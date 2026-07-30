@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.85.0
+  changelogEntry:
+    - summary: |
+        `fern generate --pack` now produces a source zip artifact for Go SDKs in `fern-dist/`
+        (`<output-dir>-source.zip`). Go modules have no binary package format, so the zip contains the
+        module source (excluding `fern-dist/` and `.git/`) and can be shared internally and referenced
+        with a `replace` directive in `go.mod`. The zip is built in-process, so it works identically in
+        host and docker pack modes without any toolchain.
+      type: feat
+  createdAt: "2026-07-30"
+  irVersion: 67
 - version: 5.84.0
   changelogEntry:
     - summary: |

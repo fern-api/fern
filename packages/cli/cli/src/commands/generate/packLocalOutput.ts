@@ -3,7 +3,10 @@ import { assertNever, ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
+import { createWriteStream } from "fs";
 import { copyFile, mkdir, readdir, readFile, rename, rmdir } from "fs/promises";
+import { basename } from "path";
+import { ZipFile } from "yazl";
 
 /** Directory (inside each generator's local output) where packaged artifacts are written. */
 export const PACK_OUTPUT_DIRECTORY = "fern-dist";
@@ -149,12 +152,19 @@ async function packOutputForLanguage({
             logArtifacts({ distDir, context });
             return;
         }
-        case "go":
-            context.logger.warn(
-                "Go SDKs are distributed as source modules, so there is no package artifact to build. " +
-                    "Share the output directory itself (e.g. as a zip), or reference it with a 'replace' directive in go.mod."
-            );
+        case "go": {
+            // Go modules have no binary package format ('go get' always fetches source), so the
+            // shareable artifact is a zip of the module source. Consumers unzip it and reference
+            // it with a 'replace' directive in go.mod.
+            await mkdir(distDir, { recursive: true });
+            const zipName = `${basename(outputPath)}-source.zip`;
+            await zipDirectory({
+                sourceDir: outputPath,
+                zipPath: join(distDir, RelativeFilePath.of(zipName))
+            });
+            logArtifacts({ distDir, context });
             return;
+        }
         case "swift":
             context.logger.warn(
                 "Swift SDKs are distributed as source packages (Swift Package Manager), so there is no package artifact to build. " +
@@ -215,6 +225,41 @@ async function runPackCommands({
             cwd: outputPath
         });
     }
+}
+
+/**
+ * Zips the contents of a directory (excluding fern-dist itself and any .git directory) into
+ * `zipPath`. Runs in-process, so it behaves identically in host and docker pack modes and
+ * requires no language toolchain.
+ */
+async function zipDirectory({
+    sourceDir,
+    zipPath
+}: {
+    sourceDir: AbsoluteFilePath;
+    zipPath: AbsoluteFilePath;
+}): Promise<void> {
+    const zip = new ZipFile();
+    const addEntries = async (dir: AbsoluteFilePath, prefix: string): Promise<void> => {
+        for (const entry of await readdir(dir, { withFileTypes: true })) {
+            if (prefix === "" && (entry.name === PACK_OUTPUT_DIRECTORY || entry.name === ".git")) {
+                continue;
+            }
+            const entryPath = join(dir, RelativeFilePath.of(entry.name));
+            const entryName = prefix === "" ? entry.name : `${prefix}/${entry.name}`;
+            if (entry.isDirectory()) {
+                await addEntries(entryPath, entryName);
+            } else if (entry.isFile()) {
+                zip.addFile(entryPath, entryName);
+            }
+        }
+    };
+    await addEntries(sourceDir, "");
+    zip.end();
+    await new Promise<void>((resolve, reject) => {
+        zip.outputStream.on("error", reject);
+        zip.outputStream.pipe(createWriteStream(zipPath)).on("close", resolve).on("error", reject);
+    });
 }
 
 async function removeDistDirIfEmpty(outputPath: AbsoluteFilePath): Promise<void> {

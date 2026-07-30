@@ -82,6 +82,22 @@ function ${APPEND_APP_INFO_HELPER_NAME}(
     return \`\${userAgent} \${productToken}\`;
 }`;
 
+/**
+ * Splits a `{name}/{version}` User-Agent product token into its parts so the version can
+ * be recombined with the runtime-resolved platform segments. A value without a separator
+ * is treated as the product name.
+ */
+function splitUserAgentCoordinate(value: string): { name: string; version: string } {
+    const separatorIndex = value.lastIndexOf("/");
+    const version = separatorIndex < 0 ? "" : value.slice(separatorIndex + 1);
+    // The product name may itself contain a separator (e.g. `@acme/sdk`), so only split off a
+    // trailing segment that looks like a version.
+    if (!/^v?\d/.test(version)) {
+        return { name: value, version: "" };
+    }
+    return { name: value.slice(0, separatorIndex), version };
+}
+
 export class BaseClientTypeGenerator {
     public static readonly OPTIONS_PARAMETER_NAME = OPTIONS_PARAMETER_NAME;
     private readonly generateIdempotentRequestOptions: boolean;
@@ -288,15 +304,24 @@ export type BaseClientOptions = {
             // that consolidates the platform + runtime information. This supersedes
             // the default `{package}/{version}` User-Agent, and the discrete
             // X-Fern-Runtime / X-Fern-Runtime-Version headers are dropped.
-            const useRichUserAgent = this.includePlatformHeaders && context.npmPackage != null;
+            // The IR value already reflects the resolved `user-agent` template when one is
+            // configured, so it takes precedence over the npm package coordinate.
+            const irUserAgent = this.ir.sdkConfig.platformHeaders.userAgent;
+            const coordinate =
+                irUserAgent != null
+                    ? splitUserAgentCoordinate(irUserAgent.value)
+                    : context.npmPackage != null
+                      ? { name: context.npmPackage.packageName, version: context.npmPackage.version }
+                      : undefined;
+            const useRichUserAgent = this.includePlatformHeaders && coordinate != null && coordinate.version.length > 0;
 
-            if (useRichUserAgent && context.npmPackage != null) {
+            if (useRichUserAgent && coordinate != null) {
                 fernHeaderEntries.push([
-                    "User-Agent",
+                    irUserAgent?.header ?? "User-Agent",
                     withAppInfo(
                         context.coreUtilities.runtime.userAgent._invoke(
-                            ts.factory.createStringLiteral(context.npmPackage.packageName),
-                            ts.factory.createStringLiteral(context.npmPackage.version)
+                            ts.factory.createStringLiteral(coordinate.name),
+                            ts.factory.createStringLiteral(coordinate.version)
                         )
                     )
                 ]);

@@ -1,3 +1,4 @@
+import re
 import typing
 from dataclasses import dataclass
 from enum import Enum
@@ -21,6 +22,22 @@ from fern_python.snippet.template_utils import TemplateGenerator
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
+
+
+def _get_user_agent_coordinate_prefix(user_agent_value: str) -> typing.Optional[str]:
+    """Returns the User-Agent value up to and including the separator preceding its version.
+
+    The version segment is dropped so a runtime-resolved version can be appended in its
+    place. Returns None when the value does not end in a version, since the product name
+    itself may contain a separator (e.g. `@acme/sdk`).
+    """
+    separator_index = user_agent_value.rfind("/")
+    if separator_index < 0:
+        return None
+    version = user_agent_value[separator_index + 1 :]
+    if re.match(r"^v?\d", version) is None:
+        return None
+    return user_agent_value[: separator_index + 1]
 
 
 @dataclass
@@ -808,13 +825,20 @@ class ClientWrapperGenerator:
             # discrete X-Fern-Runtime / X-Fern-Platform headers. The value is computed
             # at runtime so the platform/runtime segments reflect the execution env.
             # When it is disabled (default), the discrete headers are preserved.
+            # The IR value already reflects the resolved `user-agent` template when one is
+            # configured, so it takes precedence over the package coordinate.
             user_agent_prefix: typing.Optional[str] = None
-            if project._project_config is not None:
-                user_agent_prefix = f"{project._project_config.package_name}/{project._project_config.package_version}"
-            elif user_agent_header is not None:
+            if user_agent_header is not None:
                 user_agent_prefix = user_agent_header.value
+            elif project._project_config is not None:
+                user_agent_prefix = f"{project._project_config.package_name}/{project._project_config.package_version}"
             emit_structured_user_agent = (
                 include_platform_headers and not omit_fern_headers and user_agent_prefix is not None
+            )
+            # Everything up to and including the version separator, so a runtime-resolved
+            # version can be appended in place of the baked-in one.
+            user_agent_coordinate_prefix = (
+                _get_user_agent_coordinate_prefix(user_agent_prefix) if user_agent_prefix is not None else None
             )
 
             if not omit_fern_headers:
@@ -835,8 +859,8 @@ class ClientWrapperGenerator:
                         writer.write_line(f'_sdk_version = "{project._project_config.package_version}"')
                     writer.write_line("")
                 if emit_structured_user_agent:
-                    if runtime_version_active and project._project_config is not None:
-                        writer.write_line(f'_user_agent = "{project._project_config.package_name}/" + _sdk_version')
+                    if runtime_version_active and user_agent_coordinate_prefix is not None:
+                        writer.write_line(f'_user_agent = "{user_agent_coordinate_prefix}" + _sdk_version')
                     else:
                         writer.write_line(f'_user_agent = "{user_agent_prefix}"')
                     writer.write_line("_os = platform.system().lower()")
@@ -860,9 +884,9 @@ class ClientWrapperGenerator:
                 if emit_structured_user_agent:
                     writer.write_line('"User-Agent": _user_agent,')
                 elif user_agent_header is not None:
-                    if runtime_version_active and project._project_config is not None:
+                    if runtime_version_active and user_agent_coordinate_prefix is not None:
                         writer.write_line(
-                            f'"{user_agent_header.header}": "{project._project_config.package_name}/" + _sdk_version,'
+                            f'"{user_agent_header.header}": "{user_agent_coordinate_prefix}" + _sdk_version,'
                         )
                     else:
                         writer.write_line(f'"{user_agent_header.header}": "{user_agent_header.value}",')
