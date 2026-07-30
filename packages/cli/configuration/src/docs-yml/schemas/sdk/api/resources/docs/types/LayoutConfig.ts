@@ -111,4 +111,9 @@ export interface LayoutConfig {
      * availability badge is unaffected by this setting.
      */
     showNavAvailabilityBadges?: boolean;
+    /**
+     * If `hide-related-topics` is set to true, the "Related topics" suggestions at the bottom of
+     * pages will not be rendered. This can be overridden for a specific page using the frontmatter.
+     */
+    hideRelatedTopics?: boolean;
 }

@@ -30,6 +30,7 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
             "show-nav-availability-badges",
             core.serialization.boolean().optional(),
         ),
+        hideRelatedTopics: core.serialization.property("hide-related-topics", core.serialization.boolean().optional()),
     });
 
 export declare namespace LayoutConfig {
@@ -49,5 +50,6 @@ export declare namespace LayoutConfig {
         "mobile-toc"?: boolean | null;
         "changelog-layout"?: ChangelogLayout.Raw | null;
         "show-nav-availability-badges"?: boolean | null;
+        "hide-related-topics"?: boolean | null;
     }
 }
