@@ -35,6 +35,7 @@ export async function generateWorkspace({
     generatorName,
     generatorIndex,
     version,
+    prerelease,
     shouldLogS3Url,
     token,
     useLocalDocker,
@@ -64,6 +65,8 @@ export async function generateWorkspace({
     projectConfig: fernConfigJson.ProjectConfig;
     context: TaskContext;
     version: string | undefined;
+    /** `--prerelease <identifier>`: keeps `--version AUTO` on a `-<identifier>.N` prerelease line. */
+    prerelease?: string;
     /**
      * The resolved group names to run for this workspace, already validated and alias-expanded
      * by the pre-flight pass in {@link generateAPIWorkspaces}. Must be non-empty.
@@ -169,6 +172,7 @@ export async function generateWorkspace({
                         workspace,
                         generatorGroup: group,
                         version,
+                        prerelease,
                         keepDocker,
                         context: groupContext,
                         runner,
@@ -214,6 +218,7 @@ export async function generateWorkspace({
                         context: groupContext,
                         generatorGroup: group,
                         version,
+                        prerelease,
                         shouldLogS3Url,
                         token,
                         whitelabel: workspace.generatorsConfiguration?.whitelabel,

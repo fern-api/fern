@@ -9,10 +9,12 @@ export {
 export { changelogContainsVersion, prependChangelogBlock } from "./changelogUtils.js";
 export {
     AUTO_VERSION,
+    applyPrereleaseIdentifier,
     extractLanguageFromGeneratorName,
     extractPreviousVersionFromDiffLine,
     incrementVersion,
     isAutoVersion,
+    isValidPrereleaseIdentifier,
     isValidSemver,
     MAGIC_VERSION,
     MAGIC_VERSION_PYTHON,

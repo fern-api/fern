@@ -44,6 +44,7 @@ export async function runRemoteGenerationForGenerator({
     interactiveTaskContext,
     generatorInvocation,
     version,
+    prerelease,
     audiences,
     shouldLogS3Url,
     token,
@@ -76,6 +77,8 @@ export async function runRemoteGenerationForGenerator({
     interactiveTaskContext: InteractiveTaskContext;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     version: string | undefined;
+    /** `--prerelease <identifier>`: keeps `--version AUTO` on a `-<identifier>.N` prerelease line. */
+    prerelease?: string;
     audiences: Audiences;
     shouldLogS3Url: boolean;
     token: FernToken;
@@ -361,6 +364,7 @@ export async function runRemoteGenerationForGenerator({
         generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
         context: interactiveTaskContext,
         version: resolvedVersion,
+        prerelease,
         intermediateRepresentation: {
             ...ir,
             fdrApiDefinitionId,

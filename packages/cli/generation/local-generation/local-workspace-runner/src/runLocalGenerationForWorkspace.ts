@@ -56,6 +56,7 @@ export async function runLocalGenerationForWorkspace({
     workspace,
     generatorGroup,
     version,
+    prerelease,
     keepDocker,
     inspect,
     context,
@@ -82,6 +83,8 @@ export async function runLocalGenerationForWorkspace({
     workspace: AbstractAPIWorkspace<unknown>;
     generatorGroup: generatorsYml.GeneratorGroup;
     version: string | undefined;
+    /** `--prerelease <identifier>`: keeps `--version AUTO` on a `-<identifier>.N` prerelease line. */
+    prerelease?: string;
     keepDocker: boolean;
     context: TaskContext;
     absolutePathToPreview: AbsoluteFilePath | undefined;
@@ -420,6 +423,7 @@ export async function runLocalGenerationForWorkspace({
                     absolutePathToLocalSnippetJSON,
                     absolutePathToLocalSnippetTemplateJSON: undefined,
                     version,
+                    prerelease,
                     audiences: generatorGroup.audiences,
                     workspaceTempDir,
                     keepDocker,

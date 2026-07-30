@@ -31,6 +31,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     context,
     generatorGroup,
     version,
+    prerelease,
     shouldLogS3Url,
     token,
     whitelabel,
@@ -64,6 +65,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     context: TaskContext;
     generatorGroup: generatorsYml.GeneratorGroup;
     version: string | undefined;
+    /** `--prerelease <identifier>`: keeps `--version AUTO` on a `-<identifier>.N` prerelease line. */
+    prerelease?: string;
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
@@ -216,6 +219,7 @@ async function generateOne({
     context,
     generatorGroup,
     version,
+    prerelease,
     shouldLogS3Url,
     token,
     whitelabel,
@@ -253,6 +257,8 @@ async function generateOne({
     context: TaskContext;
     generatorGroup: generatorsYml.GeneratorGroup;
     version: string | undefined;
+    /** `--prerelease <identifier>`: keeps `--version AUTO` on a `-<identifier>.N` prerelease line. */
+    prerelease?: string;
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
@@ -341,6 +347,7 @@ async function generateOne({
                 })
             },
             version,
+            prerelease,
             audiences: generatorGroup.audiences,
             shouldLogS3Url,
             token,

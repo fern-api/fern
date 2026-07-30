@@ -8,10 +8,12 @@ import {
     AutoVersioningException,
     AutoVersioningService,
     AutoVersionResult,
+    applyPrereleaseIdentifier,
     CachedAnalysis,
     changelogContainsVersion,
     countFilesInDiff,
     formatSizeKB,
+    incrementVersion,
     isAutoVersion,
     MAGIC_VERSION,
     MAX_AI_DIFF_BYTES,
@@ -41,6 +43,8 @@ export declare namespace LocalTaskHandler {
         absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
         version: string | undefined;
+        /** `--prerelease <identifier>`: keeps AUTO versions on a `-<identifier>.N` prerelease line. */
+        prerelease?: string;
         ai: generatorsYml.AiServicesSchema | undefined;
         isWhitelabel: boolean;
         autoVersioningCache?: AutoVersioningCache;
@@ -59,6 +63,7 @@ export class LocalTaskHandler {
     private absolutePathToLocalOutput: AbsoluteFilePath;
     private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
     private version: string | undefined;
+    private prerelease: string | undefined;
     private ai: generatorsYml.AiServicesSchema | undefined;
     private isWhitelabel: boolean;
     private autoVersioningCache: AutoVersioningCache | undefined;
@@ -75,6 +80,7 @@ export class LocalTaskHandler {
         absolutePathToLocalSnippetJSON,
         absolutePathToTmpSnippetTemplatesJSON,
         version,
+        prerelease,
         ai,
         isWhitelabel,
         autoVersioningCache,
@@ -90,6 +96,7 @@ export class LocalTaskHandler {
         this.absolutePathToLocalSnippetTemplateJSON = absolutePathToLocalSnippetTemplateJSON;
         this.absolutePathToTmpSnippetTemplatesJSON = absolutePathToTmpSnippetTemplatesJSON;
         this.version = version;
+        this.prerelease = prerelease;
         this.ai = ai;
         this.isWhitelabel = isWhitelabel;
         this.autoVersioningCache = autoVersioningCache;
@@ -264,7 +271,7 @@ export class LocalTaskHandler {
                 }
                 if (previousVersion == null) {
                     this.context.logger.info("No git tags found — treating as new SDK repository");
-                    const initialVersion = mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1";
+                    const initialVersion = this.initialVersion(mappedMagicVersion);
                     const commitMessage = this.isWhitelabel
                         ? "Initial SDK generation"
                         : "Initial SDK generation\n\n🌿 Generated with Fern";
@@ -308,7 +315,7 @@ export class LocalTaskHandler {
                 this.context.logger.info(
                     "No previous version found (new SDK repository). Using 0.0.1 as initial version."
                 );
-                const initialVersion = mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1";
+                const initialVersion = this.initialVersion(mappedMagicVersion);
                 const commitMessage = this.isWhitelabel
                     ? "Initial SDK generation"
                     : "Initial SDK generation\n\n🌿 Generated with Fern";
@@ -639,10 +646,22 @@ export class LocalTaskHandler {
     }
 
     /**
+     * Version stamped on a brand new SDK repository, carrying the `--prerelease` identifier when set.
+     */
+    private initialVersion(mappedMagicVersion: string): string {
+        const version = mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1";
+        return this.prerelease != null ? applyPrereleaseIdentifier(version, this.prerelease) : version;
+    }
+
+    /**
      * Increments a semantic version string based on the version bump type.
      * Uses the semver library for robust version handling.
      */
     private incrementVersion(version: string, versionBump: VersionBump): string {
+        if (this.prerelease != null) {
+            return incrementVersion(version, versionBump, { prerelease: this.prerelease });
+        }
+
         // Handle 'v' prefix - semver handles this automatically
         const cleanVersion = semver.clean(version);
         if (!cleanVersion) {

@@ -73,6 +73,7 @@ export async function writeFilesToDiskAndRunGenerator({
     absolutePathToLocalSnippetTemplateJSON,
     audiences,
     version,
+    prerelease,
     workspaceTempDir,
     keepDocker,
     context,
@@ -100,6 +101,8 @@ export async function writeFilesToDiskAndRunGenerator({
     workspace: FernWorkspace;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     version: string | undefined;
+    /** `--prerelease <identifier>`: keeps `--version AUTO` on a `-<identifier>.N` prerelease line. */
+    prerelease?: string;
     absolutePathToLocalOutput: AbsoluteFilePath;
     absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
     absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
@@ -325,6 +328,7 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToTmpSnippetJSON,
         absolutePathToTmpSnippetTemplatesJSON,
         version: mappedVersion,
+        prerelease,
         ai,
         isWhitelabel: ir.readmeConfig?.whiteLabel ?? false,
         autoVersioningCache,

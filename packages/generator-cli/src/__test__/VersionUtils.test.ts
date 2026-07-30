@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { extractLanguageFromGeneratorName } from "../autoversion/VersionUtils.js";
+import { AutoVersioningException } from "../autoversion/AutoVersioningService.js";
+import {
+    applyPrereleaseIdentifier,
+    extractLanguageFromGeneratorName,
+    incrementVersion,
+    isValidPrereleaseIdentifier,
+    VersionBump
+} from "../autoversion/VersionUtils.js";
 
 describe("extractLanguageFromGeneratorName", () => {
     it("extracts 'typescript' from 'fernapi/fern-typescript-node-sdk'", () => {
@@ -90,5 +97,105 @@ describe("extractLanguageFromGeneratorName", () => {
 
     it("does not false-positive match 'java' in 'javascript'", () => {
         expect(extractLanguageFromGeneratorName("fernapi/fern-javascript-sdk")).toBe("unknown");
+    });
+});
+
+describe("incrementVersion", () => {
+    it("applies the bump to the release core when no prerelease is requested", () => {
+        expect(incrementVersion("1.5.5", VersionBump.PATCH)).toBe("1.5.6");
+        expect(incrementVersion("1.5.5", VersionBump.MINOR)).toBe("1.6.0");
+        expect(incrementVersion("1.5.5", VersionBump.MAJOR)).toBe("2.0.0");
+    });
+
+    it("advances the prerelease counter without a requested identifier", () => {
+        expect(incrementVersion("4.0.0-rc.1", VersionBump.MAJOR)).toBe("4.0.0-rc.2");
+        expect(incrementVersion("1.2.3-beta", VersionBump.PATCH)).toBe("1.2.3-beta.0");
+    });
+
+    it("returns the version unchanged on NO_CHANGE", () => {
+        expect(incrementVersion("1.5.5", VersionBump.NO_CHANGE)).toBe("1.5.5");
+        expect(incrementVersion("1.5.5", VersionBump.NO_CHANGE, { prerelease: "rc" })).toBe("1.5.5");
+    });
+});
+
+describe("incrementVersion with a prerelease identifier", () => {
+    it("bumps the release core and starts the counter at zero from a stable version", () => {
+        expect(incrementVersion("1.5.5", VersionBump.PATCH, { prerelease: "rc" })).toBe("1.5.6-rc.0");
+        expect(incrementVersion("1.5.5", VersionBump.MINOR, { prerelease: "rc" })).toBe("1.6.0-rc.0");
+        expect(incrementVersion("1.5.5", VersionBump.MAJOR, { prerelease: "rc" })).toBe("2.0.0-rc.0");
+    });
+
+    it("advances the counter while the pending core already covers the bump", () => {
+        expect(incrementVersion("1.5.6-rc.0", VersionBump.PATCH, { prerelease: "rc" })).toBe("1.5.6-rc.1");
+        expect(incrementVersion("1.6.0-rc.1", VersionBump.MINOR, { prerelease: "rc" })).toBe("1.6.0-rc.2");
+        expect(incrementVersion("1.6.0-rc.1", VersionBump.PATCH, { prerelease: "rc" })).toBe("1.6.0-rc.2");
+        expect(incrementVersion("2.0.0-rc.3", VersionBump.MAJOR, { prerelease: "rc" })).toBe("2.0.0-rc.4");
+    });
+
+    it("re-anchors the core and resets the counter when the bump outranks the pending core", () => {
+        expect(incrementVersion("1.5.6-rc.1", VersionBump.MINOR, { prerelease: "rc" })).toBe("1.6.0-rc.0");
+        expect(incrementVersion("1.5.6-rc.1", VersionBump.MAJOR, { prerelease: "rc" })).toBe("2.0.0-rc.0");
+        expect(incrementVersion("1.6.0-rc.2", VersionBump.MAJOR, { prerelease: "rc" })).toBe("2.0.0-rc.0");
+    });
+
+    it("switches identifiers while keeping the pending core", () => {
+        expect(incrementVersion("1.6.0-beta.3", VersionBump.PATCH, { prerelease: "rc" })).toBe("1.6.0-rc.0");
+        expect(incrementVersion("1.6.0-0", VersionBump.PATCH, { prerelease: "rc" })).toBe("1.6.0-rc.0");
+    });
+
+    it("preserves a 'v' prefix", () => {
+        expect(incrementVersion("v1.5.5", VersionBump.MINOR, { prerelease: "rc" })).toBe("v1.6.0-rc.0");
+        expect(incrementVersion("v1.6.0-rc.0", VersionBump.PATCH, { prerelease: "rc" })).toBe("v1.6.0-rc.1");
+    });
+
+    it("drops build metadata when advancing the counter", () => {
+        expect(incrementVersion("1.6.0-rc.2+build.5", VersionBump.PATCH, { prerelease: "rc" })).toBe("1.6.0-rc.3");
+    });
+
+    it("rejects an invalid identifier", () => {
+        expect(() => incrementVersion("1.5.5", VersionBump.PATCH, { prerelease: "0rc" })).toThrow(
+            AutoVersioningException
+        );
+        expect(() => incrementVersion("1.5.5", VersionBump.PATCH, { prerelease: "rc.1" })).toThrow(
+            AutoVersioningException
+        );
+        expect(() => incrementVersion("1.5.5", VersionBump.PATCH, { prerelease: "" })).toThrow(AutoVersioningException);
+    });
+
+    it("rejects an invalid version", () => {
+        expect(() => incrementVersion("not-a-version", VersionBump.PATCH, { prerelease: "rc" })).toThrow(
+            AutoVersioningException
+        );
+    });
+});
+
+describe("applyPrereleaseIdentifier", () => {
+    it("attaches the identifier with a zero counter to a stable version", () => {
+        expect(applyPrereleaseIdentifier("0.0.1", "rc")).toBe("0.0.1-rc.0");
+        expect(applyPrereleaseIdentifier("v0.0.1", "rc")).toBe("v0.0.1-rc.0");
+    });
+
+    it("leaves versions already on a prerelease line untouched", () => {
+        expect(applyPrereleaseIdentifier("0.0.1-beta.2", "rc")).toBe("0.0.1-beta.2");
+    });
+
+    it("rejects invalid input", () => {
+        expect(() => applyPrereleaseIdentifier("0.0.1", "1rc")).toThrow(AutoVersioningException);
+        expect(() => applyPrereleaseIdentifier("nope", "rc")).toThrow(AutoVersioningException);
+    });
+});
+
+describe("isValidPrereleaseIdentifier", () => {
+    it("accepts alphanumeric identifiers starting with a letter", () => {
+        expect(isValidPrereleaseIdentifier("rc")).toBe(true);
+        expect(isValidPrereleaseIdentifier("beta")).toBe(true);
+        expect(isValidPrereleaseIdentifier("next-1")).toBe(true);
+    });
+
+    it("rejects empty, numeric-leading and dotted identifiers", () => {
+        expect(isValidPrereleaseIdentifier("")).toBe(false);
+        expect(isValidPrereleaseIdentifier("0rc")).toBe(false);
+        expect(isValidPrereleaseIdentifier("rc.0")).toBe(false);
+        expect(isValidPrereleaseIdentifier("rc 0")).toBe(false);
     });
 });

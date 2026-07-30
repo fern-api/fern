@@ -68,6 +68,13 @@ export interface AutoVersionStepConfig {
     /** Fallback version when no prior generation exists (first run). Defaults to "0.0.1" (or "v0.0.1" for Go). */
     baseVersion?: string;
     /**
+     * Prerelease identifier (e.g. "rc") that keeps the SDK on a prerelease line: the AI-selected
+     * bump is applied to the release core and suffixed with `-<identifier>.0`, and subsequent
+     * generations advance the counter. Promotion to stable is done by generating with an explicit
+     * `--version`.
+     */
+    prerelease?: string;
+    /**
      * BAML AI service configuration (provider + model). When absent, the step calls the
      * hosted FAI service using `fernToken` instead. If neither is supplied, AI analysis
      * fails and the step falls back to a PATCH bump with a neutral message.
