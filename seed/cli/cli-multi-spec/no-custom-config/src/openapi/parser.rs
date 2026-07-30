@@ -3484,28 +3484,47 @@ fn classify_multipart_property(
         prop
     };
 
-    let ty = resolved.schema_type();
-    let fmt = resolved.format.as_deref();
-
-    // `type: string, format: binary` or legacy `type: file`
-    if (ty == Some("string") && fmt == Some("binary")) || ty == Some("file") {
-        let ct = Some("application/octet-stream".to_string());
-        return (true, ct);
+    if is_binary_schema(resolved) {
+        return (true, Some("application/octet-stream".to_string()));
     }
 
-    // Array of binary files (e.g. `type: array, items: { type: string, format: binary }`)
-    if ty == Some("array") {
-        if let Some(items) = &resolved.items {
-            if (items.schema_type() == Some("string")
-                && items.format.as_deref() == Some("binary"))
-                || items.schema_type() == Some("file")
-            {
-                return (true, Some("application/octet-stream".to_string()));
-            }
+    // Optional / nullable uploads wrap the binary schema in a composition:
+    // `anyOf: [{type: string, format: binary}, {type: "null"}]`. Unwrap the
+    // non-null branches (resolving `$ref`) and classify on those.
+    for branch in resolved.one_of.iter().chain(resolved.any_of.iter()) {
+        let effective = branch
+            .schema_ref
+            .as_ref()
+            .and_then(|r| component_schemas.get(&strip_ref_prefix(r)))
+            .unwrap_or(branch);
+        if is_null_sentinel(effective) {
+            continue;
+        }
+        if is_binary_schema(effective) {
+            return (true, Some("application/octet-stream".to_string()));
         }
     }
 
     (false, None)
+}
+
+/// `true` when the schema is a binary payload: `type: string, format: binary`,
+/// the legacy `type: file`, or an array whose items are either of those.
+fn is_binary_schema(schema: &OpenApiSchemaObject) -> bool {
+    let ty = schema.schema_type();
+    if (ty == Some("string") && schema.format.as_deref() == Some("binary")) || ty == Some("file") {
+        return true;
+    }
+
+    if ty == Some("array") {
+        if let Some(items) = &schema.items {
+            return (items.schema_type() == Some("string")
+                && items.format.as_deref() == Some("binary"))
+                || items.schema_type() == Some("file");
+        }
+    }
+
+    false
 }
 
 /// Recursively walk an object schema and emit one body-located [`MethodParameter`]
@@ -4500,6 +4519,98 @@ paths:
             .expect("purpose field missing");
         assert!(!purpose_field.is_file);
         assert!(!purpose_field.required);
+    }
+
+    #[test]
+    fn test_multipart_nullable_anyof_binary_is_file_part() {
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /speech-to-text:
+    post:
+      x-fern-sdk-group-name: stt
+      x-fern-sdk-method-name: convert
+      operationId: sttConvert
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [model_id]
+              properties:
+                model_id:
+                  type: string
+                file:
+                  anyOf:
+                    - type: string
+                      format: binary
+                    - type: "null"
+      responses: { "200": { description: ok } }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let convert = &doc.resources["stt"].methods["convert"];
+        let file_field = convert
+            .multipart_fields
+            .iter()
+            .find(|f| f.wire_name == "file")
+            .expect("file field missing");
+        assert!(
+            file_field.is_file,
+            "anyOf[binary, null] must be classified as a file part"
+        );
+        assert_eq!(
+            file_field.content_type.as_deref(),
+            Some("application/octet-stream")
+        );
+        assert!(!file_field.required);
+    }
+
+    #[test]
+    fn test_multipart_nullable_oneof_ref_binary_is_file_part() {
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /dubbing:
+    post:
+      x-fern-sdk-group-name: dubbing
+      x-fern-sdk-method-name: create
+      operationId: dubbingCreate
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                csv_file:
+                  oneOf:
+                    - $ref: '#/components/schemas/Upload'
+                    - type: "null"
+                clips:
+                  anyOf:
+                    - type: array
+                      items: { type: string, format: binary }
+                    - type: "null"
+      responses: { "200": { description: ok } }
+components:
+  schemas:
+    Upload:
+      type: string
+      format: binary
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let create = &doc.resources["dubbing"].methods["create"];
+        for name in ["csv_file", "clips"] {
+            let field = create
+                .multipart_fields
+                .iter()
+                .find(|f| f.wire_name == name)
+                .unwrap_or_else(|| panic!("{name} field missing"));
+            assert!(field.is_file, "{name} must be classified as a file part");
+        }
     }
 
     #[test]
