@@ -324,6 +324,158 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
     }
 
+    private static final String APP_INFO_METHOD_NAME = "appInfoProductToken";
+
+    private static final String APP_INFO_FIELD_NAME = "appInfo";
+
+    /**
+     * Builds a static helper that assembles the caller-supplied {@code appInfo} product token, following RFC 9110
+     * §10.1.5, as {@code {name}/{version} ({comment})}. Emitted into the generated {@code ClientOptions} class only
+     * when the opt-in {@code allowUserAgentAppInfo} config is enabled, so that clients which do not opt in keep
+     * byte-identical generated output and the shared always-shipped core-utilities are never touched.
+     *
+     * <p>Sanitizes caller-supplied values so untrusted input cannot inject additional header content: {@code name} and
+     * {@code version} are token-encoded (every character outside the RFC 7230 {@code tchar} set — including spaces,
+     * control characters and CR/LF — is percent-encoded), and {@code comment} has its delimiters ({@code (}, {@code )},
+     * {@code \}) and control characters escaped. Each value is trimmed before checking for blankness and before
+     * encoding, so a blank value is treated as absent rather than encoded into a whitespace token. Returns an empty
+     * string (and the caller leaves the User-Agent unchanged) when {@code name} is absent or blank, drops the
+     * {@code /version} segment and the {@code (comment)} group when those are blank.
+     */
+    static MethodSpec buildAppInfoProductTokenMethod() {
+        return MethodSpec.methodBuilder(APP_INFO_METHOD_NAME)
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addParameter(String.class, "name")
+                .addParameter(String.class, "version")
+                .addParameter(String.class, "comment")
+                .addStatement("$T encodedName = name == null ? $S : encodeToken(name.trim())", String.class, "")
+                .beginControlFlow("if (encodedName.isEmpty())")
+                .addStatement("return $S", "")
+                .endControlFlow()
+                .addStatement("$T token = new $T(encodedName)", StringBuilder.class, StringBuilder.class)
+                .addStatement(
+                        "$T encodedVersion = version == null ? $S : encodeToken(version.trim())", String.class, "")
+                .beginControlFlow("if (!encodedVersion.isEmpty())")
+                .addStatement("token.append($S).append(encodedVersion)", "/")
+                .endControlFlow()
+                .addStatement(
+                        "$T encodedComment = comment == null ? $S : encodeComment(comment.trim())", String.class, "")
+                .beginControlFlow("if (!encodedComment.isEmpty())")
+                .addStatement("token.append($S).append(encodedComment).append($S)", " (", ")")
+                .endControlFlow()
+                .addStatement("return token.toString()")
+                .build();
+    }
+
+    /**
+     * Builds the static {@code encodeToken} helper used by {@link #buildAppInfoProductTokenMethod()}. Percent-encodes
+     * every character of {@code value} that is not an RFC 7230 {@code tchar}, using UTF-8 bytes, so caller-supplied
+     * {@code name}/{@code version} values cannot break out of the product token or inject additional header content.
+     */
+    static MethodSpec buildEncodeTokenMethod() {
+        return MethodSpec.methodBuilder("encodeToken")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addParameter(String.class, "value")
+                .addStatement("$T encoded = new $T()", StringBuilder.class, StringBuilder.class)
+                .beginControlFlow("for (int i = 0; i < value.length(); i++)")
+                .addStatement("char c = value.charAt(i)")
+                .beginControlFlow(
+                        "if ((c >= $L && c <= $L) || (c >= $L && c <= $L) || (c >= $L && c <= $L) || "
+                                + "$S.indexOf(c) >= 0)",
+                        "'0'",
+                        "'9'",
+                        "'a'",
+                        "'z'",
+                        "'A'",
+                        "'Z'",
+                        "!#$%&'*+-.^_`|~")
+                .addStatement("encoded.append(c)")
+                .endControlFlow()
+                .beginControlFlow("else")
+                .addStatement("appendPercentEncoded(encoded, c)")
+                .endControlFlow()
+                .endControlFlow()
+                .addStatement("return encoded.toString()")
+                .build();
+    }
+
+    /**
+     * Builds the static {@code encodeComment} helper used by {@link #buildAppInfoProductTokenMethod()}. Percent-encodes
+     * the RFC 9110 comment delimiters ({@code (}, {@code )}, {@code \}) and control characters (0x00-0x1F, 0x7F, incl.
+     * CR/LF), so a caller-supplied comment cannot terminate the comment group early or inject additional header
+     * content; other printable characters (e.g. a URL) are kept human-readable.
+     */
+    static MethodSpec buildEncodeCommentMethod() {
+        return MethodSpec.methodBuilder("encodeComment")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addParameter(String.class, "value")
+                .addStatement("$T encoded = new $T()", StringBuilder.class, StringBuilder.class)
+                .beginControlFlow("for (int i = 0; i < value.length(); i++)")
+                .addStatement("char c = value.charAt(i)")
+                .beginControlFlow(
+                        "if (c == $L || c == $L || c == $L || c <= $L || c == $L)",
+                        "'('",
+                        "')'",
+                        "'\\\\'",
+                        "0x1f",
+                        "0x7f")
+                .addStatement("appendPercentEncoded(encoded, c)")
+                .endControlFlow()
+                .beginControlFlow("else")
+                .addStatement("encoded.append(c)")
+                .endControlFlow()
+                .endControlFlow()
+                .addStatement("return encoded.toString()")
+                .build();
+    }
+
+    /**
+     * Builds the static {@code appendPercentEncoded} helper that percent-encodes a single char to its UTF-8 byte
+     * sequence (e.g. CR/LF -> {@code %0D%0A}), shared by {@code encodeToken} and {@code encodeComment}.
+     */
+    static MethodSpec buildAppendPercentEncodedMethod() {
+        return MethodSpec.methodBuilder("appendPercentEncoded")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(TypeName.VOID)
+                .addParameter(StringBuilder.class, "encoded")
+                .addParameter(TypeName.CHAR, "c")
+                .addStatement(
+                        "byte[] bytes = $T.valueOf(c).getBytes($T.UTF_8)",
+                        String.class,
+                        ClassName.get("java.nio.charset", "StandardCharsets"))
+                .beginControlFlow("for (byte b : bytes)")
+                .addStatement(
+                        "encoded.append($S).append($T.format($S, b & 0xff).toUpperCase($T.ROOT))",
+                        "%",
+                        String.class,
+                        "%02x",
+                        Locale.class)
+                .endControlFlow()
+                .build();
+    }
+
+    /**
+     * Builds a static helper that appends an (already-sanitized) {@code appInfo} product token to whichever
+     * {@code User-Agent} value the SDK would otherwise send, separated by a single space per RFC 9110. Returns the
+     * User-Agent unchanged when the token is null or empty (e.g. the caller never supplied {@code appInfo}, or supplied
+     * a blank name). Emitted only when the opt-in {@code allowUserAgentAppInfo} config is enabled.
+     */
+    static MethodSpec buildAppendAppInfoMethod() {
+        return MethodSpec.methodBuilder("appendAppInfo")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addParameter(String.class, "userAgent")
+                .addParameter(String.class, "appInfoToken")
+                .beginControlFlow("if (appInfoToken == null || appInfoToken.isEmpty())")
+                .addStatement("return userAgent")
+                .endControlFlow()
+                .addStatement("return userAgent + $S + appInfoToken", " ")
+                .build();
+    }
+
     private final ClassName builderClassName;
     private final FieldSpec environmentField;
     private final GeneratedJavaFile requestOptionsFile;
@@ -408,6 +560,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         String platformHeadersPutString = "";
         Optional<MethodSpec> userAgentMethod = Optional.empty();
         Optional<MethodSpec> sdkVersionMethod = Optional.empty();
+        // Tracks whether the User-Agent value expression actually references the caller-supplied appInfo product token
+        // (only possible when the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent header is written),
+        // so the appInfo field, builder method and sanitizing helpers are emitted only when they are actually used.
+        boolean referencesAppInfo = false;
         if (!clientGeneratorContext.getCustomConfig().omitFernHeaders()) {
             Map<String, String> platformHeaderEntries = getPlatformHeadersEntries(
                     generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
@@ -416,6 +572,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             boolean includePlatformHeaders =
                     clientGeneratorContext.getCustomConfig().includePlatformHeaders();
             boolean runtimeVersion = clientGeneratorContext.getCustomConfig().runtimeVersion();
+            boolean allowUserAgentAppInfo =
+                    clientGeneratorContext.getCustomConfig().allowUserAgentAppInfo();
             Optional<String> userAgentHeaderName = generatorContext
                     .getIr()
                     .getSdkConfig()
@@ -447,23 +605,32 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     if (runtimeVersion) {
                         referencesRuntimeVersion = true;
                     }
-                    putStatements.append(CodeBlock.of("put($S, $L());", entry.getKey(), USER_AGENT_METHOD_NAME)
+                    // The structured User-Agent value assembled at runtime by getUserAgent().
+                    CodeBlock userAgentValue = CodeBlock.of("$L()", USER_AGENT_METHOD_NAME);
+                    if (allowUserAgentAppInfo) {
+                        referencesAppInfo = true;
+                        userAgentValue = CodeBlock.of("appendAppInfo($L, $L)", userAgentValue, APP_INFO_FIELD_NAME);
+                    }
+                    putStatements.append(CodeBlock.of("put($S, $L);", entry.getKey(), userAgentValue)
                             .toString());
                 } else if (isUserAgentHeader) {
+                    // The base User-Agent value expression for the two non-structured branches: the runtime-version
+                    // `{coordinate}/ + getSdkVersion()` path and the baked-in literal path (the latter also covers the
+                    // configured `user-agent` template value).
+                    CodeBlock userAgentValue;
                     if (runtimeVersion) {
                         String coordinatePrefix = userAgentCoordinatePrefix(toRfcCompliantUserAgent(entry.getValue()));
                         referencesRuntimeVersion = true;
-                        putStatements.append(CodeBlock.of(
-                                        "put($S, $S + $L());",
-                                        entry.getKey(),
-                                        coordinatePrefix,
-                                        SDK_VERSION_METHOD_NAME)
-                                .toString());
+                        userAgentValue = CodeBlock.of("$S + $L()", coordinatePrefix, SDK_VERSION_METHOD_NAME);
                     } else {
-                        putStatements.append(
-                                CodeBlock.of("put($S, $S);", entry.getKey(), toRfcCompliantUserAgent(entry.getValue()))
-                                        .toString());
+                        userAgentValue = CodeBlock.of("$S", toRfcCompliantUserAgent(entry.getValue()));
                     }
+                    if (allowUserAgentAppInfo) {
+                        referencesAppInfo = true;
+                        userAgentValue = CodeBlock.of("appendAppInfo($L, $L)", userAgentValue, APP_INFO_FIELD_NAME);
+                    }
+                    putStatements.append(CodeBlock.of("put($S, $L);", entry.getKey(), userAgentValue)
+                            .toString());
                 } else if (isSdkVersionHeader) {
                     referencesRuntimeVersion = true;
                     putStatements.append(CodeBlock.of("put($S, $L());", entry.getKey(), SDK_VERSION_METHOD_NAME)
@@ -501,6 +668,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 .build())
                 .addParameter(ParameterSpec.builder(RETRY_JITTER_FACTOR_FIELD.type, RETRY_JITTER_FACTOR_FIELD.name)
                         .build());
+
+        // Only add the appInfo parameter when the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent is
+        // actually written, so default-off generated output stays byte-identical.
+        if (referencesAppInfo) {
+            constructorBuilder.addParameter(
+                    ParameterSpec.builder(String.class, APP_INFO_FIELD_NAME).build());
+        }
 
         // Only add webSocketFactory parameter if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -611,6 +785,17 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         if (sdkVersionMethod.isPresent()) {
             clientOptionsBuilder.addMethod(sdkVersionMethod.get());
+        }
+
+        // Emit the self-contained appInfo appender and sanitizing helpers only when the opt-in `allowUserAgentAppInfo`
+        // config is enabled and a User-Agent is actually written, so default-off output stays byte-identical and the
+        // shared always-shipped core-utilities are never touched.
+        if (referencesAppInfo) {
+            clientOptionsBuilder.addMethod(buildAppendAppInfoMethod());
+            clientOptionsBuilder.addMethod(buildAppInfoProductTokenMethod());
+            clientOptionsBuilder.addMethod(buildEncodeTokenMethod());
+            clientOptionsBuilder.addMethod(buildEncodeCommentMethod());
+            clientOptionsBuilder.addMethod(buildAppendPercentEncodedMethod());
         }
 
         addApiVersionField(clientOptionsBuilder);
@@ -728,7 +913,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .returns(builderClassName)
                         .addStatement("return new $T()", builderClassName)
                         .build())
-                .addType(createBuilder(variableFields, apiPathParamFieldsForBuilder))
+                .addType(createBuilder(variableFields, apiPathParamFieldsForBuilder, referencesAppInfo))
                 .build();
 
         JavaFile environmentsFile =
@@ -880,7 +1065,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     }
 
     private TypeSpec createBuilder(
-            Map<VariableId, FieldSpec> variableFields, Map<String, FieldSpec> apiPathParamFields) {
+            Map<VariableId, FieldSpec> variableFields,
+            Map<String, FieldSpec> apiPathParamFields,
+            boolean referencesAppInfo) {
         TypeSpec.Builder builder = TypeSpec.classBuilder(builderClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addField(FieldSpec.builder(environmentField.type, environmentField.name)
@@ -921,6 +1108,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(FieldSpec.builder(loggingField.type, loggingField.name, Modifier.PRIVATE)
                         .initializer("$T.empty()", Optional.class)
                         .build());
+
+        // Only add the appInfo builder field when the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent
+        // is actually written, so default-off generated output stays byte-identical. Stores the sanitized product token
+        // (null until the caller supplies appInfo).
+        if (referencesAppInfo) {
+            builder.addField(FieldSpec.builder(String.class, APP_INFO_FIELD_NAME, Modifier.PRIVATE)
+                    .initializer("null")
+                    .build());
+        }
 
         // Only add webSocketFactory field to builder if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -1082,11 +1278,31 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("return this")
                 .build());
 
+        // Add the appInfo builder method only when the opt-in `allowUserAgentAppInfo` config is enabled and a
+        // User-Agent is actually written. Its product token is appended to the User-Agent header the SDK would
+        // otherwise send.
+        if (referencesAppInfo) {
+            builder.addMethod(MethodSpec.methodBuilder(APP_INFO_FIELD_NAME)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc(
+                            "Identify the calling application. Its product token — "
+                                    + "$L — is appended to the User-Agent header sent by the SDK, following RFC 9110. "
+                                    + "The version and comment are optional; caller-supplied values are sanitized.\n",
+                            "{name}/{version} ({comment})")
+                    .returns(builderClassName)
+                    .addParameter(String.class, "name")
+                    .addParameter(String.class, "version")
+                    .addParameter(String.class, "comment")
+                    .addStatement("this.$L = $L(name, version, comment)", APP_INFO_FIELD_NAME, APP_INFO_METHOD_NAME)
+                    .addStatement("return this")
+                    .build());
+        }
+
         builder.addMethods(getVariableBuilders(variableFields)).addMethods(getApiPathParamBuilders(apiPathParamFields));
 
         addApiVersionToBuilder(builder);
 
-        builder.addMethod(getBuildMethod(variableFields, apiPathParamFields));
+        builder.addMethod(getBuildMethod(variableFields, apiPathParamFields, referencesAppInfo));
 
         Map<VariableId, MethodSpec> variableGetters = variableFields.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, entry -> MethodSpec.methodBuilder(entry.getValue().name)
@@ -1422,7 +1638,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec getBuildMethod(
-            Map<VariableId, FieldSpec> variableFields, Map<String, FieldSpec> apiPathParamFields) {
+            Map<VariableId, FieldSpec> variableFields,
+            Map<String, FieldSpec> apiPathParamFields,
+            boolean referencesAppInfo) {
         ImmutableList.Builder<Object> argsBuilder = ImmutableList.builder();
         argsBuilder.add(
                 className,
@@ -1438,6 +1656,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         returnStringBuilder.append(", this.").append(INITIAL_RETRY_DELAY_MILLIS_FIELD.name);
         returnStringBuilder.append(", this.").append(MAX_RETRY_DELAY_MILLIS_FIELD.name);
         returnStringBuilder.append(", this.").append(RETRY_JITTER_FACTOR_FIELD.name);
+
+        // Pass the sanitized appInfo product token in the same position as its constructor parameter, only when the
+        // opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent is actually written.
+        if (referencesAppInfo) {
+            returnStringBuilder.append(", this.").append(APP_INFO_FIELD_NAME);
+        }
 
         // Add webSocketFactory if present
         if (webSocketFactoryField != null) {
