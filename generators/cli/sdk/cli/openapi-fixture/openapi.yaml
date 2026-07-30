@@ -73,6 +73,24 @@ x-fern-groups:
     # (about set, long_about absent).
 
 paths:
+  # --- auth ---
+  #
+  # A spec-owned `auth` resource group. Guards the collision between the
+  # framework's built-in `auth login` / `logout` / `status` surface and a
+  # spec that legitimately groups operations under `auth`: both must stay
+  # reachable.
+
+  /auth/me:
+    get:
+      x-fern-sdk-group-name:
+        - auth
+      x-fern-sdk-method-name: me
+      operationId: auth_me
+      summary: Get the authenticated principal
+      responses:
+        "200":
+          description: Principal object
+
   # --- users ---
 
   /users/me:

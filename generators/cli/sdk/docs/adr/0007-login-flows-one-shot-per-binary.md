@@ -76,7 +76,9 @@ The `auth` subcommand (`login` / `logout` / `status`) is **always grafted** on e
 
 1. **`gh` users expect a menu.** Documentation must explicitly state the design choice, otherwise newcomers assume the picker just isn't built yet.
 2. **One flow per binary means no automatic fallback** between PKCE and device-code. `--no-browser` is the closest analog; pure SSH-with-no-port-forward users have to use `--with-token`.
-3. **Always-graft creates collision risk.** A future spec that uses `auth` as a top-level resource group would collide. The existing `graft_subcommand` "custom wins on leaf collision" rule handles it, but the collision-naming case is a future problem (acknowledged in Q4d of the grilling).
+3. **Always-graft creates collision risk.** A spec that uses `auth` as a top-level resource group collides with the built-in surface (acknowledged in Q4d of the grilling).
+
+   **Resolved:** the built-in commands are folded *into* a spec-owned group of the same name (`graft_builtin_command` in `src/app.rs`) rather than replacing it, so `<bin> auth login` and `<bin> auth me` coexist. Dispatch intercepts only `login` / `logout` / `status` under `auth`; every other `auth <op>` reaches its binding. An exact leaf collision (a spec operation literally named `auth login`) still follows the `graft_subcommand` "framework wins on leaf collision" rule — such an operation must be renamed via `x-fern-sdk-method-name` in an overlay to stay reachable.
 
 ## Alternatives considered
 
