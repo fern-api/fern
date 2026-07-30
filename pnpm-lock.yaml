@@ -826,8 +826,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/cli/task-context
       '@fern-fern/ir-sdk':
-        specifier: 67.10.1
-        version: 67.10.1
+        specifier: 67.18.0
+        version: 67.18.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -9609,16 +9609,16 @@ packages:
     resolution: {integrity: sha512-BKtpmuyK98GagBSZ5CMe3oAkkwG5l3MId+/VyyyGbUV+HRrqIS+htIBlGmsNBW6fzuKK6hgOGn+Kyb2N4+Mejg==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-fern/ir-sdk@67.10.1':
-    resolution: {integrity: sha512-raP+HeW7wmV1seF7Wc8yasvwIjRATKkRxbM8Ttd4a1x99LEuIZ5KOFXsb53aKFJ2k52HZuaa2deLljP3CH15lA==}
-    engines: {node: '>=18.0.0'}
-
   '@fern-fern/ir-sdk@67.11.0':
     resolution: {integrity: sha512-oArasMZ8Mc+NJImzxq6F1qN5wpVS9xrpa2bqZDq8axjKD/0T5nwoRdY2OhqjvhUTYLUQjGFOYeWiLmQ6XVjlhw==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/ir-sdk@67.15.0':
     resolution: {integrity: sha512-Y/qMjaW+5ayybyGe6kUTPOo1rLhD7o3gbGnm7wi55dhzW808jLyj1rkFx9DJlIXghgMVSA/cKYyuAb0engG0Cw==}
+    engines: {node: '>=18.0.0'}
+
+  '@fern-fern/ir-sdk@67.18.0':
+    resolution: {integrity: sha512-j/6HVuCkHgYZoXnqCT24EZfgdirdY/JgrMYh8ub1qF6gUdf68b8QVH8X6D8HTfcXceoMb7BF01uKTK8xf6n1uQ==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/ir-v53-sdk@1.0.1':
@@ -16651,11 +16651,11 @@ snapshots:
 
   '@fern-fern/ir-sdk@66.3.0': {}
 
-  '@fern-fern/ir-sdk@67.10.1': {}
-
   '@fern-fern/ir-sdk@67.11.0': {}
 
   '@fern-fern/ir-sdk@67.15.0': {}
+
+  '@fern-fern/ir-sdk@67.18.0': {}
 
   '@fern-fern/ir-v53-sdk@1.0.1': {}
 

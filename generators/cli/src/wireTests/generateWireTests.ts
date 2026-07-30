@@ -51,6 +51,7 @@ export async function generateWireTests(args: {
 
     const authEnvVars = collectAuthEnvVars(authBindings);
     const oauthTokenEndpoint = collectOAuthTokenEndpoint(authBindings);
+    const loginFlowSchemes = collectLoginFlowSchemes(authBindings);
 
     const ir = await readFullIr(irFilepath);
     const manifest = buildWireTestManifest(ir, {
@@ -58,7 +59,8 @@ export async function generateWireTests(args: {
         rootGroup: rootGroup ?? null,
         specs,
         authEnvVars,
-        oauthTokenEndpoint
+        oauthTokenEndpoint,
+        loginFlowSchemes
     });
 
     if (manifest.cases.length === 0) {
@@ -104,4 +106,15 @@ function collectOAuthTokenEndpoint(authBindings: DetectedAuthBinding[]): OAuthTo
         }
     }
     return null;
+}
+
+/**
+ * Scheme keys of public-client login flows (authorization-code / device-code). Their request-time
+ * auth is a keyring-stored bearer token (not a per-request exchange), so the harness seeds one via
+ * `auth login --with-token` rather than stubbing a token endpoint.
+ */
+function collectLoginFlowSchemes(authBindings: DetectedAuthBinding[]): string[] {
+    return authBindings
+        .filter((binding) => binding.kind === "oauth-authorization-code" || binding.kind === "oauth-device-code")
+        .map((binding) => binding.schemeName);
 }

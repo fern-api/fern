@@ -78,6 +78,10 @@ function resolveOAuthScheme({
     }
 
     const tokenEndpointConfig = oauthScheme["get-token"];
+    if (tokenEndpointConfig == null) {
+        // `get-token` is optional on the shared OAuth schema but required for client-credentials.
+        return undefined;
+    }
     const resolved = resolveEndpointFromReference({ ir, endpointRef: tokenEndpointConfig.endpoint });
     if (resolved == null) {
         return undefined;

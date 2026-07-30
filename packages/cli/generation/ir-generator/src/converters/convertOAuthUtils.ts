@@ -62,13 +62,19 @@ interface OAuthRefreshTokenRequestPropertyComponents {
 }
 
 export function get0AuthTokenEndpoint(oauthSchema: RawSchemas.OAuthSchemeSchema): TokenEndpoint {
+    const getToken = oauthSchema["get-token"];
+    if (getToken == null) {
+        // `get-token` is optional on the shared OAuth schema but required for the
+        // client-credentials flow (enforced by the validator). This is only reached for that flow.
+        throw new Error("OAuth client-credentials flow is missing the required `get-token` endpoint");
+    }
     return {
-        endpoint: oauthSchema["get-token"].endpoint,
+        endpoint: getToken.endpoint,
         requestProperties: getTokenEndpointRequestProperties({
-            requestProperties: oauthSchema["get-token"]?.["request-properties"]
+            requestProperties: getToken["request-properties"]
         }),
         responseProperties: getTokenEndpointResponseProperties({
-            responseProperties: oauthSchema["get-token"]?.["response-properties"]
+            responseProperties: getToken["response-properties"]
         })
     };
 }

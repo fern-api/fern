@@ -26,8 +26,20 @@ auth scheme (`configuration.clientCredentials`), matching the SDK
 generators. The generator lowers the token and refresh endpoint contracts,
 including methods, request locations and paths, custom values, response
 paths, scopes, token application, and environment URLs, into structured
-runtime descriptors. Interactive flows (PKCE, device-code) are not modeled
-by the IR and are not emitted.
+runtime descriptors.
+
+The interactive public-client flows are also emitted:
+`configuration.authorizationCode` (Authorization Code + PKCE) lowers to a
+`PkceLoginFlow` and `configuration.deviceCode` (RFC 8628) to a
+`DeviceCodeLoginFlow`, each registered via `CliApp::login_flow(...)` (which
+also wires the request-time `OAuth2KeyringProvider`). Only the fields the
+SDK builders consume are emitted: client id, authorization / device / token
+URLs, scopes, a loopback redirect port, and the extra literal parameter maps
+(`authorizationParameters` / `deviceAuthorizationParameters` / `tokenParameters`
+/ `refreshParameters` — e.g. an Auth0 `audience`), which are appended to the
+authorize/token/refresh requests with protocol-reserved keys skipped. Still not
+consumed and therefore skipped: the IR's `refreshUrl`, `tokenHeader`/`tokenPrefix`,
+and environment-variable client IDs.
 
 We deserialize through `@fern-fern/ir-sdk`'s `IrSerialization`, so
 downstream code consumes typed `FernIr.IntermediateRepresentation` /
