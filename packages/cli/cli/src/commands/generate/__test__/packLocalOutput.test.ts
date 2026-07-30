@@ -173,6 +173,36 @@ describe("packLocalOutputForGroup", () => {
         expect(command).toBe("podman");
     });
 
+    it("removes everything except fern-dist when packOnly is set", async () => {
+        await writeFile(path.join(outputDir, "go.mod"), "module example.com/test\n");
+        await mkdir(path.join(outputDir, "client"), { recursive: true });
+        await writeFile(path.join(outputDir, "client", "client.go"), "package client\n");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-go-sdk", language: "go", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext(), packOnly: true });
+
+        expect(await readdir(outputDir)).toEqual(["fern-dist"]);
+        const distFiles = await readdir(path.join(outputDir, "fern-dist"));
+        expect(distFiles).toEqual([`${path.basename(outputDir)}-source.zip`]);
+    });
+
+    it("keeps generated source alongside fern-dist when packOnly is not set", async () => {
+        await writeFile(path.join(outputDir, "go.mod"), "module example.com/test\n");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-go-sdk", language: "go", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        expect((await readdir(outputDir)).sort()).toEqual(["fern-dist", "go.mod"]);
+    });
+
     it("fails when packaging a generator errors", async () => {
         loggingExecaMock.mockRejectedValueOnce(new Error("python3 not found"));
         const group = {

@@ -53,7 +53,8 @@ export async function generateAPIWorkspaces({
     generateTests,
     automation,
     pack,
-    packMode
+    packMode,
+    packOnly
 }: {
     project: Project;
     cliContext: CliContext;
@@ -90,8 +91,10 @@ export async function generateAPIWorkspaces({
     automation?: AutomationRunOptions;
     /** Build distributable package artifacts for local-file-system outputs after generation. */
     pack?: boolean;
-    /** Where --pack runs the packaging toolchain: on the host or inside Docker toolchain images. */
+    /** Where packaging runs the toolchain: on the host or inside Docker toolchain images. */
     packMode?: PackMode;
+    /** Keep only the fern-dist/ artifact in the output directory, removing the generated SDK source. */
+    packOnly?: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -195,7 +198,8 @@ export async function generateAPIWorkspaces({
                     generateTests,
                     automation,
                     pack,
-                    packMode
+                    packMode,
+                    packOnly
                 });
             });
         })

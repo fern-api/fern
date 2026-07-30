@@ -875,17 +875,23 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Generate test files even when generating to a local file system (tests are normally only generated for GitHub output modes)"
                 })
-                .option("pack", {
+                .option("package", {
                     boolean: true,
                     default: false,
                     description:
                         "After generating to the local file system, build distributable package artifacts (npm tarball, wheel, JAR, NuGet package, gem, etc.) into a fern-dist/ folder inside the output directory."
                 })
-                .option("pack-mode", {
+                .option("package-mode", {
                     choices: ["host", "docker"] as const,
                     default: "host" as const,
                     description:
-                        "Where --pack runs the packaging toolchain: 'host' uses toolchains installed on this machine; 'docker' runs each toolchain inside an official Docker image (node, python, gradle, dotnet/sdk, ruby, composer, rust) with the output directory mounted, so no local toolchains are needed."
+                        "Where --package runs the packaging toolchain: 'host' uses toolchains installed on this machine; 'docker' runs each toolchain inside an official Docker image (node, python, gradle, dotnet/sdk, ruby, composer, rust) with the output directory mounted, so no local toolchains are needed."
+                })
+                .option("package-only", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Like --package, but only the fern-dist/ artifact is kept in the output directory — the generated SDK source is removed after the package is built."
                 }),
         async (argv) => {
             if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
@@ -961,22 +967,25 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     { code: CliError.Code.ConfigError }
                 );
             }
-            if (argv.pack && argv.preview) {
-                return cliContext.failWithoutThrowing("The --pack flag cannot be used with --preview.", undefined, {
+            const shouldPackage = argv.package || argv.packageOnly;
+            if (shouldPackage && argv.preview) {
+                return cliContext.failWithoutThrowing("The --package flag cannot be used with --preview.", undefined, {
                     code: CliError.Code.ConfigError
                 });
             }
-            if (argv.pack && argv.docs != null) {
+            if (shouldPackage && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
-                    "The --pack flag can only be used for API generation, not docs generation.",
+                    "The --package flag can only be used for API generation, not docs generation.",
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
             }
-            if (argv.packMode !== "host" && !argv.pack) {
-                return cliContext.failWithoutThrowing("The --pack-mode flag can only be used with --pack.", undefined, {
-                    code: CliError.Code.ConfigError
-                });
+            if (argv.packageMode !== "host" && !shouldPackage) {
+                return cliContext.failWithoutThrowing(
+                    "The --package-mode flag can only be used with --package.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
             }
             if (argv.output != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
@@ -1018,8 +1027,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     requireEnvVars: argv["require-env-vars"],
                     skipIfNoDiff: argv["skip-if-no-diff"],
                     generateTests: argv["generate-tests"],
-                    pack: argv.pack,
-                    packMode: argv.packMode
+                    pack: shouldPackage,
+                    packMode: argv.packageMode,
+                    packOnly: argv.packageOnly
                 });
             }
             if (argv.docs != null) {
@@ -1083,8 +1093,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 requireEnvVars: argv["require-env-vars"],
                 skipIfNoDiff: argv["skip-if-no-diff"],
                 generateTests: argv["generate-tests"],
-                pack: argv.pack,
-                packMode: argv.packMode
+                pack: shouldPackage,
+                packMode: argv.packageMode,
+                packOnly: argv.packageOnly
             });
         }
     );

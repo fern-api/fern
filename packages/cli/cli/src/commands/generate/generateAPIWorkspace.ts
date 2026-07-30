@@ -57,7 +57,8 @@ export async function generateWorkspace({
     generateTests,
     automation,
     pack,
-    packMode
+    packMode,
+    packOnly
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -99,8 +100,10 @@ export async function generateWorkspace({
     automation?: AutomationRunOptions;
     /** Build distributable package artifacts for local-file-system outputs after generation. */
     pack?: boolean;
-    /** Where --pack runs the packaging toolchain: on the host or inside Docker toolchain images. */
+    /** Where packaging runs the toolchain: on the host or inside Docker toolchain images. */
     packMode?: PackMode;
+    /** Keep only the fern-dist/ artifact in the output directory, removing the generated SDK source. */
+    packOnly?: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -239,7 +242,7 @@ export async function generateWorkspace({
                     });
                 }
                 if (pack) {
-                    await packLocalOutputForGroup({ group, context: groupContext, mode: packMode, runner });
+                    await packLocalOutputForGroup({ group, context: groupContext, mode: packMode, runner, packOnly });
                 }
             })
         )

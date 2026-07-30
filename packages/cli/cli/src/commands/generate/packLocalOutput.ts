@@ -4,7 +4,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { createWriteStream } from "fs";
-import { copyFile, mkdir, readdir, readFile, rename, rmdir } from "fs/promises";
+import { copyFile, mkdir, readdir, readFile, rename, rm, rmdir } from "fs/promises";
 import { basename } from "path";
 import { ZipFile } from "yazl";
 
@@ -14,7 +14,7 @@ export const PACK_OUTPUT_DIRECTORY = "fern-dist";
 /** Where the packaging toolchain runs: on the host machine, or inside a Docker toolchain image. */
 export type PackMode = "host" | "docker";
 
-/** Official toolchain images used when packing with `--pack-mode docker`. */
+/** Official toolchain images used when packing with `--package-mode docker`. */
 const PACK_DOCKER_IMAGES: Record<string, string> = {
     typescript: "node:22",
     python: "python:3.12",
@@ -39,12 +39,15 @@ export async function packLocalOutputForGroup({
     group,
     context,
     mode = "host",
-    runner
+    runner,
+    packOnly = false
 }: {
     group: generatorsYml.GeneratorGroup;
     context: TaskContext;
     mode?: PackMode;
     runner?: ContainerRunner;
+    /** Keep only the fern-dist/ artifact in each output directory, removing the generated SDK source. */
+    packOnly?: boolean;
 }): Promise<void> {
     const failures: string[] = [];
     for (const generator of group.generators) {
@@ -62,6 +65,9 @@ export async function packLocalOutputForGroup({
         }
         try {
             await packOutputForLanguage({ language, outputPath, context, mode, runner: runner ?? "docker" });
+            if (packOnly) {
+                await removeEverythingExceptDist({ outputPath, context });
+            }
         } catch (error) {
             const message = error instanceof Error ? error.message : String(error);
             context.logger.error(`Failed to package ${generator.name} output at ${outputPath}: ${message}`);
@@ -260,6 +266,26 @@ async function zipDirectory({
         zip.outputStream.on("error", reject);
         zip.outputStream.pipe(createWriteStream(zipPath)).on("close", resolve).on("error", reject);
     });
+}
+
+/**
+ * Removes every entry in the output directory except the fern-dist/ artifact folder, so only the
+ * distributable package remains (used by --package-only).
+ */
+async function removeEverythingExceptDist({
+    outputPath,
+    context
+}: {
+    outputPath: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<void> {
+    for (const entry of await readdir(outputPath)) {
+        if (entry === PACK_OUTPUT_DIRECTORY) {
+            continue;
+        }
+        await rm(join(outputPath, RelativeFilePath.of(entry)), { recursive: true, force: true });
+    }
+    context.logger.info(`Removed generated SDK source from ${outputPath}; only ${PACK_OUTPUT_DIRECTORY}/ remains.`);
 }
 
 async function removeDistDirIfEmpty(outputPath: AbsoluteFilePath): Promise<void> {
