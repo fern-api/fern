@@ -109,6 +109,10 @@ fixtures:
     - outputFolder: allow-user-agent-app-info
       customConfig:
         allowUserAgentAppInfo: true
+    - outputFolder: include-platform-headers-app-info
+      customConfig:
+        includePlatformHeaders: true
+        allowUserAgentAppInfo: true
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
