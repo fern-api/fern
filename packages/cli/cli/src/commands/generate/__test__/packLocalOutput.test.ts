@@ -190,6 +190,37 @@ describe("packLocalOutputForGroup", () => {
         expect(distFiles).toEqual([`${path.basename(outputDir)}-source.zip`]);
     });
 
+    it("preserves .git, .fernignore, and fernignore-listed paths when packOnly is set", async () => {
+        await writeFile(path.join(outputDir, "go.mod"), "module example.com/test\n");
+        await mkdir(path.join(outputDir, ".git"), { recursive: true });
+        await writeFile(path.join(outputDir, ".git", "HEAD"), "ref: refs/heads/main\n");
+        await mkdir(path.join(outputDir, "custom"), { recursive: true });
+        await writeFile(path.join(outputDir, "custom", "handwritten.go"), "package custom\n");
+        await writeFile(path.join(outputDir, ".fernignore"), "custom/**\n");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-go-sdk", language: "go", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext(), packOnly: true });
+
+        expect((await readdir(outputDir)).sort()).toEqual([".fernignore", ".git", "custom", "fern-dist"]);
+    });
+
+    it("does not wipe the output directory when no artifact is produced (swift) and packOnly is set", async () => {
+        await writeFile(path.join(outputDir, "Package.swift"), "// swift-tools-version:5.9\n");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-swift-sdk", language: "swift", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext(), packOnly: true });
+
+        expect(await readdir(outputDir)).toEqual(["Package.swift"]);
+    });
+
     it("keeps generated source alongside fern-dist when packOnly is not set", async () => {
         await writeFile(path.join(outputDir, "go.mod"), "module example.com/test\n");
         const group = {

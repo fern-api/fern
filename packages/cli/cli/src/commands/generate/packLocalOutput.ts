@@ -1,4 +1,4 @@
-import { generatorsYml } from "@fern-api/configuration-loader";
+import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration-loader";
 import { assertNever, ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -64,9 +64,21 @@ export async function packLocalOutputForGroup({
             continue;
         }
         try {
-            await packOutputForLanguage({ language, outputPath, context, mode, runner: runner ?? "docker" });
+            const artifactProduced = await packOutputForLanguage({
+                language,
+                outputPath,
+                context,
+                mode,
+                runner: runner ?? "docker"
+            });
             if (packOnly) {
-                await removeEverythingExceptDist({ outputPath, context });
+                if (artifactProduced) {
+                    await removeEverythingExceptDist({ outputPath, context });
+                } else {
+                    context.logger.warn(
+                        `Keeping generated source for ${generator.name}: no package artifact was produced, so there is nothing to keep in ${PACK_OUTPUT_DIRECTORY}/.`
+                    );
+                }
             }
         } catch (error) {
             const message = error instanceof Error ? error.message : String(error);
@@ -80,6 +92,7 @@ export async function packLocalOutputForGroup({
     }
 }
 
+/** Packs one generator's output. Returns whether a package artifact was produced in fern-dist/. */
 async function packOutputForLanguage({
     language,
     outputPath,
@@ -92,7 +105,7 @@ async function packOutputForLanguage({
     context: TaskContext;
     mode: PackMode;
     runner: ContainerRunner;
-}): Promise<void> {
+}): Promise<boolean> {
     const distDir = join(outputPath, RelativeFilePath.of(PACK_OUTPUT_DIRECTORY));
     const run = async (commands: string[][]) => {
         await runPackCommands({ commands, language, outputPath, context, mode, runner });
@@ -107,13 +120,13 @@ async function packOutputForLanguage({
             commands.push(["npm", "pack", "--pack-destination", PACK_OUTPUT_DIRECTORY]);
             await run(commands);
             logArtifacts({ distDir, context });
-            return;
+            return true;
         }
         case "python": {
             await mkdir(distDir, { recursive: true });
             await run([["python3", "-m", "pip", "wheel", ".", "--no-deps", "--wheel-dir", PACK_OUTPUT_DIRECTORY]]);
             logArtifacts({ distDir, context });
-            return;
+            return true;
         }
         case "java": {
             await mkdir(distDir, { recursive: true });
@@ -121,7 +134,7 @@ async function packOutputForLanguage({
             const libsDir = join(outputPath, RelativeFilePath.of("build/libs"));
             await copyMatchingFiles({ fromDir: libsDir, toDir: distDir, extension: ".jar" });
             logArtifacts({ distDir, context });
-            return;
+            return true;
         }
         case "csharp": {
             await mkdir(distDir, { recursive: true });
@@ -131,7 +144,7 @@ async function packOutputForLanguage({
             }
             await run([["dotnet", "pack", csproj, "-c", "Release", "-o", PACK_OUTPUT_DIRECTORY]]);
             logArtifacts({ distDir, context });
-            return;
+            return true;
         }
         case "ruby": {
             await mkdir(distDir, { recursive: true });
@@ -142,13 +155,13 @@ async function packOutputForLanguage({
             await run([["gem", "build", gemspec]]);
             await moveMatchingFiles({ fromDir: outputPath, toDir: distDir, extension: ".gem" });
             logArtifacts({ distDir, context });
-            return;
+            return true;
         }
         case "php": {
             await mkdir(distDir, { recursive: true });
             await run([["composer", "archive", "--format=zip", `--dir=${PACK_OUTPUT_DIRECTORY}`]]);
             logArtifacts({ distDir, context });
-            return;
+            return true;
         }
         case "rust": {
             await mkdir(distDir, { recursive: true });
@@ -156,7 +169,7 @@ async function packOutputForLanguage({
             const packageDir = join(outputPath, RelativeFilePath.of("target/package"));
             await copyMatchingFiles({ fromDir: packageDir, toDir: distDir, extension: ".crate" });
             logArtifacts({ distDir, context });
-            return;
+            return true;
         }
         case "go": {
             // Go modules have no binary package format ('go get' always fetches source), so the
@@ -169,14 +182,14 @@ async function packOutputForLanguage({
                 zipPath: join(distDir, RelativeFilePath.of(zipName))
             });
             logArtifacts({ distDir, context });
-            return;
+            return true;
         }
         case "swift":
             context.logger.warn(
                 "Swift SDKs are distributed as source packages (Swift Package Manager), so there is no package artifact to build. " +
                     "Share the output directory itself, or reference it as a local package dependency."
             );
-            return;
+            return false;
         default:
             assertNever(language);
     }
@@ -269,8 +282,13 @@ async function zipDirectory({
 }
 
 /**
- * Removes every entry in the output directory except the fern-dist/ artifact folder, so only the
- * distributable package remains (used by --package-only).
+ * Removes the generated SDK source from the output directory so only the fern-dist/ artifact
+ * remains (used by --package-only). Never removes:
+ * - fern-dist/ (the artifact itself),
+ * - .git (output directories are often checked-in repos),
+ * - .fernignore and any top-level path covered by a .fernignore entry (hand-written files that
+ *   local generation intentionally preserves). Nested/glob entries are handled conservatively by
+ *   preserving their entire top-level directory.
  */
 async function removeEverythingExceptDist({
     outputPath,
@@ -279,13 +297,23 @@ async function removeEverythingExceptDist({
     outputPath: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<void> {
+    const preserved = new Set<string>([PACK_OUTPUT_DIRECTORY, ".git"]);
+    const fernignorePath = join(outputPath, RelativeFilePath.of(FERNIGNORE_FILENAME));
+    if (await doesPathExist(fernignorePath)) {
+        for (const ignorePath of await getFernIgnorePaths({ absolutePathToFernignore: fernignorePath })) {
+            const topLevelSegment = ignorePath.split("/")[0];
+            if (topLevelSegment != null && topLevelSegment.length > 0) {
+                preserved.add(topLevelSegment);
+            }
+        }
+    }
     for (const entry of await readdir(outputPath)) {
-        if (entry === PACK_OUTPUT_DIRECTORY) {
+        if (preserved.has(entry)) {
             continue;
         }
         await rm(join(outputPath, RelativeFilePath.of(entry)), { recursive: true, force: true });
     }
-    context.logger.info(`Removed generated SDK source from ${outputPath}; only ${PACK_OUTPUT_DIRECTORY}/ remains.`);
+    context.logger.info(`Removed generated SDK source from ${outputPath}; kept ${[...preserved].join(", ")}.`);
 }
 
 async function removeDistDirIfEmpty(outputPath: AbsoluteFilePath): Promise<void> {
