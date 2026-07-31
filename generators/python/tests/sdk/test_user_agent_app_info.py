@@ -103,6 +103,29 @@ def test_escapes_parentheses_and_backslash_in_comment() -> None:
     assert result == f"{BASE} app (a%29b%28c%5Cd)"
 
 
+def test_percent_encodes_non_ascii_comment_characters() -> None:
+    # Regression: non-ASCII bytes (>= 0x80) must be percent-encoded (UTF-8), not passed
+    # through. httpx ASCII-encodes str header values, so a raw non-ASCII char in the
+    # User-Agent would raise UnicodeEncodeError and break EVERY request.
+    result = _append(BASE, {"name": "app", "comment": "café"})
+    assert result == f"{BASE} app (caf%C3%A9)"
+    assert "é" not in result
+
+
+def test_percent_encodes_non_ascii_comment_umlaut() -> None:
+    result = _append(BASE, {"name": "app", "comment": "Müller"})
+    assert result == f"{BASE} app (M%C3%BCller)"
+    assert "ü" not in result
+
+
+def test_percent_encodes_non_ascii_comment_emoji() -> None:
+    result = _append(BASE, {"name": "app", "comment": "hi😀"})
+    assert result == f"{BASE} app (hi%F0%9F%98%80)"
+    assert "😀" not in result
+    # The whole product token must be ASCII-encodable so httpx can send it.
+    result.encode("ascii")
+
+
 def test_keeps_printable_comment_characters_readable() -> None:
     assert (
         _append(BASE, {"name": "app", "comment": "+https://partner.example/path?q=1"})

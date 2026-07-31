@@ -22,10 +22,11 @@ def _append_app_info_to_user_agent(user_agent: str, app_info: typing.Optional[ty
         return "".join(c if c in _tchar else _percent_encode_char(c) for c in value)
 
     # Escape the comment delimiters `(`, `)`, `\` and control characters (0x00-0x1F,
-    # 0x7F, incl. CR/LF) so a caller-supplied comment cannot terminate the comment group
-    # early or inject additional header content.
+    # 0x7F, incl. CR/LF), and percent-encode any non-ASCII byte (>= 0x80) so a
+    # caller-supplied comment cannot terminate the comment group early, inject additional
+    # header content, or raise a UnicodeEncodeError when httpx ASCII-encodes the header.
     def _encode_comment(value: str) -> str:
-        return "".join(_percent_encode_char(c) if c in "()\\" or ord(c) < 0x20 or ord(c) == 0x7F else c for c in value)
+        return "".join(_percent_encode_char(c) if c in "()\\" or ord(c) < 0x20 or ord(c) >= 0x7F else c for c in value)
 
     name = _encode_token((app_info.get("name") or "").strip())
     if not name:
