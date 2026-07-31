@@ -7,7 +7,8 @@
     following RFC 9110. Disabled by default, so existing generated output is unchanged, and it
     composes with `includePlatformHeaders`, the `runtime-version` jar-manifest path, the configured
     `user-agent` template value, and the default `{coordinate}/{version}`. Caller-supplied values are
-    trimmed and sanitized (name/version percent-encoded to RFC 7230 tchars; comment delimiters and
-    control characters escaped), so untrusted values cannot inject header content. Still overridable
+    trimmed and sanitized (name/version percent-encoded to RFC 7230 tchars; comment delimiters,
+    control characters and any non-ASCII characters percent-encoded as UTF-8 bytes so OkHttp's header
+    validation never rejects them), so untrusted values cannot inject header content. Still overridable
     by an explicit `User-Agent` and suppressed by `omit-fern-headers`.
   type: feat

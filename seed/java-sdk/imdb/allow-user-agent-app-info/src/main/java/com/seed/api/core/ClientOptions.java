@@ -155,7 +155,7 @@ public final class ClientOptions {
         StringBuilder encoded = new StringBuilder();
         for (int i = 0; i < value.length(); i++) {
             char c = value.charAt(i);
-            if (c == '(' || c == ')' || c == '\\' || c <= 0x1f || c == 0x7f) {
+            if (c == '(' || c == ')' || c == '\\' || c <= 0x1f || c >= 0x7f) {
                 appendPercentEncoded(encoded, c);
             } else {
                 encoded.append(c);

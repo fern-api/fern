@@ -403,9 +403,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
     /**
      * Builds the static {@code encodeComment} helper used by {@link #buildAppInfoProductTokenMethod()}. Percent-encodes
-     * the RFC 9110 comment delimiters ({@code (}, {@code )}, {@code \}) and control characters (0x00-0x1F, 0x7F, incl.
-     * CR/LF), so a caller-supplied comment cannot terminate the comment group early or inject additional header
-     * content; other printable characters (e.g. a URL) are kept human-readable.
+     * the RFC 9110 comment delimiters ({@code (}, {@code )}, {@code \}), control characters (0x00-0x1F, incl. CR/LF) and
+     * every non-ASCII character (>= 0x7F, e.g. accented letters or emoji) as UTF-8 bytes, so a caller-supplied comment
+     * cannot terminate the comment group early or inject additional header content, and OkHttp's header validation
+     * (which rejects any value char outside {@code \t} / {@code ' '..'~'}) never throws; other printable ASCII
+     * characters (e.g. a URL) are kept human-readable.
      */
     static MethodSpec buildEncodeCommentMethod() {
         return MethodSpec.methodBuilder("encodeComment")
@@ -416,7 +418,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .beginControlFlow("for (int i = 0; i < value.length(); i++)")
                 .addStatement("char c = value.charAt(i)")
                 .beginControlFlow(
-                        "if (c == $L || c == $L || c == $L || c <= $L || c == $L)",
+                        "if (c == $L || c == $L || c == $L || c <= $L || c >= $L)",
                         "'('",
                         "')'",
                         "'\\\\'",

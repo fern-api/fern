@@ -188,4 +188,48 @@ class AppInfoUserAgentTest {
         assertThat(apply("app", null, "+https://partner.example/path?q=1"))
                 .isEqualTo(BASE + " app (+https://partner.example/path?q=1)");
     }
+
+    @Test
+    void percentEncodesAccentedLetterInComment() throws Exception {
+        // 'é' (U+00E9) is > 0x7f, so OkHttp's header validation would reject it verbatim. It must be percent-encoded
+        // to its UTF-8 bytes (C3 A9) rather than passed through, otherwise every request throws IllegalArgumentException.
+        String result = apply("app", null, "café");
+        assertThat(result).isEqualTo(BASE + " app (caf%C3%A9)");
+        assertThat(result).doesNotContain("é");
+        assertThat(result).matches("[\\x09\\x20-\\x7e]+");
+    }
+
+    @Test
+    void percentEncodesMultipleNonAsciiLettersInComment() throws Exception {
+        // 'ü' (U+00FC) -> UTF-8 C3 BC.
+        String result = apply("app", null, "grüße");
+        assertThat(result).isEqualTo(BASE + " app (gr%C3%BC%C3%9Fe)");
+        assertThat(result).doesNotContain("ü");
+        assertThat(result).matches("[\\x09\\x20-\\x7e]+");
+    }
+
+    @Test
+    void percentEncodesEmojiInComment() throws Exception {
+        // An astral emoji (U+1F680 ROCKET) is a surrogate pair. The emitted helper encodes char-by-char, so each lone
+        // surrogate half is not UTF-8-encodable and becomes %3F (a literal '?'). What matters for the bug is that the
+        // result contains ZERO chars > 0x7f (so OkHttp's header validation never throws) — it is not passed through.
+        // Built from the code point so the assertion is independent of this test file's own source encoding.
+        String rocket = new String(Character.toChars(0x1F680));
+        String result = apply("app", null, "launch" + rocket + "now");
+        assertThat(result).isEqualTo(BASE + " app (launch%3F%3Fnow)");
+        assertThat(result).matches("[\\x09\\x20-\\x7e]+");
+    }
+
+    @Test
+    void encodesExactlyDeleteCharacterInComment() throws Exception {
+        // 0x7f (DEL) is not printable and must remain encoded (boundary of the c >= 0x7f branch).
+        String result = apply("app", null, "a" + ((char) 0x7f) + "b");
+        assertThat(result).isEqualTo(BASE + " app (a%7Fb)");
+    }
+
+    @Test
+    void keepsAllPrintableAsciiCommentCharactersReadable() throws Exception {
+        // Tilde (0x7e) is the last printable ASCII char and must NOT be encoded (just below the c >= 0x7f threshold).
+        assertThat(apply("app", null, "a~b")).isEqualTo(BASE + " app (a~b)");
+    }
 }
