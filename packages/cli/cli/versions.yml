@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.89.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs preview list` omitting previews created with a named `--id`.
+        The command filtered server results with a hex-only pattern that dropped any
+        preview whose id contained letters outside a-f. Preview deployments are already
+        filtered server-side, so the redundant client-side filter has been removed.
+      type: fix
+  createdAt: "2026-07-31"
+  irVersion: 67
 - version: 5.89.0
   changelogEntry:
     - summary: |
