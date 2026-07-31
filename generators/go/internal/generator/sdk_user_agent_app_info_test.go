@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/fern-api/fern-go/internal/coordinator"
+	"github.com/fern-api/fern-go/internal/fern/ir"
 )
 
 // newAppInfoTestWriter builds a bare fileWriter with allowUserAgentAppInfo
@@ -66,6 +67,93 @@ func TestAppInfoEmittedSourceStructure(t *testing.T) {
 		if !strings.Contains(src, want) {
 			t.Errorf("emitted AppInfo source missing %q\n---\n%s", want, src)
 		}
+	}
+}
+
+// TestAppInfoTypeEmittedRegardlessOfVersionAndPlatformHeaders proves the
+// previously-broken gating: the AppInfo type must be emitted whenever
+// emitsAppInfo() is true, even when no SDK version is available (local /
+// downloadFiles generation) and the IR declares no platform headers. Its
+// consumers (the AppInfo field, AppInfoOption, and option.WithUserAgentAppInfo)
+// are gated solely on emitsAppInfo(); if the type were skipped in this path the
+// generated core package would reference an undefined core.AppInfo and fail to
+// compile.
+func TestAppInfoTypeEmittedRegardlessOfVersionAndPlatformHeaders(t *testing.T) {
+	f := newAppInfoTestWriter()
+
+	// Empty auth + no headers exercises the versionless code path, and a nil
+	// PlatformHeaders + empty sdkVersion is precisely the previously-broken case.
+	err := f.WriteRequestOptionsDefinition(
+		&ir.ApiAuth{},   // no schemes
+		nil,             // headers
+		nil,             // idempotencyHeaders
+		&ir.SdkConfig{}, // PlatformHeaders == nil
+		&ModuleConfig{}, // moduleConfig
+		"",              // sdkVersion (empty -> platform headers early-return)
+		nil,             // environmentsConfig
+		nil,             // inferredParams
+	)
+	if err != nil {
+		t.Fatalf("WriteRequestOptionsDefinition returned error: %v", err)
+	}
+
+	src := f.buffer.String()
+
+	// The type must be present exactly once (no double-emission).
+	const typeDecl = "type AppInfo struct {"
+	if count := strings.Count(src, typeDecl); count != 1 {
+		t.Fatalf("expected %q emitted exactly once, got %d:\n---\n%s", typeDecl, count, src)
+	}
+	// Its consumer (the RequestOptions field) must also be present, confirming
+	// the type and its consumers are emitted together.
+	if !strings.Contains(src, "AppInfo *AppInfo") {
+		t.Errorf("expected RequestOptions to declare the AppInfo field:\n---\n%s", src)
+	}
+}
+
+// TestAppInfoTypeNotEmittedWhenFeatureDisabled guards against regressions: with
+// the appInfo feature off, neither the type nor its field should be emitted, so
+// flag-off output stays byte-identical.
+func TestAppInfoTypeNotEmittedWhenFeatureDisabled(t *testing.T) {
+	f := newFileWriter(
+		"request_option.go",
+		"core",
+		"github.com/acme/test",
+		false,             // whitelabel
+		false,             // alwaysSendRequiredProperties
+		false,             // inlinePathParameters
+		false,             // inlineFileProperties
+		false,             // useReaderForBytesRequest
+		false,             // gettersPassByValue
+		false,             // dedupeUnionBaseProperties
+		true,              // serverURLVariables
+		false,             // exportAllRequestsAtRoot
+		false,             // omitEmptyRequestWrappers
+		userAgentConfig{}, // allowUserAgentAppInfo disabled
+		UnionVersionUnspecified,
+		"",
+		nil,
+		nil,
+		(*coordinator.Client)(nil),
+	)
+
+	err := f.WriteRequestOptionsDefinition(
+		&ir.ApiAuth{},
+		nil,
+		nil,
+		&ir.SdkConfig{},
+		&ModuleConfig{},
+		"",
+		nil,
+		nil,
+	)
+	if err != nil {
+		t.Fatalf("WriteRequestOptionsDefinition returned error: %v", err)
+	}
+
+	src := f.buffer.String()
+	if strings.Contains(src, "type AppInfo struct {") {
+		t.Errorf("AppInfo type should not be emitted when feature disabled:\n---\n%s", src)
 	}
 }
 

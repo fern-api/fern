@@ -601,7 +601,18 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig))
+		if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig)); err != nil {
+			return err
+		}
+		// Emit the AppInfo type alongside its consumers (the AppInfo field,
+		// AppInfoOption, and option.WithUserAgentAppInfo) whenever the feature is
+		// enabled, independent of sdkVersion/PlatformHeaders. Otherwise the core
+		// package references an undefined core.AppInfo for versionless (local /
+		// downloadFiles) generation or IRs without platform headers.
+		if f.userAgent.emitsAppInfo() {
+			f.writeAppInfoType()
+		}
+		return nil
 	}
 
 	// Generate the ToHeader method.
@@ -770,6 +781,15 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 
 	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig)); err != nil {
 		return err
+	}
+
+	// Emit the AppInfo type alongside its consumers (the AppInfo field,
+	// AppInfoOption, and option.WithUserAgentAppInfo) whenever the feature is
+	// enabled, independent of sdkVersion/PlatformHeaders. Otherwise the core
+	// package references an undefined core.AppInfo for versionless (local /
+	// downloadFiles) generation or IRs without platform headers.
+	if f.userAgent.emitsAppInfo() {
+		f.writeAppInfoType()
 	}
 
 	return nil
@@ -1003,14 +1023,12 @@ func (f *fileWriter) writePlatformHeaders(
 		if f.userAgent.includePlatformHeaders && sdkConfig.PlatformHeaders.UserAgent != nil {
 			f.writePlatformUserAgentFunc()
 		}
-		if f.userAgent.emitsAppInfo() {
-			// The AppInfo type is always emitted when the feature is enabled so the
-			// AppInfo option surface resolves; the appender is emitted only when a
-			// User-Agent header is actually written.
-			f.writeAppInfoType()
-			if sdkConfig.PlatformHeaders.UserAgent != nil {
-				f.writeAppendAppInfoFunc()
-			}
+		if f.userAgent.emitsAppInfo() && sdkConfig.PlatformHeaders.UserAgent != nil {
+			// The AppInfo type itself is emitted unconditionally by
+			// WriteRequestOptionsDefinition (gated only on emitsAppInfo) so it is
+			// always defined alongside its consumers. The appender helper is emitted
+			// here only when a User-Agent header is actually written.
+			f.writeAppendAppInfoFunc()
 		}
 	}
 	return nil

@@ -74,16 +74,6 @@ func (r *RequestOptions) cloneHeader() http.Header {
 	return headers
 }
 
-// AppInfo is optional application information whose product token is
-// appended to the User-Agent header (see WithUserAgentAppInfo). The Name is
-// required; when it is blank the User-Agent is left unchanged. Version and
-// Comment are optional and omitted from the token when blank.
-type AppInfo struct {
-	Name    string
-	Version string
-	Comment string
-}
-
 // appendAppInfoToUserAgentPercentEncode percent-encodes a single rune from its
 // UTF-8 bytes (e.g. '\n' -> "%0A"), so untrusted values cannot inject header content.
 func appendAppInfoToUserAgentPercentEncode(b *strings.Builder, r rune) {
@@ -259,4 +249,14 @@ type TokenFuncOption struct {
 
 func (t *TokenFuncOption) applyRequestOptions(opts *RequestOptions) {
 	opts.TokenFunc = t.TokenFunc
+}
+
+// AppInfo is optional application information whose product token is
+// appended to the User-Agent header (see WithUserAgentAppInfo). The Name is
+// required; when it is blank the User-Agent is left unchanged. Version and
+// Comment are optional and omitted from the token when blank.
+type AppInfo struct {
+	Name    string
+	Version string
+	Comment string
 }
