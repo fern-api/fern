@@ -1,7 +1,7 @@
 - summary: |
     `check.rules` in docs.yml now accepts `off` in addition to `warn` and `error`. A rule set to
     `off` is never initialized or run, so `fern check` and `fern docs dev` skip both its violations
-    and its setup cost.
+    and its setup cost. Each disabled rule is reported as a warning so it stays visible in the output.
 
     ```yaml
     check:

@@ -40,7 +40,7 @@ function createRule({ name, onCreate }: { name: string; onCreate: () => void }):
 
 async function runWithRule(check: docsYml.RawSchemas.CheckConfig | undefined): Promise<{
     created: boolean;
-    violations: string[];
+    violations: { message: string; severity: string }[];
 }> {
     let created = false;
     const violations = await runRulesOnDocsWorkspace({
@@ -57,25 +57,39 @@ async function runWithRule(check: docsYml.RawSchemas.CheckConfig | undefined): P
         apiWorkspaces: [],
         ossWorkspaces: []
     });
-    return { created, violations: violations.map((violation) => violation.message) };
+    return {
+        created,
+        violations: violations.map((violation) => ({ message: violation.message, severity: violation.severity }))
+    };
 }
 
 describe("check.rules severities", () => {
-    it("does not initialize or report a rule configured as off", async () => {
+    it("does not initialize a rule configured as off, and reports it as a warning", async () => {
         const { created, violations } = await runWithRule({ rules: { missingRedirects: "off" } });
         expect(created).toBe(false);
-        expect(violations).toEqual([]);
+        expect(violations).toEqual([
+            {
+                message: 'Rule "missing-redirects" is disabled in docs.yml and was not run.',
+                severity: "warning"
+            }
+        ]);
     });
 
     it("still runs a rule configured as warn", async () => {
         const { created, violations } = await runWithRule({ rules: { missingRedirects: "warn" } });
         expect(created).toBe(true);
-        expect(violations).toEqual(["missing-redirects violation"]);
+        expect(violations).toEqual([{ message: "missing-redirects violation", severity: "warning" }]);
     });
 
     it("only disables the rule that is turned off", async () => {
         const { created, violations } = await runWithRule({ rules: { brokenLinks: "off" } });
         expect(created).toBe(true);
-        expect(violations).toEqual(["missing-redirects violation"]);
+        expect(violations).toEqual([
+            {
+                message: 'Rule "valid-markdown-links" is disabled in docs.yml and was not run.',
+                severity: "warning"
+            },
+            { message: "missing-redirects violation", severity: "error" }
+        ]);
     });
 });

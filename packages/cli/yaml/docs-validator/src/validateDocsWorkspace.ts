@@ -50,7 +50,8 @@ const CHECK_RULE_CONFIG_TO_RULE_NAME = {
 /**
  * Reads `check.rules` from docs.yml. Rules configured as `off` are collected
  * separately: they are never initialized or run, so their setup cost (network
- * calls, docs resolution) is skipped along with their violations.
+ * calls, docs resolution) is skipped along with their violations. Each disabled
+ * rule is instead reported as a warning so it is visible in the check output.
  */
 function buildRuleConfig(checkConfig: docsYml.RawSchemas.CheckConfig | undefined): {
     severityOverrides: Map<string, SeverityOverride>;
@@ -109,6 +110,7 @@ export async function runRulesOnDocsWorkspace({
     ossWorkspaces: OSSWorkspace[];
 }): Promise<ValidationViolation[]> {
     const startMemory = process.memoryUsage();
+    const violations: ValidationViolation[] = [];
     const { severityOverrides, disabledRules } = buildRuleConfig(workspace.config.check);
     const rules = selectedRules.filter((rule) => !disabledRules.has(rule.name));
     const validMarkdownLinksOverride = severityOverrides.get(ValidMarkdownLinks.name);
@@ -118,15 +120,19 @@ export async function runRulesOnDocsWorkspace({
     if (validMarkdownLinksOverride != null && rules.find((r) => r.name === ValidMarkdownLinks.name) == null) {
         rules.push(ValidMarkdownLinks);
     }
-    if (disabledRules.size > 0) {
-        context.logger.debug(`Skipping disabled docs validation rules: ${Array.from(disabledRules).join(", ")}`);
+    for (const disabledRule of disabledRules) {
+        violations.push({
+            name: disabledRule,
+            severity: "warning",
+            relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
+            nodePath: ["check", "rules"],
+            message: `Rule "${disabledRule}" is disabled in ${DOCS_CONFIGURATION_FILENAME} and was not run.`
+        });
     }
     context.logger.debug(`Starting docs validation with ${rules.length} rules: ${rules.map((r) => r.name).join(", ")}`);
     context.logger.debug(
         `Initial memory usage: RSS=${(startMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(startMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
     );
-
-    const violations: ValidationViolation[] = [];
 
     const ruleCreationStart = performance.now();
     const ruleCreationResults = await Promise.all(
