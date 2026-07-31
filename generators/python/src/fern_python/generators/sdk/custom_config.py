@@ -129,6 +129,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     # If true, treats path parameters as named parameters in endpoint functions
     inline_path_params: bool = False
 
+    # If true, path parameter values are percent-encoded when substituted into the
+    # request path, so a value containing "/" or ".." cannot change which endpoint
+    # the request resolves to. Off by default so existing output is unchanged.
+    encode_path_params: bool = False
+
     # Feature flag that enables generation of Python websocket clients
     should_generate_websocket_clients: bool = False
 

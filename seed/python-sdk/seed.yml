@@ -406,6 +406,12 @@ fixtures:
     - customConfig:
         offsetSemantics: "page-index"
       outputFolder: page-index-semantics
+  path-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        encode_path_params: true
+      outputFolder: encode-path-params
   query-parameters:
     - customConfig: null
       outputFolder: no-custom-config
