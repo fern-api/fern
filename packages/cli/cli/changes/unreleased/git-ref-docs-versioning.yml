@@ -8,5 +8,5 @@
     and committed library output from the ref, composed with the current branch's theme,
     shell, and `versions:` metadata. Branch refs are resolved to their latest commit on
     the remote; tags and commit SHAs are immutable. `fern docs dev` builds only the
-    working-tree version by default; pass `--versions all` to include ref-backed versions.
+    working-tree version (git-ref-backed versions are built on publish).
   type: feat
