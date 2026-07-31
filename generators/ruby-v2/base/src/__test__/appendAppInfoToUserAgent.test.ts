@@ -223,3 +223,35 @@ describe("emitted RawClient.append_app_info (source-level guarantees)", () => {
         expect(source).toContain("USER_AGENT_COMMENT_UNSAFE = /[()\\\\\\x00-\\x1f\\x7f]/");
     });
 });
+
+// ──────────────────────────────────────────────────────────────────────────────
+// When appInfo is enabled the base User-Agent value is emitted as *raw* Ruby via
+// `ruby.codeblock(...)` (so it can be wrapped by `RawClient.append_app_info`),
+// rather than as a `ruby.TypeLiteral.string(...)` literal. A raw double-quoted
+// Ruby string performs interpolation, so a configured `userAgentTemplate` value
+// containing `#{...}` (or `#@ivar` / `#$global`) would otherwise be evaluated by
+// Ruby at SDK-init time — producing a broken/unintended User-Agent or arbitrary
+// code execution. RootClientGenerator escapes these markers with the same
+// `.replace(/#(?=[{$@])/g, "\\#")` transform it already applies to auth-header
+// prefixes. This suite pins that transform (the exact string emitted into the
+// generated `client.rb`).
+// ──────────────────────────────────────────────────────────────────────────────
+describe("user-agent codeblock interpolation escaping", () => {
+    const escapeUserAgentValue = (value: string): string => JSON.stringify(value).replace(/#(?=[{$@])/g, "\\#");
+
+    it("escapes `#{...}` interpolation markers so Ruby does not evaluate them", () => {
+        expect(escapeUserAgentValue("my-app/#{RUBY_VERSION}")).toBe('"my-app/\\#{RUBY_VERSION}"');
+    });
+
+    it("escapes `#@ivar` and `#$global` interpolation markers", () => {
+        expect(escapeUserAgentValue("a#@ivar b#$global")).toBe('"a\\#@ivar b\\#$global"');
+    });
+
+    it("leaves a `#` not followed by an interpolation sigil untouched", () => {
+        expect(escapeUserAgentValue("build#123")).toBe('"build#123"');
+    });
+
+    it("is a no-op for a plain value with no interpolation markers", () => {
+        expect(escapeUserAgentValue("seed/1.0.0")).toBe('"seed/1.0.0"');
+    });
+});

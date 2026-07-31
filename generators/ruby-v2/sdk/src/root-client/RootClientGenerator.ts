@@ -34,7 +34,8 @@ const RESERVED_OPTION_NAMES = new Set<string>([
     "max_retries",
     "token",
     "client",
-    "request_options"
+    "request_options",
+    APP_INFO_PARAMETER_NAME
 ]);
 
 interface InferredAuthParameter {
@@ -1086,7 +1087,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     key: ruby.TypeLiteral.string("User-Agent"),
                     value: ruby.codeblock(
                         this.wrapUserAgentWithAppInfo(
-                            `${rootModuleName}::Internal::Http::RawClient.user_agent(${JSON.stringify(userAgent.value)})`
+                            `${rootModuleName}::Internal::Http::RawClient.user_agent(${JSON.stringify(userAgent.value).replace(/#(?=[{$@])/g, "\\#")})`
                         )
                     )
                 });
@@ -1098,7 +1099,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 if (this.emitAppInfoOption()) {
                     headers.push({
                         key: ruby.TypeLiteral.string("User-Agent"),
-                        value: ruby.codeblock(this.wrapUserAgentWithAppInfo(JSON.stringify(userAgent.value)))
+                        value: ruby.codeblock(
+                            this.wrapUserAgentWithAppInfo(JSON.stringify(userAgent.value).replace(/#(?=[{$@])/g, "\\#"))
+                        )
                     });
                 } else {
                     headers.push({
@@ -1203,7 +1206,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
      * output stays byte-identical.
      */
     private emitAppInfoOption(): boolean {
-        return this.context.customConfig.allowUserAgentAppInfo === true && !this.context.customConfig.omitFernHeaders;
+        return (
+            this.context.customConfig.allowUserAgentAppInfo === true &&
+            !this.context.customConfig.omitFernHeaders &&
+            this.context.ir.sdkConfig.platformHeaders.userAgent != null
+        );
     }
 
     /**
