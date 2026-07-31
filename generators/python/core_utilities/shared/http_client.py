@@ -4,7 +4,7 @@ import re
 import socket
 import time
 import typing
-from contextlib import asynccontextmanager, contextmanager
+from contextlib import AsyncExitStack, ExitStack, asynccontextmanager, contextmanager
 from random import random
 
 import httpx
@@ -568,18 +568,45 @@ class HttpClient:
                 headers=_redact_headers(_request_headers),
             )
 
-        with self.httpx_client.stream(
-            method=method,
-            url=_request_url,
-            headers=_request_headers,
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
-            timeout=timeout,
-        ) as stream:
-            yield stream
+        max_retries: int = (
+            request_options.get("max_retries", self.base_max_retries)
+            if request_options is not None
+            else self.base_max_retries
+        )
+
+        while True:
+            with ExitStack() as stack:
+                try:
+                    stream = stack.enter_context(
+                        self.httpx_client.stream(
+                            method=method,
+                            url=_request_url,
+                            headers=_request_headers,
+                            params=_encoded_params if _encoded_params else None,
+                            json=json_body,
+                            data=data_body,
+                            content=content,
+                            files=request_files,
+                            timeout=timeout,
+                        )
+                    )
+                except (httpx.ConnectError, httpx.RemoteProtocolError):
+                    if retries < max_retries:
+                        time.sleep(_retry_timeout_from_retries(retries=retries))
+                        retries += 1
+                        continue
+                    raise
+
+                # Retry only BEFORE the response reaches the caller. Once it has been yielded the
+                # caller may already have consumed part of the body, and replaying the request would
+                # silently produce a truncated or duplicated stream.
+                if _should_retry(response=stream) and retries < max_retries:
+                    time.sleep(_retry_timeout(response=stream, retries=retries))
+                    retries += 1
+                    continue
+
+                yield stream
+                return
 
 
 class AsyncHttpClient:
@@ -869,15 +896,42 @@ class AsyncHttpClient:
                 headers=_redact_headers(_request_headers),
             )
 
-        async with self.httpx_client.stream(
-            method=method,
-            url=_request_url,
-            headers=_request_headers,
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
-            timeout=timeout,
-        ) as stream:
-            yield stream
+        max_retries: int = (
+            request_options.get("max_retries", self.base_max_retries)
+            if request_options is not None
+            else self.base_max_retries
+        )
+
+        while True:
+            async with AsyncExitStack() as stack:
+                try:
+                    stream = await stack.enter_async_context(
+                        self.httpx_client.stream(
+                            method=method,
+                            url=_request_url,
+                            headers=_request_headers,
+                            params=_encoded_params if _encoded_params else None,
+                            json=json_body,
+                            data=data_body,
+                            content=content,
+                            files=request_files,
+                            timeout=timeout,
+                        )
+                    )
+                except (httpx.ConnectError, httpx.RemoteProtocolError):
+                    if retries < max_retries:
+                        await asyncio.sleep(_retry_timeout_from_retries(retries=retries))
+                        retries += 1
+                        continue
+                    raise
+
+                # Retry only BEFORE the response reaches the caller. Once it has been yielded the
+                # caller may already have consumed part of the body, and replaying the request would
+                # silently produce a truncated or duplicated stream.
+                if _should_retry(response=stream) and retries < max_retries:
+                    await asyncio.sleep(_retry_timeout(response=stream, retries=retries))
+                    retries += 1
+                    continue
+
+                yield stream
+                return
