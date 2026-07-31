@@ -329,7 +329,9 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 ? camelCase(this.operation.summary)
                 : camelCase(`${this.method}_${this.path.split("/").join("_")}`);
         }
-        return operationId;
+        // A dot in a method name is parsed as a reference to another file (`import.endpoint`),
+        // so dotted operation ids must be collapsed into a single name.
+        return operationId.includes(".") ? camelCase(operationId) : operationId;
     }
 
     protected computeGroupNameFromTagAndOperationId(): GroupNameAndLocation {

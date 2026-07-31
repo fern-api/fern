@@ -1,0 +1,67 @@
+openapi: 3.0.3
+info:
+  title: Test `x-fern-pagination` with an operationId whose prefix does not match its tag
+  version: 1.0.0
+paths:
+  /comments:
+    get:
+      tags:
+        - Comments
+      operationId: comments.index
+      summary: List comments
+      description: ""
+      x-fern-pagination:
+        cursor: $request.page
+        next_cursor: $response.links.next
+        results: $response.data
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedResponse"
+  /custom_actions:
+    get:
+      tags:
+        - Custom Actions
+      operationId: actions.index
+      summary: List custom actions
+      description: ""
+      x-fern-pagination:
+        cursor: $request.page
+        next_cursor: $response.links.next
+        results: $response.data
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedResponse"
+components:
+  schemas:
+    PaginatedResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: string
+        links:
+          type: object
+          properties:
+            next:
+              type: string
+        total_count:
+          type: integer
