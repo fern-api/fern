@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.89.0
+  changelogEntry:
+    - summary: |
+        Rename the `--pack` and `--pack-mode` flags on `fern generate` to `--package` and
+        `--package-mode`, and add `--package-only`, which builds the distributable artifact into
+        `fern-dist/` and removes the generated SDK source, leaving only the package in the output
+        directory.
+      type: feat
+  createdAt: "2026-07-31"
+  irVersion: 67
 - version: 5.88.0
   changelogEntry:
     - summary: |
