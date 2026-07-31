@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.26.0
+  changelogEntry:
+    - summary: |
+        Add an `encode_path_params` config option (default `false`). When enabled, path parameter
+        values are percent-encoded when substituted into the request path, so a value containing `/`
+        or `..` can no longer change which endpoint the request resolves to. The default `false`
+        preserves the existing (unencoded) behavior; TypeScript, Go, Java, and C# already encode path
+        params.
+      type: feat
+  createdAt: "2026-07-31"
+  irVersion: 67
 - version: 5.25.0
   changelogEntry:
     - summary: |
