@@ -49,7 +49,8 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern.java-pagination-deep-cursor-path/0.0.1");
                 put("X-Fern-Language", "JAVA");
-                put("X-Fern-SDK-Name", "com.seed.fern:deep-cursor-path-sdk");
+                put("X-Fern-SDK-Name", "com.fern:java-pagination-deep-cursor-path");
+                put("X-Fern-SDK-Version", "0.0.1");
             }
         });
         this.headerSuppliers = headerSuppliers;

@@ -3980,6 +3980,9 @@
                       "preserveSingleSchemaOneof": {
                         "type": "boolean"
                       },
+                      "preserveOneOfInAllOf": {
+                        "type": "boolean"
+                      },
                       "inlineAllOfSchemas": {
                         "type": "boolean"
                       },
@@ -4558,6 +4561,9 @@
                           "type": "boolean"
                         },
                         "preserveSingleSchemaOneof": {
+                          "type": "boolean"
+                        },
+                        "preserveOneOfInAllOf": {
                           "type": "boolean"
                         },
                         "inlineAllOfSchemas": {
@@ -5570,6 +5576,9 @@
                   "type": "integer",
                   "minimum": -9007199254740991,
                   "maximum": 9007199254740991
+                },
+                "send-optional-defaults": {
+                  "type": "boolean"
                 }
               },
               "additionalProperties": false
@@ -6016,6 +6025,9 @@
                         "type": "integer",
                         "minimum": -9007199254740991,
                         "maximum": 9007199254740991
+                      },
+                      "send-optional-defaults": {
+                        "type": "boolean"
                       }
                     },
                     "additionalProperties": false
@@ -6171,6 +6183,9 @@
                   "type": "integer",
                   "minimum": -9007199254740991,
                   "maximum": 9007199254740991
+                },
+                "send-optional-defaults": {
+                  "type": "boolean"
                 }
               },
               "additionalProperties": false
@@ -6292,6 +6307,9 @@
                   "type": "integer",
                   "minimum": -9007199254740991,
                   "maximum": 9007199254740991
+                },
+                "send-optional-defaults": {
+                  "type": "boolean"
                 }
               },
               "additionalProperties": false

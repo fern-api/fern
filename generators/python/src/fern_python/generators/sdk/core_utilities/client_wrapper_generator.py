@@ -1,3 +1,4 @@
+import re
 import typing
 from dataclasses import dataclass
 from enum import Enum
@@ -21,6 +22,22 @@ from fern_python.snippet.template_utils import TemplateGenerator
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
+
+
+def _get_user_agent_coordinate_prefix(user_agent_value: str) -> typing.Optional[str]:
+    """Returns the User-Agent value up to and including the separator preceding its version.
+
+    The version segment is dropped so a runtime-resolved version can be appended in its
+    place. Returns None when the value does not end in a version, since the product name
+    itself may contain a separator (e.g. `@acme/sdk`).
+    """
+    separator_index = user_agent_value.rfind("/")
+    if separator_index < 0:
+        return None
+    version = user_agent_value[separator_index + 1 :]
+    if re.match(r"^v?\d", version) is None:
+        return None
+    return user_agent_value[: separator_index + 1]
 
 
 @dataclass
@@ -796,6 +813,11 @@ class ClientWrapperGenerator:
             omit_fern_headers = self._context.custom_config.omit_fern_headers
             include_platform_headers = self._context.custom_config.include_platform_headers
             user_agent_header = self._context.ir.sdk_config.platform_headers.user_agent
+            # When runtime_version is enabled we resolve the SDK version at runtime via
+            # importlib.metadata (see the `_sdk_version` block emitted below) instead of
+            # baking the generation-time literal, so the reported version tracks the
+            # actually-installed package version. Requires a known distribution name.
+            runtime_version_active = self._context.custom_config.runtime_version and project._project_config is not None
 
             # When include_platform_headers is enabled we emit a single structured
             # `User-Agent` (`{sdkName}/{version} ({os}; {arch}) Python/{version}`)
@@ -803,20 +825,44 @@ class ClientWrapperGenerator:
             # discrete X-Fern-Runtime / X-Fern-Platform headers. The value is computed
             # at runtime so the platform/runtime segments reflect the execution env.
             # When it is disabled (default), the discrete headers are preserved.
+            # The IR value already reflects the resolved `user-agent` template when one is
+            # configured, so it takes precedence over the package coordinate.
             user_agent_prefix: typing.Optional[str] = None
-            if project._project_config is not None:
-                user_agent_prefix = f"{project._project_config.package_name}/{project._project_config.package_version}"
-            elif user_agent_header is not None:
+            if user_agent_header is not None:
                 user_agent_prefix = user_agent_header.value
+            elif project._project_config is not None:
+                user_agent_prefix = f"{project._project_config.package_name}/{project._project_config.package_version}"
             emit_structured_user_agent = (
                 include_platform_headers and not omit_fern_headers and user_agent_prefix is not None
+            )
+            # Everything up to and including the version separator, so a runtime-resolved
+            # version can be appended in place of the baked-in one.
+            user_agent_coordinate_prefix = (
+                _get_user_agent_coordinate_prefix(user_agent_prefix) if user_agent_prefix is not None else None
             )
 
             if not omit_fern_headers:
                 writer.write_line("import platform")
                 writer.write_line("")
+                if runtime_version_active and project._project_config is not None:
+                    # Resolve the installed distribution version at runtime; fall back to
+                    # the generation-time version when the package is not installed
+                    # (e.g. running from source).
+                    writer.write_line("from importlib import metadata as _fern_importlib_metadata")
+                    writer.write_line("try:")
+                    with writer.indent():
+                        writer.write_line(
+                            f'_sdk_version = _fern_importlib_metadata.version("{project._project_config.package_name}")'
+                        )
+                    writer.write_line("except _fern_importlib_metadata.PackageNotFoundError:")
+                    with writer.indent():
+                        writer.write_line(f'_sdk_version = "{project._project_config.package_version}"')
+                    writer.write_line("")
                 if emit_structured_user_agent:
-                    writer.write_line(f'_user_agent = "{user_agent_prefix}"')
+                    if runtime_version_active and user_agent_coordinate_prefix is not None:
+                        writer.write_line(f'_user_agent = "{user_agent_coordinate_prefix}" + _sdk_version')
+                    else:
+                        writer.write_line(f'_user_agent = "{user_agent_prefix}"')
                     writer.write_line("_os = platform.system().lower()")
                     # Collapse the 64-bit x86 aliases (x64, amd64, x86_64) to the canonical x86_64.
                     writer.write_line("_arch = platform.machine()")
@@ -838,7 +884,12 @@ class ClientWrapperGenerator:
                 if emit_structured_user_agent:
                     writer.write_line('"User-Agent": _user_agent,')
                 elif user_agent_header is not None:
-                    writer.write_line(f'"{user_agent_header.header}": "{user_agent_header.value}",')
+                    if runtime_version_active and user_agent_coordinate_prefix is not None:
+                        writer.write_line(
+                            f'"{user_agent_header.header}": "{user_agent_coordinate_prefix}" + _sdk_version,'
+                        )
+                    else:
+                        writer.write_line(f'"{user_agent_header.header}": "{user_agent_header.value}",')
                 writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
                 if not emit_structured_user_agent:
                     writer.write_line("f'X-Fern-Runtime': f\"python/{platform.python_version()}\",")
@@ -847,9 +898,14 @@ class ClientWrapperGenerator:
                     writer.write_line(
                         f'"{self._context.ir.sdk_config.platform_headers.sdk_name}": "{project._project_config.package_name}",'
                     )
-                    writer.write_line(
-                        f'"{self._context.ir.sdk_config.platform_headers.sdk_version}": "{project._project_config.package_version}",'
-                    )
+                    if runtime_version_active:
+                        writer.write_line(
+                            f'"{self._context.ir.sdk_config.platform_headers.sdk_version}": _sdk_version,'
+                        )
+                    else:
+                        writer.write_line(
+                            f'"{self._context.ir.sdk_config.platform_headers.sdk_version}": "{project._project_config.package_version}",'
+                        )
             writer.write_line("**(self.get_custom_headers() or {}),")
             writer.write_line("}")
             writer.write_newline_if_last_line_not()
@@ -862,7 +918,7 @@ class ClientWrapperGenerator:
                 username_omitted = basic_auth_scheme.username_omit is True
                 password_omitted = basic_auth_scheme.password_omit is True
 
-                if not self._context.ir.sdk_config.is_auth_mandatory:
+                if not self._context.ir.sdk_config.is_auth_mandatory or self._context.custom_config.optional_auth:
                     # Build condition and args based on which fields are omitted vs present
                     conditions = []
                     if not username_omitted:
@@ -1122,7 +1178,7 @@ class ClientWrapperGenerator:
             type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 header_auth_scheme.value_type
             )
-            if self._has_oauth() and not type_hint.is_optional:
+            if (self._has_oauth() or self._context.custom_config.optional_auth) and not type_hint.is_optional:
                 type_hint = AST.TypeHint.optional(type_hint)
             parameters.append(
                 ConstructorParameter(
@@ -1146,7 +1202,11 @@ class ClientWrapperGenerator:
         # present (auth: any), make the credentials optional so users can authenticate
         # with either OAuth or basic auth alone.
         basic_auth_scheme = self._get_basic_auth_scheme()
-        basic_auth_is_required = self._context.ir.sdk_config.is_auth_mandatory and not self._has_oauth()
+        basic_auth_is_required = (
+            self._context.ir.sdk_config.is_auth_mandatory
+            and not self._has_oauth()
+            and not self._context.custom_config.optional_auth
+        )
         if basic_auth_scheme is not None:
             username_omitted = basic_auth_scheme.username_omit is True
             password_omitted = basic_auth_scheme.password_omit is True
@@ -1287,7 +1347,11 @@ class ClientWrapperGenerator:
             # For OAuth flows, the OAuthTokenProvider needs to create a SyncClientWrapper without a token
             # to fetch the initial token. For plain bearer auth, use the is_auth_mandatory flag.
             # This matches TypeScript's behavior where the auth client doesn't require a token.
-            is_token_optional = self._has_oauth() or not self._context.ir.sdk_config.is_auth_mandatory
+            is_token_optional = (
+                self._has_oauth()
+                or not self._context.ir.sdk_config.is_auth_mandatory
+                or self._context.custom_config.optional_auth
+            )
             parameters.append(
                 ConstructorParameter(
                     constructor_parameter_name=constructor_parameter_name,

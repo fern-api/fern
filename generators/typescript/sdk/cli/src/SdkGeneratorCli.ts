@@ -106,6 +106,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             customPagerName: parsed?.customPagerName ?? "CustomPager",
             resolveQueryParameterNameConflicts: parsed?.resolveQueryParameterNameConflicts ?? false,
             alwaysSendAuth: parsed?.alwaysSendAuth ?? false,
+            optionalAuth: parsed?.["optional-auth"] ?? false,
             maxRetries: parsed?.maxRetries,
             retryStatusCodes: parsed?.retryStatusCodes ?? "legacy",
             generateReactQueryHooks: parsed?.generateReactQueryHooks ?? false
@@ -273,6 +274,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 resolveQueryParameterNameConflicts: customConfig.resolveQueryParameterNameConflicts,
                 maxRetries: customConfig.maxRetries,
                 alwaysSendAuth: customConfig.alwaysSendAuth,
+                optionalAuth: customConfig.optionalAuth,
                 generateReactQueryHooks: customConfig.generateReactQueryHooks
             }
         });

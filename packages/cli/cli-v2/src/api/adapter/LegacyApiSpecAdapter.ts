@@ -198,6 +198,7 @@ export class LegacyApiSpecAdapter {
             additionalPropertiesDefaultsTo: settings.additionalPropertiesDefaultsTo,
             typeDatesAsStrings: settings.typeDatesAsStrings,
             preserveSingleSchemaOneOf: settings.preserveSingleSchemaOneof,
+            preserveOneOfInAllOf: settings.preserveOneOfInAllOf,
             inlineAllOfSchemas: settings.inlineAllOfSchemas,
             resolveAliases: settings.resolveAliases,
             groupMultiApiEnvironments: settings.groupMultiApiEnvironments,

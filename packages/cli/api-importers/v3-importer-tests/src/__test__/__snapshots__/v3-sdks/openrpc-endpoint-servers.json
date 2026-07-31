@@ -4062,7 +4062,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/{apiKey}"
+                    "path": ""
                   },
                   "pathParameters": {},
                   "queryParameters": {},
@@ -4397,7 +4397,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/{apiKey}"
+                    "path": ""
                   },
                   "pathParameters": {},
                   "queryParameters": {},

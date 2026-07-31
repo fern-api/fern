@@ -21,6 +21,7 @@ export declare namespace HeaderAuthProviderGenerator {
         neverThrowErrors: boolean;
         isAuthMandatory: boolean;
         shouldUseWrapper: boolean;
+        optionalAuth?: boolean;
     }
 }
 
@@ -36,6 +37,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     private readonly neverThrowErrors: boolean;
     private readonly isAuthMandatory: boolean;
     private readonly shouldUseWrapper: boolean;
+    private readonly optionalAuth: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: HeaderAuthProviderGenerator.Init) {
@@ -44,6 +46,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         this.neverThrowErrors = init.neverThrowErrors;
         this.isAuthMandatory = init.isAuthMandatory;
         this.shouldUseWrapper = init.shouldUseWrapper;
+        this.optionalAuth = init.optionalAuth ?? false;
         this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
     }
 
@@ -278,8 +281,8 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
 
         const headerValueExpr = this.authScheme.prefix != null ? `\`\${HEADER_PREFIX}\${${headerVar}}\`` : headerVar;
 
-        if (this.neverThrowErrors) {
-            // When neverThrowErrors is true, return empty headers if header value is missing
+        if (this.neverThrowErrors || this.optionalAuth) {
+            // Return empty headers if the header value is missing, so requests are sent unauthenticated
             return `
         const ${headerVar} = ${envFallback};
         if (${headerVar} == null) {

@@ -52,4 +52,36 @@ export function buildUserAgentReturnPrefix(packageName: string): string {
     return `return $"${packageName}/{`;
 }
 
+/**
+ * Returns the product coordinate to use in the structured `User-Agent`. The IR value already
+ * reflects the resolved `user-agent` template when one is configured, so it takes precedence
+ * over the package id. `appendVersion` is false when the configured value does not end in a
+ * version, since the product name itself may contain a separator (e.g. `@acme/sdk`).
+ */
+export function getUserAgentProduct({
+    userAgentValue,
+    packageName
+}: {
+    userAgentValue: string | undefined;
+    packageName: string;
+}): { productName: string; appendVersion: boolean } {
+    if (userAgentValue == null) {
+        return { productName: packageName, appendVersion: true };
+    }
+    const separatorIndex = userAgentValue.lastIndexOf("/");
+    const version = separatorIndex < 0 ? undefined : userAgentValue.slice(separatorIndex + 1);
+    if (version == null || !/^v?\d/.test(version)) {
+        return { productName: userAgentValue, appendVersion: false };
+    }
+    return { productName: userAgentValue.slice(0, separatorIndex), appendVersion: true };
+}
+
+/**
+ * The full `return` statement for a configured `User-Agent` value that carries no version
+ * segment, so no version is synthesized.
+ */
+export function buildUserAgentReturnWithoutVersion(productName: string): string {
+    return `return $"${productName}{platform}{runtime}";`;
+}
+
 export const BUILD_USER_AGENT_RETURN_SUFFIX = '}{platform}{runtime}";';

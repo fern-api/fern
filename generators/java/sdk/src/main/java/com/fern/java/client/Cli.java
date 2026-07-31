@@ -836,6 +836,11 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         return JavaSdkCustomConfig.builder().build();
     }
 
+    @Override
+    protected boolean shouldEmitImplementationVersionInManifest(GeneratorConfig generatorConfig) {
+        return getCustomConfig(generatorConfig).runtimeVersion();
+    }
+
     private void runInProjectModeHook(
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,

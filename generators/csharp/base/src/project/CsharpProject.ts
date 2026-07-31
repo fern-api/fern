@@ -898,7 +898,7 @@ ${projectGroup.join("\n")}
     </ItemGroup>
 ${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${indent}`)}
     <ItemGroup>
-        <None Include="${this.readmeRelativePathFromProject}" Pack="true" PackagePath=""/>
+        <None Include="${this.readmeRelativePathFromProject}" Pack="true" PackagePath="" Condition="Exists('${this.readmeRelativePathFromProject}')"/>
     </ItemGroup>
 ${this.getAdditionalItemGroups().join(`\n${indent}`)}
     <ItemGroup>
@@ -1115,7 +1115,9 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
             result.push("<FileVersion>$(Version)</FileVersion>");
         }
 
-        result.push("<PackageReadmeFile>README.md</PackageReadmeFile>");
+        result.push(
+            `<PackageReadmeFile Condition="Exists('${this.readmeRelativePathFromProject}')">README.md</PackageReadmeFile>`
+        );
 
         if (this.license) {
             result.push(

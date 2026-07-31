@@ -146,6 +146,13 @@ export function getFilesystemPublishTarget({
             );
         }
         return undefined;
+    } else if (generatorInvocation.language === "ruby") {
+        const publishTarget = PublishTarget.rubygems({
+            version,
+            packageName
+        });
+        context.logger.debug(`Created RubyGemsPublishTarget: version ${version} package name: ${packageName}`);
+        return publishTarget;
     } else if (generatorInvocation.language === "csharp") {
         // Only populate the nuget publish target when the user explicitly
         // passed `--version`. C# SDKs generate a `Version.cs` constant from

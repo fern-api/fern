@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the additive `OAuthAuthorizationCode.redirectUriBackupPorts` IR field (fallback loopback
+    callback ports for the authorization-code/PKCE flow). No behavior change for existing configs.
+  type: internal

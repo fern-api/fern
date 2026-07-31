@@ -85,6 +85,13 @@ import { installDependencies } from "./commands/install-dependencies/installDepe
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
 import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
+import {
+    applyOrgBoundsToVersion,
+    getOrgConfig,
+    setOrgCliVersion,
+    unsetOrgCliVersion,
+    warnIfVersionOutsideOrgBounds
+} from "./commands/org/orgConfig.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { resolveSpecsForWorkspaces } from "./commands/resolve-specs/resolveSpecsForWorkspaces.js";
@@ -106,6 +113,7 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
+import { isVersionRedirectionExempt } from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
 // hangs the process. UV_USE_IO_URING must be set before Node starts (libuv
@@ -179,9 +187,10 @@ async function runCli() {
             process.chdir(cwd);
         }
 
-        // During completion, skip version redirection to avoid a slow network
-        // round-trip that blocks every TAB press.
-        if (isCompletion) {
+        // Skip version redirection for shell completion (avoids a slow network
+        // round-trip on every TAB press) and for commands that are exempt from
+        // it (see VERSION_REDIRECTION_EXEMPT_COMMANDS).
+        if (isCompletion || isVersionRedirectionExempt(process.argv)) {
             await tryRunCli(cliContext);
         } else {
             const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
@@ -296,6 +305,7 @@ async function tryRunCli(cliContext: CliContext) {
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
     addGeneratorCommands(cli, cliContext);
+    addOrgCommand(cli, cliContext);
 
     addProtocGenFernCommand(cli, cliContext);
     addInstallDependenciesCommand(cli, cliContext);
@@ -313,6 +323,17 @@ async function tryRunCli(cliContext: CliContext) {
 
 async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> {
     if (process.env.FERN_NO_VERSION_REDIRECTION === "true") {
+        // Redirection is off (e.g. local dev builds), so we won't re-exec at the
+        // org bounds — but still surface a warning if the running version is out
+        // of range, otherwise enforcement would be silently invisible here.
+        const orgId = await getOrganization(cliContext);
+        if (orgId != null) {
+            await warnIfVersionOutsideOrgBounds({
+                cliContext,
+                orgId,
+                currentVersion: cliContext.environment.packageVersion
+            });
+        }
         return cliContext.environment.packageVersion;
     }
     const fernDirectory = await getFernDirectory();
@@ -320,13 +341,21 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
         const projectConfig = await cliContext.runTask((context) =>
             loadProjectConfig({ directory: fernDirectory, context })
         );
+        let intendedVersion: string;
         if (projectConfig.version === "*") {
-            return cliContext.environment.packageVersion;
+            intendedVersion = cliContext.environment.packageVersion;
+        } else if (projectConfig.version === "latest") {
+            intendedVersion = await getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
+        } else {
+            intendedVersion = projectConfig.version;
         }
-        if (projectConfig.version === "latest") {
-            return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
-        }
-        return projectConfig.version;
+        // Clamp to the org-level CLI version bounds (floor/ceiling) if set. Fails
+        // open to the resolved version when bounds are unset or unreachable.
+        return await applyOrgBoundsToVersion({
+            cliContext,
+            orgId: projectConfig.organization,
+            intendedVersion
+        });
     }
     return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
 }
@@ -845,6 +874,24 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Generate test files even when generating to a local file system (tests are normally only generated for GitHub output modes)"
+                })
+                .option("package", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "After generating to the local file system, build distributable package artifacts (npm tarball, wheel, JAR, NuGet package, gem, etc.) into a fern-dist/ folder inside the output directory."
+                })
+                .option("package-mode", {
+                    choices: ["host", "docker"] as const,
+                    default: "host" as const,
+                    description:
+                        "Where --package runs the packaging toolchain: 'host' uses toolchains installed on this machine; 'docker' runs each toolchain inside an official Docker image (node, python, gradle, dotnet/sdk, ruby, composer, rust) with the output directory mounted, so no local toolchains are needed."
+                })
+                .option("package-only", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Like --package, but only the fern-dist/ artifact is kept in the output directory — the generated SDK source is removed after the package is built."
                 }),
         async (argv) => {
             if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
@@ -920,6 +967,26 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     { code: CliError.Code.ConfigError }
                 );
             }
+            const shouldPackage = argv.package || argv.packageOnly;
+            if (shouldPackage && argv.preview) {
+                return cliContext.failWithoutThrowing("The --package flag cannot be used with --preview.", undefined, {
+                    code: CliError.Code.ConfigError
+                });
+            }
+            if (shouldPackage && argv.docs != null) {
+                return cliContext.failWithoutThrowing(
+                    "The --package flag can only be used for API generation, not docs generation.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
+            if (argv.packageMode !== "host" && !shouldPackage) {
+                return cliContext.failWithoutThrowing(
+                    "The --package-mode flag can only be used with --package.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
             if (argv.output != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
                     "The --output flag is not supported for docs generation.",
@@ -959,7 +1026,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     retryRateLimited: argv["retry-rate-limited"],
                     requireEnvVars: argv["require-env-vars"],
                     skipIfNoDiff: argv["skip-if-no-diff"],
-                    generateTests: argv["generate-tests"]
+                    generateTests: argv["generate-tests"],
+                    pack: shouldPackage,
+                    packMode: argv.packageMode,
+                    packOnly: argv.packageOnly
                 });
             }
             if (argv.docs != null) {
@@ -1022,7 +1092,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 retryRateLimited: argv["retry-rate-limited"],
                 requireEnvVars: argv["require-env-vars"],
                 skipIfNoDiff: argv["skip-if-no-diff"],
-                generateTests: argv["generate-tests"]
+                generateTests: argv["generate-tests"],
+                pack: shouldPackage,
+                packMode: argv.packageMode,
+                packOnly: argv.packageOnly
             });
         }
     );
@@ -3762,6 +3835,101 @@ function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCont
             }
         }
     );
+}
+
+function addOrgCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("org", "Manage org-level configuration", (yargs) => {
+        yargs.command(
+            "set",
+            "Set an org-level config value (admin only)",
+            (setYargs) =>
+                setYargs
+                    .command(
+                        "cli-version [version]",
+                        "Set the org's Fern CLI version policy: pin an exact version, or set a min/max range",
+                        (y) =>
+                            y
+                                .positional("version", {
+                                    type: "string",
+                                    description: "Pin to an exact version (sets both the floor and ceiling)"
+                                })
+                                .option("min", {
+                                    type: "string",
+                                    description: "Minimum allowed CLI version (floor)"
+                                })
+                                .option("max", {
+                                    type: "string",
+                                    description: "Maximum allowed CLI version (ceiling)"
+                                })
+                                .option("org", { type: "string", description: "Override org ID" }),
+                        async (argv) => {
+                            cliContext.instrumentPostHogEvent({ command: "fern org set cli-version" });
+                            const { version, min, max } = argv;
+                            if (version != null && (min != null || max != null)) {
+                                cliContext.failAndThrow(
+                                    "Pass either an exact version to pin (e.g. `fern org set cli-version 5.45.0`) or --min/--max to set a range, not both."
+                                );
+                                return;
+                            }
+                            if (version == null && min == null && max == null) {
+                                cliContext.failAndThrow(
+                                    "Nothing to set. Pass a version to pin (e.g. `fern org set cli-version 5.45.0`) or --min/--max to set a range."
+                                );
+                                return;
+                            }
+                            if (version != null) {
+                                await setOrgCliVersion({ cliContext, min: version, max: version, org: argv.org });
+                            } else {
+                                await setOrgCliVersion({ cliContext, min, max, org: argv.org });
+                            }
+                        }
+                    )
+                    .demandCommand(1, "Specify what to set, e.g. `fern org set cli-version 5.45.0`."),
+            () => {
+                /* handled by subcommand */
+            }
+        );
+
+        yargs.command(
+            "get",
+            "View org-level config",
+            (y) =>
+                y
+                    .option("org", { type: "string", description: "Override org ID" })
+                    .option("json", { type: "boolean", description: "Output as JSON" }),
+            async (argv) => {
+                cliContext.instrumentPostHogEvent({ command: "fern org get" });
+                await getOrgConfig({ cliContext, org: argv.org, json: argv.json });
+            }
+        );
+
+        yargs.command(
+            "unset",
+            "Remove an org-level config value (admin only)",
+            (unsetYargs) =>
+                unsetYargs
+                    .command(
+                        "cli-version",
+                        "Clear the org's Fern CLI version policy (both bounds by default, or --min/--max for one end)",
+                        (y) =>
+                            y
+                                .option("min", { type: "boolean", description: "Clear only the floor" })
+                                .option("max", { type: "boolean", description: "Clear only the ceiling" })
+                                .option("org", { type: "string", description: "Override org ID" }),
+                        async (argv) => {
+                            cliContext.instrumentPostHogEvent({ command: "fern org unset cli-version" });
+                            const field = argv.min && !argv.max ? "min" : argv.max && !argv.min ? "max" : "all";
+                            await unsetOrgCliVersion({ cliContext, org: argv.org, field });
+                        }
+                    )
+                    .demandCommand(1, "Specify what to unset, e.g. `fern org unset cli-version`."),
+            () => {
+                /* handled by subcommand */
+            }
+        );
+
+        return yargs;
+    });
 }
 
 function parseOwnerRepo(githubRepo: string): { owner: string; repo: string } {

@@ -9,6 +9,7 @@ import {
 } from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
+import { AuthProvidersGenerator } from "../AuthProvidersGenerator.js";
 import { AnyAuthProviderInstance } from "../auth-provider/AnyAuthProviderInstance.js";
 import { BasicAuthProviderGenerator } from "../auth-provider/BasicAuthProviderGenerator.js";
 import { BasicAuthProviderInstance } from "../auth-provider/BasicAuthProviderInstance.js";
@@ -483,6 +484,25 @@ describe("BearerAuthProviderGenerator", () => {
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
 
+        it("generates bearer auth provider that skips the auth header when optionalAuth is enabled", () => {
+            const authScheme = createAuthScheme("bearer", createBearerAuthScheme({ tokenEnvVar: "PLANT_API_TOKEN" }));
+            const ir = createMinimalIR({ authSchemes: [authScheme] });
+            const generator = new BearerAuthProviderGenerator({
+                ir,
+                authScheme: authScheme as AnyScheme,
+                neverThrowErrors: false,
+                isAuthMandatory: false,
+                shouldUseWrapper: false,
+                optionalAuth: true
+            });
+            const project = new Project({ useInMemoryFileSystem: true });
+            const context = createMockGeneratorContext(project, "BearerAuthProvider.ts");
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).not.toContain("AUTH_CONFIG_ERROR_MESSAGE,");
+            expect(text).toMatchSnapshot();
+        });
+
         it("generates bearer auth provider with env var + neverThrowErrors", () => {
             const authScheme = createAuthScheme("bearer", createBearerAuthScheme({ tokenEnvVar: "PLANT_API_TOKEN" }));
             const ir = createMinimalIR({ authSchemes: [authScheme] });
@@ -837,5 +857,59 @@ export type BaseClientOptions = {
             expect(diagnostics.length).toBeGreaterThan(0);
             expect(diagnostics.some((d) => d.includes("nonsense"))).toBe(true);
         });
+    });
+});
+
+// ─── optional-auth custom config ─────────────────────────────────────────────
+//
+// When `optional-auth` is enabled, AuthProvidersGenerator treats auth as
+// non-mandatory even if the IR reports isAuthMandatory=true, so the generated
+// client can be constructed without credentials (matching the behavior of a
+// spec where auth is not mandatory).
+
+describe("AuthProvidersGenerator optionalAuth", () => {
+    function renderBearer({
+        isAuthMandatory,
+        optionalAuth
+    }: {
+        isAuthMandatory: boolean;
+        optionalAuth?: boolean;
+    }): string {
+        const authScheme = createAuthScheme("bearer", createBearerAuthScheme());
+        const ir = createMinimalIR({ authSchemes: [authScheme], isAuthMandatory });
+        const generator = new AuthProvidersGenerator({
+            ir,
+            authScheme: authScheme as AnyScheme,
+            neverThrowErrors: false,
+            includeSerdeLayer: true,
+            shouldUseWrapper: false,
+            optionalAuth
+        });
+        const project = new Project({ useInMemoryFileSystem: true });
+        const context = createMockGeneratorContext(project, "BearerAuthProvider.ts");
+        generator.writeToFile(context);
+        return context.sourceFile.getFullText();
+    }
+
+    it("keeps the token required when auth is mandatory and optionalAuth is off", () => {
+        const output = renderBearer({ isAuthMandatory: true, optionalAuth: false });
+        expect(output).not.toContain("[TOKEN_PARAM]?:");
+        expect(output).toContain("[TOKEN_PARAM]:");
+    });
+
+    it("makes the token optional when optionalAuth is on despite mandatory auth", () => {
+        const output = renderBearer({ isAuthMandatory: true, optionalAuth: true });
+        expect(output).toContain("[TOKEN_PARAM]?:");
+    });
+
+    it("sends the request unauthenticated instead of throwing when optionalAuth is on", () => {
+        const output = renderBearer({ isAuthMandatory: true, optionalAuth: true });
+        expect(output).toContain("return { headers: {} };");
+        expect(output).not.toContain("AUTH_CONFIG_ERROR_MESSAGE,");
+    });
+
+    it("still throws on a missing token when auth is non-mandatory but optionalAuth is off", () => {
+        const output = renderBearer({ isAuthMandatory: false, optionalAuth: false });
+        expect(output).toContain("AUTH_CONFIG_ERROR_MESSAGE,");
     });
 });
