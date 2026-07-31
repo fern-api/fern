@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.89.3
+  changelogEntry:
+    - summary: |
+        Fix `Cannot resolve endpoint: <operationId> in file <tag>.yml` when importing an OpenAPI
+        spec whose `operationId` contains a dot and does not share a prefix with its tag
+        (e.g. `actions.index` under the `Custom Actions` tag). Dotted operation ids are now
+        collapsed into a single valid endpoint name, so `x-fern-pagination` resolves correctly.
+        Note that this renames the generated method for these endpoints (`actions.index` is now
+        imported as `actionsIndex` rather than verbatim); set `x-fern-sdk-method-name` to pin a
+        specific name.
+      type: fix
+  createdAt: "2026-07-31"
+  irVersion: 67
 - version: 5.89.2
   changelogEntry:
     - summary: |
