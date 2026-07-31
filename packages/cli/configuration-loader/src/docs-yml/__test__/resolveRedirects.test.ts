@@ -16,15 +16,22 @@ describe("resolveRedirects", () => {
         await writeFile(
             join(dir, RelativeFilePath.of("redirects.yml")),
             [
-                "- source: /old-plants",
-                "  destination: /plants",
-                "- source: /plants/:plantId/legacy",
-                "  destination: /plants/:plantId",
-                "  permanent: false"
+                "redirects:",
+                "  - source: /old-plants",
+                "    destination: /plants",
+                "  - source: /plants/:plantId/legacy",
+                "    destination: /plants/:plantId",
+                "    permanent: false"
             ].join("\n")
         );
-        await writeFile(join(dir, RelativeFilePath.of("invalid.yml")), "- source: /old-plants\n  target: /plants");
-        await writeFile(join(dir, RelativeFilePath.of("not-a-list.yml")), "redirects:\n  - source: /old-plants");
+        await writeFile(
+            join(dir, RelativeFilePath.of("invalid.yml")),
+            "redirects:\n  - source: /old-plants\n    target: /plants"
+        );
+        await writeFile(
+            join(dir, RelativeFilePath.of("bare-list.yml")),
+            "- source: /old-plants\n  destination: /plants"
+        );
     });
 
     it("passes through an inline list", async () => {
@@ -66,9 +73,9 @@ describe("resolveRedirects", () => {
         ).rejects.toThrowError(/Failed to parse/);
     });
 
-    it("fails when the file holds anything other than a list of redirects", async () => {
+    it("fails when the file is missing the `redirects` key", async () => {
         await expect(
-            resolveRedirects({ redirects: "./not-a-list.yml", absoluteFilepathToDocsConfig })
+            resolveRedirects({ redirects: "./bare-list.yml", absoluteFilepathToDocsConfig })
         ).rejects.toThrowError(/Failed to parse/);
     });
 });

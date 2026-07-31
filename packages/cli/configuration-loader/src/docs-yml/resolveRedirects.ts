@@ -5,7 +5,7 @@ import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-const RedirectsFile = docsYml.DocsYmlSchemas.RedirectConfig.strict().array();
+const RedirectsFile = docsYml.DocsYmlSchemas.RedirectsFile;
 
 /**
  * A docs.yml configuration whose `redirects` filepath (if any) has already been read off disk.
@@ -50,15 +50,15 @@ export async function resolveRedirects({
         });
     }
 
-    const parsed = RedirectsFile.safeParse(contents ?? []);
+    const parsed = RedirectsFile.safeParse(contents ?? { redirects: [] });
     if (!parsed.success) {
         throw new CliError({
-            message: `Failed to parse ${absoluteFilepathToRedirects}. The file must contain only a list of redirects:\n${parsed.error.issues
+            message: `Failed to parse ${absoluteFilepathToRedirects}. The file must contain only a \`redirects\` list:\n${parsed.error.issues
                 .map((issue) => `  - ${issue.path.join(".")}: ${issue.message}`)
                 .join("\n")}`,
             code: CliError.Code.ParseError
         });
     }
 
-    return parsed.data;
+    return parsed.data.redirects;
 }

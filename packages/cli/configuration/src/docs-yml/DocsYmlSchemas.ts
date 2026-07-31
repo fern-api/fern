@@ -595,6 +595,15 @@ export const RedirectConfig = z.object({
  */
 export const RedirectsConfiguration = z.union([z.array(RedirectConfig), z.string()]);
 
+/**
+ * The contents of a standalone redirects file referenced by `redirects` in docs.yml.
+ */
+export const RedirectsFile = z
+    .object({
+        redirects: z.array(RedirectConfig.strict())
+    })
+    .strict();
+
 // ===== Check =====
 
 export const CheckRuleSeverity = z.enum(["warn", "error"]);
