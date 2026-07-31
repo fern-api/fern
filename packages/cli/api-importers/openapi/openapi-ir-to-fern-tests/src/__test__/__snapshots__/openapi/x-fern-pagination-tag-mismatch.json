@@ -234,6 +234,100 @@ service:
     openapi: ../openapi.yml
 ",
     },
+    "users.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "listV2": {
+              "auth": undefined,
+              "display-name": "List users",
+              "docs": "",
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "data": [
+                        "data",
+                      ],
+                      "links": {
+                        "next": "next",
+                      },
+                      "total_count": 1,
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": {
+                "cursor": "$request.page",
+                "next_cursor": "$response.links.next",
+                "results": "$response.data",
+              },
+              "path": "/users",
+              "request": {
+                "name": "UsersListV2Request",
+                "query-parameters": {
+                  "page": "optional<string>",
+                },
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "root.PaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listV2:
+      path: /users
+      method: GET
+      docs: ''
+      pagination:
+        cursor: $request.page
+        next_cursor: $response.links.next
+        results: $response.data
+      source:
+        openapi: ../openapi.yml
+      display-name: List users
+      request:
+        name: UsersListV2Request
+        query-parameters:
+          page: optional<string>
+      response:
+        docs: Success
+        type: root.PaginatedResponse
+        status-code: 200
+      examples:
+        - response:
+            body:
+              data:
+                - data
+              links:
+                next: next
+              total_count: 1
+  source:
+    openapi: ../openapi.yml
+",
+    },
   },
   "packageMarkers": {},
   "rootApiFile": {

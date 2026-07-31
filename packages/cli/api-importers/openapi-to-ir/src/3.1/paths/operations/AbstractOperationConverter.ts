@@ -329,9 +329,14 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 ? camelCase(this.operation.summary)
                 : camelCase(`${this.method}_${this.path.split("/").join("_")}`);
         }
-        // A dot in a method name is parsed as a reference to another file (`import.endpoint`),
-        // so dotted operation ids must be collapsed into a single name.
-        return operationId.includes(".") ? camelCase(operationId) : operationId;
+        return operationId;
+    }
+
+    // A dot in a method name is parsed as a reference to another file (`import.endpoint`),
+    // so dotted operation ids must be collapsed into a single name. This runs after
+    // tokenization so that grouping still sees the individual tokens.
+    protected sanitizeMethodName(methodName: string): string {
+        return methodName.includes(".") ? camelCase(methodName) : methodName;
     }
 
     protected computeGroupNameFromTagAndOperationId(): GroupNameAndLocation {
@@ -339,7 +344,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         const methodName = this.evaluateMethodNameFromOperation();
 
         if (tag == null) {
-            return { method: methodName };
+            return { method: this.sanitizeMethodName(methodName) };
         }
 
         const tagTokens = tokenizeString(tag);
@@ -374,7 +379,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         if (tagIsNotPrefixOfMethodName) {
             return {
                 group: [tag],
-                method: methodName
+                method: this.sanitizeMethodName(methodName)
             };
         }
 

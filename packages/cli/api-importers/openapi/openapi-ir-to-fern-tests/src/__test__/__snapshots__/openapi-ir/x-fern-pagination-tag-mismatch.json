@@ -239,6 +239,122 @@
         "file": "../openapi.yml",
         "type": "openapi"
       }
+    },
+    {
+      "summary": "List users",
+      "audiences": [],
+      "operationId": "users.list_v2",
+      "tags": [
+        "Users"
+      ],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "name": "page",
+          "schema": {
+            "generatedName": "UsersListV2RequestPage",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "UsersListV2RequestPage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "UsersListV2Request",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "UsersListV2Response",
+          "schema": "PaginatedResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "data": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "data",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "links": {
+                  "properties": {
+                    "next": {
+                      "value": {
+                        "value": "next",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "total_count": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "pagination": {
+        "cursor": "$request.page",
+        "nextCursor": "$response.links.next",
+        "results": "$response.data",
+        "type": "cursor"
+      },
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
     }
   ],
   "webhooks": [],

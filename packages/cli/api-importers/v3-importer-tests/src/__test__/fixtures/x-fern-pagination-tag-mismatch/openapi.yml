@@ -49,6 +49,29 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PaginatedResponse"
+  /users:
+    get:
+      tags:
+        - Users
+      operationId: users.list_v2
+      summary: List users
+      description: ""
+      x-fern-pagination:
+        cursor: $request.page
+        next_cursor: $response.links.next
+        results: $response.data
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedResponse"
 components:
   schemas:
     PaginatedResponse:
