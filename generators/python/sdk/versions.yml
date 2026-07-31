@@ -1,4 +1,46 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.26.0
+  changelogEntry:
+    - summary: |
+        Add an `encode_path_params` config option (default `false`). When enabled, path parameter
+        values are percent-encoded when substituted into the request path, so a value containing `/`
+        or `..` can no longer change which endpoint the request resolves to. The default `false`
+        preserves the existing (unencoded) behavior; TypeScript, Go, Java, and C# already encode path
+        params.
+      type: feat
+  createdAt: "2026-07-31"
+  irVersion: 67
+- version: 5.25.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `allow_user_agent_app_info` config (camelCase alias `allowUserAgentAppInfo`).
+        When enabled, the generated client accepts an optional `app_info`
+        (`{"name": ..., "version"?: ..., "comment"?: ...}`) constructor argument whose product
+        token is appended to the `User-Agent` header
+        (`{sdk}/{version} ... {product}/{product-version} ({comment})`), following RFC 9110.
+        Disabled by default, so existing generated output is unchanged. It composes with
+        `include_platform_headers`, the `user-agent` template config, and the default
+        `{package}/{version}` value, and survives the `runtime_version` path. Caller-supplied
+        values are sanitized (name/version token-encoded, comment delimiters and control
+        characters escaped), and it is still overridable by an explicit `User-Agent` header and
+        suppressed by `omit_fern_headers`.
+      type: feat
+  createdAt: "2026-07-31"
+  irVersion: 67
+- version: 5.24.2
+  changelogEntry:
+    - summary: |
+        Fix two issues with the opt-in `allow_user_agent_app_info` client option:
+        - The `app_info` constructor parameter no longer leaks a bare positional `None`
+          into generated usage snippets and docstrings, which produced invalid Python
+          (a positional argument after keyword arguments). It remains an optional keyword
+          argument defaulting to `None`.
+        - Non-ASCII characters in the `app_info` comment are now percent-encoded (UTF-8).
+          Previously they were passed through into the `User-Agent` header, causing httpx
+          to raise `UnicodeEncodeError` on every request.
+      type: fix
+  createdAt: "2026-07-31"
+  irVersion: 67
 - version: 5.24.1
   changelogEntry:
     - summary: |

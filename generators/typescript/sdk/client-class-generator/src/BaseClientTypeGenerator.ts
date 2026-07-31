@@ -14,6 +14,7 @@ export declare namespace BaseClientTypeGenerator {
         ir: FernIr.IntermediateRepresentation;
         omitFernHeaders: boolean;
         includePlatformHeaders: boolean;
+        allowUserAgentAppInfo: boolean;
         retainOriginalCasing: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         caseConverter: CaseConverter;
@@ -21,6 +22,65 @@ export declare namespace BaseClientTypeGenerator {
 }
 
 const OPTIONS_PARAMETER_NAME = "options";
+const APPEND_APP_INFO_HELPER_NAME = "appendAppInfoToUserAgent";
+
+/**
+ * Source for the self-contained `appendAppInfoToUserAgent` helper emitted into the
+ * generated base client when `allowUserAgentAppInfo` is enabled. It is intentionally
+ * standalone (rather than reusing the shared `core/runtime` utility) so that clients
+ * which do not opt into `allowUserAgentAppInfo` keep byte-identical generated output
+ * and the shared core-utilities are never modified.
+ *
+ * Sanitizes caller-supplied values: `name`/`version` are token-encoded (every
+ * non-RFC-7230 `tchar` is percent-encoded, including spaces, control characters and
+ * CR/LF) and `comment` has its delimiters (`(`, `)`, `\`) and control characters
+ * (incl. CR/LF) escaped, so the untrusted values cannot inject additional header
+ * content. Each value is trimmed before encoding so blank values are treated as
+ * absent rather than encoded into whitespace tokens. Formats the appended product
+ * token as `{name}/{version} ({comment})`, dropping `/version` and ` (comment)` when
+ * blank, and returns the User-Agent unchanged when `appInfo`/`name` is absent.
+ */
+const APPEND_APP_INFO_HELPER_SOURCE = `
+function ${APPEND_APP_INFO_HELPER_NAME}(
+    userAgent: string,
+    appInfo: { name: string; version?: string; comment?: string } | undefined
+): string {
+    if (appInfo == null) {
+        return userAgent;
+    }
+    const percentEncodeChar = (char: string): string => {
+        let encoded = "";
+        for (const byte of new TextEncoder().encode(char)) {
+            encoded += \`%\${byte.toString(16).toUpperCase().padStart(2, "0")}\`;
+        }
+        return encoded;
+    };
+    // RFC 7230 token = 1*tchar. Any character outside that set is percent-encoded so
+    // it cannot break out of the product token or inject additional header content.
+    const encodeToken = (value: string): string =>
+        value.replace(/[^!#$%&'*+\\-.^_\`|~0-9A-Za-z]/g, percentEncodeChar);
+    // Escape the comment delimiters \`(\`, \`)\`, \`\\\` and control characters (0x00-0x1F,
+    // 0x7F, incl. CR/LF) so a caller-supplied comment cannot terminate the comment
+    // group early or inject additional header content.
+    const encodeComment = (value: string): string =>
+        // eslint-disable-next-line no-control-regex
+        value.replace(/[()\\\\\\u0000-\\u001f\\u007f]/g, percentEncodeChar);
+
+    const name = encodeToken((appInfo.name ?? "").trim());
+    if (name.length === 0) {
+        return userAgent;
+    }
+    let productToken = name;
+    const version = encodeToken((appInfo.version ?? "").trim());
+    if (version.length > 0) {
+        productToken += \`/\${version}\`;
+    }
+    const comment = encodeComment((appInfo.comment ?? "").trim());
+    if (comment.length > 0) {
+        productToken += \` (\${comment})\`;
+    }
+    return \`\${userAgent} \${productToken}\`;
+}`;
 
 /**
  * Splits a `{name}/{version}` User-Agent product token into its parts so the version can
@@ -44,6 +104,7 @@ export class BaseClientTypeGenerator {
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly omitFernHeaders: boolean;
     private readonly includePlatformHeaders: boolean;
+    private readonly allowUserAgentAppInfo: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly caseConverter: CaseConverter;
@@ -53,6 +114,7 @@ export class BaseClientTypeGenerator {
         ir,
         omitFernHeaders,
         includePlatformHeaders,
+        allowUserAgentAppInfo,
         retainOriginalCasing,
         parameterNaming,
         caseConverter
@@ -61,6 +123,7 @@ export class BaseClientTypeGenerator {
         this.ir = ir;
         this.omitFernHeaders = omitFernHeaders;
         this.includePlatformHeaders = includePlatformHeaders;
+        this.allowUserAgentAppInfo = allowUserAgentAppInfo;
         this.retainOriginalCasing = retainOriginalCasing;
         this.parameterNaming = parameterNaming;
         this.caseConverter = caseConverter;
@@ -185,6 +248,37 @@ export type BaseClientOptions = {
     private generateNormalizeClientOptionsFunction(context: FileContext): void {
         const fernHeaderEntries: [string, ts.Expression][] = [];
 
+        // Tracks whether the emitted `appendAppInfoToUserAgent` helper is actually
+        // referenced, so we only emit its definition when it is used.
+        let usesAppInfoHelper = false;
+
+        // When the opt-in `allowUserAgentAppInfo` config is set, the caller's
+        // `appInfo` product token is appended to whichever User-Agent value the SDK
+        // would otherwise send. `options?.appInfo` is in scope inside the generated
+        // `normalizeClientOptions` function. Rather than modifying the shared
+        // `getUserAgent` core-utility, we wrap the computed User-Agent expression
+        // (for all three branches) in a self-contained `appendAppInfoToUserAgent`
+        // helper emitted into this generated file, keeping the shared core-utilities
+        // byte-identical for callers that do not opt in.
+        const withAppInfo = (userAgent: ts.Expression): ts.Expression => {
+            if (!this.allowUserAgentAppInfo) {
+                return userAgent;
+            }
+            usesAppInfoHelper = true;
+            return ts.factory.createCallExpression(
+                ts.factory.createIdentifier(APPEND_APP_INFO_HELPER_NAME),
+                undefined,
+                [
+                    userAgent,
+                    ts.factory.createPropertyAccessChain(
+                        ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                        ts.factory.createIdentifier("appInfo")
+                    )
+                ]
+            );
+        };
+
         if (!this.omitFernHeaders) {
             // X-Fern-Language header
             fernHeaderEntries.push([
@@ -224,20 +318,26 @@ export type BaseClientOptions = {
             if (useRichUserAgent && coordinate != null) {
                 fernHeaderEntries.push([
                     irUserAgent?.header ?? "User-Agent",
-                    context.coreUtilities.runtime.userAgent._invoke(
-                        ts.factory.createStringLiteral(coordinate.name),
-                        ts.factory.createStringLiteral(coordinate.version)
+                    withAppInfo(
+                        context.coreUtilities.runtime.userAgent._invoke(
+                            ts.factory.createStringLiteral(coordinate.name),
+                            ts.factory.createStringLiteral(coordinate.version)
+                        )
                     )
                 ]);
             } else if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
                 fernHeaderEntries.push([
                     this.ir.sdkConfig.platformHeaders.userAgent.header,
-                    ts.factory.createStringLiteral(this.ir.sdkConfig.platformHeaders.userAgent.value)
+                    withAppInfo(ts.factory.createStringLiteral(this.ir.sdkConfig.platformHeaders.userAgent.value))
                 ]);
             } else if (context.npmPackage != null) {
                 fernHeaderEntries.push([
                     "User-Agent",
-                    ts.factory.createStringLiteral(`${context.npmPackage.packageName}/${context.npmPackage.version}`)
+                    withAppInfo(
+                        ts.factory.createStringLiteral(
+                            `${context.npmPackage.packageName}/${context.npmPackage.version}`
+                        )
+                    )
                 ]);
             }
 
@@ -295,6 +395,10 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
 }`;
 
         context.sourceFile.addStatements(functionCode);
+
+        if (usesAppInfoHelper) {
+            context.sourceFile.addStatements(APPEND_APP_INFO_HELPER_SOURCE);
+        }
     }
 
     /**
