@@ -26,3 +26,7 @@ def test_quote_path_param() -> None:
     assert quote_path_param(42) == "42"
     assert quote_path_param(True) == "true"
     assert quote_path_param(False) == "false"
+    # every "/" is encoded, so a multi-segment value cannot change the endpoint
+    assert quote_path_param("a/b/c") == "a%2Fb%2Fc"
+    # already-encoded input is encoded again rather than passed through
+    assert quote_path_param("a%2Fb") == "a%252Fb"
