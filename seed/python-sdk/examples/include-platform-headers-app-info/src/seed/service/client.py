@@ -63,7 +63,6 @@ class ServiceClient:
 
         client = SeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
         client.service.get_movie(
@@ -123,7 +122,6 @@ class ServiceClient:
 
         client = SeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
         client.service.create_movie(
@@ -186,7 +184,6 @@ class ServiceClient:
 
         client = SeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
         client.service.get_metadata(
@@ -279,7 +276,6 @@ class ServiceClient:
 
         client = SeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
         client.service.create_big_entity(
@@ -513,7 +509,6 @@ class ServiceClient:
 
         client = SeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
         client.service.refresh_token()
@@ -559,7 +554,6 @@ class AsyncServiceClient:
 
         client = AsyncSeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
 
@@ -627,7 +621,6 @@ class AsyncServiceClient:
 
         client = AsyncSeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
 
@@ -698,7 +691,6 @@ class AsyncServiceClient:
 
         client = AsyncSeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
 
@@ -798,7 +790,6 @@ class AsyncServiceClient:
 
         client = AsyncSeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
 
@@ -1040,7 +1031,6 @@ class AsyncServiceClient:
 
         client = AsyncSeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
 

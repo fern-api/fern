@@ -45,7 +45,6 @@ class ServiceClient:
 
         client = SeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
         client.health.service.check(
@@ -75,7 +74,6 @@ class ServiceClient:
 
         client = SeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
         client.health.service.ping()
@@ -124,7 +122,6 @@ class AsyncServiceClient:
 
         client = AsyncSeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
 
@@ -162,7 +159,6 @@ class AsyncServiceClient:
 
         client = AsyncSeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
 

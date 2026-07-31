@@ -1190,7 +1190,6 @@ class ClientWrapperGenerator:
                 constructor_parameter_name=ClientWrapperGenerator.APP_INFO_PARAMETER_NAME,
                 type_hint=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())),
                 private_member_name=ClientWrapperGenerator.APP_INFO_MEMBER_NAME,
-                initializer=AST.Expression(AST.TypeHint.none()),
                 docs=(
                     "Application identification appended to the User-Agent header as a product token, "
                     'e.g. `{"name": "partner-app", "version": "3.1.0", "comment": "+https://partner.example"}`. '

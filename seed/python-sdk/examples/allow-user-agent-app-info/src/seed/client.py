@@ -68,7 +68,6 @@ class SeedExamples:
 
     client = SeedExamples(
         token="YOUR_TOKEN",
-        None,
         environment=SeedExamplesEnvironment.PRODUCTION,
     )
     """
@@ -143,7 +142,6 @@ class SeedExamples:
 
         client = SeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
         client.echo(
@@ -173,7 +171,6 @@ class SeedExamples:
 
         client = SeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
         client.create_type(
@@ -276,7 +273,6 @@ class AsyncSeedExamples:
 
     client = AsyncSeedExamples(
         token="YOUR_TOKEN",
-        None,
         environment=SeedExamplesEnvironment.PRODUCTION,
     )
     """
@@ -353,7 +349,6 @@ class AsyncSeedExamples:
 
         client = AsyncSeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
 
@@ -393,7 +388,6 @@ class AsyncSeedExamples:
 
         client = AsyncSeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
 

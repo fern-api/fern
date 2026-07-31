@@ -50,7 +50,6 @@ class ServiceClient:
 
         client = SeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
         client.file.service.get_file(
@@ -108,7 +107,6 @@ class AsyncServiceClient:
 
         client = AsyncSeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
 

@@ -45,7 +45,6 @@ class ServiceClient:
 
         client = SeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
         client.file.notification.service.get_exception(
@@ -95,7 +94,6 @@ class AsyncServiceClient:
 
         client = AsyncSeedExamples(
             token="YOUR_TOKEN",
-            None,
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
 
