@@ -116,3 +116,40 @@ async def test_async_stream_retries_on_retryable_status() -> None:
         async with client.stream(path="x", method="GET") as response:
             assert response.status_code == 200
     assert len(calls) == 2
+
+
+@patch("core_utilities.shared.http_client.time.sleep", return_value=None)
+def test_stream_does_not_retry_a_one_shot_body(_sleep: Any) -> None:
+    """A retry re-sends the SAME object. An iterator body is consumed by the first attempt, so
+    replaying it would silently send an empty body instead of failing loudly."""
+    calls: List[Any] = []
+    client = HttpClient(
+        httpx_client=_client([503, 200], calls),
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        base_max_retries=2,
+    )
+
+    def body() -> Any:
+        yield b"chunk"
+
+    with client.stream(path="x", method="POST", content=body()) as response:
+        assert response.status_code == 503
+    assert len(calls) == 1, "a one-shot iterator body must not be replayed"
+
+
+@patch("core_utilities.shared.http_client.time.sleep", return_value=None)
+def test_stream_still_retries_a_bytes_body(_sleep: Any) -> None:
+    """Negative control: bytes ARE replayable, so the guard must not disable retries generally."""
+    calls: List[Any] = []
+    client = HttpClient(
+        httpx_client=_client([503, 200], calls),
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        base_max_retries=2,
+    )
+    with client.stream(path="x", method="POST", content=b"fixed") as response:
+        assert response.status_code == 200
+    assert len(calls) == 2

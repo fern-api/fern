@@ -156,6 +156,20 @@ def _retry_timeout_from_retries(retries: int) -> float:
     return _add_symmetric_jitter(backoff)
 
 
+def _body_is_replayable(content: typing.Optional[typing.Any], files: typing.Optional[typing.Any]) -> bool:
+    """Can this request body be sent a second time?
+
+    A retry re-sends the SAME objects. `bytes` and `str` survive that; a one-shot iterator or an open
+    file handle does not, and replaying one silently sends an empty or truncated body instead of
+    failing loudly. So a request whose body cannot be replayed is returned as-is rather than retried.
+    """
+    if files:
+        return False
+    if content is None or isinstance(content, (bytes, bytearray, str)):
+        return True
+    return False
+
+
 def _should_retry(response: httpx.Response) -> bool:
     return response.status_code >= 500 or response.status_code in [429, 408, 409]  # {{RETRY_STATUS_CHECK}}
 
@@ -591,7 +605,7 @@ class HttpClient:
                         )
                     )
                 except (httpx.ConnectError, httpx.RemoteProtocolError):
-                    if retries < max_retries:
+                    if retries < max_retries and _body_is_replayable(content, request_files):
                         time.sleep(_retry_timeout_from_retries(retries=retries))
                         retries += 1
                         continue
@@ -600,7 +614,11 @@ class HttpClient:
                 # Retry only BEFORE the response reaches the caller. Once it has been yielded the
                 # caller may already have consumed part of the body, and replaying the request would
                 # silently produce a truncated or duplicated stream.
-                if _should_retry(response=stream) and retries < max_retries:
+                if (
+                    _should_retry(response=stream)
+                    and retries < max_retries
+                    and _body_is_replayable(content, request_files)
+                ):
                     time.sleep(_retry_timeout(response=stream, retries=retries))
                     retries += 1
                     continue
@@ -919,7 +937,7 @@ class AsyncHttpClient:
                         )
                     )
                 except (httpx.ConnectError, httpx.RemoteProtocolError):
-                    if retries < max_retries:
+                    if retries < max_retries and _body_is_replayable(content, request_files):
                         await asyncio.sleep(_retry_timeout_from_retries(retries=retries))
                         retries += 1
                         continue
@@ -928,7 +946,11 @@ class AsyncHttpClient:
                 # Retry only BEFORE the response reaches the caller. Once it has been yielded the
                 # caller may already have consumed part of the body, and replaying the request would
                 # silently produce a truncated or duplicated stream.
-                if _should_retry(response=stream) and retries < max_retries:
+                if (
+                    _should_retry(response=stream)
+                    and retries < max_retries
+                    and _body_is_replayable(content, request_files)
+                ):
                     await asyncio.sleep(_retry_timeout(response=stream, retries=retries))
                     retries += 1
                     continue
