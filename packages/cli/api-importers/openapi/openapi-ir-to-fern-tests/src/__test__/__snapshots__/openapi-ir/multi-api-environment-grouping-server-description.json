@@ -1,0 +1,376 @@
+{
+  "specVersion": "1.0.0",
+  "title": "Core API",
+  "servers": [
+    {
+      "type": "grouped",
+      "name": "Production",
+      "description": "Production environment",
+      "urls": {
+        "api": {
+          "url": "https://api.example.com"
+        },
+        "auth": {
+          "url": "https://auth.example.com"
+        }
+      }
+    },
+    {
+      "type": "grouped",
+      "name": "Staging",
+      "description": "Staging environment",
+      "urls": {
+        "api": {
+          "url": "https://api.stage.example.com"
+        },
+        "auth": {
+          "url": "https://auth.stage.example.com"
+        }
+      }
+    },
+    {
+      "type": "grouped",
+      "name": "Development",
+      "description": "Development environment",
+      "urls": {
+        "api": {
+          "url": "https://api.dev.example.com"
+        },
+        "auth": {
+          "url": "https://auth.dev.example.com"
+        }
+      }
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "List widgets",
+      "audiences": [],
+      "operationId": "listWidgets",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListWidgetsRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "value": {
+            "generatedName": "ListWidgetsResponseItem",
+            "schema": "Widget",
+            "source": {
+              "file": "../core-api.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "generatedName": "ListWidgetsResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../core-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/widgets",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "name": {
+                      "value": {
+                        "value": "name",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../core-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "api",
+      "servers": [
+        {
+          "name": "api"
+        }
+      ]
+    },
+    {
+      "summary": "Issue a token",
+      "audiences": [],
+      "operationId": "issueToken",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "IssueTokenRequest",
+      "request": {
+        "schema": {
+          "generatedName": "IssueTokenRequest",
+          "schema": "TokenRequest",
+          "source": {
+            "file": "../auth-api.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../auth-api.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "generatedName": "IssueTokenResponse",
+          "schema": "TokenResponse",
+          "source": {
+            "file": "../auth-api.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../auth-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "POST",
+      "path": "/token",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "accessToken": {
+                  "value": {
+                    "value": "accessToken",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../auth-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "auth",
+      "servers": [
+        {
+          "name": "auth"
+        }
+      ]
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Widget": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "widgetId",
+            "key": "id",
+            "schema": {
+              "generatedName": "WidgetId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "WidgetId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "widgetName",
+            "key": "name",
+            "schema": {
+              "generatedName": "WidgetName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "WidgetName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Widget",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../core-api.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "TokenRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "tokenRequestClientId",
+            "key": "clientId",
+            "schema": {
+              "generatedName": "TokenRequestClientId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "TokenRequestClientId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "tokenRequestClientSecret",
+            "key": "clientSecret",
+            "schema": {
+              "generatedName": "TokenRequestClientSecret",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "TokenRequestClientSecret",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "TokenRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../auth-api.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "TokenResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "tokenResponseAccessToken",
+            "key": "accessToken",
+            "schema": {
+              "generatedName": "TokenResponseAccessToken",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "TokenResponseAccessToken",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "TokenResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../auth-api.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
