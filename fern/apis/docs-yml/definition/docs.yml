@@ -339,7 +339,7 @@ types:
 
       # seo
       metadata: optional<MetadataConfig>
-      redirects: optional<list<RedirectConfig>>
+      redirects: optional<RedirectsConfiguration>
 
       # validation
       check: optional<CheckConfig>
@@ -2227,6 +2227,19 @@ types:
     enum:
       - dark
       - light
+
+  RedirectsConfiguration:
+    discriminated: false
+    docs: |
+      Either an inline list of redirects, or a relative filepath to a YAML file containing
+      only the list of redirects.
+
+      ```yaml
+      redirects: ./redirects.yml
+      ```
+    union:
+      - list<RedirectConfig>
+      - string
 
   RedirectConfig:
     availability: in-development

@@ -11,6 +11,7 @@ import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks.js";
 import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
 import { getAllPages, loadAllPages } from "./getAllPages.js";
 import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
+import { resolveRedirects } from "./resolveRedirects.js";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {
@@ -126,6 +127,8 @@ export async function parseDocsConfiguration({
               })
             : undefined;
 
+    const redirectsPromise = resolveRedirects({ redirects, absoluteFilepathToDocsConfig });
+
     const cssPromise = convertCssConfig(rawCssConfig, absoluteFilepathToDocsConfig);
     const jsPromise = convertJsConfig(rawJsConfig, absoluteFilepathToDocsConfig);
 
@@ -183,6 +186,7 @@ export async function parseDocsConfiguration({
         css,
         js,
         metadata,
+        resolvedRedirects,
         context7File,
         llmsTxtFile,
         llmsFullTxtFile,
@@ -196,6 +200,7 @@ export async function parseDocsConfiguration({
         cssPromise,
         jsPromise,
         metadataPromise,
+        redirectsPromise,
         context7FilePromise,
         llmsTxtFilePromise,
         llmsFullTxtFilePromise,
@@ -246,10 +251,7 @@ export async function parseDocsConfiguration({
 
         /* seo */
         metadata,
-        redirects: redirects?.map((redirect) => ({
-            ...redirect,
-            permanent: redirect?.permanent
-        })),
+        redirects: resolvedRedirects,
 
         /* branding */
         logo,

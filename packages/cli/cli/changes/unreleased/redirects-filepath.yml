@@ -1,0 +1,5 @@
+- summary: |
+    `redirects` in `docs.yml` now accepts a relative filepath to a YAML file containing only the
+    list of redirects, in addition to an inline list. The file's contents are validated the same
+    way as inline redirects.
+  type: feat
