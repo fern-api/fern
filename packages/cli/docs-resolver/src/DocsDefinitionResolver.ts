@@ -2239,7 +2239,7 @@ export class DocsDefinitionResolver {
 
     /**
      * Human-readable suffix naming the version and git ref a library section is
-     * resolved at, used in hard-failure messages. Empty for working-tree versions.
+     * resolved at, used in warnings. Empty for working-tree versions.
      */
     private describeVersionSource(contentSource: docsYml.VersionContentSource | undefined): string {
         if (contentSource == null) {
@@ -2250,28 +2250,32 @@ export class DocsDefinitionResolver {
 
     /**
      * Handles librarySection navigation items by reading pre-generated MDX files
-     * and _navigation.yml from the library's output directory. Hard-fails (like api:
-     * sections) when the library is unconfigured or its generated output is missing.
+     * and _navigation.yml from the library's output directory. Warns and skips the
+     * section (returning null) when the library is unconfigured or its generated
+     * output is missing.
      */
     private async handleLibrarySection(
         item: docsYml.DocsNavigationItem.LibrarySection,
         parentSlug: FernNavigation.V1.SlugGenerator,
         contentSource?: docsYml.VersionContentSource
-    ): Promise<FernNavigation.V1.SectionNode> {
+    ): Promise<FernNavigation.V1.SectionNode | null> {
         // For git-ref-backed versions the libraries config and generated output both come
         // from the ref; otherwise they come from the current working tree.
         const libraries = contentSource?.libraries ?? this.parsedDocsConfig.libraries;
         const libraryConfig = libraries?.[item.libraryName];
         if (libraryConfig == null) {
-            throw new CliError({
-                message: `library '${item.libraryName}' is not configured in libraries${this.describeVersionSource(contentSource)}.`,
-                code: CliError.Code.ConfigError
-            });
+            this.taskContext.logger.warn(
+                `Library '${item.libraryName}' not found in libraries config${this.describeVersionSource(contentSource)}. Skipping.`
+            );
+            return null;
         }
 
         const baseDir = contentSource?.absolutePathToFernFolder ?? this.docsWorkspace.absoluteFilePath;
         const outputDir = resolve(baseDir, libraryConfig.output.path);
         const navNodes = await this.loadLibraryNavNodes(item.libraryName, outputDir, contentSource);
+        if (navNodes == null) {
+            return null;
+        }
 
         const sectionTitle = item.title ?? item.libraryName;
         const sectionSlug = parentSlug.apply({
@@ -2290,13 +2294,7 @@ export class DocsDefinitionResolver {
             }
         }
 
-        const children = await this.convertLibraryNavNodes({
-            nodes: navNodes,
-            outputDir,
-            parentSlug: sectionSlug,
-            libraryName: item.libraryName,
-            contentSource
-        });
+        const children = await this.convertLibraryNavNodes(navNodes, outputDir, sectionSlug);
 
         return {
             id: sectionId,
@@ -2321,23 +2319,22 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Load and parse the _navigation.yml for a library. Hard-fails if the file is
-     * missing or unparseable, naming the version/ref when applicable.
+     * Load and parse the _navigation.yml for a library. Returns null (with a warning)
+     * if the file is missing or unparseable, naming the version/ref when applicable.
      */
     private async loadLibraryNavNodes(
         libraryName: string,
         outputDir: AbsoluteFilePath,
         contentSource: docsYml.VersionContentSource | undefined
-    ): Promise<LibraryNavNode[]> {
+    ): Promise<LibraryNavNode[] | null> {
         const navFilePath = join(outputDir, RelativeFilePath.of("_navigation.yml"));
 
         if (!existsSync(navFilePath)) {
-            throw new CliError({
-                message:
-                    `library '${libraryName}' has no generated output${this.describeVersionSource(contentSource)} ` +
-                    `(missing _navigation.yml at ${navFilePath}). Run 'fern docs md generate' and commit the output.`,
-                code: CliError.Code.ConfigError
-            });
+            this.taskContext.logger.warn(
+                `No _navigation.yml found for library '${libraryName}'${this.describeVersionSource(contentSource)} ` +
+                    `at ${navFilePath}. Run 'fern docs md generate' first.`
+            );
+            return null;
         }
 
         const navContent = await readFile(navFilePath, "utf-8");
@@ -2350,10 +2347,10 @@ export class DocsDefinitionResolver {
         try {
             return (jsYaml.load(yamlBody) as LibraryNavNode[] | null) ?? [];
         } catch (e) {
-            throw new CliError({
-                message: `Failed to parse _navigation.yml for library '${libraryName}'${this.describeVersionSource(contentSource)}: ${extractErrorMessage(e)}`,
-                code: CliError.Code.ParseError
-            });
+            this.taskContext.logger.warn(
+                `Failed to parse _navigation.yml for library '${libraryName}'${this.describeVersionSource(contentSource)}: ${extractErrorMessage(e)}`
+            );
+            return null;
         }
     }
 
@@ -2386,32 +2383,18 @@ export class DocsDefinitionResolver {
      * Recursively convert library NavNodes to FernNavigation nodes,
      * reading and registering MDX page content along the way.
      */
-    private async convertLibraryNavNodes({
-        nodes,
-        outputDir,
-        parentSlug,
-        libraryName,
-        contentSource
-    }: {
-        nodes: LibraryNavNode[];
-        outputDir: AbsoluteFilePath;
-        parentSlug: FernNavigation.V1.SlugGenerator;
-        libraryName: string;
-        contentSource: docsYml.VersionContentSource | undefined;
-    }): Promise<FernNavigation.V1.NavigationChild[]> {
+    private async convertLibraryNavNodes(
+        nodes: LibraryNavNode[],
+        outputDir: AbsoluteFilePath,
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.NavigationChild[]> {
         const children: FernNavigation.V1.NavigationChild[] = [];
 
         for (const node of nodes) {
             if (node.type === "page" && node.pageId != null) {
                 const pageId = await this.registerLibraryMdxPage(outputDir, node.pageId);
                 if (pageId == null) {
-                    throw new CliError({
-                        message:
-                            `library '${libraryName}' is missing generated page '${node.pageId}'` +
-                            `${this.describeVersionSource(contentSource)} (expected at ${join(outputDir, RelativeFilePath.of(node.pageId))}). ` +
-                            "Run 'fern docs md generate' and commit the output.",
-                        code: CliError.Code.ConfigError
-                    });
+                    continue;
                 }
 
                 const slug = parentSlug.apply({
@@ -2452,13 +2435,7 @@ export class DocsDefinitionResolver {
                     (child) => !(child.type === "page" && child.slug === node.slug)
                 );
 
-                const sectionChildren = await this.convertLibraryNavNodes({
-                    nodes: filteredChildren,
-                    outputDir,
-                    parentSlug: sectionSlug,
-                    libraryName,
-                    contentSource
-                });
+                const sectionChildren = await this.convertLibraryNavNodes(filteredChildren, outputDir, sectionSlug);
 
                 children.push({
                     id: sectionId,

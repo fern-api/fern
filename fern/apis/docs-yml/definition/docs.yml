@@ -707,14 +707,14 @@ types:
       path:
         type: optional<string>
         docs: |
-          The relative path to the version's docs.yml file. Optional when `tag` or `branch`
-          is set; in that case it names the nav/content file to read at that ref.
-      tag:
+          The relative path to the version's docs.yml file. Required unless `ref` is set,
+          in which case the version's content is built from that git ref.
+      ref:
         type: optional<string>
-        docs: A frozen git tag whose committed content is built for this version.
-      branch:
-        type: optional<string>
-        docs: A patchable git branch whose committed content is built for this version.
+        docs: |
+          A git ref—branch, tag, or commit SHA—whose committed content is built for this
+          version. Branches are mutable and resolve to their latest commit on the remote;
+          tags and commit SHAs are immutable.
       slug:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.

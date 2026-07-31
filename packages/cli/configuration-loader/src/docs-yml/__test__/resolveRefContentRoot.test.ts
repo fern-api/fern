@@ -38,23 +38,7 @@ describe("resolveRefContentRoot", () => {
         };
     }
 
-    it("prefers the explicit path on the version entry", async () => {
-        const fernFolder = await makeFernFolder({
-            "docs.yml": ["instances: []", "navigation:", "  - page: Root", "    path: ./root.mdx"].join("\n"),
-            "versions/explicit.yml": ["navigation:", "  - page: Explicit", "    path: ./explicit.mdx"].join("\n")
-        });
-
-        const result = await resolveRefContentRoot({
-            materialized: materialized(fernFolder),
-            explicitPath: "./versions/explicit.yml",
-            context
-        });
-
-        expect(result.absoluteFilepathToConfig).toBe(join(fernFolder, RelativeFilePath.of("versions/explicit.yml")));
-        expect(result.navigation).toEqual([{ page: "Explicit", path: "./explicit.mdx" }]);
-    });
-
-    it("falls back to the ref's docs.yml versions[0].path when no explicit path is given", async () => {
+    it("uses the ref's docs.yml versions[0].path", async () => {
         const fernFolder = await makeFernFolder({
             "docs.yml": [
                 "instances: []",
@@ -70,7 +54,6 @@ describe("resolveRefContentRoot", () => {
 
         const result = await resolveRefContentRoot({
             materialized: materialized(fernFolder),
-            explicitPath: undefined,
             context
         });
 
@@ -85,7 +68,6 @@ describe("resolveRefContentRoot", () => {
 
         const result = await resolveRefContentRoot({
             materialized: materialized(fernFolder),
-            explicitPath: undefined,
             context
         });
 
@@ -98,8 +80,8 @@ describe("resolveRefContentRoot", () => {
             "docs.yml": ["instances: []", "title: Docs"].join("\n")
         });
 
-        await expect(
-            resolveRefContentRoot({ materialized: materialized(fernFolder), explicitPath: undefined, context })
-        ).rejects.toThrow(/Could not determine the content root for git ref 'v2.2.0'/);
+        await expect(resolveRefContentRoot({ materialized: materialized(fernFolder), context })).rejects.toThrow(
+            /Could not determine the content root for git ref 'v2.2.0'/
+        );
     });
 });

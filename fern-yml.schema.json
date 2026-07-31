@@ -456,10 +456,7 @@
               "path": {
                 "type": "string"
               },
-              "tag": {
-                "type": "string"
-              },
-              "branch": {
+              "ref": {
                 "type": "string"
               },
               "slug": {
@@ -647,10 +644,7 @@
                         "path": {
                           "type": "string"
                         },
-                        "tag": {
-                          "type": "string"
-                        },
-                        "branch": {
+                        "ref": {
                           "type": "string"
                         },
                         "slug": {
@@ -872,10 +866,7 @@
                         "path": {
                           "type": "string"
                         },
-                        "tag": {
-                          "type": "string"
-                        },
-                        "branch": {
+                        "ref": {
                           "type": "string"
                         },
                         "slug": {

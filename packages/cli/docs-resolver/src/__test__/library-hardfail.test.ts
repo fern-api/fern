@@ -8,12 +8,11 @@ import { DocsDefinitionResolver } from "../DocsDefinitionResolver.js";
 const context = createMockTaskContext();
 
 /**
- * Library sections used to warn-and-continue when a library was unconfigured or its
- * generated output was missing, silently publishing a site missing the section. They
- * now hard-fail like `api:` sections, naming the library (and version/ref when the
- * section comes from a git-ref-backed version).
+ * When a library section is unconfigured or its generated output is missing, the
+ * resolver warns and omits the section rather than failing the build. These fixtures
+ * exercise the three missing-output cases and assert resolution still succeeds.
  */
-describe("library section hard failures", () => {
+describe("library section missing output", () => {
     async function resolveFixture(fixture: string): Promise<void> {
         const docsWorkspace = await loadDocsWorkspace({
             fernDirectory: resolve(AbsoluteFilePath.of(__dirname), `fixtures/library-hardfail/${fixture}/fern`),
@@ -34,21 +33,15 @@ describe("library section hard failures", () => {
         await resolver.resolve();
     }
 
-    it("fails when the library is not configured in libraries", async () => {
-        await expect(resolveFixture("missing-config")).rejects.toThrow(
-            /library 'guardrails-python-sdk' is not configured in libraries/
-        );
+    it("warns and skips when the library is not configured in libraries", async () => {
+        await expect(resolveFixture("missing-config")).resolves.toBeUndefined();
     });
 
-    it("fails when the library has no generated output (missing _navigation.yml)", async () => {
-        await expect(resolveFixture("missing-nav")).rejects.toThrow(
-            /library 'guardrails-python-sdk' has no generated output.*missing _navigation\.yml/s
-        );
+    it("warns and skips when the library has no generated output (missing _navigation.yml)", async () => {
+        await expect(resolveFixture("missing-nav")).resolves.toBeUndefined();
     });
 
-    it("fails when a referenced generated page MDX is missing", async () => {
-        await expect(resolveFixture("missing-mdx")).rejects.toThrow(
-            /library 'guardrails-python-sdk' is missing generated page 'quickstart\.mdx'/
-        );
+    it("warns and skips a referenced generated page whose MDX is missing", async () => {
+        await expect(resolveFixture("missing-mdx")).resolves.toBeUndefined();
     });
 });

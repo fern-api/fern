@@ -1166,9 +1166,9 @@
               "type": "null"
             }
           ],
-          "description": "The relative path to the version's docs.yml file. Optional when `tag` or `branch`\nis set; in that case it names the nav/content file to read at that ref."
+          "description": "The relative path to the version's docs.yml file. Required unless `ref` is set,\nin which case the version's content is built from that git ref."
         },
-        "tag": {
+        "ref": {
           "oneOf": [
             {
               "type": "string"
@@ -1177,18 +1177,7 @@
               "type": "null"
             }
           ],
-          "description": "A frozen git tag whose committed content is built for this version."
-        },
-        "branch": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A patchable git branch whose committed content is built for this version."
+          "description": "A git ref—branch, tag, or commit SHA—whose committed content is built for this\nversion. Branches are mutable and resolve to their latest commit on the remote;\ntags and commit SHAs are immutable."
         },
         "slug": {
           "oneOf": [

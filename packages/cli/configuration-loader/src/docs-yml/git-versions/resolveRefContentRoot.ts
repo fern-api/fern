@@ -59,20 +59,17 @@ async function readVersionFile({
 
 /**
  * Selects the content root for a ref-backed version, in order:
- * 1. an explicit `path` on the version entry (relative to the ref's fern folder),
- * 2. else the ref's docs.yml `versions[0].path` (the default version at the ref),
- * 3. else the ref's top-level `navigation`.
+ * 1. the ref's docs.yml `versions[0].path` (the default version at the ref),
+ * 2. else the ref's top-level `navigation`.
  *
  * The ref's own `versions` list is never recursed into beyond reading `versions[0].path`;
  * it is a stale snapshot pointing at even older refs.
  */
 export async function resolveRefContentRoot({
     materialized,
-    explicitPath,
     context
 }: {
     materialized: MaterializedGitRef;
-    explicitPath: string | undefined;
     context: TaskContext;
 }): Promise<ResolvedRefContentRoot> {
     const refFernFolder = materialized.absolutePathToFernFolder;
@@ -82,14 +79,6 @@ export async function resolveRefContentRoot({
         await loadYamlFile(refDocsConfigPath, context)
     );
     const rawLibraries = refDocsConfig.libraries;
-
-    if (explicitPath != null) {
-        return readVersionFile({
-            absoluteFilepathToConfig: resolve(refFernFolder, RelativeFilePath.of(explicitPath)),
-            rawLibraries,
-            context
-        });
-    }
 
     const firstVersionPath = refDocsConfig.versions?.[0]?.path;
     if (firstVersionPath != null) {
@@ -113,8 +102,7 @@ export async function resolveRefContentRoot({
     throw new CliError({
         message:
             `Could not determine the content root for git ref '${materialized.ref}' (${materialized.sha}). ` +
-            "Add a `path:` to the version entry pointing at a nav file at that ref, " +
-            "or ensure the ref's docs.yml declares a default version or top-level navigation.",
+            "Ensure the ref's docs.yml declares a default version or top-level navigation.",
         code: CliError.Code.ConfigError
     });
 }

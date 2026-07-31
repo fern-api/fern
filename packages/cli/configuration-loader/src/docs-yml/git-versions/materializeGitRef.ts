@@ -1,3 +1,4 @@
+import { isCommitSha, isGitAvailable } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -187,6 +188,28 @@ async function attemptFetch({
     return await tryResolveCandidates({ repoRoot, candidates: resolutionCandidates({ ref, remote }), context });
 }
 
+/**
+ * Whether a declared ref is immutable (its commit never changes). Commit SHAs and
+ * tags are immutable; branches move as commits are pushed. A tag that is not yet
+ * present locally is treated as mutable — the only cost of that misclassification is
+ * an eager fetch, and the fetch still resolves the (unchanging) tag correctly.
+ */
+async function refIsImmutable({
+    repoRoot,
+    ref,
+    context
+}: {
+    repoRoot: string;
+    ref: string;
+    context: TaskContext;
+}): Promise<boolean> {
+    if (isCommitSha(ref)) {
+        return true;
+    }
+    const asTag = await tryResolveSha({ repoRoot, ref: `refs/tags/${ref}`, context });
+    return asTag != null;
+}
+
 async function resolveRefToSha({
     repoRoot,
     ref,
@@ -200,18 +223,32 @@ async function resolveRefToSha({
 
     // Resolve against everything already present locally: a local branch/tag/SHA
     // (`ref`) or an already-fetched remote-tracking branch (`<remote>/<ref>`).
-    const existing = await tryResolveCandidates({
-        repoRoot,
-        candidates: resolutionCandidates({ ref, remote }),
-        context
-    });
-    if (existing != null) {
-        return existing;
-    }
+    const resolveLocal = (): Promise<string | undefined> =>
+        tryResolveCandidates({ repoRoot, candidates: resolutionCandidates({ ref, remote }), context });
 
-    const afterFetch = await attemptFetch({ repoRoot, ref, remote, context });
-    if (afterFetch != null) {
-        return afterFetch;
+    if (await refIsImmutable({ repoRoot, ref, context })) {
+        // Immutable ref (tag or commit SHA): the commit never changes, so resolve from
+        // what is already present and only touch the network if it is missing locally.
+        const existing = await resolveLocal();
+        if (existing != null) {
+            return existing;
+        }
+        const afterFetch = await attemptFetch({ repoRoot, ref, remote, context });
+        if (afterFetch != null) {
+            return afterFetch;
+        }
+    } else {
+        // Mutable ref (branch): fetch first so we build the branch's latest commit on
+        // the remote rather than a stale local copy. Fall back to local when offline
+        // or when there is no remote to fetch from.
+        const afterFetch = await attemptFetch({ repoRoot, ref, remote, context });
+        if (afterFetch != null) {
+            return afterFetch;
+        }
+        const existing = await resolveLocal();
+        if (existing != null) {
+            return existing;
+        }
     }
 
     throw new CliError({
@@ -238,6 +275,15 @@ export async function materializeGitRef({
     absolutePathToFernFolder: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<MaterializedGitRef> {
+    if (!isGitAvailable()) {
+        throw new CliError({
+            message:
+                "Git is not installed or not found in PATH. " +
+                "Git-ref-backed docs versions require git to be available.",
+            code: CliError.Code.ConfigError
+        });
+    }
+
     const repoRoot = await getRepositoryRoot({ absolutePathToFernFolder, context });
     const sha = await resolveRefToSha({ repoRoot, ref, context });
 

@@ -723,7 +723,7 @@ async function loadWorkingTreeVersion({
 }): Promise<docsYml.VersionInfo> {
     if (version.path == null) {
         throw new CliError({
-            message: `Version '${version.displayName}' must specify a 'path', 'tag', or 'branch'.`,
+            message: `Version '${version.displayName}' must specify a 'path' or 'ref'.`,
             code: CliError.Code.ConfigError
         });
     }
@@ -788,7 +788,7 @@ async function loadRefVersion({
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.VersionInfo> {
     const materialized = await materializeGitRef({ ref, absolutePathToFernFolder, context });
-    const contentRoot = await resolveRefContentRoot({ materialized, explicitPath: version.path, context });
+    const contentRoot = await resolveRefContentRoot({ materialized, context });
 
     const versionNavigation = await convertNavigationConfiguration({
         tabs: contentRoot.tabs,
