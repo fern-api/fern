@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath, dirname, doesPathExist, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 
 import { readFile } from "fs/promises";
@@ -29,10 +29,10 @@ export async function resolveRedirects({
         return redirects;
     }
 
-    const absoluteFilepathToRedirects = resolve(dirname(absoluteFilepathToDocsConfig), RelativeFilePath.of(redirects));
-    if (!(await doesPathExist(absoluteFilepathToRedirects))) {
+    const absoluteFilepathToRedirects = resolve(dirname(absoluteFilepathToDocsConfig), redirects);
+    if (redirects.trim().length === 0 || !(await doesPathExist(absoluteFilepathToRedirects, "file"))) {
         throw new CliError({
-            message: `Failed to load redirects: ${absoluteFilepathToRedirects} does not exist`,
+            message: `Failed to load redirects: ${absoluteFilepathToRedirects} is not a file`,
             code: CliError.Code.ParseError
         });
     }

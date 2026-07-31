@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { mkdtemp, writeFile } from "fs/promises";
 import { tmpdir } from "os";
@@ -43,10 +43,21 @@ describe("resolveRedirects", () => {
         ]);
     });
 
+    it("loads redirects from an absolute filepath", async () => {
+        const absolute = join(dirname(absoluteFilepathToDocsConfig), RelativeFilePath.of("redirects.yml"));
+        expect(await resolveRedirects({ redirects: absolute, absoluteFilepathToDocsConfig })).toHaveLength(2);
+    });
+
     it("fails when the file does not exist", async () => {
         await expect(
             resolveRedirects({ redirects: "./missing.yml", absoluteFilepathToDocsConfig })
-        ).rejects.toThrowError(/does not exist/);
+        ).rejects.toThrowError(/is not a file/);
+    });
+
+    it("fails when the filepath is empty", async () => {
+        await expect(resolveRedirects({ redirects: "", absoluteFilepathToDocsConfig })).rejects.toThrowError(
+            /is not a file/
+        );
     });
 
     it("fails when a redirect is invalid", async () => {
