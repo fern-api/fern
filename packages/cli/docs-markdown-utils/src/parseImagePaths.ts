@@ -74,13 +74,77 @@ function isJsxTagStart(content: string, index: number): boolean {
     return nameStart != null && JSX_TAG_NAME_START_REGEX.test(nameStart);
 }
 
+const BLANK_LINE_REGEX = /\n[ \t]*\r?\n/;
+const CODE_FENCE_REGEX = /^[ \t]*(`{3,}|~{3,})/;
+
 /**
- * Tags never span a blank line, so the scan is bounded there. Without a bound, an unterminated `<`
- * consumes the remainder of the page.
+ * Neither tags nor code spans span a blank line, so scans for them are bounded there. Without a
+ * bound, an unterminated construct consumes the remainder of the page.
  */
-function findJsxTagScanLimit(content: string, start: number): number {
-    const blankLine = content.indexOf("\n\n", start);
-    return blankLine === -1 ? content.length : blankLine;
+function findScanLimit(content: string, start: number): number {
+    const blankLine = BLANK_LINE_REGEX.exec(content.slice(start));
+    return blankLine == null ? content.length : start + blankLine.index;
+}
+
+/**
+ * Skips a fenced code block that opens at `start` (which must be a line start), returning the index
+ * just past its closing fence. Returns null when no fence opens there or the fence is never closed,
+ * so an unterminated fence cannot swallow the rest of the page.
+ */
+function findCodeFenceEnd(content: string, start: number): number | null {
+    const lineEnd = content.indexOf("\n", start);
+    const line = content.slice(start, lineEnd === -1 ? content.length : lineEnd);
+    const fence = CODE_FENCE_REGEX.exec(line)?.[1];
+    if (fence == null || lineEnd === -1) {
+        return null;
+    }
+
+    const closingFenceRegex = new RegExp(`^[ \\t]*${fence[0] === "\`" ? "`" : "~"}{${fence.length},}[ \\t\\r]*$`);
+    let i = lineEnd + 1;
+    while (i <= content.length) {
+        const nextLineEnd = content.indexOf("\n", i);
+        const end = nextLineEnd === -1 ? content.length : nextLineEnd;
+        if (closingFenceRegex.test(content.slice(i, end))) {
+            return end;
+        }
+        if (nextLineEnd === -1) {
+            return null;
+        }
+        i = nextLineEnd + 1;
+    }
+    return null;
+}
+
+/**
+ * Skips an inline code span opening at `start`, returning the index just past its closing backtick
+ * run. A code span closes only on a run of the same length and cannot contain a blank line; when
+ * there is no such closing run the backticks are literal text and null is returned, so a stray
+ * backtick cannot make the rest of the page look like code.
+ */
+function findInlineCodeEnd(content: string, start: number): number | null {
+    const limit = findScanLimit(content, start);
+    let runLength = 0;
+    while (content[start + runLength] === "`") {
+        runLength++;
+    }
+
+    let i = start + runLength;
+    while (i < limit) {
+        if (content[i] !== "`") {
+            i++;
+            continue;
+        }
+        let closingRunLength = 0;
+        while (content[i + closingRunLength] === "`") {
+            closingRunLength++;
+        }
+        if (closingRunLength === runLength) {
+            return i + closingRunLength;
+        }
+        i += closingRunLength;
+    }
+
+    return null;
 }
 
 function streamingScanForImages(
@@ -91,47 +155,45 @@ function streamingScanForImages(
     const edits: Edit[] = [];
     let i = 0;
     const len = content.length;
-    let inCodeFence = false;
-    let inInlineCode = false;
 
     while (i < len) {
         if (i === 0 || content[i - 1] === "\n") {
-            if (content.slice(i, i + 3) === "```") {
-                inCodeFence = !inCodeFence;
-                i += 3;
+            const fenceEnd = findCodeFenceEnd(content, i);
+            if (fenceEnd != null) {
+                i = fenceEnd;
                 continue;
             }
         }
 
-        if (!inCodeFence) {
-            if (content[i] === "`" && (i === 0 || content[i - 1] !== "\\")) {
-                inInlineCode = !inInlineCode;
-                i++;
+        if (content[i] === "`" && content[i - 1] !== "\\") {
+            const inlineCodeEnd = findInlineCodeEnd(content, i);
+            if (inlineCodeEnd != null) {
+                i = inlineCodeEnd;
                 continue;
             }
+            i++;
+            continue;
+        }
 
-            if (!inInlineCode) {
-                if (content[i] === "!" && content[i + 1] === "[") {
-                    const result = parseMarkdownImage(content, i, metadata);
-                    if (result) {
-                        filepaths.add(result.filepath);
-                        edits.push(result.edit);
-                        i = result.nextIndex;
-                        continue;
-                    }
-                } else if (content[i] === "[" && content[i - 1] !== "!") {
-                    const result = parseMarkdownLink(content, i, metadata);
-                    if (result) {
-                        i = result.nextIndex;
-                        continue;
-                    }
-                } else if (content[i] === "<") {
-                    const result = parseJsxTag(content, i, metadata, filepaths, edits);
-                    if (result) {
-                        i = result.nextIndex;
-                        continue;
-                    }
-                }
+        if (content[i] === "!" && content[i + 1] === "[") {
+            const result = parseMarkdownImage(content, i, metadata);
+            if (result) {
+                filepaths.add(result.filepath);
+                edits.push(result.edit);
+                i = result.nextIndex;
+                continue;
+            }
+        } else if (content[i] === "[" && content[i - 1] !== "!") {
+            const result = parseMarkdownLink(content, i, metadata);
+            if (result) {
+                i = result.nextIndex;
+                continue;
+            }
+        } else if (content[i] === "<") {
+            const result = parseJsxTag(content, i, metadata, filepaths, edits);
+            if (result) {
+                i = result.nextIndex;
+                continue;
             }
         }
 
@@ -302,7 +364,7 @@ function parseJsxTag(
     }
 
     let i = start + 1;
-    const limit = findJsxTagScanLimit(content, start);
+    const limit = findScanLimit(content, start);
     // Buffered so a `<` that turns out not to be a tag leaves no edits behind.
     const tagFilepaths: AbsoluteFilePath[] = [];
     const tagEdits: Edit[] = [];
@@ -802,28 +864,22 @@ export function replaceImagePathsAndUrls(
     let hasUnhandledExpressions = false;
     let i = 0;
     const len = content.length;
-    let inCodeFence = false;
-    let inInlineCode = false;
 
     while (i < len) {
-        if ((i === 0 || content[i - 1] === "\n") && content.slice(i, i + 3) === "```") {
-            inCodeFence = !inCodeFence;
-            i += 3;
-            continue;
-        }
-
-        if (inCodeFence) {
-            i++;
-            continue;
+        if (i === 0 || content[i - 1] === "\n") {
+            const fenceEnd = findCodeFenceEnd(content, i);
+            if (fenceEnd != null) {
+                i = fenceEnd;
+                continue;
+            }
         }
 
         if (content[i] === "`" && content[i - 1] !== "\\") {
-            inInlineCode = !inInlineCode;
-            i++;
-            continue;
-        }
-
-        if (inInlineCode) {
+            const inlineCodeEnd = findInlineCodeEnd(content, i);
+            if (inlineCodeEnd != null) {
+                i = inlineCodeEnd;
+                continue;
+            }
             i++;
             continue;
         }
@@ -894,7 +950,7 @@ export function replaceImagePathsAndUrls(
                 continue;
             }
         } else if (isJsxTagStart(content, i)) {
-            const limit = findJsxTagScanLimit(content, i);
+            const limit = findScanLimit(content, i);
             // Edits collected while scanning are discarded unless the tag is properly terminated.
             const editsBeforeTag = edits.length;
             let j = i + 1;

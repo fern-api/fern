@@ -1604,4 +1604,19 @@ describe("literal angle brackets in prose", () => {
         const page = "Outliers are `is < Q1`.\n\n![leaf](path/to/image.png)\n";
         expect(roundTrip(page)).not.toContain("/Volume/git/fern");
     });
+
+    it.each([
+        ["unmatched backtick in prose", "The a`b operator is odd."],
+        ["backtick inside an indented fence", "- Example:\n\n    ```\n    a ` b\n    ```"],
+        ["unterminated fence", "```js\nconst a = 1;"],
+        ["windows line endings around an unterminated tag-like construct", "Pass `<div` here.\r\n\r\n"]
+    ])("replaces a later image path when the page contains an %s", (_name, prose) => {
+        const page = `${prose}\n\n![leaf](path/to/image.png)\n`;
+        expect(roundTrip(page)).toContain("file:leaf-id");
+    });
+
+    it("does not rewrite an image inside a fenced code block", () => {
+        const page = "```\n![leaf](path/to/image.png)\n```\n";
+        expect(roundTrip(page)).toContain("![leaf](path/to/image.png)");
+    });
 });
