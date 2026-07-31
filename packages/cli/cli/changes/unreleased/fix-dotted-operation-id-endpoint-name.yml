@@ -3,4 +3,7 @@
     spec whose `operationId` contains a dot and does not share a prefix with its tag
     (e.g. `actions.index` under the `Custom Actions` tag). Dotted operation ids are now
     collapsed into a single valid endpoint name, so `x-fern-pagination` resolves correctly.
+    Note that this renames the generated method for these endpoints (`actions.index` is now
+    imported as `actionsIndex` rather than verbatim); set `x-fern-sdk-method-name` to pin a
+    specific name.
   type: fix
