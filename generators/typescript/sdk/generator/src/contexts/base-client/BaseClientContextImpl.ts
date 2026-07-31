@@ -25,6 +25,9 @@ export declare namespace BaseClientContextImpl {
         caseConverter: CaseConverter;
         // When true, treat auth as optional even when the spec mandates it.
         optionalAuth: boolean;
+        // When true, expose an optional `appInfo` client option whose product
+        // token is appended to the User-Agent header.
+        allowUserAgentAppInfo: boolean;
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -47,6 +50,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
     private readonly case: CaseConverter;
     private readonly optionalAuth: boolean;
+    private readonly allowUserAgentAppInfo: boolean;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -73,7 +77,8 @@ export class BaseClientContextImpl implements BaseClientContext {
         parameterNaming,
         baseClientTypeDeclarationReferencer,
         caseConverter,
-        optionalAuth
+        optionalAuth,
+        allowUserAgentAppInfo
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
@@ -84,6 +89,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
         this.case = caseConverter;
         this.optionalAuth = optionalAuth;
+        this.allowUserAgentAppInfo = allowUserAgentAppInfo;
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -281,6 +287,18 @@ export class BaseClientContextImpl implements BaseClientContext {
                 type: generatedVersion.getEnumValueUnion(),
                 hasQuestionToken: generatedVersion.hasDefaultVersion(),
                 docs: [`Override the ${getWireValue(header.name)} header`]
+            });
+        }
+
+        if (this.allowUserAgentAppInfo) {
+            properties.push({
+                kind: StructureKind.PropertySignature,
+                docs: [
+                    "Identifies the calling application. Its product token is appended to the User-Agent header sent by the SDK."
+                ],
+                name: "appInfo",
+                type: "{ name: string; version?: string; comment?: string }",
+                hasQuestionToken: true
             });
         }
 
