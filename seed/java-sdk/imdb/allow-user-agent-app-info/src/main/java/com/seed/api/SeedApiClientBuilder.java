@@ -32,6 +32,12 @@ public class SeedApiClientBuilder {
 
     private Optional<LogConfig> logging = Optional.empty();
 
+    private String appInfoName = null;
+
+    private String appInfoVersion = null;
+
+    private String appInfoComment = null;
+
     /**
      * Sets token
      */
@@ -102,6 +108,16 @@ public class SeedApiClientBuilder {
     }
 
     /**
+     * Identify the calling application. Its product token — {name}/{version} ({comment}) — is appended to the User-Agent header sent by the SDK, following RFC 9110. The version and comment are optional; caller-supplied values are sanitized.
+     */
+    public SeedApiClientBuilder appInfo(String name, String version, String comment) {
+        this.appInfoName = name;
+        this.appInfoVersion = version;
+        this.appInfoComment = comment;
+        return this;
+    }
+
+    /**
      * Add a custom header to be sent with all requests.
      * For headers that need to be computed dynamically or conditionally, use the setAdditional() method override instead.
      *
@@ -122,6 +138,7 @@ public class SeedApiClientBuilder {
         setTimeouts(builder);
         setRetries(builder);
         setLogging(builder);
+        setAppInfo(builder);
         for (Map.Entry<String, String> header : this.customHeaders.entrySet()) {
             builder.addHeader(header.getKey(), header.getValue());
         }
@@ -214,6 +231,18 @@ public class SeedApiClientBuilder {
     protected void setLogging(ClientOptions.Builder builder) {
         if (this.logging.isPresent()) {
             builder.logging(this.logging.get());
+        }
+    }
+
+    /**
+     * Forwards the caller-supplied appInfo product token to the ClientOptions.Builder, which appends it to the User-Agent header.
+     * Override this method to customize application-identification behavior.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setAppInfo(ClientOptions.Builder builder) {
+        if (this.appInfoName != null) {
+            builder.appInfo(this.appInfoName, this.appInfoVersion, this.appInfoComment);
         }
     }
 
