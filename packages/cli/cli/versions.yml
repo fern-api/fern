@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.89.4
+  changelogEntry:
+    - summary: |
+        Fix local images and links being published as build-machine filesystem paths (e.g.
+        `/home/runner/work/.../assets/image.png`) when an earlier line on the page contains a literal
+        `<` in prose or inline code. The markdown scanner treated any `<` as the start of a tag and
+        skipped ahead to the next `>`, dropping every image and link substitution in between.
+      type: fix
+  createdAt: "2026-08-02"
+  irVersion: 67
 - version: 5.89.3
   changelogEntry:
     - summary: |
