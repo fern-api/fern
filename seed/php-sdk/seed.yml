@@ -137,6 +137,9 @@ fixtures:
       customConfig:
         inlinePathParameters: true
         propertyAccess: private
+    - outputFolder: encode-path-params
+      customConfig:
+        encode-path-params: true
   request-parameters:
     - outputFolder: no-custom-config
       customConfig: null

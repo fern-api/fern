@@ -34,6 +34,7 @@ export class RawClient {
     public static CLASS_NAME = "RawClient";
     public static FIELD_NAME = "client";
     public static SEND_REQUEST_METHOD_NAME = "sendRequest";
+    public static ENCODE_PATH_PARAM_METHOD_NAME = "encodePathParam";
 
     private context: SdkGeneratorContext;
 
@@ -76,12 +77,10 @@ export class RawClient {
             },
             {
                 name: "path",
-                assignment: php.codeblock(
-                    this.getPathString({
-                        endpoint: args.endpoint,
-                        pathParameterReferences: args.pathParameterReferences ?? {}
-                    })
-                )
+                assignment: this.getPathString({
+                    endpoint: args.endpoint,
+                    pathParameterReferences: args.pathParameterReferences ?? {}
+                })
             },
             {
                 name: "method",
@@ -131,11 +130,61 @@ export class RawClient {
     }: {
         endpoint: FernIr.HttpEndpoint;
         pathParameterReferences: Record<string, string>;
+    }): php.AstNode {
+        if (!this.context.customConfig.encodePathParams) {
+            return php.codeblock(this.getInterpolatedPathString({ endpoint, pathParameterReferences }));
+        }
+        // Build the request path by concatenating the literal segments of the path template with
+        // each path parameter value passed through RawClient::encodePathParam(). Encoding the
+        // values here, rather than after the path is assembled, keeps the literal "/" separators
+        // intact while preventing a value from resolving the request to a different endpoint.
+        const parts: { literal: string; reference: string }[] = [];
+        let literal = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts) {
+            const reference = pathParameterReferences[part.pathParameter];
+            if (reference == null) {
+                throw GeneratorError.internalError(
+                    `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
+                );
+            }
+            parts.push({ literal, reference });
+            literal = part.tail;
+        }
+        const trailingLiteral = literal;
+        return php.codeblock((writer) => {
+            if (parts.length === 0) {
+                writer.write(`"${trailingLiteral}"`);
+                return;
+            }
+            parts.forEach(({ literal: leadingLiteral, reference }, index) => {
+                if (index > 0) {
+                    writer.write(" . ");
+                }
+                if (leadingLiteral.length > 0) {
+                    writer.write(`"${leadingLiteral}" . `);
+                }
+                writer.writeNode(this.getClassReference());
+                writer.write(`::${RawClient.ENCODE_PATH_PARAM_METHOD_NAME}(${reference})`);
+            });
+            if (trailingLiteral.length > 0) {
+                writer.write(` . "${trailingLiteral}"`);
+            }
+        });
+    }
+
+    /**
+     * Builds a double-quoted PHP string expression for the request path, interpolating path
+     * parameter values without encoding them. Used when the encode-path-params config is disabled.
+     * Most references can be interpolated directly (e.g. "/users/{$id}"), but some are expressions
+     * (e.g. a boolean rendered as "true"/"false") that must be concatenated instead.
+     */
+    private getInterpolatedPathString({
+        endpoint,
+        pathParameterReferences
+    }: {
+        endpoint: FernIr.HttpEndpoint;
+        pathParameterReferences: Record<string, string>;
     }): string {
-        // Build a double-quoted PHP string expression for the request path. Most path parameter
-        // references can be interpolated directly (e.g. "/users/{$id}"), but some are expressions
-        // (e.g. a boolean rendered as "true"/"false") that cannot be interpolated and must be
-        // concatenated onto the string literal instead.
         const segments: string[] = [];
         let literal = endpoint.fullPath.head;
         for (const part of endpoint.fullPath.parts) {
