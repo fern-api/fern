@@ -154,6 +154,26 @@ fixtures:
     - customConfig:
         generateWireTests: true
       outputFolder: with-wire-tests
+  # Multipart/form-data wire coverage. The `POST /upload-file` operation has an
+  # optional `file` field typed `anyOf: [{string, binary}, {type: null}]` — the
+  # canonical shape the harness must drive with a real fixture file (not the
+  # filename as a text part). The harness writes a temp file, passes it via the
+  # per-field `--file` flag, and asserts the multipart body carries the file
+  # bytes, so a regression that sends the path string instead fails at
+  # `cargo test`.
+  file-upload-openapi:
+    - customConfig:
+        generateWireTests: true
+      outputFolder: with-wire-tests
+  # JSON request-body wire coverage. `PATCH /Profiles/{profileId}/Identifiers/
+  # {idType}` carries an inlined JSON body (`idType`/`oldValue`/`newValue`) that
+  # also collides with a path param name. The harness asserts the request body
+  # the CLI sends matches the example, so a body that drops/renames/mis-serializes
+  # a field fails at `cargo test`.
+  openapi-path-param-body-collision:
+    - customConfig:
+        generateWireTests: true
+      outputFolder: with-wire-tests
 
 # Alpha-quality coverage: the SDK template only handles happy-path
 # OpenAPI specs. Seed iterates every test-definition by default; fixtures

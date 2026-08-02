@@ -44,9 +44,16 @@ export function renderWireTestHarness(args: { binaryName: string; cases: WireTes
 //!
 //! Each test stands up an in-process \`wiremock\` server, points the
 //! generated CLI at it via \`--base-url\`, drives one endpoint from an IR
-//! example (\`--params\` / \`--json\`), and asserts the CLI (a) hit the mock
-//! exactly once with the right method + path and (b) rendered the mocked
-//! response body to stdout.
+//! example, and asserts the request the CLI *sent* — not just the response
+//! it renders:
+//!   - method + path, scalar query params, and auth headers;
+//!   - the request body: opaque JSON bodies (\`--json\`) are matched
+//!     field-by-field, and file/multipart uploads are driven with a real
+//!     temp fixture file whose bytes must appear in the request body (so an
+//!     upload the runtime sends as a text path, not a file part, is caught);
+//!   - for the happy-path case, the rendered response body on stdout;
+//!   - each case also has a negative twin: the mock serves a non-2xx with a
+//!     JSON error body and the CLI is required to exit non-zero.
 //!
 //! No docker, no network — runs under a plain \`cargo test\`. Regenerated on
 //! every \`fern generate\`; do not edit by hand.
@@ -55,6 +62,7 @@ export function renderWireTestHarness(args: { binaryName: string; cases: WireTes
 use serde::Deserialize;
 use std::collections::HashMap;
 use wiremock::matchers::{
+    body_partial_json as match_body_partial_json, body_string_contains as match_body_contains,
     header as match_header, header_regex as match_header_regex, method as match_method, path as match_path,
     query_param as match_query_param,
 };
@@ -114,7 +122,19 @@ struct Case {
     query_matchers: Vec<QueryMatcher>,
     #[serde(rename = "headerMatchers", default)]
     header_matchers: Vec<HeaderMatcher>,
+    #[serde(rename = "multipartFields", default)]
+    multipart_fields: Vec<MultipartFieldSpec>,
+    #[serde(rename = "expectError", default)]
+    expect_error: bool,
     response: ExpectedResponse,
+}
+
+#[derive(Deserialize)]
+struct MultipartFieldSpec {
+    #[serde(rename = "wireName")]
+    wire_name: String,
+    #[serde(rename = "isFile")]
+    is_file: bool,
 }
 
 #[derive(Deserialize)]
@@ -152,6 +172,33 @@ fn normalize_path(path: &str) -> String {
     }
 }
 
+/// Canonicalize a path *template* for resolution: normalize it, then collapse
+/// every \`{param}\` placeholder to a bare \`{}\` so two templates match
+/// regardless of parameter *names*. The CLI can rename a path parameter (e.g.
+/// to disambiguate it from a request-body field of the same name), so the
+/// manifest's template (\`…/{idTypePathParam}\`) and the spec's template
+/// (\`…/{idType}\`) describe the same route but differ only in placeholder name.
+fn canonicalize_path_template(path: &str) -> String {
+    let normalized = normalize_path(path);
+    let mut out = String::with_capacity(normalized.len());
+    let mut in_placeholder = false;
+    for ch in normalized.chars() {
+        match ch {
+            '{' => {
+                in_placeholder = true;
+                out.push('{');
+            }
+            '}' => {
+                in_placeholder = false;
+                out.push('}');
+            }
+            _ if in_placeholder => {}
+            _ => out.push(ch),
+        }
+    }
+    out
+}
+
 /// A resolved command plus the body-input modality read straight off the
 /// \`RestMethod\` the CLI itself uses — so the harness drives each endpoint the
 /// same way the CLI expects, and can tell when it can't drive one at all.
@@ -164,6 +211,8 @@ struct CommandInfo {
     has_json_body: bool,
     /// Binary request body — the CLI wants a real file via a typed flag.
     is_binary: bool,
+    /// Flag name for the binary request-body file (\`--<flag> <path>\`), if any.
+    binary_flag: Option<String>,
     /// multipart/form-data — per-field file/value flags, not \`--json\`.
     is_multipart: bool,
     /// Body was flattened into per-field flags (params carry location "body").
@@ -183,6 +232,7 @@ fn make_command(chain: Vec<String>, method: &fern_cli_sdk::openapi::discovery::R
         path: method.path.clone(),
         has_json_body: method.request.is_some(),
         is_binary: method.binary_request_body.is_some(),
+        binary_flag: method.binary_request_body.as_ref().map(|b| b.flag_name.clone()),
         is_multipart: !method.multipart_fields.is_empty(),
         has_body_field_flags: method
             .parameters
@@ -276,12 +326,12 @@ fn resolve_command(manifest: &Manifest, method: &str, path: &str) -> CommandInfo
     }
 
     let want_method = method.to_uppercase();
-    let want_path = normalize_path(path);
+    let want_path = canonicalize_path_template(path);
 
-    // Exact match on method + normalized path.
+    // Exact match on method + canonicalized path template.
     let mut hits: Vec<CommandInfo> = commands
         .iter()
-        .filter(|c| c.http_method == want_method && normalize_path(&c.path) == want_path)
+        .filter(|c| c.http_method == want_method && canonicalize_path_template(&c.path) == want_path)
         .cloned()
         .collect();
 
@@ -290,7 +340,7 @@ fn resolve_command(manifest: &Manifest, method: &str, path: &str) -> CommandInfo
         hits = commands
             .iter()
             .filter(|c| {
-                let np = normalize_path(&c.path);
+                let np = canonicalize_path_template(&c.path);
                 c.http_method == want_method && (np.ends_with(&want_path) || want_path.ends_with(&np))
             })
             .cloned()
@@ -361,25 +411,79 @@ async fn run_case(id: &str) {
 
     let command = resolve_command(&manifest, &case.method, &case.path);
 
-    // Some endpoints can't be driven by the generic --params / --json
-    // mechanism: file & multipart uploads need a real file, and bodies the CLI
-    // flattened into per-field flags reject a whole-body --json. Skip those
-    // (the test passes) and log why, rather than emit a guaranteed failure —
-    // mirrors the SDK wire-test generator, which skips endpoints it can't
-    // synthesize a call for.
-    if command.is_binary || command.is_multipart || command.has_body_field_flags {
-        let reason = if command.is_binary {
-            "binary/file-upload request body"
-        } else if command.is_multipart {
-            "multipart/form-data request body"
-        } else {
-            "request body is exposed as per-field flags, not --json"
-        };
-        eprintln!("skipping wire test {id} ({} {}): {reason}", case.method, case.path);
+    // Bodies the CLI flattened into per-field flags reject a whole-body --json,
+    // and the generic driver has no per-field example values to synthesize them
+    // from — skip those (the test passes) and log why, rather than emit a
+    // guaranteed failure. Binary and multipart uploads are *not* skipped: we
+    // drive them with a real fixture file below and assert the bytes land in
+    // the request body — that is exactly what catches an upload the runtime
+    // mis-serializes (e.g. sending a filename as a text part).
+    if command.has_body_field_flags {
+        eprintln!(
+            "skipping wire test {id} ({} {}): request body is exposed as per-field flags, not --json",
+            case.method, case.path
+        );
+        return;
+    }
+    if command.is_multipart && case.multipart_fields.is_empty() {
+        eprintln!(
+            "skipping wire test {id} ({} {}): multipart endpoint has no IR field metadata to drive",
+            case.method, case.path
+        );
         return;
     }
 
     let expected_path = substitute_path(&case.path, &case.params);
+
+    // A per-case scratch dir for any fixture file(s) the request needs.
+    // Distinct from the login-keyring HOME dir, and removed at the end.
+    let fixtures_dir = std::env::temp_dir().join(format!("{}-wire-files-{id}", manifest.binary_name));
+    let _ = std::fs::remove_dir_all(&fixtures_dir);
+
+    // Plan how to drive the request body: extra CLI flags to append, plus
+    // substrings that MUST appear in the received request body. For an upload,
+    // each file field gets a temp file whose unique marker bytes must show up
+    // in the multipart body — so a runtime that sends the file's *path* as a
+    // text part (the optional-file bug) fails to match and the test fails.
+    let mut body_flag_args: Vec<String> = Vec::new();
+    let mut required_body_substrings: Vec<String> = Vec::new();
+
+    if command.is_multipart {
+        std::fs::create_dir_all(&fixtures_dir).expect("create multipart fixture dir");
+        for field in &case.multipart_fields {
+            let flag = fern_cli_sdk::to_kebab_flag(&field.wire_name);
+            if field.is_file {
+                let marker = format!("wire-fixture-{id}-{}-bytes", field.wire_name);
+                let file_path = fixtures_dir.join(&field.wire_name);
+                std::fs::write(&file_path, marker.as_bytes()).expect("write multipart fixture file");
+                body_flag_args.push(format!("--{flag}"));
+                body_flag_args.push(file_path.to_string_lossy().into_owned());
+                // The file's bytes only appear if the CLI actually read and sent
+                // the file — not if it sent the path string as a text part.
+                required_body_substrings.push(marker);
+            } else {
+                let value = case
+                    .body
+                    .get(&field.wire_name)
+                    .and_then(|v| v.as_str())
+                    .map(str::to_string)
+                    .unwrap_or_else(|| format!("wire-fixture-{id}-{}", field.wire_name));
+                body_flag_args.push(format!("--{flag}"));
+                body_flag_args.push(value.clone());
+                required_body_substrings.push(value);
+            }
+        }
+    } else if command.is_binary {
+        if let Some(flag) = &command.binary_flag {
+            std::fs::create_dir_all(&fixtures_dir).expect("create binary fixture dir");
+            let marker = format!("wire-fixture-{id}-body-bytes");
+            let file_path = fixtures_dir.join("body");
+            std::fs::write(&file_path, marker.as_bytes()).expect("write binary fixture file");
+            body_flag_args.push(format!("--{flag}"));
+            body_flag_args.push(file_path.to_string_lossy().into_owned());
+            required_body_substrings.push(marker);
+        }
+    }
 
     // Public-client login flows (PKCE / device-code) authenticate from a keyring token that
     // \`auth login\` populates. We can't drive the interactive browser/device login headlessly, so
@@ -470,6 +574,19 @@ async fn run_case(id: &str) {
     if let Some(setup) = &manifest.login_token_setup {
         mock = mock.and(match_header("authorization", format!("Bearer {}", setup.token).as_str()));
     }
+    // Assert the *request body* the CLI sends, not just its method/path. For an
+    // opaque JSON body, require the example fields to be present with the right
+    // values (partial match — tolerant of extra transport fields). For an
+    // upload, require each part's marker/value to appear in the multipart body.
+    // A request with a wrong, missing, or mis-serialized body won't match this
+    // mock, so the CLI gets no response and the test fails.
+    if command.is_multipart || command.is_binary {
+        for substring in &required_body_substrings {
+            mock = mock.and(match_body_contains(substring.clone()));
+        }
+    } else if command.has_json_body && !case.body.is_null() {
+        mock = mock.and(match_body_partial_json(case.body.clone()));
+    }
     mock.respond_with(template).expect(1).mount(&server).await;
 
     let mut args: Vec<String> = command.chain.clone();
@@ -480,9 +597,11 @@ async fn run_case(id: &str) {
         args.push("--params".to_string());
         args.push(serde_json::to_string(&case.params).expect("params serialize"));
     }
-    // Feed --json only when the endpoint actually registers it (opaque JSON
-    // body). Endpoints without it were filtered out by the skip above.
-    if command.has_json_body && !case.body.is_null() {
+    // Feed the request body the way the endpoint expects it: per-field upload
+    // flags for binary/multipart (planned above), else the opaque --json body.
+    if command.is_multipart || command.is_binary {
+        args.extend(body_flag_args.iter().cloned());
+    } else if command.has_json_body && !case.body.is_null() {
         args.push("--json".to_string());
         args.push(serde_json::to_string(&case.body).expect("body serialize"));
     }
@@ -508,6 +627,30 @@ async fn run_case(id: &str) {
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
+
+    // Best-effort cleanup of the per-case fixture dir (ignore errors — a leaked
+    // temp dir must never fail a test).
+    let _ = std::fs::remove_dir_all(&fixtures_dir);
+
+    if case.expect_error {
+        // Negative twin: the mock served a non-2xx with a non-empty JSON body,
+        // and \`Mock::expect(1)\` still requires exactly one correctly-matched
+        // request. The CLI must surface the error — a non-zero exit — rather
+        // than deserialize the error body and report it as success (exit 0).
+        assert!(
+            !output.status.success(),
+            "expected CLI to fail on a {} response, but it exited 0\n  command: {} {}\n  stdout: {stdout}\n  stderr: {stderr}",
+            case.response.status,
+            manifest.binary_name,
+            args.join(" ")
+        );
+        assert!(
+            !stderr.trim().is_empty(),
+            "expected an error message on stderr for {id} (a {} response), got empty stderr",
+            case.response.status
+        );
+        return;
+    }
 
     // Primary assertion (mirrors the SDK wire tests: the call succeeds, and
     // \`Mock::expect(1)\` verifies exactly one matching request on server drop).

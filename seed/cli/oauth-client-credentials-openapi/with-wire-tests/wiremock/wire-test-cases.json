@@ -16,6 +16,7 @@
     "path": "/identity/token",
     "responseBody": "{\"access_token\":\"test-access-token\",\"expires_in\":3600}"
   },
+  "loginTokenSetup": null,
   "cases": [
     {
       "id": "list",
@@ -44,6 +45,36 @@
         "status": 200,
         "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"species\": \"species\"\n}"
       }
+    },
+    {
+      "id": "list_error",
+      "method": "GET",
+      "path": "/plants",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
+    },
+    {
+      "id": "get_error",
+      "method": "GET",
+      "path": "/plants/{plantId}",
+      "params": {
+        "plantId": "plantId"
+      },
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
     }
   ]
 }

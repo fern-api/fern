@@ -9,6 +9,7 @@
   ],
   "authEnvVars": [],
   "authMock": null,
+  "loginTokenSetup": null,
   "cases": [
     {
       "id": "get",
@@ -24,6 +25,22 @@
         "status": 200,
         "body": "{\n  \"id\": \"id\",\n  \"created_by\": \"self\"\n}"
       }
+    },
+    {
+      "id": "get_error",
+      "method": "GET",
+      "path": "/models/{model_id}",
+      "params": {
+        "model_id": "model_id"
+      },
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
     }
   ]
 }

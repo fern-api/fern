@@ -30,6 +30,11 @@ pub mod websocket;
 // Convenience re-exports for auth types
 pub use auth::{ApiKeyAuth, BasicAuth, BearerAuth, OAuth2Auth, OAuth2Grant, OAuth2TokenProvider, TokenCache};
 
+// Re-exported for the generated wire-test harness so it derives multipart
+// field flag names (`--<kebab>`) with the exact same rule the CLI registers
+// them under, rather than reproducing the kebab-casing logic and risking drift.
+pub use text::to_kebab_flag;
+
 // Internal modules
 pub(crate) mod debug;
 pub(crate) mod early_intercept;

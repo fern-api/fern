@@ -9,6 +9,7 @@
   ],
   "authEnvVars": [],
   "authMock": null,
+  "loginTokenSetup": null,
   "cases": [
     {
       "id": "list",
@@ -22,6 +23,20 @@
         "status": 200,
         "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]"
       }
+    },
+    {
+      "id": "list_error",
+      "method": "GET",
+      "path": "/items",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
     }
   ]
 }

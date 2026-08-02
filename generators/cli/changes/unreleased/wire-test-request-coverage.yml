@@ -1,0 +1,12 @@
+- summary: |
+    Wire tests now exercise the request side, not just the response. The
+    harness asserts JSON request bodies with a partial-JSON matcher, drives
+    multipart and binary endpoints with real temporary fixture files through
+    the generated field flags (instead of skipping them), and every positive
+    case gets a negative (non-2xx) twin that asserts the CLI exits non-zero and
+    surfaces an error. Multipart file/text classification is derived from the
+    Fern IR so a runtime regression fails the mock match rather than passing
+    silently. Also fixes the OpenAPI multipart classifier to unwrap
+    `anyOf`/`oneOf`/`allOf` so an optional nullable binary field
+    (`anyOf: [{string, binary}, {null}]`) is recognized as a file upload.
+  type: fix

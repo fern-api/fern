@@ -3505,6 +3505,27 @@ fn classify_multipart_property(
         }
     }
 
+    // Composition wrapping a binary schema — the canonical shape for an
+    // *optional* file, `anyOf: [{type: string, format: binary}, {type: null}]`.
+    // Without unwrapping, an optional upload has no top-level `type`/`format`
+    // and would be mistaken for a text part (the filename sent as a string).
+    // Classify as a file when any non-null branch is itself a file; the content
+    // type comes from the first file branch.
+    for branch in resolved
+        .any_of
+        .iter()
+        .chain(resolved.one_of.iter())
+        .chain(resolved.all_of.iter())
+    {
+        if is_null_sentinel(branch) {
+            continue;
+        }
+        let (branch_is_file, branch_ct) = classify_multipart_property(branch, component_schemas);
+        if branch_is_file {
+            return (true, branch_ct);
+        }
+    }
+
     (false, None)
 }
 
@@ -4266,6 +4287,54 @@ paths:
         let binary = send.binary_request_body.as_ref().unwrap();
         assert_eq!(binary.content_type, "text/plain");
         assert_eq!(binary.flag_name, "body");
+    }
+
+    #[test]
+    fn test_multipart_optional_file_via_anyof_null_is_classified_as_file() {
+        // Regression: an *optional* file (`anyOf: [{string, binary}, {null}]`)
+        // must be recognized as a file part, not sent as a text part (the
+        // filename as a string), which the server rejects with a 422.
+        let yaml = r#"
+openapi: "3.1.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /upload-file:
+    post:
+      x-fern-sdk-group-name: files
+      x-fern-sdk-method-name: upload
+      operationId: uploadFile
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name: { type: string }
+                file:
+                  anyOf:
+                    - { type: string, format: binary }
+                    - { type: "null" }
+      responses: { "200": { description: ok } }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let upload = &doc.resources["files"].methods["upload"];
+        let file_field = upload
+            .multipart_fields
+            .iter()
+            .find(|f| f.wire_name == "file")
+            .expect("file field present");
+        assert!(
+            file_field.is_file,
+            "optional anyOf-null binary field must classify as a file"
+        );
+        let name_field = upload
+            .multipart_fields
+            .iter()
+            .find(|f| f.wire_name == "name")
+            .expect("name field present");
+        assert!(!name_field.is_file, "plain string field stays a text part");
     }
 
     #[test]

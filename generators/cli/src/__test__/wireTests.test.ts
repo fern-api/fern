@@ -66,18 +66,30 @@ describe("buildWireTestManifest", () => {
         });
 
         expect(manifest.binaryName).toBe("acme-cli");
-        expect(manifest.cases).toHaveLength(1);
+        // One positive case plus its negative (non-2xx) twin.
+        expect(manifest.cases).toHaveLength(2);
 
         const testCase = manifest.cases[0];
         expect(testCase?.method).toBe("GET");
         expect(testCase?.path).toBe("/users");
         expect(testCase?.params).toEqual({ limit: 5 });
         expect(testCase?.body).toBeNull();
+        expect(testCase?.expectError).toBeFalsy();
         expect(testCase?.response.status).toBe(200);
         expect(JSON.parse(testCase?.response.body ?? "")).toEqual({ results: ["alice"] });
         // The scalar query param is carried as a matcher so the mock enforces it.
         expect(testCase?.queryMatchers).toEqual([{ name: "limit", value: "5" }]);
         expect(testCase?.headerMatchers).toEqual([]);
+
+        // The negative twin reuses the request shape (so the request is still
+        // matched exactly) but forces a non-2xx response the CLI must surface.
+        const negativeCase = manifest.cases[1];
+        expect(negativeCase?.expectError).toBe(true);
+        expect(negativeCase?.method).toBe("GET");
+        expect(negativeCase?.path).toBe("/users");
+        expect(negativeCase?.params).toEqual({ limit: 5 });
+        expect(negativeCase?.response.status).toBeGreaterThanOrEqual(400);
+        expect(negativeCase?.response.body).not.toBe("");
     });
 
     it("emits an auth-header matcher for an authenticated bearer endpoint", () => {

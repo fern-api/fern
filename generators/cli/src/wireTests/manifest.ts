@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import { isEqualToMatcher, WireMock, WireMockMapping, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -52,6 +53,26 @@ export interface WireTestCase {
      * `equalTo` for the exact Basic value.
      */
     headerMatchers: Array<{ name: string; equalTo?: string; matches?: string }>;
+    /**
+     * multipart/form-data fields, present only when the endpoint's request body
+     * is a file upload. Derived from the IR — *not* the runtime's own multipart
+     * classifier — so the harness drives each field the way the spec intends: a
+     * real temp file for file fields, the example value for text fields. This is
+     * what lets a wire test catch a runtime that mis-classifies an (optional)
+     * file field and sends its filename as a text part: the harness passes a
+     * file and asserts the multipart body actually carries the file's bytes.
+     * Absent/empty for non-multipart endpoints.
+     */
+    multipartFields?: Array<{ wireName: string; isFile: boolean }>;
+    /**
+     * When true, this is a negative twin of a happy-path case: the mock serves a
+     * non-2xx response (with a non-empty JSON error body) and the harness asserts
+     * the CLI exits non-zero and reports an error — so an SDK path that
+     * deserializes an error body and returns it as success (exit 0) fails here.
+     * The request matchers (and `expect(1)`) are unchanged, so the CLI must still
+     * send exactly the same, correct request.
+     */
+    expectError?: boolean;
     /** Expected response the mock serves and the CLI is expected to render. */
     response: {
         status: number;
@@ -216,6 +237,18 @@ export function buildWireTestManifest(
         }
     }
 
+    // For every happy-path case, emit a negative twin whose mock serves a
+    // non-2xx response with a non-empty JSON error body. The harness keeps the
+    // exact same request matchers but asserts the CLI exits non-zero and reports
+    // an error — so a code path that deserializes an error body and reports it
+    // as success (exit 0) is caught. Twins are appended after the positive cases
+    // so the happy path is exercised first.
+    const negativeCases: WireTestCase[] = [];
+    for (const positive of cases) {
+        negativeCases.push(buildNegativeTwin(positive, usedIds));
+    }
+    cases.push(...negativeCases);
+
     return {
         binaryName: options.binaryName,
         rootGroup: options.rootGroup,
@@ -327,6 +360,7 @@ function buildCase(args: {
     }
 
     const body = example.request != null ? (example.request.jsonExample ?? null) : null;
+    const multipartFields = extractMultipartFields(endpoint);
 
     return {
         id: uniqueId(caseIdBase(endpoint), usedIds),
@@ -336,11 +370,78 @@ function buildCase(args: {
         body,
         queryMatchers: extractQueryMatchers(mapping),
         headerMatchers: extractHeaderMatchers(mapping),
+        ...(multipartFields != null ? { multipartFields } : {}),
         response: {
             status: mapping.response.status,
             body: mapping.response.body
         }
     };
+}
+
+/** Status + non-empty JSON body the negative twin's mock serves. A non-empty
+ * body is the crux: the error-as-success bug only surfaces when there is a body
+ * to (mis)deserialize, so an empty 4xx would not exercise it. */
+const NEGATIVE_CASE_STATUS = 422;
+const NEGATIVE_CASE_BODY = JSON.stringify({
+    error: { code: NEGATIVE_CASE_STATUS, message: "wire-test forced error response" }
+});
+
+/**
+ * Build the negative twin of a happy-path case: identical request matchers, but
+ * the mock serves a non-2xx response with a non-empty JSON error body and the
+ * harness asserts the CLI fails (non-zero exit). See {@link WireTestCase.expectError}.
+ */
+function buildNegativeTwin(positive: WireTestCase, usedIds: Set<string>): WireTestCase {
+    return {
+        ...positive,
+        id: uniqueId(`${positive.id}_error`, usedIds),
+        expectError: true,
+        response: {
+            status: NEGATIVE_CASE_STATUS,
+            body: NEGATIVE_CASE_BODY
+        }
+    };
+}
+
+/**
+ * Multipart/form-data fields for a file-upload endpoint, derived straight from
+ * the IR. Whether a field is a *file* comes from the IR discriminant
+ * (`FileUploadRequestProperty.type === "file"`), independent of the CLI
+ * runtime's own multipart classifier — the runtime is exactly the thing under
+ * test, and a bug there (e.g. failing to unwrap `anyOf: [{binary}, {null}]` for
+ * an optional file) is what we want the wire test to expose, so it must not be
+ * the oracle. Returns `undefined` for non-file-upload endpoints.
+ */
+function extractMultipartFields(
+    endpoint: FernIr.HttpEndpoint
+): Array<{ wireName: string; isFile: boolean }> | undefined {
+    const requestBody = endpoint.requestBody;
+    if (requestBody == null || requestBody.type !== "fileUpload") {
+        return undefined;
+    }
+    const fields: Array<{ wireName: string; isFile: boolean }> = [];
+    for (const property of requestBody.properties) {
+        switch (property.type) {
+            case "file": {
+                // Both single-file and file-array variants carry `key`.
+                const wireName = getWireValue(property.value.key);
+                if (wireName != null && wireName !== "") {
+                    fields.push({ wireName, isFile: true });
+                }
+                break;
+            }
+            case "bodyProperty": {
+                const wireName = getWireValue(property.name);
+                if (wireName != null && wireName !== "") {
+                    fields.push({ wireName, isFile: false });
+                }
+                break;
+            }
+            default:
+                assertNever(property);
+        }
+    }
+    return fields.length > 0 ? fields : undefined;
 }
 
 const DATETIME_WITH_ZERO_MILLIS_IN_VALUE = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})\.000(Z|[+-]\d{2}:\d{2})$/;
