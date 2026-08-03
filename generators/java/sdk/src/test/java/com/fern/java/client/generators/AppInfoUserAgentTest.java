@@ -192,7 +192,8 @@ class AppInfoUserAgentTest {
     @Test
     void percentEncodesAccentedLetterInComment() throws Exception {
         // 'é' (U+00E9) is > 0x7f, so OkHttp's header validation would reject it verbatim. It must be percent-encoded
-        // to its UTF-8 bytes (C3 A9) rather than passed through, otherwise every request throws IllegalArgumentException.
+        // to its UTF-8 bytes (C3 A9) rather than passed through, otherwise every request throws
+        // IllegalArgumentException.
         String result = apply("app", null, "café");
         assertThat(result).isEqualTo(BASE + " app (caf%C3%A9)");
         assertThat(result).doesNotContain("é");
@@ -231,5 +232,31 @@ class AppInfoUserAgentTest {
     void keepsAllPrintableAsciiCommentCharactersReadable() throws Exception {
         // Tilde (0x7e) is the last printable ASCII char and must NOT be encoded (just below the c >= 0x7f threshold).
         assertThat(apply("app", null, "a~b")).isEqualTo(BASE + " app (a~b)");
+    }
+
+    @Test
+    void fromCopiesAppInfoTokenToDerivedBuilder() {
+        // Regression: ClientOptions.Builder.from(clientOptions) must forward the sanitized appInfo product token to the
+        // derived builder. Otherwise the derived build() re-bakes the User-Agent from a null token and silently drops
+        // the caller's app token — which happens on every generated OAuth client, since those derive their per-request
+        // ClientOptions via Builder.from(baseOptions).addHeader("Authorization", ...).build().
+        String statement =
+                ClientOptionsGenerator.buildFromAppInfoCopyStatement().toString();
+        assertThat(statement).isEqualTo("builder.appInfo = clientOptions.appInfo()");
+    }
+
+    @Test
+    void copiedAppInfoTokenReproducesUserAgent() throws Exception {
+        // Proves why copying the stored token in from() is sufficient: appending the same sanitized token to the base
+        // User-Agent (as the derived build() does) reproduces the original client's User-Agent value verbatim.
+        Method productToken =
+                helpersClass.getDeclaredMethod("appInfoProductToken", String.class, String.class, String.class);
+        Method appendAppInfo = helpersClass.getDeclaredMethod("appendAppInfo", String.class, String.class);
+        productToken.setAccessible(true);
+        appendAppInfo.setAccessible(true);
+
+        String storedToken = (String) productToken.invoke(null, "app", "1.2.3", "note");
+        String rebakedUserAgent = (String) appendAppInfo.invoke(null, BASE, storedToken);
+        assertThat(rebakedUserAgent).isEqualTo(BASE + " app/1.2.3 (note)");
     }
 }

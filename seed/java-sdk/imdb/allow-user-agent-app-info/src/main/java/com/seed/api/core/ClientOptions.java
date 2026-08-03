@@ -35,6 +35,8 @@ public final class ClientOptions {
 
     private final Optional<LogConfig> logging;
 
+    private String appInfo;
+
     private ClientOptions(
             Environment environment,
             Map<String, String> headers,
@@ -66,6 +68,7 @@ public final class ClientOptions {
         this.maxRetryDelayMillis = maxRetryDelayMillis;
         this.retryJitterFactor = retryJitterFactor;
         this.logging = logging;
+        this.appInfo = appInfo;
     }
 
     public Environment environment() {
@@ -169,6 +172,10 @@ public final class ClientOptions {
         for (byte b : bytes) {
             encoded.append("%").append(String.format("%02x", b & 0xff).toUpperCase(Locale.ROOT));
         }
+    }
+
+    public String appInfo() {
+        return this.appInfo;
     }
 
     public int timeout(RequestOptions requestOptions) {
@@ -387,6 +394,7 @@ public final class ClientOptions {
             builder.maxRetryDelayMillis = clientOptions.maxRetryDelayMillis();
             builder.retryJitterFactor = clientOptions.retryJitterFactor();
             builder.logging = clientOptions.logging();
+            builder.appInfo = clientOptions.appInfo();
             return builder;
         }
     }

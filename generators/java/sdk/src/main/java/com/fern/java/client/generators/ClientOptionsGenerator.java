@@ -403,11 +403,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
     /**
      * Builds the static {@code encodeComment} helper used by {@link #buildAppInfoProductTokenMethod()}. Percent-encodes
-     * the RFC 9110 comment delimiters ({@code (}, {@code )}, {@code \}), control characters (0x00-0x1F, incl. CR/LF) and
-     * every non-ASCII character (>= 0x7F, e.g. accented letters or emoji) as UTF-8 bytes, so a caller-supplied comment
-     * cannot terminate the comment group early or inject additional header content, and OkHttp's header validation
-     * (which rejects any value char outside {@code \t} / {@code ' '..'~'}) never throws; other printable ASCII
-     * characters (e.g. a URL) are kept human-readable.
+     * the RFC 9110 comment delimiters ({@code (}, {@code )}, {@code \}), control characters (0x00-0x1F, incl. CR/LF)
+     * and every non-ASCII character (>= 0x7F, e.g. accented letters or emoji) as UTF-8 bytes, so a caller-supplied
+     * comment cannot terminate the comment group early or inject additional header content, and OkHttp's header
+     * validation (which rejects any value char outside {@code \t} / {@code ' '..'~'}) never throws; other printable
+     * ASCII characters (e.g. a URL) are kept human-readable.
      */
     static MethodSpec buildEncodeCommentMethod() {
         return MethodSpec.methodBuilder("encodeComment")
@@ -476,6 +476,16 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .endControlFlow()
                 .addStatement("return userAgent + $S + appInfoToken", " ")
                 .build();
+    }
+
+    /**
+     * Builds the statement emitted into {@code ClientOptions.Builder.from(ClientOptions)} that forwards the source
+     * client's sanitized {@code appInfo} product token to the derived builder. Without it, the derived {@code build()}
+     * re-bakes the {@code User-Agent} header from a {@code null} token and silently drops the caller's app token.
+     * Emitted only when the opt-in {@code allowUserAgentAppInfo} config is enabled and a {@code User-Agent} is written.
+     */
+    static CodeBlock buildFromAppInfoCopyStatement() {
+        return CodeBlock.of("builder.$L = clientOptions.$L()", APP_INFO_FIELD_NAME, APP_INFO_FIELD_NAME);
     }
 
     private final ClassName builderClassName;
@@ -739,6 +749,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         // Add logging assignment
         constructorBuilder.addStatement("this.$L = $L", loggingField.name, loggingField.name);
 
+        // Store the sanitized appInfo product token so a ClientOptions derived via Builder.from(...) can copy it
+        // forward; only present when the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent is written,
+        // so default-off generated output stays byte-identical.
+        if (referencesAppInfo) {
+            constructorBuilder.addStatement("this.$L = $L", APP_INFO_FIELD_NAME, APP_INFO_FIELD_NAME);
+        }
+
         addApiVersionToConstructor(constructorBuilder);
 
         variableFields
@@ -774,6 +791,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         // Add logging field
         clientOptionsBuilder.addField(loggingField);
 
+        // Store the sanitized appInfo product token as a field so Builder.from(...) can forward it; only present when
+        // the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent is written, so default-off generated
+        // output stays byte-identical.
+        if (referencesAppInfo) {
+            clientOptionsBuilder.addField(FieldSpec.builder(String.class, APP_INFO_FIELD_NAME, Modifier.PRIVATE)
+                    .build());
+        }
+
         clientOptionsBuilder
                 .addFields(variableFields.values())
                 .addFields(apiPathParamFieldsForMainClass.values())
@@ -798,6 +823,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             clientOptionsBuilder.addMethod(buildEncodeTokenMethod());
             clientOptionsBuilder.addMethod(buildEncodeCommentMethod());
             clientOptionsBuilder.addMethod(buildAppendPercentEncodedMethod());
+            // Getter exposing the stored appInfo product token so Builder.from(this) can forward it to a derived
+            // ClientOptions, whose constructor re-bakes the User-Agent from the (otherwise null) token.
+            clientOptionsBuilder.addMethod(MethodSpec.methodBuilder(APP_INFO_FIELD_NAME)
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(String.class)
+                    .addStatement("return this.$L", APP_INFO_FIELD_NAME)
+                    .build());
         }
 
         addApiVersionField(clientOptionsBuilder);
@@ -1312,7 +1344,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .returns(entry.getValue().type)
                         .addStatement("return this.$L", entry.getValue().name)
                         .build()));
-        builder.addMethod(getFromMethod(variableFields, variableGetters));
+        builder.addMethod(getFromMethod(variableFields, variableGetters, referencesAppInfo));
 
         return builder.build();
     }
@@ -1561,7 +1593,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec getFromMethod(
-            Map<VariableId, FieldSpec> variableFields, Map<VariableId, MethodSpec> variableGetters) {
+            Map<VariableId, FieldSpec> variableFields,
+            Map<VariableId, MethodSpec> variableGetters,
+            boolean referencesAppInfo) {
         MethodSpec.Builder fromMethod = MethodSpec.methodBuilder("from")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(builderClassName)
@@ -1592,6 +1626,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         RETRY_JITTER_FACTOR_FIELD.name,
                         RETRY_JITTER_FACTOR_FIELD.name)
                 .addStatement("builder.$L = clientOptions.$L()", LOGGING_FIELD_NAME, LOGGING_FIELD_NAME);
+
+        // Forward the sanitized appInfo product token so a derived client keeps sending the caller's app token; the
+        // build() constructor re-bakes the User-Agent from this field (null on the plain Builder would otherwise drop
+        // it). Only emitted when the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent is written, so
+        // default-off generated output stays byte-identical.
+        if (referencesAppInfo) {
+            fromMethod.addStatement(buildFromAppInfoCopyStatement());
+        }
 
         for (Map.Entry<VariableId, FieldSpec> entry : variableFields.entrySet()) {
             MethodSpec getter = variableGetters.get(entry.getKey());
