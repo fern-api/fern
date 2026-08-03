@@ -24,6 +24,7 @@ import { isEndpointSecurity } from "../endpoint/request/endpointAuthHeaders.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
+import { APPEND_APP_INFO_METHOD_NAME, buildAppendAppInfoMethodLines } from "./buildAppInfoUserAgent.js";
 import { buildUserAgentHeaderEntry } from "./buildUserAgentHeaderEntry.js";
 import {
     BUILD_USER_AGENT_METHOD_NAME,
@@ -87,6 +88,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     private grpcClientInfo: GrpcClientInfo | undefined;
     private oauth: OAuthScheme | undefined;
     private inferred: InferredAuthScheme | undefined;
+    /**
+     * Set while building the constructor body when the opt-in
+     * `allow-user-agent-app-info` config actually wraps a written User-Agent value,
+     * so the emitted `AppendAppInfoToUserAgent` helper is only added when referenced.
+     */
+    private usesAppInfoHelper = false;
 
     constructor(context: SdkGeneratorContext) {
         super(context);
@@ -200,6 +207,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
         if (this.settings.includePlatformHeaders) {
             this.addBuildUserAgentMethod(class_);
+        }
+
+        // Emit the self-contained `AppendAppInfoToUserAgent` helper only when the
+        // opt-in `allow-user-agent-app-info` config actually wrapped a written
+        // User-Agent value (set by `getConstructorMethod`, invoked above), so
+        // flag-off output and clients that never send a User-Agent stay unchanged.
+        if (this.usesAppInfoHelper) {
+            this.addAppendAppInfoMethod(class_);
         }
 
         for (const subpackage of this.getSubpackages()) {
@@ -419,13 +434,33 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
                 value: this.context.getCurrentVersionValueAccess()
             });
+            // When the opt-in `allow-user-agent-app-info` config is set, wrap the
+            // computed User-Agent value expression in the emitted
+            // `AppendAppInfoToUserAgent` helper, which appends the caller-supplied
+            // `AppInfo` product token. `clientOptions` is already initialized (and
+            // non-null) at the point the platform-headers dictionary is written, so
+            // `clientOptions.AppInfo` is safe to read. Keeping this wrapping local to
+            // the generated client (rather than modifying the shared
+            // `BuildUserAgent`/core-utilities) keeps flag-off output byte-identical.
+            const withAppInfo = (userAgentValue: ast.AstNode): ast.AstNode => {
+                if (!this.settings.allowUserAgentAppInfo) {
+                    return userAgentValue;
+                }
+                this.usesAppInfoHelper = true;
+                return this.csharp.codeblock((writer) => {
+                    writer.write(`${APPEND_APP_INFO_METHOD_NAME}(`);
+                    writer.writeNode(userAgentValue);
+                    writer.write(", clientOptions.AppInfo)");
+                });
+            };
+
             if (this.settings.includePlatformHeaders) {
                 // Emit a single structured `User-Agent` consolidating the SDK
                 // name/version with the OS, architecture, and runtime, all
                 // resolved at runtime by the `BuildUserAgent` helper.
                 platformHeaderEntries.push({
                     key: this.csharp.codeblock(`"${platformHeaders.userAgent?.header ?? "User-Agent"}"`),
-                    value: this.csharp.codeblock(`${BUILD_USER_AGENT_METHOD_NAME}()`)
+                    value: withAppInfo(this.csharp.codeblock(`${BUILD_USER_AGENT_METHOD_NAME}()`))
                 });
             } else {
                 // When `user-agent-name-from-package` is enabled, falls back to
@@ -441,7 +476,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     userAgentNameFromPackage: this.settings.userAgentNameFromPackage
                 });
                 if (userAgentEntry != null) {
-                    platformHeaderEntries.push(userAgentEntry);
+                    platformHeaderEntries.push({
+                        key: userAgentEntry.key,
+                        value: withAppInfo(userAgentEntry.value)
+                    });
                 }
             }
         }
@@ -1536,6 +1574,35 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 // registers its using directive.
                 writer.writeNode(this.context.getCurrentVersionValueAccess());
                 writer.writeLine(BUILD_USER_AGENT_RETURN_SUFFIX);
+            }),
+            type: ast.MethodType.STATIC
+        });
+    }
+
+    /**
+     * Emits the self-contained static `AppendAppInfoToUserAgent(string userAgent,
+     * AppInfo? appInfo)` helper used by the opt-in `allow-user-agent-app-info`
+     * feature. It appends the caller-supplied, sanitized `AppInfo` product token to
+     * whichever `User-Agent` value the SDK would otherwise send. Percent-encodes
+     * non-RFC-7230 `tchar` in `Name`/`Version` and escapes comment delimiters and
+     * control characters (incl. CR/LF) in `Comment`; values are trimmed before the
+     * blank check and before encoding, so blank values are dropped rather than
+     * encoded into whitespace tokens. Only netstandard2.0/net462-safe APIs are used.
+     */
+    private addAppendAppInfoMethod(cls: ast.Class) {
+        cls.addMethod({
+            access: ast.Access.Private,
+            name: APPEND_APP_INFO_METHOD_NAME,
+            return_: this.Primitive.string,
+            parameters: [
+                this.csharp.parameter({ name: "userAgent", type: this.Primitive.string }),
+                this.csharp.parameter({ name: "appInfo", type: this.Types.AppInfo.asOptional() })
+            ],
+            isAsync: false,
+            body: this.csharp.codeblock((writer) => {
+                for (const line of buildAppendAppInfoMethodLines()) {
+                    writer.writeLine(line);
+                }
             }),
             type: ast.MethodType.STATIC
         });
