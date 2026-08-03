@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.17.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `allowUserAgentAppInfo` config. When enabled, the generated client's builder exposes
+        an `appInfo(name, version, comment)` option whose product token is appended to the `User-Agent`
+        header the SDK would otherwise send (`{sdk}/{version} ... {name}/{version} ({comment})`),
+        following RFC 9110. Disabled by default, so existing generated output is unchanged, and it
+        composes with `includePlatformHeaders`, the `runtime-version` jar-manifest path, the configured
+        `user-agent` template value, and the default `{coordinate}/{version}`. Caller-supplied values are
+        trimmed and sanitized (name/version percent-encoded to RFC 7230 tchars; comment delimiters,
+        control characters and any non-ASCII characters percent-encoded as UTF-8 bytes so OkHttp's header
+        validation never rejects them), so untrusted values cannot inject header content. Still overridable
+        by an explicit `User-Agent` and suppressed by `omit-fern-headers`.
+      type: feat
+  createdAt: "2026-08-03"
+  irVersion: 67
 - version: 4.16.0
   changelogEntry:
     - summary: |
