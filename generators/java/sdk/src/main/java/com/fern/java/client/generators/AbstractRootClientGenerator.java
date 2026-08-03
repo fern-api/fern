@@ -1305,11 +1305,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
     /**
      * Mirrors the condition under which {@code ClientOptionsGenerator} emits an {@code appInfo(name, version, comment)}
-     * method on the generated {@code ClientOptions.Builder}: the opt-in {@code allowUserAgentAppInfo} config is enabled,
-     * Fern headers are not omitted, and the API actually writes a {@code User-Agent} platform header (the only thing the
-     * product token can be appended to). Keeping the two conditions in lockstep guarantees the root builder's
-     * {@code appInfo(...)} always forwards to a method that exists on {@code ClientOptions.Builder}, and that default-off
-     * generated output stays byte-identical.
+     * method on the generated {@code ClientOptions.Builder}: the opt-in {@code allowUserAgentAppInfo} config is
+     * enabled, Fern headers are not omitted, and the API actually writes a {@code User-Agent} platform header (the only
+     * thing the product token can be appended to). Keeping the two conditions in lockstep guarantees the root builder's
+     * {@code appInfo(...)} always forwards to a method that exists on {@code ClientOptions.Builder}, and that
+     * default-off generated output stays byte-identical.
      */
     private boolean isAppInfoEnabled() {
         if (!clientGeneratorContext.getCustomConfig().allowUserAgentAppInfo()) {
