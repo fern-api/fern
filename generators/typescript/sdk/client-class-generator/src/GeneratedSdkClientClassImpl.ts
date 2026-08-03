@@ -68,6 +68,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         allowCustomFetcher: boolean;
         generateWebSocketClients: boolean;
         requireDefaultEnvironment: boolean;
+        requireBaseUrl: boolean;
         defaultTimeout: number | "infinity" | undefined;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
@@ -114,6 +115,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly generateWebSocketClients: boolean;
     private readonly packageResolver: PackageResolver;
     private readonly requireDefaultEnvironment: boolean;
+    private readonly requireBaseUrl: boolean;
     private readonly packageId: PackageId;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -142,6 +144,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         allowCustomFetcher,
         generateWebSocketClients,
         requireDefaultEnvironment,
+        requireBaseUrl,
         defaultTimeout,
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
@@ -167,6 +170,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generateWebSocketClients = generateWebSocketClients;
         this.packageResolver = packageResolver;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
+        this.requireBaseUrl = requireBaseUrl;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -1067,8 +1071,13 @@ return core.makePassthroughRequest(input, init, {
     public getOptionsPropertiesForSnippet(context: FileContext): ts.ObjectLiteralElementLike[] {
         const properties: ts.ObjectLiteralElementLike[] = [];
 
-        if (!this.requireDefaultEnvironment && context.ir.environments?.defaultEnvironment == null) {
-            const firstEnvironment = context.environments.getReferenceToFirstEnvironmentEnum();
+        if (
+            this.requireBaseUrl ||
+            (!this.requireDefaultEnvironment && context.ir.environments?.defaultEnvironment == null)
+        ) {
+            const firstEnvironment = this.requireBaseUrl
+                ? undefined
+                : context.environments.getReferenceToFirstEnvironmentEnum();
             if (firstEnvironment != null) {
                 properties.push(
                     ts.factory.createPropertyAssignment(

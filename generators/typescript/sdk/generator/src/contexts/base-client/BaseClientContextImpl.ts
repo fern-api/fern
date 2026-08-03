@@ -18,6 +18,8 @@ export declare namespace BaseClientContextImpl {
         intermediateRepresentation: FernIr.IntermediateRepresentation;
         allowCustomFetcher: boolean;
         requireDefaultEnvironment: boolean;
+        // When true, `baseUrl` is a required client option and `environment` is optional.
+        requireBaseUrl: boolean;
         retainOriginalCasing: boolean;
         generateIdempotentRequestOptions: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -44,6 +46,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly allowCustomFetcher: boolean;
     private readonly requireDefaultEnvironment: boolean;
+    private readonly requireBaseUrl: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly generateIdempotentRequestOptions: boolean;
@@ -72,6 +75,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         intermediateRepresentation,
         allowCustomFetcher,
         requireDefaultEnvironment,
+        requireBaseUrl,
         retainOriginalCasing,
         generateIdempotentRequestOptions,
         parameterNaming,
@@ -83,6 +87,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
+        this.requireBaseUrl = requireBaseUrl;
         this.retainOriginalCasing = retainOriginalCasing;
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.parameterNaming = parameterNaming;
@@ -193,7 +198,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                         generatedEnvironments.getTypeForUserSuppliedEnvironment(context)
                     )
                 ),
-                hasQuestionToken: generatedEnvironments.hasDefaultEnvironment()
+                hasQuestionToken: generatedEnvironments.hasDefaultEnvironment() || this.requireBaseUrl
             });
         }
 
@@ -205,7 +210,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                 )
             ),
-            hasQuestionToken: true,
+            hasQuestionToken: !this.requireBaseUrl,
             docs: ["Specify a custom URL to connect the client to."]
         });
 
