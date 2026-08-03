@@ -1,0 +1,6 @@
+- summary: |
+    Add a `requireBaseUrl` config option. When enabled, `baseUrl` is a required client option and
+    `environment` is optional, for APIs whose users always pass an explicit server URL. Generated
+    snippets, README, and wire tests use `baseUrl` accordingly. Defaults to `false`, so existing
+    SDKs are unchanged.
+  type: feat

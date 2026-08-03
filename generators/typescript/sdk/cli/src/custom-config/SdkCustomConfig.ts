@@ -31,6 +31,7 @@ export interface SdkCustomConfig {
     includeOtherInUnionTypes: boolean;
     enableForwardCompatibleEnums: boolean;
     requireDefaultEnvironment: boolean;
+    requireBaseUrl: boolean;
     /**
      * Effective default request timeout in milliseconds. Resolved from the
      * `defaultTimeout` config key, falling back to the deprecated

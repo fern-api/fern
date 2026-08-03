@@ -176,7 +176,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -205,7 +206,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -230,7 +232,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -254,7 +257,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -282,7 +286,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -314,7 +319,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -343,7 +349,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -370,7 +377,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -398,7 +406,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -425,7 +434,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -450,7 +460,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -474,7 +485,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -510,7 +522,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -542,7 +555,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -585,7 +599,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -622,7 +637,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -646,7 +662,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -684,7 +701,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -709,7 +727,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -749,7 +768,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: true
+                generateSubpackageExports: true,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -790,7 +810,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -827,7 +848,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: true
+                generateSubpackageExports: true,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -858,7 +880,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -912,7 +935,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -936,7 +960,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -972,7 +997,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "binary-response",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -1010,7 +1036,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -1033,7 +1060,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "binary-response",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -1067,7 +1095,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const description = builder.buildAuthenticationDescription();
@@ -1109,7 +1138,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const description = builder.buildAuthenticationDescription();
@@ -1130,7 +1160,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const description = builder.buildAuthenticationDescription();
@@ -1154,7 +1185,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const addendums = builder.buildReadmeAddendums();
@@ -1178,7 +1210,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -1201,7 +1234,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [endpointSnippet],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -1240,7 +1274,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [snippet1, snippet2],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -1265,7 +1300,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [snippetGet, snippetPost],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -1307,7 +1343,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [snippet1, snippet2],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -1345,7 +1382,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [snippet1, snippet2],
                 fileResponseType: "stream",
                 allowCustomFetcher: true,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();
@@ -1424,7 +1462,8 @@ describe("ReadmeSnippetBuilder", () => {
                 endpointSnippets: [snippet1, snippet2, snippet3],
                 fileResponseType: "binary-response",
                 allowCustomFetcher: true,
-                generateSubpackageExports: true
+                generateSubpackageExports: true,
+                requireBaseUrl: false
             });
 
             const snippets = builder.buildReadmeSnippets();

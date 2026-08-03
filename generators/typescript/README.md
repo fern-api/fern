@@ -197,6 +197,21 @@ const acme = new AcmeClient({
 });
 ```
 
+#### ✨ `requireBaseUrl`
+
+**Type:** boolean
+
+**Default:** `false`
+
+When enabled, `baseUrl` becomes a required client option and `environment` becomes optional. Use this if your
+users always pass an explicit server URL and have no concept of named environments:
+
+```typescript
+const acme = new AcmeClient({
+  baseUrl: "https://acme.example.com"
+});
+```
+
 #### ✨ `defaultTimeout`
 
 **Type:** number | `"infinity"`

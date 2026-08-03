@@ -126,6 +126,7 @@ export declare namespace SdkGenerator {
         includeOtherInUnionTypes: boolean;
         enableForwardCompatibleEnums: boolean;
         requireDefaultEnvironment: boolean;
+        requireBaseUrl: boolean;
         defaultTimeout: number | "infinity" | undefined;
         skipResponseValidation: boolean;
         extraDependencies: Record<string, string>;
@@ -437,6 +438,7 @@ export class SdkGenerator {
             allowCustomFetcher: config.allowCustomFetcher,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
             requireDefaultEnvironment: config.requireDefaultEnvironment,
+            requireBaseUrl: config.requireBaseUrl,
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
             baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer,
@@ -538,6 +540,7 @@ export class SdkGenerator {
             allowCustomFetcher: config.allowCustomFetcher,
             generateWebSocketClients: this.generateWebSocketClients,
             requireDefaultEnvironment: config.requireDefaultEnvironment,
+            requireBaseUrl: config.requireBaseUrl,
             defaultTimeout: config.defaultTimeout,
             npmPackage,
             includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,
@@ -598,6 +601,7 @@ export class SdkGenerator {
             relativeTestPath: this.relativeTestPath,
             neverThrowErrors: config.neverThrowErrors,
             generateReadWriteOnlyTypes: config.generateReadWriteOnlyTypes,
+            requireBaseUrl: config.requireBaseUrl,
             testFramework: config.testFramework,
             useLegacyExports: config.useLegacyExports,
             shouldBundle: config.shouldBundle,
@@ -614,6 +618,7 @@ export class SdkGenerator {
                 fetchSupport: config.fetchSupport,
                 allowCustomFetcher: config.allowCustomFetcher,
                 generateSubpackageExports: config.generateSubpackageExports,
+                requireBaseUrl: config.requireBaseUrl,
                 reactQueryConfig: config.generateReactQueryHooks
                     ? {
                           clientClassName: naming.client,

@@ -59,6 +59,7 @@ function createGenerator(opts?: Partial<SdkClientClassGenerator.Init>): SdkClien
         allowCustomFetcher: false,
         generateWebSocketClients: false,
         requireDefaultEnvironment: false,
+        requireBaseUrl: false,
         defaultTimeout: 60000,
         npmPackage: undefined,
         includeContentHeadersOnFileDownloadResponse: false,
