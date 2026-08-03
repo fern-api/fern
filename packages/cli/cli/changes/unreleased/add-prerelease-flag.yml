@@ -1,0 +1,8 @@
+- summary: |
+    Add `fern generate --prerelease <identifier>`, which requires `--version AUTO`. The
+    AI-selected bump is applied to the release core and suffixed with the identifier and a
+    counter (e.g. `1.5.5` + MINOR → `1.6.0-rc.0`). Subsequent generations advance the counter
+    (`1.6.0-rc.0` → `1.6.0-rc.1`) and re-anchor the core when a bump outranks the pending one
+    (`1.5.6-rc.1` + MINOR → `1.6.0-rc.0`). Promotion to stable is done with an explicit
+    `--version`.
+  type: feat

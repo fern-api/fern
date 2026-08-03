@@ -27,6 +27,7 @@ export async function generateAPIWorkspaces({
     project,
     cliContext,
     version,
+    prerelease,
     groupNames,
     generatorName,
     generatorIndex,
@@ -59,6 +60,8 @@ export async function generateAPIWorkspaces({
     project: Project;
     cliContext: CliContext;
     version: string | undefined;
+    /** `--prerelease <identifier>`: keeps `--version AUTO` on a `-<identifier>.N` prerelease line. */
+    prerelease?: string;
     /** One or more `--group` values. `undefined` means no `--group` was passed. */
     groupNames: string[] | undefined;
     generatorName: string | undefined;
@@ -173,6 +176,7 @@ export async function generateAPIWorkspaces({
                     projectConfig: project.config,
                     context,
                     version,
+                    prerelease,
                     resolvedGroupNames: resolvedGroupNames ?? [],
                     generatorName,
                     generatorIndex,

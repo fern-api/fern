@@ -29,6 +29,7 @@ export async function createAndStartJob({
     intermediateRepresentation,
     generatorInvocation,
     version,
+    prerelease,
     context,
     shouldLogS3Url,
     token,
@@ -54,6 +55,8 @@ export async function createAndStartJob({
     intermediateRepresentation: IntermediateRepresentation;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     version: string | undefined;
+    /** `--prerelease <identifier>`: keeps `--version AUTO` on a `-<identifier>.N` prerelease line. */
+    prerelease?: string;
     context: TaskContext;
     shouldLogS3Url: boolean;
     token: FernToken;
@@ -110,6 +113,7 @@ export async function createAndStartJob({
                 organization,
                 generatorInvocation,
                 version,
+                prerelease,
                 context,
                 shouldLogS3Url,
                 token,
@@ -151,6 +155,7 @@ async function createJob({
     organization,
     generatorInvocation,
     version,
+    prerelease,
     context,
     shouldLogS3Url,
     token,
@@ -169,6 +174,8 @@ async function createJob({
     organization: string;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     version: string | undefined;
+    /** `--prerelease <identifier>`: keeps `--version AUTO` on a `-<identifier>.N` prerelease line. */
+    prerelease?: string;
     context: TaskContext;
     shouldLogS3Url: boolean;
     token: FernToken;
@@ -197,10 +204,13 @@ async function createJob({
     };
 
     // Const-typed payload ducks the TS excess-property check; `replay` isn't on
-    // fiddle-sdk's CreateJobRequestV2 yet (FER-10343).
+    // fiddle-sdk's CreateJobRequestV2 yet (FER-10343). `prerelease` likewise: Fiddle
+    // must forward it into the generator-cli pipeline's AutoVersionStepConfig before
+    // it takes effect on the cloud path.
     const createJobRequest = {
         apiName: workspace.definition.rootApiFile.contents.name,
         version,
+        prerelease,
         organizationName: organization,
         generators: [generatorConfig],
         uploadToS3: shouldUploadToS3({

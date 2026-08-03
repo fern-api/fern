@@ -144,9 +144,41 @@ export function isValidSemver(version: string): boolean {
     return SEMVER_PATTERN.test(version);
 }
 
+const PRERELEASE_IDENTIFIER_PATTERN = /^[A-Za-z][0-9A-Za-z-]*$/;
+
+/**
+ * True iff the string is usable as a `--prerelease` identifier (e.g. "rc", "beta", "next").
+ *
+ * Numeric-leading identifiers are rejected: semver treats numeric prerelease segments as
+ * counters, so `1.6.0-0.0` would not round-trip through the counter logic below.
+ */
+export function isValidPrereleaseIdentifier(identifier: string): boolean {
+    return PRERELEASE_IDENTIFIER_PATTERN.test(identifier);
+}
+
+/**
+ * Attaches `-<identifier>.0` to a stable version, preserving any `v` prefix.
+ * Versions already on a prerelease line are returned unchanged.
+ */
+export function applyPrereleaseIdentifier(version: string, identifier: string): string {
+    const matcher = version.match(SEMVER_PATTERN);
+    if (!matcher) {
+        throw new AutoVersioningException("Invalid semantic version format: " + version);
+    }
+    assertValidPrereleaseIdentifier(identifier);
+    if (matcher[5] != null) {
+        return version;
+    }
+    return `${matcher[1] ?? ""}${matcher[2]}.${matcher[3]}.${matcher[4]}-${identifier}.0`;
+}
+
 // Pre-release lines stay in line: any real bump advances the prerelease counter.
 // Promotion to stable (4.0.0-rc.2 → 4.0.0) requires an explicit baseVersion. See FER-10378.
-export function incrementVersion(currentVersion: string, versionBump: VersionBump): string {
+export function incrementVersion(
+    currentVersion: string,
+    versionBump: VersionBump,
+    options: { prerelease?: string } = {}
+): string {
     const matcher = currentVersion.match(SEMVER_PATTERN);
     if (!matcher) {
         throw new AutoVersioningException("Invalid semantic version format: " + currentVersion);
@@ -158,6 +190,10 @@ export function incrementVersion(currentVersion: string, versionBump: VersionBum
 
     if (versionBump === VersionBump.NO_CHANGE) {
         return currentVersion;
+    }
+
+    if (options.prerelease != null) {
+        return `${prefix}${incrementPrerelease(versionWithoutPrefix, versionBump, options.prerelease)}`;
     }
 
     let bumped: string | null;
@@ -178,6 +214,93 @@ export function incrementVersion(currentVersion: string, versionBump: VersionBum
     }
 
     return `${prefix}${bumped}`;
+}
+
+/**
+ * Advances a prerelease line for `--prerelease <identifier>`.
+ *
+ * From a stable version the AI-selected bump is applied to the release core and the counter
+ * starts at zero (1.5.5 + MINOR → 1.6.0-rc.0). While that prerelease is pending, further
+ * changes fold into it by advancing the counter (1.6.0-rc.0 → 1.6.0-rc.1) — unless the new
+ * bump outranks the pending core, in which case the core is re-anchored and the counter
+ * resets (1.5.6-rc.1 + MINOR → 1.6.0-rc.0, 1.6.0-rc.2 + MAJOR → 2.0.0-rc.0). Switching
+ * identifiers keeps the pending core when that still moves the version forward
+ * (1.6.0-beta.3 + `rc` → 1.6.0-rc.0) and otherwise re-anchors the core
+ * (1.6.0-rc.3 + `beta` → 1.7.0-beta.0 for MINOR).
+ *
+ * Every transition is monotonically increasing under semver precedence.
+ */
+function incrementPrerelease(version: string, versionBump: VersionBump, identifier: string): string {
+    assertValidPrereleaseIdentifier(identifier);
+
+    const parsed = semver.parse(version);
+    if (parsed == null) {
+        throw new AutoVersioningException("Invalid semantic version format: " + version);
+    }
+    const core = `${parsed.major}.${parsed.minor}.${parsed.patch}`;
+
+    if (parsed.prerelease.length > 0 && !bumpOutranksPendingCore(parsed, versionBump)) {
+        if (parsed.prerelease[0] === identifier) {
+            const bumped = semver.inc(version, "prerelease", identifier);
+            if (bumped == null) {
+                throw new AutoVersioningException("Failed to increment version: " + version);
+            }
+            return bumped;
+        }
+        // A different identifier can sort below the pending one (rc → beta), so only keep the
+        // pending core when the switch still moves the version forward.
+        const switched = `${core}-${identifier}.0`;
+        if (semver.gt(switched, version)) {
+            return switched;
+        }
+    }
+
+    const bumpedCore = semver.inc(core, toReleaseType(versionBump));
+    if (bumpedCore == null) {
+        throw new AutoVersioningException("Failed to increment version: " + version);
+    }
+    return `${bumpedCore}-${identifier}.0`;
+}
+
+/**
+ * True when the bump is more significant than the one the pending prerelease core already
+ * encodes — i.e. a MAJOR while a non-major core (1.6.0, 1.5.6) is pending, or a MINOR while
+ * a patch core (1.5.6) is pending. PATCH always folds into the pending core.
+ */
+function bumpOutranksPendingCore(parsed: semver.SemVer, versionBump: VersionBump): boolean {
+    switch (versionBump) {
+        case VersionBump.MAJOR:
+            return parsed.minor !== 0 || parsed.patch !== 0;
+        case VersionBump.MINOR:
+            return parsed.patch !== 0;
+        case VersionBump.PATCH:
+        case VersionBump.NO_CHANGE:
+            return false;
+        default:
+            throw new AutoVersioningException("Unknown version bump type: " + versionBump);
+    }
+}
+
+function toReleaseType(versionBump: VersionBump): "major" | "minor" | "patch" {
+    switch (versionBump) {
+        case VersionBump.MAJOR:
+            return "major";
+        case VersionBump.MINOR:
+            return "minor";
+        case VersionBump.PATCH:
+            return "patch";
+        case VersionBump.NO_CHANGE:
+        default:
+            throw new AutoVersioningException("Unknown version bump type: " + versionBump);
+    }
+}
+
+function assertValidPrereleaseIdentifier(identifier: string): void {
+    if (!isValidPrereleaseIdentifier(identifier)) {
+        throw new AutoVersioningException(
+            `Invalid prerelease identifier: ${identifier}. Expected an alphanumeric identifier starting with a letter (e.g. "rc").`
+        );
+    }
 }
 
 /**

@@ -32,6 +32,7 @@ import {
 } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { formatBootstrapSummary, replayForget, replayInit, replayResolve, replayStatus } from "@fern-api/generator-cli";
+import { AUTO_VERSION, isAutoVersion, isValidPrereleaseIdentifier } from "@fern-api/generator-cli/autoversion";
 import {
     initializeAPI,
     initializeDocs,
@@ -756,6 +757,13 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     type: "string",
                     description: "The version for the generated packages"
                 })
+                .option("prerelease", {
+                    type: "string",
+                    description:
+                        `Requires --version ${AUTO_VERSION}. Applies the computed bump to the release core and ` +
+                        "appends the given prerelease identifier (e.g. --prerelease rc yields 1.6.0-rc.0), " +
+                        "advancing the counter on subsequent generations."
+                })
                 .option("printZipUrl", {
                     boolean: true,
                     hidden: true,
@@ -994,6 +1002,20 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     { code: CliError.Code.ConfigError }
                 );
             }
+            if (argv.prerelease != null && (argv.version == null || !isAutoVersion(argv.version))) {
+                return cliContext.failWithoutThrowing(
+                    `The --prerelease flag can only be used with --version ${AUTO_VERSION}.`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
+            if (argv.prerelease != null && !isValidPrereleaseIdentifier(argv.prerelease)) {
+                return cliContext.failWithoutThrowing(
+                    `Invalid --prerelease identifier "${argv.prerelease}". Expected an alphanumeric identifier starting with a letter, such as "rc".`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
             const correctedGeneratorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
             const { generatorName, generatorIndex } = parseGeneratorArg(correctedGeneratorFilter);
@@ -1005,6 +1027,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     }),
                     cliContext,
                     version: argv.version,
+                    prerelease: argv.prerelease,
                     groupNames: argv.group,
                     generatorName,
                     generatorIndex,
@@ -1071,6 +1094,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 }),
                 cliContext,
                 version: argv.version,
+                prerelease: argv.prerelease,
                 groupNames: argv.group,
                 generatorName,
                 generatorIndex,

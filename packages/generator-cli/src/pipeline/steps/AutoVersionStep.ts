@@ -6,9 +6,11 @@ import { join } from "path";
 import {
     AutoVersioningException,
     AutoVersioningService,
+    applyPrereleaseIdentifier,
     countFilesInDiff,
     formatSizeKB,
     incrementVersion,
+    isValidPrereleaseIdentifier,
     isValidSemver,
     MAGIC_VERSION,
     MAX_AI_DIFF_BYTES,
@@ -64,6 +66,15 @@ export class AutoVersionStep extends BaseStep {
     }
 
     async execute(context: PipelineContext): Promise<AutoVersionStepResult> {
+        const prerelease = this.config.prerelease;
+        if (prerelease != null && !isValidPrereleaseIdentifier(prerelease)) {
+            const errorMessage =
+                `AutoVersionStep: prerelease ${JSON.stringify(prerelease)} is not a valid prerelease ` +
+                `identifier (expected e.g. "rc"). Refusing to run.`;
+            this.logger.error(errorMessage);
+            return { executed: true, success: false, errorMessage };
+        }
+
         const prepared = context.previousStepResults.generationCommit?.preparedReplay;
 
         if (prepared) {
@@ -102,7 +113,11 @@ export class AutoVersionStep extends BaseStep {
         commit: boolean;
     }): Promise<AutoVersionStepResult> {
         const { service, language, mappedMagicVersion, commit } = params;
-        const initialVersion = this.config.baseVersion ?? (mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1");
+        const baseVersion = this.config.baseVersion ?? (mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1");
+        const initialVersion =
+            this.config.prerelease != null && isValidSemver(baseVersion)
+                ? applyPrereleaseIdentifier(baseVersion, this.config.prerelease)
+                : baseVersion;
 
         // `initialVersion` flows into `AutoVersioningService.replaceMagicVersion`.
         // `baseVersion` is user-supplied config, so validate it against the same strict
@@ -440,7 +455,9 @@ export class AutoVersionStep extends BaseStep {
     }): Promise<AutoVersionStepResult> {
         const { service, language, mappedMagicVersion, previousVersion, analysis } = params;
 
-        const newVersion = incrementVersion(previousVersion, analysis.versionBump as VersionBumpEnum);
+        const newVersion = incrementVersion(previousVersion, analysis.versionBump as VersionBumpEnum, {
+            prerelease: this.config.prerelease
+        });
         this.logger.info(`AutoVersionStep: ${analysis.versionBump} bump: ${previousVersion} → ${newVersion}`);
 
         await service.replaceMagicVersion(this.outputDir, mappedMagicVersion, newVersion);
@@ -518,7 +535,9 @@ export class AutoVersionStep extends BaseStep {
     }): Promise<AutoVersionStepResult> {
         const { service, language, mappedMagicVersion, previousVersion, analysis } = params;
 
-        const newVersion = incrementVersion(previousVersion, analysis.versionBump as VersionBumpEnum);
+        const newVersion = incrementVersion(previousVersion, analysis.versionBump as VersionBumpEnum, {
+            prerelease: this.config.prerelease
+        });
         this.logger.info(
             `AutoVersionStep (non-replay): ${analysis.versionBump} bump: ${previousVersion} → ${newVersion}`
         );
@@ -926,7 +945,9 @@ export class AutoVersionStep extends BaseStep {
                 bestBump,
                 language,
                 previousVersion,
-                incrementVersion(previousVersion, bestBump as VersionBumpEnum)
+                incrementVersion(previousVersion, bestBump as VersionBumpEnum, {
+                    prerelease: this.config.prerelease
+                })
             );
             return {
                 versionBump: bestBump,
