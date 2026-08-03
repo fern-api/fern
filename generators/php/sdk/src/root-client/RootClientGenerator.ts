@@ -63,6 +63,111 @@ const BEARER_HEADER_INFO: HeaderInfo = {
 
 const GET_FROM_ENV_OR_THROW = "getFromEnvOrThrow";
 const GET_PLATFORM_USER_AGENT = "getPlatformUserAgent";
+const APPEND_APP_INFO_TO_USER_AGENT = "appendAppInfoToUserAgent";
+
+/**
+ * Builds the self-contained `appendAppInfoToUserAgent` helper emitted into the
+ * generated root client (only when `allowUserAgentAppInfo` is enabled). It is
+ * standalone so that clients which do not opt in keep byte-identical generated
+ * output, and never touches the shared always-shipped core-utilities.
+ *
+ * Sanitizes caller-supplied values: `name`/`version` are token-encoded (every
+ * non-RFC-7230 `tchar` is percent-encoded, including spaces, control characters and
+ * CR/LF) and `comment` has its delimiters (`(`, `)`, `\`) and control characters
+ * (incl. CR/LF) escaped, so the untrusted values cannot inject additional header
+ * content. Each value is trimmed before checking for blankness and before encoding,
+ * so blank values are treated as absent rather than encoded into whitespace tokens.
+ * Formats the appended product token as `{name}/{version} ({comment})`, dropping
+ * `/version` and ` (comment)` when blank, and returns the User-Agent unchanged when
+ * `appInfo`/`name` is absent.
+ *
+ * Exported so the emitted PHP can be exercised directly by unit tests.
+ */
+export function buildAppendAppInfoToUserAgentMethod(): php.Method {
+    return php.method({
+        access: "private",
+        static_: true,
+        name: APPEND_APP_INFO_TO_USER_AGENT,
+        return_: php.Type.string(),
+        parameters: [
+            php.parameter({ name: "userAgent", type: php.Type.string() }),
+            php.parameter({
+                name: "appInfo",
+                type: php.Type.optional(
+                    php.Type.typeDict(
+                        [
+                            { key: "name", valueType: php.Type.string() },
+                            { key: "version", valueType: php.Type.string(), optional: true },
+                            { key: "comment", valueType: php.Type.string(), optional: true }
+                        ],
+                        { multiline: false }
+                    )
+                )
+            })
+        ],
+        body: php.codeblock((writer) => {
+            writer.controlFlow("if", php.codeblock("$appInfo === null"));
+            writer.writeTextStatement("return $userAgent");
+            writer.endControlFlow();
+            writer.writeLine();
+
+            // RFC 7230 token = 1*tchar. Any character outside that set is
+            // percent-encoded so it cannot break out of the product token or inject
+            // additional header content (spaces, control characters, CR/LF).
+            writer.writeLine("$encodeToken = static function (string $value): string {");
+            writer.writeLine(
+                "    return preg_replace_callback('/[^!#$%&\\'*+\\-.^_`|~0-9A-Za-z]/', static function (array $matches): string {"
+            );
+            writer.writeLine("        $encoded = '';");
+            writer.writeLine("        foreach (str_split($matches[0]) as $char) {");
+            writer.writeLine("            $encoded .= '%' . strtoupper(bin2hex($char));");
+            writer.writeLine("        }");
+            writer.writeLine("        return $encoded;");
+            writer.writeLine("    }, $value) ?? '';");
+            writer.writeLine("};");
+            writer.writeLine();
+
+            // Escape the comment delimiters `(`, `)`, `\` and control characters
+            // (0x00-0x1F, 0x7F, incl. CR/LF) so a caller-supplied comment cannot
+            // terminate the comment group early or inject additional header content.
+            writer.writeLine("$encodeComment = static function (string $value): string {");
+            writer.writeLine(
+                "    return preg_replace_callback('/[()\\\\\\\\\\x00-\\x1f\\x7f]/', static function (array $matches): string {"
+            );
+            writer.writeLine("        $encoded = '';");
+            writer.writeLine("        foreach (str_split($matches[0]) as $char) {");
+            writer.writeLine("            $encoded .= '%' . strtoupper(bin2hex($char));");
+            writer.writeLine("        }");
+            writer.writeLine("        return $encoded;");
+            writer.writeLine("    }, $value) ?? '';");
+            writer.writeLine("};");
+            writer.writeLine();
+
+            // `name` is a required key of the appInfo shape, so no `?? ''` fallback
+            // (PHPStan level max flags the redundant null-coalesce otherwise).
+            writer.writeTextStatement("$name = $encodeToken(trim($appInfo['name']))");
+            writer.controlFlow("if", php.codeblock("$name === ''"));
+            writer.writeTextStatement("return $userAgent");
+            writer.endControlFlow();
+            writer.writeLine();
+
+            writer.writeTextStatement("$productToken = $name");
+            writer.writeTextStatement("$version = $encodeToken(trim($appInfo['version'] ?? ''))");
+            writer.controlFlow("if", php.codeblock("$version !== ''"));
+            writer.writeTextStatement("$productToken .= '/' . $version");
+            writer.endControlFlow();
+            writer.writeLine();
+
+            writer.writeTextStatement("$comment = $encodeComment(trim($appInfo['comment'] ?? ''))");
+            writer.controlFlow("if", php.codeblock("$comment !== ''"));
+            writer.writeTextStatement("$productToken .= ' (' . $comment . ')'");
+            writer.endControlFlow();
+            writer.writeLine();
+
+            writer.writeTextStatement("return $userAgent . ' ' . $productToken");
+        })
+    });
+}
 
 export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private readonly case: CaseConverter;
@@ -222,6 +327,17 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             class_.addMethod(this.getPlatformUserAgentMethod(userAgent.value));
         }
 
+        // Emit the self-contained appInfo appender only when the opt-in
+        // `allowUserAgentAppInfo` config is enabled and a User-Agent is actually
+        // sent, so that clients which do not opt in keep byte-identical output.
+        if (
+            !this.context.customConfig.omitFernHeaders &&
+            this.context.customConfig.allowUserAgentAppInfo &&
+            userAgent != null
+        ) {
+            class_.addMethod(this.getAppendAppInfoToUserAgentMethod());
+        }
+
         return this.newRootClientFile(class_);
     }
 
@@ -366,13 +482,23 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             }
             const userAgent = this.context.getUserAgent();
             if (userAgent != null) {
+                const escapedUserAgentValue = userAgent.value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+                // The base User-Agent expression, covering all three branches: the
+                // structured platform value, the `user-agent` template value, and the
+                // default `{package}/{version}` (the latter two both surface via
+                // `userAgent.value`).
+                const baseUserAgentExpression = this.context.customConfig.includePlatformHeaders
+                    ? `self::${GET_PLATFORM_USER_AGENT}(strtolower(PHP_OS), php_uname('m'), PHP_VERSION)`
+                    : `'${escapedUserAgentValue}'`;
+                // When `allowUserAgentAppInfo` is enabled, append the caller-supplied
+                // `appInfo` product token to whichever User-Agent value the SDK would
+                // otherwise send. `$options['appInfo']` is in scope in the constructor.
+                const userAgentExpression = this.context.customConfig.allowUserAgentAppInfo
+                    ? `self::${APPEND_APP_INFO_TO_USER_AGENT}(${baseUserAgentExpression}, $${this.context.getClientOptionsName()}['${this.context.getAppInfoOptionName()}'] ?? null)`
+                    : baseUserAgentExpression;
                 headerEntries.push({
                     key: php.codeblock(`'${userAgent.header}'`),
-                    value: this.context.customConfig.includePlatformHeaders
-                        ? php.codeblock(
-                              `self::${GET_PLATFORM_USER_AGENT}(strtolower(PHP_OS), php_uname('m'), PHP_VERSION)`
-                          )
-                        : php.codeblock(`'${userAgent.value}'`)
+                    value: php.codeblock(userAgentExpression)
                 });
             }
         }
@@ -1081,6 +1207,25 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 writer.writeTextStatement(`return '${escapedBase}' . $platform . ' ' . $runtime`);
             })
         });
+    }
+
+    /**
+     * Emits the self-contained `appendAppInfoToUserAgent` helper into the generated
+     * root client (only when `allowUserAgentAppInfo` is enabled). It is standalone so
+     * that clients which do not opt in keep byte-identical generated output.
+     *
+     * Sanitizes caller-supplied values: `name`/`version` are token-encoded (every
+     * non-RFC-7230 `tchar` is percent-encoded, including spaces, control characters
+     * and CR/LF) and `comment` has its delimiters (`(`, `)`, `\`) and control
+     * characters escaped, so the untrusted values cannot inject additional header
+     * content. Each value is trimmed before checking for blankness and before
+     * encoding, so blank values are treated as absent rather than encoded into
+     * whitespace tokens. Formats the appended product token as
+     * `{name}/{version} ({comment})`, dropping `/version` and ` (comment)` when blank,
+     * and returns the User-Agent unchanged when `appInfo`/`name` is absent.
+     */
+    private getAppendAppInfoToUserAgentMethod(): php.Method {
+        return buildAppendAppInfoToUserAgentMethod();
     }
 
     private getConstructorParameters(): ConstructorParameters {
