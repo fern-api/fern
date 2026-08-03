@@ -1,0 +1,7 @@
+- summary: |
+    Fix a `Could not locate alias for: <param>` generator crash on endpoints that use
+    URI or path pagination (`next_uri` / `next_path`) together with a request wrapper
+    (e.g. inlined path parameters or non-literal headers). The request wrapper is now
+    destructured before the paginated `list` helper, so path parameter and header
+    references resolve correctly.
+  type: fix

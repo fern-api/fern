@@ -494,6 +494,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         // URI/path pagination
         if (paginationInfo != null && (paginationInfo.type === "uri" || paginationInfo.type === "path")) {
             const urlParamIdentifier = ts.factory.createIdentifier("_requestUrl");
+            // Destructure the request wrapper up front so path parameter and header
+            // references below resolve to in-scope variables.
+            const initialRequestStatements = this.request.getInitialRequestStatements(context);
             // For URI/path pagination, subsequent page requests should only send headers
             // (auth, custom headers), not query params or body. The next URL already contains
             // all necessary parameters. This matches the Python and Java SDK behavior.
@@ -544,7 +547,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 ts.NodeFlags.Const
             );
 
-            const statements: ts.Statement[] = [ts.factory.createVariableStatement(undefined, listFn)];
+            const statements: ts.Statement[] = [
+                ...initialRequestStatements,
+                ts.factory.createVariableStatement(undefined, listFn)
+            ];
 
             // For path pagination, store the base URL for combining with the path later
             if (paginationInfo.type === "path") {
