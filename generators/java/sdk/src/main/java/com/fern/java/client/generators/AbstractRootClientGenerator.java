@@ -92,6 +92,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
     private static final String CLIENT_OPTIONS_BUILDER_NAME = "clientOptionsBuilder";
     private static final String ENVIRONMENT_FIELD_NAME = "environment";
+    private static final String APP_INFO_NAME_FIELD_NAME = "appInfoName";
+    private static final String APP_INFO_VERSION_FIELD_NAME = "appInfoVersion";
+    private static final String APP_INFO_COMMENT_FIELD_NAME = "appInfoComment";
     protected final GeneratedObjectMapper generatedObjectMapper;
     protected final ClientGeneratorContext clientGeneratorContext;
     protected final GeneratedClientOptions generatedClientOptions;
@@ -724,6 +727,43 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement(isExtensible ? "return self()" : "return this")
                 .build());
 
+        // When the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent header is actually written, the
+        // generated ClientOptions.Builder exposes an appInfo(name, version, comment) method. Expose the same option on
+        // the root client builder (the surface SDK users actually configure) so the appInfo product token reaches the
+        // User-Agent header via buildClientOptions() -> setAppInfo(). Gated so default-off output stays byte-identical.
+        boolean appInfoEnabled = isAppInfoEnabled();
+        if (appInfoEnabled) {
+            clientBuilder.addField(FieldSpec.builder(String.class, APP_INFO_NAME_FIELD_NAME)
+                    .addModifiers(Modifier.PRIVATE)
+                    .initializer("null")
+                    .build());
+            clientBuilder.addField(FieldSpec.builder(String.class, APP_INFO_VERSION_FIELD_NAME)
+                    .addModifiers(Modifier.PRIVATE)
+                    .initializer("null")
+                    .build());
+            clientBuilder.addField(FieldSpec.builder(String.class, APP_INFO_COMMENT_FIELD_NAME)
+                    .addModifiers(Modifier.PRIVATE)
+                    .initializer("null")
+                    .build());
+
+            clientBuilder.addMethod(MethodSpec.methodBuilder("appInfo")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc(
+                            "Identify the calling application. Its product token — "
+                                    + "$L — is appended to the User-Agent header sent by the SDK, following RFC 9110. "
+                                    + "The version and comment are optional; caller-supplied values are sanitized.\n",
+                            "{name}/{version} ({comment})")
+                    .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                    .addParameter(String.class, "name")
+                    .addParameter(String.class, "version")
+                    .addParameter(String.class, "comment")
+                    .addStatement("this.$L = name", APP_INFO_NAME_FIELD_NAME)
+                    .addStatement("this.$L = version", APP_INFO_VERSION_FIELD_NAME)
+                    .addStatement("this.$L = comment", APP_INFO_COMMENT_FIELD_NAME)
+                    .addStatement(isExtensible ? "return self()" : "return this")
+                    .build());
+        }
+
         clientBuilder.addMethod(MethodSpec.methodBuilder("addHeader")
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc("Add a custom header to be sent with all requests.\n"
@@ -858,7 +898,13 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         buildClientOptionsMethodBuilder
                 .addStatement("setTimeouts(builder)")
                 .addStatement("setRetries(builder)")
-                .addStatement("setLogging(builder)")
+                .addStatement("setLogging(builder)");
+
+        if (appInfoEnabled) {
+            buildClientOptionsMethodBuilder.addStatement("setAppInfo(builder)");
+        }
+
+        buildClientOptionsMethodBuilder
                 .beginControlFlow("for ($T.Entry<String, String> header : this.customHeaders.entrySet())", Map.class)
                 .addStatement("builder.addHeader(header.getKey(), header.getValue())")
                 .endControlFlow()
@@ -1175,6 +1221,26 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .build();
         clientBuilder.addMethod(setLoggingMethod);
 
+        if (appInfoEnabled) {
+            MethodSpec setAppInfoMethod = MethodSpec.methodBuilder("setAppInfo")
+                    .addModifiers(Modifier.PROTECTED)
+                    .addParameter(generatedClientOptions.builderClassName(), "builder")
+                    .addJavadoc("Forwards the caller-supplied appInfo product token to the ClientOptions.Builder, "
+                            + "which appends it to the User-Agent header.\n"
+                            + "Override this method to customize application-identification behavior.\n"
+                            + "\n"
+                            + "@param builder The ClientOptions.Builder to configure")
+                    .beginControlFlow("if (this.$L != null)", APP_INFO_NAME_FIELD_NAME)
+                    .addStatement(
+                            "builder.appInfo(this.$L, this.$L, this.$L)",
+                            APP_INFO_NAME_FIELD_NAME,
+                            APP_INFO_VERSION_FIELD_NAME,
+                            APP_INFO_COMMENT_FIELD_NAME)
+                    .endControlFlow()
+                    .build();
+            clientBuilder.addMethod(setAppInfoMethod);
+        }
+
         MethodSpec setAdditionalMethod = MethodSpec.methodBuilder("setAdditional")
                 .addModifiers(Modifier.PROTECTED)
                 .addParameter(generatedClientOptions.builderClassName(), "builder")
@@ -1235,6 +1301,29 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         }
 
         return clientBuilder.build();
+    }
+
+    /**
+     * Mirrors the condition under which {@code ClientOptionsGenerator} emits an {@code appInfo(name, version, comment)}
+     * method on the generated {@code ClientOptions.Builder}: the opt-in {@code allowUserAgentAppInfo} config is
+     * enabled, Fern headers are not omitted, and the API actually writes a {@code User-Agent} platform header (the only
+     * thing the product token can be appended to). Keeping the two conditions in lockstep guarantees the root builder's
+     * {@code appInfo(...)} always forwards to a method that exists on {@code ClientOptions.Builder}, and that
+     * default-off generated output stays byte-identical.
+     */
+    private boolean isAppInfoEnabled() {
+        if (!clientGeneratorContext.getCustomConfig().allowUserAgentAppInfo()) {
+            return false;
+        }
+        if (clientGeneratorContext.getCustomConfig().omitFernHeaders()) {
+            return false;
+        }
+        return clientGeneratorContext
+                .getIr()
+                .getSdkConfig()
+                .getPlatformHeaders()
+                .getUserAgent()
+                .isPresent();
     }
 
     private static String getRootClientName(AbstractGeneratorContext<?, ?> generatorContext) {
