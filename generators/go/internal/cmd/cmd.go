@@ -70,6 +70,7 @@ type Config struct {
 	OmitEmptyRequestWrappers       bool
 	OmitFernHeaders                bool
 	IncludePlatformHeaders         bool
+	AllowUserAgentAppInfo          bool
 	Organization                   string
 	CoordinatorURL                 string
 	CoordinatorTaskID              string
@@ -247,6 +248,7 @@ func newConfig(configFilename string) (*Config, error) {
 		OmitEmptyRequestWrappers:       *customConfig.OmitEmptyRequestWrappers,
 		OmitFernHeaders:                *customConfig.OmitFernHeaders,
 		IncludePlatformHeaders:         *customConfig.IncludePlatformHeaders,
+		AllowUserAgentAppInfo:          *customConfig.AllowUserAgentAppInfo,
 		Organization:                   config.Organization,
 		AlwaysSendRequiredProperties:   *customConfig.AlwaysSendRequiredProperties,
 		Whitelabel:                     config.Whitelabel,
@@ -317,6 +319,7 @@ type customConfig struct {
 	OmitEmptyRequestWrappers       *bool         `json:"omitEmptyRequestWrappers,omitempty"`
 	OmitFernHeaders                *bool         `json:"omitFernHeaders,omitempty"`
 	IncludePlatformHeaders         *bool         `json:"includePlatformHeaders,omitempty"`
+	AllowUserAgentAppInfo          *bool         `json:"allowUserAgentAppInfo,omitempty"`
 	ClientName                     string        `json:"clientName,omitempty"`
 	ClientConstructorName          string        `json:"clientConstructorName,omitempty"`
 	ImportPath                     string        `json:"importPath,omitempty"`
@@ -549,6 +552,9 @@ func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
 	}
 	if customConfig.IncludePlatformHeaders == nil {
 		customConfig.IncludePlatformHeaders = gospec.Ptr(false)
+	}
+	if customConfig.AllowUserAgentAppInfo == nil {
+		customConfig.AllowUserAgentAppInfo = gospec.Ptr(false)
 	}
 	if customConfig.UnionVersion == "" {
 		customConfig.UnionVersion = "v1"
