@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.87.0
+  changelogEntry:
+    - summary: |
+        Add a `requireBaseUrl` config option. When enabled, `baseUrl` is a required client option and
+        `environment` is optional, for APIs whose users always pass an explicit server URL. Generated
+        snippets, README, and wire tests use `baseUrl` accordingly. The option is ignored for APIs with
+        multiple base URLs, whose clients resolve each URL from `environment`. Defaults to `false`, so
+        existing SDKs are unchanged.
+      type: feat
+  createdAt: "2026-08-03"
+  irVersion: 67
 - version: 3.86.0
   changelogEntry:
     - summary: |
