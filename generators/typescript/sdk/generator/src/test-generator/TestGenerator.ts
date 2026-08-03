@@ -1250,12 +1250,7 @@ describe("${serviceName}", () => {
                 _other: () => code`server.baseUrl`
             });
         };
-        if (this.requireBaseUrl) {
-            options["baseUrl"] = code`server.baseUrl`;
-        }
-        if (!this.requireBaseUrl || this.ir.environments?.environments.type === "multipleBaseUrls") {
-            options["environment"] = generateEnvironment();
-        }
+        options[this.requireBaseUrl ? "baseUrl" : "environment"] = generateEnvironment();
 
         example.rootPathParameters.forEach((pathParameter) => {
             options[

@@ -212,6 +212,8 @@ const acme = new AcmeClient({
 });
 ```
 
+Ignored for APIs that define multiple base URLs, since those clients resolve each URL from `environment`.
+
 #### ✨ `defaultTimeout`
 
 **Type:** number | `"infinity"`

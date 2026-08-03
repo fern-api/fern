@@ -302,6 +302,11 @@ export class SdkGenerator {
         if (intermediateRepresentation.auth.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity) {
             config.generateEndpointMetadata = true;
         }
+        // `baseUrl` cannot be required for multi-base-URL APIs: the generated clients read each
+        // URL off the environment value, so `environment` must stay required for them.
+        if (intermediateRepresentation.environments?.environments.type === "multipleBaseUrls") {
+            config.requireBaseUrl = false;
+        }
         this.config = config;
 
         this.npmPackage = npmPackage;

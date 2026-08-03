@@ -418,6 +418,13 @@ fixtures:
     - outputFolder: require-base-url
       customConfig:
         requireBaseUrl: true
+  multi-url-environment-no-default:
+    - outputFolder: no-custom-config
+      customConfig: null
+    # `requireBaseUrl` is ignored for multi-base-URL APIs, so this output matches no-custom-config.
+    - outputFolder: require-base-url
+      customConfig:
+        requireBaseUrl: true
   simple-api:
     - outputFolder: use-yarn
       customConfig:
