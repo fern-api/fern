@@ -137,6 +137,17 @@ describe("emitted appendAppInfoToUserAgent (runtime behavior)", () => {
         expect(append(BASE, undefined)).toBe(BASE);
     });
 
+    // Control characters inside a regex literal are an error under common lint setups
+    // (e.g. Biome's `noControlCharactersInRegex`), which SDK consumers run over the
+    // generated output, so the emitted helper must not rely on lint suppressions.
+    it("emits no control-character regex ranges and no lint suppressions", () => {
+        const source = extractEmittedHelperSource();
+        expect(source).not.toMatch(/\\u00[0-1][0-9a-fA-F]/);
+        expect(source).not.toContain("\\u007f");
+        expect(source).not.toContain("eslint-disable");
+        expect(source).not.toContain("biome-ignore");
+    });
+
     it("returns the User-Agent unchanged when name is empty", () => {
         expect(append(BASE, { name: "" })).toBe(BASE);
     });
