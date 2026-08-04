@@ -242,7 +242,14 @@ export async function generateWorkspace({
                     });
                 }
                 if (pack) {
-                    await packLocalOutputForGroup({ group, context: groupContext, mode: packMode, runner, packOnly });
+                    await packLocalOutputForGroup({
+                        group,
+                        context: groupContext,
+                        mode: packMode,
+                        runner,
+                        packOnly,
+                        version
+                    });
                 }
             })
         )

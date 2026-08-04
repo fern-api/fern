@@ -219,6 +219,10 @@ fixtures:
     - customConfig:
         include-platform-headers: true
       outputFolder: include-platform-headers
+    - customConfig:
+        include-platform-headers: true
+        allow-user-agent-app-info: true
+      outputFolder: allow-user-agent-app-info
   multi-url-environment:
     - customConfig:
         pascal-case-environments: false

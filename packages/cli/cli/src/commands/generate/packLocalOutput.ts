@@ -4,7 +4,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { createWriteStream } from "fs";
-import { copyFile, mkdir, readdir, readFile, rename, rm, rmdir } from "fs/promises";
+import { copyFile, mkdir, readdir, readFile, rename, rm, rmdir, writeFile } from "fs/promises";
 import { basename } from "path";
 import { ZipFile } from "yazl";
 
@@ -40,7 +40,8 @@ export async function packLocalOutputForGroup({
     context,
     mode = "host",
     runner,
-    packOnly = false
+    packOnly = false,
+    version
 }: {
     group: generatorsYml.GeneratorGroup;
     context: TaskContext;
@@ -48,6 +49,8 @@ export async function packLocalOutputForGroup({
     runner?: ContainerRunner;
     /** Keep only the fern-dist/ artifact in each output directory, removing the generated SDK source. */
     packOnly?: boolean;
+    /** The version the SDKs were generated with (from --version), used in package metadata. */
+    version?: string;
 }): Promise<void> {
     const failures: string[] = [];
     for (const generator of group.generators) {
@@ -69,7 +72,8 @@ export async function packLocalOutputForGroup({
                 outputPath,
                 context,
                 mode,
-                runner: runner ?? "docker"
+                runner: runner ?? "docker",
+                version
             });
             if (packOnly) {
                 if (artifactProduced) {
@@ -98,13 +102,15 @@ async function packOutputForLanguage({
     outputPath,
     context,
     mode,
-    runner
+    runner,
+    version
 }: {
     language: generatorsYml.GenerationLanguage;
     outputPath: AbsoluteFilePath;
     context: TaskContext;
     mode: PackMode;
     runner: ContainerRunner;
+    version: string | undefined;
 }): Promise<boolean> {
     const distDir = join(outputPath, RelativeFilePath.of(PACK_OUTPUT_DIRECTORY));
     const run = async (commands: string[][]) => {
@@ -113,26 +119,126 @@ async function packOutputForLanguage({
     switch (language) {
         case "typescript": {
             await mkdir(distDir, { recursive: true });
-            const commands: string[][] = [["npm", "install"]];
+            await run([["npm", "install"]]);
+            // Compile the package before packing so the tarball ships runnable JavaScript and
+            // consumers can require() it right after npm install, without a post-install build.
             if (await hasNpmScript({ outputPath, script: "build" })) {
-                commands.push(["npm", "run", "build"]);
+                // Generated build scripts invoke pnpm, which isn't preinstalled on the host or in
+                // the node toolchain image — npx fetches it on demand and puts it on PATH for the
+                // nested `pnpm build:*` invocations.
+                await run([["npx", "--yes", "pnpm", "run", "build"]]);
+            } else {
+                const tsconfig = await findTsconfig(outputPath);
+                if (tsconfig != null) {
+                    try {
+                        await run([["npx", "--yes", "--package", "typescript", "tsc", "--project", tsconfig]]);
+                    } catch (error) {
+                        // tsc emits output even when type errors are reported (noEmitOnError is off
+                        // by default); pack whatever was produced rather than failing the build. If
+                        // nothing was emitted at all, the failure was real (e.g. npx couldn't fetch
+                        // typescript), so don't ship a tarball with no compiled code.
+                        if (!(await hasEmittedCompilerOutput({ outputPath, tsconfig }))) {
+                            throw error;
+                        }
+                        context.logger.warn(
+                            `tsc reported errors while compiling ${tsconfig}; packing the emitted output anyway.`
+                        );
+                    }
+                }
             }
-            commands.push(["npm", "pack", "--pack-destination", PACK_OUTPUT_DIRECTORY]);
-            await run(commands);
+            // Without a "files" field, npm pack falls back to .gitignore, which typically lists
+            // dist/ — silently dropping the compiled output from the tarball. An .npmignore takes
+            // precedence over .gitignore, so drop a temporary one that only excludes fern-dist.
+            const npmignorePath = join(outputPath, RelativeFilePath.of(".npmignore"));
+            const shouldWriteNpmignore =
+                !(await doesPathExist(npmignorePath)) &&
+                !(await hasPackageJsonFilesField(outputPath)) &&
+                (await doesPathExist(join(outputPath, RelativeFilePath.of(".gitignore"))));
+            if (shouldWriteNpmignore) {
+                await writeFile(npmignorePath, `${PACK_OUTPUT_DIRECTORY}/\n`);
+            }
+            try {
+                await run([["npm", "pack", "--pack-destination", PACK_OUTPUT_DIRECTORY]]);
+            } finally {
+                if (shouldWriteNpmignore) {
+                    await rm(npmignorePath, { force: true });
+                }
+            }
             logArtifacts({ distDir, context });
             return true;
         }
         case "python": {
             await mkdir(distDir, { recursive: true });
-            await run([["python3", "-m", "pip", "wheel", ".", "--no-deps", "--wheel-dir", PACK_OUTPUT_DIRECTORY]]);
+            const pipWheelCommand = [
+                "python3",
+                "-m",
+                "pip",
+                "wheel",
+                ".",
+                "--no-deps",
+                "--wheel-dir",
+                PACK_OUTPUT_DIRECTORY
+            ];
+            if (mode === "host") {
+                try {
+                    await run([pipWheelCommand]);
+                } catch {
+                    // Host pythons frequently can't run `pip wheel` directly (no pip module, old
+                    // interpreter, missing build tooling). Retry inside a throwaway venv with the
+                    // PyPA `build` frontend, which performs an isolated, PEP 517 build.
+                    context.logger.warn(
+                        "pip wheel failed on the host toolchain; retrying in an isolated build environment (python -m venv + python -m build)."
+                    );
+                    const venvDirectory = ".fern-pack-venv";
+                    const venvPython =
+                        process.platform === "win32"
+                            ? `${venvDirectory}/Scripts/python`
+                            : `${venvDirectory}/bin/python`;
+                    try {
+                        await run([
+                            ["python3", "-m", "venv", venvDirectory],
+                            [venvPython, "-m", "pip", "install", "--quiet", "build"],
+                            [venvPython, "-m", "build", "--wheel", "--outdir", PACK_OUTPUT_DIRECTORY]
+                        ]);
+                    } finally {
+                        await rm(join(outputPath, RelativeFilePath.of(venvDirectory)), {
+                            recursive: true,
+                            force: true
+                        });
+                    }
+                }
+            } else {
+                await run([pipWheelCommand]);
+            }
             logArtifacts({ distDir, context });
             return true;
         }
         case "java": {
             await mkdir(distDir, { recursive: true });
-            await run([["gradle", "jar", "-x", "test"]]);
+            // A bare JAR carries no dependency metadata, so consumers would have to declare every
+            // transitive dependency by hand. Generate a POM alongside it via an init script that
+            // registers a maven-publish publication (local outputs have no publishing config).
+            const initScriptName = ".fern-pack-pom-init.gradle";
+            const initScriptPath = join(outputPath, RelativeFilePath.of(initScriptName));
+            await writeFile(initScriptPath, getJavaPomInitScript({ fallbackVersion: version ?? "0.0.0" }));
+            try {
+                await run([
+                    [
+                        "gradle",
+                        "--init-script",
+                        initScriptName,
+                        "jar",
+                        `generatePomFileFor${JAVA_POM_PUBLICATION_NAME_CAPITALIZED}Publication`,
+                        "-x",
+                        "test"
+                    ]
+                ]);
+            } finally {
+                await rm(initScriptPath, { force: true });
+            }
             const libsDir = join(outputPath, RelativeFilePath.of("build/libs"));
             await copyMatchingFiles({ fromDir: libsDir, toDir: distDir, extension: ".jar" });
+            await copyGeneratedPom({ outputPath, distDir, context });
             logArtifacts({ distDir, context });
             return true;
         }
@@ -235,7 +341,11 @@ async function runPackCommands({
         if (image == null) {
             throw new Error(`No Docker toolchain image is configured for ${language}.`);
         }
-        const containerArgs = ["run", "--rm", "-v", `${outputPath}:/workspace`, "-w", "/workspace", "-e", "HOME=/tmp"];
+        // Mount under a directory that keeps the output folder's name so toolchains that derive
+        // package identity from the directory name (e.g. Gradle's project name) behave the same
+        // as on the host.
+        const workdir = `/workspace/${basename(outputPath)}`;
+        const containerArgs = ["run", "--rm", "-v", `${outputPath}:${workdir}`, "-w", workdir, "-e", "HOME=/tmp"];
         // Run as the invoking user on POSIX hosts so artifacts in the mounted volume aren't root-owned.
         if (process.getuid != null && process.getgid != null) {
             containerArgs.push("--user", `${process.getuid()}:${process.getgid()}`);
@@ -325,6 +435,115 @@ async function removeDistDirIfEmpty(outputPath: AbsoluteFilePath): Promise<void>
     } catch {
         // dist dir was never created (or was removed concurrently) — nothing to clean up
     }
+}
+
+const JAVA_POM_PUBLICATION_NAME = "fernLocalPack";
+const JAVA_POM_PUBLICATION_NAME_CAPITALIZED = "FernLocalPack";
+
+/**
+ * Gradle init script that registers a maven-publish publication on every java project so
+ * `generatePomFileFor...Publication` can emit a POM with the project's dependencies, even when
+ * the generated build.gradle has no publishing configuration (the local-file-system case).
+ */
+function getJavaPomInitScript({ fallbackVersion }: { fallbackVersion: string }): string {
+    return `allprojects { project ->
+    project.plugins.withId("java") {
+        project.apply plugin: "maven-publish"
+        project.afterEvaluate {
+            if (project.group == null || project.group.toString().isEmpty()) {
+                project.group = project.name
+            }
+            if (project.version == null || project.version.toString() == "unspecified") {
+                project.version = "${fallbackVersion}"
+            }
+            if (project.publishing.publications.findByName("${JAVA_POM_PUBLICATION_NAME}") == null) {
+                project.publishing.publications.create("${JAVA_POM_PUBLICATION_NAME}", MavenPublication) {
+                    from project.components.java
+                }
+            }
+        }
+    }
+}
+`;
+}
+
+/** Copies the POM emitted by the init-script publication into fern-dist, named after the jar. */
+async function copyGeneratedPom({
+    outputPath,
+    distDir,
+    context
+}: {
+    outputPath: AbsoluteFilePath;
+    distDir: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<void> {
+    const pomPath = join(
+        outputPath,
+        RelativeFilePath.of(`build/publications/${JAVA_POM_PUBLICATION_NAME}/pom-default.xml`)
+    );
+    if (!(await doesPathExist(pomPath))) {
+        context.logger.warn(
+            "No POM was generated for the Java package; the JAR is packaged without dependency metadata."
+        );
+        return;
+    }
+    const jarNames = (await readdir(distDir)).filter((file) => file.endsWith(".jar"));
+    const jarName =
+        jarNames.find((file) => !file.endsWith("-sources.jar") && !file.endsWith("-javadoc.jar")) ?? jarNames[0];
+    const pomName = jarName != null ? `${jarName.slice(0, -".jar".length)}.pom` : "pom.xml";
+    await copyFile(pomPath, join(distDir, RelativeFilePath.of(pomName)));
+}
+
+/** Whether the tsconfig's outDir (or ./dist by default) exists and is non-empty. */
+async function hasEmittedCompilerOutput({
+    outputPath,
+    tsconfig
+}: {
+    outputPath: AbsoluteFilePath;
+    tsconfig: string;
+}): Promise<boolean> {
+    let outDir = "dist";
+    try {
+        const parsed: unknown = JSON.parse(await readFile(join(outputPath, RelativeFilePath.of(tsconfig)), "utf-8"));
+        if (typeof parsed === "object" && parsed != null && "compilerOptions" in parsed) {
+            const compilerOptions = (parsed as { compilerOptions: unknown }).compilerOptions;
+            if (
+                typeof compilerOptions === "object" &&
+                compilerOptions != null &&
+                "outDir" in compilerOptions &&
+                typeof (compilerOptions as { outDir: unknown }).outDir === "string"
+            ) {
+                outDir = (compilerOptions as { outDir: string }).outDir;
+            }
+        }
+    } catch {
+        // tsconfig files may contain comments or be otherwise unparseable as plain JSON;
+        // fall back to the conventional ./dist output directory.
+    }
+    const outDirPath = join(outputPath, RelativeFilePath.of(outDir));
+    if (!(await doesPathExist(outDirPath))) {
+        return false;
+    }
+    return (await readdir(outDirPath)).length > 0;
+}
+
+/** Returns the tsconfig to compile with when the package has no build script, if one exists. */
+async function findTsconfig(outputPath: AbsoluteFilePath): Promise<string | undefined> {
+    for (const candidate of ["tsconfig.cjs.json", "tsconfig.json"]) {
+        if (await doesPathExist(join(outputPath, RelativeFilePath.of(candidate)))) {
+            return candidate;
+        }
+    }
+    return undefined;
+}
+
+async function hasPackageJsonFilesField(outputPath: AbsoluteFilePath): Promise<boolean> {
+    const packageJsonPath = join(outputPath, RelativeFilePath.of("package.json"));
+    if (!(await doesPathExist(packageJsonPath))) {
+        return false;
+    }
+    const parsed: unknown = JSON.parse(await readFile(packageJsonPath, "utf-8"));
+    return typeof parsed === "object" && parsed != null && "files" in parsed;
 }
 
 async function hasNpmScript({

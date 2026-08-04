@@ -85,6 +85,10 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     serdeLayer: z.optional(z.boolean()),
     private: z.optional(z.boolean()),
     requireDefaultEnvironment: z.optional(z.boolean()),
+    // When true, the client's `baseUrl` option becomes required and the `environment`
+    // option becomes optional. Intended for APIs whose consumers always supply a URL
+    // explicitly and have no concept of named environments.
+    requireBaseUrl: z.optional(z.boolean()),
     retainOriginalCasing: z.optional(z.boolean()),
     useBigInt: z.optional(z.boolean()),
     useBrandedStringAliases: z.optional(z.boolean()),
