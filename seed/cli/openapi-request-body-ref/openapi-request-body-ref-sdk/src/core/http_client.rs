@@ -136,6 +136,10 @@ pub struct OAuthTokenExchangeConfig {
     pub access_token_property: String,
     /// Response field name that holds the token lifetime in seconds (e.g. `"expires_in"`).
     pub expires_in_property: String,
+    /// Whether the token request body is `application/x-www-form-urlencoded` (per RFC 6749
+    /// §4.4.2) instead of JSON. Resolved from the token endpoint's declared content type in
+    /// the API definition, so JSON token endpoints keep sending a JSON body.
+    pub form_encoded: bool,
 }
 
 impl Default for OAuthTokenExchangeConfig {
@@ -149,6 +153,7 @@ impl Default for OAuthTokenExchangeConfig {
             )]),
             access_token_property: "access_token".to_string(),
             expires_in_property: "expires_in".to_string(),
+            form_encoded: false,
         }
     }
 }
@@ -597,6 +602,10 @@ impl HttpClient {
     /// applied: the token is cached and shared across requests, so it must not depend on the
     /// options of whichever request happens to trigger the fetch. Auth headers are also not
     /// applied, as this request is what produces the credential they would carry.
+    ///
+    /// The body is encoded to match the token endpoint's declared content type: form-encoded
+    /// (`application/x-www-form-urlencoded`, per RFC 6749 §4.4.2) when `exchange.form_encoded`
+    /// is set, otherwise JSON.
     async fn fetch_oauth_token(
         &self,
         base_url: &str,
@@ -607,27 +616,29 @@ impl HttpClient {
     ) -> Result<(String, u64), ApiError> {
         let url = join_url(base_url, token_endpoint);
 
-        // Build the token request body using the configured property names.
-        let mut body = serde_json::Map::new();
-        body.insert(
-            exchange.client_id_property.clone(),
-            serde_json::Value::String(client_id.to_string()),
-        );
-        body.insert(
+        // Collect the token request properties (keyed by the configured names) as ordered
+        // key/value pairs, then encode them as form or JSON depending on the endpoint.
+        let mut params: Vec<(String, String)> = Vec::new();
+        params.push((exchange.client_id_property.clone(), client_id.to_string()));
+        params.push((
             exchange.client_secret_property.clone(),
-            serde_json::Value::String(client_secret.to_string()),
-        );
+            client_secret.to_string(),
+        ));
         for (name, value) in &exchange.extra_request_properties {
-            body.insert(name.clone(), serde_json::Value::String(value.clone()));
+            params.push((name.clone(), value.clone()));
         }
-        let body = serde_json::Value::Object(body);
 
-        let mut request = self
-            .client
-            .request(Method::POST, &url)
-            .json(&body)
-            .build()
-            .map_err(ApiError::Network)?;
+        let builder = self.client.request(Method::POST, &url);
+        let builder = if exchange.form_encoded {
+            builder.form(&params)
+        } else {
+            let body = params
+                .into_iter()
+                .map(|(name, value)| (name, serde_json::Value::String(value)))
+                .collect::<serde_json::Map<String, serde_json::Value>>();
+            builder.json(&serde_json::Value::Object(body))
+        };
+        let mut request = builder.build().map_err(ApiError::Network)?;
         self.apply_custom_headers(&mut request, &None)?;
 
         let response = self
@@ -1053,6 +1064,45 @@ mod tests {
         assert!(
             raw_request.contains("x-gateway-token: sunflower"),
             "token request is missing the client's custom headers: {raw_request}"
+        );
+    }
+
+    #[tokio::test]
+    async fn test_oauth_token_request_form_encodes_when_configured() {
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0")
+            .await
+            .expect("bind");
+        let base_url = format!("http://{}", listener.local_addr().expect("addr"));
+        let server = tokio::spawn(serve_one_token_request(listener));
+
+        let mut config = ClientConfig::default();
+        config.base_url = base_url;
+        let client = HttpClient::new(config).expect("client");
+
+        let exchange = OAuthTokenExchangeConfig {
+            form_encoded: true,
+            ..OAuthTokenExchangeConfig::default()
+        };
+        let (access_token, _) = client
+            .fetch_oauth_token(
+                &client.config.base_url.clone(),
+                "/token",
+                "client-id",
+                "client-secret",
+                &exchange,
+            )
+            .await
+            .expect("token");
+
+        let raw_request = server.await.expect("server");
+        assert_eq!(access_token, "token-from-server");
+        assert!(
+            raw_request.contains("content-type: application/x-www-form-urlencoded"),
+            "token request should be form-encoded when the endpoint declares it: {raw_request}"
+        );
+        assert!(
+            !raw_request.contains("content-type: application/json"),
+            "token request should not send a JSON content type when form-encoded: {raw_request}"
         );
     }
 }
