@@ -474,10 +474,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 key: php.codeblock(`'${platformHeaders.sdkName}'`),
                 value: php.codeblock(`'${this.context.getRootNamespace()}'`)
             });
-            if (this.context.version != null) {
+            const sdkVersion = this.context.getSdkVersion();
+            if (sdkVersion != null) {
                 headerEntries.push({
                     key: php.codeblock(`'${platformHeaders.sdkVersion}'`),
-                    value: php.codeblock(`'${this.context.version}'`)
+                    value: php.codeblock(`'${sdkVersion}'`)
                 });
             }
             const userAgent = this.context.getUserAgent();
