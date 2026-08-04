@@ -9,6 +9,7 @@ import {
     countFilesInDiff,
     formatSizeKB,
     incrementVersion,
+    isPlaceholderVersion,
     isValidSemver,
     MAGIC_VERSION,
     MAX_AI_DIFF_BYTES,
@@ -102,7 +103,8 @@ export class AutoVersionStep extends BaseStep {
         commit: boolean;
     }): Promise<AutoVersionStepResult> {
         const { service, language, mappedMagicVersion, commit } = params;
-        const initialVersion = this.config.baseVersion ?? (mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1");
+        const configuredBaseVersion = this.usableVersion(this.config.baseVersion, "baseVersion");
+        const initialVersion = configuredBaseVersion ?? (mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1");
 
         // `initialVersion` flows into `AutoVersioningService.replaceMagicVersion`.
         // `baseVersion` is user-supplied config, so validate it against the same strict
@@ -557,15 +559,19 @@ export class AutoVersionStep extends BaseStep {
     }): Promise<string | null> {
         const { service, rawDiff, mappedMagicVersion, baseVersion } = params;
 
-        if (baseVersion != null && isValidSemver(baseVersion)) {
+        const usableBaseVersion = this.usableVersion(baseVersion, "baseVersion");
+        if (usableBaseVersion != null && isValidSemver(usableBaseVersion)) {
             this.logger.debug(
-                `AutoVersionStep (non-replay): previous version from pipeline baseVersion: ${baseVersion}`
+                `AutoVersionStep (non-replay): previous version from pipeline baseVersion: ${usableBaseVersion}`
             );
-            return this.normalizeVersionPrefix(baseVersion, mappedMagicVersion);
+            return this.normalizeVersionPrefix(usableBaseVersion, mappedMagicVersion);
         }
 
         try {
-            const extracted = service.extractPreviousVersion(rawDiff, mappedMagicVersion);
+            const extracted = this.usableVersion(
+                service.extractPreviousVersion(rawDiff, mappedMagicVersion) ?? undefined,
+                "diff"
+            );
             if (extracted != null) {
                 this.logger.debug(`AutoVersionStep (non-replay): previous version from diff: ${extracted}`);
                 return extracted;
@@ -577,13 +583,16 @@ export class AutoVersionStep extends BaseStep {
             this.logger.info("AutoVersionStep (non-replay): magic version not in diff; trying metadata + git tags.");
         }
 
-        const metadataVersion = this.readVersionFromMetadataAtHead();
+        const metadataVersion = this.usableVersion(this.readVersionFromMetadataAtHead(), "metadata.json");
         if (metadataVersion != null) {
             return this.normalizeVersionPrefix(metadataVersion, mappedMagicVersion);
         }
 
         try {
-            const tagVersion = await service.getLatestVersionFromGitTags(this.outputDir);
+            const tagVersion = this.usableVersion(
+                (await service.getLatestVersionFromGitTags(this.outputDir)) ?? undefined,
+                "git tags"
+            );
             if (tagVersion != null) {
                 return this.normalizeVersionPrefix(tagVersion, mappedMagicVersion);
             }
@@ -605,13 +614,17 @@ export class AutoVersionStep extends BaseStep {
         // Prefer the pipeline-supplied baseVersion (main tip's metadata.json) over
         // diff extraction, which is blind to customer manual bumps. Semver-validate
         // before use — it flows into replaceMagicVersion.
-        if (baseVersion != null && isValidSemver(baseVersion)) {
-            this.logger.debug(`AutoVersionStep: previous version from pipeline baseVersion: ${baseVersion}`);
-            return this.normalizeVersionPrefix(baseVersion, mappedMagicVersion);
+        const usableBaseVersion = this.usableVersion(baseVersion, "baseVersion");
+        if (usableBaseVersion != null && isValidSemver(usableBaseVersion)) {
+            this.logger.debug(`AutoVersionStep: previous version from pipeline baseVersion: ${usableBaseVersion}`);
+            return this.normalizeVersionPrefix(usableBaseVersion, mappedMagicVersion);
         }
 
         try {
-            const extracted = service.extractPreviousVersion(rawDiff, mappedMagicVersion);
+            const extracted = this.usableVersion(
+                service.extractPreviousVersion(rawDiff, mappedMagicVersion) ?? undefined,
+                "diff"
+            );
             if (extracted != null) {
                 this.logger.debug(`AutoVersionStep: previous version from diff: ${extracted}`);
                 return extracted;
@@ -623,13 +636,16 @@ export class AutoVersionStep extends BaseStep {
             this.logger.info("AutoVersionStep: magic version not found in diff; falling back to metadata + git tags.");
         }
 
-        const metadataVersion = await this.readVersionFromMetadata();
+        const metadataVersion = this.usableVersion(await this.readVersionFromMetadata(), "metadata.json");
         if (metadataVersion != null) {
             return this.normalizeVersionPrefix(metadataVersion, mappedMagicVersion);
         }
 
         try {
-            const tagVersion = await service.getLatestVersionFromGitTags(this.outputDir);
+            const tagVersion = this.usableVersion(
+                (await service.getLatestVersionFromGitTags(this.outputDir)) ?? undefined,
+                "git tags"
+            );
             if (tagVersion != null) {
                 return this.normalizeVersionPrefix(tagVersion, mappedMagicVersion);
             }
@@ -652,6 +668,29 @@ export class AutoVersionStep extends BaseStep {
         } catch {
             return undefined;
         }
+    }
+
+    /**
+     * Drops candidate previous versions that are the magic placeholder. SDK repos
+     * that derive their published version at release time keep the placeholder
+     * committed, so every resolution source (baseVersion, diff extraction,
+     * metadata.json, git tags) can hand back the sentinel; incrementing it would
+     * emit a mutated placeholder such as `0.0.0-fern-placeholder.0` instead of a
+     * real version. Returning undefined lets the caller fall through to the next
+     * source, and ultimately to the first-generation path.
+     */
+    private usableVersion(version: string | undefined, source: string): string | undefined {
+        if (version == null) {
+            return undefined;
+        }
+        if (isPlaceholderVersion(version)) {
+            this.logger.info(
+                `AutoVersionStep: ignoring placeholder version ${version} from ${source}; ` +
+                    "trying the next previous-version source."
+            );
+            return undefined;
+        }
+        return version;
     }
 
     private normalizeVersionPrefix(version: string, mappedMagicVersion: string): string {

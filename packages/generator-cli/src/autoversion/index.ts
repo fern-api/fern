@@ -13,6 +13,7 @@ export {
     extractPreviousVersionFromDiffLine,
     incrementVersion,
     isAutoVersion,
+    isPlaceholderVersion,
     isValidSemver,
     MAGIC_VERSION,
     MAGIC_VERSION_PYTHON,
