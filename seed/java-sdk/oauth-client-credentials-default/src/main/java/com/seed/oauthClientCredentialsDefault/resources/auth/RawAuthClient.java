@@ -8,6 +8,7 @@ import com.seed.oauthClientCredentialsDefault.core.ClientOptions;
 import com.seed.oauthClientCredentialsDefault.core.MediaTypes;
 import com.seed.oauthClientCredentialsDefault.core.ObjectMappers;
 import com.seed.oauthClientCredentialsDefault.core.RequestOptions;
+import com.seed.oauthClientCredentialsDefault.core.RetryInterceptor;
 import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultApiException;
 import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultException;
 import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultHttpResponse;
@@ -61,6 +62,15 @@ public class RawAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -71,6 +81,9 @@ public class RawAuthClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedOauthClientCredentialsDefaultApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedOauthClientCredentialsDefaultException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedOauthClientCredentialsDefaultException("Network error executing HTTP request", e);
         }

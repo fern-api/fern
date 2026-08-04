@@ -18,6 +18,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Additional Body Properties](#additional-body-properties)
   - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
@@ -179,6 +180,23 @@ var response = await client.Events.SubscribeAsync(
         AdditionalQueryParameters = new Dictionary<string, string>
         {
             { "custom_param", "custom-value" }
+        }
+    }
+);
+```
+
+### Additional Body Properties
+
+If you would like to send additional body properties as part of the request, use the `AdditionalBodyProperties` request option.
+This is only applied to JSON requests.
+
+```csharp
+var response = await client.Events.SubscribeAsync(
+    ...,
+    new RequestOptions {
+        AdditionalBodyProperties = new Dictionary<string, object>
+        {
+            { "custom_field", "custom-value" }
         }
     }
 );

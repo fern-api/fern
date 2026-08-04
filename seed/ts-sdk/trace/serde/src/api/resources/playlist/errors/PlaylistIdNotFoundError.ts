@@ -5,6 +5,8 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedTrace from "../../../index.js";
 
 export class PlaylistIdNotFoundError extends errors.SeedTraceError {
+    public declare readonly body: SeedTrace.PlaylistIdNotFoundErrorBody;
+
     constructor(body: SeedTrace.PlaylistIdNotFoundErrorBody, rawResponse?: core.RawResponse) {
         super({
             message: "PlaylistIdNotFoundError",
@@ -17,6 +19,6 @@ export class PlaylistIdNotFoundError extends errors.SeedTraceError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "PlaylistIdNotFoundError";
     }
 }

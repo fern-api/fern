@@ -19,8 +19,12 @@ import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.Literal;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
+import com.fern.java.client.generators.endpoint.PaginationPathUtils;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.utils.NameUtils;
@@ -55,6 +59,7 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private static final String BUFFER_IN_MINUTES_CONSTANT_NAME = "BUFFER_IN_MINUTES";
     private static final String EXPIRES_IN_SECONDS_PARAMETER_NAME = "expiresInSeconds";
     private static final String CACHED_HEADERS_FIELD_NAME = "cachedHeaders";
+    private static final String TOKEN_LOCK_FIELD_NAME = "tokenLock";
 
     private static final String FETCH_TOKEN_METHOD_NAME = "fetchToken";
     private static final String GET_METHOD_NAME = "get";
@@ -114,22 +119,43 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 ClassName.get(Map.class), ClassName.get(String.class), ClassName.get(String.class));
         ParameterizedTypeName supplierOfMap = ParameterizedTypeName.get(ClassName.get(Supplier.class), mapStringString);
 
+        // This supplier is a singleton shared across all request threads (registered via
+        // builder.addHeader), so cachedHeaders/expiresAt are volatile and refreshed under tokenLock.
+        // A cache hit takes the lock-free fast path (a volatile snapshot read); only an expired or
+        // absent value enters the synchronized block, where a double-check ensures exactly one thread
+        // performs the token request (single-flight). The headers map is fully built locally and
+        // published via a single volatile write, then never mutated. Fields are written only after
+        // fetchToken() returns, so a failed refresh leaves any prior headers intact.
+        CodeBlock refreshNeededPredicate = refreshRequired
+                ? CodeBlock.builder()
+                        .add(
+                                "if ($L == null || $L.isBefore($T.now()))",
+                                CACHED_HEADERS_FIELD_NAME,
+                                EXPIRES_AT_FIELD_NAME,
+                                Instant.class)
+                        .build()
+                : CodeBlock.builder()
+                        .add("if ($L == null)", CACHED_HEADERS_FIELD_NAME)
+                        .build();
         MethodSpec.Builder getMethodSpecBuilder = MethodSpec.methodBuilder(GET_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .returns(mapStringString)
-                .beginControlFlow(
-                        refreshRequired
-                                ? CodeBlock.builder()
-                                        .add(
-                                                "if ($L == null || $L.isBefore($T.now()))",
-                                                CACHED_HEADERS_FIELD_NAME,
-                                                EXPIRES_AT_FIELD_NAME,
-                                                Instant.class)
-                                        .build()
-                                : CodeBlock.builder()
-                                        .add("if ($L == null)", CACHED_HEADERS_FIELD_NAME)
-                                        .build())
+                .addStatement("$T cachedHeadersSnapshot = this.$L", mapStringString, CACHED_HEADERS_FIELD_NAME);
+        if (refreshRequired) {
+            getMethodSpecBuilder
+                    .addStatement("$T cachedExpiresAt = this.$L", Instant.class, EXPIRES_AT_FIELD_NAME)
+                    .beginControlFlow(
+                            "if (cachedHeadersSnapshot != null && cachedExpiresAt != null && !cachedExpiresAt.isBefore($T.now()))",
+                            Instant.class);
+        } else {
+            getMethodSpecBuilder.beginControlFlow("if (cachedHeadersSnapshot != null)");
+        }
+        getMethodSpecBuilder
+                .addStatement("return cachedHeadersSnapshot")
+                .endControlFlow()
+                .beginControlFlow("synchronized ($L)", TOKEN_LOCK_FIELD_NAME)
+                .beginControlFlow(refreshNeededPredicate)
                 .addStatement("$T tokenResponse = $L()", fetchTokenReturnType, FETCH_TOKEN_METHOD_NAME);
 
         getMethodSpecBuilder.addStatement("$T headers = new $T<>()", mapStringString, HashMap.class);
@@ -154,7 +180,10 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
                     "this.$L = $L($L)", EXPIRES_AT_FIELD_NAME, GET_EXPIRES_AT_METHOD_NAME, expiryAccessor);
         }
 
-        getMethodSpecBuilder.endControlFlow().addStatement("return $L", CACHED_HEADERS_FIELD_NAME);
+        getMethodSpecBuilder
+                .endControlFlow()
+                .addStatement("return $L", CACHED_HEADERS_FIELD_NAME)
+                .endControlFlow();
 
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
 
@@ -192,7 +221,11 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
         typeSpecBuilder
                 .addField(FieldSpec.builder(authClientClassName, AUTH_CLIENT_NAME, Modifier.PRIVATE, Modifier.FINAL)
                         .build())
-                .addField(FieldSpec.builder(mapStringString, CACHED_HEADERS_FIELD_NAME, Modifier.PRIVATE)
+                .addField(FieldSpec.builder(Object.class, TOKEN_LOCK_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
+                        .initializer("new $T()", Object.class)
+                        .build())
+                .addField(FieldSpec.builder(
+                                mapStringString, CACHED_HEADERS_FIELD_NAME, Modifier.PRIVATE, Modifier.VOLATILE)
                         .build())
                 .addMethod(constructorBuilder.build())
                 .addMethod(buildFetchTokenMethod(
@@ -201,8 +234,9 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
 
         if (refreshRequired) {
             typeSpecBuilder
-                    .addField(FieldSpec.builder(Instant.class, EXPIRES_AT_FIELD_NAME, Modifier.PRIVATE)
-                            .build())
+                    .addField(
+                            FieldSpec.builder(Instant.class, EXPIRES_AT_FIELD_NAME, Modifier.PRIVATE, Modifier.VOLATILE)
+                                    .build())
                     .addField(FieldSpec.builder(
                                     long.class,
                                     BUFFER_IN_MINUTES_CONSTANT_NAME,
@@ -265,8 +299,21 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
 
                 @Override
                 public Void visitReference(com.fern.ir.model.http.HttpRequestBodyReference reference) {
-                    // For referenced types, we would need to resolve the type
-                    // For now, skip - most inferred auth uses inline bodies
+                    reference
+                            .getRequestBodyType()
+                            .visit(new PaginationPathUtils.TypeReferenceResolver(clientGeneratorContext))
+                            .map(TypeDeclaration::getShape)
+                            .flatMap(shape -> shape.getObject())
+                            .ifPresent(objectDeclaration -> {
+                                for (ObjectProperty prop : resolvedObjectProperties(objectDeclaration)) {
+                                    String fieldName = NameUtils.getName(prop.getName())
+                                            .getCamelCase()
+                                            .getUnsafeName();
+                                    Optional<Literal> literal = extractLiteral(prop.getValueType());
+                                    boolean isOptional = isOptionalType(prop.getValueType());
+                                    properties.add(new CredentialProperty(fieldName, fieldName, literal, isOptional));
+                                }
+                            });
                     return null;
                 }
 
@@ -288,6 +335,18 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
         }
 
         return properties;
+    }
+
+    /**
+     * Returns the object's extended (inherited) properties followed by its own properties, matching the order in which
+     * the model generator stages them in the builder (see {@code ObjectTypeSpecGenerator}, which adds interface
+     * properties before the type's own properties).
+     */
+    private List<ObjectProperty> resolvedObjectProperties(ObjectTypeDeclaration objectDeclaration) {
+        List<ObjectProperty> resolved = new ArrayList<>();
+        objectDeclaration.getExtendedProperties().stream().flatMap(List::stream).forEach(resolved::add);
+        resolved.addAll(objectDeclaration.getProperties());
+        return resolved;
     }
 
     /** Extracts a literal value from a TypeReference if present. */

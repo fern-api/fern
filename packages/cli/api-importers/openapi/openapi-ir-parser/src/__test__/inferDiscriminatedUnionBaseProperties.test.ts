@@ -44,7 +44,7 @@ function commonPropertyOptionalityOf(schema: Schema | undefined, key: string): "
 }
 
 describe("infer-discriminated-union-base-properties", () => {
-    it("does NOT infer properties already inherited via a shared allOf $ref parent", () => {
+    it("infers properties inherited via a shared allOf $ref parent so non-structural-typing SDKs can expose them", () => {
         const doc: OpenAPIV3.Document = {
             openapi: "3.0.0",
             info: { title: "Test API", version: "1.0" },
@@ -135,9 +135,12 @@ describe("infer-discriminated-union-base-properties", () => {
         const keys = commonPropertyKeysOf(union);
 
         // `sharedField` and `anotherShared` come from Common, which every variant inherits
-        // via `allOf: $ref`. They should NOT be re-emitted as union commonProperties.
-        expect(keys).not.toContain("sharedField");
-        expect(keys).not.toContain("anotherShared");
+        // via `allOf: $ref`. They are lifted onto the union so SDKs without structural
+        // typing (Go, C#, etc.) can expose them at the top level. Generators that
+        // synthesize a duplicate base interface (e.g. TypeScript) are responsible for
+        // suppressing the redeclaration to avoid TS2320 collisions.
+        expect(keys).toContain("sharedField");
+        expect(keys).toContain("anotherShared");
     });
 
     it("still infers properties that variants declare inline (not inherited from a shared parent)", () => {

@@ -9,6 +9,11 @@ export interface IntermediateRepresentation {
     /** The unique identifier for the API definition used within FDR. This is retrieved once a definition has been registered. */
     fdrApiDefinitionId: string | undefined;
     apiVersion: FernIr.ApiVersionScheme | undefined;
+    /**
+     * The document version from the OpenAPI `info.version` field.
+     * Preserved as-is (supports semver, CalVer, or any free-form string).
+     */
+    specVersion: string | undefined;
     /** This is the human readable unique id for the API. */
     apiName: FernIr.NameOrString;
     apiDisplayName: string | undefined;
@@ -36,6 +41,15 @@ export interface IntermediateRepresentation {
     errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     sdkConfig: FernIr.SdkConfig;
     variables: FernIr.VariableDeclaration[];
+    /**
+     * Global parameters that are set once at the SDK client level
+     * and injected into every relevant request at the declared wire
+     * location (header, query, body, or path). Subsumes the header-only
+     * semantics of `headers` (x-fern-global-headers) and the path-only
+     * semantics of `variables` (x-fern-sdk-variables) with support for
+     * body and query locations.
+     */
+    globalParameters: FernIr.GlobalParameter[] | undefined;
     serviceTypeReferenceInfo: FernIr.ServiceTypeReferenceInfo;
     readmeConfig: FernIr.ReadmeConfig | undefined;
     sourceConfig: FernIr.SourceConfig | undefined;

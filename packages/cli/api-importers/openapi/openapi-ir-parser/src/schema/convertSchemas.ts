@@ -272,6 +272,15 @@ function getSiblingExampleFromRef(
     return undefined;
 }
 
+// Detects whether a oneOf/anyOf contains a `{ "type": "null" }` member, which
+// contributes nullability to schemas that reference the enclosing schema.
+function schemaHasNullBranch(subschemas: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] | undefined): boolean {
+    if (subschemas == null) {
+        return false;
+    }
+    return subschemas.some((subschema) => !isReferenceObject(subschema) && (subschema.type as unknown) === "null");
+}
+
 export function convertReferenceObject(
     schema: OpenAPIV3.ReferenceObject,
     wrapAsOptional: boolean,
@@ -306,7 +315,9 @@ export function convertReferenceObject(
             referencedSchema.nullable === true ||
             (Array.isArray(referencedSchema.type) &&
                 referencedSchema.type.length >= 2 &&
-                referencedSchema.type.includes("null"))
+                referencedSchema.type.includes("null")) ||
+            schemaHasNullBranch(referencedSchema.anyOf) ||
+            schemaHasNullBranch(referencedSchema.oneOf)
         ) {
             wrapAsNullable = true;
         }
@@ -380,6 +391,13 @@ export function convertSchemaObject(
     groupName = context.resolveGroupName(groupName);
 
     const generatedName = getGeneratedTypeName(breadcrumbs, context.options.preserveSchemaIds);
+
+    // When x-fern-type-name (or title) overrides the schema name, propagate to
+    // breadcrumbs so inline child types derive names from the overridden name.
+    if (nameOverride != null) {
+        breadcrumbs = [nameOverride];
+    }
+
     const title = schema.title;
     const description = schema.description;
     const availability = convertAvailability(schema);
@@ -957,6 +975,7 @@ export function convertSchemaObject(
                     description,
                     availability,
                     discriminator: schema.discriminator,
+                    oneOfSchemas: schema.oneOf ?? schema.anyOf,
                     properties: schema.properties ?? {},
                     required: schema.required,
                     wrapAsOptional,
@@ -1027,6 +1046,7 @@ export function convertSchemaObject(
                         description,
                         availability,
                         discriminator: schema.discriminator,
+                        oneOfSchemas: schema.oneOf ?? schema.anyOf,
                         properties: schema.properties ?? {},
                         required: schema.required,
                         wrapAsOptional,
@@ -1291,6 +1311,7 @@ export function convertSchemaObject(
                 description,
                 availability,
                 discriminator: schema.discriminator,
+                oneOfSchemas: schema.oneOf ?? schema.anyOf,
                 properties: schema.properties ?? {},
                 required: schema.required,
                 wrapAsOptional,

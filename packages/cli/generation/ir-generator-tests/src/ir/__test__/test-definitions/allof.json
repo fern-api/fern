@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": "1.0.0",
     "apiName": "api",
     "apiDisplayName": "allOf Composition",
     "apiDocs": null,
@@ -167,7 +168,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:PagingCursors"
@@ -251,7 +253,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -433,7 +436,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -537,7 +541,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -629,7 +634,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:RuleType",
@@ -713,7 +719,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -805,7 +812,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:User",
@@ -1100,7 +1108,8 @@
                         "availability": null,
                         "docs": "When this resource was last modified."
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:AuditInfo",
@@ -1186,7 +1195,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1274,7 +1284,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1449,7 +1460,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:CombinedEntityStatus"
@@ -1533,7 +1545,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1617,7 +1630,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:BaseOrgMetadata"
@@ -1701,7 +1715,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1763,7 +1778,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:DetailedOrgMetadata"
@@ -1871,7 +1887,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:BaseOrgMetadata"
@@ -1971,7 +1988,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2190,7 +2208,8 @@
                         "availability": null,
                         "docs": "The botanical genus."
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:PlantStrict",
@@ -2252,7 +2271,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2340,7 +2360,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2533,7 +2554,8 @@
                         "availability": null,
                         "docs": "A description of the tree."
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:TreeIdentifiable",
@@ -2743,7 +2765,8 @@
                         "availability": null,
                         "docs": "A description of the tree."
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:TreeBase",
@@ -2792,6 +2815,7 @@
                     "id": "endpoint_.searchRuleTypes",
                     "name": "searchRuleTypes",
                     "displayName": "Search rule types with paginated results",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -3769,6 +3793,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -3778,6 +3803,7 @@
                     "id": "endpoint_.createRule",
                     "name": "createRule",
                     "displayName": "Create a rule with constrained execution context",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -4740,6 +4766,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -4749,6 +4776,7 @@
                     "id": "endpoint_.listUsers",
                     "name": "listUsers",
                     "displayName": "List users with paginated results",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -5535,6 +5563,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -5544,6 +5573,7 @@
                     "id": "endpoint_.getEntity",
                     "name": "getEntity",
                     "displayName": "Get an entity that combines multiple parents",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -6005,6 +6035,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -6014,6 +6045,7 @@
                     "id": "endpoint_.getOrganization",
                     "name": "getOrganization",
                     "displayName": "Get an organization with merged object-typed properties",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -6551,6 +6583,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -6560,6 +6593,7 @@
                     "id": "endpoint_.createPlant",
                     "name": "createPlant",
                     "displayName": "Create a plant (nested allOf with $ref chain)",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7391,6 +7425,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -7400,6 +7435,7 @@
                     "id": "endpoint_.createTree",
                     "name": "createTree",
                     "displayName": "Create a tree (multiple nested $ref in parent allOf)",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -8366,6 +8402,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -8402,6 +8439,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_": [
@@ -8733,7 +8771,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:PagingCursors": {
                 "type": "object",
@@ -8829,7 +8868,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:RuleExecutionContext": {
                 "type": "enum",
@@ -9091,7 +9131,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:RuleType": {
                 "type": "object",
@@ -9217,7 +9258,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:RuleTypeSearchResponse": {
                 "type": "object",
@@ -9316,7 +9358,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:User": {
                 "type": "object",
@@ -9409,7 +9452,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UserSearchResponse": {
                 "type": "object",
@@ -9508,7 +9552,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:RuleResponseStatus": {
                 "type": "enum",
@@ -9895,7 +9940,8 @@
                 "extends": [
                     "type_:AuditInfo"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:Identifiable": {
                 "type": "object",
@@ -9991,7 +10037,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:Describable": {
                 "type": "object",
@@ -10090,7 +10137,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:CombinedEntityStatus": {
                 "type": "enum",
@@ -10324,7 +10372,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:BaseOrgMetadata": {
                 "type": "object",
@@ -10420,7 +10469,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:BaseOrg": {
                 "type": "object",
@@ -10516,7 +10566,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:DetailedOrgMetadata": {
                 "type": "object",
@@ -10612,7 +10663,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:DetailedOrg": {
                 "type": "object",
@@ -10678,7 +10730,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:Organization": {
                 "type": "object",
@@ -10804,7 +10857,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:PlantStrict": {
                 "type": "object",
@@ -10927,7 +10981,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:PlantBaseWateringFrequency": {
                 "type": "enum",
@@ -11237,7 +11292,8 @@
                 "extends": [
                     "type_:PlantStrict"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:TreeIdentifiable": {
                 "type": "object",
@@ -11300,7 +11356,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:TreeDescribable": {
                 "type": "object",
@@ -11399,7 +11456,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:TreeBase": {
                 "type": "object",
@@ -11597,7 +11655,8 @@
                     "type_:TreeIdentifiable",
                     "type_:TreeDescribable"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:TreeRecord": {
                 "type": "object",
@@ -11827,7 +11886,8 @@
                 "extends": [
                     "type_:TreeBase"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],
@@ -12617,6 +12677,7 @@
             }
         },
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -12625,7 +12686,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {},
     "rootPackage": {
@@ -12679,6 +12741,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

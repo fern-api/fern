@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix JSON encoding/decoding of maps keyed by a non-`String` type (e.g. a
+    string enum or an undiscriminated union). Swift only serializes a
+    `Dictionary` as a JSON object when its key is `String`/`Int` or conforms to
+    `CodingKeyRepresentable`; otherwise it falls back to a JSON array, which
+    fails to round-trip object payloads. The generator now emits a
+    `CodingKeyRepresentable` conformance for enum and undiscriminated-union types
+    used as map keys. The conformance is gated with `@available` (macOS 12.3+,
+    iOS 15.4+, tvOS 15.4+, watchOS 8.5+) to match the platforms where
+    `Dictionary`'s `Codable` conformance uses `CodingKeyRepresentable`, so the
+    generated SDK keeps compiling on its existing deployment targets.
+  type: fix

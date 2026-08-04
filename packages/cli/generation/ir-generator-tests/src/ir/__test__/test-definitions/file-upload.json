@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "file-upload",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -134,7 +135,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -325,7 +327,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -424,7 +427,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -568,6 +572,7 @@
                     "id": "endpoint_service.post",
                     "name": "post",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1009,6 +1014,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1018,6 +1024,7 @@
                     "id": "endpoint_service.justFile",
                     "name": "justFile",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1113,6 +1120,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1122,6 +1130,7 @@
                     "id": "endpoint_service.justFileWithQueryParams",
                     "name": "justFileWithQueryParams",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1327,6 +1336,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1336,6 +1346,7 @@
                     "id": "endpoint_service.justFileWithOptionalQueryParams",
                     "name": "justFileWithOptionalQueryParams",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1463,6 +1474,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1472,6 +1484,7 @@
                     "id": "endpoint_service.withContentType",
                     "name": "withContentType",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1627,6 +1640,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1636,6 +1650,7 @@
                     "id": "endpoint_service.withFormEncoding",
                     "name": "withFormEncoding",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1756,6 +1771,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1765,6 +1781,7 @@
                     "id": "endpoint_service.withFormEncodedContainers",
                     "name": "withFormEncodedContainers",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -2241,6 +2258,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -2250,6 +2268,7 @@
                     "id": "endpoint_service.optionalArgs",
                     "name": "optionalArgs",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -2397,6 +2416,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -2406,6 +2426,7 @@
                     "id": "endpoint_service.withInlineType",
                     "name": "withInlineType",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -2519,6 +2540,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -2528,6 +2550,7 @@
                     "id": "endpoint_service.withJsonProperty",
                     "name": "withJsonProperty",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -2647,6 +2670,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -2656,6 +2680,7 @@
                     "id": "endpoint_service.withRefBody",
                     "name": "withRefBody",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -2872,6 +2897,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -2881,6 +2907,7 @@
                     "id": "endpoint_service.simple",
                     "name": "simple",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -2942,6 +2969,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -2951,6 +2979,7 @@
                     "id": "endpoint_service.withLiteralAndEnumTypes",
                     "name": "withLiteralAndEnumTypes",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -3136,6 +3165,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -3155,6 +3185,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_service": [
@@ -3382,7 +3413,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_service:MyAliasObject": {
                 "type": "alias",
@@ -3628,7 +3660,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_service:ObjectType": {
                 "type": "enum",
@@ -3842,7 +3875,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_service:ModelType": {
                 "type": "alias",
@@ -7792,6 +7826,7 @@
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -7800,7 +7835,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_service": {
@@ -7859,6 +7895,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

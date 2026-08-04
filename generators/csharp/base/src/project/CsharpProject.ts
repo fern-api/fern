@@ -295,6 +295,11 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         }
 
         const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.CiYaml))).toString();
+        const useOidc = this.context.publishConfig?.apiKeyEnvironmentVariable === "<USE_OIDC>";
+        const shouldWritePublishBlock =
+            this.context.publishConfig != null &&
+            (this.context.publishConfig.shouldGeneratePublishWorkflow == null ||
+                this.context.publishConfig.shouldGeneratePublishWorkflow === true);
         const githubWorkflow = eta
             .renderString(githubWorkflowTemplate, {
                 projectName: this.name,
@@ -305,10 +310,12 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
                     this.names.files.testProject,
                     `${this.names.files.testProject}.csproj`
                 ),
-                shouldWritePublishBlock: this.context.publishConfig != null,
+                shouldWritePublishBlock,
+                useOidc,
                 nugetTokenEnvvar:
                     this.context.publishConfig?.apiKeyEnvironmentVariable == null ||
-                    this.context.publishConfig?.apiKeyEnvironmentVariable === ""
+                    this.context.publishConfig?.apiKeyEnvironmentVariable === "" ||
+                    useOidc
                         ? "NUGET_API_TOKEN"
                         : this.context.publishConfig.apiKeyEnvironmentVariable
             })
@@ -891,7 +898,7 @@ ${projectGroup.join("\n")}
     </ItemGroup>
 ${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${indent}`)}
     <ItemGroup>
-        <None Include="${this.readmeRelativePathFromProject}" Pack="true" PackagePath=""/>
+        <None Include="${this.readmeRelativePathFromProject}" Pack="true" PackagePath="" Condition="Exists('${this.readmeRelativePathFromProject}')"/>
     </ItemGroup>
 ${this.getAdditionalItemGroups().join(`\n${indent}`)}
     <ItemGroup>
@@ -1007,7 +1014,11 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
             Object.keys(this.generation.settings.extraDependencies).map((n) => n.toLowerCase())
         );
         const result: string[] = [];
-        for (const pkg of NET8_INBOX_PACKAGES) {
+        const inboxPackages = [...NET8_INBOX_PACKAGES];
+        if (this.generation.settings.includePlatformHeaders) {
+            inboxPackages.push(PLATFORM_HEADERS_INBOX_PACKAGE);
+        }
+        for (const pkg of inboxPackages) {
             if (!extraDepNames.has(pkg.name.toLowerCase())) {
                 result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
             }
@@ -1098,13 +1109,15 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
 
     private getPropertyGroups(): string[] {
         const result: string[] = [];
-        if (this.context.version != null) {
-            result.push(`<Version>${this.context.version}</Version>`);
+        if (this.context.sdkVersion != null) {
+            result.push(`<Version>${this.context.sdkVersion}</Version>`);
             result.push("<AssemblyVersion>$(Version)</AssemblyVersion>");
             result.push("<FileVersion>$(Version)</FileVersion>");
         }
 
-        result.push("<PackageReadmeFile>README.md</PackageReadmeFile>");
+        result.push(
+            `<PackageReadmeFile Condition="Exists('${this.readmeRelativePathFromProject}')">README.md</PackageReadmeFile>`
+        );
 
         if (this.license) {
             result.push(
@@ -1171,3 +1184,14 @@ const LEGACY_FRAMEWORK_CONDITION = `!${NET8_COMPATIBLE_CONDITION}`;
 const NET8_INBOX_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
     { name: "System.Text.Json", version: "9.0.9" }
 ];
+
+/**
+ * Provides System.Runtime.InteropServices.RuntimeInformation on legacy TFMs
+ * (net462/netstandard2.0); in-box on net8.0+. Only emitted when the
+ * `include-platform-headers` config is enabled, since that is the only feature
+ * that references RuntimeInformation (for the structured User-Agent header).
+ */
+const PLATFORM_HEADERS_INBOX_PACKAGE = {
+    name: "System.Runtime.InteropServices.RuntimeInformation",
+    version: "4.3.0"
+} as const;

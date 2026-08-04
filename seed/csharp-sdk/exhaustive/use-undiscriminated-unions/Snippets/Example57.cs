@@ -10,7 +10,7 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Urls.NoEndingSlashAsync();
+        await client.Endpoints.Urls.WithMixedCaseAsync();
     }
 
 }

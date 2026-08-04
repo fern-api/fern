@@ -42,7 +42,7 @@ enum Example19 {
                 name: "name"
             ),
             metadata: MetadataType.html(
-
+                "metadata"
             ),
             commonMetadata: Metadata(
                 id: "id",
@@ -61,7 +61,7 @@ enum Example19 {
                 )
             ),
             data: Data.string(
-
+                "data"
             ),
             migration: Migration(
                 name: "name",
@@ -75,7 +75,7 @@ enum Example19 {
                 )
             ),
             test: Test.and(
-
+                true
             ),
             node: Node(
                 name: "name",

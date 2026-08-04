@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Readonly Ref Shared Schema API",
   "description": "Tests that readOnly on a $ref'd schema propagates correctly when the parent schema is shared between request and response contexts.\n",
   "servers": [],

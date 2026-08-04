@@ -6,7 +6,7 @@ enum Example7 {
         let client = UnionsClient(baseURL: "https://api.fern.com")
 
         _ = try await client.types.update(request: UnionWithTime.datetime(
-
+            try! Date("1994-01-01T01:01:01Z", strategy: .iso8601)
         ))
     }
 }

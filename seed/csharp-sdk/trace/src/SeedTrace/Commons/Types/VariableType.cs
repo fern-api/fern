@@ -170,46 +170,46 @@ public record VariableType
     public bool IsDoublyLinkedListType => Type == "doublyLinkedListType";
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'integerType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'integerType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'integerType'.</exception>
-    public object AsIntegerType() =>
+    public object? AsIntegerType() =>
         IsIntegerType
             ? Value!
             : throw new global::System.Exception("VariableType.Type is not 'integerType'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'doubleType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'doubleType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'doubleType'.</exception>
-    public object AsDoubleType() =>
+    public object? AsDoubleType() =>
         IsDoubleType
             ? Value!
             : throw new global::System.Exception("VariableType.Type is not 'doubleType'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'booleanType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'booleanType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'booleanType'.</exception>
-    public object AsBooleanType() =>
+    public object? AsBooleanType() =>
         IsBooleanType
             ? Value!
             : throw new global::System.Exception("VariableType.Type is not 'booleanType'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stringType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'stringType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stringType'.</exception>
-    public object AsStringType() =>
+    public object? AsStringType() =>
         IsStringType
             ? Value!
             : throw new global::System.Exception("VariableType.Type is not 'stringType'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'charType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'charType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'charType'.</exception>
-    public object AsCharType() =>
+    public object? AsCharType() =>
         IsCharType
             ? Value!
             : throw new global::System.Exception("VariableType.Type is not 'charType'");
@@ -233,43 +233,43 @@ public record VariableType
             : throw new global::System.Exception("VariableType.Type is not 'mapType'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'binaryTreeType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'binaryTreeType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'binaryTreeType'.</exception>
-    public object AsBinaryTreeType() =>
+    public object? AsBinaryTreeType() =>
         IsBinaryTreeType
             ? Value!
             : throw new global::System.Exception("VariableType.Type is not 'binaryTreeType'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'singlyLinkedListType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'singlyLinkedListType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'singlyLinkedListType'.</exception>
-    public object AsSinglyLinkedListType() =>
+    public object? AsSinglyLinkedListType() =>
         IsSinglyLinkedListType
             ? Value!
             : throw new global::System.Exception("VariableType.Type is not 'singlyLinkedListType'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'doublyLinkedListType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'doublyLinkedListType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'doublyLinkedListType'.</exception>
-    public object AsDoublyLinkedListType() =>
+    public object? AsDoublyLinkedListType() =>
         IsDoublyLinkedListType
             ? Value!
             : throw new global::System.Exception("VariableType.Type is not 'doublyLinkedListType'");
 
     public T Match<T>(
-        Func<object, T> onIntegerType,
-        Func<object, T> onDoubleType,
-        Func<object, T> onBooleanType,
-        Func<object, T> onStringType,
-        Func<object, T> onCharType,
+        Func<object?, T> onIntegerType,
+        Func<object?, T> onDoubleType,
+        Func<object?, T> onBooleanType,
+        Func<object?, T> onStringType,
+        Func<object?, T> onCharType,
         Func<SeedTrace.ListType, T> onListType,
         Func<SeedTrace.MapType, T> onMapType,
-        Func<object, T> onBinaryTreeType,
-        Func<object, T> onSinglyLinkedListType,
-        Func<object, T> onDoublyLinkedListType,
+        Func<object?, T> onBinaryTreeType,
+        Func<object?, T> onSinglyLinkedListType,
+        Func<object?, T> onDoublyLinkedListType,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -290,16 +290,16 @@ public record VariableType
     }
 
     public void Visit(
-        Action<object> onIntegerType,
-        Action<object> onDoubleType,
-        Action<object> onBooleanType,
-        Action<object> onStringType,
-        Action<object> onCharType,
+        Action<object?> onIntegerType,
+        Action<object?> onDoubleType,
+        Action<object?> onBooleanType,
+        Action<object?> onStringType,
+        Action<object?> onCharType,
         Action<SeedTrace.ListType> onListType,
         Action<SeedTrace.MapType> onMapType,
-        Action<object> onBinaryTreeType,
-        Action<object> onSinglyLinkedListType,
-        Action<object> onDoublyLinkedListType,
+        Action<object?> onBinaryTreeType,
+        Action<object?> onSinglyLinkedListType,
+        Action<object?> onDoublyLinkedListType,
         Action<string, object?> onUnknown_
     )
     {
@@ -342,7 +342,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsIntegerType(out object? value)
     {
@@ -356,7 +356,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsDoubleType(out object? value)
     {
@@ -370,7 +370,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsBooleanType(out object? value)
     {
@@ -384,7 +384,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsStringType(out object? value)
     {
@@ -398,7 +398,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsCharType(out object? value)
     {
@@ -440,7 +440,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsBinaryTreeType(out object? value)
     {
@@ -454,7 +454,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsSinglyLinkedListType(out object? value)
     {
@@ -468,7 +468,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsDoublyLinkedListType(out object? value)
     {
@@ -528,18 +528,18 @@ public record VariableType
 
             var value = discriminator switch
             {
-                "integerType" => new { },
-                "doubleType" => new { },
-                "booleanType" => new { },
-                "stringType" => new { },
-                "charType" => new { },
+                "integerType" => null,
+                "doubleType" => null,
+                "booleanType" => null,
+                "stringType" => null,
+                "charType" => null,
                 "listType" => jsonWithoutDiscriminator.Deserialize<SeedTrace.ListType?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ListType"),
                 "mapType" => jsonWithoutDiscriminator.Deserialize<SeedTrace.MapType?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.MapType"),
-                "binaryTreeType" => new { },
-                "singlyLinkedListType" => new { },
-                "doublyLinkedListType" => new { },
+                "binaryTreeType" => null,
+                "singlyLinkedListType" => null,
+                "doublyLinkedListType" => null,
                 _ => json.Deserialize<object?>(options),
             };
             return new VariableType(discriminator, value);
@@ -598,9 +598,9 @@ public record VariableType
     [Serializable]
     public record IntegerType
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>
@@ -609,9 +609,9 @@ public record VariableType
     [Serializable]
     public record DoubleType
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>
@@ -620,9 +620,9 @@ public record VariableType
     [Serializable]
     public record BooleanType
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>
@@ -631,9 +631,9 @@ public record VariableType
     [Serializable]
     public record StringType
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>
@@ -642,9 +642,9 @@ public record VariableType
     [Serializable]
     public record CharType
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>
@@ -690,9 +690,9 @@ public record VariableType
     [Serializable]
     public record BinaryTreeType
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>
@@ -701,9 +701,9 @@ public record VariableType
     [Serializable]
     public record SinglyLinkedListType
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>
@@ -712,8 +712,8 @@ public record VariableType
     [Serializable]
     public record DoublyLinkedListType
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 }

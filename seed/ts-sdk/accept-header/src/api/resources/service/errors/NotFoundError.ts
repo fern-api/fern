@@ -16,6 +16,6 @@ export class NotFoundError extends errors.SeedAcceptError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "NotFoundError";
     }
 }

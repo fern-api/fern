@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "websocket-auth",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -128,7 +129,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -206,7 +208,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -284,7 +287,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -362,7 +366,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -440,7 +445,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -517,7 +523,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -616,7 +623,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -672,7 +680,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -719,6 +728,7 @@
                     "id": "endpoint_auth.getTokenWithClientCredentials",
                     "name": "getTokenWithClientCredentials",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1184,6 +1194,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1193,6 +1204,7 @@
                     "id": "endpoint_auth.refreshToken",
                     "name": "refreshToken",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1697,6 +1709,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1716,6 +1729,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_auth": [
@@ -2765,7 +2779,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_realtime:SendEvent": {
                 "type": "object",
@@ -2896,7 +2911,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_realtime:send_snake_case": {
                 "type": "object",
@@ -3027,7 +3043,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_realtime:ReceiveEvent": {
                 "type": "object",
@@ -3158,7 +3175,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_realtime:receive_snake_case": {
                 "type": "object",
@@ -3289,7 +3307,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_realtime:SendEvent2": {
                 "type": "object",
@@ -3420,7 +3439,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_realtime:ReceiveEvent2": {
                 "type": "object",
@@ -3581,7 +3601,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_realtime:ReceiveEvent3": {
                 "type": "object",
@@ -3682,7 +3703,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],
@@ -4663,6 +4685,7 @@
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -4671,7 +4694,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_auth": {
@@ -4752,6 +4776,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

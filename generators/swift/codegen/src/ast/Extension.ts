@@ -1,3 +1,4 @@
+import { escapeReservedKeywordTypeReference } from "../syntax/index.js";
 import { ComputedProperty } from "./ComputedProperty.js";
 import { AstNode, Writer } from "./core/index.js";
 import { DocComment } from "./DocComment.js";
@@ -51,7 +52,7 @@ export class Extension extends AstNode {
         if (this.docs != null) {
             this.docs.write(writer);
         }
-        writer.write(`extension ${this.name}`);
+        writer.write(`extension ${escapeReservedKeywordTypeReference(this.name)}`);
         this.conformances.forEach((conformance, index) => {
             if (index === 0) {
                 writer.write(": ");

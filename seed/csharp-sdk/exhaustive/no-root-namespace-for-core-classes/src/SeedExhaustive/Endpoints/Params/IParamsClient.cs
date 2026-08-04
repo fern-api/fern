@@ -91,6 +91,24 @@ public partial interface IParamsClient
     );
 
     /// <summary>
+    /// POST with referenced body + query params
+    /// </summary>
+    WithRawResponseTask<ObjectWithOptionalField> CreateWithBodyAndQueryAsync(
+        CreateWithBodyAndQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// POST bytes body + query params
+    /// </summary>
+    WithRawResponseTask<ObjectWithOptionalField> UploadBytesWithQueryAsync(
+        UploadBytesWithQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// GET with boolean path param
     /// </summary>
     WithRawResponseTask<string> GetWithBooleanPathAsync(

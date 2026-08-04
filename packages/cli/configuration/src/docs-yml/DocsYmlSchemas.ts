@@ -92,6 +92,8 @@ export const ContentAlignment = z.enum(["center", "left"]);
 
 export const HeaderPosition = z.enum(["fixed", "static"]);
 
+export const ChangelogLayout = z.enum(["timeline", "classic"]);
+
 export const ProductSwitcherThemeConfig = z.enum(["default", "toggle", "tabs"]);
 
 export const LanguageSwitcherThemeConfig = z.enum(["default", "minimal"]);
@@ -244,7 +246,8 @@ export const AIChatConfig = z.object({
     model: AIChatModel.optional(),
     "system-prompt": z.string().optional(),
     location: z.array(AIChatLocation).optional(),
-    datasources: z.array(AIChatDatasource).optional()
+    datasources: z.array(AIChatDatasource).optional(),
+    "mask-pii": z.boolean().optional()
 });
 
 // ===== Font schemas =====
@@ -303,7 +306,9 @@ export const LayoutConfig = z.object({
     "disable-header": z.boolean().optional(),
     "hide-nav-links": z.boolean().optional(),
     "hide-feedback": z.boolean().optional(),
-    "mobile-toc": z.boolean().optional()
+    "mobile-toc": z.boolean().optional(),
+    "changelog-layout": ChangelogLayout.optional(),
+    "show-nav-availability-badges": z.boolean().optional()
 });
 
 // ===== Settings =====
@@ -371,6 +376,7 @@ export const PageActionOptions = z.object({
     chatgpt: z.boolean().optional(),
     claude: z.boolean().optional(),
     cursor: z.boolean().optional(),
+    mcp: z.boolean().optional(),
     vscode: z.boolean().optional(),
     custom: z.array(CustomPageAction).optional()
 });
@@ -455,7 +461,8 @@ export const PlaygroundSettings = z.object({
     environments: z.array(z.string()).optional(),
     button: PlaygroundButtonSettings.optional(),
     oauth: z.boolean().optional(),
-    "limit-websocket-messages-per-connection": z.number().int().optional()
+    "limit-websocket-messages-per-connection": z.number().int().optional(),
+    "send-optional-defaults": z.boolean().optional()
 });
 
 // ===== Announcement =====
@@ -535,7 +542,8 @@ export const JsFileConfig = z.union([z.string(), JsFileConfigSettings]);
 
 export const JsRemoteConfig = z.object({
     url: z.string(),
-    strategy: JsScriptStrategy.optional()
+    strategy: JsScriptStrategy.optional(),
+    "disable-sri": z.boolean().optional()
 });
 
 export const JsConfigOptions = z.union([JsRemoteConfig, JsFileConfig]);
@@ -619,7 +627,8 @@ export const ExperimentalConfig = z.object({
     "ai-examples": z.boolean().optional(),
     "ai-example-style-instructions": z.string().optional(),
     "exclude-apis": z.boolean().optional(),
-    "basepath-aware": z.boolean().optional()
+    "basepath-aware": z.boolean().optional(),
+    "external-sitemaps": z.array(z.string()).optional()
 });
 
 // ===== Library schemas =====
@@ -627,7 +636,7 @@ export const ExperimentalConfig = z.object({
 export const GitLibraryInputSchema = z.object({
     git: z.string(),
     subpath: z.string().optional(),
-    branch: z.string().optional()
+    ref: z.string().optional()
 });
 
 export const PathLibraryInputSchema = z.object({

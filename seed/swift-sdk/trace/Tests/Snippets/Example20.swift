@@ -13,10 +13,10 @@ enum Example20 {
             problemDescription: ProblemDescription(
                 boards: [
                     ProblemDescriptionBoard.html(
-
+                        "boards"
                     ),
                     ProblemDescriptionBoard.html(
-
+                        "boards"
                     )
                 ]
             ),
@@ -55,15 +55,15 @@ enum Example20 {
                         id: "id",
                         params: [
                             VariableValue.integerValue(
-
+                                1
                             ),
                             VariableValue.integerValue(
-
+                                1
                             )
                         ]
                     ),
                     expectedResult: VariableValue.integerValue(
-
+                        1
                     )
                 ),
                 TestCaseWithExpectedResult(
@@ -71,15 +71,15 @@ enum Example20 {
                         id: "id",
                         params: [
                             VariableValue.integerValue(
-
+                                1
                             ),
                             VariableValue.integerValue(
-
+                                1
                             )
                         ]
                     ),
                     expectedResult: VariableValue.integerValue(
-
+                        1
                     )
                 )
             ],

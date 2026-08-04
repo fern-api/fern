@@ -34,6 +34,20 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &foldera.GetDirectThreadRequest{
+//	    IDs: []string{
+//	        "ids",
+//	    },
+//	    Tags: []string{
+//	        "tags",
+//	    },
+//	}
+//	client.FolderA.Service.GetDirectThread(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetDirectThread(
 	ctx context.Context,
 	request *foldera.GetDirectThreadRequest,

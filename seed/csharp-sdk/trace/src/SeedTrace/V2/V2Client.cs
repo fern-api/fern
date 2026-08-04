@@ -24,6 +24,9 @@ public partial class V2Client : IV2Client
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -36,6 +39,7 @@ public partial class V2Client : IV2Client
                 {
                     Method = HttpMethod.Get,
                     Path = "",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Auth.GetTokenAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/things",
+                "method": "GET",
+                "identifier_override": "endpoint_core.listThings"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Core.ListThingsAsync();\n"
+            }
+        }
+    ]
+}

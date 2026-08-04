@@ -142,7 +142,7 @@ private func main() async throws {
         request: TestSubmissionUpdate(
             updateTime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             updateInfo: TestSubmissionUpdateInfo.running(
-
+                .queueingSubmission
             )
         )
     )
@@ -283,7 +283,7 @@ private func main() async throws {
         request: WorkspaceSubmissionUpdate(
             updateTime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             updateInfo: WorkspaceSubmissionUpdateInfo.running(
-
+                .queueingSubmission
             )
         )
     )
@@ -358,11 +358,11 @@ private func main() async throws {
             result: TestCaseResultWithStdout(
                 result: TestCaseResult(
                     expectedResult: VariableValue.integerValue(
-
+                        1
                     ),
                     actualResult: ActualResult.value(
                         VariableValue.integerValue(
-
+                            1
                         )
                     ),
                     passed: true
@@ -374,7 +374,7 @@ private func main() async throws {
                     submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                     lineNumber: 1,
                     returnValue: DebugVariableValue.integerValue(
-
+                        1
                     ),
                     expressionLocation: ExpressionLocation(
                         start: 1,
@@ -389,14 +389,14 @@ private func main() async throws {
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-
+                                            1
                                         )
                                     ]
                                 ),
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-
+                                            1
                                         )
                                     ]
                                 )
@@ -409,7 +409,7 @@ private func main() async throws {
                     submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                     lineNumber: 1,
                     returnValue: DebugVariableValue.integerValue(
-
+                        1
                     ),
                     expressionLocation: ExpressionLocation(
                         start: 1,
@@ -424,14 +424,14 @@ private func main() async throws {
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-
+                                            1
                                         )
                                     ]
                                 ),
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-
+                                            1
                                         )
                                     ]
                                 )
@@ -527,7 +527,7 @@ private func main() async throws {
                     directory: "directory"
                 ),
                 returnValue: DebugVariableValue.integerValue(
-
+                    1
                 ),
                 expressionLocation: ExpressionLocation(
                     start: 1,
@@ -542,14 +542,14 @@ private func main() async throws {
                             Scope(
                                 variables: [
                                     "variables": DebugVariableValue.integerValue(
-
+                                        1
                                     )
                                 ]
                             ),
                             Scope(
                                 variables: [
                                     "variables": DebugVariableValue.integerValue(
-
+                                        1
                                     )
                                 ]
                             )
@@ -566,7 +566,7 @@ private func main() async throws {
                     directory: "directory"
                 ),
                 returnValue: DebugVariableValue.integerValue(
-
+                    1
                 ),
                 expressionLocation: ExpressionLocation(
                     start: 1,
@@ -581,14 +581,14 @@ private func main() async throws {
                             Scope(
                                 variables: [
                                     "variables": DebugVariableValue.integerValue(
-
+                                        1
                                     )
                                 ]
                             ),
                             Scope(
                                 variables: [
                                     "variables": DebugVariableValue.integerValue(
-
+                                        1
                                     )
                                 ]
                             )
@@ -694,7 +694,7 @@ private func main() async throws {
                     submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                     lineNumber: 1,
                     returnValue: DebugVariableValue.integerValue(
-
+                        1
                     ),
                     expressionLocation: ExpressionLocation(
                         start: 1,
@@ -709,14 +709,14 @@ private func main() async throws {
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-
+                                            1
                                         )
                                     ]
                                 ),
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-
+                                            1
                                         )
                                     ]
                                 )
@@ -729,7 +729,7 @@ private func main() async throws {
                     submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                     lineNumber: 1,
                     returnValue: DebugVariableValue.integerValue(
-
+                        1
                     ),
                     expressionLocation: ExpressionLocation(
                         start: 1,
@@ -744,14 +744,14 @@ private func main() async throws {
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-
+                                            1
                                         )
                                     ]
                                 ),
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-
+                                            1
                                         )
                                     ]
                                 )
@@ -838,7 +838,7 @@ private func main() async throws {
                     directory: "directory"
                 ),
                 returnValue: DebugVariableValue.integerValue(
-
+                    1
                 ),
                 expressionLocation: ExpressionLocation(
                     start: 1,
@@ -853,14 +853,14 @@ private func main() async throws {
                             Scope(
                                 variables: [
                                     "variables": DebugVariableValue.integerValue(
-
+                                        1
                                     )
                                 ]
                             ),
                             Scope(
                                 variables: [
                                     "variables": DebugVariableValue.integerValue(
-
+                                        1
                                     )
                                 ]
                             )
@@ -877,7 +877,7 @@ private func main() async throws {
                     directory: "directory"
                 ),
                 returnValue: DebugVariableValue.integerValue(
-
+                    1
                 ),
                 expressionLocation: ExpressionLocation(
                     start: 1,
@@ -892,14 +892,14 @@ private func main() async throws {
                             Scope(
                                 variables: [
                                     "variables": DebugVariableValue.integerValue(
-
+                                        1
                                     )
                                 ]
                             ),
                             Scope(
                                 variables: [
                                     "variables": DebugVariableValue.integerValue(
-
+                                        1
                                     )
                                 ]
                             )
@@ -1085,7 +1085,7 @@ import Trace
 private func main() async throws {
     let client = TraceClient(token: "<token>")
 
-    _ = try await client.migration.getAttemptedMigrations()
+    _ = try await client.migration.getAttemptedMigrations(adminKeyHeader: "admin-key-header")
 }
 
 try await main()
@@ -1230,7 +1230,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/Sources/Resources/Playlist/PlaylistClient.swift">getPlaylists</a>(serviceParam: String, limit: Int?, otherField: String, multiLineDocs: String, optionalMultipleField: String?, multipleField: String, requestOptions: RequestOptions?) -> [Playlist]</code></summary>
+<details><summary><code>client.playlist.<a href="/Sources/Resources/Playlist/PlaylistClient.swift">getPlaylists</a>(serviceParam: String, limit: Int?, otherField: String, multiLineDocs: String, optionalMultipleField: [String]?, multipleField: [String], requestOptions: RequestOptions?) -> [Playlist]</code></summary>
 <dl>
 <dd>
 
@@ -1267,7 +1267,13 @@ private func main() async throws {
         serviceParam: "1",
         limit: 1,
         otherField: "otherField",
-        multiLineDocs: "multiLineDocs"
+        multiLineDocs: "multiLineDocs",
+        optionalMultipleField: [
+            "optionalMultipleField"
+        ],
+        multipleField: [
+            "multipleField"
+        ]
     )
 }
 
@@ -1321,7 +1327,7 @@ description
 <dl>
 <dd>
 
-**optionalMultipleField:** `String?` 
+**optionalMultipleField:** `[String]?` 
     
 </dd>
 </dl>
@@ -1329,7 +1335,7 @@ description
 <dl>
 <dd>
 
-**multipleField:** `String` 
+**multipleField:** `[String]` 
     
 </dd>
 </dl>
@@ -1649,10 +1655,10 @@ private func main() async throws {
         problemDescription: ProblemDescription(
             boards: [
                 ProblemDescriptionBoard.html(
-
+                    "boards"
                 ),
                 ProblemDescriptionBoard.html(
-
+                    "boards"
                 )
             ]
         ),
@@ -1691,15 +1697,15 @@ private func main() async throws {
                     id: "id",
                     params: [
                         VariableValue.integerValue(
-
+                            1
                         ),
                         VariableValue.integerValue(
-
+                            1
                         )
                     ]
                 ),
                 expectedResult: VariableValue.integerValue(
-
+                    1
                 )
             ),
             TestCaseWithExpectedResult(
@@ -1707,15 +1713,15 @@ private func main() async throws {
                     id: "id",
                     params: [
                         VariableValue.integerValue(
-
+                            1
                         ),
                         VariableValue.integerValue(
-
+                            1
                         )
                     ]
                 ),
                 expectedResult: VariableValue.integerValue(
-
+                    1
                 )
             )
         ],
@@ -1798,10 +1804,10 @@ private func main() async throws {
             problemDescription: ProblemDescription(
                 boards: [
                     ProblemDescriptionBoard.html(
-
+                        "boards"
                     ),
                     ProblemDescriptionBoard.html(
-
+                        "boards"
                     )
                 ]
             ),
@@ -1840,15 +1846,15 @@ private func main() async throws {
                         id: "id",
                         params: [
                             VariableValue.integerValue(
-
+                                1
                             ),
                             VariableValue.integerValue(
-
+                                1
                             )
                         ]
                     ),
                     expectedResult: VariableValue.integerValue(
-
+                        1
                     )
                 ),
                 TestCaseWithExpectedResult(
@@ -1856,15 +1862,15 @@ private func main() async throws {
                         id: "id",
                         params: [
                             VariableValue.integerValue(
-
+                                1
                             ),
                             VariableValue.integerValue(
-
+                                1
                             )
                         ]
                     ),
                     expectedResult: VariableValue.integerValue(
-
+                        1
                     )
                 )
             ],

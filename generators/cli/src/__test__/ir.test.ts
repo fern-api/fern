@@ -2,7 +2,7 @@ import { mkdtemp, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { readIrSummary } from "../ir.js";
+import { readIr } from "../ir.js";
 
 /**
  * Smoke coverage for the IR boundary. The IR SDK does the heavy
@@ -17,7 +17,7 @@ import { readIrSummary } from "../ir.js";
  * (the irFilepath in the message is what users grep for when an
  * upstream tool emits a malformed IR).
  */
-describe("readIrSummary", () => {
+describe("readIr", () => {
     let tmpDir: string;
 
     beforeEach(async () => {
@@ -29,13 +29,13 @@ describe("readIrSummary", () => {
     });
 
     it("throws when the file is missing", async () => {
-        await expect(readIrSummary(path.join(tmpDir, "missing.json"))).rejects.toThrow();
+        await expect(readIr(path.join(tmpDir, "missing.json"))).rejects.toThrow();
     });
 
     it("throws on malformed JSON", async () => {
         const irPath = path.join(tmpDir, "ir.json");
         await writeFile(irPath, "{ not json");
-        await expect(readIrSummary(irPath)).rejects.toThrow();
+        await expect(readIr(irPath)).rejects.toThrow();
     });
 
     it("wraps IR-shape parse failures with the file path so users can locate the bad input", async () => {
@@ -44,6 +44,6 @@ describe("readIrSummary", () => {
         // serializer will reject it, and we want the file path baked
         // into the surfaced message.
         await writeFile(irPath, JSON.stringify({ something: "else" }));
-        await expect(readIrSummary(irPath)).rejects.toThrow(irPath);
+        await expect(readIr(irPath)).rejects.toThrow(irPath);
     });
 });

@@ -52,7 +52,8 @@ describe("emitReadme", () => {
             binaryName: "petstore-api",
             apiDisplayName: "Petstore",
             authBindings: [bearerBinding],
-            npmPublishInfo
+            npmPublishInfo,
+            repoUrl: "https://github.com/fern-api/petstore-cli"
         });
 
         expect(readme).toContain("# Petstore CLI");
@@ -82,7 +83,8 @@ describe("emitReadme", () => {
             binaryName: "petstore-api",
             apiDisplayName: "Petstore",
             authBindings: [bearerBinding],
-            npmPublishInfo
+            npmPublishInfo,
+            repoUrl: "https://github.com/fern-api/petstore-cli"
         });
 
         expect(readme).toContain("[![npm shield](https://img.shields.io/npm/v/@petstore/cli)]");
@@ -95,7 +97,8 @@ describe("emitReadme", () => {
             binaryName: "acme",
             apiDisplayName: "Acme",
             authBindings: [bearerBinding],
-            npmPublishInfo: undefined
+            npmPublishInfo: undefined,
+            repoUrl: undefined
         });
 
         expect(readme).not.toContain("npm shield");
@@ -104,20 +107,24 @@ describe("emitReadme", () => {
 
     // ── Build from source when npmPublishInfo absent ────────────────
 
-    it("shows build-from-source when npmPublishInfo is absent", async () => {
+    it("shows curl|bash primary install when npmPublishInfo is absent", async () => {
         const readme = await emitAndRead({
             outputDir,
             binaryName: "acme",
             apiDisplayName: "Acme",
             authBindings: [bearerBinding],
-            npmPublishInfo: undefined
+            npmPublishInfo: undefined,
+            repoUrl: "https://github.com/acme/acme-cli"
         });
 
+        expect(readme).toContain(
+            "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/acme/acme-cli/releases/latest/download/acme-installer.sh | sh"
+        );
+        expect(readme).toContain("### Build from source");
         expect(readme).toContain("cargo build --release");
         expect(readme).toContain("rustup.rs");
         expect(readme).not.toContain("npm install");
         expect(readme).not.toContain("npx");
-        expect(readme).not.toContain("### Build from source");
     });
 
     // ── Generic auth when no supported bindings ─────────────────────
@@ -128,7 +135,8 @@ describe("emitReadme", () => {
             binaryName: "my-api",
             apiDisplayName: "My API",
             authBindings: [],
-            npmPublishInfo: undefined
+            npmPublishInfo: undefined,
+            repoUrl: undefined
         });
 
         expect(readme).toContain("This API requires authentication. Run `my-api --help` for details.");
@@ -145,7 +153,8 @@ describe("emitReadme", () => {
             binaryName: "my-tool",
             apiDisplayName: undefined,
             authBindings: [],
-            npmPublishInfo: undefined
+            npmPublishInfo: undefined,
+            repoUrl: undefined
         });
 
         expect(readme).toContain("# my-tool CLI");
@@ -177,12 +186,39 @@ describe("emitReadme", () => {
             binaryName: "acme",
             apiDisplayName: "Acme",
             authBindings: [headerBinding, basicBinding],
-            npmPublishInfo: undefined
+            npmPublishInfo: undefined,
+            repoUrl: undefined
         });
 
         expect(readme).toContain('export ACME_API_KEY="<your api key>"');
         expect(readme).toContain('export ACME_USERNAME="<your credential>"');
         expect(readme).toContain('export ACME_PASSWORD="<your credential>"');
+    });
+
+    it("documents OAuth client-credentials env vars", async () => {
+        const oauthBinding: DetectedAuthBinding = {
+            schemeName: "OAuth2",
+            rustCall:
+                '.auth(OAuth2Auth::new("OAuth2").token_url("https://api.example.com/token").client_id_env("ACME_CLIENT_ID").client_secret_env("ACME_CLIENT_SECRET"))',
+            placement: "root",
+            authTypeImport: "OAuth2Auth",
+            envVars: ["ACME_CLIENT_ID", "ACME_CLIENT_SECRET"],
+            optionalEnvVars: ["ACME_AUDIENCE"],
+            kind: "oauth-client-credentials"
+        };
+
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [oauthBinding],
+            npmPublishInfo: undefined,
+            repoUrl: undefined
+        });
+
+        expect(readme).toContain('export ACME_CLIENT_ID="<your OAuth client credential>"');
+        expect(readme).toContain('export ACME_CLIENT_SECRET="<your OAuth client credential>"');
+        expect(readme).toContain('# export ACME_AUDIENCE="<your OAuth client credential>" # optional');
     });
 
     // ── Merge preserves customer-added sections ─────────────────────
@@ -212,7 +248,8 @@ describe("emitReadme", () => {
             binaryName: "acme",
             apiDisplayName: "Acme",
             authBindings: [],
-            npmPublishInfo: undefined
+            npmPublishInfo: undefined,
+            repoUrl: undefined
         });
 
         // Header is regenerated.
@@ -245,7 +282,8 @@ describe("emitReadme", () => {
             binaryName: "acme",
             apiDisplayName: "Acme",
             authBindings: [bearerBinding],
-            npmPublishInfo
+            npmPublishInfo,
+            repoUrl: "https://github.com/acme/acme-cli"
         });
 
         const expectedOrder = [
@@ -274,7 +312,8 @@ describe("emitReadme", () => {
             binaryName: "acme",
             apiDisplayName: "Acme",
             authBindings: [bearerBinding],
-            npmPublishInfo
+            npmPublishInfo,
+            repoUrl: "https://github.com/acme/acme-cli"
         });
 
         const advancedSection = readme.split("## Advanced")[1] ?? "";
@@ -292,7 +331,8 @@ describe("emitReadme", () => {
             binaryName: "petstore-api",
             apiDisplayName: "Petstore",
             authBindings: [bearerBinding],
-            npmPublishInfo
+            npmPublishInfo,
+            repoUrl: "https://github.com/fern-api/petstore-cli"
         });
 
         const quickStartSection = readme.split("## Quick start")[1]?.split("## Usage")[0] ?? "";
@@ -309,7 +349,8 @@ describe("emitReadme", () => {
             binaryName: "petstore-api",
             apiDisplayName: "Petstore",
             authBindings: [bearerBinding],
-            npmPublishInfo
+            npmPublishInfo,
+            repoUrl: "https://github.com/fern-api/petstore-cli"
         });
 
         const usageSection = readme.split("## Usage")[1]?.split("## Documentation")[0] ?? "";
@@ -329,7 +370,8 @@ describe("emitReadme", () => {
             binaryName: "acme",
             apiDisplayName: "Acme",
             authBindings: [bearerBinding],
-            npmPublishInfo
+            npmPublishInfo,
+            repoUrl: "https://github.com/acme/acme-cli"
         });
 
         const tocSection = readme.split("## Table of contents")[1]?.split("## Installation")[0] ?? "";
@@ -366,7 +408,8 @@ describe("emitReadme", () => {
             binaryName: "acme",
             apiDisplayName: "Acme",
             authBindings: [],
-            npmPublishInfo: undefined
+            npmPublishInfo: undefined,
+            repoUrl: undefined
         });
 
         const tocSection = readme.split("## Table of contents")[1]?.split("## Installation")[0] ?? "";
@@ -381,7 +424,8 @@ describe("emitReadme", () => {
             binaryName: "acme",
             apiDisplayName: "Acme",
             authBindings: [bearerBinding],
-            npmPublishInfo: undefined
+            npmPublishInfo: undefined,
+            repoUrl: undefined
         });
 
         const authSection = readme.split("## Authentication")[1]?.split("##")[0] ?? "";

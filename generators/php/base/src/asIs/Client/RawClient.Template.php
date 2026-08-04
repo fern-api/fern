@@ -159,6 +159,16 @@ class RawClient
                 $request->headers,
                 $options['headers'] ?? [],
             ),
+            UrlEncodedApiRequest::class => array_merge(
+                [
+                    "Content-Type" => "application/x-www-form-urlencoded",
+                    "Accept" => "*/*",
+                ],
+                $this->headers,
+                $authHeaders,
+                $request->headers,
+                $options['headers'] ?? [],
+            ),
             MultipartApiRequest::class => array_merge(
                 $this->headers,
                 $authHeaders,
@@ -190,6 +200,23 @@ class RawClient
                     ),
                 )
             );
+        }
+
+        if ($request instanceof UrlEncodedApiRequest) {
+            if ($request->body === null) {
+                return null;
+            }
+            $body = $this->buildJsonBody($request->body, $options);
+            if ($body instanceof JsonSerializable) {
+                $body = $body->jsonSerialize();
+            }
+            if (is_object($body)) {
+                $body = (array)$body;
+            }
+            if (!is_array($body)) {
+                throw new InvalidArgumentException('URL-encoded request bodies must serialize to an array.');
+            }
+            return $this->streamFactory->createStream(http_build_query($body));
         }
 
         if ($request instanceof MultipartApiRequest) {
@@ -230,6 +257,28 @@ class RawClient
         }
 
         return $result;
+    }
+
+    /**
+     * Percent-encodes a value for use inside a single URL path segment. Encoding happens here,
+     * where the value is still separate from the path template, so that a value containing "/"
+     * or ".." cannot change which endpoint the request resolves to.
+     */
+    public static function encodePathParam(mixed $value): string
+    {
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+        if (is_null($value)) {
+            return '';
+        }
+        if (is_scalar($value)) {
+            return rawurlencode((string)$value);
+        }
+        if (is_object($value) && method_exists($value, '__toString')) {
+            return rawurlencode((string)$value);
+        }
+        return rawurlencode(JsonEncoder::encode($value));
     }
 
     /**

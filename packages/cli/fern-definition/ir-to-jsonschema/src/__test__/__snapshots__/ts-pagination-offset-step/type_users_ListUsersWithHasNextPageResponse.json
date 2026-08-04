@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "has_next_page": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "total_count": {
+      "type": "integer"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/users.User"
+      }
+    }
+  },
+  "required": [
+    "total_count",
+    "data"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "users.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

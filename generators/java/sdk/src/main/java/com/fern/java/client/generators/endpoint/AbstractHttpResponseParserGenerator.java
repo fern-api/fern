@@ -155,6 +155,9 @@ public abstract class AbstractHttpResponseParserGenerator {
     public abstract CodeBlock getNextPageGetter(String endpointName, String methodParameters);
 
     public CodeBlock getResponseParserCodeBlock(MethodSpec.Builder endpointMethodBuilder) {
+        ClassName retryInterceptorClassName =
+                clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName();
+        ClassName maxRetriesOverrideClassName = retryInterceptorClassName.nestedClass("MaxRetriesOverride");
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
                 // Default the request client
                 .addStatement(
@@ -173,6 +176,18 @@ public abstract class AbstractHttpResponseParserGenerator {
                         variables.getDefaultedClientName(),
                         clientOptionsField,
                         generatedClientOptions.httpClientWithTimeout(),
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                .endControlFlow()
+                .beginControlFlow(
+                        "if ($L != null && $L.getMaxRetries().isPresent())",
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME,
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                .addStatement(
+                        "$L = $L.newBuilder().tag($T.class, new $T($L.getMaxRetries().get())).build()",
+                        variables.getOkhttpRequestName(),
+                        variables.getOkhttpRequestName(),
+                        maxRetriesOverrideClassName,
+                        maxRetriesOverrideClassName,
                         AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
                 .endControlFlow();
         if (isStreamingEndpoint()) {
@@ -533,8 +548,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                 @Override
                 public TypeName visitStreamParameter(StreamParameterResponse streamParameterResponse) {
-                    // TODO: Implement stream parameters.
-                    throw new UnsupportedOperationException("Not implemented.");
+                    return visitStreaming(streamParameterResponse.getStreamResponse());
                 }
 
                 @Override
@@ -578,7 +592,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                     @Override
                     public Boolean visitStreamParameter(StreamParameterResponse streamParameterResponse) {
-                        return false;
+                        return true;
                     }
 
                     @Override
@@ -667,8 +681,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                 @Override
                 public Void visitStreamParameter(StreamParameterResponse streamParameterResponse) {
-                    // TODO: Implement stream parameters.
-                    throw new UnsupportedOperationException("Not implemented.");
+                    return visitStreaming(streamParameterResponse.getStreamResponse());
                 }
 
                 @Override
@@ -1052,8 +1065,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         @Override
         public Void visitStreamParameter(StreamParameterResponse streamParameterResponse) {
-            // TODO: Implement stream parameters.
-            throw new UnsupportedOperationException("Not implemented.");
+            return visitStreaming(streamParameterResponse.getStreamResponse());
         }
 
         @Override
@@ -1539,7 +1551,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                     EnrichedCursorPathGetter propertyOverrideGetter =
                             setters.get(setters.size() - 1).getter();
                     propertyOverrideOnRequest = propertyOverrideGetter.propertyName();
-                    propertyOverrideValueOnRequest = propertyOverrideGetter.propertyName();
+                    propertyOverrideValueOnRequest = propertyOverrideGetter.variableName();
 
                     if (!propertyOverrideGetter.pathItem().optional() && propertyOverrideGetter.optional()) {
                         propertyOverrideValueOnRequest += ".get()";
@@ -1824,7 +1836,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                     EnrichedCursorPathGetter propertyOverrideGetter =
                             setters.get(setters.size() - 1).getter();
                     propertyOverrideOnRequest = propertyOverrideGetter.propertyName();
-                    propertyOverrideValueOnRequest = propertyOverrideGetter.propertyName();
+                    propertyOverrideValueOnRequest = propertyOverrideGetter.variableName();
 
                     if (!propertyOverrideGetter.pathItem().optional() && propertyOverrideGetter.optional()) {
                         propertyOverrideValueOnRequest += ".get()";

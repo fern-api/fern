@@ -72,10 +72,10 @@ public record Status
     public bool IsSoftDeleted => Type == "soft-deleted";
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'active', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'active', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'active'.</exception>
-    public object AsActive() =>
+    public object? AsActive() =>
         IsActive ? Value! : throw new global::System.Exception("Status.Type is not 'active'");
 
     /// <summary>
@@ -97,7 +97,7 @@ public record Status
             : throw new global::System.Exception("Status.Type is not 'soft-deleted'");
 
     public T Match<T>(
-        Func<object, T> onActive,
+        Func<object?, T> onActive,
         Func<DateTime?, T> onArchived,
         Func<DateTime?, T> onSoftDeleted,
         Func<string, object?, T> onUnknown_
@@ -113,7 +113,7 @@ public record Status
     }
 
     public void Visit(
-        Action<object> onActive,
+        Action<object?> onActive,
         Action<DateTime?> onArchived,
         Action<DateTime?> onSoftDeleted,
         Action<string, object?> onUnknown_
@@ -137,7 +137,7 @@ public record Status
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsActive(out object? value)
     {
@@ -219,7 +219,7 @@ public record Status
 
             var value = discriminator switch
             {
-                "active" => new { },
+                "active" => null,
                 "archived" => json.GetProperty("value").Deserialize<DateTime?>(options),
                 "soft-deleted" => json.GetProperty("value").Deserialize<DateTime?>(options),
                 _ => json.Deserialize<object?>(options),
@@ -279,9 +279,9 @@ public record Status
     [Serializable]
     public record Active
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>

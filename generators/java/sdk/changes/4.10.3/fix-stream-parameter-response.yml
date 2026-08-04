@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support endpoints whose streaming behavior is toggled by a request parameter
+    ("stream parameter"). The SDK now resolves the streaming response variant for
+    these endpoints instead of failing generation.
+  type: fix

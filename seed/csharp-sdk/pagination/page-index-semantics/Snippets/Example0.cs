@@ -11,8 +11,8 @@ public partial class Examples
         );
 
         await client.Complex.SearchAsync(
-            "index",
-            new SearchRequest {
+            index: "index",
+            request: new SearchRequest {
                 Pagination = new StartingAfterPaging {
                     PerPage = 1,
                     StartingAfter = "starting_after"

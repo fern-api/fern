@@ -10,7 +10,7 @@ import Testing
         stub.setResponse(
             statusCode: 400,
             headers: ["Content-Type": "application/json"],
-            body: Data(#"{"message":"Bad request"}"#.utf8)
+            body: Foundation.Data(#"{"message":"Bad request"}"#.utf8)
         )
 
         let client = ErrorsClient(
@@ -45,7 +45,7 @@ import Testing
         stub.setResponse(
             statusCode: 404,
             headers: ["Content-Type": "application/json"],
-            body: Data(#"{"message":"Not found"}"#.utf8)
+            body: Foundation.Data(#"{"message":"Not found"}"#.utf8)
         )
 
         let client = ErrorsClient(
@@ -80,7 +80,7 @@ import Testing
         stub.setResponse(
             statusCode: 422,
             headers: ["Content-Type": "application/json"],
-            body: Data(#"{"message":"Validation failed"}"#.utf8)
+            body: Foundation.Data(#"{"message":"Validation failed"}"#.utf8)
         )
 
         let client = ErrorsClient(
@@ -117,7 +117,7 @@ import Testing
         stub.setResponse(
             statusCode: 500,
             headers: ["Content-Type": "application/json"],
-            body: Data(#"{"message":"Internal error"}"#.utf8)
+            body: Foundation.Data(#"{"message":"Internal error"}"#.utf8)
         )
 
         let client = ErrorsClient(
@@ -152,7 +152,7 @@ import Testing
         stub.setResponse(
             statusCode: 503,
             headers: ["Content-Type": "application/json"],
-            body: Data(#"{"message":"Unavailable"}"#.utf8)
+            body: Foundation.Data(#"{"message":"Unavailable"}"#.utf8)
         )
 
         let client = ErrorsClient(
@@ -189,7 +189,7 @@ import Testing
         stub.setResponse(
             statusCode: 302,
             headers: ["Location": "https://example.com"],
-            body: Data()
+            body: Foundation.Data()
         )
 
         let client = ErrorsClient(
@@ -224,7 +224,7 @@ import Testing
         stub.setResponse(
             statusCode: 500,
             headers: ["Content-Type": "text/plain"],
-            body: Data("Plain text error".utf8)
+            body: Foundation.Data("Plain text error".utf8)
         )
 
         let client = ErrorsClient(

@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
 image: fernapi/fern-java-sdk
@@ -59,6 +59,9 @@ fixtures:
         enable-wire-tests: true
       outputFolder: no-custom-config
     - customConfig:
+        runtime-version: true
+      outputFolder: runtime-version
+    - customConfig:
         package-layout: flat
         use-default-request-parameter-values: true
       outputFolder: flat-package-layout
@@ -92,11 +95,14 @@ fixtures:
       outputFolder: custom-client-class-name
       readmeConfig:
         exampleStyle: minimal
+    # local_files mode emits source-only output (no Gradle project/wrapper),
+    # so the gradle compile/spotless scripts can't run against it.
     - customConfig:
         inline-path-parameters: true
         package-prefix: com.fern.sdk
       outputMode: local_files
       outputFolder: local-files
+      skipScripts: true
     - customConfig:
         inline-path-parameters: true
         enable-public-constructors: true
@@ -137,8 +143,17 @@ fixtures:
       license:
         custom: LICENSE
       outputFolder: custom-license
+  idempotency-headers:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: auto-generate-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
   java-idempotency-headers-file-upload:
     - outputFolder: default
+    - outputFolder: auto-generate-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
   java-inline-types:
     - customConfig:
         enable-inline-types: true
@@ -168,6 +183,13 @@ fixtures:
         omit-fern-headers: true
         maxRetries: 5
       outputFolder: omit-fern-headers
+    - customConfig:
+        includePlatformHeaders: true
+      outputFolder: include-platform-headers
+    - customConfig:
+        includePlatformHeaders: true
+        allowUserAgentAppInfo: true
+      outputFolder: allow-user-agent-app-info
   java-custom-package-prefix:
     - customConfig:
         package-prefix: "com.customprefix"
@@ -191,6 +213,9 @@ fixtures:
         enable-wire-tests: true
         offset-semantics: "item-index"
       outputFolder: item-index-semantics
+  java-multi-env-url-templating:
+    - customConfig: null
+      outputFolder: no-custom-config
   pagination-custom:
     - customConfig:
         custom-pager-name: "FernCustomPaginator"
@@ -302,6 +327,9 @@ fixtures:
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
+  java-oauth-token-optional:
+    - customConfig: null
+      outputFolder: no-custom-config
   header-auth:
     - customConfig:
         enable-wire-tests: true
@@ -350,6 +378,8 @@ fixtures:
     - outputFolder: default
   java-path-param-key-conflict:
     - outputFolder: default
+  java-path-parameter-suffix:
+    - outputFolder: default
   java-many-properties:
     - outputFolder: default
   java-output-directory:
@@ -383,46 +413,8 @@ scripts:
       - ./gradlew compileJava spotlessCheck
 
 allowedFailures:
-  # Extending an alias (that resolves to an object) is not yet supported by the
-  # generator: "Non-objects cannot be extended". Tracked for a follow-up PR.
-  - alias-extends
-  - examples:default
-  - examples:inline-file-properties
-  - examples:no-custom-config
-  - examples:readme-config
-  - exhaustive:local-files
-  - java-inline-types:no-wrapped-aliases
-  - nullable-optional:with-nullable-annotation
-  - nullable-optional:collapse-optional-nullable
-  - oauth-client-credentials-custom
-  - request-parameters
-  - streaming-parameter
-  - inferred-auth-implicit-reference
-
-  # Generated raw client / publish fixtures fail to compile in CI
-  # (e.g. endpoint-security-auth's RawUserClient "cannot find symbol").
-  # Tracked for a follow-up PR.
-  - endpoint-security-auth
-  - exhaustive:publish-to
-  - exhaustive:signed_publish
-
-  # Snippet failures; many of these failures are due to the fact that a
-  # required list of query parameters is not actually required by the builder.
-  - java-inline-types:inline
-  - java-inline-types:enable-forward-compatible-enums
-  - nullable:wrapped-aliases
-  - pagination-custom
-
-  - java-pagination-deep-cursor-path:wire-tests
-
-  # Bug with how java-sdk creates nightly balanced files
-  - java-pagination-deep-cursor-path
-
   # Staged builder snippets don't provide required file arguments (separate from positional shift fix)
   - file-upload:inline-file-properties
-
-
-  # Optional wire tests have snippet generation bug with optional(nullable(T))
-  # Snippet generator doesn't wrap value in Optional.of() for optional request bodies
-  - optional:wire-tests
-
+  # CLI-specific OAuth fixture: declares scheme-level scopes, which the Java
+  # generator explicitly rejects ("Scopes not supported"). Exercised by the CLI generator.
+  - cli-oauth

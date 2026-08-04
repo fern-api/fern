@@ -315,4 +315,5 @@ error-discrimination:
 display-name: Enum Normalization Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

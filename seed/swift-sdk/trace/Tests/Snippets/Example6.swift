@@ -20,7 +20,7 @@ enum Example6 {
                         directory: "directory"
                     ),
                     returnValue: DebugVariableValue.integerValue(
-
+                        1
                     ),
                     expressionLocation: ExpressionLocation(
                         start: 1,
@@ -35,14 +35,14 @@ enum Example6 {
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-
+                                            1
                                         )
                                     ]
                                 ),
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-
+                                            1
                                         )
                                     ]
                                 )
@@ -59,7 +59,7 @@ enum Example6 {
                         directory: "directory"
                     ),
                     returnValue: DebugVariableValue.integerValue(
-
+                        1
                     ),
                     expressionLocation: ExpressionLocation(
                         start: 1,
@@ -74,14 +74,14 @@ enum Example6 {
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-
+                                            1
                                         )
                                     ]
                                 ),
                                 Scope(
                                     variables: [
                                         "variables": DebugVariableValue.integerValue(
-
+                                            1
                                         )
                                     ]
                                 )

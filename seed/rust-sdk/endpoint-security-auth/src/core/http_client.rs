@@ -1,4 +1,5 @@
 use crate::{join_url, ApiError, ClientConfig, OAuthTokenProvider, RequestOptions};
+use base64::Engine;
 use futures::{future::BoxFuture, Stream, StreamExt};
 use reqwest::{
     header::{HeaderMap, HeaderName, HeaderValue},
@@ -7,6 +8,7 @@ use reqwest::{
 use serde::de::DeserializeOwned;
 
 use std::{
+    collections::HashMap,
     pin::Pin,
     str::FromStr,
     sync::Arc,
@@ -114,22 +116,39 @@ pub trait RequestExecutor: Send + Sync {
     ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>>;
 }
 
-/// Default executor that delegates to a `reqwest::Client`.
-struct ReqwestExecutor {
-    client: Client,
+/// Wire-level property-name mapping for the OAuth token exchange.
+///
+/// The token endpoint's request/response contract varies between APIs (e.g. camelCase
+/// `clientId`/`clientSecret`, an absent `grant_type`, or a non-standard `access_token`
+/// field name). These names are resolved from the API's OAuth scheme in the IR so the
+/// generated token fetch matches the endpoint's contract instead of hardcoding a shape.
+#[derive(Debug, Clone)]
+pub struct OAuthTokenExchangeConfig {
+    /// Request body field name carrying the client id (e.g. `"client_id"` or `"clientId"`).
+    pub client_id_property: String,
+    /// Request body field name carrying the client secret.
+    pub client_secret_property: String,
+    /// Additional static request body properties sent verbatim (e.g.
+    /// `{"grant_type": "client_credentials"}`). Empty when the token contract has none.
+    pub extra_request_properties: HashMap<String, String>,
+    /// Response field name that holds the access token (e.g. `"access_token"`).
+    pub access_token_property: String,
+    /// Response field name that holds the token lifetime in seconds (e.g. `"expires_in"`).
+    pub expires_in_property: String,
 }
 
-impl RequestExecutor for ReqwestExecutor {
-    fn execute(
-        &self,
-        request: Request,
-    ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>> {
-        Box::pin(async move {
-            self.client
-                .execute(request)
-                .await
-                .map_err(|e| Box::new(e) as Box<dyn std::error::Error + Send + Sync>)
-        })
+impl Default for OAuthTokenExchangeConfig {
+    fn default() -> Self {
+        Self {
+            client_id_property: "client_id".to_string(),
+            client_secret_property: "client_secret".to_string(),
+            extra_request_properties: HashMap::from([(
+                "grant_type".to_string(),
+                "client_credentials".to_string(),
+            )]),
+            access_token_property: "access_token".to_string(),
+            expires_in_property: "expires_in".to_string(),
+        }
     }
 }
 
@@ -143,14 +162,8 @@ pub struct OAuthConfig {
     pub token_provider: Arc<OAuthTokenProvider>,
     /// The token endpoint path (e.g., "/token")
     pub token_endpoint: String,
-}
-
-/// Response from an OAuth token endpoint.
-#[derive(Debug, Clone, serde::Deserialize)]
-struct OAuthTokenResponse {
-    access_token: String,
-    #[serde(default)]
-    expires_in: Option<i64>,
+    /// The request/response property-name mapping for the token exchange.
+    pub exchange: OAuthTokenExchangeConfig,
 }
 
 /// Internal HTTP client that handles requests with authentication and retries
@@ -164,9 +177,25 @@ pub struct HttpClient {
 }
 
 impl HttpClient {
-    /// Creates a new HttpClient without OAuth support.
+    /// Creates a new HttpClient, enabling OAuth automatically when the configuration
+    /// provides an OAuth token endpoint together with client credentials.
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
-        Self::new_with_oauth(config, None)
+        let oauth_config = match (
+            config.oauth_token_endpoint.as_ref(),
+            config.client_id.as_ref(),
+            config.client_secret.as_ref(),
+        ) {
+            (Some(token_endpoint), Some(client_id), Some(client_secret)) => Some(OAuthConfig {
+                token_provider: Arc::new(OAuthTokenProvider::new(
+                    client_id.clone(),
+                    client_secret.clone(),
+                )),
+                token_endpoint: token_endpoint.clone(),
+                exchange: config.oauth_token_exchange.clone().unwrap_or_default(),
+            }),
+            _ => None,
+        };
+        Self::new_with_oauth(config, oauth_config)
     }
 
     /// Creates a new HttpClient with optional OAuth support.
@@ -355,23 +384,30 @@ impl HttpClient {
         request: &mut Request,
         options: &Option<RequestOptions>,
     ) -> Result<(), ApiError> {
-        let headers = request.headers_mut();
+        // In endpoint-security mode, authentication is resolved per-endpoint via
+        // resolve_endpoint_auth_headers and injected as request headers, so no
+        // client-wide auth headers are applied here.
+        let _ = (request, options);
+        Ok(())
+    }
 
-        // Apply API key (request options override config)
-        let api_key = options
-            .as_ref()
-            .and_then(|opts| opts.api_key.as_ref())
-            .or(self.config.api_key.as_ref());
-
-        if let Some(key) = api_key {
-            let header_value = key.to_string();
-            headers.insert(
-                "X-API-Key",
-                header_value.parse().map_err(|_| ApiError::InvalidHeader)?,
-            );
+    /// Resolves the authentication headers to apply for an endpoint, given the endpoint's
+    /// declared security requirements. `requirements` is an OR-list of AND-groups of auth
+    /// scheme keys: the first group whose schemes all have credentials available is applied.
+    /// An empty `requirements` means the endpoint requires no auth. If no group is
+    /// satisfiable, an error naming the missing schemes is returned.
+    pub(crate) async fn resolve_endpoint_auth_headers(
+        &self,
+        options: &Option<RequestOptions>,
+        requirements: &[&[&str]],
+    ) -> Result<HashMap<String, String>, ApiError> {
+        if requirements.is_empty() {
+            return Ok(HashMap::new());
         }
 
-        // Apply bearer token - priority: request options > OAuth > config
+        let mut available: HashMap<&str, Vec<(String, String)>> = HashMap::new();
+
+        // Bearer / OAuth token schemes both resolve to `Authorization: Bearer <token>`.
         let token = if let Some(opts) = options.as_ref() {
             if opts.token.is_some() {
                 opts.token.clone()
@@ -381,29 +417,86 @@ impl HttpClient {
         } else {
             None
         };
-
         let token = match token {
             Some(t) => Some(t),
             None => {
-                // Try OAuth token provider if configured
                 if let Some(oauth_config) = &self.oauth_config {
                     Some(self.get_oauth_token(oauth_config).await?)
                 } else {
-                    // Fall back to static token from config
                     self.config.token.clone()
                 }
             }
         };
-
         if let Some(token) = token {
             let auth_value = format!("Bearer {}", token);
-            headers.insert(
-                "Authorization",
-                auth_value.parse().map_err(|_| ApiError::InvalidHeader)?,
+            available.insert(
+                "Bearer",
+                vec![("Authorization".to_string(), auth_value.clone())],
+            );
+            available.insert(
+                "OAuth",
+                vec![("Authorization".to_string(), auth_value.clone())],
             );
         }
 
-        Ok(())
+        // Header (API key) scheme "ApiKey".
+        {
+            let api_key = options
+                .as_ref()
+                .and_then(|opts| opts.api_key.as_ref())
+                .or(self.config.api_key.as_ref());
+            if let Some(key) = api_key {
+                let header_value = key.to_string();
+                available.insert("ApiKey", vec![("X-API-Key".to_string(), header_value)]);
+            }
+        }
+
+        // Basic auth schemes resolve to `Authorization: Basic <base64(user:pass)>`.
+        if let (Some(username), Some(password)) =
+            (self.config.username.as_ref(), self.config.password.as_ref())
+        {
+            let encoded = base64::engine::general_purpose::STANDARD
+                .encode(format!("{}:{}", username, password));
+            let basic_value = format!("Basic {}", encoded);
+            available.insert(
+                "Basic",
+                vec![("Authorization".to_string(), basic_value.clone())],
+            );
+        }
+
+        for requirement in requirements {
+            if requirement
+                .iter()
+                .all(|scheme_key| available.contains_key(scheme_key))
+            {
+                let mut combined_headers = HashMap::new();
+                for scheme_key in *requirement {
+                    if let Some(pairs) = available.get(scheme_key) {
+                        for (header_name, header_value) in pairs {
+                            combined_headers.insert(header_name.clone(), header_value.clone());
+                        }
+                    }
+                }
+                return Ok(combined_headers);
+            }
+        }
+
+        let missing = requirements
+            .iter()
+            .map(|requirement| {
+                requirement
+                    .iter()
+                    .filter(|scheme_key| !available.contains_key(*scheme_key))
+                    .copied()
+                    .collect::<Vec<_>>()
+                    .join(" AND ")
+            })
+            .collect::<Vec<_>>()
+            .join(" OR ");
+        Err(ApiError::Configuration(format!(
+            "No authentication credentials provided that satisfy the endpoint's security requirements. Please provide credentials for: {}",
+            missing
+        )))
     }
 
     /// Fetches an OAuth token, using the cached token if valid or fetching a new one.
@@ -414,31 +507,52 @@ impl HttpClient {
         let client_secret = token_provider.client_secret().to_string();
         let base_url = self.config.base_url.clone();
 
+        let exchange = &oauth_config.exchange;
+
         // Use the async get_or_fetch method with a closure that fetches the token
         token_provider
             .get_or_fetch_async(|| async {
-                self.fetch_oauth_token(&base_url, token_endpoint, &client_id, &client_secret)
-                    .await
+                self.fetch_oauth_token(
+                    &base_url,
+                    token_endpoint,
+                    &client_id,
+                    &client_secret,
+                    exchange,
+                )
+                .await
             })
             .await
     }
 
     /// Makes an HTTP request to the OAuth token endpoint to fetch a new token.
+    ///
+    /// The request body and response are keyed by the property names configured on the
+    /// API's OAuth scheme (via `exchange`), so non-standard token contracts (e.g. camelCase
+    /// field names or an absent `grant_type`) are honored instead of a hardcoded shape.
     async fn fetch_oauth_token(
         &self,
         base_url: &str,
         token_endpoint: &str,
         client_id: &str,
         client_secret: &str,
+        exchange: &OAuthTokenExchangeConfig,
     ) -> Result<(String, u64), ApiError> {
         let url = join_url(base_url, token_endpoint);
 
-        // Build the token request body
-        let body = serde_json::json!({
-            "client_id": client_id,
-            "client_secret": client_secret,
-            "grant_type": "client_credentials"
-        });
+        // Build the token request body using the configured property names.
+        let mut body = serde_json::Map::new();
+        body.insert(
+            exchange.client_id_property.clone(),
+            serde_json::Value::String(client_id.to_string()),
+        );
+        body.insert(
+            exchange.client_secret_property.clone(),
+            serde_json::Value::String(client_secret.to_string()),
+        );
+        for (name, value) in &exchange.extra_request_properties {
+            body.insert(name.clone(), serde_json::Value::String(value.clone()));
+        }
+        let body = serde_json::Value::Object(body);
 
         let response = self
             .client
@@ -448,18 +562,30 @@ impl HttpClient {
             .await
             .map_err(ApiError::Network)?;
 
+        let status_code = response.status().as_u16();
         if !response.status().is_success() {
-            let status_code = response.status().as_u16();
             let body = response.text().await.ok();
             return Err(ApiError::from_response(status_code, body.as_deref()));
         }
 
-        // Parse the token response
-        let token_response: OAuthTokenResponse =
-            response.json().await.map_err(ApiError::Network)?;
+        // Parse the token response using the configured property names.
+        let token_response: serde_json::Value = response.json().await.map_err(ApiError::Network)?;
 
-        let expires_in = token_response.expires_in.unwrap_or(3600) as u64;
-        Ok((token_response.access_token, expires_in))
+        let access_token = token_response
+            .get(&exchange.access_token_property)
+            .and_then(|value| value.as_str())
+            .ok_or_else(|| ApiError::Http {
+                status: status_code,
+                message: "OAuth token response is missing the access token".to_string(),
+            })?
+            .to_string();
+
+        let expires_in = token_response
+            .get(&exchange.expires_in_property)
+            .and_then(|value| value.as_i64())
+            .unwrap_or(3600) as u64;
+
+        Ok((access_token, expires_in))
     }
 
     fn apply_custom_headers(

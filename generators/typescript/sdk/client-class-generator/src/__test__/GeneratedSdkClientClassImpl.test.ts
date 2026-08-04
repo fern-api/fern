@@ -110,7 +110,8 @@ function createClientClass(opts?: {
     allowCustomFetcher?: boolean;
     generateWebSocketClients?: boolean;
     requireDefaultEnvironment?: boolean;
-    defaultTimeoutInSeconds?: number | "infinity" | undefined;
+    requireBaseUrl?: boolean;
+    defaultTimeout?: number | "infinity" | undefined;
     includeContentHeadersOnFileDownloadResponse?: boolean;
     includeSerdeLayer?: boolean;
     retainOriginalCasing?: boolean;
@@ -142,7 +143,8 @@ function createClientClass(opts?: {
         allowCustomFetcher: opts?.allowCustomFetcher ?? false,
         generateWebSocketClients: opts?.generateWebSocketClients ?? false,
         requireDefaultEnvironment: opts?.requireDefaultEnvironment ?? false,
-        defaultTimeoutInSeconds: opts?.defaultTimeoutInSeconds,
+        requireBaseUrl: opts?.requireBaseUrl ?? false,
+        defaultTimeout: opts?.defaultTimeout,
         includeContentHeadersOnFileDownloadResponse: opts?.includeContentHeadersOnFileDownloadResponse ?? false,
         includeSerdeLayer: opts?.includeSerdeLayer ?? true,
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
@@ -812,7 +814,8 @@ describe("GeneratedSdkClientClassImpl", () => {
                         docs: undefined,
                         availability: undefined,
                         v2Examples: undefined,
-                        clientDefault: undefined
+                        clientDefault: undefined,
+                        defaultValue: undefined
                     }
                 ],
                 authRequirement: "ALL",
@@ -897,6 +900,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                                             docs: undefined,
                                             availability: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -908,6 +912,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                                             docs: undefined,
                                             availability: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -923,6 +928,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                                             docs: undefined,
                                             availability: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         }
                                     },
@@ -1014,17 +1020,41 @@ describe("GeneratedSdkClientClassImpl", () => {
     });
 
     describe("getOptionsPropertiesForSnippet", () => {
-        it("includes environment property when no default environment and not requireDefaultEnvironment", () => {
+        it("includes baseUrl property when no environments are defined", () => {
             const clientClass = createClientClass({ requireDefaultEnvironment: false });
             const context = createMockFileContext();
             const props = clientClass.getOptionsPropertiesForSnippet(context);
-            // Should include environment: "YOUR_BASE_URL" since no default env and no first enum
+            // Should include baseUrl: "YOUR_BASE_URL" since no environments are defined
             expect(props.length).toBeGreaterThan(0);
-            const envProp = props.find((p) => {
+            const baseUrlProp = props.find((p) => {
                 const text = getTextOfTsNode(p);
-                return text.includes("environment");
+                return text.includes("baseUrl");
             });
-            expect(envProp).toBeDefined();
+            expect(baseUrlProp).toBeDefined();
+        });
+
+        it("includes baseUrl instead of environment when requireBaseUrl is true and environments exist", () => {
+            const clientClass = createClientClass({ requireBaseUrl: true });
+            // biome-ignore lint/suspicious/noExplicitAny: test mock override
+            const context: any = {
+                ...createMockFileContext(),
+                environments: {
+                    getGeneratedEnvironments: () => ({
+                        getReferenceToDefaultEnvironment: () => undefined,
+                        getReferenceToEnvironmentUrl: ({
+                            referenceToEnvironmentValue
+                        }: {
+                            referenceToEnvironmentValue: ts.Expression;
+                        }) => referenceToEnvironmentValue
+                    }),
+                    getReferenceToFirstEnvironmentEnum: () => ({
+                        getExpression: () => ts.factory.createIdentifier("Environment.Production")
+                    })
+                }
+            };
+            const props = clientClass.getOptionsPropertiesForSnippet(context).map((p) => getTextOfTsNode(p));
+            expect(props).toContain('baseUrl: "YOUR_BASE_URL"');
+            expect(props.some((text) => text.includes("environment"))).toBe(false);
         });
 
         it("includes auth snippet properties when auth provider exists", () => {

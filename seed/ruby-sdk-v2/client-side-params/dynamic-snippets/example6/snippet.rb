@@ -12,8 +12,16 @@ client.service.update_user(
   username: "username",
   phone_number: "phone_number",
   phone_verified: true,
-  user_metadata: {},
-  app_metadata: {},
+  user_metadata: {
+    user_metadata: {
+      key: "value"
+    }
+  },
+  app_metadata: {
+    app_metadata: {
+      key: "value"
+    }
+  },
   password: "password",
   blocked: true
 )

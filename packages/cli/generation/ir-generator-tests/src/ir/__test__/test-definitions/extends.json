@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "extends",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -87,7 +88,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:Docs"
@@ -266,7 +268,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:JSON",
@@ -417,7 +420,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -545,7 +549,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:Docs"
@@ -659,6 +664,7 @@
                     "id": "endpoint_.extendedInlineRequestBody",
                     "name": "extendedInlineRequestBody",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -877,6 +883,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -896,6 +903,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_": [
@@ -1009,7 +1017,8 @@
                 "extends": [
                     "type_:Docs"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:NestedType": {
                 "type": "object",
@@ -1134,7 +1143,8 @@
                 "extends": [
                     "type_:JSON"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:Docs": {
                 "type": "object",
@@ -1197,7 +1207,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:JSON": {
                 "type": "object",
@@ -1292,7 +1303,8 @@
                 "extends": [
                     "type_:Docs"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],
@@ -1469,6 +1481,7 @@
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -1477,7 +1490,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {},
     "rootPackage": {
@@ -1507,6 +1521,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

@@ -1,0 +1,7 @@
+- summary: |
+    Fix multi-API environment grouping (`group-multi-api-environments`) selecting the wrong
+    base URL when more than two specs are merged and several specs share identical servers.
+    Duplicate servers no longer accumulate across merges, so environments with the same name
+    but different URLs are now grouped into a multi-URL environment instead of collapsing to
+    the last spec's URL.
+  type: fix

@@ -153,4 +153,5 @@ error-discrimination:
 display-name: Test HEAD method
 ",
   },
+  "specVersion": "1.0.0",
 }

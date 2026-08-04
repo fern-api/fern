@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `dedupeUnionBaseProperties` config option (default `false`). When enabled, a
+    discriminated union no longer emits a duplicate top-level field for base properties
+    that every variant already carries (e.g. properties lifted from a shared parent by
+    `infer-discriminated-union-base-properties`). Without it, such a property appears both
+    on the union and inside each variant struct, and the top-level copy is silently
+    dropped when marshaling `samePropertiesAsObject` variants. With the flag on, the
+    shared property is exposed through a getter that switches on the discriminant and reads
+    from the active variant — a single source of truth that still allows top-level access
+    without a type switch. The flag is opt-in to preserve the existing generated surface;
+    the default will flip in a future major version with a migration.
+  type: feat

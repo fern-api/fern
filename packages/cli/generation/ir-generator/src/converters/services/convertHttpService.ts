@@ -163,6 +163,7 @@ export function convertHttpService({
                 id: "",
                 name: file.casingsGenerator.generateName(endpointKey),
                 displayName: endpoint["display-name"],
+                subtitle: endpoint.subtitle,
                 auth:
                     typeof endpoint.auth === "boolean"
                         ? endpoint.auth
@@ -274,6 +275,7 @@ export function convertHttpService({
                 retries: convertRetries({
                     endpointSchema: endpoint
                 }),
+                globalParameters: endpoint["global-parameters"] ?? undefined,
                 apiPlayground: undefined,
                 responseHeaders: []
             };

@@ -361,4 +361,5 @@ error-discrimination:
 display-name: Parameter Serialization Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": "0.0.1",
     "apiName": "api",
     "apiDisplayName": "\"\"",
     "apiDocs": null,
@@ -61,7 +62,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:UserModel",
@@ -246,7 +248,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:Metadata",
@@ -498,6 +501,7 @@
                     "id": "endpoint_userService.Create",
                     "name": "Create",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1719,6 +1723,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1738,6 +1743,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_userService": [
@@ -1821,7 +1827,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UserModel": {
                 "type": "object",
@@ -2019,7 +2026,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:Metadata": {
                 "type": "undiscriminatedUnion",
@@ -2442,6 +2450,7 @@
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -2450,7 +2459,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_userService": {
@@ -2504,6 +2514,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

@@ -109,7 +109,8 @@
             },
             "properties": [],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_a/aa:B": {
             "type": "object",
@@ -219,7 +220,8 @@
             },
             "properties": [],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_a/aa:SubTestType": {
             "type": "object",
@@ -390,7 +392,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_b:TestType": {
             "type": "object",
@@ -523,7 +526,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_tasktest:Task": {
             "type": "object",
@@ -624,7 +628,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -713,5 +718,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

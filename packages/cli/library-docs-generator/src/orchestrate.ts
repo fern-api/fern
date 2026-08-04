@@ -205,8 +205,7 @@ export async function runLibraryDocsGeneration({
                 docsDirectoryPath,
                 orgId,
                 wrapStep,
-                local,
-                branch: isGitLibraryInput(config.input) ? config.input.branch : undefined
+                local
             });
         })
     );
@@ -239,8 +238,7 @@ async function generateSingleLibrary({
     docsDirectoryPath,
     orgId,
     wrapStep,
-    local,
-    branch
+    local
 }: {
     client: LibraryDocsClient | undefined;
     context: TaskContext;
@@ -250,7 +248,6 @@ async function generateSingleLibrary({
     orgId: string;
     wrapStep: StepWrapper;
     local: boolean;
-    branch?: string;
 }): Promise<void> {
     const resolvedOutputPath = resolve(docsDirectoryPath, config.output.path);
 
@@ -288,7 +285,7 @@ async function generateSingleLibrary({
     if (local) {
         ir = await generateIrLocally({ context, name, config, docsDirectoryPath, language, doxyfileContent, wrapStep });
     } else if (client != null) {
-        ir = await generateIrRemotely({ client, name, config, language, orgId, doxyfileContent, branch, wrapStep });
+        ir = await generateIrRemotely({ client, name, config, language, orgId, doxyfileContent, wrapStep });
     } else {
         // Unreachable in practice (runLibraryDocsGeneration constructs a client for the remote
         // path), but keeps the nullable `client` honest without a non-null assertion.
@@ -338,7 +335,6 @@ async function generateIrRemotely({
     language,
     orgId,
     doxyfileContent,
-    branch,
     wrapStep
 }: {
     client: LibraryDocsClient;
@@ -347,7 +343,6 @@ async function generateIrRemotely({
     language: LibraryLanguage;
     orgId: string;
     doxyfileContent: string | undefined;
-    branch?: string;
     wrapStep: StepWrapper;
 }): Promise<unknown> {
     if (!isGitLibraryInput(config.input)) {
@@ -359,7 +354,7 @@ async function generateIrRemotely({
     const gitInput = config.input;
 
     const jobId = await wrapStep({
-        message: `Library '${name}': starting generation from ${gitInput.git}${branch != null ? ` (branch: ${branch})` : ""}`,
+        message: `Library '${name}': starting generation from ${gitInput.git}${gitInput.ref != null ? ` (ref: ${gitInput.ref})` : ""}`,
         operation: () =>
             startGeneration(client, {
                 name,
@@ -367,7 +362,7 @@ async function generateIrRemotely({
                 githubUrl: gitInput.git,
                 language,
                 packagePath: gitInput.subpath,
-                branch,
+                ref: gitInput.ref,
                 doxyfileContent
             })
     });
@@ -437,7 +432,7 @@ async function startGeneration(
         githubUrl: string;
         language: LibraryLanguage;
         packagePath?: string;
-        branch?: string;
+        ref?: string;
         doxyfileContent?: string;
     }
 ): Promise<string> {
@@ -447,7 +442,8 @@ async function startGeneration(
             githubUrl: opts.githubUrl,
             language: opts.language,
             config: {
-                branch: opts.branch,
+                // FDR's library-docs API accepts any git ref (branch, tag, or SHA) via `branch`.
+                branch: opts.ref,
                 packagePath: opts.packagePath,
                 title: opts.name,
                 slug: opts.name,

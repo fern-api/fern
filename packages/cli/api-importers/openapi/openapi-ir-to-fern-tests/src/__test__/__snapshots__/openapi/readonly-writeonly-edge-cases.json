@@ -267,4 +267,5 @@ error-discrimination:
 display-name: ReadOnly/WriteOnly Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

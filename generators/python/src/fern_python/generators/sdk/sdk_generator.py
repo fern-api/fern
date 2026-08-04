@@ -23,6 +23,7 @@ from .error_generator.error_generator import ErrorGenerator
 from .v2.generator import PythonV2Generator
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
+from fern_python.codegen.ast.dependency.dependency import DependencyCompatibility
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
 from fern_python.codegen.project import ProjectConfig
@@ -39,6 +40,7 @@ from fern_python.generators.sdk.context.sdk_generator_context_impl import (
 from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
+from fern_python.generators.sdk.webhooks_helper_generator import WebhooksHelperGenerator
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.utils import resolve_name
@@ -148,11 +150,24 @@ class SdkGenerator(AbstractGenerator):
         # accordingly so SDKs that still support older Python fall back to not
         # installing the extra rather than pinning to a vulnerable aiohttp.
         project.add_dependency(
-            dependency=AST.Dependency(name="httpx-aiohttp", version="0.1.8", optional=True, python=">=3.10")
+            dependency=AST.Dependency(name="httpx-aiohttp", version="^0.1.8", optional=True, python=">=3.10")
         )
         project.add_dependency(
-            dependency=AST.Dependency(name="aiohttp", version=">=3.14.0,<4", optional=True, python=">=3.10")
+            dependency=AST.Dependency(name="aiohttp", version=">=3.14.1,<4", optional=True, python=">=3.10")
         )
+
+        # `socket_options=` on httpx.HTTPTransport/AsyncHTTPTransport (used for TCP
+        # keepalive) was added in httpx>=0.25 / httpcore>=0.18. The generated SDK's
+        # floor is otherwise httpx>=0.21.2, so bump it only when keepalive is opted in.
+        if custom_config.tcp_keepalive.enabled:
+            project.add_dependency(
+                dependency=AST.Dependency(
+                    name="httpx",
+                    version="0.25.0",
+                    compatibility=DependencyCompatibility.GREATER_THAN_OR_EQUAL,
+                ),
+                is_user_override=True,
+            )
 
         for dep, bas_dep_value in custom_config.extra_dev_dependencies.items():
             if type(bas_dep_value) is str:
@@ -322,6 +337,10 @@ class SdkGenerator(AbstractGenerator):
             context=context,
             project=project,
         )
+
+        # Generate webhook signature verification helpers (WebhooksHelper) for
+        # any webhooks that declare HMAC signature verification in the IR.
+        WebhooksHelperGenerator(context=context, project=project).generate()
 
         # Generate test_aiohttp_autodetect.py test file (skip when embedding —
         # the host project owns its own tests/ directory).
@@ -887,6 +906,62 @@ class TestDefaultClientsWithAiohttp(unittest.TestCase):
         self.assertEqual(client.timeout.read, SDK_DEFAULT_TIMEOUT)
         self.assertTrue(client.follow_redirects)
 '''
+
+        # When custom_transport or tcp_keepalive is enabled, _make_default_async_client
+        # accepts and threads a transport. Assert a supplied transport is threaded through
+        # (this is the previously-dropped async custom_transport path).
+        if context.custom_config.custom_transport or context.custom_config.tcp_keepalive.enabled:
+            contents += f'''
+
+class TestMakeDefaultAsyncClientThreadsTransport(unittest.TestCase):
+    """A transport supplied to _make_default_async_client is threaded to httpx.AsyncClient."""
+
+    def test_supplied_transport_is_used(self) -> None:
+        with mock.patch.dict(sys.modules, {{"httpx_aiohttp": None}}):
+            from {module_path}.{client_module} import _make_default_async_client
+
+            supplied = httpx.AsyncHTTPTransport()
+            client = _make_default_async_client(timeout=60, follow_redirects=True, transport=supplied)
+            self.assertIs(client._transport, supplied)
+'''
+
+        # When tcp_keepalive is enabled, the generated default clients apply a keepalive
+        # transport, a user-supplied transport wins over it, and the aiohttp path is a
+        # documented no-op.
+        if context.custom_config.tcp_keepalive.enabled:
+            contents += f'''
+
+class TestTcpKeepaliveDefaultTransport(unittest.TestCase):
+    """tcp_keepalive is enabled: the default async client carries a keepalive transport."""
+
+    def test_default_async_client_applies_keepalive(self) -> None:
+        import socket
+
+        with mock.patch.dict(sys.modules, {{"httpx_aiohttp": None}}):
+            from {module_path}.{client_module} import _make_default_async_client
+
+            client = _make_default_async_client(timeout=60, follow_redirects=True)
+            transport = client._transport
+            self.assertIsInstance(transport, httpx.AsyncHTTPTransport)
+            options = transport._pool._socket_options  # type: ignore[attr-defined]
+            self.assertIsNotNone(options)
+            self.assertTrue(any(option[1] == socket.SO_KEEPALIVE for option in options))
+
+
+@pytest.mark.aiohttp
+class TestTcpKeepaliveAiohttpNoop(unittest.TestCase):
+    """When httpx_aiohttp is installed, keepalive socket_options are a documented no-op
+    (aiohttp manages its own TCP connector), so the aiohttp client is still returned."""
+
+    def test_aiohttp_path_ignores_keepalive(self) -> None:
+        import httpx_aiohttp  # type: ignore[import-not-found]
+
+        from {module_path}.{client_module} import _make_default_async_client
+
+        client = _make_default_async_client(timeout=60, follow_redirects=True)
+        self.assertIsInstance(client, httpx_aiohttp.HttpxAiohttpClient)
+'''
+
         project.add_source_file("tests/test_aiohttp_autodetect.py", contents)
 
         # Generate a minimal tests/conftest.py with aiohttp skip logic when wire tests

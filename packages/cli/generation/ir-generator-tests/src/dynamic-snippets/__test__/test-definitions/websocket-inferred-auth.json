@@ -133,7 +133,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_realtime:SendEvent": {
             "type": "object",
@@ -264,7 +265,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_realtime:send_snake_case": {
             "type": "object",
@@ -395,7 +397,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_realtime:ReceiveEvent": {
             "type": "object",
@@ -526,7 +529,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_realtime:receive_snake_case": {
             "type": "object",
@@ -657,7 +661,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_realtime:SendEvent2": {
             "type": "object",
@@ -788,7 +793,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_realtime:ReceiveEvent2": {
             "type": "object",
@@ -949,7 +955,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_realtime:ReceiveEvent3": {
             "type": "object",
@@ -1050,7 +1057,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -2031,5 +2039,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

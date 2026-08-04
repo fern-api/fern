@@ -56,10 +56,10 @@ export class InferredAuthProvider implements core.AuthProvider {
 
     private async getAuthRequestFromTokenEndpoint(): Promise<core.AuthRequest> {
         const response = await this.client.getTokenWithClientCredentials({
-            clientId: await core.Supplier.get(this.options.clientId),
-            clientSecret: await core.Supplier.get(this.options.clientSecret),
+            client_id: await core.Supplier.get(this.options.clientId),
+            client_secret: await core.Supplier.get(this.options.clientSecret),
             audience: await core.Supplier.get(this.options.audience),
-            grantType: await core.Supplier.get(this.options.grantType),
+            grant_type: await core.Supplier.get(this.options.grantType),
             scope: await core.Supplier.get(this.options.scope),
         });
         this.expiresAt = getExpiresAt(response.expires_in);

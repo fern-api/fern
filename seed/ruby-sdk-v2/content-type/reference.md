@@ -59,7 +59,7 @@ client.service.patch(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">patch_complex</a>(id, request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">patch_complex</a>(id:, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -94,13 +94,21 @@ client.service.patch_complex(
   name: "name",
   age: 1,
   active: true,
-  metadata: {},
+  metadata: {
+    metadata: {
+      key: "value"
+    }
+  },
   tags: %w[tags tags],
   email: "email",
   nickname: "nickname",
   bio: "bio",
   profile_image_url: "profileImageUrl",
-  settings: {}
+  settings: {
+    settings: {
+      key: "value"
+    }
+  }
 )
 ```
 </dd>
@@ -216,7 +224,7 @@ client.service.patch_complex(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">named_patch_with_mixed</a>(id, request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">named_patch_with_mixed</a>(id:, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -411,7 +419,7 @@ client.service.optional_merge_patch_test(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">regular_patch</a>(id, request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">regular_patch</a>(id:, request) -> </code></summary>
 <dl>
 <dd>
 

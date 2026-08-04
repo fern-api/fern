@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Test spec for `uint` types specified as number formats.",
   "auth": {

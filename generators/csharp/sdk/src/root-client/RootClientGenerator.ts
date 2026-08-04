@@ -2,7 +2,7 @@ import { fail } from "node:assert";
 import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator, GrpcClientInfo } from "@fern-api/csharp-base";
-import { ast, escapeForCSharpString, lazy } from "@fern-api/csharp-codegen";
+import { ast, escapeForCSharpString, lazy, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -20,11 +20,27 @@ type Literal = FernIr.Literal;
 type TypeReference = FernIr.TypeReference;
 
 import { RawClient } from "../endpoint/http/RawClient.js";
+import { isEndpointSecurity } from "../endpoint/request/endpointAuthHeaders.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
+import { APPEND_APP_INFO_METHOD_NAME, buildAppendAppInfoMethodLines } from "./buildAppInfoUserAgent.js";
 import { buildUserAgentHeaderEntry } from "./buildUserAgentHeaderEntry.js";
+import {
+    BUILD_USER_AGENT_METHOD_NAME,
+    BUILD_USER_AGENT_RETURN_SUFFIX,
+    buildUserAgentLocalLines,
+    buildUserAgentReturnPrefix,
+    buildUserAgentReturnWithoutVersion,
+    getUserAgentProduct
+} from "./buildUserAgentMethodBody.js";
 import { dedupAuthHeaderEntries } from "./dedupAuthHeaderEntries.js";
+import {
+    getServerVariableOptions,
+    getServerVariableValueExpression,
+    type ServerVariableOption,
+    urlTemplateToInterpolatedString
+} from "./serverVariables.js";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 
@@ -39,6 +55,10 @@ interface ConstructorParameter {
      */
     header?: HeaderInfo;
     environmentVariable?: string;
+    /**
+     * Whether this parameter comes from a global API header (as opposed to an auth scheme).
+     */
+    isGlobalHeader?: boolean;
     /**
      * The wire value to use in examples (e.g., "client_id", "X-API-Key")
      * Falls back to parameter name if not provided
@@ -68,6 +88,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     private grpcClientInfo: GrpcClientInfo | undefined;
     private oauth: OAuthScheme | undefined;
     private inferred: InferredAuthScheme | undefined;
+    /**
+     * Set while building the constructor body when the opt-in
+     * `allow-user-agent-app-info` config actually wraps a written User-Agent value,
+     * so the emitted `AppendAppInfoToUserAgent` helper is only added when referenced.
+     */
+    private usesAppInfoHelper = false;
 
     constructor(context: SdkGeneratorContext) {
         super(context);
@@ -77,6 +103,31 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         this.serviceId = this.context.ir.rootPackage.service;
         this.grpcClientInfo =
             this.serviceId != null ? this.context.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
+    }
+
+    /**
+     * Both OAuth and inferred auth attach their Authorization header through a
+     * token provider, and only one provider can drive the root client's auth
+     * header. When both schemes are present (e.g. `auth: any` with an OAuth and
+     * an inferred scheme), pick the provider-based scheme that appears first in
+     * `ir.auth.schemes`, which mirrors the declared `any` order.
+     */
+    private shouldUseOAuthProvider(): boolean {
+        if (this.oauth == null) {
+            return false;
+        }
+        if (this.inferred == null) {
+            return true;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return true;
+            }
+            if (scheme.type === "inferred") {
+                return false;
+            }
+        }
+        return true;
     }
 
     private members = lazy({
@@ -154,6 +205,18 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
         class_.addConstructor(this.getConstructorMethod());
 
+        if (this.settings.includePlatformHeaders) {
+            this.addBuildUserAgentMethod(class_);
+        }
+
+        // Emit the self-contained `AppendAppInfoToUserAgent` helper only when the
+        // opt-in `allow-user-agent-app-info` config actually wrapped a written
+        // User-Agent value (set by `getConstructorMethod`, invoked above), so
+        // flag-off output and clients that never send a User-Agent stay unchanged.
+        if (this.usesAppInfoHelper) {
+            this.addAppendAppInfoMethod(class_);
+        }
+
         for (const subpackage of this.getSubpackages()) {
             if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
                 class_.addField({
@@ -184,7 +247,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         }
 
         const { optionalParameters } = this.getConstructorParameters();
-        if (optionalParameters.some((parameter) => parameter.environmentVariable != null)) {
+        if (
+            !this.isAnyAuthWithMultipleSchemes() &&
+            !this.isEndpointSecurity() &&
+            optionalParameters.some(
+                (parameter) =>
+                    parameter.environmentVariable != null && !(parameter.isGlobalHeader && parameter.isOptional)
+            )
+        ) {
             this.getFromEnvironmentOrThrowMethod(class_);
         }
         return new CSharpFile({
@@ -200,6 +270,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     private getConstructorMethod() {
         const { requiredParameters, optionalParameters, literalParameters } = this.getConstructorParameters();
         const unified = this.settings.unifiedClientOptions;
+        // Under `any`-composed auth with more than one scheme, each scheme's
+        // credentials are independently optional: the caller supplies exactly one
+        // scheme's creds. We must not throw for missing creds nor wire up a token
+        // provider / auth header unless that scheme's creds were actually provided.
+        const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
+        const endpointSecurity = this.isEndpointSecurity();
         const parameters: ast.Parameter[] = [];
 
         // In unified mode, check if any ClientOptions fields are truly required.
@@ -272,6 +348,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         // win; we preserve the IR-established ordering of required > optional
         // > literal so the most specific / required scheme takes precedence.
         const authHeaderCandidates: { headerName: string; entry: ast.Dictionary.MapEntry }[] = [];
+        // Parallel list used only under `any`-composed multi-scheme auth: each auth
+        // header is written conditionally (guarded on its credential being non-null)
+        // instead of via an unconditional dictionary initializer.
+        const authHeaderConditionalWrites: { headerName: string; condition: string | null; value: string }[] = [];
 
         for (const param of [...requiredParameters, ...optionalParameters]) {
             if (param.header != null) {
@@ -290,11 +370,22 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         )
                     }
                 });
+                authHeaderConditionalWrites.push({
+                    headerName: param.header.name,
+                    condition: `${access} != null`,
+                    value: param.header.prefix != null ? `$"${param.header.prefix} {${access}}"` : access
+                });
             }
         }
 
         for (const param of literalParameters) {
             if (param.header != null) {
+                const literalValue =
+                    param.value.type === "string"
+                        ? `"${escapeForCSharpString(param.value.string)}"`
+                        : param.value.boolean
+                          ? `"${true.toString()}"`
+                          : `"${false.toString()}"`;
                 authHeaderCandidates.push({
                     headerName: param.header.name,
                     entry: {
@@ -308,11 +399,20 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         )
                     }
                 });
+                authHeaderConditionalWrites.push({
+                    headerName: param.header.name,
+                    condition: null,
+                    value: literalValue
+                });
             }
         }
 
         const authHeaderEntries = dedupAuthHeaderEntries(authHeaderCandidates, (item) => item.headerName).map(
             (item) => item.entry
+        );
+        const authHeaderConditionalWriteEntries = dedupAuthHeaderEntries(
+            authHeaderConditionalWrites,
+            (item) => item.headerName
         );
 
         // Platform headers (no auth)
@@ -325,26 +425,62 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             });
             platformHeaderEntries.push({
                 key: this.csharp.codeblock(`"${platformHeaders.sdkName}"`),
-                value: this.csharp.codeblock(`"${this.namespaces.root}"`)
+                // Use the package identity (NuGet package id or nuget filesystem
+                // publish target) so the SDK-name header matches the `User-Agent`;
+                // falls back to the root namespace when neither is configured.
+                value: this.csharp.codeblock(`"${this.generation.names.project.packageId}"`)
             });
             platformHeaderEntries.push({
                 key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
                 value: this.context.getCurrentVersionValueAccess()
             });
-            // When `user-agent-name-from-package` is enabled, falls back to
-            // `$"<NuGetPackageId>/{Version.Current}"` when the IR has no
-            // `platformHeaders.userAgent` (e.g. OpenAPI imports), mirroring the
-            // TypeScript generator's npm-package-name fallback. Defaults off so
-            // existing C# SDKs imported from OpenAPI keep emitting no User-Agent.
-            const userAgentEntry = buildUserAgentHeaderEntry({
-                userAgent: platformHeaders.userAgent,
-                packageName: this.generation.names.project.packageId,
-                csharp: this.csharp,
-                versionValueAccess: this.context.getCurrentVersionValueAccess(),
-                userAgentNameFromPackage: this.settings.userAgentNameFromPackage
-            });
-            if (userAgentEntry != null) {
-                platformHeaderEntries.push(userAgentEntry);
+            // When the opt-in `allow-user-agent-app-info` config is set, wrap the
+            // computed User-Agent value expression in the emitted
+            // `AppendAppInfoToUserAgent` helper, which appends the caller-supplied
+            // `AppInfo` product token. `clientOptions` is already initialized (and
+            // non-null) at the point the platform-headers dictionary is written, so
+            // `clientOptions.AppInfo` is safe to read. Keeping this wrapping local to
+            // the generated client (rather than modifying the shared
+            // `BuildUserAgent`/core-utilities) keeps flag-off output byte-identical.
+            const withAppInfo = (userAgentValue: ast.AstNode): ast.AstNode => {
+                if (!this.settings.allowUserAgentAppInfo) {
+                    return userAgentValue;
+                }
+                this.usesAppInfoHelper = true;
+                return this.csharp.codeblock((writer) => {
+                    writer.write(`${APPEND_APP_INFO_METHOD_NAME}(`);
+                    writer.writeNode(userAgentValue);
+                    writer.write(", clientOptions.AppInfo)");
+                });
+            };
+
+            if (this.settings.includePlatformHeaders) {
+                // Emit a single structured `User-Agent` consolidating the SDK
+                // name/version with the OS, architecture, and runtime, all
+                // resolved at runtime by the `BuildUserAgent` helper.
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock(`"${platformHeaders.userAgent?.header ?? "User-Agent"}"`),
+                    value: withAppInfo(this.csharp.codeblock(`${BUILD_USER_AGENT_METHOD_NAME}()`))
+                });
+            } else {
+                // When `user-agent-name-from-package` is enabled, falls back to
+                // `$"<NuGetPackageId>/{Version.Current}"` when the IR has no
+                // `platformHeaders.userAgent` (e.g. OpenAPI imports), mirroring the
+                // TypeScript generator's npm-package-name fallback. Defaults off so
+                // existing C# SDKs imported from OpenAPI keep emitting no User-Agent.
+                const userAgentEntry = buildUserAgentHeaderEntry({
+                    userAgent: platformHeaders.userAgent,
+                    packageName: this.generation.names.project.packageId,
+                    csharp: this.csharp,
+                    versionValueAccess: this.context.getCurrentVersionValueAccess(),
+                    userAgentNameFromPackage: this.settings.userAgentNameFromPackage
+                });
+                if (userAgentEntry != null) {
+                    platformHeaderEntries.push({
+                        key: userAgentEntry.key,
+                        value: withAppInfo(userAgentEntry.value)
+                    });
+                }
             }
         }
 
@@ -385,17 +521,38 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     }
 
                     for (const param of optionalParameters) {
+                        const clientDefaultLiteral =
+                            param.isGlobalHeader && param.clientDefault != null
+                                ? this.getHeaderFallback(param)
+                                : undefined;
                         if (param.environmentVariable != null) {
                             const target = paramAccess(param);
-                            innerWriter.writeLine(`${target} ??= ${GetFromEnvironmentOrThrow}(`);
-                            innerWriter.indent();
-                            innerWriter.writeNode(this.csharp.string_({ string: param.environmentVariable }));
-                            innerWriter.writeLine(",");
-                            innerWriter.writeLine(
-                                `"Please pass in ${escapeForCSharpString(param.name)} or set the environment variable ${escapeForCSharpString(param.environmentVariable)}."`
-                            );
-                            innerWriter.dedent();
-                            innerWriter.writeLine(");");
+                            if (anyAuthMultiScheme || endpointSecurity || (param.isGlobalHeader && param.isOptional)) {
+                                // Fall back to the env var if set, but do not throw when it is
+                                // missing — the caller may be authenticating with another scheme.
+                                innerWriter.write(`${target} ??= Environment.GetEnvironmentVariable(`);
+                                innerWriter.writeNode(this.csharp.string_({ string: param.environmentVariable }));
+                                if (clientDefaultLiteral != null) {
+                                    innerWriter.writeTextStatement(`) ?? ${clientDefaultLiteral}`);
+                                } else {
+                                    innerWriter.writeTextStatement(")");
+                                }
+                            } else {
+                                innerWriter.writeLine(`${target} ??= ${GetFromEnvironmentOrThrow}(`);
+                                innerWriter.indent();
+                                innerWriter.writeNode(this.csharp.string_({ string: param.environmentVariable }));
+                                innerWriter.writeLine(",");
+                                innerWriter.writeLine(
+                                    `"Please pass in ${escapeForCSharpString(param.name)} or set the environment variable ${escapeForCSharpString(param.environmentVariable)}."`
+                                );
+                                innerWriter.dedent();
+                                innerWriter.writeLine(");");
+                            }
+                        } else if (clientDefaultLiteral != null && (anyAuthMultiScheme || endpointSecurity)) {
+                            // Header dictionary entries apply the client default inline elsewhere,
+                            // but the `any`-composed multi-scheme and endpoint-security paths write
+                            // headers conditionally, so the default must be applied here.
+                            innerWriter.writeTextStatement(`${paramAccess(param)} ??= ${clientDefaultLiteral}`);
                         }
                     }
 
@@ -424,6 +581,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             })
                         );
                     }
+
+                    this.writeServerVariableInterpolation(innerWriter);
 
                     // Add platform headers to clientOptions
                     innerWriter.write("var platformHeaders = ");
@@ -462,34 +621,62 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
                     // Only clone clientOptions if we have auth headers or OAuth/inferred auth/basic auth
                     const needsAuthHeaders =
-                        authHeaderEntries.length > 0 || this.oauth != null || this.inferred != null || hasBasicAuth;
+                        authHeaderEntries.length > 0 ||
+                        this.oauth != null ||
+                        this.inferred != null ||
+                        hasBasicAuth ||
+                        endpointSecurity;
                     const clientOptionsVariable = needsAuthHeaders ? "clientOptionsWithAuth" : "clientOptions";
 
                     if (needsAuthHeaders) {
                         // Clone clientOptions for use with auth headers
                         innerWriter.writeLine("var clientOptionsWithAuth = clientOptions.Clone();");
 
+                        // In endpoint-security mode, auth is routed per endpoint: store each scheme's
+                        // headers keyed by scheme instead of flattening them onto every request.
+                        if (endpointSecurity) {
+                            this.writeEndpointSecurityAuthHeaderSchemes(innerWriter, { unified });
+                        }
+
                         // Add auth headers to the cloned clientOptions
-                        if (authHeaderEntries.length > 0) {
-                            innerWriter.write("var authHeaders = ");
-                            innerWriter.writeNodeStatement(
-                                this.csharp.instantiateClass({
-                                    classReference: this.generation.Types.Headers,
-                                    arguments_: [authHeaderDictionary]
-                                })
-                            );
-                            innerWriter.controlFlow("foreach", this.csharp.codeblock("var header in authHeaders"));
-                            innerWriter.writeLine("clientOptionsWithAuth.Headers[header.Key] = header.Value;");
-                            innerWriter.endControlFlow();
+                        if (authHeaderEntries.length > 0 && !endpointSecurity) {
+                            if (anyAuthMultiScheme) {
+                                // Only set a scheme's auth header when its credential was provided,
+                                // so callers can authenticate with just one of the `any` schemes.
+                                for (const write of authHeaderConditionalWriteEntries) {
+                                    if (write.condition != null) {
+                                        innerWriter.controlFlow("if", this.csharp.codeblock(write.condition));
+                                        innerWriter.writeTextStatement(
+                                            `clientOptionsWithAuth.Headers["${write.headerName}"] = ${write.value}`
+                                        );
+                                        innerWriter.endControlFlow();
+                                    } else {
+                                        innerWriter.writeTextStatement(
+                                            `clientOptionsWithAuth.Headers["${write.headerName}"] = ${write.value}`
+                                        );
+                                    }
+                                }
+                            } else {
+                                innerWriter.write("var authHeaders = ");
+                                innerWriter.writeNodeStatement(
+                                    this.csharp.instantiateClass({
+                                        classReference: this.generation.Types.Headers,
+                                        arguments_: [authHeaderDictionary]
+                                    })
+                                );
+                                innerWriter.controlFlow("foreach", this.csharp.codeblock("var header in authHeaders"));
+                                innerWriter.writeLine("clientOptionsWithAuth.Headers[header.Key] = header.Value;");
+                                innerWriter.endControlFlow();
+                            }
                         }
                     }
 
                     // Add Basic Auth header if applicable
-                    if (hasBasicAuth) {
+                    if (hasBasicAuth && !endpointSecurity) {
                         const basicSchemes = this.context.ir.auth.schemes.filter(
                             (s): s is typeof s & { type: "basic" } => s.type === "basic"
                         );
-                        const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+                        const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory || anyAuthMultiScheme;
                         let isFirstBlock = true;
                         for (let i = 0; i < basicSchemes.length; i++) {
                             const basicScheme = basicSchemes[i];
@@ -535,7 +722,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }
                     }
 
-                    if (this.oauth != null) {
+                    if (this.oauth != null && this.shouldUseOAuthProvider() && !endpointSecurity) {
                         const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
                             this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
                         );
@@ -549,6 +736,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         const oauthAdditionalParams = this.getOAuthAdditionalParamNames();
                         const clientIdAccess = unified ? "clientOptions.ClientId" : "clientId";
                         const clientSecretAccess = unified ? "clientOptions.ClientSecret" : "clientSecret";
+                        // Only wire up the OAuth token provider when OAuth creds were supplied;
+                        // otherwise the caller is using another `any` scheme (e.g. an API key).
+                        if (anyAuthMultiScheme) {
+                            innerWriter.controlFlow(
+                                "if",
+                                this.csharp.codeblock(`${clientIdAccess} != null && ${clientSecretAccess} != null`)
+                            );
+                        }
                         innerWriter.write(
                             `var tokenProvider = new OAuthTokenProvider(${clientIdAccess}, ${clientSecretAccess}, `
                         );
@@ -568,9 +763,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         innerWriter.writeTextStatement(
                             `clientOptionsWithAuth.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
                         );
+                        if (anyAuthMultiScheme) {
+                            innerWriter.endControlFlow();
+                        }
                     }
 
-                    if (this.inferred != null) {
+                    if (this.inferred != null && !this.shouldUseOAuthProvider() && !endpointSecurity) {
                         const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
                             this.inferred.tokenEndpoint.endpoint.serviceId
                         );
@@ -583,6 +781,19 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 arguments_: [this.csharp.codeblock("clientOptions")]
                             })
                         ];
+
+                        // Only wire up the inferred-auth token provider when its creds were
+                        // supplied; otherwise the caller is using another `any` scheme.
+                        const shouldGuardInferred = anyAuthMultiScheme && credentialParams.length > 0;
+                        if (shouldGuardInferred) {
+                            const guard = credentialParams
+                                .map(
+                                    (param) =>
+                                        `${unified ? `clientOptions.${this.toPascalCase(param)}` : param} != null`
+                                )
+                                .join(" && ");
+                            innerWriter.controlFlow("if", this.csharp.codeblock(guard));
+                        }
 
                         innerWriter.write("var inferredAuthProvider = new InferredAuthTokenProvider(");
                         for (const param of credentialParams) {
@@ -613,6 +824,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                     );
                                 })
                             );
+                        }
+                        if (shouldGuardInferred) {
+                            innerWriter.endControlFlow();
                         }
                     }
 
@@ -668,6 +882,285 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 }
             })
         };
+    }
+
+    /**
+     * In endpoint-security mode, populates `clientOptionsWithAuth.AuthHeaderSchemes` with each
+     * scheme's ready-to-send headers, keyed by the scheme's IR key. Each scheme is guarded on
+     * its credentials being present so callers only need creds for the schemes their endpoints
+     * use. `ClientOptions.GetAuthHeadersForEndpoint` later routes these per request. Mirrors the
+     * per-scheme header construction of the flat path, but keyed by scheme instead of flattened.
+     */
+    private writeEndpointSecurityAuthHeaderSchemes(writer: Writer, { unified }: { unified: boolean }): void {
+        const access = (name: string): string => (unified ? `clientOptions.${this.toPascalCase(name)}` : name);
+        const setScheme = (key: string, headerName: string, valueExpression: string): void => {
+            writer.write(`clientOptionsWithAuth.AuthHeaderSchemes["${key}"] = new `);
+            writer.writeNode(this.generation.Types.Headers);
+            writer.writeTextStatement(`(new Dictionary<string, string>() { { "${headerName}", ${valueExpression} } })`);
+        };
+
+        for (const scheme of this.context.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer": {
+                    const tokenAccess = access(this.case.camelSafe(scheme.token));
+                    writer.controlFlow("if", this.csharp.codeblock(`${tokenAccess} != null`));
+                    setScheme(scheme.key, "Authorization", `$"Bearer {${tokenAccess}}"`);
+                    writer.endControlFlow();
+                    break;
+                }
+                case "header": {
+                    const headerAccess = access(this.case.camelSafe(scheme.name));
+                    const headerName = getWireValue(scheme.name);
+                    const value = scheme.prefix != null ? `$"${scheme.prefix} {${headerAccess}}"` : headerAccess;
+                    writer.controlFlow("if", this.csharp.codeblock(`${headerAccess} != null`));
+                    setScheme(scheme.key, headerName, value);
+                    writer.endControlFlow();
+                    break;
+                }
+                case "basic": {
+                    const usernameOmitted = !!scheme.usernameOmit;
+                    const passwordOmitted = !!scheme.passwordOmit;
+                    if (usernameOmitted && passwordOmitted) {
+                        break;
+                    }
+                    const usernameAccess = access(this.case.camelSafe(scheme.username));
+                    const passwordAccess = access(this.case.camelSafe(scheme.password));
+                    const conditions: string[] = [];
+                    if (!usernameOmitted) {
+                        conditions.push(`${usernameAccess} != null`);
+                    }
+                    if (!passwordOmitted) {
+                        conditions.push(`${passwordAccess} != null`);
+                    }
+                    const usernamePart = usernameOmitted ? "" : `{${usernameAccess}}`;
+                    const passwordPart = passwordOmitted ? "" : `{${passwordAccess}}`;
+                    writer.controlFlow("if", this.csharp.codeblock(conditions.join(" && ")));
+                    setScheme(
+                        scheme.key,
+                        "Authorization",
+                        `$"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"${usernamePart}:${passwordPart}"))}"`
+                    );
+                    writer.endControlFlow();
+                    break;
+                }
+                case "oauth": {
+                    if (this.oauth == null) {
+                        break;
+                    }
+                    const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
+                        this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
+                    );
+                    const arguments_ = [
+                        this.generation.Types.RawClient.new({
+                            arguments_: [this.csharp.codeblock("clientOptions")]
+                        })
+                    ];
+                    const oauthAdditionalParams = this.getOAuthAdditionalParamNames();
+                    const clientIdAccess = access("clientId");
+                    const clientSecretAccess = access("clientSecret");
+                    writer.controlFlow(
+                        "if",
+                        this.csharp.codeblock(`${clientIdAccess} != null && ${clientSecretAccess} != null`)
+                    );
+                    writer.write(
+                        `var tokenProvider = new OAuthTokenProvider(${clientIdAccess}, ${clientSecretAccess}, `
+                    );
+                    for (const param of oauthAdditionalParams) {
+                        writer.write(`${access(param)}, `);
+                    }
+                    writer.writeNode(
+                        this.csharp.instantiateClass({
+                            classReference: authClientClassReference,
+                            arguments_,
+                            forceUseConstructor: true
+                        })
+                    );
+                    writer.writeTextStatement(")");
+                    writer.write("var oauthAuthHeaders = new ");
+                    writer.writeNode(this.generation.Types.Headers);
+                    writer.writeTextStatement("()");
+                    writer.writeTextStatement(
+                        `oauthAuthHeaders["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
+                    );
+                    writer.writeTextStatement(
+                        `clientOptionsWithAuth.AuthHeaderSchemes["${scheme.key}"] = oauthAuthHeaders`
+                    );
+                    writer.endControlFlow();
+                    break;
+                }
+                case "inferred": {
+                    if (this.inferred == null) {
+                        break;
+                    }
+                    const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
+                        this.inferred.tokenEndpoint.endpoint.serviceId
+                    );
+                    const credentialParams = this.getInferredAuthCredentialParams();
+                    const arguments_ = [
+                        this.generation.Types.RawClient.new({
+                            arguments_: [this.csharp.codeblock("clientOptions")]
+                        })
+                    ];
+                    const shouldGuard = credentialParams.length > 0;
+                    if (shouldGuard) {
+                        const guard = credentialParams.map((param) => `${access(param)} != null`).join(" && ");
+                        writer.controlFlow("if", this.csharp.codeblock(guard));
+                    }
+                    writer.write("var inferredAuthProvider = new InferredAuthTokenProvider(");
+                    for (const param of credentialParams) {
+                        writer.write(`${access(param)}, `);
+                    }
+                    writer.writeNode(
+                        this.csharp.instantiateClass({
+                            classReference: authClientClassReference,
+                            arguments_,
+                            forceUseConstructor: true
+                        })
+                    );
+                    writer.writeTextStatement(")");
+                    const authenticatedHeaders = this.inferred.tokenEndpoint.authenticatedRequestHeaders;
+                    if (authenticatedHeaders.length === 0) {
+                        this.context.logger.warn(
+                            "Inferred auth scheme has no authenticated request headers. At least one header should be specified."
+                        );
+                    }
+                    writer.write("var inferredAuthHeaders = new ");
+                    writer.writeNode(this.generation.Types.Headers);
+                    writer.writeTextStatement("()");
+                    for (const authHeader of authenticatedHeaders) {
+                        writer.writeTextStatement(
+                            `inferredAuthHeaders["${authHeader.headerName}"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => (await inferredAuthProvider.${this.names.methods.getAuthHeadersAsync}().ConfigureAwait(false)).First().Value)`
+                        );
+                    }
+                    writer.writeTextStatement(
+                        `clientOptionsWithAuth.AuthHeaderSchemes["${scheme.key}"] = inferredAuthHeaders`
+                    );
+                    if (shouldGuard) {
+                        writer.endControlFlow();
+                    }
+                    break;
+                }
+                default:
+                    assertNever(scheme);
+            }
+        }
+    }
+
+    /**
+     * Rebuilds the environment base URL(s) from the API's URL template(s) when the user
+     * sets any server URL variable (e.g. region/edge) at construction time. Each `{id}`
+     * placeholder is substituted with the provided value, falling back to the variable's
+     * IR default when omitted. Emits nothing when the API declares no server variables.
+     */
+    private writeServerVariableInterpolation(writer: Writer): void {
+        const config = this.context.ir.environments;
+        const options = getServerVariableOptions(config, this.case, this.settings.serverUrlVariables);
+        if (options.length === 0 || config == null) {
+            return;
+        }
+        const environments = config.environments;
+        const variableSetCondition = options
+            .map(({ optionName }) => `clientOptions.${optionName} != null`)
+            .join(" || ");
+        switch (environments.type) {
+            case "singleBaseUrl": {
+                const templatedEnvironments = environments.environments.filter((env) => env.urlTemplate != null);
+                const firstTemplate = templatedEnvironments[0]?.urlTemplate;
+                if (firstTemplate == null) {
+                    return;
+                }
+                writer.controlFlow("if", this.csharp.codeblock(variableSetCondition));
+                this.writeServerVariableLocals(writer, options);
+                writer.controlFlow("if", this.csharp.codeblock("!clientOptions.IsBaseUrlExplicitlySet"));
+                writer.writeTextStatement(
+                    `clientOptions.BaseUrl = ${urlTemplateToInterpolatedString(firstTemplate, options)}`
+                );
+                writer.endControlFlow();
+                for (const environment of templatedEnvironments) {
+                    if (environment.urlTemplate == null) {
+                        continue;
+                    }
+                    writer.controlFlow(
+                        "else if",
+                        this.csharp.codeblock((conditionWriter) => {
+                            conditionWriter.write("clientOptions.BaseUrl == ");
+                            conditionWriter.writeNode(this.Types.Environments);
+                            conditionWriter.write(`.${this.getEnvironmentConstantName(environment.name)}`);
+                        })
+                    );
+                    writer.writeTextStatement(
+                        `clientOptions.BaseUrl = ${urlTemplateToInterpolatedString(environment.urlTemplate, options)}`
+                    );
+                    writer.endControlFlow();
+                }
+                writer.endControlFlow();
+                break;
+            }
+            case "multipleBaseUrls": {
+                const templatedEnvironments = environments.environments.filter((env) => env.urlTemplates != null);
+                const firstTemplatedEnvironment = templatedEnvironments[0];
+                if (firstTemplatedEnvironment == null) {
+                    return;
+                }
+                const writeEnvironmentAssignment = (
+                    environment: FernIr.MultipleBaseUrlsEnvironment,
+                    assignmentWriter: Writer
+                ): void => {
+                    assignmentWriter.write("clientOptions.Environment = ");
+                    assignmentWriter.writeNodeStatement(
+                        this.csharp.instantiateClass({
+                            classReference: this.Types.Environments,
+                            arguments_: environments.baseUrls.map((baseUrl) => {
+                                const template = environment.urlTemplates?.[baseUrl.id];
+                                return {
+                                    name: this.case.pascalSafe(baseUrl.name),
+                                    assignment:
+                                        template != null
+                                            ? this.csharp.codeblock(urlTemplateToInterpolatedString(template, options))
+                                            : this.csharp.codeblock(
+                                                  this.csharp.string_({ string: environment.urls[baseUrl.id] ?? "" })
+                                              )
+                                };
+                            }),
+                            multiline: true
+                        })
+                    );
+                };
+                writer.controlFlow("if", this.csharp.codeblock(variableSetCondition));
+                this.writeServerVariableLocals(writer, options);
+                writer.controlFlow("if", this.csharp.codeblock("!clientOptions.IsEnvironmentExplicitlySet"));
+                writeEnvironmentAssignment(firstTemplatedEnvironment, writer);
+                writer.endControlFlow();
+                for (const environment of templatedEnvironments) {
+                    writer.controlFlow(
+                        "else if",
+                        this.csharp.codeblock((conditionWriter) => {
+                            conditionWriter.write("clientOptions.Environment == ");
+                            conditionWriter.writeNode(this.Types.Environments);
+                            conditionWriter.write(`.${this.getEnvironmentConstantName(environment.name)}`);
+                        })
+                    );
+                    writeEnvironmentAssignment(environment, writer);
+                    writer.endControlFlow();
+                }
+                writer.endControlFlow();
+                break;
+            }
+            default:
+                assertNever(environments);
+        }
+    }
+
+    private getEnvironmentConstantName(environmentName: FernIr.NameOrString): string {
+        return this.settings.pascalCaseEnvironments
+            ? this.case.pascalSafe(environmentName)
+            : this.case.screamingSnakeSafe(environmentName);
+    }
+
+    private writeServerVariableLocals(writer: Writer, options: ServerVariableOption[]): void {
+        for (const option of options) {
+            writer.writeTextStatement(`var ${option.localName} = ${getServerVariableValueExpression(option)}`);
+        }
     }
 
     public generateExampleClientInstantiationSnippet({
@@ -803,7 +1296,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     private getParameterFromAuthScheme(scheme: AuthScheme): ConstructorParameter[] {
-        const isOptional = this.context.ir.sdkConfig.isAuthMandatory;
+        // In endpoint-security mode each scheme's credentials are independently optional (the
+        // caller supplies only what the endpoints they call require), so treat like `any`-composed auth.
+        const isOptional =
+            this.context.ir.sdkConfig.isAuthMandatory ||
+            this.isAnyAuthWithMultipleSchemes() ||
+            this.isEndpointSecurity();
         if (scheme.type === "header") {
             {
                 const name = this.case.camelSafe(scheme.name);
@@ -998,6 +1496,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             type: this.context.csharpTypeMapper.convert({
                 reference: header.valueType
             }),
+            environmentVariable: header.env,
+            isGlobalHeader: true,
             exampleValue: this.case.screamingSnakeSafe(header.name),
             clientDefault: header.clientDefault
         };
@@ -1037,6 +1537,72 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 writer.write("return Environment.GetEnvironmentVariable(env) ?? throw new ");
                 writer.writeNode(this.System.Exception);
                 writer.writeLine("(message);");
+            }),
+            type: ast.MethodType.STATIC
+        });
+    }
+
+    /**
+     * Emits a static helper that builds a structured `User-Agent` of the shape
+     * `{sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}`, with the
+     * OS, architecture, and runtime version resolved at runtime. The OS/arch group
+     * is omitted when neither can be determined (and reduced to a single value when
+     * only one is), and the runtime version is dropped when unavailable, so the
+     * helper never emits an empty group and never throws.
+     */
+    private addBuildUserAgentMethod(cls: ast.Class) {
+        const { productName, appendVersion } = getUserAgentProduct({
+            userAgentValue: this.context.ir.sdkConfig.platformHeaders.userAgent?.value,
+            packageName: this.generation.names.project.packageId
+        });
+        cls.addMethod({
+            access: ast.Access.Private,
+            name: BUILD_USER_AGENT_METHOD_NAME,
+            return_: this.Primitive.string,
+            parameters: [],
+            isAsync: false,
+            body: this.csharp.codeblock((writer) => {
+                for (const line of buildUserAgentLocalLines()) {
+                    writer.writeLine(line);
+                }
+                if (!appendVersion) {
+                    writer.writeLine(buildUserAgentReturnWithoutVersion(productName));
+                    return;
+                }
+                writer.write(buildUserAgentReturnPrefix(productName));
+                // Written via `writeNode` so the generated `Version` reference
+                // registers its using directive.
+                writer.writeNode(this.context.getCurrentVersionValueAccess());
+                writer.writeLine(BUILD_USER_AGENT_RETURN_SUFFIX);
+            }),
+            type: ast.MethodType.STATIC
+        });
+    }
+
+    /**
+     * Emits the self-contained static `AppendAppInfoToUserAgent(string userAgent,
+     * AppInfo? appInfo)` helper used by the opt-in `allow-user-agent-app-info`
+     * feature. It appends the caller-supplied, sanitized `AppInfo` product token to
+     * whichever `User-Agent` value the SDK would otherwise send. Percent-encodes
+     * non-RFC-7230 `tchar` in `Name`/`Version` and escapes comment delimiters and
+     * control characters (incl. CR/LF) in `Comment`; values are trimmed before the
+     * blank check and before encoding, so blank values are dropped rather than
+     * encoded into whitespace tokens. Only netstandard2.0/net462-safe APIs are used.
+     */
+    private addAppendAppInfoMethod(cls: ast.Class) {
+        cls.addMethod({
+            access: ast.Access.Private,
+            name: APPEND_APP_INFO_METHOD_NAME,
+            return_: this.Primitive.string,
+            parameters: [
+                this.csharp.parameter({ name: "userAgent", type: this.Primitive.string }),
+                this.csharp.parameter({ name: "appInfo", type: this.Types.AppInfo.asOptional() })
+            ],
+            isAsync: false,
+            body: this.csharp.codeblock((writer) => {
+                for (const line of buildAppendAppInfoMethodLines()) {
+                    writer.writeLine(line);
+                }
             }),
             type: ast.MethodType.STATIC
         });
@@ -1121,6 +1687,25 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
     private toPascalCase(name: string): string {
         return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+
+    /**
+     * True when auth is `any`-composed across more than one scheme. In that case
+     * each scheme's credentials are independently optional (the caller supplies
+     * exactly one scheme's creds), so we must not throw for missing creds and must
+     * only wire up a scheme's token provider / header when its creds are present.
+     */
+    private isAnyAuthWithMultipleSchemes(): boolean {
+        return this.context.ir.auth.requirement === "ANY" && this.context.ir.auth.schemes.length > 1;
+    }
+
+    /**
+     * Whether the API applies auth per-endpoint (each endpoint declares its own schemes) rather
+     * than applying every configured scheme flatly to every request. In this mode each scheme's
+     * credentials are independently optional and are routed per endpoint by ClientOptions.
+     */
+    private isEndpointSecurity(): boolean {
+        return isEndpointSecurity(this.context);
     }
 }
 

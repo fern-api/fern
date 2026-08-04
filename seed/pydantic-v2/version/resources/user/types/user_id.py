@@ -6,12 +6,12 @@ from core.datetime_utils import serialize_datetime
 class UserId(RootModel[str]):
     root: str
 
-    def get_as_str() -> UUID:
+    def get_as_str(self) -> str:
         return self.root
 
     @staticmethod
-    def from_str(value: str) -> UserId:
-        UserId(root=value)
+    def from_str(value: str) -> "UserId":
+        return UserId(root=value)
 
     class Config:
         frozen = True

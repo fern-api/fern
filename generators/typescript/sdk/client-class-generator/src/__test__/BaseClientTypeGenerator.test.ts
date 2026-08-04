@@ -60,6 +60,7 @@ function createHeader(opts: {
         availability: undefined,
         docs: undefined,
         clientDefault: undefined,
+        defaultValue: undefined,
         v2Examples: undefined
     };
 }
@@ -147,6 +148,14 @@ function createMockContext(opts?: {
                 properties: [{ name: "idempotencyKey", type: "string", hasQuestionToken: true }]
             })
         },
+        environments: {
+            getReferenceToEnvironmentsEnum: () => ({
+                getExpression: () => ts.factory.createIdentifier("environments.TestEnvironment")
+            }),
+            getReferenceToEnvironmentUrls: () => ({
+                getTypeNode: () => ts.factory.createTypeReferenceNode("environments.TestEnvironmentUrls")
+            })
+        },
         coreUtilities: {
             runtime: {
                 type: {
@@ -154,6 +163,19 @@ function createMockContext(opts?: {
                 },
                 version: {
                     _getReferenceTo: () => ts.factory.createIdentifier("core.RUNTIME.version")
+                },
+                os: {
+                    _getReferenceTo: () => ts.factory.createIdentifier("core.RUNTIME.os")
+                },
+                arch: {
+                    _getReferenceTo: () => ts.factory.createIdentifier("core.RUNTIME.arch")
+                },
+                userAgent: {
+                    _invoke: (sdkName: ts.Expression, sdkVersion: ts.Expression) =>
+                        ts.factory.createCallExpression(ts.factory.createIdentifier("core.getUserAgent"), undefined, [
+                            sdkName,
+                            sdkVersion
+                        ])
                 }
             },
             logging: {
@@ -212,11 +234,15 @@ function createGenerator(opts?: {
     generateIdempotentRequestOptions?: boolean;
     ir?: FernIr.IntermediateRepresentation;
     omitFernHeaders?: boolean;
+    includePlatformHeaders?: boolean;
+    allowUserAgentAppInfo?: boolean;
 }): BaseClientTypeGenerator {
     return new BaseClientTypeGenerator({
         generateIdempotentRequestOptions: opts?.generateIdempotentRequestOptions ?? false,
         ir: opts?.ir ?? createIR(),
         omitFernHeaders: opts?.omitFernHeaders ?? false,
+        includePlatformHeaders: opts?.includePlatformHeaders ?? false,
+        allowUserAgentAppInfo: opts?.allowUserAgentAppInfo ?? false,
         retainOriginalCasing: false,
         parameterNaming: "default",
         caseConverter
@@ -446,6 +472,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -457,6 +484,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -472,6 +500,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         }
                                     },
@@ -521,6 +550,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -532,6 +562,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -547,6 +578,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         }
                                     },
@@ -697,6 +729,124 @@ describe("BaseClientTypeGenerator", () => {
             );
             expect(normalizeFunc).toContain("@acme/sdk");
             expect(normalizeFunc).toContain("2.0.0");
+        });
+
+        it("emits a bare User-Agent + discrete runtime headers by default (includePlatformHeaders false)", () => {
+            const gen = createGenerator({ omitFernHeaders: false });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).toBeDefined();
+            // Default output is unchanged: bare User-Agent + discrete runtime headers,
+            // and no structured User-Agent / platform header.
+            expect(normalizeFunc).toContain('"@test/sdk/1.0.0"');
+            expect(normalizeFunc).toContain("X-Fern-Runtime");
+            expect(normalizeFunc).not.toContain("core.getUserAgent");
+            expect(normalizeFunc).not.toContain("X-Fern-Platform");
+        });
+
+        it("emits a structured User-Agent and drops discrete runtime headers when includePlatformHeaders is true", () => {
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            // The rich User-Agent consolidates the platform + runtime information.
+            expect(normalizeFunc).toContain("core.getUserAgent");
+            expect(normalizeFunc).toContain('"@test/sdk"');
+            expect(normalizeFunc).toContain("User-Agent");
+            expect(normalizeFunc).not.toContain("X-Fern-Runtime");
+            expect(normalizeFunc).not.toContain("X-Fern-Platform");
+        });
+
+        it("structured User-Agent supersedes the IR default userAgent when includePlatformHeaders is true", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "@test/sdk/1.0.0"
+            };
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true, ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            // The rich User-Agent wins over the auto-populated `{package}/{version}` value.
+            expect(normalizeFunc).toContain("core.getUserAgent");
+            expect(normalizeFunc).not.toContain('"@test/sdk/1.0.0"');
+            expect(normalizeFunc).not.toContain("X-Fern-Runtime");
+        });
+
+        it("uses the configured user-agent template over the package name when includePlatformHeaders is true", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "acme-sdk-internal/1.0.0"
+            };
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true, ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).toContain("core.getUserAgent");
+            expect(normalizeFunc).toContain('"acme-sdk-internal"');
+            expect(normalizeFunc).toContain('"1.0.0"');
+            expect(normalizeFunc).not.toContain('core.getUserAgent("@test/sdk"');
+        });
+
+        it("falls back to the plain user-agent value when it has no version segment", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "acme-sdk-internal"
+            };
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true, ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("core.getUserAgent");
+            expect(normalizeFunc).toContain('"acme-sdk-internal"');
+        });
+
+        it("does not treat a trailing name segment as a version", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "acme/sdk-python"
+            };
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true, ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("core.getUserAgent");
+            expect(normalizeFunc).toContain('"acme/sdk-python"');
+        });
+
+        it("omits all fern headers when omitFernHeaders is true even if includePlatformHeaders is true", () => {
+            const gen = createGenerator({ omitFernHeaders: true, includePlatformHeaders: true });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("core.getUserAgent");
+            expect(normalizeFunc).not.toContain("X-Fern-Platform");
+            expect(normalizeFunc).not.toContain("X-Fern-Runtime");
         });
 
         it("omits fern headers when omitFernHeaders is true", () => {
@@ -910,6 +1060,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -921,6 +1072,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -936,6 +1088,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         }
                                     },
@@ -1212,6 +1365,114 @@ describe("BaseClientTypeGenerator", () => {
         });
     });
 
+    describe("allowUserAgentAppInfo", () => {
+        const HELPER_NAME = "appendAppInfoToUserAgent";
+
+        function getNormalizeFunc(context: ReturnType<typeof createMockContext>): string {
+            return context._captured.statements.find((s: string) => s.includes("normalizeClientOptions"));
+        }
+
+        function getHelper(context: ReturnType<typeof createMockContext>): string | undefined {
+            return context._captured.statements.find((s: string) => s.includes(`function ${HELPER_NAME}(`));
+        }
+
+        it("emits no appInfo references and no helper when the flag is off (byte-identical default)", () => {
+            const gen = createGenerator({ omitFernHeaders: false, allowUserAgentAppInfo: false });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = getNormalizeFunc(context);
+            expect(normalizeFunc).toBeDefined();
+            expect(normalizeFunc).not.toContain("appInfo");
+            expect(normalizeFunc).not.toContain(HELPER_NAME);
+            expect(getHelper(context)).toBeUndefined();
+        });
+
+        it("wraps the getUserAgent branch with the append helper when includePlatformHeaders is true", () => {
+            const gen = createGenerator({
+                omitFernHeaders: false,
+                includePlatformHeaders: true,
+                allowUserAgentAppInfo: true
+            });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = getNormalizeFunc(context);
+            expect(normalizeFunc).toContain(`${HELPER_NAME}(core.getUserAgent(`);
+            expect(normalizeFunc).toContain("options?.appInfo");
+            // Helper is emitted exactly once, into this file.
+            expect(getHelper(context)).toBeDefined();
+        });
+
+        it("wraps the default `{package}/{version}` branch when includePlatformHeaders is false", () => {
+            const gen = createGenerator({
+                omitFernHeaders: false,
+                includePlatformHeaders: false,
+                allowUserAgentAppInfo: true
+            });
+            const context = createMockContext({ npmPackage: { packageName: "@acme/sdk", version: "2.0.0" } });
+            gen.writeToFile(context);
+
+            const normalizeFunc = getNormalizeFunc(context);
+            expect(normalizeFunc).toContain(`${HELPER_NAME}("@acme/sdk/2.0.0", options?.appInfo)`);
+            expect(getHelper(context)).toBeDefined();
+        });
+
+        it("wraps the IR `user-agent` template branch", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "my-sdk/1.0"
+            };
+            const gen = createGenerator({
+                omitFernHeaders: false,
+                includePlatformHeaders: false,
+                allowUserAgentAppInfo: true,
+                ir
+            });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = getNormalizeFunc(context);
+            expect(normalizeFunc).toContain(`${HELPER_NAME}("my-sdk/1.0", options?.appInfo)`);
+            expect(getHelper(context)).toBeDefined();
+        });
+
+        it("does not emit the helper when omitFernHeaders suppresses the User-Agent even with the flag on", () => {
+            const gen = createGenerator({
+                omitFernHeaders: true,
+                includePlatformHeaders: true,
+                allowUserAgentAppInfo: true
+            });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = getNormalizeFunc(context);
+            expect(normalizeFunc).not.toContain(HELPER_NAME);
+            expect(getHelper(context)).toBeUndefined();
+        });
+
+        it("emits a self-contained, sanitizing helper (token/comment encoders, blank handling)", () => {
+            const gen = createGenerator({
+                omitFernHeaders: false,
+                includePlatformHeaders: false,
+                allowUserAgentAppInfo: true
+            });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const helper = getHelper(context);
+            expect(helper).toBeDefined();
+            // Sanitizes name/version to RFC 7230 tchar, and comment delimiters/control chars.
+            expect(helper).toContain("percentEncodeChar");
+            expect(helper).toContain("encodeToken");
+            expect(helper).toContain("encodeComment");
+            // Blank/absent handling (no literal `undefined` or empty parens).
+            expect(helper).toContain("if (name.length === 0)");
+            expect(helper).toContain("if (appInfo == null)");
+        });
+    });
+
     describe("ANY auth with all scheme types", () => {
         it("imports all auth provider types for ANY requirement", () => {
             const ir = createIR({
@@ -1323,6 +1584,151 @@ describe("BaseClientTypeGenerator", () => {
             expect(importedNames).toContain("BearerAuthProvider");
             expect(importedNames).toContain("HeaderAuthProvider");
             expect(importedNames).toContain("InferredAuthProvider");
+        });
+    });
+
+    describe("server URL variables (region/edge routing)", () => {
+        function createServerVariable(opts: {
+            id: string;
+            name: string;
+            default?: string;
+            values?: string[];
+        }): FernIr.ServerVariable {
+            return {
+                id: opts.id,
+                name: casingsGenerator.generateName(opts.name),
+                default: opts.default,
+                values: opts.values
+            };
+        }
+
+        function createMultipleBaseUrlsIR(): FernIr.IntermediateRepresentation {
+            const region = createServerVariable({
+                id: "region",
+                name: "region",
+                default: "us-east-1",
+                values: ["us-east-1", "us-west-2", "eu-west-1"]
+            });
+            // "environment" collides with the reserved BaseClientOptions.environment option
+            const environment = createServerVariable({
+                id: "environment",
+                name: "environment",
+                default: "prod",
+                values: ["prod", "staging", "dev"]
+            });
+            const ir = createIR();
+            ir.environments = {
+                defaultEnvironment: "RegionalApiServer",
+                environments: FernIr.Environments.multipleBaseUrls({
+                    baseUrls: [
+                        { id: "base", name: casingsGenerator.generateName("base") },
+                        { id: "auth", name: casingsGenerator.generateName("auth") }
+                    ],
+                    environments: [
+                        {
+                            id: "RegionalApiServer",
+                            name: casingsGenerator.generateName("Regional API Server"),
+                            urls: {
+                                base: "https://api.example.com/v1",
+                                auth: "https://auth.example.com"
+                            },
+                            urlTemplates: {
+                                base: "https://api.{region}.{environment}.example.com/v1",
+                                auth: "https://auth.{region}.example.com"
+                            },
+                            urlVariables: {
+                                base: [region, environment],
+                                auth: [region]
+                            },
+                            audiences: undefined,
+                            defaultUrls: undefined,
+                            docs: undefined
+                        }
+                    ]
+                })
+            };
+            return ir;
+        }
+
+        function createSingleBaseUrlIR(): FernIr.IntermediateRepresentation {
+            const region = createServerVariable({
+                id: "region",
+                name: "region",
+                default: "us-east-1",
+                values: ["us-east-1", "eu-west-1"]
+            });
+            const ir = createIR();
+            ir.environments = {
+                defaultEnvironment: "Default",
+                environments: FernIr.Environments.singleBaseUrl({
+                    environments: [
+                        {
+                            id: "Default",
+                            name: casingsGenerator.generateName("Default"),
+                            url: "https://api.example.com",
+                            urlTemplate: "https://api.{region}.example.com",
+                            urlVariables: [region],
+                            audiences: undefined,
+                            defaultUrl: undefined,
+                            docs: undefined
+                        }
+                    ]
+                })
+            };
+            return ir;
+        }
+
+        function getNormalizeFunction(ir: FernIr.IntermediateRepresentation): string {
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+            const normalizeFunction = context._captured.statements.find((s: string) =>
+                s.includes("export function normalizeClientOptions")
+            );
+            if (normalizeFunction == null) {
+                throw new Error("normalizeClientOptions function was not generated");
+            }
+            return normalizeFunction;
+        }
+
+        it("does not emit interpolation when the IR has no environments config", () => {
+            const normalizeFunction = getNormalizeFunction(createIR());
+            expect(normalizeFunction).not.toContain("_region");
+        });
+
+        it("interpolates server variables into multiple base URLs", () => {
+            const normalizeFunction = getNormalizeFunction(createMultipleBaseUrlsIR());
+            // Both server variables gate the interpolation
+            expect(normalizeFunction).toContain("options?.region != null");
+            expect(normalizeFunction).toContain("options?.serverUrlEnvironment != null");
+            // Local declarations fall back to the variable defaults
+            expect(normalizeFunction).toContain('const _region = options?.region ?? "us-east-1"');
+            expect(normalizeFunction).toContain(
+                'const _serverUrlEnvironment = options?.serverUrlEnvironment ?? "prod"'
+            );
+            // Each base URL is rebuilt from its template
+            expect(normalizeFunction).toContain(
+                "base: `https://api.${_region}.${_serverUrlEnvironment}.example.com/v1`"
+            );
+            expect(normalizeFunction).toContain("auth: `https://auth.${_region}.example.com`");
+            // The selected environment's templates are used; custom environments are untouched
+            expect(normalizeFunction).toContain("environments.TestEnvironment.RegionalApiServer");
+            expect(normalizeFunction).toContain("environment = _environmentUrls.get(environment) ?? environment;");
+            expect(normalizeFunction).toContain("if (environment == null) {");
+        });
+
+        it("interpolates server variables into a single base URL", () => {
+            const normalizeFunction = getNormalizeFunction(createSingleBaseUrlIR());
+            expect(normalizeFunction).toContain("options?.region != null");
+            expect(normalizeFunction).toContain('const _region = options?.region ?? "us-east-1"');
+            // The selected environment's template is used; an explicit baseUrl is not overridden
+            expect(normalizeFunction).toContain("if (baseUrl == null) {");
+            expect(normalizeFunction).toContain(
+                "[environments.TestEnvironment.Default, `https://api.${_region}.example.com`]"
+            );
+            expect(normalizeFunction).toContain(
+                "baseUrl = _environmentUrls.get(options?.environment) ?? `https://api.${_region}.example.com`;"
+            );
         });
     });
 });

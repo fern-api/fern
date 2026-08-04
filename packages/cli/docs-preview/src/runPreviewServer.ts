@@ -24,6 +24,7 @@ import { type WebSocket, WebSocketServer } from "ws";
 
 import { createDocsPreviewWatcher } from "./createDocsPreviewWatcher.js";
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle.js";
+import { getExternalDocsWatchPaths } from "./getExternalDocsWatchPaths.js";
 import { getPreviewDocsDefinition, type PreviewDocsResult } from "./previewDocs.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
@@ -160,8 +161,14 @@ export async function runPreviewServer({
         result: PreviewDocsResult
     ): Promise<Map<string, DocsV1Read.DocsDefinition>> {
         const translations = new Map<string, DocsV1Read.DocsDefinition>();
-        const { docsDefinition, translationPages, translationNavigationOverlays, collectedFileIds, docsWorkspacePath } =
-            result;
+        const {
+            docsDefinition,
+            translationPages,
+            translationNavigationOverlays,
+            collectedFileIds,
+            docsWorkspacePath,
+            markdownFilesToPathName
+        } = result;
 
         if (translationPages == null || Object.keys(translationPages).length === 0) {
             return translations;
@@ -244,7 +251,7 @@ export async function runPreviewServer({
                         processedMarkdown = replaceImagePathsAndUrls(
                             processedMarkdown,
                             collectedFileIds,
-                            {}, // markdownFilesToPathName not needed for translations
+                            markdownFilesToPathName,
                             {
                                 absolutePathToMarkdownFile,
                                 absolutePathToFernFolder: docsWorkspacePath
@@ -350,6 +357,17 @@ export async function runPreviewServer({
     }
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
+
+    // Watch directories containing docs pages referenced from outside the fern folder
+    // (e.g., `path: ../docs/page.mdx` in docs.yml)
+    if (previewResult != null) {
+        const externalDocsPaths = getExternalDocsWatchPaths(absoluteFilePathToFern, previewResult.docsDefinition);
+        if (externalDocsPaths.length > 0) {
+            context.logger.debug(`Watching external docs directories: ${externalDocsPaths.join(", ")}`);
+            additionalFilepaths.push(...externalDocsPaths);
+        }
+    }
+
     const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder({ cacheDir });
 
     const watcher = await createDocsPreviewWatcher({

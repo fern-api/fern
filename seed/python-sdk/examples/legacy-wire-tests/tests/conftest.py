@@ -9,17 +9,31 @@ from seed import AsyncSeedExamples, SeedExamples
 
 @pytest.fixture
 def client() -> SeedExamples:
-    return SeedExamples(
-        token=os.getenv("ENV_TOKEN", "token"),
-        headers=os.getenv("ENV_HEADERS", "headers"),
-        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
-    )
+    if os.getenv("TESTS_BASE_URL") is None:
+        pytest.skip("TESTS_BASE_URL is not set; skipping wire test (no mock server available)")
+    return SeedExamples(token=os.getenv("ENV_TOKEN", "token"), base_url=os.getenv("TESTS_BASE_URL", "base_url"))
 
 
 @pytest.fixture
 def async_client() -> AsyncSeedExamples:
-    return AsyncSeedExamples(
-        token=os.getenv("ENV_TOKEN", "token"),
-        headers=os.getenv("ENV_HEADERS", "headers"),
-        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
-    )
+    if os.getenv("TESTS_BASE_URL") is None:
+        pytest.skip("TESTS_BASE_URL is not set; skipping wire test (no mock server available)")
+    return AsyncSeedExamples(token=os.getenv("ENV_TOKEN", "token"), base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+
+
+def _has_httpx_aiohttp() -> bool:
+    try:
+        import httpx_aiohttp  # type: ignore[import-not-found]  # noqa: F401
+
+        return True
+    except ImportError:
+        return False
+
+
+def pytest_collection_modifyitems(config: pytest.Config, items: list) -> None:
+    if _has_httpx_aiohttp():
+        return
+    skip_aiohttp = pytest.mark.skip(reason="httpx_aiohttp not installed")
+    for item in items:
+        if "aiohttp" in item.keywords:
+            item.add_marker(skip_aiohttp)

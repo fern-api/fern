@@ -6,7 +6,7 @@ import Pagination
     @Test func listWithCursorPagination1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "hasNextPage": true,
@@ -79,7 +79,7 @@ import Pagination
     @Test func listWithMixedTypeCursorPagination1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "next": "next",
@@ -129,7 +129,7 @@ import Pagination
     @Test func listWithBodyCursorPagination1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "hasNextPage": true,
@@ -201,7 +201,7 @@ import Pagination
     @Test func listWithOffsetPagination1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "hasNextPage": true,
@@ -274,7 +274,7 @@ import Pagination
     @Test func listWithDoubleOffsetPagination1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "hasNextPage": true,
@@ -347,7 +347,7 @@ import Pagination
     @Test func listWithBodyOffsetPagination1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "hasNextPage": true,
@@ -419,7 +419,7 @@ import Pagination
     @Test func listWithOffsetStepPagination1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "hasNextPage": true,
@@ -491,7 +491,7 @@ import Pagination
     @Test func listWithOffsetPaginationHasNextPage1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "hasNextPage": true,
@@ -563,7 +563,7 @@ import Pagination
     @Test func listWithExtendedResults1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "total_count": 1,
@@ -590,7 +590,6 @@ import Pagination
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersExtendedResponse(
-            totalCount: 1,
             data: UserListContainer(
                 users: [
                     User(
@@ -603,7 +602,8 @@ import Pagination
                     )
                 ]
             ),
-            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
+            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
+            totalCount: 1
         )
         let response = try await client.inlineUsers.inlineUsers.listWithExtendedResults(
             cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
@@ -615,7 +615,7 @@ import Pagination
     @Test func listWithExtendedResultsAndOptionalData1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "total_count": 1,
@@ -642,7 +642,6 @@ import Pagination
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersExtendedOptionalListResponse(
-            totalCount: 1,
             data: UserOptionalListContainer(
                 users: Optional([
                     User(
@@ -655,7 +654,8 @@ import Pagination
                     )
                 ])
             ),
-            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
+            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
+            totalCount: 1
         )
         let response = try await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData(
             cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
@@ -667,7 +667,7 @@ import Pagination
     @Test func listUsernames1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "cursor": {
@@ -705,7 +705,7 @@ import Pagination
     @Test func listWithGlobalConfig1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "results": [

@@ -1,0 +1,7 @@
+- summary: |
+    Fix a compile error when a global header is `optional` and has an `env` fallback.
+    The generated env-fallback code compared and assigned the pointer-typed options
+    field as a plain `string` (e.g. `options.Version == ""`). Optional header fields
+    are now nil-checked and assigned via a pointer
+    (`if options.Version == nil { if value := os.Getenv("MY_API_VERSION"); value != "" { options.Version = &value } }`).
+  type: fix

@@ -17,6 +17,11 @@ public partial class Ec2Client : IEc2Client
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedMultiUrlEnvironmentNoDefault.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedMultiUrlEnvironmentNoDefault.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +36,7 @@ public partial class Ec2Client : IEc2Client
                     Method = HttpMethod.Post,
                     Path = "/ec2/boot",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

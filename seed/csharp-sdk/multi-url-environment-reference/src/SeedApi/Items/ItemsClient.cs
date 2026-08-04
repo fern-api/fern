@@ -17,6 +17,9 @@ public partial class ItemsClient : IItemsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -30,6 +33,7 @@ public partial class ItemsClient : IItemsClient
                     BaseUrl = _client.Options.Environment.Base,
                     Method = HttpMethod.Get,
                     Path = "items",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

@@ -370,6 +370,10 @@ echo -e "\${GREEN}Wire tests completed!\${NC}"
      * Users can manually stop with: docker compose -f wiremock/docker-compose.test.yml down
      */
     private buildWireTestUtilsContent(): string {
+        // In endpoint-security mode, emit an extra helper that asserts the exact set of auth
+        // headers routed for an endpoint. Gated so non-endpoint-security fixtures keep
+        // wire_test_utils.rs byte-for-byte unchanged.
+        const verifyAuthHeaders = this.context.isEndpointSecurity() ? this.buildVerifyAuthHeadersHelper() : "";
         return `//! Centralized helper functions for WireMock-based wire tests.
 //!
 //! This module provides utilities for managing WireMock interactions during integration tests.
@@ -551,6 +555,66 @@ pub async fn verify_request_count(
         expected,
         "Expected {} requests, found {}",
         expected,
+        requests.len()
+    );
+
+    Ok(())
+}
+${verifyAuthHeaders}`;
+    }
+
+    /**
+     * Builds the `verify_auth_headers` helper used in endpoint-security mode.
+     *
+     * It queries WireMock's `/requests/find` endpoint with a set of per-header matchers
+     * (each value is a raw WireMock matcher such as `{"matches": "Bearer .*"}` or
+     * `{"absent": true}`) and asserts that exactly one recorded request matches — i.e. the
+     * routed request sent precisely the declared scheme's auth header(s) and no others.
+     * Tests reset the request journal and run single-threaded, so the journal holds only the
+     * current test's request.
+     */
+    private buildVerifyAuthHeadersHelper(): string {
+        return `
+/// Verifies the auth headers sent for an endpoint under endpoint-security routing.
+///
+/// # Arguments
+/// * \`method\` - The HTTP method (GET, POST, etc.)
+/// * \`url_path\` - The URL path to match
+/// * \`header_matchers\` - Map of header name to a raw WireMock matcher value, e.g.
+///   \`{"matches": "Bearer .*"}\` for a required header or \`{"absent": true}\` for a
+///   header that must not be present.
+///
+/// # Returns
+/// Returns Ok(()) if exactly one recorded request matches all header matchers, otherwise
+/// panics with an assertion error.
+pub async fn verify_auth_headers(
+    method: &str,
+    url_path: &str,
+    header_matchers: HashMap<String, serde_json::Value>,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let mut request_body = json!({
+        "method": method,
+        "urlPath": url_path,
+    });
+
+    let headers: serde_json::Map<String, Value> = header_matchers.into_iter().collect();
+    request_body["headers"] = Value::Object(headers);
+
+    let response = Client::new()
+        .post(format!("{}/requests/find", get_wiremock_admin_url()))
+        .json(&request_body)
+        .send()
+        .await?;
+
+    let result: Value = response.json().await?;
+    let requests = result["requests"]
+        .as_array()
+        .ok_or("Invalid response from WireMock")?;
+
+    assert_eq!(
+        requests.len(),
+        1,
+        "Expected exactly 1 request matching the routed auth headers, found {}",
         requests.len()
     );
 

@@ -14,7 +14,7 @@ public partial class SeedApiClient : ISeedApiClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
-                { "X-Fern-SDK-Name", "SeedApi" },
+                { "X-Fern-SDK-Name", "Seed.Client" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Ferncsharp-grpc-proto-exhaustive/0.0.1" },
             }
@@ -37,6 +37,9 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -49,6 +52,7 @@ public partial class SeedApiClient : ISeedApiClient
                 {
                     Method = HttpMethod.Post,
                     Path = "foo",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

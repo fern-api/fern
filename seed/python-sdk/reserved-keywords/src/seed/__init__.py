@@ -9,15 +9,42 @@ if typing.TYPE_CHECKING:
     from . import package
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedNurseryApi, SeedNurseryApi
-    from .package import Package, Record
+    from .package import (
+        BackupConfig,
+        BackupConfig_Fallback,
+        BackupConfig_Override,
+        BackupOverride,
+        CustomSipHeader,
+        DependencyItem,
+        DependencyItem_Known,
+        DependencyItem_Unknown,
+        KnownDependency,
+        Package,
+        Record,
+        SipHeaderAction,
+        SipHeaderAction_Dynamic,
+        SipHeaderAction_Static,
+    )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedNurseryApi": ".client",
+    "BackupConfig": ".package",
+    "BackupConfig_Fallback": ".package",
+    "BackupConfig_Override": ".package",
+    "BackupOverride": ".package",
+    "CustomSipHeader": ".package",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
+    "DependencyItem": ".package",
+    "DependencyItem_Known": ".package",
+    "DependencyItem_Unknown": ".package",
+    "KnownDependency": ".package",
     "Package": ".package",
     "Record": ".package",
     "SeedNurseryApi": ".client",
+    "SipHeaderAction": ".package",
+    "SipHeaderAction_Dynamic": ".package",
+    "SipHeaderAction_Static": ".package",
     "__version__": ".version",
     "package": ".package",
 }
@@ -46,11 +73,23 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedNurseryApi",
+    "BackupConfig",
+    "BackupConfig_Fallback",
+    "BackupConfig_Override",
+    "BackupOverride",
+    "CustomSipHeader",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
+    "DependencyItem",
+    "DependencyItem_Known",
+    "DependencyItem_Unknown",
+    "KnownDependency",
     "Package",
     "Record",
     "SeedNurseryApi",
+    "SipHeaderAction",
+    "SipHeaderAction_Dynamic",
+    "SipHeaderAction_Static",
     "__version__",
     "package",
 ]

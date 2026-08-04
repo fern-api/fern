@@ -63,6 +63,12 @@ export class FilePropertyMapper {
         record: Record<string, unknown>;
     }): java.TypeLiteral {
         const fileValue = this.context.getSingleFileValue({ property, record });
+        if (this.context.shouldInlineFileProperties()) {
+            // In inline-file-properties mode the request builder field is typed as `java.io.File`,
+            // so render a `java.io.File` literal. A required file is a staged builder step that
+            // cannot be omitted, so fall back to a placeholder path when the example has no value.
+            return this.context.getJavaIoFileFromString(fileValue ?? "path/to/file");
+        }
         if (fileValue == null) {
             return java.TypeLiteral.nop();
         }
@@ -77,6 +83,13 @@ export class FilePropertyMapper {
         record: Record<string, unknown>;
     }): java.TypeLiteral {
         const fileValues = this.context.getFileArrayValues({ property, record });
+        if (this.context.shouldInlineFileProperties()) {
+            // In inline-file-properties mode the request builder field is typed as `java.io.File`,
+            // so render a `java.io.File` literal (the Java SDK does not support file arrays, so a
+            // single value is emitted) and fall back to a placeholder when no example value exists.
+            const fileValue = fileValues?.[0] ?? "path/to/file";
+            return this.context.getJavaIoFileFromString(fileValue);
+        }
         if (fileValues == null) {
             return java.TypeLiteral.nop();
         }

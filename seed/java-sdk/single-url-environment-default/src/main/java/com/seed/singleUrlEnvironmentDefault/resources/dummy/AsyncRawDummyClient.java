@@ -3,9 +3,11 @@
  */
 package com.seed.singleUrlEnvironmentDefault.resources.dummy;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.singleUrlEnvironmentDefault.core.ClientOptions;
 import com.seed.singleUrlEnvironmentDefault.core.ObjectMappers;
 import com.seed.singleUrlEnvironmentDefault.core.RequestOptions;
+import com.seed.singleUrlEnvironmentDefault.core.RetryInterceptor;
 import com.seed.singleUrlEnvironmentDefault.core.SeedSingleUrlEnvironmentDefaultApiException;
 import com.seed.singleUrlEnvironmentDefault.core.SeedSingleUrlEnvironmentDefaultException;
 import com.seed.singleUrlEnvironmentDefault.core.SeedSingleUrlEnvironmentDefaultHttpResponse;
@@ -52,6 +54,15 @@ public class AsyncRawDummyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedSingleUrlEnvironmentDefaultHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -67,6 +78,9 @@ public class AsyncRawDummyClient {
                     future.completeExceptionally(new SeedSingleUrlEnvironmentDefaultApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedSingleUrlEnvironmentDefaultException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedSingleUrlEnvironmentDefaultException("Network error executing HTTP request", e));

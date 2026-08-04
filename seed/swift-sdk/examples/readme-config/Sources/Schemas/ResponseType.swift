@@ -1,12 +1,12 @@
 import Foundation
 
 public struct ResponseType: Codable, Hashable, Sendable {
-    public let type: Type
+    public let type: `Type`
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        type: Type,
+        type: `Type`,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.type = type
@@ -15,7 +15,7 @@ public struct ResponseType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.decode(Type.self, forKey: .type)
+        self.type = try container.decode(`Type`.self, forKey: .type)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

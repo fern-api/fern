@@ -96,6 +96,7 @@ function createUnionDeclaration(opts: {
 }): FernIr.UnionTypeDeclaration {
     return {
         discriminant: createNameAndWireValueFromName(opts.discriminantName, opts.discriminantWireValue),
+        inheritedBaseProperties: undefined,
         types: opts.types,
         baseProperties: opts.baseProperties ?? [],
         extends: opts.extends ?? [],
@@ -157,7 +158,8 @@ function createMockBaseContext(opts?: {
                         properties: [],
                         extends: [],
                         extraProperties: false,
-                        extendedProperties: undefined
+                        extendedProperties: undefined,
+                        deferredUnionBaseProperties: undefined
                     }),
                     referencedTypes: new Set<string>(),
                     encoding: undefined,
@@ -387,6 +389,7 @@ describe("GeneratedUnionTypeImpl", () => {
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined,
                         availability: undefined,
+                        defaultValue: undefined,
                         v2Examples: undefined,
                         propertyAccess: undefined
                     }
@@ -413,6 +416,7 @@ describe("GeneratedUnionTypeImpl", () => {
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined,
                         availability: undefined,
+                        defaultValue: undefined,
                         v2Examples: undefined,
                         propertyAccess: undefined
                     }
@@ -867,6 +871,7 @@ describe("GeneratedUnionTypeImpl", () => {
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined,
                         availability: undefined,
+                        defaultValue: undefined,
                         v2Examples: undefined,
                         propertyAccess: undefined
                     }

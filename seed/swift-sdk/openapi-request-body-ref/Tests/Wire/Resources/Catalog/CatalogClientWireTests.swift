@@ -6,7 +6,7 @@ import Api
     @Test func createCatalogImage1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -35,10 +35,10 @@ import Api
         )
         let response = try await client.catalog.createCatalogImage(
             request: .init(
-                imageFile: .init(data: Data("".utf8)),
                 request: CreateCatalogImageRequest(
                     catalogObjectId: "catalog_object_id"
-                )
+                ),
+                imageFile: .init(data: Data("".utf8))
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -48,7 +48,7 @@ import Api
     @Test func getCatalogImage1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -85,7 +85,7 @@ import Api
     @Test func getCatalogImage2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",

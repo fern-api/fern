@@ -1,4 +1,5 @@
 import { Referencer, swift } from "@fern-api/swift-codegen";
+import { LiteralEnumGenerator } from "@fern-api/swift-model";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
@@ -48,8 +49,17 @@ export class SubClientGenerator {
                 this.clientGeneratorContext.httpClient.property
             ],
             initializers: [this.generateInitializer()],
-            methods: this.generateMethods()
+            methods: this.generateMethods(),
+            nestedTypes: this.generateNestedLiteralEnums()
         });
+    }
+
+    private generateNestedLiteralEnums(): swift.EnumWithRawValues[] {
+        return this.sdkGeneratorContext.project.nameRegistry
+            .getAllNestedLiteralEnumSymbolsOrThrow(this.symbol)
+            .map(({ symbol, literalValue }) =>
+                new LiteralEnumGenerator({ name: symbol.name, literalValue }).generate()
+            );
     }
 
     private generateInitializer(): swift.Initializer {

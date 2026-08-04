@@ -1,0 +1,9 @@
+- summary: |
+    Add webhook signature verification support. When a webhook declares HMAC signature
+    verification in the IR, the generator now emits a `WebhooksHelper` (plus named
+    `<WebhookName>WebhooksHelper` overrides for distinct configs) exposing a static
+    `verify_signature` method, backed by a stdlib-only `Internal::WebhookSignature`
+    core utility (HMAC via OpenSSL, constant-time comparison). Supports timestamp
+    tolerance checks, signature prefixes, configurable payload components/delimiter,
+    and alphabetical body sorting. Asymmetric verification is not emitted.
+  type: feat

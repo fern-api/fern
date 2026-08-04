@@ -136,7 +136,6 @@ public final class NullableStreamRequest {
 
         /**
          * <p>The prompt or query to complete.</p>
-         * <p>The prompt or query to complete.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

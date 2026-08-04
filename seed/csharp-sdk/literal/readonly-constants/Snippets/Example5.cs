@@ -9,7 +9,16 @@ public partial class Examples
             }
         );
 
-        await client.Path.SendAsync(
+        await client.Inlined.SendAsync(
+            new SendLiteralsInlinedRequest {
+                Query = "query",
+                Temperature = 1.1,
+                AliasedContext = new SomeAliasedLiteral(),
+                MaybeContext = new SomeAliasedLiteral(),
+                ObjectWithLiteral = new ATopLevelLiteral {
+                    NestedLiteral = new ANestedLiteral()
+                }
+            }
         );
     }
 

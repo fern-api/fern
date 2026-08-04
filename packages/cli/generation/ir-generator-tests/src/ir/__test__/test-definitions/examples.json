@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "examples",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -173,7 +174,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:Type",
@@ -352,7 +354,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -559,7 +562,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -843,6 +847,7 @@
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "metadata",
@@ -1167,6 +1172,7 @@
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "string",
@@ -1675,7 +1681,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_types:MovieId",
@@ -2838,7 +2845,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2916,7 +2924,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -3065,7 +3074,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -3396,7 +3406,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_types:Movie",
@@ -3970,7 +3981,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -4143,7 +4155,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -4416,7 +4429,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_types:File",
@@ -5092,7 +5106,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_types:Node",
@@ -5826,7 +5841,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_types:Node",
@@ -6145,6 +6161,7 @@
                         "docs": null
                     }
                 ],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "html",
@@ -6406,6 +6423,7 @@
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "generic",
@@ -6652,7 +6670,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -6901,7 +6920,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_types:MigrationStatus"
@@ -7032,7 +7052,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -7147,7 +7168,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:Identifier",
@@ -7577,7 +7599,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:Type",
@@ -7614,6 +7637,7 @@
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "and",
@@ -7794,7 +7818,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:Type",
@@ -8356,7 +8381,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_types:CastMember",
@@ -8439,7 +8465,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -8537,7 +8564,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -8615,6 +8643,7 @@
                     "id": "endpoint_.echo",
                     "name": "echo",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -8803,6 +8832,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -8812,6 +8842,7 @@
                     "id": "endpoint_.createType",
                     "name": "createType",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -9113,6 +9144,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -9185,6 +9217,7 @@
                     "id": "endpoint_file/notification/service.getException",
                     "name": "getException",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -9605,6 +9638,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -9670,6 +9704,7 @@
                     "id": "endpoint_file/service.getFile",
                     "name": "getFile",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -10102,6 +10137,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -10143,6 +10179,7 @@
                     "id": "endpoint_health/service.check",
                     "name": "check",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -10361,6 +10398,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -10370,6 +10408,7 @@
                     "id": "endpoint_health/service.ping",
                     "name": "ping",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -10494,6 +10533,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -10532,6 +10572,7 @@
                     "id": "endpoint_service.getMovie",
                     "name": "getMovie",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -11734,6 +11775,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -11743,6 +11785,7 @@
                     "id": "endpoint_service.createMovie",
                     "name": "createMovie",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -12871,6 +12914,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -12880,6 +12924,7 @@
                     "id": "endpoint_service.getMetadata",
                     "name": "getMetadata",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -13533,6 +13578,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -13542,6 +13588,7 @@
                     "id": "endpoint_service.createBigEntity",
                     "name": "createBigEntity",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -14612,6 +14659,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -14621,6 +14669,7 @@
                     "id": "endpoint_service.refreshToken",
                     "name": "refreshToken",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -14914,6 +14963,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -14960,6 +15010,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_service": [
@@ -15171,7 +15222,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:BasicType": {
                 "type": "enum",
@@ -15436,7 +15488,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_commons/types:Tag": {
                 "type": "alias",
@@ -15759,7 +15812,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_commons/types:EventInfo": {
                 "type": "discriminatedUnion",
@@ -15888,6 +15942,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "metadata": {
                         "type": "samePropertiesAsObject",
@@ -16075,6 +16130,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "string": {
                         "type": "singleProperty",
@@ -16703,7 +16759,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:CastMember": {
                 "type": "undiscriminatedUnion",
@@ -16915,7 +16972,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:Actress": {
                 "type": "object",
@@ -17046,7 +17104,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:StuntDouble": {
                 "type": "object",
@@ -17177,7 +17236,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:ExtendedMovie": {
                 "type": "object",
@@ -17598,7 +17658,8 @@
                 "extends": [
                     "type_types:Movie"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:Moment": {
                 "type": "object",
@@ -17759,7 +17820,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:File": {
                 "type": "object",
@@ -17890,7 +17952,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:Directory": {
                 "type": "object",
@@ -18063,7 +18126,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:Node": {
                 "type": "object",
@@ -18236,7 +18300,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:Tree": {
                 "type": "object",
@@ -18343,7 +18408,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:Metadata": {
                 "type": "discriminatedUnion",
@@ -18433,6 +18499,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "html": {
                         "type": "singleProperty",
@@ -18726,6 +18793,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "generic": {
                         "type": "samePropertiesAsObject",
@@ -18941,7 +19009,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:MigrationStatus": {
                 "type": "enum",
@@ -19207,7 +19276,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:Request": {
                 "type": "object",
@@ -19307,7 +19377,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:Response": {
                 "type": "object",
@@ -19440,7 +19511,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:ResponseType": {
                 "type": "object",
@@ -19541,7 +19613,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:Test": {
                 "type": "discriminatedUnion",
@@ -19631,6 +19704,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "and": {
                         "type": "singleProperty",
@@ -19823,7 +19897,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:BigEntity": {
                 "type": "object",
@@ -20323,7 +20398,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:CronJob": {
                 "type": "object",
@@ -20424,7 +20500,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_types:RefreshTokenRequest": {
                 "type": "object",
@@ -20525,7 +20602,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],
@@ -22286,6 +22364,7 @@
             }
         },
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -22294,7 +22373,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_commons": {
@@ -22610,6 +22690,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

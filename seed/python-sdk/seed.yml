@@ -75,6 +75,8 @@ fixtures:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
   circular-references-advanced:
+    - customConfig: null
+      outputFolder: no-custom-config
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
@@ -95,6 +97,16 @@ fixtures:
     - customConfig:
         omit_fern_headers: true
       outputFolder: omit-fern-headers
+    - customConfig:
+        include_platform_headers: true
+      outputFolder: include-platform-headers
+    - customConfig:
+        allow_user_agent_app_info: true
+      outputFolder: allow-user-agent-app-info
+    - customConfig:
+        include_platform_headers: true
+        allow_user_agent_app_info: true
+      outputFolder: include-platform-headers-app-info
     - customConfig:
         additional_init_exports:
           - from: types.types
@@ -160,10 +172,17 @@ fixtures:
         pydantic_config:
           enum_type: "python_enums"
       outputFolder: real-enum
+  endpoint-security-auth:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: .
   exhaustive:
     - customConfig:
         enable_wire_tests: true
       outputFolder: no-custom-config
+    - customConfig:
+        runtime_version: true
+      outputFolder: runtime-version
     - customConfig:
         enable_wire_tests: true
         client:
@@ -325,8 +344,21 @@ fixtures:
         custom_transport: true
       outputFolder: custom-transport
     - customConfig:
+        tcp_keepalive:
+          enabled: true
+      outputFolder: tcp-keepalive
+    - customConfig:
         datetime_milliseconds: true
       outputFolder: datetime-milliseconds
+    - customConfig:
+        auto-generate-idempotency-key: true
+      outputFolder: auto-generate-idempotency-key
+  idempotency-headers:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        auto-generate-idempotency-key: true
+      outputFolder: auto-generate-idempotency-key
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -352,6 +384,9 @@ fixtures:
     - customConfig:
         use_typeddict_requests: true
       outputFolder: use_typeddict_requests
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: wire-tests
   literal-user-agent:
     - customConfig: null
       outputFolder: no-custom-config
@@ -371,6 +406,12 @@ fixtures:
     - customConfig:
         offsetSemantics: "page-index"
       outputFolder: page-index-semantics
+  path-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        encode_path_params: true
+      outputFolder: encode-path-params
   query-parameters:
     - customConfig: null
       outputFolder: no-custom-config
@@ -380,6 +421,10 @@ fixtures:
   query-parameters-openapi-as-objects:
     - customConfig: null
       outputFolder: no-custom-config
+  simple-api:
+    - customConfig:
+        optional-auth: true
+      outputFolder: optional-auth
   simple-fhir:
     - customConfig:
         use_inheritance_for_extended_models: false
@@ -403,6 +448,9 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+  python-multi-env-url-templating:
+    - customConfig: null
+      outputFolder: no-custom-config
   server-url-templating:
     - customConfig: null
       outputFolder: no-custom-config
@@ -446,6 +494,13 @@ fixtures:
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
+  python-oauth-token-optional:
+    - customConfig: null
+      outputFolder: no-custom-config
+  oauth-pkce:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: wire-tests
   python-mypy-exclude:
     - customConfig: null
       outputFolder: no-custom-config
@@ -499,6 +554,3 @@ scripts:
         - poetry run pytest -rP .
         - poetry install --extras aiohttp
         - poetry run pytest -rP -n auto -m aiohttp .
-allowedFailures:
-  - examples:legacy-wire-tests
-  - oauth-client-credentials-custom

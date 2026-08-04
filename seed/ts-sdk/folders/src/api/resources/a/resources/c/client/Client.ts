@@ -23,6 +23,9 @@ export class CClient {
     /**
      * @param {CClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.a.c.foo()
      */

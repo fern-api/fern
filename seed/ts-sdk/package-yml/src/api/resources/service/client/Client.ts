@@ -24,6 +24,9 @@ export class ServiceClient {
      * @param {string} nestedId
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPackageYmlError}
+     * @throws {@link errors.SeedPackageYmlTimeoutError}
+     *
      * @example
      *     await client.service.nop("id-219xca8")
      */

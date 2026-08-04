@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "object",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -298,7 +299,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -352,7 +354,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -555,7 +558,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:RootType1InlineType1",
@@ -641,7 +645,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ReferenceType"
@@ -721,7 +726,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ReferenceType"
@@ -801,7 +807,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ReferenceType"
@@ -905,7 +912,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:RootType1InlineType1NestedInlineType1",
@@ -1033,7 +1041,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:InlineEnum1",
@@ -1067,6 +1076,7 @@
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "type1",
@@ -1228,7 +1238,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:DiscriminatedUnion1InlineType1InlineType1",
@@ -1309,7 +1320,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ReferenceType"
@@ -1389,7 +1401,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ReferenceType"
@@ -1710,7 +1723,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:UndiscriminatedUnion1InlineType1InlineType1",
@@ -1791,7 +1805,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ReferenceType"
@@ -1871,7 +1886,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ReferenceType"
@@ -1955,6 +1971,7 @@
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "type1",
@@ -2116,7 +2133,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1",
@@ -2197,7 +2215,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ReferenceType"
@@ -2277,7 +2296,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ReferenceType"
@@ -2457,7 +2477,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ReferenceType"
@@ -2537,7 +2558,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ReferenceType"
@@ -2617,7 +2639,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ReferenceType"
@@ -2673,7 +2696,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2704,6 +2728,7 @@
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "aliasVariant",
@@ -2776,6 +2801,7 @@
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "aliasVariant",
@@ -2857,6 +2883,7 @@
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "aliasVariant",
@@ -2923,6 +2950,7 @@
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "aliasVariant",
@@ -3260,7 +3288,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:AliasProperty",
@@ -3336,7 +3365,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:AliasProperty",
@@ -3412,7 +3442,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:AliasProperty",
@@ -3490,7 +3521,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:AliasProperty",
@@ -3557,7 +3589,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:AliasProperty",
@@ -3622,7 +3655,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:AliasProperty",
@@ -3903,7 +3937,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -3957,7 +3992,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -4011,7 +4047,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -4065,7 +4102,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -4119,7 +4157,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -4197,7 +4236,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:TypesPropertyCollisionChild"
@@ -4253,7 +4293,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -4307,7 +4348,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -4397,7 +4439,8 @@
                         "availability": null,
                         "docs": "This inherited property collides with the default nested class name \"Types\""
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:TypesPropertyCollisionBaseParent",
@@ -4454,7 +4497,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -4485,6 +4529,7 @@
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "types",
@@ -4604,7 +4649,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ReferenceType"
@@ -4684,7 +4730,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ReferenceType"
@@ -4731,6 +4778,7 @@
                     "id": "endpoint_.getRoot",
                     "name": "getRoot",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -6086,6 +6134,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -6095,6 +6144,7 @@
                     "id": "endpoint_.getDiscriminatedUnion",
                     "name": "getDiscriminatedUnion",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -6531,6 +6581,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -6540,6 +6591,7 @@
                     "id": "endpoint_.getUndiscriminatedUnion",
                     "name": "getUndiscriminatedUnion",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -6993,6 +7045,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -7012,6 +7065,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_": [
@@ -7292,7 +7346,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:RequestTypeInlineType1": {
                 "type": "object",
@@ -7355,7 +7410,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:RootType1": {
                 "type": "object",
@@ -7581,7 +7637,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:RootType1FooMapValue": {
                 "type": "object",
@@ -7674,7 +7731,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:RootType1FooListItem": {
                 "type": "object",
@@ -7767,7 +7825,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:RootType1FooSetItem": {
                 "type": "object",
@@ -7860,7 +7919,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:RootType1InlineType1": {
                 "type": "object",
@@ -7983,7 +8043,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:RootType1InlineType1NestedInlineType1": {
                 "type": "object",
@@ -8136,7 +8197,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:DiscriminatedUnion1": {
                 "type": "discriminatedUnion",
@@ -8188,6 +8250,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "type1": {
                         "type": "samePropertiesAsObject",
@@ -8393,7 +8456,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:DiscriminatedUnion1InlineType1InlineType1": {
                 "type": "object",
@@ -8486,7 +8550,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:DiscriminatedUnion1InlineType2": {
                 "type": "object",
@@ -8579,7 +8644,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UndiscriminatedUnion1": {
                 "type": "undiscriminatedUnion",
@@ -8782,7 +8848,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UndiscriminatedUnion1InlineType1InlineType1": {
                 "type": "object",
@@ -8875,7 +8942,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UndiscriminatedUnion1InlineType2": {
                 "type": "object",
@@ -8968,7 +9036,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:InlineEnum1": {
                 "type": "enum",
@@ -9139,6 +9208,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "type1": {
                         "type": "samePropertiesAsObject",
@@ -9344,7 +9414,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1": {
                 "type": "object",
@@ -9437,7 +9508,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType2": {
                 "type": "object",
@@ -9530,7 +9602,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UndiscriminatedUnion1InlineEnum1": {
                 "type": "enum",
@@ -9775,7 +9848,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UndiscriminatedUnion1InlineSetItem1": {
                 "type": "object",
@@ -9868,7 +9942,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UndiscriminatedUnion1InlineMapItem1": {
                 "type": "object",
@@ -9961,7 +10036,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:ReferenceType": {
                 "type": "object",
@@ -10024,7 +10100,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UnionTypeWithAliasVariant": {
                 "type": "discriminatedUnion",
@@ -10076,6 +10153,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "aliasVariant": {
                         "type": "samePropertiesAsObject",
@@ -10183,6 +10261,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "aliasVariant": {
                         "type": "singleProperty",
@@ -10273,6 +10352,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "aliasVariant": {
                         "type": "singleProperty",
@@ -10359,6 +10439,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "aliasVariant": {
                         "type": "singleProperty",
@@ -10613,7 +10694,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:ObjectTypeWithMapAliasTypeValue": {
                 "type": "object",
@@ -10683,7 +10765,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:ObjectTypeWithMapAliasTypeKey": {
                 "type": "object",
@@ -10753,7 +10836,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:ObjectTypeWithMapAliasTypeBoth": {
                 "type": "object",
@@ -10823,7 +10907,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:ObjectTypeWithListAliasType": {
                 "type": "object",
@@ -10889,7 +10974,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:ObjectTypeWithSetAliasType": {
                 "type": "object",
@@ -10955,7 +11041,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:AliasVariant": {
                 "type": "alias",
@@ -11150,7 +11237,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:OtherAliasVariantType": {
                 "type": "object",
@@ -11213,7 +11301,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:AliasPropertyType": {
                 "type": "object",
@@ -11276,7 +11365,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:OtherAliasPropertyType": {
                 "type": "object",
@@ -11339,7 +11429,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:NonAliasVariant": {
                 "type": "object",
@@ -11402,7 +11493,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:TypesPropertyCollisionParent": {
                 "type": "object",
@@ -11495,7 +11587,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:TypesPropertyCollisionChild": {
                 "type": "object",
@@ -11558,7 +11651,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:TypesPropertyCollisionBaseParent": {
                 "type": "object",
@@ -11621,7 +11715,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:TypesPropertyCollisionExtendsParent": {
                 "type": "object",
@@ -11716,7 +11811,8 @@
                 "extends": [
                     "type_:TypesPropertyCollisionBaseParent"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:TypesPropertyCollisionExtendsChild": {
                 "type": "object",
@@ -11779,7 +11875,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UnionWithTypesVariant": {
                 "type": "discriminatedUnion",
@@ -11831,6 +11928,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "types": {
                         "type": "samePropertiesAsObject",
@@ -11979,7 +12077,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UnionWithTypesVariantOtherInlineType1": {
                 "type": "object",
@@ -12072,7 +12171,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],
@@ -12495,6 +12595,7 @@
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -12503,7 +12604,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {},
     "rootPackage": {
@@ -12590,6 +12692,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

@@ -1484,4 +1484,5 @@ auth-schemes:
 auth: BearerAuth
 ",
   },
+  "specVersion": "1.0.0",
 }

@@ -18,6 +18,9 @@ public partial class OptionalClient : IOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedObjectsWithImports.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedObjectsWithImports.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +34,7 @@ public partial class OptionalClient : IOptionalClient
                     Method = HttpMethod.Post,
                     Path = "send-optional-body",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -96,6 +100,9 @@ public partial class OptionalClient : IOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedObjectsWithImports.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedObjectsWithImports.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -109,6 +116,7 @@ public partial class OptionalClient : IOptionalClient
                     Method = HttpMethod.Post,
                     Path = "send-optional-typed-body",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -178,6 +186,9 @@ public partial class OptionalClient : IOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedObjectsWithImports.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedObjectsWithImports.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -195,6 +206,7 @@ public partial class OptionalClient : IOptionalClient
                         ValueConvert.ToPathParameterString(id)
                     ),
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

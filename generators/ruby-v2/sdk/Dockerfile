@@ -153,6 +153,19 @@ RUN for dir in \
       fi; \
     done
 
+# - undici 6.25.0 -> 6.27.0 (CVE-2026-12151).
+RUN for dir in \
+      /usr/lib/node_modules/npm/node_modules/undici; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/undici/-/undici-6.27.0.tgz -o undici-6.27.0.tgz && \
+        tar -xzf undici-6.27.0.tgz && \
+        mv package undici && \
+        rm undici-6.27.0.tgz; \
+      fi; \
+    done
+
 # - diff 8.0.2 -> 8.0.3 (GHSA-73rr-hh4g-fpgx ReDoS in normal/json/css patches).
 RUN for dir in \
       /usr/lib/node_modules/npm/node_modules/diff; do \

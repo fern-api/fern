@@ -207,6 +207,28 @@ class EndpointsParamsWireTest < WireMockTestCase
     )
   end
 
+  def test_endpoints_params_create_with_body_and_query_with_wiremock
+    test_id = "endpoints.params.create_with_body_and_query.0"
+
+    @client.endpoints.params.create_with_body_and_query(
+      fields: "_fields",
+      string: "string",
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.params.create_with_body_and_query.0"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/params/body-and-query",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
   def test_endpoints_params_get_with_boolean_path_with_wiremock
     test_id = "endpoints.params.get_with_boolean_path.0"
 

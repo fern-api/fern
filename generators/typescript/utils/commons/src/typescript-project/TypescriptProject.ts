@@ -33,6 +33,7 @@ export declare namespace TypescriptProject {
         linter: "biome" | "oxlint" | "none";
         generateSubpackageExports?: boolean;
         subpackageExportPaths?: Array<{ key: string; relPath: string }>;
+        extraExportPaths?: string[];
     }
 }
 
@@ -51,9 +52,9 @@ type COMMON_SCRIPTS = (typeof COMMON_SCRIPTS)[keyof typeof COMMON_SCRIPTS];
 const TOOL_VERSIONS = {
     BIOME: "2.4.10",
     PRETTIER: "3.8.1",
-    OXFMT: "0.54.0",
-    OXLINT: "1.69.0",
-    OXLINT_TSGOLINT: "0.23.0"
+    OXFMT: "0.57.0",
+    OXLINT: "1.72.0",
+    OXLINT_TSGOLINT: "0.24.0"
 } as const;
 
 export abstract class TypescriptProject {
@@ -120,6 +121,7 @@ export abstract class TypescriptProject {
     private readonly linter: "biome" | "oxlint" | "none";
     protected readonly generateSubpackageExports: boolean;
     protected readonly subpackageExportPaths: Array<{ key: string; relPath: string }>;
+    protected readonly extraExportPaths: string[];
 
     private readonly runScripts: boolean;
 
@@ -143,7 +145,8 @@ export abstract class TypescriptProject {
         formatter,
         linter,
         generateSubpackageExports,
-        subpackageExportPaths
+        subpackageExportPaths,
+        extraExportPaths
     }: TypescriptProject.Init) {
         this.npmPackage = npmPackage;
         this.runScripts = runScripts;
@@ -165,6 +168,7 @@ export abstract class TypescriptProject {
         this.linter = linter;
         this.generateSubpackageExports = generateSubpackageExports ?? false;
         this.subpackageExportPaths = subpackageExportPaths ?? [];
+        this.extraExportPaths = extraExportPaths ?? [];
     }
 
     protected async addCommonFilesToVolume(): Promise<void> {
@@ -188,6 +192,7 @@ export abstract class TypescriptProject {
         if (this.generateSubpackageExports) {
             exports.push(...this.subpackageExportPaths.map((p) => p.relPath));
         }
+        exports.push(...this.extraExportPaths);
         return exports;
     }
 

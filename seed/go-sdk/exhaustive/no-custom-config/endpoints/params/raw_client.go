@@ -450,6 +450,104 @@ func (r *RawClient) UploadWithPath(
 	}, nil
 }
 
+func (r *RawClient) CreateWithBodyAndQuery(
+	ctx context.Context,
+	request *endpoints.CreateWithBodyAndQuery,
+	opts ...option.RequestOption,
+) (*core.Response[*types.ObjectWithOptionalField], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/params/body-and-query"
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *types.ObjectWithOptionalField
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*types.ObjectWithOptionalField]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) UploadBytesWithQuery(
+	ctx context.Context,
+	request *endpoints.UploadBytesWithQuery,
+	opts ...option.RequestOption,
+) (*core.Response[*types.ObjectWithOptionalField], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/params/bytes-and-query"
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *types.ObjectWithOptionalField
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*types.ObjectWithOptionalField]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
 func (r *RawClient) GetWithBooleanPath(
 	ctx context.Context,
 	param bool,

@@ -5,6 +5,33 @@ import { AbstractConverter, AbstractConverterContext, APIError } from "../index.
 
 const LITERAL_REGEX = /^literal<\s*(?:"(.*)"|(true|false))\s*>$/;
 
+interface MergedAllOfProperties {
+    mergedProperties: Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject>;
+    mergedRequired: string[];
+}
+
+interface ExampleConverterSharedState {
+    mergedAllOfProperties: WeakMap<OpenAPIV3_1.SchemaObject, Map<number, MergedAllOfProperties>>;
+    mergeOnlyAllOfSchemas: WeakMap<OpenAPIV3_1.SchemaObject, boolean>;
+}
+
+const EXAMPLE_CONVERTER_SHARED_STATE = new WeakMap<AbstractConverterContext<object>, ExampleConverterSharedState>();
+
+const MERGE_ONLY_OBJECT_SCHEMA_FIELDS = new Set([
+    "type",
+    "properties",
+    "required",
+    "allOf",
+    "description",
+    "title",
+    "deprecated",
+    "readOnly",
+    "writeOnly",
+    "xml",
+    "externalDocs",
+    "discriminator"
+]);
+
 /**
  * Type guard: returns true if the schema is an inline SchemaObject (not a $ref).
  */
@@ -165,6 +192,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private readonly exampleGenerationStrategy: "request" | "response" | undefined;
     private readonly generateOptionalProperties: boolean;
     private readonly seenRefs: Set<string>;
+    private readonly sharedState: ExampleConverterSharedState;
 
     constructor({
         breadcrumbs,
@@ -183,6 +211,16 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         this.exampleGenerationStrategy = exampleGenerationStrategy;
         this.generateOptionalProperties = generateOptionalProperties;
         this.seenRefs = seenRefs;
+        const existingSharedState = EXAMPLE_CONVERTER_SHARED_STATE.get(context);
+        if (existingSharedState != null) {
+            this.sharedState = existingSharedState;
+        } else {
+            this.sharedState = {
+                mergedAllOfProperties: new WeakMap(),
+                mergeOnlyAllOfSchemas: new WeakMap()
+            };
+            EXAMPLE_CONVERTER_SHARED_STATE.set(context, this.sharedState);
+        }
     }
 
     public convert(): ExampleConverter.Output {
@@ -756,7 +794,14 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         // inherit type information (e.g. `type: array`) from the base schema.
         // Without this, a property override that only specifies `items` but not
         // `type: array` would fail to generate a proper array example.
-        const { mergedProperties, mergedRequired } = this.mergeAllOfProperties(resolvedSchema);
+        const canGenerateFromMergedAllOf =
+            this.example === undefined && this.canGenerateFromMergedAllOf(resolvedSchema);
+        const { mergedProperties, mergedRequired } = this.mergeAllOfProperties(
+            resolvedSchema,
+            new Set(),
+            0,
+            canGenerateFromMergedAllOf
+        );
 
         const resultsByKey = Object.entries(mergedProperties).map(([key, property]) => {
             if (typeof property !== "object") {
@@ -889,38 +934,40 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             }
         });
 
-        const allOfResults = (resolvedSchema.allOf ?? []).map((subSchema, index) => {
-            // Resolve the sub-schema to check if it's a constraint-only schema
-            const resolvedSubSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-                schemaOrReference: subSchema,
-                breadcrumbs: [...this.breadcrumbs, `allOf[${index}]`],
-                skipErrorCollector: true
-            });
+        const allOfResults = canGenerateFromMergedAllOf
+            ? []
+            : (resolvedSchema.allOf ?? []).map((subSchema, index) => {
+                  // Resolve the sub-schema to check if it's a constraint-only schema
+                  const resolvedSubSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: subSchema,
+                      breadcrumbs: [...this.breadcrumbs, `allOf[${index}]`],
+                      skipErrorCollector: true
+                  });
 
-            // Skip validation for constraint-only schemas (only have 'required', no actual structure)
-            // These schemas are meant to add constraints to the merged schema, not define structure
-            if (resolvedSubSchema && this.isConstraintOnlySchema(resolvedSubSchema)) {
-                return {
-                    isValid: true,
-                    coerced: false,
-                    usedProvidedExample: this.example !== undefined,
-                    validExample: this.example,
-                    errors: []
-                };
-            }
+                  // Skip validation for constraint-only schemas (only have 'required', no actual structure)
+                  // These schemas are meant to add constraints to the merged schema, not define structure
+                  if (resolvedSubSchema && this.isConstraintOnlySchema(resolvedSubSchema)) {
+                      return {
+                          isValid: true,
+                          coerced: false,
+                          usedProvidedExample: this.example !== undefined,
+                          validExample: this.example,
+                          errors: []
+                      };
+                  }
 
-            const exampleConverter = new ExampleConverter({
-                breadcrumbs: [...this.breadcrumbs, `allOf[${index}]`],
-                context: this.context,
-                schema: { ...resolvedSchema, ...subSchema, allOf: undefined },
-                example: this.example,
-                depth: this.depth + 1,
-                generateOptionalProperties: this.generateOptionalProperties,
-                exampleGenerationStrategy: this.exampleGenerationStrategy,
-                seenRefs: this.getMaybeUpdatedSeenRefs()
-            });
-            return exampleConverter.convert();
-        });
+                  const exampleConverter = new ExampleConverter({
+                      breadcrumbs: [...this.breadcrumbs, `allOf[${index}]`],
+                      context: this.context,
+                      schema: { ...resolvedSchema, ...subSchema, allOf: undefined },
+                      example: this.example,
+                      depth: this.depth + 1,
+                      generateOptionalProperties: this.generateOptionalProperties,
+                      exampleGenerationStrategy: this.exampleGenerationStrategy,
+                      seenRefs: this.getMaybeUpdatedSeenRefs()
+                  });
+                  return exampleConverter.convert();
+              });
 
         const usedProvidedExample =
             this.example !== undefined &&
@@ -956,10 +1003,32 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key));
 
-        if (additionalPropertyKeys.length > 0) {
+        // If the schema declares `patternProperties`, accept all otherwise-undefined keys and
+        // preserve their values. We don't implement first-class `patternProperties` support and
+        // deliberately don't compile or match the patterns themselves — the presence of
+        // `patternProperties` simply means example keys should not be rejected as unexpected
+        // additional properties (e.g. under `additionalProperties: false`).
+        const hasPatternProperties = this.schemaHasPatternProperties(resolvedSchema);
+        const patternMatchedKeys = hasPatternProperties ? additionalPropertyKeys : [];
+        const remainingAdditionalKeys = hasPatternProperties ? [] : additionalPropertyKeys;
+
+        patternMatchedKeys.forEach((key) => {
+            additionalPropertiesResults.push({
+                key,
+                result: {
+                    isValid: true,
+                    coerced: false,
+                    usedProvidedExample: true,
+                    validExample: exampleObj[key],
+                    errors: []
+                }
+            });
+        });
+
+        if (remainingAdditionalKeys.length > 0) {
             if (resolvedSchema.additionalProperties === false) {
                 // Additional properties are not allowed, create errors for each extra property
-                additionalPropertyKeys.forEach((key) => {
+                remainingAdditionalKeys.forEach((key) => {
                     const breadcrumbPath = [...this.breadcrumbs, key].join(".");
                     const error = {
                         message: `Found unexpected property '${key}' in example. This property does not exist in the schema${breadcrumbPath ? ` at path: ${breadcrumbPath}` : ""}`,
@@ -981,7 +1050,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 resolvedSchema.additionalProperties === undefined
             ) {
                 // additionalProperties: true or undefined - preserve values without validation
-                additionalPropertyKeys.forEach((key) => {
+                remainingAdditionalKeys.forEach((key) => {
                     additionalPropertiesResults.push({
                         key,
                         result: {
@@ -996,7 +1065,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             } else {
                 // additionalProperties is a schema object - validate each additional property against it
                 const additionalPropsSchema = resolvedSchema.additionalProperties as OpenAPIV3_1.SchemaObject;
-                additionalPropertyKeys.forEach((key) => {
+                remainingAdditionalKeys.forEach((key) => {
                     const exampleConverter = new ExampleConverter({
                         breadcrumbs: [...this.breadcrumbs, key],
                         context: this.context,
@@ -1368,15 +1437,24 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private mergeAllOfProperties(
         resolvedSchema: OpenAPIV3_1.SchemaObject,
         visited: Set<string> = new Set(),
-        depth: number = 0
-    ): {
-        mergedProperties: Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject>;
-        mergedRequired: string[];
-    } {
+        depth: number = 0,
+        useCache: boolean = false
+    ): MergedAllOfProperties {
+        if (useCache) {
+            const cached = this.sharedState.mergedAllOfProperties.get(resolvedSchema)?.get(depth);
+            if (cached != null) {
+                return cached;
+            }
+        }
+
         const directProps = resolvedSchema.properties ?? {};
         const directRequired = resolvedSchema.required ?? [];
         if (depth > this.MAX_DEPTH || resolvedSchema.allOf == null || resolvedSchema.allOf.length === 0) {
-            return { mergedProperties: directProps, mergedRequired: directRequired };
+            const result = { mergedProperties: directProps, mergedRequired: directRequired };
+            if (useCache) {
+                this.cacheMergedAllOfProperties(resolvedSchema, depth, result);
+            }
+            return result;
         }
 
         const baseProps: Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject> = {};
@@ -1406,7 +1484,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 if (refKey != null) {
                     childVisited.add(refKey);
                 }
-                const nested = this.mergeAllOfProperties(resolved, childVisited, depth + 1);
+                const nested = this.mergeAllOfProperties(resolved, childVisited, depth + 1, useCache);
                 for (const req of nested.mergedRequired) {
                     baseRequired.add(req);
                 }
@@ -1467,7 +1545,72 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             }
         }
 
-        return { mergedProperties: merged, mergedRequired: [...baseRequired] };
+        const result = { mergedProperties: merged, mergedRequired: [...baseRequired] };
+        if (useCache) {
+            this.cacheMergedAllOfProperties(resolvedSchema, depth, result);
+        }
+        return result;
+    }
+
+    private cacheMergedAllOfProperties(
+        schema: OpenAPIV3_1.SchemaObject,
+        depth: number,
+        mergedAllOfProperties: MergedAllOfProperties
+    ): void {
+        const cachedByDepth = this.sharedState.mergedAllOfProperties.get(schema);
+        if (cachedByDepth != null) {
+            cachedByDepth.set(depth, mergedAllOfProperties);
+        } else {
+            this.sharedState.mergedAllOfProperties.set(schema, new Map([[depth, mergedAllOfProperties]]));
+        }
+    }
+
+    private canGenerateFromMergedAllOf(
+        resolvedSchema: OpenAPIV3_1.SchemaObject,
+        visiting: WeakSet<OpenAPIV3_1.SchemaObject> = new WeakSet()
+    ): boolean {
+        if (resolvedSchema.allOf == null || resolvedSchema.allOf.length === 0) {
+            return false;
+        }
+        if (!this.isMergeOnlyObjectSchema(resolvedSchema)) {
+            return false;
+        }
+
+        const cached = this.sharedState.mergeOnlyAllOfSchemas.get(resolvedSchema);
+        if (cached != null) {
+            return cached;
+        }
+        if (visiting.has(resolvedSchema)) {
+            return false;
+        }
+
+        visiting.add(resolvedSchema);
+        const canGenerateFromMergedAllOf = resolvedSchema.allOf.every((subSchema) => {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (resolved == null || !this.isMergeOnlyObjectSchema(resolved)) {
+                return false;
+            }
+            return resolved.allOf == null || resolved.allOf.length === 0
+                ? true
+                : this.canGenerateFromMergedAllOf(resolved, visiting);
+        });
+        visiting.delete(resolvedSchema);
+        this.sharedState.mergeOnlyAllOfSchemas.set(resolvedSchema, canGenerateFromMergedAllOf);
+        return canGenerateFromMergedAllOf;
+    }
+
+    private isMergeOnlyObjectSchema(schema: OpenAPIV3_1.SchemaObject): boolean {
+        if (schema.type != null && schema.type !== "object") {
+            return false;
+        }
+        if (schema.type == null && schema.properties == null && schema.allOf == null) {
+            return false;
+        }
+        return Object.keys(schema).every((key) => MERGE_ONLY_OBJECT_SCHEMA_FIELDS.has(key));
     }
 
     /**
@@ -1593,5 +1736,35 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         return propertyKeys;
+    }
+
+    /**
+     * Returns true if the schema declares any `patternProperties`, including via allOf, oneOf,
+     * and anyOf compositions. The patterns themselves are intentionally not compiled or matched.
+     */
+    private schemaHasPatternProperties(schema: OpenAPIV3_1.SchemaObject, visited: Set<string> = new Set()): boolean {
+        const patternProperties = (schema as { patternProperties?: Record<string, unknown> }).patternProperties;
+        if (patternProperties && typeof patternProperties === "object" && Object.keys(patternProperties).length > 0) {
+            return true;
+        }
+
+        for (const subSchema of [...(schema.allOf ?? []), ...(schema.oneOf ?? []), ...(schema.anyOf ?? [])]) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (resolved) {
+                const refKey = this.context.isReferenceObject(subSchema) ? subSchema.$ref : JSON.stringify(resolved);
+                if (!visited.has(refKey)) {
+                    visited.add(refKey);
+                    if (this.schemaHasPatternProperties(resolved, visited)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

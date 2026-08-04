@@ -187,4 +187,5 @@ error-discrimination:
 display-name: Pet Store API
 ",
   },
+  "specVersion": "1.0.0",
 }

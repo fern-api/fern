@@ -58,6 +58,7 @@ describe("migrateFromV67ToV66", () => {
             basePath: undefined,
             pathParameters: [],
             variables: [],
+            globalParameters: undefined,
             serviceTypeReferenceInfo: {
                 typesReferencedOnlyByService: {},
                 sharedTypes: []
@@ -257,6 +258,7 @@ describe("migrateFromV67ToV66", () => {
                     extends: [],
                     extendedProperties: undefined,
                     extraProperties: false,
+                    deferredUnionBaseProperties: undefined,
                     properties: [
                         {
                             docs: undefined,

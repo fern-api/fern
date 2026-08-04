@@ -128,7 +128,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:Tree": {
             "type": "object",
@@ -197,7 +198,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons/metadata:Metadata": {
             "type": "object",
@@ -377,7 +379,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_file:File": {
             "type": "object",
@@ -538,7 +541,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_file:FileInfo": {
             "type": "enum",
@@ -863,7 +867,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -871,5 +876,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

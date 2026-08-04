@@ -50,6 +50,7 @@ exports[`generateDynamicIR > go 1`] = `
   },
   "environments": undefined,
   "generatorConfig": undefined,
+  "globalParameters": undefined,
   "headers": [],
   "pathParameters": [],
   "types": {
@@ -82,6 +83,7 @@ exports[`generateDynamicIR > go 1`] = `
           },
         },
       },
+      "deferredUnionBaseProperties": undefined,
       "extends": undefined,
       "properties": [
         {

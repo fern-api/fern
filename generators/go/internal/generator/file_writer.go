@@ -79,9 +79,11 @@ type fileWriter struct {
 	inlineFileProperties         bool
 	useReaderForBytesRequest     bool
 	gettersPassByValue           bool
+	dedupeUnionBaseProperties    bool
+	serverURLVariables           bool
 	exportAllRequestsAtRoot      bool
 	omitEmptyRequestWrappers     bool
-	omitFernHeaders              bool
+	userAgent                    userAgentConfig
 	unionVersion                 UnionVersion
 	customPagerName              string
 	scope                        *gospec.Scope
@@ -94,6 +96,11 @@ type fileWriter struct {
 	// may be encoded as query parameters. Only unions in this set get an
 	// EncodeQueryValues method generated; populated by generateModelTypes.
 	queryReachableUnions map[common.TypeId]struct{}
+
+	// headerReachableUnions is the set of undiscriminated union TypeIds that
+	// may be sent as request headers. Only unions in this set get a String
+	// method generated; populated by generateModelTypes.
+	headerReachableUnions map[common.TypeId]struct{}
 
 	buffer *bytes.Buffer
 
@@ -139,9 +146,11 @@ func newFileWriter(
 	inlineFileProperties bool,
 	useReaderForBytesRequest bool,
 	gettersPassByValue bool,
+	dedupeUnionBaseProperties bool,
+	serverURLVariables bool,
 	exportAllRequestsAtRoot bool,
 	omitEmptyRequestWrappers bool,
-	omitFernHeaders bool,
+	userAgent userAgentConfig,
 	unionVersion UnionVersion,
 	customPagerName string,
 	types map[common.TypeId]*ir.TypeDeclaration,
@@ -188,9 +197,11 @@ func newFileWriter(
 		inlineFileProperties:         inlineFileProperties,
 		useReaderForBytesRequest:     useReaderForBytesRequest,
 		gettersPassByValue:           gettersPassByValue,
+		dedupeUnionBaseProperties:    dedupeUnionBaseProperties,
+		serverURLVariables:           serverURLVariables,
 		exportAllRequestsAtRoot:      exportAllRequestsAtRoot,
 		omitEmptyRequestWrappers:     omitEmptyRequestWrappers,
-		omitFernHeaders:              omitFernHeaders,
+		userAgent:                    userAgent,
 		unionVersion:                 unionVersion,
 		customPagerName:              customPagerName,
 		scope:                        scope,
@@ -443,9 +454,11 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		f.inlineFileProperties,
 		f.useReaderForBytesRequest,
 		f.gettersPassByValue,
+		f.dedupeUnionBaseProperties,
+		f.serverURLVariables,
 		f.exportAllRequestsAtRoot,
 		f.omitEmptyRequestWrappers,
-		f.omitFernHeaders,
+		f.userAgent,
 		f.unionVersion,
 		f.customPagerName,
 		f.types,
@@ -470,11 +483,32 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		mainAliasToPath[alias] = importPath
 	}
 
+	// Cycle-breaking can relocate types into a sibling subpackage whose alias
+	// matches the current package name (e.g. a package named "v2" importing the
+	// relocated "common/v2", also aliased "v2"). In that case a "v2." qualifier
+	// refers to the imported package, not the local one, so it must be kept and
+	// imported rather than stripped.
+	currentImportPath := path.Join(f.baseImportPath, path.Dir(f.filename))
+	packageNameIsImportedAlias := false
+	if importPath, ok := mainAliasToPath[f.packageName]; ok && importPath != currentImportPath {
+		packageNameIsImportedAlias = true
+	}
+
 	validSubpackages := make(map[string]struct{})
+	if packageNameIsImportedAlias {
+		// A property's qualifier is only the first package referenced in its
+		// type string (e.g. "common" in map[common.X]*v2.Y), so the colliding
+		// alias may not be discovered below. Register it up front.
+		validSubpackages[f.packageName] = struct{}{}
+		testWriter.scope.AddImport(mainAliasToPath[f.packageName])
+	}
 	for _, td := range f.testData {
 		for _, propType := range td.propertyTypes {
 			pkgQualifier := extractPackageQualifier(propType)
-			if pkgQualifier == "" || pkgQualifier == f.packageName || isStdLibPackage(pkgQualifier) {
+			if pkgQualifier == "" || isStdLibPackage(pkgQualifier) {
+				continue
+			}
+			if pkgQualifier == f.packageName && !packageNameIsImportedAlias {
 				continue
 			}
 			if _, seen := validSubpackages[pkgQualifier]; seen {
@@ -505,7 +539,7 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 			// 3. Package qualifier is in validSubpackages (known generated subpackage)
 			// 4. Package qualifier is a standard library package
 			shouldInclude := false
-			if pkgQualifier == "" || pkgQualifier == f.packageName {
+			if pkgQualifier == "" || (pkgQualifier == f.packageName && !packageNameIsImportedAlias) {
 				shouldInclude = true
 			} else if _, isValid := validSubpackages[pkgQualifier]; isValid {
 				shouldInclude = true
@@ -518,7 +552,16 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 			}
 
 			localPropertyNames = append(localPropertyNames, testData.propertyNames[i])
-			localPropertyTypes = append(localPropertyTypes, stripPackageQualifier(propType, f.packageName))
+			// When the current package name is also an imported alias (a type was
+			// relocated into a sibling subpackage by cycle-breaking), the
+			// "packageName." qualifier refers to that import, not the local
+			// package, so it must be kept; stripping it references an undefined
+			// local type.
+			localPropertyType := propType
+			if !packageNameIsImportedAlias {
+				localPropertyType = stripPackageQualifier(propType, f.packageName)
+			}
+			localPropertyTypes = append(localPropertyTypes, localPropertyType)
 			if i < len(testData.propertySafeNames) {
 				localPropertySafeNames = append(localPropertySafeNames, testData.propertySafeNames[i])
 			}
@@ -946,9 +989,11 @@ func (f *fileWriter) clone() *fileWriter {
 		f.inlineFileProperties,
 		f.useReaderForBytesRequest,
 		f.gettersPassByValue,
+		f.dedupeUnionBaseProperties,
+		f.serverURLVariables,
 		f.exportAllRequestsAtRoot,
 		f.omitEmptyRequestWrappers,
-		f.omitFernHeaders,
+		f.userAgent,
 		f.unionVersion,
 		f.customPagerName,
 		f.types,

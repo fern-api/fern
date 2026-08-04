@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "pagination",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -64,7 +65,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:UsernamePage"
@@ -154,7 +156,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -326,7 +329,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_complex:MultipleFilterSearchRequestOperator",
@@ -583,7 +587,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_complex:SingleFilterSearchRequestOperator"
@@ -790,7 +795,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_complex:StartingAfterPaging",
@@ -939,7 +945,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_complex:Conversation",
@@ -1114,7 +1121,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_complex:StartingAfterPaging"
@@ -1200,7 +1208,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1256,7 +1265,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1367,7 +1377,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1432,7 +1443,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1504,7 +1516,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_inline-users/inline-users:User"
@@ -1596,7 +1609,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_inline-users/inline-users:UserListContainer",
@@ -1677,7 +1691,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_inline-users/inline-users:User"
@@ -1769,7 +1784,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_inline-users/inline-users:UserOptionalListContainer",
@@ -1837,7 +1853,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1966,7 +1983,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_inline-users/inline-users:UserPage",
@@ -2099,7 +2117,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_inline-users/inline-users:UserOptionalListPage",
@@ -2253,7 +2272,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_inline-users/inline-users:Page",
@@ -2346,7 +2366,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_inline-users/inline-users:Users",
@@ -2487,7 +2508,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_inline-users/inline-users:NextPage"
@@ -2570,7 +2592,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2642,7 +2665,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_inline-users/inline-users:User"
@@ -2725,7 +2749,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2830,7 +2855,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2892,7 +2918,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2958,7 +2985,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_users:User"
@@ -3044,7 +3072,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_users:UserListContainer",
@@ -3119,7 +3148,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_users:User"
@@ -3205,7 +3235,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_users:UserOptionalListContainer",
@@ -3270,7 +3301,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -3390,7 +3422,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_users:UserPage",
@@ -3514,7 +3547,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_users:UserOptionalListPage",
@@ -3665,7 +3699,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_users:Page",
@@ -3822,7 +3857,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_users:Page",
@@ -3914,7 +3950,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_users:User"
@@ -4010,7 +4047,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_users:User"
@@ -4226,7 +4264,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_users:Page",
@@ -4363,7 +4402,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_users:NextPage"
@@ -4443,7 +4483,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -4521,7 +4562,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -4568,6 +4610,7 @@
                     "id": "endpoint_complex.search",
                     "name": "search",
                     "displayName": "Search conversations",
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -5843,6 +5886,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -5884,6 +5928,7 @@
                     "id": "endpoint_inline-users/inline-users.listWithCursorPagination",
                     "name": "listWithCursorPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7020,6 +7065,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -7029,6 +7075,7 @@
                     "id": "endpoint_inline-users/inline-users.listWithMixedTypeCursorPagination",
                     "name": "listWithMixedTypeCursorPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7642,6 +7689,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -7651,6 +7699,7 @@
                     "id": "endpoint_inline-users/inline-users.listWithBodyCursorPagination",
                     "name": "listWithBodyCursorPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -8768,6 +8817,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -8777,6 +8827,7 @@
                     "id": "endpoint_inline-users/inline-users.listWithOffsetPagination",
                     "name": "listWithOffsetPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -9835,6 +9886,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -9844,6 +9896,7 @@
                     "id": "endpoint_inline-users/inline-users.listWithDoubleOffsetPagination",
                     "name": "listWithDoubleOffsetPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -10902,6 +10955,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -10911,6 +10965,7 @@
                     "id": "endpoint_inline-users/inline-users.listWithBodyOffsetPagination",
                     "name": "listWithBodyOffsetPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -11950,6 +12005,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -11959,6 +12015,7 @@
                     "id": "endpoint_inline-users/inline-users.listWithOffsetStepPagination",
                     "name": "listWithOffsetStepPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -13020,6 +13077,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -13029,6 +13087,7 @@
                     "id": "endpoint_inline-users/inline-users.listWithOffsetPaginationHasNextPage",
                     "name": "listWithOffsetPaginationHasNextPage",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -14119,6 +14178,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -14128,6 +14188,7 @@
                     "id": "endpoint_inline-users/inline-users.listWithExtendedResults",
                     "name": "listWithExtendedResults",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -14779,6 +14840,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -14788,6 +14850,7 @@
                     "id": "endpoint_inline-users/inline-users.listWithExtendedResultsAndOptionalData",
                     "name": "listWithExtendedResultsAndOptionalData",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -15487,6 +15550,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -15496,6 +15560,7 @@
                     "id": "endpoint_inline-users/inline-users.listUsernames",
                     "name": "listUsernames",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -15930,6 +15995,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -15939,6 +16005,7 @@
                     "id": "endpoint_inline-users/inline-users.listWithGlobalConfig",
                     "name": "listWithGlobalConfig",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -16234,6 +16301,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -16272,6 +16340,7 @@
                     "id": "endpoint_users.listWithCursorPagination",
                     "name": "listWithCursorPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -17246,6 +17315,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -17255,6 +17325,7 @@
                     "id": "endpoint_users.listWithMixedTypeCursorPagination",
                     "name": "listWithMixedTypeCursorPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -17751,6 +17822,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -17760,6 +17832,7 @@
                     "id": "endpoint_users.listWithBodyCursorPagination",
                     "name": "listWithBodyCursorPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -18709,6 +18782,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -18718,6 +18792,7 @@
                     "id": "endpoint_users.listWithTopLevelBodyCursorPagination",
                     "name": "listWithTopLevelBodyCursorPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -19729,6 +19804,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -19738,6 +19814,7 @@
                     "id": "endpoint_users.listWithOffsetPagination",
                     "name": "listWithOffsetPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -20640,6 +20717,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -20649,6 +20727,7 @@
                     "id": "endpoint_users.listWithDoubleOffsetPagination",
                     "name": "listWithDoubleOffsetPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -21551,6 +21630,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -21560,6 +21640,7 @@
                     "id": "endpoint_users.listWithBodyOffsetPagination",
                     "name": "listWithBodyOffsetPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -22437,6 +22518,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -22446,6 +22528,7 @@
                     "id": "endpoint_users.listWithOffsetStepPagination",
                     "name": "listWithOffsetStepPagination",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -23351,6 +23434,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -23360,6 +23444,7 @@
                     "id": "endpoint_users.listWithOffsetPaginationHasNextPage",
                     "name": "listWithOffsetPaginationHasNextPage",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -25813,6 +25898,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -25822,6 +25908,7 @@
                     "id": "endpoint_users.listWithExtendedResults",
                     "name": "listWithExtendedResults",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -26425,6 +26512,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -26434,6 +26522,7 @@
                     "id": "endpoint_users.listWithExtendedResultsAndOptionalData",
                     "name": "listWithExtendedResultsAndOptionalData",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -27082,6 +27171,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -27091,6 +27181,7 @@
                     "id": "endpoint_users.listUsernames",
                     "name": "listUsernames",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -27525,6 +27616,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -27534,6 +27626,7 @@
                     "id": "endpoint_users.listUsernamesWithOptionalResponse",
                     "name": "listUsernamesWithOptionalResponse",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -28004,6 +28097,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -28013,6 +28107,7 @@
                     "id": "endpoint_users.listWithGlobalConfig",
                     "name": "listWithGlobalConfig",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -28299,6 +28394,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -28308,6 +28404,7 @@
                     "id": "endpoint_users.listWithOptionalData",
                     "name": "listWithOptionalData",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -30320,6 +30417,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -30329,6 +30427,7 @@
                     "id": "endpoint_users.listWithAliasedData",
                     "name": "listWithAliasedData",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -31293,6 +31392,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -31312,6 +31412,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_complex": [
@@ -31441,7 +31542,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UsernamePage": {
                 "type": "object",
@@ -31540,7 +31642,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_complex:SearchRequestQuery": {
                 "type": "undiscriminatedUnion",
@@ -31754,7 +31857,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_complex:MultipleFilterSearchRequestOperator": {
                 "type": "enum",
@@ -32120,7 +32224,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_complex:SingleFilterSearchRequestOperator": {
                 "type": "enum",
@@ -32543,7 +32648,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_complex:PaginatedConversationResponse": {
                 "type": "object",
@@ -32743,7 +32849,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_complex:CursorPages": {
                 "type": "object",
@@ -32979,7 +33086,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_complex:StartingAfterPaging": {
                 "type": "object",
@@ -33113,7 +33221,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_complex:Conversation": {
                 "type": "object",
@@ -33214,7 +33323,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:Order": {
                 "type": "enum",
@@ -33509,7 +33619,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:WithCursor": {
                 "type": "object",
@@ -33652,7 +33763,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:UserListContainer": {
                 "type": "object",
@@ -33795,7 +33907,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:UserPage": {
                 "type": "object",
@@ -33968,7 +34081,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:UserOptionalListContainer": {
                 "type": "object",
@@ -34114,7 +34228,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:UserOptionalListPage": {
                 "type": "object",
@@ -34287,7 +34402,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:UsernameContainer": {
                 "type": "object",
@@ -34430,7 +34546,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:ListUsersExtendedResponse": {
                 "type": "object",
@@ -34635,7 +34752,8 @@
                 "extends": [
                     "type_inline-users/inline-users:UserPage"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:ListUsersExtendedOptionalListResponse": {
                 "type": "object",
@@ -34840,7 +34958,8 @@
                 "extends": [
                     "type_inline-users/inline-users:UserOptionalListPage"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:ListUsersPaginationResponse": {
                 "type": "object",
@@ -35076,7 +35195,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:ListUsersMixedTypePaginationResponse": {
                 "type": "object",
@@ -35246,7 +35366,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:Page": {
                 "type": "object",
@@ -35479,7 +35600,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:NextPage": {
                 "type": "object",
@@ -35649,7 +35771,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:Users": {
                 "type": "object",
@@ -35792,7 +35915,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inline-users/inline-users:User": {
                 "type": "object",
@@ -35962,7 +36086,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:Order": {
                 "type": "enum",
@@ -36179,7 +36304,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:WithCursor": {
                 "type": "object",
@@ -36283,7 +36409,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:UserListContainer": {
                 "type": "object",
@@ -36387,7 +36514,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:UserPage": {
                 "type": "object",
@@ -36521,7 +36649,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:UserOptionalListContainer": {
                 "type": "object",
@@ -36628,7 +36757,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:UserOptionalListPage": {
                 "type": "object",
@@ -36762,7 +36892,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:UsernameContainer": {
                 "type": "object",
@@ -36866,7 +36997,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:ListUsersExtendedResponse": {
                 "type": "object",
@@ -37032,7 +37164,8 @@
                 "extends": [
                     "type_users:UserPage"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:ListUsersExtendedOptionalListResponse": {
                 "type": "object",
@@ -37198,7 +37331,8 @@
                 "extends": [
                     "type_users:UserOptionalListPage"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:ListUsersPaginationResponse": {
                 "type": "object",
@@ -37398,7 +37532,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:ListUsersOptionalDataPaginationResponse": {
                 "type": "object",
@@ -37601,7 +37736,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:ListUsersMixedTypePaginationResponse": {
                 "type": "object",
@@ -37735,7 +37871,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:ListUsersTopLevelCursorPaginationResponse": {
                 "type": "object",
@@ -37872,7 +38009,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:UserList": {
                 "type": "alias",
@@ -38143,7 +38281,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:Page": {
                 "type": "object",
@@ -38337,7 +38476,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:NextPage": {
                 "type": "object",
@@ -38468,7 +38608,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_users:User": {
                 "type": "object",
@@ -38599,7 +38740,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],
@@ -46394,6 +46536,7 @@
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -46402,7 +46545,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_complex": {
@@ -46575,6 +46719,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": true,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

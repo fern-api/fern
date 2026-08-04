@@ -89,9 +89,13 @@ class SeedAnyAuth:
         *,
         base_url: str,
         api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
@@ -104,9 +108,13 @@ class SeedAnyAuth:
         *,
         base_url: str,
         api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
@@ -117,6 +125,8 @@ class SeedAnyAuth:
         *,
         base_url: str,
         api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = os.getenv("MY_CLIENT_ID"),
         client_secret: typing.Optional[str] = os.getenv("MY_CLIENT_SECRET"),
@@ -124,18 +134,20 @@ class SeedAnyAuth:
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         if token is not None:
             self._client_wrapper = SyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
+                username=username,
+                password=password,
                 headers=headers,
                 httpx_client=httpx_client
                 if httpx_client is not None
@@ -144,6 +156,8 @@ class SeedAnyAuth:
                 else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
@@ -154,6 +168,8 @@ class SeedAnyAuth:
                 client_wrapper=SyncClientWrapper(
                     base_url=base_url,
                     api_key=api_key,
+                    username=username,
+                    password=password,
                     headers=headers,
                     httpx_client=httpx_client
                     if httpx_client is not None
@@ -162,12 +178,16 @@ class SeedAnyAuth:
                     else httpx.Client(timeout=_defaulted_timeout),
                     timeout=_defaulted_timeout,
                     max_retries=_defaulted_max_retries,
+                    stream_reconnection_enabled=stream_reconnection_enabled,
+                    max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                     logging=logging,
                 ),
             )
             self._client_wrapper = SyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
+                username=username,
+                password=password,
                 headers=headers,
                 token=_token_getter_override if _token_getter_override is not None else oauth_token_provider.get_token,
                 httpx_client=httpx_client
@@ -177,12 +197,16 @@ class SeedAnyAuth:
                 else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
             )
         else:
             self._client_wrapper = SyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
+                username=username,
+                password=password,
                 headers=headers,
                 httpx_client=httpx_client
                 if httpx_client is not None
@@ -191,6 +215,8 @@ class SeedAnyAuth:
                 else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
             )
         self._auth: typing.Optional[AuthClient] = None
@@ -305,9 +331,13 @@ class AsyncSeedAnyAuth:
         *,
         base_url: str,
         api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
@@ -320,9 +350,13 @@ class AsyncSeedAnyAuth:
         *,
         base_url: str,
         api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
@@ -333,6 +367,8 @@ class AsyncSeedAnyAuth:
         *,
         base_url: str,
         api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = os.getenv("MY_CLIENT_ID"),
         client_secret: typing.Optional[str] = os.getenv("MY_CLIENT_SECRET"),
@@ -340,24 +376,28 @@ class AsyncSeedAnyAuth:
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         if token is not None:
             self._client_wrapper = AsyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
+                username=username,
+                password=password,
                 headers=headers,
                 httpx_client=httpx_client
                 if httpx_client is not None
                 else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
@@ -368,6 +408,8 @@ class AsyncSeedAnyAuth:
                 client_wrapper=AsyncClientWrapper(
                     base_url=base_url,
                     api_key=api_key,
+                    username=username,
+                    password=password,
                     headers=headers,
                     httpx_client=httpx_client
                     if httpx_client is not None
@@ -376,12 +418,16 @@ class AsyncSeedAnyAuth:
                     else httpx.AsyncClient(timeout=_defaulted_timeout),
                     timeout=_defaulted_timeout,
                     max_retries=_defaulted_max_retries,
+                    stream_reconnection_enabled=stream_reconnection_enabled,
+                    max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                     logging=logging,
                 ),
             )
             self._client_wrapper = AsyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
+                username=username,
+                password=password,
                 headers=headers,
                 token=_token_getter_override,
                 async_token=oauth_token_provider.get_token,
@@ -390,18 +436,24 @@ class AsyncSeedAnyAuth:
                 else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
             )
         else:
             self._client_wrapper = AsyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
+                username=username,
+                password=password,
                 headers=headers,
                 httpx_client=httpx_client
                 if httpx_client is not None
                 else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
             )
         self._auth: typing.Optional[AsyncAuthClient] = None

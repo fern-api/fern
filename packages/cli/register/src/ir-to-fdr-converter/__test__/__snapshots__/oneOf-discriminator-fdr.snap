@@ -193,6 +193,7 @@
             ],
           },
           "slug": undefined,
+          "subtitle": undefined,
         },
       ],
       "graphqlOperations": [],

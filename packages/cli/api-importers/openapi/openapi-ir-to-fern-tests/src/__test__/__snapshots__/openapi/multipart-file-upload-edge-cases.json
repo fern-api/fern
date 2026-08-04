@@ -308,4 +308,5 @@ error-discrimination:
 display-name: Multipart File Upload Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

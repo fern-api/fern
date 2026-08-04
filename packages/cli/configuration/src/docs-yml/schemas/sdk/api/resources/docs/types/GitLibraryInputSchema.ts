@@ -15,9 +15,9 @@ export interface GitLibraryInputSchema {
      */
     subpath?: string;
     /**
-     * Git branch, tag, or commit SHA to check out.
+     * Git ref (branch, tag, or commit SHA) to check out.
      * Defaults to the repository's default branch when omitted.
      * Example: feature/my-fix
      */
-    branch?: string;
+    ref?: string;
 }

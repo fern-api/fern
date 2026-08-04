@@ -17,6 +17,9 @@ public partial class StatusClient : IStatusClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedWebsocket.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedWebsocket.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -29,6 +32,7 @@ public partial class StatusClient : IStatusClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/status",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

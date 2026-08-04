@@ -13,6 +13,27 @@ impl OrganizationsClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_path_parameters::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PathParametersClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .organizations
+    ///         .get_organization(
+    ///             &"tenant_id".to_string(),
+    ///             &"organization_id".to_string(),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_organization(
         &self,
         tenant_id: &str,
@@ -30,6 +51,28 @@ impl OrganizationsClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_path_parameters::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PathParametersClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .organizations
+    ///         .get_organization_user(
+    ///             &"tenant_id".to_string(),
+    ///             &"organization_id".to_string(),
+    ///             &"user_id".to_string(),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_organization_user(
         &self,
         tenant_id: &str,
@@ -51,6 +94,31 @@ impl OrganizationsClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_path_parameters::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PathParametersClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .organizations
+    ///         .search_organizations(
+    ///             &"tenant_id".to_string(),
+    ///             &"organization_id".to_string(),
+    ///             &SearchOrganizationsQueryRequest {
+    ///                 limit: Some(1),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn search_organizations(
         &self,
         tenant_id: &str,

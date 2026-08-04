@@ -9,8 +9,10 @@ import {
     visitDiscriminatedUnion
 } from "@fern-api/core-utils";
 import {
+    collectCodeSrcUrls,
     isValidRelativeSlug,
     parseImagePaths,
+    prefetchCodeSrcUrls,
     type ReferencedMarkdownFile,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
@@ -65,9 +67,16 @@ interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
     translations: DocsTranslationsConfig | undefined;
 }
 
+// TODO: Remove this shim once the published @fern-api/fdr-sdk type for
+// DocsV1Write.AIChatConfig includes the maskPii field.
+type AIChatConfigWithMaskPii = NonNullable<DocsV1Write.DocsConfig["aiChatConfig"]> & {
+    maskPii?: boolean;
+};
+
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { maybeBundleMdxComponent } from "./utils/bundleMdxComponent.js";
 import { collectWellKnownSkillsFiles } from "./utils/collectWellKnownSkillsFiles.js";
 import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
@@ -171,6 +180,7 @@ export class DocsDefinitionResolver {
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
     private buildTranslatedApiDefinitions: boolean;
+    private markdownFilesToPathName: Record<AbsoluteFilePath, string> = {} as Record<AbsoluteFilePath, string>;
 
     constructor({
         domain,
@@ -342,6 +352,15 @@ export class DocsDefinitionResolver {
         return this.translatedApiSpecs;
     }
 
+    /**
+     * Returns the map of absolute file paths to their fully qualified slug pathnames.
+     * Used by translation processing to resolve relative .md/.mdx links.
+     * Must be called after `resolve()`.
+     */
+    public getMarkdownFilesToPathName(): Record<AbsoluteFilePath, string> {
+        return this.markdownFilesToPathName;
+    }
+
     private getDocsTranslationsConfig(): DocsConfigWithTranslations["translations"] {
         const translations = this.parsedDocsConfig.translations;
         if (translations == null || translations.length === 0) {
@@ -473,7 +492,24 @@ export class DocsDefinitionResolver {
         const refStart = performance.now();
         // Use a Set for O(1) deduplication instead of O(N) array scan
         const seenReferencedFiles = new Set<AbsoluteFilePath>();
-        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
+        const pageEntries = Object.entries(this.parsedDocsConfig.pages);
+
+        // Pre-fetch all external <Code src="https://..."/> URLs in parallel to avoid
+        // sequential HTTP blocking (can save 30+ seconds for docs with many external code snippets)
+        const allCodeSrcUrls: string[] = [];
+        for (const [, markdown] of pageEntries) {
+            allCodeSrcUrls.push(...collectCodeSrcUrls(markdown));
+        }
+        const prefetchStart = Date.now();
+        const urlCache = await prefetchCodeSrcUrls(allCodeSrcUrls, this.taskContext);
+        if (urlCache.size > 0) {
+            const uniqueCount = new Set(allCodeSrcUrls).size;
+            this.taskContext.logger.info(
+                `Prefetched ${uniqueCount} external code URLs in ${Date.now() - prefetchStart}ms`
+            );
+        }
+
+        for (const [relativePath, markdown] of pageEntries) {
             // First replace markdown includes, then code includes (order matters: snippets can contain code)
             const result = await replaceReferencedMarkdown({
                 markdown,
@@ -492,7 +528,8 @@ export class DocsDefinitionResolver {
                 markdown: result.markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                context: this.taskContext
+                context: this.taskContext,
+                urlCache
             });
 
             const newMarkdown = transformAtPrefixImports({
@@ -592,6 +629,7 @@ export class DocsDefinitionResolver {
         const pathNameStart = performance.now();
         const markdownFilesToPathName: Record<AbsoluteFilePath, string> =
             await this.getMarkdownFilesToFullyQualifiedPathNames(root);
+        this.markdownFilesToPathName = markdownFilesToPathName;
         const pathNameTime = performance.now() - pathNameStart;
         this.taskContext.logger.debug(`Got path names in ${pathNameTime.toFixed(0)}ms`);
 
@@ -726,7 +764,7 @@ export class DocsDefinitionResolver {
                     [...jsFilePaths].map(async (filePath): Promise<[string, string]> => {
                         const relativeFilePath = this.toRelativeFilepath(filePath);
                         const contents = (await readFile(filePath)).toString();
-                        return [relativeFilePath, contents];
+                        return [relativeFilePath, await this.bundleJsFileContents(filePath, contents)];
                     })
                 )
             );
@@ -751,13 +789,13 @@ export class DocsDefinitionResolver {
         if (this._parsedDocsConfig.header != null) {
             const relativeFilePath = this.toRelativeFilepath(this._parsedDocsConfig.header);
             const contents = (await readFile(this._parsedDocsConfig.header)).toString();
-            jsFiles[relativeFilePath] = contents;
+            jsFiles[relativeFilePath] = await this.bundleJsFileContents(this._parsedDocsConfig.header, contents);
             this.taskContext.logger.debug(`Added custom header component: ${relativeFilePath}`);
         }
         if (this._parsedDocsConfig.footer != null) {
             const relativeFilePath = this.toRelativeFilepath(this._parsedDocsConfig.footer);
             const contents = (await readFile(this._parsedDocsConfig.footer)).toString();
-            jsFiles[relativeFilePath] = contents;
+            jsFiles[relativeFilePath] = await this.bundleJsFileContents(this._parsedDocsConfig.footer, contents);
             this.taskContext.logger.debug(`Added custom footer component: ${relativeFilePath}`);
         }
 
@@ -933,8 +971,9 @@ export class DocsDefinitionResolver {
                           datasources: this.parsedDocsConfig.aiChatConfig.datasources?.map((ds) => ({
                               url: ds.url,
                               title: ds.title
-                          }))
-                      } as DocsV1Write.DocsConfig["aiChatConfig"])
+                          })),
+                          maskPii: this.parsedDocsConfig.aiChatConfig.maskPii
+                      } as AIChatConfigWithMaskPii as DocsV1Write.DocsConfig["aiChatConfig"])
                     : undefined,
             hideNavLinks: undefined,
             title: this.parsedDocsConfig.title,
@@ -976,7 +1015,7 @@ export class DocsDefinitionResolver {
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
-            settings: this.parsedDocsConfig.settings,
+            settings: this.convertDocsSettings(),
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
             agents:
@@ -1069,6 +1108,27 @@ export class DocsDefinitionResolver {
             footer: this.parsedDocsConfig.footer ? this.toRelativeFilepath(this.parsedDocsConfig.footer) : undefined
         };
         return config;
+    }
+
+    /**
+     * Bundles a custom component file with rolldown when it imports third-party
+     * libraries, so the uploaded source is self-contained. Returns the original
+     * contents when no bundling is needed.
+     */
+    private async bundleJsFileContents(absoluteFilePath: AbsoluteFilePath, contents: string): Promise<string> {
+        try {
+            const bundled = await maybeBundleMdxComponent({
+                absoluteFilePath,
+                contents,
+                context: this.taskContext
+            });
+            return bundled ?? contents;
+        } catch (error) {
+            throw new CliError({
+                message: `Failed to bundle third-party imports in ${absoluteFilePath}: ${extractErrorMessage(error)}`,
+                code: CliError.Code.ParseError
+            });
+        }
     }
 
     private getFernWorkspaceForApiSection(
@@ -1289,6 +1349,13 @@ export class DocsDefinitionResolver {
                     navigationConfig: tabbed,
                     parentSlug: slug
                 }),
+            // NOTE: the top-level landing page is intentionally NOT propagated
+            // into versioned navigation. Cloning it into every version node
+            // creates landingPage nodes that shadow real pages sharing the
+            // landing slug (they are visited first during slug collection),
+            // which strips the sidebar from those pages at render time. This
+            // matches the legacy (< 5.58.0) publish behavior that live docs
+            // sites were authored against.
             versioned: (versioned) => this.toVersionedNode(versioned, slug),
             productgroup: (productGroup) =>
                 this.toProductGroupNode({
@@ -1409,6 +1476,13 @@ export class DocsDefinitionResolver {
         if (product.type === "internal") {
             const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
             let child: FernNavigation.V1.ProductChild;
+            // NOTE: `product.landingPage` is intentionally NOT emitted here.
+            // Like the versioned case in toRootChild, landingPage nodes are
+            // visited before the product's own navigation during slug
+            // collection, so a landing page sharing a slug with a page in the
+            // product shadows that page and strips its sidebar at render time.
+            // This matches the legacy (< 5.58.0) publish behavior that live
+            // docs sites were authored against.
             switch (product.navigation.type) {
                 case "tabbed":
                     child = {
@@ -2091,7 +2165,9 @@ export class DocsDefinitionResolver {
         if (navNodes.length > 0) {
             const rootSlug = navNodes[0]?.slug.split("/").slice(0, -1).join("/");
             if (rootSlug) {
-                overviewPageId = await this.registerLibraryMdxPage(outputDir, `${rootSlug}.mdx`);
+                overviewPageId =
+                    (await this.registerLibraryMdxPage(outputDir, `${rootSlug}/index.mdx`, { quiet: true })) ??
+                    (await this.registerLibraryMdxPage(outputDir, `${rootSlug}.mdx`));
             }
         }
 
@@ -2157,14 +2233,20 @@ export class DocsDefinitionResolver {
     /**
      * Read an MDX file from the library output directory, register its content,
      * and return its PageId. Returns undefined if the file doesn't exist.
+     *
+     * @param quiet - When true, suppresses the warning when the file is missing.
+     *   Used when probing multiple candidate paths (e.g. index.mdx then sibling .mdx).
      */
     private async registerLibraryMdxPage(
         outputDir: AbsoluteFilePath,
-        relativeMdxPath: string
+        relativeMdxPath: string,
+        { quiet = false }: { quiet?: boolean } = {}
     ): Promise<FernNavigation.PageId | undefined> {
         const absolutePath = join(outputDir, RelativeFilePath.of(relativeMdxPath));
         if (!existsSync(absolutePath)) {
-            this.taskContext.logger.warn(`Library MDX file not found: ${absolutePath}`);
+            if (!quiet) {
+                this.taskContext.logger.warn(`Library MDX file not found: ${absolutePath}`);
+            }
             return undefined;
         }
         const relPath = relative(this.docsWorkspace.absoluteFilePath, absolutePath);
@@ -2219,7 +2301,9 @@ export class DocsDefinitionResolver {
                 });
                 const sectionId = this.#idgen.get(`library-section/${node.slug}`);
 
-                const overviewPageId = await this.registerLibraryMdxPage(outputDir, `${node.slug}.mdx`);
+                const overviewPageId =
+                    (await this.registerLibraryMdxPage(outputDir, `${node.slug}/index.mdx`, { quiet: true })) ??
+                    (await this.registerLibraryMdxPage(outputDir, `${node.slug}.mdx`));
 
                 // Filter out child pages whose slug matches the section's slug
                 // (they're already represented by the section's overview page)
@@ -2600,6 +2684,7 @@ export class DocsDefinitionResolver {
                 cursor: this.parsedDocsConfig.pageActions.options.cursor,
                 claudeCode: this.parsedDocsConfig.pageActions.options.claudeCode,
                 vscode: this.parsedDocsConfig.pageActions.options.vscode,
+                ...(!this.parsedDocsConfig.pageActions.options.mcp ? { mcp: false } : {}),
                 custom: this.parsedDocsConfig.pageActions.options.custom.map((customAction) => ({
                     title: customAction.title,
                     subtitle: customAction.subtitle,
@@ -2698,6 +2783,26 @@ export class DocsDefinitionResolver {
             fallback: font.fallback,
             fontVariationSettings: font.fontVariationSettings
         };
+    }
+
+    // Merges the experimental `external-sitemaps` list into `settings.search`
+    // so it is persisted through FDR and read back during Algolia reindexing.
+    // The `as` cast mirrors convertMetadata(): the published FDR SDK
+    // SearchSettingsConfig type does not yet include `externalSitemaps`, but FDR
+    // stores and serves the field at runtime.
+    private convertDocsSettings(): DocsV1Write.DocsConfig["settings"] {
+        const settings = this.parsedDocsConfig.settings;
+        const externalSitemaps = this.parsedDocsConfig.experimental?.externalSitemaps;
+        if (externalSitemaps == null || externalSitemaps.length === 0) {
+            return settings;
+        }
+        return {
+            ...settings,
+            search: {
+                ...settings?.search,
+                externalSitemaps
+            }
+        } as DocsV1Write.DocsConfig["settings"];
     }
 
     private convertJavascriptConfiguration(): DocsV1Write.JsConfig | undefined {

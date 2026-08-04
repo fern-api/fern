@@ -13,8 +13,8 @@ public partial class Examples
         );
 
         await client.Endpoints.Params.UploadWithPathAsync(
-            "upload-path",
-            new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+            param: "upload-path",
+            request: new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
         );
     }
 

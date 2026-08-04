@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": "1.0.0",
     "apiName": "api",
     "apiDisplayName": "Extra Properties Test API",
     "apiDocs": null,
@@ -117,7 +118,8 @@
                     }
                 ],
                 "extra-properties": true,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -162,6 +164,7 @@
                     "id": "endpoint_.getUser",
                     "name": "getUser",
                     "displayName": "Get a user with extra properties",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -555,6 +558,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -564,6 +568,7 @@
                     "id": "endpoint_.createUser",
                     "name": "createUser",
                     "displayName": "Create a user with extra properties",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1118,6 +1123,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1137,6 +1143,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_": [
@@ -1307,7 +1314,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": true
+                "additionalProperties": true,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],
@@ -1505,6 +1513,7 @@
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -1513,7 +1522,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {},
     "rootPackage": {
@@ -1540,6 +1550,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

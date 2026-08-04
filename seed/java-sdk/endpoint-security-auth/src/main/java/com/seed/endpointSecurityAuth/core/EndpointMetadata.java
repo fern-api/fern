@@ -3,6 +3,10 @@
  */
 package com.seed.endpointSecurityAuth.core;
 
+import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +34,33 @@ public final class EndpointMetadata {
      * Creates an EndpointMetadata with no security requirements.
      */
     public static EndpointMetadata empty() {
-        return new EndpointMetadata(List.of());
+        return new EndpointMetadata(Collections.emptyList());
+    }
+
+    /**
+     * Creates an EndpointMetadata from the given alternative security requirements.
+     */
+    @SafeVarargs
+    public static EndpointMetadata of(Map<String, List<String>>... requirements) {
+        return new EndpointMetadata(Arrays.asList(requirements));
+    }
+
+    /**
+     * Builds a single security requirement from its schemes (all must be satisfied).
+     */
+    @SafeVarargs
+    public static Map<String, List<String>> requirement(Map.Entry<String, List<String>>... schemes) {
+        Map<String, List<String>> result = new LinkedHashMap<>();
+        for (Map.Entry<String, List<String>> scheme : schemes) {
+            result.put(scheme.getKey(), scheme.getValue());
+        }
+        return result;
+    }
+
+    /**
+     * Associates a scheme name with its required scopes.
+     */
+    public static Map.Entry<String, List<String>> scheme(String name, String... scopes) {
+        return new AbstractMap.SimpleEntry<>(name, Arrays.asList(scopes));
     }
 }

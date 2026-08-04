@@ -554,13 +554,13 @@ export class EndpointSnippetGenerator {
         const args: go.AstNode[] = [];
         for (const param of parameters) {
             // Skip optional and literal parameters — they don't have WithXxx() options.
-            if (param.typeReference.type === "optional" || param.typeReference.type === "literal") {
+            if (this.isInferredAuthConstructorParamSkipped(param.typeReference)) {
                 continue;
             }
             const wireValue = param.name.wireValue;
             const value = values.values?.[wireValue] ?? param.name.name.originalName;
             const typeInstantiation = this.context.dynamicTypeInstantiationMapper.convert({
-                typeReference: param.typeReference,
+                typeReference: this.getInferredAuthConstructorTypeReference(param.typeReference),
                 value
             });
             if (go.TypeInstantiation.isNop(typeInstantiation)) {
@@ -581,6 +581,65 @@ export class EndpointSnippetGenerator {
             );
         }
         return args;
+    }
+
+    private isInferredAuthConstructorParamSkipped(
+        typeReference: FernIr.dynamic.TypeReference,
+        seen: Set<FernIr.dynamic.TypeId> = new Set()
+    ): boolean {
+        switch (typeReference.type) {
+            case "optional":
+            case "literal":
+                return true;
+            case "named": {
+                if (seen.has(typeReference.value)) {
+                    return false;
+                }
+                seen.add(typeReference.value);
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                return named?.type === "alias" && this.isInferredAuthConstructorParamSkipped(named.typeReference, seen);
+            }
+            case "list":
+            case "map":
+            case "nullable":
+            case "primitive":
+            case "set":
+            case "unknown":
+                return false;
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    private getInferredAuthConstructorTypeReference(
+        typeReference: FernIr.dynamic.TypeReference,
+        seen: Set<FernIr.dynamic.TypeId> = new Set()
+    ): FernIr.dynamic.TypeReference {
+        switch (typeReference.type) {
+            case "nullable":
+                return this.getInferredAuthConstructorTypeReference(typeReference.value, seen);
+            case "named": {
+                if (seen.has(typeReference.value)) {
+                    return typeReference;
+                }
+                seen.add(typeReference.value);
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (named?.type === "alias" && named.typeReference.type === "nullable") {
+                    return this.getInferredAuthConstructorTypeReference(named.typeReference, seen);
+                }
+                return typeReference;
+            }
+            case "list":
+            case "literal":
+            case "map":
+            case "optional":
+            case "primitive":
+            case "set":
+            case "unknown":
+                return typeReference;
+            default:
+                assertNever(typeReference);
+        }
     }
 
     private getConstructorHeaderArgs({

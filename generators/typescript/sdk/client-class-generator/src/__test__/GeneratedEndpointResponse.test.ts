@@ -24,6 +24,7 @@ function createResponseProperty(name: string, valueType?: FernIr.TypeReference):
             availability: undefined,
             docs: undefined,
             propertyAccess: undefined,
+            defaultValue: undefined,
             v2Examples: undefined
         },
         propertyPath: []
@@ -38,6 +39,7 @@ function createRequestProperty(name: string, valueType?: FernIr.TypeReference): 
             availability: undefined,
             docs: undefined,
             propertyAccess: undefined,
+            defaultValue: undefined,
             v2Examples: undefined
         }),
         propertyPath: []
@@ -122,7 +124,8 @@ function createMockContext(): any {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             })
         },
@@ -225,6 +228,11 @@ function createMockContext(): any {
                     ])
             })
         },
+        timeoutSdkError: {
+            getReferenceToTimeoutSdkError: () => ({
+                getExpression: () => ts.factory.createIdentifier("MyOrgTimeoutError")
+            })
+        },
         sdkErrorSchema: {
             getGeneratedSdkErrorSchema: () => ({
                 deserializeBody: (_context: unknown, { referenceToBody }: { referenceToBody: ts.Expression }) =>
@@ -273,6 +281,9 @@ function createMockContext(): any {
             })
         },
         genericAPISdkError: {
+            getReferenceToGenericAPISdkError: () => ({
+                getExpression: () => ts.factory.createIdentifier("MyOrgError")
+            }),
             getGeneratedGenericAPISdkError: () => ({
                 build: (
                     _context: unknown,
@@ -398,7 +409,11 @@ describe("GeneratedThrowingEndpointResponse", () => {
 
         it("returns string for text response", () => {
             const instance = createInstance({
-                response: FernIr.HttpResponseBody.text({ docs: undefined, v2Examples: undefined })
+                response: FernIr.HttpResponseBody.text({
+                    docs: undefined,
+                    v2Examples: undefined,
+                    contentType: undefined
+                })
             });
             const context = createMockContext();
             const result = instance.getReturnType(context);
@@ -410,7 +425,7 @@ describe("GeneratedThrowingEndpointResponse", () => {
         it("returns empty array when no errors", () => {
             const instance = createInstance();
             const context = createMockContext();
-            expect(instance.getNamesOfThrownExceptions(context)).toEqual([]);
+            expect(instance.getNamesOfThrownExceptions(context)).toEqual(["MyOrgError", "MyOrgTimeoutError"]);
         });
 
         it("returns error names when errors are defined", () => {
@@ -419,7 +434,7 @@ describe("GeneratedThrowingEndpointResponse", () => {
             });
             const context = createMockContext();
             const names = instance.getNamesOfThrownExceptions(context);
-            expect(names).toEqual(["BadRequestError", "NotFoundError"]);
+            expect(names).toEqual(["BadRequestError", "NotFoundError", "MyOrgError", "MyOrgTimeoutError"]);
         });
     });
 
@@ -574,6 +589,30 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 expect(getTextOfTsNode(info!.hasNextPage)).toContain("hasMore");
                 // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(getTextOfTsNode(info!.hasNextPage)).toMatchSnapshot();
+            });
+
+            it("wraps baseHasNextPage in parens when combined with hasNextPage via ??", () => {
+                const offsetPagination: FernIr.Pagination = FernIr.Pagination.offset({
+                    page: createRequestProperty("page", INTEGER_TYPE),
+                    results: createResponseProperty("items", LIST_STRING_TYPE),
+                    step: createRequestProperty("limit", INTEGER_TYPE),
+                    hasNextPage: createResponseProperty(
+                        "hasMore",
+                        FernIr.TypeReference.primitive({ v1: "BOOLEAN", v2: undefined })
+                    )
+                });
+                const instance = createInstance({ pagination: offsetPagination });
+                const context = createMockContext();
+                const info = instance.getPaginationInfo(context);
+                expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
+                const text = getTextOfTsNode(info!.hasNextPage);
+                expect(text).toContain("hasMore");
+                expect(text).toContain("??");
+                expect(text).toContain("&&");
+                // The && expression must be parenthesized to avoid TS5076
+                expect(text).toMatch(/\?\?\s*\(/);
+                expect(text).toMatchSnapshot();
             });
 
             it("returns undefined when results type is not a list", () => {

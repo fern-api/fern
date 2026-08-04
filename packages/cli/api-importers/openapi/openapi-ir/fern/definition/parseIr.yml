@@ -40,6 +40,11 @@ types:
           This string includes templated path parameters.
           For example, `/users/{userId}` is a valid value.
       summary: optional<string>
+      subtitle:
+        type: optional<string>
+        docs: |
+          A short subtitle for the endpoint, populated from `x-fern-subtitle`.
+          Rendered below the endpoint title in the docs UI.
       operationId: optional<string>
       tags: list<commons.TagId>
       pathParameters: list<PathParameterWithExample>
@@ -69,6 +74,11 @@ types:
           Also migrated from `x-readme.code-samples` if present.
       pagination: optional<finalIr.Pagination>
       retries: optional<finalIr.RetriesConfiguration>
+      globalParameterIds:
+        type: optional<list<string>>
+        docs: |
+          Per-operation opt-in IDs for global parameters with apply: explicit.
+          Populated from x-fern-global-parameter on an operation.
 
   WebhookWithExample:
     extends:

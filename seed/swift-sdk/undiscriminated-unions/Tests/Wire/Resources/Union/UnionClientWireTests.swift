@@ -6,9 +6,9 @@ import UndiscriminatedUnions
     @Test func get1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
-                string
+                "string"
                 """#.utf8
             )
         )
@@ -31,7 +31,7 @@ import UndiscriminatedUnions
     @Test func getMetadata1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "exampleName",
@@ -47,12 +47,12 @@ import UndiscriminatedUnions
         )
         let expectedResponse = [
             Key.keyType(
-                .name
+                KeyType.name
             ): "exampleName", 
             Key.keyType(
-                .value
+                KeyType.value
             ): "exampleValue", 
-            Key.jsonValue(
+            Key.default(
                 .default
             ): "exampleDefault"
         ]
@@ -63,7 +63,7 @@ import UndiscriminatedUnions
     @Test func getMetadata2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "string"
@@ -77,7 +77,7 @@ import UndiscriminatedUnions
         )
         let expectedResponse = [
             Key.keyType(
-                .name
+                KeyType.name
             ): "string"
         ]
         let response = try await client.union.getMetadata(requestOptions: RequestOptions(additionalHeaders: stub.headers))
@@ -87,7 +87,7 @@ import UndiscriminatedUnions
     @Test func updateMetadata1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8
@@ -114,7 +114,7 @@ import UndiscriminatedUnions
     @Test func updateMetadata2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8
@@ -141,7 +141,7 @@ import UndiscriminatedUnions
     @Test func call1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8
@@ -170,7 +170,7 @@ import UndiscriminatedUnions
     @Test func call2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8
@@ -199,9 +199,9 @@ import UndiscriminatedUnions
     @Test func duplicateTypesUnion1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
-                string
+                "string"
                 """#.utf8
             )
         )
@@ -224,7 +224,7 @@ import UndiscriminatedUnions
     @Test func nestedUnions1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -247,7 +247,7 @@ import UndiscriminatedUnions
     @Test func nestedObjectUnions1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -270,7 +270,7 @@ import UndiscriminatedUnions
     @Test func aliasedObjectUnion1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -296,7 +296,7 @@ import UndiscriminatedUnions
     @Test func getWithBaseProperties1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -344,7 +344,7 @@ import UndiscriminatedUnions
     @Test func testCamelCaseProperties1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 success
                 """#.utf8
@@ -370,7 +370,7 @@ import UndiscriminatedUnions
     @Test func testCamelCaseProperties2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8

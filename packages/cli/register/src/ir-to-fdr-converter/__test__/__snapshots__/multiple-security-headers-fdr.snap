@@ -229,6 +229,7 @@
           ],
         },
         "slug": undefined,
+        "subtitle": undefined,
       },
       {
         "auth": true,
@@ -388,6 +389,7 @@
           ],
         },
         "slug": undefined,
+        "subtitle": undefined,
       },
       {
         "auth": true,
@@ -497,6 +499,7 @@
           ],
         },
         "slug": undefined,
+        "subtitle": undefined,
       },
       {
         "auth": true,
@@ -620,6 +623,7 @@
           ],
         },
         "slug": undefined,
+        "subtitle": undefined,
       },
     ],
     "graphqlOperations": [],

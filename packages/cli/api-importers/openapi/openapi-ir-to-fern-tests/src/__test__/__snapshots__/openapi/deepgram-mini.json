@@ -87,4 +87,5 @@ error-discrimination:
   strategy: status-code
 ",
   },
+  "specVersion": undefined,
 }

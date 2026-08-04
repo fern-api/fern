@@ -1,5 +1,6 @@
 using NUnit.Framework.Constraints;
 using OneOf;
+using SeedHttpHead.Core;
 
 namespace NUnit.Framework;
 
@@ -29,6 +30,14 @@ public static class EqualConstraintExtensions
                 if (x.Value is null)
                 {
                     return false;
+                }
+
+                // Undiscriminated unions of string enums are only distinguishable by their
+                // wire value: the concrete member type is not recoverable when deserializing,
+                // so two members with the same string value are considered equal.
+                if (x.Value is IStringEnum xStringEnum && y.Value is IStringEnum yStringEnum)
+                {
+                    return xStringEnum.Value == yStringEnum.Value;
                 }
 
                 var propertiesComparer = new NUnitEqualityComparer();
@@ -77,6 +86,11 @@ public static class EqualConstraintExtensions
             if (oneOfX?.Value is null || oneOfY?.Value is null)
             {
                 return false;
+            }
+
+            if (oneOfX.Value is IStringEnum xStringEnum && oneOfY.Value is IStringEnum yStringEnum)
+            {
+                return xStringEnum.Value == yStringEnum.Value;
             }
 
             var tolerance = Tolerance.Default;

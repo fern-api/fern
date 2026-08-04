@@ -53,6 +53,22 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     }
 
     public convert(): ResponseBodyConverter.Output | undefined {
+        // A 204 (No Content) response never carries a body at runtime (RFC 9110 §15.3.5), even when
+        // the spec erroneously declares one. Return no body so the operation converter detects the
+        // no-content case and wraps the success response optional (rather than parsing the declared
+        // 204 body and leaving the return type non-optional). Warn about the spec error so authors
+        // can fix it upstream.
+        if (parseInt(this.statusCode) === 204) {
+            if (this.responseBody.content != null && Object.keys(this.responseBody.content).length > 0) {
+                this.context.errorCollector.collect({
+                    message:
+                        "A 204 (No Content) response declares a body, but a 204 response cannot include one. " +
+                        "Ignoring the declared body and treating the success response as optional.",
+                    path: this.breadcrumbs
+                });
+            }
+            return undefined;
+        }
         return this.shouldConvertAsStreaming()
             ? this.convertStreamingResponseBody()
             : this.convertNonStreamingResponseBody();

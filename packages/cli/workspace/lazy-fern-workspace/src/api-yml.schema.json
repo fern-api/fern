@@ -192,6 +192,19 @@
         }
       ]
     },
+    "global-parameters": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/global-parameters.GlobalParameterDeclarationSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "pagination": {
       "oneOf": [
         {
@@ -533,6 +546,14 @@
         }
       ]
     },
+    "auth.OAuthFlowTypeSchema": {
+      "type": "string",
+      "enum": [
+        "client-credentials",
+        "authorization-code",
+        "device-code"
+      ]
+    },
     "auth.AuthScope": {
       "type": "string"
     },
@@ -732,6 +753,62 @@
       ],
       "additionalProperties": false
     },
+    "auth.RedirectUriWithBackupPortsSchema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The primary loopback callback URI, e.g. `http://127.0.0.1:8484/callback`."
+        },
+        "ports": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Backup loopback ports, tried in order when the port in `url` is busy. Each reuses the host and path of `url` (only the port differs) and must be pre-registered with the authorization server."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false,
+      "description": "A loopback callback URI with additional backup ports for the authorization-code flow."
+    },
+    "auth.RedirectUriSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/auth.RedirectUriWithBackupPortsSchema"
+        }
+      ]
+    },
+    "auth.OAuthPkceSchema": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The PKCE code challenge method. Only 'S256' is supported. Defaults to 'S256'."
+        }
+      },
+      "additionalProperties": false,
+      "description": "PKCE (RFC 7636) configuration for the authorization-code flow."
+    },
     "auth.OAuthSchemeSchema": {
       "type": "object",
       "properties": {
@@ -749,7 +826,8 @@
           "const": "oauth"
         },
         "type": {
-          "const": "client-credentials"
+          "$ref": "#/definitions/auth.OAuthFlowTypeSchema",
+          "description": "The OAuth flow. Defaults to 'client-credentials'."
         },
         "scopes": {
           "oneOf": [
@@ -758,26 +836,6 @@
               "items": {
                 "$ref": "#/definitions/auth.AuthScope"
               }
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "client-id-env": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "client-secret-env": {
-          "oneOf": [
-            {
-              "type": "string"
             },
             {
               "type": "null"
@@ -806,8 +864,37 @@
           ],
           "description": "Sets the token header key name. Defaults to 'Authorization'"
         },
+        "client-id-env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The environment variable holding the client ID. Used by the client-credentials flow and, for the public-client flows, as an alternative to a literal `client-id`."
+        },
+        "client-secret-env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "get-token": {
-          "$ref": "#/definitions/auth.OAuthGetTokenEndpointSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.OAuthGetTokenEndpointSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The token endpoint for the client-credentials flow. Required for that flow."
         },
         "refresh-token": {
           "oneOf": [
@@ -818,12 +905,144 @@
               "type": "null"
             }
           ]
+        },
+        "client-id": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The public client ID (literal). Public clients do not use a client secret. Required for the authorization-code and device-code flows (an environment-variable client ID via `client-id-env` is not yet supported for these flows)."
+        },
+        "authorization-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The authorization (consent) endpoint URL. Required for the authorization-code flow."
+        },
+        "device-authorization-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The device authorization endpoint URL. Required for the device-code flow."
+        },
+        "token-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The token endpoint URL. Required for the authorization-code and device-code flows."
+        },
+        "refresh-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The token refresh endpoint URL. Defaults to `token-url` when omitted."
+        },
+        "redirect-uri": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.RedirectUriSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The loopback redirect (callback) URI for the authorization-code flow. Must be a loopback host over http — `127.0.0.1` (recommended, RFC 8252 §7.3) or `localhost` — with any path; the generated CLI binds and sends this URI exactly, so it must match the redirect registered with the authorization server (e.g. `http://127.0.0.1:8484/callback` or `http://localhost:8484/callback`). Provide a bare string to pin a single port, or an object with `url` plus `ports` to add backup ports tried when the primary is busy. Omit it entirely to use an ephemeral (OS-assigned) port."
+        },
+        "pkce": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.OAuthPkceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PKCE configuration for the authorization-code flow. PKCE is always applied for that flow."
+        },
+        "authorization-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters appended to the authorization request (e.g. `audience`)."
+        },
+        "device-authorization-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters included in the device authorization request."
+        },
+        "token-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters included in the token exchange request."
+        },
+        "refresh-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters included in the refresh request."
         }
       },
       "required": [
         "scheme",
-        "type",
-        "get-token"
+        "type"
       ],
       "additionalProperties": false
     },
@@ -1759,6 +1978,117 @@
           "$ref": "#/definitions/variables.VariableDeclarationDetailed"
         }
       ]
+    },
+    "global-parameters.GlobalParameterDeclarationSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "in": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The location of the parameter: body, query, header, or path.\nDefaults to body if not specified."
+        },
+        "target": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The wire-level injection path for the parameter.\nIf not specified, defaults to the parameter name."
+        },
+        "type": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The type of the parameter: string, integer, double, boolean.\nDefaults to string if not specified."
+        },
+        "env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Environment variable to read the default value from."
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Client-side default value for the parameter."
+        },
+        "optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether the parameter is optional."
+        },
+        "apply": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How the parameter is applied: explicit or auto.\nexplicit requires per-operation opt-in via x-fern-global-parameter.\nauto injects on every operation with the target field."
+        },
+        "parameter-name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "SDK/CLI alias for the parameter name.\nIf specified, this name is used in generated SDKs and CLIs\ninstead of the parameter name key."
+        }
+      },
+      "additionalProperties": false
     },
     "pagination.CursorPaginationSchema": {
       "type": "object",

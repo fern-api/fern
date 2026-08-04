@@ -82,4 +82,5 @@ error-discrimination:
 display-name: Vapi API
 ",
   },
+  "specVersion": "1.0",
 }

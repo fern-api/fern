@@ -31,4 +31,20 @@ public class AsyncServiceClient {
     public CompletableFuture<String> getText(RequestOptions requestOptions) {
         return this.rawClient.getText(requestOptions).thenApply(response -> response.body());
     }
+
+    public CompletableFuture<String> getCsv() {
+        return this.rawClient.getCsv().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> getCsv(RequestOptions requestOptions) {
+        return this.rawClient.getCsv(requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> getXml() {
+        return this.rawClient.getXml().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> getXml(RequestOptions requestOptions) {
+        return this.rawClient.getXml(requestOptions).thenApply(response -> response.body());
+    }
 }

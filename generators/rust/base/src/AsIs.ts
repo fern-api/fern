@@ -1,4 +1,6 @@
+import { accessSync, constants } from "node:fs";
 import { readFile } from "node:fs/promises";
+import { createRequire } from "node:module";
 import path from "node:path";
 
 import { entries } from "@fern-api/core-utils";
@@ -162,6 +164,78 @@ export type AsIsFileDefinitionsById = {
 export const AsIsFiles = createAsIsFiles();
 
 /**
+ * Resolve the directory containing the as-is Rust template files.
+ *
+ * Resolution order:
+ *   1. Env var override (`FERN_RUST_ASIS_DIR`) — set by the CLI generator's
+ *      `generateEmbeddedSdk.ts` when invoking the Rust SDK in-process.
+ *   2. `<scriptDir>/asIs/` — standalone Rust SDK Docker image layout.
+ *   3. `<scriptDir>/rust-sdk-dist/asIs/` — embedded in CLI generator Docker.
+ *   4. Monorepo dev — `@fern-api/rust-base` package's `src/asIs/`.
+ */
+function resolveAsIsDir(): string {
+    // 1. Explicit override via environment variable.
+    const envOverride = process.env.FERN_RUST_ASIS_DIR;
+    if (envOverride != null && envOverride !== "") {
+        try {
+            accessSync(path.join(envOverride, "prelude.rs"), constants.R_OK);
+            return envOverride;
+        } catch (_e: unknown) {
+            // fall through
+        }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const scriptDir: string = typeof __dirname !== "undefined" ? __dirname : ".";
+
+    // 2. Standalone Docker layout: <dist>/asIs/
+    const standalone = path.join(scriptDir, "asIs");
+    try {
+        accessSync(path.join(standalone, "prelude.rs"), constants.R_OK);
+        return standalone;
+    } catch (_e: unknown) {
+        // fall through
+    }
+
+    // 3. Embedded in CLI generator Docker: <dist>/rust-sdk-dist/asIs/
+    const embedded = path.join(scriptDir, "rust-sdk-dist", "asIs");
+    try {
+        accessSync(path.join(embedded, "prelude.rs"), constants.R_OK);
+        return embedded;
+    } catch (_e: unknown) {
+        // fall through
+    }
+
+    // 4. Monorepo dev — resolve via @fern-api/rust-base package.
+    try {
+        const base = typeof __filename !== "undefined" ? `file://${__filename}` : "file:///";
+        const require = createRequire(base);
+        const basePkg = require.resolve("@fern-api/rust-base/package.json");
+        const baseRoot = path.dirname(basePkg);
+        const devAsIs = path.join(baseRoot, "src", "asIs");
+        accessSync(path.join(devAsIs, "prelude.rs"), constants.R_OK);
+        return devAsIs;
+    } catch (_e: unknown) {
+        // fall through
+    }
+
+    throw new Error(
+        "Could not resolve Rust core as-is files. " +
+            "Ensure the rust-sdk dist has been built (`pnpm turbo run dist:cli --filter @fern-api/rust-sdk`), " +
+            "or that @fern-api/rust-base is installed in the workspace."
+    );
+}
+
+/** Lazily resolved asIs directory (cached after first call). */
+let _resolvedAsIsDir: string | undefined;
+function getAsIsDir(): string {
+    if (_resolvedAsIsDir == null) {
+        _resolvedAsIsDir = resolveAsIsDir();
+    }
+    return _resolvedAsIsDir;
+}
+
+/**
  * Transforms the raw file specifications into fully resolved file definitions.
  */
 function createAsIsFiles(): AsIsFileDefinitionsById {
@@ -173,7 +247,7 @@ function createAsIsFiles(): AsIsFileDefinitionsById {
             filename,
             directory: RelativeFilePath.of(relativePathToDir),
             loadContents: () => {
-                const absolutePath = path.join(__dirname, "asIs", filename);
+                const absolutePath = path.join(getAsIsDir(), filename);
                 return readFile(absolutePath, "utf-8");
             }
         };

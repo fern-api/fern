@@ -17,34 +17,61 @@ const (
 
 // Config represents the Fern generator configuration.
 type Config struct {
-	DryRun                       bool
-	EnableExplicitNull           bool
-	IncludeLegacyClientOptions   bool
-	IncludeReadme                bool
-	Whitelabel                   bool
-	AlwaysSendRequiredProperties bool
-	InlinePathParameters         bool
-	InlineFileProperties         bool
-	UseReaderForBytesRequest     bool
-	GettersPassByValue           bool
-	ExportAllRequestsAtRoot      bool
-	OmitEmptyRequestWrappers     bool
-	OmitFernHeaders              bool
-	Organization                 string
-	Version                      string
-	IRFilepath                   string
-	SnippetFilepath              string
-	ClientName                   string
-	ClientConstructorName        string
-	FullImportPath               string
-	PackageName                  string
-	PackagePath                  string
-	ExportedClientName           string
-	UnionVersion                 UnionVersion
-	CustomPagerName              string
+	DryRun                         bool
+	ApplyQueryDefaultsOnNilRequest bool
+	EnableExplicitNull             bool
+	IncludeLegacyClientOptions     bool
+	IncludeReadme                  bool
+	Whitelabel                     bool
+	AlwaysSendRequiredProperties   bool
+	InlinePathParameters           bool
+	InlineFileProperties           bool
+	UseReaderForBytesRequest       bool
+	GettersPassByValue             bool
+	DedupeUnionBaseProperties      bool
+	ServerURLVariables             bool
+	ExportAllRequestsAtRoot        bool
+	OmitEmptyRequestWrappers       bool
+	OmitFernHeaders                bool
+	IncludePlatformHeaders         bool
+	AllowUserAgentAppInfo          bool
+	Organization                   string
+	Version                        string
+	IRFilepath                     string
+	SnippetFilepath                string
+	ClientName                     string
+	ClientConstructorName          string
+	FullImportPath                 string
+	PackageName                    string
+	PackagePath                    string
+	ExportedClientName             string
+	UnionVersion                   UnionVersion
+	CustomPagerName                string
 
 	// If not specified, a go.mod and go.sum will not be generated.
 	ModuleConfig *ModuleConfig
+}
+
+// userAgentConfig collapses the User-Agent-related generator flags into a
+// single value so they can be threaded through the file writers without adding
+// yet another positional boolean parameter.
+type userAgentConfig struct {
+	// omitFernHeaders suppresses all Fern platform headers, including the
+	// User-Agent, when true.
+	omitFernHeaders bool
+	// includePlatformHeaders emits the structured, runtime-computed User-Agent
+	// header (os/arch/Go runtime) when true.
+	includePlatformHeaders bool
+	// allowUserAgentAppInfo emits the opt-in appInfo client option whose product
+	// token is appended to whatever User-Agent the SDK would otherwise send.
+	allowUserAgentAppInfo bool
+}
+
+// emitsAppInfo reports whether the opt-in User-Agent appInfo feature should emit
+// any generated code. It is on only when the flag is enabled and the User-Agent
+// is not suppressed by omitFernHeaders (which drops all Fern platform headers).
+func (c userAgentConfig) emitsAppInfo() bool {
+	return c.allowUserAgentAppInfo && !c.omitFernHeaders
 }
 
 // ModuleConfig represents the configuration used to generate
@@ -66,6 +93,7 @@ type ModuleConfig struct {
 // NewConfig returns a new *Config for the given values.
 func NewConfig(
 	dryRun bool,
+	applyQueryDefaultsOnNilRequest bool,
 	enableExplicitNull bool,
 	includeLegacyClientOptions bool,
 	includeReadme bool,
@@ -75,9 +103,13 @@ func NewConfig(
 	inlineFileProperties bool,
 	useReaderForBytesRequest bool,
 	gettersPassByValue bool,
+	dedupeUnionBaseProperties bool,
+	serverURLVariables bool,
 	exportAllRequestsAtRoot bool,
 	omitEmptyRequestWrappers bool,
 	omitFernHeaders bool,
+	includePlatformHeaders bool,
+	allowUserAgentAppInfo bool,
 	organization string,
 	version string,
 	irFilepath string,
@@ -97,32 +129,37 @@ func NewConfig(
 		return nil, err
 	}
 	return &Config{
-		DryRun:                       dryRun,
-		EnableExplicitNull:           enableExplicitNull,
-		IncludeLegacyClientOptions:   includeLegacyClientOptions,
-		IncludeReadme:                includeReadme,
-		Organization:                 organization,
-		Whitelabel:                   whitelabel,
-		AlwaysSendRequiredProperties: alwaysSendRequiredProperties,
-		InlinePathParameters:         inlinePathParameters,
-		InlineFileProperties:         inlineFileProperties,
-		UseReaderForBytesRequest:     useReaderForBytesRequest,
-		GettersPassByValue:           gettersPassByValue,
-		ExportAllRequestsAtRoot:      exportAllRequestsAtRoot,
-		OmitEmptyRequestWrappers:     omitEmptyRequestWrappers,
-		OmitFernHeaders:              omitFernHeaders,
-		Version:                      version,
-		IRFilepath:                   irFilepath,
-		SnippetFilepath:              snippetFilepath,
-		ClientName:                   clientName,
-		ClientConstructorName:        clientConstructorName,
-		FullImportPath:               path.Join(importPath, packagePath),
-		PackageName:                  packageName,
-		PackagePath:                  packagePath,
-		ExportedClientName:           exportedClientName,
-		UnionVersion:                 uv,
-		CustomPagerName:              customPagerName,
-		ModuleConfig:                 moduleConfig,
+		DryRun:                         dryRun,
+		ApplyQueryDefaultsOnNilRequest: applyQueryDefaultsOnNilRequest,
+		EnableExplicitNull:             enableExplicitNull,
+		IncludeLegacyClientOptions:     includeLegacyClientOptions,
+		IncludeReadme:                  includeReadme,
+		Organization:                   organization,
+		Whitelabel:                     whitelabel,
+		AlwaysSendRequiredProperties:   alwaysSendRequiredProperties,
+		InlinePathParameters:           inlinePathParameters,
+		InlineFileProperties:           inlineFileProperties,
+		UseReaderForBytesRequest:       useReaderForBytesRequest,
+		GettersPassByValue:             gettersPassByValue,
+		DedupeUnionBaseProperties:      dedupeUnionBaseProperties,
+		ServerURLVariables:             serverURLVariables,
+		ExportAllRequestsAtRoot:        exportAllRequestsAtRoot,
+		OmitEmptyRequestWrappers:       omitEmptyRequestWrappers,
+		OmitFernHeaders:                omitFernHeaders,
+		IncludePlatformHeaders:         includePlatformHeaders,
+		AllowUserAgentAppInfo:          allowUserAgentAppInfo,
+		Version:                        version,
+		IRFilepath:                     irFilepath,
+		SnippetFilepath:                snippetFilepath,
+		ClientName:                     clientName,
+		ClientConstructorName:          clientConstructorName,
+		FullImportPath:                 path.Join(importPath, packagePath),
+		PackageName:                    packageName,
+		PackagePath:                    packagePath,
+		ExportedClientName:             exportedClientName,
+		UnionVersion:                   uv,
+		CustomPagerName:                customPagerName,
+		ModuleConfig:                   moduleConfig,
 	}, nil
 }
 

@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": "1.0.0",
     "apiName": "api",
     "apiDisplayName": "Discriminator Context Test",
     "apiDocs": null,
@@ -30,6 +31,7 @@
                 "discriminant": "event",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "message",
@@ -149,7 +151,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -233,7 +236,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:SseMessageEventData"
@@ -295,7 +299,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -377,7 +382,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -408,6 +414,7 @@
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "dog",
@@ -530,7 +537,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -611,7 +619,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -642,6 +651,7 @@
                 "discriminant": "event",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "message",
@@ -742,7 +752,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -802,7 +813,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -847,6 +859,7 @@
                     "id": "endpoint_.getSseEvents",
                     "name": "getSseEvents",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1302,6 +1315,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1311,6 +1325,7 @@
                     "id": "endpoint_.getRegularEvents",
                     "name": "getRegularEvents",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1634,6 +1649,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1643,6 +1659,7 @@
                     "id": "endpoint_.getExplicitContext",
                     "name": "getExplicitContext",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1924,6 +1941,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1943,6 +1961,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_": [
@@ -2019,6 +2038,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "message": {
                         "type": "samePropertiesAsObject",
@@ -2167,7 +2187,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:SseMessageEvent": {
                 "type": "object",
@@ -2263,7 +2284,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:SseHeartbeatEvent": {
                 "type": "object",
@@ -2329,7 +2351,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:SseErrorEvent": {
                 "type": "object",
@@ -2425,7 +2448,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:RegularUnion": {
                 "type": "discriminatedUnion",
@@ -2477,6 +2501,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "dog": {
                         "type": "samePropertiesAsObject",
@@ -2628,7 +2653,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:CatVariant": {
                 "type": "object",
@@ -2724,7 +2750,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:ExplicitContextUnion": {
                 "type": "discriminatedUnion",
@@ -2776,6 +2803,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "message": {
                         "type": "samePropertiesAsObject",
@@ -2897,7 +2925,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:ExplicitHeartbeatEvent": {
                 "type": "object",
@@ -2963,7 +2992,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],
@@ -3098,6 +3128,7 @@
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -3106,7 +3137,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {},
     "rootPackage": {
@@ -3143,6 +3175,7 @@
         "hasStreamingEndpoints": true,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

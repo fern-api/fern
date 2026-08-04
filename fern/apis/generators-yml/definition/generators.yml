@@ -316,8 +316,8 @@ types:
         type: optional<string>
         docs: The path to the target `.proto` file that defines the API (e.g. `proto/user/v1/user.proto`).
       root:
-        type: string
-        docs: The path to the `.proto` directory root (e.g. `proto`).
+        type: SpecSourceSchema
+        docs: The path to the `.proto` directory root (e.g. `proto`), or a git remote reference.
       overrides:
         type: optional<OverridesSchema>
         docs: Paths to the overrides configuration. Can be a single path or an array of paths applied sequentially.
@@ -373,6 +373,28 @@ types:
       Individual spec settings in specs[].settings will override these defaults.
       Generator settings in groups.generators[].api.settings will override both.
       Settings hierarchy (highest to lowest priority): generator > spec > api.
+    properties:
+      auto-generate-idempotency-key:
+        type: optional<unknown>
+        docs: |
+          Enable idempotency-key auto-generation for every generator in this API, so it
+          does not have to be set on each generator's `config`. When enabled, generators
+          auto-generate an idempotency key header on retry-unsafe (POST/PUT) requests
+          unless the caller supplies one.
+
+          Accepts either a boolean shorthand or an object with an optional custom
+          header name and eligible-method list:
+          ```yaml
+          api:
+            settings:
+              auto-generate-idempotency-key: true
+              # or
+              auto-generate-idempotency-key:
+                header-name: "Idempotency-Key"
+                methods: ["POST", "PUT"]
+          ```
+          A generator's own `config.auto-generate-idempotency-key` overrides this
+          value for that generator.
 
   APIConfigurationV2SpecsSchema:
     discriminated: false
@@ -528,6 +550,14 @@ types:
           If false, unwrap oneOf structures with a single schema.
           Defaults to false.
         default: false
+      preserve-one-of-in-all-of:
+        type: optional<boolean>
+        docs: |
+          If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each
+          variant is the union member merged with the remaining allOf members.
+          If false, the variants' properties are flattened into a single object and marked optional.
+          Defaults to false.
+        default: false
       inline-all-of-schemas:
         type: optional<boolean>
         docs: |
@@ -558,6 +588,22 @@ types:
           If true, properties shared by every variant of a discriminated `oneOf`
           (including via `allOf`/`$ref`) are lifted into the union's base properties
           so SDKs can expose them directly on the union type without casting.
+          Defaults to false.
+        default: false
+      disambiguate-request-names:
+        type: optional<boolean>
+        docs: |
+          If true, disambiguate generated request wrapper names that collide with
+          component schema names by replacing the "Request" suffix with "Body".
+          If false, keep the original "Request" suffix regardless of collisions.
+          Defaults to true.
+        default: true
+      ignore-tags:
+        type: optional<boolean>
+        docs: |
+          If true, ignore operation-level tags when determining the SDK structure.
+          Endpoints fall back to the root package (or their namespace) and method
+          names are derived from each operation's operationId.
           Defaults to false.
         default: false
 
@@ -602,9 +648,40 @@ types:
         docs: Endpoints to include in the generated SDK (e.g. "POST /users").
         type: optional<list<string>>
 
+  GitRemoteSchema:
+    docs: |
+      A reference to a file or directory in a remote git repository.
+      The CLI will shallow-clone the repo at the specified ref and resolve the path locally.
+    properties:
+      repo:
+        type: string
+        docs: The git repository URL (e.g., https://github.com/org/repo.git).
+      ref:
+        type: optional<string>
+        docs: Branch, tag, or commit SHA. Defaults to the repository's default branch.
+      path:
+        type: string
+        docs: Path to the spec file or directory within the repository.
+
+  SpecGitSourceSchema:
+    docs: |
+      A wrapper that identifies the spec source as a remote git reference.
+      Contains the git repository details under the `git` key.
+    properties:
+      git: GitRemoteSchema
+
+  SpecSourceSchema:
+    discriminated: false
+    docs: |
+      A spec source can be either a local file path (string) or a remote git reference.
+    union:
+      - type: string
+        docs: A local file path relative to the Fern workspace.
+      - SpecGitSourceSchema
+
   OpenAPISpecSchema:
     properties:
-      openapi: string
+      openapi: SpecSourceSchema
       origin: optional<string>
       overrides: optional<OverridesSchema>
       overlays: optional<string>
@@ -627,7 +704,7 @@ types:
 
   AsyncAPISpecSchema:
     properties:
-      asyncapi: string
+      asyncapi: SpecSourceSchema
       origin: optional<string>
       overrides: optional<OverridesSchema>
       namespace: optional<string>

@@ -39,6 +39,9 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedPackageYml.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedPackageYml.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -52,6 +55,7 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
                     Method = HttpMethod.Post,
                     Path = string.Format("/{0}/", ValueConvert.ToPathParameterString(id)),
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

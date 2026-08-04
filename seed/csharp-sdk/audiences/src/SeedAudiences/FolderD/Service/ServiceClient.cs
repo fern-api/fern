@@ -18,6 +18,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedAudiences.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedAudiences.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -30,6 +33,7 @@ public partial class ServiceClient : IServiceClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/partner-path",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

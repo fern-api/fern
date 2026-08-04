@@ -72,6 +72,7 @@
   },
   "fdrApiDefinitionId": undefined,
   "generationMetadata": undefined,
+  "globalParameters": undefined,
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
@@ -103,6 +104,7 @@
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
+    "idempotencyKeyGeneration": undefined,
     "isAuthMandatory": true,
     "platformHeaders": {
       "language": "",
@@ -958,6 +960,7 @@
             "head": "/plant",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_plant.addPlant",
           "idempotent": false,
@@ -1083,6 +1086,7 @@
             "_visit": [Function],
             "type": "openapi",
           },
+          "subtitle": undefined,
           "transport": undefined,
           "userSpecifiedExamples": [],
           "v2BaseUrls": undefined,
@@ -1091,6 +1095,7 @@
             "userSpecifiedExamples": {
               "Add a Fern Plant_plant_addPlant_example_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Add a Fern Plant",
                 "request": {
                   "auth": undefined,
@@ -1134,6 +1139,7 @@
               },
               "Add a Flowering Plant_plant_addPlant_example_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Add a Flowering Plant",
                 "request": {
                   "auth": undefined,
@@ -1178,6 +1184,7 @@
               },
               "Add a Succulent_plant_addPlant_example_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Add a Succulent",
                 "request": {
                   "auth": undefined,
@@ -1221,6 +1228,7 @@
               },
               "Add an Outdoor Plant_plant_addPlant_example_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Add an Outdoor Plant",
                 "request": {
                   "auth": undefined,
@@ -1265,6 +1273,7 @@
               },
               "base_plant_addPlant_example_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "plant_addPlant_example",
                 "request": {
                   "auth": undefined,
@@ -1430,6 +1439,7 @@
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_plant": {
       "displayName": undefined,
@@ -1475,6 +1485,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -1672,6 +1683,7 @@
       "referencedTypes": Set {},
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,

@@ -452,6 +452,16 @@ types:
           to `false` to hide it on those sites.
 
           @default: true
+      mcp:
+        type: optional<boolean>
+        docs: |
+          Controls whether the MCP server endpoint (`/_mcp/server`) is enabled for this docs site.
+          When set to `false`, the endpoint returns 404, the MCP server URL is omitted from
+          `llms.txt` and agent prompts, and the "Connect to Claude Code" / "Connect to Cursor"
+          buttons are hidden. Useful for authenticated docs sites where unauthenticated AI agents
+          discovering the endpoint would cause confusion.
+
+          @default: true
       vscode:
         type: optional<boolean>
         docs: |
@@ -565,6 +575,11 @@ types:
       datasources:
         type: optional<list<AIChatDatasource>>
         docs: Additional content sources that Ask Fern should index and search.
+      "mask-pii":
+        type: optional<boolean>
+        docs: |
+          When enabled, personally identifiable information (PII) in user messages is masked before
+          being sent to Ask Fern. Disabled by default.
 
   AIChatLocation:
     enum:
@@ -971,6 +986,25 @@ types:
         docs: |
           If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages.
 
+      changelog-layout:
+        type: optional<ChangelogLayout>
+        availability: in-development
+        docs: |
+          Sets which layout to use for changelog pages.
+
+          @default: `timeline`
+
+          - `timeline` renders the searchable timeline-of-cards layout.
+          - `classic` renders the legacy stacked-entries layout with a per-page table of contents.
+
+      show-nav-availability-badges:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)
+          are rendered inline next to navigation items in the sidebar. Defaults to false. The page-header
+          availability badge is unaffected by this setting.
+
   DocsSettingsConfig:
     properties:
       search-text:
@@ -1201,6 +1235,11 @@ types:
     enum:
       - fixed
       - static
+
+  ChangelogLayout:
+    enum:
+      - timeline
+      - classic
 
   AudienceId:
     type: string
@@ -1533,10 +1572,10 @@ types:
         docs: |
           Optional path within the repository to the library source.
           Example: django/core
-      branch:
+      ref:
         type: optional<string>
         docs: |
-          Git branch, tag, or commit SHA to check out.
+          Git ref (branch, tag, or commit SHA) to check out.
           Defaults to the repository's default branch when omitted.
           Example: feature/my-fix
 
@@ -2070,6 +2109,13 @@ types:
     properties:
       url: string
       strategy: optional<JsScriptStrategy>
+      disable-sri:
+        type: optional<boolean>
+        docs: |-
+          When true, skip computing a Subresource Integrity (SRI) hash for this
+          remote script. The script is rendered without an `integrity` attribute.
+          Useful for scripts whose contents change (e.g. rolling CDN builds) that
+          would otherwise fail integrity verification.
 
   JsFileConfig:
     discriminated: false
@@ -2278,6 +2324,11 @@ types:
         type: optional<boolean>
         docs: |
           Deprecated: Use `multi-source: true` on the instance instead. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
+      external-sitemaps:
+        type: optional<list<string>>
+        availability: pre-release
+        docs: |
+          Experimental flag: a list of absolute URLs pointing to external sitemaps (`sitemap.xml`). Their pages are fetched and indexed in search alongside this site's documentation (tagged to the same domain), but are flagged as third-party so they rank below all first-party documentation.
 
   PlaygroundSettings:
     properties:
@@ -2292,6 +2343,11 @@ types:
         type: optional<integer>
         docs: |
           The maximum number of websocket messages per connection in the playground.
+      "send-optional-defaults":
+        type: optional<boolean>
+        docs: |
+          When true, optional parameters that declare a default (or x-fern-default) are
+          pre-filled and sent from the API Explorer playground. Defaults to false.
 
   PlaygroundButtonSettings:
     properties:

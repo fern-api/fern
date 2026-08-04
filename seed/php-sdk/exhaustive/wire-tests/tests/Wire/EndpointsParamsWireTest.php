@@ -6,6 +6,8 @@ use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 use Seed\Endpoints\Params\Requests\GetWithQuery;
 use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
+use Seed\Endpoints\Params\Requests\CreateWithBodyAndQuery;
+use Seed\Types\Object\Types\ObjectWithRequiredField;
 
 class EndpointsParamsWireTest extends WireMockTestCase
 {
@@ -198,21 +200,26 @@ class EndpointsParamsWireTest extends WireMockTestCase
 
     /**
      */
-    public function testUploadWithPath(): void {
-        $testId = 'endpoints.params.upload_with_path.0';
-        $this->client->endpoints->params->uploadWithPath(
-            'upload-path',
+    public function testCreateWithBodyAndQuery(): void {
+        $testId = 'endpoints.params.create_with_body_and_query.0';
+        $this->client->endpoints->params->createWithBodyAndQuery(
+            new CreateWithBodyAndQuery([
+                'fields' => '_fields',
+                'body' => new ObjectWithRequiredField([
+                    'string' => 'string',
+                ]),
+            ]),
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.params.upload_with_path.0',
+                    'X-Test-Id' => 'endpoints.params.create_with_body_and_query.0',
                 ],
             ],
         );
         $this->verifyRequestCount(
             $testId,
             "POST",
-            "/params/path/{param}",
-            null,
+            "/params/body-and-query",
+            ['_fields' => '_fields'],
             1
         );
     }

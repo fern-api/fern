@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.12.0-rc.3
+  changelogEntry:
+    - summary: |
+        Bump the Pydantic model generator container's base image from
+        `python:3.11.13` to `python:3.13.14-slim`, matching the SDK generator
+        image and pulling in CPython security fixes (clears CVE-2025-13836,
+        CVE-2025-8194, CVE-2026-3644, and CVE-2026-4224, among other advisories).
+      type: chore
+  createdAt: "2026-06-17"
+  irVersion: 66
+
 - version: 1.12.0-rc.2
   changelogEntry:
     - summary: |

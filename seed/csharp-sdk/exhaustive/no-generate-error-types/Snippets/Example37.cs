@@ -12,8 +12,8 @@ public partial class Examples
         );
 
         await client.Endpoints.Params.GetWithPathAndQueryAsync(
-            "param",
-            new GetWithPathAndQuery {
+            param: "param",
+            request: new GetWithPathAndQuery {
                 Query = "query"
             }
         );

@@ -3,6 +3,7 @@ import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { getOriginalName } from "@fern-api/ir-utils";
 import { Logger } from "@fern-api/logger";
+import { resolveTimeoutInMilliseconds } from "@fern-api/typescript-ast";
 import { getNamespaceExport, resolveNaming } from "@fern-api/typescript-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
@@ -54,7 +55,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             enableForwardCompatibleEnums: parsed?.enableForwardCompatibleEnums ?? false,
             requireDefaultEnvironment: parsed?.requireDefaultEnvironment ?? false,
-            defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds ?? parsed?.timeoutInSeconds,
+            requireBaseUrl: parsed?.requireBaseUrl ?? false,
+            defaultTimeout: resolveTimeoutInMilliseconds(parsed),
             skipResponseValidation: noSerdeLayer || (parsed?.skipResponseValidation ?? true),
             extraDependencies: parsed?.extraDependencies ?? {},
             extraDevDependencies: parsed?.extraDevDependencies ?? {},
@@ -87,6 +89,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             fetchSupport: parsed?.fetchSupport ?? "native",
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
+            includePlatformHeaders: parsed?.includePlatformHeaders ?? false,
+            allowUserAgentAppInfo: parsed?.allowUserAgentAppInfo ?? false,
             useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
             packageManager: parsed?.packageManager ?? "pnpm",
             generateReadWriteOnlyTypes: parsed?.experimentalGenerateReadWriteOnlyTypes ?? false,
@@ -104,8 +108,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             customPagerName: parsed?.customPagerName ?? "CustomPager",
             resolveQueryParameterNameConflicts: parsed?.resolveQueryParameterNameConflicts ?? false,
             alwaysSendAuth: parsed?.alwaysSendAuth ?? false,
+            optionalAuth: parsed?.["optional-auth"] ?? false,
             maxRetries: parsed?.maxRetries,
-            retryStatusCodes: parsed?.retryStatusCodes ?? "legacy"
+            retryStatusCodes: parsed?.retryStatusCodes ?? "legacy",
+            generateReactQueryHooks: parsed?.generateReactQueryHooks ?? false
         };
 
         if (parsed?.serdeLayer != null && parsed?.noSerdeLayer != null) {
@@ -220,7 +226,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
                 enableForwardCompatibleEnums: customConfig.enableForwardCompatibleEnums,
                 requireDefaultEnvironment: customConfig.requireDefaultEnvironment,
-                defaultTimeoutInSeconds: customConfig.defaultTimeoutInSeconds,
+                requireBaseUrl: customConfig.requireBaseUrl,
+                defaultTimeout: customConfig.defaultTimeout,
                 skipResponseValidation: customConfig.skipResponseValidation,
                 extraDevDependencies: customConfig.extraDevDependencies,
                 extraDependencies: customConfig.extraDependencies,
@@ -251,6 +258,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 fetchSupport: customConfig.fetchSupport ?? "native",
                 packagePath: customConfig.packagePath,
                 omitFernHeaders: customConfig.omitFernHeaders ?? false,
+                includePlatformHeaders: customConfig.includePlatformHeaders ?? false,
+                allowUserAgentAppInfo: customConfig.allowUserAgentAppInfo ?? false,
                 useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false,
                 packageManager: customConfig.packageManager,
                 generateReadWriteOnlyTypes: customConfig.generateReadWriteOnlyTypes,
@@ -268,7 +277,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 customPagerName: customConfig.customPagerName ?? "CustomPager",
                 resolveQueryParameterNameConflicts: customConfig.resolveQueryParameterNameConflicts,
                 maxRetries: customConfig.maxRetries,
-                alwaysSendAuth: customConfig.alwaysSendAuth
+                alwaysSendAuth: customConfig.alwaysSendAuth,
+                optionalAuth: customConfig.optionalAuth,
+                generateReactQueryHooks: customConfig.generateReactQueryHooks
             }
         });
         const typescriptProject = await sdkGenerator.generate();

@@ -5,7 +5,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { diffLines } from "diff";
 import fs from "fs";
 import { resolve } from "path";
-import { afterEach, beforeEach } from "vitest";
+import { afterEach, beforeEach, vi } from "vitest";
 
 import { parseImagePaths, replaceImagePathsAndUrls } from "../parseImagePaths.js";
 
@@ -108,21 +108,21 @@ describe("parseImagePaths", () => {
         const page = '---\nimage: { type: "url", value: "https://someurl.com" }\n---';
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual([]);
-        expect(result.markdown.trim()).toEqual("---\nimage:\n  type: url\n  value: 'https://someurl.com'\n---");
+        expect(result.markdown.trim()).toEqual("---\nimage:\n  type: url\n  value: https://someurl.com\n---");
     });
 
     it("should parse url from frontmatter yaml", () => {
         const page = '---\nimage:\n  type: url\n  value: "https://someurl.com"\n---';
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual([]);
-        expect(result.markdown.trim()).toEqual("---\nimage:\n  type: url\n  value: 'https://someurl.com'\n---");
+        expect(result.markdown.trim()).toEqual("---\nimage:\n  type: url\n  value: https://someurl.com\n---");
     });
 
     it("should parse url from frontmatter text", () => {
         const page = '---\nimage: "https://someurl.com"\n---';
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual([]);
-        expect(result.markdown.trim()).toEqual("---\nimage:\n  type: url\n  value: 'https://someurl.com'\n---");
+        expect(result.markdown.trim()).toEqual("---\nimage:\n  type: url\n  value: https://someurl.com\n---");
     });
 
     it("should parse images from frontmatter text", () => {
@@ -139,7 +139,7 @@ describe("parseImagePaths", () => {
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
         expect(result.markdown.trim()).toEqual(
-            "---\n'og:image':\n  type: fileId\n  value: /Volume/git/fern/my/docs/folder/path/to/image.png\n---"
+            "---\nog:image:\n  type: fileId\n  value: /Volume/git/fern/my/docs/folder/path/to/image.png\n---"
         );
     });
 
@@ -167,7 +167,7 @@ describe("parseImagePaths", () => {
           "---
           logo:
             type: url
-            value: 'https://someurl.com'
+            value: https://someurl.com
           ---"
         `
         );
@@ -745,6 +745,33 @@ describe("replaceImagePaths", () => {
             "
         `);
     });
+
+    it("should preserve anchors when replacing markdown link hrefs", () => {
+        const page = "[link text](../other/page.mdx#some-heading)";
+        const markdownFilesToPathName = {
+            "/Volume/git/fern/my/docs/other/page.mdx": "/other/page"
+        };
+        const result = replaceImagePathsAndUrls(page, new Map(), markdownFilesToPathName, PATHS, CONTEXT);
+        expect(result).toContain("[link text](/other/page#some-heading)");
+    });
+
+    it("should preserve anchors when replacing JSX href attributes", () => {
+        const page = '<a href="../other/page.mdx#section">link</a>';
+        const markdownFilesToPathName = {
+            "/Volume/git/fern/my/docs/other/page.mdx": "/other/page"
+        };
+        const result = replaceImagePathsAndUrls(page, new Map(), markdownFilesToPathName, PATHS, CONTEXT);
+        expect(result).toContain('href="/other/page#section"');
+    });
+
+    it("should resolve markdown link without anchor", () => {
+        const page = "[link text](../other/page.mdx)";
+        const markdownFilesToPathName = {
+            "/Volume/git/fern/my/docs/other/page.mdx": "/other/page"
+        };
+        const result = replaceImagePathsAndUrls(page, new Map(), markdownFilesToPathName, PATHS, CONTEXT);
+        expect(result).toContain("[link text](/other/page)");
+    });
 });
 
 describe("cross-platform image path round-trip", () => {
@@ -1049,6 +1076,39 @@ describe("replaceImagePathsAndUrls with streaming parser for large files", () =>
         expect(replaced).toContain("[text](/other/page)");
     });
 
+    it("should resolve relative .md links in translated content when markdownFilesToPathName is provided", () => {
+        // Regression test: translated pages previously passed {} for markdownFilesToPathName,
+        // so relative .md links like ../reference/support-matrix.md were not resolved to slugs.
+        // The on-disk directory "reference/" maps to nav slug "resources/" in this scenario.
+        const page =
+            "Check the [support matrix](../reference/support-matrix.md) for details and also the [quickstart](./quickstart.mdx) guide.";
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const markdownFilesToPathName = {
+            "/Volume/git/fern/my/docs/reference/support-matrix.md": "/dynamo/dev/resources/support-matrix",
+            "/Volume/git/fern/my/docs/reference/support-matrix.mdx": "/dynamo/dev/resources/support-matrix",
+            "/Volume/git/fern/my/docs/folder/quickstart.mdx": "/dynamo/dev/getting-started/quickstart"
+        };
+        const replaced = replaceImagePathsAndUrls(
+            parseResult.markdown,
+            new Map(),
+            markdownFilesToPathName,
+            PATHS,
+            CONTEXT
+        );
+        expect(replaced).toContain("[support matrix](/dynamo/dev/resources/support-matrix)");
+        expect(replaced).toContain("[quickstart](/dynamo/dev/getting-started/quickstart)");
+    });
+
+    it("should not resolve relative .md links when markdownFilesToPathName is empty (previous bug)", () => {
+        // When markdownFilesToPathName is {}, relative .md links pass through unresolved.
+        // This demonstrates the bug that existed for translated content.
+        const page = "Check the [support matrix](../reference/support-matrix.md) for details.";
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const replaced = replaceImagePathsAndUrls(parseResult.markdown, new Map(), {}, PATHS, CONTEXT);
+        // With empty map, the link is NOT resolved — the .md extension remains
+        expect(replaced).toContain("[support matrix](../reference/support-matrix.md)");
+    });
+
     it("should replace absolute image paths with file IDs using streaming parser", () => {
         const page =
             "This is a test page with an absolute image ![image](/static/image.png) and lots more content to exceed the 100 bytes threshold for the streaming parser to run while replacing paths.";
@@ -1140,7 +1200,8 @@ describe("consistency between AST and streaming parsers", () => {
         it("should preserve quoted leading-zero title through parse+stringify round-trip", () => {
             const page = "---\ntitle: '001999'\ndescription: test\n---\nBody content";
             const result = parseImagePaths(page, PATHS);
-            expect(result.markdown).toContain('"001999"');
+            // js-yaml v4 correctly single-quotes leading-zero strings
+            expect(result.markdown).toMatch(/title: '001999'/);
             expect(result.markdown).not.toMatch(/title: 001999\n/);
         });
 
@@ -1156,12 +1217,13 @@ describe("consistency between AST and streaming parsers", () => {
             expect(result.markdown).toMatch(/title: '000000'/);
         });
 
-        it("should preserve non-octal leading-zero titles that js-yaml would leave unquoted", () => {
+        it("should preserve non-octal leading-zero titles that js-yaml v4 quotes correctly", () => {
             const nonOctalCases = ["009999", "001599", "002996", "002997", "002998"];
             for (const val of nonOctalCases) {
                 const page = `---\ntitle: '${val}'\ndescription: test\n---\nBody content`;
                 const result = parseImagePaths(page, PATHS);
-                expect(result.markdown).toContain(`"${val}"`);
+                // js-yaml v4 correctly quotes these with single quotes
+                expect(result.markdown).toMatch(new RegExp(`title: '${val}'`));
                 expect(result.markdown).not.toMatch(new RegExp(`title: ${val}\n`));
             }
         });
@@ -1188,5 +1250,373 @@ describe("consistency between AST and streaming parsers", () => {
             expect(result.markdown).not.toContain('port: "08080"');
             expect(result.markdown).not.toContain('code: "0123"');
         });
+    });
+});
+
+describe("parseImagePaths early exit optimization", () => {
+    it("should process frontmatter images even when body has no image indicators", () => {
+        const page = [
+            "---",
+            "image: path/to/frontmatter-image.png",
+            "---",
+            "This body has no images, no src=, and no icon= attributes at all."
+        ].join("\n");
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/frontmatter-image.png"]);
+    });
+
+    it("should process og:image in frontmatter when body has no image indicators", () => {
+        const page = ["---", "og:image: assets/og-banner.png", "---", "Plain text body with no images."].join("\n");
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/assets/og-banner.png"]);
+    });
+
+    it("should return empty filepaths and preserve body when no images anywhere", () => {
+        const page = ["---", "title: No Images", "---", "This page has no images in frontmatter or body."].join("\n");
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown).toContain("This page has no images in frontmatter or body.");
+    });
+
+    it("should not early-exit when body contains src= attribute", () => {
+        const page = ["---", "title: Has Image", "---", '<img src="path/to/image.png" />'].join("\n");
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
+    });
+});
+
+describe("streaming scanner curly-brace src handling", () => {
+    it("should replace src={'path'} with file ID", () => {
+        const page = "<img src={'path/to/image.png'} />";
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "curly-single-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:curly-single-id");
+    });
+
+    it('should replace src={"path"} with file ID', () => {
+        const page = '<img src={"path/to/image.png"} />';
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "curly-double-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:curly-double-id");
+    });
+
+    it("should handle src={'path'} with whitespace inside braces", () => {
+        const page = "<img src={ 'path/to/image.png' } />";
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "curly-space-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:curly-space-id");
+    });
+
+    it("should preserve anchor in src={'path#anchor'}", () => {
+        const page = "<img src={'path/to/image.png#section'} />";
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "curly-anchor-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:curly-anchor-id#section");
+    });
+
+    it("should handle icon={'path'} for local icon references", () => {
+        const page = "<Component icon={'path/to/icon.svg'} />";
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/icon.svg"), "curly-icon-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:curly-icon-id");
+    });
+
+    it("should produce same result as plain quotes for simple string literals", () => {
+        const plainPage = '<img src="path/to/image.png" />';
+        const curlyPage = "<img src={'path/to/image.png'} />";
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "compare-id"]
+        ]);
+        const plainResult = replaceImagePathsAndUrls(plainPage, fileIds, {}, PATHS, CONTEXT);
+        const curlyResult = replaceImagePathsAndUrls(curlyPage, fileIds, {}, PATHS, CONTEXT);
+        expect(plainResult).toContain("file:compare-id");
+        expect(curlyResult).toContain("file:compare-id");
+    });
+});
+
+describe("AST fallback for complex JSX expressions", () => {
+    it("should leave src={variable} unchanged", () => {
+        const page = "<img src={pathToImage} />";
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "should-not-appear"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("src={pathToImage}");
+        expect(result).not.toContain("file:");
+    });
+
+    it("should leave src={fn('path')} unchanged when fn wraps the literal", () => {
+        const page = "<img src={getUrl('path/to/image.png')} />";
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "fn-wrap-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        // The function call prevents extractSingleLiteral from returning a value,
+        // so the AST fallback correctly skips this attribute
+        expect(result).toContain("src={getUrl(");
+    });
+
+    it("should leave concatenated expressions unchanged", () => {
+        const page = "<img src={base + '/image.png'} />";
+        const fileIds = new Map([[AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/image.png"), "concat-id"]]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("src={base + '/image.png'}");
+        expect(result).not.toContain("file:concat-id");
+    });
+
+    it("should handle spread attributes without crashing", () => {
+        const page = '<Component {...{src: "path/to/image.png"}} />';
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "spread-id"]
+        ]);
+        // Should not throw — the spread triggers AST fallback which handles it via estree walking
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toBeDefined();
+    });
+});
+
+describe("overlap prevention: mixed simple and complex expressions", () => {
+    it("should replace simple src={'path'} without duplicating edits when complex expression is on same page", () => {
+        const page = ["<img src={'path/to/simple.png'} />", "<Component src={getUrl('other.png')} />"].join("\n");
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/simple.png"), "simple-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:simple-id");
+        // The simple path should be replaced exactly once
+        const matches = result.match(/file:simple-id/g);
+        expect(matches).toHaveLength(1);
+    });
+
+    it("should handle plain quotes and curly expressions on same page without corruption", () => {
+        const page = [
+            '<img src="path/to/plain.png" />',
+            "<img src={'path/to/curly.png'} />",
+            "<img src={dynamicPath} />"
+        ].join("\n");
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/plain.png"), "plain-id"],
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/curly.png"), "curly-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:plain-id");
+        expect(result).toContain("file:curly-id");
+        expect(result).toContain("src={dynamicPath}");
+    });
+
+    it("should handle markdown images alongside JSX expressions without corruption", () => {
+        const page = [
+            "![alt](path/to/md-image.png)",
+            "<img src={variable} />",
+            '<img src="path/to/html-image.png" />'
+        ].join("\n");
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/md-image.png"), "md-id"],
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/html-image.png"), "html-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("![alt](file:md-id)");
+        expect(result).toContain('src="file:html-id"');
+        expect(result).toContain("src={variable}");
+    });
+
+    it("should not produce overlapping edits when spread and simple attributes coexist", () => {
+        const page = ["<img src={'path/to/image.png'} />", '<Component {...{href: "/other/page"}} />'].join("\n");
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "no-overlap-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:no-overlap-id");
+        // Verify the output is well-formed (no corrupted text from overlapping edits)
+        expect(result).toContain("<Component");
+        expect(result).toContain("/>");
+    });
+});
+
+describe("markdown image titles", () => {
+    it("should resolve the path of an image with a title", () => {
+        const page = 'This is a test page with an image ![image](path/to/image.png "My title")';
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
+        expect(result.markdown.trim()).toBe(
+            'This is a test page with an image ![image](/Volume/git/fern/my/docs/folder/path/to/image.png "My title")'
+        );
+    });
+
+    it("should replace an image with a title with its file ID, preserving the title", () => {
+        const page = '![image](path/to/image.png "My title")';
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "titled-image-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
+        expect(result.trim()).toBe('![image](file:titled-image-id "My title")');
+    });
+
+    it("should support single-quoted and parenthesized titles", () => {
+        const page = ["![a](path/to/a.png 'single')", "![b](path/to/b.png (parens))"].join("\n");
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/a.png"), "a-id"],
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/b.png"), "b-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("![a](file:a-id 'single')");
+        expect(result).toContain("![b](file:b-id (parens))");
+    });
+
+    it("should preserve the title alongside an anchor", () => {
+        const page = '![image](path/to/image.png#anchor "My title")';
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "anchored-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
+        expect(result.trim()).toBe('![image](file:anchored-id#anchor "My title")');
+    });
+
+    it("should leave external images with titles untouched", () => {
+        const page = '![image](https://example.com/image.png "My title")';
+        const result = parseImagePaths(page, PATHS, CONTEXT);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toBe('![image](https://example.com/image.png "My title")');
+    });
+
+    it("should handle titles with the streaming parser for large files", () => {
+        vi.stubEnv("FERN_DOCS_LARGE_FILE_BYTES", "10");
+        const logSpy = vi.spyOn(console, "debug").mockImplementation(() => undefined);
+
+        const page = '![image](path/to/image.png "My title")';
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const logged = logSpy.mock.calls.flat().join("\n");
+        logSpy.mockRestore();
+
+        // guards against silently exercising the mdast path instead
+        expect(logged).toContain("Using streaming parser for large file");
+        expect(parseResult.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
+
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "streamed-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
+        expect(result.trim()).toBe('![image](file:streamed-id "My title")');
+
+        vi.unstubAllEnvs();
+    });
+
+    it("should not swallow the title when the destination has an unterminated angle bracket", () => {
+        vi.stubEnv("FERN_DOCS_LARGE_FILE_BYTES", "10");
+        const result = parseImagePaths('![image](<path/to/image.png "My title")', PATHS, CONTEXT);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/<path/to/image.png"]);
+        expect(result.markdown.trim()).toBe('![image](/Volume/git/fern/my/docs/folder/<path/to/image.png "My title")');
+        vi.unstubAllEnvs();
+    });
+
+    it("should rewrite a relative markdown link that specifies a title", () => {
+        const page = '[other page](./other.mdx "My title")';
+        const result = replaceImagePathsAndUrls(
+            page,
+            new Map(),
+            { [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/other.mdx")]: "docs/other" },
+            PATHS,
+            CONTEXT
+        );
+        expect(result.trim()).toBe('[other page](/docs/other "My title")');
+    });
+
+    it("should rewrite a relative markdown link with both an anchor and a title", () => {
+        const page = "[other page](./other.mdx#section 'My title')";
+        const result = replaceImagePathsAndUrls(
+            page,
+            new Map(),
+            { [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/other.mdx")]: "docs/other" },
+            PATHS,
+            CONTEXT
+        );
+        expect(result.trim()).toBe("[other page](/docs/other#section 'My title')");
+    });
+});
+
+describe("literal angle brackets in prose", () => {
+    const IMAGE_PATH = AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png");
+    const fileIds = new Map([[IMAGE_PATH, "leaf-id"]]);
+
+    function roundTrip(page: string): string {
+        const parsed = parseImagePaths(page, PATHS, CONTEXT);
+        return replaceImagePathsAndUrls(parsed.markdown, fileIds, {}, PATHS, CONTEXT);
+    }
+
+    it.each([
+        ["comparison operator in inline code", "Outliers are `is < Q1 - 1.5*IQR`."],
+        ["comparison operator in plain text", "Keep the tolerance < 5 percent."],
+        ["less-than-or-equal in inline code", "Show deals below the margin (filter is `<=`)."],
+        ["escaped angle bracket", "Use \\<placeholder\\> for the name."],
+        ["angle bracket inside a fenced code block", "```js\nif (a < b) {\n  send();\n}\n```"]
+    ])("replaces a later image path when the page contains a %s", (_name, prose) => {
+        const page = `${prose}\n\n![leaf](path/to/image.png)\n`;
+        expect(roundTrip(page).trim()).toBe(`${prose}\n\n![leaf](file:leaf-id)`.trim());
+    });
+
+    it("replaces images that follow an unterminated tag-like construct", () => {
+        const page = "Pass `<div` to the helper.\n\n![leaf](path/to/image.png)\n";
+        expect(roundTrip(page)).toContain("file:leaf-id");
+    });
+
+    it("still rewrites src on real tags", () => {
+        const page = 'The width must be < 100.\n\n<img src="path/to/image.png" />\n';
+        const result = roundTrip(page);
+        expect(result).toContain('src="file:leaf-id"');
+        expect(result).toContain("must be < 100");
+    });
+
+    it("still rewrites links after a literal angle bracket", () => {
+        const page = "Values where a < b.\n\n[other page](./other.mdx)\n";
+        const result = replaceImagePathsAndUrls(
+            page,
+            new Map(),
+            { [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/other.mdx")]: "docs/other" },
+            PATHS,
+            CONTEXT
+        );
+        expect(result).toContain("[other page](/docs/other)");
+    });
+
+    it("replaces the image path on both the streaming and AST paths", () => {
+        vi.stubEnv("FERN_DOCS_LARGE_FILE_BYTES", "10");
+        const page = "Outliers are `is < Q1`.\n\n![leaf](path/to/image.png)\n";
+        const parsed = parseImagePaths(page, PATHS, CONTEXT);
+        expect(parsed.filepaths).toEqual([IMAGE_PATH]);
+        expect(replaceImagePathsAndUrls(parsed.markdown, fileIds, {}, PATHS, CONTEXT)).toContain("file:leaf-id");
+        vi.unstubAllEnvs();
+    });
+
+    it("does not leave a local filesystem path in the published markdown", () => {
+        const page = "Outliers are `is < Q1`.\n\n![leaf](path/to/image.png)\n";
+        expect(roundTrip(page)).not.toContain("/Volume/git/fern");
+    });
+
+    it.each([
+        ["unmatched backtick in prose", "The a`b operator is odd."],
+        ["backtick inside an indented fence", "- Example:\n\n    ```\n    a ` b\n    ```"],
+        ["unterminated fence", "```js\nconst a = 1;"],
+        ["windows line endings around an unterminated tag-like construct", "Pass `<div` here.\r\n\r\n"]
+    ])("replaces a later image path when the page contains an %s", (_name, prose) => {
+        const page = `${prose}\n\n![leaf](path/to/image.png)\n`;
+        expect(roundTrip(page)).toContain("file:leaf-id");
+    });
+
+    it("does not rewrite an image inside a fenced code block", () => {
+        const page = "```\n![leaf](path/to/image.png)\n```\n";
+        expect(roundTrip(page)).toContain("![leaf](path/to/image.png)");
     });
 });

@@ -19,9 +19,9 @@
                   },
                   "response": {
                     "body": {
-                      "display_name": "display_name",
-                      "id": "id",
-                      "name": "name",
+                      "display_name": "string",
+                      "id": "string",
+                      "name": "string",
                       "options_auth0": {
                         "tenant": "tenant",
                       },
@@ -77,7 +77,20 @@
           },
           "ConnectionResponse": {
             "availability": undefined,
-            "base-properties": {},
+            "base-properties": {
+              "display_name": {
+                "docs": "Connection name shown in the login screen.",
+                "type": "optional<string>",
+              },
+              "id": {
+                "docs": "The connection's identifier.",
+                "type": "string",
+              },
+              "name": {
+                "docs": "The connection's display name.",
+                "type": "string",
+              },
+            },
             "default-variant": undefined,
             "discriminant": {
               "context": "data",
@@ -187,9 +200,9 @@
             id: id
           response:
             body:
-              id: id
-              name: name
-              display_name: display_name
+              id: string
+              name: string
+              display_name: string
               options_auth0:
                 tenant: tenant
               strategy: auth0
@@ -214,7 +227,16 @@ types:
     discriminant:
       value: strategy
       context: data
-    base-properties: {}
+    base-properties:
+      id:
+        type: string
+        docs: The connection's identifier.
+      name:
+        type: string
+        docs: The connection's display name.
+      display_name:
+        type: optional<string>
+        docs: Connection name shown in the login screen.
     docs: Discriminated union of connection strategies.
     union:
       auth0: ConnectionResponseAuth0
@@ -283,4 +305,5 @@ error-discrimination:
 display-name: Lift shared allOf properties from oneOf variants
 ",
   },
+  "specVersion": "1.0.0",
 }

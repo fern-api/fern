@@ -14,6 +14,9 @@ module Seed
     # @option params [String, nil] :filter_date
     # @option params [String, nil] :fields
     #
+    # @example
+    #   client.bulk_update_tasks
+    #
     # @return [Seed::Types::BulkUpdateTasksResponse]
     def bulk_update_tasks(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)

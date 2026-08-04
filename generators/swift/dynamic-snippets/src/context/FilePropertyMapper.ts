@@ -1,12 +1,18 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
+import { sanitizeSwiftIdentifier, swift } from "@fern-api/swift-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export interface FilePropertyInfo {
     fileFields: swift.FunctionArgument[];
     bodyPropertyFields: swift.FunctionArgument[];
+    /**
+     * All file and body-property fields in their original schema declaration
+     * order. The generated request type declares its initializer parameters in
+     * this order, so snippets must emit arguments in the same order.
+     */
+    orderedFields: swift.FunctionArgument[];
 }
 
 export class FilePropertyMapper {
@@ -27,33 +33,37 @@ export class FilePropertyMapper {
     }): FilePropertyInfo {
         const result: FilePropertyInfo = {
             fileFields: [],
-            bodyPropertyFields: []
+            bodyPropertyFields: [],
+            orderedFields: []
         };
         const record = this.context.getRecord(value) ?? {};
         for (const property of body.properties) {
             switch (property.type) {
                 case "file": {
                     const arg = swift.functionArgument({
-                        label: sanitizeSelf(property.name.camelCase.unsafeName),
+                        label: sanitizeSwiftIdentifier(property.name.camelCase.unsafeName),
                         value: this.getSingleFileProperty({ property, record })
                     });
                     result.fileFields.push(arg);
+                    result.orderedFields.push(arg);
                     break;
                 }
                 case "fileArray": {
                     const arg = swift.functionArgument({
-                        label: sanitizeSelf(property.name.camelCase.unsafeName),
+                        label: sanitizeSwiftIdentifier(property.name.camelCase.unsafeName),
                         value: this.getArrayFileProperty({ property, record })
                     });
                     result.fileFields.push(arg);
+                    result.orderedFields.push(arg);
                     break;
                 }
                 case "bodyProperty": {
                     const arg = swift.functionArgument({
-                        label: sanitizeSelf(property.name.name.camelCase.unsafeName),
+                        label: sanitizeSwiftIdentifier(property.name.name.camelCase.unsafeName),
                         value: this.getBodyProperty({ fromSymbol, property, record })
                     });
                     result.bodyPropertyFields.push(arg);
+                    result.orderedFields.push(arg);
                     break;
                 }
                 default:

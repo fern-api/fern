@@ -36,6 +36,7 @@ export const EndpointWithExample: core.serialization.ObjectSchema<
         audiences: core.serialization.list(core.serialization.string()),
         path: core.serialization.string(),
         summary: core.serialization.string().optional(),
+        subtitle: core.serialization.string().optional(),
         operationId: core.serialization.string().optional(),
         tags: core.serialization.list(TagId),
         pathParameters: core.serialization.list(PathParameterWithExample),
@@ -51,6 +52,7 @@ export const EndpointWithExample: core.serialization.ObjectSchema<
         examples: core.serialization.list(EndpointExample),
         pagination: Pagination.optional(),
         retries: RetriesConfiguration.optional(),
+        globalParameterIds: core.serialization.list(core.serialization.string()).optional(),
     })
     .extend(WithDescription)
     .extend(WithAvailability)
@@ -67,6 +69,7 @@ export declare namespace EndpointWithExample {
         audiences: string[];
         path: string;
         summary?: string | null;
+        subtitle?: string | null;
         operationId?: string | null;
         tags: TagId.Raw[];
         pathParameters: PathParameterWithExample.Raw[];
@@ -82,5 +85,6 @@ export declare namespace EndpointWithExample {
         examples: EndpointExample.Raw[];
         pagination?: Pagination.Raw | null;
         retries?: RetriesConfiguration.Raw | null;
+        globalParameterIds?: string[] | null;
     }
 }

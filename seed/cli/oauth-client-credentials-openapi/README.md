@@ -17,13 +17,21 @@ Command-line interface for the OAuth Client Credentials OpenAPI.
 
 ## Installation
 
-Install the [Rust toolchain](https://rustup.rs/) if you don't have it:
+### Shell (macOS / Linux)
 
 ```bash
-curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/<org>/<repo>/releases/latest/download/oauth-client-credentials-openapi-installer.sh | sh
 ```
 
-Then build from source:
+### PowerShell (Windows)
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://github.com/<org>/<repo>/releases/latest/download/oauth-client-credentials-openapi-installer.ps1 | iex"
+```
+
+### Build from source
+
+If you prefer to build from source, install the [Rust toolchain](https://rustup.rs/) and run:
 
 ```bash
 cargo build --release
@@ -32,7 +40,14 @@ cargo build --release
 
 ## Authentication
 
-This API requires authentication. Run `oauth-client-credentials-openapi --help` for details.
+Set the following environment variable(s) before using the CLI:
+
+```bash
+export OAUTH_CLIENT_CREDENTIALS_OPENAPI_CLIENT_ID="<your OAuth client credential>"
+export OAUTH_CLIENT_CREDENTIALS_OPENAPI_CLIENT_SECRET="<your OAuth client credential>"
+```
+
+A `.env` file in the working directory is also supported — the CLI auto-loads it on startup.
 
 ## Quick start
 

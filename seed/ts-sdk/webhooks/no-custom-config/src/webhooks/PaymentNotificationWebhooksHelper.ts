@@ -18,19 +18,20 @@ export class PaymentNotificationWebhooksHelper {
         requestBody: string,
         signatureHeader: string,
         keyIdHeader: string | undefined,
+        messageId: string,
         timestampHeader: string,
     ): Promise<boolean> {
         if (requestBody == null || signatureHeader == null) {
-            throw new Error("Missing required parameters for webhook signature verification");
+            return false;
         }
 
         if (timestampHeader == null || timestampHeader === "") {
-            throw new Error("Missing timestamp header 'x-payment-timestamp' for webhook signature verification");
+            return false;
         }
 
         const timestampMs = new Date(timestampHeader).getTime();
         if (Number.isNaN(timestampMs)) {
-            throw new Error("Invalid timestamp format: expected ISO 8601 date string");
+            return false;
         }
 
         if (Math.abs(Date.now() - timestampMs) > TIMESTAMP_TOLERANCE_SECONDS * 1000) {
@@ -41,7 +42,7 @@ export class PaymentNotificationWebhooksHelper {
             ? signatureHeader.slice(SIGNATURE_PREFIX.length)
             : signatureHeader;
 
-        const payload = requestBody;
+        const payload = [messageId, timestampHeader, requestBody].join(".");
 
         const resolvedKey = await await core.fetchJwks({
             url: "https://api.example.com/.well-known/jwks.json",

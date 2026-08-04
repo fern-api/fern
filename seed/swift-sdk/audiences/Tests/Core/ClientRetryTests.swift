@@ -6,11 +6,11 @@ import Testing
     @Test func testRetryOn408RequestTimeout() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 408, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 408, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 408, headers: ["Content-Type": "application/json"], body: Foundation.Data()),
+            (statusCode: 408, headers: ["Content-Type": "application/json"], body: Foundation.Data()),
             (
                 statusCode: 200, headers: ["Content-Type": "application/json"],
-                body: Data("true".utf8)
+                body: Foundation.Data("true".utf8)
             ),
         ])
 
@@ -20,7 +20,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -30,11 +38,11 @@ import Testing
     @Test func testRetryOn429TooManyRequests() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 429, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 429, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 429, headers: ["Content-Type": "application/json"], body: Foundation.Data()),
+            (statusCode: 429, headers: ["Content-Type": "application/json"], body: Foundation.Data()),
             (
                 statusCode: 200, headers: ["Content-Type": "application/json"],
-                body: Data("true".utf8)
+                body: Foundation.Data("true".utf8)
             ),
         ])
 
@@ -44,7 +52,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -54,11 +70,11 @@ import Testing
     @Test func testRetryOn500InternalServerError() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Foundation.Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Foundation.Data()),
             (
                 statusCode: 200, headers: ["Content-Type": "application/json"],
-                body: Data("true".utf8)
+                body: Foundation.Data("true".utf8)
             ),
         ])
 
@@ -68,7 +84,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -78,10 +102,10 @@ import Testing
     @Test func testRetryOn503ServiceUnavailable() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 503, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 503, headers: ["Content-Type": "application/json"], body: Foundation.Data()),
             (
                 statusCode: 200, headers: ["Content-Type": "application/json"],
-                body: Data("true".utf8)
+                body: Foundation.Data("true".utf8)
             ),
         ])
 
@@ -91,7 +115,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -103,7 +135,7 @@ import Testing
         stub.setResponseSequence([
             (
                 statusCode: 400, headers: ["Content-Type": "application/json"],
-                body: Data("{\"errorName\":\"BadRequest\"}".utf8)
+                body: Foundation.Data("{\"errorName\":\"BadRequest\"}".utf8)
             )
         ])
 
@@ -113,7 +145,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -126,7 +166,7 @@ import Testing
         stub.setResponseSequence([
             (
                 statusCode: 404, headers: ["Content-Type": "application/json"],
-                body: Data("{\"errorName\":\"NotFound\"}".utf8)
+                body: Foundation.Data("{\"errorName\":\"NotFound\"}".utf8)
             )
         ])
 
@@ -136,7 +176,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -159,7 +207,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -172,11 +228,11 @@ import Testing
         stub.setResponseSequence([
             (
                 statusCode: 429, headers: ["Content-Type": "application/json", "Retry-After": "1"],
-                body: Data()
+                body: Foundation.Data()
             ),
             (
                 statusCode: 200, headers: ["Content-Type": "application/json"],
-                body: Data("true".utf8)
+                body: Foundation.Data("true".utf8)
             ),
         ])
 
@@ -187,7 +243,15 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -210,11 +274,11 @@ import Testing
         stub.setResponseSequence([
             (
                 statusCode: 429,
-                headers: ["Content-Type": "application/json", "Retry-After": httpDate], body: Data()
+                headers: ["Content-Type": "application/json", "Retry-After": httpDate], body: Foundation.Data()
             ),
             (
                 statusCode: 200, headers: ["Content-Type": "application/json"],
-                body: Data("true".utf8)
+                body: Foundation.Data("true".utf8)
             ),
         ])
 
@@ -225,7 +289,15 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -244,11 +316,11 @@ import Testing
                 statusCode: 429,
                 headers: [
                     "Content-Type": "application/json", "X-RateLimit-Reset": "\(futureTimestamp)",
-                ], body: Data()
+                ], body: Foundation.Data()
             ),
             (
                 statusCode: 200, headers: ["Content-Type": "application/json"],
-                body: Data("true".utf8)
+                body: Foundation.Data("true".utf8)
             ),
         ])
 
@@ -259,7 +331,15 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -274,27 +354,27 @@ import Testing
         stub.setResponseSequence([
             (
                 statusCode: 500,
-                headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
+                headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Foundation.Data()
             ),
             (
                 statusCode: 500,
-                headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
+                headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Foundation.Data()
             ),
             (
                 statusCode: 500,
-                headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
+                headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Foundation.Data()
             ),
             (
                 statusCode: 500,
-                headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
+                headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Foundation.Data()
             ),
             (
                 statusCode: 500,
-                headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
+                headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Foundation.Data()
             ),
             (
                 statusCode: 200, headers: ["Content-Type": "application/json"],
-                body: Data("true".utf8)
+                body: Foundation.Data("true".utf8)
             ),
         ])
 
@@ -304,7 +384,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -314,7 +402,7 @@ import Testing
     @Test func testEndpointLevelMaxRetriesZero() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Foundation.Data())
         ])
 
         let client = AudiencesClient(
@@ -323,7 +411,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -336,7 +432,7 @@ import Testing
         stub.setResponseSequence([
             (
                 statusCode: 200, headers: ["Content-Type": "application/json"],
-                body: Data("true".utf8)
+                body: Foundation.Data("true".utf8)
             )
         ])
 
@@ -346,7 +442,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }

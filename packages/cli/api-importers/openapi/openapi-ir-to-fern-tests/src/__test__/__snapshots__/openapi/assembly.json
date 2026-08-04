@@ -6345,4 +6345,5 @@ auth-schemes:
 auth: ApiKey
 ",
   },
+  "specVersion": "1.0.0",
 }

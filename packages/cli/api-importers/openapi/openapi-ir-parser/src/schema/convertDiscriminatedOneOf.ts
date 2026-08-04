@@ -1,3 +1,4 @@
+import type { Logger } from "@fern-api/logger";
 import {
     Availability,
     CommonPropertyWithExample,
@@ -30,6 +31,7 @@ export function convertDiscriminatedOneOf({
     wrapAsOptional,
     wrapAsNullable,
     discriminator,
+    oneOfSchemas,
     context,
     namespace,
     groupName,
@@ -47,6 +49,7 @@ export function convertDiscriminatedOneOf({
     wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     discriminator: OpenAPIV3.DiscriminatorObject;
+    oneOfSchemas: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[] | undefined;
     context: SchemaParserContext;
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
@@ -58,10 +61,44 @@ export function convertDiscriminatedOneOf({
     const discriminatorContext = resolveDiscriminatorContext({ discriminator, context });
     const unionSubTypes = Object.fromEntries(
         Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema]) => {
+            const ref: OpenAPIV3.ReferenceObject = { $ref: schema };
+            const resolvedSchema = context.resolveSchemaReference(ref);
+
+            // If the referenced schema is itself a oneOf/anyOf of objects (without its own
+            // discriminator), merge those objects into a single object to avoid the spurious
+            // "value" wrapper that the IR generator adds for non-object variants.
+            const nestedVariants = resolvedSchema.oneOf ?? resolvedSchema.anyOf;
+            if (
+                nestedVariants != null &&
+                nestedVariants.length > 0 &&
+                resolvedSchema.discriminator == null &&
+                resolvedSchema.properties == null &&
+                resolvedSchema.allOf == null
+            ) {
+                const mergedSchema = mergeOneOfVariantsIntoObject({
+                    variants: nestedVariants,
+                    context,
+                    discriminant
+                });
+                if (mergedSchema != null) {
+                    const variantSchema = convertSchemaObject(
+                        mergedSchema,
+                        false,
+                        false,
+                        context,
+                        [...breadcrumbs, discriminantValue],
+                        encoding,
+                        source,
+                        namespace,
+                        new Set([discriminant])
+                    );
+                    context.markReferencedByDiscriminatedUnion(ref, discriminant, 1);
+                    return [discriminantValue, variantSchema];
+                }
+            }
+
             const subtypeReference = convertReferenceObject(
-                {
-                    $ref: schema
-                },
+                ref,
                 false,
                 false,
                 context,
@@ -70,16 +107,17 @@ export function convertDiscriminatedOneOf({
                 source,
                 namespace
             );
-            context.markReferencedByDiscriminatedUnion(
-                {
-                    $ref: schema
-                },
-                discriminant,
-                1
-            );
+            context.markReferencedByDiscriminatedUnion(ref, discriminant, 1);
             return [discriminantValue, subtypeReference];
         })
     );
+    warnAboutUnmappedOneOfMembers({
+        oneOfSchemas,
+        mapping: discriminator.mapping,
+        generatedName,
+        breadcrumbs,
+        context
+    });
     const convertedProperties = Object.entries(properties)
         .filter(([propertyName]) => {
             return propertyName !== discriminant;
@@ -136,6 +174,77 @@ export function convertDiscriminatedOneOf({
         groupName,
         source
     });
+}
+
+function getSchemaNameFromReference(ref: string): string {
+    const segments = ref.split("/");
+    return segments[segments.length - 1] ?? ref;
+}
+
+/**
+ * `convertDiscriminatedOneOf` runs more than once for the same union during parsing (e.g. an inline
+ * request-body union is converted separately for the request and non-request passes), so the same
+ * warning would otherwise be emitted several times. The parser spins up multiple context objects but
+ * shares a single logger, so we track the warnings already emitted per logger to avoid log spam.
+ */
+const alreadyWarnedUnmappedMembersByLogger = new WeakMap<Logger, Set<string>>();
+
+function warnOnce(context: SchemaParserContext, message: string): void {
+    let alreadyWarned = alreadyWarnedUnmappedMembersByLogger.get(context.logger);
+    if (alreadyWarned == null) {
+        alreadyWarned = new Set<string>();
+        alreadyWarnedUnmappedMembersByLogger.set(context.logger, alreadyWarned);
+    }
+    if (alreadyWarned.has(message)) {
+        return;
+    }
+    alreadyWarned.add(message);
+    context.logger.warn(message);
+}
+
+/**
+ * A discriminated union is built exclusively from `discriminator.mapping`. Any member listed in the
+ * spec's `oneOf`/`anyOf` that is not represented in the mapping is silently omitted from the generated
+ * union, producing an SDK whose wire contract does not match the spec. Emit a warning so this failure
+ * is loud instead of silent.
+ */
+function warnAboutUnmappedOneOfMembers({
+    oneOfSchemas,
+    mapping,
+    generatedName,
+    breadcrumbs,
+    context
+}: {
+    oneOfSchemas: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[] | undefined;
+    mapping: Record<string, string> | undefined;
+    generatedName: string;
+    breadcrumbs: string[];
+    context: SchemaParserContext;
+}): void {
+    if (oneOfSchemas == null || oneOfSchemas.length === 0) {
+        return;
+    }
+    const mappedSchemaNames = new Set(Object.values(mapping ?? {}).map(getSchemaNameFromReference));
+    const location = breadcrumbs.length > 0 ? `${generatedName} (${breadcrumbs.join(" > ")})` : generatedName;
+    for (const member of oneOfSchemas) {
+        if (isReferenceObject(member)) {
+            if (!mappedSchemaNames.has(getSchemaNameFromReference(member.$ref))) {
+                warnOnce(
+                    context,
+                    `Discriminated union "${location}" lists "${member.$ref}" in its oneOf/anyOf, but it is not present in ` +
+                        `the discriminator mapping. This variant will be omitted from the generated union, so payloads using it ` +
+                        `will fail to serialize or deserialize. Add it to the discriminator mapping to include it.`
+                );
+            }
+        } else if ((member.type as string) !== "null") {
+            warnOnce(
+                context,
+                `Discriminated union "${location}" contains an inline oneOf/anyOf member that is not referenced by the ` +
+                    `discriminator mapping. This variant will be omitted from the generated union, so payloads using it will fail ` +
+                    `to serialize or deserialize. Extract it into a named schema and add it to the discriminator mapping to include it.`
+            );
+        }
+    }
 }
 
 export function convertDiscriminatedOneOfWithVariants({
@@ -354,11 +463,12 @@ export function wrapDiscriminatedOneOf({
  * union's top level are excluded. This lets SDKs expose shared fields directly on
  * the union type instead of forcing a cast to a concrete variant.
  *
- * Properties that every variant already inherits through a shared `allOf $ref` parent
- * are also excluded: the parent schema is the single source of truth, and re-emitting
- * those properties on the union forces some generators (e.g. TypeScript) to declare a
- * synthesized base interface alongside the real parent, which can collide when the two
- * disagree on optionality.
+ * Properties that every variant inherits via a shared `allOf $ref` parent are also
+ * lifted: SDKs without structural typing (Go, C#, etc.) can only expose what the IR
+ * declares on the union itself, so omitting them would force a cast even when every
+ * variant truly has the property. Generators that synthesize a base interface
+ * alongside the real parent (e.g. TypeScript) are responsible for suppressing the
+ * duplicate at generation time to avoid TS2320 collisions.
  */
 function inferCommonPropertiesFromVariants({
     variants,
@@ -387,13 +497,6 @@ function inferCommonPropertiesFromVariants({
     if (firstVariantProps == null) {
         return [];
     }
-    const inheritedFromSharedParent = getPropertyNamesInheritedFromSharedAllOfRefParents({
-        variants,
-        context,
-        breadcrumbs,
-        source,
-        namespace
-    });
     const variantRequiredSets = variants.map((variant) =>
         getAllRequiredPropertyNames({ schema: variant, context, visited: new Set() })
     );
@@ -403,9 +506,6 @@ function inferCommonPropertiesFromVariants({
             continue;
         }
         if (existingPropertyNames.has(propertyName)) {
-            continue;
-        }
-        if (inheritedFromSharedParent.has(propertyName)) {
             continue;
         }
         let presentInAll = true;
@@ -479,60 +579,10 @@ function getAllRequiredPropertyNames({
 }
 
 /**
- * Walks each variant's `allOf` chain (following `$ref`s transitively) and returns the set
- * of property names that come from `$ref` parents shared by *every* variant. These are the
- * properties each variant already inherits from a common ancestor — re-declaring them on
- * the union would cause the structural duplication described above.
+ * Collects all properties from a schema, flattening any `allOf` chain.
+ * Returns a map of property name → property schema, plus a set of required property names.
  */
-function getPropertyNamesInheritedFromSharedAllOfRefParents({
-    variants,
-    context,
-    breadcrumbs,
-    source,
-    namespace
-}: {
-    variants: Array<OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
-    context: SchemaParserContext;
-    breadcrumbs: string[];
-    source: Source;
-    namespace: string | undefined;
-}): Set<string> {
-    if (variants.length === 0) {
-        return new Set();
-    }
-    const refsPerVariant = variants.map((variant) =>
-        collectTransitiveAllOfRefs({ schema: variant, context, visited: new Set() })
-    );
-    const firstSet = refsPerVariant[0];
-    if (firstSet == null || firstSet.size === 0) {
-        return new Set();
-    }
-    const inherited = new Set<string>();
-    for (const [refKey, refObject] of firstSet) {
-        const sharedAcrossAllVariants = refsPerVariant.every((s) => s.has(refKey));
-        if (!sharedAcrossAllVariants) {
-            continue;
-        }
-        const parentProperties = getAllProperties({
-            schema: refObject,
-            context,
-            breadcrumbs,
-            source,
-            namespace
-        });
-        for (const propertyName of Object.keys(parentProperties)) {
-            inherited.add(propertyName);
-        }
-    }
-    return inherited;
-}
-
-/**
- * Returns a map of `$ref` URI -> the `ReferenceObject` that points to it, for every
- * `$ref` reachable via `allOf` from the given schema (transitively). Inline `allOf`
- * elements are recursed into so a deeply-nested `$ref` still surfaces.
- */
-function collectTransitiveAllOfRefs({
+function collectAllRawProperties({
     schema,
     context,
     visited
@@ -540,37 +590,108 @@ function collectTransitiveAllOfRefs({
     schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     context: SchemaParserContext;
     visited: Set<string>;
-}): Map<string, OpenAPIV3.ReferenceObject> {
-    const result = new Map<string, OpenAPIV3.ReferenceObject>();
+}): { properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>; required: Set<string> } {
+    const properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = {};
+    const required = new Set<string>();
+
     let resolved: OpenAPIV3.SchemaObject;
     if (isReferenceObject(schema)) {
         if (visited.has(schema.$ref)) {
-            return result;
+            return { properties, required };
         }
         visited.add(schema.$ref);
         resolved = context.resolveSchemaReference(schema);
     } else {
         resolved = schema;
     }
+
     for (const allOfElement of resolved.allOf ?? []) {
-        if (isReferenceObject(allOfElement)) {
-            if (!result.has(allOfElement.$ref)) {
-                result.set(allOfElement.$ref, allOfElement);
+        const child = collectAllRawProperties({ schema: allOfElement, context, visited: new Set(visited) });
+        for (const [name, prop] of Object.entries(child.properties)) {
+            if (!(name in properties)) {
+                properties[name] = prop;
             }
-            const nested = collectTransitiveAllOfRefs({ schema: allOfElement, context, visited });
-            for (const [k, v] of nested) {
-                if (!result.has(k)) {
-                    result.set(k, v);
-                }
+        }
+        for (const name of child.required) {
+            required.add(name);
+        }
+    }
+
+    for (const [name, prop] of Object.entries(resolved.properties ?? {})) {
+        if (!(name in properties)) {
+            properties[name] = prop;
+        }
+    }
+    for (const name of resolved.required ?? []) {
+        required.add(name);
+    }
+
+    return { properties, required };
+}
+
+/**
+ * When a discriminated union variant references a schema that is itself a `oneOf`/`anyOf`
+ * of objects (without its own discriminator), this function merges all variant objects into
+ * a single object schema. Properties present in all variants keep their required/optional
+ * status; properties not present in all variants become optional.
+ *
+ * Returns `undefined` if any variant is not object-like (cannot be merged).
+ */
+function mergeOneOfVariantsIntoObject({
+    variants,
+    context,
+    discriminant
+}: {
+    variants: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
+    context: SchemaParserContext;
+    discriminant: string;
+}): OpenAPIV3.SchemaObject | undefined {
+    const variantData: Array<{
+        properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
+        required: Set<string>;
+    }> = [];
+
+    for (const variant of variants) {
+        const resolved = isReferenceObject(variant) ? context.resolveSchemaReference(variant) : variant;
+
+        // Only merge if all variants are object-like
+        if (resolved.properties == null && resolved.allOf == null && resolved.type !== "object") {
+            return undefined;
+        }
+
+        const collected = collectAllRawProperties({ schema: variant, context, visited: new Set() });
+        variantData.push(collected);
+    }
+
+    // Merge all properties across variants
+    const mergedProperties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = {};
+    const propertyPresenceCount: Record<string, number> = {};
+    const requiredInAllCount: Record<string, number> = {};
+
+    for (const { properties, required } of variantData) {
+        for (const [name, prop] of Object.entries(properties)) {
+            if (name === discriminant) {
+                continue;
             }
-        } else {
-            const nested = collectTransitiveAllOfRefs({ schema: allOfElement, context, visited });
-            for (const [k, v] of nested) {
-                if (!result.has(k)) {
-                    result.set(k, v);
-                }
+            if (!(name in mergedProperties)) {
+                mergedProperties[name] = prop;
+            }
+            propertyPresenceCount[name] = (propertyPresenceCount[name] ?? 0) + 1;
+            if (required.has(name)) {
+                requiredInAllCount[name] = (requiredInAllCount[name] ?? 0) + 1;
             }
         }
     }
-    return result;
+
+    // A property is required in the merged object only if it is present in ALL
+    // variants AND required in ALL variants.
+    const mergedRequired = Object.keys(mergedProperties).filter(
+        (name) => propertyPresenceCount[name] === variants.length && requiredInAllCount[name] === variants.length
+    );
+
+    return {
+        type: "object",
+        properties: mergedProperties,
+        required: mergedRequired.length > 0 ? mergedRequired : undefined
+    };
 }

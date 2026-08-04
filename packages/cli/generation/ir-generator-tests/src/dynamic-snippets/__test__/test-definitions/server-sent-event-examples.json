@@ -133,7 +133,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_completions:CompletionEvent": {
             "type": "object",
@@ -234,7 +235,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_completions:EventEvent": {
             "type": "object",
@@ -365,7 +367,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_completions:ErrorEvent": {
             "type": "object",
@@ -499,7 +502,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_completions:StreamEventContextProtocol": {
             "type": "discriminatedUnion",
@@ -589,6 +593,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "completion": {
                     "type": "samePropertiesAsObject",
@@ -802,7 +807,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_completions:GroupDeletedEvent": {
             "type": "object",
@@ -933,7 +939,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_completions:StreamEventDiscriminantInData": {
             "type": "discriminatedUnion",
@@ -1023,6 +1030,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "group.created": {
                     "type": "samePropertiesAsObject",
@@ -1168,6 +1176,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "completion": {
                     "type": "samePropertiesAsObject",
@@ -1968,5 +1977,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

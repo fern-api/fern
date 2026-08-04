@@ -6,7 +6,7 @@ import Api
     @Test func gettoken1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "access_token": "access_token"
@@ -34,7 +34,7 @@ import Api
     @Test func gettoken2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "access_token": "access_token"

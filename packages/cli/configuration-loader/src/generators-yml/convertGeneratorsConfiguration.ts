@@ -10,6 +10,23 @@ import path from "path";
 
 import { addDefaultDockerOrgIfNotPresent, correctIncorrectDockerOrgWithWarning } from "./getGeneratorName.js";
 
+function parseSpecSource(source: generatorsYml.SpecSourceSchema): {
+    path: string;
+    gitSource: generatorsYml.GitSource | undefined;
+} {
+    if (typeof source === "string") {
+        return { path: source, gitSource: undefined };
+    }
+    return {
+        path: source.git.path,
+        gitSource: {
+            repo: source.git.repo,
+            ref: source.git.ref,
+            path: source.git.path
+        }
+    };
+}
+
 /**
  * Union type representing any spec-level settings schema.
  * Used for parsing global api.settings which may contain settings from any spec type.
@@ -40,6 +57,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     additionalPropertiesDefaultsTo: undefined,
     typeDatesAsStrings: undefined,
     preserveSingleSchemaOneOf: undefined,
+    preserveOneOfInAllOf: undefined,
     inlineAllOfSchemas: undefined,
     resolveAliases: undefined,
     groupMultiApiEnvironments: undefined,
@@ -54,7 +72,9 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     resolveSchemaCollisions: undefined,
     inferForwardCompatible: undefined,
     coerceConstsTo: undefined,
-    shouldInferDiscriminatedUnionBaseProperties: undefined
+    shouldInferDiscriminatedUnionBaseProperties: undefined,
+    disambiguateRequestNames: undefined,
+    ignoreTags: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -71,6 +91,14 @@ export async function convertGeneratorsConfiguration({
     warnForDeprecatedConfiguration(context, rawGeneratorsConfiguration);
 
     const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration);
+    // API-level idempotency-key default (`api.settings.auto-generate-idempotency-key`): applied to
+    // every generator in this API unless the generator overrides it in its own `config`. Resolved
+    // into the IR downstream.
+    const apiConfiguration = rawGeneratorsConfiguration.api;
+    const globalIdempotencyKeyGeneration =
+        apiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(apiConfiguration)
+            ? apiConfiguration.settings?.["auto-generate-idempotency-key"]
+            : undefined;
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: parsedApiConfiguration,
@@ -89,6 +117,7 @@ export async function convertGeneratorsConfiguration({
                               maybeTopLevelMetadata,
                               maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
                               maybeRootAutomation: rawGeneratorsConfiguration.automation,
+                              globalIdempotencyKeyGeneration,
                               readme,
                               context
                           })
@@ -146,6 +175,7 @@ function parseOpenApiDefinitionSettingsSchema(
         additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"],
         typeDatesAsStrings: settings?.["type-dates-as-strings"],
         preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"],
+        preserveOneOfInAllOf: settings?.["preserve-one-of-in-all-of"],
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
         resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
@@ -153,7 +183,9 @@ function parseOpenApiDefinitionSettingsSchema(
         multiServerStrategy: settings?.["multi-server-strategy"],
         defaultIntegerFormat: settings?.["default-integer-format"],
         pathParameterOrder: settings?.["path-parameter-order"],
-        shouldInferDiscriminatedUnionBaseProperties: settings?.["infer-discriminated-union-base-properties"]
+        shouldInferDiscriminatedUnionBaseProperties: settings?.["infer-discriminated-union-base-properties"],
+        disambiguateRequestNames: settings?.["disambiguate-request-names"],
+        ignoreTags: settings?.["ignore-tags"]
     };
 }
 
@@ -249,10 +281,11 @@ async function parseAPIConfigurationToApiLocations(
                 settings: rootSettings
             });
         } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
+            const { path: rootPath, gitSource } = parseSpecSource(apiConfiguration.proto.root);
             apiDefinitions.push({
                 schema: {
                     type: "protobuf",
-                    root: apiConfiguration.proto.root,
+                    root: rootPath,
                     target: apiConfiguration.proto.target ?? "",
                     localGeneration: apiConfiguration.proto["local-generation"] ?? false,
                     fromOpenAPI: apiConfiguration.proto["from-openapi"] ?? false,
@@ -262,7 +295,8 @@ async function parseAPIConfigurationToApiLocations(
                 overrides: apiConfiguration.proto.overrides,
                 overlays: undefined,
                 audiences: [],
-                settings: rootSettings
+                settings: rootSettings,
+                gitSource
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
@@ -279,10 +313,11 @@ async function parseAPIConfigurationToApiLocations(
                         settings: rootSettings
                     });
                 } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(definition)) {
+                    const { path: rootPath, gitSource } = parseSpecSource(definition.proto.root);
                     apiDefinitions.push({
                         schema: {
                             type: "protobuf",
-                            root: definition.proto.root,
+                            root: rootPath,
                             target: definition.proto.target ?? "",
                             localGeneration: definition.proto["local-generation"] ?? false,
                             fromOpenAPI: definition.proto["from-openapi"] ?? false,
@@ -292,7 +327,8 @@ async function parseAPIConfigurationToApiLocations(
                         overrides: definition.proto.overrides,
                         overlays: undefined,
                         audiences: [],
-                        settings: rootSettings
+                        settings: rootSettings,
+                        gitSource
                     });
                 } else {
                     apiDefinitions.push({
@@ -411,34 +447,39 @@ async function parseApiConfigurationV2Schema({
     for (const spec of apiConfiguration.specs ?? []) {
         let definitionLocation: generatorsYml.APIDefinitionLocation;
         if (generatorsYml.isOpenApiSpecSchema(spec)) {
+            const { path: specPath, gitSource } = parseSpecSource(spec.openapi);
             definitionLocation = {
                 schema: {
                     type: "oss",
-                    path: spec.openapi
+                    path: specPath
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,
                 overlays: spec.overlays,
                 audiences: [],
-                settings: mergeSettings(apiSettings, parseOpenApiDefinitionSettingsSchema(spec.settings))
+                settings: mergeSettings(apiSettings, parseOpenApiDefinitionSettingsSchema(spec.settings)),
+                gitSource
             };
         } else if (generatorsYml.isAsyncApiSpecSchema(spec)) {
+            const { path: specPath, gitSource } = parseSpecSource(spec.asyncapi);
             definitionLocation = {
                 schema: {
                     type: "oss",
-                    path: spec.asyncapi
+                    path: specPath
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,
                 overlays: undefined,
                 audiences: [],
-                settings: mergeSettings(apiSettings, parseAsyncApiDefinitionSettingsSchema(spec.settings))
+                settings: mergeSettings(apiSettings, parseAsyncApiDefinitionSettingsSchema(spec.settings)),
+                gitSource
             };
         } else if (generatorsYml.isProtoSpecSchema(spec)) {
+            const { path: rootPath, gitSource } = parseSpecSource(spec.proto.root);
             definitionLocation = {
                 schema: {
                     type: "protobuf",
-                    root: spec.proto.root,
+                    root: rootPath,
                     target: spec.proto.target ?? "",
                     localGeneration: spec.proto["local-generation"] ?? false,
                     fromOpenAPI: spec.proto["from-openapi"] ?? false,
@@ -448,7 +489,8 @@ async function parseApiConfigurationV2Schema({
                 overrides: spec.proto.overrides,
                 overlays: undefined,
                 audiences: [],
-                settings: apiSettings
+                settings: apiSettings,
+                gitSource
             };
         } else if (generatorsYml.isOpenRpcSpecSchema(spec)) {
             definitionLocation = {
@@ -567,6 +609,7 @@ async function convertGroup({
     maybeTopLevelMetadata,
     maybeTopLevelReviewers,
     maybeRootAutomation,
+    globalIdempotencyKeyGeneration,
     readme,
     context
 }: {
@@ -576,6 +619,7 @@ async function convertGroup({
     maybeTopLevelMetadata: FernFiddle.OutputMetadata | undefined;
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
+    globalIdempotencyKeyGeneration: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorGroup> {
@@ -595,6 +639,7 @@ async function convertGroup({
                     maybeGroupLevelReviewers: group.reviewers,
                     maybeRootAutomation,
                     maybeGroupAutomation: group.automation,
+                    globalIdempotencyKeyGeneration,
                     readme,
                     context
                 })
@@ -640,6 +685,7 @@ async function convertGenerator({
     maybeTopLevelReviewers,
     maybeRootAutomation,
     maybeGroupAutomation,
+    globalIdempotencyKeyGeneration,
     readme,
     context
 }: {
@@ -651,12 +697,18 @@ async function convertGenerator({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
     maybeGroupAutomation: generatorsYml.AutomationSchema | undefined;
+    globalIdempotencyKeyGeneration: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
     const { normalizedName, containerImage } = getGeneratorNameAndImage(generator, context);
+    const perGeneratorIdempotencyKeyGeneration =
+        typeof generator.config === "object" && generator.config !== null
+            ? (generator.config as { "auto-generate-idempotency-key"?: unknown })["auto-generate-idempotency-key"]
+            : undefined;
     return {
         raw: generator,
+        idempotencyKeyGenerationConfig: perGeneratorIdempotencyKeyGeneration ?? globalIdempotencyKeyGeneration,
         automation: generatorsYml.resolveAutomationConfig({
             rootAutomation: maybeRootAutomation,
             groupAutomation: maybeGroupAutomation,
@@ -676,6 +728,7 @@ async function convertGenerator({
         }),
         keywords: generator.keywords,
         smartCasing: generator["smart-casing"] ?? true,
+        smartCasingDigitWordBoundary: generator["smart-casing-digit-word-boundary"] ?? false,
         disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"

@@ -2,6 +2,7 @@
   "cli/openapi-fixture/**",
   "src/bin/strip_schema.rs",
   ".gitignore",
+  "README.md",
   "docs/**",
   "changes/**",
   ".github/**"

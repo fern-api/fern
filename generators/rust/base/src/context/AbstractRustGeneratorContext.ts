@@ -13,6 +13,27 @@ import {
     validateAndSanitizeCrateName
 } from "../utils/index.js";
 
+/**
+ * A literal request-body property (e.g. `grant_type: "client_credentials"`) that must be
+ * sent verbatim on the OAuth token request.
+ */
+export interface OAuthTokenExchangeExtraProperty {
+    name: string;
+    value: string;
+}
+
+/**
+ * The wire-level property-name mapping for the OAuth client-credentials token exchange,
+ * resolved from the API's OAuth scheme configuration in the IR.
+ */
+export interface OAuthTokenExchange {
+    clientIdProperty: string;
+    clientSecretProperty: string;
+    accessTokenProperty: string;
+    expiresInProperty: string;
+    extraRequestProperties: OAuthTokenExchangeExtraProperty[];
+}
+
 export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
 > extends AbstractGeneratorContext {
@@ -85,7 +106,10 @@ export abstract class AbstractRustGeneratorContext<
         this.dependencyManager.add("serde_json", "1.0");
         this.dependencyManager.add("reqwest", {
             version: "0.12",
-            features: ["json", "stream"], // stream is needed for ByteStream (file downloads)
+            // stream is needed for ByteStream (file downloads); gzip is needed to
+            // decompress gzip-encoded responses (e.g. when an Accept-Encoding
+            // header is set explicitly on the request)
+            features: ["json", "stream", "gzip"],
             defaultFeatures: false
         });
         this.dependencyManager.add("tokio", { version: "1.0", features: ["full"] });
@@ -113,8 +137,9 @@ export abstract class AbstractRustGeneratorContext<
             this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
         }
 
-        // Conditionally include base64 only when base64 types are used
-        if (this.usesBase64()) {
+        // Conditionally include base64 when base64 types are used, or when per-endpoint
+        // auth routing needs it to encode basic auth credentials.
+        if (this.usesBase64() || (this.isEndpointSecurity() && this.hasBasicAuthScheme())) {
             this.dependencyManager.add("base64", "0.22");
         }
 
@@ -1329,6 +1354,69 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Whether the API applies auth per-endpoint: each endpoint declares its own
+     * subset of auth schemes (via `HttpEndpoint.security`) instead of applying all
+     * configured credentials to every request.
+     */
+    public isEndpointSecurity(): boolean {
+        return this.ir.auth?.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity;
+    }
+
+    /**
+     * Whether the API configures a basic auth scheme.
+     */
+    public hasBasicAuthScheme(): boolean {
+        return (this.ir.auth?.schemes ?? []).some((scheme) => scheme.type === "basic");
+    }
+
+    /**
+     * Categorizes the API's auth schemes by how they produce request headers, keyed by
+     * each scheme's `key` (the identifier used in an endpoint's `security` requirements).
+     * Used to generate per-endpoint auth routing in endpoint-security mode.
+     *
+     * - `tokenSchemeKeys`: bearer + oauth schemes, all rendered as `Authorization: Bearer <token>`
+     * - `apiKeySchemes`: header auth schemes, each with its wire header name and optional prefix
+     * - `basicSchemeKeys`: basic auth schemes, rendered as `Authorization: Basic <base64>`
+     * - `inferredSchemeKeys`: inferred auth schemes (unsupported by the Rust SDK today)
+     */
+    public getEndpointAuthRoutingSchemes(): {
+        tokenSchemeKeys: string[];
+        apiKeySchemes: { key: string; headerName: string; prefix: string | undefined }[];
+        basicSchemeKeys: string[];
+        inferredSchemeKeys: string[];
+    } {
+        const tokenSchemeKeys: string[] = [];
+        const apiKeySchemes: { key: string; headerName: string; prefix: string | undefined }[] = [];
+        const basicSchemeKeys: string[] = [];
+        const inferredSchemeKeys: string[] = [];
+        for (const scheme of this.ir.auth?.schemes ?? []) {
+            FernIr.AuthScheme._visit<void>(scheme, {
+                bearer: (bearer) => {
+                    tokenSchemeKeys.push(bearer.key);
+                },
+                oauth: (oauth) => {
+                    tokenSchemeKeys.push(oauth.key);
+                },
+                header: (header) => {
+                    apiKeySchemes.push({
+                        key: header.key,
+                        headerName: getWireValue(header.name),
+                        prefix: header.prefix ?? undefined
+                    });
+                },
+                basic: (basic) => {
+                    basicSchemeKeys.push(basic.key);
+                },
+                inferred: (inferred) => {
+                    inferredSchemeKeys.push(inferred.key);
+                },
+                _other: () => undefined
+            });
+        }
+        return { tokenSchemeKeys, apiKeySchemes, basicSchemeKeys, inferredSchemeKeys };
+    }
+
+    /**
      * Get the API key header name from the IR auth schemes.
      * Returns the wireValue of the first header auth scheme, or "api_key" as default.
      */
@@ -1438,6 +1526,146 @@ export abstract class AbstractRustGeneratorContext<
                 if (result !== undefined) {
                     return result;
                 }
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Get the OAuth client-credentials auth scheme from the IR, if one is configured.
+     */
+    public getOAuthClientCredentialsScheme(): FernIr.OAuthScheme | undefined {
+        if (this.ir.auth?.schemes == null) {
+            return undefined;
+        }
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "oauth" && scheme.configuration.type === "clientCredentials") {
+                return scheme;
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Resolve the {@link FernIr.HttpEndpoint} referenced by the OAuth client-credentials
+     * token endpoint, if one is configured and resolvable.
+     */
+    public getOAuthTokenHttpEndpoint(): FernIr.HttpEndpoint | undefined {
+        const scheme = this.getOAuthClientCredentialsScheme();
+        if (scheme == null) {
+            return undefined;
+        }
+        const reference = scheme.configuration.tokenEndpoint.endpointReference;
+        const service = this.ir.services[reference.serviceId];
+        if (service == null) {
+            return undefined;
+        }
+        return service.endpoints.find((e) => e.id === reference.endpointId);
+    }
+
+    /**
+     * Get the URL path of the OAuth token endpoint (e.g. "/token"), resolved from the
+     * endpoint referenced by the OAuth client-credentials scheme. Returns undefined when
+     * no OAuth client-credentials scheme is configured or the referenced endpoint cannot
+     * be resolved.
+     */
+    public getOAuthTokenEndpointPath(): string | undefined {
+        const endpoint = this.getOAuthTokenHttpEndpoint();
+        if (endpoint == null) {
+            return undefined;
+        }
+        let path = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts) {
+            path += `{${part.pathParameter}}${part.tail}`;
+        }
+        if (!path.startsWith("/")) {
+            path = `/${path}`;
+        }
+        return path;
+    }
+
+    /**
+     * Extract the wire-level property-name mapping for the OAuth client-credentials token
+     * exchange from the IR. The generated token fetch uses these names to build the request
+     * body and parse the response, instead of hardcoding the default `client_id` /
+     * `client_secret` / `grant_type` / `access_token` / `expires_in` shape.
+     *
+     * Returns undefined when no OAuth client-credentials scheme is configured.
+     */
+    public getOAuthTokenExchange(): OAuthTokenExchange | undefined {
+        const scheme = this.getOAuthClientCredentialsScheme();
+        if (scheme == null) {
+            return undefined;
+        }
+        const { tokenEndpoint } = scheme.configuration;
+        const clientIdProperty = this.getRequestPropertyWireName(tokenEndpoint.requestProperties.clientId);
+        const clientSecretProperty = this.getRequestPropertyWireName(tokenEndpoint.requestProperties.clientSecret);
+        const accessTokenProperty = this.getResponsePropertyWireName(tokenEndpoint.responseProperties.accessToken);
+        const expiresInProperty =
+            tokenEndpoint.responseProperties.expiresIn != null
+                ? this.getResponsePropertyWireName(tokenEndpoint.responseProperties.expiresIn)
+                : undefined;
+
+        // Collect literal request-body properties (e.g. `grant_type: "client_credentials"`,
+        // `audience: "..."`), which must be sent verbatim on the token request. Non-literal
+        // properties are supplied from the credentials (client id / secret) or omitted.
+        const extraRequestProperties: OAuthTokenExchangeExtraProperty[] = [];
+        const endpoint = this.getOAuthTokenHttpEndpoint();
+        if (endpoint?.requestBody?.type === "inlinedRequestBody") {
+            for (const property of endpoint.requestBody.properties) {
+                const literalValue = this.getLiteralValueAsString(property.valueType);
+                if (literalValue != null) {
+                    extraRequestProperties.push({
+                        name: this.getWireValueFromName(property.name),
+                        value: literalValue
+                    });
+                }
+            }
+        }
+
+        return {
+            clientIdProperty: clientIdProperty ?? "client_id",
+            clientSecretProperty: clientSecretProperty ?? "client_secret",
+            accessTokenProperty: accessTokenProperty ?? "access_token",
+            expiresInProperty: expiresInProperty ?? "expires_in",
+            extraRequestProperties
+        };
+    }
+
+    private getWireValueFromName(name: FernIr.NameAndWireValueOrString): string {
+        return typeof name === "string" ? name : name.wireValue;
+    }
+
+    private getRequestPropertyWireName(requestProperty: FernIr.RequestProperty): string | undefined {
+        const value = requestProperty.property;
+        switch (value.type) {
+            case "body":
+                return this.getWireValueFromName(value.name);
+            case "query":
+                return this.getWireValueFromName(value.name);
+            default:
+                return undefined;
+        }
+    }
+
+    private getResponsePropertyWireName(responseProperty: FernIr.ResponseProperty): string | undefined {
+        return this.getWireValueFromName(responseProperty.property.name);
+    }
+
+    /**
+     * Returns the constant value of a literal type reference (e.g. `literal<"client_credentials">`)
+     * as a string, or undefined when the type reference is not a literal.
+     */
+    private getLiteralValueAsString(typeReference: FernIr.TypeReference): string | undefined {
+        if (typeReference.type === "container" && typeReference.container.type === "literal") {
+            const literal = typeReference.container.literal;
+            switch (literal.type) {
+                case "string":
+                    return literal.string;
+                case "boolean":
+                    return String(literal.boolean);
+                default:
+                    return undefined;
             }
         }
         return undefined;

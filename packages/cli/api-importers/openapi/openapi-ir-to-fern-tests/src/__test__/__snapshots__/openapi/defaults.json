@@ -184,4 +184,5 @@ error-discrimination:
 display-name: API with Default Values
 ",
   },
+  "specVersion": "1.0.0",
 }

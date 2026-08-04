@@ -24,6 +24,7 @@
   "errors": {},
   "fdrApiDefinitionId": undefined,
   "generationMetadata": undefined,
+  "globalParameters": undefined,
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
@@ -54,6 +55,7 @@
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
+    "idempotencyKeyGeneration": undefined,
     "isAuthMandatory": true,
     "platformHeaders": {
       "language": "",
@@ -94,6 +96,7 @@
             "head": "/payments",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.listPayments",
           "idempotent": false,
@@ -158,6 +161,7 @@
             "_visit": [Function],
             "type": "openapi",
           },
+          "subtitle": undefined,
           "transport": undefined,
           "userSpecifiedExamples": [],
           "v2BaseUrls": undefined,
@@ -166,6 +170,7 @@
             "userSpecifiedExamples": {
               "base_Paginated Payment List_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Paginated Payment List",
                 "request": {
                   "auth": undefined,
@@ -269,6 +274,7 @@
             "head": "/payments",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.createPayment",
           "idempotent": false,
@@ -360,6 +366,7 @@
             "_visit": [Function],
             "type": "openapi",
           },
+          "subtitle": undefined,
           "transport": undefined,
           "userSpecifiedExamples": [],
           "v2BaseUrls": undefined,
@@ -368,6 +375,7 @@
             "userSpecifiedExamples": {
               "Apple Pay Payment_Payment Response_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Apple Pay Payment",
                 "request": {
                   "auth": undefined,
@@ -402,6 +410,7 @@
               },
               "Card Payment_Payment Response_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Card Payment",
                 "request": {
                   "auth": undefined,
@@ -436,6 +445,7 @@
               },
               "base_Payment Response_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Payment Response",
                 "request": {
                   "auth": undefined,
@@ -561,6 +571,7 @@
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {},
   "types": {
     "Payment": {
@@ -582,6 +593,7 @@
       "referencedTypes": Set {},
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -737,6 +749,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -850,6 +863,7 @@
       "referencedTypes": Set {},
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,

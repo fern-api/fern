@@ -11,6 +11,7 @@ import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.RetryInterceptor;
 import com.seed.exhaustive.resources.generalerrors.errors.BadRequestBody;
 import com.seed.exhaustive.resources.generalerrors.types.BadObjectRequestInfo;
 import java.io.IOException;
@@ -70,6 +71,15 @@ public class AsyncRawNoAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<BestHttpResponse<Boolean>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -95,6 +105,9 @@ public class AsyncRawNoAuthClient {
                     future.completeExceptionally(new BestApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new BestException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new BestException("Network error executing HTTP request", e));
                 }

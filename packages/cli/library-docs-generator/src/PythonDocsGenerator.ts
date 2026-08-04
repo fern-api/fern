@@ -61,7 +61,10 @@ export function generate(options: GenerateOptions): GenerateResult {
 
     // Stage 3: Build navigation tree
     const navigation = buildNavigation(ir.rootModule, slug);
-    const rootPageId = `${slug}/${ir.rootModule.name}.mdx`;
+    const rootPageId =
+        ir.rootModule.submodules.length > 0
+            ? `${slug}/${ir.rootModule.name}/index.mdx`
+            : `${slug}/${ir.rootModule.name}.mdx`;
 
     // Stage 4: Write navigation YAML
     const navigationFilePath = writeNavigation(outputDir, navigation);
@@ -98,9 +101,11 @@ function renderModuleTree(
 
     const hasSubmodules = module.submodules.length > 0;
 
-    // Generate page if module has any documentable content
+    // Generate page if module has any documentable content.
+    // Modules with submodules write to <path>/index.mdx so the folder scanner
+    // picks them up as section overview pages (not sibling duplicates).
     if (hasDirectContent || hasSubmodules) {
-        const pageKey = `${ctx.baseSlug}/${modulePath}.mdx`;
+        const pageKey = hasSubmodules ? `${ctx.baseSlug}/${modulePath}/index.mdx` : `${ctx.baseSlug}/${modulePath}.mdx`;
         const content = renderModulePage(module, ctx, parentPath);
         writer.writePage(pageKey, content);
     }

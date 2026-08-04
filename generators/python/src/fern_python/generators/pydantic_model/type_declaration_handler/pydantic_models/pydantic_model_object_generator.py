@@ -41,8 +41,31 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             as_request=False,
         )
 
+    def _has_circular_extends(self) -> bool:
+        """Check if any extends relationship would create a circular import.
+
+        When type A extends type B, A's file has a hard top-level import of B.
+        If B (transitively) references A, using Python inheritance creates
+        a circular import that cannot be resolved with deferred imports.
+        In this case we must fall back to inlining properties.
+        """
+        if self._name is None:
+            return False
+        for ext in self._extends:
+            if self._context.does_type_reference_other_type(ext.type_id, self._name.type_id):
+                return True
+        return False
+
     def generate(self) -> None:
-        if self._custom_config.use_inheritance_for_extended_models:
+        use_inheritance = self._custom_config.use_inheritance_for_extended_models
+        # Even when inheritance is configured, fall back to inlining if the
+        # extends relationship participates in a circular reference cycle.
+        # Python cannot resolve the circular top-level import that
+        # inheritance requires in this scenario.
+        if use_inheritance and self._has_circular_extends():
+            use_inheritance = False
+
+        if use_inheritance:
             extends = self._extends
             properties = self._properties
         else:

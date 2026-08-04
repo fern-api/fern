@@ -220,4 +220,5 @@ error-discrimination:
 display-name: URL Reference API
 ",
   },
+  "specVersion": "1.0.0",
 }

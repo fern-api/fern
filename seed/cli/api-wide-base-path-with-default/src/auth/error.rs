@@ -34,25 +34,52 @@ pub fn handle_error_response<T>(
     provider: &dyn AuthProvider,
     endpoint: &EndpointAuthMetadata,
 ) -> Result<T, CliError> {
-    if (status.as_u16() == 401 || status.as_u16() == 403)
-        && !provider.has_credentials_for(endpoint)
-    {
-        let hints = provider.credential_hints();
-        let message = if hints.is_empty() {
-            "Access denied. Authentication credentials are missing. \
-             Check that the configured auth source for this CLI \
-             (environment variable, --flag, or credential file) has a value set."
-                .to_string()
-        } else {
-            let joined = dedup_preserve_order(hints).join(", ");
-            format!(
+    if status.as_u16() == 401 || status.as_u16() == 403 {
+        if !provider.has_credentials_for(endpoint) {
+            let hints = provider.credential_hints();
+            let message = if hints.is_empty() {
                 "Access denied. Authentication credentials are missing. \
-                 Set {joined}.",
-            )
-        };
-        return Err(CliError::Auth(message));
+                 Check that the configured auth source for this CLI \
+                 (environment variable, --flag, or credential file) has a value set."
+                    .to_string()
+            } else {
+                let joined = dedup_preserve_order(hints).join(", ");
+                format!(
+                    "Access denied. Authentication credentials are missing. \
+                     Set {joined}.",
+                )
+            };
+            return Err(CliError::Auth(message));
+        }
+        // Credentials were sent but the server rejected them.
+        // Surface which source supplied the credential so the user can
+        // diagnose shadowing (e.g. stale env var winning over a fresh
+        // `auth login`). ADR-0008 § 8e.
+        let hints = dedup_preserve_order(provider.credential_hints());
+        if !hints.is_empty() {
+            let base = parse_api_error(status, error_body);
+            return Err(decorate_with_source_hint(base, &hints));
+        }
     }
     Err(parse_api_error(status, error_body))
+}
+
+/// Append a "Credentials were supplied via: …" line to an existing
+/// `CliError::Api` message, preserving the structured fields. For
+/// non-`Api` variants (defensive — shouldn't happen here), pass through.
+fn decorate_with_source_hint(err: CliError, hints: &[String]) -> CliError {
+    let joined = hints.join(", ");
+    match err {
+        CliError::Api { code, message, reason } => CliError::Api {
+            code,
+            message: format!(
+                "{message}\nCredentials were supplied via: {joined}. \
+                 Run `auth status` to see all visible sources and check for shadowing."
+            ),
+            reason,
+        },
+        other => other,
+    }
 }
 
 /// Deduplicate strings while preserving first-seen order.
@@ -381,6 +408,77 @@ mod tests {
             json_msg.contains("__FERN_TEST_JSON_KEY"),
             "expected env var in JSON message, got: {json_msg}",
         );
+    }
+
+    #[test]
+    fn unauthorized_with_credentials_discloses_source() {
+        // 401 fired with valid creds → server rejecting → disclose source.
+        std::env::set_var("__FERN_TEST_SHADOW_TOKEN", "stale-token");
+        let p = BearerAuthProvider::new(
+            "bearer",
+            AuthCredentialSource::from_env("__FERN_TEST_SHADOW_TOKEN"),
+        );
+        let err = handle_error_response::<()>(
+            reqwest::StatusCode::UNAUTHORIZED,
+            r#"{"error":{"code":401,"message":"bad token"}}"#,
+            &p,
+            &EndpointAuthMetadata::unspecified(),
+        )
+        .unwrap_err();
+        match err {
+            CliError::Api { message, .. } => {
+                assert!(message.contains("__FERN_TEST_SHADOW_TOKEN"));
+                assert!(message.contains("auth status"));
+            }
+            other => panic!("expected Api with source-hint suffix, got: {other:?}"),
+        }
+        std::env::remove_var("__FERN_TEST_SHADOW_TOKEN");
+    }
+
+    #[test]
+    fn forbidden_with_credentials_discloses_source() {
+        std::env::set_var("__FERN_TEST_FORBIDDEN_TOKEN", "x");
+        let p = BearerAuthProvider::new(
+            "bearer",
+            AuthCredentialSource::from_env("__FERN_TEST_FORBIDDEN_TOKEN"),
+        );
+        let err = handle_error_response::<()>(
+            reqwest::StatusCode::FORBIDDEN,
+            r#"{"error":{"code":403,"message":"forbidden"}}"#,
+            &p,
+            &EndpointAuthMetadata::unspecified(),
+        )
+        .unwrap_err();
+        match err {
+            CliError::Api { message, .. } => {
+                assert!(message.contains("__FERN_TEST_FORBIDDEN_TOKEN"));
+            }
+            other => panic!("expected Api with source-hint suffix, got: {other:?}"),
+        }
+        std::env::remove_var("__FERN_TEST_FORBIDDEN_TOKEN");
+    }
+
+    #[test]
+    fn non_auth_status_codes_skip_source_disclosure() {
+        std::env::set_var("__FERN_TEST_NONAUTH_TOKEN", "x");
+        let p = BearerAuthProvider::new(
+            "bearer",
+            AuthCredentialSource::from_env("__FERN_TEST_NONAUTH_TOKEN"),
+        );
+        let err = handle_error_response::<()>(
+            reqwest::StatusCode::INTERNAL_SERVER_ERROR,
+            r#"{"error":{"code":500,"message":"server down"}}"#,
+            &p,
+            &EndpointAuthMetadata::unspecified(),
+        )
+        .unwrap_err();
+        match err {
+            CliError::Api { message, .. } => {
+                assert!(!message.contains("__FERN_TEST_NONAUTH_TOKEN"));
+            }
+            _ => panic!("expected Api"),
+        }
+        std::env::remove_var("__FERN_TEST_NONAUTH_TOKEN");
     }
 
     #[test]

@@ -9,6 +9,11 @@ export interface OpenApiIntermediateRepresentation {
      * simply echo the Fern configuration as-is.
      */
     apiVersion: unknown | undefined;
+    /**
+     * The document version from the OpenAPI `info.version` field.
+     * Preserved as-is (supports semver, CalVer, or any free-form string).
+     */
+    specVersion: string | undefined;
     title: string | undefined;
     description: string | undefined;
     basePath: string | undefined;
@@ -36,5 +41,6 @@ export interface OpenApiIntermediateRepresentation {
     securitySchemes: Record<FernOpenapiIr.SecuritySchemeId, FernOpenapiIr.SecurityScheme>;
     security: FernOpenapiIr.GlobalSecurity | undefined;
     globalHeaders: FernOpenapiIr.GlobalHeader[] | undefined;
+    globalParameters: FernOpenapiIr.GlobalParameter[] | undefined;
     idempotencyHeaders: FernOpenapiIr.IdempotencyHeader[] | undefined;
 }

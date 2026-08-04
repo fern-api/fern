@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Webhook Signature Verification Test",
   "servers": [],
   "websocketServers": [],
@@ -259,6 +260,80 @@
         "file": "../openapi.yml",
         "type": "openapi"
       }
+    },
+    {
+      "audiences": [],
+      "sdkName": {
+        "groupName": [
+          "webhooks"
+        ],
+        "methodName": "messageStatus"
+      },
+      "method": "POST",
+      "operationId": "messageStatus",
+      "tags": [],
+      "headers": [],
+      "generatedPayloadName": "MessageStatusWebhooksPayload",
+      "payload": {
+        "generatedName": "MessageStatusWebhooksPayload",
+        "schema": "MessageStatusEvent",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "signatureVerification": {
+        "header": "x-twilio-signature",
+        "algorithm": "sha1",
+        "encoding": "base64",
+        "payloadFormat": {
+          "components": [
+            "notification-url",
+            "body"
+          ]
+        },
+        "bodyHashBinding": {
+          "algorithm": "sha256",
+          "encoding": "hex",
+          "location": {
+            "name": "bodySHA256",
+            "type": "queryParameter"
+          }
+        },
+        "notificationUrlNormalization": {
+          "portVariants": true,
+          "legacyQueryEncoding": true
+        },
+        "type": "hmac"
+      },
+      "examples": [
+        {
+          "payload": {
+            "properties": {
+              "messageSid": {
+                "value": {
+                  "value": "messageSid",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "status": {
+                "value": {
+                  "value": "status",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
     }
   ],
   "channels": {},
@@ -467,6 +542,48 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "RefundEvent",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "MessageStatusEvent": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "messageStatusEventMessageSid",
+            "key": "messageSid",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "MessageStatusEventMessageSid",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "messageStatusEventStatus",
+            "key": "status",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "MessageStatusEventStatus",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "MessageStatusEvent",
         "groupName": [],
         "additionalProperties": false,
         "source": {

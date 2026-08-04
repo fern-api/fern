@@ -1,5 +1,7 @@
 # Build base image with dependencies
-FROM python:3.11.13 AS base
+# Pinned to the latest 3.13 patch release (matching the SDK generator image) to
+# pull in CPython security fixes.
+FROM python:3.13.14-slim AS base
 
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \

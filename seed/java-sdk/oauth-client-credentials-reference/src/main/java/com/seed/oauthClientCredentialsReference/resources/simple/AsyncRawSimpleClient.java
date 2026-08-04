@@ -3,9 +3,11 @@
  */
 package com.seed.oauthClientCredentialsReference.resources.simple;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.oauthClientCredentialsReference.core.ClientOptions;
 import com.seed.oauthClientCredentialsReference.core.ObjectMappers;
 import com.seed.oauthClientCredentialsReference.core.RequestOptions;
+import com.seed.oauthClientCredentialsReference.core.RetryInterceptor;
 import com.seed.oauthClientCredentialsReference.core.SeedOauthClientCredentialsReferenceApiException;
 import com.seed.oauthClientCredentialsReference.core.SeedOauthClientCredentialsReferenceException;
 import com.seed.oauthClientCredentialsReference.core.SeedOauthClientCredentialsReferenceHttpResponse;
@@ -51,6 +53,15 @@ public class AsyncRawSimpleClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedOauthClientCredentialsReferenceHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -65,6 +76,9 @@ public class AsyncRawSimpleClient {
                     future.completeExceptionally(new SeedOauthClientCredentialsReferenceApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedOauthClientCredentialsReferenceException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedOauthClientCredentialsReferenceException(
                             "Network error executing HTTP request", e));

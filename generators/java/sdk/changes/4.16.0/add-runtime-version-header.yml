@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an opt-in `runtime-version` config flag. When enabled, the SDK version reported
+    in the telemetry headers (`X-Fern-SDK-Version` and the version segment of
+    `User-Agent`) is resolved at runtime from the jar manifest's `Implementation-Version`
+    attribute instead of being baked in as a literal at generation time. The generated
+    build.gradle records the project version in the jar manifest, so an external tool such
+    as release-please only has to rewrite a single `version` line for the reported version
+    to track the actually-published artifact — rather than a version the SDK may never
+    publish. Falls back to the generation-time version when the manifest attribute is
+    absent (e.g. running from unpackaged classes). Disabled by default, so existing
+    generated output is unchanged, and subject to `omitFernHeaders`.
+  type: feat

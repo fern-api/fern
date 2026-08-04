@@ -8,6 +8,7 @@ import com.seed.api.core.ClientOptions;
 import com.seed.api.core.MediaTypes;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.RetryInterceptor;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
@@ -34,16 +35,16 @@ public class AsyncRawSeedApiClient {
     }
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNullableNamedRequestBodyType(
-            String id, PostWithNullableNamedRequestBodyTypeRequest request) {
-        return postWithNullableNamedRequestBodyType(id, request, null);
+            String pathId, PostWithNullableNamedRequestBodyTypeRequest request) {
+        return postWithNullableNamedRequestBodyType(pathId, request, null);
     }
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNullableNamedRequestBodyType(
-            String id, PostWithNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
+            String pathId, PostWithNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("postWithNullableNamedRequestBodyType")
-                .addPathSegment(id);
+                .addPathSegment(pathId);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -67,6 +68,15 @@ public class AsyncRawSeedApiClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedApiHttpResponse<ResponseBody>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -82,6 +92,9 @@ public class AsyncRawSeedApiClient {
                     future.completeExceptionally(new SeedApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedApiException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }
@@ -95,28 +108,28 @@ public class AsyncRawSeedApiClient {
         return future;
     }
 
-    public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(String id) {
+    public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(String pathId) {
         return postWithNonNullableNamedRequestBodyType(
-                id, NonNullableObject.builder().build());
+                pathId, NonNullableObject.builder().build());
     }
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(
-            String id, RequestOptions requestOptions) {
+            String pathId, RequestOptions requestOptions) {
         return postWithNonNullableNamedRequestBodyType(
-                id, NonNullableObject.builder().build(), requestOptions);
+                pathId, NonNullableObject.builder().build(), requestOptions);
     }
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request) {
-        return postWithNonNullableNamedRequestBodyType(id, request, null);
+            String pathId, NonNullableObject request) {
+        return postWithNonNullableNamedRequestBodyType(pathId, request, null);
     }
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request, RequestOptions requestOptions) {
+            String pathId, NonNullableObject request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("postWithNonNullableNamedRequestBodyType")
-                .addPathSegment(id);
+                .addPathSegment(pathId);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -140,6 +153,15 @@ public class AsyncRawSeedApiClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedApiHttpResponse<ResponseBody>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -155,6 +177,9 @@ public class AsyncRawSeedApiClient {
                     future.completeExceptionally(new SeedApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedApiException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }

@@ -6,7 +6,7 @@ import Streaming
     @Test func generate1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -36,7 +36,7 @@ import Streaming
     @Test func generate2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",

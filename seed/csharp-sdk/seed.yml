@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v66
+irVersion: v67
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
@@ -216,6 +216,13 @@ fixtures:
     - customConfig:
         omit-fern-headers: true
       outputFolder: omit-fern-headers
+    - customConfig:
+        include-platform-headers: true
+      outputFolder: include-platform-headers
+    - customConfig:
+        include-platform-headers: true
+        allow-user-agent-app-info: true
+      outputFolder: allow-user-agent-app-info
   multi-url-environment:
     - customConfig:
         pascal-case-environments: false
@@ -223,6 +230,21 @@ fixtures:
     - customConfig:
         environment-class-name: CustomEnvironment
       outputFolder: environment-class-name
+  csharp-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        server-url-variables: false
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        server-url-variables: false
   exhaustive:
     - customConfig:
         explicit-namespaces: true
@@ -242,6 +264,15 @@ fixtures:
     - customConfig:
         use-undiscriminated-unions: true
       outputFolder: use-undiscriminated-unions
+    - customConfig:
+        auto-generate-idempotency-key: true
+      outputFolder: auto-generate-idempotency-key
+    - publishConfig:
+        type: nuget
+        registryUrl: ""
+        packageName: Fern.Exhaustive
+        apiKey: OIDC
+      outputFolder: oidc-token
   optional:
     - customConfig: null
       outputFolder: no-custom-config
@@ -254,6 +285,9 @@ fixtures:
     - customConfig:
         inline-path-parameters: false
       outputFolder: no-inline-path-parameters
+  csharp-path-param-order:
+    - customConfig: null
+      outputFolder: no-custom-config
   csharp-grpc-proto:
     - customConfig: null
       outputFolder: no-custom-config
@@ -411,25 +445,25 @@ fixtures:
         enable-inline-types: true
       outputFolder: inline-types
       disableDynamicSnippetTests: true
+  csharp-union-base-properties:
+    - customConfig:
+        dedupe-union-base-properties: true
+      outputFolder: dedupe-union-base-properties
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
+  idempotency-headers:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        auto-generate-idempotency-key: true
+      outputFolder: auto-generate-idempotency-key
 allowedFailures:
-  - api-wide-base-path-with-default
-  - enum:forward-compatible-enums
-  - enum:plain-enums
-  - examples:no-custom-config
-  - examples:readme-config
-  - imdb:exported-client-class-name
-  - literal:no-custom-config
-  - literal:readonly-constants
   - oauth-client-credentials-custom
-  - package-yml
-  - pagination-uri-path
-  - unions:no-custom-config
-  - unions-with-local-date
-  - server-sent-event-examples
-  - server-sent-events-openapi
+  # CLI-specific OAuth fixture: the full IR client-credentials contract (custom
+  # token request properties) produces C# OAuth-provider code that doesn't compile.
+  # Exercised by the CLI generator.
+  - cli-oauth

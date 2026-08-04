@@ -62,7 +62,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:IsinWithDiscriminator": {
             "type": "object",
@@ -158,7 +159,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:Quantity": {
             "type": "object",
@@ -254,7 +256,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:TwoFields": {
             "type": "object",
@@ -347,7 +350,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:OneRequiredOneOptional": {
             "type": "object",
@@ -443,7 +447,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:MultipleDiscriminators": {
             "type": "object",
@@ -572,7 +577,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:Trader": {
             "type": "object",
@@ -635,7 +641,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:TakerParty": {
             "type": "object",
@@ -698,7 +705,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:BondSingleLeg": {
             "type": "object",
@@ -791,7 +799,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:Identifier": {
             "type": "discriminatedUnion",
@@ -843,6 +852,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "isin": {
                     "type": "samePropertiesAsObject",
@@ -961,7 +971,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -1108,5 +1119,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

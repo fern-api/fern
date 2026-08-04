@@ -19,13 +19,25 @@ Command-line interface for the Query Parameters API.
 
 ## Installation
 
-Install the CLI globally via npm:
+### Shell (macOS / Linux)
+
+```bash
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/query-parameters-openapi/fern/releases/latest/download/query-parameters-api-installer.sh | sh
+```
+
+### PowerShell (Windows)
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://github.com/query-parameters-openapi/fern/releases/latest/download/query-parameters-api-installer.ps1 | iex"
+```
+
+### npm
 
 ```bash
 npm install -g @fern/query-parameters-openapi
 ```
 
-Or run it directly without installing:
+Or run directly without installing:
 
 ```bash
 npx @fern/query-parameters-openapi --help

@@ -68,6 +68,67 @@ client.headers.send_(
 </dl>
 </details>
 
+<details><summary><code>client.headers.<a href="/lib/seed/headers/client.rb">send_literals_only</a>() -> Seed::Types::SendResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.headers.send_literals_only(request_options: {
+  additional_headers: {
+    "X-Endpoint-Version" => "02-12-2024",
+    "X-Async" => "true"
+  }
+})
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**endpoint_version:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**async:** `Internal::Types::Boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Headers::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inlined
 <details><summary><code>client.inlined.<a href="/lib/seed/inlined/client.rb">send_</a>(request) -> Seed::Types::SendResponse</code></summary>
 <dl>
@@ -187,7 +248,7 @@ client.inlined.send_(
 </details>
 
 ## Path
-<details><summary><code>client.path.<a href="/lib/seed/path/client.rb">send_</a>(id) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.path.<a href="/lib/seed/path/client.rb">send_</a>(id:) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 

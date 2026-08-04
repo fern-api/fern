@@ -1,50 +1,32 @@
-//! JSON help output — renders `--help --format json` as a machine-readable
-//! schema. When an agent passes both `--help` (or `-h`) and `--format json`,
-//! `app.rs` intercepts before clap parses and calls [`render_json_help`].
+//! Spec output — renders the CLI's command surface as a machine-readable
+//! JSON document. Backs the `--schema` global flag, which is the agent-facing
+//! counterpart to `--help`: wherever a user could type `--help` for prose,
+//! they can type `--schema` for the same scope rendered as JSON.
 
 use serde_json::{json, Map, Value};
 
-use crate::error::CliError;
 use crate::graphql::discovery::{GraphQLOperation, GraphQLResource, GraphQLSchema};
 
-/// Renders JSON help for the given subcommand path and prints it to stdout.
-#[cfg(test)]
-pub fn render_json_help(doc: &GraphQLSchema, path: &[String]) -> Result<(), CliError> {
-    write_json_help(doc, path, &mut std::io::stdout())
-}
-
-/// Writer-parameterized variant of [`render_json_help`].
-pub fn write_json_help(
-    doc: &GraphQLSchema,
-    path: &[String],
-    out: &mut dyn std::io::Write,
-) -> Result<(), CliError> {
-    let output = match path.len() {
-        0 => list_all_operations(doc),
-        1 => list_resource_operations(doc, &path[0])?,
+/// Build the spec document for the given subcommand path.
+///
+/// Returns `Some(value)` when the path resolves in this doc and `None` when it
+/// doesn't (so a multi-binding caller can try the next binding). Empty path
+/// always returns `Some(_)` — every binding contributes its full operation
+/// list to the aggregate root view.
+pub fn build_schema(doc: &GraphQLSchema, path: &[String]) -> Option<Value> {
+    match path.len() {
+        0 => Some(list_all_operations(doc)),
+        1 => list_resource_operations(doc, &path[0]),
         _ => {
-            // Try treating last element as a method name first.
-            // If that fails, the full path may resolve to a nested sub-resource — list its ops.
-            let resource_path: Vec<&str> = path[..path.len() - 1].iter().map(|s| s.as_str()).collect();
+            let resource_path: Vec<&str> =
+                path[..path.len() - 1].iter().map(|s| s.as_str()).collect();
             let method_name = path[path.len() - 1].as_str();
-            match operation_schema(doc, &resource_path, method_name) {
-                Ok(schema) => schema,
-                Err(_) => {
-                    let full_path: Vec<&str> = path.iter().map(|s| s.as_str()).collect();
-                    list_nested_resource_operations(doc, &full_path)?
-                }
-            }
+            operation_schema(doc, &resource_path, method_name).or_else(|| {
+                let full_path: Vec<&str> = path.iter().map(|s| s.as_str()).collect();
+                list_nested_resource_operations(doc, &full_path)
+            })
         }
-    };
-
-    writeln!(
-        out,
-        "{}",
-        serde_json::to_string_pretty(&output)
-            .map_err(|e| CliError::Validation(format!("Failed to serialize help: {e}")))?
-    )
-    .map_err(|e| CliError::Other(e.into()))?;
-    Ok(())
+    }
 }
 
 fn list_all_operations(doc: &GraphQLSchema) -> Value {
@@ -57,63 +39,35 @@ fn list_all_operations(doc: &GraphQLSchema) -> Value {
     json!(ops)
 }
 
-fn list_resource_operations(doc: &GraphQLSchema, resource: &str) -> Result<Value, CliError> {
-    let res = doc
-        .resources
-        .get(resource)
-        .ok_or_else(|| CliError::Validation(format!("Resource not found: {resource}")))?;
+fn list_resource_operations(doc: &GraphQLSchema, resource: &str) -> Option<Value> {
+    let res = doc.resources.get(resource)?;
     let mut ops: Vec<Value> = Vec::new();
     collect_resource_ops(res, &[resource], &mut ops);
-    Ok(json!(ops))
+    Some(json!(ops))
 }
 
-fn list_nested_resource_operations(doc: &GraphQLSchema, path: &[&str]) -> Result<Value, CliError> {
-    let first = path.first().ok_or_else(|| {
-        CliError::Validation("No resource specified".to_string())
-    })?;
-    let mut res = doc
-        .resources
-        .get(*first)
-        .ok_or_else(|| CliError::Validation(format!("Resource not found: {first}")))?;
+fn list_nested_resource_operations(doc: &GraphQLSchema, path: &[&str]) -> Option<Value> {
+    let first = path.first()?;
+    let mut res = doc.resources.get(*first)?;
     for segment in &path[1..] {
-        res = res
-            .resources
-            .get(*segment)
-            .ok_or_else(|| CliError::Validation(format!("Resource not found: {segment}")))?;
+        res = res.resources.get(*segment)?;
     }
     let mut ops: Vec<Value> = Vec::new();
     collect_resource_ops(res, path, &mut ops);
-    Ok(json!(ops))
+    Some(json!(ops))
 }
 
-fn operation_schema(doc: &GraphQLSchema, resource_path: &[&str], method_name: &str) -> Result<Value, CliError> {
-    let first = resource_path.first().ok_or_else(|| {
-        CliError::Validation("No resource specified".to_string())
-    })?;
-
-    let mut res = doc
-        .resources
-        .get(*first)
-        .ok_or_else(|| CliError::Validation(format!("Resource not found: {first}")))?;
-
+fn operation_schema(doc: &GraphQLSchema, resource_path: &[&str], method_name: &str) -> Option<Value> {
+    let first = resource_path.first()?;
+    let mut res = doc.resources.get(*first)?;
     for segment in &resource_path[1..] {
-        res = res
-            .resources
-            .get(*segment)
-            .ok_or_else(|| CliError::Validation(format!("Resource not found: {segment}")))?;
+        res = res.resources.get(*segment)?;
     }
-
-    let method = res.methods.get(method_name).ok_or_else(|| {
-        CliError::Validation(format!(
-            "Operation not found: {} {method_name}",
-            resource_path.join(" ")
-        ))
-    })?;
-
-    Ok(build_schema(resource_path, method_name, method))
+    let method = res.methods.get(method_name)?;
+    Some(build_operation_schema(resource_path, method_name, method))
 }
 
-fn build_schema(resource_path: &[&str], method_name: &str, method: &GraphQLOperation) -> Value {
+fn build_operation_schema(resource_path: &[&str], method_name: &str, method: &GraphQLOperation) -> Value {
     let mut properties: Map<String, Value> = Map::new();
     let mut required: Vec<String> = Vec::new();
 
@@ -135,23 +89,33 @@ fn build_schema(resource_path: &[&str], method_name: &str, method: &GraphQLOpera
     }
     required.sort();
 
-    let (operation_type, field) = method
-        .graphql
-        .as_ref()
-        .map(|g| (g.operation_type.as_str(), g.field_name.as_str()))
-        .unwrap_or(("query", ""));
-
-    json!({
+    // Per ADR-0006: `--schema` is the agent-facing contract. Drop
+    // GraphQL execution detail (`operationType`, `field`) — agents drive
+    // the CLI, not the underlying GraphQL schema. Rename `parameters` →
+    // `input` for symmetry with `output` / `defaultSelection`.
+    //
+    // `output` is OpenAPI-only — the GraphQL IR has no lowered return-
+    // type schema yet. Instead we emit `defaultSelection`, the GraphQL
+    // fragment string the CLI will send by default; it tells the agent
+    // which fields it will receive without overpromising a JSON Schema.
+    let mut out = json!({
         "operation": format!("{}.{}", resource_path.join("."), method_name),
-        "operationType": operation_type,
-        "field": field,
         "description": method.description.as_deref().unwrap_or(""),
-        "parameters": {
+        "input": {
             "type": "object",
             "properties": properties,
             "required": required,
         },
-    })
+    });
+    if let Some(default_selection) = method
+        .graphql
+        .as_ref()
+        .map(|g| g.default_selection.as_str())
+        .filter(|s| !s.is_empty())
+    {
+        out["defaultSelection"] = json!(default_selection);
+    }
+    out
 }
 
 fn collect_resource_ops(res: &GraphQLResource, path: &[&str], ops: &mut Vec<Value>) {
@@ -159,15 +123,10 @@ fn collect_resource_ops(res: &GraphQLResource, path: &[&str], ops: &mut Vec<Valu
     method_names.sort();
     for method_name in method_names {
         let m = &res.methods[method_name];
-        let (operation_type, field) = m
-            .graphql
-            .as_ref()
-            .map(|g| (g.operation_type.as_str(), g.field_name.as_str()))
-            .unwrap_or(("query", ""));
+        // Per ADR-0006: drop `operationType` and `field` — GraphQL
+        // execution detail an agent driving the CLI never uses.
         ops.push(json!({
             "operation": format!("{}.{}", path.join("."), method_name),
-            "operationType": operation_type,
-            "field": field,
             "description": m.description.as_deref().unwrap_or(""),
         }));
     }
@@ -251,14 +210,67 @@ mod tests {
     fn test_render_operation_schema() {
         let doc = make_doc();
         let schema = operation_schema(&doc, &["users"], "get").unwrap();
-        assert_eq!(schema["operationType"], "query");
-        assert_eq!(schema["field"], "user");
-        let required = schema["parameters"]["required"].as_array().unwrap();
+        // Per ADR-0006: drop GraphQL execution detail; rename
+        // `parameters` → `input`.
+        assert!(schema.get("operationType").is_none(), "operationType should be dropped");
+        assert!(schema.get("field").is_none(), "field should be dropped");
+        assert!(schema.get("parameters").is_none(), "`parameters` should be renamed to `input`");
+        let required = schema["input"]["required"].as_array().unwrap();
         assert!(required.iter().any(|v| v == "user_id"));
     }
 
     #[test]
-    fn test_render_json_help_nested_sub_resource_listing() {
+    fn test_default_selection_emitted_on_per_op_schema() {
+        // Per ADR-0006: GraphQL ops carry `defaultSelection` as a
+        // sibling of `input` — the GraphQL fragment string telling the
+        // agent which fields it will get back by default.
+        let doc = make_doc();
+        let schema = operation_schema(&doc, &["users"], "get").unwrap();
+        assert_eq!(schema["defaultSelection"], "{ id name }");
+    }
+
+    #[test]
+    fn test_default_selection_omitted_when_empty() {
+        use crate::graphql::discovery::{
+            GraphQLMethodInfo, GraphQLOperation, GraphQLResource, MethodParameter,
+        };
+        let mut methods = HashMap::new();
+        methods.insert(
+            "ping".to_string(),
+            GraphQLOperation {
+                description: Some("Ping".to_string()),
+                parameters: HashMap::<String, MethodParameter>::new(),
+                graphql: Some(GraphQLMethodInfo {
+                    operation_type: "query".to_string(),
+                    field_name: "ping".to_string(),
+                    default_selection: String::new(),
+                    args: Vec::new(),
+                }),
+                ..Default::default()
+            },
+        );
+        let mut resources = HashMap::new();
+        resources.insert(
+            "ops".to_string(),
+            GraphQLResource {
+                methods,
+                resources: HashMap::new(),
+            },
+        );
+        let doc = GraphQLSchema {
+            name: "test".to_string(),
+            resources,
+            ..Default::default()
+        };
+        let schema = operation_schema(&doc, &["ops"], "ping").unwrap();
+        assert!(
+            schema.get("defaultSelection").is_none(),
+            "empty default_selection should be omitted: {schema}",
+        );
+    }
+
+    #[test]
+    fn test_render_schema_nested_sub_resource_listing() {
         let mut nested_methods = std::collections::HashMap::new();
         nested_methods.insert(
             "get-membership".to_string(),
@@ -287,8 +299,8 @@ mod tests {
         };
 
         let path: Vec<String> = vec!["organizations".into(), "memberships".into()];
-        let result = render_json_help(&doc, &path);
-        assert!(result.is_ok(), "sub-resource path should list operations, not error");
+        let result = build_schema(&doc, &path);
+        assert!(result.is_some(), "sub-resource path should list operations, not be None");
     }
 
     #[test]
@@ -333,12 +345,10 @@ mod tests {
 
         let schema = operation_schema(&doc, &["organizations", "memberships"], "get-membership").unwrap();
         assert_eq!(schema["operation"], "organizations.memberships.get-membership");
-        assert_eq!(schema["operationType"], "query");
-        assert_eq!(schema["field"], "membership");
     }
 
     #[test]
-    fn test_render_json_help_dispatches_nested_path() {
+    fn test_render_schema_dispatches_nested_path() {
         let mut nested_methods = std::collections::HashMap::new();
         nested_methods.insert(
             "get-membership".to_string(),
@@ -367,7 +377,7 @@ mod tests {
         };
 
         let path: Vec<String> = vec!["organizations".into(), "memberships".into(), "get-membership".into()];
-        let result = render_json_help(&doc, &path);
-        assert!(result.is_ok(), "nested path should resolve correctly");
+        let result = build_schema(&doc, &path);
+        assert!(result.is_some(), "nested path should resolve correctly");
     }
 }

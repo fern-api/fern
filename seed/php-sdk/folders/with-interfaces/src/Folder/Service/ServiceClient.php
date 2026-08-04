@@ -47,6 +47,11 @@ class ServiceClient implements ServiceClientInterface
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->folder->service->endpoint();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -85,6 +90,15 @@ class ServiceClient implements ServiceClientInterface
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->folder->service->unknownRequest(
+     *     [
+     *         'key' => "value",
+     *     ],
+     * );
+     * ```
+     *
      * @param mixed $request
      * @param ?array{
      *   baseUrl?: string,

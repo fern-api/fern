@@ -26,6 +26,11 @@ public interface EnrichedCursorPathGetter {
         return pathItem().name().getCamelCase().getSafeName();
     }
 
+    // The local variable / lambda parameter name for this path item. Distinct from propertyName()
+    // because a cursor path may navigate through repeated property names (e.g. b.c.b), which would
+    // otherwise produce duplicate local variable declarations.
+    String variableName();
+
     static ImmutableEnrichedCursorPathGetter.Builder builder() {
         return ImmutableEnrichedCursorPathGetter.builder();
     }

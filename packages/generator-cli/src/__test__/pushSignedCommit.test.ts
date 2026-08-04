@@ -1,12 +1,13 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { isNonFastForwardError, pushSignedCommit } from "../pipeline/github/pushSignedCommit.js";
+import { isNonFastForwardError, pushSignedCommit, resolveCommitAuthor } from "../pipeline/github/pushSignedCommit.js";
 
 interface MockedRepository {
     getHeadSha: ReturnType<typeof vi.fn>;
-    getHeadTreeHash: ReturnType<typeof vi.fn>;
-    getHeadCommitMessage: ReturnType<typeof vi.fn>;
-    getHeadParents: ReturnType<typeof vi.fn>;
+    getLocalOnlyCommits: ReturnType<typeof vi.fn>;
+    getCommitTreeHash: ReturnType<typeof vi.fn>;
+    getCommitMessage: ReturnType<typeof vi.fn>;
+    getCommitParents: ReturnType<typeof vi.fn>;
     pushObjectToRef: ReturnType<typeof vi.fn>;
     pullWithRebase: ReturnType<typeof vi.fn>;
     resetHardToSha: ReturnType<typeof vi.fn>;
@@ -16,9 +17,10 @@ interface MockedRepository {
 function buildRepository(overrides: Partial<MockedRepository> = {}): MockedRepository {
     return {
         getHeadSha: vi.fn().mockResolvedValue("local-sha"),
-        getHeadTreeHash: vi.fn().mockResolvedValue("tree-sha"),
-        getHeadCommitMessage: vi.fn().mockResolvedValue("SDK Generation"),
-        getHeadParents: vi.fn().mockResolvedValue(["parent-sha"]),
+        getLocalOnlyCommits: vi.fn().mockResolvedValue(["local-sha"]),
+        getCommitTreeHash: vi.fn().mockResolvedValue("tree-sha"),
+        getCommitMessage: vi.fn().mockResolvedValue("SDK Generation"),
+        getCommitParents: vi.fn().mockResolvedValue(["parent-sha"]),
         pushObjectToRef: vi.fn().mockResolvedValue(undefined),
         pullWithRebase: vi.fn().mockResolvedValue(undefined),
         resetHardToSha: vi.fn().mockResolvedValue(undefined),
@@ -97,16 +99,16 @@ describe("pushSignedCommit", () => {
             "local-sha",
             expect.stringMatching(/^refs\/temp\/fern-/)
         );
-        // `author` always sent; `committer` omitted so GitHub fills it in and signs.
+        // `author` and `committer` both omitted so GitHub fills them in and signs.
         expect(octokit.git.createCommit).toHaveBeenCalledWith({
             owner: "acme",
             repo: "acme-sdk",
             message: "SDK Generation",
             tree: "tree-sha",
-            parents: ["parent-sha"],
-            author: { name: "fern-api", email: "115122769+fern-api[bot]@users.noreply.github.com" }
+            parents: ["parent-sha"]
         });
         const defaultCall = octokit.git.createCommit.mock.calls[0]?.[0] as Record<string, unknown>;
+        expect(defaultCall).not.toHaveProperty("author");
         expect(defaultCall).not.toHaveProperty("committer");
         expect(octokit.git.updateRef).toHaveBeenCalledWith({
             owner: "acme",
@@ -201,8 +203,9 @@ describe("pushSignedCommit", () => {
         const nonFF = Object.assign(new Error("Update is not a fast forward"), { status: 422 });
         const repository = buildRepository({
             getHeadSha: vi.fn().mockResolvedValueOnce("local-sha-1").mockResolvedValue("local-sha-2"),
-            getHeadTreeHash: vi.fn().mockResolvedValueOnce("tree-sha-1").mockResolvedValue("tree-sha-2"),
-            getHeadParents: vi.fn().mockResolvedValueOnce(["parent-sha-1"]).mockResolvedValue(["parent-sha-2"])
+            getLocalOnlyCommits: vi.fn().mockResolvedValueOnce(["local-sha-1"]).mockResolvedValue(["local-sha-2"]),
+            getCommitTreeHash: vi.fn().mockResolvedValueOnce("tree-sha-1").mockResolvedValue("tree-sha-2"),
+            getCommitParents: vi.fn().mockResolvedValueOnce(["parent-sha-1"]).mockResolvedValue(["parent-sha-2"])
         });
         const octokit = buildOctokit({
             createCommit: vi
@@ -230,10 +233,10 @@ describe("pushSignedCommit", () => {
             repo: "acme-sdk",
             message: "SDK Generation",
             tree: "tree-sha-2",
-            parents: ["parent-sha-2"],
-            author: { name: "fern-api", email: "115122769+fern-api[bot]@users.noreply.github.com" }
+            parents: ["parent-sha-2"]
         });
         const retryCall = octokit.git.createCommit.mock.calls[1]?.[0] as Record<string, unknown>;
+        expect(retryCall).not.toHaveProperty("author");
         expect(retryCall).not.toHaveProperty("committer");
         // Temp ref re-push on the rebase retry must force, because the rebased commit
         // is not a descendant of the original tempRef tip.
@@ -248,6 +251,80 @@ describe("pushSignedCommit", () => {
             "local-sha-2",
             expect.stringMatching(/^refs\/temp\/fern-/),
             { force: true }
+        );
+    });
+
+    it("signs every local-only commit and re-parents each onto its signed predecessor", async () => {
+        // Replay-style branch: [fern-generated] (gen-sha) followed by [fern-replay] (replay-sha).
+        const repository = buildRepository({
+            getHeadSha: vi.fn().mockResolvedValue("replay-sha"),
+            getLocalOnlyCommits: vi.fn().mockResolvedValue(["gen-sha", "replay-sha"]),
+            getCommitTreeHash: vi.fn().mockImplementation((sha: string) => Promise.resolve(`tree-${sha}`)),
+            getCommitMessage: vi
+                .fn()
+                .mockImplementation((sha: string) =>
+                    Promise.resolve(
+                        sha === "gen-sha" ? "[fern-generated] Update SDK" : "[fern-replay] Applied customizations"
+                    )
+                ),
+            getCommitParents: vi
+                .fn()
+                .mockImplementation((sha: string) => Promise.resolve(sha === "gen-sha" ? ["base-sha"] : ["gen-sha"]))
+        });
+        const octokit = buildOctokit({
+            createCommit: vi
+                .fn()
+                .mockResolvedValueOnce({ data: { sha: "signed-gen-sha" } })
+                .mockResolvedValueOnce({ data: { sha: "signed-replay-sha" } })
+        });
+
+        const result = await makeCaller(
+            repository,
+            octokit
+        )({
+            ...baseArgs,
+            repository: repository as never,
+            octokit: octokit as never
+        });
+
+        expect(result).toBe("signed-replay-sha");
+        expect(octokit.git.createCommit).toHaveBeenNthCalledWith(1, {
+            owner: "acme",
+            repo: "acme-sdk",
+            message: "[fern-generated] Update SDK",
+            tree: "tree-gen-sha",
+            parents: ["base-sha"]
+        });
+        expect(octokit.git.createCommit).toHaveBeenNthCalledWith(2, {
+            owner: "acme",
+            repo: "acme-sdk",
+            message: "[fern-replay] Applied customizations",
+            tree: "tree-replay-sha",
+            parents: ["signed-gen-sha"]
+        });
+        expect(octokit.git.updateRef).toHaveBeenCalledWith(expect.objectContaining({ sha: "signed-replay-sha" }));
+        expect(repository.resetHardToSha).toHaveBeenCalledWith("signed-replay-sha");
+    });
+
+    it("falls back to signing HEAD only when the local-only chain is empty", async () => {
+        const repository = buildRepository({
+            getLocalOnlyCommits: vi.fn().mockResolvedValue([])
+        });
+        const octokit = buildOctokit();
+
+        const result = await makeCaller(
+            repository,
+            octokit
+        )({
+            ...baseArgs,
+            repository: repository as never,
+            octokit: octokit as never
+        });
+
+        expect(result).toBe("signed-sha-1");
+        expect(octokit.git.createCommit).toHaveBeenCalledTimes(1);
+        expect(octokit.git.createCommit).toHaveBeenCalledWith(
+            expect.objectContaining({ message: "SDK Generation", tree: "tree-sha", parents: ["parent-sha"] })
         );
     });
 
@@ -282,8 +359,9 @@ describe("pushSignedCommit", () => {
         const customAuthor = { name: "auth0-bot", email: "auth0-bot@example.com" };
         const repository = buildRepository({
             getHeadSha: vi.fn().mockResolvedValueOnce("local-sha-1").mockResolvedValue("local-sha-2"),
-            getHeadTreeHash: vi.fn().mockResolvedValueOnce("tree-sha-1").mockResolvedValue("tree-sha-2"),
-            getHeadParents: vi.fn().mockResolvedValueOnce(["parent-sha-1"]).mockResolvedValue(["parent-sha-2"])
+            getLocalOnlyCommits: vi.fn().mockResolvedValueOnce(["local-sha-1"]).mockResolvedValue(["local-sha-2"]),
+            getCommitTreeHash: vi.fn().mockResolvedValueOnce("tree-sha-1").mockResolvedValue("tree-sha-2"),
+            getCommitParents: vi.fn().mockResolvedValueOnce(["parent-sha-1"]).mockResolvedValue(["parent-sha-2"])
         });
         const octokit = buildOctokit({
             createCommit: vi
@@ -357,6 +435,30 @@ describe("pushSignedCommit", () => {
         ).rejects.toBe(boom);
 
         expect(octokit.git.deleteRef).toHaveBeenCalled();
+    });
+});
+
+describe("resolveCommitAuthor", () => {
+    const fernBot = { name: "fern-api", email: "115122769+fern-api[bot]@users.noreply.github.com" };
+
+    it("returns the explicit author when provided", () => {
+        const author = { name: "custom", email: "custom@example.com" };
+        expect(resolveCommitAuthor("ghp_abc123", author)).toBe(author);
+        expect(resolveCommitAuthor("ghs_abc123", author)).toBe(author);
+    });
+
+    it("pins the Fern bot identity for classic PATs", () => {
+        expect(resolveCommitAuthor("ghp_abc123", undefined)).toEqual(fernBot);
+    });
+
+    it("pins the Fern bot identity for fine-grained PATs", () => {
+        expect(resolveCommitAuthor("github_pat_abc123", undefined)).toEqual(fernBot);
+    });
+
+    it("returns undefined for signing-capable tokens", () => {
+        expect(resolveCommitAuthor("ghs_installation", undefined)).toBeUndefined();
+        expect(resolveCommitAuthor("gho_oauth", undefined)).toBeUndefined();
+        expect(resolveCommitAuthor("unknown-token", undefined)).toBeUndefined();
     });
 });
 

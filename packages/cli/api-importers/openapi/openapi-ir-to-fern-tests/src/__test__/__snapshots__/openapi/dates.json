@@ -151,4 +151,5 @@ headers:
     name: dateTimeHeader
 ",
   },
+  "specVersion": "1.0.0",
 }

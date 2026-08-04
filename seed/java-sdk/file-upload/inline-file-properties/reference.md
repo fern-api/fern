@@ -16,6 +16,9 @@
 client.service().justFile(
     JustFileRequest
         .builder()
+        .file(
+            new File("path/to/file")
+        )
         .build()
 );
 ```
@@ -45,6 +48,9 @@ client.service().justFile(
 client.service().optionalArgs(
     OptionalArgsRequest
         .builder()
+        .imageFile(
+            new File("path/to/file")
+        )
         .build()
 );
 ```
@@ -79,6 +85,9 @@ client.service().withRefBody(
                 .builder()
                 .foo("bar")
                 .build()
+        )
+        .imageFile(
+            new File("path/to/file")
         )
         .build()
 );

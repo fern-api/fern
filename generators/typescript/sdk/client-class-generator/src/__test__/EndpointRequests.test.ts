@@ -57,7 +57,8 @@ function createEndpointRequestMockContext(opts?: { shouldInlinePathParams?: bool
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             }),
             getReferenceToType: (typeRef: FernIr.TypeReference) => {
@@ -323,6 +324,7 @@ function createMockSdkClientClass(): any {
     return {
         hasAuthProvider: () => false,
         getGenerateEndpointMetadata: () => false,
+        getAutoGenerateIdempotencyKey: () => false,
         getReferenceToAuthProviderOrThrow: () => ts.factory.createIdentifier("this._authProvider"),
         getReferenceToMetadataForEndpointSupplier: () => ts.factory.createIdentifier("_metadata"),
         getEnvironment: () => undefined
@@ -627,6 +629,64 @@ describe("GeneratedDefaultEndpointRequest", () => {
             const args = request.getFetcherRequestArgs(context);
             expect(args.contentType).toBe("application/json");
             expect(args.requestType).toBe("json");
+        });
+
+        it("spreads requestOptions.additionalBodyParameters on top of an inlined request body", () => {
+            const sdkRequest = createSdkRequestWrapper();
+            const inlinedBody = createInlinedRequestBody({
+                properties: [createInlinedRequestBodyProperty("name", STRING_TYPE)]
+            });
+            const request = new GeneratedDefaultEndpointRequest({
+                ir: createMinimalIR(),
+                packageId: { isRoot: true },
+                sdkRequest,
+                service: createHttpService(),
+                endpoint: createHttpEndpoint({
+                    sdkRequest,
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(inlinedBody)
+                }),
+                requestBody: FernIr.HttpRequestBody.inlinedRequestBody(inlinedBody),
+                generatedSdkClientClass: createMockSdkClientClass(),
+                retainOriginalCasing: false,
+                parameterNaming: "default",
+                caseConverter
+            });
+            const context = createEndpointRequestMockContext();
+            request.getBuildRequestStatements(context);
+            const args = request.getFetcherRequestArgs(context);
+            assert(args.body != null, "body should not be null");
+            expect(getTextOfTsNode(args.body)).toBe(
+                "mergeAdditionalBodyParameters(serializers.TestRequest.jsonOrThrow(request), requestOptions?.additionalBodyParameters)"
+            );
+        });
+
+        it("spreads requestOptions.additionalBodyParameters on top of a reference request body", () => {
+            const sdkRequest = createSdkRequestBody();
+            const referenceBody = FernIr.HttpRequestBody.reference({
+                requestBodyType: STRING_TYPE,
+                contentType: undefined,
+                docs: undefined,
+                v2Examples: undefined
+            });
+            const request = new GeneratedDefaultEndpointRequest({
+                ir: createMinimalIR(),
+                packageId: { isRoot: true },
+                sdkRequest,
+                service: createHttpService(),
+                endpoint: createHttpEndpoint({ sdkRequest, requestBody: referenceBody }),
+                requestBody: referenceBody,
+                generatedSdkClientClass: createMockSdkClientClass(),
+                retainOriginalCasing: false,
+                parameterNaming: "default",
+                caseConverter
+            });
+            const context = createEndpointRequestMockContext();
+            request.getBuildRequestStatements(context);
+            const args = request.getFetcherRequestArgs(context);
+            assert(args.body != null, "body should not be null");
+            expect(getTextOfTsNode(args.body)).toBe(
+                "mergeAdditionalBodyParameters(serializers.testEndpoint.Request.jsonOrThrow(request), requestOptions?.additionalBodyParameters)"
+            );
         });
 
         it("returns form request type for x-www-form-urlencoded content type", () => {

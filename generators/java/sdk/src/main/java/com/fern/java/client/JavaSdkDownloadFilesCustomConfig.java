@@ -77,6 +77,18 @@ public interface JavaSdkDownloadFilesCustomConfig extends IDownloadFilesCustomCo
         return true;
     }
 
+    @Value.Default
+    @JsonProperty("includePlatformHeaders")
+    default Boolean includePlatformHeaders() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("allowUserAgentAppInfo")
+    default Boolean allowUserAgentAppInfo() {
+        return false;
+    }
+
     static ImmutableJavaSdkDownloadFilesCustomConfig.Builder builder() {
         return ImmutableJavaSdkDownloadFilesCustomConfig.builder();
     }

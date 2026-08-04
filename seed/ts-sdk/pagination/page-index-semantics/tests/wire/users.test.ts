@@ -531,7 +531,7 @@ describe("UsersClient", () => {
         };
 
         server
-            .mockEndpoint({ once: false })
+            .mockEndpoint()
             .get("/users/optional-data")
             .respondWith()
             .statusCode(200)

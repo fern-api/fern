@@ -35,6 +35,9 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -50,6 +53,7 @@ public partial class SeedApiClient : ISeedApiClient
                         "account/{0}",
                         ValueConvert.ToPathParameterString(accountId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

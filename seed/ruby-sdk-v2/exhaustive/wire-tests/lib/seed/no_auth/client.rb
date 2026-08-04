@@ -20,6 +20,11 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.no_auth.post_with_no_auth(request: {
+      #     key: "value"
+      #   })
+      #
       # @return [Boolean]
       def post_with_no_auth(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

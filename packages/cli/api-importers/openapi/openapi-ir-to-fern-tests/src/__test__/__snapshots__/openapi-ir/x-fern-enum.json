@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Test extension `x-fern-enum` for enums",
   "servers": [],
   "websocketServers": [],

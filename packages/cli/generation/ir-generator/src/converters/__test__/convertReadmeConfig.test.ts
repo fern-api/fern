@@ -79,8 +79,10 @@ describe("convertReadmeConfig", () => {
             sdkRequest: undefined,
             v2Examples: undefined,
             displayName: undefined,
+            subtitle: undefined,
             source: undefined,
             retries: undefined,
+            globalParameters: undefined,
             apiPlayground: undefined
         };
         const service: HttpService = {

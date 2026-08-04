@@ -31,6 +31,7 @@ function makeMinimalIr(overrides: Partial<FernIr.IntermediateRepresentation> = {
     return {
         fdrApiDefinitionId: undefined,
         apiVersion: undefined,
+        specVersion: undefined,
         apiName: "test-api",
         apiDisplayName: undefined,
         apiDocs: undefined,
@@ -71,6 +72,7 @@ function makeMinimalIr(overrides: Partial<FernIr.IntermediateRepresentation> = {
             hasStreamingEndpoints: false,
             hasPaginatedEndpoints: false,
             hasFileDownloadEndpoints: false,
+            idempotencyKeyGeneration: undefined,
             platformHeaders: {
                 language: "X-Fern-Language",
                 sdkName: "X-Fern-SDK-Name",
@@ -79,6 +81,7 @@ function makeMinimalIr(overrides: Partial<FernIr.IntermediateRepresentation> = {
             }
         },
         variables: [],
+        globalParameters: undefined,
         serviceTypeReferenceInfo: {
             typesReferencedOnlyByService: {},
             sharedTypes: []

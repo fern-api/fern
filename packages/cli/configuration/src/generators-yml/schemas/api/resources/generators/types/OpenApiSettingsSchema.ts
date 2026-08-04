@@ -40,6 +40,13 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      */
     "preserve-single-schema-oneof"?: boolean;
     /**
+     * If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each
+     * variant is the union member merged with the remaining allOf members.
+     * If false, the variants' properties are flattened into a single object and marked optional.
+     * Defaults to false.
+     */
+    "preserve-one-of-in-all-of"?: boolean;
+    /**
      * Whether to inline allOf schemas. If false, allOf schemas will be
      * extended in the code generation.
      */
@@ -67,4 +74,18 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      * Defaults to false.
      */
     "infer-discriminated-union-base-properties"?: boolean;
+    /**
+     * If true, disambiguate generated request wrapper names that collide with
+     * component schema names by replacing the "Request" suffix with "Body".
+     * If false, keep the original "Request" suffix regardless of collisions.
+     * Defaults to false.
+     */
+    "disambiguate-request-names"?: boolean;
+    /**
+     * If true, ignore operation-level tags when determining the SDK structure.
+     * Endpoints fall back to the root package (or their namespace) and method
+     * names are derived from each operation's operationId.
+     * Defaults to false.
+     */
+    "ignore-tags"?: boolean;
 }

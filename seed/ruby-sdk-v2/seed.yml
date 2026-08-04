@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: Ruby SDK
 language: ruby
 generatorType: SDK
@@ -52,7 +52,15 @@ scripts:
         - bundle install
       test:
         - bundle exec rubocop
-        - bundle exec rake test
+        # Wire tests spin up a WireMock container via wire_helper.rb, so only enable them
+        # when a working Docker daemon is reachable. The default seed container path
+        # (image: ruby:3.3) has no Docker, so wire tests stay skipped there; the local
+        # script runner (--local) runs on the host where Docker is available and executes them.
+        - |
+          if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
+            export RUN_WIRE_TESTS=true
+          fi
+          bundle exec rake test
 
 fixtures:
   basic-auth:
@@ -63,12 +71,22 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
+  endpoint-security-auth:
+    - outputFolder: wire-tests
+      customConfig:
+        enableWireTests: true
   exhaustive:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
         clientModuleName: MyClient
         maxRetries: 5
+  idempotency-headers:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: auto-generate-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
   pagination:
     - customConfig: null
       outputFolder: no-custom-config
@@ -85,6 +103,16 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
+    - outputFolder: include-platform-headers
+      customConfig:
+        includePlatformHeaders: true
+    - outputFolder: allow-user-agent-app-info
+      customConfig:
+        allowUserAgentAppInfo: true
+    - outputFolder: include-platform-headers-app-info
+      customConfig:
+        includePlatformHeaders: true
+        allowUserAgentAppInfo: true
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
@@ -119,12 +147,21 @@ fixtures:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
+  ruby-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
 
 features:
   requestOptions: true
   idempotency: false
   autoPagination: false
-  oauth: false
+  oauth: true
   authEnvVarScanning: true
   websocket: false
   streamingJson: false

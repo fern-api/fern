@@ -1,5 +1,7 @@
 # frozen_string_literal: true
-
+<% if (includePlatformHeaders) { %>
+require "rbconfig"
+<% } %>
 module <%= gem_namespace %>
   module Internal
     module Http
@@ -21,21 +23,140 @@ module <%= gem_namespace %>
         # @param max_retries [Integer] The number of times to retry a failed request, defaults to <%= defaultMaxRetries %>.
         # @param timeout [Float] The timeout for the request, defaults to 60.0 seconds.
         # @param headers [Hash] The headers for the request.
-        def initialize(base_url:, max_retries: <%= defaultMaxRetries %>, timeout: 60.0, headers: {})
+        # @param auth_provider [Object, nil] An optional auth provider responding to
+        #   `auth_headers`. When present its headers are resolved on every request so
+        #   token-based schemes (e.g. OAuth) can refresh an expired token mid-session.
+        def initialize(base_url:, max_retries: <%= defaultMaxRetries %>, timeout: 60.0, headers: {}, auth_provider: nil)
           @base_url = base_url
           @max_retries = max_retries
           @timeout = timeout
+          @auth_provider = auth_provider
           @default_headers = <% if (!omitFernHeaders) { %>{
             "X-Fern-Language": "Ruby",
             "X-Fern-SDK-Name": "<%= sdkName %>",
             "X-Fern-SDK-Version": "0.0.1"
           }.merge(headers)<% } else { %>headers<% } %>
         end
+<% if (includePlatformHeaders) { %>
+        # Builds a structured User-Agent header value of the form
+        # "{sdk_name}/{sdk_version} ({os}; {arch}) Ruby/{version}", resolving the
+        # operating system, architecture, and Ruby version at runtime. Unknown
+        # components are omitted rather than emitted as placeholder values.
+        # @param prefix [String] The "{sdk_name}/{sdk_version}" portion.
+        # @return [String] The User-Agent header value.
+        def self.user_agent(prefix)
+          os = normalize_os(RbConfig::CONFIG["host_os"])
+          arch = normalize_arch(RbConfig::CONFIG["host_cpu"])
+          version = normalize_value(RUBY_VERSION)
 
+          result = prefix.to_s
+          platform = [os, arch].compact
+          result += " (#{platform.join("; ")})" unless platform.empty?
+          result += version.nil? ? " Ruby" : " Ruby/#{version}"
+          result
+        end
+
+        # @param value [String, nil] The raw value to normalize.
+        # @return [String, nil] The stripped value, or nil when blank.
+        def self.normalize_value(value)
+          return nil if value.nil?
+
+          stripped = value.to_s.strip
+          stripped.empty? ? nil : stripped
+        end
+
+        # Collapses the 64-bit x86 architecture aliases (x64, amd64, x86_64) to
+        # the single canonical token "x86_64"; other architectures are returned
+        # unchanged.
+        # @param host_cpu [String, nil] The raw RbConfig host_cpu value.
+        # @return [String, nil] A normalized architecture token, or nil when blank.
+        def self.normalize_arch(host_cpu)
+          value = normalize_value(host_cpu)
+          return nil if value.nil?
+
+          %w[x64 amd64 x86_64].include?(value.downcase) ? "x86_64" : value
+        end
+
+        # Maps RbConfig's host_os to a short, stable platform token.
+        # @param host_os [String, nil] The raw RbConfig host_os value.
+        # @return [String, nil] A normalized OS token, or nil when unknown.
+        def self.normalize_os(host_os)
+          value = normalize_value(host_os)
+          return nil if value.nil?
+
+          case value
+          when /linux/i then "linux"
+          when /darwin|mac ?os/i then "darwin"
+          when /mswin|mingw|cygwin|windows/i then "windows"
+          when /bsd/i then "bsd"
+          when /solaris/i then "solaris"
+          else value
+          end
+        end
+<% } %><% if (allowUserAgentAppInfo) { %>
+        # RFC 7230 token characters (tchar). Any character outside this set in a
+        # product token (name/version) is percent-encoded so caller-supplied values
+        # cannot break out of the token or inject additional header content.
+        USER_AGENT_TCHAR = /[^!#$%&'*+\-.^_`|~0-9A-Za-z]/
+        # Characters that must be escaped inside an RFC 9110 comment: the delimiters
+        # `(`, `)`, `\`, and control characters (incl. CR/LF).
+        USER_AGENT_COMMENT_UNSAFE = /[()\\\x00-\x1f\x7f]/
+
+        # Appends the caller-supplied application product token to a base User-Agent
+        # value, producing "{base} {name}/{version} ({comment})" per RFC 9110. The
+        # `version` and `comment` segments are omitted when blank. Caller-supplied
+        # values are trimmed (blank is treated as absent) and sanitized before being
+        # appended so they cannot inject additional header content. Returns the base
+        # value unchanged when `app_info` or its `name` is absent.
+        # @param user_agent [String] The base User-Agent value.
+        # @param app_info [Hash, nil] Optional { name:, version:, comment: } app info.
+        # @return [String] The User-Agent value with the app product token appended.
+        def self.append_app_info(user_agent, app_info)
+          return user_agent if app_info.nil?
+
+          name = encode_user_agent_token((app_info[:name] || app_info["name"]).to_s.strip)
+          return user_agent if name.empty?
+
+          product_token = name
+          version = encode_user_agent_token((app_info[:version] || app_info["version"]).to_s.strip)
+          product_token += "/#{version}" unless version.empty?
+
+          comment = encode_user_agent_comment((app_info[:comment] || app_info["comment"]).to_s.strip)
+          product_token += " (#{comment})" unless comment.empty?
+
+          "#{user_agent} #{product_token}"
+        end
+
+        # Percent-encodes every non-tchar character so the value is a valid RFC 7230
+        # token.
+        # @param value [String] The raw product-token value.
+        # @return [String] The token-encoded value.
+        def self.encode_user_agent_token(value)
+          value.gsub(USER_AGENT_TCHAR) { |char| percent_encode_user_agent(char) }
+        end
+
+        # Escapes the comment delimiters and control characters so a caller-supplied
+        # comment cannot terminate the comment group early or inject header content.
+        # @param value [String] The raw comment value.
+        # @return [String] The escaped comment value.
+        def self.encode_user_agent_comment(value)
+          value.gsub(USER_AGENT_COMMENT_UNSAFE) { |char| percent_encode_user_agent(char) }
+        end
+
+        # Percent-encodes each byte of the given character as uppercase hex.
+        # @param char [String] A single (possibly multibyte) character.
+        # @return [String] The percent-encoded representation.
+        def self.percent_encode_user_agent(char)
+          char.bytes.map { |byte| format("%%%02X", byte) }.join
+        end
+<% } %>
         # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
         # @return [HTTP::Response] The HTTP response.
         def send(request)
           url = build_url(request)
+          # Resolve auth headers once per request (not per retry) so token-based
+          # providers refresh at most once here; static providers are cheap.
+          auth_headers = resolve_auth_headers
           attempt = 0
           response = nil
 
@@ -43,8 +164,9 @@ module <%= gem_namespace %>
             http_request = build_http_request(
               url:,
               method: request.method,
-              headers: request.encode_headers(protected_keys: @default_headers.keys),
-              body: request.encode_body
+              headers: request.encode_headers(protected_keys: @default_headers.keys + auth_headers.keys),
+              body: request.encode_body,
+              auth_headers: auth_headers
             )
 
             conn = connect(url)
@@ -157,12 +279,39 @@ module <%= gem_namespace %>
                 "HTTP is only allowed for localhost. Use HTTPS or pass a localhost URL."
         end
 
+        # Resolves the auth headers to send with the next request. Delegates to the
+        # configured auth provider (if any) on every call so that token-based
+        # providers (e.g. OAuth client-credentials) can refresh an expired token
+        # before the request is sent. Returns an empty hash when no provider is set,
+        # which keeps the api-key / basic / bearer / no-auth paths unchanged.
+        # @return [Hash] The auth headers for the current request.
+        def resolve_auth_headers
+          return {} if @auth_provider.nil?
+
+          @auth_provider.auth_headers
+        end
+<% if (endpointSecurity) { %>
+        # Resolves the auth headers for a single endpoint given its declared security
+        # requirements. Under endpoint-security each endpoint applies only the schemes it
+        # declares, so it delegates to the routing auth provider with its own `security`.
+        # Returns an empty hash when no auth provider is configured.
+        # @param security [Array, nil] The endpoint's security requirements.
+        # @return [Hash] The auth headers to send for this endpoint.
+        def auth_headers_for_endpoint(security:)
+          return {} if @auth_provider.nil?
+
+          @auth_provider.auth_headers_for_endpoint(security: security)
+        end
+<% } %>
         # @param url [URI::Generic] The url to the resource.
         # @param method [String] The HTTP method to use.
         # @param headers [Hash] The headers for the request.
         # @param body [String, nil] The body for the request.
+        # @param auth_headers [Hash] The auth headers resolved for this request. These
+        #   take precedence over the static default headers but not over per-request
+        #   headers, mirroring the previous baked-header precedence.
         # @return [HTTP::Request] The HTTP request.
-        def build_http_request(url:, method:, headers: {}, body: nil)
+        def build_http_request(url:, method:, headers: {}, body: nil, auth_headers: {})
           request = Net::HTTPGenericRequest.new(
             method,
             !body.nil?,
@@ -170,11 +319,25 @@ module <%= gem_namespace %>
             url
           )
 
-          request_headers = @default_headers.merge(headers)
+          request_headers = @default_headers.merge(auth_headers).merge(headers)
           request_headers.each { |name, value| request[name] = value }
           request.body = body if body
 
+          # Net::HTTP disables its transparent gzip/deflate decoding as soon as an
+          # Accept-Encoding header is set explicitly on the request. Re-enable it so
+          # that compressed response bodies are still inflated.
+          request.extend(DecodeContent) if request_headers.keys.any? { |name| name.to_s.casecmp("accept-encoding").zero? }
+
           request
+        end
+
+        # Keeps Net::HTTP's transparent gzip/deflate response decoding enabled
+        # even when an Accept-Encoding header is set explicitly on the request.
+        # @api private
+        module DecodeContent
+          def decode_content # rubocop:disable Naming/PredicateMethod
+            true
+          end
         end
 
         # @param query [Hash] The query for the request.

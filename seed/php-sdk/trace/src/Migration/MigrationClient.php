@@ -52,6 +52,15 @@ class MigrationClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->migration->getAttemptedMigrations(
+     *     new GetAttemptedMigrationsRequest([
+     *         'adminKeyHeader' => 'admin-key-header',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetAttemptedMigrationsRequest $request
      * @param ?array{
      *   baseUrl?: string,

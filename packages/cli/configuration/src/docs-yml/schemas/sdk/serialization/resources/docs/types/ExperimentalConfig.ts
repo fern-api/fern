@@ -23,6 +23,10 @@ export const ExperimentalConfig: core.serialization.ObjectSchema<
     ),
     excludeApis: core.serialization.property("exclude-apis", core.serialization.boolean().optional()),
     basepathAware: core.serialization.property("basepath-aware", core.serialization.boolean().optional()),
+    externalSitemaps: core.serialization.property(
+        "external-sitemaps",
+        core.serialization.list(core.serialization.string()).optional(),
+    ),
 });
 
 export declare namespace ExperimentalConfig {
@@ -36,5 +40,6 @@ export declare namespace ExperimentalConfig {
         "ai-example-style-instructions"?: string | null;
         "exclude-apis"?: boolean | null;
         "basepath-aware"?: boolean | null;
+        "external-sitemaps"?: string[] | null;
     }
 }

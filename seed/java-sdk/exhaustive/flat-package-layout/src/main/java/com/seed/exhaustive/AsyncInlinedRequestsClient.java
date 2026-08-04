@@ -5,8 +5,10 @@ package com.seed.exhaustive;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.types.PostWithArrayBodyAndHeaders;
 import com.seed.exhaustive.types.PostWithObjectBody;
 import com.seed.exhaustive.types.types.ObjectWithOptionalField;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncInlinedRequestsClient {
@@ -40,6 +42,37 @@ public class AsyncInlinedRequestsClient {
             PostWithObjectBody request, RequestOptions requestOptions) {
         return this.rawClient
                 .postWithObjectBodyandResponse(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public CompletableFuture<String> postWithArrayBodyAndHeaders(List<String> body) {
+        return this.rawClient.postWithArrayBodyAndHeaders(body).thenApply(response -> response.body());
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public CompletableFuture<String> postWithArrayBodyAndHeaders(List<String> body, RequestOptions requestOptions) {
+        return this.rawClient.postWithArrayBodyAndHeaders(body, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public CompletableFuture<String> postWithArrayBodyAndHeaders(PostWithArrayBodyAndHeaders request) {
+        return this.rawClient.postWithArrayBodyAndHeaders(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public CompletableFuture<String> postWithArrayBodyAndHeaders(
+            PostWithArrayBodyAndHeaders request, RequestOptions requestOptions) {
+        return this.rawClient
+                .postWithArrayBodyAndHeaders(request, requestOptions)
                 .thenApply(response -> response.body());
     }
 }

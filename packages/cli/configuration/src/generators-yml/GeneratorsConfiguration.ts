@@ -84,6 +84,7 @@ export interface APIDefinitionSettings {
     additionalPropertiesDefaultsTo: boolean | undefined;
     typeDatesAsStrings: boolean | undefined;
     preserveSingleSchemaOneOf: boolean | undefined;
+    preserveOneOfInAllOf: boolean | undefined;
     inlineAllOfSchemas: boolean | undefined;
     resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;
@@ -99,6 +100,14 @@ export interface APIDefinitionSettings {
     inferForwardCompatible: boolean | undefined;
     coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     shouldInferDiscriminatedUnionBaseProperties: boolean | undefined;
+    disambiguateRequestNames: boolean | undefined;
+    ignoreTags: boolean | undefined;
+}
+
+export interface GitSource {
+    repo: string;
+    ref?: string;
+    path: string;
 }
 
 export interface APIDefinitionLocation {
@@ -108,6 +117,9 @@ export interface APIDefinitionLocation {
     overlays: string | undefined;
     audiences: string[] | undefined;
     settings: APIDefinitionSettings | undefined;
+    gitSource?: GitSource;
+    /** Set to true when the path was resolved from a remote git source and is an absolute local path. */
+    resolvedAbsolutePath?: boolean;
 }
 
 export type APIDefinitionSchema =
@@ -179,6 +191,13 @@ export interface GeneratorInvocation {
     irVersionOverride: string | undefined;
     version: string;
     config: unknown;
+    /**
+     * Resolved `auto-generate-idempotency-key` value for this generator: the generator's own
+     * `config.auto-generate-idempotency-key` when present, otherwise the API-level default from
+     * `api.settings.auto-generate-idempotency-key`. Left as the raw boolean/object; normalized
+     * into the IR downstream.
+     */
+    idempotencyKeyGenerationConfig?: unknown;
     // Note this also includes a reviewers block for PR mode, it's from fiddle
     // and the same schema
     outputMode: FernFiddle.remoteGen.OutputMode;
@@ -186,6 +205,7 @@ export interface GeneratorInvocation {
     absolutePathToLocalSnippets: AbsoluteFilePath | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    smartCasingDigitWordBoundary: boolean;
     disableExamples: boolean;
     language: GenerationLanguage | undefined;
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;

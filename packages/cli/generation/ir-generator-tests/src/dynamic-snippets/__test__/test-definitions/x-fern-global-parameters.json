@@ -1,0 +1,1072 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_products:SearchProductsRequestConfig": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "SearchProductsRequestConfig",
+                    "camelCase": {
+                        "unsafeName": "searchProductsRequestConfig",
+                        "safeName": "searchProductsRequestConfig"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "search_products_request_config",
+                        "safeName": "search_products_request_config"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEARCH_PRODUCTS_REQUEST_CONFIG",
+                        "safeName": "SEARCH_PRODUCTS_REQUEST_CONFIG"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SearchProductsRequestConfig",
+                        "safeName": "SearchProductsRequestConfig"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "products",
+                            "camelCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PRODUCTS",
+                                "safeName": "PRODUCTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Products",
+                                "safeName": "Products"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "products",
+                        "camelCase": {
+                            "unsafeName": "products",
+                            "safeName": "products"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "products",
+                            "safeName": "products"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCTS",
+                            "safeName": "PRODUCTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Products",
+                            "safeName": "Products"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "currency",
+                        "name": {
+                            "originalName": "currency",
+                            "camelCase": {
+                                "unsafeName": "currency",
+                                "safeName": "currency"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "currency",
+                                "safeName": "currency"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CURRENCY",
+                                "safeName": "CURRENCY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Currency",
+                                "safeName": "Currency"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "limit",
+                        "name": {
+                            "originalName": "limit",
+                            "camelCase": {
+                                "unsafeName": "limit",
+                                "safeName": "limit"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "limit",
+                                "safeName": "limit"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LIMIT",
+                                "safeName": "LIMIT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Limit",
+                                "safeName": "Limit"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_products:SearchProductsResponse": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "SearchProductsResponse",
+                    "camelCase": {
+                        "unsafeName": "searchProductsResponse",
+                        "safeName": "searchProductsResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "search_products_response",
+                        "safeName": "search_products_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEARCH_PRODUCTS_RESPONSE",
+                        "safeName": "SEARCH_PRODUCTS_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SearchProductsResponse",
+                        "safeName": "SearchProductsResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "products",
+                            "camelCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PRODUCTS",
+                                "safeName": "PRODUCTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Products",
+                                "safeName": "Products"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "products",
+                        "camelCase": {
+                            "unsafeName": "products",
+                            "safeName": "products"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "products",
+                            "safeName": "products"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCTS",
+                            "safeName": "PRODUCTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Products",
+                            "safeName": "Products"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "results",
+                        "name": {
+                            "originalName": "results",
+                            "camelCase": {
+                                "unsafeName": "results",
+                                "safeName": "results"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "results",
+                                "safeName": "results"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RESULTS",
+                                "safeName": "RESULTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Results",
+                                "safeName": "Results"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "list",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:Product"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:Product": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Product",
+                    "camelCase": {
+                        "unsafeName": "product",
+                        "safeName": "product"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "product",
+                        "safeName": "product"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PRODUCT",
+                        "safeName": "PRODUCT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Product",
+                        "safeName": "Product"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "id",
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "name",
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "price",
+                        "name": {
+                            "originalName": "price",
+                            "camelCase": {
+                                "unsafeName": "price",
+                                "safeName": "price"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "price",
+                                "safeName": "price"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PRICE",
+                                "safeName": "PRICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Price",
+                                "safeName": "Price"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DOUBLE"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_products.search": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "search",
+                    "camelCase": {
+                        "unsafeName": "search",
+                        "safeName": "search"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "search",
+                        "safeName": "search"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEARCH",
+                        "safeName": "SEARCH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Search",
+                        "safeName": "Search"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "products",
+                            "camelCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PRODUCTS",
+                                "safeName": "PRODUCTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Products",
+                                "safeName": "Products"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "products",
+                        "camelCase": {
+                            "unsafeName": "products",
+                            "safeName": "products"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "products",
+                            "safeName": "products"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCTS",
+                            "safeName": "PRODUCTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Products",
+                            "safeName": "Products"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/v1/products/{regionId}/search"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "SearchProductsRequest",
+                        "camelCase": {
+                            "unsafeName": "searchProductsRequest",
+                            "safeName": "searchProductsRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "search_products_request",
+                            "safeName": "search_products_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SEARCH_PRODUCTS_REQUEST",
+                            "safeName": "SEARCH_PRODUCTS_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "SearchProductsRequest",
+                            "safeName": "SearchProductsRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "products",
+                                "camelCase": {
+                                    "unsafeName": "products",
+                                    "safeName": "products"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "products",
+                                    "safeName": "products"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PRODUCTS",
+                                    "safeName": "PRODUCTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Products",
+                                    "safeName": "Products"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "products",
+                            "camelCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PRODUCTS",
+                                "safeName": "PRODUCTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Products",
+                                "safeName": "Products"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "regionId",
+                                "camelCase": {
+                                    "unsafeName": "regionID",
+                                    "safeName": "regionID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "region_id",
+                                    "safeName": "region_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REGION_ID",
+                                    "safeName": "REGION_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "RegionID",
+                                    "safeName": "RegionID"
+                                }
+                            },
+                            "wireValue": "regionId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "query",
+                                "name": {
+                                    "originalName": "query",
+                                    "camelCase": {
+                                        "unsafeName": "query",
+                                        "safeName": "query"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "query",
+                                        "safeName": "query"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "QUERY",
+                                        "safeName": "QUERY"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Query",
+                                        "safeName": "Query"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "config",
+                                "name": {
+                                    "originalName": "config",
+                                    "camelCase": {
+                                        "unsafeName": "config",
+                                        "safeName": "config"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "config",
+                                        "safeName": "config"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CONFIG",
+                                        "safeName": "CONFIG"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Config",
+                                        "safeName": "Config"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_products:SearchProductsRequestConfig"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_products.get": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "get",
+                    "camelCase": {
+                        "unsafeName": "get",
+                        "safeName": "get"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get",
+                        "safeName": "get"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET",
+                        "safeName": "GET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Get",
+                        "safeName": "Get"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "products",
+                            "camelCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PRODUCTS",
+                                "safeName": "PRODUCTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Products",
+                                "safeName": "Products"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "products",
+                        "camelCase": {
+                            "unsafeName": "products",
+                            "safeName": "products"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "products",
+                            "safeName": "products"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCTS",
+                            "safeName": "PRODUCTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Products",
+                            "safeName": "Products"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/v1/products/{regionId}/{productId}"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "GetProductsRequest",
+                        "camelCase": {
+                            "unsafeName": "getProductsRequest",
+                            "safeName": "getProductsRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_products_request",
+                            "safeName": "get_products_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_PRODUCTS_REQUEST",
+                            "safeName": "GET_PRODUCTS_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetProductsRequest",
+                            "safeName": "GetProductsRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "products",
+                                "camelCase": {
+                                    "unsafeName": "products",
+                                    "safeName": "products"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "products",
+                                    "safeName": "products"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PRODUCTS",
+                                    "safeName": "PRODUCTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Products",
+                                    "safeName": "Products"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "products",
+                            "camelCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PRODUCTS",
+                                "safeName": "PRODUCTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Products",
+                                "safeName": "Products"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "regionId",
+                                "camelCase": {
+                                    "unsafeName": "regionID",
+                                    "safeName": "regionID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "region_id",
+                                    "safeName": "region_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REGION_ID",
+                                    "safeName": "REGION_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "RegionID",
+                                    "safeName": "RegionID"
+                                }
+                            },
+                            "wireValue": "regionId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "productId",
+                                "camelCase": {
+                                    "unsafeName": "productID",
+                                    "safeName": "productID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "product_id",
+                                    "safeName": "product_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PRODUCT_ID",
+                                    "safeName": "PRODUCT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ProductID",
+                                    "safeName": "ProductID"
+                                }
+                            },
+                            "wireValue": "productId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": true
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": [
+        {
+            "id": "currency",
+            "name": "currency",
+            "location": "body",
+            "target": "config.currency",
+            "valueType": {
+                "_type": "container",
+                "container": {
+                    "_type": "optional",
+                    "optional": {
+                        "_type": "primitive",
+                        "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                                "type": "string",
+                                "default": null,
+                                "validation": null
+                            }
+                        }
+                    }
+                }
+            },
+            "env": "CHANNEL3_CURRENCY",
+            "clientDefault": {
+                "type": "string",
+                "string": "USD"
+            },
+            "optional": true,
+            "apply": "auto",
+            "docs": "The currency code used for pricing."
+        },
+        {
+            "id": "language",
+            "name": "language",
+            "location": "query",
+            "target": "language",
+            "valueType": {
+                "_type": "container",
+                "container": {
+                    "_type": "optional",
+                    "optional": {
+                        "_type": "primitive",
+                        "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                                "type": "string",
+                                "default": null,
+                                "validation": null
+                            }
+                        }
+                    }
+                }
+            },
+            "env": "CHANNEL3_LANGUAGE",
+            "clientDefault": null,
+            "optional": true,
+            "apply": null,
+            "docs": null
+        },
+        {
+            "id": "x-custom-header",
+            "name": "x-custom-header",
+            "location": "header",
+            "target": "x-custom-header",
+            "valueType": {
+                "_type": "primitive",
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
+            },
+            "env": "CUSTOM_HEADER",
+            "clientDefault": null,
+            "optional": false,
+            "apply": null,
+            "docs": null
+        },
+        {
+            "id": "region",
+            "name": "region",
+            "location": "path",
+            "target": "regionId",
+            "valueType": {
+                "_type": "primitive",
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
+            },
+            "env": "CHANNEL3_REGION",
+            "clientDefault": {
+                "type": "string",
+                "string": "us"
+            },
+            "optional": null,
+            "apply": "explicit",
+            "docs": null
+        },
+        {
+            "id": "verbose",
+            "name": "verbose",
+            "location": "query",
+            "target": "verbose",
+            "valueType": {
+                "_type": "container",
+                "container": {
+                    "_type": "optional",
+                    "optional": {
+                        "_type": "primitive",
+                        "primitive": {
+                            "v1": "BOOLEAN",
+                            "v2": {
+                                "type": "boolean",
+                                "default": null
+                            }
+                        }
+                    }
+                }
+            },
+            "env": null,
+            "clientDefault": {
+                "type": "boolean",
+                "boolean": false
+            },
+            "optional": true,
+            "apply": null,
+            "docs": "Enable verbose response output."
+        },
+        {
+            "id": "max-retries",
+            "name": {
+                "wireValue": "max-retries",
+                "name": "maxRetries"
+            },
+            "location": "header",
+            "target": "X-Max-Retries",
+            "valueType": {
+                "_type": "container",
+                "container": {
+                    "_type": "optional",
+                    "optional": {
+                        "_type": "primitive",
+                        "primitive": {
+                            "v1": "INTEGER",
+                            "v2": {
+                                "type": "integer",
+                                "default": null,
+                                "validation": null
+                            }
+                        }
+                    }
+                }
+            },
+            "env": null,
+            "clientDefault": {
+                "type": "string",
+                "string": "3"
+            },
+            "optional": true,
+            "apply": null,
+            "docs": null
+        },
+        {
+            "id": "api-version",
+            "name": "api-version",
+            "location": "query",
+            "target": "api-version",
+            "valueType": {
+                "_type": "primitive",
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
+            },
+            "env": null,
+            "clientDefault": null,
+            "optional": null,
+            "apply": null,
+            "docs": "The API version to use for the request."
+        },
+        {
+            "id": "x-trace-id",
+            "name": "x-trace-id",
+            "location": "header",
+            "target": "x-trace-id",
+            "valueType": {
+                "_type": "primitive",
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
+            },
+            "env": "TRACE_ID",
+            "clientDefault": {
+                "type": "string",
+                "string": "trace-default"
+            },
+            "optional": null,
+            "apply": null,
+            "docs": "x-fern-default should take precedence over default."
+        }
+    ],
+    "generatorConfig": null
+}

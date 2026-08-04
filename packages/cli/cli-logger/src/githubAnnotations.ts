@@ -3,7 +3,7 @@ import { LogLevel } from "@fern-api/logger";
 
 import { Log } from "./Log.js";
 
-export type GithubAnnotationLevel = "error" | "warning";
+export type GithubAnnotationLevel = "error" | "warning" | "notice";
 
 /**
  * Properties supported by GitHub Actions `::error/warning file=...,line=...,title=...::message`

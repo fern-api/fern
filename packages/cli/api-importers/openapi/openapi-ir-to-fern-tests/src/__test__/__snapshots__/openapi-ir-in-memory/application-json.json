@@ -75,6 +75,7 @@
     "additionalPropertiesDefaultsTo": false,
     "typeDatesAsStrings": false,
     "preserveSingleSchemaOneOf": false,
+    "preserveOneOfInAllOf": false,
     "inlineAllOfSchemas": false,
     "resolveAliases": false,
     "groupMultiApiEnvironments": false,
@@ -88,6 +89,8 @@
     "inferForwardCompatible": false,
     "coerceConstsTo": "enums-coerceable-to-literals",
     "respectByteFormat": false,
-    "shouldInferDiscriminatedUnionBaseProperties": false
+    "shouldInferDiscriminatedUnionBaseProperties": false,
+    "disambiguateRequestNames": true,
+    "ignoreTags": false
   }
 }

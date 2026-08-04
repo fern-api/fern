@@ -11,19 +11,15 @@ export type StreamXFernStreamingUnionStreamRequest =
     | SeedApi.StreamXFernStreamingUnionStreamRequest.Compact;
 
 export namespace StreamXFernStreamingUnionStreamRequest {
-    export interface Message extends SeedApi.UnionStreamMessageVariant, _Base {
+    export interface Message extends SeedApi.UnionStreamMessageVariant {
         type: "message";
     }
 
-    export interface Interrupt extends SeedApi.UnionStreamInterruptVariant, _Base {
+    export interface Interrupt extends SeedApi.UnionStreamInterruptVariant {
         type: "interrupt";
     }
 
-    export interface Compact extends SeedApi.UnionStreamCompactVariant, _Base {
+    export interface Compact extends SeedApi.UnionStreamCompactVariant {
         type: "compact";
-    }
-
-    export interface _Base {
-        stream_response: true;
     }
 }

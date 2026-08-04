@@ -24,6 +24,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 	_, includeReadme := config.Writer.Mode.(*writer.GithubConfig)
 	generatorConfig, err := generator.NewConfig(
 		config.DryRun,
+		config.ApplyQueryDefaultsOnNilRequest,
 		config.EnableExplicitNull,
 		config.IncludeLegacyClientOptions,
 		includeReadme,
@@ -33,9 +34,13 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.InlineFileProperties,
 		config.UseReaderForBytesRequest,
 		config.GettersPassByValue,
+		config.DedupeUnionBaseProperties,
+		config.ServerURLVariables,
 		config.ExportAllRequestsAtRoot,
 		config.OmitEmptyRequestWrappers,
 		config.OmitFernHeaders,
+		config.IncludePlatformHeaders,
+		config.AllowUserAgentAppInfo,
 		config.Organization,
 		config.Version,
 		config.IrFilepath,

@@ -17,6 +17,7 @@
 package com.fern.java.client.generators;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
+import com.fern.generator.exec.model.config.GithubPublishInfo;
 import com.fern.ir.model.ir.ApiVersionScheme;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
@@ -47,6 +48,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -94,6 +96,27 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     TypeName.INT, "maxRetries", Modifier.PRIVATE, Modifier.FINAL)
             .build();
 
+    private static final FieldSpec INITIAL_RETRY_DELAY_MILLIS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
+                    "initialRetryDelayMillis",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
+    private static final FieldSpec MAX_RETRY_DELAY_MILLIS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
+                    "maxRetryDelayMillis",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
+    private static final FieldSpec RETRY_JITTER_FACTOR_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Double.class)),
+                    "retryJitterFactor",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
     private static final String LOGGING_FIELD_NAME = "logging";
 
     private static MethodSpec createGetter(FieldSpec fieldSpec) {
@@ -138,39 +161,21 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             PlatformHeaders platformHeaders, GeneratorConfig generatorConfig, IntermediateRepresentation ir) {
         Map<String, String> entries = new HashMap<>();
 
-        // Try generatorConfig.publish first (remote generation)
-        if (generatorConfig.getPublish().isPresent()) {
-            entries.put(
-                    platformHeaders.getSdkName(),
-                    generatorConfig
-                            .getPublish()
-                            .get()
-                            .getRegistriesV2()
-                            .getMaven()
-                            .getCoordinate());
-            entries.put(
-                    platformHeaders.getSdkVersion(),
-                    generatorConfig.getPublish().get().getVersion());
-        }
-        // Fallback to IR publishConfig (local generation with explicit maven config)
-        else if (ir.getPublishConfig().isPresent()) {
-            Optional<MavenPublishTarget> mavenTarget =
-                    extractMavenTarget(ir.getPublishConfig().get());
-            if (mavenTarget.isPresent()) {
-                mavenTarget.get().getCoordinate().ifPresent(coord -> entries.put(platformHeaders.getSdkName(), coord));
-                mavenTarget
-                        .get()
-                        .getVersion()
-                        .ifPresent(version -> entries.put(platformHeaders.getSdkVersion(), version));
-            }
-        }
-        // Final fallback: generate default coordinate matching Fiddle's RegistryConfigFactory behavior
-        // This ensures local generation matches remote generation for GitHub output mode without explicit maven config
-        else {
-            String fallbackCoordinate = String.format(
-                    "com.%s.fern:%s-sdk", generatorConfig.getOrganization(), generatorConfig.getWorkspaceName());
-            entries.put(platformHeaders.getSdkName(), fallbackCoordinate);
-        }
+        // Resolve the SDK coordinate from the highest-priority source that carries it, then emit the name (with a
+        // synthesized fallback) and the version (when known). Sources are flattened so that a source which supplies a
+        // coordinate but no version still yields an X-Fern-SDK-Name header.
+        Optional<SdkCoordinate> resolvedCoordinate = resolveFromGithubOutputMode(generatorConfig)
+                .or(() -> resolveFromGeneratorPublish(generatorConfig))
+                .or(() -> resolveFromIrPublishConfig(ir));
+
+        String sdkName = resolvedCoordinate
+                .map(coordinate -> coordinate.name)
+                .orElseGet(() -> String.format(
+                        "com.%s.fern:%s-sdk", generatorConfig.getOrganization(), generatorConfig.getWorkspaceName()));
+        entries.put(platformHeaders.getSdkName(), sdkName);
+        resolvedCoordinate
+                .flatMap(coordinate -> coordinate.version)
+                .ifPresent(version -> entries.put(platformHeaders.getSdkVersion(), version));
 
         if (platformHeaders.getUserAgent().isPresent()) {
             entries.put(
@@ -179,6 +184,308 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         }
         entries.put(platformHeaders.getLanguage(), "JAVA");
         return entries;
+    }
+
+    /**
+     * Resolves the SDK coordinate from the GitHub output mode's publish info
+     * ({@code output.mode.github.publishInfo.maven}). This is the user-configured Maven coordinate and is populated for
+     * both remote (Fiddle) and {@code --local} GitHub-mode generation. It must be checked before
+     * {@link GeneratorConfig#getPublish()} because Fiddle also sets a synthesized (and incorrect) publish coordinate in
+     * GitHub output mode, which would otherwise take precedence and leak into {@code X-Fern-SDK-Name}.
+     */
+    private static Optional<SdkCoordinate> resolveFromGithubOutputMode(GeneratorConfig generatorConfig) {
+        return generatorConfig.getOutput().getMode().getGithub().flatMap(githubOutputMode -> githubOutputMode
+                .getPublishInfo()
+                .flatMap(GithubPublishInfo::getMaven)
+                .map(maven -> new SdkCoordinate(maven.getCoordinate(), Optional.of(githubOutputMode.getVersion()))));
+    }
+
+    /**
+     * Resolves the SDK coordinate from {@code generatorConfig.publish.registriesV2.maven} (remote publish/registry
+     * mode).
+     */
+    private static Optional<SdkCoordinate> resolveFromGeneratorPublish(GeneratorConfig generatorConfig) {
+        return generatorConfig
+                .getPublish()
+                .map(publish -> new SdkCoordinate(
+                        publish.getRegistriesV2().getMaven().getCoordinate(), Optional.of(publish.getVersion())));
+    }
+
+    /**
+     * Resolves the SDK coordinate from the IR's {@code publishConfig} Maven target (local generation with an explicit
+     * maven target).
+     */
+    private static Optional<SdkCoordinate> resolveFromIrPublishConfig(IntermediateRepresentation ir) {
+        return ir.getPublishConfig()
+                .flatMap(ClientOptionsGenerator::extractMavenTarget)
+                .flatMap(mavenTarget -> mavenTarget
+                        .getCoordinate()
+                        .map(coordinate -> new SdkCoordinate(coordinate, mavenTarget.getVersion())));
+    }
+
+    /** A resolved {@code X-Fern-SDK-Name} coordinate together with an optional {@code X-Fern-SDK-Version}. */
+    private static final class SdkCoordinate {
+        private final String name;
+        private final Optional<String> version;
+
+        private SdkCoordinate(String name, Optional<String> version) {
+            this.name = name;
+            this.version = version;
+        }
+    }
+
+    private static final String USER_AGENT_METHOD_NAME = "getUserAgent";
+
+    private static final String SDK_VERSION_METHOD_NAME = "getSdkVersion";
+
+    /**
+     * Returns the {@code {coordinate}/} prefix of an (already RFC-compliant) User-Agent value, i.e. everything up to
+     * and including the {@code /} that precedes the version segment. Used to reconstruct the User-Agent at runtime as
+     * {@code {coordinate}/ + getSdkVersion()} when runtime version resolution is enabled.
+     */
+    private static String userAgentCoordinatePrefix(String rfcCompliantUserAgent) {
+        int lastSlash = rfcCompliantUserAgent.lastIndexOf('/');
+        return lastSlash >= 0 ? rfcCompliantUserAgent.substring(0, lastSlash + 1) : rfcCompliantUserAgent + "/";
+    }
+
+    /**
+     * Builds a static helper that resolves the SDK version from the jar manifest's {@code Implementation-Version}
+     * attribute at runtime, falling back to the generation-time version when the attribute is absent (e.g. the classes
+     * are not loaded from a packaged jar). Emitted only when {@code runtime-version} is enabled and a version header is
+     * actually written.
+     */
+    private MethodSpec buildSdkVersionMethod(String fallbackVersion) {
+        return MethodSpec.methodBuilder(SDK_VERSION_METHOD_NAME)
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addStatement("$T version = $T.class.getPackage().getImplementationVersion()", String.class, className)
+                .addStatement("return version != null ? version : $S", fallbackVersion)
+                .build();
+    }
+
+    /**
+     * Normalizes a {@code User-Agent} product token so it stays within the RFC 7230 token grammar. The Maven coordinate
+     * is {@code groupId:artifactId}, but a colon is not a valid token character, so it is replaced with a dot (e.g.
+     * {@code com.fern:imdb} -> {@code com.fern.imdb}), which is idiomatic for reverse-domain Java-style identifiers.
+     */
+    private static String toRfcCompliantUserAgent(String baseUserAgent) {
+        return baseUserAgent.replace(':', '.');
+    }
+
+    /**
+     * Builds a static helper that assembles a structured {@code User-Agent} value at runtime, following the shape
+     * {@code {sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}}. The os, arch, and runtime-version
+     * segments are resolved at runtime via {@link System#getProperty(String)} rather than baked in at generation time;
+     * each is omitted (never emitted as a literal {@code null}) when it cannot be determined.
+     *
+     * <p>When {@code runtimeVersion} is true the {@code {sdkName}/{sdkVersion}} prefix is assembled as
+     * {@code {sdkName}/ + getSdkVersion()} so the version segment is resolved from the jar manifest at runtime rather
+     * than baked in.
+     */
+    private static MethodSpec buildUserAgentMethod(String baseUserAgent, boolean runtimeVersion) {
+        String rfcCompliantUserAgent = toRfcCompliantUserAgent(baseUserAgent);
+        MethodSpec.Builder builder = MethodSpec.methodBuilder(USER_AGENT_METHOD_NAME)
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class);
+        if (runtimeVersion) {
+            builder.addStatement(
+                    "$T userAgent = $S + $L()",
+                    String.class,
+                    userAgentCoordinatePrefix(rfcCompliantUserAgent),
+                    SDK_VERSION_METHOD_NAME);
+        } else {
+            builder.addStatement("$T userAgent = $S", String.class, rfcCompliantUserAgent);
+        }
+        return builder.addStatement("$T os = $T.getProperty($S)", String.class, System.class, "os.name")
+                .addStatement("$T arch = $T.getProperty($S)", String.class, System.class, "os.arch")
+                .beginControlFlow(
+                        "if (arch != null && (arch.equalsIgnoreCase($S) || arch.equalsIgnoreCase($S) || arch.equalsIgnoreCase($S)))",
+                        "x64",
+                        "amd64",
+                        "x86_64")
+                .addStatement("arch = $S", "x86_64")
+                .endControlFlow()
+                .addStatement("$T<$T> platformParts = new $T<>()", List.class, String.class, ArrayList.class)
+                .beginControlFlow("if (os != null && !os.isEmpty())")
+                .addStatement("platformParts.add(os.toLowerCase($T.ROOT))", Locale.class)
+                .endControlFlow()
+                .beginControlFlow("if (arch != null && !arch.isEmpty())")
+                .addStatement("platformParts.add(arch)")
+                .endControlFlow()
+                .beginControlFlow("if (!platformParts.isEmpty())")
+                .addStatement("userAgent += $S + $T.join($S, platformParts) + $S", " (", String.class, "; ", ")")
+                .endControlFlow()
+                .addStatement("$T javaVersion = $T.getProperty($S)", String.class, System.class, "java.version")
+                .addStatement("userAgent += $S", " Java")
+                .beginControlFlow("if (javaVersion != null && !javaVersion.isEmpty())")
+                .addStatement("userAgent += $S + javaVersion", "/")
+                .endControlFlow()
+                .addStatement("return userAgent")
+                .build();
+    }
+
+    private static final String APP_INFO_METHOD_NAME = "appInfoProductToken";
+
+    private static final String APP_INFO_FIELD_NAME = "appInfo";
+
+    /**
+     * Builds a static helper that assembles the caller-supplied {@code appInfo} product token, following RFC 9110
+     * §10.1.5, as {@code {name}/{version} ({comment})}. Emitted into the generated {@code ClientOptions} class only
+     * when the opt-in {@code allowUserAgentAppInfo} config is enabled, so that clients which do not opt in keep
+     * byte-identical generated output and the shared always-shipped core-utilities are never touched.
+     *
+     * <p>Sanitizes caller-supplied values so untrusted input cannot inject additional header content: {@code name} and
+     * {@code version} are token-encoded (every character outside the RFC 7230 {@code tchar} set — including spaces,
+     * control characters and CR/LF — is percent-encoded), and {@code comment} has its delimiters ({@code (}, {@code )},
+     * {@code \}) and control characters escaped. Each value is trimmed before checking for blankness and before
+     * encoding, so a blank value is treated as absent rather than encoded into a whitespace token. Returns an empty
+     * string (and the caller leaves the User-Agent unchanged) when {@code name} is absent or blank, drops the
+     * {@code /version} segment and the {@code (comment)} group when those are blank.
+     */
+    static MethodSpec buildAppInfoProductTokenMethod() {
+        return MethodSpec.methodBuilder(APP_INFO_METHOD_NAME)
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addParameter(String.class, "name")
+                .addParameter(String.class, "version")
+                .addParameter(String.class, "comment")
+                .addStatement("$T encodedName = name == null ? $S : encodeToken(name.trim())", String.class, "")
+                .beginControlFlow("if (encodedName.isEmpty())")
+                .addStatement("return $S", "")
+                .endControlFlow()
+                .addStatement("$T token = new $T(encodedName)", StringBuilder.class, StringBuilder.class)
+                .addStatement(
+                        "$T encodedVersion = version == null ? $S : encodeToken(version.trim())", String.class, "")
+                .beginControlFlow("if (!encodedVersion.isEmpty())")
+                .addStatement("token.append($S).append(encodedVersion)", "/")
+                .endControlFlow()
+                .addStatement(
+                        "$T encodedComment = comment == null ? $S : encodeComment(comment.trim())", String.class, "")
+                .beginControlFlow("if (!encodedComment.isEmpty())")
+                .addStatement("token.append($S).append(encodedComment).append($S)", " (", ")")
+                .endControlFlow()
+                .addStatement("return token.toString()")
+                .build();
+    }
+
+    /**
+     * Builds the static {@code encodeToken} helper used by {@link #buildAppInfoProductTokenMethod()}. Percent-encodes
+     * every character of {@code value} that is not an RFC 7230 {@code tchar}, using UTF-8 bytes, so caller-supplied
+     * {@code name}/{@code version} values cannot break out of the product token or inject additional header content.
+     */
+    static MethodSpec buildEncodeTokenMethod() {
+        return MethodSpec.methodBuilder("encodeToken")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addParameter(String.class, "value")
+                .addStatement("$T encoded = new $T()", StringBuilder.class, StringBuilder.class)
+                .beginControlFlow("for (int i = 0; i < value.length(); i++)")
+                .addStatement("char c = value.charAt(i)")
+                .beginControlFlow(
+                        "if ((c >= $L && c <= $L) || (c >= $L && c <= $L) || (c >= $L && c <= $L) || "
+                                + "$S.indexOf(c) >= 0)",
+                        "'0'",
+                        "'9'",
+                        "'a'",
+                        "'z'",
+                        "'A'",
+                        "'Z'",
+                        "!#$%&'*+-.^_`|~")
+                .addStatement("encoded.append(c)")
+                .endControlFlow()
+                .beginControlFlow("else")
+                .addStatement("appendPercentEncoded(encoded, c)")
+                .endControlFlow()
+                .endControlFlow()
+                .addStatement("return encoded.toString()")
+                .build();
+    }
+
+    /**
+     * Builds the static {@code encodeComment} helper used by {@link #buildAppInfoProductTokenMethod()}. Percent-encodes
+     * the RFC 9110 comment delimiters ({@code (}, {@code )}, {@code \}), control characters (0x00-0x1F, incl. CR/LF)
+     * and every non-ASCII character (>= 0x7F, e.g. accented letters or emoji) as UTF-8 bytes, so a caller-supplied
+     * comment cannot terminate the comment group early or inject additional header content, and OkHttp's header
+     * validation (which rejects any value char outside {@code \t} / {@code ' '..'~'}) never throws; other printable
+     * ASCII characters (e.g. a URL) are kept human-readable.
+     */
+    static MethodSpec buildEncodeCommentMethod() {
+        return MethodSpec.methodBuilder("encodeComment")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addParameter(String.class, "value")
+                .addStatement("$T encoded = new $T()", StringBuilder.class, StringBuilder.class)
+                .beginControlFlow("for (int i = 0; i < value.length(); i++)")
+                .addStatement("char c = value.charAt(i)")
+                .beginControlFlow(
+                        "if (c == $L || c == $L || c == $L || c <= $L || c >= $L)",
+                        "'('",
+                        "')'",
+                        "'\\\\'",
+                        "0x1f",
+                        "0x7f")
+                .addStatement("appendPercentEncoded(encoded, c)")
+                .endControlFlow()
+                .beginControlFlow("else")
+                .addStatement("encoded.append(c)")
+                .endControlFlow()
+                .endControlFlow()
+                .addStatement("return encoded.toString()")
+                .build();
+    }
+
+    /**
+     * Builds the static {@code appendPercentEncoded} helper that percent-encodes a single char to its UTF-8 byte
+     * sequence (e.g. CR/LF -> {@code %0D%0A}), shared by {@code encodeToken} and {@code encodeComment}.
+     */
+    static MethodSpec buildAppendPercentEncodedMethod() {
+        return MethodSpec.methodBuilder("appendPercentEncoded")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(TypeName.VOID)
+                .addParameter(StringBuilder.class, "encoded")
+                .addParameter(TypeName.CHAR, "c")
+                .addStatement(
+                        "byte[] bytes = $T.valueOf(c).getBytes($T.UTF_8)",
+                        String.class,
+                        ClassName.get("java.nio.charset", "StandardCharsets"))
+                .beginControlFlow("for (byte b : bytes)")
+                .addStatement(
+                        "encoded.append($S).append($T.format($S, b & 0xff).toUpperCase($T.ROOT))",
+                        "%",
+                        String.class,
+                        "%02x",
+                        Locale.class)
+                .endControlFlow()
+                .build();
+    }
+
+    /**
+     * Builds a static helper that appends an (already-sanitized) {@code appInfo} product token to whichever
+     * {@code User-Agent} value the SDK would otherwise send, separated by a single space per RFC 9110. Returns the
+     * User-Agent unchanged when the token is null or empty (e.g. the caller never supplied {@code appInfo}, or supplied
+     * a blank name). Emitted only when the opt-in {@code allowUserAgentAppInfo} config is enabled.
+     */
+    static MethodSpec buildAppendAppInfoMethod() {
+        return MethodSpec.methodBuilder("appendAppInfo")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addParameter(String.class, "userAgent")
+                .addParameter(String.class, "appInfoToken")
+                .beginControlFlow("if (appInfoToken == null || appInfoToken.isEmpty())")
+                .addStatement("return userAgent")
+                .endControlFlow()
+                .addStatement("return userAgent + $S + appInfoToken", " ")
+                .build();
+    }
+
+    /**
+     * Builds the statement emitted into {@code ClientOptions.Builder.from(ClientOptions)} that forwards the source
+     * client's sanitized {@code appInfo} product token to the derived builder. Without it, the derived {@code build()}
+     * re-bakes the {@code User-Agent} header from a {@code null} token and silently drops the caller's app token.
+     * Emitted only when the opt-in {@code allowUserAgentAppInfo} config is enabled and a {@code User-Agent} is written.
+     */
+    static CodeBlock buildFromAppInfoCopyStatement() {
+        return CodeBlock.of("builder.$L = clientOptions.$L()", APP_INFO_FIELD_NAME, APP_INFO_FIELD_NAME);
     }
 
     private final ClassName builderClassName;
@@ -263,16 +570,92 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         Map<String, MethodSpec> apiPathParamGetters = getApiPathParamGetters(apiPathParamFieldsForMainClass);
 
         String platformHeadersPutString = "";
+        Optional<MethodSpec> userAgentMethod = Optional.empty();
+        Optional<MethodSpec> sdkVersionMethod = Optional.empty();
+        // Tracks whether the User-Agent value expression actually references the caller-supplied appInfo product token
+        // (only possible when the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent header is written),
+        // so the appInfo field, builder method and sanitizing helpers are emitted only when they are actually used.
+        boolean referencesAppInfo = false;
         if (!clientGeneratorContext.getCustomConfig().omitFernHeaders()) {
-            platformHeadersPutString = getPlatformHeadersEntries(
-                            generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
-                            generatorContext.getGeneratorConfig(),
-                            generatorContext.getIr())
-                    .entrySet()
-                    .stream()
-                    .map(val -> CodeBlock.of("put($S, $S);", val.getKey(), val.getValue())
-                            .toString())
-                    .collect(Collectors.joining(""));
+            Map<String, String> platformHeaderEntries = getPlatformHeadersEntries(
+                    generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
+                    generatorContext.getGeneratorConfig(),
+                    generatorContext.getIr());
+            boolean includePlatformHeaders =
+                    clientGeneratorContext.getCustomConfig().includePlatformHeaders();
+            boolean runtimeVersion = clientGeneratorContext.getCustomConfig().runtimeVersion();
+            boolean allowUserAgentAppInfo =
+                    clientGeneratorContext.getCustomConfig().allowUserAgentAppInfo();
+            Optional<String> userAgentHeaderName = generatorContext
+                    .getIr()
+                    .getSdkConfig()
+                    .getPlatformHeaders()
+                    .getUserAgent()
+                    .map(userAgent -> userAgent.getHeader());
+            String sdkVersionHeaderName =
+                    generatorContext.getIr().getSdkConfig().getPlatformHeaders().getSdkVersion();
+            // When runtime-version is on, the SDK version is read from the jar manifest at runtime
+            // via getSdkVersion(); this literal is only its fallback (used when the manifest attribute
+            // is absent, e.g. running from unpackaged classes). Prefer the discrete SDK-version header
+            // value, else the version segment of the User-Agent value.
+            String fallbackVersion = platformHeaderEntries.get(sdkVersionHeaderName);
+            if (fallbackVersion == null && userAgentHeaderName.isPresent()) {
+                String userAgentValue = platformHeaderEntries.get(userAgentHeaderName.get());
+                if (userAgentValue != null) {
+                    int lastSlash = userAgentValue.lastIndexOf('/');
+                    fallbackVersion = lastSlash >= 0 ? userAgentValue.substring(lastSlash + 1) : userAgentValue;
+                }
+            }
+            StringBuilder putStatements = new StringBuilder();
+            boolean referencesRuntimeVersion = false;
+            for (Map.Entry<String, String> entry : platformHeaderEntries.entrySet()) {
+                boolean isUserAgentHeader = userAgentHeaderName.isPresent()
+                        && userAgentHeaderName.get().equals(entry.getKey());
+                boolean isSdkVersionHeader = runtimeVersion && entry.getKey().equals(sdkVersionHeaderName);
+                if (isUserAgentHeader && includePlatformHeaders) {
+                    userAgentMethod = Optional.of(buildUserAgentMethod(entry.getValue(), runtimeVersion));
+                    if (runtimeVersion) {
+                        referencesRuntimeVersion = true;
+                    }
+                    // The structured User-Agent value assembled at runtime by getUserAgent().
+                    CodeBlock userAgentValue = CodeBlock.of("$L()", USER_AGENT_METHOD_NAME);
+                    if (allowUserAgentAppInfo) {
+                        referencesAppInfo = true;
+                        userAgentValue = CodeBlock.of("appendAppInfo($L, $L)", userAgentValue, APP_INFO_FIELD_NAME);
+                    }
+                    putStatements.append(CodeBlock.of("put($S, $L);", entry.getKey(), userAgentValue)
+                            .toString());
+                } else if (isUserAgentHeader) {
+                    // The base User-Agent value expression for the two non-structured branches: the runtime-version
+                    // `{coordinate}/ + getSdkVersion()` path and the baked-in literal path (the latter also covers the
+                    // configured `user-agent` template value).
+                    CodeBlock userAgentValue;
+                    if (runtimeVersion) {
+                        String coordinatePrefix = userAgentCoordinatePrefix(toRfcCompliantUserAgent(entry.getValue()));
+                        referencesRuntimeVersion = true;
+                        userAgentValue = CodeBlock.of("$S + $L()", coordinatePrefix, SDK_VERSION_METHOD_NAME);
+                    } else {
+                        userAgentValue = CodeBlock.of("$S", toRfcCompliantUserAgent(entry.getValue()));
+                    }
+                    if (allowUserAgentAppInfo) {
+                        referencesAppInfo = true;
+                        userAgentValue = CodeBlock.of("appendAppInfo($L, $L)", userAgentValue, APP_INFO_FIELD_NAME);
+                    }
+                    putStatements.append(CodeBlock.of("put($S, $L);", entry.getKey(), userAgentValue)
+                            .toString());
+                } else if (isSdkVersionHeader) {
+                    referencesRuntimeVersion = true;
+                    putStatements.append(CodeBlock.of("put($S, $L());", entry.getKey(), SDK_VERSION_METHOD_NAME)
+                            .toString());
+                } else {
+                    putStatements.append(CodeBlock.of("put($S, $S);", entry.getKey(), entry.getValue())
+                            .toString());
+                }
+            }
+            if (referencesRuntimeVersion) {
+                sdkVersionMethod = Optional.of(buildSdkVersionMethod(fallbackVersion == null ? "" : fallbackVersion));
+            }
+            platformHeadersPutString = putStatements.toString();
         }
 
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
@@ -288,7 +671,22 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addParameter(ParameterSpec.builder(TIMEOUT_FIELD.type, TIMEOUT_FIELD.name)
                         .build())
                 .addParameter(ParameterSpec.builder(MAX_RETRIES_FIELD.type, MAX_RETRIES_FIELD.name)
+                        .build())
+                .addParameter(ParameterSpec.builder(
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.type, INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                        .build())
+                .addParameter(
+                        ParameterSpec.builder(MAX_RETRY_DELAY_MILLIS_FIELD.type, MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                                .build())
+                .addParameter(ParameterSpec.builder(RETRY_JITTER_FACTOR_FIELD.type, RETRY_JITTER_FACTOR_FIELD.name)
                         .build());
+
+        // Only add the appInfo parameter when the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent is
+        // actually written, so default-off generated output stays byte-identical.
+        if (referencesAppInfo) {
+            constructorBuilder.addParameter(
+                    ParameterSpec.builder(String.class, APP_INFO_FIELD_NAME).build());
+        }
 
         // Only add webSocketFactory parameter if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -332,7 +730,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                 .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name)
-                .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name);
+                .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
+                .addStatement(
+                        "this.$L = $L", INITIAL_RETRY_DELAY_MILLIS_FIELD.name, INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                .addStatement("this.$L = $L", MAX_RETRY_DELAY_MILLIS_FIELD.name, MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                .addStatement("this.$L = $L", RETRY_JITTER_FACTOR_FIELD.name, RETRY_JITTER_FACTOR_FIELD.name);
 
         // Only add webSocketFactory assignment if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -346,6 +748,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         // Add logging assignment
         constructorBuilder.addStatement("this.$L = $L", loggingField.name, loggingField.name);
+
+        // Store the sanitized appInfo product token so a ClientOptions derived via Builder.from(...) can copy it
+        // forward; only present when the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent is written,
+        // so default-off generated output stays byte-identical.
+        if (referencesAppInfo) {
+            constructorBuilder.addStatement("this.$L = $L", APP_INFO_FIELD_NAME, APP_INFO_FIELD_NAME);
+        }
 
         addApiVersionToConstructor(constructorBuilder);
 
@@ -364,7 +773,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(HEADER_SUPPLIERS_FIELD)
                 .addField(OKHTTP_CLIENT_FIELD)
                 .addField(TIMEOUT_FIELD)
-                .addField(MAX_RETRIES_FIELD);
+                .addField(MAX_RETRIES_FIELD)
+                .addField(INITIAL_RETRY_DELAY_MILLIS_FIELD)
+                .addField(MAX_RETRY_DELAY_MILLIS_FIELD)
+                .addField(RETRY_JITTER_FACTOR_FIELD);
 
         // Only add webSocketFactory field if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -379,12 +791,46 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         // Add logging field
         clientOptionsBuilder.addField(loggingField);
 
+        // Store the sanitized appInfo product token as a field so Builder.from(...) can forward it; only present when
+        // the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent is written, so default-off generated
+        // output stays byte-identical.
+        if (referencesAppInfo) {
+            clientOptionsBuilder.addField(FieldSpec.builder(String.class, APP_INFO_FIELD_NAME, Modifier.PRIVATE)
+                    .build());
+        }
+
         clientOptionsBuilder
                 .addFields(variableFields.values())
                 .addFields(apiPathParamFieldsForMainClass.values())
                 .addMethod(constructorBuilder.build())
                 .addMethod(environmentGetter)
                 .addMethod(headersFromRequestOptions);
+
+        if (userAgentMethod.isPresent()) {
+            clientOptionsBuilder.addMethod(userAgentMethod.get());
+        }
+
+        if (sdkVersionMethod.isPresent()) {
+            clientOptionsBuilder.addMethod(sdkVersionMethod.get());
+        }
+
+        // Emit the self-contained appInfo appender and sanitizing helpers only when the opt-in `allowUserAgentAppInfo`
+        // config is enabled and a User-Agent is actually written, so default-off output stays byte-identical and the
+        // shared always-shipped core-utilities are never touched.
+        if (referencesAppInfo) {
+            clientOptionsBuilder.addMethod(buildAppendAppInfoMethod());
+            clientOptionsBuilder.addMethod(buildAppInfoProductTokenMethod());
+            clientOptionsBuilder.addMethod(buildEncodeTokenMethod());
+            clientOptionsBuilder.addMethod(buildEncodeCommentMethod());
+            clientOptionsBuilder.addMethod(buildAppendPercentEncodedMethod());
+            // Getter exposing the stored appInfo product token so Builder.from(this) can forward it to a derived
+            // ClientOptions, whose constructor re-bakes the User-Agent from the (otherwise null) token.
+            clientOptionsBuilder.addMethod(MethodSpec.methodBuilder(APP_INFO_FIELD_NAME)
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(String.class)
+                    .addStatement("return this.$L", APP_INFO_FIELD_NAME)
+                    .build());
+        }
 
         addApiVersionField(clientOptionsBuilder);
 
@@ -451,12 +897,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
 
         MethodSpec maxRetriesGetter = createGetter(MAX_RETRIES_FIELD);
+        MethodSpec initialRetryDelayMillisGetter = createGetter(INITIAL_RETRY_DELAY_MILLIS_FIELD);
+        MethodSpec maxRetryDelayMillisGetter = createGetter(MAX_RETRY_DELAY_MILLIS_FIELD);
+        MethodSpec retryJitterFactorGetter = createGetter(RETRY_JITTER_FACTOR_FIELD);
 
         clientOptionsBuilder
                 .addMethod(timeoutGetter)
                 .addMethod(httpClientGetter)
                 .addMethod(httpClientWithTimeoutGetter)
-                .addMethod(maxRetriesGetter);
+                .addMethod(maxRetriesGetter)
+                .addMethod(initialRetryDelayMillisGetter)
+                .addMethod(maxRetryDelayMillisGetter)
+                .addMethod(retryJitterFactorGetter);
 
         // Only add webSocketFactory getter if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -476,6 +928,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(endpointMetadataClassName, "endpointMetadata")
                     .returns(ParameterizedTypeName.get(Map.class, String.class, String.class))
+                    // A client may be constructed without an auth provider — e.g. the internal client
+                    // the OAuth/inferred auth provider uses to fetch a token from the (unauthenticated)
+                    // token endpoint. Return no auth headers in that case instead of throwing an NPE.
+                    .beginControlFlow("if (this.$L == null)", authProviderField.name)
+                    .addStatement("return new $T<>()", ClassName.get("java.util", "HashMap"))
+                    .endControlFlow()
                     .addStatement("return this.$L.getAuthHeaders(endpointMetadata)", authProviderField.name)
                     .build();
             clientOptionsBuilder.addMethod(getAuthHeadersMethod);
@@ -489,7 +947,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .returns(builderClassName)
                         .addStatement("return new $T()", builderClassName)
                         .build())
-                .addType(createBuilder(variableFields, apiPathParamFieldsForBuilder))
+                .addType(createBuilder(variableFields, apiPathParamFieldsForBuilder, referencesAppInfo))
                 .build();
 
         JavaFile environmentsFile =
@@ -641,7 +1099,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     }
 
     private TypeSpec createBuilder(
-            Map<VariableId, FieldSpec> variableFields, Map<String, FieldSpec> apiPathParamFields) {
+            Map<VariableId, FieldSpec> variableFields,
+            Map<String, FieldSpec> apiPathParamFields,
+            boolean referencesAppInfo) {
         TypeSpec.Builder builder = TypeSpec.classBuilder(builderClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addField(FieldSpec.builder(environmentField.type, environmentField.name)
@@ -657,6 +1117,20 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .initializer("$L", getDefaultMaxRetries())
                         .build())
                 .addField(FieldSpec.builder(
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.type,
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
+                                Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build())
+                .addField(FieldSpec.builder(
+                                MAX_RETRY_DELAY_MILLIS_FIELD.type, MAX_RETRY_DELAY_MILLIS_FIELD.name, Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build())
+                .addField(FieldSpec.builder(
+                                RETRY_JITTER_FACTOR_FIELD.type, RETRY_JITTER_FACTOR_FIELD.name, Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build())
+                .addField(FieldSpec.builder(
                                 ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
                                 TIMEOUT_FIELD.name,
                                 Modifier.PRIVATE)
@@ -668,6 +1142,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(FieldSpec.builder(loggingField.type, loggingField.name, Modifier.PRIVATE)
                         .initializer("$T.empty()", Optional.class)
                         .build());
+
+        // Only add the appInfo builder field when the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent
+        // is actually written, so default-off generated output stays byte-identical. Stores the sanitized product token
+        // (null until the caller supplies appInfo).
+        if (referencesAppInfo) {
+            builder.addField(FieldSpec.builder(String.class, APP_INFO_FIELD_NAME, Modifier.PRIVATE)
+                    .initializer("null")
+                    .build());
+        }
 
         // Only add webSocketFactory field to builder if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -723,6 +1206,45 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .returns(builderClassName)
                         .addParameter(TypeName.INT, MAX_RETRIES_FIELD.name)
                         .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
+                        .addStatement("return this")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder(INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Override the initial delay (in milliseconds) used for exponential backoff "
+                                + "between retries. Defaults to 1000 milliseconds.")
+                        .returns(builderClassName)
+                        .addParameter(TypeName.LONG, INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addStatement(
+                                "this.$L = $T.of($L)",
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
+                                Optional.class,
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addStatement("return this")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder(MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Override the maximum delay (in milliseconds) between retries. "
+                                + "Defaults to 60000 milliseconds.")
+                        .returns(builderClassName)
+                        .addParameter(TypeName.LONG, MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addStatement(
+                                "this.$L = $T.of($L)",
+                                MAX_RETRY_DELAY_MILLIS_FIELD.name,
+                                Optional.class,
+                                MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addStatement("return this")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder(RETRY_JITTER_FACTOR_FIELD.name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Override the jitter factor (between 0 and 1) applied to retry delays. "
+                                + "Defaults to 0.2.")
+                        .returns(builderClassName)
+                        .addParameter(TypeName.DOUBLE, RETRY_JITTER_FACTOR_FIELD.name)
+                        .addStatement(
+                                "this.$L = $T.of($L)",
+                                RETRY_JITTER_FACTOR_FIELD.name,
+                                Optional.class,
+                                RETRY_JITTER_FACTOR_FIELD.name)
                         .addStatement("return this")
                         .build())
                 .addMethod(MethodSpec.methodBuilder(OKHTTP_CLIENT_FIELD.name)
@@ -790,11 +1312,31 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("return this")
                 .build());
 
+        // Add the appInfo builder method only when the opt-in `allowUserAgentAppInfo` config is enabled and a
+        // User-Agent is actually written. Its product token is appended to the User-Agent header the SDK would
+        // otherwise send.
+        if (referencesAppInfo) {
+            builder.addMethod(MethodSpec.methodBuilder(APP_INFO_FIELD_NAME)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc(
+                            "Identify the calling application. Its product token — "
+                                    + "$L — is appended to the User-Agent header sent by the SDK, following RFC 9110. "
+                                    + "The version and comment are optional; caller-supplied values are sanitized.\n",
+                            "{name}/{version} ({comment})")
+                    .returns(builderClassName)
+                    .addParameter(String.class, "name")
+                    .addParameter(String.class, "version")
+                    .addParameter(String.class, "comment")
+                    .addStatement("this.$L = $L(name, version, comment)", APP_INFO_FIELD_NAME, APP_INFO_METHOD_NAME)
+                    .addStatement("return this")
+                    .build());
+        }
+
         builder.addMethods(getVariableBuilders(variableFields)).addMethods(getApiPathParamBuilders(apiPathParamFields));
 
         addApiVersionToBuilder(builder);
 
-        builder.addMethod(getBuildMethod(variableFields, apiPathParamFields));
+        builder.addMethod(getBuildMethod(variableFields, apiPathParamFields, referencesAppInfo));
 
         Map<VariableId, MethodSpec> variableGetters = variableFields.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, entry -> MethodSpec.methodBuilder(entry.getValue().name)
@@ -802,7 +1344,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .returns(entry.getValue().type)
                         .addStatement("return this.$L", entry.getValue().name)
                         .build()));
-        builder.addMethod(getFromMethod(variableFields, variableGetters));
+        builder.addMethod(getFromMethod(variableFields, variableGetters, referencesAppInfo));
 
         return builder.build();
     }
@@ -867,7 +1409,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .returns(builderClassName)
                 .addParameter(String.class, "key")
                 .addParameter(String.class, "value")
+                // Defensively skip null header values so that no codegen path can bake a null header into
+                // ClientOptions (okhttp Headers.of NPEs on null values).
+                .beginControlFlow("if ($L != null)", "value")
                 .addStatement("this.$L.put($L, $L)", HEADERS_FIELD.name, "key", "value")
+                .endControlFlow()
                 .addStatement("return this")
                 .build();
     }
@@ -1047,7 +1593,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec getFromMethod(
-            Map<VariableId, FieldSpec> variableFields, Map<VariableId, MethodSpec> variableGetters) {
+            Map<VariableId, FieldSpec> variableFields,
+            Map<VariableId, MethodSpec> variableGetters,
+            boolean referencesAppInfo) {
         MethodSpec.Builder fromMethod = MethodSpec.methodBuilder("from")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(builderClassName)
@@ -1065,7 +1613,27 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement(
                         "builder.$L.putAll(clientOptions.$L)", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("builder.$L = clientOptions.$L()", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
+                .addStatement(
+                        "builder.$L = clientOptions.$L()",
+                        INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
+                        INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                .addStatement(
+                        "builder.$L = clientOptions.$L()",
+                        MAX_RETRY_DELAY_MILLIS_FIELD.name,
+                        MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                .addStatement(
+                        "builder.$L = clientOptions.$L()",
+                        RETRY_JITTER_FACTOR_FIELD.name,
+                        RETRY_JITTER_FACTOR_FIELD.name)
                 .addStatement("builder.$L = clientOptions.$L()", LOGGING_FIELD_NAME, LOGGING_FIELD_NAME);
+
+        // Forward the sanitized appInfo product token so a derived client keeps sending the caller's app token; the
+        // build() constructor re-bakes the User-Agent from this field (null on the plain Builder would otherwise drop
+        // it). Only emitted when the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent is written, so
+        // default-off generated output stays byte-identical.
+        if (referencesAppInfo) {
+            fromMethod.addStatement(buildFromAppInfoCopyStatement());
+        }
 
         for (Map.Entry<VariableId, FieldSpec> entry : variableFields.entrySet()) {
             MethodSpec getter = variableGetters.get(entry.getKey());
@@ -1114,7 +1682,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec getBuildMethod(
-            Map<VariableId, FieldSpec> variableFields, Map<String, FieldSpec> apiPathParamFields) {
+            Map<VariableId, FieldSpec> variableFields,
+            Map<String, FieldSpec> apiPathParamFields,
+            boolean referencesAppInfo) {
         ImmutableList.Builder<Object> argsBuilder = ImmutableList.builder();
         argsBuilder.add(
                 className,
@@ -1127,6 +1697,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         StringBuilder returnStringBuilder = new StringBuilder();
         returnStringBuilder.append("return new $T($L, $L, $L, $L, this.timeout.get(), this.");
         returnStringBuilder.append(MAX_RETRIES_FIELD.name);
+        returnStringBuilder.append(", this.").append(INITIAL_RETRY_DELAY_MILLIS_FIELD.name);
+        returnStringBuilder.append(", this.").append(MAX_RETRY_DELAY_MILLIS_FIELD.name);
+        returnStringBuilder.append(", this.").append(RETRY_JITTER_FACTOR_FIELD.name);
+
+        // Pass the sanitized appInfo product token in the same position as its constructor parameter, only when the
+        // opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent is actually written.
+        if (referencesAppInfo) {
+            returnStringBuilder.append(", this.").append(APP_INFO_FIELD_NAME);
+        }
 
         // Add webSocketFactory if present
         if (webSocketFactoryField != null) {
@@ -1191,9 +1770,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         TimeUnit.class,
                         TimeUnit.class)
                 .addCode(
-                        ".addInterceptor(new $T(this.$L));\n",
+                        ".addInterceptor(new $T(this.$L, this.$L, this.$L, this.$L));\n",
                         clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName(),
-                        MAX_RETRIES_FIELD.name)
+                        MAX_RETRIES_FIELD.name,
+                        INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
+                        MAX_RETRY_DELAY_MILLIS_FIELD.name,
+                        RETRY_JITTER_FACTOR_FIELD.name)
                 .endControlFlow()
                 .addCode("\n")
                 .addStatement(
@@ -1207,6 +1789,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         OKHTTP_CLIENT_FIELD.name + "Builder",
                         clientGeneratorContext.getPoetClassNameFactory().getLoggingInterceptorClassName(),
                         "logger")
+                .addStatement(
+                        "$L.addInterceptor(new $T())",
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        clientGeneratorContext.getPoetClassNameFactory().getResponseDecompressionInterceptorClassName())
                 .addCode("\n");
 
         // Apply custom interceptors when custom-interceptors is enabled

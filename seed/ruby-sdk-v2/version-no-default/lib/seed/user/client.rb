@@ -19,6 +19,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::User::Types::UserID] :user_id
       #
+      # @example
+      #   client.user.get_user(user_id: "userId")
+      #
       # @return [Seed::User::Types::User]
       def get_user(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

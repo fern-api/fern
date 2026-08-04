@@ -6,7 +6,7 @@ import PathParameters
     @Test func getOrganization1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -40,7 +40,7 @@ import PathParameters
     @Test func getOrganizationUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -75,7 +75,7 @@ import PathParameters
     @Test func searchOrganizations1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {

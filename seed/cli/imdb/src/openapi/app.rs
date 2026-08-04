@@ -10,7 +10,7 @@ use std::collections::HashMap;
 use crate::auth::{AuthCredentialSource, AuthStrategy, DynAuthProvider, SchemeBinding};
 use crate::error::CliError;
 use crate::formatter;
-use crate::openapi::discovery::{JsonSchema, RestDescription, RestMethod, RestResource};
+use crate::openapi::discovery::{GlobalParameter, JsonSchema, RestDescription, RestMethod, RestResource};
 use crate::openapi::executor;
 
 /// Split a slash-delimited prefix string into its path components, dropping
@@ -288,6 +288,66 @@ pub(crate) fn global_header_flag_name(h: &crate::openapi::discovery::GlobalHeade
     crate::text::to_kebab_flag(source)
 }
 
+/// Merge `x-fern-global-parameters` declarations across specs. First
+/// write wins on name collisions, mirroring [`merge_global_headers`].
+fn merge_global_parameters(
+    acc: &mut Vec<crate::openapi::discovery::GlobalParameter>,
+    incoming: Vec<crate::openapi::discovery::GlobalParameter>,
+) {
+    use std::collections::HashSet;
+    let existing: HashSet<String> = acc.iter().map(|p| p.name.clone()).collect();
+    for p in incoming {
+        if !existing.contains(&p.name) {
+            acc.push(p);
+        }
+    }
+}
+
+/// Derive the kebab-cased CLI flag (`--<flag>`) for a global parameter.
+/// Prefers `parameter_name` when present; otherwise falls back to
+/// kebab-casing `name`.
+pub(crate) fn global_parameter_flag_name(p: &crate::openapi::discovery::GlobalParameter) -> String {
+    let source = p.parameter_name.as_deref().unwrap_or(p.name.as_str());
+    crate::text::to_kebab_flag(source)
+}
+
+/// Derive a stable clap `Arg::new()` identifier for a global parameter.
+/// Uses the format `global-param:<name>` to avoid collisions with
+/// per-operation parameter flags.
+fn global_parameter_arg_id(p: &crate::openapi::discovery::GlobalParameter) -> String {
+    format!("global-param:{}", p.name)
+}
+
+/// Returns true when a global-parameter flag would collide with a
+/// built-in CLI flag.
+fn global_parameter_flag_collides_with_builtin(kebab: &str) -> bool {
+    crate::openapi::commands::BUILTIN_FLAG_NAMES.contains(&kebab)
+}
+
+/// Resolve a global parameter value from clap matches (CLI flag > env >
+/// default, handled by clap's `.env()` + `.default_value()`).
+///
+/// Uses `try_get_one` rather than `get_one` because the flag is not
+/// guaranteed to be registered on every command: when its long name
+/// collides with a per-operation parameter, the flag is dropped from
+/// that operation's command (the per-op parameter wins — see
+/// `register_global_header_on_nonconflicting_leaves`). On such a
+/// command the arg id is unknown and `get_one` would panic;
+/// `try_get_one` returns `Err`, which we map to `None`.
+pub(crate) fn resolve_global_parameter_value(
+    matches: &clap::ArgMatches,
+    p: &crate::openapi::discovery::GlobalParameter,
+) -> Option<String> {
+    let arg_id = global_parameter_arg_id(p);
+    matches
+        .try_get_one::<String>(&arg_id)
+        .ok()
+        .flatten()
+        .map(|s| s.trim())
+        .filter(|s| !s.is_empty())
+        .map(|s| s.to_string())
+}
+
 /// Stable clap arg ID for a global header. Anchored to the wire header
 /// name so per-op parameter lookups (which key off the same string)
 /// remain consistent with what clap returns.
@@ -304,6 +364,71 @@ fn global_header_flag_collides_with_builtin(kebab: &str) -> bool {
     crate::openapi::commands::BUILTIN_FLAG_NAMES.contains(&kebab)
 }
 
+/// Returns true when some operation command in the tree rooted at `cli`
+/// declares a flag whose long name equals `long`. A `global(true)` arg
+/// that shares a long name with a per-operation parameter makes clap
+/// panic at build time ("Long option names must be unique for each
+/// argument"), so a global-header flag that collides with a parameter on
+/// any operation cannot be registered globally — see the call site in
+/// [`CliApp::decorate_command`].
+///
+/// Only descendant (subcommand) args are inspected; the root's own global
+/// flags (`--format`, `--dry-run`, …) are screened separately by
+/// [`global_header_flag_collides_with_builtin`].
+fn global_header_long_collides_with_param(cli: &clap::Command, long: &str) -> bool {
+    cli.get_subcommands().any(|sub| command_declares_long(sub, long))
+}
+
+/// Recursive worker for [`global_header_long_collides_with_param`]: true
+/// if `cmd` or any of its descendants declares a flag with long name
+/// `long`.
+fn command_declares_long(cmd: &clap::Command, long: &str) -> bool {
+    cmd.get_arguments().any(|a| a.get_long() == Some(long))
+        || cmd
+            .get_subcommands()
+            .any(|sub| command_declares_long(sub, long))
+}
+
+/// Register `arg` (a global-header flag that is *not* marked
+/// `global(true)`) on every leaf operation command whose flags don't
+/// already include the arg's long name. Leaves that declare a same-named
+/// per-operation parameter are left untouched so the per-op parameter
+/// wins (mirroring the importer semantics documented on
+/// [`GlobalHeader`](crate::openapi::discovery::GlobalHeader)).
+///
+/// Intermediate (resource) commands are recursed into but never carry
+/// the flag themselves — the resolved value is read from the leaf's
+/// `ArgMatches` (see [`build_global_header_overrides`]), so attaching it
+/// to the leaf is what makes the flag, its env fallback, and its default
+/// available on the operations that don't collide.
+fn register_global_header_on_nonconflicting_leaves(
+    cmd: clap::Command,
+    arg: &clap::Arg,
+    long: &str,
+) -> clap::Command {
+    let sub_names: Vec<String> = cmd
+        .get_subcommands()
+        .map(|c| c.get_name().to_string())
+        .collect();
+    if sub_names.is_empty() {
+        // Leaf operation command: attach the flag unless it already
+        // declares one with the same long name (per-op param wins).
+        if cmd.get_arguments().any(|a| a.get_long() == Some(long)) {
+            return cmd;
+        }
+        return cmd.arg(arg.clone());
+    }
+    let mut out = cmd;
+    for name in sub_names {
+        let arg = arg.clone();
+        let long = long.to_string();
+        out = out.mut_subcommand(name, move |sub| {
+            register_global_header_on_nonconflicting_leaves(sub, &arg, &long)
+        });
+    }
+    out
+}
+
 /// Resolve a global header value from `matched_args`, the env, and the
 /// configured default — in that order. Returns `None` when none of the
 /// three sources produced a value, OR when the resolved value is empty
@@ -311,16 +436,26 @@ fn global_header_flag_collides_with_builtin(kebab: &str) -> bool {
 /// on the wire — that's almost always a user mistake worth surfacing as a
 /// required-header error, and matches the env-var-handling convention).
 ///
-/// `matched_args.get_one::<String>` already incorporates clap's
+/// `matched_args.try_get_one::<String>` already incorporates clap's
 /// `.env()` and `.default_value()` bindings, so the lookup is a single
 /// read; the explicit env/default fields on [`GlobalHeader`] are what
 /// feed those clap bindings at registration time.
+///
+/// Uses `try_get_one` rather than `get_one` because the flag is not
+/// guaranteed to be registered on every command: when its long name
+/// collides with a per-operation parameter, the flag is dropped from
+/// that operation's command (the per-op parameter wins — see
+/// `register_global_header_on_nonconflicting_leaves`). On such a command
+/// the arg id is unknown and `get_one` would panic; `try_get_one`
+/// returns `Err`, which we map to `None`.
 pub(crate) fn resolve_global_header_value(
     matched_args: &clap::ArgMatches,
     h: &crate::openapi::discovery::GlobalHeader,
 ) -> Option<String> {
     matched_args
-        .get_one::<String>(&global_header_arg_id(h))
+        .try_get_one::<String>(&global_header_arg_id(h))
+        .ok()
+        .flatten()
         .map(|s| s.trim())
         .filter(|s| !s.is_empty())
         .map(|s| s.to_string())
@@ -440,21 +575,144 @@ pub(crate) fn build_global_header_overrides(
     })
 }
 
+/// A single resolved global parameter value, ready for injection into
+/// an outgoing request. Carries the location and wire target so the
+/// executor can route the value to the correct part of the request.
+#[derive(Debug, Clone)]
+pub struct ResolvedGlobalParam {
+    /// Stable identity of the declaring `x-fern-global-parameters` entry
+    /// (its `name`). Two parameters may share a `target` across different
+    /// locations (e.g. `currency` in both `query` and `body`), so the
+    /// declaration must be looked up by `name`, not `target`.
+    pub name: String,
+    /// Where the value is injected on the wire.
+    pub location: crate::openapi::discovery::GlobalParameterLocation,
+    /// Wire-level target (header name, query param name, body path, or
+    /// path template variable).
+    pub target: String,
+    /// The resolved string value.
+    pub value: String,
+}
+
+/// Whether a declared global parameter's apply mode admits it on
+/// `method`: `auto` always applies; `explicit` applies only when the
+/// operation opts in via `x-fern-global-parameter`. Shared by both the
+/// built-in command path ([`build_global_parameter_overrides`]) and the
+/// custom-command path ([`CliApp::extra_global_params_for_entry`]) so the
+/// two cannot drift.
+pub(crate) fn global_param_apply_mode_admits(
+    decl: &crate::openapi::discovery::GlobalParameter,
+    method: &RestMethod,
+) -> bool {
+    use crate::openapi::discovery::GlobalParameterApplyMode;
+    match decl.apply {
+        GlobalParameterApplyMode::Auto => true,
+        GlobalParameterApplyMode::Explicit => {
+            method.global_parameter_opt_ins.iter().any(|n| n == &decl.name)
+        }
+    }
+}
+
+/// Whether a per-operation parameter supplied by the caller overrides the
+/// global targeting the same wire location (per-op wins). Shared by both
+/// injection paths.
+pub(crate) fn per_op_param_overrides_global(
+    params: &serde_json::Map<String, serde_json::Value>,
+    method: &RestMethod,
+    location: crate::openapi::discovery::GlobalParameterLocation,
+    target: &str,
+) -> bool {
+    use crate::openapi::discovery::GlobalParameterLocation;
+    match location {
+        GlobalParameterLocation::Header => {
+            per_op_header_param_overrides_global(params, method, target)
+        }
+        GlobalParameterLocation::Query
+        | GlobalParameterLocation::Body
+        | GlobalParameterLocation::Path => params.contains_key(target),
+    }
+}
+
+/// Build the resolved list of `x-fern-global-parameters` to inject on
+/// this operation's request.
+///
+/// For each declared global parameter:
+/// - `apply: auto` → always inject (unless a per-op parameter overrides)
+/// - `apply: explicit` → only inject if the operation opts in via
+///   `x-fern-global-parameter`
+///
+/// Per-operation parameters with the same wire-name suppress the global
+/// (per-op wins). Required globals without a resolved value error.
+pub(crate) fn build_global_parameter_overrides(
+    matched_args: &clap::ArgMatches,
+    doc: &RestDescription,
+    method: &RestMethod,
+    params: &serde_json::Map<String, serde_json::Value>,
+) -> Result<Vec<ResolvedGlobalParam>, CliError> {
+    let mut out = Vec::new();
+    for p in &doc.global_parameters {
+        // Apply mode: auto injects on all ops, explicit only on opted-in ops.
+        if !global_param_apply_mode_admits(p, method) {
+            continue;
+        }
+
+        // A per-operation parameter with the same target overrides the global.
+        let overridden = per_op_param_overrides_global(params, method, p.location, &p.target);
+
+        let resolved = resolve_global_parameter_value(matched_args, p);
+        match (resolved, overridden) {
+            (Some(value), false) => {
+                out.push(ResolvedGlobalParam {
+                    name: p.name.clone(),
+                    location: p.location,
+                    target: p.target.clone(),
+                    value,
+                });
+            }
+            (Some(_), true) => { /* per-op wins */ }
+            (None, true) => { /* per-op satisfies */ }
+            (None, false) => {
+                if !p.optional {
+                    let kebab = global_parameter_flag_name(p);
+                    let mut msg = format!(
+                        "Required global parameter '{}' has no value.",
+                        p.name,
+                    );
+                    if let Some(ref env) = p.env {
+                        msg.push_str(&format!(
+                            " Provide it via --{kebab} or {env}."
+                        ));
+                    } else {
+                        msg.push_str(&format!(" Provide it via --{kebab}."));
+                    }
+                    return Err(CliError::Validation(msg));
+                }
+            }
+        }
+    }
+    Ok(out)
+}
+
 /// Compose the root `--help` footer from the optional global-headers
-/// section, the optional auth section, and the always-present runtime
-/// footer. Sections are joined with a single newline; absent sections
-/// are skipped entirely (no stray blank dividers).
+/// section, the optional global-parameters section, the optional auth
+/// section, and the always-present runtime footer. Sections are joined
+/// with a single newline; absent sections are skipped entirely (no
+/// stray blank dividers).
 ///
 /// Extracted so the section-skipping logic is unit-testable in
 /// isolation — the clap `Command` it eventually feeds into is opaque
 /// and harder to introspect from tests.
 pub(crate) fn compose_root_after_help_sections(
     global_headers_section: Option<&str>,
+    global_params_section: Option<&str>,
     auth_section: Option<&str>,
     footer: &str,
 ) -> String {
-    let mut sections: Vec<&str> = Vec::with_capacity(3);
+    let mut sections: Vec<&str> = Vec::with_capacity(4);
     if let Some(s) = global_headers_section {
+        sections.push(s);
+    }
+    if let Some(s) = global_params_section {
         sections.push(s);
     }
     if let Some(s) = auth_section {
@@ -548,6 +806,11 @@ pub struct CliApp {
     /// selection is a build-time decision baked into the generated SDK
     /// (`packages/cli/api-importers/openapi/openapi-ir-parser/src/openapi/v3/generateIr.ts:117-143`).
     pub(crate) audiences: Vec<String>,
+    /// Global parameters registered via [`global_parameter`](Self::global_parameter).
+    /// These are merged with (and take precedence over) parameters parsed
+    /// from the spec's `x-fern-global-parameters` extension, letting the
+    /// TypeScript codegen layer supply the authoritative set from the IR.
+    pub(crate) builder_global_parameters: Vec<GlobalParameter>,
 }
 
 #[allow(dead_code)] // Methods available for binding wrappers to delegate to.
@@ -567,6 +830,7 @@ impl CliApp {
             server_vars: Vec::new(),
             idempotency_header_envs: HashMap::new(),
             audiences: Vec::new(),
+            builder_global_parameters: Vec::new(),
         }
     }
 
@@ -574,7 +838,7 @@ impl CliApp {
     /// `x-fern-audiences` values. Operations without an
     /// `x-fern-audiences` tag, or whose tags don't intersect this set,
     /// are dropped from the command tree at build time — they don't
-    /// appear in `--help`, JSON help, completions, or anywhere else.
+    /// appear in `--help`, `--schema`, completions, or anywhere else.
     ///
     /// Multiple audiences union (OR): an operation tagged with *any* of
     /// the listed audiences survives. Calling `.audiences([])` (or not
@@ -604,6 +868,36 @@ impl CliApp {
             .map(|s| s.trim().to_string())
             .filter(|s| !s.is_empty())
             .collect();
+        self
+    }
+
+    /// Register a global parameter that surfaces as a top-level CLI flag
+    /// and is injected into outgoing requests at the configured wire location.
+    ///
+    /// This is the builder entry point emitted by the TypeScript codegen
+    /// layer (`detectGlobalParams.ts`) from `ir.globalParameters`. Parameters
+    /// registered here are merged with (and take precedence over) any
+    /// parameters the Rust parser finds in the raw spec's
+    /// `x-fern-global-parameters` extension — the IR is authoritative.
+    ///
+    /// ```ignore
+    /// CliApp::new("api")
+    ///     .spec(include_str!("openapi.yaml"))
+    ///     .global_parameter(GlobalParameter {
+    ///         name: "api-version".into(),
+    ///         location: GlobalParameterLocation::Query,
+    ///         target: "api-version".into(),
+    ///         env: Some("API_VERSION".into()),
+    ///         default: None,
+    ///         optional: false,
+    ///         apply: GlobalParameterApplyMode::Auto,
+    ///         parameter_name: None,
+    ///         docs: Some("The API version to use.".into()),
+    ///     })
+    ///     .run();
+    /// ```
+    pub fn global_parameter(mut self, param: GlobalParameter) -> Self {
+        self.builder_global_parameters.push(param);
         self
     }
 
@@ -897,6 +1191,7 @@ impl CliApp {
                     merge_security_schemes(&mut acc.security_schemes, spec_doc.security_schemes);
                     merge_sdk_variables(&mut acc.sdk_variables, spec_doc.sdk_variables);
                     merge_global_headers(&mut acc.global_headers, spec_doc.global_headers);
+                    merge_global_parameters(&mut acc.global_parameters, spec_doc.global_parameters);
                 }
             }
         }
@@ -907,6 +1202,21 @@ impl CliApp {
         }
         if let Some(ref d) = self.description_override {
             doc.description = Some(d.clone());
+        }
+
+        // Merge builder-registered global parameters (from IR via
+        // TypeScript codegen). Builder params are authoritative — they
+        // replace any spec-parsed param with the same name.
+        if !self.builder_global_parameters.is_empty() {
+            // Remove spec-parsed params that the builder overrides by name.
+            let builder_names: std::collections::HashSet<String> =
+                self.builder_global_parameters.iter().map(|p| p.name.clone()).collect();
+            doc.global_parameters.retain(|p| !builder_names.contains(&p.name));
+            // Prepend builder params (they take precedence in flag order),
+            // followed by the surviving spec-parsed params.
+            let mut merged = self.builder_global_parameters.clone();
+            merged.append(&mut doc.global_parameters);
+            doc.global_parameters = merged;
         }
 
         // Apply generator-supplied idempotency-header env overrides.
@@ -920,6 +1230,78 @@ impl CliApp {
         }
 
         Ok(doc)
+    }
+
+    /// Return embedded spec(s) as a YAML string.
+    ///
+    /// - `raw == true` → byte-exact `SpecEntry.yaml` for each entry.
+    /// - `raw == false` → effective spec with overlays + overrides merged
+    ///   (same pipeline as `build_doc`, but stops before parsing to
+    ///   `RestDescription` to preserve full OpenAPI fidelity).
+    ///
+    /// Multi-spec binaries emit a YAML stream (`---`-delimited).
+    pub(crate) fn spec_yaml(&self, raw: bool) -> Result<Option<String>, crate::error::CliError> {
+        if self.specs.is_empty() {
+            return Ok(None);
+        }
+
+        let mut documents: Vec<String> = Vec::new();
+
+        for entry in &self.specs {
+            if raw {
+                documents.push(entry.yaml.clone());
+            } else {
+                // Reproduce the overlay + override merge from build_doc,
+                // stopping before parsing to RestDescription.
+                let effective = crate::openapi::overlay::apply_overlays_to_spec(
+                    &entry.yaml,
+                    &entry.overlays,
+                )?;
+
+                if entry.overrides.is_empty() {
+                    documents.push(effective);
+                } else {
+                    let mut value: serde_yaml::Value =
+                        serde_yaml::from_str(&effective).map_err(|e| {
+                            crate::error::CliError::Discovery(format!(
+                                "Failed to parse OpenAPI spec: {e}"
+                            ))
+                        })?;
+                    for ovr in &entry.overrides {
+                        let override_value: serde_yaml::Value =
+                            serde_yaml::from_str(ovr).map_err(|e| {
+                                crate::error::CliError::Discovery(format!(
+                                    "Failed to parse overrides YAML: {e}"
+                                ))
+                            })?;
+                        value = crate::openapi::deep_merge_yaml(value, override_value);
+                    }
+                    let merged = serde_yaml::to_string(&value).map_err(|e| {
+                        crate::error::CliError::Discovery(format!(
+                            "Failed to serialize merged spec: {e}"
+                        ))
+                    })?;
+                    documents.push(merged);
+                }
+            }
+        }
+
+        // Join as a YAML stream with document separators.
+        let yaml = if documents.len() == 1 {
+            documents.into_iter().next().unwrap()
+        } else {
+            let mut yaml = documents[0].clone();
+            for doc in &documents[1..] {
+                if !yaml.ends_with('\n') {
+                    yaml.push('\n');
+                }
+                yaml.push_str("---\n");
+                yaml.push_str(doc);
+            }
+            yaml
+        };
+
+        Ok(Some(yaml))
     }
 
     /// Shorthand for `auth_scheme(name, AuthCredentialSource::from_env(env))`.
@@ -1221,8 +1603,7 @@ impl CliApp {
             let prefix = format!("--{kebab} <{value_name}>");
             global_header_help_pairs.push((prefix, help_text.clone()));
             let mut arg = clap::Arg::new(arg_id)
-                .long(kebab)
-                .global(true)
+                .long(kebab.clone())
                 .hide(true)
                 .value_name(value_name)
                 .help(help_text);
@@ -1232,11 +1613,111 @@ impl CliApp {
             if let Some(def) = &h.default {
                 arg = arg.default_value(def.clone());
             }
-            cli = cli.arg(arg);
+            // A `global(true)` arg whose long name matches a per-operation
+            // parameter makes clap panic at build time ("Long option names
+            // must be unique for each argument"). When the flag collides
+            // with a parameter on some operation, register it per-command
+            // on the non-colliding leaves and let the per-op parameter win
+            // on the rest — rather than handing clap two args with the same
+            // long name (FER-11145).
+            if global_header_long_collides_with_param(&cli, &kebab) {
+                tracing::debug!(
+                    header = %h.header,
+                    flag = %kebab,
+                    "Global-header flag collides with a per-operation parameter; \
+                     registering per-command so the per-op parameter wins"
+                );
+                cli = register_global_header_on_nonconflicting_leaves(cli, &arg, &kebab);
+            } else {
+                cli = cli.arg(arg.global(true));
+            }
         }
 
+        // Global-parameter flags (`x-fern-global-parameters`).
+        // Reuse `registered_kebabs` from global headers so cross-feature
+        // collisions (header + parameter producing the same flag) are
+        // detected rather than panicking clap.
+        let mut global_param_help_pairs: Vec<(String, String)> = Vec::new();
+        for p in &doc.global_parameters {
+            let kebab = global_parameter_flag_name(p);
+            if global_parameter_flag_collides_with_builtin(&kebab) {
+                tracing::warn!(
+                    name = %p.name,
+                    flag = %kebab,
+                    "Global-parameter flag collides with built-in; skipping"
+                );
+                continue;
+            }
+            if !registered_kebabs.insert(kebab.clone()) {
+                tracing::warn!(
+                    name = %p.name,
+                    flag = %kebab,
+                    "Global-parameter flag collides with an already-registered flag; skipping"
+                );
+                continue;
+            }
+            let arg_id = global_parameter_arg_id(p);
+            let value_name = crate::text::to_screaming_snake(&kebab);
+            let location_label = match p.location {
+                crate::openapi::discovery::GlobalParameterLocation::Header => "header",
+                crate::openapi::discovery::GlobalParameterLocation::Query => "query",
+                crate::openapi::discovery::GlobalParameterLocation::Body => "body",
+                crate::openapi::discovery::GlobalParameterLocation::Path => "path",
+            };
+            let mut help_lines: Vec<String> = Vec::new();
+            if let Some(ref docs) = p.docs {
+                help_lines.push(docs.clone());
+            } else {
+                help_lines.push(format!(
+                    "Global {location_label} parameter `{}`.",
+                    p.target,
+                ));
+            }
+            if let Some(ref env) = p.env {
+                help_lines.push(format!("Env: {env}."));
+            }
+            if let Some(ref def) = p.default {
+                help_lines.push(format!("Default: {def}."));
+            } else if !p.optional {
+                help_lines.push("Required.".to_string());
+            }
+            let help_text = help_lines.join(" ");
+            let prefix = format!("--{kebab} <{value_name}>");
+            global_param_help_pairs.push((prefix, help_text.clone()));
+            let mut arg = clap::Arg::new(arg_id)
+                .long(kebab.clone())
+                .hide(true)
+                .value_name(value_name)
+                .help(help_text);
+            if let Some(ref env) = p.env {
+                arg = arg.env(env.clone());
+            }
+            if let Some(ref def) = p.default {
+                arg = arg.default_value(def.clone());
+            }
+            if global_header_long_collides_with_param(&cli, &kebab) {
+                tracing::debug!(
+                    name = %p.name,
+                    flag = %kebab,
+                    "Global-parameter flag collides with a per-operation parameter; \
+                     registering per-command so the per-op parameter wins"
+                );
+                cli = register_global_header_on_nonconflicting_leaves(cli, &arg, &kebab);
+            } else {
+                cli = cli.arg(arg.global(true));
+            }
+        }
+
+        cli = cli.arg(
+            clap::Arg::new("debug")
+                .long("debug")
+                .action(clap::ArgAction::SetTrue)
+                .global(true)
+                .help("Dump HTTP request and response to stderr")
+        );
+
         // Compose the root --help footer. Preserves the section order
-        // from the old run_async path: global headers → auth → env vars.
+        // from the old run_async path: global headers → global params → auth → env vars.
         let existing_after_help = cli.get_after_help().map(|s| s.to_string());
         let global_headers_section: Option<String> = if global_header_help_pairs.is_empty() {
             None
@@ -1255,6 +1736,23 @@ impl CliApp {
                 .collect();
             Some(format!("Global headers:\n{}", rows.join("\n")))
         };
+        let global_params_section: Option<String> = if global_param_help_pairs.is_empty() {
+            None
+        } else {
+            let prefix_width = global_param_help_pairs
+                .iter()
+                .map(|(p, _)| p.chars().count())
+                .max()
+                .unwrap_or(0);
+            let rows: Vec<String> = global_param_help_pairs
+                .iter()
+                .map(|(prefix, help)| {
+                    let pad = prefix_width.saturating_sub(prefix.chars().count());
+                    format!("  {prefix}{:pad$}  {help}", "", pad = pad)
+                })
+                .collect();
+            Some(format!("Global parameters:\n{}", rows.join("\n")))
+        };
         let env_footer = super::commands::after_help_footer(&doc.name);
         let base_footer = match existing_after_help {
             Some(ref s) if !s.is_empty() => format!("{s}\n{env_footer}"),
@@ -1262,6 +1760,7 @@ impl CliApp {
         };
         cli = cli.after_help(compose_root_after_help_sections(
             global_headers_section.as_deref(),
+            global_params_section.as_deref(),
             auth_section.as_deref(),
             &base_footer,
         ));
@@ -1381,6 +1880,9 @@ pub(crate) struct BindingEntry {
     pub(crate) auth_provider: DynAuthProvider,
     pub(crate) http_config: crate::http::HttpConfig,
     pub(crate) global_headers: Vec<(String, String)>,
+    /// Pre-resolved global parameter values (from CLI flags / env / defaults).
+    /// The executor splits these by location at dispatch time.
+    pub(crate) global_params: Vec<ResolvedGlobalParam>,
 }
 
 /// Runtime context passed to custom command handlers.
@@ -1398,11 +1900,14 @@ pub struct AppContext {
     /// Whether `--quiet` was passed on the command line. Threaded into
     /// `OutputPipeline` by [`AppContext::execute`] so custom commands
     /// honor the flag.
-    quiet: bool,
+    pub(crate) quiet: bool,
     /// Base URL override resolved from `--base-url` / `{NAME}_BASE_URL`.
     /// Threaded into `invoke()` so custom command handlers respect the
     /// override the same way direct CLI dispatch does.
-    base_url_override: Option<String>,
+    pub(crate) base_url_override: Option<String>,
+    /// Whether `--debug` was passed on the command line. Stored for
+    /// use by the executor (DBO-1.3) to dump HTTP traffic to stderr.
+    pub(crate) debug: bool,
 }
 
 impl AppContext {
@@ -1411,11 +1916,13 @@ impl AppContext {
         auth_provider: DynAuthProvider,
         http_config: crate::http::HttpConfig,
         global_headers: Vec<(String, String)>,
+        global_params: Vec<ResolvedGlobalParam>,
     ) -> Self {
         Self {
-            entries: vec![BindingEntry { doc, auth_provider, http_config, global_headers }],
+            entries: vec![BindingEntry { doc, auth_provider, http_config, global_headers, global_params }],
             quiet: false,
             base_url_override: None,
+            debug: false,
         }
     }
 
@@ -1426,6 +1933,11 @@ impl AppContext {
 
     pub(crate) fn with_base_url_override(mut self, base_url_override: Option<String>) -> Self {
         self.base_url_override = base_url_override;
+        self
+    }
+
+    pub(crate) fn with_debug(mut self, debug: bool) -> Self {
+        self.debug = debug;
         self
     }
 
@@ -1494,6 +2006,46 @@ impl AppContext {
         })
     }
 
+    /// Compute the per-op `extra_global_params` slice from the
+    /// pre-resolved global parameters, applying the same apply-mode
+    /// filtering and per-op override suppression as
+    /// `build_global_parameter_overrides` on the built-in command path.
+    ///
+    /// Note: `entry.global_params` is already resolved (CLI flag > env >
+    /// default) in `binding.rs`; a global with no resolved value was
+    /// dropped there. Unlike the built-in path, this path does not raise
+    /// a "required global has no value" error — a custom command's own
+    /// handler owns request assembly, so the built-in required-param
+    /// enforcement is intentionally not duplicated here.
+    fn extra_global_params_for_entry(
+        &self,
+        entry: &BindingEntry,
+        method: &RestMethod,
+        params_json: Option<&str>,
+    ) -> Vec<ResolvedGlobalParam> {
+        let params: serde_json::Map<String, serde_json::Value> = match params_json {
+            Some(s) if !s.trim().is_empty() => serde_json::from_str(s).unwrap_or_default(),
+            _ => serde_json::Map::new(),
+        };
+
+        entry
+            .global_params
+            .iter()
+            .filter(|gp| {
+                // Look up the declaration by identity (`name`), not `target`:
+                // two params can share a target across locations.
+                let decl = entry.doc.global_parameters.iter().find(|d| d.name == gp.name);
+                if let Some(d) = decl {
+                    if !global_param_apply_mode_admits(d, method) {
+                        return false;
+                    }
+                }
+                !per_op_param_overrides_global(&params, method, gp.location, &gp.target)
+            })
+            .cloned()
+            .collect()
+    }
+
     /// Execute an API method by name, using the same executor as built-in
     /// commands. Automatically routes to the binding that owns `method`.
     pub fn execute(
@@ -1518,14 +2070,18 @@ impl AppContext {
                 .pagination_token_response_path
                 .clone()
                 .unwrap_or_else(|| "nextPageToken".to_string()),
+            no_pager: true,
+            cli_name: String::new(),
         };
 
         let pipeline = formatter::OutputPipeline {
             format: output_format.clone(),
             color_mode: formatter::ColorMode::default(),
             quiet: self.quiet,
+            query: None,
         };
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
+        let filtered_global_params = self.extra_global_params_for_entry(entry, method, params_json);
 
         // Custom commands dispatch from inside `run_async`, which is itself
         // driven by a tokio runtime. Naively calling `block_on` from a sync
@@ -1570,7 +2126,9 @@ impl AppContext {
                 // streaming default; only the CLI front-end exposes the
                 // opt-in buffered toggle.
                 false,
+                self.debug,
                 &extra_headers,
+                &filtered_global_params,
             ))
         })
         .map(|_| ())
@@ -1604,9 +2162,12 @@ impl AppContext {
                 .pagination_token_response_path
                 .clone()
                 .unwrap_or_else(|| "nextPageToken".to_string()),
+            no_pager: true,
+            cli_name: String::new(),
         };
 
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
+        let filtered_global_params = self.extra_global_params_for_entry(entry, method, params_json);
         // See note in `execute` — `block_in_place` is required because the
         // handler runs inside the outer tokio runtime.
         let value = tokio::task::block_in_place(|| {
@@ -1641,7 +2202,11 @@ impl AppContext {
                 // buffered semantics so the captured value mirrors the
                 // unary-response shape callers already handle.
                 true,
+                // Programmatic callers (invoke) never use the debug dump —
+                // debug mode is a CLI-only surface.
+                false,
                 &extra_headers,
+                &filtered_global_params,
             ))
         })?;
 
@@ -1884,10 +2449,26 @@ pub(crate) fn collect_params_from_flags(
 
         if param_def.repeated {
             if let Some(values) = matched_args.get_many::<String>(&arg_id) {
-                let arr: Vec<serde_json::Value> = values
-                    .map(|v| serde_json::Value::String(v.clone()))
-                    .collect();
-                params.insert(param_name.clone(), serde_json::Value::Array(arr));
+                // A value that parses as a JSON array is spliced in element
+                // by element (`--to '["a","b"]'` ≡ `--to a --to b`); anything
+                // else — including non-array JSON like "123" — stays a
+                // literal string.
+                let mut arr: Vec<serde_json::Value> = Vec::new();
+                for v in values {
+                    match serde_json::from_str(v) {
+                        Ok(serde_json::Value::Array(elems)) => arr.extend(elems),
+                        _ => arr.push(serde_json::Value::String(v.clone())),
+                    }
+                }
+                // For oneOf [string, array<string>] unions, a single scalar
+                // value stays a plain string — only multiple values (or an
+                // explicit JSON array) produce an array on the wire.
+                let value = if param_def.scalar_or_array && arr.len() == 1 {
+                    arr.into_iter().next().unwrap()
+                } else {
+                    serde_json::Value::Array(arr)
+                };
+                params.insert(param_name.clone(), value);
             }
             continue;
         }
@@ -1915,8 +2496,17 @@ pub(crate) fn collect_params_from_flags(
                     // so the style-aware serializer receives a `Value::Object` /
                     // `Value::Array` rather than a verbatim string. Falls back
                     // to the raw string when the value isn't valid JSON.
-                    serde_json::from_str(value.as_str())
-                        .unwrap_or_else(|_| serde_json::Value::String(value.clone()))
+                    match serde_json::from_str::<serde_json::Value>(value.as_str()) {
+                        Ok(mut parsed) => {
+                            // Resolve `@filename` references inside nested
+                            // string values — mirrors Stainless's CLI shorthand
+                            // semantics (e.g. `--profile '{"pic":"@abe.jpg"}'`).
+                            // FER-10436.
+                            executor::resolve_file_refs(&mut parsed)?;
+                            parsed
+                        }
+                        Err(_) => serde_json::Value::String(value.clone()),
+                    }
                 } else {
                     let wire = param_def
                         .resolve_enum_display_to_wire(value.as_str())
@@ -1986,10 +2576,38 @@ pub(crate) fn collect_multipart_parts(
 
         if field.is_file {
             let raw = value.as_str();
-            let stripped = raw.strip_prefix('@').unwrap_or(raw);
-            if stripped != "-" {
+            // `\@literal` — escape syntax for sending a literal `@`-prefixed
+            // value on a file-typed field (FER-10436). The value is sent as a
+            // plain text part; no file read is attempted, and the path-safety
+            // validators that normally guard file inputs are skipped because
+            // there is no path to validate.
+            if executor::is_escaped_literal(raw) {
+                let literal = executor::strip_or_escape_at(raw).into_owned();
+                parts.push(executor::MultipartPart::Text {
+                    name: field.wire_name.clone(),
+                    value: literal,
+                    content_type: field.content_type.clone(),
+                });
+                continue;
+            }
+            // Validate the inner filesystem path — the same string the executor
+            // will eventually pass to `tokio::fs::read`. `parse_at_ref` strips
+            // the `@`, `@file://`, or `@data://` prefix so an adversarial
+            // `@file://evil\x00path` is rejected before disk I/O regardless of
+            // which encoding mode was requested (FER-10532). Stdin is only the
+            // `Auto`-mode `-` sentinel; an explicit-scheme `-` is a literal
+            // filename and still gets validated.
+            let (inner, mode) = match executor::parse_at_ref(raw) {
+                executor::AtRef::File { path, mode } => (path, mode),
+                executor::AtRef::Plain(s) => (std::borrow::Cow::Borrowed(s), executor::AtMode::Auto),
+                // `\@literal` was handled above; reachable only as a defensive
+                // fallback if the escape branch is ever skipped.
+                executor::AtRef::Escaped(_) => continue,
+            };
+            let is_stdin = mode == executor::AtMode::Auto && inner.as_ref() == "-";
+            if !is_stdin {
                 crate::output::reject_dangerous_chars(
-                    stripped,
+                    inner.as_ref(),
                     &format!("--{}", crate::text::to_kebab_flag(&field.wire_name)),
                 )?;
             }
@@ -2017,6 +2635,7 @@ pub(crate) fn collect_multipart_parts(
 pub(crate) fn build_pagination_config(
     matches: &clap::ArgMatches,
     doc: &RestDescription,
+    cli_name: &str,
 ) -> executor::PaginationConfig {
     executor::PaginationConfig {
         page_all: matches.get_flag("page-all"),
@@ -2036,6 +2655,8 @@ pub(crate) fn build_pagination_config(
             .pagination_token_response_path
             .clone()
             .unwrap_or_else(|| "nextPageToken".to_string()),
+        no_pager: matches.get_flag("no-pager"),
+        cli_name: cli_name.to_string(),
     }
 }
 
@@ -2194,13 +2815,161 @@ mod tests {
         );
     }
 
+    /// `global_header_long_collides_with_param` inspects descendant
+    /// (subcommand) args only — a long shared with a per-op param is a
+    /// collision; a long that only exists as a root-level global is not.
+    #[test]
+    fn test_global_header_long_collides_with_param_scopes_to_subcommands() {
+        let cli = clap::Command::new("cli")
+            // A root-level global flag must NOT count as a collision.
+            .arg(clap::Arg::new("format").long("format").global(true))
+            .subcommand(
+                clap::Command::new("products").subcommand(
+                    clap::Command::new("retrieve")
+                        .arg(clap::Arg::new("country").long("country")),
+                ),
+            );
+        assert!(
+            global_header_long_collides_with_param(&cli, "country"),
+            "a per-op param on a leaf must register as a collision",
+        );
+        assert!(
+            !global_header_long_collides_with_param(&cli, "format"),
+            "a root-level global flag must not register as a collision",
+        );
+        assert!(
+            !global_header_long_collides_with_param(&cli, "language"),
+            "a long that exists nowhere in the tree is not a collision",
+        );
+    }
+
+    /// `register_global_header_on_nonconflicting_leaves` attaches the flag
+    /// to leaves that don't already declare it and leaves colliding leaves
+    /// untouched.
+    #[test]
+    fn test_register_global_header_skips_conflicting_leaf() {
+        let cli = clap::Command::new("cli").subcommand(
+            clap::Command::new("products")
+                .subcommand(
+                    clap::Command::new("retrieve")
+                        .arg(clap::Arg::new("country").long("country")),
+                )
+                .subcommand(clap::Command::new("list")),
+        );
+        let arg = clap::Arg::new("__global_header::X-Country").long("country");
+        let cli = register_global_header_on_nonconflicting_leaves(cli, &arg, "country");
+        let products = cli.find_subcommand("products").unwrap();
+        let retrieve = products.find_subcommand("retrieve").unwrap();
+        let list = products.find_subcommand("list").unwrap();
+        // retrieve already declares --country → no global-header arg added.
+        assert!(
+            !retrieve
+                .get_arguments()
+                .any(|a| a.get_id().as_str() == "__global_header::X-Country"),
+            "colliding leaf must keep only its per-op param",
+        );
+        // list has no --country → global-header arg attached.
+        assert!(
+            list.get_arguments()
+                .any(|a| a.get_id().as_str() == "__global_header::X-Country"),
+            "non-colliding leaf must receive the global-header flag",
+        );
+    }
+
+    /// Full regression for FER-11145: a global header whose flag name
+    /// matches a per-operation parameter must not make clap panic, and the
+    /// per-op param must win on the colliding command while the global
+    /// flag stays available on non-colliding siblings.
+    #[test]
+    fn test_decorate_command_global_header_param_collision_no_panic() {
+        use crate::openapi::discovery::{
+            GlobalHeader, MethodParameter, RestDescription, RestMethod, RestResource,
+        };
+        use std::collections::HashMap;
+
+        // products.retrieve declares a per-op `country` query param.
+        let mut retrieve_params: HashMap<String, MethodParameter> = HashMap::new();
+        retrieve_params.insert(
+            "country".into(),
+            MethodParameter {
+                location: Some("query".into()),
+                param_type: Some("string".into()),
+                ..Default::default()
+            },
+        );
+        let retrieve = RestMethod {
+            http_method: "GET".into(),
+            parameters: retrieve_params,
+            ..Default::default()
+        };
+        // products.list carries no `country` param.
+        let list = RestMethod {
+            http_method: "GET".into(),
+            ..Default::default()
+        };
+        let mut products = RestResource::default();
+        products.methods.insert("retrieve".into(), retrieve);
+        products.methods.insert("list".into(), list);
+        let mut resources = HashMap::new();
+        resources.insert("products".into(), products);
+
+        let doc = RestDescription {
+            name: "channel3".into(),
+            resources,
+            global_headers: vec![GlobalHeader {
+                header: "X-Channel3-Country".into(),
+                name: Some("country".into()),
+                optional: true,
+                env: Some("CHANNEL3_COUNTRY".into()),
+                default: None,
+            }],
+            ..Default::default()
+        };
+
+        let app = CliApp::new("channel3");
+        let cli = crate::openapi::commands::build_cli(&doc);
+        let cli = app.decorate_command(&doc, cli);
+
+        // Before the fix, building this command panicked because
+        // `--country` was registered twice (global header + per-op param).
+        cli.clone().debug_assert();
+
+        // Colliding command: `--country` binds to the per-op param, and the
+        // global-header arg id is absent (per-op param wins).
+        let matches = cli
+            .clone()
+            .try_get_matches_from(["channel3", "products", "retrieve", "--country", "US"])
+            .expect("retrieve should parse --country as the per-op param");
+        let (_, products_m) = matches.subcommand().unwrap();
+        let (_, retrieve_m) = products_m.subcommand().unwrap();
+        assert_eq!(
+            retrieve_m.get_one::<String>("country").map(String::as_str),
+            Some("US"),
+        );
+        assert!(
+            resolve_global_header_value(retrieve_m, &doc.global_headers[0]).is_none(),
+            "global header must be dropped from the colliding command",
+        );
+
+        // Non-colliding sibling: `--country` binds to the global header.
+        let matches = cli
+            .try_get_matches_from(["channel3", "products", "list", "--country", "CA"])
+            .expect("list should parse --country as the global-header flag");
+        let (_, products_m) = matches.subcommand().unwrap();
+        let (_, list_m) = products_m.subcommand().unwrap();
+        assert_eq!(
+            resolve_global_header_value(list_m, &doc.global_headers[0]).as_deref(),
+            Some("CA"),
+        );
+    }
+
     #[test]
     fn test_sdk_variable_collides_with_builtin_flags() {
         // Variables whose kebab form matches any built-in per-op flag
         // must be flagged as colliding so the global registration site
         // can skip them with a warning instead of letting clap panic.
         // Cover the names that are most likely to be picked accidentally.
-        for builtin in ["params", "format", "dry-run", "base-url", "page-all", "output", "json"] {
+        for builtin in ["params", "format", "dry-run", "base-url", "page-all", "output", "json", "debug"] {
             assert!(
                 sdk_variable_collides_with_builtin(builtin),
                 "expected '{builtin}' to collide with a built-in flag",
@@ -2357,6 +3126,7 @@ mod tests {
             // dropped this required header. With the fix,
             // extra_headers_for surfaces a validation error.
             Vec::new(),
+            Vec::new(),
         );
         let method = RestMethod::default();
         let err = ctx.extra_headers_for(&method, None).unwrap_err();
@@ -2392,6 +3162,7 @@ mod tests {
             doc,
             crate::auth::no_auth_provider(),
             crate::http::HttpConfig::new("test").unwrap(),
+            Vec::new(),
             Vec::new(),
         );
         let mut parameters: HashMap<String, MethodParameter> = HashMap::new();
@@ -2435,6 +3206,7 @@ mod tests {
             doc,
             crate::auth::no_auth_provider(),
             crate::http::HttpConfig::new("test").unwrap(),
+            Vec::new(),
             Vec::new(),
         );
         let method = RestMethod::default();
@@ -2523,6 +3295,7 @@ mod tests {
             crate::auth::no_auth_provider(),
             crate::http::HttpConfig::new("test").unwrap(),
             Vec::new(),
+            Vec::new(),
         );
         // User supplied the per-op param under a third casing — the
         // override should still kick in, satisfying the required check
@@ -2588,25 +3361,25 @@ mod tests {
         let g = "Global headers:\n  --api-stage <STAGE>  …";
         let a = "Authentication:\n  bearer  …";
 
-        // Both absent: only the footer.
+        // All absent: only the footer.
         assert_eq!(
-            compose_root_after_help_sections(None, None, footer),
+            compose_root_after_help_sections(None, None, None, footer),
             footer,
-            "no global headers, no auth → only the footer is rendered",
+            "no global headers, no global params, no auth → only the footer is rendered",
         );
         // Auth only: same as the pre-FER-9864 baseline.
         assert_eq!(
-            compose_root_after_help_sections(None, Some(a), footer),
+            compose_root_after_help_sections(None, None, Some(a), footer),
             format!("{a}\n{footer}"),
         );
         // Globals only: no auth section.
         assert_eq!(
-            compose_root_after_help_sections(Some(g), None, footer),
+            compose_root_after_help_sections(Some(g), None, None, footer),
             format!("{g}\n{footer}"),
         );
         // Both present: globals first, then auth, then footer.
         assert_eq!(
-            compose_root_after_help_sections(Some(g), Some(a), footer),
+            compose_root_after_help_sections(Some(g), None, Some(a), footer),
             format!("{g}\n{a}\n{footer}"),
         );
     }
@@ -2621,6 +3394,7 @@ mod tests {
             doc,
             crate::auth::no_auth_provider(),
             crate::http::HttpConfig::new("test").unwrap(),
+            Vec::new(),
             Vec::new(),
         );
         assert_eq!(ctx.spec().name, "test");
@@ -2668,12 +3442,14 @@ mod tests {
             crate::auth::no_auth_provider(),
             crate::http::HttpConfig::new("test").unwrap(),
             Vec::new(),
+            Vec::new(),
         );
         ctx.add_entry(BindingEntry {
             doc: doc_b,
             auth_provider: crate::auth::no_auth_provider(),
             http_config: crate::http::HttpConfig::new("test").unwrap(),
             global_headers: Vec::new(),
+            global_params: Vec::new(),
         });
 
         // find_method should find methods from either entry.
@@ -2865,6 +3641,223 @@ mod tests {
         assert_eq!(
             result.get("ids").and_then(|v| v.as_str()),
             Some("not-json"),
+        );
+    }
+
+    #[test]
+    fn test_collect_params_repeated_param_json_array_value_flattened() {
+        // A repeated string flag (array body props and string|array<string>
+        // unions both lower to this shape) carrying a JSON-array literal must
+        // be parsed and its elements spliced in — not wrapped verbatim as a
+        // single array element.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches =
+            cmd.get_matches_from(vec!["test", "--to", r#"["a@example.com","b@example.com"]"#]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!(["a@example.com", "b@example.com"])),
+            "JSON-array value on a repeated flag must be parsed, not passed verbatim",
+        );
+    }
+
+    #[test]
+    fn test_collect_params_repeated_param_mixed_json_array_and_literal() {
+        // Occurrences can mix: a JSON-array literal flattens in place while
+        // plain values stay literal strings.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec![
+            "test",
+            "--to",
+            r#"["a@example.com"]"#,
+            "--to",
+            "b@example.com",
+        ]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!(["a@example.com", "b@example.com"])),
+        );
+    }
+
+    #[test]
+    fn test_collect_params_repeated_param_non_array_json_stays_literal() {
+        // Values that parse as non-array JSON ("123", "null", "{}") keep the
+        // old literal-string behavior — only arrays flatten.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "tags".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("tags")
+                    .long("tags")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches =
+            cmd.get_matches_from(vec!["test", "--tags", "123", "--tags", "null", "--tags", "{}"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("tags"),
+            Some(&serde_json::json!(["123", "null", "{}"])),
+            "non-array values must stay literal strings",
+        );
+    }
+
+    #[test]
+    fn test_collect_params_scalar_or_array_single_value_stays_scalar() {
+        // For oneOf [string, array<string>] unions, a single value should be
+        // sent as a plain string, not wrapped in a length-1 array.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                scalar_or_array: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec!["test", "--to", "a@example.com"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!("a@example.com")),
+            "single value on scalar_or_array param must be a plain string",
+        );
+    }
+
+    #[test]
+    fn test_collect_params_scalar_or_array_multiple_values_become_array() {
+        // Multiple values on a scalar_or_array param should produce an array.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                scalar_or_array: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec![
+            "test", "--to", "a@example.com", "--to", "b@example.com",
+        ]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!(["a@example.com", "b@example.com"])),
+        );
+    }
+
+    #[test]
+    fn test_collect_params_scalar_or_array_json_array_stays_array() {
+        // A JSON-array literal on a scalar_or_array param with >1 element
+        // produces an array.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                scalar_or_array: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec![
+            "test", "--to", r#"["a@example.com","b@example.com"]"#,
+        ]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!(["a@example.com", "b@example.com"])),
         );
     }
 
@@ -3066,13 +4059,18 @@ paths:
                     .long("page-delay")
                     .value_parser(clap::value_parser!(u64)),
             )
+            .arg(
+                clap::Arg::new("no-pager")
+                    .long("no-pager")
+                    .action(clap::ArgAction::SetTrue),
+            )
     }
 
     #[test]
     fn test_build_pagination_config_defaults() {
         let doc = RestDescription::default();
         let matches = pagination_cmd().get_matches_from(vec!["test"]);
-        let config = build_pagination_config(&matches, &doc);
+        let config = build_pagination_config(&matches, &doc, "test");
         assert!(!config.page_all);
         assert_eq!(config.page_limit, 10);
         assert_eq!(config.page_delay_ms, 100);
@@ -3088,7 +4086,7 @@ paths:
             ..Default::default()
         };
         let matches = pagination_cmd().get_matches_from(vec!["test"]);
-        let config = build_pagination_config(&matches, &doc);
+        let config = build_pagination_config(&matches, &doc, "test");
         assert_eq!(config.token_query_param, "cursor");
         assert_eq!(config.token_response_path, "meta.next_cursor");
     }
@@ -4044,5 +5042,334 @@ paths:
         let doc = crate::openapi::parser::load_openapi_spec_from_value(merged, "t").unwrap();
         assert!(doc.resources["alpha"].methods.contains_key("list"));
         assert!(doc.resources["beta"].methods.contains_key("list"));
+    }
+
+    // ── Global Parameters ─────────────────────────────────────────
+
+    #[test]
+    fn test_global_parameter_flag_name_uses_parameter_name_when_present() {
+        let p = crate::openapi::discovery::GlobalParameter {
+            name: "max-retries".into(),
+            parameter_name: Some("maxRetries".into()),
+            location: crate::openapi::discovery::GlobalParameterLocation::Header,
+            target: "X-Max-Retries".into(),
+            env: None,
+            default: None,
+            optional: false,
+            apply: crate::openapi::discovery::GlobalParameterApplyMode::Auto,
+            docs: None,
+        };
+        assert_eq!(global_parameter_flag_name(&p), "max-retries");
+    }
+
+    #[test]
+    fn test_global_parameter_flag_name_falls_back_to_name() {
+        let p = crate::openapi::discovery::GlobalParameter {
+            name: "api-version".into(),
+            parameter_name: None,
+            location: crate::openapi::discovery::GlobalParameterLocation::Query,
+            target: "api-version".into(),
+            env: None,
+            default: None,
+            optional: false,
+            apply: crate::openapi::discovery::GlobalParameterApplyMode::Auto,
+            docs: None,
+        };
+        assert_eq!(global_parameter_flag_name(&p), "api-version");
+    }
+
+    #[test]
+    fn test_global_parameter_arg_id_format() {
+        let p = crate::openapi::discovery::GlobalParameter {
+            name: "currency".into(),
+            parameter_name: None,
+            location: crate::openapi::discovery::GlobalParameterLocation::Body,
+            target: "currency".into(),
+            env: None,
+            default: None,
+            optional: false,
+            apply: crate::openapi::discovery::GlobalParameterApplyMode::Auto,
+            docs: None,
+        };
+        assert_eq!(global_parameter_arg_id(&p), "global-param:currency");
+    }
+
+    #[test]
+    fn test_merge_global_parameters_first_write_wins() {
+        use crate::openapi::discovery::{
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
+        };
+
+        let mut acc = vec![GlobalParameter {
+            name: "currency".into(),
+            parameter_name: None,
+            location: GlobalParameterLocation::Query,
+            target: "currency".into(),
+            env: Some("FIRST_ENV".into()),
+            default: Some("USD".into()),
+            optional: false,
+            apply: GlobalParameterApplyMode::Auto,
+            docs: None,
+        }];
+        let incoming = vec![
+            GlobalParameter {
+                name: "currency".into(),
+                parameter_name: None,
+                location: GlobalParameterLocation::Query,
+                target: "currency".into(),
+                env: Some("SECOND_ENV".into()),
+                default: Some("EUR".into()),
+                optional: true,
+                apply: GlobalParameterApplyMode::Auto,
+                docs: None,
+            },
+            GlobalParameter {
+                name: "region".into(),
+                parameter_name: None,
+                location: GlobalParameterLocation::Header,
+                target: "X-Region".into(),
+                env: None,
+                default: None,
+                optional: true,
+                apply: GlobalParameterApplyMode::Auto,
+                docs: None,
+            },
+        ];
+        merge_global_parameters(&mut acc, incoming);
+        assert_eq!(acc.len(), 2, "duplicate dropped, new appended: {acc:?}");
+        assert_eq!(acc[0].env.as_deref(), Some("FIRST_ENV"));
+        assert_eq!(acc[0].default.as_deref(), Some("USD"));
+        assert_eq!(acc[1].name, "region");
+    }
+
+    #[test]
+    fn test_build_global_parameter_overrides_auto_mode() {
+        use crate::openapi::discovery::{
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
+            RestDescription, RestMethod,
+        };
+
+        let doc = RestDescription {
+            global_parameters: vec![GlobalParameter {
+                name: "api-version".into(),
+                parameter_name: None,
+                location: GlobalParameterLocation::Query,
+                target: "api-version".into(),
+                env: None,
+                default: Some("2024-01-01".into()),
+                optional: false,
+                apply: GlobalParameterApplyMode::Auto,
+                docs: None,
+            }],
+            ..Default::default()
+        };
+        let method = RestMethod::default();
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:api-version").long("api-version").default_value("2024-06-01"));
+        let matches = cmd.get_matches_from(vec!["test"]);
+        let params = serde_json::Map::new();
+        let overrides =
+            build_global_parameter_overrides(&matches, &doc, &method, &params)
+                .expect("auto mode should always apply");
+        assert_eq!(overrides.len(), 1);
+        assert_eq!(overrides[0].target, "api-version");
+        assert_eq!(overrides[0].value, "2024-06-01");
+        assert!(matches!(
+            overrides[0].location,
+            GlobalParameterLocation::Query
+        ));
+    }
+
+    #[test]
+    fn test_build_global_parameter_overrides_explicit_mode_included() {
+        use crate::openapi::discovery::{
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
+            RestDescription, RestMethod,
+        };
+
+        let doc = RestDescription {
+            global_parameters: vec![GlobalParameter {
+                name: "currency".into(),
+                parameter_name: None,
+                location: GlobalParameterLocation::Body,
+                target: "currency".into(),
+                env: None,
+                default: Some("USD".into()),
+                optional: false,
+                apply: GlobalParameterApplyMode::Explicit,
+                docs: None,
+            }],
+            ..Default::default()
+        };
+        let method = RestMethod {
+            global_parameter_opt_ins: vec!["currency".to_string()],
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:currency").long("currency").default_value("USD"));
+        let matches = cmd.get_matches_from(vec!["test"]);
+        let params = serde_json::Map::new();
+        let overrides =
+            build_global_parameter_overrides(&matches, &doc, &method, &params)
+                .expect("explicit mode with opt-in should apply");
+        assert_eq!(overrides.len(), 1);
+        assert_eq!(overrides[0].target, "currency");
+        assert_eq!(overrides[0].value, "USD");
+    }
+
+    #[test]
+    fn test_build_global_parameter_overrides_explicit_mode_excluded() {
+        use crate::openapi::discovery::{
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
+            RestDescription, RestMethod,
+        };
+
+        let doc = RestDescription {
+            global_parameters: vec![GlobalParameter {
+                name: "currency".into(),
+                parameter_name: None,
+                location: GlobalParameterLocation::Body,
+                target: "currency".into(),
+                env: None,
+                default: Some("USD".into()),
+                optional: true,
+                apply: GlobalParameterApplyMode::Explicit,
+                docs: None,
+            }],
+            ..Default::default()
+        };
+        let method = RestMethod::default(); // no opt-ins
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:currency").long("currency").default_value("USD"));
+        let matches = cmd.get_matches_from(vec!["test"]);
+        let params = serde_json::Map::new();
+        let overrides =
+            build_global_parameter_overrides(&matches, &doc, &method, &params)
+                .expect("explicit mode without opt-in should skip");
+        assert!(
+            overrides.is_empty(),
+            "explicit param not opted-in should not appear: {overrides:?}"
+        );
+    }
+
+    #[test]
+    fn test_build_global_parameter_overrides_per_op_override_suppresses_global() {
+        use crate::openapi::discovery::{
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
+            MethodParameter, RestDescription, RestMethod,
+        };
+
+        let mut parameters = std::collections::HashMap::new();
+        parameters.insert(
+            "X-Api-Version".to_string(),
+            MethodParameter {
+                location: Some("header".to_string()),
+                ..Default::default()
+            },
+        );
+        let doc = RestDescription {
+            global_parameters: vec![GlobalParameter {
+                name: "api-version".into(),
+                parameter_name: None,
+                location: GlobalParameterLocation::Header,
+                target: "X-Api-Version".into(),
+                env: None,
+                default: Some("v1".into()),
+                optional: false,
+                apply: GlobalParameterApplyMode::Auto,
+                docs: None,
+            }],
+            ..Default::default()
+        };
+        let method = RestMethod {
+            parameters,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:api-version").long("api-version").default_value("v2"));
+        let matches = cmd.get_matches_from(vec!["test"]);
+        let mut params = serde_json::Map::new();
+        params.insert("X-Api-Version".to_string(), serde_json::Value::String("v3-per-op".to_string()));
+        let overrides = build_global_parameter_overrides(
+            &matches,
+            &doc,
+            &method,
+            &params,
+        )
+        .expect("per-op override should suppress global");
+        assert!(
+            overrides.is_empty(),
+            "per-op param wins, global should be suppressed: {overrides:?}"
+        );
+    }
+
+    #[test]
+    fn test_build_global_parameter_overrides_required_missing_errors() {
+        use crate::openapi::discovery::{
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
+            RestDescription, RestMethod,
+        };
+
+        let doc = RestDescription {
+            global_parameters: vec![GlobalParameter {
+                name: "api-key".into(),
+                parameter_name: None,
+                location: GlobalParameterLocation::Header,
+                target: "X-Api-Key".into(),
+                env: Some("API_KEY".into()),
+                default: None,
+                optional: false,
+                apply: GlobalParameterApplyMode::Auto,
+                docs: None,
+            }],
+            ..Default::default()
+        };
+        let method = RestMethod::default();
+        // Register the arg so clap recognizes it, but don't provide a value
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:api-key").long("api-key").required(false));
+        let matches = cmd.get_matches_from(vec!["test"]);
+        let params = serde_json::Map::new();
+        let err =
+            build_global_parameter_overrides(&matches, &doc, &method, &params)
+                .unwrap_err();
+        let msg = format!("{err}");
+        assert!(msg.contains("api-key"), "error names param: {msg}");
+    }
+
+    #[test]
+    fn test_build_global_parameter_overrides_optional_missing_skips() {
+        use crate::openapi::discovery::{
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
+            RestDescription, RestMethod,
+        };
+
+        let doc = RestDescription {
+            global_parameters: vec![GlobalParameter {
+                name: "trace-id".into(),
+                parameter_name: None,
+                location: GlobalParameterLocation::Header,
+                target: "X-Trace-Id".into(),
+                env: None,
+                default: None,
+                optional: true,
+                apply: GlobalParameterApplyMode::Auto,
+                docs: None,
+            }],
+            ..Default::default()
+        };
+        let method = RestMethod::default();
+        // Register the arg so clap recognizes it, but don't provide a value
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:trace-id").long("trace-id").required(false));
+        let matches = cmd.get_matches_from(vec!["test"]);
+        let params = serde_json::Map::new();
+        let overrides =
+            build_global_parameter_overrides(&matches, &doc, &method, &params)
+                .expect("optional missing should succeed");
+        assert!(
+            overrides.is_empty(),
+            "optional with no value should be omitted: {overrides:?}"
+        );
     }
 }

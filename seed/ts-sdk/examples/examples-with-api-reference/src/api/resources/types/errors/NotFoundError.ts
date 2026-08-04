@@ -4,6 +4,8 @@ import type * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 
 export class NotFoundError extends errors.SeedExamplesError {
+    public declare readonly body: string;
+
     constructor(body: string, rawResponse?: core.RawResponse) {
         super({
             message: "NotFoundError",
@@ -16,6 +18,6 @@ export class NotFoundError extends errors.SeedExamplesError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "NotFoundError";
     }
 }

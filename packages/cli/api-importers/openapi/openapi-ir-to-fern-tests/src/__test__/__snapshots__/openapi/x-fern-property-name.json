@@ -178,4 +178,5 @@ error-discrimination:
 display-name: Test extension `x-fern-property-name`
 ",
   },
+  "specVersion": "1.0.0",
 }

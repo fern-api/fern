@@ -30,4 +30,20 @@ public class ServiceClient {
     public String getText(RequestOptions requestOptions) {
         return this.rawClient.getText(requestOptions).body();
     }
+
+    public String getCsv() {
+        return this.rawClient.getCsv().body();
+    }
+
+    public String getCsv(RequestOptions requestOptions) {
+        return this.rawClient.getCsv(requestOptions).body();
+    }
+
+    public String getXml() {
+        return this.rawClient.getXml().body();
+    }
+
+    public String getXml(RequestOptions requestOptions) {
+        return this.rawClient.getXml(requestOptions).body();
+    }
 }

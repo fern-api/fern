@@ -37,6 +37,13 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // GET with path param
+//
+// Example:
+//
+//	client.Endpoints.Params.GetWithPath(
+//	    context.TODO(),
+//	    "param",
+//	)
 func (c *Client) GetWithPath(
 	ctx context.Context,
 	param string,
@@ -54,6 +61,16 @@ func (c *Client) GetWithPath(
 }
 
 // GET with path param
+//
+// Example:
+//
+//	request := &endpoints.GetWithInlinePath{
+//	    Param: "param",
+//	}
+//	client.Endpoints.Params.GetWithInlinePath(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetWithInlinePath(
 	ctx context.Context,
 	request *endpoints.GetWithInlinePath,
@@ -71,6 +88,17 @@ func (c *Client) GetWithInlinePath(
 }
 
 // GET with query param
+//
+// Example:
+//
+//	request := &endpoints.GetWithQuery{
+//	    Query: "query",
+//	    Number: 1,
+//	}
+//	client.Endpoints.Params.GetWithQuery(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetWithQuery(
 	ctx context.Context,
 	request *endpoints.GetWithQuery,
@@ -88,6 +116,21 @@ func (c *Client) GetWithQuery(
 }
 
 // GET with multiple of same query param
+//
+// Example:
+//
+//	request := &endpoints.GetWithMultipleQuery{
+//	    Query: []string{
+//	        "query",
+//	    },
+//	    Number: []int{
+//	        1,
+//	    },
+//	}
+//	client.Endpoints.Params.GetWithAllowMultipleQuery(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetWithAllowMultipleQuery(
 	ctx context.Context,
 	request *endpoints.GetWithMultipleQuery,
@@ -105,6 +148,17 @@ func (c *Client) GetWithAllowMultipleQuery(
 }
 
 // GET with path and query params
+//
+// Example:
+//
+//	request := &endpoints.GetWithPathAndQuery{
+//	    Query: "query",
+//	}
+//	client.Endpoints.Params.GetWithPathAndQuery(
+//	    context.TODO(),
+//	    "param",
+//	    request,
+//	)
 func (c *Client) GetWithPathAndQuery(
 	ctx context.Context,
 	param string,
@@ -124,6 +178,17 @@ func (c *Client) GetWithPathAndQuery(
 }
 
 // GET with path and query params
+//
+// Example:
+//
+//	request := &endpoints.GetWithInlinePathAndQuery{
+//	    Param: "param",
+//	    Query: "query",
+//	}
+//	client.Endpoints.Params.GetWithInlinePathAndQuery(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetWithInlinePathAndQuery(
 	ctx context.Context,
 	request *endpoints.GetWithInlinePathAndQuery,
@@ -141,6 +206,14 @@ func (c *Client) GetWithInlinePathAndQuery(
 }
 
 // PUT to update with path param
+//
+// Example:
+//
+//	client.Endpoints.Params.ModifyWithPath(
+//	    context.TODO(),
+//	    "param",
+//	    request,
+//	)
 func (c *Client) ModifyWithPath(
 	ctx context.Context,
 	param string,
@@ -160,6 +233,17 @@ func (c *Client) ModifyWithPath(
 }
 
 // PUT to update with path param
+//
+// Example:
+//
+//	request := &endpoints.ModifyResourceAtInlinedPath{
+//	    Param: "param",
+//	    Body: "string",
+//	}
+//	client.Endpoints.Params.ModifyWithInlinePath(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ModifyWithInlinePath(
 	ctx context.Context,
 	request *endpoints.ModifyResourceAtInlinedPath,
@@ -177,6 +261,14 @@ func (c *Client) ModifyWithInlinePath(
 }
 
 // POST bytes with path param returning object
+//
+// Example:
+//
+//	client.Endpoints.Params.UploadWithPath(
+//	    context.TODO(),
+//	    "upload-path",
+//	    request,
+//	)
 func (c *Client) UploadWithPath(
 	ctx context.Context,
 	param string,
@@ -195,7 +287,63 @@ func (c *Client) UploadWithPath(
 	return response.Body, nil
 }
 
+// POST with referenced body + query params
+//
+// Example:
+//
+//	request := &endpoints.CreateWithBodyAndQuery{
+//	    Fields: fern.String(
+//	        "_fields",
+//	    ),
+//	    Body: &types.ObjectWithRequiredField{
+//	        FieldString: "string",
+//	    },
+//	}
+//	client.Endpoints.Params.CreateWithBodyAndQuery(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) CreateWithBodyAndQuery(
+	ctx context.Context,
+	request *endpoints.CreateWithBodyAndQuery,
+	opts ...option.RequestOption,
+) (*types.ObjectWithOptionalField, error) {
+	response, err := c.WithRawResponse.CreateWithBodyAndQuery(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// POST bytes body + query params
+func (c *Client) UploadBytesWithQuery(
+	ctx context.Context,
+	request *endpoints.UploadBytesWithQuery,
+	opts ...option.RequestOption,
+) (*types.ObjectWithOptionalField, error) {
+	response, err := c.WithRawResponse.UploadBytesWithQuery(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 // GET with boolean path param
+//
+// Example:
+//
+//	client.Endpoints.Params.GetWithBooleanPath(
+//	    context.TODO(),
+//	    true,
+//	)
 func (c *Client) GetWithBooleanPath(
 	ctx context.Context,
 	param bool,
@@ -213,6 +361,13 @@ func (c *Client) GetWithBooleanPath(
 }
 
 // GET with path param that can throw errors
+//
+// Example:
+//
+//	client.Endpoints.Params.GetWithPathAndErrors(
+//	    context.TODO(),
+//	    "param",
+//	)
 func (c *Client) GetWithPathAndErrors(
 	ctx context.Context,
 	param string,

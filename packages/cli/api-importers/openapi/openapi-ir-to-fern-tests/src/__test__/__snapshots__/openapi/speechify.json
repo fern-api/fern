@@ -2370,4 +2370,5 @@ headers:
     name: authorization
 ",
   },
+  "specVersion": "0.1.0",
 }

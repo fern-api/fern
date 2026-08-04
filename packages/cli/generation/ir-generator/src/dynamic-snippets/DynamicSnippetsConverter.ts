@@ -25,9 +25,11 @@ import {
     InferredAuthScheme,
     IntermediateRepresentation,
     Literal,
+    NameAndWireValue,
     NameAndWireValueOrString,
     NamedType,
     NameOrString,
+    OAuthScheme,
     ObjectProperty,
     ObjectTypeDeclaration,
     PathParameter,
@@ -59,6 +61,7 @@ export declare namespace DynamicSnippetsConverter {
         ir: IntermediateRepresentation;
         generationLanguage?: generatorsYml.GenerationLanguage;
         smartCasing?: boolean;
+        smartCasingDigitWordBoundary?: boolean;
         generatorConfig?: dynamic.GeneratorConfig;
     }
 }
@@ -79,11 +82,15 @@ export class DynamicSnippetsConverter {
         this.casingsGenerator = constructCasingsGenerator({
             generationLanguage: args.generationLanguage,
             smartCasing: args.smartCasing ?? args.ir.casingsConfig?.smartCasing ?? true,
+            smartCasingDigitWordBoundary:
+                args.smartCasingDigitWordBoundary ?? args.ir.casingsConfig?.smartCasingDigitWordBoundary ?? false,
             keywords: args.ir.casingsConfig?.keywords
         });
         this.fullCasingsGenerator = constructFullCasingsGenerator({
             generationLanguage: args.generationLanguage,
             smartCasing: args.smartCasing ?? args.ir.casingsConfig?.smartCasing ?? true,
+            smartCasingDigitWordBoundary:
+                args.smartCasingDigitWordBoundary ?? args.ir.casingsConfig?.smartCasingDigitWordBoundary ?? false,
             keywords: args.ir.casingsConfig?.keywords
         });
         this.auth = this.convertAuth(this.ir.auth);
@@ -148,6 +155,7 @@ export class DynamicSnippetsConverter {
             pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
             environments: this.ir.environments != null ? this.convertEnvironments(this.ir.environments) : undefined,
             variables: this.convertVariables(),
+            globalParameters: this.ir.globalParameters,
             generatorConfig: this.generatorConfig
         };
     }
@@ -566,7 +574,8 @@ export class DynamicSnippetsConverter {
             declaration,
             properties,
             extends_: extendsTypeIds,
-            additionalProperties: object.extraProperties
+            additionalProperties: object.extraProperties,
+            deferredUnionBaseProperties: object.deferredUnionBaseProperties
         });
     }
 
@@ -574,18 +583,24 @@ export class DynamicSnippetsConverter {
         declaration,
         properties,
         extends_,
-        additionalProperties
+        additionalProperties,
+        deferredUnionBaseProperties
     }: {
         declaration: DynamicSnippets.Declaration;
         properties: ObjectProperty[];
         extends_?: TypeId[];
         additionalProperties: boolean;
+        deferredUnionBaseProperties?: NameAndWireValue[];
     }): DynamicSnippets.NamedType {
         return DynamicSnippets.NamedType.object({
             declaration,
             properties: this.convertBodyPropertiesToParameters({ properties }),
             extends: extends_,
-            additionalProperties
+            additionalProperties,
+            // Mirror the pre-computed regular-IR fact; computed once by the IR generator, never here.
+            deferredUnionBaseProperties: deferredUnionBaseProperties?.map((property) =>
+                this.inflateNameAndWireValue(property)
+            )
         });
     }
 
@@ -600,6 +615,10 @@ export class DynamicSnippetsConverter {
         return DynamicSnippets.NamedType.discriminatedUnion({
             declaration,
             discriminant: this.inflateNameAndWireValue(union.discriminant),
+            // Mirror the pre-computed regular-IR fact; computed once by the IR generator, never here.
+            inheritedBaseProperties: (union.inheritedBaseProperties ?? []).map((property) =>
+                this.inflateNameAndWireValue(property)
+            ),
             types: Object.fromEntries(
                 union.types.map((unionType) => [
                     getWireValue(unionType.discriminantValue),
@@ -755,11 +774,14 @@ export class DynamicSnippetsConverter {
                         variable: undefined
                     }
                 });
-            case "oauth":
+            case "oauth": {
+                const customProperties = this.getOAuthCustomProperties(scheme);
                 return DynamicSnippets.Auth.oauth({
                     clientId: this.fullCasingsGenerator.generateName("clientId"),
-                    clientSecret: this.fullCasingsGenerator.generateName("clientSecret")
+                    clientSecret: this.fullCasingsGenerator.generateName("clientSecret"),
+                    customProperties: customProperties.length > 0 ? customProperties : undefined
                 });
+            }
             case "inferred":
                 return DynamicSnippets.Auth.inferred({
                     parameters: this.getInferredAuthParameters(scheme)
@@ -788,11 +810,15 @@ export class DynamicSnippetsConverter {
                 return DynamicSnippets.AuthValues.header({
                     value: scheme.headerPlaceholder ?? "<value>"
                 });
-            case "oauth":
+            case "oauth": {
+                const customPropertyValues = this.getOAuthCustomPropertyValues(scheme);
                 return DynamicSnippets.AuthValues.oauth({
                     clientId: "<clientId>",
-                    clientSecret: "<clientSecret>"
+                    clientSecret: "<clientSecret>",
+                    customPropertyValues:
+                        Object.keys(customPropertyValues).length > 0 ? customPropertyValues : undefined
                 });
+            }
             case "inferred":
                 return DynamicSnippets.AuthValues.inferred({
                     values: this.getInferredAuthValues(scheme)
@@ -898,6 +924,59 @@ export class DynamicSnippetsConverter {
         }
 
         return properties;
+    }
+
+    private getOAuthCustomProperties(scheme: OAuthScheme): DynamicSnippets.NamedParameter[] {
+        const parameters: DynamicSnippets.NamedParameter[] = [];
+        // Only the client-credentials flow has a token-request contract whose custom properties
+        // become snippet parameters. The authorization-code (PKCE) flow is a browser login with
+        // no such request-time inputs.
+        if (scheme.configuration.type !== "clientCredentials") {
+            return parameters;
+        }
+        const customProperties = scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? [];
+        for (const customProperty of customProperties) {
+            if (isExcludedOAuthProperty(customProperty.property.valueType)) {
+                continue;
+            }
+            parameters.push({
+                name: this.inflateNameAndWireValue(customProperty.property.name),
+                typeReference: this.convertTypeReference(customProperty.property.valueType),
+                propertyAccess: undefined,
+                variable: undefined
+            });
+        }
+        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        if (scopes != null && !isExcludedOAuthProperty(scopes.property.valueType)) {
+            parameters.push({
+                name: this.inflateNameAndWireValue(scopes.property.name),
+                typeReference: this.convertTypeReference(scopes.property.valueType),
+                propertyAccess: undefined,
+                variable: undefined
+            });
+        }
+        return parameters;
+    }
+
+    private getOAuthCustomPropertyValues(scheme: OAuthScheme): Record<string, unknown> {
+        const values: Record<string, unknown> = {};
+        if (scheme.configuration.type !== "clientCredentials") {
+            return values;
+        }
+        const customProperties = scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? [];
+        for (const customProperty of customProperties) {
+            if (isExcludedOAuthProperty(customProperty.property.valueType)) {
+                continue;
+            }
+            const wireValue = getWireValue(customProperty.property.name);
+            values[wireValue] = `<${wireValue}>`;
+        }
+        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        if (scopes != null && !isExcludedOAuthProperty(scopes.property.valueType)) {
+            const wireValue = getWireValue(scopes.property.name);
+            values[wireValue] = `<${wireValue}>`;
+        }
+        return values;
     }
 
     private convertEnvironments(environmentsConfig: EnvironmentsConfig): DynamicSnippets.EnvironmentsConfig {
@@ -1083,4 +1162,16 @@ export class DynamicSnippetsConverter {
         }
         return requests;
     }
+}
+
+/**
+ * Literal and optional properties should not be propagated as constructor
+ * parameters or snippet values. Literals are hardcoded in the request class,
+ * and optional properties are not included as required constructor parameters.
+ */
+function isExcludedOAuthProperty(typeReference: TypeReference): boolean {
+    if (typeReference.type !== "container") {
+        return false;
+    }
+    return typeReference.container.type === "literal" || typeReference.container.type === "optional";
 }

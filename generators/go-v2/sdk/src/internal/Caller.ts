@@ -11,6 +11,12 @@ export declare namespace Caller {
         url: go.AstNode;
         request?: go.AstNode;
         response?: go.AstNode;
+        /**
+         * Whether the endpoint's response body may be empty (e.g. an operation that returns both a
+         * body-bearing 2xx and a no-body 204). When true, the caller tolerates an empty body and
+         * returns a successful response with a nil body instead of failing to decode it.
+         */
+        responseIsOptional?: boolean;
         errorCodes?: go.AstNode;
         /** The import path of the namespace where the endpoint is defined. Used to reference namespace-specific ErrorCodes. */
         namespaceImportPath?: string;
@@ -188,6 +194,12 @@ export class Caller {
             arguments_.push({
                 name: "Response",
                 value: go.TypeInstantiation.reference(args.response)
+            });
+        }
+        if (args.responseIsOptional) {
+            arguments_.push({
+                name: "ResponseIsOptional",
+                value: go.TypeInstantiation.bool(true)
             });
         }
         if (args.errorCodes != null) {

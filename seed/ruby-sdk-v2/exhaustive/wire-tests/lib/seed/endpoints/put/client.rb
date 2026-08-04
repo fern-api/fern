@@ -20,6 +20,9 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :id
         #
+        # @example
+        #   client.endpoints.put.add(id: "id")
+        #
         # @return [Seed::Endpoints::Put::Types::PutResponse]
         def add(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)

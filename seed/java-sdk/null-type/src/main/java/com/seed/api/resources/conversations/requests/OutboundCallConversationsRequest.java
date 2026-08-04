@@ -123,7 +123,6 @@ public final class OutboundCallConversationsRequest {
 
         /**
          * <p>The phone number to call in E.164 format.</p>
-         * <p>The phone number to call in E.164 format.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

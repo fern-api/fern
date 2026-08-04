@@ -10,7 +10,7 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Urls.WithUnderscoresAsync();
+        await client.Endpoints.Urls.WithEndingSlashAsync();
     }
 
 }

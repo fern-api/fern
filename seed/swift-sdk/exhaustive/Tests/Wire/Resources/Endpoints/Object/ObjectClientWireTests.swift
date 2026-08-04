@@ -6,7 +6,7 @@ import Exhaustive
     @Test func getAndReturnWithOptionalField1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string",
@@ -52,7 +52,9 @@ import Exhaustive
                 "list",
                 "list"
             ]),
-            set: Optional([]),
+            set: Optional(JSONValue.array([
+                JSONValue.string("set")
+            ])),
             map: Optional([
                 1: "map"
             ]),
@@ -73,9 +75,13 @@ import Exhaustive
                     "list",
                     "list"
                 ],
+                set: .array([
+                    .string("set")
+                ]),
                 map: [
                     1: "map"
-                ]
+                ],
+                bigint: "1000000"
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -85,7 +91,7 @@ import Exhaustive
     @Test func getAndReturnWithRequiredField1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string"
@@ -113,7 +119,7 @@ import Exhaustive
     @Test func getAndReturnWithMapOfMap1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "map": {
@@ -153,7 +159,7 @@ import Exhaustive
     @Test func getAndReturnNestedWithOptionalField1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string",
@@ -204,7 +210,9 @@ import Exhaustive
                     "list",
                     "list"
                 ]),
-                set: Optional([]),
+                set: Optional(JSONValue.array([
+                    JSONValue.string("set")
+                ])),
                 map: Optional([
                     1: "map"
                 ]),
@@ -228,9 +236,13 @@ import Exhaustive
                         "list",
                         "list"
                     ],
+                    set: .array([
+                        .string("set")
+                    ]),
                     map: [
                         1: "map"
-                    ]
+                    ],
+                    bigint: "1000000"
                 )
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -241,7 +253,7 @@ import Exhaustive
     @Test func getAndReturnNestedWithRequiredField1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string",
@@ -292,7 +304,9 @@ import Exhaustive
                     "list",
                     "list"
                 ]),
-                set: Optional([]),
+                set: Optional(JSONValue.array([
+                    JSONValue.string("set")
+                ])),
                 map: Optional([
                     1: "map"
                 ]),
@@ -317,9 +331,13 @@ import Exhaustive
                         "list",
                         "list"
                     ],
+                    set: .array([
+                        .string("set")
+                    ]),
                     map: [
                         1: "map"
-                    ]
+                    ],
+                    bigint: "1000000"
                 )
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -330,7 +348,7 @@ import Exhaustive
     @Test func getAndReturnNestedWithRequiredFieldAsList1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string",
@@ -381,7 +399,9 @@ import Exhaustive
                     "list",
                     "list"
                 ]),
-                set: Optional([]),
+                set: Optional(JSONValue.array([
+                    JSONValue.string("set")
+                ])),
                 map: Optional([
                     1: "map"
                 ]),
@@ -406,9 +426,13 @@ import Exhaustive
                             "list",
                             "list"
                         ],
+                        set: .array([
+                            .string("set")
+                        ]),
                         map: [
                             1: "map"
-                        ]
+                        ],
+                        bigint: "1000000"
                     )
                 ),
                 NestedObjectWithRequiredField(
@@ -427,9 +451,13 @@ import Exhaustive
                             "list",
                             "list"
                         ],
+                        set: .array([
+                            .string("set")
+                        ]),
                         map: [
                             1: "map"
-                        ]
+                        ],
+                        bigint: "1000000"
                     )
                 )
             ],
@@ -441,7 +469,7 @@ import Exhaustive
     @Test func getAndReturnWithUnknownField1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "unknown": {
@@ -477,7 +505,7 @@ import Exhaustive
     @Test func getAndReturnWithUnknownField2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "unknown": {
@@ -513,7 +541,7 @@ import Exhaustive
     @Test func getAndReturnWithDocumentedUnknownType1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "documentedUnknownType": {
@@ -549,7 +577,7 @@ import Exhaustive
     @Test func getAndReturnMapOfDocumentedUnknownType1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": {
@@ -585,7 +613,7 @@ import Exhaustive
     @Test func getAndReturnWithMixedRequiredAndOptionalFields1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "requiredString": "hello",
@@ -622,7 +650,7 @@ import Exhaustive
     @Test func getAndReturnWithMixedRequiredAndOptionalFields2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "requiredString": "requiredString",
@@ -659,7 +687,7 @@ import Exhaustive
     @Test func getAndReturnWithRequiredNestedObject1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "requiredString": "hello",
@@ -703,7 +731,7 @@ import Exhaustive
     @Test func getAndReturnWithRequiredNestedObject2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "requiredString": "requiredString",
@@ -759,7 +787,9 @@ import Exhaustive
                         "list",
                         "list"
                     ]),
-                    set: Optional([]),
+                    set: Optional(JSONValue.array([
+                        JSONValue.string("set")
+                    ])),
                     map: Optional([
                         1: "map"
                     ]),
@@ -786,9 +816,13 @@ import Exhaustive
                             "list",
                             "list"
                         ],
+                        set: .array([
+                            .string("set")
+                        ]),
                         map: [
                             1: "map"
-                        ]
+                        ],
+                        bigint: "1000000"
                     )
                 )
             ),
@@ -800,7 +834,7 @@ import Exhaustive
     @Test func getAndReturnWithDatetimeLikeString1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "datetimeLikeString": "2023-08-31T14:15:22Z",
@@ -831,7 +865,7 @@ import Exhaustive
     @Test func getAndReturnWithDatetimeLikeString2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "datetimeLikeString": "datetimeLikeString",

@@ -11,8 +11,8 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnIntAsync(
-            1
+        await client.Endpoints.Primitive.GetAndReturnStringAsync(
+            "string"
         );
     }
 

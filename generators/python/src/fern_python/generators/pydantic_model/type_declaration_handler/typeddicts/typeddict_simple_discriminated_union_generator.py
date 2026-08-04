@@ -146,6 +146,17 @@ class TypeddictDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnionSnip
             union_naming_version=union_naming_version,
         )
 
+    def _get_base_properties_as_simple_object_properties(self) -> List[SimpleObjectProperty]:
+        if self.example is None or self.example.base_properties is None:
+            return []
+        return [
+            SimpleObjectProperty(
+                name=resolve_name(get_name_from_wire_value(prop.name)).snake_case.safe_name,
+                value=prop.value,
+            )
+            for prop in self.example.base_properties
+        ]
+
     def _get_snippet_for_union_with_same_properties_as_object(
         self,
         name: ir_types.DeclaredTypeName,
@@ -160,7 +171,8 @@ class TypeddictDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnionSnip
                     SimpleObjectProperty(
                         name=resolve_name(get_name_from_wire_value(discriminant_field_name)).snake_case.safe_name,
                         value=FernTypedDict.wrap_string_as_example(get_wire_value(wire_discriminant_value)),
-                    )
+                    ),
+                    *self._get_base_properties_as_simple_object_properties(),
                 ],
                 snippet_writer=self.snippet_writer,
             )
@@ -191,6 +203,7 @@ class TypeddictDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnionSnip
                         name=resolve_name(get_name_from_wire_value(discriminant_field_name)).snake_case.safe_name,
                         value=FernTypedDict.wrap_string_as_example(get_wire_value(wire_discriminant_value)),
                     ),
+                    *self._get_base_properties_as_simple_object_properties(),
                 ],
                 snippet_writer=self.snippet_writer,
             )
@@ -214,7 +227,8 @@ class TypeddictDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnionSnip
                 SimpleObjectProperty(
                     name=resolve_name(get_name_from_wire_value(discriminant_field_name)).snake_case.safe_name,
                     value=FernTypedDict.wrap_string_as_example(get_wire_value(wire_discriminant_value)),
-                )
+                ),
+                *self._get_base_properties_as_simple_object_properties(),
             ],
             snippet_writer=self.snippet_writer,
         )

@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": "0.1.0",
     "apiName": "api",
     "apiDisplayName": "server-sent-events-openapi",
     "apiDocs": null,
@@ -30,6 +31,7 @@
                 "discriminant": "event",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "heartbeat",
@@ -138,6 +140,7 @@
                 "discriminant": "event",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "heartbeat",
@@ -246,6 +249,7 @@
                 "discriminant": "event",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "heartbeat",
@@ -320,6 +324,7 @@
                 "discriminant": "event",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "heartbeat",
@@ -394,6 +399,7 @@
                 "discriminant": "event",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "heartbeat",
@@ -468,6 +474,7 @@
                 "discriminant": "event",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "heartbeat",
@@ -598,6 +605,7 @@
                         "docs": null
                     }
                 ],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "message",
@@ -710,6 +718,7 @@
                         "docs": null
                     }
                 ],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "message",
@@ -828,7 +837,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -888,7 +898,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1032,7 +1043,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1104,7 +1116,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1202,7 +1215,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1258,7 +1272,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1423,7 +1438,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:EntityEventPayloadEventType"
@@ -1456,7 +1472,8 @@
                 "extends": [],
                 "properties": [],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1510,7 +1527,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1564,7 +1582,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1620,7 +1639,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:StatusPayload"
@@ -1678,7 +1698,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:ObjectPayloadWithEventField"
@@ -1747,7 +1768,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:HeartbeatPayload"
@@ -1874,7 +1896,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:EntityEventPayload",
@@ -1958,7 +1981,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2045,7 +2069,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2181,7 +2206,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:CompletionFullResponseFinishReason"
@@ -2271,7 +2297,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2352,7 +2379,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2467,7 +2495,8 @@
                         "availability": null,
                         "docs": "The input prompt."
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:UnionStreamRequestBase"
@@ -2561,7 +2590,8 @@
                         "availability": null,
                         "docs": "The input prompt."
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:UnionStreamRequestBase"
@@ -2678,7 +2708,8 @@
                         "availability": null,
                         "docs": "The input prompt."
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:UnionStreamRequestBase"
@@ -2711,6 +2742,7 @@
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "message",
@@ -2815,6 +2847,7 @@
                     "id": "endpoint_.streamProtocolNoCollision",
                     "name": "streamProtocolNoCollision",
                     "displayName": "Protocol context with no field collision and mixed data types",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -3120,6 +3153,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -3129,6 +3163,7 @@
                     "id": "endpoint_.streamProtocolCollision",
                     "name": "streamProtocolCollision",
                     "displayName": "Protocol context with event field collision and mixed data types",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -3434,6 +3469,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -3443,6 +3479,7 @@
                     "id": "endpoint_.streamDataContext",
                     "name": "streamDataContext",
                     "displayName": "Explicit data context with discriminant flattened via allOf",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -3834,6 +3871,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -3843,6 +3881,7 @@
                     "id": "endpoint_.streamNoContext",
                     "name": "streamNoContext",
                     "displayName": "No context extension, defaults to data context",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -4234,6 +4273,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -4243,6 +4283,7 @@
                     "id": "endpoint_.streamProtocolWithFlatSchema",
                     "name": "streamProtocolWithFlatSchema",
                     "displayName": "Protocol context with flat allOf schema pattern",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -4634,6 +4675,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -4643,6 +4685,7 @@
                     "id": "endpoint_.streamDataContextWithEnvelopeSchema",
                     "name": "streamDataContextWithEnvelopeSchema",
                     "displayName": "Data context with envelope+data schema pattern",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -4948,6 +4991,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -4957,6 +5001,7 @@
                     "id": "endpoint_.streamOasSpecNative",
                     "name": "streamOasSpecNative",
                     "displayName": "OAS 3.2 spec-native SSE pattern with inline variants and contentSchema",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -5576,6 +5621,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -5585,6 +5631,7 @@
                     "id": "endpoint_.streamXFernStreamingCondition_stream",
                     "name": "streamXFernStreamingCondition_stream",
                     "displayName": "x-fern-streaming with stream-condition and $ref request body",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -6071,6 +6118,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -6080,6 +6128,7 @@
                     "id": "endpoint_.streamXFernStreamingCondition",
                     "name": "streamXFernStreamingCondition",
                     "displayName": "x-fern-streaming with stream-condition and $ref request body",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -6585,6 +6634,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -6594,6 +6644,7 @@
                     "id": "endpoint_.streamXFernStreamingSharedSchema_stream",
                     "name": "streamXFernStreamingSharedSchema_stream",
                     "displayName": "x-fern-streaming with shared request schema",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7136,6 +7187,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -7145,6 +7197,7 @@
                     "id": "endpoint_.streamXFernStreamingSharedSchema",
                     "name": "streamXFernStreamingSharedSchema",
                     "displayName": "x-fern-streaming with shared request schema",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7706,6 +7759,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -7715,6 +7769,7 @@
                     "id": "endpoint_.validateCompletion",
                     "name": "validateCompletion",
                     "displayName": "Non-streaming endpoint sharing request schema with endpoint 10",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -8269,6 +8324,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -8278,6 +8334,7 @@
                     "id": "endpoint_.streamXFernStreamingUnion_stream",
                     "name": "streamXFernStreamingUnion_stream",
                     "displayName": "x-fern-streaming with discriminated union request body",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -8951,6 +9008,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -8960,6 +9018,7 @@
                     "id": "endpoint_.streamXFernStreamingUnion",
                     "name": "streamXFernStreamingUnion",
                     "displayName": "x-fern-streaming with discriminated union request body",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -9652,6 +9711,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -9661,6 +9721,7 @@
                     "id": "endpoint_.validateUnionRequest",
                     "name": "validateUnionRequest",
                     "displayName": "Non-streaming endpoint referencing the union base schema",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -10074,6 +10135,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -10083,6 +10145,7 @@
                     "id": "endpoint_.streamXFernStreamingNullableCondition_stream",
                     "name": "streamXFernStreamingNullableCondition_stream",
                     "displayName": "x-fern-streaming with nullable stream condition field",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -10569,6 +10632,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -10578,6 +10642,7 @@
                     "id": "endpoint_.streamXFernStreamingNullableCondition",
                     "name": "streamXFernStreamingNullableCondition",
                     "displayName": "x-fern-streaming with nullable stream condition field",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -11083,6 +11148,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -11092,6 +11158,7 @@
                     "id": "endpoint_.streamXFernStreamingSseOnly",
                     "name": "streamXFernStreamingSseOnly",
                     "displayName": "x-fern-streaming with SSE format but no stream-condition",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -11349,6 +11416,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -11368,6 +11436,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_": [
@@ -11467,6 +11536,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "heartbeat": {
                         "type": "samePropertiesAsObject",
@@ -11628,6 +11698,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "heartbeat": {
                         "type": "samePropertiesAsObject",
@@ -11789,6 +11860,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "heartbeat": {
                         "type": "samePropertiesAsObject",
@@ -11896,6 +11968,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "heartbeat": {
                         "type": "samePropertiesAsObject",
@@ -12003,6 +12076,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "heartbeat": {
                         "type": "samePropertiesAsObject",
@@ -12110,6 +12184,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "heartbeat": {
                         "type": "samePropertiesAsObject",
@@ -12271,6 +12346,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "message": {
                         "type": "samePropertiesAsObject",
@@ -12507,6 +12583,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "message": {
                         "type": "samePropertiesAsObject",
@@ -12757,7 +12834,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:StreamRequest": {
                 "type": "object",
@@ -12823,7 +12901,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:Event": {
                 "type": "object",
@@ -12985,7 +13064,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:StatusPayload": {
                 "type": "object",
@@ -13078,7 +13158,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:ObjectPayloadWithEventField": {
                 "type": "object",
@@ -13201,7 +13282,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:HeartbeatPayload": {
                 "type": "object",
@@ -13267,7 +13349,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:EntityEventPayloadEventType": {
                 "type": "enum",
@@ -13518,7 +13601,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:ProtocolHeartbeat": {
                 "type": "object",
@@ -13550,7 +13634,8 @@
                 },
                 "properties": [],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:ProtocolStringEvent": {
                 "type": "object",
@@ -13613,7 +13698,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:ProtocolNumberEvent": {
                 "type": "object",
@@ -13676,7 +13762,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:ProtocolObjectEvent": {
                 "type": "object",
@@ -13739,7 +13826,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:ProtocolCollisionObjectEvent": {
                 "type": "object",
@@ -13802,7 +13890,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:DataContextHeartbeat": {
                 "type": "object",
@@ -13870,7 +13959,8 @@
                 "extends": [
                     "type_:HeartbeatPayload"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:DataContextEntityEvent": {
                 "type": "object",
@@ -14004,7 +14094,8 @@
                 "extends": [
                     "type_:EntityEventPayload"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:CompletionRequest": {
                 "type": "object",
@@ -14100,7 +14191,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:NullableStreamRequest": {
                 "type": "object",
@@ -14199,7 +14291,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:CompletionFullResponseFinishReason": {
                 "type": "enum",
@@ -14395,7 +14488,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:CompletionStreamChunk": {
                 "type": "object",
@@ -14494,7 +14588,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UnionStreamRequestBase": {
                 "type": "object",
@@ -14590,7 +14685,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UnionStreamMessageVariant": {
                 "type": "object",
@@ -14718,7 +14814,8 @@
                 "extends": [
                     "type_:UnionStreamRequestBase"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UnionStreamInterruptVariant": {
                 "type": "object",
@@ -14816,7 +14913,8 @@
                 "extends": [
                     "type_:UnionStreamRequestBase"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UnionStreamCompactVariant": {
                 "type": "object",
@@ -14944,7 +15042,8 @@
                 "extends": [
                     "type_:UnionStreamRequestBase"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:UnionStreamRequest": {
                 "type": "discriminatedUnion",
@@ -14996,6 +15095,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "message": {
                         "type": "samePropertiesAsObject",
@@ -16692,6 +16792,7 @@
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -16700,7 +16801,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {},
     "rootPackage": {
@@ -16759,6 +16861,7 @@
         "hasStreamingEndpoints": true,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

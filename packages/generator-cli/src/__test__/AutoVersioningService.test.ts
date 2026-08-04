@@ -287,6 +287,228 @@ describe("AutoVersioningService", () => {
         expect(cleaned).not.toContain("version.go");
     });
 
+    // Regression coverage for the Go SDK being flagged as a breaking change on a no-op
+    // regeneration. The freshly generated Go code carries the magic placeholder version (major 0,
+    // so no /vN suffix), while the previously published SDK has /vN on its module path and every
+    // import. git groups all deletions before all additions in an import block, so the old
+    // near-neighbour pairing only stripped the FIRST import's suffix churn and leaked the rest to
+    // the AI analyzer, which then misclassified the diff as breaking. The whole block must be
+    // stripped so nothing reaches the analyzer.
+    it("testCleanDiffForAI_stripsGoModulePathSuffixChangesInGroupedImportBlock", () => {
+        const diff =
+            "diff --git a/client/client.go b/client/client.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/client/client.go\n" +
+            "+++ b/client/client.go\n" +
+            "@@ -1,9 +1,9 @@\n" +
+            " package client\n" +
+            " import (\n" +
+            '-\tcore "github.com/anduril/lattice-sdk-go/v4/core"\n' +
+            '-\tinternal "github.com/anduril/lattice-sdk-go/v4/internal"\n' +
+            '-\toption "github.com/anduril/lattice-sdk-go/v4/option"\n' +
+            '+\tcore "github.com/anduril/lattice-sdk-go/core"\n' +
+            '+\tinternal "github.com/anduril/lattice-sdk-go/internal"\n' +
+            '+\toption "github.com/anduril/lattice-sdk-go/option"\n' +
+            " )\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        // No suffix churn should survive — the whole file section collapses to nothing.
+        expect(cleaned).not.toContain("/v4/");
+        expect(cleaned).not.toContain('core "github.com/anduril/lattice-sdk-go/core"');
+        expect(cleaned).not.toContain('internal "github.com/anduril/lattice-sdk-go/internal"');
+        expect(cleaned).not.toContain('option "github.com/anduril/lattice-sdk-go/option"');
+        expect(cleaned).not.toContain("client.go");
+    });
+
+    it("testCleanDiffForAI_stripsGoModuleDirectiveSuffixButKeepsRealChanges", () => {
+        const diff =
+            "diff --git a/go.mod b/go.mod\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/go.mod\n" +
+            "+++ b/go.mod\n" +
+            "@@ -1,4 +1,4 @@\n" +
+            "-module github.com/anduril/lattice-sdk-go/v4\n" +
+            "+module github.com/anduril/lattice-sdk-go\n" +
+            " go 1.21\n" +
+            "-require github.com/pkg/errors v0.9.1\n" +
+            "+require github.com/pkg/errors v0.10.0\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        // The /v4 module-directive suffix churn is stripped...
+        expect(cleaned).not.toContain("module github.com/anduril/lattice-sdk-go/v4");
+        expect(cleaned).not.toContain("+module github.com/anduril/lattice-sdk-go\n");
+        // ...but a genuine dependency change on a github.com line is preserved.
+        expect(cleaned).toContain("-require github.com/pkg/errors v0.9.1");
+        expect(cleaned).toContain("+require github.com/pkg/errors v0.10.0");
+    });
+
+    it("testCleanDiffForAI_preservesGenuineGoImportAdditionAlongsideSuffixChurn", () => {
+        const diff =
+            "diff --git a/client/client.go b/client/client.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/client/client.go\n" +
+            "+++ b/client/client.go\n" +
+            "@@ -1,7 +1,7 @@\n" +
+            " import (\n" +
+            '-\tcore "github.com/anduril/lattice-sdk-go/v4/core"\n' +
+            '-\tinternal "github.com/anduril/lattice-sdk-go/v4/internal"\n' +
+            '+\tcore "github.com/anduril/lattice-sdk-go/core"\n' +
+            '+\tinternal "github.com/anduril/lattice-sdk-go/internal"\n' +
+            '+\tnewpkg "github.com/anduril/lattice-sdk-go/newpkg"\n' +
+            " )\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        // Suffix-only churn is gone...
+        expect(cleaned).not.toContain("/v4/");
+        expect(cleaned).not.toContain('core "github.com/anduril/lattice-sdk-go/core"');
+        expect(cleaned).not.toContain('internal "github.com/anduril/lattice-sdk-go/internal"');
+        // ...but the genuinely new import (no matching suffix-bearing deletion) survives.
+        expect(cleaned).toContain('+\tnewpkg "github.com/anduril/lattice-sdk-go/newpkg"');
+    });
+
+    // The generated Go SDK also embeds its own module path (with the `/vN` suffix) mid-line as the
+    // `X-Fern-SDK-Name` header value, where the closing quote is followed by more characters (`)`),
+    // not end-of-line. The suffix must still be stripped there so this no-op churn does not reach
+    // the AI analyzer. Regression for a gap found during end-to-end testing against a real Go SDK.
+    it("testCleanDiffForAI_stripsGoModulePathSuffixInMidLineHeaderValue", () => {
+        const diff =
+            "diff --git a/core/request_option.go b/core/request_option.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/core/request_option.go\n" +
+            "+++ b/core/request_option.go\n" +
+            "@@ -52,3 +52,3 @@ func (r *RequestOptions) cloneHeader() http.Header {\n" +
+            '-\theaders.Set("X-Fern-SDK-Name", "github.com/anduril/lattice-sdk-go/v4")\n' +
+            '+\theaders.Set("X-Fern-SDK-Name", "github.com/anduril/lattice-sdk-go")\n' +
+            " \treturn headers\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        // Both sides of the header-value suffix churn are removed — nothing reaches the analyzer.
+        expect(cleaned).not.toContain("/v4");
+        expect(cleaned).not.toContain('"github.com/anduril/lattice-sdk-go"');
+        expect(cleaned).not.toContain("request_option.go");
+    });
+
+    // Regression coverage for the Go SDK being flagged as a spurious breaking change when a new
+    // field is inserted into a struct. The Go SDK assigns each struct property a single-bit
+    // `explicitFields` constant at its positional index; inserting a field earlier shifts every
+    // following constant's bit index by one, producing a deletion/addition pair per field that
+    // differs only by the integer. That churn is a purely mechanical artifact (the bit is set and
+    // read within the same generated version; the wire format is name-based JSON), but the AI
+    // analyzer read the shifted positions as a serialization break and returned MAJOR. The whole
+    // reindexing block must be stripped before analysis.
+    it("testCleanDiffForAI_stripsGoExplicitFieldBitConstantReindexing", () => {
+        const diff =
+            "diff --git a/entity.go b/entity.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/entity.go\n" +
+            "+++ b/entity.go\n" +
+            "@@ -10,8 +10,9 @@ var (\n" +
+            " var (\n" +
+            "-\tentityFieldGeoShape = big.NewInt(1 << 3)\n" +
+            "-\tentityFieldGeoDetails = big.NewInt(1 << 4)\n" +
+            "-\tentityFieldOverrides = big.NewInt(1 << 5)\n" +
+            "+\tentityFieldKinematics = big.NewInt(1 << 3)\n" +
+            "+\tentityFieldGeoShape = big.NewInt(1 << 4)\n" +
+            "+\tentityFieldGeoDetails = big.NewInt(1 << 5)\n" +
+            "+\tentityFieldOverrides = big.NewInt(1 << 6)\n" +
+            " )\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        // The reindexed GeoShape/GeoDetails/Overrides constants (deletion + addition per field)
+        // are dropped as noise...
+        expect(cleaned).not.toContain("entityFieldGeoShape");
+        expect(cleaned).not.toContain("entityFieldGeoDetails");
+        expect(cleaned).not.toContain("entityFieldOverrides");
+        // ...but the genuinely new field's bit constant (a pure addition, no matching deletion)
+        // survives so the analyzer still sees the additive change.
+        expect(cleaned).toContain("+\tentityFieldKinematics = big.NewInt(1 << 3)");
+    });
+
+    // The >= 63 bit constant uses the `big.NewInt(0).Lsh(big.NewInt(1), N)` form; reindexing churn
+    // in that form must also be stripped.
+    it("testCleanDiffForAI_stripsGoExplicitFieldBitConstantReindexing_lshForm", () => {
+        const diff =
+            "diff --git a/entity.go b/entity.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/entity.go\n" +
+            "+++ b/entity.go\n" +
+            "@@ -70,2 +70,2 @@ var (\n" +
+            "-\tentityFieldTrailing = big.NewInt(0).Lsh(big.NewInt(1), 63)\n" +
+            "+\tentityFieldTrailing = big.NewInt(0).Lsh(big.NewInt(1), 64)\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        expect(cleaned).not.toContain("entityFieldTrailing");
+        expect(cleaned).not.toContain("entity.go");
+    });
+
+    // A removed field is a genuine breaking change: its bit constant deletion has no matching
+    // addition and must NOT be filtered, so the analyzer still sees the removal.
+    it("testCleanDiffForAI_keepsGoExplicitFieldBitConstantDeletionForRemovedField", () => {
+        const diff =
+            "diff --git a/entity.go b/entity.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/entity.go\n" +
+            "+++ b/entity.go\n" +
+            "@@ -10,4 +10,3 @@ var (\n" +
+            " var (\n" +
+            "\tentityFieldGeoShape = big.NewInt(1 << 3)\n" +
+            "-\tentityFieldGeoDetails = big.NewInt(1 << 4)\n" +
+            " )\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        // The removed field's constant deletion survives (no matching addition to pair with).
+        expect(cleaned).toContain("-\tentityFieldGeoDetails = big.NewInt(1 << 4)");
+    });
+
+    // A plain integer assignment that merely changes value (e.g. a real default like a retry
+    // count) must never be mistaken for bit-constant reindexing churn.
+    it("testCleanDiffForAI_doesNotStripOrdinaryIntegerAssignmentChanges", () => {
+        const diff =
+            "diff --git a/config.go b/config.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/config.go\n" +
+            "+++ b/config.go\n" +
+            "@@ -1,2 +1,2 @@\n" +
+            "-\tmaxRetries = big.NewInt(3)\n" +
+            "+\tmaxRetries = big.NewInt(5)\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        expect(cleaned).toContain("-\tmaxRetries = big.NewInt(3)");
+        expect(cleaned).toContain("+\tmaxRetries = big.NewInt(5)");
+    });
+
     it("testExtractPreviousVersion_invalidVersionFormat_returnsUndefined", () => {
         const diff =
             "diff --git a/config.txt b/config.txt\n" +
@@ -604,6 +826,45 @@ describe("AutoVersioningService", () => {
 
         expect(cleaned).not.toContain("0.0.0-fern-placeholder");
         expect(cleaned).not.toContain("/0.0.0-fern-placeholder");
+        // The old-version deletions must be removed too — otherwise they reach the AI as
+        // orphan deletions and are misread as the headers being removed.
+        expect(cleaned).not.toContain('-                    "User-Agent": "/0.0.1",');
+        expect(cleaned).not.toContain('-                    "X-Fern-SDK-Version": "0.0.1",');
+    });
+
+    it("testCleanDiffForAI_userAgentBumpNotReportedAsRemoval", () => {
+        // Regression: git groups all deletions before all additions in a hunk, so when
+        // X-Fern-SDK-Version and User-Agent bump together the adjacency-only pairing left
+        // the User-Agent deletion behind. The AI then wrote a changelog claiming the
+        // User-Agent header was removed.
+        const diff =
+            "diff --git a/src/BaseClient.ts b/src/BaseClient.ts\n" +
+            "index 1111111..2222222 100644\n" +
+            "--- a/src/BaseClient.ts\n" +
+            "+++ b/src/BaseClient.ts\n" +
+            "@@ -52,6 +52,6 @@ export class BaseClient {\n" +
+            '                 "X-Fern-Language": "JavaScript",\n' +
+            '                 "X-Fern-SDK-Name": "@anduril/lattice-sdk",\n' +
+            '-                "X-Fern-SDK-Version": "4.18.0",\n' +
+            '-                "User-Agent": "@anduril/lattice-sdk/4.18.0",\n' +
+            '+                "X-Fern-SDK-Version": "0.0.0-fern-placeholder",\n' +
+            '+                "User-Agent": "@anduril/lattice-sdk/0.0.0-fern-placeholder",\n' +
+            '                 "X-Fern-Runtime": core.RUNTIME.type,\n';
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
+
+        const survivingChanges = cleaned
+            .split("\n")
+            .filter(
+                (line) =>
+                    (line.startsWith("-") || line.startsWith("+")) && !line.startsWith("---") && !line.startsWith("+++")
+            );
+        expect(survivingChanges).toHaveLength(0);
+        expect(cleaned).not.toContain("User-Agent");
+        expect(cleaned).not.toContain("X-Fern-SDK-Version");
     });
 
     it("testReplaceMagicVersion_simpleFile", async () => {
@@ -807,6 +1068,370 @@ describe("AutoVersioningService", () => {
 
             const updatedContent = await fs.readFile(testFile, "utf-8");
             expect(updatedContent).toBe(originalContent);
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    // --- Regression test: AUTO identifiers must not be corrupted ---
+    // Reproduces the bug from https://github.com/fern-api/fern/pull/16675
+    // When --version AUTO was used, the sed command did `s/AUTO/<version>/g`
+    // which corrupted identifiers like SENSOR_MODE_AUTO and CORRELATION_TYPE_AUTOMATED.
+    // The fix ensures we always replace the magic placeholder, never "AUTO".
+
+    it("testReplaceMagicVersion_doesNotCorruptAutoIdentifiers", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            const typesFile = path.join(tempDir, "types.ts");
+            const originalContent = [
+                "export const SensorMode = {",
+                '    SensorModeAuto: "SENSOR_MODE_AUTO",',
+                '    SensorModeManual: "SENSOR_MODE_MANUAL",',
+                "} as const;",
+                "",
+                "export const CorrelationType = {",
+                '    CorrelationTypeAutomated: "CORRELATION_TYPE_AUTOMATED",',
+                '    CorrelationTypeManual: "CORRELATION_TYPE_MANUAL",',
+                "} as const;",
+                "",
+                "export const AutoScaling = {",
+                "    enabled: true,",
+                '    mode: "AUTO_DETECT",',
+                "} as const;",
+                "",
+                'export const VERSION = "0.0.0-fern-placeholder";'
+            ].join("\n");
+            await fs.writeFile(typesFile, originalContent);
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "4.13.1"
+            );
+
+            const updatedContent = await fs.readFile(typesFile, "utf-8");
+
+            // Version placeholder should be replaced
+            expect(updatedContent).not.toContain("0.0.0-fern-placeholder");
+            expect(updatedContent).toContain('"4.13.1"');
+
+            // AUTO identifiers must be preserved unchanged
+            expect(updatedContent).toContain('"SENSOR_MODE_AUTO"');
+            expect(updatedContent).toContain('"CORRELATION_TYPE_AUTOMATED"');
+            expect(updatedContent).toContain('"AUTO_DETECT"');
+            expect(updatedContent).toContain("SensorModeAuto");
+            expect(updatedContent).toContain("CorrelationTypeAutomated");
+            expect(updatedContent).toContain("AutoScaling");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    // --- Tests for replaceMagicVersion: binary file handling ---
+
+    it("testReplaceMagicVersion_skipsBinaryFiles", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            // Create a text file with the magic version
+            const textFile = path.join(tempDir, "version.txt");
+            await fs.writeFile(textFile, "version=0.0.0-fern-placeholder");
+
+            // Create a binary file (contains null bytes) with the magic version string embedded
+            const binaryFile = path.join(tempDir, "library.jar");
+            const binaryContent = Buffer.alloc(256);
+            binaryContent.write("PK\x03\x04", 0); // ZIP/JAR magic bytes
+            binaryContent[10] = 0; // null byte
+            // Embed magic version string after null bytes
+            binaryContent.write("0.0.0-fern-placeholder", 20);
+            await fs.writeFile(binaryFile, binaryContent);
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "1.0.0"
+            );
+
+            // Text file should be updated
+            const textContent = await fs.readFile(textFile, "utf-8");
+            expect(textContent).not.toContain("0.0.0-fern-placeholder");
+            expect(textContent).toContain("1.0.0");
+
+            // Binary file should remain unchanged
+            const binaryResult = await fs.readFile(binaryFile);
+            expect(binaryResult.equals(binaryContent)).toBe(true);
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("testReplaceMagicVersion_skipsBinaryFileWithNullByteInFirst8KB", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            // Create a file that looks like text initially but has a null byte within the 8KB header
+            const compiledFile = path.join(tempDir, "compiled.class");
+            const content = Buffer.alloc(4096);
+            content.write("// 0.0.0-fern-placeholder appears here", 0);
+            content[100] = 0; // null byte within the 8KB detection window
+            await fs.writeFile(compiledFile, content);
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "2.0.0"
+            );
+
+            // Binary file should remain unchanged
+            const result = await fs.readFile(compiledFile);
+            expect(result.equals(content)).toBe(true);
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    // --- Tests for replaceMagicVersion: symlink handling (security fix) ---
+
+    it("testReplaceMagicVersion_skipsSymlinks", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            // Create a real file with the magic version
+            const realFile = path.join(tempDir, "version.txt");
+            await fs.writeFile(realFile, "version=0.0.0-fern-placeholder");
+
+            // Create a target file outside the working directory
+            const outsideDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "outside-"));
+            const outsideFile = path.join(outsideDir, "secret.txt");
+            await fs.writeFile(outsideFile, "secret=0.0.0-fern-placeholder");
+
+            // Create a symlink pointing to the outside file
+            const symlinkPath = path.join(tempDir, "link-to-secret.txt");
+            await fs.symlink(outsideFile, symlinkPath);
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "1.0.0"
+            );
+
+            // Real file should be updated
+            const realContent = await fs.readFile(realFile, "utf-8");
+            expect(realContent).toContain("1.0.0");
+            expect(realContent).not.toContain("0.0.0-fern-placeholder");
+
+            // File outside the directory (target of symlink) should NOT be modified
+            const outsideContent = await fs.readFile(outsideFile, "utf-8");
+            expect(outsideContent).toContain("0.0.0-fern-placeholder");
+            expect(outsideContent).not.toContain("1.0.0");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("testReplaceMagicVersion_skipsSymlinkedDirectories", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            // Create a real file
+            const realFile = path.join(tempDir, "version.txt");
+            await fs.writeFile(realFile, "version=0.0.0-fern-placeholder");
+
+            // Create an external directory with files containing the magic version
+            const externalDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "external-"));
+            const externalFile = path.join(externalDir, "config.txt");
+            await fs.writeFile(externalFile, "version=0.0.0-fern-placeholder");
+
+            // Create a symlink to the external directory
+            const symlinkDir = path.join(tempDir, "linked-dir");
+            await fs.symlink(externalDir, symlinkDir);
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "1.0.0"
+            );
+
+            // Real file should be updated
+            const realContent = await fs.readFile(realFile, "utf-8");
+            expect(realContent).toContain("1.0.0");
+
+            // External file (behind symlinked directory) should NOT be modified
+            const externalContent = await fs.readFile(externalFile, "utf-8");
+            expect(externalContent).toContain("0.0.0-fern-placeholder");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    // --- Tests for replaceMagicVersion: vendor directory exclusion ---
+
+    it("testReplaceMagicVersion_vendorDirectoryIgnored", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            // Create vendor directory with a file containing magic version
+            const vendorDir = path.join(tempDir, "vendor", "github.com", "other");
+            await fs.mkdir(vendorDir, { recursive: true });
+            const vendorFile = path.join(vendorDir, "lib.go");
+            const vendorContent = 'package other\n\nconst Version = "0.0.0-fern-placeholder"\n';
+            await fs.writeFile(vendorFile, vendorContent);
+
+            // Create a regular file with magic version
+            const regularFile = path.join(tempDir, "version.go");
+            await fs.writeFile(regularFile, 'package main\n\nconst Version = "0.0.0-fern-placeholder"\n');
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "1.0.0"
+            );
+
+            // Vendor file should NOT be changed
+            const vendorResult = await fs.readFile(vendorFile, "utf-8");
+            expect(vendorResult).toBe(vendorContent);
+
+            // Regular file should be updated
+            const regularContent = await fs.readFile(regularFile, "utf-8");
+            expect(regularContent).not.toContain("0.0.0-fern-placeholder");
+            expect(regularContent).toContain("1.0.0");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("testReplaceMagicVersion_excludedDirectoriesIgnored", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            const excludedDirs = [
+                "node_modules",
+                "__pycache__",
+                ".venv",
+                "build",
+                "dist",
+                "target",
+                ".gradle",
+                ".next",
+                ".idea",
+                ".dart_tool",
+                "Pods"
+            ];
+
+            // Create a file inside each excluded directory
+            for (const dir of excludedDirs) {
+                const dirPath = path.join(tempDir, dir, "nested");
+                await fs.mkdir(dirPath, { recursive: true });
+                await fs.writeFile(path.join(dirPath, "file.txt"), "version=0.0.0-fern-placeholder");
+            }
+
+            // Create a regular file
+            const regularFile = path.join(tempDir, "main.txt");
+            await fs.writeFile(regularFile, "version=0.0.0-fern-placeholder");
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "2.0.0"
+            );
+
+            // Regular file should be updated
+            const regularContent = await fs.readFile(regularFile, "utf-8");
+            expect(regularContent).toContain("2.0.0");
+            expect(regularContent).not.toContain("0.0.0-fern-placeholder");
+
+            // All excluded directories should be untouched
+            for (const dir of excludedDirs) {
+                const content = await fs.readFile(path.join(tempDir, dir, "nested", "file.txt"), "utf-8");
+                expect(content).toContain("0.0.0-fern-placeholder");
+                expect(content).not.toContain("2.0.0");
+            }
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    // --- Tests for replaceMagicVersion: parallel processing ---
+
+    it("testReplaceMagicVersion_manyFilesProcessedCorrectly", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            const fileCount = 100;
+            const filesWithMagic: string[] = [];
+            const filesWithoutMagic: string[] = [];
+
+            // Create 100 files across nested directories — more than the concurrency limit (32)
+            for (let i = 0; i < fileCount; i++) {
+                const subDir = path.join(tempDir, `dir-${i % 10}`);
+                await fs.mkdir(subDir, { recursive: true });
+                const filePath = path.join(subDir, `file-${i}.txt`);
+
+                if (i % 3 === 0) {
+                    // Every 3rd file has the magic version
+                    await fs.writeFile(filePath, `version=0.0.0-fern-placeholder\nindex=${i}`);
+                    filesWithMagic.push(filePath);
+                } else {
+                    await fs.writeFile(filePath, `no-magic-here\nindex=${i}`);
+                    filesWithoutMagic.push(filePath);
+                }
+            }
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "3.2.1"
+            );
+
+            // All files with magic version should be updated
+            for (const filePath of filesWithMagic) {
+                const content = await fs.readFile(filePath, "utf-8");
+                expect(content).toContain("3.2.1");
+                expect(content).not.toContain("0.0.0-fern-placeholder");
+            }
+
+            // Files without magic version should be unchanged
+            for (const filePath of filesWithoutMagic) {
+                const content = await fs.readFile(filePath, "utf-8");
+                expect(content).toContain("no-magic-here");
+                expect(content).not.toContain("3.2.1");
+            }
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("testReplaceMagicVersion_mixedBinaryAndTextInParallel", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            const textFiles: string[] = [];
+            const binaryFiles: string[] = [];
+
+            // Create a mix of 50 text and 50 binary files to exercise parallel binary detection
+            for (let i = 0; i < 50; i++) {
+                const textPath = path.join(tempDir, `text-${i}.txt`);
+                await fs.writeFile(textPath, `version=0.0.0-fern-placeholder file=${i}`);
+                textFiles.push(textPath);
+
+                const binaryPath = path.join(tempDir, `binary-${i}.bin`);
+                const binContent = Buffer.alloc(128);
+                binContent[0] = 0; // null byte → binary
+                binContent.write("0.0.0-fern-placeholder", 10);
+                await fs.writeFile(binaryPath, binContent);
+                binaryFiles.push(binaryPath);
+            }
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "5.0.0"
+            );
+
+            // All text files should be updated
+            for (const filePath of textFiles) {
+                const content = await fs.readFile(filePath, "utf-8");
+                expect(content).toContain("5.0.0");
+                expect(content).not.toContain("0.0.0-fern-placeholder");
+            }
+
+            // All binary files should remain unchanged (still contain null byte at position 0)
+            for (const filePath of binaryFiles) {
+                const content = await fs.readFile(filePath);
+                expect(content[0]).toBe(0);
+            }
         } finally {
             await fs.rm(tempDir, { recursive: true, force: true });
         }
@@ -2762,6 +3387,100 @@ describe("addGoMajorVersionSuffix", () => {
 
             const goFile = await fs.readFile(path.join(tempDir, "simple.go"), "utf-8");
             expect(goFile).toContain('"github.com/org/repo/v2/core"');
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    // The generated Go SDK embeds its own module path as the X-Fern-SDK-Name header
+    // value — a plain (non-import) string literal. Under --version AUTO the SDK is
+    // generated with a major-zero placeholder, so this literal has no /vN suffix and
+    // must be retrofitted alongside imports; otherwise the header ships without /v4.
+    it("adds suffix to the X-Fern-SDK-Name header string literal", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/anduril/lattice-sdk-go\n\ngo 1.21\n");
+            const requestOption =
+                "package core\n\n" +
+                "func (r *RequestOptions) cloneHeader() http.Header {\n" +
+                "\theaders := r.HTTPHeader.Clone()\n" +
+                '\theaders.Set("X-Fern-Language", "Go")\n' +
+                '\theaders.Set("X-Fern-SDK-Name", "github.com/anduril/lattice-sdk-go")\n' +
+                '\theaders.Set("X-Fern-SDK-Version", "v4.19.0")\n' +
+                "\treturn headers\n" +
+                "}\n";
+            await fs.mkdir(path.join(tempDir, "core"), { recursive: true });
+            await fs.writeFile(path.join(tempDir, "core", "request_option.go"), requestOption);
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v4.19.0");
+
+            const goFile = await fs.readFile(path.join(tempDir, "core", "request_option.go"), "utf-8");
+            expect(goFile).toContain('headers.Set("X-Fern-SDK-Name", "github.com/anduril/lattice-sdk-go/v4")');
+            // The SDK version header keeps its own v-prefix and is not touched.
+            expect(goFile).toContain('headers.Set("X-Fern-SDK-Version", "v4.19.0")');
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    // The User-Agent value is "<modulePath>/<version>". The version segment already
+    // carries the module version, so the module-path portion must NOT gain a /vN
+    // segment on this non-import line (that would produce ".../v4/v4.19.0").
+    it("does not add suffix to the composite User-Agent value", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/anduril/lattice-sdk-go\n\ngo 1.21\n");
+            const requestOption =
+                "package core\n\n" +
+                "func (r *RequestOptions) cloneHeader() http.Header {\n" +
+                "\theaders := r.HTTPHeader.Clone()\n" +
+                '\theaders.Set("User-Agent", "github.com/anduril/lattice-sdk-go/v4.19.0")\n' +
+                "\treturn headers\n" +
+                "}\n";
+            await fs.writeFile(path.join(tempDir, "request_option.go"), requestOption);
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v4.19.0");
+
+            const goFile = await fs.readFile(path.join(tempDir, "request_option.go"), "utf-8");
+            expect(goFile).toContain('headers.Set("User-Agent", "github.com/anduril/lattice-sdk-go/v4.19.0")');
+            expect(goFile).not.toContain("v4/v4.19.0");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    // The README shows `go get <module>` and quoted import samples. Under
+    // --version AUTO these are generated without /vN and must be retrofitted so
+    // copy-pasted snippets compile. Badge/web URLs must remain untouched.
+    it("adds suffix to README install command and import samples but not web URLs", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/anduril/lattice-sdk-go\n\ngo 1.21\n");
+            const readme =
+                "# lattice-sdk-go\n\n" +
+                "[![go shield](https://img.shields.io/badge/go-docs-blue)]" +
+                "(https://pkg.go.dev/github.com/anduril/lattice-sdk-go)\n\n" +
+                "## Installation\n\n" +
+                "```sh\n" +
+                "go get github.com/anduril/lattice-sdk-go\n" +
+                "```\n\n" +
+                "## Usage\n\n" +
+                "```go\n" +
+                "import (\n" +
+                '\tlattice "github.com/anduril/lattice-sdk-go"\n' +
+                '\tlatticeclient "github.com/anduril/lattice-sdk-go/client"\n' +
+                ")\n" +
+                "```\n";
+            await fs.writeFile(path.join(tempDir, "README.md"), readme);
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v4.19.0");
+
+            const updated = await fs.readFile(path.join(tempDir, "README.md"), "utf-8");
+            expect(updated).toContain("go get github.com/anduril/lattice-sdk-go/v4\n");
+            expect(updated).toContain('lattice "github.com/anduril/lattice-sdk-go/v4"');
+            expect(updated).toContain('latticeclient "github.com/anduril/lattice-sdk-go/v4/client"');
+            // The pkg.go.dev badge URL is a web link and must not be rewritten.
+            expect(updated).toContain("(https://pkg.go.dev/github.com/anduril/lattice-sdk-go)");
         } finally {
             await fs.rm(tempDir, { recursive: true, force: true });
         }

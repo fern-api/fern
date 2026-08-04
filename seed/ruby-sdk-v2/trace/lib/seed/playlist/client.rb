@@ -23,6 +23,15 @@ module Seed
       # @option params [String] :datetime
       # @option params [String, nil] :optional_datetime
       #
+      # @example
+      #   client.playlist.create_playlist(
+      #     service_param: 1,
+      #     datetime: "2024-01-15T09:30:00Z",
+      #     optional_datetime: "2024-01-15T09:30:00Z",
+      #     name: "name",
+      #     problems: %w[problems problems]
+      #   )
+      #
       # @return [Seed::Playlist::Types::Playlist]
       def create_playlist(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -73,6 +82,14 @@ module Seed
       # @option params [String, nil] :optional_multiple_field
       # @option params [String] :multiple_field
       #
+      # @example
+      #   client.playlist.get_playlists(
+      #     service_param: 1,
+      #     limit: 1,
+      #     other_field: "otherField",
+      #     multi_line_docs: "multiLineDocs"
+      #   )
+      #
       # @return [Array[Seed::Playlist::Types::Playlist]]
       def get_playlists(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -114,6 +131,12 @@ module Seed
       # @option params [Integer] :service_param
       # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
       #
+      # @example
+      #   client.playlist.get_playlist(
+      #     service_param: 1,
+      #     playlist_id: "playlistId"
+      #   )
+      #
       # @return [Seed::Playlist::Types::Playlist]
       def get_playlist(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -149,6 +172,16 @@ module Seed
       # @option params [Integer] :service_param
       # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
       #
+      # @example
+      #   client.playlist.update_playlist(
+      #     service_param: 1,
+      #     playlist_id: "playlistId",
+      #     request: {
+      #       name: "name",
+      #       problems: %w[problems problems]
+      #     }
+      #   )
+      #
       # @return [Seed::Playlist::Types::Playlist, nil]
       def update_playlist(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -182,6 +215,12 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
       # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
+      #
+      # @example
+      #   client.playlist.delete_playlist(
+      #     service_param: 1,
+      #     playlist_id: "playlist_id"
+      #   )
       #
       # @return [untyped]
       def delete_playlist(request_options: {}, **params)

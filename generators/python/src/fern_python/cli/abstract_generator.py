@@ -39,6 +39,8 @@ class AbstractGenerator(ABC):
         # Configure smart-casing from the IR's casingsConfig (driven by the customer's
         # `smart-casing` flag in generators.yml). Must run before any name resolution
         # so _smart_snake matches the IR server's pre-computed snake_case values.
+        # The digit/word boundary opt-in (`smart-casing-digit-word-boundary`) is not wired up
+        # yet: the pinned IR package (67.11.0) does not carry `smartCasingDigitWordBoundary`.
         smart_casing = ir.casings_config.smart_casing if ir.casings_config is not None else True
         configure_smart_casing(smart_casing)
 
@@ -255,9 +257,14 @@ class AbstractGenerator(ABC):
         # when publishing to github, we always need a project config, so that
         # we generate a pyproject.toml
         if output_mode.publish_info is None:
+            custom_package_name = (
+                generator_config.custom_config.get("package_name")
+                if generator_config.custom_config is not None
+                else None
+            )
             return ProjectConfig(
-                package_name=generator_config.organization,
-                package_version="0.0.0",
+                package_name=custom_package_name or generator_config.organization,
+                package_version=output_mode.version or "0.0.0",
             )
         publish_info_union = output_mode.publish_info.get_as_union()
         if publish_info_union.type != "pypi":

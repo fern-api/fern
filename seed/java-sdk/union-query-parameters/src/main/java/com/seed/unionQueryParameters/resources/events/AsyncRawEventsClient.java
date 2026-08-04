@@ -3,10 +3,12 @@
  */
 package com.seed.unionQueryParameters.resources.events;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.unionQueryParameters.core.ClientOptions;
 import com.seed.unionQueryParameters.core.ObjectMappers;
 import com.seed.unionQueryParameters.core.QueryStringMapper;
 import com.seed.unionQueryParameters.core.RequestOptions;
+import com.seed.unionQueryParameters.core.RetryInterceptor;
 import com.seed.unionQueryParameters.core.SeedUnionQueryParametersApiException;
 import com.seed.unionQueryParameters.core.SeedUnionQueryParametersException;
 import com.seed.unionQueryParameters.core.SeedUnionQueryParametersHttpResponse;
@@ -86,6 +88,15 @@ public class AsyncRawEventsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedUnionQueryParametersHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -101,6 +112,9 @@ public class AsyncRawEventsClient {
                     future.completeExceptionally(new SeedUnionQueryParametersApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedUnionQueryParametersException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedUnionQueryParametersException("Network error executing HTTP request", e));

@@ -6,7 +6,7 @@ import OauthClientCredentialsDefault
     @Test func getToken1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "access_token": "access_token",

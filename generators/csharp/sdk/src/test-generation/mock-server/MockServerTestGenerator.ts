@@ -11,6 +11,7 @@ type HttpEndpoint = FernIr.HttpEndpoint;
 type ServiceId = FernIr.ServiceId;
 
 import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator.js";
+import { isPagerPagination } from "../../endpoint/utils/isPagerPagination.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
 
@@ -62,7 +63,16 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
      * non-IAsyncEnumerable return type.
      */
     private hasPaginationEnabled(): boolean {
-        return this.context.config.generatePaginatedClients === true && this.endpoint.pagination != null;
+        if (this.context.config.generatePaginatedClients !== true) {
+            return false;
+        }
+        const pagination = this.endpoint.pagination;
+        if (pagination == null) {
+            return false;
+        }
+        // Only pager pagination types (offset/cursor/custom) are iterated with `await foreach`;
+        // uri/path are emitted as regular unpaged methods.
+        return isPagerPagination(pagination);
     }
 
     private getServiceNamespaceSegments(): string[] {

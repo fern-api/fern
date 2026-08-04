@@ -124,4 +124,5 @@ error-discrimination:
 display-name: Preserve Single Schema OneOf Test
 ",
   },
+  "specVersion": "1.0.0",
 }

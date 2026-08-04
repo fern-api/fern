@@ -12,25 +12,29 @@ class BaseClientWrapper:
         self,
         *,
         api_key: typing.Optional[str] = None,
-        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         max_retries: int = 2,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self.api_key = api_key
-        self._auth_headers = auth_headers
-        self._token = token
         self._username = username
         self._password = password
+        self._auth_headers = auth_headers
+        self._token = token
         self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
         self._max_retries = max_retries
+        self._stream_reconnection_enabled = stream_reconnection_enabled
+        self._max_stream_reconnection_attempts = max_stream_reconnection_attempts
         self._logging = logging
 
     def get_headers(self) -> typing.Dict[str, str]:
@@ -45,24 +49,40 @@ class BaseClientWrapper:
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }
-        username = self._get_username()
-        password = self._get_password()
-        if username is not None and password is not None:
-            headers["Authorization"] = httpx.BasicAuth(username, password)._auth_header
-        if self.api_key is not None:
-            headers["X-API-Key"] = self.api_key
-        token = self._get_token()
-        if token is not None:
-            headers["Authorization"] = f"Bearer {token}"
-        if self._auth_headers is not None:
-            headers.update(self._auth_headers())
         return headers
 
-    def _get_token(self) -> typing.Optional[str]:
-        if isinstance(self._token, str) or self._token is None:
-            return self._token
-        else:
-            return self._token()
+    def get_auth_headers_for_endpoint(
+        self, *, security: typing.Optional[typing.List[typing.Dict[str, typing.List[str]]]] = None
+    ) -> typing.Dict[str, str]:
+        if not security:
+            return {}
+        available_auth_headers: typing.Dict[str, typing.Dict[str, str]] = {}
+        _token = self._get_token()
+        if _token is not None:
+            available_auth_headers["Bearer"] = {"Authorization": f"Bearer {_token}"}
+            available_auth_headers["OAuth"] = {"Authorization": f"Bearer {_token}"}
+        if self.api_key is not None:
+            available_auth_headers["ApiKey"] = {"X-API-Key": self.api_key}
+        _username = self._get_username()
+        _password = self._get_password()
+        if _username is not None and _password is not None:
+            available_auth_headers["Basic"] = {"Authorization": httpx.BasicAuth(_username, _password)._auth_header}
+        if self._auth_headers is not None:
+            available_auth_headers["InferredAuth"] = dict(self._auth_headers())
+        for requirement in security:
+            if all(scheme_key in available_auth_headers for scheme_key in requirement):
+                combined_headers: typing.Dict[str, str] = {}
+                for scheme_key in requirement:
+                    combined_headers.update(available_auth_headers[scheme_key])
+                return combined_headers
+        _missing_hints = " OR ".join(
+            " AND ".join(scheme_key for scheme_key in requirement if scheme_key not in available_auth_headers)
+            for requirement in security
+        )
+        raise ValueError(
+            "No authentication credentials provided that satisfy the endpoint's security requirements. "
+            "Please provide credentials for: " + _missing_hints
+        )
 
     def _get_username(self) -> typing.Optional[str]:
         if isinstance(self._username, str) or self._username is None:
@@ -76,6 +96,12 @@ class BaseClientWrapper:
         else:
             return self._password()
 
+    def _get_token(self) -> typing.Optional[str]:
+        if isinstance(self._token, str) or self._token is None:
+            return self._token
+        else:
+            return self._token()
+
     def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
         return self._headers
 
@@ -88,33 +114,43 @@ class BaseClientWrapper:
     def get_max_retries(self) -> int:
         return self._max_retries
 
+    def get_stream_reconnection_enabled(self) -> bool:
+        return self._stream_reconnection_enabled if self._stream_reconnection_enabled is not None else True
+
+    def get_max_stream_reconnection_attempts(self) -> typing.Optional[int]:
+        return self._max_stream_reconnection_attempts
+
 
 class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
         api_key: typing.Optional[str] = None,
-        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         max_retries: int = 2,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         httpx_client: httpx.Client,
     ):
         super().__init__(
             api_key=api_key,
-            auth_headers=auth_headers,
-            token=token,
             username=username,
             password=password,
+            auth_headers=auth_headers,
+            token=token,
             headers=headers,
             base_url=base_url,
             timeout=timeout,
             max_retries=max_retries,
+            stream_reconnection_enabled=stream_reconnection_enabled,
+            max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
         )
         self.httpx_client = HttpClient(
@@ -132,14 +168,16 @@ class AsyncClientWrapper(BaseClientWrapper):
         self,
         *,
         api_key: typing.Optional[str] = None,
-        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         max_retries: int = 2,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         async_auth_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
@@ -147,14 +185,16 @@ class AsyncClientWrapper(BaseClientWrapper):
     ):
         super().__init__(
             api_key=api_key,
-            auth_headers=auth_headers,
-            token=token,
             username=username,
             password=password,
+            auth_headers=auth_headers,
+            token=token,
             headers=headers,
             base_url=base_url,
             timeout=timeout,
             max_retries=max_retries,
+            stream_reconnection_enabled=stream_reconnection_enabled,
+            max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
         )
         self._async_token = async_token
@@ -171,9 +211,43 @@ class AsyncClientWrapper(BaseClientWrapper):
 
     async def async_get_headers(self) -> typing.Dict[str, str]:
         headers = self.get_headers()
-        if self._async_token is not None:
-            token = await self._async_token()
-            headers["Authorization"] = f"Bearer {token}"
-        if self._async_auth_headers is not None:
-            headers.update(await self._async_auth_headers())
         return headers
+
+    async def async_get_auth_headers_for_endpoint(
+        self, *, security: typing.Optional[typing.List[typing.Dict[str, typing.List[str]]]] = None
+    ) -> typing.Dict[str, str]:
+        if not security:
+            return {}
+        available_auth_headers: typing.Dict[str, typing.Dict[str, str]] = {}
+        _token: typing.Optional[str]
+        if self._async_token is not None:
+            _token = await self._async_token()
+        else:
+            _token = self._get_token()
+        if _token is not None:
+            available_auth_headers["Bearer"] = {"Authorization": f"Bearer {_token}"}
+            available_auth_headers["OAuth"] = {"Authorization": f"Bearer {_token}"}
+        if self.api_key is not None:
+            available_auth_headers["ApiKey"] = {"X-API-Key": self.api_key}
+        _username = self._get_username()
+        _password = self._get_password()
+        if _username is not None and _password is not None:
+            available_auth_headers["Basic"] = {"Authorization": httpx.BasicAuth(_username, _password)._auth_header}
+        if self._async_auth_headers is not None:
+            available_auth_headers["InferredAuth"] = dict(await self._async_auth_headers())
+        elif self._auth_headers is not None:
+            available_auth_headers["InferredAuth"] = dict(self._auth_headers())
+        for requirement in security:
+            if all(scheme_key in available_auth_headers for scheme_key in requirement):
+                combined_headers: typing.Dict[str, str] = {}
+                for scheme_key in requirement:
+                    combined_headers.update(available_auth_headers[scheme_key])
+                return combined_headers
+        _missing_hints = " OR ".join(
+            " AND ".join(scheme_key for scheme_key in requirement if scheme_key not in available_auth_headers)
+            for requirement in security
+        )
+        raise ValueError(
+            "No authentication credentials provided that satisfy the endpoint's security requirements. "
+            "Please provide credentials for: " + _missing_hints
+        )

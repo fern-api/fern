@@ -34,10 +34,8 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeSpec.Builder;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
@@ -50,8 +48,12 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private static final String AUTH_CLIENT_NAME = "authClient";
     private static final String GET_TOKEN_REQUEST_NAME = "getTokenRequest";
     private static final String EXPIRES_AT_FIELD_NAME = "expiresAt";
+    private static final String TOKEN_LOCK_FIELD_NAME = "tokenLock";
     private static final String BUFFER_IN_MINUTES_CONSTANT_NAME = "BUFFER_IN_MINUTES";
     private static final String EXPIRES_IN_SECONDS_PARAMETER_NAME = "expiresInSeconds";
+
+    private static final String GRANT_TYPE_WIRE_VALUE = "grant_type";
+    private static final String CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
 
     private static final String FETCH_TOKEN_METHOD_NAME = "fetchToken";
     private static final String GET_METHOD_NAME = "get";
@@ -95,38 +97,17 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         .visit(new RequestPropertyToNameVisitor())
                         .getName())
                 .getCamelCase()
-                .getUnsafeName();
+                .getSafeName();
         String clientSecretPropertyName = NameUtils.toName(requestProperties
                         .getClientSecret()
                         .getProperty()
                         .visit(new RequestPropertyToNameVisitor())
                         .getName())
                 .getCamelCase()
-                .getUnsafeName();
+                .getSafeName();
 
-        List<Map.Entry<String, String>> customPropertiesWithNames = new ArrayList<>();
-        if (requestProperties.getCustomProperties().isPresent()) {
-            for (RequestProperty customProp :
-                    requestProperties.getCustomProperties().get()) {
-                // Skip literal properties - they are hardcoded in the request class
-                if (isLiteralProperty(customProp)) {
-                    continue;
-                }
-                String propName = NameUtils.toName(customProp
-                                .getProperty()
-                                .visit(new RequestPropertyToNameVisitor())
-                                .getName())
-                        .getCamelCase()
-                        .getUnsafeName();
-                customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(propName, propName));
-            }
-        }
-
-        for (var header : httpEndpoint.getHeaders()) {
-            String headerName =
-                    NameUtils.getName(header.getName()).getCamelCase().getUnsafeName();
-            customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(headerName, headerName));
-        }
+        List<OAuthTokenSupplierProperty> customPropertiesWithNames =
+                computeCustomProperties(clientGeneratorContext, clientCredentials);
 
         TypeName fetchTokenRequestType = getFetchTokenRequestType(httpEndpoint, httpService);
         // todo: handle other response types
@@ -153,22 +134,43 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         Optional<ResponseProperty> expiryResponseProperty =
                 clientCredentials.getTokenEndpoint().getResponseProperties().getExpiresIn();
         boolean refreshRequired = expiryResponseProperty.isPresent();
+        String tokenPrefixWithSpace = clientCredentials.getTokenPrefix().orElse("Bearer") + " ";
+        // This supplier is a singleton shared across all request threads (registered via
+        // builder.addHeader), so accessToken/expiresAt are volatile and refreshed under tokenLock.
+        // A cache hit takes the lock-free fast path (a volatile snapshot read); only an expired or
+        // absent token enters the synchronized block, where a double-check ensures exactly one thread
+        // performs the token request (single-flight). Fields are written only after fetchToken()
+        // returns, so a failed refresh leaves any prior token intact.
+        CodeBlock refreshNeededPredicate = refreshRequired
+                ? CodeBlock.builder()
+                        .add(
+                                "if ($L == null || $L.isBefore($T.now()))",
+                                ACCESS_TOKEN_FIELD_NAME,
+                                EXPIRES_AT_FIELD_NAME,
+                                Instant.class)
+                        .build()
+                : CodeBlock.builder()
+                        .add("if ($L == null)", ACCESS_TOKEN_FIELD_NAME)
+                        .build();
         MethodSpec.Builder getMethodSpecBuilder = MethodSpec.methodBuilder(GET_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .returns(String.class)
-                .beginControlFlow(
-                        refreshRequired
-                                ? CodeBlock.builder()
-                                        .add(
-                                                "if ($L == null || $L.isBefore($T.now()))",
-                                                ACCESS_TOKEN_FIELD_NAME,
-                                                EXPIRES_AT_FIELD_NAME,
-                                                Instant.class)
-                                        .build()
-                                : CodeBlock.builder()
-                                        .add("if ($L == null)", ACCESS_TOKEN_FIELD_NAME)
-                                        .build())
+                .addStatement("$T cachedToken = this.$L", String.class, ACCESS_TOKEN_FIELD_NAME);
+        if (refreshRequired) {
+            getMethodSpecBuilder
+                    .addStatement("$T cachedExpiresAt = this.$L", Instant.class, EXPIRES_AT_FIELD_NAME)
+                    .beginControlFlow(
+                            "if (cachedToken != null && cachedExpiresAt != null && !cachedExpiresAt.isBefore($T.now()))",
+                            Instant.class);
+        } else {
+            getMethodSpecBuilder.beginControlFlow("if (cachedToken != null)");
+        }
+        getMethodSpecBuilder
+                .addStatement("return $S + cachedToken", tokenPrefixWithSpace)
+                .endControlFlow()
+                .beginControlFlow("synchronized ($L)", TOKEN_LOCK_FIELD_NAME)
+                .beginControlFlow(refreshNeededPredicate)
                 .addStatement("$T authResponse = $L()", fetchTokenReturnType, FETCH_TOKEN_METHOD_NAME);
 
         if (isAccessTokenOptional) {
@@ -212,17 +214,18 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         }
         getMethodSpecBuilder
                 .endControlFlow()
-                .addStatement(
-                        "return $S + $L",
-                        clientCredentials.getTokenPrefix().orElse("Bearer") + " ",
-                        ACCESS_TOKEN_FIELD_NAME);
+                .addStatement("return $S + $L", tokenPrefixWithSpace, ACCESS_TOKEN_FIELD_NAME)
+                .endControlFlow();
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(String.class, CLIENT_ID_FIELD_NAME)
                 .addParameter(String.class, CLIENT_SECRET_FIELD_NAME);
 
-        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
-            constructorBuilder.addParameter(String.class, customProp.getKey());
+        for (OAuthTokenSupplierProperty customProp : customPropertiesWithNames) {
+            if (customProp.hardcodedStringValue != null) {
+                continue;
+            }
+            constructorBuilder.addParameter(customProp.type, customProp.name);
         }
 
         constructorBuilder
@@ -230,8 +233,11 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addStatement("this.$L = $L", CLIENT_ID_FIELD_NAME, CLIENT_ID_FIELD_NAME)
                 .addStatement("this.$L = $L", CLIENT_SECRET_FIELD_NAME, CLIENT_SECRET_FIELD_NAME);
 
-        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
-            constructorBuilder.addStatement("this.$L = $L", customProp.getKey(), customProp.getKey());
+        for (OAuthTokenSupplierProperty customProp : customPropertiesWithNames) {
+            if (customProp.hardcodedStringValue != null) {
+                continue;
+            }
+            constructorBuilder.addStatement("this.$L = $L", customProp.name, customProp.name);
         }
 
         constructorBuilder.addStatement("this.$L = $L", AUTH_CLIENT_NAME, AUTH_CLIENT_NAME);
@@ -247,16 +253,22 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addField(FieldSpec.builder(String.class, CLIENT_SECRET_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
                         .build());
 
-        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
+        for (OAuthTokenSupplierProperty customProp : customPropertiesWithNames) {
+            if (customProp.hardcodedStringValue != null) {
+                continue;
+            }
             oauthTypeSpecBuilder.addField(
-                    FieldSpec.builder(String.class, customProp.getKey(), Modifier.PRIVATE, Modifier.FINAL)
+                    FieldSpec.builder(customProp.type, customProp.name, Modifier.PRIVATE, Modifier.FINAL)
                             .build());
         }
 
         oauthTypeSpecBuilder
                 .addField(FieldSpec.builder(authClientClassName, AUTH_CLIENT_NAME, Modifier.PRIVATE, Modifier.FINAL)
                         .build())
-                .addField(FieldSpec.builder(String.class, ACCESS_TOKEN_FIELD_NAME, Modifier.PRIVATE)
+                .addField(FieldSpec.builder(Object.class, TOKEN_LOCK_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
+                        .initializer("new $T()", Object.class)
+                        .build())
+                .addField(FieldSpec.builder(String.class, ACCESS_TOKEN_FIELD_NAME, Modifier.PRIVATE, Modifier.VOLATILE)
                         .build())
                 .addMethod(constructorBuilder.build())
                 .addMethod(buildFetchTokenMethod(
@@ -269,8 +281,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addMethod(getMethodSpecBuilder.build());
         if (refreshRequired) {
             oauthTypeSpecBuilder
-                    .addField(FieldSpec.builder(Instant.class, EXPIRES_AT_FIELD_NAME, Modifier.PRIVATE)
-                            .build())
+                    .addField(
+                            FieldSpec.builder(Instant.class, EXPIRES_AT_FIELD_NAME, Modifier.PRIVATE, Modifier.VOLATILE)
+                                    .build())
                     .addField(FieldSpec.builder(
                                     long.class,
                                     BUFFER_IN_MINUTES_CONSTANT_NAME,
@@ -312,7 +325,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             TypeName fetchTokenRequestType,
             String clientIdPropertyName,
             String clientSecretPropertyName,
-            List<Map.Entry<String, String>> customPropertiesWithNames,
+            List<OAuthTokenSupplierProperty> customPropertiesWithNames,
             HttpEndpoint httpEndpoint) {
         // Required properties (clientId/clientSecret) must come first for staged builders,
         // followed by optional custom properties (like scope) which are in _FinalStage
@@ -321,8 +334,12 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .add(".$L($L)", clientIdPropertyName, CLIENT_ID_FIELD_NAME)
                 .add(".$L($L)", clientSecretPropertyName, CLIENT_SECRET_FIELD_NAME);
 
-        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
-            requestBuilderCode.add(".$L($L)", customProp.getValue(), customProp.getKey());
+        for (OAuthTokenSupplierProperty customProp : customPropertiesWithNames) {
+            if (customProp.hardcodedStringValue != null) {
+                requestBuilderCode.add(".$L($S)", customProp.name, customProp.hardcodedStringValue);
+                continue;
+            }
+            requestBuilderCode.add(".$L($L)", customProp.name, customProp.name);
         }
 
         requestBuilderCode.add(".build()");
@@ -394,7 +411,144 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         return typeString.equals("java.lang.Long") || typeString.equals("Long") || typeString.equals("long");
     }
 
-    private boolean isLiteralProperty(RequestProperty requestProperty) {
+    /**
+     * Computes the ordered list of custom token-request properties that become extra constructor parameters on the
+     * generated {@code OAuthTokenSupplier} (inserted after clientId/clientSecret and before authClient). Shared with
+     * {@code OAuthAuthProviderGenerator} so the two never drift — the auth provider must pass a matching argument for
+     * each of these when it builds a token supplier.
+     */
+    public static List<OAuthTokenSupplierProperty> computeCustomProperties(
+            ClientGeneratorContext clientGeneratorContext, OAuthClientCredentials clientCredentials) {
+        EndpointReference tokenEndpointReference =
+                clientCredentials.getTokenEndpoint().getEndpointReference();
+        HttpService httpService =
+                clientGeneratorContext.getIr().getServices().get(tokenEndpointReference.getServiceId());
+        EndpointId endpointId = tokenEndpointReference.getEndpointId();
+        HttpEndpoint httpEndpoint = httpService.getEndpoints().stream()
+                .filter(it -> it.getId().equals(endpointId))
+                .findFirst()
+                .orElseThrow();
+        OAuthAccessTokenRequestProperties requestProperties =
+                clientCredentials.getTokenEndpoint().getRequestProperties();
+
+        List<OAuthTokenSupplierProperty> customPropertiesWithNames = new ArrayList<>();
+        // The scopes request property (if mapped) is a required property on the token request and
+        // must be set on the staged builder, ordered before the remaining custom properties.
+        if (requestProperties.getScopes().isPresent()
+                && !isLiteralProperty(requestProperties.getScopes().get())) {
+            String scopesPropName = NameUtils.toName(requestProperties
+                            .getScopes()
+                            .get()
+                            .getProperty()
+                            .visit(new RequestPropertyToNameVisitor())
+                            .getName())
+                    .getCamelCase()
+                    .getSafeName();
+            customPropertiesWithNames.add(new OAuthTokenSupplierProperty(
+                    scopesPropName,
+                    getPropertyTypeName(
+                            clientGeneratorContext,
+                            requestProperties.getScopes().get())));
+        }
+        if (requestProperties.getCustomProperties().isPresent()) {
+            for (RequestProperty customProp :
+                    requestProperties.getCustomProperties().get()) {
+                // Skip literal properties - they are hardcoded in the request class
+                if (isLiteralProperty(customProp)) {
+                    continue;
+                }
+                String propName = NameUtils.toName(customProp
+                                .getProperty()
+                                .visit(new RequestPropertyToNameVisitor())
+                                .getName())
+                        .getCamelCase()
+                        .getSafeName();
+                // A non-literal grant_type property is always sent with the
+                // "client_credentials" value rather than surfaced as a
+                // user-supplied option: the client credentials flow requires
+                // grant_type=client_credentials (RFC 6749 §4.4.2).
+                if (isGrantTypeProperty(customProp)) {
+                    customPropertiesWithNames.add(new OAuthTokenSupplierProperty(
+                            propName,
+                            getPropertyTypeName(clientGeneratorContext, customProp),
+                            CLIENT_CREDENTIALS_GRANT_TYPE));
+                    continue;
+                }
+                customPropertiesWithNames.add(new OAuthTokenSupplierProperty(
+                        propName, getPropertyTypeName(clientGeneratorContext, customProp)));
+            }
+        }
+
+        for (var header : httpEndpoint.getHeaders()) {
+            String headerName =
+                    NameUtils.getName(header.getName()).getCamelCase().getSafeName();
+            TypeName headerType =
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(false, header.getValueType());
+            customPropertiesWithNames.add(new OAuthTokenSupplierProperty(headerName, headerType));
+        }
+        return customPropertiesWithNames;
+    }
+
+    private static TypeName getPropertyTypeName(
+            ClientGeneratorContext clientGeneratorContext, RequestProperty requestProperty) {
+        TypeReference valueType = requestProperty
+                .getProperty()
+                .visit(new RequestPropertyValue.Visitor<TypeReference>() {
+                    @Override
+                    public TypeReference visitQuery(QueryParameter query) {
+                        return query.getValueType();
+                    }
+
+                    @Override
+                    public TypeReference visitBody(ObjectProperty body) {
+                        return body.getValueType();
+                    }
+
+                    @Override
+                    public TypeReference _visitUnknown(Object unknownType) {
+                        return null;
+                    }
+                });
+        return clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(false, valueType);
+    }
+
+    /** A get-token request property carried through to the token supplier, with its resolved Java type. */
+    public static final class OAuthTokenSupplierProperty {
+        private final String name;
+        private final TypeName type;
+        private final String hardcodedStringValue;
+
+        private OAuthTokenSupplierProperty(String name, TypeName type) {
+            this(name, type, null);
+        }
+
+        private OAuthTokenSupplierProperty(String name, TypeName type, String hardcodedStringValue) {
+            this.name = name;
+            this.type = type;
+            this.hardcodedStringValue = hardcodedStringValue;
+        }
+
+        public TypeName getType() {
+            return type;
+        }
+
+        /**
+         * A hardcoded property (e.g. grant_type) is written directly into the token request and is NOT a constructor
+         * parameter, so it must be skipped when matching constructor arguments.
+         */
+        public boolean isHardcoded() {
+            return hardcodedStringValue != null;
+        }
+    }
+
+    public static boolean isGrantTypeProperty(RequestProperty requestProperty) {
+        return GRANT_TYPE_WIRE_VALUE.equals(requestProperty
+                .getProperty()
+                .visit(new RequestPropertyToNameVisitor())
+                .getWireValue());
+    }
+
+    private static boolean isLiteralProperty(RequestProperty requestProperty) {
         TypeReference valueType = requestProperty
                 .getProperty()
                 .visit(new RequestPropertyValue.Visitor<TypeReference>() {

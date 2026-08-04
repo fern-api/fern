@@ -18,6 +18,12 @@ public partial class AuthClient : IAuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString =
+            new SeedOauthClientCredentialsEnvironmentVariables.Core.QueryStringBuilder.Builder(
+                capacity: 0
+            )
+                .MergeAdditional(options?.AdditionalQueryParameters)
+                .Build();
         var _headers =
             await new SeedOauthClientCredentialsEnvironmentVariables.Core.HeadersBuilder.Builder()
                 .Add(_client.Options.Headers)
@@ -32,6 +38,7 @@ public partial class AuthClient : IAuthClient
                     Method = HttpMethod.Post,
                     Path = "/token",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -97,6 +104,12 @@ public partial class AuthClient : IAuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString =
+            new SeedOauthClientCredentialsEnvironmentVariables.Core.QueryStringBuilder.Builder(
+                capacity: 0
+            )
+                .MergeAdditional(options?.AdditionalQueryParameters)
+                .Build();
         var _headers =
             await new SeedOauthClientCredentialsEnvironmentVariables.Core.HeadersBuilder.Builder()
                 .Add(_client.Options.Headers)
@@ -111,6 +124,7 @@ public partial class AuthClient : IAuthClient
                     Method = HttpMethod.Post,
                     Path = "/token",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

@@ -145,7 +145,7 @@ client = SeedExtends(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.extended_inline_request_body(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

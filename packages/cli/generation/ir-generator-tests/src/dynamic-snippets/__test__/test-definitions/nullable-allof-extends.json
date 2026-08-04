@@ -101,7 +101,8 @@
                 "type_:NormalObject",
                 "type_:NullableObject"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:NormalObject": {
             "type": "object",
@@ -167,7 +168,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:NullableObject": {
             "type": "object",
@@ -233,7 +235,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -363,5 +366,6 @@
         }
     },
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

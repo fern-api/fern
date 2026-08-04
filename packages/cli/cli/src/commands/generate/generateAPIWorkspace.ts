@@ -22,6 +22,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
+import { PackMode, packLocalOutputForGroup } from "./packLocalOutput.js";
 import { buildAutomationTargeting, selectGeneratorsForAutomation } from "./selectGeneratorsForAutomation.js";
 import { shouldSkipMissingGenerator } from "./shouldSkipMissingGenerator.js";
 
@@ -53,7 +54,11 @@ export async function generateWorkspace({
     automationMode,
     autoMerge,
     skipIfNoDiff,
-    automation
+    generateTests,
+    automation,
+    pack,
+    packMode,
+    packOnly
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -86,12 +91,19 @@ export async function generateWorkspace({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    generateTests?: boolean;
     /**
      * When provided, this call runs in fan-out automation mode: iterate every group (ignoring
      * `default-group`), silently skip generators opted out of automation, and route per-generator
      * outcomes through the recorder so siblings keep running when one fails.
      */
     automation?: AutomationRunOptions;
+    /** Build distributable package artifacts for local-file-system outputs after generation. */
+    pack?: boolean;
+    /** Where packaging runs the toolchain: on the host or inside Docker toolchain images. */
+    packMode?: PackMode;
+    /** Keep only the fern-dist/ artifact in the output directory, removing the generated SDK source. */
+    packOnly?: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -174,6 +186,8 @@ export async function generateWorkspace({
                         automationMode,
                         autoMerge,
                         skipIfNoDiff,
+                        generateTests,
+                        generateFullProject: pack,
                         verify,
                         disableTelemetry: isTelemetryDisabled()
                     });
@@ -223,8 +237,12 @@ export async function generateWorkspace({
                         noReplay,
                         verify,
                         disableTelemetry: isTelemetryDisabled(),
-                        getSpecsTarGzBuffer: getSpecsTarGz
+                        getSpecsTarGzBuffer: getSpecsTarGz,
+                        generateFullProject: pack
                     });
+                }
+                if (pack) {
+                    await packLocalOutputForGroup({ group, context: groupContext, mode: packMode, runner, packOnly });
                 }
             })
         )

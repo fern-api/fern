@@ -388,7 +388,7 @@ describe("LocalTaskHandler - Fallback Chain (magic version absent)", () => {
         // Both fallbacks fail
         mockLoggingExeca.mockResolvedValue({ stdout: "", exitCode: 128 });
 
-        const handler = await createTaskHandler({ version: "v0.0.0-fern-placeholder" });
+        const handler = await createTaskHandler({ version: "v0.0.0-fern-placeholder", generatorLanguage: "go" });
         const result = await callHandleAutoVersioning(handler);
 
         expect(result).not.toBeNull();
@@ -703,11 +703,84 @@ describe("LocalTaskHandler - normalizeVersionPrefix", () => {
         });
 
         // magic version is "v0.0.0-fern-placeholder" (has v prefix, like Go)
-        const handler = await createTaskHandler({ version: "v0.0.0-fern-placeholder" });
+        const handler = await createTaskHandler({ version: "v0.0.0-fern-placeholder", generatorLanguage: "go" });
         const result = await callHandleAutoVersioning(handler);
 
         expect(result).not.toBeNull();
         // v prefix should be added → v3.0.0 → PATCH → v3.0.1
         expect(result?.version).toBe("v3.0.1");
+    });
+});
+
+describe("LocalTaskHandler - Regression: version='AUTO' must use magic placeholder for replacement", () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+        mockWithOptions.mockReturnValue({
+            AnalyzeSdkDiff: mockAnalyzeSdkDiff
+        });
+        mockChunkDiff.mockReturnValue(["cleaned diff content"]);
+        mockLoggingExeca.mockResolvedValue({ stdout: "", exitCode: 0 });
+    });
+
+    async function createTaskHandler(overrides: Record<string, unknown> = {}) {
+        const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
+        return new LocalTaskHandler({
+            // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
+            context: mockContext as any,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToTmpOutputDirectory: "/tmp/output" as any,
+            absolutePathToTmpSnippetJSON: undefined,
+            absolutePathToLocalSnippetTemplateJSON: undefined,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToLocalOutput: "/tmp/local-output" as any,
+            absolutePathToLocalSnippetJSON: undefined,
+            absolutePathToTmpSnippetTemplatesJSON: undefined,
+            version: "AUTO",
+            ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
+            isWhitelabel: false,
+            generatorLanguage: "typescript",
+            absolutePathToSpecRepo: undefined,
+            ...overrides
+        });
+    }
+
+    it("uses magic placeholder (not 'AUTO') when calling replaceMagicVersion", async () => {
+        // Setup: extractPreviousVersion works normally (magic version found in diff)
+        mockExtractPreviousVersion.mockReturnValue("1.0.0");
+
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.PATCH,
+            message: "fix: minor update",
+            changelog_entry: ""
+        });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("1.0.1");
+
+        // Verify that extractPreviousVersion was called with the magic placeholder,
+        // NOT with the literal "AUTO" string
+        expect(mockExtractPreviousVersion).toHaveBeenCalledWith(expect.anything(), "0.0.0-fern-placeholder");
+    });
+
+    it("uses Go v-prefixed magic placeholder when generatorLanguage is 'go'", async () => {
+        mockExtractPreviousVersion.mockReturnValue("v2.0.0");
+
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.MINOR,
+            message: "feat: new feature",
+            changelog_entry: "Added new feature."
+        });
+
+        const handler = await createTaskHandler({ generatorLanguage: "go" });
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("v2.1.0");
+
+        // For Go, the magic version should be "v0.0.0-fern-placeholder"
+        expect(mockExtractPreviousVersion).toHaveBeenCalledWith(expect.anything(), "v0.0.0-fern-placeholder");
     });
 });

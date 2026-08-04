@@ -501,6 +501,12 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                                                 }
 
                                                 @Override
+                                                public Optional<MavenCoordinate> visitGo(
+                                                        com.fern.ir.model.publish.GoPublishTarget value) {
+                                                    return Optional.empty();
+                                                }
+
+                                                @Override
                                                 public Optional<MavenCoordinate> _visitUnknown(Object value) {
                                                     return Optional.empty();
                                                 }
@@ -685,6 +691,16 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         return List.of();
     }
 
+    /**
+     * When true, the generated build.gradle records the project version in the jar manifest's
+     * {@code Implementation-Version} attribute so the SDK can resolve its own version at runtime. Only consulted when a
+     * Maven coordinate is present (i.e. when a top-level {@code version} is emitted). Defaults to false; overridden by
+     * generators that support the {@code runtime-version} option.
+     */
+    protected boolean shouldEmitImplementationVersionInManifest(GeneratorConfig generatorConfig) {
+        return false;
+    }
+
     public abstract <T extends ICustomConfig> T getCustomConfig(GeneratorConfig generatorConfig);
 
     public abstract <K extends IDownloadFilesCustomConfig> K getDownloadFilesCustomConfig(
@@ -741,6 +757,13 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             buildGradle.addCustomBlocks("jar {\n" + "    dependsOn(\":generatePomFileForMavenPublication\")\n"
                     + "    archiveBaseName = \""
                     + maybeMavenCoordinate.get().getArtifact() + "\"\n" + "}");
+            if (shouldEmitImplementationVersionInManifest(generatorConfig)) {
+                // Record the project version in the jar manifest so the SDK can read its own version at runtime via
+                // Package.getImplementationVersion(). References the top-level `version` emitted above, so an external
+                // tool such as release-please only has to rewrite that single line.
+                buildGradle.addCustomBlocks("jar {\n" + "    manifest {\n"
+                        + "        attributes('Implementation-Version': version)\n" + "    }\n" + "}");
+            }
             buildGradle.addCustomBlocks("sourcesJar {\n" + "    archiveBaseName = \""
                     + maybeMavenCoordinate.get().getArtifact() + "\"\n" + "}");
             buildGradle.addCustomBlocks("javadocJar {\n" + "    archiveBaseName = \""
@@ -748,10 +771,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
         if (addSignaturePlugin) {
             buildGradle.addPlugins(GradlePlugin.builder().pluginId("signing").build());
-            buildGradle.addPlugins(GradlePlugin.builder()
-                    .pluginId("cl.franciscosolis.sonatype-central-upload")
-                    .version("1.0.3")
-                    .build());
+            // The sonatype-central-upload plugin is not declared in the plugins block because its artifact cannot be
+            // resolved on a Java 8 JVM (seed CI). GeneratedBuildGradle instead puts it on the buildscript classpath and
+            // applies it only when the build runs on Java 11+.
             buildGradle.addCustomBlocks("signing {\n" + "    sign(publishing.publications)\n" + "}");
             // Generate an empty gradle.properties file
             addGeneratedFile(GeneratedGradleProperties.getGeneratedFile());

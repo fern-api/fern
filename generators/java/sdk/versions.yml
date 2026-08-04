@@ -1,4 +1,556 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.17.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `allowUserAgentAppInfo` config. When enabled, the generated client's builder exposes
+        an `appInfo(name, version, comment)` option whose product token is appended to the `User-Agent`
+        header the SDK would otherwise send (`{sdk}/{version} ... {name}/{version} ({comment})`),
+        following RFC 9110. Disabled by default, so existing generated output is unchanged, and it
+        composes with `includePlatformHeaders`, the `runtime-version` jar-manifest path, the configured
+        `user-agent` template value, and the default `{coordinate}/{version}`. Caller-supplied values are
+        trimmed and sanitized (name/version percent-encoded to RFC 7230 tchars; comment delimiters,
+        control characters and any non-ASCII characters percent-encoded as UTF-8 bytes so OkHttp's header
+        validation never rejects them), so untrusted values cannot inject header content. Still overridable
+        by an explicit `User-Agent` and suppressed by `omit-fern-headers`.
+      type: feat
+  createdAt: "2026-08-03"
+  irVersion: 67
+- version: 4.16.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `runtime-version` config flag. When enabled, the SDK version reported
+        in the telemetry headers (`X-Fern-SDK-Version` and the version segment of
+        `User-Agent`) is resolved at runtime from the jar manifest's `Implementation-Version`
+        attribute instead of being baked in as a literal at generation time. The generated
+        build.gradle records the project version in the jar manifest, so an external tool such
+        as release-please only has to rewrite a single `version` line for the reported version
+        to track the actually-published artifact — rather than a version the SDK may never
+        publish. Falls back to the generation-time version when the manifest attribute is
+        absent (e.g. running from unpackaged classes). Disabled by default, so existing
+        generated output is unchanged, and subject to `omitFernHeaders`.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 4.15.5
+  changelogEntry:
+    - summary: |
+        Resolve the `X-Fern-SDK-Name` header from the configured Maven coordinate in
+        GitHub output mode. Previously the header was read from the (Fiddle-synthesized)
+        publish config, so it emitted `com.<org>.fern:<workspace>-sdk` instead of the
+        coordinate the user configured under `output.coordinate`, leaving it inconsistent
+        with the `User-Agent` product token. The header now reads
+        `output.mode.github.publishInfo.maven.coordinate`, which is populated for both
+        remote and `--local` generation. Also emits `X-Fern-SDK-Version` in cases where a
+        coordinate resolves without a version previously being set.
+      type: fix
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 4.15.4
+  changelogEntry:
+    - summary: |
+        Global headers now honor their `env` and `client-default` values. The
+        builder initializes the header from the environment variable when set,
+        otherwise the client default, and an explicitly provided value still takes
+        precedence. Previously a global header was only sent when the caller set it
+        explicitly.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 4.15.3
+  changelogEntry:
+    - summary: |
+        Fix a `NullPointerException` thrown at runtime on every OAuth (or inferred-auth) authenticated
+        request under `auth: endpoint-security`. To fetch a token, the OAuth auth provider builds an
+        internal client for the (unauthenticated) token endpoint whose `ClientOptions` has no auth
+        provider; `ClientOptions.getAuthHeaders(...)` then dereferenced the null provider and threw. It
+        now returns no auth headers when no auth provider is configured, so token fetching (and therefore
+        all OAuth-authenticated calls) works.
+      type: fix
+    - summary: |
+        Fix generated code failing to compile under `auth: endpoint-security` when the OAuth token
+        endpoint declares custom request properties (scopes, custom body properties, or headers). The
+        generated `OAuthTokenSupplier` constructor takes an extra parameter for each such property, but
+        the `OAuthAuthProvider` always called it with a fixed three arguments
+        (`clientId, clientSecret, authClient`), producing a "constructor cannot be applied to given
+        types" error. `OAuthAuthProvider` now passes a matching argument for every extra property
+        (`Optional.empty()` for optional properties), sharing the property computation with the token
+        supplier generator so the two cannot drift.
+      type: fix
+    - summary: |
+        Fix generated OAuth code snippets and README failing to compile under `auth: endpoint-security`.
+        The snippet/README examples instantiate the client with `Client.withCredentials(clientId,
+        clientSecret)`, but under endpoint-security the client builder is not staged, so that factory was
+        never generated — producing "cannot find symbol: method withCredentials" errors across the
+        generated example files. The client now generates a `withCredentials(clientId, clientSecret)`
+        convenience factory under endpoint-security that returns the standard builder pre-configured with
+        the OAuth credentials.
+      type: fix
+    - summary: |
+        Fix generated wire tests asserting OAuth authentication on endpoints that do not require it under
+        `auth: endpoint-security`. The wire-test generator applied the OAuth token flow (enqueue a token
+        response and assert `Authorization: Bearer ...`) to every test method based on an API-level check,
+        so a test for an `auth: []` (no-auth) endpoint enqueued a token and asserted a bearer header the
+        SDK correctly never sends — failing at runtime. Under endpoint-security the OAuth flow is now
+        applied per endpoint (only to endpoints that require auth); global-auth behavior is unchanged.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 4.15.2
+  changelogEntry:
+    - summary: |
+        Fix a `NullPointerException` when generating an SDK with `auth: endpoint-security` whose
+        OAuth (or inferred-auth) token endpoint is grouped under a subpackage not named `auth`.
+        The `RoutingAuthProvider` setup previously located the auth client by scanning for a
+        subpackage literally named `auth`, yielding `null` (and an NPE) when the token endpoint
+        lived in a differently-named group (e.g. `token`). It now resolves the client from the
+        token endpoint's actual subpackage, falling back to the core `AuthClient` when the token
+        endpoint sits at the API root.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 4.15.1
+  changelogEntry:
+    - summary: |
+        Fix `ConsoleLogger` dropping DEBUG-level log messages. The `ConsoleHandler` used by the
+        default logger keeps java.util.logging's default `INFO` handler level, so `FINE` records
+        (SDK debug logs, including HTTP request/response logging) were silently discarded even
+        when `LogConfig` was configured with `LogLevel.DEBUG` and `silent(false)`. The handler
+        level is now set to `ALL` so the configured `LogLevel` controls filtering.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 4.15.0
+  changelogEntry:
+    - summary: |
+        Add webhook body-hash binding support. When a webhook's HMAC signature verification
+        declares a `bodyHashBinding` in the IR, the generated `verifySignature` helper now
+        recomputes the encoded hash of the raw request body using the binding's own
+        algorithm/encoding, extracts the configured query parameter from the notification URL,
+        and timing-safe-compares them (failing closed) before performing the existing HMAC
+        verification over the verbatim notification URL. A stdlib-only `WebhookBodyHash` core
+        utility (unkeyed digest plus read-only query-parameter extraction) is emitted alongside
+        the existing signature utility. Output is unchanged when no binding is present.
+      type: feat
+    - summary: |
+        Add webhook signature verification support. When a webhook declares HMAC signature
+        verification in the IR, the generated SDK now emits a `WebhooksHelper` with a static
+        `verifySignature` method and a stdlib-only core utility for HMAC computation and
+        constant-time comparison.
+      type: feat
+    - summary: |
+        Extend the generated `verifySignature` webhook helper with Twilio-compatible
+        verification, mirroring the TypeScript reference:
+        - Multi-value form params: when `payloadFormat.bodySort` is set, a `Map<String, ?>`
+          overload accepts POST body parameters whose values are a `String` or a
+          `Collection<String>`; keys are sorted, each key's values are deduped and sorted, and
+          `key + value` pairs are concatenated with no separator before signing.
+        - Runtime body-hash branch: when a `bodyHashBinding` is configured, the configured
+          query parameter is read from the notification URL at runtime. When present (JSON) the
+          raw body is hashed and constant-time compared and the signature is checked over the
+          URL only; when absent (classic form) the signature is checked over the URL + params
+          with no body-hash check.
+        - No-throw: the verifier is a pure boolean. Every throw on the verification path (null
+          or empty inputs, a missing/malformed timestamp) now returns `false`.
+        - URL any-match normalization: when `notificationUrlNormalization` is configured, the
+          signature is verified against several normalized notification-URL candidates
+          (standard-port/no-port variants and legacy query re-encoding), accepting on the first
+          constant-time match. A stdlib-only `notificationUrlCandidates` method is added to the
+          `WebhookSignature` core utility.
+        Output is unchanged for webhooks that do not configure these fields, other than the
+        no-throw behavior which applies to all generated helpers.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 4.14.6
+  changelogEntry:
+    - summary: |
+        Fixed an issue where the client builder rendered the first environment's URL
+        template instead of the selected environment's template when both a named
+        environment and server URL variables (e.g. `region`) were provided. The
+        builder now resolves the template(s) from the selected environment, falls
+        back to the first templated environment when no environment is selected, and
+        no longer overrides a custom environment or explicitly provided base URL.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
+- version: 4.14.5
+  changelogEntry:
+    - summary: |
+        Honor `includePlatformHeaders` when generating to local file system output.
+        Previously the flag was only read for GitHub/publish output, so locally
+        generated SDKs always emitted the static `{package}/{version}` User-Agent
+        instead of the structured `{package}/{version} (os; arch) Java/{version}` form.
+      type: fix
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 4.14.4
+  changelogEntry:
+    - summary: |
+        Make the smart-casing digit/word boundary behavior opt-in via the new
+        `smart-casing-digit-word-boundary` option in `generators.yml`. By default, snake_case
+        names keep a digit run fused to the following word (`conversations_v2configuration`),
+        restoring pre-4.13.4 output. When enabled, the word boundary after the digit run is
+        preserved (`conversations_v2_configuration`).
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 4.14.3
+  changelogEntry:
+    - summary: |
+        Endpoints without a request wrapper (no request object, or a request that is
+        just a body) now send service- and endpoint-level headers whose types are
+        literals (e.g. `Accept-Encoding: literal<"gzip">`). Previously these headers
+        were silently dropped because there was no request object to carry them.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 4.14.2
+  changelogEntry:
+    - summary: |
+        Fix a `NullPointerException` when constructing an OAuth-only client under multi-scheme
+        (`any`) auth combining OAuth client-credentials with an API-key header. Building via
+        `withCredentials(...)` (no `apiKey(...)`) previously baked a `null` API-key header into
+        `ClientOptions`, which crashed okhttp `Headers.of` on the first HTTP call (the token
+        fetch). The generated `setAuthentication` now guards the API-key header add on a non-null
+        value, and `ClientOptions.Builder.addHeader(String, String)` defensively skips null values.
+        Supplying both credentials and an API key still sends both the `Authorization: Bearer`
+        and the API-key header, and an API-key-only client still validates the key at build time.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 4.14.1
+  changelogEntry:
+    - summary: |
+        OAuth client credentials token requests now send `grant_type: "client_credentials"`
+        when the token endpoint declares a non-literal `grant_type` request property. The
+        property is synthesized in the token request and is no longer surfaced as a
+        builder option.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 4.14.0
+  changelogEntry:
+    - summary: |
+        Idempotency-key auto-generation is now driven by the IR (`SdkConfig.idempotencyKeyGeneration`)
+        instead of a per-generator config flag. When enabled, the SDK adds the configured idempotency
+        header on the configured HTTP methods unless the caller already supplied one. The header name
+        and eligible methods come from the IR, and generated output is unchanged when the feature is off.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 4.13.4
+  changelogEntry:
+    - summary: |
+        Fix smart-casing snake_case names dropping the word boundary after a number.
+        Names like `ConversationsV2Configuration` now produce the snake_case
+        `conversations_v2_configuration` instead of `conversations_v2configuration`,
+        matching the camelCase and pascalCase variants.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 4.13.3
+  changelogEntry:
+    - summary: |
+        Upgrade the Java SDK generator to consume IR v67. The generated SDK output is unchanged.
+      type: chore
+  createdAt: "2026-07-13"
+  irVersion: 67
+- version: 4.13.2
+  changelogEntry:
+    - summary: |
+        Fix the OAuth `OAuthTokenSupplier` generator to derive each get-token request
+        property's Java type from its IR `TypeReference` (via `PoetTypeNameMapper`)
+        instead of hardcoding `String`. Previously a non-string token-request property
+        (e.g. `permissions: Optional<List<String>>`) generated a `String` field and a
+        `.permissions(String)` builder call that did not match the request builder's
+        typed setter, breaking compilation of the entire SDK. The generated custom
+        property fields, constructor parameters, client-builder setters, and request
+        builder calls now use the property's real type.
+
+        To preserve backward compatibility, any get-token custom property whose real
+        type is `Optional<X>` also gets an unwrapped setter overload accepting `X`
+        directly (mirroring the request model's convenience setters), so existing
+        callers such as `.scope("value")` continue to compile unchanged.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 4.13.1
+  changelogEntry:
+    - summary: |
+        Make the generated `User-Agent` comply with the RFC 7230 token grammar. The
+        Maven coordinate in the product token now uses a dot instead of a colon, since
+        a colon is not a valid token character (e.g. `com.fern:imdb/0.0.1` becomes
+        `com.fern.imdb/0.0.1`); this applies to both the plain header value and the
+        structured value emitted when `includePlatformHeaders` is enabled. For the
+        structured value, the architecture label is also normalized so the 64-bit x86
+        aliases (`x64`, `amd64`, `x86_64`) all report as the canonical `x86_64`.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 4.13.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated SDK clients,
+        of the form `{sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}`
+        (e.g. `com.fern:sdk/0.0.1 (linux; amd64) Java/17.0.13`). The os
+        (`System.getProperty("os.name")`, lowercased), arch (`System.getProperty("os.arch")`),
+        and runtime version (`System.getProperty("java.version")`) are resolved at runtime;
+        any segment that cannot be determined is omitted rather than emitted as `null`.
+        This is gated behind a new `includePlatformHeaders` config option and is disabled by
+        default, so existing generated output is unchanged. When enabled, the header is still
+        subject to `omit-fern-headers`.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 4.12.1
+  changelogEntry:
+    - summary: |
+        Decompress gzip and deflate encoded response bodies via a new
+        `ResponseDecompressionInterceptor` added to the generated `OkHttpClient`.
+        OkHttp only performs transparent gzip decompression when it adds the
+        `Accept-Encoding` header itself, so responses to requests with a
+        spec-defined `Accept-Encoding: gzip` header were previously returned as
+        raw gzip bytes.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 4.12.0
+  changelogEntry:
+    - summary: |
+        Add client builder options to customize the retry backoff schedule, alongside the existing
+        `maxRetries` option: `initialRetryDelayMillis` (default 1000), `maxRetryDelayMillis`
+        (default 60000), and `retryJitterFactor` (default 0.2). The options are available on both
+        the root client builder and `ClientOptions.Builder`.
+
+        ```java
+        Client client = Client.builder()
+            .maxRetries(3)
+            .initialRetryDelayMillis(500)
+            .maxRetryDelayMillis(30000)
+            .retryJitterFactor(0.1)
+            .build();
+        ```
+      type: feat
+  createdAt: "2026-07-09"
+  irVersion: 66
+- version: 4.11.2
+  changelogEntry:
+    - summary: |
+        Fix a thread-safety bug in the generated OAuth and inferred-auth token
+        caches. `OAuthTokenSupplier` and `InferredAuthTokenSupplier` now use
+        double-checked locking with `volatile` cache fields, so the token/header
+        cache (a singleton shared across all request threads) is refreshed exactly
+        once under concurrent load (single-flight) and cached values are safely
+        published across threads. The cache-hit path stays lock-free.
+        `OAuthAuthProvider`'s existing double-checked locking is corrected by
+        marking its `accessToken`/`expiresAt` fields `volatile`. No public API
+        changes; generated code remains Java 8 compatible.
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 66
+- version: 4.11.1
+  changelogEntry:
+    - summary: |
+        Fix misleading "Network error" message when deserialization fails. JSON deserialization
+        errors (e.g. unsupported date formats) are now reported as "Failed to deserialize response"
+        instead of being incorrectly wrapped as network errors.
+      type: fix
+    - summary: |
+        Add RFC 1123 (RFC 2822) date format support to DateTimeDeserializer. Dates like
+        "Thu, 07 May 2026 14:23:38 +0000" are now parsed correctly.
+      type: fix
+  createdAt: "2026-07-02"
+  irVersion: 66
+- version: 4.11.0
+  changelogEntry:
+    - summary: |
+        Fix URL building for paths with non-slash-separated suffixes (e.g.,
+        `/{Sid}.json`). The suffix is now correctly concatenated with the path
+        parameter value instead of being added as a separate path segment,
+        which previously caused an extra `/` before the suffix.
+      type: fix
+    - summary: |
+        Add per-request `maxRetries` override on `RequestOptions`. A non-null
+        per-request value overrides the client-wide `ClientOptions.maxRetries`;
+        when unset, behavior is unchanged. Mirrors the existing per-request
+        `timeout` override pattern and matches the behavior of the TypeScript,
+        Python, Go, C#, PHP, Rust, and Swift SDKs.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 66
+- version: 4.10.19
+  changelogEntry:
+    - summary: |
+        Remove duplicate JavaDoc descriptions in staged builder implementation methods.
+        Previously, builder methods would display the field description twice in IDE
+        inline documentation.
+      type: fix
+  createdAt: "2026-06-25"
+  irVersion: 66
+- version: 4.10.18
+  changelogEntry:
+    - summary: |
+        Bump jackson from 2.18.8 to 2.22.0 to fix CVE-2026-54515.
+        2.18.9 backport not yet published; 2.22.0 is the first available release with the fix.
+      type: chore
+  createdAt: "2026-06-25"
+  irVersion: 66
+- version: 4.10.17
+  changelogEntry:
+    - summary: |
+        Make the generated Maven Central publish configuration compatible with Java 8 builds by only resolving and applying the sonatype-central-upload plugin (which requires a Java 11+ runtime) when the build runs on Java 11 or newer.
+      type: fix
+  createdAt: "2026-06-25"
+  irVersion: 66
+- version: 4.10.16
+  changelogEntry:
+    - summary: |
+        Bump jackson-databind from 2.18.6 to 2.18.8 to fix CVE-2026-54513
+        (allowIfSubTypeIsArray bypass) and CVE-2026-54514 (InetSocketAddress SSRF).
+      type: chore
+  createdAt: "2026-06-24"
+  irVersion: 66
+- version: 4.10.15
+  changelogEntry:
+    - summary: |
+        Support extending a type alias that resolves to an object. Previously the generator crashed with "Non-objects cannot be extended"; it now resolves the alias to its underlying object declaration when generating the interface.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 4.10.14
+  changelogEntry:
+    - summary: |
+        Generate Java 8 compatible endpoint security metadata. The EndpointMetadata
+        class and raw clients no longer emit Java 9+ List.of()/Map.of() calls, so
+        SDKs with per-endpoint security requirements compile under Java 8.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 4.10.13
+  changelogEntry:
+    - summary: |
+        Enable the `exhaustive:local-files` seed fixture by skipping the Gradle build
+        scripts for source-only `local_files` output (which has no Gradle project).
+      type: chore
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 4.10.12
+  changelogEntry:
+    - summary: |
+        Fix inferred auth token supplier generation when the token endpoint's request body is a referenced (named) type rather than an inlined body. The supplier now resolves the referenced type's properties and passes the required token-request properties to the builder, instead of calling `builder().build()` on a staged builder that has required properties.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 4.10.11
+  changelogEntry:
+    - summary: |
+        Fix OAuth client-credentials token supplier generation so the mapped `scopes` request property is set on the token request builder, preventing a compile error when the token endpoint uses a custom scopes property.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 4.10.10
+  changelogEntry:
+    - summary: |
+        Fix generated raw clients for cursor pagination whose deep cursor path navigates through inline
+        types or repeats property names. The generator no longer emits duplicate local variable names,
+        uses the correct type names in method references, and passes the navigated value (instead of a
+        type literal) when rebuilding the next-page request.
+      type: fix
+    - summary: |
+        Fix compilation of generated models that have a wrapped-alias property whose alias resolves to a nullable type. The builder now declares the backing field and a default setter for these properties, so the model compiles.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 4.10.9
+  changelogEntry:
+    - summary: |
+        Fix two Java SDK compile errors. Endpoint method overloads that omit the wrapped
+        request (or pass only the request body) are no longer generated when the request has a
+        required service-level header, since the staged builder cannot be `.build()` without it.
+        Dynamic snippets now fully-qualify class references when two types share the same simple
+        name instead of emitting clashing single-type imports.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 4.10.8
+  changelogEntry:
+    - summary: |
+        Wrap `optional(nullable(T))` request bodies exactly once in generated dynamic snippets and wire tests so they match the generated method signature and compile. This also fixes a double-wrap (`OptionalNullable.of(OptionalNullable.of(...))`) when `collapse-optional-nullable` is enabled.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 4.10.7
+  changelogEntry:
+    - summary: |
+        Fixed nested optional/nullable type generation in code examples under
+        `collapse-optional-nullable`. The snippet type mapper now collapses nested
+        same-kind wrappers (`optional<optional<T>>`, `nullable<nullable<T>>`) into a
+        single `OptionalNullable<T>`, matching the literal mapper and avoiding
+        type/value mismatches in generated examples.
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 66
+- version: 4.10.6
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation to reference the correct nested class names for inline
+        types. Inline types within objects, discriminated unions, and undiscriminated unions are
+        now resolved to their actual generated nested class (e.g. `Parent.Bar.Type1`) instead of a
+        mangled top-level name, so generated snippets compile.
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 66
+- version: 4.10.5
+  changelogEntry:
+    - summary: |
+        Fix Java SDK generation for the `use-nullable-annotation` and
+        `collapse-optional-nullable` configurations.
+
+        - Dynamic snippets now honor these config flags when emitting nullable and
+          optional values, so a nullable property rendered as a raw (non-`Optional`)
+          value no longer produces type mismatches such as
+          `Email cannot be converted to Nullable<Email>`.
+        - Staged-builder method calls in snippets are now ordered correctly: required
+          stages first, then the final-stage (optional, nullable, and collection)
+          properties. Collections (`list`/`set`/`map`) are treated as final-stage
+          properties to match v1's staged builders.
+        - Builder setters on the default (non-staged) builder no longer emit a
+          spurious `@Override` annotation, which previously failed to compile for
+          nullable request properties (e.g. `FilterByRoleRequest`).
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 66
+- version: 4.10.4
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation for endpoints with an optional request body
+        that wraps a nullable type (e.g. `optional<nullable<T>>`). The snippet now
+        wraps the body in `Optional.of(...)` so it matches the generated client
+        method signature and compiles.
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 66
+- version: 4.10.3
+  changelogEntry:
+    - summary: |
+        Support endpoints whose streaming behavior is toggled by a request parameter
+        ("stream parameter"). The SDK now resolves the streaming response variant for
+        these endpoints instead of failing generation.
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 66
+- version: 4.10.2
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now compile for endpoints that inline file properties into the
+        request builder (`inline-file-properties: true`). File builder fields are typed as
+        `java.io.File`, so snippets render `new File("path/to/file")` (with a placeholder
+        path when the example omits a file) instead of a `FileStream`, and body properties
+        are emitted before file properties so a required body property's staged-builder step
+        precedes an optional file step.
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 66
 - version: 4.10.1
   changelogEntry:
     - summary: |

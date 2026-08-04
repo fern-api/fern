@@ -11,6 +11,27 @@ interface PreviewDeployment {
     updatedAt: string;
 }
 
+/** A single docs-url entry as returned by FDR's `listAllDocsUrls`. */
+type DocsUrlItem = Awaited<
+    ReturnType<ReturnType<typeof createFdrService>["docs"]["v2"]["read"]["listAllDocsUrls"]>
+>["urls"][number];
+
+/**
+ * Maps FDR docs-url items to preview deployments. Preview deployments are
+ * filtered entirely server-side (preview: true -> the isPreview column in FDR),
+ * so there is intentionally NO client-side URL filtering: the domain suffix is
+ * shared with production sites and so can't distinguish previews, and any
+ * URL-shape filter here would risk silently hiding valid previews the server
+ * returned (as a prior hex-only pattern did to named --id previews).
+ */
+export function toPreviewDeployments(urls: readonly DocsUrlItem[]): PreviewDeployment[] {
+    return urls.map((item) => ({
+        url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
+        organizationId: item.organizationId,
+        updatedAt: item.updatedAt
+    }));
+}
+
 export async function listDocsPreview({
     cliContext,
     limit,
@@ -64,17 +85,7 @@ export async function listDocsPreview({
             }
         }
 
-        // Preview URLs match the pattern: {org}-preview-{hash}.docs.buildwithfern.com
-        // The hash can be alphanumeric or a UUID with hyphens (e.g., 9b2b47f0-c44b-4338-b579-46872f33404a)
-        const previewUrlPattern = /-preview-[a-f0-9-]+\.docs\.buildwithfern\.com$/;
-
-        const previewDeployments: PreviewDeployment[] = listResponse.urls
-            .filter((item) => previewUrlPattern.test(item.domain))
-            .map((item) => ({
-                url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
-                organizationId: item.organizationId,
-                updatedAt: item.updatedAt
-            }));
+        const previewDeployments = toPreviewDeployments(listResponse.urls);
 
         if (previewDeployments.length === 0) {
             context.logger.info("No preview deployments found.");

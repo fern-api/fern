@@ -5,6 +5,8 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { HmacAlgorithm } from "./HmacAlgorithm.js";
+import { WebhookBodyHashBinding } from "./WebhookBodyHashBinding.js";
+import { WebhookNotificationUrlNormalization } from "./WebhookNotificationUrlNormalization.js";
 import { WebhookPayloadFormat } from "./WebhookPayloadFormat.js";
 import { WebhookSignatureEncoding } from "./WebhookSignatureEncoding.js";
 import { WebhookTimestampConfig } from "./WebhookTimestampConfig.js";
@@ -19,6 +21,8 @@ export const HmacSignatureVerification: core.serialization.ObjectSchema<
     signaturePrefix: core.serialization.string().optional(),
     payloadFormat: WebhookPayloadFormat,
     timestamp: WebhookTimestampConfig.optional(),
+    bodyHashBinding: WebhookBodyHashBinding.optional(),
+    notificationUrlNormalization: WebhookNotificationUrlNormalization.optional(),
 });
 
 export declare namespace HmacSignatureVerification {
@@ -29,5 +33,7 @@ export declare namespace HmacSignatureVerification {
         signaturePrefix?: string | null;
         payloadFormat: WebhookPayloadFormat.Raw;
         timestamp?: WebhookTimestampConfig.Raw | null;
+        bodyHashBinding?: WebhookBodyHashBinding.Raw | null;
+        notificationUrlNormalization?: WebhookNotificationUrlNormalization.Raw | null;
     }
 }

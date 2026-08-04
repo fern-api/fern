@@ -19,7 +19,7 @@ var (
 )
 
 type DoubleOptional struct {
-	OptionalAlias *OptionalAlias `json:"optionalAlias,omitempty" url:"optionalAlias,omitempty"`
+	OptionalAlias OptionalAlias `json:"optionalAlias,omitempty" url:"optionalAlias,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -28,7 +28,7 @@ type DoubleOptional struct {
 	rawJSON         json.RawMessage
 }
 
-func (d *DoubleOptional) GetOptionalAlias() *OptionalAlias {
+func (d *DoubleOptional) GetOptionalAlias() OptionalAlias {
 	if d == nil {
 		return nil
 	}
@@ -51,7 +51,7 @@ func (d *DoubleOptional) require(field *big.Int) {
 
 // SetOptionalAlias sets the OptionalAlias field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DoubleOptional) SetOptionalAlias(optionalAlias *OptionalAlias) {
+func (d *DoubleOptional) SetOptionalAlias(optionalAlias OptionalAlias) {
 	d.OptionalAlias = optionalAlias
 	d.require(doubleOptionalFieldOptionalAlias)
 }

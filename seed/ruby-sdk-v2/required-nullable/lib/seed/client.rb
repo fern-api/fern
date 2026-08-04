@@ -14,6 +14,12 @@ module Seed
     # @option params [String] :required_baz
     # @option params [String, nil] :required_nullable_baz
     #
+    # @example
+    #   client.get_foo(
+    #     required_baz: "required_baz",
+    #     required_nullable_baz: "required_nullable_baz"
+    #   )
+    #
     # @return [Seed::Types::Foo]
     def get_foo(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -53,6 +59,15 @@ module Seed
     # @option request_options [Integer] :timeout_in_seconds
     # @option params [String] :id
     # @option params [String] :x_idempotency_key
+    #
+    # @example
+    #   client.update_foo(
+    #     id: "id",
+    #     x_idempotency_key: "X-Idempotency-Key",
+    #     nullable_text: "nullable_text",
+    #     nullable_number: 1.1,
+    #     non_nullable_text: "non_nullable_text"
+    #   )
     #
     # @return [Seed::Types::Foo]
     def update_foo(request_options: {}, **params)

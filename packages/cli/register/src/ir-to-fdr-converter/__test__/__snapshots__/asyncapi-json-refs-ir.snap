@@ -42,6 +42,7 @@
   "errors": {},
   "fdrApiDefinitionId": undefined,
   "generationMetadata": undefined,
+  "globalParameters": undefined,
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
@@ -71,6 +72,7 @@
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
+    "idempotencyKeyGeneration": undefined,
     "isAuthMandatory": true,
     "platformHeaders": {
       "language": "",
@@ -86,6 +88,7 @@
   },
   "services": {},
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_plantOrders": {
       "displayName": undefined,
@@ -262,6 +265,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -406,6 +410,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,

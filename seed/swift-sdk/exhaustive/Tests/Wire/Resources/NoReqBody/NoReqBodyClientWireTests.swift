@@ -6,7 +6,7 @@ import Exhaustive
     @Test func getWithNoRequestBody1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string",
@@ -52,7 +52,9 @@ import Exhaustive
                 "list",
                 "list"
             ]),
-            set: Optional([]),
+            set: Optional(JSONValue.array([
+                JSONValue.string("set")
+            ])),
             map: Optional([
                 1: "map"
             ]),
@@ -65,7 +67,7 @@ import Exhaustive
     @Test func postWithNoRequestBody1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8

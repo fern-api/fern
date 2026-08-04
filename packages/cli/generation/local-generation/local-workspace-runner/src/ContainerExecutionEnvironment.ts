@@ -7,7 +7,9 @@ import {
     CONTAINER_PATH_TO_IR,
     CONTAINER_PATH_TO_SNIPPET,
     CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
-    DEFAULT_NODE_DEBUG_PORT
+    DEFAULT_NODE_DEBUG_PORT,
+    TYPE_RELOCATIONS_FILENAME,
+    TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR
 } from "./constants.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 
@@ -78,7 +80,13 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
             binds.push(`${sourceMount.hostPath}:${sourceMount.containerPath}:ro`);
         }
 
-        const envVars: Record<string, string> = {};
+        const envVars: Record<string, string> = {
+            // Generators that relocate types to break import cycles write the
+            // relocations here (inside the bind-mounted output dir, so it is
+            // host-readable). The host applies them to its dynamic snippet IR
+            // and deletes the file before copying generated output.
+            [TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR]: `${CONTAINER_CODEGEN_OUTPUT_DIRECTORY}/${TYPE_RELOCATIONS_FILENAME}`
+        };
         const ports: Record<string, string> = {};
         if (inspect) {
             envVars["NODE_OPTIONS"] = `--inspect-brk=0.0.0.0:${DEFAULT_NODE_DEBUG_PORT}`;

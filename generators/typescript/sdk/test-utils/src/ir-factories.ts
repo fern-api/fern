@@ -167,7 +167,8 @@ export function createQueryParameter(
         docs: undefined,
         availability: undefined,
         explode: undefined,
-        clientDefault: undefined
+        clientDefault: undefined,
+        defaultValue: undefined
     };
 }
 
@@ -216,7 +217,8 @@ export function createHttpHeader(
         v2Examples: undefined,
         docs: opts?.docs,
         availability: undefined,
-        clientDefault: undefined
+        clientDefault: undefined,
+        defaultValue: undefined
     };
 }
 
@@ -234,7 +236,8 @@ export function createInlinedRequestBodyProperty(
         docs: opts?.docs,
         availability: undefined,
         v2Examples: undefined,
-        propertyAccess: undefined
+        propertyAccess: undefined,
+        defaultValue: undefined
     };
 }
 
@@ -298,6 +301,7 @@ export function createHttpEndpoint(opts?: {
         displayName: undefined,
         method: "POST",
         headers: opts?.headers ?? [],
+        globalParameters: undefined,
         responseHeaders: undefined,
         baseUrl: undefined,
         v2BaseUrls: undefined,
@@ -326,7 +330,8 @@ export function createHttpEndpoint(opts?: {
         retries: undefined,
         apiPlayground: undefined,
         docs: opts?.docs,
-        availability: undefined
+        availability: undefined,
+        subtitle: undefined
     };
 }
 
@@ -372,7 +377,8 @@ export function createObjectProperty(
         docs: opts?.docs,
         availability: undefined,
         v2Examples: undefined,
-        propertyAccess: undefined
+        propertyAccess: undefined,
+        defaultValue: undefined
     };
 }
 

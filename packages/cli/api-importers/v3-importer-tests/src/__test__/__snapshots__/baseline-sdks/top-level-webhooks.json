@@ -35,6 +35,7 @@
     },
     "type": "header"
   },
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-webhook`.",
   "auth": {

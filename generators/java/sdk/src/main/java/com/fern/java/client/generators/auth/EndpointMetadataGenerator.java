@@ -19,12 +19,17 @@ package com.fern.java.client.generators.auth;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.lang.model.element.Modifier;
@@ -50,6 +55,8 @@ public final class EndpointMetadataGenerator extends AbstractFileGenerator {
         ParameterizedTypeName schemeMapType =
                 ParameterizedTypeName.get(ClassName.get(Map.class), ClassName.get(String.class), scopesType);
         ParameterizedTypeName securityType = ParameterizedTypeName.get(ClassName.get(List.class), schemeMapType);
+        ParameterizedTypeName schemeEntryType =
+                ParameterizedTypeName.get(ClassName.get(Map.Entry.class), ClassName.get(String.class), scopesType);
 
         FieldSpec securityField = FieldSpec.builder(securityType, "security", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
@@ -76,7 +83,39 @@ public final class EndpointMetadataGenerator extends AbstractFileGenerator {
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                         .addJavadoc("Creates an EndpointMetadata with no security requirements.\n")
                         .returns(className)
-                        .addStatement("return new $T($T.of())", className, List.class)
+                        .addStatement("return new $T($T.emptyList())", className, Collections.class)
+                        .build())
+                .addMethod(MethodSpec.methodBuilder("of")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                        .addAnnotation(SafeVarargs.class)
+                        .varargs(true)
+                        .addJavadoc("Creates an EndpointMetadata from the given alternative security requirements.\n")
+                        .addParameter(ArrayTypeName.of(schemeMapType), "requirements")
+                        .returns(className)
+                        .addStatement("return new $T($T.asList(requirements))", className, Arrays.class)
+                        .build())
+                .addMethod(MethodSpec.methodBuilder("requirement")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                        .addAnnotation(SafeVarargs.class)
+                        .varargs(true)
+                        .addJavadoc("Builds a single security requirement from its schemes (all must be satisfied).\n")
+                        .addParameter(ArrayTypeName.of(schemeEntryType), "schemes")
+                        .returns(schemeMapType)
+                        .addStatement("$T result = new $T<>()", schemeMapType, LinkedHashMap.class)
+                        .beginControlFlow("for ($T scheme : schemes)", schemeEntryType)
+                        .addStatement("result.put(scheme.getKey(), scheme.getValue())")
+                        .endControlFlow()
+                        .addStatement("return result")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder("scheme")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                        .varargs(true)
+                        .addJavadoc("Associates a scheme name with its required scopes.\n")
+                        .addParameter(ClassName.get(String.class), "name")
+                        .addParameter(ArrayTypeName.of(ClassName.get(String.class)), "scopes")
+                        .returns(schemeEntryType)
+                        .addStatement(
+                                "return new $T<>(name, $T.asList(scopes))", AbstractMap.SimpleEntry.class, Arrays.class)
                         .build())
                 .build();
 

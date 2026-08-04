@@ -72,7 +72,8 @@ function createMockFileContext() {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             })
         },
@@ -86,6 +87,7 @@ function createMockFileContext() {
                         getReferenceTo: () => ts.factory.createTypeReferenceNode("ErrorUnion"),
                         discriminant: "errorName",
                         visitPropertyName: "_visit",
+                        getEffectiveBaseProperties: () => [],
                         getBasePropertyKey: (key: string) => key,
                         buildFromExistingValue: ({ existingValue }: { existingValue: ts.Expression }) => existingValue,
                         buildUnknown: ({ existingValue }: { existingValue: ts.Expression }) => existingValue
@@ -748,7 +750,8 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 response: {
                     body: FernIr.HttpResponseBody.text({
                         v2Examples: undefined,
-                        docs: undefined
+                        docs: undefined,
+                        contentType: undefined
                     }),
                     statusCode: undefined,
                     isWildcardStatusCode: undefined,
@@ -1222,7 +1225,8 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                     properties: [],
                     extends: [],
                     extraProperties: true,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             });
             const schemas = createEndpointSchemas({

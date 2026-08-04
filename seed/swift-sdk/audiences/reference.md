@@ -1,6 +1,6 @@
 # Reference
 ## FolderA Service
-<details><summary><code>client.folderA.service.<a href="/Sources/Resources/FolderA/Service/ServiceClient.swift">getDirectThread</a>(ids: String, tags: String, requestOptions: RequestOptions?) -> Response</code></summary>
+<details><summary><code>client.folderA.service.<a href="/Sources/Resources/FolderA/Service/ServiceClient.swift">getDirectThread</a>(ids: [String], tags: [String], requestOptions: RequestOptions?) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -19,7 +19,14 @@ import Audiences
 private func main() async throws {
     let client = AudiencesClient()
 
-    _ = try await client.folderA.service.getDirectThread()
+    _ = try await client.folderA.service.getDirectThread(
+        ids: [
+            "ids"
+        ],
+        tags: [
+            "tags"
+        ]
+    )
 }
 
 try await main()
@@ -37,7 +44,7 @@ try await main()
 <dl>
 <dd>
 
-**ids:** `String` 
+**ids:** `[String]` 
     
 </dd>
 </dl>
@@ -45,7 +52,7 @@ try await main()
 <dl>
 <dd>
 
-**tags:** `String` 
+**tags:** `[String]` 
     
 </dd>
 </dl>

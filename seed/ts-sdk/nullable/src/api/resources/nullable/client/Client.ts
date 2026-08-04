@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedNullable from "../../../index.js";
@@ -24,6 +25,9 @@ export class NullableClient {
     /**
      * @param {SeedNullable.GetUsersRequest} request
      * @param {NullableClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableError}
+     * @throws {@link errors.SeedNullableTimeoutError}
      *
      * @example
      *     await client.nullable.getUsers({
@@ -92,6 +96,9 @@ export class NullableClient {
      * @param {SeedNullable.CreateUserRequest} request
      * @param {NullableClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNullableError}
+     * @throws {@link errors.SeedNullableTimeoutError}
+     *
      * @example
      *     await client.nullable.createUser({
      *         username: "username",
@@ -134,7 +141,7 @@ export class NullableClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -159,6 +166,9 @@ export class NullableClient {
     /**
      * @param {SeedNullable.DeleteUserRequest} request
      * @param {NullableClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableError}
+     * @throws {@link errors.SeedNullableTimeoutError}
      *
      * @example
      *     await client.nullable.deleteUser({
@@ -188,7 +198,7 @@ export class NullableClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

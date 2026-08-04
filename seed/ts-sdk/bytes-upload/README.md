@@ -44,7 +44,7 @@ Instantiate and use the client with the following:
 import { createReadStream } from "fs";
 import { SeedBytesUploadClient } from "@fern/bytes-upload";
 
-const client = new SeedBytesUploadClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedBytesUploadClient({ baseUrl: "YOUR_BASE_URL" });
 await client.service.upload(createReadStream("path/to/file"));
 ```
 

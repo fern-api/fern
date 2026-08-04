@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "multi-url-environment-no-default",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -54,6 +55,7 @@
                     "id": "endpoint_ec2.bootInstance",
                     "name": "bootInstance",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -186,6 +188,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -224,6 +227,7 @@
                     "id": "endpoint_s3.getPresignedUrl",
                     "name": "getPresignedUrl",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -385,6 +389,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -447,6 +452,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -982,6 +988,7 @@
             }
         },
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -990,7 +997,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_ec2": {
@@ -1061,6 +1069,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

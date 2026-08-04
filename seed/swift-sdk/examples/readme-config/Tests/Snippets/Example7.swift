@@ -8,6 +8,9 @@ enum Example7 {
             token: "<token>"
         )
 
-        _ = try await client.file.service.getFile(filename: "filename")
+        _ = try await client.file.service.getFile(
+            filename: "filename",
+            xFileApiVersion: "X-File-API-Version"
+        )
     }
 }

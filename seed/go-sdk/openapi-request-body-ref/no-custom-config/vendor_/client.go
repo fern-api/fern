@@ -34,6 +34,18 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.UpdateVendorBody{
+//	    VendorID: "vendor_id",
+//	    Body: &fern.UpdateVendorRequest{
+//	        Name: "name",
+//	    },
+//	}
+//	client.Vendor.UpdateVendor(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UpdateVendor(
 	ctx context.Context,
 	request *fern.UpdateVendorBody,
@@ -50,6 +62,15 @@ func (c *Client) UpdateVendor(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.CreateVendorRequest{
+//	    Name: "name",
+//	}
+//	client.Vendor.CreateVendor(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateVendor(
 	ctx context.Context,
 	request *fern.CreateVendorRequest,

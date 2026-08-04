@@ -136,7 +136,6 @@ public final class OutboundCallConversationsResponse {
 
         /**
          * <p>Always true for this response.</p>
-         * <p>Always true for this response.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

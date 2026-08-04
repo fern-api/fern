@@ -179,6 +179,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.getCoreJsonClassReference("JsonApiRequest");
     }
 
+    public getUrlEncodedApiRequestClassReference(): php.ClassReference {
+        return this.getCoreClientClassReference("UrlEncodedApiRequest");
+    }
+
     public getJsonDecoderClassReference(): php.ClassReference {
         return this.getCoreJsonClassReference("JsonDecoder");
     }
@@ -370,9 +374,32 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             });
         }
 
+        // When the opt-in `allowUserAgentAppInfo` config is enabled, the generated
+        // client accepts an optional `appInfo` product token whose value is appended
+        // to the `User-Agent` header. This key is only surfaced when the flag is on so
+        // that clients which do not opt in keep byte-identical generated output.
+        if (this.customConfig.allowUserAgentAppInfo) {
+            options.push({
+                key: this.getAppInfoOptionName(),
+                valueType: php.Type.typeDict(
+                    [
+                        { key: "name", valueType: php.Type.string() },
+                        { key: "version", valueType: php.Type.string(), optional: true },
+                        { key: "comment", valueType: php.Type.string(), optional: true }
+                    ],
+                    { multiline: false }
+                ),
+                optional: true
+            });
+        }
+
         return php.Type.typeDict(options, {
             multiline: true
         });
+    }
+
+    public getAppInfoOptionName(): string {
+        return "appInfo";
     }
 
     public getRequestOptionsType({ endpoint }: { endpoint: FernIr.HttpEndpoint }): php.Type {
@@ -602,10 +629,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getCoreAsIsFiles(): string[] {
-        return [
+        const files = [
             AsIsFiles.BaseApiRequest,
             AsIsFiles.HttpMethod,
             AsIsFiles.JsonApiRequest,
+            AsIsFiles.UrlEncodedApiRequest,
             AsIsFiles.RawClient,
             AsIsFiles.RetryDecoratingClient,
             AsIsFiles.HttpClientBuilder,
@@ -617,6 +645,25 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             ...this.getCoreStreamAsIsFiles(),
             ...this.getCoreSerializationAsIsFiles()
         ];
+        // Only ship the idempotency key helper when the IR enables idempotency-key generation.
+        if (this.ir.sdkConfig.idempotencyKeyGeneration != null) {
+            files.push(AsIsFiles.IdempotencyKey);
+        }
+        if (this.hasHmacWebhookSignatureVerification()) {
+            files.push(AsIsFiles.WebhookSignature);
+        }
+        return files;
+    }
+
+    private hasHmacWebhookSignatureVerification(): boolean {
+        for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
+            for (const webhook of webhookGroup) {
+                if (webhook.signatureVerification?.type === "hmac") {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private getCoreStreamAsIsFiles(): string[] {
@@ -658,8 +705,13 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.RawClientTest,
             ...this.getCoreStreamTestAsIsFiles(),
             ...this.getCorePagerTestAsIsFiles(),
-            ...this.getCoreSerializationTestAsIsFiles()
+            ...this.getCoreSerializationTestAsIsFiles(),
+            ...this.getCoreWebhookTestAsIsFiles()
         ];
+    }
+
+    private getCoreWebhookTestAsIsFiles(): string[] {
+        return this.hasHmacWebhookSignatureVerification() ? [AsIsFiles.WebhookSignatureTest] : [];
     }
 
     private getCoreStreamTestAsIsFiles(): string[] {
@@ -814,12 +866,13 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getOauth(): FernIr.OAuthScheme | undefined {
-        if (
-            this.ir.auth.schemes[0] != null &&
-            this.ir.auth.schemes[0].type === "oauth" &&
-            this.config.generateOauthClients
-        ) {
-            return this.ir.auth.schemes[0];
+        if (!this.config.generateOauthClients) {
+            return undefined;
+        }
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return scheme;
+            }
         }
         return undefined;
     }
@@ -831,5 +884,23 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             }
         }
         return undefined;
+    }
+
+    /**
+     * Whether the API routes auth per-endpoint: each endpoint declares its own set of
+     * required auth schemes (via `HttpEndpoint.security`) rather than applying every
+     * configured scheme's credentials flatly to every request. When true, the flat
+     * auth-header wiring is suppressed and a RoutingAuthProvider selects the schemes
+     * for each endpoint at call time.
+     */
+    public isEndpointSecurity(): boolean {
+        return this.ir.auth.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity;
+    }
+
+    public getRoutingAuthProviderClassReference(): php.ClassReference {
+        return php.classReference({
+            name: "RoutingAuthProvider",
+            namespace: this.getCoreNamespace()
+        });
     }
 }

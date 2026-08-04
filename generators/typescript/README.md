@@ -197,13 +197,44 @@ const acme = new AcmeClient({
 });
 ```
 
-#### ✨ `defaultTimeoutInSeconds`
+#### ✨ `requireBaseUrl`
 
-**Type:** number
+**Type:** boolean
+
+**Default:** `false`
+
+When enabled, `baseUrl` becomes a required client option and `environment` becomes optional. Use this if your
+users always pass an explicit server URL and have no concept of named environments:
+
+```typescript
+const acme = new AcmeClient({
+  baseUrl: "https://acme.example.com"
+});
+```
+
+Ignored for APIs that define multiple base URLs, since those clients resolve each URL from `environment`.
+
+#### ✨ `defaultTimeout`
+
+**Type:** number | `"infinity"`
+
+**Default:** 60000
+
+The default timeout for network requests, in **milliseconds** (idiomatic for JavaScript/TypeScript,
+e.g. `setTimeout` and `AbortSignal.timeout(ms)`). Use `"infinity"` to disable the timeout. In the
+generated client, this can be overridden at the request level.
+
+#### `defaultTimeoutInSeconds`
+
+> [!WARNING]
+> Deprecated. Use [`defaultTimeout`](#-defaulttimeout) (milliseconds) instead.
+
+**Type:** number | `"infinity"`
 
 **Default:** 60
 
-The default timeout for network requests. In the generated client, this can be overridden at the request level.
+The default timeout for network requests, in seconds. When set, it is converted to milliseconds
+(× 1000). `defaultTimeout` takes precedence when both are provided.
 
 #### ✨ `skipResponseValidation`
 

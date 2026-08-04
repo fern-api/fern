@@ -34,6 +34,15 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := map[string]any{
+//	    "key": "value",
+//	}
+//	client.Unknown.Post(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Post(
 	ctx context.Context,
 	request any,
@@ -50,6 +59,17 @@ func (c *Client) Post(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.MyObject{
+//	    Unknown: map[string]any{
+//	        "key": "value",
+//	    },
+//	}
+//	client.Unknown.PostObject(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) PostObject(
 	ctx context.Context,
 	request *fern.MyObject,

@@ -6,7 +6,7 @@ import Exhaustive
     @Test func getWithPath1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -28,7 +28,7 @@ import Exhaustive
     @Test func getWithInlinePath1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -50,7 +50,7 @@ import Exhaustive
     @Test func modifyWithPath1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -73,7 +73,7 @@ import Exhaustive
     @Test func modifyWithInlinePath1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -96,7 +96,7 @@ import Exhaustive
     @Test func uploadWithPath1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "uploaded"
@@ -120,10 +120,77 @@ import Exhaustive
         try #require(response == expectedResponse)
     }
 
+    @Test func createWithBodyAndQuery1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data(
+                #"""
+                {
+                  "string": "string",
+                  "integer": 1,
+                  "long": 1000000,
+                  "double": 1.1,
+                  "bool": true,
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "date": "2023-01-15",
+                  "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "base64": "SGVsbG8gd29ybGQh",
+                  "list": [
+                    "list",
+                    "list"
+                  ],
+                  "set": [
+                    "set"
+                  ],
+                  "map": {
+                    "1": "map"
+                  },
+                  "bigint": "1000000"
+                }
+                """#.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ObjectWithOptionalField(
+            string: Optional("string"),
+            integer: Optional(1),
+            long: Optional(1000000),
+            double: Optional(1.1),
+            bool: Optional(true),
+            datetime: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+            date: Optional(CalendarDate("2023-01-15")!),
+            uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
+            base64: Optional("SGVsbG8gd29ybGQh"),
+            list: Optional([
+                "list",
+                "list"
+            ]),
+            set: Optional(JSONValue.array([
+                JSONValue.string("set")
+            ])),
+            map: Optional([
+                1: "map"
+            ]),
+            bigint: Optional("1000000")
+        )
+        let response = try await client.endpoints.params.createWithBodyAndQuery(
+            fields: "_fields",
+            request: ObjectWithRequiredField(
+                string: "string"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
     @Test func getWithBooleanPath1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -145,7 +212,7 @@ import Exhaustive
     @Test func getWithPathAndErrors1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8

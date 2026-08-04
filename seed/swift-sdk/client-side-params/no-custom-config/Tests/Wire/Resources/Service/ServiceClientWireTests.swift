@@ -6,7 +6,7 @@ import ClientSideParams
     @Test func listResources1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -88,7 +88,7 @@ import ClientSideParams
     @Test func getResource1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -136,7 +136,7 @@ import ClientSideParams
     @Test func searchResources1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "results": [
@@ -229,7 +229,7 @@ import ClientSideParams
     @Test func listUsers1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "users": [
@@ -484,7 +484,7 @@ import ClientSideParams
     @Test func getUserById1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "user_id": "user_id",
@@ -612,7 +612,7 @@ import ClientSideParams
     @Test func createUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "user_id": "user_id",
@@ -756,7 +756,7 @@ import ClientSideParams
     @Test func updateUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "user_id": "user_id",
@@ -901,7 +901,7 @@ import ClientSideParams
     @Test func listConnections1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -1035,7 +1035,7 @@ import ClientSideParams
     @Test func getConnection1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -1110,7 +1110,7 @@ import ClientSideParams
     @Test func listClients1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "start": 1,
@@ -1484,7 +1484,7 @@ import ClientSideParams
     @Test func getClient1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "client_id": "client_id",

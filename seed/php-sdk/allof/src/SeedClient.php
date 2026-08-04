@@ -71,6 +71,13 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->searchRuleTypes(
+     *     new SearchRuleTypesRequest([]),
+     * );
+     * ```
+     *
      * @param SearchRuleTypesRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -122,6 +129,16 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->createRule(
+     *     new RuleCreateRequest([
+     *         'name' => 'name',
+     *         'executionContext' => RuleCreateRequestExecutionContext::Prod->value,
+     *     ]),
+     * );
+     * ```
+     *
      * @param RuleCreateRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -169,6 +186,11 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->listUsers();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -214,6 +236,11 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getEntity();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -259,6 +286,11 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getOrganization();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -305,6 +337,18 @@ class SeedClient
 
     /**
      * Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+     *
+     * Example:
+     * ```php
+     * $client->createPlant(
+     *     new PlantPost([
+     *         'species' => 'species',
+     *         'family' => 'family',
+     *         'genus' => 'genus',
+     *         'sunExposure' => PlantPostSunExposure::Full->value,
+     *     ]),
+     * );
+     * ```
      *
      * @param PlantPost $request
      * @param ?array{
@@ -354,6 +398,15 @@ class SeedClient
 
     /**
      * Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+     *
+     * Example:
+     * ```php
+     * $client->createTree(
+     *     new TreeRecord([
+     *         'id' => 'id',
+     *     ]),
+     * );
+     * ```
      *
      * @param TreeRecord $request
      * @param ?array{

@@ -31,7 +31,14 @@ export interface SdkCustomConfig {
     includeOtherInUnionTypes: boolean;
     enableForwardCompatibleEnums: boolean;
     requireDefaultEnvironment: boolean;
-    defaultTimeoutInSeconds: number | "infinity" | undefined;
+    requireBaseUrl: boolean;
+    /**
+     * Effective default request timeout in milliseconds. Resolved from the
+     * `defaultTimeout` config key, falling back to the deprecated
+     * `defaultTimeoutInSeconds` / `timeoutInSeconds` keys (× 1000).
+     * `"infinity"` disables the timeout; `undefined` applies the built-in default.
+     */
+    defaultTimeout: number | "infinity" | undefined;
     skipResponseValidation: boolean;
     extraDependencies: Record<string, string>;
     extraDevDependencies: Record<string, string>;
@@ -63,6 +70,8 @@ export interface SdkCustomConfig {
     fetchSupport: "node-fetch" | "native";
     packagePath: string | undefined;
     omitFernHeaders: boolean | undefined;
+    includePlatformHeaders: boolean | undefined;
+    allowUserAgentAppInfo: boolean | undefined;
     useDefaultRequestParameterValues: boolean | undefined;
     packageManager: "pnpm" | "yarn";
     generateReadWriteOnlyTypes: boolean;
@@ -81,5 +90,7 @@ export interface SdkCustomConfig {
     resolveQueryParameterNameConflicts: boolean;
     maxRetries: number | undefined;
     alwaysSendAuth: boolean;
+    optionalAuth: boolean;
     retryStatusCodes: "legacy" | "recommended";
+    generateReactQueryHooks: boolean;
 }

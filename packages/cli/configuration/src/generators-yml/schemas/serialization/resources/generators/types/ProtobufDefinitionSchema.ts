@@ -4,13 +4,14 @@ import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { OverridesSchema } from "./OverridesSchema.js";
+import { SpecSourceSchema } from "./SpecSourceSchema.js";
 
 export const ProtobufDefinitionSchema: core.serialization.ObjectSchema<
     serializers.ProtobufDefinitionSchema.Raw,
     GeneratorsYml.ProtobufDefinitionSchema
 > = core.serialization.object({
     target: core.serialization.string().optional(),
-    root: core.serialization.string(),
+    root: SpecSourceSchema,
     overrides: OverridesSchema.optional(),
     "local-generation": core.serialization.boolean().optional(),
     "from-openapi": core.serialization.boolean().optional(),
@@ -20,7 +21,7 @@ export const ProtobufDefinitionSchema: core.serialization.ObjectSchema<
 export declare namespace ProtobufDefinitionSchema {
     export interface Raw {
         target?: string | null;
-        root: string;
+        root: SpecSourceSchema.Raw;
         overrides?: OverridesSchema.Raw | null;
         "local-generation"?: boolean | null;
         "from-openapi"?: boolean | null;

@@ -68,7 +68,8 @@ export declare namespace GeneratedSdkClientClassImpl {
         allowCustomFetcher: boolean;
         generateWebSocketClients: boolean;
         requireDefaultEnvironment: boolean;
-        defaultTimeoutInSeconds: number | "infinity" | undefined;
+        requireBaseUrl: boolean;
+        defaultTimeout: number | "infinity" | undefined;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
@@ -114,6 +115,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly generateWebSocketClients: boolean;
     private readonly packageResolver: PackageResolver;
     private readonly requireDefaultEnvironment: boolean;
+    private readonly requireBaseUrl: boolean;
     private readonly packageId: PackageId;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -142,7 +144,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         allowCustomFetcher,
         generateWebSocketClients,
         requireDefaultEnvironment,
-        defaultTimeoutInSeconds,
+        requireBaseUrl,
+        defaultTimeout,
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
         retainOriginalCasing,
@@ -167,6 +170,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generateWebSocketClients = generateWebSocketClients;
         this.packageResolver = packageResolver;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
+        this.requireBaseUrl = requireBaseUrl;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -257,7 +261,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         response: getGeneratedEndpointResponse({ response }),
                         generatedSdkClientClass: this,
                         includeCredentialsOnCrossOriginRequests,
-                        defaultTimeoutInSeconds,
+                        defaultTimeout,
                         includeSerdeLayer,
                         retainOriginalCasing: this.retainOriginalCasing,
                         omitUndefined: this.omitUndefined,
@@ -276,7 +280,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             endpoint,
                             generatedSdkClientClass: this,
                             includeCredentialsOnCrossOriginRequests,
-                            defaultTimeoutInSeconds,
+                            defaultTimeout,
                             request: getGeneratedEndpointRequest(),
                             response: getGeneratedEndpointResponse({
                                 response: FernIr.HttpResponseBody.fileDownload(fileDownload)
@@ -302,7 +306,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             response: getGeneratedEndpointResponse({
                                 response: FernIr.HttpResponseBody.streaming(streamingResponse)
                             }),
-                            defaultTimeoutInSeconds,
+                            defaultTimeout,
                             request: getGeneratedEndpointRequest(),
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
@@ -322,7 +326,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             response: getGeneratedEndpointResponse({
                                 response: FernIr.HttpResponseBody.streaming(streamParameter.streamResponse)
                             }),
-                            defaultTimeoutInSeconds,
+                            defaultTimeout,
                             request: getGeneratedEndpointRequest(),
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
@@ -341,7 +345,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             endpoint,
                             generatedSdkClientClass: this,
                             includeCredentialsOnCrossOriginRequests,
-                            defaultTimeoutInSeconds,
+                            defaultTimeout,
                             request: getGeneratedEndpointRequest(),
                             response: getGeneratedEndpointResponse({
                                 response: FernIr.HttpResponseBody.bytes(bytesResponse)
@@ -709,12 +713,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
                 }
             ];
-            const statements = code`
-                ${this.getCtorOptionsStatementsWithAuth(context)}
-            `;
             serviceClass.ctors.push({
                 parameters,
-                statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
+                statements: this.getCtorOptionsStatementsWithAuth(context).toString({
+                    dprintOptions: { indentWidth: 4 }
+                })
             });
         } else {
             serviceClass.ctors.push({
@@ -1068,18 +1071,30 @@ return core.makePassthroughRequest(input, init, {
     public getOptionsPropertiesForSnippet(context: FileContext): ts.ObjectLiteralElementLike[] {
         const properties: ts.ObjectLiteralElementLike[] = [];
 
-        if (!this.requireDefaultEnvironment && context.ir.environments?.defaultEnvironment == null) {
-            const firstEnvironment = context.environments.getReferenceToFirstEnvironmentEnum();
-            const environment =
-                firstEnvironment != null
-                    ? firstEnvironment.getExpression()
-                    : ts.factory.createStringLiteral("YOUR_BASE_URL");
-            properties.push(
-                ts.factory.createPropertyAssignment(
-                    GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME,
-                    environment
-                )
-            );
+        if (
+            this.requireBaseUrl ||
+            (!this.requireDefaultEnvironment && context.ir.environments?.defaultEnvironment == null)
+        ) {
+            const firstEnvironment = this.requireBaseUrl
+                ? undefined
+                : context.environments.getReferenceToFirstEnvironmentEnum();
+            if (firstEnvironment != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME,
+                        firstEnvironment.getExpression()
+                    )
+                );
+            } else {
+                // When no environments are defined, use baseUrl instead of environment
+                // to avoid confusing users who don't have a concept of environments.
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME,
+                        ts.factory.createStringLiteral("YOUR_BASE_URL")
+                    )
+                );
+            }
         }
 
         // Delegate auth snippet properties to the auth provider

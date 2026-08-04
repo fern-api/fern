@@ -61,6 +61,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
 
     public override generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void {
         const interfaces = this.singleUnionTypes.map((singleUnionType) => singleUnionType.generateInterface(context));
+        const effectiveBaseProperties = this.getEffectiveBaseProperties(context);
 
         module.addTypeAlias({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
@@ -81,15 +82,15 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
 
         for (const interfaceStructure of interfaces) {
             const interface_ = module.addInterface(interfaceStructure);
-            if (this.hasBaseInterface()) {
+            if (this.hasBaseInterface(context)) {
                 interface_.insertExtends(0, GeneratedUnionSchema.BASE_SCHEMA_NAME);
             }
         }
 
-        if (this.hasBaseInterface()) {
+        if (this.hasBaseInterface(context)) {
             module.addInterface({
                 name: GeneratedUnionSchema.BASE_SCHEMA_NAME,
-                properties: this.baseProperties.map((property) => {
+                properties: effectiveBaseProperties.map((property) => {
                     const type = context.typeSchema.getReferenceToRawType(property.valueType);
                     return {
                         name: getPropertyKey(getWireValue(property.name)),
@@ -116,7 +117,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
             rawDiscriminant: getWireValue(this.discriminant),
             singleUnionTypes: this.singleUnionTypes.map((singleUnionType) => {
                 const singleUnionTypeSchema = singleUnionType.getSchema(context);
-                if (this.hasBaseInterface()) {
+                if (this.hasBaseInterface(context)) {
                     singleUnionTypeSchema.nonDiscriminantProperties =
                         singleUnionTypeSchema.nonDiscriminantProperties.extend(
                             context.coreUtilities.zurg.Schema._fromExpression(
@@ -205,27 +206,27 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
             return;
         }
 
-        if (this.hasBaseInterface()) {
+        if (this.hasBaseInterface(context)) {
+            let baseSchema: Zurg.ObjectSchema = context.coreUtilities.zurg.object(
+                this.getEffectiveBaseProperties(context).map((baseProperty) => ({
+                    key: {
+                        raw: getWireValue(baseProperty.name),
+                        parsed: this.getGeneratedUnion(context).getBasePropertyKey(getWireValue(baseProperty.name))
+                    },
+                    value: context.typeSchema.getSchemaOfTypeReference(baseProperty.valueType)
+                }))
+            );
+            for (const extension of this.shape?.extends ?? []) {
+                baseSchema = baseSchema.extend(
+                    context.typeSchema.getSchemaOfNamedType(extension, { isGeneratingSchema: true })
+                );
+            }
             context.sourceFile.addVariableStatement({
                 declarationKind: VariableDeclarationKind.Const,
                 declarations: [
                     {
                         name: GeneratedUnionSchema.BASE_SCHEMA_NAME,
-                        initializer: getTextOfTsNode(
-                            context.coreUtilities.zurg
-                                .object(
-                                    this.baseProperties.map((baseProperty) => ({
-                                        key: {
-                                            raw: getWireValue(baseProperty.name),
-                                            parsed: this.getGeneratedUnion(context).getBasePropertyKey(
-                                                getWireValue(baseProperty.name)
-                                            )
-                                        },
-                                        value: context.typeSchema.getSchemaOfTypeReference(baseProperty.valueType)
-                                    }))
-                                )
-                                .toExpression()
-                        )
+                        initializer: getTextOfTsNode(baseSchema.toExpression())
                     }
                 ]
             });
@@ -316,7 +317,11 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
         });
     }
 
-    private hasBaseInterface(): boolean {
-        return this.baseProperties.length > 0 || (this.shape?.extends ?? []).length > 0;
+    private getEffectiveBaseProperties(context: Context): FernIr.ObjectProperty[] {
+        return this.getGeneratedUnion(context).getEffectiveBaseProperties(context);
+    }
+
+    private hasBaseInterface(context: Context): boolean {
+        return this.getEffectiveBaseProperties(context).length > 0 || (this.shape?.extends ?? []).length > 0;
     }
 }

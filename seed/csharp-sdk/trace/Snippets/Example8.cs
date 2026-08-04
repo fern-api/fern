@@ -11,8 +11,8 @@ public partial class Examples
         );
 
         await client.Admin.StoreTracedWorkspaceV2Async(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            new List<TraceResponseV2>(){
+            submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            request: new List<TraceResponseV2>(){
                 new TraceResponseV2 {
                     SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     LineNumber = 1,

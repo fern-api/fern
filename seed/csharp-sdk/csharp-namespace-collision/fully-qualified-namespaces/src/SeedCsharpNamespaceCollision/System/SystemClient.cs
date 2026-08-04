@@ -18,6 +18,9 @@ public partial class SystemClient : ISystemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +34,7 @@ public partial class SystemClient : ISystemClient
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -96,6 +100,9 @@ public partial class SystemClient : ISystemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -109,6 +116,7 @@ public partial class SystemClient : ISystemClient
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -174,6 +182,9 @@ public partial class SystemClient : ISystemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -186,6 +197,7 @@ public partial class SystemClient : ISystemClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format("/users/{0}", ValueConvert.ToPathParameterString(userId)),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

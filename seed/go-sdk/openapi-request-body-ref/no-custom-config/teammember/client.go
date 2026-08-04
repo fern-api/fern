@@ -34,6 +34,15 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.UpdateTeamMemberRequest{
+//	    TeamMemberID: "team_member_id",
+//	}
+//	client.TeamMember.UpdateTeamMember(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UpdateTeamMember(
 	ctx context.Context,
 	request *fern.UpdateTeamMemberRequest,

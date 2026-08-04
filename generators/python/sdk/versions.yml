@@ -1,4 +1,467 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.26.0
+  changelogEntry:
+    - summary: |
+        Add an `encode_path_params` config option (default `false`). When enabled, path parameter
+        values are percent-encoded when substituted into the request path, so a value containing `/`
+        or `..` can no longer change which endpoint the request resolves to. The default `false`
+        preserves the existing (unencoded) behavior; TypeScript, Go, Java, and C# already encode path
+        params.
+      type: feat
+  createdAt: "2026-07-31"
+  irVersion: 67
+- version: 5.25.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `allow_user_agent_app_info` config (camelCase alias `allowUserAgentAppInfo`).
+        When enabled, the generated client accepts an optional `app_info`
+        (`{"name": ..., "version"?: ..., "comment"?: ...}`) constructor argument whose product
+        token is appended to the `User-Agent` header
+        (`{sdk}/{version} ... {product}/{product-version} ({comment})`), following RFC 9110.
+        Disabled by default, so existing generated output is unchanged. It composes with
+        `include_platform_headers`, the `user-agent` template config, and the default
+        `{package}/{version}` value, and survives the `runtime_version` path. Caller-supplied
+        values are sanitized (name/version token-encoded, comment delimiters and control
+        characters escaped), and it is still overridable by an explicit `User-Agent` header and
+        suppressed by `omit_fern_headers`.
+      type: feat
+  createdAt: "2026-07-31"
+  irVersion: 67
+- version: 5.24.2
+  changelogEntry:
+    - summary: |
+        Fix two issues with the opt-in `allow_user_agent_app_info` client option:
+        - The `app_info` constructor parameter no longer leaks a bare positional `None`
+          into generated usage snippets and docstrings, which produced invalid Python
+          (a positional argument after keyword arguments). It remains an optional keyword
+          argument defaulting to `None`.
+        - Non-ASCII characters in the `app_info` comment are now percent-encoded (UTF-8).
+          Previously they were passed through into the `User-Agent` header, causing httpx
+          to raise `UnicodeEncodeError` on every request.
+      type: fix
+  createdAt: "2026-07-31"
+  irVersion: 67
+- version: 5.24.1
+  changelogEntry:
+    - summary: |
+        Respect the `user-agent` config template when `include_platform_headers` or
+        `runtime_version` is enabled. The structured User-Agent previously always used the
+        package name and version, ignoring the configured template.
+      type: fix
+  createdAt: "2026-07-30"
+  irVersion: 67
+- version: 5.24.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `optional-auth` config flag. When enabled, client auth
+        parameters (bearer token, basic auth username/password, header auth) are
+        made optional even when the API spec mandates auth on all endpoints
+        (`isAuthMandatory=true`). Auth headers are only sent when credentials are
+        provided. Useful for hand-maintained wrapper clients that authenticate via
+        external means (e.g. cloud provider credentials). Defaults to `false`, so
+        existing behavior is unchanged.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 5.23.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `runtime_version` config flag. When enabled, the SDK version
+        reported in the telemetry headers (`X-Fern-SDK-Version` and the version segment
+        of `User-Agent`) is resolved at runtime via `importlib.metadata.version(<dist>)`
+        instead of being baked in as a literal at generation time. This lets the reported
+        version track the actually-installed package version — for example when an
+        external tool such as release-please sets the published version after generation —
+        rather than a version the SDK may never publish. Falls back to the generation-time
+        version when the distribution is not installed (e.g. running from source). Disabled
+        by default, so existing generated output is unchanged, and subject to
+        `omit_fern_headers`.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 5.22.2
+  changelogEntry:
+    - summary: |
+        Fix multipart form list-of-primitive body properties being sent as a single
+        JSON-encoded field instead of repeated form fields. A property such as
+        `Optional[List[str]]` was serialized as `json.dumps(jsonable_encoder(value))`,
+        producing one field whose value was the whole JSON array (e.g.
+        `keyterms=["a","b"]`); servers that validate each item then rejected it. Such
+        properties are now passed through `jsonable_encoder` and handed directly to
+        httpx's `data=`, emitting repeated fields (`keyterms=a`, `keyterms=b`). Lists of
+        objects, maps, and other complex types remain JSON-encoded as before.
+      type: fix
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 5.22.1
+  changelogEntry:
+    - summary: |
+        Loosen the generated `httpx-aiohttp` optional dependency constraint from an exact
+        pin (`0.1.8`) to a caret range (`^0.1.8`, i.e. `>=0.1.8,<0.2.0`). This lets the
+        aiohttp extra coexist with other packages that require a newer 0.1.x of
+        `httpx-aiohttp` (e.g. `>0.1.9`) without introducing a breaking major bump.
+      type: fix
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 5.22.0
+  changelogEntry:
+    - summary: |
+        Add support for per-endpoint auth routing. When the API-level auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+        its IR `security` field (OR across the list of requirements, AND within a requirement,
+        and no auth when `security` is empty), instead of applying every configured credential
+        to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+        is unchanged.
+        Inferred (token-endpoint) auth is now also wired under `ENDPOINT_SECURITY` when other
+        schemes are present, and generated wire tests assert per endpoint that only the declared
+        scheme's header is sent.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 5.21.0
+  changelogEntry:
+    - summary: |
+        Add webhook body-hash binding support to `verify_signature`. When a webhook's HMAC
+        signature declares a `bodyHashBinding` in the IR, the generated helper first recomputes
+        the raw request body's hash (using the binding's own algorithm/encoding), extracts the
+        configured query parameter from the notification URL, and timing-safe-compares them
+        (failing closed on a missing or mismatched hash) before performing the existing HMAC
+        verification over the verbatim notification URL. Adds stdlib-only `compute_hash` (unkeyed
+        digest) and read-only `get_webhook_query_parameter` core utilities. Output is unchanged
+        when no body-hash binding is present.
+      type: feat
+    - summary: |
+        Add webhook signature verification support. When a webhook declares HMAC signature
+        verification in the IR, the generated SDK now emits a `WebhooksHelper` with a static
+        `verify_signature` method that validates the signature (and optional timestamp) using a
+        new stdlib-only core utility (`hmac`/`hashlib`/`base64` with constant-time comparison).
+      type: feat
+    - summary: |
+        Extend `verify_signature` with Twilio-compatible webhook verification. The generated
+        helper now (1) accepts either a raw string or a multi-value form map for `request_body`
+        when the IR sets `payloadFormat.bodySort`, sorting and deduping keys and per-key values
+        before signing; (2) branches at runtime on a `bodyHashBinding`: a JSON request (body-hash
+        query parameter present) recomputes and timing-safe-compares the raw-body hash and signs
+        the notification URL only, while a classic form request signs the URL plus the sorted
+        params with no body-hash check; (3) verifies against several normalized notification-URL
+        forms when `notificationUrlNormalization` is set, succeeding on the first constant-time
+        match; and (4) is a pure boolean that fails closed with `False` on invalid inputs
+        (missing parameters, malformed timestamps, unparseable URLs) rather than raising. Adds a
+        stdlib-only `notification_url_candidates` core utility (port and legacy-query-encoding
+        variants via `urllib.parse`). Output is unchanged for webhooks that do not configure these
+        fields, aside from the no-throw behavior on the verification path.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 5.20.2
+  changelogEntry:
+    - summary: |
+        When a client is constructed with both an `environment` and server URL
+        variables (e.g. `region`), the generated client now renders the selected
+        environment's URL template instead of always using the default (first)
+        environment's template. For example, `Client(environment=Environment.STAGING,
+        region="ie1")` now resolves to the Staging template
+        (`https://api.stage.ie1.example.com`) rather than the Production one.
+        An explicitly provided `base_url` is no longer overridden by URL variables.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
+- version: 5.20.1
+  changelogEntry:
+    - summary: |
+        Stop passing required literal query parameters as keyword arguments in generated
+        snippets and wire tests. Required literals (e.g. `response_type="code"`) are
+        hardcoded inside the generated method and omitted from its signature, so passing
+        them raised `TypeError: got an unexpected keyword argument`. Optional literal
+        query parameters remain in the signature and are still included.
+      type: fix
+  createdAt: "2026-07-17"
+  irVersion: 67
+- version: 5.20.0
+  changelogEntry:
+    - summary: |
+        Add opt-in, platform-guarded TCP keepalive for the generated default HTTP
+        transport. Enable it via the new `tcp_keepalive` custom config
+        (`enabled`, `idle_seconds`, `interval_seconds`, `count`); it is disabled by
+        default so existing generated output is unchanged. When enabled, the default
+        httpx transport applies `SO_KEEPALIVE` plus the platform's idle/interval/count
+        knobs (with a macOS `TCP_KEEPIDLE` -> `TCP_KEEPALIVE` fallback and guards for
+        older/minimal platforms) so long, non-streaming requests survive
+        idle-connection reaping by a firewall/load balancer/NAT. A user-supplied
+        `httpx_client` or a `custom_transport` `http_client` always takes precedence
+        over the keepalive default. Opting in requires `httpx>=0.25`.
+      type: feat
+    - summary: |
+        Fix the async default client dropping a `custom_transport` `http_client`.
+        `_make_default_async_client` now threads the supplied transport through to the
+        underlying `httpx.AsyncClient` (the httpx-aiohttp path remains a documented
+        no-op, since aiohttp manages its own connector).
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 5.19.3
+  changelogEntry:
+    - summary: |
+        Revert the smart-casing digit/word boundary behavior introduced in 5.18.4. snake_case
+        names keep a digit run fused to the following word (`conversations_v2configuration`),
+        restoring pre-5.18.4 output. The behavior will become opt-in via the new
+        `smart-casing-digit-word-boundary` option in `generators.yml` once the generator
+        consumes the IR version that carries the setting.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 5.19.2
+  changelogEntry:
+    - summary: |
+        Fix the OAuth token provider crashing with "Access token not present in OAuth response"
+        when the token response does not include a refresh token. Client-credentials token
+        responses often omit `refresh_token`; the provider now treats it as optional instead
+        of raising.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 5.19.1
+  changelogEntry:
+    - summary: |
+        OAuth client credentials token requests now send `grant_type: "client_credentials"`
+        when the token endpoint declares a non-literal `grant_type` request property. The
+        property is synthesized in the token request and is no longer surfaced as a
+        user-supplied option.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 5.19.0
+  changelogEntry:
+    - summary: |
+        Add automatic idempotency-key generation, driven by the centralized
+        `idempotencyKeyGeneration` config in the IR. When enabled, the generated SDK attaches a
+        UUIDv4 idempotency-key header to requests whose HTTP method is listed in the IR. A
+        caller-supplied key still takes precedence.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 5.18.4
+  changelogEntry:
+    - summary: |
+        Fix smart-casing snake_case names dropping the word boundary after a number.
+        Sub-client accessors and methods like `ConversationsV2Configuration` now generate
+        `conversations_v2_configuration` instead of `conversations_v2configuration`.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 5.18.3
+  changelogEntry:
+    - summary: |
+        Expose basic auth credentials (e.g. `account_sid` / `auth_token`) on the top-level
+        client when the API also configures OAuth (`auth: any`). Previously the root client
+        constructor only accepted OAuth client credentials or a bearer token, even though the
+        underlying client wrapper supported basic auth. The credentials are now optional
+        constructor parameters that are forwarded to the client wrapper, and the client can be
+        instantiated with basic auth alone without raising an error.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 5.18.2
+  changelogEntry:
+    - summary: |
+        Preserve leading and trailing underscores in generated namespace/module names.
+        Previously a subpackage named `_agents` (via `x-fern-sdk-group-name: _agents`)
+        was transformed to `agents`, stripping the underscore. Now it generates a
+        private `_agents/` Python module with a matching `client._agents` accessor,
+        enabling the pattern of hiding autogenerated clients behind a hand-written
+        public layer.
+
+        This is scoped to namespace/module names only. Parameter, field, and property
+        casing is unchanged, so existing SDK method signatures are unaffected.
+
+        Note: if you already use a group name that begins or ends with an underscore
+        (e.g. `x-fern-sdk-group-name: _agents`), the generated module and accessor now
+        preserve that underscore (`_agents/` and `client._agents`) instead of stripping
+        it (`agents/` / `client.agents`). Regenerating will change those import paths.
+      type: fix
+  createdAt: "2026-07-13"
+  irVersion: 67
+- version: 5.18.1
+  changelogEntry:
+    - summary: |
+        Normalize the architecture label in the structured `User-Agent` (emitted when
+        `include_platform_headers` is enabled) so the 64-bit x86 aliases (`x64`,
+        `amd64`, `x86_64`) all report as the canonical `x86_64`, keeping the value
+        consistent across generators.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 5.18.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header of the form
+        `{sdkName}/{version} ({os}; {arch}) Python/{pythonVersion}`, matching the
+        Twilio helper-library shape. This is gated behind the `include_platform_headers`
+        config option and is disabled by default. When enabled, the platform + runtime
+        information is consolidated into the `User-Agent` header, superseding the
+        default `{package}/{version}` value, and the discrete `X-Fern-Runtime` /
+        `X-Fern-Platform` headers are no longer emitted. The platform group and runtime
+        segment are dropped gracefully when they cannot be determined, and the header
+        remains subject to `omit_fern_headers`.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 5.17.1
+  changelogEntry:
+    - summary: |
+        Generated code snippets (README, OAuth token override examples) now use
+        the custom bearer token parameter name from the API spec (e.g. `api_key`)
+        instead of always using the default `token`.
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
+- version: 5.17.0
+  changelogEntry:
+    - summary: |
+        Add a `timeout` config option as an alias for `timeout_in_seconds`. Both keys
+        are in seconds and `timeout_in_seconds` continues to work, with `timeout`
+        taking precedence when both are set.
+      type: feat
+    - summary: |
+        Add a `timeout` key to the generated SDK's `RequestOptions` as an alias for the
+        per-request `timeout_in_seconds`. Both are in seconds; `timeout_in_seconds` keeps
+        working, with `timeout` taking precedence when both are provided.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 5.16.1
+  changelogEntry:
+    - summary: |
+        Emit attribute docstrings for aliased Pydantic model fields (e.g. fields renamed
+        from camelCase wire names to snake_case) so IDEs surface the field description
+        on hover, matching the behavior of non-aliased fields.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
+- version: 5.16.0
+  changelogEntry:
+    - summary: |
+        Implement transparent SSE stream auto-reconnection for `resumable: true`
+        endpoints, bringing the Python SDK to parity with TypeScript and Go. When a
+        resumable stream ends prematurely, `EventSource` now re-issues the original
+        request with a `Last-Event-ID` header and resumes from the last *dispatched*
+        event id (never a parsed-but-undispatched id, avoiding silent event loss).
+        Reconnection is gated on a configured stream terminator, honors
+        `stream_reconnection_enabled` and `max_stream_reconnection_attempts` (with
+        reset-on-progress), backs off 1s by default (or the server `retry:` value,
+        clamped to 30s), guards against empty reconnect bodies, and remains
+        cancellable during the backoff delay. Supported for both sync and async
+        clients.
+      type: feat
+  createdAt: "2026-07-05"
+  irVersion: 67
+- version: 5.15.2
+  changelogEntry:
+    - summary: |
+        Fix `ImportError` when a type uses `extends` to inherit from a base type that
+        is part of a circular reference cycle (e.g. `Acai extends Berry` where
+        `Berry → Animal → Cat → Fruit → Acai`). Python inheritance requires a
+        top-level import of the base class, which cannot coexist with the ghost
+        reference imports needed for circular forward-ref resolution. The generator
+        now automatically falls back to inlining the base type's properties instead
+        of using Python class inheritance when it detects a circular extends chain.
+      type: fix
+    - summary: |
+        When a custom `httpx.Client` or `httpx.AsyncClient` is passed to the generated SDK client,
+        the timeout configured on that httpx client is now respected. Previously, the SDK would
+        extract only the `read` timeout component and pass it explicitly to each request, which
+        overrode the full timeout configuration (including separate connect/read/write/pool timeouts).
+        Now, when no explicit `timeout` is provided to the SDK constructor, requests defer to the
+        httpx client's own timeout settings via `httpx.USE_CLIENT_DEFAULT`.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.15.1
+  changelogEntry:
+    - summary: |
+        Fix pydantic-v2 generator failing to find `.gitignore.Template` at runtime by
+        copying the `asIs` directory into the dist bundle.
+      type: fix
+    - summary: |
+        Fix pydantic-v2 WrappedAliasGenerator producing invalid Python: add missing
+        `self` parameter to getter methods, use correct return type instead of
+        hardcoded `UUID`, quote forward-reference return types in builder methods,
+        and add missing `return` statement in builder method bodies.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.15.0
+  changelogEntry:
+    - summary: |
+        Support `resumable` flag in SSE streaming endpoints. When an endpoint has
+        `x-fern-streaming.resumable: true`, the generated SDK now passes `resumable=True`
+        to `EventSource`, plumbing the flag through to the runtime for use by
+        reconnection logic. Adds `stream_reconnection_enabled` and
+        `max_stream_reconnection_attempts` request options for runtime control of
+        reconnection behavior.
+      type: feat
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 5.14.21
+  changelogEntry:
+    - summary: |
+        Fix `pyproject.toml` distribution name for github-output SDKs without a PyPI publish target
+        to prefer `config.package_name` over the organization name. Also use `output_mode.version`
+        instead of hardcoding `0.0.0`.
+      type: fix
+  createdAt: "2026-06-20"
+  irVersion: 67
+- version: 5.14.20
+  changelogEntry:
+    - summary: |
+        Bump the Python SDK generator container's base image from `python:3.13.7-slim`
+        to `python:3.13.14-slim` to pull in CPython security fixes, clearing
+        CVE-2025-13836, CVE-2026-3644, and CVE-2026-4224 (plus several lower-severity
+        CPython advisories).
+      type: chore
+  createdAt: "2026-06-17"
+  irVersion: 67
+- version: 5.14.19
+  changelogEntry:
+    - summary: |
+        Bump aiohttp lower bound from >=3.14.0 to >=3.14.1 to fix CVE-2026-54274.
+      type: fix
+  createdAt: "2026-06-16"
+  irVersion: 67
+- version: 5.14.18
+  changelogEntry:
+    - summary: |
+        Fixed the generated legacy wire test `conftest.py` so the test suite no longer fails when
+        no mock server is configured. The client fixtures now skip wire tests when `TESTS_BASE_URL`
+        is unset (instead of issuing requests to an invalid URL), and the conftest re-declares the
+        hook that auto-skips `@pytest.mark.aiohttp` tests when the optional `httpx_aiohttp`
+        dependency is not installed.
+      type: fix
+  createdAt: "2026-06-15"
+  irVersion: 67
+- version: 5.14.17
+  changelogEntry:
+    - summary: |
+        Fix OAuth token provider to use correct parameter names from request-properties mapping
+        for custom OAuth endpoints, and pass additional required parameters (scopes, custom properties)
+        through the client constructor to the token provider.
+      type: fix
+    - summary: |
+        Enforce required additional OAuth parameters with an explicit runtime check that raises
+        an `ApiError` instead of `assert`, so the validation is not stripped under Python's
+        optimized mode (`-O`).
+      type: fix
+  createdAt: "2026-06-15"
+  irVersion: 67
+- version: 5.14.16
+  changelogEntry:
+    - summary: |
+        Fix discriminated union snippet generation to include base properties (e.g. extra, tags)
+        inherited from the union's base type. Also fix conftest generation to skip non-string
+        constructor parameters like headers from os.getenv() wrapping.
+      type: fix
+  createdAt: "2026-06-15"
+  irVersion: 67
 - version: 5.14.15
   changelogEntry:
     - summary: |

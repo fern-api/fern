@@ -49,6 +49,11 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->folderD->service->getDirectThread();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

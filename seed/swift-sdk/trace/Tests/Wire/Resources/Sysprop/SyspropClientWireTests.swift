@@ -6,7 +6,7 @@ import Trace
     @Test func getNumWarmInstances1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "JAVA": 1
@@ -20,7 +20,7 @@ import Trace
             urlSession: stub.urlSession
         )
         let expectedResponse = [
-            .java: 1
+            Language.java: 1
         ]
         let response = try await client.sysprop.getNumWarmInstances(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)

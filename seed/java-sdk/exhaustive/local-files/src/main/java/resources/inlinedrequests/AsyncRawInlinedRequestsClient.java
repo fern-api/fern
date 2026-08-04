@@ -9,17 +9,22 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.RetryInterceptor;
 import com.fern.sdk.core.SeedExhaustiveApiException;
 import com.fern.sdk.core.SeedExhaustiveException;
 import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import com.fern.sdk.resources.generalerrors.errors.BadRequestBody;
 import com.fern.sdk.resources.generalerrors.types.BadObjectRequestInfo;
+import com.fern.sdk.resources.inlinedrequests.requests.PostWithArrayBodyAndHeaders;
 import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
+import java.lang.Exception;
 import java.lang.Object;
 import java.lang.Override;
+import java.lang.RuntimeException;
 import java.lang.String;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -77,6 +82,9 @@ public class AsyncRawInlinedRequestsClient {
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
+      if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+        okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+      }
       CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> future = new CompletableFuture<>();
       client.newCall(okhttpRequest).enqueue(new Callback() {
         @Override
@@ -100,6 +108,9 @@ public class AsyncRawInlinedRequestsClient {
             future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
             return;
           }
+          catch (JsonProcessingException e) {
+            future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+          }
           catch (IOException e) {
             future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
           }
@@ -112,4 +123,94 @@ public class AsyncRawInlinedRequestsClient {
       });
       return future;
     }
-  }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> postWithArrayBodyAndHeaders(
+        List<String> body) {
+      return postWithArrayBodyAndHeaders(PostWithArrayBodyAndHeaders.builder().body(body).build());
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> postWithArrayBodyAndHeaders(
+        List<String> body, RequestOptions requestOptions) {
+      return postWithArrayBodyAndHeaders(PostWithArrayBodyAndHeaders.builder().body(body).build(), requestOptions);
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> postWithArrayBodyAndHeaders(
+        PostWithArrayBodyAndHeaders request) {
+      return postWithArrayBodyAndHeaders(request,null);
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> postWithArrayBodyAndHeaders(
+        PostWithArrayBodyAndHeaders request, RequestOptions requestOptions) {
+      HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+        .addPathSegments("req-bodies")
+        .addPathSegments("array-body-with-headers");if (requestOptions != null) {
+          requestOptions.getQueryParameters().forEach((_key, _value) -> {
+            httpUrl.addQueryParameter(_key, _value);
+          } );
+        }
+        RequestBody body;
+        try {
+          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+        }
+        catch(Exception e) {
+          throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+          .url(httpUrl.build())
+          .method("POST", body)
+          .headers(Headers.of(clientOptions.headers(requestOptions)))
+          .addHeader("Content-Type", "application/json")
+          .addHeader("Accept", "application/json");
+        if (request.getXCustomHeader().isPresent()) {
+          _requestBuilder.addHeader("X-Custom-Header", request.getXCustomHeader().get());
+        }
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+          client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+          okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+        }
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+          @Override
+          public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            try (ResponseBody responseBody = response.body()) {
+              String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+              if (response.isSuccessful()) {
+                future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+                return;
+              }
+              Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+              future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+              return;
+            }
+            catch (JsonProcessingException e) {
+              future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+            }
+            catch (IOException e) {
+              future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+            }
+          }
+
+          @Override
+          public void onFailure(@NotNull Call call, @NotNull IOException e) {
+            future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+          }
+        });
+        return future;
+      }
+    }

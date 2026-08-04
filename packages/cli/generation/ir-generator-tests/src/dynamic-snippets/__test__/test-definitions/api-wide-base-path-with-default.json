@@ -62,7 +62,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -188,5 +189,6 @@
     ],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

@@ -5,6 +5,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "my-api",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -52,6 +53,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -69,6 +71,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -77,7 +80,8 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {},
     "rootPackage": {
@@ -102,6 +106,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -117,6 +122,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "api",
     "apiDisplayName": "API",
     "apiDocs": null,
@@ -219,7 +225,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_commons:Deployment",
@@ -446,7 +453,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_commons:AppId"
@@ -475,6 +483,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
@@ -622,7 +631,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                 "extends": [
                     "type_commons:Deployment"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_commons:AppId": {
                 "type": "alias",
@@ -794,7 +804,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],
@@ -802,6 +813,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -810,7 +822,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_app": {
@@ -886,6 +899,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -901,6 +915,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "my-api",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -944,6 +959,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                     "id": "endpoint_file-upload.fileUpload",
                     "name": "fileUpload",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1070,6 +1086,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1089,6 +1106,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -1369,6 +1387,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -1377,7 +1396,8 @@ exports[`ir > {"name":"file-upload"} 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_file-upload": {
@@ -1426,6 +1446,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -9026,7 +9047,7 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "af5006c6",
+                                "id": "ad8355e6",
                                 "name": null,
                                 "url": "/movies",
                                 "rootPathParameters": [],
@@ -9450,7 +9471,7 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                         },
                         {
                             "example": {
-                                "id": "12352e13",
+                                "id": "382e8503",
                                 "name": null,
                                 "url": "/movies",
                                 "rootPathParameters": [],
@@ -11285,7 +11306,7 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "b4899d1c",
+                                "id": "4d7afefc",
                                 "name": null,
                                 "url": "/movies/movieId",
                                 "rootPathParameters": [],
@@ -11909,7 +11930,7 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                         },
                         {
                             "example": {
-                                "id": "b198c97c",
+                                "id": "196b404c",
                                 "name": null,
                                 "url": "/movies/movieId",
                                 "rootPathParameters": [],
@@ -12152,7 +12173,7 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                         },
                         {
                             "example": {
-                                "id": "4be98dcb",
+                                "id": "448a81cb",
                                 "name": null,
                                 "url": "/movies/movieId",
                                 "rootPathParameters": [],
@@ -12703,7 +12724,7 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "b86e256f",
+                                "id": "4ffc544f",
                                 "name": null,
                                 "url": "/movies/movieId",
                                 "rootPathParameters": [],
@@ -12833,7 +12854,7 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                         },
                         {
                             "example": {
-                                "id": "1fcfc248",
+                                "id": "dfd0bd58",
                                 "name": null,
                                 "url": "/movies/movieId",
                                 "rootPathParameters": [],
@@ -15348,6 +15369,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "api",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -15391,6 +15413,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "id": "endpoint_endpoint-urls.test1",
                     "name": "test1",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -15425,7 +15448,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "82444d62",
+                                "id": "7cf5c162",
                                 "url": "/a",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -15452,6 +15475,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -15461,6 +15485,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "id": "endpoint_endpoint-urls.test2",
                     "name": "test2",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -15495,7 +15520,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "82444d62",
+                                "id": "7cf5c162",
                                 "url": "/b",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -15522,6 +15547,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -15560,6 +15586,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "id": "endpoint_service-url.test",
                     "name": "test",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -15594,7 +15621,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "82444d62",
+                                "id": "7cf5c162",
                                 "url": "",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -15621,6 +15648,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -15683,6 +15711,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -16048,6 +16077,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
             }
         },
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -16056,7 +16086,8 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_endpoint-urls": {
@@ -16127,6 +16158,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -16142,6 +16174,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "my-api",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -16165,6 +16198,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -16182,6 +16216,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -16190,7 +16225,8 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_subpackage": {
@@ -16269,6 +16305,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -16284,6 +16321,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "api",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -16378,7 +16416,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_nested:Product"
@@ -16434,7 +16473,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -16553,6 +16593,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "id": "endpoint_nested.calculate",
                     "name": "calculate",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -16878,7 +16919,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "c351a3f9",
+                                "id": "a877f409",
                                 "url": "/nested",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -17125,6 +17166,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -17144,6 +17186,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_nested": [
@@ -17272,7 +17315,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_nested:Product": {
                 "type": "object",
@@ -17375,7 +17419,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_nested:StringAlias": {
                 "type": "alias",
@@ -17577,6 +17622,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -17585,7 +17631,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_nested": {
@@ -17638,6 +17685,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -17653,6 +17701,7 @@ exports[`ir > {"name":"packages"} 1`] = `
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "packages",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -17838,7 +17887,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:RootString",
@@ -17940,6 +17990,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "id": "endpoint_.rootEndpoint",
                     "name": "rootEndpoint",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -17974,7 +18025,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "82444d62",
+                                "id": "7cf5c162",
                                 "url": "",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -18001,6 +18052,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -18050,6 +18102,7 @@ exports[`ir > {"name":"packages"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
@@ -18302,7 +18355,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_package/a:A": {
                 "type": "alias",
@@ -18463,6 +18517,7 @@ exports[`ir > {"name":"packages"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -18471,7 +18526,8 @@ exports[`ir > {"name":"packages"} 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_package": {
@@ -18603,6 +18659,7 @@ exports[`ir > {"name":"packages"} 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -18618,6 +18675,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "response-property",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -18671,7 +18729,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -18727,7 +18786,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -18823,7 +18883,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_service:WithDocs",
@@ -18873,6 +18934,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "id": "endpoint_service.getMovie",
                     "name": "getMovie",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -18994,7 +19056,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "d7b56075",
+                                "id": "309fe535",
                                 "url": "/movie",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -19159,6 +19221,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -19168,6 +19231,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "id": "endpoint_service.getMovieDocs",
                     "name": "getMovieDocs",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -19285,7 +19349,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "d7b56075",
+                                "id": "309fe535",
                                 "url": "/movie",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -19450,6 +19514,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -19469,6 +19534,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_service": [
@@ -19586,7 +19652,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_service:Movie": {
                 "type": "object",
@@ -19687,7 +19754,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_service:Response": {
                 "type": "object",
@@ -19820,7 +19888,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                 "extends": [
                     "type_service:WithDocs"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],
@@ -20001,6 +20070,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -20009,7 +20079,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_service": {
@@ -20062,6 +20133,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -20077,6 +20149,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "my-api",
     "apiDisplayName": null,
     "apiDocs": "foo bar baz",
@@ -20163,7 +20236,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -20211,7 +20285,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -20281,6 +20356,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     "id": "endpoint_imdb.internalEndpoint",
                     "name": "internalEndpoint",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -20424,7 +20500,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "97aa4775",
+                                "id": "935e18d5",
                                 "url": "/test/rootPathParam/movies",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -20528,7 +20604,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                         },
                         {
                             "example": {
-                                "id": "2dfcfb01",
+                                "id": "9f02b741",
                                 "url": "/test/rootPathParam/movies",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -20636,6 +20712,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                         "internal"
                     ],
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -20689,6 +20766,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
         }
     ],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "sharedTypes": [
             "type_commons:Internal"
@@ -20806,7 +20884,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:UnknownRequest": {
                 "type": "object",
@@ -20906,7 +20985,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [
@@ -21066,6 +21146,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
         ],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": [
@@ -21077,7 +21158,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_commons": {
@@ -21154,6 +21236,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -21169,6 +21252,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "my-api",
     "apiDisplayName": null,
     "apiDocs": "foo bar baz",
@@ -21255,7 +21339,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -21431,7 +21516,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -21620,6 +21706,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     "id": "endpoint_imdb.createMovie",
                     "name": "createMovie",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -22184,7 +22271,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "ecaa4a1d",
+                                "id": "df44c04d",
                                 "url": "/test/rootPathParam/movies",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -22373,7 +22460,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         {
                             "example": {
-                                "id": "bb62c8b8",
+                                "id": "edf15cf8",
                                 "url": "/test/rootPathParam/movies",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -22545,6 +22632,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                         "test"
                     ],
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -22598,6 +22686,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
         }
     ],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "sharedTypes": [
             "type_commons:Type"
@@ -22716,7 +22805,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:MovieId": {
                 "type": "alias",
@@ -22921,7 +23011,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [
@@ -23081,6 +23172,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
         ],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": [
@@ -23092,7 +23184,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_commons": {
@@ -23170,6 +23263,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -23185,6 +23279,7 @@ exports[`ir > {"name":"simple"} 1`] = `
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "my-api",
     "apiDisplayName": null,
     "apiDocs": "foo bar baz",
@@ -23271,7 +23366,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -23327,7 +23423,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -23515,7 +23612,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_director:Age"
@@ -24094,7 +24192,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_imdb:MovieId"
@@ -24299,7 +24398,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -24478,7 +24578,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_director:Director",
@@ -24649,7 +24750,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                 "extends": [],
                 "properties": [],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -24682,6 +24784,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "actor",
@@ -24998,7 +25101,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -25128,7 +25232,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_imdb:CreateMovieRequest",
@@ -25878,6 +25983,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "id": "endpoint_imdb.internalEndpoint",
                     "name": "internalEndpoint",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -26021,7 +26127,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "97aa4775",
+                                "id": "935e18d5",
                                 "url": "/test/rootPathParam/movies",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -26125,7 +26231,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         },
                         {
                             "example": {
-                                "id": "2dfcfb01",
+                                "id": "9f02b741",
                                 "url": "/test/rootPathParam/movies",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -26233,6 +26339,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "internal"
                     ],
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -26242,6 +26349,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "id": "endpoint_imdb.createMovie",
                     "name": "createMovie",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -26806,7 +26914,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "ecaa4a1d",
+                                "id": "df44c04d",
                                 "url": "/test/rootPathParam/movies",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -26995,7 +27103,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         },
                         {
                             "example": {
-                                "id": "bb62c8b8",
+                                "id": "edf15cf8",
                                 "url": "/test/rootPathParam/movies",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -27167,6 +27275,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "test"
                     ],
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -27176,6 +27285,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "id": "endpoint_imdb.getMovie",
                     "name": "getMovie",
                     "displayName": "Get Movie by Id",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -27729,7 +27839,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "8da3f9d7",
+                                "id": "7d40e807",
                                 "url": "/test/rootPathParam/movies/movieId",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -27953,7 +28063,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         },
                         {
                             "example": {
-                                "id": "f73bf377",
+                                "id": "81bc2f17",
                                 "url": "/test/rootPathParam/movies/movieId",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -28066,7 +28176,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         },
                         {
                             "example": {
-                                "id": "d74d2200",
+                                "id": "79a80950",
                                 "url": "/test/rootPathParam/movies/movieId",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -28173,6 +28283,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -28182,6 +28293,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "id": "endpoint_imdb.delete",
                     "name": "delete",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -28324,7 +28436,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "a87620bc",
+                                "id": "e1d0202c",
                                 "url": "/test/rootPathParam/movies/movieId",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -28399,7 +28511,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         },
                         {
                             "example": {
-                                "id": "125475db",
+                                "id": "9056d4fb",
                                 "url": "/test/rootPathParam/movies/movieId",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -28487,6 +28599,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -28540,6 +28653,7 @@ exports[`ir > {"name":"simple"} 1`] = `
         }
     ],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_imdb": [
@@ -28672,7 +28786,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_commons:Type": {
                 "type": "object",
@@ -28773,7 +28888,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_commons:UndiscriminatedUnion": {
                 "type": "undiscriminatedUnion",
@@ -28998,7 +29114,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_director:Age": {
                 "type": "alias",
@@ -29591,7 +29708,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:CreateMovieRequest": {
                 "type": "object",
@@ -29725,7 +29843,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:DirectorWrapper": {
                 "type": "object",
@@ -29826,7 +29945,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:EmptyObject": {
                 "type": "object",
@@ -29896,7 +30016,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                 },
                 "properties": [],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:Person": {
                 "type": "discriminatedUnion",
@@ -29986,6 +30107,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "actor": {
                         "type": "singleProperty",
@@ -30198,7 +30320,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:RecursiveType": {
                 "type": "object",
@@ -30367,7 +30490,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                 "extends": [
                     "type_imdb:CreateMovieRequest"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [
@@ -30939,6 +31063,7 @@ exports[`ir > {"name":"simple"} 1`] = `
         ],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": [
@@ -30950,7 +31075,8 @@ exports[`ir > {"name":"simple"} 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_commons": {
@@ -31067,6 +31193,7 @@ exports[`ir > {"name":"simple"} 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -31082,6 +31209,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "my-api",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -31125,6 +31253,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "id": "endpoint_streaming.streaming",
                     "name": "streaming",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -31178,7 +31307,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "336e6e59",
+                                "id": "96bde829",
                                 "url": "/movies/streaming",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -31218,6 +31347,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -31227,6 +31357,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "id": "endpoint_streaming.maybeStreaming",
                     "name": "maybeStreaming",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -31322,7 +31453,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "8f952748",
+                                "id": "4777458",
                                 "url": "/movies/maybe-streaming",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -31384,6 +31515,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -31403,6 +31535,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -31685,6 +31818,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -31693,7 +31827,8 @@ exports[`ir > {"name":"streaming"} 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_streaming": {
@@ -31742,6 +31877,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
         "hasStreamingEndpoints": true,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -31757,6 +31893,7 @@ exports[`ir > {"name":"variables"} 1`] = `
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "my-api",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -31852,6 +31989,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "id": "endpoint_service.test",
                     "name": "test",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -31983,7 +32121,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "20f4e400",
+                                "id": "4d1b3780",
                                 "url": "/root/movies/foo",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -32084,6 +32222,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -32160,6 +32299,7 @@ exports[`ir > {"name":"variables"} 1`] = `
             "docs": "I am a variable"
         }
     ],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_service": [
@@ -32423,6 +32563,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                 }
             }
         ],
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -32431,7 +32572,8 @@ exports[`ir > {"name":"variables"} 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_commons": {
@@ -32504,6 +32646,7 @@ exports[`ir > {"name":"variables"} 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -32519,6 +32662,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "my-api",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -32594,7 +32738,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -32672,7 +32817,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -32772,7 +32918,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -32878,7 +33025,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -32905,6 +33053,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
@@ -32959,7 +33108,9 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                         "headerName": "x-webhook-timestamp",
                         "format": "UNIX_SECONDS",
                         "tolerance": 300
-                    }
+                    },
+                    "bodyHashBinding": null,
+                    "notificationUrlNormalization": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
@@ -33011,7 +33162,9 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                         "headerName": "x-webhook-timestamp",
                         "format": "UNIX_SECONDS",
                         "tolerance": 300
-                    }
+                    },
+                    "bodyHashBinding": null,
+                    "notificationUrlNormalization": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
@@ -33056,6 +33209,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                         "url": "https://api.example.com/.well-known/jwks.json",
                         "keyIdHeader": "x-key-id"
                     },
+                    "payloadFormat": null,
                     "timestamp": {
                         "headerName": "x-payment-timestamp",
                         "format": "ISO8601",
@@ -33103,6 +33257,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     "keySource": {
                         "type": "static"
                     },
+                    "payloadFormat": null,
                     "timestamp": null
                 },
                 "fileUploadPayload": null,
@@ -33250,7 +33405,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_webhooks:OrderCompletedPayload": {
                 "type": "object",
@@ -33381,7 +33537,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_webhooks:PaymentNotificationPayload": {
                 "type": "object",
@@ -33542,7 +33699,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_webhooks:RefundProcessedPayload": {
                 "type": "object",
@@ -33706,7 +33864,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],
@@ -33714,6 +33873,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -33722,7 +33882,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_webhooks": {
@@ -33776,6 +33937,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

@@ -5,6 +5,8 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedApi from "../../../index.js";
 
 export class MovieDoesNotExistError extends errors.SeedApiError {
+    public declare readonly body: SeedApi.MovieId;
+
     constructor(body: SeedApi.MovieId, rawResponse?: core.RawResponse) {
         super({
             message: "MovieDoesNotExistError",
@@ -17,6 +19,6 @@ export class MovieDoesNotExistError extends errors.SeedApiError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "MovieDoesNotExistError";
     }
 }

@@ -8,6 +8,8 @@ enum Example2 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.container.getAndReturnSetOfPrimitives()
+        _ = try await client.endpoints.container.getAndReturnSetOfPrimitives(request: .array([
+            .string("string")
+        ]))
     }
 }

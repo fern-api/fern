@@ -31,13 +31,32 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
+// Example:
+//
+//	request := &inlineusers.ListUsersCursorPaginationRequest{
+//	    Page: fern.Int(
+//	        1,
+//	    ),
+//	    PerPage: fern.Int(
+//	        1,
+//	    ),
+//	    Order: inlineusers.OrderAsc.Ptr(),
+//	    StartingAfter: fern.String(
+//	        "starting_after",
+//	    ),
+//	}
+//	client.InlineUsers.InlineUsers.ListWithCursorPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithCursorPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersCursorPaginationRequest,
@@ -71,6 +90,7 @@ func (c *Client) ListWithCursorPagination(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -96,6 +116,17 @@ func (c *Client) ListWithCursorPagination(
 	return pager.GetPage(ctx, request.StartingAfter)
 }
 
+// Example:
+//
+//	request := &inlineusers.ListUsersMixedTypeCursorPaginationRequest{
+//	    Cursor: fern.String(
+//	        "cursor",
+//	    ),
+//	}
+//	client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithMixedTypeCursorPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersMixedTypeCursorPaginationRequest,
@@ -129,6 +160,7 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 			Method:          http.MethodPost,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -154,6 +186,19 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 	return pager.GetPage(ctx, request.Cursor)
 }
 
+// Example:
+//
+//	request := &inlineusers.ListUsersBodyCursorPaginationRequest{
+//	    Pagination: &inlineusers.WithCursor{
+//	        Cursor: fern.String(
+//	            "cursor",
+//	        ),
+//	    },
+//	}
+//	client.InlineUsers.InlineUsers.ListWithBodyCursorPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithBodyCursorPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersBodyCursorPaginationRequest,
@@ -170,6 +215,24 @@ func (c *Client) ListWithBodyCursorPagination(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &inlineusers.ListUsersOffsetPaginationRequest{
+//	    Page: fern.Int(
+//	        1,
+//	    ),
+//	    PerPage: fern.Int(
+//	        1,
+//	    ),
+//	    Order: inlineusers.OrderAsc.Ptr(),
+//	    StartingAfter: fern.String(
+//	        "starting_after",
+//	    ),
+//	}
+//	client.InlineUsers.InlineUsers.ListWithOffsetPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithOffsetPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersOffsetPaginationRequest,
@@ -203,6 +266,7 @@ func (c *Client) ListWithOffsetPagination(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -234,6 +298,24 @@ func (c *Client) ListWithOffsetPagination(
 	return pager.GetPage(ctx, &next)
 }
 
+// Example:
+//
+//	request := &inlineusers.ListUsersDoubleOffsetPaginationRequest{
+//	    Page: fern.Float64(
+//	        1.1,
+//	    ),
+//	    PerPage: fern.Float64(
+//	        1.1,
+//	    ),
+//	    Order: inlineusers.OrderAsc.Ptr(),
+//	    StartingAfter: fern.String(
+//	        "starting_after",
+//	    ),
+//	}
+//	client.InlineUsers.InlineUsers.ListWithDoubleOffsetPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithDoubleOffsetPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersDoubleOffsetPaginationRequest,
@@ -267,6 +349,7 @@ func (c *Client) ListWithDoubleOffsetPagination(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -298,6 +381,19 @@ func (c *Client) ListWithDoubleOffsetPagination(
 	return pager.GetPage(ctx, &next)
 }
 
+// Example:
+//
+//	request := &inlineusers.ListUsersBodyOffsetPaginationRequest{
+//	    Pagination: &inlineusers.WithPage{
+//	        Page: fern.Int(
+//	            1,
+//	        ),
+//	    },
+//	}
+//	client.InlineUsers.InlineUsers.ListWithBodyOffsetPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithBodyOffsetPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersBodyOffsetPaginationRequest,
@@ -314,6 +410,21 @@ func (c *Client) ListWithBodyOffsetPagination(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &inlineusers.ListUsersOffsetStepPaginationRequest{
+//	    Page: fern.Int(
+//	        1,
+//	    ),
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	    Order: inlineusers.OrderAsc.Ptr(),
+//	}
+//	client.InlineUsers.InlineUsers.ListWithOffsetStepPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithOffsetStepPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersOffsetStepPaginationRequest,
@@ -347,6 +458,7 @@ func (c *Client) ListWithOffsetStepPagination(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -378,6 +490,21 @@ func (c *Client) ListWithOffsetStepPagination(
 	return pager.GetPage(ctx, &next)
 }
 
+// Example:
+//
+//	request := &inlineusers.ListWithOffsetPaginationHasNextPageRequest{
+//	    Page: fern.Int(
+//	        1,
+//	    ),
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	    Order: inlineusers.OrderAsc.Ptr(),
+//	}
+//	client.InlineUsers.InlineUsers.ListWithOffsetPaginationHasNextPage(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithOffsetPaginationHasNextPage(
 	ctx context.Context,
 	request *inlineusers.ListWithOffsetPaginationHasNextPageRequest,
@@ -411,6 +538,7 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -442,6 +570,19 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 	return pager.GetPage(ctx, &next)
 }
 
+// Example:
+//
+//	request := &inlineusers.ListUsersExtendedRequest{
+//	    Cursor: fern.UUID(
+//	        uuid.MustParse(
+//	            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	        ),
+//	    ),
+//	}
+//	client.InlineUsers.InlineUsers.ListWithExtendedResults(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithExtendedResults(
 	ctx context.Context,
 	request *inlineusers.ListUsersExtendedRequest,
@@ -475,6 +616,7 @@ func (c *Client) ListWithExtendedResults(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -500,6 +642,19 @@ func (c *Client) ListWithExtendedResults(
 	return pager.GetPage(ctx, request.Cursor)
 }
 
+// Example:
+//
+//	request := &inlineusers.ListUsersExtendedRequestForOptionalData{
+//	    Cursor: fern.UUID(
+//	        uuid.MustParse(
+//	            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	        ),
+//	    ),
+//	}
+//	client.InlineUsers.InlineUsers.ListWithExtendedResultsAndOptionalData(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithExtendedResultsAndOptionalData(
 	ctx context.Context,
 	request *inlineusers.ListUsersExtendedRequestForOptionalData,
@@ -533,6 +688,7 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -558,6 +714,17 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 	return pager.GetPage(ctx, request.Cursor)
 }
 
+// Example:
+//
+//	request := &inlineusers.ListUsernamesRequest{
+//	    StartingAfter: fern.String(
+//	        "starting_after",
+//	    ),
+//	}
+//	client.InlineUsers.InlineUsers.ListUsernames(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListUsernames(
 	ctx context.Context,
 	request *inlineusers.ListUsernamesRequest,
@@ -591,6 +758,7 @@ func (c *Client) ListUsernames(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -619,6 +787,17 @@ func (c *Client) ListUsernames(
 	return pager.GetPage(ctx, request.StartingAfter)
 }
 
+// Example:
+//
+//	request := &inlineusers.ListWithGlobalConfigRequest{
+//	    Offset: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.InlineUsers.InlineUsers.ListWithGlobalConfig(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithGlobalConfig(
 	ctx context.Context,
 	request *inlineusers.ListWithGlobalConfigRequest,
@@ -652,6 +831,7 @@ func (c *Client) ListWithGlobalConfig(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

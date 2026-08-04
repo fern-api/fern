@@ -1,0 +1,5 @@
+- summary: |
+    Add the `layout.show-nav-availability-badges` docs.yml setting. When set to true,
+    availability badges (Beta, Deprecated, etc.) render inline next to navigation items
+    in the sidebar. Defaults to false; the page-header availability badge is unaffected.
+  type: feat

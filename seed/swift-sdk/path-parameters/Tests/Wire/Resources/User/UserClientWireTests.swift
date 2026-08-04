@@ -6,7 +6,7 @@ import PathParameters
     @Test func getUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -40,7 +40,7 @@ import PathParameters
     @Test func createUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -80,7 +80,7 @@ import PathParameters
     @Test func updateUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -121,7 +121,7 @@ import PathParameters
     @Test func searchUsers1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -174,7 +174,7 @@ import PathParameters
     @Test func getUserMetadata1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -209,7 +209,7 @@ import PathParameters
     @Test func getUserSpecifics1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",

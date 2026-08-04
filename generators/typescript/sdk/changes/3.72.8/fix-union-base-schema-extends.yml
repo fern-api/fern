@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix the serialization layer for discriminated unions that both `extend` another
+    type and declare `base-properties`. The generated `_Base` schema now extends the
+    parent type schemas (in addition to the base properties), so its inferred raw
+    type matches the declared `Raw` type and the union schema compiles.
+  type: fix

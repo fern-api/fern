@@ -37,6 +37,13 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // GET with path param
+//
+// Example:
+//
+//	client.Endpoints.Params.GetWithPath(
+//	    context.TODO(),
+//	    "param",
+//	)
 func (c *Client) GetWithPath(
 	ctx context.Context,
 	param string,
@@ -54,6 +61,16 @@ func (c *Client) GetWithPath(
 }
 
 // GET with path param
+//
+// Example:
+//
+//	request := &fern.GetWithInlinePath{
+//	    Param: "param",
+//	}
+//	client.Endpoints.Params.GetWithInlinePath(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetWithInlinePath(
 	ctx context.Context,
 	request *fern.GetWithInlinePath,
@@ -71,6 +88,17 @@ func (c *Client) GetWithInlinePath(
 }
 
 // GET with query param
+//
+// Example:
+//
+//	request := &fern.GetWithQuery{
+//	    Query: "query",
+//	    Number: 1,
+//	}
+//	client.Endpoints.Params.GetWithQuery(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetWithQuery(
 	ctx context.Context,
 	request *fern.GetWithQuery,
@@ -88,6 +116,21 @@ func (c *Client) GetWithQuery(
 }
 
 // GET with multiple of same query param
+//
+// Example:
+//
+//	request := &fern.GetWithMultipleQuery{
+//	    Query: []string{
+//	        "query",
+//	    },
+//	    Number: []int{
+//	        1,
+//	    },
+//	}
+//	client.Endpoints.Params.GetWithAllowMultipleQuery(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetWithAllowMultipleQuery(
 	ctx context.Context,
 	request *fern.GetWithMultipleQuery,
@@ -105,6 +148,17 @@ func (c *Client) GetWithAllowMultipleQuery(
 }
 
 // GET with path and query params
+//
+// Example:
+//
+//	request := &fern.GetWithPathAndQuery{
+//	    Query: "query",
+//	}
+//	client.Endpoints.Params.GetWithPathAndQuery(
+//	    context.TODO(),
+//	    "param",
+//	    request,
+//	)
 func (c *Client) GetWithPathAndQuery(
 	ctx context.Context,
 	param string,
@@ -124,6 +178,17 @@ func (c *Client) GetWithPathAndQuery(
 }
 
 // GET with path and query params
+//
+// Example:
+//
+//	request := &fern.GetWithInlinePathAndQuery{
+//	    Param: "param",
+//	    Query: "query",
+//	}
+//	client.Endpoints.Params.GetWithInlinePathAndQuery(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetWithInlinePathAndQuery(
 	ctx context.Context,
 	request *fern.GetWithInlinePathAndQuery,
@@ -141,6 +206,14 @@ func (c *Client) GetWithInlinePathAndQuery(
 }
 
 // PUT to update with path param
+//
+// Example:
+//
+//	client.Endpoints.Params.ModifyWithPath(
+//	    context.TODO(),
+//	    "param",
+//	    request,
+//	)
 func (c *Client) ModifyWithPath(
 	ctx context.Context,
 	param string,
@@ -160,6 +233,17 @@ func (c *Client) ModifyWithPath(
 }
 
 // PUT to update with path param
+//
+// Example:
+//
+//	request := &fern.ModifyResourceAtInlinedPath{
+//	    Param: "param",
+//	    Body: "string",
+//	}
+//	client.Endpoints.Params.ModifyWithInlinePath(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ModifyWithInlinePath(
 	ctx context.Context,
 	request *fern.ModifyResourceAtInlinedPath,
@@ -177,6 +261,14 @@ func (c *Client) ModifyWithInlinePath(
 }
 
 // POST bytes with path param returning object
+//
+// Example:
+//
+//	client.Endpoints.Params.UploadWithPath(
+//	    context.TODO(),
+//	    "upload-path",
+//	    request,
+//	)
 func (c *Client) UploadWithPath(
 	ctx context.Context,
 	param string,

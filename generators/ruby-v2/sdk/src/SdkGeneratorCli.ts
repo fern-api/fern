@@ -7,10 +7,12 @@ import { generateModels } from "@fern-api/ruby-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { RoutingAuthProviderGenerator } from "./auth/RoutingAuthProviderGenerator.js";
 import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator.js";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator.js";
 import { InferredAuthProviderGenerator } from "./inferred-auth/InferredAuthProviderGenerator.js";
+import { OAuthProviderGenerator } from "./oauth/OAuthProviderGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
 import { RootClientGenerator } from "./root-client/RootClientGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
@@ -19,6 +21,7 @@ import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientG
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "./utils/convertIr.js";
 import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
+import { WebhooksHelperGenerator } from "./webhooks/WebhooksHelperGenerator.js";
 import { WireTestGenerator } from "./wire-tests/index.js";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator.js";
 
@@ -58,6 +61,8 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        await context.snippetGenerator.populateSnippetsCache();
+
         const models = generateModels({ context });
         for (const file of models) {
             context.project.addRawFiles(file);
@@ -112,8 +117,9 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         });
 
         this.generateInferredAuthProvider(context);
-
-        await context.snippetGenerator.populateSnippetsCache();
+        this.generateOAuthProvider(context);
+        this.generateRoutingAuthProvider(context);
+        this.generateWebhooksHelpers(context);
 
         if (this.shouldGenerateReadme(context)) {
             try {
@@ -171,6 +177,35 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 scheme: inferredAuth
             });
             context.project.addRawFiles(inferredAuthProvider.generate());
+        }
+    }
+
+    private generateOAuthProvider(context: SdkGeneratorContext): void {
+        const oauth = context.getOAuthAuth();
+        if (oauth != null) {
+            const oauthProvider = new OAuthProviderGenerator({
+                context,
+                scheme: oauth
+            });
+            context.project.addRawFiles(oauthProvider.generate());
+        }
+    }
+
+    private generateRoutingAuthProvider(context: SdkGeneratorContext): void {
+        // The routing auth provider only exists under endpoint-security, where each
+        // endpoint applies only the schemes it declares. ALL/ANY auth continues to use
+        // the flat client headers / single auth provider, so nothing is emitted here.
+        if (!context.isEndpointSecurity()) {
+            return;
+        }
+        const routingAuthProvider = new RoutingAuthProviderGenerator(context);
+        context.project.addRawFiles(routingAuthProvider.generate());
+    }
+
+    private generateWebhooksHelpers(context: SdkGeneratorContext): void {
+        const webhooksHelperGenerator = new WebhooksHelperGenerator(context);
+        for (const file of webhooksHelperGenerator.generate()) {
+            context.project.addRawFiles(file);
         }
     }
 

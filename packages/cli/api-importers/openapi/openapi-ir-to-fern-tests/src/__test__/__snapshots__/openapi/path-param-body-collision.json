@@ -1,0 +1,104 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "updateIdentifier": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "idTypePathParam": "idType",
+                  },
+                  "request": {
+                    "idType": "idType",
+                    "newValue": "newValue",
+                    "oldValue": "oldValue",
+                  },
+                },
+              ],
+              "method": "PATCH",
+              "pagination": undefined,
+              "path": "/Identifiers/{idTypePathParam}",
+              "request": {
+                "body": {
+                  "properties": {
+                    "idType": "string",
+                    "newValue": "string",
+                    "oldValue": "string",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "IdentifierUpdate",
+                "path-parameters": {
+                  "idTypePathParam": "string",
+                },
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    updateIdentifier:
+      path: /Identifiers/{idTypePathParam}
+      method: PATCH
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: IdentifierUpdate
+        path-parameters:
+          idTypePathParam: string
+        body:
+          properties:
+            idType: string
+            oldValue: string
+            newValue: string
+        content-type: application/json
+      examples:
+        - path-parameters:
+            idTypePathParam: idType
+          request:
+            idType: idType
+            oldValue: oldValue
+            newValue: newValue
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Collision Test",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Collision Test
+",
+  },
+  "specVersion": "1.0.0",
+}

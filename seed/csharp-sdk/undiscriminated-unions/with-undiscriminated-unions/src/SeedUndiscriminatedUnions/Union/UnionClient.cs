@@ -18,6 +18,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +36,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -95,6 +101,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -107,6 +118,7 @@ public partial class UnionClient : IUnionClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/metadata",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -172,6 +184,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -185,6 +202,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Put,
                     Path = "/metadata",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -250,6 +268,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -263,6 +286,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/call",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -328,6 +352,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -341,6 +370,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/duplicate",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -406,6 +436,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -419,6 +454,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/nested",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -484,6 +520,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -497,6 +538,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/nested-objects",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -562,6 +604,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -575,6 +622,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/aliased-object",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -640,6 +688,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -653,6 +706,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/with-base-properties",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -718,6 +772,11 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUndiscriminatedUnions.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -731,6 +790,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/camel-case",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

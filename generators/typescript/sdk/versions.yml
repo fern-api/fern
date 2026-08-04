@@ -1,4 +1,562 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.87.0
+  changelogEntry:
+    - summary: |
+        Add a `requireBaseUrl` config option. When enabled, `baseUrl` is a required client option and
+        `environment` is optional, for APIs whose users always pass an explicit server URL. Generated
+        snippets, README, and wire tests use `baseUrl` accordingly. The option is ignored for APIs with
+        multiple base URLs, whose clients resolve each URL from `environment`. Defaults to `false`, so
+        existing SDKs are unchanged.
+      type: feat
+  createdAt: "2026-08-03"
+  irVersion: 67
+- version: 3.86.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `allowUserAgentAppInfo` config. When enabled, generated clients accept an
+        `appInfo: { name, version?, comment? }` option whose product token is appended to the
+        `User-Agent` header (`{sdk}/{version} ... {product}/{product-version} ({comment})`),
+        following RFC 9110. Disabled by default, so existing generated output is unchanged, and
+        it composes with `includePlatformHeaders`, the `user-agent` template config, and the
+        default `{package}/{version}` value. Caller-supplied values are token-encoded.
+      type: feat
+  createdAt: "2026-07-31"
+  irVersion: 67
+- version: 3.85.2
+  changelogEntry:
+    - summary: |
+        Respect the `user-agent` config template when `includePlatformHeaders` is enabled. The
+        structured User-Agent previously always used the npm package name and version, ignoring
+        the configured template.
+      type: fix
+  createdAt: "2026-07-30"
+  irVersion: 67
+- version: 3.85.1
+  changelogEntry:
+    - summary: |
+        Fixed the generated wire tests for endpoints that use offset pagination. The tests
+        asserted `page.hasNextPage()` was `true` for every example, but the generated client
+        reports no next page when the response returns fewer items than the requested page
+        size (the pagination `step`), or when the response's `has-next-page` property is
+        `false`. The wire test now evaluates the same condition against the mocked response,
+        and only asserts `hasNextPage()`/`getNextPage()` when a next page is actually expected.
+      type: fix
+  createdAt: "2026-07-29"
+  irVersion: 67
+- version: 3.85.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `optional-auth` config flag. When enabled, client auth
+        parameters are made optional even when the API spec mandates auth on all
+        endpoints (`isAuthMandatory=true`), so the client can be constructed without
+        credentials. Requests are then sent unauthenticated when no credentials are
+        supplied, instead of throwing from the auth provider. Useful for
+        hand-maintained wrapper clients that authenticate via external means
+        (e.g. cloud provider credentials). Defaults to `false`, so existing
+        behavior is unchanged.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 3.84.0
+  changelogEntry:
+    - summary: |
+        Generated error classes now redeclare the `body` property with the error's
+        typed body (e.g. `public declare readonly body: MyErrorBody;`) instead of
+        inheriting `body?: unknown` from the base API error class. This makes
+        `err.body.<field>` type-check in catch blocks without casting when the
+        error has a declared body schema.
+      type: feat
+  createdAt: "2026-07-27"
+  irVersion: 67
+- version: 3.83.2
+  changelogEntry:
+    - summary: |
+        Global headers declared with an `env` now fall back to that environment
+        variable at runtime. The resolution order for a global header is the
+        explicit option, then the environment variable, then the client default.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 3.83.1
+  changelogEntry:
+    - summary: |
+        Scope the passthrough `client.fetch()` auth headers to the configured base URL.
+        Auth headers are now only attached when the resolved request URL has the same
+        origin as the configured base URL (or environment), so passing an absolute
+        cross-origin URL into the passthrough fetch escape hatch no longer leaks the
+        SDK's credentials to an unrelated host. Relative paths and same-origin absolute
+        URLs are unaffected. Passthrough debug logs now redact credentials in the
+        request URL, matching the main fetcher.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 3.83.0
+  changelogEntry:
+    - summary: |
+        Add support for webhook body-hash binding in the generated `verifySignature` helper.
+        When a webhook's signature declares a body-hash binding, the helper now hashes the raw
+        request body and compares it to the hash transmitted separately as a query parameter on
+        the notification URL (e.g. Twilio's `bodySHA256`) before verifying the HMAC signature.
+        Both checks must pass. The body-hash algorithm and encoding are independent of the outer
+        HMAC's.
+      type: feat
+    - summary: |
+        Webhook signature helpers now support multi-value form parameters (with per-key
+        dedup + sort), branch at runtime on the body-hash query parameter to verify either
+        classic form-encoded or JSON requests, verify against normalized notification-URL
+        variants (port / legacy query encoding) when configured, and return `false` instead
+        of throwing on missing/invalid inputs.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 3.82.3
+  changelogEntry:
+    - summary: |
+        Fix server URL variable interpolation to render the selected environment's URL
+        template instead of always using the first environment's template. When a client
+        is constructed with both an `environment` and server URL variable values (e.g.
+        `region`), the base URL is now built from the selected environment's template(s);
+        for multi-host environments every host's template is formatted. An explicitly
+        provided `baseUrl` or custom environment value is no longer overridden.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
+- version: 3.82.2
+  changelogEntry:
+    - summary: |
+        Generated endpoint JSDoc now documents all thrown error paths: in addition to
+        the errors declared in the API definition, each method's `@throws` annotations
+        include the base API error class (thrown for any undeclared HTTP error status
+        code) and the timeout error class (thrown when the request times out).
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 3.82.1
+  changelogEntry:
+    - summary: |
+        Send `grant_type: "client_credentials"` in the OAuth token request when the token
+        endpoint models `grant_type` as a plain (non-literal) string. Previously the
+        generated `OAuthAuthProvider` omitted `grant_type` entirely, so token requests
+        against OpenAPI-imported specs (where `grant_type` is an optional string rather
+        than a literal) failed. A required non-literal `grant_type` is no longer surfaced
+        as a user-supplied client-credentials option; it is synthesized automatically.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 3.82.0
+  changelogEntry:
+    - summary: |
+        Add automatic idempotency-key generation, driven by the centralized
+        `idempotencyKeyGeneration` config in the IR. When enabled, the generated SDK attaches a
+        UUIDv4 idempotency-key header (default `Idempotency-Key`) to requests whose HTTP method is
+        listed in the IR (default `POST`/`PUT`). A caller-supplied key in request options still takes
+        precedence.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 3.81.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL variables (e.g. region/edge routing). Server variables
+        defined on the API's environments are now exposed as optional string options on the
+        client constructor and interpolated into the base URL(s) at request time. Reserved
+        option names are de-collided by prefixing with `serverUrl` (e.g. a variable named
+        `environment` is exposed as `serverUrlEnvironment`).
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 3.80.2
+  changelogEntry:
+    - summary: |
+        Fix compile errors in the generated `OAuthAuthProvider` when the serde layer is
+        disabled: the token endpoint method is now called with the same camelCase name
+        that the generated client exposes (previously the original casing, e.g.
+        `CreateOauth2Token`, was used). Also guard against optional `access_token`
+        response properties so the token refresh path satisfies its `Promise<string>`
+        return type instead of `string | undefined`.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 3.80.1
+  changelogEntry:
+    - summary: |
+        Make the structured `User-Agent` (emitted when `includePlatformHeaders` is
+        enabled) comply with the RFC 7230 token grammar. The npm package name is now
+        percent-encoded in the product token so the `@` and `/` of a scoped package
+        are escaped (e.g. `@dummy/sdk/0.0.1` becomes `%40dummy%2Fsdk/0.0.1`); the
+        original name can be recovered by URL-decoding. The architecture label is also
+        normalized so the 64-bit x86 aliases (`x64`, `amd64`, `x86_64`) all report as
+        the canonical `x86_64`.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 3.80.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header of the form
+        `{sdkName}/{version} ({os}; {arch}) {runtime}/{runtimeVersion}`, matching the
+        Twilio helper-library shape. This is gated behind the `includePlatformHeaders`
+        config option and is disabled by default, so existing generated output is
+        unchanged. When enabled, the platform + runtime information is consolidated
+        into the `User-Agent` and the discrete `X-Fern-Runtime` / `X-Fern-Runtime-Version`
+        headers are omitted. The platform group and runtime segment are dropped
+        gracefully in environments where they cannot be determined (e.g. browsers),
+        and the header remains subject to `omitFernHeaders`.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 3.79.2
+  changelogEntry:
+    - summary: |
+        Pin the npm toolchain used by the generated publish workflow. The
+        `.github/workflows/ci.yml` publish job now runs on a pinned Node LTS
+        (`node-version: "lts/Krypton"`) and calls `npm publish` directly instead
+        of `npx -y npm@latest publish`. Relying on `npm@latest` pulled whatever
+        npm release was newest at publish time, so a broken npm release could
+        break publishing. The pinned Node LTS bundles an npm that supports OIDC
+        trusted publishing. The `npx semver` invocation used for backport
+        detection is also pinned to `semver@7.8.1`.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 67
+- version: 3.79.1
+  changelogEntry:
+    - summary: |
+        Generated snippets now use `baseUrl` instead of `environment` when
+        no environments are defined in the API spec, matching the actual
+        constructor parameter users should provide.
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
+- version: 3.79.0
+  changelogEntry:
+    - summary: |
+        Add a `defaultTimeout` custom config option, expressed in milliseconds, which is idiomatic for
+        JavaScript/TypeScript (`setTimeout`, `AbortSignal.timeout(ms)`). Use `"infinity"` to disable the
+        timeout. The seconds-based `defaultTimeoutInSeconds` and `timeoutInSeconds` keys are now
+        deprecated but continue to work: their values are converted to milliseconds (× 1000). Precedence
+        is `defaultTimeout` > `defaultTimeoutInSeconds` > `timeoutInSeconds`. Generated SDK output is
+        unchanged for existing configs.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.78.2
+  changelogEntry:
+    - summary: |
+        Fix a regression where `| undefined` was dropped from the value type of generated
+        `Record` types backed by optional map values (e.g. optional `additionalProperties`).
+        Optional map values now correctly generate `Record<string, T | undefined>` with
+        serialization `record(string(), T.optional())`, while `unknown`/`any` map values
+        keep the redundant `| undefined` stripped (`Record<string, unknown>`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.78.1
+  changelogEntry:
+    - summary: |
+        Fix `TypeError: Cannot use 'in' operator to search for 'path' in undefined`
+        crash when `null` or `undefined` is passed to a file upload parameter at
+        runtime. The error is now a clear `TypeError` describing the expected types
+        instead of a cryptic `in` operator failure.
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.78.0
+  changelogEntry:
+    - summary: |
+        Add an `additionalBodyParameters` request option that spreads additional parameters into an
+        endpoint's JSON request body. Caller-supplied properties override matching keys in the endpoint
+        body, matching the behavior of the Python, Swift, and Ruby SDKs. Omitting the option leaves the
+        request body unchanged and never fabricates a body for bodyless requests.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.77.3
+  changelogEntry:
+    - summary: |
+        Revert the automatic renaming of inlined path parameters that collide with request
+        body properties (introduced in 3.77.1). These collisions are now rejected at the CLI
+        level: `fern check` errors and asks the user to deconflict the names (e.g. via
+        `x-fern-parameter-name`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.77.2
+  changelogEntry:
+    - summary: |
+        Fix ESM spec violations for extensionless imports in generated SDKs. The
+        `rename-to-esm-files.js` script now resolves bare directory imports
+        (e.g. `from "./oauth"` → `from "./oauth/index.mjs"`) and extensionless
+        file imports (e.g. `from "./client"` → `from "./client.mjs"`), which
+        previously broke Node's ESM loader and Turbopack (Next 16). Also sets
+        `moduleResolution: "bundler"` in `tsconfig.esm.json` for correct ESM
+        semantics.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
+- version: 3.77.1
+  changelogEntry:
+    - summary: |
+        When an inlined path parameter (`inlinePathParameters: true`) shares its property name with an
+        inlined request-body property (e.g. a `{idType}` path parameter and an `idType` body field),
+        the request wrapper now keeps both fields by renaming the path parameter with a `PathParam`
+        suffix (e.g. `idTypePathParam`). Previously the two values were collapsed into a single shared
+        field, which made it impossible to send different values for the URL path and the request body.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
+- version: 3.77.0
+  changelogEntry:
+    - summary: |
+        Implement SSE stream auto-reconnection for resumable endpoints. When an SSE
+        stream drops mid-connection and the endpoint is marked `resumable: true`, the
+        SDK now automatically reconnects using the Last-Event-ID header, honoring
+        server-sent retry directives clamped to 30 seconds. Reconnection respects
+        `reconnectionEnabled` and `maxReconnectionAttempts` options.
+      type: feat
+  createdAt: "2026-07-04"
+  irVersion: 67
+- version: 3.76.0
+  changelogEntry:
+    - summary: |
+        Add React Query hooks generation support via the `generateReactQueryHooks` config flag.
+        When enabled, generates a `react-query/` directory with a tRPC-style namespace object
+        that mirrors the SDK client hierarchy (e.g. `seedApi.user.list.useQuery()`). Each query
+        endpoint exposes useQuery, useSuspenseQuery, getQueryKey, getQueryOptions (for SSR/RSC),
+        and invalidate. Mutation endpoints expose useMutation. Hierarchical cache invalidation
+        at endpoint, service, and SDK levels. Per-service file splits with wildcard subexports
+        for tree-shaking. All exports available via a `./react-query` package.json subexport
+        with optional peer dependencies on react and @tanstack/react-query.
+      type: feat
+  createdAt: "2026-07-03"
+  irVersion: 67
+- version: 3.75.3
+  changelogEntry:
+    - summary: |
+        Emit object keys without quotes in generated dynamic snippets when the key is
+        a valid JavaScript identifier. Previously, keys of maps and free-form objects
+        (e.g. `map<string, unknown>` values) were always quoted, producing inconsistent
+        output where `metadata: { "releaseDate": ... }` sat next to unquoted typed
+        properties. Keys that are not valid identifiers remain quoted.
+      type: fix
+  createdAt: "2026-07-02"
+  irVersion: 67
+- version: 3.75.2
+  changelogEntry:
+    - summary: |
+        Fix formatter regression caused by pnpm 11 Docker upgrade. The Dockerfile's
+        `rm -rf /.pnpm/store` cleanup step was breaking all globally installed tools
+        (biome, oxfmt, prettier) because pnpm 11 stores global packages as symlinks
+        into `$PNPM_HOME/store`. Also clean up a redundant `code` template wrapper in
+        constructor generation that produced malformed indentation before formatting.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 3.75.1
+  changelogEntry:
+    - summary: |
+        Fix asymmetric webhook signature verification to support `payload-format`
+        configuration. When `payload-format.components` includes `timestamp`, the
+        timestamp header value is now included in the data verified by the asymmetric
+        signature, closing a replay-protection gap where the timestamp was
+        unauthenticated.
+      type: fix
+    - summary: |
+        Use `IterableIterator<T>` instead of `HeadersIterator<T>` in the generated `Headers.ts` shim.
+        `HeadersIterator` was added in TypeScript 5.6; the previous annotations broke compilation on TS < 5.6.
+      type: fix
+    - summary: |
+        Upgrade oxc tooling: oxlint 1.69.0 → 1.72.0, oxfmt 0.54.0 → 0.57.0,
+        oxlint-tsgolint 0.23.0 → 0.24.0.
+      type: chore
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 3.75.0
+  changelogEntry:
+    - summary: |
+        TimeoutError now extends the base API error class instead of Error directly,
+        so `instanceof ApiError` catches timeout errors. Added a `requestId` getter
+        to the base API error class that extracts `x-request-id` from the raw response
+        headers.
+      type: feat
+  createdAt: "2026-06-30"
+  irVersion: 67
+- version: 3.74.2
+  changelogEntry:
+    - summary: |
+        Remove the tsgolint rebuild-from-source Docker stage. The published
+        oxlint-tsgolint 0.23.0 binaries are now used directly, eliminating the
+        golang image pull, typescript-go submodule clone, and Go compilation
+        that made Dockerfile builds slow. The two Go stdlib CVEs previously
+        addressed by the rebuild (CVE-2026-42507 net/textproto, CVE-2026-27145
+        crypto/x509) are not exercisable by a linting binary; they will clear
+        automatically when tsgolint ships a release built with go1.26.4+.
+      type: chore
+  createdAt: "2026-06-29"
+  irVersion: 67
+- version: 3.74.1
+  changelogEntry:
+    - summary: |
+        Fix TS5076 compilation error in generated pagination code when both
+        `hasNextPage` and `step` are configured on offset pagination. The
+        `??` and `&&` operators were mixed without parentheses.
+      type: fix
+    - summary: |
+        Fix TS1484 compilation error in generated webhook code by using
+        `import type` for `SignatureEncoding` to satisfy `verbatimModuleSyntax`.
+      type: fix
+  createdAt: "2026-06-29"
+  irVersion: 67
+- version: 3.74.0
+  changelogEntry:
+    - summary: |
+        Support `resumable` flag in SSE streaming endpoints. When an endpoint has
+        `x-fern-streaming.resumable: true`, the generated SDK now includes `resumable: true`
+        in the stream event shape, plumbing the flag through to the runtime for use by
+        reconnection logic. Adds `stream: { reconnectionEnabled, maxReconnectionAttempts }`
+        request options for runtime control of reconnection behavior.
+      type: feat
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.4
+  changelogEntry:
+    - summary: |
+        Treat null values identically to undefined when serializing query string
+        parameters. Previously, null values in objects and arrays were serialized as
+        empty strings (e.g. `key=`); they are now omitted from the query string,
+        matching the existing behavior for undefined values and the
+        QueryStringBuilder API.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.3
+  changelogEntry:
+    - summary: |
+        Fix SSE event parsing to buffer data and yield on blank lines per the SSE spec.
+        Previously, the parser yielded events immediately on `data:` lines, causing
+        `id:` and `retry:` fields that follow the `data:` line to be missed or
+        associated with the wrong event.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.2
+  changelogEntry:
+    - summary: |
+        Fix a request-wrapper collision when an inlined path parameter (`inlinePathParameters: true`)
+        shares its property name with an inlined request-body property (e.g. a `{idType}` path
+        parameter and an `idType` body field). Previously the generated interface emitted a duplicate
+        member and the client destructured the path parameter out of the request, dropping the body
+        property from the payload. The colliding property is now emitted once and used for both the
+        URL path and the request body.
+      type: fix
+    - summary: |
+        Fix a naming collision in generated wire tests when the configured client class
+        name (`naming.client`) matches the error namespace export. Previously the client
+        class import and the error namespace import shared a single binding, which shadowed
+        each other and made error references (e.g. `Client.namespace.SomeError`) unresolvable.
+        The error namespace is now imported under an alternate alias when a collision is detected.
+        The same collision also produced a duplicate identifier in the root `index.ts` (the client
+        class re-export clashed with `export * as <name> from "./api/index.js"`); the colliding root
+        client re-export is now omitted (the client remains importable from `./Client.js`).
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.1
+  changelogEntry:
+    - summary: |
+        Fix generated wire tests failing to parse when a header example value contains
+        special characters (e.g. double quotes or backticks). Header values in the
+        generated mock-server `.header(...)` calls are now emitted as properly escaped
+        string literals via `JSON.stringify`, instead of being interpolated raw into a
+        double-quoted string.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.0
+  changelogEntry:
+    - summary: |
+        Add support for SSE `id` and `retry` fields in the TypeScript SDK Stream class.
+        A new `withMetadata()` method returns an `AsyncIterable<ServerSentEvent<T>>`
+        exposing per-event `id`, `retry`, and `event` fields alongside the parsed `data`.
+        Default iteration still yields `T`, so this is fully backward compatible.
+      type: feat
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 3.72.10
+  changelogEntry:
+    - summary: |
+        Fix inferred auth providers generating an invalid token request when the token
+        endpoint uses a referenced request body. The generated provider now sends the
+        request body keys using the same casing as the generated request type (the wire
+        value when the serde layer is disabled) instead of always camelCasing them.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.9
+  changelogEntry:
+    - summary: |
+        Fix OAuth client-credentials providers when the token endpoint request body has
+        required properties beyond the client id and secret (e.g. a scopes mapping or
+        other custom fields). Those required, non-literal properties are now surfaced on
+        the client-credentials options and forwarded to the token request, so the
+        generated provider compiles and sends a complete request.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.8
+  changelogEntry:
+    - summary: |
+        Fix the serialization layer for discriminated unions that both `extend` another
+        type and declare `base-properties`. The generated `_Base` schema now extends the
+        parent type schemas (in addition to the base properties), so its inferred raw
+        type matches the declared `Raw` type and the union schema compiles.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.7
+  changelogEntry:
+    - summary: |
+        Fixed a runtime error in the serialization layer when a type references a
+        same-named type in another package. Such references are now wrapped with
+        `lazy()`/`lazyObject()` so they are resolved through the `serializers`
+        namespace barrel after all modules have initialized, instead of being read
+        eagerly during module load (which could throw "Cannot read properties of
+        undefined").
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.6
+  changelogEntry:
+    - summary: |
+        Fixed the generated wire test for paginated endpoints when `neverThrowErrors`
+        is enabled. In that mode the SDK returns a wrapped `APIResponse` instead of a
+        `Page`, so the test no longer calls `page.data`/`page.hasNextPage()`/
+        `page.getNextPage()`; it now asserts the returned `APIResponse` directly.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.5
+  changelogEntry:
+    - summary: |
+        Bump form-data dependency from ^4.0.4 to ^4.0.6 in generated SDKs to fix
+        CRLF injection vulnerability (CVE-2026-12143).
+      type: chore
+  createdAt: "2026-06-16"
+  irVersion: 67
+- version: 3.72.4
+  changelogEntry:
+    - summary: |
+        The TypeScript SDK generator now suppresses lifted base properties from a discriminated union's synthesized `_Base` interface when every variant already inherits them via its `extends` chain. Pairs with the parser change that lifts shared-parent properties so non-structural-typing SDKs (Go, C#) can expose them; keeps the TypeScript output stable and avoids TS2320 collisions on optionality.
+      type: fix
+  createdAt: "2026-06-16"
+  irVersion: 67
+- version: 3.72.3
+  changelogEntry:
+    - summary: |
+        Bump esbuild from ~0.24.2 to ~0.28.1 to fix GHSA-gv7w-rqvm-qjhr (missing binary integrity verification).
+      type: chore
+  createdAt: "2026-06-15"
+  irVersion: 67
 - version: 3.72.2
   changelogEntry:
     - summary: |

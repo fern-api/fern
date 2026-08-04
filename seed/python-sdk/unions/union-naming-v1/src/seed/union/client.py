@@ -77,6 +77,7 @@ class UnionClient:
         client.union.update(
             request=CircleShape(
                 radius=1.1,
+                id="id",
             ),
         )
         """
@@ -163,6 +164,7 @@ class AsyncUnionClient:
             await client.union.update(
                 request=CircleShape(
                     radius=1.1,
+                    id="id",
                 ),
             )
 

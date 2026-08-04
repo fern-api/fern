@@ -100,10 +100,10 @@ public record WorkspaceSubmissionStatus
     public bool IsTraced => Type == "traced";
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stopped'.</exception>
-    public object AsStopped() =>
+    public object? AsStopped() =>
         IsStopped
             ? Value!
             : throw new global::System.Exception("WorkspaceSubmissionStatus.Type is not 'stopped'");
@@ -145,7 +145,7 @@ public record WorkspaceSubmissionStatus
             : throw new global::System.Exception("WorkspaceSubmissionStatus.Type is not 'traced'");
 
     public T Match<T>(
-        Func<object, T> onStopped,
+        Func<object?, T> onStopped,
         Func<SeedTrace.ErrorInfo, T> onErrored,
         Func<SeedTrace.RunningSubmissionState, T> onRunning,
         Func<SeedTrace.WorkspaceRunDetails, T> onRan,
@@ -165,7 +165,7 @@ public record WorkspaceSubmissionStatus
     }
 
     public void Visit(
-        Action<object> onStopped,
+        Action<object?> onStopped,
         Action<SeedTrace.ErrorInfo> onErrored,
         Action<SeedTrace.RunningSubmissionState> onRunning,
         Action<SeedTrace.WorkspaceRunDetails> onRan,
@@ -197,7 +197,7 @@ public record WorkspaceSubmissionStatus
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsStopped(out object? value)
     {
@@ -325,7 +325,7 @@ public record WorkspaceSubmissionStatus
 
             var value = discriminator switch
             {
-                "stopped" => new { },
+                "stopped" => null,
                 "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
                 "running" => json.GetProperty("value")
@@ -398,9 +398,9 @@ public record WorkspaceSubmissionStatus
     [Serializable]
     public record Stopped
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>

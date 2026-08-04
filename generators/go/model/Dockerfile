@@ -1,4 +1,4 @@
-FROM node:24.16-alpine3.23 AS node
+FROM node:24.17-alpine3.23 AS node
 
 FROM golang:1.26.4-alpine3.23
 
@@ -50,6 +50,34 @@ RUN for dir in \
         tar -xzf brace-expansion-5.0.6.tgz && \
         mv package brace-expansion && \
         rm brace-expansion-5.0.6.tgz; \
+      fi; \
+    done
+
+# Patch undici to 6.27.0 to fix CVE-2026-12151.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/undici; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/undici/-/undici-6.27.0.tgz -o undici-6.27.0.tgz && \
+        tar -xzf undici-6.27.0.tgz && \
+        mv package undici && \
+        rm undici-6.27.0.tgz; \
+      fi; \
+    done
+
+# Patch tar to 7.5.16 to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh
+# (PAX size override applied to intermediary GNU long-name/long-link headers,
+# causing tar parser interpretation differential / file smuggling).
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/tar; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/tar/-/tar-7.5.16.tgz -o tar-7.5.16.tgz && \
+        tar -xzf tar-7.5.16.tgz && \
+        mv package tar && \
+        rm tar-7.5.16.tgz; \
       fi; \
     done
 

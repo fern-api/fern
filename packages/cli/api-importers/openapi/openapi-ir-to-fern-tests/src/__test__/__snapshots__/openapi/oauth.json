@@ -259,4 +259,5 @@ auth-schemes:
 auth: oauth2
 ",
   },
+  "specVersion": "1.0.0",
 }

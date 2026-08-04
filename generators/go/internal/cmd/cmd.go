@@ -54,34 +54,39 @@ var (
 // Config represents the common configuration required from all of
 // the commands (e.g. fern-go-{client,model}).
 type Config struct {
-	DryRun                       bool
-	EnableExplicitNull           bool
-	IncludeLegacyClientOptions   bool
-	Whitelabel                   bool
-	AlwaysSendRequiredProperties bool
-	InlinePathParameters         bool
-	InlineFileProperties         bool
-	UseReaderForBytesRequest     bool
-	GettersPassByValue           bool
-	ExportAllRequestsAtRoot      bool
-	OmitEmptyRequestWrappers     bool
-	OmitFernHeaders              bool
-	Organization                 string
-	CoordinatorURL               string
-	CoordinatorTaskID            string
-	Version                      string
-	IrFilepath                   string
-	SnippetFilepath              string
-	ClientName                   string
-	ClientConstructorName        string
-	ImportPath                   string
-	ExportedClientName           string
-	PackageName                  string
-	PackagePath                  string
-	UnionVersion                 string
-	CustomPagerName              string
-	Module                       *generator.ModuleConfig
-	Writer                       *writer.Config
+	DryRun                         bool
+	ApplyQueryDefaultsOnNilRequest bool
+	EnableExplicitNull             bool
+	IncludeLegacyClientOptions     bool
+	Whitelabel                     bool
+	AlwaysSendRequiredProperties   bool
+	InlinePathParameters           bool
+	InlineFileProperties           bool
+	UseReaderForBytesRequest       bool
+	GettersPassByValue             bool
+	DedupeUnionBaseProperties      bool
+	ServerURLVariables             bool
+	ExportAllRequestsAtRoot        bool
+	OmitEmptyRequestWrappers       bool
+	OmitFernHeaders                bool
+	IncludePlatformHeaders         bool
+	AllowUserAgentAppInfo          bool
+	Organization                   string
+	CoordinatorURL                 string
+	CoordinatorTaskID              string
+	Version                        string
+	IrFilepath                     string
+	SnippetFilepath                string
+	ClientName                     string
+	ClientConstructorName          string
+	ImportPath                     string
+	ExportedClientName             string
+	PackageName                    string
+	PackagePath                    string
+	UnionVersion                   string
+	CustomPagerName                string
+	Module                         *generator.ModuleConfig
+	Writer                         *writer.Config
 }
 
 // GeneratorFunc is a function that generates files.
@@ -178,7 +183,7 @@ func run(fn GeneratorFunc) (retErr error) {
 	if err := writeFiles(coordinator, config.Writer, config.Module, files); err != nil {
 		return err
 	}
-	
+
 	// Run the go-v2 SDK generator after files are written to disk, but only for client mode.
 	// This ensures all files (including internal/caller.go and other templated files)
 	// are available on disk before the go-v2 generator tries to read them.
@@ -187,7 +192,7 @@ func run(fn GeneratorFunc) (retErr error) {
 			return err
 		}
 	}
-	
+
 	return nil
 }
 
@@ -229,34 +234,39 @@ func newConfig(configFilename string) (*Config, error) {
 	}
 
 	return &Config{
-		DryRun:                       config.DryRun,
-		InlinePathParameters:         *customConfig.InlinePathParameters,
-		InlineFileProperties:         *customConfig.InlineFileProperties,
-		IncludeLegacyClientOptions:   *customConfig.IncludeLegacyClientOptions,
-		EnableExplicitNull:           *customConfig.EnableExplicitNull,
-		UseReaderForBytesRequest:     *customConfig.UseReaderForBytesRequest,
-		GettersPassByValue:           *customConfig.GettersPassByValue,
-		ExportAllRequestsAtRoot:      *customConfig.ExportAllRequestsAtRoot,
-		OmitEmptyRequestWrappers:     *customConfig.OmitEmptyRequestWrappers,
-		OmitFernHeaders:              *customConfig.OmitFernHeaders,
-		Organization:                 config.Organization,
-		AlwaysSendRequiredProperties: *customConfig.AlwaysSendRequiredProperties,
-		Whitelabel:                   config.Whitelabel,
-		CoordinatorURL:               coordinatorURL,
-		CoordinatorTaskID:            coordinatorTaskID,
-		Version:                      versionFromConfigOrIr(config),
-		IrFilepath:                   config.IrFilepath,
-		SnippetFilepath:              snippetFilepath,
-		ClientName:                   customConfig.ClientName,
-		ClientConstructorName:        customConfig.ClientConstructorName,
-		ImportPath:                   customConfig.ImportPath,
-		PackageName:                  customConfig.PackageName,
-		PackagePath:                  customConfig.PackagePath,
-		ExportedClientName:           customConfig.ExportedClientName,
-		UnionVersion:                 customConfig.UnionVersion,
-		CustomPagerName:              customConfig.CustomPagerName,
-		Module:                       moduleConfig,
-		Writer:                       writerConfig,
+		DryRun:                         config.DryRun,
+		ApplyQueryDefaultsOnNilRequest: *customConfig.ApplyQueryDefaultsOnNilRequest,
+		InlinePathParameters:           *customConfig.InlinePathParameters,
+		InlineFileProperties:           *customConfig.InlineFileProperties,
+		IncludeLegacyClientOptions:     *customConfig.IncludeLegacyClientOptions,
+		EnableExplicitNull:             *customConfig.EnableExplicitNull,
+		UseReaderForBytesRequest:       *customConfig.UseReaderForBytesRequest,
+		GettersPassByValue:             *customConfig.GettersPassByValue,
+		DedupeUnionBaseProperties:      *customConfig.DedupeUnionBaseProperties,
+		ServerURLVariables:             *customConfig.ServerURLVariables,
+		ExportAllRequestsAtRoot:        *customConfig.ExportAllRequestsAtRoot,
+		OmitEmptyRequestWrappers:       *customConfig.OmitEmptyRequestWrappers,
+		OmitFernHeaders:                *customConfig.OmitFernHeaders,
+		IncludePlatformHeaders:         *customConfig.IncludePlatformHeaders,
+		AllowUserAgentAppInfo:          *customConfig.AllowUserAgentAppInfo,
+		Organization:                   config.Organization,
+		AlwaysSendRequiredProperties:   *customConfig.AlwaysSendRequiredProperties,
+		Whitelabel:                     config.Whitelabel,
+		CoordinatorURL:                 coordinatorURL,
+		CoordinatorTaskID:              coordinatorTaskID,
+		Version:                        versionFromConfigOrIr(config),
+		IrFilepath:                     config.IrFilepath,
+		SnippetFilepath:                snippetFilepath,
+		ClientName:                     customConfig.ClientName,
+		ClientConstructorName:          customConfig.ClientConstructorName,
+		ImportPath:                     customConfig.ImportPath,
+		PackageName:                    customConfig.PackageName,
+		PackagePath:                    customConfig.PackagePath,
+		ExportedClientName:             customConfig.ExportedClientName,
+		UnionVersion:                   customConfig.UnionVersion,
+		CustomPagerName:                customConfig.CustomPagerName,
+		Module:                         moduleConfig,
+		Writer:                         writerConfig,
 	}, nil
 }
 
@@ -295,25 +305,30 @@ func readConfig(configFilename string) (*generatorexec.GeneratorConfig, error) {
 }
 
 type customConfig struct {
-	EnableExplicitNull           *bool         `json:"enableExplicitNull,omitempty"`
-	InlinePathParameters         *bool         `json:"inlinePathParameters,omitempty"`
-	InlineFileProperties         *bool         `json:"inlineFileProperties,omitempty"`
-	IncludeLegacyClientOptions   *bool         `json:"includeLegacyClientOptions,omitempty"`
-	AlwaysSendRequiredProperties *bool         `json:"alwaysSendRequiredProperties,omitempty"`
-	UseReaderForBytesRequest     *bool         `json:"useReaderForBytesRequest,omitempty"`
-	GettersPassByValue           *bool         `json:"gettersPassByValue,omitempty"`
-	ExportAllRequestsAtRoot      *bool         `json:"exportAllRequestsAtRoot,omitempty"`
-	OmitEmptyRequestWrappers     *bool         `json:"omitEmptyRequestWrappers,omitempty"`
-	OmitFernHeaders              *bool         `json:"omitFernHeaders,omitempty"`
-	ClientName                   string        `json:"clientName,omitempty"`
-	ClientConstructorName        string        `json:"clientConstructorName,omitempty"`
-	ImportPath                   string        `json:"importPath,omitempty"`
-	PackageName                  string        `json:"packageName,omitempty"`
-	PackagePath                  string        `json:"packagePath,omitempty"`
-	ExportedClientName           string        `json:"exportedClientName,omitempty"`
-	UnionVersion                 string        `json:"union,omitempty"`
-	Module                       *moduleConfig `json:"module,omitempty"`
-	CustomPagerName              string        `json:"customPagerName,omitempty"`
+	ApplyQueryDefaultsOnNilRequest *bool         `json:"applyQueryDefaultsOnNilRequest,omitempty"`
+	EnableExplicitNull             *bool         `json:"enableExplicitNull,omitempty"`
+	InlinePathParameters           *bool         `json:"inlinePathParameters,omitempty"`
+	InlineFileProperties           *bool         `json:"inlineFileProperties,omitempty"`
+	IncludeLegacyClientOptions     *bool         `json:"includeLegacyClientOptions,omitempty"`
+	AlwaysSendRequiredProperties   *bool         `json:"alwaysSendRequiredProperties,omitempty"`
+	UseReaderForBytesRequest       *bool         `json:"useReaderForBytesRequest,omitempty"`
+	GettersPassByValue             *bool         `json:"gettersPassByValue,omitempty"`
+	DedupeUnionBaseProperties      *bool         `json:"dedupeUnionBaseProperties,omitempty"`
+	ServerURLVariables             *bool         `json:"serverUrlVariables,omitempty"`
+	ExportAllRequestsAtRoot        *bool         `json:"exportAllRequestsAtRoot,omitempty"`
+	OmitEmptyRequestWrappers       *bool         `json:"omitEmptyRequestWrappers,omitempty"`
+	OmitFernHeaders                *bool         `json:"omitFernHeaders,omitempty"`
+	IncludePlatformHeaders         *bool         `json:"includePlatformHeaders,omitempty"`
+	AllowUserAgentAppInfo          *bool         `json:"allowUserAgentAppInfo,omitempty"`
+	ClientName                     string        `json:"clientName,omitempty"`
+	ClientConstructorName          string        `json:"clientConstructorName,omitempty"`
+	ImportPath                     string        `json:"importPath,omitempty"`
+	PackageName                    string        `json:"packageName,omitempty"`
+	PackagePath                    string        `json:"packagePath,omitempty"`
+	ExportedClientName             string        `json:"exportedClientName,omitempty"`
+	UnionVersion                   string        `json:"union,omitempty"`
+	Module                         *moduleConfig `json:"module,omitempty"`
+	CustomPagerName                string        `json:"customPagerName,omitempty"`
 }
 
 type moduleConfig struct {
@@ -499,6 +514,9 @@ func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
 	if customConfig.AlwaysSendRequiredProperties == nil {
 		customConfig.AlwaysSendRequiredProperties = gospec.Ptr(true)
 	}
+	if customConfig.ApplyQueryDefaultsOnNilRequest == nil {
+		customConfig.ApplyQueryDefaultsOnNilRequest = gospec.Ptr(false)
+	}
 	if customConfig.EnableExplicitNull == nil {
 		customConfig.EnableExplicitNull = gospec.Ptr(false)
 	}
@@ -517,6 +535,12 @@ func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
 	if customConfig.GettersPassByValue == nil {
 		customConfig.GettersPassByValue = gospec.Ptr(false)
 	}
+	if customConfig.DedupeUnionBaseProperties == nil {
+		customConfig.DedupeUnionBaseProperties = gospec.Ptr(false)
+	}
+	if customConfig.ServerURLVariables == nil {
+		customConfig.ServerURLVariables = gospec.Ptr(true)
+	}
 	if customConfig.ExportAllRequestsAtRoot == nil {
 		customConfig.ExportAllRequestsAtRoot = gospec.Ptr(false)
 	}
@@ -525,6 +549,12 @@ func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
 	}
 	if customConfig.OmitFernHeaders == nil {
 		customConfig.OmitFernHeaders = gospec.Ptr(false)
+	}
+	if customConfig.IncludePlatformHeaders == nil {
+		customConfig.IncludePlatformHeaders = gospec.Ptr(false)
+	}
+	if customConfig.AllowUserAgentAppInfo == nil {
+		customConfig.AllowUserAgentAppInfo = gospec.Ptr(false)
 	}
 	if customConfig.UnionVersion == "" {
 		customConfig.UnionVersion = "v1"
@@ -583,6 +613,6 @@ func runGoV2Generator(coordinator *coordinator.Client) error {
 		generatorexec.LogLevelDebug,
 		"Successfully completed go-v2 SDK generator",
 	)
-	
+
 	return nil
 }

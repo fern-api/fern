@@ -30,6 +30,9 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -43,6 +46,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/string",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -117,6 +121,9 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -130,6 +137,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/integer",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -204,6 +212,9 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -217,6 +228,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/long",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -291,6 +303,9 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -304,6 +319,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/double",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -378,6 +394,9 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -391,6 +410,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/boolean",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -465,6 +485,9 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -478,6 +501,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/datetime",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -552,6 +576,9 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -565,6 +592,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/date",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -639,6 +667,9 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -652,6 +683,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/uuid",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },
@@ -726,6 +758,9 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -739,6 +774,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/base64",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },

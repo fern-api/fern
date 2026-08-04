@@ -31,7 +31,7 @@ abstract class JsonSerializableType implements \JsonSerializable
     public function toJson(): string
     {
         $serializedObject = $this->jsonSerialize();
-        $encoded = JsonEncoder::encode($serializedObject);
+        $encoded = JsonEncoder::encode(empty($serializedObject) ? new \stdClass() : $serializedObject);
         if (!$encoded) {
             throw new Exception("Could not encode type");
         }
@@ -78,8 +78,8 @@ abstract class JsonSerializableType implements \JsonSerializable
                 $value = JsonSerializer::serializeArray($value, $arrayType);
             }
 
-            // Handle object
-            if (is_object($value)) {
+            // Handle object (skip stdClass since it's already serialized, e.g. from union processing)
+            if (is_object($value) && !($value instanceof \stdClass)) {
                 $value = JsonSerializer::serializeObject($value);
             }
 

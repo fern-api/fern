@@ -18,10 +18,19 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.auth.get_token_with_client_credentials(
+      #     client_id: "my_oauth_app_123",
+      #     client_secret: "sk_live_abcdef123456789",
+      #     audience: "https://api.example.com",
+      #     grant_type: "client_credentials",
+      #     scope: "read:users"
+      #   )
+      #
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token_with_client_credentials(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::UrlEncoded::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token",
@@ -50,10 +59,20 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.auth.refresh_token(
+      #     client_id: "my_oauth_app_123",
+      #     client_secret: "sk_live_abcdef123456789",
+      #     refresh_token: "refresh_token",
+      #     audience: "https://api.example.com",
+      #     grant_type: "refresh_token",
+      #     scope: "read:users"
+      #   )
+      #
       # @return [Seed::Auth::Types::TokenResponse]
       def refresh_token(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::UrlEncoded::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token",

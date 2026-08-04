@@ -154,7 +154,7 @@ client.inlined_request.send_(
 
 ## MultipartForm
 ## PathParam
-<details><summary><code>client.path_param.<a href="/lib/seed/path_param/client.rb">send_</a>(operand, operand_or_color) -> </code></summary>
+<details><summary><code>client.path_param.<a href="/lib/seed/path_param/client.rb">send_</a>(operand:, operand_or_color:) -> </code></summary>
 <dl>
 <dd>
 

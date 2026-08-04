@@ -14,6 +14,8 @@ export * as examples from "./examples/index.js";
 export * from "./examples/types/index.js";
 export * as file from "./file/index.js";
 export * from "./file/types/index.js";
+export * as globalParameters from "./globalParameters/index.js";
+export * from "./globalParameters/types/index.js";
 export * as pagination from "./pagination/index.js";
 export * from "./pagination/types/index.js";
 export * as products from "./products/index.js";

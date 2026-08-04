@@ -27,6 +27,107 @@ import {
 } from "./utils/getTypeFromTypeReference.js";
 import { isWriteMethod } from "./utils/isWriteMethod.js";
 
+const PATH_PARAM_DECONFLICT_SUFFIX = "PathParam";
+
+/**
+ * Collects the SDK-facing names of all non-path request properties (query parameters,
+ * headers, and request body properties) for an endpoint. Path parameters whose names
+ * collide with these are automatically renamed (see deconflictPathParameterName), which
+ * is wire-safe because path parameter names never appear on the wire.
+ */
+function getReservedRequestPropertyNames({
+    endpoint,
+    context,
+    namespace
+}: {
+    endpoint: Endpoint;
+    context: OpenApiIrConverterContext;
+    namespace: string | undefined;
+}): Set<string> {
+    const reservedNames = new Set<string>();
+
+    for (const queryParameter of endpoint.queryParameters) {
+        reservedNames.add(queryParameter.name);
+    }
+    for (const header of endpoint.headers) {
+        reservedNames.add(header.parameterNameOverride ?? header.name);
+    }
+
+    const request = endpoint.request;
+    if (request == null) {
+        return reservedNames;
+    }
+    switch (request.type) {
+        case "multipart":
+            for (const property of request.properties) {
+                reservedNames.add(property.key);
+            }
+            break;
+        case "json":
+        case "formUrlEncoded": {
+            const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined;
+            const resolvedSchema =
+                request.schema.type === "reference"
+                    ? context.getSchema(request.schema.schema, namespace)
+                    : request.schema;
+            if (
+                resolvedSchema?.type !== "object" ||
+                (maybeSchemaId != null && context.isResponseReachable(maybeSchemaId))
+            ) {
+                // the request body is emitted as a single referenced `body` property
+                reservedNames.add("body");
+                break;
+            }
+            for (const property of resolvedSchema.properties) {
+                reservedNames.add(property.nameOverride ?? property.key);
+            }
+            for (const allOfRef of resolvedSchema.allOf) {
+                const { properties: allOfProperties } = getProperties(context, allOfRef.schema, namespace);
+                for (const property of allOfProperties) {
+                    reservedNames.add(property.nameOverride ?? property.key);
+                }
+            }
+            break;
+        }
+        case "octetStream":
+            break;
+        default:
+            assertNever(request);
+    }
+
+    return reservedNames;
+}
+
+/**
+ * Returns a deterministic, non-colliding SDK name for a path parameter whose name
+ * collides with another request property (e.g. `idType` -> `idTypePathParam`).
+ * The wire format is unchanged: path parameter names never appear on the wire.
+ */
+function deconflictPathParameterName({
+    pathParameterName,
+    reservedNames,
+    pathParameters
+}: {
+    pathParameterName: string;
+    reservedNames: Set<string>;
+    pathParameters: Endpoint["pathParameters"];
+}): string {
+    const otherPathParameterNames = new Set<string>();
+    for (const pathParameter of pathParameters) {
+        const name = pathParameter.parameterNameOverride ?? pathParameter.name;
+        if (name !== pathParameterName) {
+            otherPathParameterNames.add(name);
+        }
+    }
+    let candidate = `${pathParameterName}${PATH_PARAM_DECONFLICT_SUFFIX}`;
+    let counter = 2;
+    while (reservedNames.has(candidate) || otherPathParameterNames.has(candidate)) {
+        candidate = `${pathParameterName}${PATH_PARAM_DECONFLICT_SUFFIX}${counter}`;
+        counter++;
+    }
+    return candidate;
+}
+
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
     schemaIdsToExclude: string[];
@@ -49,18 +150,33 @@ export function buildEndpoint({
 
     const maybeEndpointNamespace = getEndpointNamespace(endpoint.sdkName, endpoint.namespace);
 
+    const reservedRequestPropertyNames = getReservedRequestPropertyNames({
+        endpoint,
+        context,
+        namespace: maybeEndpointNamespace
+    });
+
+    const pathParameterRenames: Record<string, string> = {};
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     for (const pathParameter of endpoint.pathParameters) {
-        if (pathParameter.parameterNameOverride) {
-            path = path.replace(pathParameter.name, pathParameter.parameterNameOverride);
+        let parameterNameOverride = pathParameter.parameterNameOverride;
+        if (parameterNameOverride == null && reservedRequestPropertyNames.has(pathParameter.name)) {
+            parameterNameOverride = deconflictPathParameterName({
+                pathParameterName: pathParameter.name,
+                reservedNames: reservedRequestPropertyNames,
+                pathParameters: endpoint.pathParameters
+            });
+            pathParameterRenames[pathParameter.name] = parameterNameOverride;
         }
-        pathParameters[pathParameter.parameterNameOverride ?? pathParameter.name] = buildPathParameter({
+        if (parameterNameOverride) {
+            path = path.replace(`{${pathParameter.name}}`, `{${parameterNameOverride}}`);
+        }
+        pathParameters[parameterNameOverride ?? pathParameter.name] = buildPathParameter({
             pathParameter,
             context,
             fileContainingReference: declarationFile,
             namespace: maybeEndpointNamespace
         });
-        names.add(pathParameter.name);
     }
 
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
@@ -137,6 +253,10 @@ export function buildEndpoint({
 
     if (endpoint.summary != null) {
         convertedEndpoint["display-name"] = endpoint.summary;
+    }
+
+    if (endpoint.subtitle != null) {
+        convertedEndpoint["subtitle"] = endpoint.subtitle;
     }
 
     const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
@@ -400,7 +520,8 @@ export function buildEndpoint({
     if (endpoint.examples.length > 0) {
         convertedEndpoint.examples = convertEndpointExamples({
             endpointExamples: endpoint.examples,
-            context
+            context,
+            pathParameterRenames
         });
     }
 
@@ -408,6 +529,10 @@ export function buildEndpoint({
         convertedEndpoint.retries = convertEndpointRetries({
             retries: endpoint.retries
         });
+    }
+
+    if (endpoint.globalParameterIds != null && endpoint.globalParameterIds.length > 0) {
+        convertedEndpoint["global-parameters"] = endpoint.globalParameterIds;
     }
 
     // if any internal endpoints exist, then set the audience to external if this endpoint is not internal
@@ -464,14 +589,16 @@ function convertEndpointAuth({
 
 function convertEndpointExamples({
     endpointExamples,
-    context
+    context,
+    pathParameterRenames
 }: {
     endpointExamples: EndpointExample[];
     context: OpenApiIrConverterContext;
+    pathParameterRenames: Record<string, string>;
 }): RawSchemas.ExampleEndpointCallSchema[] {
     return endpointExamples.map((endpointExample) => {
         try {
-            return buildEndpointExample({ endpointExample, context });
+            return buildEndpointExample({ endpointExample, context, pathParameterRenames });
         } catch (e) {
             // biome-ignore lint/suspicious/noConsole: allow console
             console.error(`Error building endpoint example: ${e}`);

@@ -142,7 +142,7 @@
                       "subpath": {
                         "type": "string"
                       },
-                      "branch": {
+                      "ref": {
                         "type": "string"
                       }
                     },
@@ -1676,6 +1676,9 @@
                 "cursor": {
                   "type": "boolean"
                 },
+                "mcp": {
+                  "type": "boolean"
+                },
                 "vscode": {
                   "type": "boolean"
                 },
@@ -1745,6 +1748,12 @@
             },
             "basepath-aware": {
               "type": "boolean"
+            },
+            "external-sitemaps": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           "additionalProperties": false
@@ -1846,6 +1855,9 @@
                 ],
                 "additionalProperties": false
               }
+            },
+            "mask-pii": {
+              "type": "boolean"
             }
           },
           "additionalProperties": false
@@ -1892,6 +1904,9 @@
                 ],
                 "additionalProperties": false
               }
+            },
+            "mask-pii": {
+              "type": "boolean"
             }
           },
           "additionalProperties": false
@@ -2868,6 +2883,16 @@
             },
             "mobile-toc": {
               "type": "boolean"
+            },
+            "changelog-layout": {
+              "type": "string",
+              "enum": [
+                "timeline",
+                "classic"
+              ]
+            },
+            "show-nav-availability-badges": {
+              "type": "boolean"
             }
           },
           "additionalProperties": false
@@ -3061,6 +3086,9 @@
                         "afterInteractive",
                         "lazyOnload"
                       ]
+                    },
+                    "disable-sri": {
+                      "type": "boolean"
                     }
                   },
                   "required": [
@@ -3114,6 +3142,9 @@
                           "afterInteractive",
                           "lazyOnload"
                         ]
+                      },
+                      "disable-sri": {
+                        "type": "boolean"
                       }
                     },
                     "required": [
@@ -3952,6 +3983,9 @@
                       "preserveSingleSchemaOneof": {
                         "type": "boolean"
                       },
+                      "preserveOneOfInAllOf": {
+                        "type": "boolean"
+                      },
                       "inlineAllOfSchemas": {
                         "type": "boolean"
                       },
@@ -3987,6 +4021,12 @@
                         ]
                       },
                       "inferDiscriminatedUnionBaseProperties": {
+                        "type": "boolean"
+                      },
+                      "disambiguate-request-names": {
+                        "type": "boolean"
+                      },
+                      "ignore-tags": {
                         "type": "boolean"
                       }
                     },
@@ -4526,6 +4566,9 @@
                         "preserveSingleSchemaOneof": {
                           "type": "boolean"
                         },
+                        "preserveOneOfInAllOf": {
+                          "type": "boolean"
+                        },
                         "inlineAllOfSchemas": {
                           "type": "boolean"
                         },
@@ -4561,6 +4604,12 @@
                           ]
                         },
                         "inferDiscriminatedUnionBaseProperties": {
+                          "type": "boolean"
+                        },
+                        "disambiguate-request-names": {
+                          "type": "boolean"
+                        },
+                        "ignore-tags": {
                           "type": "boolean"
                         }
                       },
@@ -5530,6 +5579,9 @@
                   "type": "integer",
                   "minimum": -9007199254740991,
                   "maximum": 9007199254740991
+                },
+                "send-optional-defaults": {
+                  "type": "boolean"
                 }
               },
               "additionalProperties": false
@@ -5976,6 +6028,9 @@
                         "type": "integer",
                         "minimum": -9007199254740991,
                         "maximum": 9007199254740991
+                      },
+                      "send-optional-defaults": {
+                        "type": "boolean"
                       }
                     },
                     "additionalProperties": false
@@ -6131,6 +6186,9 @@
                   "type": "integer",
                   "minimum": -9007199254740991,
                   "maximum": 9007199254740991
+                },
+                "send-optional-defaults": {
+                  "type": "boolean"
                 }
               },
               "additionalProperties": false
@@ -6252,6 +6310,9 @@
                   "type": "integer",
                   "minimum": -9007199254740991,
                   "maximum": 9007199254740991
+                },
+                "send-optional-defaults": {
+                  "type": "boolean"
                 }
               },
               "additionalProperties": false

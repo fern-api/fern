@@ -1,0 +1,8 @@
+- summary: |
+    Suppress `unused import: super::*` warnings in generated type files by adding
+    `#[allow(unused_imports)]` before the injected `use super::*;` statement.
+  type: fix
+- summary: |
+    Suppress `dead_code` warnings in the generated `sdk_glue.rs` module, which
+    contains utilities for custom command handlers that may not be used yet.
+  type: fix

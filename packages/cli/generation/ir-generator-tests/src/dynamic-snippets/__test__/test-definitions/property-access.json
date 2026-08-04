@@ -152,7 +152,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UserProfile": {
             "type": "object",
@@ -275,7 +276,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UserProfileVerification": {
             "type": "object",
@@ -338,7 +340,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UserOrAdmin": {
             "type": "undiscriminatedUnion",
@@ -562,7 +565,8 @@
             "extends": [
                 "type_:User"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UserOrAdminDiscriminated": {
             "type": "discriminatedUnion",
@@ -614,6 +618,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "user": {
                     "type": "samePropertiesAsObject",
@@ -1274,7 +1279,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -1331,5 +1337,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

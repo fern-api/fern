@@ -834,12 +834,16 @@ function getResponseElementType({
     context: SdkGeneratorContext;
     pagination: FernIr.Pagination;
 }): go.Type {
-    const converted = context.goTypeMapper.convert({ reference: pagination.results.property.valueType });
-    const iterableElement = converted.underlying().iterableElement();
-    if (iterableElement != null) {
-        return iterableElement;
+    // Resolve the iterable element at the IR level so named aliases to a
+    // list/set (e.g. `UserList = list<User>`) unwrap to their element type.
+    // This must match getPaginationValueType, which produces the endpoint's
+    // returned *core.Page[...] element type, so the pager's PageResponse and
+    // the endpoint signature agree on the same element type.
+    const iterableType = context.maybeUnwrapIterable(pagination.results.property.valueType);
+    if (iterableType != null) {
+        return context.goTypeMapper.convert({ reference: iterableType });
     }
-    return converted;
+    return context.goTypeMapper.convert({ reference: pagination.results.property.valueType });
 }
 
 function getPagePropertyReference({

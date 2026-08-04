@@ -638,4 +638,5 @@ error-discrimination:
 display-name: Streaming API
 ",
   },
+  "specVersion": "1.0.0",
 }

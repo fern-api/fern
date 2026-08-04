@@ -1,4 +1,4 @@
-import { CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, NameInput } from "@fern-api/base-generator";
 import {
     AbstractGeneratorContext,
     FernGeneratorExec,
@@ -10,6 +10,8 @@ import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { upperFirst } from "lodash-es";
 import { RubyProject } from "../project/RubyProject.js";
+import { buildRubyTypeFileName } from "../utils/fileName.js";
+import { getFilesystemRubyGemsPublishTarget } from "./filesystem-rubygems-publish-target.js";
 import { RubyTypeMapper } from "./RubyTypeMapper.js";
 
 /**
@@ -76,7 +78,7 @@ export abstract class AbstractRubyGeneratorContext<
     public getGemName(): string {
         // Priority: package name from publish config > folder name
         // This is used for the gemspec spec.name and should match the exact gem name for publishing
-        const packageName = getPackageName(this.config);
+        const packageName = getPackageName(this.config) ?? getFilesystemRubyGemsPublishTarget(this.ir)?.packageName;
         return packageName ?? this.getRootFolderName();
     }
 
@@ -96,6 +98,10 @@ export abstract class AbstractRubyGeneratorContext<
                 return defaultVersion;
             },
             downloadFiles: () => {
+                const filesystemVersion = getFilesystemRubyGemsPublishTarget(this.ir)?.version;
+                if (filesystemVersion != null) {
+                    return filesystemVersion;
+                }
                 this.logger.warn(
                     `File download output configuration doesn't have a configured version number, defaulting to ${defaultVersion}`
                 );
@@ -148,6 +154,21 @@ export abstract class AbstractRubyGeneratorContext<
         return typeDeclaration.name.fernFilepath.allParts
             .filter((path): path is FernIr.NameOrString => path != null)
             .map((path) => this.caseConverter.snakeSafe(typeof path === "string" ? path : path.originalName));
+    }
+
+    /**
+     * Builds the filename for a type, capping it at the RubyGems 100-character
+     * limit so `gem build` does not fail with `Gem::Package::TooLongFileName`.
+     *
+     * When the snake_cased name fits, it is used verbatim (unchanged behavior).
+     * Otherwise the name is truncated and a short deterministic hash of the full
+     * name is appended to keep it unique within its directory. Only the filename
+     * (and the matching `require_relative`, which is derived from the same value)
+     * changes — the module/class name is unaffected, so this is non-breaking for
+     * consumers, who reference the constant, never the file by name.
+     */
+    protected buildTypeFileName(typeName: NameInput): string {
+        return buildRubyTypeFileName(this.caseConverter.snakeSafe(typeName));
     }
 
     protected pascalNames(typeDeclaration: FernIr.TypeDeclaration): string[] {

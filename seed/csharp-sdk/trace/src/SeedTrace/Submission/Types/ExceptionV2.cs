@@ -67,17 +67,17 @@ public record ExceptionV2
             : throw new global::System.Exception("ExceptionV2.Type is not 'generic'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'timeout', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'timeout', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'timeout'.</exception>
-    public object AsTimeout() =>
+    public object? AsTimeout() =>
         IsTimeout
             ? Value!
             : throw new global::System.Exception("ExceptionV2.Type is not 'timeout'");
 
     public T Match<T>(
         Func<SeedTrace.ExceptionInfo, T> onGeneric,
-        Func<object, T> onTimeout,
+        Func<object?, T> onTimeout,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -91,7 +91,7 @@ public record ExceptionV2
 
     public void Visit(
         Action<SeedTrace.ExceptionInfo> onGeneric,
-        Action<object> onTimeout,
+        Action<object?> onTimeout,
         Action<string, object?> onUnknown_
     )
     {
@@ -124,7 +124,7 @@ public record ExceptionV2
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsTimeout(out object? value)
     {
@@ -184,7 +184,7 @@ public record ExceptionV2
             {
                 "generic" => jsonWithoutDiscriminator.Deserialize<SeedTrace.ExceptionInfo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
-                "timeout" => new { },
+                "timeout" => null,
                 _ => json.Deserialize<object?>(options),
             };
             return new ExceptionV2(discriminator, value);
@@ -254,8 +254,8 @@ public record ExceptionV2
     [Serializable]
     public record Timeout
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 }

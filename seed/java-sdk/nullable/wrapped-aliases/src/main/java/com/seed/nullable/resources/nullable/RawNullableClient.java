@@ -10,6 +10,7 @@ import com.seed.nullable.core.MediaTypes;
 import com.seed.nullable.core.ObjectMappers;
 import com.seed.nullable.core.QueryStringMapper;
 import com.seed.nullable.core.RequestOptions;
+import com.seed.nullable.core.RetryInterceptor;
 import com.seed.nullable.core.SeedNullableApiException;
 import com.seed.nullable.core.SeedNullableException;
 import com.seed.nullable.core.SeedNullableHttpResponse;
@@ -85,6 +86,15 @@ public class RawNullableClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -96,6 +106,8 @@ public class RawNullableClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedNullableApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedNullableException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedNullableException("Network error executing HTTP request", e);
         }
@@ -132,6 +144,15 @@ public class RawNullableClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -142,6 +163,8 @@ public class RawNullableClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedNullableApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedNullableException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedNullableException("Network error executing HTTP request", e);
         }
@@ -186,6 +209,15 @@ public class RawNullableClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -196,6 +228,8 @@ public class RawNullableClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedNullableApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedNullableException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedNullableException("Network error executing HTTP request", e);
         }

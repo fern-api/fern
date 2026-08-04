@@ -6,7 +6,7 @@ import PaginationUriPath
     @Test func listWithUriPagination1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "data": [
@@ -49,7 +49,7 @@ import PaginationUriPath
     @Test func listWithPathPagination1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "data": [

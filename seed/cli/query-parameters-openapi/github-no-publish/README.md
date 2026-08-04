@@ -17,13 +17,21 @@ Command-line interface for the Query Parameters API.
 
 ## Installation
 
-Install the [Rust toolchain](https://rustup.rs/) if you don't have it:
+### Shell (macOS / Linux)
 
 ```bash
-curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/query-parameters-openapi/fern/releases/latest/download/query-parameters-api-installer.sh | sh
 ```
 
-Then build from source:
+### PowerShell (Windows)
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://github.com/query-parameters-openapi/fern/releases/latest/download/query-parameters-api-installer.ps1 | iex"
+```
+
+### Build from source
+
+If you prefer to build from source, install the [Rust toolchain](https://rustup.rs/) and run:
 
 ```bash
 cargo build --release

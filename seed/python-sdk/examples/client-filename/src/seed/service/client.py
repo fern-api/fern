@@ -299,7 +299,9 @@ class ServiceClient:
                 type="primitive",
                 name="name",
             ),
-            metadata=Metadata_Html(value="metadata"),
+            metadata=Metadata_Html(
+                value="metadata", extra={"extra": "extra"}, tags={"tags"}
+            ),
             common_metadata=Metadata(
                 id="id",
                 data={"data": "data"},
@@ -814,7 +816,9 @@ class AsyncServiceClient:
                     type="primitive",
                     name="name",
                 ),
-                metadata=Metadata_Html(value="metadata"),
+                metadata=Metadata_Html(
+                    value="metadata", extra={"extra": "extra"}, tags={"tags"}
+                ),
                 common_metadata=Metadata(
                     id="id",
                     data={"data": "data"},

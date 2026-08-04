@@ -6,7 +6,7 @@ import Examples
     @Test func getException1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "type": "generic",
@@ -42,7 +42,7 @@ import Examples
     @Test func getException2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "type": "generic",

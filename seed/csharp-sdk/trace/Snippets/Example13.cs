@@ -11,8 +11,8 @@ public partial class Examples
         );
 
         await client.Playlist.GetPlaylistsAsync(
-            1,
-            new GetPlaylistsRequest {
+            serviceParam: 1,
+            request: new GetPlaylistsRequest {
                 Limit = 1,
                 OtherField = "otherField",
                 MultiLineDocs = "multiLineDocs",

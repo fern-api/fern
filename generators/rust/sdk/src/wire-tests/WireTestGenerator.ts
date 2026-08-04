@@ -81,7 +81,7 @@ export class WireTestGenerator {
                 const firstExample = this.getDynamicEndpointExample(endpoint);
                 if (firstExample) {
                     try {
-                        const snippet = await this.generateSnippetForExample(firstExample);
+                        const snippet = await this.generateSnippetForExample(firstExample, endpoint.id);
                         endpointTestCases.set(endpoint.id, { snippet, endpoint });
                     } catch (error) {
                         this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
@@ -170,6 +170,12 @@ export class WireTestGenerator {
             const basePath = this.buildBasePath(endpoint);
             const queryParamsMap = this.buildQueryParamsMap(endpoint);
 
+            // In endpoint-security mode each endpoint routes only its declared scheme(s).
+            // Classify the endpoint so we can assert on the exact set of auth headers sent
+            // (and handle endpoints the Rust SDK cannot satisfy, e.g. inferred-auth-only).
+            const isEndpointSecurity = this.context.isEndpointSecurity();
+            const authAssertion = isEndpointSecurity ? this.classifyEndpointAuth(endpoint) : undefined;
+
             // Build test function using structured approach
             const lines: string[] = [];
 
@@ -183,9 +189,12 @@ export class WireTestGenerator {
             lines.push(`    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();`);
             lines.push(``);
 
-            // Client setup (parsed from snippet)
+            // Client setup (parsed from snippet). In endpoint-security mode we replace the
+            // snippet's single credential with credentials for every configured scheme so
+            // that per-endpoint routing (not credential availability) determines which auth
+            // header is sent.
             if (clientSetup) {
-                const setupLines = this.processClientSetupLines(clientSetup);
+                const setupLines = this.processClientSetupLines(clientSetup, isEndpointSecurity);
                 lines.push(...setupLines);
                 lines.push(``);
             }
@@ -197,14 +206,43 @@ export class WireTestGenerator {
                 lines.push(``);
             }
 
-            // Assertion
-            lines.push(`    assert!(result.is_ok(), "Client method call should succeed");`);
-            lines.push(``);
+            if (authAssertion != null && authAssertion.kind === "unsatisfiable") {
+                // The Rust SDK has no inferred-auth mechanism: resolve_endpoint_auth_headers
+                // (core/http_client.rs) cannot satisfy an InferredAuth requirement, so the call
+                // fails with a missing-credentials error before any HTTP request is made. Assert
+                // that honestly rather than faking a passing request.
+                lines.push(
+                    `    // The Rust SDK does not implement inferred auth, so this endpoint's security`
+                );
+                lines.push(
+                    `    // requirement cannot be satisfied and the call errors before any request is sent.`
+                );
+                lines.push(
+                    `    assert!(result.is_err(), "endpoint requires inferred auth, which the Rust SDK does not support");`
+                );
+                lines.push(``);
+                lines.push(
+                    `    wire_test_utils::verify_request_count("${endpoint.method}", "${basePath}", ${queryParamsMap}, 0).await.unwrap();`
+                );
+            } else {
+                // Assertion
+                lines.push(`    assert!(result.is_ok(), "Client method call should succeed");`);
+                lines.push(``);
 
-            // Verify request count using centralized wire_test_utils module
-            lines.push(
-                `    wire_test_utils::verify_request_count("${endpoint.method}", "${basePath}", ${queryParamsMap}, 1).await.unwrap();`
-            );
+                // Verify request count using centralized wire_test_utils module
+                lines.push(
+                    `    wire_test_utils::verify_request_count("${endpoint.method}", "${basePath}", ${queryParamsMap}, 1).await.unwrap();`
+                );
+
+                // In endpoint-security mode, assert exactly which auth headers were routed:
+                // the declared scheme's header(s) present, every other scheme's header absent.
+                if (authAssertion != null) {
+                    lines.push(``);
+                    lines.push(
+                        `    wire_test_utils::verify_auth_headers("${endpoint.method}", "${basePath}", ${authAssertion.matchers}).await.unwrap();`
+                    );
+                }
+            }
 
             lines.push(`}`);
 
@@ -213,6 +251,110 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test function for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    // =============================================================================
+    // ENDPOINT-SECURITY AUTH ASSERTIONS
+    // =============================================================================
+
+    /**
+     * Classifies an endpoint's auth for endpoint-security wire testing:
+     * - `no-auth`: endpoint declares no security → assert every auth header is absent.
+     * - `routed`: endpoint routes to its first satisfiable requirement → assert that
+     *   requirement's header(s) present and all other schemes' headers absent.
+     * - `unsatisfiable`: every requirement group needs an inferred-auth scheme, which the
+     *   Rust SDK cannot provide → the call errors and no request is made.
+     */
+    private classifyEndpointAuth(
+        endpoint: FernIr.HttpEndpoint
+    ): { kind: "no-auth" | "routed"; matchers: string } | { kind: "unsatisfiable" } {
+        const requirements = this.getEndpointSecurityRequirements(endpoint);
+        if (requirements == null || requirements.length === 0) {
+            return { kind: "no-auth", matchers: this.buildAuthHeaderMatchers([]) };
+        }
+        const { inferredSchemeKeys } = this.context.getEndpointAuthRoutingSchemes();
+        const inferredSet = new Set(inferredSchemeKeys);
+        // The SDK applies the first requirement group whose schemes are all satisfiable.
+        // The test client supplies credentials for every non-inferred scheme, so a group is
+        // satisfiable iff none of its schemes are inferred-auth schemes.
+        const firstSatisfiable = requirements.find((group) => group.every((key) => !inferredSet.has(key)));
+        if (firstSatisfiable == null) {
+            return { kind: "unsatisfiable" };
+        }
+        return { kind: "routed", matchers: this.buildAuthHeaderMatchers(firstSatisfiable) };
+    }
+
+    /**
+     * Returns the endpoint's auth requirements as an OR-list of AND-groups of auth scheme
+     * keys, or undefined when the endpoint declares no security (→ no auth headers).
+     */
+    private getEndpointSecurityRequirements(endpoint: FernIr.HttpEndpoint): string[][] | undefined {
+        if (endpoint.security == null) {
+            return undefined;
+        }
+        return endpoint.security.map((requirement) => Object.keys(requirement));
+    }
+
+    /**
+     * Builds a Rust `HashMap<String, Value>` literal of WireMock header matchers for the
+     * given set of routed scheme keys: each header contributed by those schemes is asserted
+     * present (pinned to the scheme's value prefix when unambiguous, e.g. `Bearer .*`), and
+     * every other auth header configured on the API is asserted absent.
+     */
+    private buildAuthHeaderMatchers(presentSchemeKeys: string[]): string {
+        const { tokenSchemeKeys, apiKeySchemes, basicSchemeKeys } = this.context.getEndpointAuthRoutingSchemes();
+
+        // Map each scheme key to the wire header it produces and its value prefix (if any).
+        const schemeInfoByKey = new Map<string, { headerName: string; prefix: string | undefined }>();
+        for (const key of tokenSchemeKeys) {
+            schemeInfoByKey.set(key, { headerName: "Authorization", prefix: "Bearer " });
+        }
+        for (const scheme of apiKeySchemes) {
+            schemeInfoByKey.set(scheme.key, {
+                headerName: scheme.headerName,
+                prefix: scheme.prefix != null ? `${scheme.prefix} ` : undefined
+            });
+        }
+        for (const key of basicSchemeKeys) {
+            schemeInfoByKey.set(key, { headerName: "Authorization", prefix: "Basic " });
+        }
+
+        // Every auth header name configured across the API.
+        const allHeaderNames = new Set<string>();
+        for (const info of schemeInfoByKey.values()) {
+            allHeaderNames.add(info.headerName);
+        }
+
+        // The distinct value prefixes contributing to each present header name.
+        const presentPrefixesByHeader = new Map<string, Set<string | undefined>>();
+        for (const key of presentSchemeKeys) {
+            const info = schemeInfoByKey.get(key);
+            if (info == null) {
+                continue;
+            }
+            const prefixes = presentPrefixesByHeader.get(info.headerName) ?? new Set<string | undefined>();
+            prefixes.add(info.prefix);
+            presentPrefixesByHeader.set(info.headerName, prefixes);
+        }
+
+        const entries: string[] = [];
+        for (const headerName of Array.from(allHeaderNames).sort()) {
+            const prefixes = presentPrefixesByHeader.get(headerName);
+            if (prefixes == null) {
+                // Not routed for this endpoint: assert absent.
+                entries.push(`("${headerName}".to_string(), json!({"absent": true}))`);
+                continue;
+            }
+            // Routed: assert present, pinned to the value prefix when unambiguous.
+            const onlyPrefix = prefixes.size === 1 ? Array.from(prefixes)[0] : undefined;
+            const matcher =
+                onlyPrefix != null && /^[A-Za-z0-9 ]+$/.test(onlyPrefix)
+                    ? `json!({"matches": "${onlyPrefix}.*"})`
+                    : `json!({"matches": ".*"})`;
+            entries.push(`("${headerName}".to_string(), ${matcher})`);
+        }
+
+        return `HashMap::from([${entries.join(", ")}])`;
     }
 
     // =============================================================================
@@ -227,10 +369,19 @@ export class WireTestGenerator {
      * 2. Skips the original base_url field
      * 3. Adds base_url override after struct creation
      */
-    private processClientSetupLines(clientSetup: string): string[] {
+    private processClientSetupLines(clientSetup: string, isEndpointSecurity = false): string[] {
         const lines: string[] = [];
         const setupLines = clientSetup.split("\n");
         let inConfigStruct = false;
+
+        // In endpoint-security mode the credential fields written into the config struct are
+        // replaced with credentials for every configured scheme (see buildEndpointSecurityCredentialFields).
+        const endpointSecurityCredentialFields = isEndpointSecurity
+            ? this.buildEndpointSecurityCredentialFields()
+            : [];
+        // Config credential field keys we drop from the snippet in endpoint-security mode so
+        // they don't collide with the full credential set we inject.
+        const credentialFieldKeys = ["token", "api_key", "username", "password", "client_id", "client_secret"];
 
         for (const line of setupLines) {
             const trimmedLine = line.trim();
@@ -247,6 +398,10 @@ export class WireTestGenerator {
                 lines.push(`    let mut ${trimmedLine.replace("let ", "")}`);
             } else if (trimmedLine === "};") {
                 if (inConfigStruct) {
+                    // Inject credentials for every scheme so per-endpoint routing decides the header.
+                    for (const field of endpointSecurityCredentialFields) {
+                        lines.push(`        ${field}`);
+                    }
                     lines.push(`        ..Default::default()`);
                     lines.push(`    };`);
                     // Override base_url and clear environment so requests go to WireMock
@@ -262,6 +417,12 @@ export class WireTestGenerator {
                 // Skip - we'll add this before the closing brace
             } else if (trimmedLine.includes("base_url:")) {
                 // Skip the base_url line in the struct - we'll set it after
+            } else if (
+                isEndpointSecurity &&
+                inConfigStruct &&
+                credentialFieldKeys.some((key) => trimmedLine.startsWith(`${key}:`))
+            ) {
+                // Skip the snippet's single credential — we inject the full set above.
             } else if (trimmedLine.includes("let client")) {
                 lines.push(`    ${trimmedLine}`);
             } else if (inConfigStruct) {
@@ -273,6 +434,32 @@ export class WireTestGenerator {
         }
 
         return lines;
+    }
+
+    /**
+     * Builds the ClientConfig credential field lines to inject in endpoint-security mode —
+     * one credential per configured scheme kind so that per-endpoint routing (not credential
+     * availability) determines which auth header is sent. Basic auth needs both username and
+     * password; token schemes (bearer/oauth) share a single token; header schemes use api_key.
+     *
+     * OAuth client-id/secret are intentionally NOT set: doing so would make the SDK fetch a
+     * token from the mocked /token endpoint, adding an extra request. Supplying `token`
+     * directly satisfies both bearer and oauth routing without that round-trip.
+     */
+    private buildEndpointSecurityCredentialFields(): string[] {
+        const { tokenSchemeKeys, apiKeySchemes, basicSchemeKeys } = this.context.getEndpointAuthRoutingSchemes();
+        const fields: string[] = [];
+        if (tokenSchemeKeys.length > 0) {
+            fields.push(`token: Some("test-token".to_string()),`);
+        }
+        if (apiKeySchemes.length > 0) {
+            fields.push(`api_key: Some("test-api-key".to_string()),`);
+        }
+        if (basicSchemeKeys.length > 0) {
+            fields.push(`username: Some("test-username".to_string()),`);
+            fields.push(`password: Some("test-password".to_string()),`);
+        }
+        return fields;
     }
 
     /**
@@ -497,9 +684,19 @@ export class WireTestGenerator {
         return example.examples?.[0] ?? null;
     }
 
-    private async generateSnippetForExample(example: FernIr.dynamic.EndpointExample): Promise<string> {
+    private async generateSnippetForExample(
+        example: FernIr.dynamic.EndpointExample,
+        endpointId: string
+    ): Promise<string> {
         const snippetRequest = convertDynamicEndpointSnippetRequest(example);
-        const response = await this.dynamicSnippetsGenerator.generate(snippetRequest);
+        // Disambiguate by endpointId only in endpoint-security mode. There every endpoint
+        // shares the same HTTP method+path (e.g. `GET /users`) but declares a different auth
+        // scheme; without the id, location-based resolution collapses them all onto the first
+        // endpoint. Restricting this to endpoint-security keeps every other fixture's generated
+        // wire tests byte-for-byte unchanged.
+        const response = await this.dynamicSnippetsGenerator.generate(snippetRequest, {
+            endpointId: this.context.isEndpointSecurity() ? endpointId : undefined
+        });
         if (!response.snippet) {
             throw GeneratorError.internalError("No snippet generated for example");
         }

@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "0.1.0",
   "apiName": "api",
   "apiDisplayName": "TEST API v2",
   "auth": {

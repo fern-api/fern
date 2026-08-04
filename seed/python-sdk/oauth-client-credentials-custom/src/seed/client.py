@@ -33,6 +33,8 @@ class SeedOauthClientCredentials:
     client_secret : str
         The client secret used for authentication.
 
+    scp : str
+    entity_id : str
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -93,11 +95,15 @@ class SeedOauthClientCredentials:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         client_id: str,
         client_secret: str,
+        scp: str,
+        entity_id: str,
     ): ...
     @typing.overload
     def __init__(
@@ -107,6 +113,8 @@ class SeedOauthClientCredentials:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
@@ -119,17 +127,19 @@ class SeedOauthClientCredentials:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
+        scp: typing.Optional[str] = None,
+        entity_id: typing.Optional[str] = None,
         token: typing.Optional[typing.Callable[[], str]] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         if token is not None:
             self._client_wrapper = SyncClientWrapper(
@@ -142,13 +152,21 @@ class SeedOauthClientCredentials:
                 else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
         elif client_id is not None and client_secret is not None:
+            if scp is None:
+                raise ApiError(body="The 'scp' parameter is required when using 'client_id' and 'client_secret'")
+            if entity_id is None:
+                raise ApiError(body="The 'entity_id' parameter is required when using 'client_id' and 'client_secret'")
             oauth_token_provider = OAuthTokenProvider(
                 client_id=client_id,
                 client_secret=client_secret,
+                scp=scp,
+                entity_id=entity_id,
                 client_wrapper=SyncClientWrapper(
                     base_url=base_url,
                     headers=headers,
@@ -159,6 +177,8 @@ class SeedOauthClientCredentials:
                     else httpx.Client(timeout=_defaulted_timeout),
                     timeout=_defaulted_timeout,
                     max_retries=_defaulted_max_retries,
+                    stream_reconnection_enabled=stream_reconnection_enabled,
+                    max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                     logging=logging,
                 ),
             )
@@ -173,6 +193,8 @@ class SeedOauthClientCredentials:
                 else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
             )
         else:
@@ -251,6 +273,8 @@ class AsyncSeedOauthClientCredentials:
     client_secret : str
         The client secret used for authentication.
 
+    scp : str
+    entity_id : str
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -311,11 +335,15 @@ class AsyncSeedOauthClientCredentials:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         client_id: str,
         client_secret: str,
+        scp: str,
+        entity_id: str,
     ): ...
     @typing.overload
     def __init__(
@@ -325,6 +353,8 @@ class AsyncSeedOauthClientCredentials:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
@@ -337,17 +367,19 @@ class AsyncSeedOauthClientCredentials:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
+        scp: typing.Optional[str] = None,
+        entity_id: typing.Optional[str] = None,
         token: typing.Optional[typing.Callable[[], str]] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         if token is not None:
             self._client_wrapper = AsyncClientWrapper(
@@ -358,13 +390,21 @@ class AsyncSeedOauthClientCredentials:
                 else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
         elif client_id is not None and client_secret is not None:
+            if scp is None:
+                raise ApiError(body="The 'scp' parameter is required when using 'client_id' and 'client_secret'")
+            if entity_id is None:
+                raise ApiError(body="The 'entity_id' parameter is required when using 'client_id' and 'client_secret'")
             oauth_token_provider = AsyncOAuthTokenProvider(
                 client_id=client_id,
                 client_secret=client_secret,
+                scp=scp,
+                entity_id=entity_id,
                 client_wrapper=AsyncClientWrapper(
                     base_url=base_url,
                     headers=headers,
@@ -375,6 +415,8 @@ class AsyncSeedOauthClientCredentials:
                     else httpx.AsyncClient(timeout=_defaulted_timeout),
                     timeout=_defaulted_timeout,
                     max_retries=_defaulted_max_retries,
+                    stream_reconnection_enabled=stream_reconnection_enabled,
+                    max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                     logging=logging,
                 ),
             )
@@ -388,6 +430,8 @@ class AsyncSeedOauthClientCredentials:
                 else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
             )
         else:

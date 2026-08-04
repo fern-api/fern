@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.ObjectMappers;
 import com.seed.examples.core.RequestOptions;
+import com.seed.examples.core.RetryInterceptor;
 import com.seed.examples.core.SeedExamplesApiException;
 import com.seed.examples.core.SeedExamplesException;
 import com.seed.examples.core.SeedExamplesHttpResponse;
@@ -26,20 +27,6 @@ public class RawServiceClient {
 
     public RawServiceClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-    }
-
-    /**
-     * This endpoint returns a file by its name.
-     */
-    public SeedExamplesHttpResponse<File> getFile(String filename) {
-        return getFile(filename, GetFileRequest.builder().build());
-    }
-
-    /**
-     * This endpoint returns a file by its name.
-     */
-    public SeedExamplesHttpResponse<File> getFile(String filename, RequestOptions requestOptions) {
-        return getFile(filename, GetFileRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -74,6 +61,15 @@ public class RawServiceClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -92,6 +88,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedExamplesApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedExamplesException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedExamplesException("Network error executing HTTP request", e);
         }

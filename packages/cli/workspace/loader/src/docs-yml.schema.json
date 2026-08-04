@@ -614,7 +614,7 @@
           ],
           "description": "Optional path within the repository to the library source.\nExample: django/core"
         },
-        "branch": {
+        "ref": {
           "oneOf": [
             {
               "type": "string"
@@ -623,7 +623,7 @@
               "type": "null"
             }
           ],
-          "description": "Git branch, tag, or commit SHA to check out.\nDefaults to the repository's default branch when omitted.\nExample: feature/my-fix"
+          "description": "Git ref (branch, tag, or commit SHA) to check out.\nDefaults to the repository's default branch when omitted.\nExample: feature/my-fix"
         }
       },
       "required": [
@@ -1945,6 +1945,17 @@
             }
           ],
           "description": "The maximum number of websocket messages per connection in the playground."
+        },
+        "send-optional-defaults": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When true, optional parameters that declare a default (or x-fern-default) are\npre-filled and sent from the API Explorer playground. Defaults to false."
         }
       },
       "additionalProperties": false
@@ -4419,6 +4430,17 @@
           ],
           "description": "Controls the \"Connect to Cursor\" button, which installs this docs site's MCP server in\nCursor via a deeplink. The button only renders on docs sites that have Ask AI enabled; set\nto `false` to hide it on those sites.\n\n@default: true"
         },
+        "mcp": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Controls whether the MCP server endpoint (`/_mcp/server`) is enabled for this docs site.\nWhen set to `false`, the endpoint returns 404, the MCP server URL is omitted from\n`llms.txt` and agent prompts, and the \"Connect to Claude Code\" / \"Connect to Cursor\"\nbuttons are hidden. Useful for authenticated docs sites where unauthenticated AI agents\ndiscovering the endpoint would cause confusion.\n\n@default: true"
+        },
         "vscode": {
           "oneOf": [
             {
@@ -4589,6 +4611,20 @@
             }
           ],
           "description": "Deprecated: Use `multi-source: true` on the instance instead. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths."
+        },
+        "external-sitemaps": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Experimental flag: a list of absolute URLs pointing to external sitemaps (`sitemap.xml`). Their pages are fetched and indexed in search alongside this site's documentation (tagged to the same domain), but are flagged as third-party so they rank below all first-party documentation."
         }
       },
       "additionalProperties": false
@@ -4751,6 +4787,17 @@
             }
           ],
           "description": "Additional content sources that Ask Fern should index and search."
+        },
+        "mask-pii": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When enabled, personally identifiable information (PII) in user messages is masked before\nbeing sent to Ask Fern. Disabled by default."
         }
       },
       "additionalProperties": false
@@ -5920,6 +5967,13 @@
         "static"
       ]
     },
+    "docs.ChangelogLayout": {
+      "type": "string",
+      "enum": [
+        "timeline",
+        "classic"
+      ]
+    },
     "docs.LayoutConfig": {
       "type": "object",
       "properties": {
@@ -6065,6 +6119,28 @@
             }
           ],
           "description": "If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages."
+        },
+        "changelog-layout": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ChangelogLayout"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Sets which layout to use for changelog pages.\n\n@default: `timeline`\n\n- `timeline` renders the searchable timeline-of-cards layout.\n- `classic` renders the legacy stacked-entries layout with a per-page table of contents."
+        },
+        "show-nav-availability-badges": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)\nare rendered inline next to navigation items in the sidebar. Defaults to false. The page-header\navailability badge is unaffected by this setting."
         }
       },
       "additionalProperties": false
@@ -6544,6 +6620,17 @@
               "type": "null"
             }
           ]
+        },
+        "disable-sri": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When true, skip computing a Subresource Integrity (SRI) hash for this\nremote script. The script is rendered without an `integrity` attribute.\nUseful for scripts whose contents change (e.g. rolling CDN builds) that\nwould otherwise fail integrity verification."
         }
       },
       "required": [

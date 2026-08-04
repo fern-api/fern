@@ -33,4 +33,12 @@ public class AsyncHeadersClient {
     public CompletableFuture<SendResponse> send(SendLiteralsInHeadersRequest request, RequestOptions requestOptions) {
         return this.rawClient.send(request, requestOptions).thenApply(response -> response.body());
     }
+
+    public CompletableFuture<SendResponse> sendLiteralsOnly() {
+        return this.rawClient.sendLiteralsOnly().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SendResponse> sendLiteralsOnly(RequestOptions requestOptions) {
+        return this.rawClient.sendLiteralsOnly(requestOptions).thenApply(response -> response.body());
+    }
 }

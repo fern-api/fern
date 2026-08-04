@@ -3,10 +3,12 @@
  */
 package com.seed.literal.resources.headers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.MediaTypes;
 import com.seed.literal.core.ObjectMappers;
 import com.seed.literal.core.RequestOptions;
+import com.seed.literal.core.RetryInterceptor;
 import com.seed.literal.core.SeedLiteralApiException;
 import com.seed.literal.core.SeedLiteralException;
 import com.seed.literal.core.SeedLiteralHttpResponse;
@@ -62,6 +64,15 @@ public class RawHeadersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -72,6 +83,59 @@ public class RawHeadersClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedLiteralApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedLiteralException("Failed to deserialize response: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new SeedLiteralException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedLiteralHttpResponse<SendResponse> sendLiteralsOnly() {
+        return sendLiteralsOnly(null);
+    }
+
+    public SeedLiteralHttpResponse<SendResponse> sendLiteralsOnly(RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("headers/literals-only");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", RequestBody.create("", null))
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("X-Endpoint-Version", "02-12-2024")
+                .addHeader("X-Async", "true")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedLiteralHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, SendResponse.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedLiteralApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedLiteralException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedLiteralException("Network error executing HTTP request", e);
         }

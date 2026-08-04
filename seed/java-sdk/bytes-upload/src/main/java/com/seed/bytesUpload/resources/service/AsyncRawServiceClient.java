@@ -3,11 +3,13 @@
  */
 package com.seed.bytesUpload.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.bytesUpload.core.ClientOptions;
 import com.seed.bytesUpload.core.InputStreamRequestBody;
 import com.seed.bytesUpload.core.ObjectMappers;
 import com.seed.bytesUpload.core.QueryStringMapper;
 import com.seed.bytesUpload.core.RequestOptions;
+import com.seed.bytesUpload.core.RetryInterceptor;
 import com.seed.bytesUpload.core.SeedBytesUploadApiException;
 import com.seed.bytesUpload.core.SeedBytesUploadException;
 import com.seed.bytesUpload.core.SeedBytesUploadHttpResponse;
@@ -59,6 +61,15 @@ public class AsyncRawServiceClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedBytesUploadHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -73,6 +84,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedBytesUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedBytesUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedBytesUploadException("Network error executing HTTP request", e));
@@ -127,6 +141,15 @@ public class AsyncRawServiceClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedBytesUploadHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -141,6 +164,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedBytesUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedBytesUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedBytesUploadException("Network error executing HTTP request", e));

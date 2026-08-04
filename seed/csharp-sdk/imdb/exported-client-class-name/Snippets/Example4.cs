@@ -3,7 +3,7 @@ using SeedApi;
 public partial class Examples
 {
     public async Task Example4() {
-        var client = new CustomClient(
+        var client = new BaseClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

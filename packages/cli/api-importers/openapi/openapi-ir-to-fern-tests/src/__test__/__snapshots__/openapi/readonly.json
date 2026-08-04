@@ -332,4 +332,5 @@ error-discrimination:
 display-name: Readonly Properties API
 ",
   },
+  "specVersion": "1.0.0",
 }

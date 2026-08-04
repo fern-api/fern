@@ -5,6 +5,8 @@ import * as errors from "../../../../../../errors/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export class NestedObjectWithOptionalFieldError extends errors.SeedExhaustiveError {
+    public declare readonly body: SeedExhaustive.types.NestedObjectWithOptionalField;
+
     constructor(body: SeedExhaustive.types.NestedObjectWithOptionalField, rawResponse?: core.RawResponse) {
         super({
             message: "NestedObjectWithOptionalFieldError",
@@ -17,6 +19,6 @@ export class NestedObjectWithOptionalFieldError extends errors.SeedExhaustiveErr
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "NestedObjectWithOptionalFieldError";
     }
 }

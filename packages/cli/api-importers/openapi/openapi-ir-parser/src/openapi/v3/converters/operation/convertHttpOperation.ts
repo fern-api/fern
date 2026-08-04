@@ -22,6 +22,7 @@ import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
 import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension.js";
 import { getFernAvailability } from "../../extensions/getFernAvailability.js";
 import { getFernRetriesExtension } from "../../extensions/getFernRetriesExtension.js";
+import { getEndpointGlobalParameterIds } from "../../extensions/getGlobalParameters.js";
 import { OperationContext } from "../contexts.js";
 import { convertServer } from "../convertServer.js";
 import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters.js";
@@ -323,8 +324,10 @@ export function convertHttpOperation({
     const availability = getFernAvailability(operation);
     const examples = getExamplesFromExtension(operationContext, operation, context);
     const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);
+    const subtitle = getExtension<string>(operation, FernOpenAPIExtension.SUBTITLE);
     return convertedRequests.map((request) => ({
         summary: operation.summary,
+        subtitle: subtitle ?? undefined,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
         idempotent,
         audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
@@ -332,7 +335,7 @@ export function convertHttpOperation({
             operation.operationId != null && suffix != null
                 ? operation.operationId + "_" + suffix
                 : operation.operationId,
-        tags: context.resolveTagsToTagIds(operation.tags),
+        tags: context.options.ignoreTags ? [] : context.resolveTagsToTagIds(operation.tags),
         namespace: context.namespace,
         sdkName: createOperationSdkMethodName({ operationContext, request }),
         pathParameters: convertedParameters.pathParameters,
@@ -364,7 +367,8 @@ export function convertHttpOperation({
         examples,
         pagination: operationContext.pagination,
         source,
-        retries
+        retries,
+        globalParameterIds: getEndpointGlobalParameterIds(operation)
     }));
 }
 
@@ -465,6 +469,10 @@ function getDisambiguatedRequestName({
         ? getDifferentiatedBreadcrumbs({ breadcrumbs: requestBreadcrumbs, request })
         : requestBreadcrumbs;
     const computedName = getGeneratedTypeName(nameBreadcrumbs, context.options.preserveSchemaIds);
+
+    if (!context.options.disambiguateRequestNames) {
+        return computedName;
+    }
 
     const componentSchemas = context.document.components?.schemas;
     if (componentSchemas == null) {

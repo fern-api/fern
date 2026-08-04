@@ -34,6 +34,7 @@ export class RawClient {
     public static CLASS_NAME = "RawClient";
     public static FIELD_NAME = "client";
     public static SEND_REQUEST_METHOD_NAME = "sendRequest";
+    public static ENCODE_PATH_PARAM_METHOD_NAME = "encodePathParam";
 
     private context: SdkGeneratorContext;
 
@@ -76,12 +77,10 @@ export class RawClient {
             },
             {
                 name: "path",
-                assignment: php.codeblock(
-                    `"${this.getPathString({
-                        endpoint: args.endpoint,
-                        pathParameterReferences: args.pathParameterReferences ?? {}
-                    })}"`
-                )
+                assignment: this.getPathString({
+                    endpoint: args.endpoint,
+                    pathParameterReferences: args.pathParameterReferences ?? {}
+                })
             },
             {
                 name: "method",
@@ -131,8 +130,16 @@ export class RawClient {
     }: {
         endpoint: FernIr.HttpEndpoint;
         pathParameterReferences: Record<string, string>;
-    }): string {
-        let path = endpoint.fullPath.head;
+    }): php.AstNode {
+        if (!this.context.customConfig.encodePathParams) {
+            return php.codeblock(this.getInterpolatedPathString({ endpoint, pathParameterReferences }));
+        }
+        // Build the request path by concatenating the literal segments of the path template with
+        // each path parameter value passed through RawClient::encodePathParam(). Encoding the
+        // values here, rather than after the path is assembled, keeps the literal "/" separators
+        // intact while preventing a value from resolving the request to a different endpoint.
+        const parts: { literal: string; reference: string }[] = [];
+        let literal = endpoint.fullPath.head;
         for (const part of endpoint.fullPath.parts) {
             const reference = pathParameterReferences[part.pathParameter];
             if (reference == null) {
@@ -140,8 +147,77 @@ export class RawClient {
                     `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
                 );
             }
-            path += `{${reference}}${part.tail}`;
+            parts.push({ literal, reference });
+            literal = part.tail;
         }
-        return path;
+        const trailingLiteral = literal;
+        return php.codeblock((writer) => {
+            if (parts.length === 0) {
+                writer.write(`"${trailingLiteral}"`);
+                return;
+            }
+            parts.forEach(({ literal: leadingLiteral, reference }, index) => {
+                if (index > 0) {
+                    writer.write(" . ");
+                }
+                if (leadingLiteral.length > 0) {
+                    writer.write(`"${leadingLiteral}" . `);
+                }
+                writer.writeNode(this.getClassReference());
+                writer.write(`::${RawClient.ENCODE_PATH_PARAM_METHOD_NAME}(${reference})`);
+            });
+            if (trailingLiteral.length > 0) {
+                writer.write(` . "${trailingLiteral}"`);
+            }
+        });
+    }
+
+    /**
+     * Builds a double-quoted PHP string expression for the request path, interpolating path
+     * parameter values without encoding them. Used when the encode-path-params config is disabled.
+     * Most references can be interpolated directly (e.g. "/users/{$id}"), but some are expressions
+     * (e.g. a boolean rendered as "true"/"false") that must be concatenated instead.
+     */
+    private getInterpolatedPathString({
+        endpoint,
+        pathParameterReferences
+    }: {
+        endpoint: FernIr.HttpEndpoint;
+        pathParameterReferences: Record<string, string>;
+    }): string {
+        const segments: string[] = [];
+        let literal = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts) {
+            const reference = pathParameterReferences[part.pathParameter];
+            if (reference == null) {
+                throw GeneratorError.internalError(
+                    `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
+                );
+            }
+            if (RawClient.isInterpolatableReference(reference)) {
+                literal += `{${reference}}${part.tail}`;
+            } else {
+                segments.push(`"${literal}"`);
+                segments.push(`(${reference})`);
+                literal = part.tail;
+            }
+        }
+        if (segments.length === 0) {
+            return `"${literal}"`;
+        }
+        if (literal.length > 0) {
+            segments.push(`"${literal}"`);
+        }
+        return segments.join(" . ");
+    }
+
+    /**
+     * Returns true when the reference is a simple variable, property, getter, or index access that
+     * can be embedded directly inside a double-quoted PHP string (e.g. `$id`, `$request->id`,
+     * `$request->getId()`, `$map['key']`). Anything else (e.g. a ternary expression) must be
+     * concatenated rather than interpolated.
+     */
+    private static isInterpolatableReference(reference: string): boolean {
+        return /^\$[A-Za-z_]\w*(?:->[A-Za-z_]\w*(?:\(\))?|\['[^']*'\]|\[\d+\])*$/.test(reference);
     }
 }

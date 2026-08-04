@@ -79,8 +79,8 @@ public partial class QueryParamClient : IQueryParamClient
         var _queryString = new SeedEnum.Core.QueryStringBuilder.Builder(capacity: 4)
             .Add("operand", request.Operand)
             .Add("maybeOperand", request.MaybeOperand)
-            .AddDeepObject("operandOrColor", request.OperandOrColor)
-            .AddDeepObject("maybeOperandOrColor", request.MaybeOperandOrColor)
+            .Add("operandOrColor", request.OperandOrColor)
+            .Add("maybeOperandOrColor", request.MaybeOperandOrColor)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var _headers = await new SeedEnum.Core.HeadersBuilder.Builder()

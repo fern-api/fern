@@ -184,22 +184,28 @@ function createMockGeneratedAliasType(opts?: { isBranded?: boolean }): Generated
 }
 
 /**
- * Creates a mock GeneratedType for union schemas.
+ * Creates a mock GeneratedType for union schemas. Optionally accepts the union's
+ * base properties so callers exercising `_Base` can have them returned from
+ * `getEffectiveBaseProperties`. The mock skips the real suppression logic
+ * (which requires variant type lookups via context) and just passes them
+ * through — adequate for these snapshot tests.
  */
-function createMockGeneratedUnionType(): GeneratedType<unknown> {
-    return {
-        type: "union",
-        getGeneratedUnion: () => ({
-            discriminant: "type",
-            visitPropertyName: "_visit",
-            getReferenceTo: () => ts.factory.createTypeReferenceNode("ParsedUnion"),
-            buildUnknown: ({ existingValue }: { existingValue: ts.Expression }) => existingValue,
-            buildFromExistingValue: ({ existingValue }: { existingValue: ts.Expression }) => existingValue,
-            getBasePropertyKey: (wireValue: string) => wireValue
-        }),
-        getSinglePropertyKey: ({ name }: { name: FernIr.NameAndWireValue }) => name.wireValue
-        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal GeneratedType interface
-    } as any;
+function createMockGeneratedUnionType(baseProperties: FernIr.ObjectProperty[] = []): () => GeneratedType<unknown> {
+    return () =>
+        ({
+            type: "union",
+            getGeneratedUnion: () => ({
+                discriminant: "type",
+                visitPropertyName: "_visit",
+                getReferenceTo: () => ts.factory.createTypeReferenceNode("ParsedUnion"),
+                getEffectiveBaseProperties: () => baseProperties,
+                buildUnknown: ({ existingValue }: { existingValue: ts.Expression }) => existingValue,
+                buildFromExistingValue: ({ existingValue }: { existingValue: ts.Expression }) => existingValue,
+                getBasePropertyKey: (wireValue: string) => wireValue
+            }),
+            getSinglePropertyKey: ({ name }: { name: FernIr.NameAndWireValue }) => name.wireValue
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal GeneratedType interface
+        }) as any;
 }
 
 /**
@@ -236,6 +242,7 @@ function createObjectProperty(
         valueType,
         docs: undefined,
         availability: undefined,
+        defaultValue: undefined,
         v2Examples: undefined,
         propertyAccess: undefined
     };
@@ -307,7 +314,8 @@ describe("TypeSchemaGenerator", () => {
             properties: [],
             extends: [],
             extraProperties: false,
-            extendedProperties: undefined
+            extendedProperties: undefined,
+            deferredUnionBaseProperties: undefined
         });
         const schema = generator.generateTypeSchema({
             typeName: "User",
@@ -356,6 +364,7 @@ describe("TypeSchemaGenerator", () => {
 
         const shape = FernIr.Type.union({
             discriminant: createNameAndWireValue("type", "type"),
+            inheritedBaseProperties: undefined,
             extends: [],
             types: [],
             baseProperties: [],
@@ -365,7 +374,7 @@ describe("TypeSchemaGenerator", () => {
         const schema = generator.generateTypeSchema({
             typeName: "Shape",
             shape,
-            getGeneratedType: createMockGeneratedUnionType,
+            getGeneratedType: createMockGeneratedUnionType(),
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode("Shape"),
             getReferenceToGeneratedTypeSchema: () => createMockReference("ShapeSchema")
         });
@@ -408,7 +417,8 @@ describe("TypeSchemaGenerator", () => {
             properties: [createObjectProperty("name", FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))],
             extends: [],
             extraProperties: false,
-            extendedProperties: undefined
+            extendedProperties: undefined,
+            deferredUnionBaseProperties: undefined
         });
         const schema = generator.generateTypeSchema({
             typeName: "User",
@@ -435,6 +445,7 @@ describe("TypeSchemaGenerator", () => {
 
         const shape = FernIr.Type.union({
             discriminant: createNameAndWireValue("type", "type"),
+            inheritedBaseProperties: undefined,
             extends: [],
             types: [],
             baseProperties: [],
@@ -444,7 +455,7 @@ describe("TypeSchemaGenerator", () => {
         const schema = generator.generateTypeSchema({
             typeName: "Shape",
             shape,
-            getGeneratedType: createMockGeneratedUnionType,
+            getGeneratedType: createMockGeneratedUnionType(),
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode("Shape"),
             getReferenceToGeneratedTypeSchema: () => createMockReference("ShapeSchema")
         });
@@ -552,7 +563,8 @@ describe("GeneratedObjectTypeSchemaImpl", () => {
                 properties: opts.properties ?? [],
                 extends: opts.extends ?? [],
                 extraProperties: opts.extraProperties ?? false,
-                extendedProperties: undefined
+                extendedProperties: undefined,
+                deferredUnionBaseProperties: undefined
             },
             getGeneratedType: () =>
                 createMockGeneratedObjectType({
@@ -919,13 +931,14 @@ describe("GeneratedUnionTypeSchemaImpl", () => {
             typeName: opts.typeName,
             shape: {
                 discriminant: opts.discriminant,
+                inheritedBaseProperties: undefined,
                 extends: [],
                 types: opts.types ?? [],
                 baseProperties: opts.baseProperties ?? [],
                 default: undefined,
                 discriminatorContext: undefined
             },
-            getGeneratedType: createMockGeneratedUnionType,
+            getGeneratedType: createMockGeneratedUnionType(opts.baseProperties ?? []),
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
             noOptionalProperties: opts.noOptionalProperties ?? false,

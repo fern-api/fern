@@ -20,6 +20,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.get_with_bearer_token
+      #
       # @return [String]
       def get_with_bearer_token(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(

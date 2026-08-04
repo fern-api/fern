@@ -46,6 +46,7 @@ import { getFernBasePath, stripBasePathFromPaths } from "./extensions/getFernBas
 import { getFernGroups } from "./extensions/getFernGroups.js";
 import { getFernVersion } from "./extensions/getFernVersion.js";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders.js";
+import { getGlobalParameters } from "./extensions/getGlobalParameters.js";
 import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders.js";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions.js";
 import { getWebhooksPathsObject } from "./getWebhookPathsObject.js";
@@ -113,6 +114,7 @@ export function generateIr({
     );
     const variables = getVariableDefinitions(openApi, options.preserveSchemaIds);
     const globalHeaders = getGlobalHeaders(openApi);
+    const globalParameters = getGlobalParameters(openApi);
     const idempotencyHeaders = getIdempotencyHeaders(openApi);
     const audiences = options.audiences ?? [];
     const endpointsWithExample: EndpointWithExample[] = [];
@@ -395,7 +397,8 @@ export function generateIr({
                     examples
                 };
             }),
-            retries: endpointWithExample.retries
+            retries: endpointWithExample.retries,
+            globalParameterIds: endpointWithExample.globalParameterIds
         };
     });
 
@@ -409,6 +412,7 @@ export function generateIr({
             context,
             document: openApi
         }),
+        specVersion: openApi.info.version != null && openApi.info.version.length > 0 ? openApi.info.version : undefined,
         basePath: (() => {
             const parsed = getFernBasePath(openApi);
             return parsed?.basePath;
@@ -449,6 +453,7 @@ export function generateIr({
         nonRequestReferencedSchemas: context.getReferencedSchemas(),
         variables,
         globalHeaders,
+        globalParameters: globalParameters.length > 0 ? globalParameters : undefined,
         idempotencyHeaders
     };
 

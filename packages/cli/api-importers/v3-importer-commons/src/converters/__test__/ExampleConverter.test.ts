@@ -245,6 +245,88 @@ describe("ExampleConverter", () => {
         });
     });
 
+    describe("patternProperties", () => {
+        const mockContextWithResolve = () =>
+            ({
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            }) as unknown as AbstractConverterContext<object>;
+
+        it("should accept properties matching a patternProperties regex even when additionalProperties is false", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: false,
+                // patternProperties is not modeled by openapi-types; cast through the schema object
+                ...({ patternProperties: { "^x-": { type: "string" } } } as object)
+            };
+
+            const example = {
+                name: "My Item",
+                "x-custom": "value",
+                "x-another": "value2"
+            };
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve(),
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.errors).toHaveLength(0);
+            expect(result.validExample).toEqual({
+                name: "My Item",
+                "x-custom": "value",
+                "x-another": "value2"
+            });
+        });
+
+        it("should accept any additional key when patternProperties is present (patterns are not matched)", () => {
+            // We deliberately do not compile or match the patterns: the mere presence of
+            // patternProperties means example keys are not rejected, even ones that wouldn't
+            // match the declared pattern. This keeps the fix minimal (no regex engine involved).
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: false,
+                ...({ patternProperties: { "^x-": { type: "string" } } } as object)
+            };
+
+            const example = {
+                name: "My Item",
+                "x-allowed": "value",
+                doesNotMatchPattern: "still accepted"
+            };
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve(),
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.errors).toHaveLength(0);
+            expect(result.validExample).toEqual({
+                name: "My Item",
+                "x-allowed": "value",
+                doesNotMatchPattern: "still accepted"
+            });
+        });
+    });
+
     describe("additionalProperties", () => {
         it("should preserve additional properties when additionalProperties is true", () => {
             const schema: OpenAPIV3_1.SchemaObject = {
@@ -1189,6 +1271,282 @@ describe("ExampleConverter", () => {
             // Required fields from parent (UserBase) backfilled
             expect(example).toHaveProperty("role");
             expect(example).toHaveProperty("companyId");
+        });
+
+        it("should preserve inherited array types when an allOf branch overrides items", () => {
+            const overrideSchemas: Record<string, OpenAPIV3_1.SchemaObject> = {
+                SearchResponse: {
+                    type: "object",
+                    required: ["results"],
+                    properties: {
+                        results: {
+                            type: "array",
+                            items: { type: "string" }
+                        }
+                    }
+                }
+            };
+            const context = {
+                ...mockContext,
+                isReferenceObject: vi.fn().mockImplementation((obj: unknown) => {
+                    return typeof obj === "object" && obj !== null && "$ref" in obj;
+                }),
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => {
+                    if (
+                        typeof schemaOrReference === "object" &&
+                        schemaOrReference !== null &&
+                        "$ref" in schemaOrReference
+                    ) {
+                        const name = (schemaOrReference as { $ref: string }).$ref.split("/").pop();
+                        return name == null ? undefined : overrideSchemas[name];
+                    }
+                    return schemaOrReference;
+                }),
+                getExamplesFromSchema: vi.fn().mockReturnValue([])
+            } as unknown as AbstractConverterContext<object>;
+            const schema: OpenAPIV3_1.SchemaObject = {
+                allOf: [
+                    { $ref: "#/components/schemas/SearchResponse" },
+                    {
+                        type: "object",
+                        properties: {
+                            results: {
+                                items: { type: "integer" }
+                            }
+                        }
+                    }
+                ]
+            };
+
+            const result = new ExampleConverter({
+                breadcrumbs: [],
+                context,
+                schema,
+                example: undefined,
+                exampleGenerationStrategy: "response"
+            }).convert();
+            const example = result.validExample as Record<string, unknown>;
+
+            expect(example.results).toEqual([1]);
+        });
+
+        it("should generate examples for deep allOf chains", () => {
+            const chainSchemas: Record<string, OpenAPIV3_1.SchemaObject> = {};
+            let rootSchema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                required: ["level0"],
+                properties: {
+                    level0: { type: "string" }
+                }
+            };
+            chainSchemas.Level0 = rootSchema;
+            const expectedKeys = ["level0"];
+
+            for (let level = 1; level <= 10; level++) {
+                const property = `level${level}`;
+                rootSchema = {
+                    allOf: [
+                        { $ref: `#/components/schemas/Level${level - 1}` },
+                        {
+                            type: "object",
+                            required: [property],
+                            properties: {
+                                [property]: { type: "string" }
+                            }
+                        }
+                    ]
+                };
+                chainSchemas[`Level${level}`] = rootSchema;
+                expectedKeys.push(property);
+            }
+
+            const context = {
+                ...mockContext,
+                isReferenceObject: vi.fn().mockImplementation((obj: unknown) => {
+                    return typeof obj === "object" && obj !== null && "$ref" in obj;
+                }),
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => {
+                    if (
+                        typeof schemaOrReference === "object" &&
+                        schemaOrReference !== null &&
+                        "$ref" in schemaOrReference
+                    ) {
+                        const name = (schemaOrReference as { $ref: string }).$ref.split("/").pop();
+                        return name == null ? undefined : chainSchemas[name];
+                    }
+                    return schemaOrReference;
+                }),
+                getExamplesFromSchema: vi.fn().mockReturnValue([])
+            } as unknown as AbstractConverterContext<object>;
+
+            const result = new ExampleConverter({
+                breadcrumbs: [],
+                context,
+                schema: rootSchema,
+                example: undefined,
+                exampleGenerationStrategy: "response"
+            }).convert();
+
+            expect(Object.keys(result.validExample as Record<string, unknown>).sort()).toEqual(expectedKeys.sort());
+        });
+
+        it("should avoid exponential traversal of shared allOf ancestors when generating examples", () => {
+            const baseSchema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                required: ["base"],
+                properties: {
+                    base: { type: "string" }
+                }
+            };
+            const diamondSchemas: Record<string, OpenAPIV3_1.SchemaObject> = {
+                Base: baseSchema
+            };
+            let previousName = "Base";
+            let rootSchema = baseSchema;
+            const expectedKeys = ["base"];
+
+            for (let level = 1; level <= 5; level++) {
+                const leftName = `Left${level}`;
+                const rightName = `Right${level}`;
+                const combinedName = `Combined${level}`;
+                const leftProperty = `left${level}`;
+                const rightProperty = `right${level}`;
+                diamondSchemas[leftName] = {
+                    allOf: [
+                        { $ref: `#/components/schemas/${previousName}` },
+                        {
+                            type: "object",
+                            required: [leftProperty],
+                            properties: {
+                                [leftProperty]: { type: "string" }
+                            }
+                        }
+                    ]
+                };
+                diamondSchemas[rightName] = {
+                    allOf: [
+                        { $ref: `#/components/schemas/${previousName}` },
+                        {
+                            type: "object",
+                            required: [rightProperty],
+                            properties: {
+                                [rightProperty]: { type: "string" }
+                            }
+                        }
+                    ]
+                };
+                rootSchema = {
+                    allOf: [{ $ref: `#/components/schemas/${leftName}` }, { $ref: `#/components/schemas/${rightName}` }]
+                };
+                diamondSchemas[combinedName] = rootSchema;
+                previousName = combinedName;
+                expectedKeys.push(leftProperty, rightProperty);
+            }
+
+            const resolveMaybeReference = vi.fn().mockImplementation(({ schemaOrReference }) => {
+                if (
+                    typeof schemaOrReference === "object" &&
+                    schemaOrReference !== null &&
+                    "$ref" in schemaOrReference
+                ) {
+                    const name = (schemaOrReference as { $ref: string }).$ref.split("/").pop();
+                    return name == null ? undefined : diamondSchemas[name];
+                }
+                return schemaOrReference;
+            });
+            const context = {
+                ...mockContext,
+                isReferenceObject: vi.fn().mockImplementation((obj: unknown) => {
+                    return typeof obj === "object" && obj !== null && "$ref" in obj;
+                }),
+                resolveMaybeReference,
+                getExamplesFromSchema: vi.fn().mockReturnValue([])
+            } as unknown as AbstractConverterContext<object>;
+
+            const result = new ExampleConverter({
+                breadcrumbs: [],
+                context,
+                schema: rootSchema,
+                example: undefined,
+                exampleGenerationStrategy: "response"
+            }).convert();
+
+            expect(Object.keys(result.validExample as Record<string, unknown>).sort()).toEqual(expectedKeys.sort());
+            expect(resolveMaybeReference.mock.calls.length).toBeLessThan(200);
+        });
+
+        it("should preserve allOf validation breadcrumbs for provided examples", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                allOf: [
+                    {
+                        type: "object",
+                        required: ["profile"],
+                        properties: {
+                            profile: {
+                                type: "object",
+                                required: ["name"],
+                                properties: {
+                                    name: { type: "string" }
+                                }
+                            }
+                        }
+                    }
+                ]
+            };
+            const context = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference),
+                getExamplesFromSchema: vi.fn().mockReturnValue([])
+            } as unknown as AbstractConverterContext<object>;
+
+            const result = new ExampleConverter({
+                breadcrumbs: [],
+                context,
+                schema,
+                example: { profile: "invalid" },
+                exampleGenerationStrategy: "request"
+            }).convert();
+
+            expect(result.isValid).toBe(false);
+            expect(result.errors.some((error) => error.path?.includes("allOf[0]") === true)).toBe(true);
+        });
+
+        it("should safely generate examples for cyclic allOf schemas", () => {
+            const cyclicSchema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                required: ["id"],
+                properties: {
+                    id: { type: "string" }
+                },
+                allOf: [{ $ref: "#/components/schemas/Cyclic" }]
+            };
+            const context = {
+                ...mockContext,
+                isReferenceObject: vi.fn().mockImplementation((obj: unknown) => {
+                    return typeof obj === "object" && obj !== null && "$ref" in obj;
+                }),
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => {
+                    if (
+                        typeof schemaOrReference === "object" &&
+                        schemaOrReference !== null &&
+                        "$ref" in schemaOrReference
+                    ) {
+                        return cyclicSchema;
+                    }
+                    return schemaOrReference;
+                }),
+                getExamplesFromSchema: vi.fn().mockReturnValue([])
+            } as unknown as AbstractConverterContext<object>;
+
+            const result = new ExampleConverter({
+                breadcrumbs: [],
+                context,
+                schema: cyclicSchema,
+                example: undefined,
+                exampleGenerationStrategy: "response"
+            }).convert();
+
+            expect(result.validExample).toHaveProperty("id");
         });
     });
 });

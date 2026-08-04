@@ -56,7 +56,20 @@ enum Example4 {
                     "tags"
                 ]
             ),
-            longParam: 1000000
+            excludeUser: [
+                User(
+                    name: "name",
+                    tags: [
+                        "tags",
+                        "tags"
+                    ]
+                )
+            ],
+            filter: [
+                "filter"
+            ],
+            longParam: 1000000,
+            bigIntParam: "1000000"
         )
     }
 }

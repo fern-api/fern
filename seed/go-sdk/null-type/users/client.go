@@ -35,6 +35,16 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Gets a user by ID. The deleted_at field uses type null.
+//
+// Example:
+//
+//	request := &fern.GetUsersRequest{
+//	    ID: "id",
+//	}
+//	client.Users.Get(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	request *fern.GetUsersRequest,

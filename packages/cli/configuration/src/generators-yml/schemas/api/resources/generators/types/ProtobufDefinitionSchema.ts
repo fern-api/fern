@@ -5,8 +5,8 @@ import type * as GeneratorsYml from "../../../index.js";
 export interface ProtobufDefinitionSchema {
     /** The path to the target `.proto` file that defines the API (e.g. `proto/user/v1/user.proto`). */
     target?: string;
-    /** The path to the `.proto` directory root (e.g. `proto`). */
-    root: string;
+    /** The path to the `.proto` directory root (e.g. `proto`), or a git remote reference. */
+    root: GeneratorsYml.SpecSourceSchema;
     /** Paths to the overrides configuration. Can be a single path or an array of paths applied sequentially. */
     overrides?: GeneratorsYml.OverridesSchema;
     /** Whether to compile the `.proto` files locally. By default, we generate remotely. */

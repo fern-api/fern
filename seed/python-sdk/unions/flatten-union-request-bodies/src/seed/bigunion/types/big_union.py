@@ -15,10 +15,19 @@ class Base(UniversalBaseModel):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -44,10 +53,19 @@ class BigUnion_NormalSweet(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -68,10 +86,19 @@ class BigUnion_ThankfulFactor(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -92,10 +119,19 @@ class BigUnion_JumboEnd(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -116,10 +152,19 @@ class BigUnion_HastyPain(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -140,10 +185,19 @@ class BigUnion_MistySnow(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -164,10 +218,19 @@ class BigUnion_DistinctFailure(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -188,10 +251,19 @@ class BigUnion_PracticalPrinciple(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -212,10 +284,19 @@ class BigUnion_LimpingStep(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -236,10 +317,19 @@ class BigUnion_VibrantExcitement(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -260,10 +350,19 @@ class BigUnion_ActiveDiamond(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -284,10 +383,19 @@ class BigUnion_PopularLimit(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -308,10 +416,19 @@ class BigUnion_FalseMirror(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -332,10 +449,19 @@ class BigUnion_PrimaryBlock(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -356,10 +482,19 @@ class BigUnion_RotatingRatio(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -380,10 +515,19 @@ class BigUnion_ColorfulCover(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -404,10 +548,19 @@ class BigUnion_DisloyalValue(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -428,10 +581,19 @@ class BigUnion_GruesomeCoach(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -452,10 +614,19 @@ class BigUnion_TotalWork(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -476,10 +647,19 @@ class BigUnion_HarmoniousPlay(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -500,10 +680,19 @@ class BigUnion_UniqueStress(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -524,10 +713,19 @@ class BigUnion_UnwillingSmoke(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -548,10 +746,19 @@ class BigUnion_FrozenSleep(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -572,10 +779,19 @@ class BigUnion_DiligentDeal(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -596,10 +812,19 @@ class BigUnion_AttractiveScript(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -620,10 +845,19 @@ class BigUnion_HoarseMouse(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -644,10 +878,19 @@ class BigUnion_CircularCard(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -668,10 +911,19 @@ class BigUnion_PotableBad(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -692,10 +944,19 @@ class BigUnion_TriangularRepair(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -716,10 +977,19 @@ class BigUnion_GaseousRoad(Base):
     """
     Examples
     --------
+    import datetime
+
     from seed.bigunion import BigUnion_NormalSweet
 
     BigUnion_NormalSweet(
         value="example1",
+        id="id",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        archived_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
     )
     """
 
@@ -737,10 +1007,19 @@ class BigUnion_GaseousRoad(Base):
 
 
 """
+import datetime
+
 from seed.bigunion import BigUnion_NormalSweet
 
 BigUnion_NormalSweet(
     value="example1",
+    id="id",
+    created_at=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    archived_at=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
 )
 """
 BigUnion = typing_extensions.Annotated[

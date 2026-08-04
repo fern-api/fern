@@ -27,6 +27,9 @@ export class QueryParamClient {
      * @param {SeedEnum.SendEnumAsQueryParamRequest} request
      * @param {QueryParamClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedEnumError}
+     * @throws {@link errors.SeedEnumTimeoutError}
+     *
      * @example
      *     await client.queryParam.send({
      *         operand: ">",
@@ -129,6 +132,9 @@ export class QueryParamClient {
     /**
      * @param {SeedEnum.SendEnumListAsQueryParamRequest} request
      * @param {QueryParamClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedEnumError}
+     * @throws {@link errors.SeedEnumTimeoutError}
      *
      * @example
      *     await client.queryParam.sendList({

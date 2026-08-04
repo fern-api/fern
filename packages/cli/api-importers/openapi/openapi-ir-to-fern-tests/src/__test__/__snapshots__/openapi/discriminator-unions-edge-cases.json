@@ -435,4 +435,5 @@ error-discrimination:
 display-name: Discriminator Unions Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

@@ -4,7 +4,11 @@ from ..context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
 from fern_python.external_dependencies.pydantic import Pydantic
-from fern_python.generators.sdk.client_generator.constants import CHUNK_VARIABLE, RESPONSE_VARIABLE
+from fern_python.generators.sdk.client_generator.constants import (
+    CHUNK_VARIABLE,
+    RESPONSE_VARIABLE,
+    SSE_RECONNECT_VARIABLE,
+)
 from fern_python.generators.sdk.client_generator.pagination.abstract_paginator import (
     PaginationSnippetConfig,
 )
@@ -52,6 +56,7 @@ class EndpointResponseCodeWriter:
         is_raw_client: bool = False,
         http_method: str = "GET",
         client_wrapper_member_name: str = "_client_wrapper",
+        request_options_variable_name: str = "request_options",
     ):
         self._context = context
         self._response = response
@@ -64,6 +69,7 @@ class EndpointResponseCodeWriter:
         self._is_raw_client = is_raw_client
         self._http_method = http_method
         self._client_wrapper_member_name = client_wrapper_member_name
+        self._request_options_variable_name = request_options_variable_name
 
     def get_writer(self) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
@@ -114,6 +120,43 @@ class EndpointResponseCodeWriter:
                 stream_response_union=stream_response_union,
                 protocol_info=protocol_info,
             )
+            event_source_kwargs: list[tuple[str, AST.Expression]] = []
+            # The stream terminator gates reconnection: without it, a dropped
+            # connection is indistinguishable from a clean end, so the whole
+            # reconnection machinery (including the ``_reconnect`` closure) is
+            # only emitted when a terminator is configured.
+            if stream_response_union.resumable is True and stream_response_union.terminator is not None:
+                event_source_kwargs.append(("resumable", AST.Expression("True")))
+                event_source_kwargs.append(
+                    (
+                        "stream_reconnection_enabled",
+                        AST.Expression(
+                            f'{self._request_options_variable_name}.get("stream_reconnection_enabled", self.{self._client_wrapper_member_name}.get_stream_reconnection_enabled()) if {self._request_options_variable_name} is not None else self.{self._client_wrapper_member_name}.get_stream_reconnection_enabled()'
+                        ),
+                    )
+                )
+                event_source_kwargs.append(
+                    (
+                        "max_stream_reconnection_attempts",
+                        AST.Expression(
+                            f'{self._request_options_variable_name}.get("max_stream_reconnection_attempts", self.{self._client_wrapper_member_name}.get_max_stream_reconnection_attempts()) if {self._request_options_variable_name} is not None else self.{self._client_wrapper_member_name}.get_max_stream_reconnection_attempts()'
+                        ),
+                    )
+                )
+                event_source_kwargs.append(
+                    (
+                        "stream_terminator",
+                        AST.Expression(repr(stream_response_union.terminator)),
+                    )
+                )
+                # Closure that re-issues the request with a Last-Event-ID header;
+                # emitted alongside the streaming call for resumable endpoints.
+                event_source_kwargs.append(
+                    (
+                        "reconnect",
+                        AST.Expression(SSE_RECONNECT_VARIABLE),
+                    )
+                )
             iter_func_body.extend(
                 [
                     AST.VariableDeclaration(
@@ -130,6 +173,7 @@ class EndpointResponseCodeWriter:
                                     ),
                                 ),
                                 args=[AST.Expression(RESPONSE_VARIABLE)],
+                                kwargs=event_source_kwargs,
                             )
                         ),
                     ),
@@ -453,7 +497,7 @@ class EndpointResponseCodeWriter:
         defaulted_chunk_size_default = maybe_chunk_size_default if maybe_chunk_size_default is not None else "None"
         chunk_size_variable = "_chunk_size"
         writer.write_line(
-            f'{chunk_size_variable} = request_options.get("chunk_size", {defaulted_chunk_size_default}) if request_options is not None else {defaulted_chunk_size_default}'
+            f'{chunk_size_variable} = {self._request_options_variable_name}.get("chunk_size", {defaulted_chunk_size_default}) if {self._request_options_variable_name} is not None else {defaulted_chunk_size_default}'
         )
 
         # For raw clients, wrap the generator in an HttpResponse

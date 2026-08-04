@@ -4,7 +4,7 @@ import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import type { DetectedAuthBinding } from "../detectAuth.js";
 import { generateAgentSkills } from "../generateAgentSkills.js";
-import type { SubClientField } from "../generateSdkGlue.js";
+import type { SubClientField } from "../generateSdk.js";
 
 describe("generateAgentSkills", () => {
     let tmpDir: string;

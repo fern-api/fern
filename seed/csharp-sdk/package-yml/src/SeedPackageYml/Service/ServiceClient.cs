@@ -18,6 +18,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedPackageYml.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedPackageYml.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -30,10 +33,11 @@ public partial class ServiceClient : IServiceClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "/{0}//{1}",
+                        "/{0}/{1}",
                         ValueConvert.ToPathParameterString(id),
                         ValueConvert.ToPathParameterString(nestedId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

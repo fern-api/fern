@@ -64,7 +64,7 @@ export function convertProperties({
                     wireValue: propertyName
                 }),
                 valueType: convertedProperty.type,
-                docs: propertySchema.description,
+                docs: propertySchema.description ?? convertedProperty.schema?.typeDeclaration.docs,
                 availability: convertedProperty.availability,
                 propertyAccess: context.getPropertyAccess(propertySchema),
                 defaultValue: resolvedPropertySchema?.default,

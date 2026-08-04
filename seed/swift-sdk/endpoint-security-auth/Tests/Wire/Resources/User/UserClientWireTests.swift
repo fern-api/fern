@@ -6,7 +6,7 @@ import EndpointSecurityAuth
     @Test func getWithBearer1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -43,7 +43,7 @@ import EndpointSecurityAuth
     @Test func getWithApiKey1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -80,7 +80,7 @@ import EndpointSecurityAuth
     @Test func getWithOAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -117,7 +117,7 @@ import EndpointSecurityAuth
     @Test func getWithBasic1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -154,7 +154,7 @@ import EndpointSecurityAuth
     @Test func getWithInferredAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -191,7 +191,7 @@ import EndpointSecurityAuth
     @Test func getWithAnyAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -228,7 +228,7 @@ import EndpointSecurityAuth
     @Test func getWithAllAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {

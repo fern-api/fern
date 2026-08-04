@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "82444d62",
+            "example_identifier": "7cf5c162",
             "id": {
                 "method": "POST",
                 "path": "/",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "82444d62",
+            "example_identifier": "7cf5c162",
             "id": {
                 "method": "POST",
                 "path": "/",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "82444d62",
+            "example_identifier": "7cf5c162",
             "id": {
                 "method": "POST",
                 "path": "/",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "82444d62",
+            "example_identifier": "7cf5c162",
             "id": {
                 "method": "POST",
                 "path": "/",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "82444d62",
+            "example_identifier": "7cf5c162",
             "id": {
                 "method": "GET",
                 "path": "/service",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "f7429229",
+            "example_identifier": "1cd509b9",
             "id": {
                 "method": "POST",
                 "path": "/service",

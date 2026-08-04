@@ -6,7 +6,7 @@ import FileUpload
     @Test func optionalArgs1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 Foo
                 """#.utf8
@@ -27,7 +27,7 @@ import FileUpload
     @Test func withRefBody1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 Success
                 """#.utf8

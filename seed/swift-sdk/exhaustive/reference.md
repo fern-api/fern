@@ -143,7 +143,9 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.container.getAndReturnSetOfPrimitives()
+    _ = try await client.endpoints.container.getAndReturnSetOfPrimitives(request: .array([
+        .string("string")
+    ]))
 }
 
 try await main()
@@ -200,7 +202,11 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.container.getAndReturnSetOfObjects()
+    _ = try await client.endpoints.container.getAndReturnSetOfObjects(request: .array([
+        .object([
+            "string": .string("string")
+        ])
+    ]))
 }
 
 try await main()
@@ -512,9 +518,13 @@ private func main() async throws {
             "list",
             "list"
         ],
+        set: .array([
+            .string("set")
+        ]),
         map: [
             1: "map"
-        ]
+        ],
+        bigint: "1000000"
     ))
 }
 
@@ -586,9 +596,13 @@ private func main() async throws {
             "list",
             "list"
         ],
+        set: .array([
+            .string("set")
+        ]),
         map: [
             1: "map"
-        ]
+        ],
+        bigint: "1000000"
     ))
 }
 
@@ -907,9 +921,13 @@ private func main() async throws {
                 "list",
                 "list"
             ],
+            set: .array([
+                .string("set")
+            ]),
             map: [
                 1: "map"
-            ]
+            ],
+            bigint: "1000000"
         )
     )
 }
@@ -1048,9 +1066,13 @@ private func main() async throws {
             "list",
             "list"
         ],
+        set: .array([
+            .string("set")
+        ]),
         map: [
             1: "map"
-        ]
+        ],
+        bigint: "1000000"
     ))
 }
 
@@ -1246,9 +1268,13 @@ private func main() async throws {
                 "list",
                 "list"
             ],
+            set: .array([
+                .string("set")
+            ]),
             map: [
                 1: "map"
-            ]
+            ],
+            bigint: "1000000"
         )
     ))
 }
@@ -1325,9 +1351,13 @@ private func main() async throws {
                     "list",
                     "list"
                 ],
+                set: .array([
+                    .string("set")
+                ]),
                 map: [
                     1: "map"
-                ]
+                ],
+                bigint: "1000000"
             )
         )
     )
@@ -1412,9 +1442,13 @@ private func main() async throws {
                     "list",
                     "list"
                 ],
+                set: .array([
+                    .string("set")
+                ]),
                 map: [
                     1: "map"
-                ]
+                ],
+                bigint: "1000000"
             )
         ),
         NestedObjectWithRequiredField(
@@ -1433,9 +1467,13 @@ private func main() async throws {
                     "list",
                     "list"
                 ],
+                set: .array([
+                    .string("set")
+                ]),
                 map: [
                     1: "map"
-                ]
+                ],
+                bigint: "1000000"
             )
         )
     ])
@@ -2202,7 +2240,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithAllowMultipleQuery</a>(query: String, number: Int, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithAllowMultipleQuery</a>(query: [String], number: [Int], requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -2256,7 +2294,7 @@ try await main()
 <dl>
 <dd>
 
-**query:** `String` 
+**query:** `[String]` 
     
 </dd>
 </dl>
@@ -2264,7 +2302,7 @@ try await main()
 <dl>
 <dd>
 
-**number:** `Int` 
+**number:** `[Int]` 
     
 </dd>
 </dl>
@@ -2675,6 +2713,90 @@ try await main()
 <dd>
 
 **request:** `Data` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">createWithBodyAndQuery</a>(fields: String?, request: ObjectWithRequiredField, requestOptions: RequestOptions?) -> ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.params.createWithBodyAndQuery(
+        fields: "_fields",
+        request: ObjectWithRequiredField(
+            string: "string"
+        )
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fields:** `String?` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -3719,9 +3841,13 @@ private func main() async throws {
                 "list",
                 "list"
             ],
+            set: .array([
+                .string("set")
+            ]),
             map: [
                 1: "map"
-            ]
+            ],
+            bigint: "1000000"
         )
     ))
 }
@@ -3742,6 +3868,91 @@ try await main()
 <dd>
 
 **request:** `Requests.PostWithObjectBody` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlinedRequests.<a href="/Sources/Resources/InlinedRequests/InlinedRequestsClient.swift">postWithArrayBodyAndHeaders</a>(xCustomHeader: String?, request: [String], requestOptions: RequestOptions?) -> String</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with root-level array body and header params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.inlinedRequests.postWithArrayBodyAndHeaders(
+        xCustomHeader: "X-Custom-Header",
+        request: [
+            "string",
+            "string"
+        ]
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xCustomHeader:** `String?` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `[String]` 
     
 </dd>
 </dl>
@@ -3954,7 +4165,11 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.reqWithHeaders.getWithCustomHeader(request: "string")
+    _ = try await client.reqWithHeaders.getWithCustomHeader(
+        xTestServiceHeader: "X-TEST-SERVICE-HEADER",
+        xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+        request: "string"
+    )
 }
 
 try await main()

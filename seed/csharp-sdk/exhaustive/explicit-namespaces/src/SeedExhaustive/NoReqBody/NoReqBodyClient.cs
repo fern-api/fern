@@ -19,6 +19,9 @@ public partial class NoReqBodyClient : INoReqBodyClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +34,7 @@ public partial class NoReqBodyClient : INoReqBodyClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/no-req-body",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -95,6 +99,9 @@ public partial class NoReqBodyClient : INoReqBodyClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -107,6 +114,7 @@ public partial class NoReqBodyClient : INoReqBodyClient
                 {
                     Method = HttpMethod.Post,
                     Path = "/no-req-body",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

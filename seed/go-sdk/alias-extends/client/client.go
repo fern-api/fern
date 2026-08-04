@@ -35,6 +35,16 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.InlinedChildRequest{
+//	    Parent: "parent",
+//	    Child: "child",
+//	}
+//	client.ExtendedInlineRequestBody(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ExtendedInlineRequestBody(
 	ctx context.Context,
 	request *fern.InlinedChildRequest,

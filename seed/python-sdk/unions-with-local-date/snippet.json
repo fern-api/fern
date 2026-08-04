@@ -1,6 +1,6 @@
 {
     "types": {
-        "type_bigunion:BigUnion": "from seed.bigunion import BigUnion_NormalSweet\n\nBigUnion_NormalSweet(\n    value=\"example1\",\n)\n",
+        "type_bigunion:BigUnion": "import datetime\n\nfrom seed.bigunion import BigUnion_NormalSweet\n\nBigUnion_NormalSweet(\n    value=\"example1\",\n    id=\"id\",\n    created_at=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    archived_at=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n)\n",
         "type_bigunion:NormalSweet": "from seed.bigunion import NormalSweet\n\nNormalSweet(\n    value=\"example1\",\n)\n",
         "type_bigunion:ThankfulFactor": "from seed.bigunion import ThankfulFactor\n\nThankfulFactor(\n    value=\"example1\",\n)\n",
         "type_types:UnionWithPrimitive": "from seed.types import UnionWithPrimitive_Integer\n\nUnionWithPrimitive_Integer(value=9)\n",
@@ -9,7 +9,7 @@
         "type_types:UnionWithNoProperties": "from seed.types import UnionWithNoProperties_Foo\n\nUnionWithNoProperties_Foo(\n    name=\"example\",\n)\n",
         "type_types:UnionWithMultipleNoProperties": "from seed.types import UnionWithMultipleNoProperties_Foo\n\nUnionWithMultipleNoProperties_Foo(\n    name=\"example\",\n)\n",
         "type_types:UnionWithLiteral": "from seed.types import UnionWithLiteral_Fern\n\nUnionWithLiteral_Fern()\n",
-        "type_types:UnionWithBaseProperties": "from seed.types import UnionWithBaseProperties_Integer\n\nUnionWithBaseProperties_Integer(value=5)\n",
+        "type_types:UnionWithBaseProperties": "from seed.types import UnionWithBaseProperties_Integer\n\nUnionWithBaseProperties_Integer(value=5, id=\"id\")\n",
         "type_types:UnionWithTime": "from seed.types import UnionWithTime_Value\n\nUnionWithTime_Value(value=5)\n",
         "type_types:UnionWithOptionalTime": "import datetime\n\nfrom seed.types import UnionWithOptionalTime_Date\n\nUnionWithOptionalTime_Date(\n    value=datetime.date.fromisoformat(\n        \"1994-01-01\",\n    )\n)\n",
         "type_types:UnionWithSingleElement": "from seed.types import UnionWithSingleElement_Foo\n\nUnionWithSingleElement_Foo(\n    name=\"example1\",\n)\n",
@@ -21,7 +21,7 @@
         "type_types:UnionWithSameStringTypes": "from seed.types import UnionWithSameStringTypes_CustomFormat\n\nUnionWithSameStringTypes_CustomFormat(value=\"custom-123\")\n",
         "type_types:UnionWithSameNumberTypes": "from seed.types import UnionWithSameNumberTypes_PositiveInt\n\nUnionWithSameNumberTypes_PositiveInt(value=100)\n",
         "type_union:GetShapeRequest": "from seed.union import GetShapeRequest\n\nGetShapeRequest(\n    id=\"example\",\n)\n",
-        "type_union:Shape": "from seed.union import Shape_Circle\n\nShape_Circle(\n    radius=5.0,\n)\n"
+        "type_union:Shape": "from seed.union import Shape_Circle\n\nShape_Circle(\n    radius=5.0,\n    id=\"example\",\n)\n"
     },
     "endpoints": [
         {
@@ -45,8 +45,8 @@
                 "identifier_override": "endpoint_bigunion.update"
             },
             "snippet": {
-                "sync_client": "from seed import SeedUnions\nfrom seed.bigunion import BigUnion_NormalSweet\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.bigunion.update(\n    request=BigUnion_NormalSweet(\n        value=\"value\",\n    ),\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnions\nfrom seed.bigunion import BigUnion_NormalSweet\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.bigunion.update(\n        request=BigUnion_NormalSweet(\n            value=\"value\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "import datetime\n\nfrom seed import SeedUnions\nfrom seed.bigunion import BigUnion_NormalSweet\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.bigunion.update(\n    request=BigUnion_NormalSweet(\n        value=\"value\",\n        id=\"id\",\n        created_at=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        archived_at=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n    ),\n)\n",
+                "async_client": "import asyncio\nimport datetime\n\nfrom seed import AsyncSeedUnions\nfrom seed.bigunion import BigUnion_NormalSweet\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.bigunion.update(\n        request=BigUnion_NormalSweet(\n            value=\"value\",\n            id=\"id\",\n            created_at=datetime.datetime.fromisoformat(\n                \"2024-01-15 09:30:00+00:00\",\n            ),\n            archived_at=datetime.datetime.fromisoformat(\n                \"2024-01-15 09:30:00+00:00\",\n            ),\n        ),\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -58,8 +58,8 @@
                 "identifier_override": "endpoint_bigunion.update-many"
             },
             "snippet": {
-                "sync_client": "from seed import SeedUnions\nfrom seed.bigunion import BigUnion_NormalSweet\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.bigunion.update_many(\n    request=[\n        BigUnion_NormalSweet(\n            value=\"value\",\n        ),\n        BigUnion_NormalSweet(\n            value=\"value\",\n        ),\n    ],\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnions\nfrom seed.bigunion import BigUnion_NormalSweet\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.bigunion.update_many(\n        request=[\n            BigUnion_NormalSweet(\n                value=\"value\",\n            ),\n            BigUnion_NormalSweet(\n                value=\"value\",\n            ),\n        ],\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "import datetime\n\nfrom seed import SeedUnions\nfrom seed.bigunion import BigUnion_NormalSweet\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.bigunion.update_many(\n    request=[\n        BigUnion_NormalSweet(\n            value=\"value\",\n            id=\"id\",\n            created_at=datetime.datetime.fromisoformat(\n                \"2024-01-15 09:30:00+00:00\",\n            ),\n            archived_at=datetime.datetime.fromisoformat(\n                \"2024-01-15 09:30:00+00:00\",\n            ),\n        ),\n        BigUnion_NormalSweet(\n            value=\"value\",\n            id=\"id\",\n            created_at=datetime.datetime.fromisoformat(\n                \"2024-01-15 09:30:00+00:00\",\n            ),\n            archived_at=datetime.datetime.fromisoformat(\n                \"2024-01-15 09:30:00+00:00\",\n            ),\n        ),\n    ],\n)\n",
+                "async_client": "import asyncio\nimport datetime\n\nfrom seed import AsyncSeedUnions\nfrom seed.bigunion import BigUnion_NormalSweet\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.bigunion.update_many(\n        request=[\n            BigUnion_NormalSweet(\n                value=\"value\",\n                id=\"id\",\n                created_at=datetime.datetime.fromisoformat(\n                    \"2024-01-15 09:30:00+00:00\",\n                ),\n                archived_at=datetime.datetime.fromisoformat(\n                    \"2024-01-15 09:30:00+00:00\",\n                ),\n            ),\n            BigUnion_NormalSweet(\n                value=\"value\",\n                id=\"id\",\n                created_at=datetime.datetime.fromisoformat(\n                    \"2024-01-15 09:30:00+00:00\",\n                ),\n                archived_at=datetime.datetime.fromisoformat(\n                    \"2024-01-15 09:30:00+00:00\",\n                ),\n            ),\n        ],\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -136,8 +136,8 @@
                 "identifier_override": "endpoint_union.update"
             },
             "snippet": {
-                "sync_client": "from seed import SeedUnions\nfrom seed.union import Shape_Circle\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.update(\n    request=Shape_Circle(\n        radius=1.1,\n    ),\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnions\nfrom seed.union import Shape_Circle\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.update(\n        request=Shape_Circle(\n            radius=1.1,\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedUnions\nfrom seed.union import Shape_Circle\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.update(\n    request=Shape_Circle(\n        radius=1.1,\n        id=\"id\",\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnions\nfrom seed.union import Shape_Circle\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.update(\n        request=Shape_Circle(\n            radius=1.1,\n            id=\"id\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

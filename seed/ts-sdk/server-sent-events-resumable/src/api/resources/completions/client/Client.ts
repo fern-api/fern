@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedServerSentEventsResumable from "../../../index.js";
@@ -44,7 +45,7 @@ export class CompletionsClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             responseType: "sse",
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -52,6 +53,34 @@ export class CompletionsClient {
             fetchFn: this._options?.fetch,
             logging: this._options.logging,
         });
+        const _reconnect = async (lastEventId: string) => {
+            const _reconnectResponse = await core.fetcher<ReadableStream>({
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "stream",
+                ),
+                method: "POST",
+                headers: { ..._headers, "Last-Event-ID": lastEventId },
+                contentType: "application/json",
+                queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+                requestType: "json",
+                body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
+                responseType: "sse",
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            });
+            if (!_reconnectResponse.ok) {
+                throw new Error("SSE stream reconnection failed");
+            }
+            if (_reconnectResponse.body == null) {
+                throw new Error("SSE stream reconnection failed: empty response body");
+            }
+            return _reconnectResponse.body;
+        };
         if (_response.ok) {
             return {
                 data: new core.Stream({
@@ -61,7 +90,14 @@ export class CompletionsClient {
                     eventShape: {
                         type: "sse",
                         streamTerminator: "[[DONE]]",
+                        resumable: true,
                     },
+                    reconnectionEnabled:
+                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
+                    maxReconnectionAttempts:
+                        requestOptions?.stream?.maxReconnectionAttempts ??
+                        this._options?.stream?.maxReconnectionAttempts,
+                    reconnect: _reconnect,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -101,7 +137,7 @@ export class CompletionsClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             responseType: "sse",
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

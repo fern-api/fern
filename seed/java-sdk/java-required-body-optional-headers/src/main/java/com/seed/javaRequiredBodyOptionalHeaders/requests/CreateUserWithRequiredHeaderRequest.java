@@ -118,7 +118,6 @@ public final class CreateUserWithRequiredHeaderRequest {
 
         /**
          * <p>Required API key header</p>
-         * <p>Required API key header</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

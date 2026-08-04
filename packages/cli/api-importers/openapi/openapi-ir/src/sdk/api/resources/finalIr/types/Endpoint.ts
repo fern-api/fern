@@ -25,6 +25,11 @@ export interface Endpoint
      */
     path: string;
     summary: string | undefined;
+    /**
+     * A short subtitle for the endpoint, populated from `x-fern-subtitle`.
+     * Rendered below the endpoint title in the docs UI.
+     */
+    subtitle: string | undefined;
     operationId: string | undefined;
     tags: FernOpenapiIr.TagId[];
     pathParameters: FernOpenapiIr.PathParameter[];
@@ -46,4 +51,9 @@ export interface Endpoint
     examples: FernOpenapiIr.EndpointExample[];
     pagination: FernOpenapiIr.Pagination | undefined;
     retries: FernOpenapiIr.RetriesConfiguration | undefined;
+    /**
+     * Per-operation opt-in IDs for global parameters with apply: explicit.
+     * Populated from x-fern-global-parameter on an operation.
+     */
+    globalParameterIds: string[] | undefined;
 }

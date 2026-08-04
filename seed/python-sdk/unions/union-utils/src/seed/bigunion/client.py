@@ -68,6 +68,8 @@ class BigunionClient:
 
         Examples
         --------
+        import datetime
+
         from seed import SeedUnions
         from seed.bigunion import BigUnion_NormalSweet
 
@@ -77,6 +79,13 @@ class BigunionClient:
         client.bigunion.update(
             request=BigUnion_NormalSweet(
                 value="value",
+                id="id",
+                created_at=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                archived_at=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
             ),
         )
         """
@@ -100,6 +109,8 @@ class BigunionClient:
 
         Examples
         --------
+        import datetime
+
         from seed import SeedUnions
         from seed.bigunion import BigUnion_NormalSweet
 
@@ -110,9 +121,23 @@ class BigunionClient:
             request=[
                 BigUnion_NormalSweet(
                     value="value",
+                    id="id",
+                    created_at=datetime.datetime.fromisoformat(
+                        "2024-01-15 09:30:00+00:00",
+                    ),
+                    archived_at=datetime.datetime.fromisoformat(
+                        "2024-01-15 09:30:00+00:00",
+                    ),
                 ),
                 BigUnion_NormalSweet(
                     value="value",
+                    id="id",
+                    created_at=datetime.datetime.fromisoformat(
+                        "2024-01-15 09:30:00+00:00",
+                    ),
+                    archived_at=datetime.datetime.fromisoformat(
+                        "2024-01-15 09:30:00+00:00",
+                    ),
                 ),
             ],
         )
@@ -187,6 +212,7 @@ class AsyncBigunionClient:
         Examples
         --------
         import asyncio
+        import datetime
 
         from seed import AsyncSeedUnions
         from seed.bigunion import BigUnion_NormalSweet
@@ -200,6 +226,13 @@ class AsyncBigunionClient:
             await client.bigunion.update(
                 request=BigUnion_NormalSweet(
                     value="value",
+                    id="id",
+                    created_at=datetime.datetime.fromisoformat(
+                        "2024-01-15 09:30:00+00:00",
+                    ),
+                    archived_at=datetime.datetime.fromisoformat(
+                        "2024-01-15 09:30:00+00:00",
+                    ),
                 ),
             )
 
@@ -227,6 +260,7 @@ class AsyncBigunionClient:
         Examples
         --------
         import asyncio
+        import datetime
 
         from seed import AsyncSeedUnions
         from seed.bigunion import BigUnion_NormalSweet
@@ -241,9 +275,23 @@ class AsyncBigunionClient:
                 request=[
                     BigUnion_NormalSweet(
                         value="value",
+                        id="id",
+                        created_at=datetime.datetime.fromisoformat(
+                            "2024-01-15 09:30:00+00:00",
+                        ),
+                        archived_at=datetime.datetime.fromisoformat(
+                            "2024-01-15 09:30:00+00:00",
+                        ),
                     ),
                     BigUnion_NormalSweet(
                         value="value",
+                        id="id",
+                        created_at=datetime.datetime.fromisoformat(
+                            "2024-01-15 09:30:00+00:00",
+                        ),
+                        archived_at=datetime.datetime.fromisoformat(
+                            "2024-01-15 09:30:00+00:00",
+                        ),
                     ),
                 ],
             )

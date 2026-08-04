@@ -36,6 +36,65 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // POST with custom object in request body, response is an object
+//
+// Example:
+//
+//	request := &fern.PostWithObjectBody{
+//	    FieldString: "string",
+//	    Integer: 1,
+//	    NestedObject: &types.ObjectWithOptionalField{
+//	        FieldString: fern.String(
+//	            "string",
+//	        ),
+//	        Integer: fern.Int(
+//	            1,
+//	        ),
+//	        Long: fern.Int64(
+//	            int64(1000000),
+//	        ),
+//	        Double: fern.Float64(
+//	            1.1,
+//	        ),
+//	        Bool: fern.Bool(
+//	            true,
+//	        ),
+//	        Datetime: fern.Time(
+//	            fern.MustParseDateTime(
+//	                "2024-01-15T09:30:00Z",
+//	            ),
+//	        ),
+//	        Date: fern.Time(
+//	            fern.MustParseDate(
+//	                "2023-01-15",
+//	            ),
+//	        ),
+//	        UUID: fern.UUID(
+//	            uuid.MustParse(
+//	                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	            ),
+//	        ),
+//	        Base64: fern.Bytes(
+//	            []byte("SGVsbG8gd29ybGQh"),
+//	        ),
+//	        List: []string{
+//	            "list",
+//	            "list",
+//	        },
+//	        Set: []string{
+//	            "set",
+//	        },
+//	        Map: map[int]string{
+//	            1: "map",
+//	        },
+//	        Bigint: fern.String(
+//	            "1000000",
+//	        ),
+//	    },
+//	}
+//	client.InlinedRequests.PostWithObjectBodyandResponse(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) PostWithObjectBodyandResponse(
 	ctx context.Context,
 	request *fern.PostWithObjectBody,
@@ -48,6 +107,39 @@ func (c *Client) PostWithObjectBodyandResponse(
 	)
 	if err != nil {
 		return nil, err
+	}
+	return response.Body, nil
+}
+
+// POST with root-level array body and header params
+//
+// Example:
+//
+//	request := &fern.PostWithArrayBodyAndHeaders{
+//	    XCustomHeader: fern.String(
+//	        "X-Custom-Header",
+//	    ),
+//	    Body: []string{
+//	        "string",
+//	        "string",
+//	    },
+//	}
+//	client.InlinedRequests.PostWithArrayBodyAndHeaders(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) PostWithArrayBodyAndHeaders(
+	ctx context.Context,
+	request *fern.PostWithArrayBodyAndHeaders,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.PostWithArrayBodyAndHeaders(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
 	}
 	return response.Body, nil
 }

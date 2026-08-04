@@ -18,6 +18,7 @@ export function mergeIntermediateRepresentation(
         apiName: ir1.apiName,
         basePath: ir1.basePath,
         selfHosted: ir1.selfHosted && ir2.selfHosted,
+        specVersion: ir1.specVersion ?? ir2.specVersion,
         apiDisplayName: ir1.apiDisplayName ?? ir2.apiDisplayName,
         apiDocs: ir1.apiDocs ?? ir2.apiDocs,
         auth: {
@@ -76,6 +77,7 @@ export function mergeIntermediateRepresentation(
         pathParameters: [...(ir1.pathParameters ?? []), ...(ir2.pathParameters ?? [])],
         errorDiscriminationStrategy: ir1.errorDiscriminationStrategy ?? ir2.errorDiscriminationStrategy,
         variables: [...(ir1.variables ?? []), ...(ir2.variables ?? [])],
+        globalParameters: mergeOptionalArrays(ir1.globalParameters, ir2.globalParameters),
         serviceTypeReferenceInfo: ir1.serviceTypeReferenceInfo ?? ir2.serviceTypeReferenceInfo,
         readmeConfig: ir1.readmeConfig ?? ir2.readmeConfig,
         sourceConfig: ir1.sourceConfig ?? ir2.sourceConfig,
@@ -549,6 +551,13 @@ function deduplicateHeaders(headers: FernIr.HttpHeader[]): FernIr.HttpHeader[] {
         seen.add(wireValue);
         return true;
     });
+}
+
+function mergeOptionalArrays<T>(a: T[] | undefined, b: T[] | undefined): T[] | undefined {
+    if (a == null && b == null) {
+        return undefined;
+    }
+    return [...(a ?? []), ...(b ?? [])];
 }
 
 function generateUniqueName(id: string, existingIds: Set<string>): string {

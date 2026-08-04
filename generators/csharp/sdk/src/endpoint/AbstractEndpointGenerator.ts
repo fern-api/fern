@@ -5,6 +5,7 @@ import { ExampleGenerator } from "@fern-api/fern-csharp-model";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type ExampleTypeReference = FernIr.ExampleTypeReference;
 type HttpEndpoint = FernIr.HttpEndpoint;
 type PathParameter = FernIr.PathParameter;
 type ServiceId = FernIr.ServiceId;
@@ -15,6 +16,7 @@ import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenera
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
 import { getEndpointRequest } from "./utils/getEndpointRequest.js";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
+import { isPagerPagination } from "./utils/isPagerPagination.js";
 
 type PagingEndpoint = HttpEndpoint & {
     pagination: NonNullable<HttpEndpoint["pagination"]>;
@@ -261,7 +263,13 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         if (!this.context.config.generatePaginatedClients) {
             return false;
         }
-        return endpoint.pagination !== undefined;
+        if (endpoint.pagination === undefined) {
+            return false;
+        }
+        // uri/path pagination is not yet generated as a pager in C#. Rather than skipping these
+        // endpoints entirely (which leaves the method off the client), treat them as regular
+        // unpaged methods so they are still generated and callable.
+        return isPagerPagination(endpoint.pagination);
     }
 
     protected assertHasPagination(endpoint: HttpEndpoint): asserts endpoint is PagingEndpoint {
@@ -293,15 +301,17 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         }
         const serviceFilePath = service.name.fernFilepath;
 
-        const args = this.getNonEndpointArguments({
+        const { requiredArguments, optionalArguments } = this.getNonEndpointArguments({
             endpoint,
             example,
             parseDatetimes
         });
+        const args: (ast.CodeBlock | ast.ClassInstantiation)[] = [...requiredArguments];
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
         }
+        args.push(...optionalArguments);
         const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {
@@ -392,21 +402,48 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         endpoint: HttpEndpoint;
         example: ExampleEndpointCall;
         parseDatetimes: boolean;
-    }): (ast.CodeBlock | ast.ClassInstantiation)[] {
+    }): {
+        requiredArguments: (ast.CodeBlock | ast.ClassInstantiation)[];
+        optionalArguments: (ast.CodeBlock | ast.ClassInstantiation)[];
+    } {
         if (!this.includePathParametersInEndpointSignature({ endpoint })) {
-            return [];
+            return { requiredArguments: [], optionalArguments: [] };
         }
-        const pathParameters = [
-            ...example.rootPathParameters,
-            ...example.servicePathParameters,
-            ...example.endpointPathParameters
-        ];
-        return pathParameters.map((pathParameter) =>
-            this.exampleGenerator.getSnippetForTypeReference({
-                exampleTypeReference: pathParameter.value,
-                parseDatetimes
-            })
+        // Path parameters with a client default are optional in the generated signature and are
+        // placed after the request body, so their snippet arguments must be ordered the same way.
+        const pathParameterNamesWithClientDefault = new Set(
+            endpoint.allPathParameters
+                .filter((pathParam) => this.defaultValueExtractor.extractClientDefault(pathParam.clientDefault) != null)
+                .map((pathParam) => getOriginalName(pathParam.name))
         );
+        // Bind each example value to its parameter by name. The example preserves path-parameters
+        // in the order the user authored them, which may differ from the URL-template order that
+        // drives the generated method signature (endpoint.allPathParameters). Iterating the example
+        // positionally would place arguments in the wrong slots (CS1503), so we look up each value by
+        // name and emit arguments in the canonical signature order instead.
+        const exampleValuesByName = new Map<string, ExampleTypeReference>(
+            [...example.rootPathParameters, ...example.servicePathParameters, ...example.endpointPathParameters].map(
+                (pathParameter) => [getOriginalName(pathParameter.name), pathParameter.value]
+            )
+        );
+        const requiredArguments: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
+        const optionalArguments: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
+        for (const pathParameter of endpoint.allPathParameters) {
+            const exampleValue = exampleValuesByName.get(getOriginalName(pathParameter.name));
+            if (exampleValue == null) {
+                continue;
+            }
+            const snippet = this.exampleGenerator.getSnippetForTypeReference({
+                exampleTypeReference: exampleValue,
+                parseDatetimes
+            });
+            if (pathParameterNamesWithClientDefault.has(getOriginalName(pathParameter.name))) {
+                optionalArguments.push(snippet);
+            } else {
+                requiredArguments.push(snippet);
+            }
+        }
+        return { requiredArguments, optionalArguments };
     }
 
     private getJustRequestBodySnippet(

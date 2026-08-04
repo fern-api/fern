@@ -122,4 +122,5 @@ error-discrimination:
 display-name: Test spec for `float` types specified as number formats.
 ",
   },
+  "specVersion": "1.0.0",
 }

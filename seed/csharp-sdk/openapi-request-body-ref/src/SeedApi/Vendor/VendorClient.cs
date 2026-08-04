@@ -18,6 +18,9 @@ public partial class VendorClient : IVendorClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -34,6 +37,7 @@ public partial class VendorClient : IVendorClient
                         ValueConvert.ToPathParameterString(request.VendorId)
                     ),
                     Body = request.Body,
+                    QueryString = _queryString,
                     Headers = _headers,
                     ContentType = "application/json",
                     Options = options,
@@ -100,6 +104,9 @@ public partial class VendorClient : IVendorClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add("idempotency_key", request.IdempotencyKey)
             .Add(_client.Options.Headers)
@@ -114,6 +121,7 @@ public partial class VendorClient : IVendorClient
                     Method = HttpMethod.Post,
                     Path = "vendors",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     ContentType = "application/json",
                     Options = options,

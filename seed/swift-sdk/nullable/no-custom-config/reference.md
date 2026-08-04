@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="/Sources/Resources/Nullable/NullableClient_.swift">getUsers</a>(usernames: String?, avatar: String?, activated: Bool?, tags: Nullable&lt;String&gt;?, extra: Nullable&lt;Bool&gt;?, requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.nullable.<a href="/Sources/Resources/Nullable/NullableClient_.swift">getUsers</a>(usernames: [String]?, avatar: String?, activated: [Bool]?, tags: [Nullable&lt;String&gt;]?, extra: Nullable&lt;Bool&gt;?, requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 
@@ -20,7 +20,16 @@ private func main() async throws {
     let client = NullableClient()
 
     _ = try await client.nullable.getUsers(
+        usernames: [
+            "usernames"
+        ],
         avatar: "avatar",
+        activated: [
+            true
+        ],
+        tags: [
+            .value("tags")
+        ],
         extra: .value(true)
     )
 }
@@ -40,7 +49,7 @@ try await main()
 <dl>
 <dd>
 
-**usernames:** `String?` 
+**usernames:** `[String]?` 
     
 </dd>
 </dl>
@@ -56,7 +65,7 @@ try await main()
 <dl>
 <dd>
 
-**activated:** `Bool?` 
+**activated:** `[Bool]?` 
     
 </dd>
 </dl>
@@ -64,7 +73,7 @@ try await main()
 <dl>
 <dd>
 
-**tags:** `Nullable<String>?` 
+**tags:** `[Nullable<String>]?` 
     
 </dd>
 </dl>

@@ -2,7 +2,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
 import { getOriginalName, getTextOfTsNode } from "@fern-typescript/commons";
 import { FileContext, GeneratedSdkErrorClass } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, ts } from "ts-morph";
+import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, Scope, ts } from "ts-morph";
 
 export declare namespace GeneratedSdkErrorClassImpl {
     export interface Init {
@@ -59,8 +59,21 @@ export class GeneratedSdkErrorClassImpl
         // no-op
     }
 
-    protected getClassProperties(): OptionalKind<PropertyDeclarationStructure>[] {
-        return [];
+    protected getClassProperties(context: FileContext): OptionalKind<PropertyDeclarationStructure>[] {
+        if (this.errorDeclaration.type == null || this.errorDeclaration.type.type === "unknown") {
+            return [];
+        }
+        const referenceToType = context.type.getReferenceToType(this.errorDeclaration.type);
+        return [
+            {
+                name: GeneratedSdkErrorClassImpl.BODY_CONSTRUCTOR_PARAMETER_NAME,
+                isReadonly: true,
+                hasDeclareKeyword: true,
+                hasQuestionToken: referenceToType.isOptional,
+                type: getTextOfTsNode(referenceToType.typeNodeWithoutUndefined),
+                scope: Scope.Public
+            }
+        ];
     }
 
     protected getConstructorParameters(context: FileContext): OptionalKind<ParameterDeclarationStructure>[] {

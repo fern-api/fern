@@ -173,4 +173,5 @@ error-discrimination:
 display-name: Sample API
 ",
   },
+  "specVersion": "1.0.0",
 }

@@ -96,4 +96,19 @@ export interface LayoutConfig {
     hideFeedback?: boolean;
     /** If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages. */
     mobileToc?: boolean;
+    /**
+     * Sets which layout to use for changelog pages.
+     *
+     * @default: `timeline`
+     *
+     * - `timeline` renders the searchable timeline-of-cards layout.
+     * - `classic` renders the legacy stacked-entries layout with a per-page table of contents.
+     */
+    changelogLayout?: FernDocsConfig.ChangelogLayout;
+    /**
+     * If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)
+     * are rendered inline next to navigation items in the sidebar. Defaults to false. The page-header
+     * availability badge is unaffected by this setting.
+     */
+    showNavAvailabilityBadges?: boolean;
 }

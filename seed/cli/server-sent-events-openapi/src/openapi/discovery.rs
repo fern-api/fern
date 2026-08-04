@@ -91,6 +91,13 @@ pub struct RestDescription {
     /// disables retries on that operation regardless of root.
     #[serde(default, skip)]
     pub retries: Option<RetriesConfig>,
+    /// Global parameter definitions parsed from the spec-root
+    /// `x-fern-global-parameters` extension. Generalizes
+    /// `x-fern-global-headers` to support header, query, body, and path
+    /// locations. Each entry surfaces as a global CLI flag and is
+    /// injected into outgoing requests at the configured location.
+    #[serde(default, skip)]
+    pub global_parameters: Vec<GlobalParameter>,
     /// Global header definitions parsed from the spec-root
     /// [`x-fern-global-headers`](https://buildwithfern.com/learn/api-definitions/openapi/extensions/global-headers)
     /// extension. Empty when the extension is absent.
@@ -169,6 +176,71 @@ pub struct GlobalHeader {
     /// `x-fern-default` shape — only the value is preserved; the
     /// schema type is informational.
     pub default: Option<String>,
+}
+
+/// Where a global parameter value is injected on the wire.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum GlobalParameterLocation {
+    /// HTTP header (e.g. `X-Custom-Header`).
+    Header,
+    /// URL query parameter (e.g. `?language=en`).
+    Query,
+    /// Nested JSON request body path (e.g. `config.currency`).
+    Body,
+    /// URL path segment (e.g. `{regionId}`).
+    Path,
+}
+
+/// Controls which operations receive the global parameter.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum GlobalParameterApplyMode {
+    /// Inject on every operation (unless a per-operation parameter with the
+    /// same wire name overrides it).
+    #[default]
+    Auto,
+    /// Only inject on operations that explicitly list the parameter in
+    /// `x-fern-global-parameter`.
+    Explicit,
+}
+
+/// A single global parameter definition from the spec-root
+/// [`x-fern-global-parameters`] extension. Generalizes
+/// [`GlobalHeader`] to support header, query, body, and path locations.
+///
+/// Each entry surfaces as a global CLI flag at the root of the command
+/// tree with an env-var fallback and (when configured) a baked-in default
+/// value. The resolved value is injected into outgoing requests at the
+/// location specified by [`GlobalParameter::location`].
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct GlobalParameter {
+    /// Canonical parameter name — used as the basis for the kebab-cased
+    /// CLI flag name (unless `parameter_name` overrides it).
+    pub name: String,
+    /// Where the resolved value is injected on the wire.
+    pub location: GlobalParameterLocation,
+    /// Wire-level target. For headers this is the header name
+    /// (e.g. `X-Max-Retries`); for query it's the query parameter name;
+    /// for body it's a dotted JSON path (e.g. `config.currency`); for
+    /// path it's the path template variable name (e.g. `regionId`).
+    /// Defaults to `name` when absent in the extension.
+    pub target: String,
+    /// Optional environment variable that provides a fallback value.
+    pub env: Option<String>,
+    /// Optional baked-in default value applied when neither the flag
+    /// nor the environment variable is supplied.
+    pub default: Option<String>,
+    /// When `false` (the default), the CLI flag is required — every
+    /// outgoing request must carry a value. When `true`, the parameter
+    /// is omitted from requests where no value resolved.
+    pub optional: bool,
+    /// Controls whether the parameter is injected on all operations
+    /// or only on those that explicitly opt in.
+    pub apply: GlobalParameterApplyMode,
+    /// Optional flag name override for the CLI surface
+    /// (e.g. `maxRetries` → `--max-retries`).
+    pub parameter_name: Option<String>,
+    /// One-line help text for the `--help` output.
+    pub docs: Option<String>,
 }
 
 /// A single idempotency-header definition from the spec-root
@@ -323,7 +395,7 @@ impl Availability {
     /// Lowercase wire identifier matching the canonical Fern spelling
     /// (`alpha`, `beta`, `pre-release`, `preview`, `generally-available`,
     /// `deprecated`, `legacy`). Used for the `availability` field
-    /// surfaced in JSON help output.
+    /// surfaced in `--schema` output.
     pub fn as_str(self) -> &'static str {
         match self {
             Availability::Alpha => "alpha",
@@ -684,6 +756,20 @@ pub struct RestMethod {
     /// parser, never round-tripped through `RestMethod` serialization.
     #[serde(default, skip)]
     pub audiences: Vec<String>,
+    /// `true` when at least one `2xx` (or `2XX` wildcard) response declares
+    /// a content media type that is not JSON. Used at command-build time to
+    /// gate the `-o, --output PATH` flag: it's only meaningful for ops that
+    /// can return a binary body (audio, octet-stream, image, etc.) and
+    /// silently no-ops on pure-JSON ops, so the help surface hides it where
+    /// it would do nothing. Empty `responses` block → `false`.
+    #[serde(default, skip)]
+    pub has_binary_response: bool,
+    /// Parameter names from `x-fern-global-parameter` on this operation.
+    /// Only global parameters with `apply: explicit` that appear in this
+    /// list are injected on this operation. `apply: auto` parameters
+    /// ignore this field.
+    #[serde(default, skip)]
+    pub global_parameter_opt_ins: Vec<String>,
 }
 
 /// Per-operation pagination configuration, resolved from the
@@ -933,8 +1019,18 @@ pub struct MethodParameter {
     pub enum_descriptions: Option<Vec<String>>,
     #[serde(default)]
     pub repeated: bool,
-    pub minimum: Option<String>,
-    pub maximum: Option<String>,
+    /// True for `oneOf/anyOf [string, array<string>]` unions where a single
+    /// value should be sent as a scalar string, not wrapped in a length-1
+    /// array. Pure `type: array` params leave this `false`.
+    #[serde(default)]
+    pub scalar_or_array: bool,
+    /// Inclusive numeric lower bound (matches [`JsonSchemaProperty::minimum`]).
+    /// Typing the param side as `Option<f64>` keeps `--schema` output
+    /// emit min/max as JSON numbers regardless of whether the property
+    /// came from `parameters` or a request body schema.
+    pub minimum: Option<f64>,
+    /// Inclusive numeric upper bound. See [`Self::minimum`].
+    pub maximum: Option<f64>,
     #[serde(default)]
     pub deprecated: bool,
     /// OpenAPI serialization style (form, deepObject, etc.)
@@ -1087,9 +1183,21 @@ pub struct JsonSchemaProperty {
     pub items: Option<Box<JsonSchemaProperty>>,
     #[serde(default)]
     pub properties: HashMap<String, JsonSchemaProperty>,
+    /// Names of nested object properties that the source schema marks as
+    /// required. Lowered from the OpenAPI `required: [...]` keyword on
+    /// object-typed schemas. Empty when the source had no `required` list
+    /// or when this property is not an object (e.g. scalar / array).
+    /// Surfaced in `--schema` so agents constructing nested JSON bodies
+    /// can tell which sub-fields the spec mandates.
+    #[serde(default)]
+    pub required: Vec<String>,
     #[serde(default)]
     pub read_only: bool,
-    pub default: Option<String>,
+    /// OpenAPI's standard `default:` keyword. Stored as a `serde_json::Value`
+    /// (lowered from the raw YAML) so the wire type — number, boolean,
+    /// object, etc. — survives into the agent-facing `--schema` output
+    /// and is symmetric with [`MethodParameter::default_value`].
+    pub default: Option<serde_json::Value>,
     #[serde(rename = "enum")]
     pub enum_values: Option<Vec<String>>,
     /// Inclusive numeric lower bound. Lowered by the parser so the OpenAPI

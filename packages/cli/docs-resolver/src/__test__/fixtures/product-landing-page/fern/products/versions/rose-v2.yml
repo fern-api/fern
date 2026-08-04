@@ -1,0 +1,7 @@
+navigation:
+  - page: Overview
+    slug: overview
+    path: ../../pages/rose-overview.mdx
+  - page: Pruning Guide
+    slug: pruning
+    path: ../../pages/rose-pruning.mdx

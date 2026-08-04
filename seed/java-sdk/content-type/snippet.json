@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "2f941392",
+            "example_identifier": "230209a2",
             "id": {
                 "method": "PATCH",
                 "path": "/",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "1b4c8cf0",
+            "example_identifier": "11310af0",
             "id": {
                 "method": "PATCH",
                 "path": "/complex/{id}",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "b1ee2326",
+            "example_identifier": "d856f46",
             "id": {
                 "method": "PATCH",
                 "path": "/named-mixed/{id}",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "1ca5e1e6",
+            "example_identifier": "3588a506",
             "id": {
                 "method": "PATCH",
                 "path": "/optional-merge-patch-test",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "9a5c3aaf",
+            "example_identifier": "cec0324f",
             "id": {
                 "method": "PATCH",
                 "path": "/regular/{id}",

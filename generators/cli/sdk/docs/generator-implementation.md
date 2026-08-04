@@ -397,7 +397,7 @@ Env var binding comes from `ServerVariable.envVar` once that field is on the IR 
 
 The generator emits **no** `.name(...)` calls on the bindings it produces. Every binding mounts at the root; their command trees merge into one user-facing tree. So `acme users get` (HTTP) and `acme events listen` (WebSocket) sit side-by-side without an `acme http` / `acme ws` subcommand prefix. The user typing on the command line doesn't see which transport handles which operation.
 
-If two bindings define the same operation path, the **last-registered binding wins** at runtime, silently. See DESIGN.md's ["Collision diagnostics"](../DESIGN.md#collision-diagnostics) for the rationale and the `<NAME>_LOG=debug` escape hatch.
+If two bindings define the exact same full leaf path, `CliApp::run` short-circuits with `CliError::Validation` listing every colliding path before any dispatch — this is a hard failure, not a silent tie-break. The generator avoids this by scoping each binding's command tree to a distinct namespace via deterministic registration order (HTTP → gRPC → WebSocket). Two bindings that share a common top-level group but contribute disjoint leaf paths merge correctly and raise no error. See ["Collision diagnostics"](#collision-diagnostics) for the full behavior.
 
 If a customer wants explicit subcommand-level segmentation (separating an admin API from a public API under `acme public ...` / `acme admin ...`, for example), they add `.name("admin")` to the relevant `Binding::new()` chain in `main.rs`. The generator itself never emits this; Replay reapplies the customer's edit.
 
@@ -426,15 +426,15 @@ If the generator changes its own `fern-cli-sdk` version pin across regens and th
 
 ### Multi-binding ordering
 
-Within a single CLI, binding order in the generated `main.rs` is deterministic: **HTTP → gRPC → WebSocket**. The order matters for hook ordering when bindings register transport-scope hooks — see DESIGN.md's ["Hook ordering"](../DESIGN.md#hook-ordering) section. It also determines which binding wins on operation-path collisions in the merged command tree (last registered wins per DESIGN.md's ["Command-tree namespacing"](../DESIGN.md#command-tree-namespacing) section).
+Within a single CLI, binding order in the generated `main.rs` is deterministic: **HTTP → gRPC → WebSocket**. The order matters for hook ordering when bindings register transport-scope hooks — see DESIGN.md's ["Hook ordering"](../DESIGN.md#hook-ordering) section. Registration order also determines the binding index used internally for dispatch, but full leaf-path collisions (two bindings declaring the exact same command path) are detected up front and surface as `CliError::Validation` before any dispatch — they are never silently resolved by ordering.
 
 The generator emits a stable order so two regens against the same IR produce byte-identical `main.rs`. Within each binding, services are enumerated in `fernFilepath` order (the IR already exposes a stable order for this), so adding a new endpoint to the spec doesn't shuffle existing ones in the generated output. Stable output is important for Replay — line-level diffs only work cleanly when the generator's output doesn't churn.
 
 ### Collision diagnostics
 
-When two bindings define the same operation path, the runtime resolves the conflict by last-registered-wins, silently. No build-time validator runs in the generated project. See DESIGN.md's ["Collision diagnostics"](../DESIGN.md#collision-diagnostics) for the rationale (and the `<NAME>_LOG=debug` escape hatch customers use when they want to see collisions).
+When two bindings define the exact same full leaf path (e.g., both HTTP and WebSocket bindings contributing `users get`), `CliApp::run` short-circuits with `CliError::Validation` listing every colliding path — before any dispatch occurs. This is a hard failure, not a silent tie-break. Two bindings that share a common top-level group but contribute disjoint leaf paths (e.g., `convai agents list` and `convai conversations get`) are merged correctly and raise no error.
 
-The generator's contribution to this story is purely the registration order: HTTP → gRPC → WebSocket within `main.rs`. A customer's hand-added `.binding(...)` call registers after the generator's by default (if appended at the end of the chain), so customer-added bindings win on collision.
+The generator's contribution to collision avoidance is deterministic registration order (HTTP → gRPC → WebSocket) combined with spec-level uniqueness: Fern's IR pipeline already rejects duplicate operation paths within a single binding. Cross-binding path conflicts surface at `CliApp::run` time and must be resolved by scoping each binding's command tree to a distinct namespace.
 
 ## Failure modes
 
@@ -446,7 +446,7 @@ The generator's contribution to this story is purely the registration order: HTT
 | Spec file is malformed | Same as above — caught upstream in IR parsing. |
 | IR shape isn't supported by any v1 transport (e.g., AsyncAPI over Kafka) | Error before emitting `main.rs`. Tell the customer that transport isn't supported yet and point at the SDK's transport roadmap. |
 | Two services in the same binding have the same `fernFilepath` (logical command path) | IR-level error before the generator runs. (Fern's IR pipeline already validates this for SDK generators.) |
-| Two **different** bindings define the same operation path after merging at root (e.g., HTTP + WebSocket bindings both contributing `users.get`) | **Not a failure.** Runtime resolves last-registered-wins, silently. See DESIGN.md's ["Collision diagnostics"](../DESIGN.md#collision-diagnostics) — customers debugging unexpected behavior flip `<NAME>_LOG=debug` to see which binding won. |
+| Two **different** bindings define the exact same full leaf path after merging at root (e.g., HTTP + WebSocket bindings both contributing `users get`) | **Hard failure.** `CliApp::run` returns `CliError::Validation` listing every colliding path before any dispatch. The generator avoids this by scoping each binding's command tree to a distinct namespace; cross-binding collisions require the customer to rename one binding's commands. |
 | Auth scheme references an `*EnvVar` that isn't set at *runtime* (not generation time) | Not a generator concern. Customer sees a `CliError::Validation` at first invocation. |
 | Customer's `Cargo.toml` has a `fern-cli-sdk` dep with a different version than the generator's expected | Replay surfaces a merge conflict. Customer resolves with `fern replay resolve`. |
 | Generated `main.rs` and customer edits collide on the same lines | Replay surfaces the conflict in the regeneration PR body. Customer resolves with `fern replay resolve`. |

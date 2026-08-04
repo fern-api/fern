@@ -31,6 +31,10 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
     public static final String MAVEN_PUBLISH_REGISTRY_URL_ENV_VAR = "MAVEN_PUBLISH_REGISTRY_URL";
     public static final String JAVA_LIBRARY_PLUGIN_ID = "java-library";
     public static final String MAVEN_PUBLISH_PLUGIN_ID = "maven-publish";
+    public static final String SONATYPE_CENTRAL_UPLOAD_PLUGIN_ID = "cl.franciscosolis.sonatype-central-upload";
+    public static final String SONATYPE_CENTRAL_UPLOAD_PLUGIN_VERSION = "1.0.3";
+    public static final String SONATYPE_CENTRAL_UPLOAD_CLASSPATH_COORDINATE =
+            "cl.franciscosolis:SonatypeCentralUpload:" + SONATYPE_CENTRAL_UPLOAD_PLUGIN_VERSION;
 
     public static final String MAVEN_SIGNING_KEY_ID = "MAVEN_SIGNATURE_KID";
 
@@ -68,6 +72,24 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
     public final String getContents() {
         RawFileWriter writer = new RawFileWriter();
+        if (shouldSignPackage()) {
+            // The sonatype-central-upload plugin's artifact declares a minimum JVM of 11 in its Gradle module
+            // metadata, so even resolving it onto the classpath fails on a Java 8 JVM. Only put it on the buildscript
+            // classpath when the build runs on Java 11+; it is then applied conditionally below. The generated publish
+            // workflow runs on Java 11+, so publishing behavior is unchanged, while the project can still be
+            // configured/compiled on Java 8.
+            writer.beginControlFlow("buildscript");
+            writer.beginControlFlow("repositories");
+            writer.addLine("gradlePluginPortal()");
+            writer.endControlFlow();
+            writer.beginControlFlow("dependencies");
+            writer.beginControlFlow("if (JavaVersion.current().isJava11Compatible())");
+            writer.addLine("classpath '" + SONATYPE_CENTRAL_UPLOAD_CLASSPATH_COORDINATE + "'");
+            writer.endControlFlow();
+            writer.endControlFlow();
+            writer.endControlFlow();
+            writer.addNewLine();
+        }
         if (!plugins().isEmpty()) {
             writer.beginControlFlow("plugins");
             for (GradlePlugin gradlePlugin : plugins()) {
@@ -143,6 +165,12 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
             writer.addNewLine();
 
             if (shouldSignPackage()) {
+                // The sonatype-central-upload plugin requires a Java 11+ runtime to load. Apply it (and configure its
+                // task) only when the build JVM supports it so the project can still be configured/compiled on Java 8;
+                // the generated publish workflow runs on Java 11+, so publishing is unaffected.
+                writer.beginControlFlow("if (JavaVersion.current().isJava11Compatible())");
+                writer.addLine("apply plugin: '" + SONATYPE_CENTRAL_UPLOAD_PLUGIN_ID + "'");
+                writer.addNewLine();
                 writer.beginControlFlow("sonatypeCentralUpload");
                 writer.addLine("username = \"$System.env." + MAVEN_USERNAME_ENV_VAR + "\"");
                 writer.addLine("password = \"$System.env." + MAVEN_PASSWORD_ENV_VAR + "\"");
@@ -161,6 +189,9 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                 writer.addLine("signingKeyPassphrase = \"$System.env." + MAVEN_SIGNING_PASSWORD + "\"");
                 writer.endControlFlow();
                 writer.addNewLine();
+                writer.addLine("sonatypeCentralUpload.dependsOn build");
+                writer.endControlFlow();
+                writer.addNewLine();
 
                 writer.beginControlFlow("signing");
                 writer.addLine("def signingKeyId = \"$System.env." + MAVEN_SIGNING_KEY_ID + "\"");
@@ -169,9 +200,6 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                 writer.addLine("useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)");
                 writer.addLine("sign publishing.publications.maven");
                 writer.endControlFlow();
-
-                writer.addNewLine();
-                writer.addLine("sonatypeCentralUpload.dependsOn build");
             }
         }
         return writer.getContents();

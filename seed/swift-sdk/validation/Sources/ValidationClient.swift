@@ -53,17 +53,54 @@ public final class ValidationClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func create(request: Requests.CreateRequest, requestOptions: RequestOptions? = nil) async throws -> Type {
+    /// ```swift
+    /// import Foundation
+    /// import Validation
+    ///
+    /// private func main() async throws {
+    ///     let client = ValidationClient()
+    ///
+    ///     _ = try await client.create(request: .init(
+    ///         decimal: 2.2,
+    ///         even: 100,
+    ///         name: "fern",
+    ///         shape: .square
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func create(request: Requests.CreateRequest, requestOptions: RequestOptions? = nil) async throws -> `Type` {
         return try await httpClient.performRequest(
             method: .post,
             path: "/create",
             body: request,
             requestOptions: requestOptions,
-            responseType: Type.self
+            responseType: `Type`.self
         )
     }
 
-    public func get(decimal: Swift.Double, even: Int, name: String, requestOptions: RequestOptions? = nil) async throws -> Type {
+    /// ```swift
+    /// import Foundation
+    /// import Validation
+    ///
+    /// private func main() async throws {
+    ///     let client = ValidationClient()
+    ///
+    ///     _ = try await client.get(
+    ///         decimal: 2.2,
+    ///         even: 100,
+    ///         name: "fern"
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func get(decimal: Swift.Double, even: Int, name: String, requestOptions: RequestOptions? = nil) async throws -> `Type` {
         return try await httpClient.performRequest(
             method: .get,
             path: "/",
@@ -73,7 +110,7 @@ public final class ValidationClient: Sendable {
                 "name": .string(name)
             ],
             requestOptions: requestOptions,
-            responseType: Type.self
+            responseType: `Type`.self
         )
     }
 }

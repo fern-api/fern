@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Readonly Schema References API",
   "description": "Test schema reference resolution when respect-readonly-schemas causes schema renaming",
   "servers": [],

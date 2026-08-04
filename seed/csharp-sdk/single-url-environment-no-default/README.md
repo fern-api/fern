@@ -19,6 +19,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Additional Body Properties](#additional-body-properties)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -53,7 +54,7 @@ This SDK allows you to configure different environments for API requests.
 ```csharp
 using SeedSingleUrlEnvironmentNoDefault;
 
-var client = new SeedSingleUrlEnvironmentNoDefaultClient(new ClientOptions
+var client = new SeedSingleUrlEnvironmentNoDefaultClient(clientOptions: new ClientOptions
 {
     BaseUrl = SeedSingleUrlEnvironmentNoDefaultEnvironment.Production
 });
@@ -190,6 +191,23 @@ var response = await client.Dummy.GetDummyAsync(
         AdditionalQueryParameters = new Dictionary<string, string>
         {
             { "custom_param", "custom-value" }
+        }
+    }
+);
+```
+
+### Additional Body Properties
+
+If you would like to send additional body properties as part of the request, use the `AdditionalBodyProperties` request option.
+This is only applied to JSON requests.
+
+```csharp
+var response = await client.Dummy.GetDummyAsync(
+    ...,
+    new RequestOptions {
+        AdditionalBodyProperties = new Dictionary<string, object>
+        {
+            { "custom_field", "custom-value" }
         }
     }
 );

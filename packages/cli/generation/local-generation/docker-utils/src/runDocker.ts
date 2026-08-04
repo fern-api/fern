@@ -248,6 +248,7 @@ export async function execInContainer({
     containerId,
     command,
     runner,
+    envVars = {},
     writeLogsToFile = true,
     reject = true
 }: {
@@ -255,14 +256,16 @@ export async function execInContainer({
     containerId: string;
     command: string[];
     runner?: ContainerRunner;
+    envVars?: Record<string, string>;
     writeLogsToFile?: boolean;
     reject?: boolean;
 }): Promise<{ stdout: string; stderr: string; exitCode: number }> {
     const containerRunner = runner ?? "docker";
+    const envArgs = Object.entries(envVars).flatMap(([key, value]) => ["-e", `${key}=${value}`]);
     const { stdout, stderr, exitCode } = await loggingExeca(
         logger,
         containerRunner,
-        ["exec", "--user", "root", containerId, ...command],
+        ["exec", "--user", "root", ...envArgs, containerId, ...command],
         {
             reject: false,
             all: true,

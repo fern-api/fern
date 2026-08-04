@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Enum Array Reference Test API",
   "servers": [],
   "websocketServers": [],

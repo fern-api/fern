@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "list-ref-discriminated-union-audiences",
   "auth": {
@@ -117,6 +118,7 @@
         "discriminant": "role",
         "extends": [],
         "baseProperties": [],
+        "inheritedBaseProperties": [],
         "types": [
           {
             "discriminantValue": "user",
@@ -513,6 +515,7 @@
             }
           }
         },
+        "inheritedBaseProperties": [],
         "types": {
           "user": {
             "typeId": "type_:UserMessage",

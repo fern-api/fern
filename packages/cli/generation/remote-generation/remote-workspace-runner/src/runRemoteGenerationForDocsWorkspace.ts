@@ -97,12 +97,18 @@ export async function runRemoteGenerationForDocsWorkspace({
         return;
     }
 
-    const maybeInstance = instances.find((instance) => instance.url === instanceUrl) ?? instances[0];
+    const maybeInstance =
+        instanceUrl != null ? instances.find((instance) => instance.url === instanceUrl) : instances[0];
 
     if (maybeInstance == null) {
-        context.failAndThrow(`No docs instance with url ${instanceUrl}. Failed to register.`, undefined, {
-            code: CliError.Code.ConfigError
-        });
+        const available = instances.map((inst) => `  - ${inst.url}`).join("\n");
+        context.failAndThrow(
+            instanceUrl != null
+                ? `No docs instance found matching '${instanceUrl}'.\n\nAvailable instances:\n${available}`
+                : `No docs instance found. Failed to register.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
         return;
     }
 
@@ -112,14 +118,8 @@ export async function runRemoteGenerationForDocsWorkspace({
             : (maybeInstance.customDomain ?? [])
     ).map(stripCustomDomainProtocol);
 
-    // Basepath-aware mode requires the Fern instance url and every custom domain to share the
-    // same basepath, otherwise docs won't resolve once the customer cuts their DNS over to Fern.
-    const isBasepathAware =
-        maybeInstance.multiSource === true || docsWorkspace.config.experimental?.basepathAware === true;
-
-    if (isBasepathAware) {
-        validateBasepathAlignment(maybeInstance.url, customDomains, context);
-    }
+    // The Fern instance url and every custom domain must share the same basepath.
+    validateBasepathAlignment(maybeInstance.url, customDomains, context);
 
     context.logger.info(`Starting docs publishing for ${preview ? "preview" : "production"}: ${maybeInstance.url}`);
     context.logger.debug(

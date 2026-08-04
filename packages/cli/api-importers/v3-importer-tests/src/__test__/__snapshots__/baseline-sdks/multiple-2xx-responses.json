@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiName": "api",
   "apiDisplayName": "Multiple 2xx Responses API",
   "auth": {

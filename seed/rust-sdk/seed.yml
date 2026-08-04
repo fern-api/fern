@@ -123,6 +123,10 @@ fixtures:
           timeouts:
             - GET /movie/{movieId}
       outputFolder: readme-config
+  endpoint-security-auth:
+    - customConfig:
+        enableWireTests: true
+      outputFolder: .
   exhaustive:
     - customConfig:
         enableWireTests: true

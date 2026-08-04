@@ -299,13 +299,13 @@ reference = "fern-prod"
 
 [[package]]
 name = "fern-fern-ir-v67"
-version = "0.0.12"
+version = "67.15.0"
 description = ""
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "fern_fern_ir_v67-0.0.12-py3-none-any.whl", hash = "sha256:86112be96f838b1cb45ceee4164da337a1463dbfbee65c2eafde43baaa094ff2"},
-    {file = "fern_fern_ir_v67-0.0.12.tar.gz", hash = "sha256:db5e5914ed8088d147988914225a38ff722177a6581c09f1820acce72b285267"},
+    {file = "fern_fern_ir_v67-67.15.0-py3-none-any.whl", hash = "sha256:4b8ea71e8353bc266c65a9fc16e159672b67c5171aa341f405efce67c7217ad2"},
+    {file = "fern_fern_ir_v67-67.15.0.tar.gz", hash = "sha256:54959b3d0129d52192fd47445ce8b1925658999fafeb3403b01c6d4871666bd3"},
 ]
 
 [package.dependencies]
@@ -1110,13 +1110,13 @@ files = [
 
 [[package]]
 name = "starlette"
-version = "1.1.0"
+version = "1.3.1"
 description = "The little ASGI library that shines."
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "starlette-1.1.0-py3-none-any.whl", hash = "sha256:7f0dfd38e428aad5cb6f9f667f0ca1d2d8ca3f3385dccac8305f79ec98458382"},
-    {file = "starlette-1.1.0.tar.gz", hash = "sha256:e83c7fe0ddecd8719c5b840080325aec0260acec86e9832899e377b91d65e90f"},
+    {file = "starlette-1.3.1-py3-none-any.whl", hash = "sha256:c7372aae11c3c3f26a42df7bd626cec2f47d03483d261d369516a615a53714c6"},
+    {file = "starlette-1.3.1.tar.gz", hash = "sha256:05d0213193f2fbaae60e2ecb593b4add4262ad4e46536b54abe36f11a71724e0"},
 ]
 
 [package.dependencies]
@@ -1124,7 +1124,7 @@ anyio = ">=3.6.2,<5"
 typing-extensions = {version = ">=4.10.0", markers = "python_version < \"3.13\""}
 
 [package.extras]
-full = ["httpx (>=0.27.0,<0.29.0)", "itsdangerous", "jinja2", "python-multipart (>=0.0.18)", "pyyaml"]
+full = ["httpx (>=0.27.0,<0.29.0)", "httpx2 (>=2.0.0)", "itsdangerous", "jinja2", "python-multipart (>=0.0.18)", "pyyaml"]
 
 [[package]]
 name = "termcolor"
@@ -1311,4 +1311,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "9205399808621ca64f72a26b1a41b6ed099ef6cb8b1d1a95954b908bfa40c9c8"
+content-hash = "c6482b60f46b0fcfb0fa95d09c5b74bc96df9cd5d14dcd4ef67dd35755a13a38"

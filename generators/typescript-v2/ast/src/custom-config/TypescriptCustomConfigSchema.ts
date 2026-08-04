@@ -34,7 +34,9 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     bundle: z.optional(z.boolean()),
     allowCustomFetcher: z.optional(z.boolean()),
     generateWebSocketClients: z.optional(z.boolean()),
-    defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
+    // Default request timeout, expressed in milliseconds (idiomatic for JS/TS, e.g.
+    // `setTimeout` / `AbortSignal.timeout(ms)`). Use "infinity" to disable the timeout.
+    defaultTimeout: z.optional(z.union([z.literal("infinity"), z.number()])),
     skipResponseValidation: z.optional(z.boolean()),
     extraDependencies: z.optional(z.record(z.string())),
     extraDevDependencies: z.optional(z.record(z.string())),
@@ -53,6 +55,8 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     fetchSupport: z.optional(z.enum(["node-fetch", "native"])),
     packagePath: z.optional(z.string()),
     omitFernHeaders: z.optional(z.boolean()),
+    includePlatformHeaders: z.optional(z.boolean()),
+    allowUserAgentAppInfo: z.optional(z.boolean()),
     useDefaultRequestParameterValues: z.optional(z.boolean()),
     packageManager: z.optional(z.enum(["pnpm", "yarn"])),
     flattenRequestParameters: z.optional(z.boolean()),
@@ -81,6 +85,10 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     serdeLayer: z.optional(z.boolean()),
     private: z.optional(z.boolean()),
     requireDefaultEnvironment: z.optional(z.boolean()),
+    // When true, the client's `baseUrl` option becomes required and the `environment`
+    // option becomes optional. Intended for APIs whose consumers always supply a URL
+    // explicitly and have no concept of named environments.
+    requireBaseUrl: z.optional(z.boolean()),
     retainOriginalCasing: z.optional(z.boolean()),
     useBigInt: z.optional(z.boolean()),
     useBrandedStringAliases: z.optional(z.boolean()),
@@ -89,6 +97,16 @@ export const TypescriptCustomConfigSchema = z.strictObject({
 
     resolveQueryParameterNameConflicts: z.optional(z.boolean()),
     alwaysSendAuth: z.optional(z.boolean()),
+    // When true, makes client auth parameters optional even when the spec
+    // mandates auth on all endpoints (isAuthMandatory=true), and sends requests
+    // unauthenticated instead of throwing when no credentials are supplied.
+    // Useful for hand-maintained wrapper clients that authenticate via external
+    // means. Orthogonal to `alwaysSendAuth`, which decides which endpoints get
+    // auth headers: with both enabled, endpoints that don't require auth still
+    // get auth headers when credentials are supplied, and no endpoint gets them
+    // when credentials are absent.
+    "optional-auth": z.optional(z.boolean()),
+    generateReactQueryHooks: z.optional(z.boolean()),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),
@@ -101,6 +119,9 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     experimentalGenerateReadWriteOnlyTypes: z.optional(z.boolean()),
 
     // deprecated
+    // @deprecated Use `defaultTimeout` (milliseconds) instead. Converted to milliseconds (× 1000).
+    defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
+    // @deprecated Use `defaultTimeout` (milliseconds) instead. Converted to milliseconds (× 1000).
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
     includeApiReference: z.optional(z.boolean()),
     // @deprecated Use generateWebSocketClients instead
@@ -123,4 +144,30 @@ export function resolveNoSerdeLayer(config: TypescriptCustomConfigSchema | undef
         return !config.serdeLayer;
     }
     return !!config?.noSerdeLayer;
+}
+
+/**
+ * Resolves the effective default request timeout in milliseconds from config.
+ *
+ * Precedence:
+ * 1. `defaultTimeout` (already in milliseconds)
+ * 2. `defaultTimeoutInSeconds` (deprecated, converted × 1000)
+ * 3. `timeoutInSeconds` (deprecated, converted × 1000)
+ *
+ * `"infinity"` is preserved as-is (disables the timeout). Returns `undefined`
+ * when no timeout is configured, so callers can fall back to their own default.
+ */
+export function resolveTimeoutInMilliseconds(
+    config: TypescriptCustomConfigSchema | undefined
+): number | "infinity" | undefined {
+    if (config?.defaultTimeout != null) {
+        return config.defaultTimeout;
+    }
+    if (config?.defaultTimeoutInSeconds != null) {
+        return config.defaultTimeoutInSeconds === "infinity" ? "infinity" : config.defaultTimeoutInSeconds * 1000;
+    }
+    if (config?.timeoutInSeconds != null) {
+        return config.timeoutInSeconds === "infinity" ? "infinity" : config.timeoutInSeconds * 1000;
+    }
+    return undefined;
 }

@@ -801,7 +801,6 @@ public final class Client {
 
         /**
          * <p>The unique client identifier</p>
-         * <p>The unique client identifier</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -812,7 +811,6 @@ public final class Client {
         }
 
         /**
-         * <p>Name of the client</p>
          * <p>Name of the client</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

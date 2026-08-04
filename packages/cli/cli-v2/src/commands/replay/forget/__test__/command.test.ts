@@ -37,7 +37,7 @@ function baseArgs(overrides: Partial<ForgetCommand.Args> = {}): ForgetCommand.Ar
     } as ForgetCommand.Args;
 }
 
-type ForgetResult = ReturnType<typeof import("@fern-api/generator-cli").replayForget>;
+type ForgetResult = Awaited<ReturnType<typeof import("@fern-api/generator-cli").replayForget>>;
 
 function makePatch(id: string, message: string) {
     return { id, message, files: [], diffstat: { additions: 1, deletions: 0 } };
@@ -67,7 +67,7 @@ describe("ForgetCommand", () => {
     describe("--all mode", () => {
         it("prints removed patches", async () => {
             const { replayForget } = await import("@fern-api/generator-cli");
-            vi.mocked(replayForget).mockReturnValue(
+            vi.mocked(replayForget).mockResolvedValue(
                 makeForgetResult({ removed: [makePatch("patch-abc", "fix types")], totalPatches: 1 })
             );
 
@@ -80,7 +80,7 @@ describe("ForgetCommand", () => {
 
         it("reports not initialized", async () => {
             const { replayForget } = await import("@fern-api/generator-cli");
-            vi.mocked(replayForget).mockReturnValue(makeForgetResult({ initialized: false }));
+            vi.mocked(replayForget).mockResolvedValue(makeForgetResult({ initialized: false }));
 
             const context = createMockContext();
             await cmd.handle(context, baseArgs({ all: true }));
@@ -90,7 +90,7 @@ describe("ForgetCommand", () => {
 
         it("reports no patches to remove when list is empty", async () => {
             const { replayForget } = await import("@fern-api/generator-cli");
-            vi.mocked(replayForget).mockReturnValue(makeForgetResult());
+            vi.mocked(replayForget).mockResolvedValue(makeForgetResult());
 
             const context = createMockContext();
             await cmd.handle(context, baseArgs({ all: true }));
@@ -102,7 +102,7 @@ describe("ForgetCommand", () => {
     describe("patch ID mode", () => {
         it("removes specified patch IDs", async () => {
             const { replayForget } = await import("@fern-api/generator-cli");
-            vi.mocked(replayForget).mockReturnValue(
+            vi.mocked(replayForget).mockResolvedValue(
                 makeForgetResult({ removed: [makePatch("patch-abc123", "fix")], remaining: 2, totalPatches: 3 })
             );
 
@@ -117,7 +117,7 @@ describe("ForgetCommand", () => {
 
         it("handles already-forgotten IDs", async () => {
             const { replayForget } = await import("@fern-api/generator-cli");
-            vi.mocked(replayForget).mockReturnValue(makeForgetResult({ alreadyForgotten: ["patch-old"] }));
+            vi.mocked(replayForget).mockResolvedValue(makeForgetResult({ alreadyForgotten: ["patch-old"] }));
 
             const context = createMockContext();
             await cmd.handle(context, baseArgs({ args: ["patch-old"] }));
@@ -139,10 +139,10 @@ describe("ForgetCommand", () => {
         it("lists matched patches and removes after confirmation", async () => {
             const { replayForget } = await import("@fern-api/generator-cli");
             vi.mocked(replayForget)
-                .mockReturnValueOnce(
+                .mockResolvedValueOnce(
                     makeForgetResult({ matched: [makePatch("patch-xyz", "add field")], totalPatches: 1 })
                 )
-                .mockReturnValueOnce(makeForgetResult({ removed: [makePatch("patch-xyz", "add field")] }));
+                .mockResolvedValueOnce(makeForgetResult({ removed: [makePatch("patch-xyz", "add field")] }));
 
             const context = createMockContext();
             await cmd.handle(context, baseArgs({ args: ["add field"], yes: true }));
@@ -153,7 +153,7 @@ describe("ForgetCommand", () => {
 
         it("reports no matches for unknown pattern", async () => {
             const { replayForget } = await import("@fern-api/generator-cli");
-            vi.mocked(replayForget).mockReturnValue(makeForgetResult({ notFound: true }));
+            vi.mocked(replayForget).mockResolvedValue(makeForgetResult({ notFound: true }));
 
             const context = createMockContext();
             await cmd.handle(context, baseArgs({ args: ["nonexistent"] }));
@@ -165,7 +165,7 @@ describe("ForgetCommand", () => {
 
         it("dry-run does not remove", async () => {
             const { replayForget } = await import("@fern-api/generator-cli");
-            vi.mocked(replayForget).mockReturnValue(
+            vi.mocked(replayForget).mockResolvedValue(
                 makeForgetResult({ matched: [makePatch("patch-abc", "fix")], remaining: 1, totalPatches: 1 })
             );
 

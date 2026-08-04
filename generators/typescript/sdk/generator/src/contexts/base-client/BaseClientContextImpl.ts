@@ -3,7 +3,7 @@ import type { SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { BaseClientContext, FileContext } from "@fern-typescript/contexts";
-import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";
+import { endpointUtils, getServerVariableOptions } from "@fern-typescript/sdk-client-class-generator";
 import {
     type InterfaceDeclarationStructure,
     type OptionalKind,
@@ -18,11 +18,18 @@ export declare namespace BaseClientContextImpl {
         intermediateRepresentation: FernIr.IntermediateRepresentation;
         allowCustomFetcher: boolean;
         requireDefaultEnvironment: boolean;
+        // When true, `baseUrl` is a required client option and `environment` is optional.
+        requireBaseUrl: boolean;
         retainOriginalCasing: boolean;
         generateIdempotentRequestOptions: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
         caseConverter: CaseConverter;
+        // When true, treat auth as optional even when the spec mandates it.
+        optionalAuth: boolean;
+        // When true, expose an optional `appInfo` client option whose product
+        // token is appended to the User-Agent header.
+        allowUserAgentAppInfo: boolean;
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -39,11 +46,14 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly allowCustomFetcher: boolean;
     private readonly requireDefaultEnvironment: boolean;
+    private readonly requireBaseUrl: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
     private readonly case: CaseConverter;
+    private readonly optionalAuth: boolean;
+    private readonly allowUserAgentAppInfo: boolean;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -65,20 +75,26 @@ export class BaseClientContextImpl implements BaseClientContext {
         intermediateRepresentation,
         allowCustomFetcher,
         requireDefaultEnvironment,
+        requireBaseUrl,
         retainOriginalCasing,
         generateIdempotentRequestOptions,
         parameterNaming,
         baseClientTypeDeclarationReferencer,
-        caseConverter
+        caseConverter,
+        optionalAuth,
+        allowUserAgentAppInfo
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
+        this.requireBaseUrl = requireBaseUrl;
         this.retainOriginalCasing = retainOriginalCasing;
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.parameterNaming = parameterNaming;
         this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
         this.case = caseConverter;
+        this.optionalAuth = optionalAuth;
+        this.allowUserAgentAppInfo = allowUserAgentAppInfo;
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -113,7 +129,7 @@ export class BaseClientContextImpl implements BaseClientContext {
 
         // Check auth options from the intersection type
         // Auth options are required when auth is mandatory and there's no environment variable fallback
-        const isAuthMandatory = this.intermediateRepresentation.sdkConfig.isAuthMandatory;
+        const isAuthMandatory = this.intermediateRepresentation.sdkConfig.isAuthMandatory && !this.optionalAuth;
 
         if (this.bearerAuthScheme != null) {
             const hasTokenEnv = this.bearerAuthScheme.tokenEnvVar != null;
@@ -182,7 +198,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                         generatedEnvironments.getTypeForUserSuppliedEnvironment(context)
                     )
                 ),
-                hasQuestionToken: generatedEnvironments.hasDefaultEnvironment()
+                hasQuestionToken: generatedEnvironments.hasDefaultEnvironment() || this.requireBaseUrl
             });
         }
 
@@ -194,9 +210,26 @@ export class BaseClientContextImpl implements BaseClientContext {
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                 )
             ),
-            hasQuestionToken: true,
+            hasQuestionToken: !this.requireBaseUrl,
             docs: ["Specify a custom URL to connect the client to."]
         });
+
+        for (const { variable, optionName } of getServerVariableOptions(this.intermediateRepresentation, this.case)) {
+            const docs: string[] = [];
+            if (variable.values != null && variable.values.length > 0) {
+                docs.push(`The ${optionName} to route requests to. Allowed values: ${variable.values.join(", ")}.`);
+            }
+            if (variable.default != null) {
+                docs.push(`Defaults to "${variable.default}".`);
+            }
+            properties.push({
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(optionName),
+                type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)),
+                hasQuestionToken: true,
+                docs: docs.length > 0 ? [docs.join(" ")] : undefined
+            });
+        }
 
         for (const variable of this.intermediateRepresentation.variables) {
             const variableType = context.type.getReferenceToType(variable.type);
@@ -262,6 +295,18 @@ export class BaseClientContextImpl implements BaseClientContext {
             });
         }
 
+        if (this.allowUserAgentAppInfo) {
+            properties.push({
+                kind: StructureKind.PropertySignature,
+                docs: [
+                    "Identifies the calling application. Its product token is appended to the User-Agent header sent by the SDK."
+                ],
+                name: "appInfo",
+                type: "{ name: string; version?: string; comment?: string }",
+                hasQuestionToken: true
+            });
+        }
+
         properties.push({
             kind: StructureKind.PropertySignature,
             docs: ["Additional headers to include in requests."],
@@ -316,6 +361,14 @@ export class BaseClientContextImpl implements BaseClientContext {
             ),
             hasQuestionToken: true,
             docs: ["Configure logging for the client."]
+        });
+
+        properties.push({
+            kind: StructureKind.PropertySignature,
+            name: "stream",
+            type: "{ reconnectionEnabled?: boolean; maxReconnectionAttempts?: number }",
+            hasQuestionToken: true,
+            docs: ["Default options for SSE stream reconnection behavior. Has no effect on non-resumable endpoints."]
         });
 
         return {
@@ -387,10 +440,22 @@ export class BaseClientContextImpl implements BaseClientContext {
                     docs: ["Additional query string parameters to include in the request."]
                 },
                 {
+                    name: endpointUtils.REQUEST_OPTIONS_ADDITIONAL_BODY_PARAMETERS_PROPERTY_NAME,
+                    type: "Record<string, unknown>",
+                    hasQuestionToken: true,
+                    docs: ["A dictionary containing additional parameters to spread into the request's body."]
+                },
+                {
                     name: "headers",
                     type: `Record<string, string | ${getTextOfTsNode(supplier._getReferenceToType(ts.factory.createTypeReferenceNode("string | null | undefined")))} | null | undefined>`,
                     hasQuestionToken: true,
                     docs: ["Additional headers to include in the request."]
+                },
+                {
+                    name: "stream",
+                    type: "{ reconnectionEnabled?: boolean; maxReconnectionAttempts?: number }",
+                    hasQuestionToken: true,
+                    docs: ["Options for SSE stream reconnection behavior. Has no effect on non-resumable endpoints."]
                 }
             ],
             isExported: true

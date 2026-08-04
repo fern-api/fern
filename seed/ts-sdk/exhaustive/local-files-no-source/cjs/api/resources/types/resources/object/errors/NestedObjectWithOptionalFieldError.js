@@ -48,7 +48,7 @@ class NestedObjectWithOptionalFieldError extends errors.SeedExhaustiveError {
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);
         }
-        this.name = this.constructor.name;
+        this.name = "NestedObjectWithOptionalFieldError";
     }
 }
 exports.NestedObjectWithOptionalFieldError = NestedObjectWithOptionalFieldError;

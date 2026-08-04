@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": "1.0.0",
     "apiName": "api",
     "apiDisplayName": "Users API (v1)",
     "apiDocs": null,
@@ -121,7 +122,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -213,7 +215,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -299,7 +302,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_v2:UserV2Profile"
@@ -350,6 +354,7 @@
                     "id": "endpoint_v1.listUsers",
                     "name": "listUsers",
                     "displayName": "List users (v1 shape)",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -860,6 +865,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -897,9 +903,10 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_v2.listUsers",
-                    "name": "listUsers",
-                    "displayName": "List users (v2 shape)",
+                    "id": "endpoint_v2.listAccounts",
+                    "name": "listAccounts",
+                    "displayName": "List accounts (v2 renamed users to accounts)",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -908,11 +915,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/users",
+                        "head": "/accounts",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "users",
+                        "head": "accounts",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -955,7 +962,7 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "ListUsersRequest",
+                            "wrapperName": "ListAccountsRequest",
                             "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
@@ -1006,7 +1013,7 @@
                             "example": {
                                 "id": "c2416d37",
                                 "name": null,
-                                "url": "/users",
+                                "url": "/accounts",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
@@ -1274,7 +1281,7 @@
                         {
                             "example": {
                                 "id": "f95f3162",
-                                "url": "/users",
+                                "url": "/accounts",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -1760,6 +1767,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1796,6 +1804,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_v1": [
@@ -1950,7 +1959,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_v2:UserV2Profile": {
                 "type": "object",
@@ -2089,7 +2099,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_v2:UserV2": {
                 "type": "object",
@@ -2222,7 +2233,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [
@@ -2361,7 +2373,7 @@
                 },
                 "examples": null
             },
-            "endpoint_v2.listUsers": {
+            "endpoint_v2.listAccounts": {
                 "auth": {
                     "type": "bearer",
                     "token": {
@@ -2386,22 +2398,22 @@
                 },
                 "declaration": {
                     "name": {
-                        "originalName": "listUsers",
+                        "originalName": "listAccounts",
                         "camelCase": {
-                            "unsafeName": "listUsers",
-                            "safeName": "listUsers"
+                            "unsafeName": "listAccounts",
+                            "safeName": "listAccounts"
                         },
                         "snakeCase": {
-                            "unsafeName": "list_users",
-                            "safeName": "list_users"
+                            "unsafeName": "list_accounts",
+                            "safeName": "list_accounts"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "LIST_USERS",
-                            "safeName": "LIST_USERS"
+                            "unsafeName": "LIST_ACCOUNTS",
+                            "safeName": "LIST_ACCOUNTS"
                         },
                         "pascalCase": {
-                            "unsafeName": "ListUsers",
-                            "safeName": "ListUsers"
+                            "unsafeName": "ListAccounts",
+                            "safeName": "ListAccounts"
                         }
                     },
                     "fernFilepath": {
@@ -2452,28 +2464,28 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/accounts"
                 },
                 "request": {
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "ListUsersRequest",
+                            "originalName": "ListAccountsRequest",
                             "camelCase": {
-                                "unsafeName": "listUsersRequest",
-                                "safeName": "listUsersRequest"
+                                "unsafeName": "listAccountsRequest",
+                                "safeName": "listAccountsRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "list_users_request",
-                                "safeName": "list_users_request"
+                                "unsafeName": "list_accounts_request",
+                                "safeName": "list_accounts_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "LIST_USERS_REQUEST",
-                                "safeName": "LIST_USERS_REQUEST"
+                                "unsafeName": "LIST_ACCOUNTS_REQUEST",
+                                "safeName": "LIST_ACCOUNTS_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "ListUsersRequest",
-                                "safeName": "ListUsersRequest"
+                                "unsafeName": "ListAccountsRequest",
+                                "safeName": "ListAccountsRequest"
                             }
                         },
                         "fernFilepath": {
@@ -2605,6 +2617,7 @@
             }
         },
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -2613,7 +2626,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_v1": {
@@ -2693,6 +2707,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

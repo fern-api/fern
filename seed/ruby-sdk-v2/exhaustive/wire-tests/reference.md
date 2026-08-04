@@ -579,7 +579,7 @@ client.endpoints.enum.get_and_return_enum(request: "SUNNY")
 </details>
 
 ## Endpoints HTTPMethods
-<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_get</a>(id) -> String</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_get</a>(id:) -> String</code></summary>
 <dl>
 <dd>
 
@@ -675,7 +675,7 @@ client.endpoints.http_methods.test_post(string: "string")
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_put</a>(id, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_put</a>(id:, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -734,7 +734,7 @@ client.endpoints.http_methods.test_put(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_patch</a>(id, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_patch</a>(id:, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -807,7 +807,7 @@ client.endpoints.http_methods.test_patch(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_delete</a>(id) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_delete</a>(id:) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -1087,7 +1087,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_nested_with_required_field</a>(string, request) -> Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_nested_with_required_field</a>(string:, request) -> Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1261,7 +1261,9 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_with_unknown_field
+client.endpoints.object.get_and_return_with_unknown_field(unknown: {
+  "$ref" => "https://example.com/schema"
+})
 ```
 </dd>
 </dl>
@@ -1309,7 +1311,9 @@ client.endpoints.object.get_and_return_with_unknown_field
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_with_documented_unknown_type
+client.endpoints.object.get_and_return_with_documented_unknown_type(documented_unknown_type: {
+  key: "value"
+})
 ```
 </dd>
 </dl>
@@ -1357,7 +1361,11 @@ client.endpoints.object.get_and_return_with_documented_unknown_type
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_map_of_documented_unknown_type(request: {})
+client.endpoints.object.get_and_return_map_of_documented_unknown_type(request: {
+  string: {
+    key: "value"
+  }
+})
 ```
 </dd>
 </dl>
@@ -1673,7 +1681,7 @@ client.endpoints.pagination.list_items(
 </details>
 
 ## Endpoints Params
-<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_path</a>(param) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_path</a>(param:) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1735,7 +1743,7 @@ client.endpoints.params.get_with_path(param: "param")
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_inline_path</a>(param) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_inline_path</a>(param:) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1943,7 +1951,7 @@ client.endpoints.params.get_with_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_path_and_query</a>(param) -> </code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_path_and_query</a>(param:) -> </code></summary>
 <dl>
 <dd>
 
@@ -2016,7 +2024,7 @@ client.endpoints.params.get_with_path_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_inline_path_and_query</a>(param) -> </code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_inline_path_and_query</a>(param:) -> </code></summary>
 <dl>
 <dd>
 
@@ -2089,7 +2097,7 @@ client.endpoints.params.get_with_path_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">modify_with_path</a>(param, request) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">modify_with_path</a>(param:, request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -2162,7 +2170,7 @@ client.endpoints.params.modify_with_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">modify_with_inline_path</a>(param, request) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">modify_with_inline_path</a>(param:, request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -2235,7 +2243,7 @@ client.endpoints.params.modify_with_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">upload_with_path</a>(param, request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">upload_with_path</a>(param:, request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -2297,7 +2305,80 @@ client.endpoints.params.upload_with_path(param: "upload-path")
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_boolean_path</a>(param) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">create_with_body_and_query</a>(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.endpoints.params.create_with_body_and_query(
+  fields: "_fields",
+  string: "string"
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fields:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Seed::Types::Object_::Types::ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_boolean_path</a>(param:) -> String</code></summary>
 <dl>
 <dd>
 
@@ -2359,7 +2440,7 @@ client.endpoints.params.get_with_boolean_path(param: true)
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_path_and_errors</a>(param) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_path_and_errors</a>(param:) -> String</code></summary>
 <dl>
 <dd>
 
@@ -2855,7 +2936,7 @@ client.endpoints.primitive.get_and_return_base64(request: "SGVsbG8gd29ybGQh")
 </details>
 
 ## Endpoints Put
-<details><summary><code>client.endpoints.put.<a href="/lib/seed/endpoints/put/client.rb">add</a>(id) -> Seed::Endpoints::Put::Types::PutResponse</code></summary>
+<details><summary><code>client.endpoints.put.<a href="/lib/seed/endpoints/put/client.rb">add</a>(id:) -> Seed::Endpoints::Put::Types::PutResponse</code></summary>
 <dl>
 <dd>
 
@@ -3212,6 +3293,79 @@ client.inlined_requests.post_with_object_bodyand_response(
 </dl>
 </details>
 
+<details><summary><code>client.inlined_requests.<a href="/lib/seed/inlined_requests/client.rb">post_with_array_body_and_headers</a>(request) -> String</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with root-level array body and header params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.inlined_requests.post_with_array_body_and_headers(
+  x_custom_header: "X-Custom-Header",
+  body: %w[string string]
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**x_custom_header:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Internal::Types::Array[String]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::InlinedRequests::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## NoAuth
 <details><summary><code>client.no_auth.<a href="/lib/seed/no_auth/client.rb">post_with_no_auth</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
@@ -3240,7 +3394,9 @@ POST request with no auth
 <dd>
 
 ```ruby
-client.no_auth.post_with_no_auth
+client.no_auth.post_with_no_auth(request: {
+  key: "value"
+})
 ```
 </dd>
 </dl>

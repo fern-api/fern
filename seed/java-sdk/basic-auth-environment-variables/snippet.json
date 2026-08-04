@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "14b143fa",
+            "example_identifier": "9f75c8ea",
             "id": {
                 "method": "GET",
                 "path": "/basic-auth",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "91843eb7",
+            "example_identifier": "1c752737",
             "id": {
                 "method": "POST",
                 "path": "/basic-auth",

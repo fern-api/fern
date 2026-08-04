@@ -42,6 +42,8 @@ types:
       pypi: PypiPublishTarget
       crates: CratesPublishTarget
       go: GoPublishTarget
+      nuget: NugetPublishTarget
+      rubygems: RubyGemsPublishTarget
 
   PostmanPublishTarget:
     properties:
@@ -77,3 +79,13 @@ types:
     properties:
       version: optional<string>
       modulePath: optional<string>
+
+  RubyGemsPublishTarget:
+    properties:
+      version: optional<string>
+      packageName: optional<string>
+
+  NugetPublishTarget:
+    properties:
+      version: optional<string>
+      packageName: optional<string>

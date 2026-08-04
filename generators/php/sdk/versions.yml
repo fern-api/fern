@@ -1,4 +1,281 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.18.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `allowUserAgentAppInfo` config (default `false`). When enabled, the
+        generated client accepts an optional `appInfo` client option
+        (`array{name: string, version?: string, comment?: string}`) whose product token is
+        appended to the `User-Agent` header for all three branches (the structured platform
+        value, the configured `user-agent` template value, and the default
+        `{package}/{version}`), producing e.g. `acme/sdk/1.0.0 partner-app/3.1.0 (+https://partner.example)`
+        per RFC 9110. Caller-supplied values are sanitized (name/version percent-encoded to
+        RFC 7230 tchars; comment delimiters and control characters escaped) and trimmed
+        before encoding, so untrusted values cannot inject additional header content. The
+        header is still overridable by an explicit `User-Agent` and suppressed by
+        `omitFernHeaders`. Default-off output is byte-identical.
+      type: feat
+  createdAt: "2026-08-03"
+  irVersion: 67
+- version: 2.17.0
+  changelogEntry:
+    - summary: |
+        Add an `encode-path-params` config option (default `false`). When enabled, generated clients
+        pass path parameter values through `RawClient::encodePathParam()` at the point they are
+        substituted into the path template, so a value containing `/` or `..` can no longer change which
+        endpoint the request resolves to. The default `false` preserves the existing (unencoded)
+        behavior; TypeScript, Go, Java, and C# already encode path params.
+      type: feat
+  createdAt: "2026-08-02"
+  irVersion: 67
+- version: 2.16.0
+  changelogEntry:
+    - summary: |
+        Add support for per-endpoint auth routing. When the API-level auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+        its IR `security` field (OR across the list of requirements, AND within a requirement,
+        and no auth when `security` is empty), instead of applying every configured credential
+        to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+        is unchanged.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 2.15.0
+  changelogEntry:
+    - summary: |
+        Support webhook body-hash binding in generated signature verification helpers.
+        When a webhook signature declares a body-hash binding, the helper now recomputes
+        the encoded hash of the raw request body, extracts the transmitted hash from the
+        configured query parameter of the notification URL, and timing-safe-compares them
+        (failing closed) before verifying the outer HMAC over the verbatim notification URL.
+      type: feat
+    - summary: |
+        Generate HMAC webhook signature verification helpers from the IR.
+      type: feat
+    - summary: |
+        Extend the generated `verifySignature` webhook helper with Twilio-compatible
+        verification, mirroring the TypeScript reference:
+        - Multi-value form params: when `payloadFormat.bodySort` is set, the request-body
+          parameter accepts either a raw string or a `string|array` multimap of POST body
+          parameters whose values are a string or a list of strings; keys are sorted, each
+          key's values are deduped and sorted, and `key . value` pairs are concatenated with
+          no separator before signing.
+        - Runtime body-hash branch: when a `bodyHashBinding` is configured, the configured
+          query parameter is read from the notification URL at runtime. When present (JSON) the
+          raw body is hashed and constant-time compared and the signature is checked over the
+          URL only; when absent (classic form) the signature is checked over the URL + params
+          with no body-hash check.
+        - No-throw: the verifier is a pure boolean. Every throw on the verification path (null
+          or empty inputs, a missing/malformed timestamp) now returns `false`.
+        - URL any-match normalization: when `notificationUrlNormalization` is configured, the
+          signature is verified against several normalized notification-URL candidates
+          (standard-port/no-port variants and legacy query re-encoding), accepting on the first
+          constant-time match. A stdlib-only `notificationUrlCandidates` method (using
+          `parse_url`/`http_build_query`) is added to the `WebhookSignature` core utility.
+        Output is unchanged for webhooks that do not configure these fields, other than the
+        no-throw behavior which applies to all generated helpers.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 2.14.1
+  changelogEntry:
+    - summary: |
+        Render the selected environment's URL template(s) when server URL variables
+        (e.g. region) are provided alongside a named environment. Previously the
+        first environment's template was always used, so
+        `new Client(environment: Environments::Staging(), region: 'ie1')` resolved
+        to Production-shaped URLs. A custom environment or explicitly provided
+        base URL is left untouched.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 2.14.0
+  changelogEntry:
+    - summary: |
+        Include a usage code example in each endpoint method's PHPDoc block, so IDEs
+        (PhpStorm, Intelephense) surface an example on hover.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 2.13.4
+  changelogEntry:
+    - summary: |
+        Global API headers configured with an `env` fallback (e.g. `X-Twilio-Version` with
+        `env: TWILIO_VERSION`) now fall back to the environment variable in the root client
+        constructor when the parameter is not passed explicitly. Optional headers never throw
+        when both the parameter and the environment variable are missing.
+      type: fix
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 2.13.3
+  changelogEntry:
+    - summary: |
+        Emit a standalone `LICENSE` file at the repo root when a custom license is
+        configured (`license: { custom: ./LICENSE }` in the generator's `github` block).
+        Previously the PHP generator only set the `license` field in `composer.json` and
+        never wrote the license file itself, so GitHub license detection and compliance
+        scanners reported no license. This brings the PHP generator to parity with the
+        TypeScript, Python, Java, and Go generators.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 2.13.2
+  changelogEntry:
+    - summary: |
+        Send request bodies declared with the `application/x-www-form-urlencoded` content type
+        (e.g. OAuth token endpoints) as form-urlencoded instead of JSON. A new
+        `UrlEncodedApiRequest` core type encodes the body with `http_build_query` and sets the
+        `Content-Type: application/x-www-form-urlencoded` header.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 2.13.1
+  changelogEntry:
+    - summary: |
+        Wire OAuth client-credentials authentication into the root client when the OAuth
+        scheme is not the first scheme in the API's auth configuration (e.g.
+        `auth: any` with basic auth listed before OAuth). Previously the OAuth token
+        provider was only generated when OAuth was the first auth scheme, so the root
+        client silently fell back to the other schemes and never used the OAuth
+        credentials. When both an OAuth and an inferred auth scheme are present, the
+        provider-based scheme that appears first in the auth configuration is used.
+      type: fix
+    - summary: |
+        Send `grant_type: "client_credentials"` in the OAuth token request when the
+        token endpoint's `grant_type` property is a non-literal string. Previously the
+        property was omitted (when optional) or surfaced as a required constructor
+        parameter (when required), so token endpoints that require `grant_type`
+        rejected the request.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 2.13.0
+  changelogEntry:
+    - summary: |
+        Auto-generation of the idempotency key header is now driven by the IR
+        (`sdkConfig.idempotencyKeyGeneration`) instead of a generator config flag. When
+        enabled, retry-unsafe requests (the IR-configured eligible methods, POST/PUT by
+        default) attach the configured header (default `Idempotency-Key`) with a freshly
+        generated UUIDv4 unless the caller supplies one. The header name and eligible
+        methods come from the IR so behavior is consistent across generators.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 2.12.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL variables (e.g. region/edge routing). Server variables
+        defined on the API's environments are now exposed as optional string parameters on
+        the client constructor and interpolated into the base URL(s) at construction time,
+        falling back to each variable's default when not provided. Conflicting constructor
+        option names are de-collided with a `serverUrl` prefix and numeric suffix when needed
+        (e.g. a variable named `environment` is exposed as `serverUrlEnvironment`).
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 2.11.2
+  changelogEntry:
+    - summary: |
+        Upgrade the PHP SDK generator to consume IR v67.
+      type: chore
+  createdAt: "2026-07-13"
+  irVersion: 67
+- version: 2.11.1
+  changelogEntry:
+    - summary: |
+        Normalize the architecture label in the structured `User-Agent` (emitted when
+        `includePlatformHeaders` is enabled) so the 64-bit x86 aliases (`x64`,
+        `amd64`, `x86_64`) all report as the canonical `x86_64`, keeping the value
+        consistent across generators.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 2.11.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated SDK
+        clients, gated behind a new `includePlatformHeaders` config option (default
+        off, so existing generated output is unchanged). When enabled, the client
+        reports its SDK name/version plus the operating system, architecture, and PHP
+        runtime version in the Twilio-style shape
+        `{sdkName}/{sdkVersion} ({os}; {arch}) PHP/{runtimeVersion}`
+        (e.g. `my-sdk/1.0.0 (linux; x86_64) PHP/8.2.0`). The platform values are
+        resolved at runtime via `PHP_OS`, `php_uname('m')`, and `PHP_VERSION`. Unknown
+        segments are omitted gracefully (the `(os; arch)` group is dropped when both are
+        empty, a single known value is included on its own, and the version suffix is
+        dropped when unavailable), and the discrete `X-Fern-Platform` / `X-Fern-Runtime`
+        headers are consolidated into the `User-Agent`.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 2.10.16
+  changelogEntry:
+    - summary: |
+        Make each scheme's credentials optional under `any`-composed auth. Previously,
+        with a multi-scheme `auth: any: [...]` config the generated client treated OAuth
+        (and other) credentials as unconditionally required at construction, so a caller
+        who only wanted API-key auth could not instantiate the client. Credentials now
+        fall back to environment variables without throwing, and the OAuth/inferred token
+        provider and auth headers are only set up when that scheme's credentials are present.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 66
+- version: 2.10.15
+  changelogEntry:
+    - summary: |
+        Fix empty object and empty map serialization to produce `{}` instead of `[]`.
+        This applies to top-level objects, nested objects, and empty map-typed properties.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 66
+- version: 2.10.14
+  changelogEntry:
+    - summary: |
+        Emit the native PHP enum case (instead of its backing string value) when an enum is
+        passed to a discriminated-union factory argument in dynamic snippets, matching the
+        generated factory signature.
+      type: fix
+    - summary: |
+        Use the backing value type (`value-of<Enum>`) for enum map keys in PHPDoc so PHPStan can
+        resolve the type. PHP array keys must be `int|string`, so the native enum type produced an
+        unresolvable type.
+      type: fix
+  createdAt: "2026-06-17"
+  irVersion: 66
+- version: 2.10.13
+  changelogEntry:
+    - summary: |
+        Fix the generated OAuth token provider to forward required non-literal token request
+        properties (custom scopes and other required body properties such as an entity id) to the
+        token endpoint. Previously these properties were silently dropped, so the generated
+        typed token request was missing required keys and failed PHPStan. They are now collected
+        as client constructor parameters and threaded through to the token request.
+      type: fix
+  createdAt: "2026-06-15"
+  irVersion: 66
+- version: 2.10.12
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to emit required variable-typed path parameters. A path
+        parameter typed by a Fern `variable` is a required argument on the generated
+        SDK method but is not provided as an explicit snippet value, so the snippet
+        previously omitted it and failed to type-check. The generator now synthesizes
+        a placeholder value for these parameters so the required argument is emitted.
+      type: fix
+  createdAt: "2026-06-15"
+  irVersion: 66
+- version: 2.10.11
+  changelogEntry:
+    - summary: |
+        Serialize boolean path parameters as "true"/"false" instead of relying on PHP's
+        string coercion (which renders them as "1"/""), producing valid URLs.
+      type: fix
+    - summary: |
+        Skip bytes request body endpoints when generating wire tests, matching the WireMock
+        stub generator which omits them. Previously the generated test called an endpoint with
+        no matching stub and failed.
+      type: fix
+  createdAt: "2026-06-14"
+  irVersion: 66
 - version: 2.10.10
   changelogEntry:
     - summary: |

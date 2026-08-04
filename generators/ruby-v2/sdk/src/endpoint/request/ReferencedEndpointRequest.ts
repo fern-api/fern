@@ -1,6 +1,7 @@
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { isUrlEncodedRequestBody } from "../../utils/requestBody.js";
 import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
@@ -42,14 +43,13 @@ export class ReferencedEndpointRequest extends EndpointRequest {
         return {
             requestBodyReference: ruby.codeblock((writer) => {
                 if (this.requestBodyShape.type === "named") {
-                    const typeDeclaration = this.context.getTypeDeclarationOrThrow(this.requestBodyShape.typeId);
+                    const resolvedTypeId = this.resolveNamedTypeId(this.requestBodyShape.typeId);
+                    const typeDeclaration = this.context.getTypeDeclarationOrThrow(resolvedTypeId);
                     // Enums and aliases are modules, not classes, so they don't have a .new() method
                     if (typeDeclaration.shape.type === "enum" || typeDeclaration.shape.type === "alias") {
                         writer.write(`params`);
                     } else {
-                        writer.write(
-                            `${this.context.getReferenceToTypeId(this.requestBodyShape.typeId)}.new(params).to_h`
-                        );
+                        writer.write(`${this.context.getReferenceToTypeId(resolvedTypeId)}.new(params).to_h`);
                     }
                 } else {
                     writer.write(`params`);
@@ -59,6 +59,6 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     }
 
     public getRequestType(): RawClient.RequestBodyType | undefined {
-        return "json";
+        return isUrlEncodedRequestBody(this.endpoint.requestBody) ? "urlencoded" : "json";
     }
 }

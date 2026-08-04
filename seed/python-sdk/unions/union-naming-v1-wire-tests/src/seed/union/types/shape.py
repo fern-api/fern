@@ -17,6 +17,7 @@ class Base(UniversalBaseModel):
 
     CircleShape(
         radius=5.0,
+        id="example",
     )
     """
 
@@ -40,6 +41,7 @@ class CircleShape(Base):
 
     CircleShape(
         radius=5.0,
+        id="example",
     )
     """
 
@@ -64,6 +66,7 @@ class SquareShape(Base):
 
     CircleShape(
         radius=5.0,
+        id="example",
     )
     """
 
@@ -85,6 +88,7 @@ from seed.union import CircleShape
 
 CircleShape(
     radius=5.0,
+    id="example",
 )
 """
 Shape = typing_extensions.Annotated[typing.Union[CircleShape, SquareShape], pydantic.Field(discriminator="type")]
