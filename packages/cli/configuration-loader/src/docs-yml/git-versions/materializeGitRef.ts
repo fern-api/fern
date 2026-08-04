@@ -1,8 +1,14 @@
 import { isCommitSha, isGitAvailable } from "@fern-api/core-utils";
-import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import tmp from "tmp-promise";
+
+// Remove the materialized worktree temp dirs when the process exits. The dirs are cached
+// for the lifetime of the publish (a ref may back several versions), so they cannot be
+// cleaned eagerly; without this they accumulate across runs. The start-of-run
+// `git worktree prune` then reaps the now-missing worktree registrations on the next run.
+tmp.setGracefulCleanup();
 
 /**
  * The materialized state of the repository at a resolved git ref. The whole
@@ -313,11 +319,26 @@ export async function materializeGitRef({
         });
     }
 
+    const absolutePathToFernFolderAtRef = join(worktreePath, RelativeFilePath.of(fernFolderRelativeToRepoRoot));
+    // The fern folder is assumed to occupy the same path relative to the repo root at any ref.
+    // When it does not (the folder was moved or renamed since the ref), that assumption yields a
+    // path that does not exist in the materialized tree; fail here with an actionable message
+    // instead of letting a downstream `ENOENT` on docs.yml leak a temp path with no context.
+    if (!(await doesPathExist(absolutePathToFernFolderAtRef, "directory"))) {
+        throw new CliError({
+            message:
+                `Git ref '${ref}' (${sha}) does not contain a fern folder at '${fernFolderRelativeToRepoRoot}'. ` +
+                "The fern folder appears to have moved or been renamed since that ref. " +
+                "Git-ref-backed docs versions require the fern folder to occupy the same path at the ref as it does now.",
+            code: CliError.Code.ConfigError
+        });
+    }
+
     const materialized: MaterializedGitRef = {
         ref,
         sha,
         absolutePathToRepoRoot: worktreePath,
-        absolutePathToFernFolder: join(worktreePath, RelativeFilePath.of(fernFolderRelativeToRepoRoot))
+        absolutePathToFernFolder: absolutePathToFernFolderAtRef
     };
     materializedRefsBySha.set(cacheKey, materialized);
     return materialized;
