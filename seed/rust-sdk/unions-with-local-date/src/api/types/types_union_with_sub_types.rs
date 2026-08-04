@@ -14,8 +14,8 @@ pub enum UnionWithSubTypes {
     #[serde(rename = "fooExtended")]
     #[non_exhaustive]
     FooExtended {
-        #[serde(default)]
-        age: i64,
+        #[serde(flatten)]
+        data: FooExtended,
     },
 
     /// Catch-all variant for unrecognized discriminant values.
@@ -30,8 +30,8 @@ impl UnionWithSubTypes {
         Self::Foo { data }
     }
 
-    pub fn foo_extended(age: i64) -> Self {
-        Self::FooExtended { age }
+    pub fn foo_extended(data: FooExtended) -> Self {
+        Self::FooExtended { data }
     }
 
     pub fn unknown(value: serde_json::Value) -> Self {
