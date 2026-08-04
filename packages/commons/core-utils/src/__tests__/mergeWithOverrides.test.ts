@@ -81,7 +81,7 @@ describe("mergeWithOverrides", () => {
         });
     });
 
-    it("should merge named arrays by name rather than by position", () => {
+    it("should merge parameters by name and location rather than by position", () => {
         const data = {
             parameters: [
                 { name: "cursor", in: "query", schema: { type: "string" } },
@@ -117,12 +117,9 @@ describe("mergeWithOverrides", () => {
         });
     });
 
-    it("should disambiguate same-named parameters by location", () => {
+    it("should not merge a parameter override into a same-named parameter in another location", () => {
         const data = {
-            parameters: [
-                { name: "id", in: "path", schema: { type: "string" } },
-                { name: "id", in: "query", schema: { type: "string" } }
-            ]
+            parameters: [{ name: "id", in: "path", schema: { type: "string" } }]
         };
 
         const result = mergeWithOverrides({
@@ -133,12 +130,33 @@ describe("mergeWithOverrides", () => {
         expect(result).toEqual({
             parameters: [
                 { name: "id", in: "path", schema: { type: "string" } },
-                { name: "id", in: "query", schema: { type: "string" }, description: "the query id" }
+                { name: "id", in: "query", description: "the query id" }
             ]
         });
     });
 
-    it("should append named entries that match nothing", () => {
+    it("should merge index-aligned diffs by position when they omit the parameter location", () => {
+        const data = {
+            parameters: [
+                { name: "cursor", in: "query", schema: { type: "string" } },
+                { name: "limit", in: "query", schema: { type: "integer" } }
+            ]
+        };
+
+        const result = mergeWithOverrides({
+            data,
+            overrides: { parameters: [{ name: "limit" }, { name: "cursor" }] }
+        });
+
+        expect(result).toEqual({
+            parameters: [
+                { name: "limit", in: "query", schema: { type: "string" } },
+                { name: "cursor", in: "query", schema: { type: "integer" } }
+            ]
+        });
+    });
+
+    it("should append parameters that match nothing", () => {
         const result = mergeWithOverrides({
             data: { parameters: [{ name: "cursor", in: "query" }] },
             overrides: { parameters: [{ name: "limit", in: "query", schema: { type: "integer" } }] }

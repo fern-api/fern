@@ -32,52 +32,53 @@ function overridesCustomizer(obj: unknown, src: unknown): unknown {
         // nested arrays of primitives are replaced
         return [...src];
     }
-    // arrays whose entries are all identified by a name (e.g. OpenAPI parameters) are
-    // merged by that identity rather than by position
-    return mergeArraysByIdentity(obj, src) ?? undefined;
+    // OpenAPI parameter arrays are merged by parameter identity rather than by position
+    return mergeParametersByIdentity(obj, src) ?? undefined;
 }
 
-type NamedEntry = { name: string; in?: unknown };
+type ParameterEntry = { name: string; in: string };
 
-function isNamedEntry(value: unknown): value is NamedEntry {
-    return isPlainObject(value) && typeof (value as { name?: unknown }).name === "string";
+function isParameterEntry(value: unknown): value is ParameterEntry {
+    if (!isPlainObject(value)) {
+        return false;
+    }
+    const { name, in: location } = value as { name?: unknown; in?: unknown };
+    return typeof name === "string" && typeof location === "string";
+}
+
+function identityOf(entry: ParameterEntry): string {
+    return `${entry.in}:${entry.name}`;
 }
 
 /**
- * Merges two arrays of named entries by matching on `name` instead of by array position. When
- * several entries share a name, `in` disambiguates them. Overrides that match nothing are
- * appended. Returns undefined when either array contains an entry without a name, in which case
- * the caller falls back to a positional merge.
+ * Merges two arrays of OpenAPI parameters by matching on `name` and `in` instead of by array
+ * position. Overrides that match no parameter are appended. Returns undefined unless every entry
+ * on both sides declares both fields, in which case the caller falls back to a positional merge —
+ * notably for the sparse, index-aligned diffs produced by `fern api split`, whose entries carry
+ * only the keys that changed.
  */
-function mergeArraysByIdentity(obj: unknown[], src: unknown[]): unknown[] | undefined {
-    if (!obj.every(isNamedEntry) || !src.every(isNamedEntry)) {
+function mergeParametersByIdentity(obj: unknown[], src: unknown[]): unknown[] | undefined {
+    if (!obj.every(isParameterEntry) || !src.every(isParameterEntry)) {
         return undefined;
     }
-    const unmatchedIndicesByName = new Map<string, number[]>();
+    const unmatchedIndices = new Map<string, number[]>();
     obj.forEach((entry, index) => {
-        const indices = unmatchedIndicesByName.get(entry.name);
+        const indices = unmatchedIndices.get(identityOf(entry));
         if (indices != null) {
             indices.push(index);
         } else {
-            unmatchedIndicesByName.set(entry.name, [index]);
+            unmatchedIndices.set(identityOf(entry), [index]);
         }
     });
 
     const merged: unknown[] = [...obj];
     for (const override of src) {
-        const candidates = unmatchedIndicesByName.get(override.name) ?? [];
-        const matchIndex =
-            candidates.length > 1 && typeof override.in === "string"
-                ? candidates.find((index) => obj[index]?.in === override.in)
-                : candidates[0];
+        const identity = identityOf(override);
+        const matchIndex = unmatchedIndices.get(identity)?.shift();
         if (matchIndex == null) {
             merged.push(override);
             continue;
         }
-        unmatchedIndicesByName.set(
-            override.name,
-            candidates.filter((index) => index !== matchIndex)
-        );
         merged[matchIndex] = mergeWith(obj[matchIndex], override, overridesCustomizer);
     }
     return merged;
