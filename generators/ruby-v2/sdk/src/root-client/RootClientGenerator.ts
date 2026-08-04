@@ -372,6 +372,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     writer.writeNode(this.getRawClientHeaders({ includeAuth: emitFlatAuth }));
                     writer.writeLine(`,`);
                 }
+                // Global headers are the only client-level headers a request may replace via
+                // `additional_headers`; SDK metadata and auth headers stay protected.
+                const overridableHeaderNames = this.getOverridableHeaderNames();
+                if (overridableHeaderNames.length > 0) {
+                    writer.writeLine(`overridable_headers: %w[${overridableHeaderNames.join(" ")}],`);
+                }
                 if (isEndpointSecurity) {
                     // Under endpoint-security, the RawClient is given a routing auth
                     // provider that holds every scheme's credentials. It contributes no
@@ -982,6 +988,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
     private getNonLiteralGlobalHeaders(): FernIr.HttpHeader[] {
         return this.context.ir.headers.filter((header) => this.maybeLiteral(header.valueType) == null);
+    }
+
+    /**
+     * The wire names of the global headers a request may replace via `additional_headers`.
+     * Literal global headers are excluded: their value is fixed by the API definition.
+     */
+    private getOverridableHeaderNames(): string[] {
+        return this.getNonLiteralGlobalHeaders().map((header) => getWireValue(header.name));
     }
 
     /**

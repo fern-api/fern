@@ -16,6 +16,7 @@ module Seed
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: headers,
+        overridable_headers: %w[X-API-Version],
         max_retries: max_retries
       )
     end

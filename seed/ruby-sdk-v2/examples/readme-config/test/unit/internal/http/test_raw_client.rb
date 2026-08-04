@@ -167,4 +167,29 @@ describe Seed::Internal::Http::RawClient do
       assert_equal("Bearer STATIC", request["Authorization"])
     end
   end
+
+  describe "#protected_header_keys" do
+    def client_with(overridable_headers)
+      Seed::Internal::Http::RawClient.new(
+        base_url: "https://example.com",
+        headers: { "X-Api-Version" => "1", "User-Agent" => "sdk/0.0.1" },
+        overridable_headers: overridable_headers
+      )
+    end
+
+    it "protects every default header when no header is overridable" do
+      assert_includes client_with([]).protected_header_keys, "X-Api-Version"
+    end
+
+    it "leaves an overridable header unprotected so a request can replace it" do
+      protected_keys = client_with(["X-Api-Version"]).protected_header_keys
+
+      refute_includes protected_keys, "X-Api-Version"
+      assert_includes protected_keys, "User-Agent"
+    end
+
+    it "matches overridable header names case-insensitively" do
+      refute_includes client_with(["x-api-version"]).protected_header_keys, "X-Api-Version"
+    end
+  end
 end
