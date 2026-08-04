@@ -6,7 +6,13 @@
     case gets a negative (non-2xx) twin that asserts the CLI exits non-zero and
     surfaces an error. Multipart file/text classification is derived from the
     Fern IR so a runtime regression fails the mock match rather than passing
-    silently. Also fixes the OpenAPI multipart classifier to unwrap
-    `anyOf`/`oneOf`/`allOf` so an optional nullable binary field
-    (`anyOf: [{string, binary}, {null}]`) is recognized as a file upload.
+    silently. Endpoints whose JSON body is also flattened into per-field flags
+    are now driven via `--json` (previously skipped without asserting the body),
+    with the harness reconciling a path parameter the CLI renamed to avoid
+    colliding with a body field of the same name. Multipart assertions now pin
+    each part's `Content-Disposition` name (and `filename=` for file parts), and
+    a dedicated variant omits optional file fields to assert the CLI still
+    succeeds without emitting a bogus part. Also fixes the OpenAPI multipart
+    classifier to unwrap `anyOf`/`oneOf`/`allOf` so an optional nullable binary
+    field (`anyOf: [{string, binary}, {null}]`) is recognized as a file upload.
   type: fix

@@ -26,7 +26,7 @@ use wiremock::matchers::{
 };
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
-use fern_cli_sdk::openapi::discovery::RestResource;
+use fern_cli_sdk::openapi::discovery::{BodyEncoding, RestResource};
 use fern_cli_sdk::openapi::load_openapi_spec;
 
 const MANIFEST: &str = include_str!("../wiremock/wire-test-cases.json");
@@ -84,6 +84,8 @@ struct Case {
     multipart_fields: Vec<MultipartFieldSpec>,
     #[serde(rename = "expectError", default)]
     expect_error: bool,
+    #[serde(rename = "omitOptionalFiles", default)]
+    omit_optional_files: bool,
     response: ExpectedResponse,
 }
 
@@ -93,6 +95,8 @@ struct MultipartFieldSpec {
     wire_name: String,
     #[serde(rename = "isFile")]
     is_file: bool,
+    #[serde(rename = "isOptional", default)]
+    is_optional: bool,
 }
 
 #[derive(Deserialize)]
@@ -173,10 +177,13 @@ struct CommandInfo {
     binary_flag: Option<String>,
     /// multipart/form-data — per-field file/value flags, not `--json`.
     is_multipart: bool,
-    /// Body was flattened into per-field flags (params carry location "body").
-    /// Such endpoints reject a whole-body `--json`, so the generic
-    /// `--params`/`--json` driver can't feed them.
-    has_body_field_flags: bool,
+    /// The request body is `application/json` (vs
+    /// `application/x-www-form-urlencoded`). Only JSON bodies are driven via
+    /// `--json` and matched with a partial-JSON matcher; a form body wouldn't
+    /// parse as JSON, so the harness skips those (see `run_case`). A JSON body
+    /// the CLI *also* flattened into per-field flags is still driven here — the
+    /// `--json` flag is registered alongside the per-field flags.
+    body_is_json_encoded: bool,
     /// Streaming/SSE response — stdout is chunked, so a byte-exact comparison
     /// against the mock's single payload doesn't hold.
     is_streaming: bool,
@@ -192,10 +199,7 @@ fn make_command(chain: Vec<String>, method: &fern_cli_sdk::openapi::discovery::R
         is_binary: method.binary_request_body.is_some(),
         binary_flag: method.binary_request_body.as_ref().map(|b| b.flag_name.clone()),
         is_multipart: !method.multipart_fields.is_empty(),
-        has_body_field_flags: method
-            .parameters
-            .values()
-            .any(|p| p.location.as_deref() == Some("body")),
+        body_is_json_encoded: matches!(method.body_encoding, BodyEncoding::Json),
         is_streaming: method.streaming.is_some(),
     }
 }
@@ -372,16 +376,17 @@ async fn run_case(id: &str) {
 
     let command = resolve_command(&manifest, &case.method, &case.path);
 
-    // Bodies the CLI flattened into per-field flags reject a whole-body --json,
-    // and the generic driver has no per-field example values to synthesize them
-    // from — skip those (the test passes) and log why, rather than emit a
-    // guaranteed failure. Binary and multipart uploads are *not* skipped: we
-    // drive them with a real fixture file below and assert the bytes land in
-    // the request body — that is exactly what catches an upload the runtime
+    // A non-JSON (form-url-encoded) body can't be sent via `--json` and there
+    // is no form-body matcher here — skip those (the test passes) and log why,
+    // rather than emit a guaranteed failure. JSON bodies are driven below via
+    // `--json`, *including* ones the CLI also flattened into per-field flags
+    // (the `--json` flag is registered alongside them). Binary and multipart
+    // uploads are driven with a real fixture file and we assert the bytes land
+    // in the request body — exactly what catches an upload the runtime
     // mis-serializes (e.g. sending a filename as a text part).
-    if command.has_body_field_flags {
+    if command.has_json_body && !command.body_is_json_encoded {
         eprintln!(
-            "skipping wire test {id} ({} {}): request body is exposed as per-field flags, not --json",
+            "skipping wire test {id} ({} {}): non-JSON request body encoding is not driven by the harness",
             case.method, case.path
         );
         return;
@@ -412,15 +417,27 @@ async fn run_case(id: &str) {
     if command.is_multipart {
         std::fs::create_dir_all(&fixtures_dir).expect("create multipart fixture dir");
         for field in &case.multipart_fields {
+            // Exercise the valid "optional file omitted" shape: drop optional
+            // file fields, send only what's required, and assert the request
+            // still succeeds and carries no bogus part for the omitted field.
+            if case.omit_optional_files && field.is_file && field.is_optional {
+                continue;
+            }
             let flag = fern_cli_sdk::to_kebab_flag(&field.wire_name);
+            // Every part sent must name itself in its Content-Disposition, so a
+            // dropped or misnamed part fails the match.
+            required_body_substrings.push(format!("name=\"{}\"", field.wire_name));
             if field.is_file {
                 let marker = format!("wire-fixture-{id}-{}-bytes", field.wire_name);
                 let file_path = fixtures_dir.join(&field.wire_name);
                 std::fs::write(&file_path, marker.as_bytes()).expect("write multipart fixture file");
                 body_flag_args.push(format!("--{flag}"));
                 body_flag_args.push(file_path.to_string_lossy().into_owned());
-                // The file's bytes only appear if the CLI actually read and sent
-                // the file — not if it sent the path string as a text part.
+                // A file part carries `filename="..."` *and* the file's bytes.
+                // The optional-file bug sends the path as a text part — no
+                // filename attribute and none of the marker bytes — so both
+                // checks fail and the test catches it.
+                required_body_substrings.push("filename=\"".to_string());
                 required_body_substrings.push(marker);
             } else {
                 let value = case

@@ -24,11 +24,13 @@
       "multipartFields": [
         {
           "wireName": "name",
-          "isFile": false
+          "isFile": false,
+          "isOptional": false
         },
         {
           "wireName": "file",
-          "isFile": true
+          "isFile": true,
+          "isOptional": true
         }
       ],
       "response": {
@@ -49,11 +51,13 @@
       "multipartFields": [
         {
           "wireName": "name",
-          "isFile": false
+          "isFile": false,
+          "isOptional": false
         },
         {
           "wireName": "file",
-          "isFile": true
+          "isFile": true,
+          "isOptional": true
         }
       ],
       "response": {
@@ -61,6 +65,34 @@
         "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
       },
       "expectError": true
+    },
+    {
+      "id": "uploadfile_optfileomitted",
+      "method": "POST",
+      "path": "/upload-file",
+      "params": {},
+      "body": {
+        "name": "name"
+      },
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "multipartFields": [
+        {
+          "wireName": "name",
+          "isFile": false,
+          "isOptional": false
+        },
+        {
+          "wireName": "file",
+          "isFile": true,
+          "isOptional": true
+        }
+      ],
+      "response": {
+        "status": 200,
+        "body": "\"string\""
+      },
+      "omitOptionalFiles": true
     }
   ]
 }

@@ -61,9 +61,11 @@ export interface WireTestCase {
      * what lets a wire test catch a runtime that mis-classifies an (optional)
      * file field and sends its filename as a text part: the harness passes a
      * file and asserts the multipart body actually carries the file's bytes.
-     * Absent/empty for non-multipart endpoints.
+     * Absent/empty for non-multipart endpoints. `isOptional` (from the IR) marks
+     * fields the request may omit — used to synthesize an "optional file omitted"
+     * variant (see {@link WireTestCase.omitOptionalFiles}).
      */
-    multipartFields?: Array<{ wireName: string; isFile: boolean }>;
+    multipartFields?: Array<{ wireName: string; isFile: boolean; isOptional: boolean }>;
     /**
      * When true, this is a negative twin of a happy-path case: the mock serves a
      * non-2xx response (with a non-empty JSON error body) and the harness asserts
@@ -73,6 +75,14 @@ export interface WireTestCase {
      * send exactly the same, correct request.
      */
     expectError?: boolean;
+    /**
+     * When true, this is a happy-path variant of a multipart case in which the
+     * harness omits every optional file field (sending only what's required).
+     * It asserts the CLI still succeeds and that the request carries no bogus
+     * part for the omitted field — so a runtime that turns an optional file into
+     * a required one, or emits an empty/path text part when it's absent, fails.
+     */
+    omitOptionalFiles?: boolean;
     /** Expected response the mock serves and the CLI is expected to render. */
     response: {
         status: number;
@@ -247,7 +257,18 @@ export function buildWireTestManifest(
     for (const positive of cases) {
         negativeCases.push(buildNegativeTwin(positive, usedIds));
     }
-    cases.push(...negativeCases);
+
+    // For every multipart case that has an optional file field, emit a
+    // happy-path variant that omits those optional files, so the harness also
+    // exercises the valid "file not provided" shape (not just the fully-
+    // populated request). Appended last.
+    const optionalFileOmittedCases: WireTestCase[] = [];
+    for (const positive of cases) {
+        if (hasOptionalFileField(positive)) {
+            optionalFileOmittedCases.push(buildOptionalFileOmittedVariant(positive, usedIds));
+        }
+    }
+    cases.push(...negativeCases, ...optionalFileOmittedCases);
 
     return {
         binaryName: options.binaryName,
@@ -330,7 +351,13 @@ function buildCase(args: {
 
     const params: Record<string, unknown> = {};
 
-    // Path parameters (root + service + endpoint), keyed by original name.
+    // Path parameters (root + service + endpoint), keyed by original name — the
+    // same name `mock-utils` uses in the path template, so `substitute_path` in
+    // the harness fills them. Fern can rename a path param's IR identity to
+    // disambiguate it from a body field of the same name (`idType` →
+    // `idTypePathParam`); the generated CLI still reads path params off the
+    // baked OpenAPI spec by their wire name, so the harness reconciles the two
+    // names (via the resolved spec route) when it builds `--params`.
     for (const param of [
         ...example.rootPathParameters,
         ...example.servicePathParameters,
@@ -403,6 +430,24 @@ function buildNegativeTwin(positive: WireTestCase, usedIds: Set<string>): WireTe
     };
 }
 
+/** True when the case is a multipart request carrying at least one optional file field. */
+function hasOptionalFileField(testCase: WireTestCase): boolean {
+    return testCase.multipartFields?.some((field) => field.isFile && field.isOptional) ?? false;
+}
+
+/**
+ * Build the "optional file omitted" variant of a multipart case: identical
+ * request otherwise, but the harness drops optional file flags. See
+ * {@link WireTestCase.omitOptionalFiles}.
+ */
+function buildOptionalFileOmittedVariant(positive: WireTestCase, usedIds: Set<string>): WireTestCase {
+    return {
+        ...positive,
+        id: uniqueId(`${positive.id}_optfileomitted`, usedIds),
+        omitOptionalFiles: true
+    };
+}
+
 /**
  * Multipart/form-data fields for a file-upload endpoint, derived straight from
  * the IR. Whether a field is a *file* comes from the IR discriminant
@@ -414,26 +459,27 @@ function buildNegativeTwin(positive: WireTestCase, usedIds: Set<string>): WireTe
  */
 function extractMultipartFields(
     endpoint: FernIr.HttpEndpoint
-): Array<{ wireName: string; isFile: boolean }> | undefined {
+): Array<{ wireName: string; isFile: boolean; isOptional: boolean }> | undefined {
     const requestBody = endpoint.requestBody;
     if (requestBody == null || requestBody.type !== "fileUpload") {
         return undefined;
     }
-    const fields: Array<{ wireName: string; isFile: boolean }> = [];
+    const fields: Array<{ wireName: string; isFile: boolean; isOptional: boolean }> = [];
     for (const property of requestBody.properties) {
         switch (property.type) {
             case "file": {
-                // Both single-file and file-array variants carry `key`.
+                // Both single-file and file-array variants carry `key` + `isOptional`.
                 const wireName = getWireValue(property.value.key);
                 if (wireName != null && wireName !== "") {
-                    fields.push({ wireName, isFile: true });
+                    fields.push({ wireName, isFile: true, isOptional: property.value.isOptional });
                 }
                 break;
             }
             case "bodyProperty": {
                 const wireName = getWireValue(property.name);
                 if (wireName != null && wireName !== "") {
-                    fields.push({ wireName, isFile: false });
+                    // Text parts are always sent by the harness, so optionality is moot.
+                    fields.push({ wireName, isFile: false, isOptional: false });
                 }
                 break;
             }
