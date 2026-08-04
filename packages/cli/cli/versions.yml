@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.89.5
+  changelogEntry:
+    - summary: |
+        Improve `fern generate --package` artifacts: TypeScript tarballs are compiled before
+        packing so they ship runnable JavaScript (falling back to `tsc` when the package has no
+        build script), Java packaging emits a POM with dependency metadata next to the JAR, and
+        Python host-mode packaging retries in an isolated venv (`python -m build`) when `pip wheel`
+        fails on the host toolchain.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 67
 - version: 5.89.4
   changelogEntry:
     - summary: |
