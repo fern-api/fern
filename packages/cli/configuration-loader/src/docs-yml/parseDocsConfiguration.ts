@@ -844,11 +844,23 @@ async function getVersionedNavigationConfiguration({
             continue;
         }
 
+        // A ref-backed version derives its content root from the ref itself
+        // (the ref's own `versions[0].path` or top-level `navigation:`), so a
+        // current-branch `path:` alongside `ref:` has no effect. Reject the
+        // combination instead of silently ignoring `path:`. Runs regardless of
+        // `buildRefVersions` so `fern check` surfaces it too.
+        if (version.path != null) {
+            throw new CliError({
+                message:
+                    `Version '${version.displayName}' declares both 'ref' and 'path'. ` +
+                    "A git-ref-backed version builds its content from the ref, so 'path' is not used. " +
+                    "Remove 'path' to build from the ref, or remove 'ref' to build from the working tree.",
+                code: CliError.Code.ConfigError
+            });
+        }
+
         if (!buildRefVersions) {
-            context.logger.debug(
-                `Skipping git-ref-backed version '${version.displayName}' (ref '${ref}'); ` +
-                    "pass --versions all to include it."
-            );
+            context.logger.debug(`Skipping git-ref-backed version '${version.displayName}' (ref '${ref}').`);
             continue;
         }
 
