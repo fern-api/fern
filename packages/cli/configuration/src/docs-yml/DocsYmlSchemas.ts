@@ -635,7 +635,8 @@ export const ExperimentalConfig = z.object({
 
 export const GitLibraryInputSchema = z.object({
     git: z.string(),
-    subpath: z.string().optional()
+    subpath: z.string().optional(),
+    ref: z.string().optional()
 });
 
 export const PathLibraryInputSchema = z.object({

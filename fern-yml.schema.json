@@ -141,6 +141,9 @@
                       },
                       "subpath": {
                         "type": "string"
+                      },
+                      "ref": {
+                        "type": "string"
                       }
                     },
                     "required": [

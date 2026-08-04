@@ -1651,7 +1651,7 @@ function parseLibrariesConfiguration(
     const result: Record<string, docsYml.ParsedLibraryConfiguration> = {};
     for (const [name, config] of Object.entries(libraries)) {
         const input: docsYml.ParsedLibraryInputConfiguration = isGitLibraryInput(config.input)
-            ? { type: "git", git: config.input.git, subpath: config.input.subpath }
+            ? { type: "git", git: config.input.git, subpath: config.input.subpath, ref: config.input.ref }
             : { type: "path", path: config.input.path };
         result[name] = {
             input,
