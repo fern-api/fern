@@ -254,6 +254,28 @@ class RawClient
     }
 
     /**
+     * Percent-encodes a value for use inside a single URL path segment. Encoding happens here,
+     * where the value is still separate from the path template, so that a value containing "/"
+     * or ".." cannot change which endpoint the request resolves to.
+     */
+    public static function encodePathParam(mixed $value): string
+    {
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+        if (is_null($value)) {
+            return '';
+        }
+        if (is_scalar($value)) {
+            return rawurlencode((string)$value);
+        }
+        if (is_object($value) && method_exists($value, '__toString')) {
+            return rawurlencode((string)$value);
+        }
+        return rawurlencode(JsonEncoder::encode($value));
+    }
+
+    /**
      * @param BaseApiRequest $request
      * @param array{
      *     queryParameters?: array<string, mixed>,

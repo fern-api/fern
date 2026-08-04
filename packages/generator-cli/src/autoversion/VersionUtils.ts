@@ -144,12 +144,42 @@ export function isValidSemver(version: string): boolean {
     return SEMVER_PATTERN.test(version);
 }
 
+/**
+ * True iff the string is a magic placeholder version rather than a real released
+ * version — the canonical `0.0.0-fern-placeholder`, its language-mapped variants
+ * (`v`-prefixed for Go, `0.0.0.dev0` for Python), or a placeholder that a previous
+ * run already mutated (e.g. `0.0.0-fern-placeholder.0`).
+ *
+ * The placeholder is a valid semver pre-release, so `isValidSemver` accepts it and
+ * `incrementVersion` would happily advance its pre-release counter. Callers must
+ * never treat it as a previous version: repositories that derive their released
+ * version at publish time (from git tags) legitimately keep the placeholder
+ * committed in `package.json` / `.fern/metadata.json`.
+ */
+export function isPlaceholderVersion(version: string): boolean {
+    const withoutPrefix = version.startsWith("v") ? version.slice(1) : version;
+    return (
+        withoutPrefix === MAGIC_VERSION ||
+        withoutPrefix.startsWith(`${MAGIC_VERSION}.`) ||
+        withoutPrefix === MAGIC_VERSION_PYTHON ||
+        withoutPrefix.startsWith(`${MAGIC_VERSION_PYTHON}.`)
+    );
+}
+
 // Pre-release lines stay in line: any real bump advances the prerelease counter.
 // Promotion to stable (4.0.0-rc.2 → 4.0.0) requires an explicit baseVersion. See FER-10378.
 export function incrementVersion(currentVersion: string, versionBump: VersionBump): string {
     const matcher = currentVersion.match(SEMVER_PATTERN);
     if (!matcher) {
         throw new AutoVersioningException("Invalid semantic version format: " + currentVersion);
+    }
+
+    if (isPlaceholderVersion(currentVersion)) {
+        throw new AutoVersioningException(
+            "Refusing to increment the magic placeholder version: " +
+                currentVersion +
+                ". A real previous version must be resolved first."
+        );
     }
 
     const prefix = matcher[1] ?? "";

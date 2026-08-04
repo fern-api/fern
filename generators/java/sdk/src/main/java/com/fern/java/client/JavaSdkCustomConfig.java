@@ -145,6 +145,20 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    /**
+     * If true, the generated client exposes an optional {@code appInfo(name, version, comment)} builder option whose
+     * product token is appended to the {@code User-Agent} header the SDK would otherwise send (following RFC 9110
+     * §10.1.5), producing e.g. {@code {sdk}/{version} ... partner-app/3.1.0 (+https://partner.example)}.
+     * Caller-supplied values are sanitized (name/version percent-encoded to RFC 7230 {@code tchar}s; comment delimiters
+     * and control characters escaped). Opt-in and disabled by default so existing generated output is unchanged. The
+     * header is still overridable by an explicit {@code User-Agent} and suppressed by {@link #omitFernHeaders()}.
+     */
+    @Value.Default
+    @JsonProperty("allowUserAgentAppInfo")
+    default Boolean allowUserAgentAppInfo() {
+        return false;
+    }
+
     @Value.Default
     @JsonProperty("retry-status-codes")
     default String retryStatusCodes() {

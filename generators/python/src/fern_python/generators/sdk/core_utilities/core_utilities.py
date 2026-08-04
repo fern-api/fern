@@ -44,6 +44,7 @@ class CoreUtilities:
         self._version = custom_config.pydantic_config.version
         self._project_module_path = project_module_path
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
+        self._encode_path_params = custom_config.encode_path_params
         self._should_generate_websocket_clients = custom_config.should_generate_websocket_clients
         self._exclude_types_from_init_exports = custom_config.exclude_types_from_init_exports
         self._custom_pager_base_name = self._sanitize_pager_name(custom_config.custom_pager_name or "CustomPager")
@@ -682,7 +683,7 @@ class CoreUtilities:
                     qualified_name_excluding_import=(),
                     import_=AST.ReferenceImport(
                         module=AST.Module.local(*self._module_path, "jsonable_encoder"),
-                        named_import="encode_path_param",
+                        named_import="quote_path_param" if self._encode_path_params else "encode_path_param",
                     ),
                 ),
                 args=[obj],

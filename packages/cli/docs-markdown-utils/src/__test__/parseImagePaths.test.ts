@@ -1546,3 +1546,77 @@ describe("markdown image titles", () => {
         expect(result.trim()).toBe("[other page](/docs/other#section 'My title')");
     });
 });
+
+describe("literal angle brackets in prose", () => {
+    const IMAGE_PATH = AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png");
+    const fileIds = new Map([[IMAGE_PATH, "leaf-id"]]);
+
+    function roundTrip(page: string): string {
+        const parsed = parseImagePaths(page, PATHS, CONTEXT);
+        return replaceImagePathsAndUrls(parsed.markdown, fileIds, {}, PATHS, CONTEXT);
+    }
+
+    it.each([
+        ["comparison operator in inline code", "Outliers are `is < Q1 - 1.5*IQR`."],
+        ["comparison operator in plain text", "Keep the tolerance < 5 percent."],
+        ["less-than-or-equal in inline code", "Show deals below the margin (filter is `<=`)."],
+        ["escaped angle bracket", "Use \\<placeholder\\> for the name."],
+        ["angle bracket inside a fenced code block", "```js\nif (a < b) {\n  send();\n}\n```"]
+    ])("replaces a later image path when the page contains a %s", (_name, prose) => {
+        const page = `${prose}\n\n![leaf](path/to/image.png)\n`;
+        expect(roundTrip(page).trim()).toBe(`${prose}\n\n![leaf](file:leaf-id)`.trim());
+    });
+
+    it("replaces images that follow an unterminated tag-like construct", () => {
+        const page = "Pass `<div` to the helper.\n\n![leaf](path/to/image.png)\n";
+        expect(roundTrip(page)).toContain("file:leaf-id");
+    });
+
+    it("still rewrites src on real tags", () => {
+        const page = 'The width must be < 100.\n\n<img src="path/to/image.png" />\n';
+        const result = roundTrip(page);
+        expect(result).toContain('src="file:leaf-id"');
+        expect(result).toContain("must be < 100");
+    });
+
+    it("still rewrites links after a literal angle bracket", () => {
+        const page = "Values where a < b.\n\n[other page](./other.mdx)\n";
+        const result = replaceImagePathsAndUrls(
+            page,
+            new Map(),
+            { [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/other.mdx")]: "docs/other" },
+            PATHS,
+            CONTEXT
+        );
+        expect(result).toContain("[other page](/docs/other)");
+    });
+
+    it("replaces the image path on both the streaming and AST paths", () => {
+        vi.stubEnv("FERN_DOCS_LARGE_FILE_BYTES", "10");
+        const page = "Outliers are `is < Q1`.\n\n![leaf](path/to/image.png)\n";
+        const parsed = parseImagePaths(page, PATHS, CONTEXT);
+        expect(parsed.filepaths).toEqual([IMAGE_PATH]);
+        expect(replaceImagePathsAndUrls(parsed.markdown, fileIds, {}, PATHS, CONTEXT)).toContain("file:leaf-id");
+        vi.unstubAllEnvs();
+    });
+
+    it("does not leave a local filesystem path in the published markdown", () => {
+        const page = "Outliers are `is < Q1`.\n\n![leaf](path/to/image.png)\n";
+        expect(roundTrip(page)).not.toContain("/Volume/git/fern");
+    });
+
+    it.each([
+        ["unmatched backtick in prose", "The a`b operator is odd."],
+        ["backtick inside an indented fence", "- Example:\n\n    ```\n    a ` b\n    ```"],
+        ["unterminated fence", "```js\nconst a = 1;"],
+        ["windows line endings around an unterminated tag-like construct", "Pass `<div` here.\r\n\r\n"]
+    ])("replaces a later image path when the page contains an %s", (_name, prose) => {
+        const page = `${prose}\n\n![leaf](path/to/image.png)\n`;
+        expect(roundTrip(page)).toContain("file:leaf-id");
+    });
+
+    it("does not rewrite an image inside a fenced code block", () => {
+        const page = "```\n![leaf](path/to/image.png)\n```\n";
+        expect(roundTrip(page)).toContain("![leaf](path/to/image.png)");
+    });
+});

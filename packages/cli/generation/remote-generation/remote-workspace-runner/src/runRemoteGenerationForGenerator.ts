@@ -67,7 +67,8 @@ export async function runRemoteGenerationForGenerator({
     noReplay,
     disableTelemetry,
     loginCommand,
-    specsTarGzBuffer
+    specsTarGzBuffer,
+    generateFullProject
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -117,6 +118,12 @@ export async function runRemoteGenerationForGenerator({
      */
     loginCommand?: string;
     specsTarGzBuffer?: Buffer;
+    /**
+     * When true, filesystem (local-file-system / download) outputs are generated as full,
+     * packageable projects (pyproject.toml, README.md, etc.) instead of source-only output.
+     * Set by `fern generate --pack` so the emitted SDK can be built into a package artifact.
+     */
+    generateFullProject?: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -363,6 +370,7 @@ export async function runRemoteGenerationForGenerator({
                 userProvidedVersion: version,
                 packageName,
                 selfHosted: ir.selfHosted ?? false,
+                generateFullProject,
                 context: interactiveTaskContext
             })
         },
@@ -472,6 +480,7 @@ export function getPublishConfig({
     userProvidedVersion,
     packageName,
     selfHosted,
+    generateFullProject,
     context
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -479,6 +488,7 @@ export function getPublishConfig({
     userProvidedVersion: string | undefined;
     packageName: string | undefined;
     selfHosted: boolean;
+    generateFullProject?: boolean;
     context: InteractiveTaskContext;
 }): FernIr.PublishingConfig | undefined {
     // When version is AUTO, substitute the language-mapped magic placeholder so the
@@ -494,7 +504,7 @@ export function getPublishConfig({
     return generatorInvocation.outputMode._visit<FernIr.PublishingConfig | undefined>({
         downloadFiles: () =>
             FernIr.PublishingConfig.filesystem({
-                generateFullProject: selfHosted,
+                generateFullProject: selfHosted || (generateFullProject ?? false),
                 publishTarget: getFilesystemPublishTarget({
                     generatorInvocation,
                     version: substituteAutoVersion(version),

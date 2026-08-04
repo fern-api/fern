@@ -69,6 +69,13 @@ export interface ParseOpenAPIOptions {
     preserveSingleSchemaOneOf: boolean;
 
     /**
+     * If true, an allOf whose members include a oneOf/anyOf is distributed into a union, where each
+     * variant is the union member merged with the remaining allOf members. If false, the variants'
+     * properties are flattened into a single object and marked optional.
+     */
+    preserveOneOfInAllOf: boolean;
+
+    /**
      * If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.
      * This is useful for organizations with multiple APIs deployed to the same set of environments.
      */
@@ -183,6 +190,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     additionalPropertiesDefaultsTo: false,
     typeDatesAsStrings: false,
     preserveSingleSchemaOneOf: false,
+    preserveOneOfInAllOf: false,
     inlineAllOfSchemas: false,
     resolveAliases: false,
     groupMultiApiEnvironments: false,

@@ -20,7 +20,9 @@ export function convertPlaygroundSettings(
                 playgroundSettings.limitWebsocketMessagesPerConnection != null
                     ? playgroundSettings.limitWebsocketMessagesPerConnection
                     : undefined,
-            hidden: playgroundSettings.hidden != null ? playgroundSettings.hidden : undefined
+            hidden: playgroundSettings.hidden != null ? playgroundSettings.hidden : undefined,
+            "send-optional-defaults":
+                playgroundSettings.sendOptionalDefaults != null ? playgroundSettings.sendOptionalDefaults : undefined
         };
     }
 

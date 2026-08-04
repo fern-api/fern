@@ -1,3 +1,4 @@
+import re
 import typing
 from dataclasses import dataclass
 from enum import Enum
@@ -21,6 +22,81 @@ from fern_python.snippet.template_utils import TemplateGenerator
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
+
+
+def _get_user_agent_coordinate_prefix(user_agent_value: str) -> typing.Optional[str]:
+    """Returns the User-Agent value up to and including the separator preceding its version.
+
+    The version segment is dropped so a runtime-resolved version can be appended in its
+    place. Returns None when the value does not end in a version, since the product name
+    itself may contain a separator (e.g. `@acme/sdk`).
+    """
+    separator_index = user_agent_value.rfind("/")
+    if separator_index < 0:
+        return None
+    version = user_agent_value[separator_index + 1 :]
+    if re.match(r"^v?\d", version) is None:
+        return None
+    return user_agent_value[: separator_index + 1]
+
+
+# Source for the self-contained `_append_app_info_to_user_agent` helper emitted into the
+# generated client wrapper module only when the `allow_user_agent_app_info` config is
+# enabled. It is intentionally standalone (rather than shipped in the always-copied
+# `core` utilities) so that clients which do not opt into `allow_user_agent_app_info`
+# keep byte-identical generated output. Only depends on the stdlib `typing` module,
+# which is always imported into the generated client wrapper.
+#
+# Sanitizes caller-supplied values: `name`/`version` are token-encoded (every
+# non-RFC-7230 `tchar` is percent-encoded, including spaces, control characters and
+# CR/LF) and `comment` has its delimiters (`(`, `)`, `\`) and control characters
+# (incl. CR/LF) percent-encoded, so untrusted values cannot inject additional header
+# content. Each value is trimmed before encoding so blank values are treated as absent
+# rather than encoded into whitespace tokens. Formats the appended product token as
+# `{name}/{version} ({comment})`, dropping `/version` and ` (comment)` when blank, and
+# returns the User-Agent unchanged when `app_info`/`name` is absent.
+#
+# The `app_info` argument is a mapping with a required `name` and optional `version` /
+# `comment` string entries, e.g. `{"name": "partner-app", "version": "3.1.0"}`.
+APPEND_APP_INFO_HELPER_SOURCE = """
+def _append_app_info_to_user_agent(
+    user_agent: str, app_info: typing.Optional[typing.Dict[str, str]]
+) -> str:
+    if app_info is None:
+        return user_agent
+
+    def _percent_encode_char(char: str) -> str:
+        return "".join(f"%{byte:02X}" for byte in char.encode("utf-8"))
+
+    # RFC 7230 token = 1*tchar. Any character outside that set is percent-encoded so it
+    # cannot break out of the product token or inject additional header content.
+    _tchar = "!#$%&\\'*+-.^_`|~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
+    def _encode_token(value: str) -> str:
+        return "".join(c if c in _tchar else _percent_encode_char(c) for c in value)
+
+    # Escape the comment delimiters `(`, `)`, `\\` and control characters (0x00-0x1F,
+    # 0x7F, incl. CR/LF), and percent-encode any non-ASCII byte (>= 0x80) so a
+    # caller-supplied comment cannot terminate the comment group early, inject additional
+    # header content, or raise a UnicodeEncodeError when httpx ASCII-encodes the header.
+    def _encode_comment(value: str) -> str:
+        return "".join(
+            _percent_encode_char(c) if c in "()\\\\" or ord(c) < 0x20 or ord(c) >= 0x7F else c
+            for c in value
+        )
+
+    name = _encode_token((app_info.get("name") or "").strip())
+    if not name:
+        return user_agent
+    product_token = name
+    version = _encode_token((app_info.get("version") or "").strip())
+    if version:
+        product_token += f"/{version}"
+    comment = _encode_comment((app_info.get("comment") or "").strip())
+    if comment:
+        product_token += f" ({comment})"
+    return f"{user_agent} {product_token}"
+"""
 
 
 @dataclass
@@ -108,6 +184,10 @@ class ClientWrapperGenerator:
     ASYNC_AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME = "async_auth_headers"
     ASYNC_AUTH_HEADERS_MEMBER_NAME = "_async_auth_headers"
 
+    APP_INFO_PARAMETER_NAME = "app_info"
+    APP_INFO_MEMBER_NAME = "_app_info"
+    APPEND_APP_INFO_HELPER_NAME = "_append_app_info_to_user_agent"
+
     def __init__(
         self,
         *,
@@ -132,6 +212,12 @@ class ClientWrapperGenerator:
         constructor_parameters.append(stream_reconnection_enabled_param)
         constructor_parameters.append(max_stream_reconnection_attempts_param)
         constructor_parameters.append(logging_param)
+
+        # Emit the self-contained User-Agent app-info helper into this module only when
+        # the opt-in `allow_user_agent_app_info` config is enabled, so that clients which
+        # do not opt in keep byte-identical generated output.
+        if self._context.custom_config.allow_user_agent_app_info:
+            source_file.add_arbitrary_code(AST.CodeWriter(APPEND_APP_INFO_HELPER_SOURCE))
 
         source_file.add_class_declaration(
             declaration=self._create_base_client_wrapper_class_declaration(
@@ -795,7 +881,21 @@ class ClientWrapperGenerator:
         def _write_get_headers_body(writer: AST.NodeWriter) -> None:
             omit_fern_headers = self._context.custom_config.omit_fern_headers
             include_platform_headers = self._context.custom_config.include_platform_headers
+            allow_user_agent_app_info = self._context.custom_config.allow_user_agent_app_info
             user_agent_header = self._context.ir.sdk_config.platform_headers.user_agent
+
+            def _with_app_info(user_agent_expr: str) -> str:
+                # When the opt-in `allow_user_agent_app_info` config is set, the caller's
+                # `app_info` product token is appended to whichever User-Agent value the
+                # SDK would otherwise send, via the self-contained helper emitted into
+                # this module. Byte-identical to the unwrapped expression when disabled.
+                if not allow_user_agent_app_info:
+                    return user_agent_expr
+                return (
+                    f"{ClientWrapperGenerator.APPEND_APP_INFO_HELPER_NAME}"
+                    f"({user_agent_expr}, self.{ClientWrapperGenerator.APP_INFO_MEMBER_NAME})"
+                )
+
             # When runtime_version is enabled we resolve the SDK version at runtime via
             # importlib.metadata (see the `_sdk_version` block emitted below) instead of
             # baking the generation-time literal, so the reported version tracks the
@@ -808,13 +908,20 @@ class ClientWrapperGenerator:
             # discrete X-Fern-Runtime / X-Fern-Platform headers. The value is computed
             # at runtime so the platform/runtime segments reflect the execution env.
             # When it is disabled (default), the discrete headers are preserved.
+            # The IR value already reflects the resolved `user-agent` template when one is
+            # configured, so it takes precedence over the package coordinate.
             user_agent_prefix: typing.Optional[str] = None
-            if project._project_config is not None:
-                user_agent_prefix = f"{project._project_config.package_name}/{project._project_config.package_version}"
-            elif user_agent_header is not None:
+            if user_agent_header is not None:
                 user_agent_prefix = user_agent_header.value
+            elif project._project_config is not None:
+                user_agent_prefix = f"{project._project_config.package_name}/{project._project_config.package_version}"
             emit_structured_user_agent = (
                 include_platform_headers and not omit_fern_headers and user_agent_prefix is not None
+            )
+            # Everything up to and including the version separator, so a runtime-resolved
+            # version can be appended in place of the baked-in one.
+            user_agent_coordinate_prefix = (
+                _get_user_agent_coordinate_prefix(user_agent_prefix) if user_agent_prefix is not None else None
             )
 
             if not omit_fern_headers:
@@ -835,8 +942,8 @@ class ClientWrapperGenerator:
                         writer.write_line(f'_sdk_version = "{project._project_config.package_version}"')
                     writer.write_line("")
                 if emit_structured_user_agent:
-                    if runtime_version_active and project._project_config is not None:
-                        writer.write_line(f'_user_agent = "{project._project_config.package_name}/" + _sdk_version')
+                    if runtime_version_active and user_agent_coordinate_prefix is not None:
+                        writer.write_line(f'_user_agent = "{user_agent_coordinate_prefix}" + _sdk_version')
                     else:
                         writer.write_line(f'_user_agent = "{user_agent_prefix}"')
                     writer.write_line("_os = platform.system().lower()")
@@ -853,6 +960,8 @@ class ClientWrapperGenerator:
                     writer.write_line("if _python_version:")
                     with writer.indent():
                         writer.write_line('_user_agent += f" Python/{_python_version}"')
+                    if allow_user_agent_app_info:
+                        writer.write_line(f"_user_agent = {_with_app_info('_user_agent')}")
             writer.write("headers: ")
             writer.write_node(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()))
             writer.write_line("= {")
@@ -860,12 +969,23 @@ class ClientWrapperGenerator:
                 if emit_structured_user_agent:
                     writer.write_line('"User-Agent": _user_agent,')
                 elif user_agent_header is not None:
-                    if runtime_version_active and project._project_config is not None:
-                        writer.write_line(
-                            f'"{user_agent_header.header}": "{project._project_config.package_name}/" + _sdk_version,'
-                        )
+                    if runtime_version_active and user_agent_coordinate_prefix is not None:
+                        user_agent_value_expr = f'"{user_agent_coordinate_prefix}" + _sdk_version'
                     else:
-                        writer.write_line(f'"{user_agent_header.header}": "{user_agent_header.value}",')
+                        user_agent_value_expr = f'"{user_agent_header.value}"'
+                    writer.write_line(f'"{user_agent_header.header}": {_with_app_info(user_agent_value_expr)},')
+                elif allow_user_agent_app_info and project._project_config is not None:
+                    # No structured or templated User-Agent is configured, but app-info was
+                    # opted into: emit the default `{package}/{version}` User-Agent so the
+                    # caller's product token has a base to append to. Only emitted when the
+                    # flag is on, keeping default output byte-identical.
+                    if runtime_version_active:
+                        default_user_agent_expr = f'"{project._project_config.package_name}/" + _sdk_version'
+                    else:
+                        default_user_agent_expr = (
+                            f'"{project._project_config.package_name}/{project._project_config.package_version}"'
+                        )
+                    writer.write_line(f'"User-Agent": {_with_app_info(default_user_agent_expr)},')
                 writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
                 if not emit_structured_user_agent:
                     writer.write_line("f'X-Fern-Runtime': f\"python/{platform.python_version()}\",")
@@ -1060,6 +1180,25 @@ class ClientWrapperGenerator:
                 body=AST.CodeWriter(f"return self.{ClientWrapperGenerator.HEADERS_MEMBER_NAME}"),
             ),
             docs=ClientWrapperGenerator.HEADERS_CONSTRUCTOR_PARAMETER_DOCS,
+        )
+
+        # Opt-in `app_info` parameter. Its product token is appended to whatever
+        # User-Agent the SDK would otherwise send (see `_get_write_get_headers_body`).
+        # Only surfaced when the `allow_user_agent_app_info` config is enabled, so
+        # default output stays byte-identical.
+        app_info_constructor_parameter = (
+            ConstructorParameter(
+                constructor_parameter_name=ClientWrapperGenerator.APP_INFO_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())),
+                private_member_name=ClientWrapperGenerator.APP_INFO_MEMBER_NAME,
+                docs=(
+                    "Application identification appended to the User-Agent header as a product token, "
+                    'e.g. `{"name": "partner-app", "version": "3.1.0", "comment": "+https://partner.example"}`. '
+                    "`name` is required; `version` and `comment` are optional."
+                ),
+            )
+            if self._context.custom_config.allow_user_agent_app_info
+            else None
         )
 
         for variable in self._context.ir.variables:
@@ -1296,6 +1435,8 @@ class ClientWrapperGenerator:
         if exclude_auth:
             # Add generic headers parameter even when excluding auth
             parameters.append(headers_constructor_parameter)
+            if app_info_constructor_parameter is not None:
+                parameters.append(app_info_constructor_parameter)
             return ConstructorInfo(
                 constructor_parameters=parameters,
                 literal_headers=literal_headers,
@@ -1381,6 +1522,8 @@ class ClientWrapperGenerator:
 
         # Add generic headers parameter
         parameters.append(headers_constructor_parameter)
+        if app_info_constructor_parameter is not None:
+            parameters.append(app_info_constructor_parameter)
 
         return ConstructorInfo(
             constructor_parameters=parameters,

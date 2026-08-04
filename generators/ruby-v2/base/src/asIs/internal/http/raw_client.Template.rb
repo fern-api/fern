@@ -93,6 +93,62 @@ module <%= gem_namespace %>
           else value
           end
         end
+<% } %><% if (allowUserAgentAppInfo) { %>
+        # RFC 7230 token characters (tchar). Any character outside this set in a
+        # product token (name/version) is percent-encoded so caller-supplied values
+        # cannot break out of the token or inject additional header content.
+        USER_AGENT_TCHAR = /[^!#$%&'*+\-.^_`|~0-9A-Za-z]/
+        # Characters that must be escaped inside an RFC 9110 comment: the delimiters
+        # `(`, `)`, `\`, and control characters (incl. CR/LF).
+        USER_AGENT_COMMENT_UNSAFE = /[()\\\x00-\x1f\x7f]/
+
+        # Appends the caller-supplied application product token to a base User-Agent
+        # value, producing "{base} {name}/{version} ({comment})" per RFC 9110. The
+        # `version` and `comment` segments are omitted when blank. Caller-supplied
+        # values are trimmed (blank is treated as absent) and sanitized before being
+        # appended so they cannot inject additional header content. Returns the base
+        # value unchanged when `app_info` or its `name` is absent.
+        # @param user_agent [String] The base User-Agent value.
+        # @param app_info [Hash, nil] Optional { name:, version:, comment: } app info.
+        # @return [String] The User-Agent value with the app product token appended.
+        def self.append_app_info(user_agent, app_info)
+          return user_agent if app_info.nil?
+
+          name = encode_user_agent_token((app_info[:name] || app_info["name"]).to_s.strip)
+          return user_agent if name.empty?
+
+          product_token = name
+          version = encode_user_agent_token((app_info[:version] || app_info["version"]).to_s.strip)
+          product_token += "/#{version}" unless version.empty?
+
+          comment = encode_user_agent_comment((app_info[:comment] || app_info["comment"]).to_s.strip)
+          product_token += " (#{comment})" unless comment.empty?
+
+          "#{user_agent} #{product_token}"
+        end
+
+        # Percent-encodes every non-tchar character so the value is a valid RFC 7230
+        # token.
+        # @param value [String] The raw product-token value.
+        # @return [String] The token-encoded value.
+        def self.encode_user_agent_token(value)
+          value.gsub(USER_AGENT_TCHAR) { |char| percent_encode_user_agent(char) }
+        end
+
+        # Escapes the comment delimiters and control characters so a caller-supplied
+        # comment cannot terminate the comment group early or inject header content.
+        # @param value [String] The raw comment value.
+        # @return [String] The escaped comment value.
+        def self.encode_user_agent_comment(value)
+          value.gsub(USER_AGENT_COMMENT_UNSAFE) { |char| percent_encode_user_agent(char) }
+        end
+
+        # Percent-encodes each byte of the given character as uppercase hex.
+        # @param char [String] A single (possibly multibyte) character.
+        # @return [String] The percent-encoded representation.
+        def self.percent_encode_user_agent(char)
+          char.bytes.map { |byte| format("%%%02X", byte) }.join
+        end
 <% } %>
         # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
         # @return [HTTP::Response] The HTTP response.

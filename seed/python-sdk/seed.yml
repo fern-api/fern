@@ -101,6 +101,13 @@ fixtures:
         include_platform_headers: true
       outputFolder: include-platform-headers
     - customConfig:
+        allow_user_agent_app_info: true
+      outputFolder: allow-user-agent-app-info
+    - customConfig:
+        include_platform_headers: true
+        allow_user_agent_app_info: true
+      outputFolder: include-platform-headers-app-info
+    - customConfig:
         additional_init_exports:
           - from: types.types
             imports:
@@ -399,6 +406,12 @@ fixtures:
     - customConfig:
         offsetSemantics: "page-index"
       outputFolder: page-index-semantics
+  path-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        encode_path_params: true
+      outputFolder: encode-path-params
   query-parameters:
     - customConfig: null
       outputFolder: no-custom-config

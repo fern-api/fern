@@ -35,6 +35,7 @@ export declare namespace TestGenerator {
         relativeTestPath: string;
         neverThrowErrors: boolean;
         generateReadWriteOnlyTypes: boolean;
+        requireBaseUrl: boolean;
         testFramework: "jest" | "vitest";
         useLegacyExports: boolean;
         shouldBundle: boolean;
@@ -56,6 +57,7 @@ export class TestGenerator {
     private readonly relativeTestPath: string;
     private readonly neverThrowErrors: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
+    private readonly requireBaseUrl: boolean;
     private readonly testFramework: "jest" | "vitest";
     private readonly useLegacyExports: boolean;
     private readonly shouldBundle: boolean;
@@ -80,6 +82,7 @@ export class TestGenerator {
         relativeTestPath,
         neverThrowErrors,
         generateReadWriteOnlyTypes,
+        requireBaseUrl,
         testFramework,
         useLegacyExports,
         shouldBundle,
@@ -97,6 +100,7 @@ export class TestGenerator {
         this.relativeTestPath = relativeTestPath;
         this.neverThrowErrors = neverThrowErrors;
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
+        this.requireBaseUrl = requireBaseUrl;
         this.testFramework = testFramework;
         this.useLegacyExports = useLegacyExports;
         this.shouldBundle = shouldBundle;
@@ -1246,7 +1250,7 @@ describe("${serviceName}", () => {
                 _other: () => code`server.baseUrl`
             });
         };
-        options["environment"] = generateEnvironment();
+        options[this.requireBaseUrl ? "baseUrl" : "environment"] = generateEnvironment();
 
         example.rootPathParameters.forEach((pathParameter) => {
             options[
@@ -2445,11 +2449,7 @@ function isPaginationCursorMissingInExample({
             cursorProperty = pagination.next;
             break;
         case "offset":
-            cursorProperty = pagination.hasNextPage;
-            if (cursorProperty == null) {
-                return false;
-            }
-            break;
+            return !willOffsetHaveNextPageInExample({ example, pagination, responseJson });
         case "uri":
             cursorProperty = pagination.nextUri;
             break;
@@ -2466,34 +2466,120 @@ function isPaginationCursorMissingInExample({
         return true;
     }
 
-    // Build the path segments using wire values for JSON walking
-    // JSON examples from IR are always in wire format (snake_case), so we must
-    // always use wire values to walk the JSON regardless of retainOriginalCasing
-    // or includeSerdeLayer settings (those affect generated code, not example JSON)
-    const segments = [
-        ...(cursorProperty.propertyPath ?? []).map((item) => getOriginalName(item.name)),
-        getWireValue(cursorProperty.property.name)
-    ];
+    const cursor = getJsonValueAtPath({ json: responseJson, segments: getResponsePropertySegments(cursorProperty) });
 
-    let cursor: unknown = responseJson;
+    // If the leaf is absent, explicitly undefined, or null, treat it as "missing"
+    return cursor == null;
+}
+
+/**
+ * The parts of an example call that a paginated request property can be read from.
+ */
+type ExampleRequestValues = Pick<FernIr.ExampleEndpointCall, "queryParameters" | "request">;
+
+/**
+ * Mirrors the `hasNextPage` expression the client generator emits for offset pagination
+ * (see GeneratedThrowingEndpointResponse.getOffsetPaginationInfo):
+ *
+ *   response.hasNextPage ?? (items.length > 0 && (request.step == null || items.length >= request.step))
+ *
+ * The `step` value is read out of the example request, since that is what the generated client
+ * passes along.
+ *
+ * Evaluating it against the example keeps the wire test from asserting `hasNextPage()` is true
+ * when the mocked response would not satisfy it, e.g. an example that returns fewer items than
+ * the requested page size.
+ */
+export function willOffsetHaveNextPageInExample({
+    example,
+    pagination,
+    responseJson
+}: {
+    example: ExampleRequestValues;
+    pagination: FernIr.OffsetPagination;
+    responseJson: unknown;
+}): boolean {
+    if (pagination.hasNextPage != null) {
+        const hasNextPage = getJsonValueAtPath({
+            json: responseJson,
+            segments: getResponsePropertySegments(pagination.hasNextPage)
+        });
+        // A present boolean short-circuits the `??`; anything else falls through to the items check
+        if (typeof hasNextPage === "boolean") {
+            return hasNextPage;
+        }
+    }
+
+    const items = getJsonValueAtPath({
+        json: responseJson,
+        segments: getResponsePropertySegments(pagination.results)
+    });
+    if (!Array.isArray(items) || items.length === 0) {
+        return false;
+    }
+
+    if (pagination.step != null) {
+        const step = getRequestPropertyValueInExample({ example, requestProperty: pagination.step });
+        if (typeof step === "number" && items.length < step) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
+ * JSON examples from IR are always in wire format (snake_case), so we must always use wire
+ * values to walk the JSON regardless of retainOriginalCasing or includeSerdeLayer settings
+ * (those affect generated code, not example JSON).
+ */
+function getResponsePropertySegments(property: FernIr.ResponseProperty): string[] {
+    return [
+        ...(property.propertyPath ?? []).map((item) => getOriginalName(item.name)),
+        getWireValue(property.property.name)
+    ];
+}
+
+function getJsonValueAtPath({ json, segments }: { json: unknown; segments: string[] }): unknown {
+    let cursor: unknown = json;
     for (const key of segments) {
         if (cursor == null || typeof cursor !== "object" || !(key in cursor)) {
-            return true;
+            return undefined;
         }
         cursor = (cursor as Record<string, unknown>)[key];
     }
+    return cursor;
+}
 
-    // If the leaf is explicitly undefined or null, treat it as "missing"
-    if (cursor === undefined || cursor === null) {
-        return true;
+function getRequestPropertyValueInExample({
+    example,
+    requestProperty
+}: {
+    example: ExampleRequestValues;
+    requestProperty: FernIr.RequestProperty;
+}): unknown {
+    const wireValue = getWireValue(requestProperty.property.name);
+    switch (requestProperty.property.type) {
+        case "query":
+            return example.queryParameters.find((queryParameter) => getWireValue(queryParameter.name) === wireValue)
+                ?.value.jsonExample;
+        case "body":
+            return getJsonValueAtPath({
+                json: getRequestBodyJsonExample(example.request),
+                segments: [...(requestProperty.propertyPath ?? []).map((item) => getOriginalName(item.name)), wireValue]
+            });
+        default:
+            assertNever(requestProperty.property);
     }
+}
 
-    // For offset pagination, if the hasNextPage property is explicitly false,
-    // treat it as "missing" so we don't generate hasNextPage().toBe(true) assertions
-    // that would contradict the mock data
-    if (pagination.type === "offset" && cursor === false) {
-        return true;
+function getRequestBodyJsonExample(request: FernIr.ExampleRequestBody | undefined): unknown | undefined {
+    if (request == null) {
+        return undefined;
     }
-
-    return false;
+    return request._visit({
+        inlinedRequestBody: (body) => body.jsonExample,
+        reference: (reference) => reference.jsonExample,
+        _other: () => undefined
+    });
 }

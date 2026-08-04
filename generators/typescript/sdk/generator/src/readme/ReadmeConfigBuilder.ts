@@ -22,6 +22,7 @@ export class ReadmeConfigBuilder {
     private readonly fetchSupport: "node-fetch" | "native";
     private readonly allowCustomFetcher: boolean;
     private readonly generateSubpackageExports: boolean;
+    private readonly requireBaseUrl: boolean;
     private readonly reactQueryConfig: ReactQueryReadmeConfig | undefined;
 
     constructor({
@@ -30,6 +31,7 @@ export class ReadmeConfigBuilder {
         fetchSupport,
         allowCustomFetcher,
         generateSubpackageExports,
+        requireBaseUrl,
         reactQueryConfig
     }: {
         endpointSnippets: FernGeneratorExec.Endpoint[];
@@ -37,6 +39,7 @@ export class ReadmeConfigBuilder {
         fetchSupport: "node-fetch" | "native";
         allowCustomFetcher: boolean;
         generateSubpackageExports: boolean;
+        requireBaseUrl: boolean;
         reactQueryConfig?: ReactQueryReadmeConfig;
     }) {
         this.endpointSnippets = endpointSnippets;
@@ -44,6 +47,7 @@ export class ReadmeConfigBuilder {
         this.fetchSupport = fetchSupport;
         this.allowCustomFetcher = allowCustomFetcher;
         this.generateSubpackageExports = generateSubpackageExports;
+        this.requireBaseUrl = requireBaseUrl;
         this.reactQueryConfig = reactQueryConfig;
     }
 
@@ -61,7 +65,8 @@ export class ReadmeConfigBuilder {
             endpointSnippets: this.endpointSnippets,
             fileResponseType: this.fileResponseType,
             allowCustomFetcher: this.allowCustomFetcher,
-            generateSubpackageExports: this.generateSubpackageExports
+            generateSubpackageExports: this.generateSubpackageExports,
+            requireBaseUrl: this.requireBaseUrl
         });
         const snippets = readmeSnippetBuilder.buildReadmeSnippets();
         const addendums = readmeSnippetBuilder.buildReadmeAddendums();

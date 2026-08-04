@@ -129,6 +129,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     # If true, treats path parameters as named parameters in endpoint functions
     inline_path_params: bool = False
 
+    # If true, path parameter values are percent-encoded when substituted into the
+    # request path, so a value containing "/" or ".." cannot change which endpoint
+    # the request resolves to. Off by default so existing output is unchanged.
+    encode_path_params: bool = False
+
     # Feature flag that enables generation of Python websocket clients
     should_generate_websocket_clients: bool = False
 
@@ -236,6 +241,19 @@ class SDKCustomConfig(pydantic.BaseModel):
     # unchanged. Subject to `omit_fern_headers`.
     runtime_version: bool = False
 
+    # If true, the generated client exposes an optional `app_info` constructor
+    # argument (`{"name": ..., "version"?: ..., "comment"?: ...}`) whose product
+    # token is appended to whatever `User-Agent` the SDK would otherwise send,
+    # e.g. `my-sdk/1.0 (...) partner-app/3.1.0 (+https://partner.example)` per
+    # RFC 9110 §5.5.3. Appended to all three User-Agent branches (the structured
+    # platform header, the `user-agent` template value, and the default
+    # `{package}/{version}`), and survives the `runtime_version` path. Caller
+    # values are sanitized (name/version token-encoded, comment delimiters and
+    # control chars escaped). Disabled by default so existing output is
+    # unchanged. Overridable by an explicit `User-Agent` in `headers`, and
+    # suppressed by `omit_fern_headers`.
+    allow_user_agent_app_info: bool = False
+
     # The default number of retries for failed requests in the generated SDK.
     # Set to 0 to disable retries by default (useful for non-idempotent APIs).
     # SDK users can still override this per-request via request_options.
@@ -275,6 +293,8 @@ class SDKCustomConfig(pydantic.BaseModel):
                 obj["runtime_version"] = obj.pop("runtime-version")
             if "runtimeVersion" in obj and "runtime_version" not in obj:
                 obj["runtime_version"] = obj.pop("runtimeVersion")
+            if "allowUserAgentAppInfo" in obj and "allow_user_agent_app_info" not in obj:
+                obj["allow_user_agent_app_info"] = obj.pop("allowUserAgentAppInfo")
             if "maxRetries" in obj and "default_max_retries" not in obj:
                 obj["default_max_retries"] = obj.pop("maxRetries")
             if "retryStatusCodes" in obj and "retry_status_codes" not in obj:

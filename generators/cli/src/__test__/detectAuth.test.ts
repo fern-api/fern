@@ -378,3 +378,173 @@ describe("joinUrl", () => {
         expect(joinUrl("https://api.example.com/v1", "/token")).toBe("https://api.example.com/v1/token");
     });
 });
+
+describe("detectAuthBindings — public-client OAuth login flows", () => {
+    const authorizationCode = (overrides: {
+        clientId?: FernIr.OAuthPublicClientId;
+        redirectUri?: string;
+        redirectUriBackupPorts?: number[];
+        scopes?: string[];
+        authorizationParameters?: Record<string, string>;
+        tokenParameters?: Record<string, string>;
+    }): FernIr.AuthScheme =>
+        FernIr.AuthScheme.oauth({
+            key: "MyOAuth",
+            docs: undefined,
+            configuration: FernIr.OAuthConfiguration.authorizationCode({
+                clientId: overrides.clientId ?? FernIr.OAuthPublicClientId.literal("public-client-id"),
+                authorizationUrl: "https://auth.example.com/authorize",
+                tokenUrl: "https://auth.example.com/token",
+                refreshUrl: undefined,
+                redirectUri: overrides.redirectUri,
+                redirectUriBackupPorts: overrides.redirectUriBackupPorts,
+                scopes: overrides.scopes,
+                pkce: { method: FernIr.OAuthPkceMethod.S256 },
+                authorizationParameters: overrides.authorizationParameters,
+                tokenParameters: overrides.tokenParameters,
+                refreshParameters: undefined,
+                tokenHeader: undefined,
+                tokenPrefix: undefined
+            })
+        });
+
+    const deviceCode = (overrides: { scopes?: string[] }): FernIr.AuthScheme =>
+        FernIr.AuthScheme.oauth({
+            key: "MyOAuth",
+            docs: undefined,
+            configuration: FernIr.OAuthConfiguration.deviceCode({
+                clientId: FernIr.OAuthPublicClientId.literal("public-client-id"),
+                deviceAuthorizationUrl: "https://auth.example.com/device/code",
+                tokenUrl: "https://auth.example.com/token",
+                refreshUrl: undefined,
+                scopes: overrides.scopes,
+                deviceAuthorizationParameters: undefined,
+                tokenParameters: undefined,
+                refreshParameters: undefined,
+                tokenHeader: undefined,
+                tokenPrefix: undefined
+            })
+        });
+
+    it("emits a root PkceLoginFlow for the authorization-code flow", () => {
+        const [binding, ...rest] = detectAuthBindings({
+            auth: auth(
+                authorizationCode({
+                    scopes: ["openid", "offline_access"],
+                    redirectUri: "http://127.0.0.1:8484/callback"
+                })
+            ),
+            binaryName: "acme"
+        });
+        expect(rest).toEqual([]);
+        expect(binding?.placement).toBe("root");
+        expect(binding?.authTypeImport).toBe("PkceLoginFlow");
+        expect(binding?.kind).toBe("oauth-authorization-code");
+        expect(binding?.envVars).toEqual([]);
+        expect(binding?.rustCall).toBe(
+            '.login_flow(PkceLoginFlow::new("MyOAuth")' +
+                '.client_id("public-client-id")' +
+                '.authorization_url("https://auth.example.com/authorize")' +
+                '.token_url("https://auth.example.com/token")' +
+                '.scopes(["openid", "offline_access"])' +
+                ".redirect_port(8484))"
+        );
+    });
+
+    it("omits redirect_port when no redirect-uri is configured (ephemeral)", () => {
+        const [binding] = detectAuthBindings({ auth: auth(authorizationCode({})), binaryName: "acme" });
+        expect(binding?.rustCall).not.toContain("redirect_port");
+        expect(binding?.rustCall).toContain('PkceLoginFlow::new("MyOAuth")');
+    });
+
+    it("emits redirect_ports (primary + backups) when backup ports are configured", () => {
+        const [binding] = detectAuthBindings({
+            auth: auth(
+                authorizationCode({
+                    redirectUri: "http://127.0.0.1:8484/callback",
+                    redirectUriBackupPorts: [8483, 8482]
+                })
+            ),
+            binaryName: "acme"
+        });
+        expect(binding?.rustCall).toContain(".redirect_ports([8484, 8483, 8482])");
+        // The single-port setter must not also be emitted.
+        expect(binding?.rustCall).not.toContain(".redirect_port(");
+    });
+
+    it("emits redirect_host and redirect_path when a non-default loopback host/path is configured", () => {
+        const [binding] = detectAuthBindings({
+            auth: auth(
+                authorizationCode({
+                    redirectUri: "http://localhost:8484/oauth/callback",
+                    redirectUriBackupPorts: [8483]
+                })
+            ),
+            binaryName: "acme"
+        });
+        expect(binding?.rustCall).toContain('.redirect_host("localhost")');
+        expect(binding?.rustCall).toContain('.redirect_path("/oauth/callback")');
+        expect(binding?.rustCall).toContain(".redirect_ports([8484, 8483])");
+    });
+
+    it("omits redirect_host and redirect_path for the default 127.0.0.1/callback loopback", () => {
+        const [binding] = detectAuthBindings({
+            auth: auth(authorizationCode({ redirectUri: "http://127.0.0.1:8484/callback" })),
+            binaryName: "acme"
+        });
+        expect(binding?.rustCall).not.toContain(".redirect_host(");
+        expect(binding?.rustCall).not.toContain(".redirect_path(");
+    });
+
+    it("emits no param setters when no extra params are configured (byte-identical output)", () => {
+        const [binding] = detectAuthBindings({
+            auth: auth(authorizationCode({ scopes: ["openid"] })),
+            binaryName: "acme"
+        });
+        expect(binding?.rustCall).not.toContain("authorization_params");
+        expect(binding?.rustCall).not.toContain("token_params");
+        expect(binding?.rustCall).not.toContain("refresh_params");
+    });
+
+    it("emits authorization_params and token_params (e.g. Auth0 audience) when configured", () => {
+        const [binding] = detectAuthBindings({
+            auth: auth(
+                authorizationCode({
+                    authorizationParameters: { audience: "https://api.acme.io" },
+                    tokenParameters: { audience: "https://api.acme.io" }
+                })
+            ),
+            binaryName: "acme"
+        });
+        expect(binding?.rustCall).toContain('.authorization_params([("audience", "https://api.acme.io")])');
+        expect(binding?.rustCall).toContain('.token_params([("audience", "https://api.acme.io")])');
+    });
+
+    it("skips the authorization-code flow when the client ID is an environment variable (unsupported)", () => {
+        const bindings = detectAuthBindings({
+            auth: auth(
+                authorizationCode({ clientId: FernIr.OAuthPublicClientId.environmentVariable("ACME_CLIENT_ID") })
+            ),
+            binaryName: "acme"
+        });
+        expect(bindings).toEqual([]);
+    });
+
+    it("emits a root DeviceCodeLoginFlow for the device-code flow", () => {
+        const [binding, ...rest] = detectAuthBindings({
+            auth: auth(deviceCode({ scopes: ["openid"] })),
+            binaryName: "acme"
+        });
+        expect(rest).toEqual([]);
+        expect(binding?.placement).toBe("root");
+        expect(binding?.authTypeImport).toBe("DeviceCodeLoginFlow");
+        expect(binding?.kind).toBe("oauth-device-code");
+        expect(binding?.rustCall).toBe(
+            '.login_flow(DeviceCodeLoginFlow::new("MyOAuth")' +
+                '.client_id("public-client-id")' +
+                '.device_authorization_url("https://auth.example.com/device/code")' +
+                '.token_url("https://auth.example.com/token")' +
+                '.scopes(["openid"]))'
+        );
+    });
+});

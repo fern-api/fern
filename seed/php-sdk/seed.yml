@@ -115,6 +115,13 @@ fixtures:
     - outputFolder: include-platform-headers
       customConfig:
         includePlatformHeaders: true
+    - outputFolder: allow-user-agent-app-info
+      customConfig:
+        allowUserAgentAppInfo: true
+    - outputFolder: include-platform-headers-app-info
+      customConfig:
+        includePlatformHeaders: true
+        allowUserAgentAppInfo: true
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
@@ -137,6 +144,9 @@ fixtures:
       customConfig:
         inlinePathParameters: true
         propertyAccess: private
+    - outputFolder: encode-path-params
+      customConfig:
+        encode-path-params: true
   request-parameters:
     - outputFolder: no-custom-config
       customConfig: null

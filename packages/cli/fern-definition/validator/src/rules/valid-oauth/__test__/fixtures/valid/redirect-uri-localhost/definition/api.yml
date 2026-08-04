@@ -1,0 +1,14 @@
+name: redirect-uri-localhost
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: authorization-code
+    client-id: "public-client-id"
+    authorization-url: https://auth.example.com/authorize
+    token-url: https://auth.example.com/token
+    redirect-uri:
+      url: http://localhost:8484/oauth/callback
+      ports: [8483, 8482]
+    pkce:
+      method: S256
