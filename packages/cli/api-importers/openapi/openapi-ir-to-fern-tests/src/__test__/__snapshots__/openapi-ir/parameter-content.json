@@ -74,13 +74,11 @@
           "schema": {
             "generatedName": "GetAccountSettingsRequestApiFilter",
             "value": {
-              "generatedName": "GetAccountSettingsRequestApiFilter",
-              "schema": "AccountSettingsFilter",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "schema": {
+                "type": "string"
               },
-              "type": "reference"
+              "generatedName": "GetAccountSettingsRequestApiFilter",
+              "type": "primitive"
             },
             "type": "optional"
           },

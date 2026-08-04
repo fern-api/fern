@@ -218,7 +218,11 @@ export function convertParameters({
 /**
  * Resolves the schema describing a parameter's value. Parameters normally declare `schema`
  * directly, but the OpenAPI spec also allows a `content` map for values that are serialized
- * in a media type — most commonly a header or query parameter holding a JSON-encoded object.
+ * in a media type — most commonly a header holding a JSON-encoded object.
+ *
+ * Only headers are resolved from `content`: header values are JSON-encoded when sent, whereas
+ * an object query parameter is serialized as separate key/value pairs rather than as a single
+ * JSON-encoded value, which is not what `content: application/json` describes.
  */
 function getParameterSchema(
     parameter: OpenAPIV3.ParameterObject,
@@ -227,7 +231,7 @@ function getParameterSchema(
     if (parameter.schema != null) {
         return parameter.schema;
     }
-    if (!context.options.respectParameterContent || parameter.content == null) {
+    if (!context.options.respectParameterContent || parameter.in !== "header" || parameter.content == null) {
         return undefined;
     }
     const jsonMediaType = findApplicationJsonRequest({ content: parameter.content, context });

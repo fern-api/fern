@@ -1,0 +1,168 @@
+{
+    "version": "1.0.0",
+    "types": {},
+    "headers": [
+        {
+            "name": {
+                "wireValue": "X-API-Version",
+                "name": {
+                    "originalName": "version",
+                    "camelCase": {
+                        "unsafeName": "version",
+                        "safeName": "version"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "version",
+                        "safeName": "version"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "VERSION",
+                        "safeName": "VERSION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Version",
+                        "safeName": "Version"
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "optional",
+                "value": {
+                    "type": "primitive",
+                    "value": "STRING"
+                }
+            },
+            "propertyAccess": null,
+            "variable": null
+        }
+    ],
+    "endpoints": {
+        "endpoint_service.getWithApiVersion": {
+            "auth": {
+                "type": "basic",
+                "username": {
+                    "originalName": "username",
+                    "camelCase": {
+                        "unsafeName": "username",
+                        "safeName": "username"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "username",
+                        "safeName": "username"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "USERNAME",
+                        "safeName": "USERNAME"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Username",
+                        "safeName": "Username"
+                    }
+                },
+                "usernameOmit": null,
+                "password": {
+                    "originalName": "password",
+                    "camelCase": {
+                        "unsafeName": "password",
+                        "safeName": "password"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "password",
+                        "safeName": "password"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PASSWORD",
+                        "safeName": "PASSWORD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Password",
+                        "safeName": "Password"
+                    }
+                },
+                "passwordOmit": null
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getWithApiVersion",
+                    "camelCase": {
+                        "unsafeName": "getWithAPIVersion",
+                        "safeName": "getWithAPIVersion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_with_api_version",
+                        "safeName": "get_with_api_version"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_WITH_API_VERSION",
+                        "safeName": "GET_WITH_API_VERSION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetWithAPIVersion",
+                        "safeName": "GetWithAPIVersion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/apiVersion"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}

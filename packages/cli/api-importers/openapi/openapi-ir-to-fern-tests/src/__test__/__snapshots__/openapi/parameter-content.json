@@ -50,7 +50,7 @@
               "request": {
                 "name": "GetAccountSettingsRequest",
                 "query-parameters": {
-                  "Api-Filter": "optional<AccountSettingsFilter>",
+                  "Api-Filter": "optional<string>",
                 },
               },
               "response": {
@@ -121,7 +121,7 @@
       request:
         name: GetAccountSettingsRequest
         query-parameters:
-          Api-Filter: optional<AccountSettingsFilter>
+          Api-Filter: optional<string>
       response:
         docs: ok
         type: string

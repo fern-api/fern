@@ -2687,7 +2687,7 @@
               "type": "null"
             }
           ],
-          "description": "If true, parameters that declare their schema under `content` (e.g. a header whose\nvalue is a JSON-encoded object) are typed from that schema instead of falling back\nto a string.\nDefaults to false."
+          "description": "If true, header parameters that declare their schema under `content` (e.g. a header\nwhose value is a JSON-encoded object) are typed from that schema instead of falling\nback to a string.\nDefaults to false."
         }
       },
       "additionalProperties": false
@@ -3369,7 +3369,7 @@
               "type": "null"
             }
           ],
-          "description": "If true, parameters that declare their schema under `content` (e.g. a header whose\nvalue is a JSON-encoded object) are typed from that schema instead of falling back\nto a string.\nDefaults to false."
+          "description": "If true, header parameters that declare their schema under `content` (e.g. a header\nwhose value is a JSON-encoded object) are typed from that schema instead of falling\nback to a string.\nDefaults to false."
         },
         "respect-nullable-schemas": {
           "oneOf": [

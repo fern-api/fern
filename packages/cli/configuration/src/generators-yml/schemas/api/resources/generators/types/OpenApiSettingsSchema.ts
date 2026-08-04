@@ -89,9 +89,9 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      */
     "ignore-tags"?: boolean;
     /**
-     * If true, parameters that declare their schema under `content` (e.g. a header whose
-     * value is a JSON-encoded object) are typed from that schema instead of falling back
-     * to a string.
+     * If true, header parameters that declare their schema under `content` (e.g. a header
+     * whose value is a JSON-encoded object) are typed from that schema instead of falling
+     * back to a string.
      * Defaults to false.
      */
     "respect-parameter-content"?: boolean;
