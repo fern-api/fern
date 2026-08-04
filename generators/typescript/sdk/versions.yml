@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.87.1
+  changelogEntry:
+    - summary: |
+        The `appInfo` User-Agent helper emitted when `allowUserAgentAppInfo` is enabled no longer
+        uses a control-character regex range, so generated SDKs lint cleanly under rules such as
+        Biome's `noControlCharactersInRegex` without a suppression comment. Escaping behavior is
+        unchanged.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 67
 - version: 3.87.0
   changelogEntry:
     - summary: |

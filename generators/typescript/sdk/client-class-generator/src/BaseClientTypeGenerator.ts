@@ -61,10 +61,18 @@ function ${APPEND_APP_INFO_HELPER_NAME}(
         value.replace(/[^!#$%&'*+\\-.^_\`|~0-9A-Za-z]/g, percentEncodeChar);
     // Escape the comment delimiters \`(\`, \`)\`, \`\\\` and control characters (0x00-0x1F,
     // 0x7F, incl. CR/LF) so a caller-supplied comment cannot terminate the comment
-    // group early or inject additional header content.
+    // group early or inject additional header content. Code points are compared rather
+    // than matched with a regex range so the emitted code does not trip lint rules that
+    // ban control characters in regular expressions.
     const encodeComment = (value: string): string =>
-        // eslint-disable-next-line no-control-regex
-        value.replace(/[()\\\\\\u0000-\\u001f\\u007f]/g, percentEncodeChar);
+        Array.from(value)
+            .map((char) => {
+                const codePoint = char.codePointAt(0) ?? 0;
+                return char === "(" || char === ")" || char === "\\\\" || codePoint <= 0x1f || codePoint === 0x7f
+                    ? percentEncodeChar(char)
+                    : char;
+            })
+            .join("");
 
     const name = encodeToken((appInfo.name ?? "").trim());
     if (name.length === 0) {

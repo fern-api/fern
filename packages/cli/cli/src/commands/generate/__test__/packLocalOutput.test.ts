@@ -90,8 +90,151 @@ describe("packLocalOutputForGroup", () => {
 
         const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
         expect(commands[0]).toBe("npm install");
-        expect(commands[1]).toBe("npm run build");
+        expect(commands[1]).toBe("npx --yes pnpm run build");
         expect(commands[2]).toContain("npm pack");
+    });
+
+    it("compiles with tsc before packing when a typescript package has no build script", async () => {
+        await writeFile(path.join(outputDir, "package.json"), JSON.stringify({ name: "acme" }));
+        await writeFile(path.join(outputDir, "tsconfig.cjs.json"), "{}");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({
+                    name: "fernapi/fern-typescript-node-sdk",
+                    language: "typescript",
+                    outputPath: outputDir
+                })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
+        expect(commands[0]).toBe("npm install");
+        expect(commands[1]).toBe("npx --yes --package typescript tsc --project tsconfig.cjs.json");
+        expect(commands[2]).toContain("npm pack");
+    });
+
+    it("fails typescript packaging when tsc fails and no output was emitted", async () => {
+        await writeFile(path.join(outputDir, "package.json"), JSON.stringify({ name: "acme" }));
+        await writeFile(path.join(outputDir, "tsconfig.json"), "{}");
+        loggingExecaMock
+            .mockResolvedValueOnce({ stdout: "", stderr: "" } as never)
+            .mockRejectedValueOnce(new Error("npx could not fetch typescript"));
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({
+                    name: "fernapi/fern-typescript-node-sdk",
+                    language: "typescript",
+                    outputPath: outputDir
+                })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await expect(packLocalOutputForGroup({ group, context: createMockTaskContext() })).rejects.toThrow();
+        const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
+        expect(commands.find((command) => command.includes("npm pack"))).toBeUndefined();
+    });
+
+    it("packs the emitted output when tsc reports errors but still emitted to the outDir", async () => {
+        await writeFile(path.join(outputDir, "package.json"), JSON.stringify({ name: "acme" }));
+        await writeFile(
+            path.join(outputDir, "tsconfig.cjs.json"),
+            JSON.stringify({ compilerOptions: { outDir: "dist/cjs" } })
+        );
+        await mkdir(path.join(outputDir, "dist", "cjs"), { recursive: true });
+        await writeFile(path.join(outputDir, "dist", "cjs", "index.js"), "module.exports = {};");
+        loggingExecaMock
+            .mockResolvedValueOnce({ stdout: "", stderr: "" } as never)
+            .mockRejectedValueOnce(new Error("tsc exited with code 2"));
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({
+                    name: "fernapi/fern-typescript-node-sdk",
+                    language: "typescript",
+                    outputPath: outputDir
+                })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
+        expect(commands.find((command) => command.includes("npm pack"))).toBeDefined();
+    });
+
+    it("falls back to an isolated venv build when host pip wheel fails for python generators", async () => {
+        loggingExecaMock.mockRejectedValueOnce(new Error("No module named pip"));
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({ name: "fernapi/fern-python-sdk", language: "python", outputPath: outputDir })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
+        expect(commands[0]).toContain("wheel");
+        expect(commands[1]).toBe("python3 -m venv .fern-pack-venv");
+        expect(commands[2]).toBe(".fern-pack-venv/bin/python -m pip install --quiet build");
+        expect(commands[3]).toBe(".fern-pack-venv/bin/python -m build --wheel --outdir fern-dist");
+    });
+
+    it("generates a POM alongside the jar for java generators", async () => {
+        await mkdir(path.join(outputDir, "build", "libs"), { recursive: true });
+        await writeFile(path.join(outputDir, "build", "libs", "acme-sdk.jar"), "jar-bytes");
+        await mkdir(path.join(outputDir, "build", "publications", "fernLocalPack"), { recursive: true });
+        await writeFile(
+            path.join(outputDir, "build", "publications", "fernLocalPack", "pom-default.xml"),
+            "<project />"
+        );
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-java-sdk", language: "java", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        expect(loggingExecaMock).toHaveBeenCalledTimes(1);
+        const [, command, args] = loggingExecaMock.mock.calls[0] ?? [];
+        expect(command).toBe("gradle");
+        expect(args).toContain("--init-script");
+        expect(args).toContain("generatePomFileForFernLocalPackPublication");
+        const distFiles = (await readdir(path.join(outputDir, "fern-dist"))).sort();
+        expect(distFiles).toEqual(["acme-sdk.jar", "acme-sdk.pom"]);
+        // the init script is temporary and must not linger in the output directory
+        expect(await readdir(outputDir)).not.toContain(".fern-pack-pom-init.gradle");
+    });
+
+    it("names the POM after the main jar, not sources/javadoc jars", async () => {
+        await mkdir(path.join(outputDir, "build", "libs"), { recursive: true });
+        await writeFile(path.join(outputDir, "build", "libs", "acme-sdk-javadoc.jar"), "jar-bytes");
+        await writeFile(path.join(outputDir, "build", "libs", "acme-sdk-sources.jar"), "jar-bytes");
+        await writeFile(path.join(outputDir, "build", "libs", "acme-sdk.jar"), "jar-bytes");
+        await mkdir(path.join(outputDir, "build", "publications", "fernLocalPack"), { recursive: true });
+        await writeFile(
+            path.join(outputDir, "build", "publications", "fernLocalPack", "pom-default.xml"),
+            "<project />"
+        );
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-java-sdk", language: "java", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        const distFiles = (await readdir(path.join(outputDir, "fern-dist"))).sort();
+        expect(distFiles).toEqual(["acme-sdk-javadoc.jar", "acme-sdk-sources.jar", "acme-sdk.jar", "acme-sdk.pom"]);
     });
 
     it("zips the module source for go generators without running any toolchain command", async () => {
@@ -154,7 +297,7 @@ describe("packLocalOutputForGroup", () => {
         expect(command).toBe("docker");
         expect(args?.[0]).toBe("run");
         expect(args).toContain("python:3.12");
-        expect(args).toContain(`${outputDir}:/workspace`);
+        expect(args).toContain(`${outputDir}:/workspace/${path.basename(outputDir)}`);
         expect(args).toContain("wheel");
     });
 
@@ -235,6 +378,7 @@ describe("packLocalOutputForGroup", () => {
     });
 
     it("fails when packaging a generator errors", async () => {
+        loggingExecaMock.mockRejectedValueOnce(new Error("python3 not found"));
         loggingExecaMock.mockRejectedValueOnce(new Error("python3 not found"));
         const group = {
             groupName: "test",
