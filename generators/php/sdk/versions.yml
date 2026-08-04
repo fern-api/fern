@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.18.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `allowUserAgentAppInfo` config (default `false`). When enabled, the
+        generated client accepts an optional `appInfo` client option
+        (`array{name: string, version?: string, comment?: string}`) whose product token is
+        appended to the `User-Agent` header for all three branches (the structured platform
+        value, the configured `user-agent` template value, and the default
+        `{package}/{version}`), producing e.g. `acme/sdk/1.0.0 partner-app/3.1.0 (+https://partner.example)`
+        per RFC 9110. Caller-supplied values are sanitized (name/version percent-encoded to
+        RFC 7230 tchars; comment delimiters and control characters escaped) and trimmed
+        before encoding, so untrusted values cannot inject additional header content. The
+        header is still overridable by an explicit `User-Agent` and suppressed by
+        `omitFernHeaders`. Default-off output is byte-identical.
+      type: feat
+  createdAt: "2026-08-03"
+  irVersion: 67
 - version: 2.17.0
   changelogEntry:
     - summary: |

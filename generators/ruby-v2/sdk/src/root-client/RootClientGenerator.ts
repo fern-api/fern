@@ -14,6 +14,9 @@ import { Comments } from "../utils/comments.js";
 
 const TOKEN_PARAMETER_NAME = "token";
 
+/** Client keyword exposed when `allowUserAgentAppInfo` is enabled. */
+const APP_INFO_PARAMETER_NAME = "app_info";
+
 /** Instance member the single flat auth provider is assigned to (ALL/ANY auth). */
 const AUTH_PROVIDER_MEMBER = "@auth_provider";
 /** Instance members the OAuth / inferred providers are assigned to under endpoint-security. */
@@ -31,7 +34,8 @@ const RESERVED_OPTION_NAMES = new Set<string>([
     "max_retries",
     "token",
     "client",
-    "request_options"
+    "request_options",
+    APP_INFO_PARAMETER_NAME
 ]);
 
 interface InferredAuthParameter {
@@ -155,6 +159,20 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             docs: "The default maximum number of retries for failed requests."
         });
         parameters.push(maxRetriesParameter);
+
+        // When the opt-in `allowUserAgentAppInfo` config is enabled, expose an optional
+        // `app_info` keyword whose product token is appended to the User-Agent header.
+        // Gated so flag-off client.rb keeps byte-identical output.
+        if (this.emitAppInfoOption()) {
+            parameters.push(
+                ruby.parameters.keyword({
+                    name: APP_INFO_PARAMETER_NAME,
+                    type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.class_({ name: "Symbol" }), ruby.Type.string())),
+                    initializer: ruby.nilValue(),
+                    docs: "Optional application info ({ name:, version:, comment: }) appended to the User-Agent header."
+                })
+            );
+        }
 
         // Sort parameters: required (no initializer) before optional (with initializer)
         const sortedParameters = [...parameters].sort((a, b) => {
@@ -1068,14 +1086,29 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 headers.push({
                     key: ruby.TypeLiteral.string("User-Agent"),
                     value: ruby.codeblock(
-                        `${rootModuleName}::Internal::Http::RawClient.user_agent(${JSON.stringify(userAgent.value)})`
+                        this.wrapUserAgentWithAppInfo(
+                            `${rootModuleName}::Internal::Http::RawClient.user_agent(${JSON.stringify(userAgent.value).replace(/#(?=[{$@])/g, "\\#")})`
+                        )
                     )
                 });
             } else if (userAgent != null) {
-                headers.push({
-                    key: ruby.TypeLiteral.string("User-Agent"),
-                    value: ruby.TypeLiteral.string(userAgent.value)
-                });
+                // Covers both the configured `user-agent` template value and the default
+                // `{package}/{version}` (both surface via userAgent.value). When
+                // appInfo is enabled the base value is wrapped so the app product token
+                // is appended; otherwise it stays a plain string literal (byte-identical).
+                if (this.emitAppInfoOption()) {
+                    headers.push({
+                        key: ruby.TypeLiteral.string("User-Agent"),
+                        value: ruby.codeblock(
+                            this.wrapUserAgentWithAppInfo(JSON.stringify(userAgent.value).replace(/#(?=[{$@])/g, "\\#"))
+                        )
+                    });
+                } else {
+                    headers.push({
+                        key: ruby.TypeLiteral.string("User-Agent"),
+                        value: ruby.TypeLiteral.string(userAgent.value)
+                    });
+                }
             }
 
             headers.push({
@@ -1164,6 +1197,34 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         }
 
         return ruby.TypeLiteral.hash(headers);
+    }
+
+    /**
+     * Whether to expose the opt-in `app_info` client keyword and emit the User-Agent
+     * appendix. Gated on the `allowUserAgentAppInfo` config, and suppressed entirely
+     * when `omitFernHeaders` is set (no User-Agent is sent in that case), so flag-off
+     * output stays byte-identical.
+     */
+    private emitAppInfoOption(): boolean {
+        return (
+            this.context.customConfig.allowUserAgentAppInfo === true &&
+            !this.context.customConfig.omitFernHeaders &&
+            this.context.ir.sdkConfig.platformHeaders.userAgent != null
+        );
+    }
+
+    /**
+     * Wraps a base User-Agent expression so the caller-supplied `app_info` product
+     * token is appended (via RawClient.append_app_info). Returns the base expression
+     * unchanged when appInfo is not enabled, so non-opted-in output is byte-identical.
+     * @param baseExpression The Ruby expression producing the base User-Agent value.
+     */
+    private wrapUserAgentWithAppInfo(baseExpression: string): string {
+        if (!this.emitAppInfoOption()) {
+            return baseExpression;
+        }
+        const rootModuleName = this.context.getRootModule().name;
+        return `${rootModuleName}::Internal::Http::RawClient.append_app_info(${baseExpression}, ${APP_INFO_PARAMETER_NAME})`;
     }
 
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {

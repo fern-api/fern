@@ -83,6 +83,12 @@ public interface JavaSdkDownloadFilesCustomConfig extends IDownloadFilesCustomCo
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("allowUserAgentAppInfo")
+    default Boolean allowUserAgentAppInfo() {
+        return false;
+    }
+
     static ImmutableJavaSdkDownloadFilesCustomConfig.Builder builder() {
         return ImmutableJavaSdkDownloadFilesCustomConfig.builder();
     }

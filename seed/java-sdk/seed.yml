@@ -186,6 +186,10 @@ fixtures:
     - customConfig:
         includePlatformHeaders: true
       outputFolder: include-platform-headers
+    - customConfig:
+        includePlatformHeaders: true
+        allowUserAgentAppInfo: true
+      outputFolder: allow-user-agent-app-info
   java-custom-package-prefix:
     - customConfig:
         package-prefix: "com.customprefix"

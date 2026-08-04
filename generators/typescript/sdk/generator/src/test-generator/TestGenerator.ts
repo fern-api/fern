@@ -35,6 +35,7 @@ export declare namespace TestGenerator {
         relativeTestPath: string;
         neverThrowErrors: boolean;
         generateReadWriteOnlyTypes: boolean;
+        requireBaseUrl: boolean;
         testFramework: "jest" | "vitest";
         useLegacyExports: boolean;
         shouldBundle: boolean;
@@ -56,6 +57,7 @@ export class TestGenerator {
     private readonly relativeTestPath: string;
     private readonly neverThrowErrors: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
+    private readonly requireBaseUrl: boolean;
     private readonly testFramework: "jest" | "vitest";
     private readonly useLegacyExports: boolean;
     private readonly shouldBundle: boolean;
@@ -80,6 +82,7 @@ export class TestGenerator {
         relativeTestPath,
         neverThrowErrors,
         generateReadWriteOnlyTypes,
+        requireBaseUrl,
         testFramework,
         useLegacyExports,
         shouldBundle,
@@ -97,6 +100,7 @@ export class TestGenerator {
         this.relativeTestPath = relativeTestPath;
         this.neverThrowErrors = neverThrowErrors;
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
+        this.requireBaseUrl = requireBaseUrl;
         this.testFramework = testFramework;
         this.useLegacyExports = useLegacyExports;
         this.shouldBundle = shouldBundle;
@@ -1246,7 +1250,7 @@ describe("${serviceName}", () => {
                 _other: () => code`server.baseUrl`
             });
         };
-        options["environment"] = generateEnvironment();
+        options[this.requireBaseUrl ? "baseUrl" : "environment"] = generateEnvironment();
 
         example.rootPathParameters.forEach((pathParameter) => {
             options[

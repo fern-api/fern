@@ -34,6 +34,7 @@ type Config struct {
 	OmitEmptyRequestWrappers       bool
 	OmitFernHeaders                bool
 	IncludePlatformHeaders         bool
+	AllowUserAgentAppInfo          bool
 	Organization                   string
 	Version                        string
 	IRFilepath                     string
@@ -49,6 +50,28 @@ type Config struct {
 
 	// If not specified, a go.mod and go.sum will not be generated.
 	ModuleConfig *ModuleConfig
+}
+
+// userAgentConfig collapses the User-Agent-related generator flags into a
+// single value so they can be threaded through the file writers without adding
+// yet another positional boolean parameter.
+type userAgentConfig struct {
+	// omitFernHeaders suppresses all Fern platform headers, including the
+	// User-Agent, when true.
+	omitFernHeaders bool
+	// includePlatformHeaders emits the structured, runtime-computed User-Agent
+	// header (os/arch/Go runtime) when true.
+	includePlatformHeaders bool
+	// allowUserAgentAppInfo emits the opt-in appInfo client option whose product
+	// token is appended to whatever User-Agent the SDK would otherwise send.
+	allowUserAgentAppInfo bool
+}
+
+// emitsAppInfo reports whether the opt-in User-Agent appInfo feature should emit
+// any generated code. It is on only when the flag is enabled and the User-Agent
+// is not suppressed by omitFernHeaders (which drops all Fern platform headers).
+func (c userAgentConfig) emitsAppInfo() bool {
+	return c.allowUserAgentAppInfo && !c.omitFernHeaders
 }
 
 // ModuleConfig represents the configuration used to generate
@@ -86,6 +109,7 @@ func NewConfig(
 	omitEmptyRequestWrappers bool,
 	omitFernHeaders bool,
 	includePlatformHeaders bool,
+	allowUserAgentAppInfo bool,
 	organization string,
 	version string,
 	irFilepath string,
@@ -123,6 +147,7 @@ func NewConfig(
 		OmitEmptyRequestWrappers:       omitEmptyRequestWrappers,
 		OmitFernHeaders:                omitFernHeaders,
 		IncludePlatformHeaders:         includePlatformHeaders,
+		AllowUserAgentAppInfo:          allowUserAgentAppInfo,
 		Version:                        version,
 		IRFilepath:                     irFilepath,
 		SnippetFilepath:                snippetFilepath,
