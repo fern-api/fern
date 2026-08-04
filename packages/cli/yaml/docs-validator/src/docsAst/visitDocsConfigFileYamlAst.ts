@@ -370,6 +370,7 @@ export async function visitDocsConfigFileYamlAst({
             context.logger.debug(`[docs-ast] Processing ${versions.length} versions...`);
             await Promise.all(
                 versions.map(async (version, idx) => {
+                    await visitor.version?.({ version }, ["versions", `${idx}`]);
                     if (version.path == null) {
                         // Git-ref-backed versions have their content validated at build time
                         // against the materialized ref, not the current working tree.
