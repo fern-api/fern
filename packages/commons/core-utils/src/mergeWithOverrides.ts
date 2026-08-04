@@ -15,21 +15,72 @@ export function mergeWithOverrides<T extends object>({
     overrides: object;
     allowNullKeys?: string[];
 }): T {
-    const merged = mergeWith(data, mergeWith, overrides, (obj, src) =>
-        Array.isArray(obj) && Array.isArray(src)
-            ? src.every((element) => typeof element === "object") && obj.every((element) => typeof element === "object")
-                ? // nested arrays of objects are merged
-                  undefined
-                : // nested arrays of primitives are replaced
-                  [...src]
-            : undefined
-    ) as T;
+    const merged = mergeWith(data, mergeWith, overrides, overridesCustomizer) as T;
     // Remove any nullified values
     const filtered = omitDeepBy(merged, isNull, {
         ancestorKeys: allowNullKeys ?? [],
         allowOmissionCursor: false
     });
     return filtered as T;
+}
+
+function overridesCustomizer(obj: unknown, src: unknown): unknown {
+    if (!Array.isArray(obj) || !Array.isArray(src)) {
+        return undefined;
+    }
+    if (!src.every((element) => typeof element === "object") || !obj.every((element) => typeof element === "object")) {
+        // nested arrays of primitives are replaced
+        return [...src];
+    }
+    // arrays whose entries are all identified by a name (e.g. OpenAPI parameters) are
+    // merged by that identity rather than by position
+    return mergeArraysByIdentity(obj, src) ?? undefined;
+}
+
+type NamedEntry = { name: string; in?: unknown };
+
+function isNamedEntry(value: unknown): value is NamedEntry {
+    return isPlainObject(value) && typeof (value as { name?: unknown }).name === "string";
+}
+
+/**
+ * Merges two arrays of named entries by matching on `name` instead of by array position. When
+ * several entries share a name, `in` disambiguates them. Overrides that match nothing are
+ * appended. Returns undefined when either array contains an entry without a name, in which case
+ * the caller falls back to a positional merge.
+ */
+function mergeArraysByIdentity(obj: unknown[], src: unknown[]): unknown[] | undefined {
+    if (!obj.every(isNamedEntry) || !src.every(isNamedEntry)) {
+        return undefined;
+    }
+    const unmatchedIndicesByName = new Map<string, number[]>();
+    obj.forEach((entry, index) => {
+        const indices = unmatchedIndicesByName.get(entry.name);
+        if (indices != null) {
+            indices.push(index);
+        } else {
+            unmatchedIndicesByName.set(entry.name, [index]);
+        }
+    });
+
+    const merged: unknown[] = [...obj];
+    for (const override of src) {
+        const candidates = unmatchedIndicesByName.get(override.name) ?? [];
+        const matchIndex =
+            candidates.length > 1 && typeof override.in === "string"
+                ? candidates.find((index) => obj[index]?.in === override.in)
+                : candidates[0];
+        if (matchIndex == null) {
+            merged.push(override);
+            continue;
+        }
+        unmatchedIndicesByName.set(
+            override.name,
+            candidates.filter((index) => index !== matchIndex)
+        );
+        merged[matchIndex] = mergeWith(obj[matchIndex], override, overridesCustomizer);
+    }
+    return merged;
 }
 
 // This is essentially lodash's omitBy, but actually running through your object tree.
