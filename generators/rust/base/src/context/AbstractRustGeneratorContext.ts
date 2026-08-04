@@ -32,6 +32,13 @@ export interface OAuthTokenExchange {
     accessTokenProperty: string;
     expiresInProperty: string;
     extraRequestProperties: OAuthTokenExchangeExtraProperty[];
+    /**
+     * Whether the token endpoint's request body is `application/x-www-form-urlencoded`
+     * (as opposed to JSON), resolved from the referenced endpoint's declared content type
+     * in the IR. OAuth 2.0 token endpoints are form-encoded per RFC 6749 §4.4.2, but the
+     * content type is honored from the spec so JSON token endpoints keep working.
+     */
+    formEncoded: boolean;
 }
 
 export abstract class AbstractRustGeneratorContext<
@@ -1623,12 +1630,20 @@ export abstract class AbstractRustGeneratorContext<
             }
         }
 
+        // Honor the token endpoint's declared content type (all request-body variants carry
+        // `contentType` via WithContentType). Form-encode only when the spec explicitly declares
+        // `application/x-www-form-urlencoded`; otherwise keep the JSON body. This matches the
+        // referenced endpoint's contract instead of assuming a single encoding.
+        const contentType = endpoint?.requestBody?.contentType;
+        const formEncoded = contentType != null && contentType.toLowerCase().includes("x-www-form-urlencoded");
+
         return {
             clientIdProperty: clientIdProperty ?? "client_id",
             clientSecretProperty: clientSecretProperty ?? "client_secret",
             accessTokenProperty: accessTokenProperty ?? "access_token",
             expiresInProperty: expiresInProperty ?? "expires_in",
-            extraRequestProperties
+            extraRequestProperties,
+            formEncoded
         };
     }
 

@@ -265,6 +265,7 @@ ${exchange.extraRequestProperties
             extra_request_properties: ${extraProperties},
             access_token_property: ${JSON.stringify(exchange.accessTokenProperty)}.to_string(),
             expires_in_property: ${JSON.stringify(exchange.expiresInProperty)}.to_string(),
+            form_encoded: ${exchange.formEncoded},
         })`;
     }
 }
