@@ -4025,6 +4025,9 @@
                       },
                       "ignore-tags": {
                         "type": "boolean"
+                      },
+                      "respect-parameter-content": {
+                        "type": "boolean"
                       }
                     },
                     "additionalProperties": false
@@ -4607,6 +4610,9 @@
                           "type": "boolean"
                         },
                         "ignore-tags": {
+                          "type": "boolean"
+                        },
+                        "respect-parameter-content": {
                           "type": "boolean"
                         }
                       },

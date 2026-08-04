@@ -102,6 +102,7 @@ export interface APIDefinitionSettings {
     shouldInferDiscriminatedUnionBaseProperties: boolean | undefined;
     disambiguateRequestNames: boolean | undefined;
     ignoreTags: boolean | undefined;
+    respectParameterContent: boolean | undefined;
 }
 
 export interface GitSource {
