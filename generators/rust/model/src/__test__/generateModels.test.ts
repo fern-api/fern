@@ -124,6 +124,26 @@ describe("generateModels type-specific tests", () => {
         expect(sproutedEvent?.fileContents).toContain("plant_event_base_fields: PlantEventBase");
     });
 
+    it("should preserve the payload of SSE stream-response variants that inherit via extends", async () => {
+        // Regression for Anduril Lattice entities/stream: EntityStreamEvent inherits its
+        // payload (time, entity) from EntityEvent via `extends` and contributes only the
+        // discriminant. Pre-fix it was inlined to an empty variant (`Entity {}`), dropping
+        // the inherited payload. It must keep the flattened wrapper so the payload survives.
+        const context = await createSampleGeneratorContext("union-types");
+        const files = generateModels({ context });
+
+        const streamResponse = files.find((file) => file.fileContents.includes("pub enum EntityStreamResponse"));
+        expect(streamResponse?.fileContents).toContain("data: EntityStreamEvent,");
+        expect(streamResponse?.fileContents).toContain("data: EntityStreamHeartbeat,");
+        // Guard against the pre-fix regression: the variants must not collapse to empty.
+        expect(streamResponse?.fileContents).not.toContain("Entity {}");
+        expect(streamResponse?.fileContents).not.toContain("Heartbeat {}");
+
+        // The entity variant's wrapper must retain the inherited EntityEvent payload.
+        const entityStreamEvent = files.find((file) => file.fileContents.includes("pub struct EntityStreamEvent"));
+        expect(entityStreamEvent?.fileContents).toContain("entity_event_fields: EntityEvent");
+    });
+
     it("should generate unions for union types (all are discriminated in Fern)", async () => {
         const context = await createSampleGeneratorContext("undiscriminated-union-types");
         const files = generateModels({ context });
