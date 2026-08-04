@@ -132,9 +132,14 @@ async function packOutputForLanguage({
                 if (tsconfig != null) {
                     try {
                         await run([["npx", "--yes", "--package", "typescript", "tsc", "--project", tsconfig]]);
-                    } catch {
+                    } catch (error) {
                         // tsc emits output even when type errors are reported (noEmitOnError is off
-                        // by default); pack whatever was produced rather than failing the build.
+                        // by default); pack whatever was produced rather than failing the build. If
+                        // nothing was emitted at all, the failure was real (e.g. npx couldn't fetch
+                        // typescript), so don't ship a tarball with no compiled code.
+                        if (!(await hasEmittedCompilerOutput({ outputPath, tsconfig }))) {
+                            throw error;
+                        }
                         context.logger.warn(
                             `tsc reported errors while compiling ${tsconfig}; packing the emitted output anyway.`
                         );
@@ -482,9 +487,44 @@ async function copyGeneratedPom({
         );
         return;
     }
-    const jarName = (await readdir(distDir)).find((file) => file.endsWith(".jar"));
+    const jarNames = (await readdir(distDir)).filter((file) => file.endsWith(".jar"));
+    const jarName =
+        jarNames.find((file) => !file.endsWith("-sources.jar") && !file.endsWith("-javadoc.jar")) ?? jarNames[0];
     const pomName = jarName != null ? `${jarName.slice(0, -".jar".length)}.pom` : "pom.xml";
     await copyFile(pomPath, join(distDir, RelativeFilePath.of(pomName)));
+}
+
+/** Whether the tsconfig's outDir (or ./dist by default) exists and is non-empty. */
+async function hasEmittedCompilerOutput({
+    outputPath,
+    tsconfig
+}: {
+    outputPath: AbsoluteFilePath;
+    tsconfig: string;
+}): Promise<boolean> {
+    let outDir = "dist";
+    try {
+        const parsed: unknown = JSON.parse(await readFile(join(outputPath, RelativeFilePath.of(tsconfig)), "utf-8"));
+        if (typeof parsed === "object" && parsed != null && "compilerOptions" in parsed) {
+            const compilerOptions = (parsed as { compilerOptions: unknown }).compilerOptions;
+            if (
+                typeof compilerOptions === "object" &&
+                compilerOptions != null &&
+                "outDir" in compilerOptions &&
+                typeof (compilerOptions as { outDir: unknown }).outDir === "string"
+            ) {
+                outDir = (compilerOptions as { outDir: string }).outDir;
+            }
+        }
+    } catch {
+        // tsconfig files may contain comments or be otherwise unparseable as plain JSON;
+        // fall back to the conventional ./dist output directory.
+    }
+    const outDirPath = join(outputPath, RelativeFilePath.of(outDir));
+    if (!(await doesPathExist(outDirPath))) {
+        return false;
+    }
+    return (await readdir(outDirPath)).length > 0;
 }
 
 /** Returns the tsconfig to compile with when the package has no build script, if one exists. */
