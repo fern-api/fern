@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.20.0] - 2026-07-28
+
+- Add `packagist` variant to `PublishTarget` (`PackagistPublishTarget` with optional `version` and
+  `packageName`). This lets the CLI thread the PHP SDK's Composer package identity into
+  `PublishingConfig.filesystem` for `local-file-system` output, the same way the other registry
+  targets already do, so the PHP generator can stamp the package name/version into the generated
+  `composer.json` instead of defaulting to `0.0.0`.
+
 ## [v67.19.0] - 2026-07-29
 
 - Add `rubygems` variant to `PublishTarget` (`RubyGemsPublishTarget` with optional `version` and
