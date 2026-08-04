@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.21.1
+  changelogEntry:
+    - summary: |
+        Fix `additional_headers` in a request's options being unable to override a global header that was
+        set at client construction. Every default header was protected from `additional_headers`, so a
+        caller who configured a global header on the client (e.g. `X-Greenhouse-Id`) could not vary it per
+        request — the per-request value was silently dropped. The API's non-literal global headers are
+        now overridable per request, while SDK metadata (`User-Agent`, `X-Fern-*`), auth headers, and
+        literal headers stay protected as before.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 67
 - version: 1.21.0
   changelogEntry:
     - summary: |
