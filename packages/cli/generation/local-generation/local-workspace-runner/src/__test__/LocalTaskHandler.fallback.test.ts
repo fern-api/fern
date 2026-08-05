@@ -795,7 +795,7 @@ describe("LocalTaskHandler - Regression: placeholder versions are never treated 
         mockLoggingExeca.mockResolvedValue({ stdout: "", exitCode: 0 });
     });
 
-    async function createTaskHandler(overrides: Record<string, unknown> = {}) {
+    async function createTaskHandler() {
         const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
         return new LocalTaskHandler({
             // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
@@ -812,17 +812,16 @@ describe("LocalTaskHandler - Regression: placeholder versions are never treated 
             ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
             isWhitelabel: false,
             generatorLanguage: "typescript",
-            absolutePathToSpecRepo: undefined,
-            ...overrides
+            absolutePathToSpecRepo: undefined
         });
     }
 
-    function metadataReturns(version: string | undefined) {
+    function metadataReturns(version: string) {
         mockLoggingExeca.mockImplementation((_logger: unknown, cmd: string, args: string[]) => {
             if (cmd === "git" && args[0] === "show" && args[1] === "HEAD:.fern/metadata.json") {
                 return Promise.resolve({
-                    stdout: version == null ? "" : JSON.stringify({ sdkVersion: version }),
-                    exitCode: version == null ? 128 : 0
+                    stdout: JSON.stringify({ sdkVersion: version }),
+                    exitCode: 0
                 });
             }
             return Promise.resolve({ stdout: "", exitCode: 0 });
