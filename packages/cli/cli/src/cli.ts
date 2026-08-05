@@ -83,9 +83,9 @@ import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAP
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
 import { installDependencies } from "./commands/install-dependencies/installDependencies.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
-import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { installMcpServer } from "./commands/mcp/installMcpServer.js";
 import { MCP_CLIENTS, McpClient } from "./commands/mcp/mcpConfig.js";
+import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
 import {
     applyOrgBoundsToVersion,
