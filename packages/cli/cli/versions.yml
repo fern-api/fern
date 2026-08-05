@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.90.1
+  changelogEntry:
+    - summary: |
+        Thread the PHP SDK's Composer package identity (name + `--version`) into the IR's
+        filesystem publish target for `local-file-system` output, so the PHP generator can
+        stamp the real version into `composer.json` instead of defaulting to `0.0.0`.
+      type: fix
+  createdAt: "2026-08-05"
+  irVersion: 67
 - version: 5.90.0
   changelogEntry:
     - summary: |
