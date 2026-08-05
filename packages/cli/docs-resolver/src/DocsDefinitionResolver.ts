@@ -169,9 +169,9 @@ export interface DocsDefinitionResolverArgs {
      */
     buildTranslatedApiDefinitions?: boolean;
     /**
-     * When true, git-ref-backed docs versions are materialized and built. `fern docs dev`
-     * passes false by default (building only the working-tree version) and true when the
-     * user opts in with `--versions all`. Defaults to true (the publish path builds them).
+     * When true, git-ref-backed docs versions are materialized and built. The publish path
+     * builds every version (default true); `fern docs dev` passes false so it previews only
+     * the working-tree version.
      */
     buildRefVersions?: boolean;
     /**

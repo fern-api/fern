@@ -54,7 +54,7 @@ export async function parseDocsConfiguration({
     context: TaskContext;
     /**
      * When false, git-ref-backed versions are skipped rather than materialized.
-     * Used by `fern docs dev`, which builds only the working-tree version by default.
+     * Set by `fern docs dev`, which previews only the working-tree version.
      */
     buildRefVersions?: boolean;
 }): Promise<WithoutQuestionMarks<docsYml.ParsedDocsConfiguration>> {
