@@ -796,8 +796,18 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         if (this.context.isEndpointSecurity()) {
             return false;
         }
+        // The explicit-tracking locals and env-var fallbacks are only emitted in the
+        // credential-gated OAuth-provider branch of the constructor, so the flag must
+        // only activate when that exact branch is generated: `any`-composed multi-scheme
+        // auth where the OAuth provider (not an inferred-auth provider) is selected.
+        if (!this.isAnyAuthWithMultipleSchemes()) {
+            return false;
+        }
         const oauthAuth = this.context.getOAuthAuth();
         if (oauthAuth == null || oauthAuth.configuration.type !== "clientCredentials") {
+            return false;
+        }
+        if (!this.shouldUseOAuthProvider(this.context.getInferredAuth(), oauthAuth)) {
             return false;
         }
         return this.getBasicAuthCredentialParameterNames().length > 0;

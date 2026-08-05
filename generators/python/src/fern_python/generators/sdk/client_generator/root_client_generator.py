@@ -936,6 +936,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         """
         if not self._context.custom_config.prefer_explicit_auth:
             return False
+        if self._context.ir.auth.requirement != ir_types.AuthSchemesRequirement.ANY:
+            return False
+        if len(self._context.ir.auth.schemes) <= 1:
+            return False
         if self._oauth_scheme is None:
             return False
         oauth = self._oauth_scheme.configuration.get_as_union()
@@ -945,7 +949,12 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             context=self._context,
             generated_environment=self._generated_environment,
         )
-        return client_wrapper_generator._get_basic_auth_scheme() is not None
+        basic_auth_scheme = client_wrapper_generator._get_basic_auth_scheme()
+        if basic_auth_scheme is None:
+            return False
+        # At least one basic credential must surface as a constructor parameter for
+        # "explicitly provided basic auth" to be expressible.
+        return basic_auth_scheme.username_omit is not True or basic_auth_scheme.password_omit is not True
 
     def _get_os_getenv_expression(self, environment_variable: str) -> AST.Expression:
         return AST.Expression(
