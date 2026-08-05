@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.18.1
+  changelogEntry:
+    - summary: |
+        The generated `composer.json` version (and the fallback User-Agent header) now honors
+        the version passed via `fern generate --version` for `local-file-system` output,
+        instead of always defaulting to `0.0.0`. The Composer package name also falls back to
+        the CLI-provided package name when `packageName` is not set in `generators.yml`.
+      type: fix
+  createdAt: "2026-08-05"
+  irVersion: 67
 - version: 2.18.0
   changelogEntry:
     - summary: |
