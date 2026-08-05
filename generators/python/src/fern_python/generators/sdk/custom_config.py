@@ -56,6 +56,35 @@ class WireTestsConfig(pydantic.BaseModel):
         extra = pydantic.Extra.forbid
 
 
+class TimeoutsConfig(pydantic.BaseModel):
+    """Optional, additive per-phase HTTP timeouts (in seconds; fractional values allowed).
+
+    When set, the granular connect/read/write values are applied to the underlying
+    httpx client via ``httpx.Timeout(connect=, read=, write=, pool=)`` on top of the
+    existing single overall timeout (``timeout`` / ``timeout_in_seconds``), which
+    remains the all-phases fallback (used for ``pool`` and any phase not set here).
+    When unset, generated output is unchanged.
+    """
+
+    connect: Optional[float] = None
+    read: Optional[float] = None
+    write: Optional[float] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid
+
+    @pydantic.model_validator(mode="after")
+    def validate_non_negative(self) -> "TimeoutsConfig":
+        for name, value in (
+            ("connect", self.connect),
+            ("read", self.read),
+            ("write", self.write),
+        ):
+            if value is not None and value < 0:
+                raise ValueError(f"timeouts.{name} must be non-negative, got: {value}")
+        return self
+
+
 class TcpKeepaliveConfig(pydantic.BaseModel):
     """Configuration for platform-guarded TCP keepalive on the default HTTP transport.
 
@@ -90,6 +119,12 @@ class SDKCustomConfig(pydantic.BaseModel):
     timeout: Optional[Union[Literal["infinity"], int]] = None
     # deprecated, use `timeout` instead (same value, seconds)
     timeout_in_seconds: Union[Literal["infinity"], int] = 60
+    # Optional, additive per-phase timeouts (connect/read/write, in seconds;
+    # fractional allowed). When set, the underlying httpx client uses an
+    # `httpx.Timeout(connect=, read=, write=, pool=)` with these values, while
+    # the single overall timeout above remains the all-phases fallback. When
+    # unset, generated output is byte-identical to before.
+    timeouts: Optional[TimeoutsConfig] = None
     # Deprecated: prefer `output_directory`. `flat_layout` toggles only the `src/`
     # prefix and never skips project scaffolding; `output_directory: source-root`
     # additionally skips pyproject.toml / requirements.txt / README.md / py.typed.
@@ -323,6 +358,23 @@ class SDKCustomConfig(pydantic.BaseModel):
         falling back to the deprecated `timeout_in_seconds` alias. Both keys mean
         seconds, so no unit conversion is applied."""
         return self.timeout if self.timeout is not None else self.timeout_in_seconds
+
+    @property
+    def has_phase_timeouts(self) -> bool:
+        """True when a `timeouts` block with at least one phase value is configured.
+
+        Gates the additive per-phase timeout code so that output is byte-identical
+        to before for existing users who have not opted in."""
+        if self.timeouts is None:
+            return False
+        return any(
+            value is not None
+            for value in (
+                self.timeouts.connect,
+                self.timeouts.read,
+                self.timeouts.write,
+            )
+        )
 
     def get_resolved_defaults_mode(self) -> str:
         """Resolve the effective defaults mode from use_request_defaults (takes precedence)

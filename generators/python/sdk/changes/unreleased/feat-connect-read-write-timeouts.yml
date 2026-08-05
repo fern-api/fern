@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add independent connect/read/write timeouts to the generated SDK, mapping onto httpx's
+    per-phase `httpx.Timeout(connect=, read=, write=, pool=)`. These are additive and opt-in —
+    when unconfigured, generated output is byte-identical to before and the existing single overall
+    timeout (`timeout` / `timeout_in_seconds`) is preserved as the all-phases fallback (used for
+    `pool` and any phase not set granularly).
+
+    Configure the defaults via a `timeouts` block in `generators.yml` (values are in seconds and
+    may be fractional):
+
+    ```yaml
+    config:
+      timeouts:
+        connect: 5
+        read: 30
+        write: 30
+    ```
+
+    The same phases are also overridable per request via `RequestOptions`
+    (`connect_timeout` / `read_timeout` / `write_timeout`), winning over the configured defaults for
+    the phases they cover while the overall timeout remains the fallback.
+  type: feat
