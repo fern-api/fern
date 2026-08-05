@@ -523,10 +523,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
             return this.ir.sdkConfig.platformHeaders.userAgent;
         }
-        if (this.version != null) {
+        const version = this.getSdkVersion();
+        if (version != null) {
             return {
                 header: "User-Agent",
-                value: `${this.getPackageName()}/${this.version}`
+                value: `${this.getPackageName()}/${version}`
             };
         }
         return undefined;

@@ -354,7 +354,7 @@ class ComposerJson {
     private build(): Record<string, unknown> {
         let composerJson: Record<string, unknown> = {
             name: this.context.getPackageName(),
-            version: this.context.version ?? "0.0.0",
+            version: this.context.getSdkVersion() ?? "0.0.0",
             description: `${this.projectName} PHP Library`,
             keywords: [this.context.config.organization, "api", "sdk"],
             license: this.license ?? [],
