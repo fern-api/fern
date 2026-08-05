@@ -1522,14 +1522,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             # Track which credentials were passed explicitly (before applying env-var
             # defaults) so explicitly provided basic auth wins over OAuth env vars.
             basic_auth_scheme = client_wrapper_generator._get_basic_auth_scheme()
-            oauth_config = (
-                self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
-            )
-            if (
-                basic_auth_scheme is not None
-                and oauth_config is not None
-                and oauth_config.type == "clientCredentials"
-            ):
+            oauth_config = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+            if basic_auth_scheme is not None and oauth_config is not None and oauth_config.type == "clientCredentials":
                 basic_param_names: List[str] = []
                 env_fallbacks: List[Tuple[str, str]] = []
                 if basic_auth_scheme.username_omit is not True:
@@ -1549,8 +1543,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         env_fallbacks.append(("client_secret", oauth_config.client_secret_env_var))
                     writer.write_line("_explicit_oauth_auth = client_id is not None or client_secret is not None")
                     writer.write_line(
-                        "_explicit_basic_auth = "
-                        + " or ".join(f"{name} is not None" for name in basic_param_names)
+                        "_explicit_basic_auth = " + " or ".join(f"{name} is not None" for name in basic_param_names)
                     )
                     for param_name, env_var in env_fallbacks:
                         writer.write(f"{param_name} = {param_name} if {param_name} is not None else ")
