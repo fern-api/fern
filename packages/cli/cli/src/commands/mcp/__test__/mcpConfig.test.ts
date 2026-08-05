@@ -130,6 +130,19 @@ describe("upsertServerInCodexConfig", () => {
         );
     });
 
+    it("replaces a fern table whose header is padded or carries a comment", () => {
+        const existingContents = [
+            "[ mcp_servers.fern ] # hand-edited",
+            'url = "https://stale.example.com/mcp"',
+            "",
+            "[mcp_servers.context7]",
+            'command = "npx"'
+        ].join("\n");
+        expect(upsertServerInCodexConfig({ existingContents, url: URL, token: TOKEN })).toBe(
+            `[mcp_servers.context7]\ncommand = "npx"\n\n${expectedTable}\n`
+        );
+    });
+
     it("does not treat a similarly named table as the fern table", () => {
         const existingContents = '[mcp_servers.fernbot]\nurl = "https://other.example.com/mcp"';
         expect(upsertServerInCodexConfig({ existingContents, url: URL, token: TOKEN })).toBe(

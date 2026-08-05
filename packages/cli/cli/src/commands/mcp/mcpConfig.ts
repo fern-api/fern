@@ -71,9 +71,9 @@ function isRecord(value: unknown): value is Record<string, unknown> {
     return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-const CODEX_SERVER_TABLE_HEADER = `[mcp_servers.${MCP_SERVER_NAME}]`;
-const CODEX_SERVER_TABLE_PATTERN = new RegExp(`^\\[mcp_servers\\.${MCP_SERVER_NAME}(\\..+)?\\]$`);
-const TOML_TABLE_HEADER_PATTERN = /^\[\[?[^[\]]+\]?\]$/;
+const CODEX_SERVER_TABLE_PATH = `mcp_servers.${MCP_SERVER_NAME}`;
+const CODEX_SERVER_TABLE_HEADER = `[${CODEX_SERVER_TABLE_PATH}]`;
+const TOML_TABLE_HEADER_PATTERN = /^\[\[?([^[\]]+)\]?\]\s*(#.*)?$/;
 
 /**
  * Upserts the `[mcp_servers.fern]` table into Codex's `config.toml`. Codex has
@@ -107,9 +107,10 @@ function withoutCodexServerTable(contents: string): string[] {
     const kept: string[] = [];
     let isInsideServerTable = false;
     for (const line of contents.split("\n")) {
-        const trimmed = line.trim();
-        if (TOML_TABLE_HEADER_PATTERN.test(trimmed)) {
-            isInsideServerTable = CODEX_SERVER_TABLE_PATTERN.test(trimmed);
+        const tablePath = getTomlTablePath(line);
+        if (tablePath != null) {
+            isInsideServerTable =
+                tablePath === CODEX_SERVER_TABLE_PATH || tablePath.startsWith(`${CODEX_SERVER_TABLE_PATH}.`);
         }
         if (!isInsideServerTable) {
             kept.push(line);
@@ -119,6 +120,18 @@ function withoutCodexServerTable(contents: string): string[] {
         kept.pop();
     }
     return kept;
+}
+
+/**
+ * Returns the dotted key path of a TOML table header, or undefined if the line
+ * is not one. TOML allows padding and a trailing comment around the header
+ * (`[ mcp_servers.fern ] # note`), and all those spellings name the same table:
+ * missing one would leave a stale table in place and append a duplicate, which
+ * makes the whole file unparseable.
+ */
+function getTomlTablePath(line: string): string | undefined {
+    const path = TOML_TABLE_HEADER_PATTERN.exec(line.trim())?.[1];
+    return path?.replace(/\s+/g, "");
 }
 
 function toTomlString(value: string): string {
