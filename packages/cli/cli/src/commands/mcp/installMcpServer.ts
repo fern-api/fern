@@ -1,4 +1,4 @@
-import { FernToken } from "@fern-api/auth";
+import { getAccessToken } from "@fern-api/auth";
 import { askToLogin } from "@fern-api/login";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -59,8 +59,7 @@ export async function installMcpServer({
     organization: string | undefined;
     context: TaskContext;
 }): Promise<void> {
-    const token = await askToLogin(context);
-    assertIsUserToken(token, context);
+    const token = await getUserToken(context);
 
     const url = getMcpServerUrl({ faiOrigin: getFaiOrigin(), organization });
     const targets = clients ?? detectInstalledClients();
@@ -73,7 +72,7 @@ export async function installMcpServer({
     }
 
     for (const client of targets) {
-        const configPath = await writeClientConfig({ client, url, token: token.value });
+        const configPath = await writeClientConfig({ client, url, token });
         context.logger.info(
             chalk.green(`Configured the ${MCP_SERVER_NAME} MCP server for ${MCP_CLIENT_LABELS[client]}`) +
                 chalk.dim(` (${configPath})`)
@@ -113,12 +112,26 @@ function detectInstalledClients(): McpClient[] {
     });
 }
 
-function assertIsUserToken(token: FernToken, context: TaskContext): asserts token is FernToken & { type: "user" } {
-    if (token.type === "organization") {
-        context.failAndThrow(
-            "The MCP server authenticates a user, so a FERN_TOKEN cannot be used. Run `fern login` first (or unset FERN_TOKEN).",
-            undefined,
-            { code: CliError.Code.AuthError }
-        );
+/**
+ * The organization token is rejected up front: `askToLogin` would otherwise walk
+ * the user through a whole login flow before we reach the same error, since it
+ * prefers `FERN_TOKEN` over the stored user token.
+ */
+async function getUserToken(context: TaskContext): Promise<string> {
+    if ((await getAccessToken()) != null) {
+        failBecauseOrganizationToken(context);
     }
+    const token = await askToLogin(context);
+    if (token.type === "organization") {
+        failBecauseOrganizationToken(context);
+    }
+    return token.value;
+}
+
+function failBecauseOrganizationToken(context: TaskContext): never {
+    return context.failAndThrow(
+        "The MCP server authenticates a user, so a FERN_TOKEN cannot be used. Run `fern login` first (or unset FERN_TOKEN).",
+        undefined,
+        { code: CliError.Code.AuthError }
+    );
 }
