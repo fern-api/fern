@@ -50,6 +50,12 @@ customFixtureConfig:
     use_typeddict_requests: true
   outputFolder: client-filename
 fixtures:
+  any-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        prefer_explicit_auth: true
+      outputFolder: prefer-explicit-auth
   alias-extends:
     - customConfig: null
       outputFolder: no-custom-config

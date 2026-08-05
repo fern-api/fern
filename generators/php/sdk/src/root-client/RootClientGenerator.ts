@@ -361,6 +361,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         // getAuthHeaders callback is installed. Each auth param stays optional and env-var
         // fallbacks never throw (a caller may only use a subset of the schemes).
         const endpointSecurity = this.context.isEndpointSecurity();
+        const preferExplicitAuth = this.preferExplicitAuthEnabled();
         const serverVariableOptions = getServerVariableOptions(
             this.context.ir.environments,
             this.case,
@@ -539,6 +540,17 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             access: "public",
             parameters,
             body: php.codeblock((writer) => {
+                if (preferExplicitAuth) {
+                    // Record which credentials were passed explicitly, before the env-var
+                    // fallbacks below overwrite null parameters, so explicitly provided
+                    // basic auth wins over env-var-derived OAuth credentials.
+                    writer.writeTextStatement("$explicitOAuthAuth = $clientId !== null || $clientSecret !== null");
+                    writer.writeTextStatement(
+                        `$explicitBasicAuth = ${this.getBasicAuthCredentialParameterNames()
+                            .map((name) => `$${name} !== null`)
+                            .join(" || ")}`
+                    );
+                }
                 for (const param of constructorParameters.optional) {
                     if (param.environmentVariable != null) {
                         if (param.clientDefault != null) {
@@ -694,7 +706,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 const hasOAuth =
                     oauth != null && oauth.configuration.type === "clientCredentials" && this.shouldUseOAuthProvider();
                 const hasInferredAuth = inferredAuth != null && !this.shouldUseOAuthProvider();
-                const oauthCredGuard = "$clientId !== null && $clientSecret !== null";
+                const oauthCredGuard = preferExplicitAuth
+                    ? "$clientId !== null && $clientSecret !== null && ($explicitOAuthAuth || !$explicitBasicAuth)"
+                    : "$clientId !== null && $clientSecret !== null";
                 const inferredCredGuard =
                     inferredAuth != null ? this.getInferredAuthCredentialGuard(inferredAuth) : null;
 
@@ -1490,6 +1504,49 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             default:
                 assertNever(literal);
         }
+    }
+
+    /**
+     * Whether explicitly provided constructor auth credentials should take precedence
+     * over environment-variable defaults when selecting the auth scheme. Opt-in via the
+     * `preferExplicitAuth` config; only applies when OAuth client-credentials is
+     * composed with a basic auth scheme via `auth: any` (outside endpoint-security).
+     */
+    private preferExplicitAuthEnabled(): boolean {
+        if (this.context.customConfig.preferExplicitAuth !== true) {
+            return false;
+        }
+        if (this.context.isEndpointSecurity()) {
+            return false;
+        }
+        if (!this.isAnyAuthWithMultipleSchemes()) {
+            return false;
+        }
+        const oauth = this.context.getOauth();
+        if (oauth == null || oauth.configuration.type !== "clientCredentials" || !this.shouldUseOAuthProvider()) {
+            return false;
+        }
+        return this.getBasicAuthCredentialParameterNames().length > 0;
+    }
+
+    /**
+     * Returns the constructor parameter names for the basic auth credentials
+     * (excluding omitted fields), e.g. `["username", "password"]`.
+     */
+    private getBasicAuthCredentialParameterNames(): string[] {
+        const names: string[] = [];
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type !== "basic") {
+                continue;
+            }
+            if (!scheme.usernameOmit) {
+                names.push(this.context.getParameterName(scheme.username));
+            }
+            if (!scheme.passwordOmit) {
+                names.push(this.context.getParameterName(scheme.password));
+            }
+        }
+        return names;
     }
 
     /**
