@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.87.2
+  changelogEntry:
+    - summary: |
+        Send the caller's request when fetching the first page of a `next_uri`/`next_path` paginated
+        endpoint. Previously the first page was requested through the same headers-only helper used for
+        subsequent pages, so query parameters, request bodies and `requestOptions.queryParams` were
+        silently dropped (and the unused `request` parameter was emitted as `_request`). Subsequent pages
+        keep using the next URL as-is.
+      type: fix
+  createdAt: "2026-08-05"
+  irVersion: 67
 - version: 3.87.1
   changelogEntry:
     - summary: |
