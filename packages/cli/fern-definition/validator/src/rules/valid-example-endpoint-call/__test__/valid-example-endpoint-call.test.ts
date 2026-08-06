@@ -247,22 +247,6 @@ describe("valid-example-endpoint-call", () => {
                 severity: "fatal"
             },
             {
-                message: "Expected example to be a string. Example is: undefined",
-                nodePath: [
-                    "service",
-                    "endpoints",
-                    "c",
-                    {
-                        arrayIndex: 0,
-                        key: "examples"
-                    },
-                    "request"
-                ],
-                relativeFilepath: RelativeFilePath.of("request.yml"),
-                name: "valid-example-endpoint-call",
-                severity: "fatal"
-            },
-            {
                 message: "Expected example to be a string. Example is: 123",
                 nodePath: [
                     "service",

@@ -392,6 +392,11 @@ function convertExampleRequestBody({
         return undefined;
     }
 
+    // an omitted request in an example represents a call with no request body
+    if (example.request == null) {
+        return undefined;
+    }
+
     if (!isInlineRequestBody(requestType)) {
         return ExampleRequestBody.reference(
             convertTypeReferenceExample({

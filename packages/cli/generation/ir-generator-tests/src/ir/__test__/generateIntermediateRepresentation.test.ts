@@ -269,6 +269,29 @@ it("availability", async () => {
     });
 }, 200_000);
 
+describe("examples that omit the request body", () => {
+    const OPTIONAL_REQUEST_BODY_DIR = path.join(__dirname, "fixtures/optional-request-body-example/fern");
+
+    it("keeps the example and generates no request body", async () => {
+        const ir = await generateIRFromPath({
+            absolutePathToWorkspace: AbsoluteFilePath.of(OPTIONAL_REQUEST_BODY_DIR),
+            workspaceName: "optionalRequestBodyExample",
+            audiences: { type: "all" }
+        });
+
+        const service = Object.values(ir.services)[0];
+        expect(service).toBeDefined();
+
+        for (const endpointName of ["referencedBody", "inlinedBody"]) {
+            const endpoint = service?.endpoints.find((e) => getOriginalName(e.name) === endpointName);
+            const examples = (endpoint?.userSpecifiedExamples ?? []).map((e) => e.example);
+            expect(examples.map((e) => e?.name)).toEqual(["withoutBody", "withBody"]);
+            expect(examples[0]?.request).toBeUndefined();
+            expect(examples[1]?.request).toBeDefined();
+        }
+    }, 200_000);
+});
+
 it("docs", async () => {
     const DOCS_DIR = path.join(__dirname, "fixtures/docs/fern");
     await generateAndSnapshotIRFromPath({
