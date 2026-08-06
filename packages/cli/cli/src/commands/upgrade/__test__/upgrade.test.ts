@@ -12,7 +12,13 @@ import { PREVIOUS_VERSION_ENV_VAR, upgrade } from "../upgrade.js";
 
 vi.mock("@fern-api/cli-migrations");
 vi.mock("@fern-api/configuration-loader");
-vi.mock("@fern-api/semver-utils");
+vi.mock("@fern-api/semver-utils", async () => {
+    const actual = await vi.importActual<typeof import("@fern-api/semver-utils")>("@fern-api/semver-utils");
+    return {
+        ...actual,
+        isVersionAhead: vi.fn()
+    };
+});
 vi.mock("fs/promises");
 vi.mock("@fern-api/logging-execa");
 vi.mock("../../../rerunFernCliAtVersion", async () => {
@@ -1103,6 +1109,73 @@ describe("upgrade", () => {
         });
     });
 
+    describe("when the resolved source version is not a parseable version", () => {
+        let originalArgv: string[];
+
+        beforeEach(() => {
+            vi.mocked(isVersionAhead).mockReturnValue(true);
+            mockCliContext.environment.packageVersion = "1.0.0";
+            originalArgv = process.argv;
+            process.argv = ["node", "cli.js", "upgrade"];
+            // fern.config.json is pinned to a range, both on disk and in git history
+            vi.mocked(loadProjectConfig).mockResolvedValue({
+                version: "*",
+                rawConfig: { version: "*", organization: "test-org" },
+                _absolutePath: "/test/fern/fern.config.json" as AbsoluteFilePath,
+                organization: "test-org"
+            });
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: '{"version":"*"}',
+                stderr: ""
+            } as loggingExeca.ReturnValue);
+        });
+
+        afterEach(() => {
+            process.argv = originalArgv;
+        });
+
+        it("should rerun with the running CLI version as --from", async () => {
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(rerunFernCliAtVersion).toHaveBeenCalledWith({
+                version: "1.2.0",
+                cliContext: mockCliContext,
+                env: {
+                    [PREVIOUS_VERSION_ENV_VAR]: "1.0.0"
+                },
+                args: ["upgrade", "--from", "1.0.0", "--to", "1.2.0"],
+                throwOnError: true
+            });
+        });
+
+        it("should run migrations from the running CLI version when already at the target version", async () => {
+            mockCliContext.environment.packageVersion = "1.2.0";
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "1.2.0",
+                toVersion: "1.2.0",
+                context: {},
+                yes: false
+            });
+            expect(writeFile).toHaveBeenCalledWith(
+                "/test/fern/fern.config.json",
+                JSON.stringify({ version: "1.2.0", organization: "test-org" }, undefined, 2) + "\n"
+            );
+        });
+    });
+
     describe("--from-git flag", () => {
         beforeEach(() => {
             mockCliContext.environment.packageVersion = "0.0.0"; // Local dev
@@ -1196,6 +1269,34 @@ describe("upgrade", () => {
                 context: {},
                 yes: false
             });
+        });
+
+        it("should skip migrations when the git version is a range pin and the CLI is local dev", async () => {
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: '{"version":"*"}',
+                stderr: ""
+            } as loggingExeca.ReturnValue);
+            vi.mocked(loadProjectConfig).mockResolvedValue({
+                version: "*",
+                rawConfig: { version: "*", organization: "test-org" },
+                _absolutePath: "/test/fern/fern.config.json" as AbsoluteFilePath,
+                organization: "test-org"
+            });
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined,
+                fromGit: true
+            });
+
+            expect(runMigrations).not.toHaveBeenCalled();
+            expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("Skipping migrations"));
+            expect(writeFile).toHaveBeenCalledWith(
+                "/test/fern/fern.config.json",
+                JSON.stringify({ version: "1.2.0", organization: "test-org" }, undefined, 2) + "\n"
+            );
         });
 
         it("should respect explicit --from flag even when --from-git is set", async () => {
