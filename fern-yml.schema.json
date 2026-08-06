@@ -459,6 +459,9 @@
               "path": {
                 "type": "string"
               },
+              "ref": {
+                "type": "string"
+              },
               "slug": {
                 "type": "string"
               },
@@ -501,8 +504,7 @@
               }
             },
             "required": [
-              "display-name",
-              "path"
+              "display-name"
             ],
             "additionalProperties": false
           }
@@ -645,6 +647,9 @@
                         "path": {
                           "type": "string"
                         },
+                        "ref": {
+                          "type": "string"
+                        },
                         "slug": {
                           "type": "string"
                         },
@@ -687,8 +692,7 @@
                         }
                       },
                       "required": [
-                        "display-name",
-                        "path"
+                        "display-name"
                       ],
                       "additionalProperties": false
                     }
@@ -865,6 +869,9 @@
                         "path": {
                           "type": "string"
                         },
+                        "ref": {
+                          "type": "string"
+                        },
                         "slug": {
                           "type": "string"
                         },
@@ -907,8 +914,7 @@
                         }
                       },
                       "required": [
-                        "display-name",
-                        "path"
+                        "display-name"
                       ],
                       "additionalProperties": false
                     }
