@@ -7,6 +7,7 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.inferred_auth_token_provider import AsyncInferredAuthTokenProvider, InferredAuthTokenProvider
 from .core.logging import LogConfig, Logger
 from .core.oauth_token_provider import AsyncOAuthTokenProvider, OAuthTokenProvider
 
@@ -183,6 +184,27 @@ class SeedEndpointSecurityAuth:
                     logging=logging,
                 ),
             )
+            inferred_auth_token_provider = InferredAuthTokenProvider(
+                client_id=client_id,
+                client_secret=client_secret,
+                client_wrapper=SyncClientWrapper(
+                    base_url=base_url,
+                    api_key=api_key,
+                    username=username,
+                    password=password,
+                    headers=headers,
+                    httpx_client=httpx_client
+                    if httpx_client is not None
+                    else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                    if follow_redirects is not None
+                    else httpx.Client(timeout=_defaulted_timeout),
+                    timeout=_defaulted_timeout,
+                    max_retries=_defaulted_max_retries,
+                    stream_reconnection_enabled=stream_reconnection_enabled,
+                    max_stream_reconnection_attempts=max_stream_reconnection_attempts,
+                    logging=logging,
+                ),
+            )
             self._client_wrapper = SyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
@@ -200,6 +222,7 @@ class SeedEndpointSecurityAuth:
                 stream_reconnection_enabled=stream_reconnection_enabled,
                 max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
+                auth_headers=inferred_auth_token_provider.get_headers,
             )
         else:
             self._client_wrapper = SyncClientWrapper(
@@ -423,6 +446,25 @@ class AsyncSeedEndpointSecurityAuth:
                     logging=logging,
                 ),
             )
+            inferred_auth_token_provider = AsyncInferredAuthTokenProvider(
+                client_id=client_id,
+                client_secret=client_secret,
+                client_wrapper=AsyncClientWrapper(
+                    base_url=base_url,
+                    api_key=api_key,
+                    username=username,
+                    password=password,
+                    headers=headers,
+                    httpx_client=httpx_client
+                    if httpx_client is not None
+                    else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
+                    timeout=_defaulted_timeout,
+                    max_retries=_defaulted_max_retries,
+                    stream_reconnection_enabled=stream_reconnection_enabled,
+                    max_stream_reconnection_attempts=max_stream_reconnection_attempts,
+                    logging=logging,
+                ),
+            )
             self._client_wrapper = AsyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
@@ -439,6 +481,7 @@ class AsyncSeedEndpointSecurityAuth:
                 stream_reconnection_enabled=stream_reconnection_enabled,
                 max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
+                async_auth_headers=inferred_auth_token_provider.get_headers,
             )
         else:
             self._client_wrapper = AsyncClientWrapper(

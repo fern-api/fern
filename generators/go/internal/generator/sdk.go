@@ -21,6 +21,16 @@ const goLanguageHeader = "Go"
 // structured User-Agent header value when includePlatformHeaders is enabled.
 const platformUserAgentFunc = "platformUserAgent"
 
+// appInfoTypeName is the name of the generated public struct carrying the opt-in
+// User-Agent appInfo (name/version/comment), emitted only when
+// allowUserAgentAppInfo is enabled.
+const appInfoTypeName = "AppInfo"
+
+// appendAppInfoFunc is the name of the generated helper that appends a sanitized
+// appInfo product token to a base User-Agent value. Emitted into core only when
+// allowUserAgentAppInfo is enabled (and a User-Agent is actually written).
+const appendAppInfoFunc = "appendAppInfoToUserAgent"
+
 var (
 	//go:embed sdk/core/api_error.go
 	apiErrorFile string
@@ -75,6 +85,9 @@ var (
 
 	//go:embed sdk/internal/query_test.go
 	queryTestFile string
+
+	//go:embed sdk/internal/query_defaults_on_nil.go_
+	queryDefaultsOnNilFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -339,7 +352,15 @@ var reservedRequestOptionNames = map[string]struct{}{
 // API's environments, paired with the client-option name each is exposed under.
 // Variables are de-duplicated by id (taken from the first environment that
 // declares them) and de-collided against reserved RequestOptions field names.
-func serverURLVariablesFromConfig(environmentsConfig *common.EnvironmentsConfig) []*serverURLVariable {
+//
+// When enabled is false (i.e. the serverUrlVariables generator config option is
+// disabled), this returns an empty slice so that no server-URL-variable client
+// options nor the construction-time base-URL template interpolation are emitted,
+// falling back to the pre-feature base-URL behavior.
+func serverURLVariablesFromConfig(enabled bool, environmentsConfig *common.EnvironmentsConfig) []*serverURLVariable {
+	if !enabled {
+		return nil
+	}
 	variables := collectServerURLVariables(environmentsConfig)
 	result := make([]*serverURLVariable, 0, len(variables))
 	for _, variable := range variables {
@@ -433,6 +454,13 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	hasOAuth := getOAuthClientCredentials(auth) != nil
 	hasInferred := getInferredAuthScheme(auth) != nil
 
+	// In endpoint-security mode, auth is applied per-endpoint (each endpoint
+	// declares its own schemes) rather than flatly on every request. The flat
+	// ToHeader() therefore emits no auth headers; routing happens in
+	// AuthHeadersForEndpoint, which the endpoint code calls with the endpoint's
+	// static security requirements.
+	endpointSecurity := isEndpointSecurity(auth)
+
 	// Generate TokenGetter type if OAuth or inferred auth is configured
 	if hasOAuth || hasInferred {
 		f.P("// TokenGetter is a function that returns an access token.")
@@ -460,6 +488,11 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("MaxStreamReconnectAttempts uint")
 	f.P("DisableStreamReconnection bool")
 	f.P("DisableRetries bool")
+	if f.userAgent.emitsAppInfo() {
+		// Optional application info appended to the User-Agent header. Set via
+		// option.WithUserAgentAppInfo.
+		f.P(appInfoTypeName, " *", appInfoTypeName)
+	}
 	if hasOAuth || hasInferred {
 		f.P("tokenGetter TokenGetter")
 	}
@@ -535,7 +568,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	}
 	// Generate a field for each server URL variable (e.g. region), used to
 	// interpolate the environment's URL template(s) at client construction.
-	for _, serverURLVariable := range serverURLVariablesFromConfig(environmentsConfig) {
+	for _, serverURLVariable := range serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig) {
 		f.P(serverURLVariable.optionName, " string")
 	}
 	f.P("}")
@@ -568,7 +601,18 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(environmentsConfig))
+		if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig)); err != nil {
+			return err
+		}
+		// Emit the AppInfo type alongside its consumers (the AppInfo field,
+		// AppInfoOption, and option.WithUserAgentAppInfo) whenever the feature is
+		// enabled, independent of sdkVersion/PlatformHeaders. Otherwise the core
+		// package references an undefined core.AppInfo for versionless (local /
+		// downloadFiles) generation or IRs without platform headers.
+		if f.userAgent.emitsAppInfo() {
+			f.writeAppInfoType()
+		}
+		return nil
 	}
 
 	// Generate the ToHeader method.
@@ -577,6 +621,10 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("func (r *RequestOptions) ToHeader() http.Header {")
 	f.P("header := r.cloneHeader()")
 	for _, authScheme := range auth.Schemes {
+		if endpointSecurity {
+			// Auth headers are routed per-endpoint via AuthHeadersForEndpoint.
+			break
+		}
 		if authScheme.Bearer != nil {
 			name := authScheme.Bearer.Token.PascalCase.UnsafeName
 			f.P("if r.", name, ` != "" {`)
@@ -685,7 +733,14 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			}
 			continue
 		}
-		if header.ClientDefault != nil {
+		// Headers with an env var and/or client default are resolved into the
+		// client-level options at construction time, so ToHeader only emits
+		// values that are explicitly set on the options. Setting the resolved
+		// fallback here would clobber the client-level value on every request,
+		// since empty per-request options win the header merge. Construction-time
+		// resolution only covers optional, string, and boolean header types, so
+		// other types keep the request-time client default fallback.
+		if header.ClientDefault != nil && !isClientDefaultResolvedAtConstruction(header.ValueType, valueTypeFormat) {
 			formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ClientDefault) + ")"
 			f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
 			if header.Env != nil {
@@ -694,11 +749,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				f.P("}")
 			}
 			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-			if valueTypeFormat.IsOptional {
-				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
-			} else {
-				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
-			}
+			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
 			f.P(header.Name.Name.CamelCase.SafeName, ` = fmt.Sprintf("%v", `, value, ")")
 			f.P("}")
 			f.P(`header.Set("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
@@ -717,17 +768,217 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("}")
 	f.P()
 
+	if endpointSecurity {
+		f.writeAuthHeadersForEndpoint(auth)
+		f.P()
+	}
+
 	if err := f.writePlatformHeaders(sdkConfig, moduleConfig, sdkVersion); err != nil {
 		return err
 	}
 
 	f.P()
 
-	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(environmentsConfig)); err != nil {
+	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig)); err != nil {
 		return err
 	}
 
+	// Emit the AppInfo type alongside its consumers (the AppInfo field,
+	// AppInfoOption, and option.WithUserAgentAppInfo) whenever the feature is
+	// enabled, independent of sdkVersion/PlatformHeaders. Otherwise the core
+	// package references an undefined core.AppInfo for versionless (local /
+	// downloadFiles) generation or IRs without platform headers.
+	if f.userAgent.emitsAppInfo() {
+		f.writeAppInfoType()
+	}
+
 	return nil
+}
+
+// writeAuthHeadersForEndpoint generates the AuthHeadersForEndpoint method on
+// *RequestOptions, used in endpoint-security mode. Given an endpoint's static
+// security requirements ([][]string, where the outer slice is OR'd and each
+// inner slice of scheme keys is AND'd), it returns only the auth headers for
+// the first requirement whose schemes all have credentials available. If none
+// is satisfiable, it returns an error naming the missing schemes. This mirrors
+// the TypeScript RoutingAuthProvider and the Python get_auth_headers_for_endpoint.
+func (f *fileWriter) writeAuthHeadersForEndpoint(auth *ir.ApiAuth) {
+	// Bearer and OAuth schemes share the single token slot: a resolved token
+	// is applied as "Authorization: Bearer <token>" for whichever of those keys
+	// the endpoint declares.
+	var (
+		bearerScheme    *ir.BearerAuthScheme
+		basicScheme     *ir.BasicAuthScheme
+		inferredScheme  *ir.InferredAuthScheme
+		headerSchemes   []*ir.HeaderAuthScheme
+		tokenSchemeKeys []string
+	)
+	for _, authScheme := range auth.Schemes {
+		switch {
+		case authScheme.Bearer != nil:
+			bearerScheme = authScheme.Bearer
+			tokenSchemeKeys = append(tokenSchemeKeys, authScheme.Bearer.Key)
+		case authScheme.Oauth != nil:
+			tokenSchemeKeys = append(tokenSchemeKeys, authScheme.Oauth.Key)
+		case authScheme.Basic != nil:
+			basicScheme = authScheme.Basic
+		case authScheme.Header != nil:
+			if shouldGenerateHeaderAuthScheme(authScheme.Header, f.types) {
+				headerSchemes = append(headerSchemes, authScheme.Header)
+			}
+		case authScheme.Inferred != nil:
+			inferredScheme = authScheme.Inferred
+		}
+	}
+
+	f.P("// AuthHeadersForEndpoint returns the auth headers to apply for an endpoint,")
+	f.P("// given the endpoint's static security requirements. It routes to the first")
+	f.P("// requirement whose schemes all have credentials available (OR across the")
+	f.P("// list, AND within a requirement).")
+	f.P("func (r *RequestOptions) AuthHeadersForEndpoint(security [][]string) (http.Header, error) {")
+	f.P("if len(security) == 0 {")
+	f.P("return make(http.Header), nil")
+	f.P("}")
+	f.P("availableAuthHeaders := make(map[string]http.Header)")
+
+	// Bearer / OAuth token schemes.
+	if len(tokenSchemeKeys) > 0 {
+		if bearerScheme != nil {
+			name := bearerScheme.Token.PascalCase.UnsafeName
+			f.P("token := r.", name)
+			f.P("if token == \"\" && r.", name, "Func != nil {")
+			f.P("if value, err := r.", name, "Func(); err == nil {")
+			f.P("token = value")
+			f.P("}")
+			f.P("}")
+		} else {
+			// OAuth without an explicit bearer scheme: the token is either provided
+			// directly or fetched via the configured token getter.
+			f.P("token := r.Token")
+			f.P("if token == \"\" && r.tokenGetter != nil {")
+			f.P("if value, err := r.tokenGetter(); err == nil {")
+			f.P("token = value")
+			f.P("}")
+			f.P("}")
+		}
+		f.P("if token != \"\" {")
+		f.P("tokenHeaders := make(http.Header)")
+		f.P(`tokenHeaders.Set("Authorization", "Bearer " + token)`)
+		for _, key := range tokenSchemeKeys {
+			f.P(`availableAuthHeaders["`, key, `"] = tokenHeaders`)
+		}
+		f.P("}")
+	}
+
+	// Header auth schemes (e.g. X-API-Key).
+	for _, header := range headerSchemes {
+		var prefix string
+		if header.Prefix != nil {
+			prefix = *header.Prefix + " "
+		}
+		valueTypeFormat := formatForValueType(header.ValueType, f.types)
+		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+		f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+		f.P("headerValues := make(http.Header)")
+		f.P(`headerValues.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
+		f.P(`availableAuthHeaders["`, header.Key, `"] = headerValues`)
+		f.P("}")
+	}
+
+	// Basic auth.
+	if basicScheme != nil {
+		usernameOmitted := isBasicAuthUsernameOmitted(basicScheme)
+		passwordOmitted := isBasicAuthPasswordOmitted(basicScheme)
+		username := basicScheme.Username.PascalCase.UnsafeName
+		password := basicScheme.Password.PascalCase.UnsafeName
+		var (
+			condition   string
+			usernameArg string
+			passwordArg string
+		)
+		switch {
+		case usernameOmitted && passwordOmitted:
+			// Both omitted — no basic credentials to apply.
+		case usernameOmitted:
+			condition = "r." + password + ` != ""`
+			usernameArg = `""`
+			passwordArg = "r." + password
+		case passwordOmitted:
+			condition = "r." + username + ` != ""`
+			usernameArg = "r." + username
+			passwordArg = `""`
+		default:
+			condition = "r." + username + ` != "" || r.` + password + ` != ""`
+			usernameArg = "r." + username
+			passwordArg = "r." + password
+		}
+		if condition != "" {
+			f.P("if ", condition, " {")
+			f.P("basicHeaders := make(http.Header)")
+			f.P(`basicHeaders.Set("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(`, usernameArg, ` + ":" + `, passwordArg, `)))`)
+			f.P(`availableAuthHeaders["`, basicScheme.Key, `"] = basicHeaders`)
+			f.P("}")
+		}
+	}
+
+	// Inferred auth: fetch the token and apply the configured authenticated
+	// request headers.
+	if inferredScheme != nil && inferredScheme.TokenEndpoint != nil {
+		f.P("if r.tokenGetter != nil {")
+		f.P("if inferredToken, err := r.tokenGetter(); err == nil && inferredToken != \"\" {")
+		f.P("inferredHeaders := make(http.Header)")
+		for _, authHeader := range inferredScheme.TokenEndpoint.AuthenticatedRequestHeaders {
+			if authHeader.ValuePrefix != nil {
+				f.P(fmt.Sprintf(`inferredHeaders.Set(%q, %q + inferredToken)`, authHeader.HeaderName, *authHeader.ValuePrefix))
+			} else {
+				f.P(fmt.Sprintf(`inferredHeaders.Set(%q, inferredToken)`, authHeader.HeaderName))
+			}
+		}
+		f.P(`availableAuthHeaders["`, inferredScheme.Key, `"] = inferredHeaders`)
+		f.P("}")
+		f.P("}")
+	}
+
+	// OR across requirements: pick the first fully-satisfiable requirement and
+	// combine the headers of its schemes.
+	f.P("for _, requirement := range security {")
+	f.P("satisfied := true")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("if _, ok := availableAuthHeaders[schemeKey]; !ok {")
+	f.P("satisfied = false")
+	f.P("break")
+	f.P("}")
+	f.P("}")
+	f.P("if !satisfied {")
+	f.P("continue")
+	f.P("}")
+	f.P("combined := make(http.Header)")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("for name, values := range availableAuthHeaders[schemeKey] {")
+	f.P("for _, value := range values {")
+	f.P("combined.Set(name, value)")
+	f.P("}")
+	f.P("}")
+	f.P("}")
+	f.P("return combined, nil")
+	f.P("}")
+
+	// No requirement satisfiable: report the missing schemes.
+	f.P("missing := make([]string, 0, len(security))")
+	f.P("for _, requirement := range security {")
+	f.P("var missingSchemes []string")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("if _, ok := availableAuthHeaders[schemeKey]; !ok {")
+	f.P("missingSchemes = append(missingSchemes, schemeKey)")
+	f.P("}")
+	f.P("}")
+	f.P(`missing = append(missing, strings.Join(missingSchemes, " AND "))`)
+	f.P("}")
+	f.P("return nil, fmt.Errorf(")
+	f.P(`"no authentication credentials provided that satisfy the endpoint's security requirements; please provide credentials for: %s",`)
+	f.P(`strings.Join(missing, " OR "),`)
+	f.P(")")
+	f.P("}")
 }
 
 // writePlatformHeaders generates the platform headers.
@@ -736,7 +987,7 @@ func (f *fileWriter) writePlatformHeaders(
 	moduleConfig *ModuleConfig,
 	sdkVersion string,
 ) error {
-	if sdkVersion == "" || f.omitFernHeaders {
+	if sdkVersion == "" || f.userAgent.omitFernHeaders {
 		f.P("func (r *RequestOptions) cloneHeader() http.Header {")
 		f.P("return r.HTTPHeader.Clone()")
 		f.P("}")
@@ -749,18 +1000,35 @@ func (f *fileWriter) writePlatformHeaders(
 		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkName, moduleConfig.Path))
 		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkVersion, sdkVersion))
 		if sdkConfig.PlatformHeaders.UserAgent != nil {
-			if f.includePlatformHeaders {
+			// Base is the User-Agent value the SDK would otherwise send: either the
+			// structured, runtime-computed value (includePlatformHeaders) or the raw
+			// configured/default value.
+			var userAgentExpr string
+			if f.userAgent.includePlatformHeaders {
 				// Consolidate runtime/platform observability into a single structured
 				// User-Agent header, computed at runtime.
-				f.P(fmt.Sprintf("headers.Set(%q, %s(%q))", sdkConfig.PlatformHeaders.UserAgent.Header(), platformUserAgentFunc, sdkConfig.PlatformHeaders.UserAgent.Value))
+				userAgentExpr = fmt.Sprintf("%s(%q)", platformUserAgentFunc, sdkConfig.PlatformHeaders.UserAgent.Value)
 			} else {
-				f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.UserAgent.Header(), sdkConfig.PlatformHeaders.UserAgent.Value))
+				userAgentExpr = fmt.Sprintf("%q", sdkConfig.PlatformHeaders.UserAgent.Value)
 			}
+			if f.userAgent.emitsAppInfo() {
+				// When enabled, the caller's appInfo product token is appended to
+				// whatever User-Agent the SDK would otherwise send (all branches).
+				userAgentExpr = fmt.Sprintf("%s(%s, r.%s)", appendAppInfoFunc, userAgentExpr, appInfoTypeName)
+			}
+			f.P(fmt.Sprintf("headers.Set(%q, %s)", sdkConfig.PlatformHeaders.UserAgent.Header(), userAgentExpr))
 		}
 		f.P("return headers")
 		f.P("}")
-		if f.includePlatformHeaders && sdkConfig.PlatformHeaders.UserAgent != nil {
+		if f.userAgent.includePlatformHeaders && sdkConfig.PlatformHeaders.UserAgent != nil {
 			f.writePlatformUserAgentFunc()
+		}
+		if f.userAgent.emitsAppInfo() && sdkConfig.PlatformHeaders.UserAgent != nil {
+			// The AppInfo type itself is emitted unconditionally by
+			// WriteRequestOptionsDefinition (gated only on emitsAppInfo) so it is
+			// always defined alongside its consumers. The appender helper is emitted
+			// here only when a User-Agent header is actually written.
+			f.writeAppendAppInfoFunc()
 		}
 	}
 	return nil
@@ -801,6 +1069,113 @@ func (f *fileWriter) writePlatformUserAgentFunc() {
 	f.P("}")
 }
 
+// writeAppInfoType emits the public AppInfo struct into core/request_option.go.
+// It is emitted whenever the feature is enabled (emitsAppInfo) so the AppInfo
+// field, AppInfoOption, and option.WithUserAgentAppInfo always resolve, even for
+// APIs that do not declare a User-Agent platform header.
+func (f *fileWriter) writeAppInfoType() {
+	f.P()
+	f.P("// ", appInfoTypeName, " is optional application information whose product token is")
+	f.P("// appended to the User-Agent header (see WithUserAgentAppInfo). The Name is")
+	f.P("// required; when it is blank the User-Agent is left unchanged. Version and")
+	f.P("// Comment are optional and omitted from the token when blank.")
+	f.P("type ", appInfoTypeName, " struct {")
+	f.P("Name string")
+	f.P("Version string")
+	f.P("Comment string")
+	f.P("}")
+}
+
+// writeAppendAppInfoFunc emits the appendAppInfoToUserAgent helper (and its
+// token/comment encoders) into core/request_option.go. Emitted only when the
+// feature is enabled and a User-Agent is actually written, so flag-off output
+// stays byte-identical and the shared core-utilities are never modified.
+//
+// The helper appends a sanitized RFC 9110 product token
+// ("{name}/{version} ({comment})") to whatever User-Agent the SDK would
+// otherwise send. Each field is trimmed before the blank check and before
+// encoding, so blank values are dropped rather than encoded into whitespace
+// tokens. name/version are percent-encoded down to RFC 7230 tchar and the
+// comment's delimiters ("(", ")", "\") and control characters (incl. CR/LF) are
+// escaped, so caller-supplied values cannot inject additional header content.
+func (f *fileWriter) writeAppendAppInfoFunc() {
+	fmtPackage := f.scope.AddImport("fmt")
+	stringsPackage := f.scope.AddImport("strings")
+	utf8Package := f.scope.AddImport("unicode/utf8")
+
+	f.P()
+	// Percent-encoder helper (shared by token and comment encoders).
+	f.P("// ", appendAppInfoFunc, "PercentEncode percent-encodes a single rune from its")
+	f.P("// UTF-8 bytes (e.g. '\\n' -> \"%0A\"), so untrusted values cannot inject header content.")
+	f.P("func ", appendAppInfoFunc, "PercentEncode(b *", stringsPackage, ".Builder, r rune) {")
+	f.P("var buf [", utf8Package, ".UTFMax]byte")
+	f.P("n := ", utf8Package, ".EncodeRune(buf[:], r)")
+	f.P("for _, c := range buf[:n] {")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\"%%%02X\", c))")
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	// Token encoder: keep RFC 7230 tchar, percent-encode everything else.
+	f.P("// ", appendAppInfoFunc, "EncodeToken keeps RFC 7230 token characters (tchar) and")
+	f.P("// percent-encodes everything else (spaces, control characters, CR/LF included).")
+	f.P("func ", appendAppInfoFunc, "EncodeToken(value string) string {")
+	f.P("var b ", stringsPackage, ".Builder")
+	f.P("for _, r := range value {")
+	f.P("switch {")
+	f.P("case r >= 'a' && r <= 'z', r >= 'A' && r <= 'Z', r >= '0' && r <= '9':")
+	f.P("b.WriteRune(r)")
+	f.P("case ", stringsPackage, ".ContainsRune(\"!#$%&'*+-.^_`|~\", r):")
+	f.P("b.WriteRune(r)")
+	f.P("default:")
+	f.P(appendAppInfoFunc, "PercentEncode(&b, r)")
+	f.P("}")
+	f.P("}")
+	f.P("return b.String()")
+	f.P("}")
+	f.P()
+
+	// Comment encoder: escape delimiters and control characters only.
+	f.P("// ", appendAppInfoFunc, "EncodeComment escapes the comment delimiters '(', ')', '\\\\'")
+	f.P("// and control characters (0x00-0x1F, 0x7F, incl. CR/LF) so a caller-supplied")
+	f.P("// comment cannot terminate the comment group early or inject header content.")
+	f.P("func ", appendAppInfoFunc, "EncodeComment(value string) string {")
+	f.P("var b ", stringsPackage, ".Builder")
+	f.P("for _, r := range value {")
+	f.P("if r == '(' || r == ')' || r == '\\\\' || r < 0x20 || r == 0x7F {")
+	f.P(appendAppInfoFunc, "PercentEncode(&b, r)")
+	f.P("} else {")
+	f.P("b.WriteRune(r)")
+	f.P("}")
+	f.P("}")
+	f.P("return b.String()")
+	f.P("}")
+	f.P()
+
+	// The appender itself.
+	f.P("// ", appendAppInfoFunc, " appends the sanitized appInfo product token")
+	f.P("// (\"{name}/{version} ({comment})\", RFC 9110) to the given User-Agent value.")
+	f.P("// Each field is trimmed before the blank check and before encoding; a blank")
+	f.P("// name leaves the User-Agent unchanged.")
+	f.P("func ", appendAppInfoFunc, "(userAgent string, appInfo *", appInfoTypeName, ") string {")
+	f.P("if appInfo == nil {")
+	f.P("return userAgent")
+	f.P("}")
+	f.P("name := ", appendAppInfoFunc, "EncodeToken(", stringsPackage, ".TrimSpace(appInfo.Name))")
+	f.P("if name == \"\" {")
+	f.P("return userAgent")
+	f.P("}")
+	f.P("productToken := name")
+	f.P("if version := ", appendAppInfoFunc, "EncodeToken(", stringsPackage, ".TrimSpace(appInfo.Version)); version != \"\" {")
+	f.P("productToken += \"/\" + version")
+	f.P("}")
+	f.P("if comment := ", appendAppInfoFunc, "EncodeComment(", stringsPackage, ".TrimSpace(appInfo.Comment)); comment != \"\" {")
+	f.P("productToken += \" (\" + comment + \")\"")
+	f.P("}")
+	f.P("return userAgent + \" \" + productToken")
+	f.P("}")
+}
+
 func (f *fileWriter) writeRequestOptionStructs(
 	auth *ir.ApiAuth,
 	headers []*ir.HttpHeader,
@@ -835,6 +1210,12 @@ func (f *fileWriter) writeRequestOptionStructs(
 	}
 	f.writeMarkerOptionStruct("WithoutStreamReconnectionOption", "DisableStreamReconnection", asIdempotentRequestOption)
 	f.writeMarkerOptionStruct("WithoutRetriesOption", "DisableRetries", asIdempotentRequestOption)
+
+	if f.userAgent.emitsAppInfo() {
+		if err := f.writeOptionStruct(appInfoTypeName, "*"+appInfoTypeName, true, asIdempotentRequestOption); err != nil {
+			return err
+		}
+	}
 
 	if isMultiURL {
 		if err := f.writeOptionStruct("Environment", "interface{}", true, asIdempotentRequestOption); err != nil {
@@ -1195,6 +1576,24 @@ func (f *fileWriter) WriteRequestOptions(
 	f.P("}")
 	f.P()
 
+	// Generate the opt-in WithUserAgentAppInfo option.
+	if f.userAgent.emitsAppInfo() {
+		f.P("// WithUserAgentAppInfo appends an application product token to the User-Agent")
+		f.P("// header sent by the client (\"{name}/{version} ({comment})\", RFC 9110). The")
+		f.P("// version and comment are optional; pass \"\" to omit them. Caller-supplied")
+		f.P("// values are sanitized before being written to the header.")
+		f.P("func WithUserAgentAppInfo(name, version, comment string) *core.", appInfoTypeName, "Option {")
+		f.P("return &core.", appInfoTypeName, "Option{")
+		f.P(appInfoTypeName, ": &core.", appInfoTypeName, "{")
+		f.P("Name: name,")
+		f.P("Version: version,")
+		f.P("Comment: comment,")
+		f.P("},")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
+
 	// Generate the WithEnvironment option for multi-URL environments.
 	if isMultipleBaseUrlsEnvironment(environmentsConfig) {
 		// Import the root package to get the Environment type
@@ -1212,7 +1611,7 @@ func (f *fileWriter) WriteRequestOptions(
 	// Generate a functional option for each server URL variable (e.g. region).
 	// Setting one rebuilds the base URL(s) from the environment's URL template(s)
 	// at client construction time.
-	for _, serverURLVariable := range serverURLVariablesFromConfig(environmentsConfig) {
+	for _, serverURLVariable := range serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig) {
 		originalName := serverURLVariable.variable.Id
 		if serverURLVariable.variable.Name != nil {
 			originalName = serverURLVariable.variable.Name.OriginalName
@@ -4530,6 +4929,21 @@ func isStringType(valueType *ir.TypeReference) bool {
 	return primitive != nil && primitive.V1 == common.PrimitiveTypeV1String
 }
 
+// isClientDefaultResolvedAtConstruction returns true if a header's client
+// default is applied to the client-level options at construction time (by the
+// v2 client generator), which covers optional (pointer) types plus plain
+// string and boolean primitives. For those types, ToHeader must not re-apply
+// the fallback, or it would clobber the client-level value on every request.
+func isClientDefaultResolvedAtConstruction(valueType *ir.TypeReference, valueTypeFormat *valueTypeFormat) bool {
+	if valueTypeFormat.IsOptional {
+		return true
+	}
+	if valueType.Primitive == nil {
+		return false
+	}
+	return valueType.Primitive.V1 == common.PrimitiveTypeV1String || valueType.Primitive.V1 == common.PrimitiveTypeV1Boolean
+}
+
 // isPrimitiveInteger returns true if the given primitive type is an integer.
 func isPrimitiveInteger(primitive *ir.PrimitiveType) bool {
 	return primitive.V1 == common.PrimitiveTypeV1Integer || primitive.V1 == common.PrimitiveTypeV1Uint || primitive.V1 == common.PrimitiveTypeV1Uint64 || primitive.V1 == common.PrimitiveTypeV1Long
@@ -4652,6 +5066,12 @@ func getOAuthScheme(auth *ir.ApiAuth) *ir.OAuthScheme {
 		}
 	}
 	return nil
+}
+
+// isEndpointSecurity returns true when the API applies auth per-endpoint (each
+// endpoint declares its own schemes) rather than flatly on every request.
+func isEndpointSecurity(auth *ir.ApiAuth) bool {
+	return auth != nil && string(auth.Requirement) == "ENDPOINT_SECURITY"
 }
 
 // hasBearerAuth returns true if the auth configuration has a bearer auth scheme.

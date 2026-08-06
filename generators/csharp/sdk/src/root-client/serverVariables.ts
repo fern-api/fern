@@ -44,11 +44,19 @@ export function getServerVariableValueExpression({ variable, optionName }: Serve
  * Returns the server URL variables (e.g. region) declared on the API's environments,
  * paired with the client-option name each is exposed under. Variables are de-duplicated
  * by id and de-collided against existing ClientOptions property names.
+ *
+ * When `enabled` is false, returns an empty list so that callers neither emit the
+ * server-URL-variable client options nor the URL-template interpolation, falling back
+ * to the pre-feature base-URL behavior. Defaults to enabled.
  */
 export function getServerVariableOptions(
     environmentsConfig: FernIr.EnvironmentsConfig | undefined,
-    caseConverter: CaseConverter
+    caseConverter: CaseConverter,
+    enabled = true
 ): ServerVariableOption[] {
+    if (!enabled) {
+        return [];
+    }
     const usedOptionNames = new Set(RESERVED_OPTION_NAMES);
     return collectServerVariables(environmentsConfig).map((variable) => {
         const pascal = caseConverter.pascalSafe(getOriginalName(variable.name));

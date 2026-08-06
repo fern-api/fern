@@ -33,6 +33,13 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Service.Nop(
+//	    context.TODO(),
+//	    "id-a2ijs82",
+//	    "id-219xca8",
+//	)
 func (c *Client) Nop(
 	ctx context.Context,
 	id string,

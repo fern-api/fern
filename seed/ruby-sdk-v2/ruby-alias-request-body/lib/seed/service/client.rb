@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.create_store(display_name: "sandbox")
+      #
       # @return [Seed::Service::Types::StoreResponse]
       def create_store(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

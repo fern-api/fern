@@ -10,6 +10,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.get_users
+    #
     # @return [Array[Seed::Types::User]]
     def get_users(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
@@ -38,6 +41,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     # @option params [String] :user_id
+    #
+    # @example
+    #   client.get_user(user_id: "userId")
     #
     # @return [Seed::Types::User]
     def get_user(request_options: {}, **params)
@@ -69,6 +75,12 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.get_token(
+    #     client_id: "client_id",
+    #     client_secret: "client_secret"
+    #   )
     #
     # @return [Seed::Types::TokenResponse]
     def get_token(request_options: {}, **params)
@@ -105,7 +117,14 @@ module Seed
       if !region.nil? || !server_url_environment.nil?
         region_value = region.nil? ? "us-east-1" : region
         server_url_environment_value = server_url_environment.nil? ? "prod" : server_url_environment
-        environment = {
+        environment_url_templates = {
+          Seed::Environment::REGIONAL_API_SERVER => {
+            base: "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1",
+            auth: "https://auth.#{region_value}.example.com"
+          }
+        }
+        environment = environment_url_templates.fetch(environment, environment)
+        environment ||= {
           base: "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1",
           auth: "https://auth.#{region_value}.example.com"
         }

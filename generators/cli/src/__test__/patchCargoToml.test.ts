@@ -3,7 +3,15 @@ import os from "os";
 import path from "path";
 import url from "url";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { applyCargoTomlPatch, patchCargoLockVersion, patchCargoToml } from "../index.js";
+import {
+    addSdkCrateToLock,
+    addTypesCrateToLock,
+    applyCargoTomlPatch,
+    applyPackageIdentityPatch,
+    patchCargoLockVersion,
+    patchCargoToml,
+    renameCargoLockPackage
+} from "../patchCargoToml.js";
 
 /**
  * Test against the real SDK template's `Cargo.toml`, not a hand-authored
@@ -93,6 +101,107 @@ dist = true`);
     });
 });
 
+describe("applyPackageIdentityPatch", () => {
+    const IDENTITY = {
+        name: "agentmail-cli",
+        description: "AgentMail CLI",
+        license: "MIT",
+        repository: "https://github.com/agentmail-to/agentmail-cli-fern",
+        homepage: "https://agentmail.to",
+        authors: ["AgentMail <support@agentmail.cc>"],
+        keywords: ["email", "agent"]
+    };
+
+    it("rewrites the [package] identity with the customer's metadata", () => {
+        const patched = applyPackageIdentityPatch(TEMPLATE_CARGO_TOML, IDENTITY);
+        expect(patched).toContain('name = "agentmail-cli"');
+        expect(patched).toContain('description = "AgentMail CLI"');
+        expect(patched).toContain('license = "MIT"');
+        expect(patched).toContain('repository = "https://github.com/agentmail-to/agentmail-cli-fern"');
+        expect(patched).toContain('homepage = "https://agentmail.to"');
+        expect(patched).toContain('authors = ["AgentMail <support@agentmail.cc>"]');
+        expect(patched).toContain('keywords = ["email", "agent"]');
+        expect(patched).not.toContain('name = "fern-cli-sdk"');
+        expect(patched).not.toContain('repository = "https://github.com/fern-api/cli-sdk"');
+        expect(patched).not.toContain("hey@buildwithfern.com");
+    });
+
+    it("never renames the [lib] target — every `use fern_cli_sdk::...` in the vendored src/ depends on it", () => {
+        const patched = applyPackageIdentityPatch(TEMPLATE_CARGO_TOML, IDENTITY);
+        expect(patched).toContain('name = "fern_cli_sdk"');
+        expect(patched).toContain('path = "src/lib.rs"');
+    });
+
+    it("leaves fields the customer didn't set at the template's values", () => {
+        const patched = applyPackageIdentityPatch(TEMPLATE_CARGO_TOML, { name: "agentmail-cli" });
+        expect(patched).toContain('license = "Apache-2.0"');
+        expect(patched).toContain('authors = ["Fern <hey@buildwithfern.com>"]');
+    });
+
+    it("stays inside [package] — an identically named key in a later section is untouched", () => {
+        const toml = '[package]\nname = "fern-cli-sdk"\n\n[dependencies.reqwest]\nversion = "0.12"\n';
+        const patched = applyPackageIdentityPatch(toml, { name: "acme" });
+        expect(patched).toContain('[package]\nname = "acme"');
+        expect(patched).toContain('[dependencies.reqwest]\nversion = "0.12"');
+    });
+
+    it("appends a field the template doesn't ship", () => {
+        const patched = applyPackageIdentityPatch('[package]\nname = "fern-cli-sdk"\n', {
+            homepage: "https://agentmail.to"
+        });
+        expect(patched).toContain('homepage = "https://agentmail.to"');
+    });
+
+    it("escapes quotes and backslashes so a stray value can't break the manifest", () => {
+        const patched = applyPackageIdentityPatch('[package]\nname = "fern-cli-sdk"\n', {
+            description: 'a "quoted" \\ value'
+        });
+        expect(patched).toContain('description = "a \\"quoted\\" \\\\ value"');
+    });
+
+    it("escapes newlines and control characters that TOML forbids in a basic string", () => {
+        const patched = applyPackageIdentityPatch('[package]\nname = "fern-cli-sdk"\n', {
+            description: `Multi\nline\tvalue${String.fromCharCode(7)}`
+        });
+        expect(patched).toContain('description = "Multi\\nline\\tvalue\\u0007"');
+        expect(patched.split("\n").filter((line) => line.startsWith("description"))).toHaveLength(1);
+    });
+
+    it("throws when the [package] section is missing", () => {
+        expect(() => applyPackageIdentityPatch('[lib]\nname = "x"\n', { name: "acme" })).toThrow(
+            /could not find the \[package\] section/
+        );
+    });
+});
+
+describe("renameCargoLockPackage", () => {
+    it("renames the template's package entry so --locked still resolves the crate", () => {
+        const patched = renameCargoLockPackage(TEMPLATE_CARGO_LOCK, "agentmail-cli");
+        expect(patched).toContain('name = "agentmail-cli"');
+        expect(patched).not.toContain('name = "fern-cli-sdk"');
+    });
+
+    it("throws when the template entry is absent", () => {
+        expect(() => renameCargoLockPackage("version = 4\n", "acme")).toThrow(/could not find fern-cli-sdk/);
+    });
+});
+
+describe("generated crate lockfile entries after a package rename", () => {
+    it("adds the types crate to the renamed CLI crate's dependency list", () => {
+        const renamed = renameCargoLockPackage(TEMPLATE_CARGO_LOCK, "agentmail-cli");
+        const patched = addTypesCrateToLock(renamed, "agentmail-types", false, "agentmail-cli");
+        const cliEntry = patched.slice(patched.indexOf('name = "agentmail-cli"'));
+        expect(cliEntry.slice(0, cliEntry.indexOf("]"))).toContain('"agentmail_types"');
+    });
+
+    it("adds the SDK crate to the renamed CLI crate's dependency list", () => {
+        const renamed = renameCargoLockPackage(TEMPLATE_CARGO_LOCK, "agentmail-cli");
+        const patched = addSdkCrateToLock(renamed, "agentmail-sdk", "agentmail-types", "agentmail-cli");
+        const cliEntry = patched.slice(patched.indexOf('name = "agentmail-cli"'));
+        expect(cliEntry.slice(0, cliEntry.indexOf("]"))).toContain('"agentmail_sdk"');
+    });
+});
+
 describe("patchCargoLockVersion", () => {
     it("replaces the fern-cli-sdk version in Cargo.lock", () => {
         const patched = patchCargoLockVersion(TEMPLATE_CARGO_LOCK, "3.0.0");
@@ -132,6 +241,43 @@ describe("patchCargoToml (filesystem)", () => {
         const lockResult = await readFile(path.join(tmpDir, "Cargo.lock"), "utf-8");
         expect(lockResult).toContain('name = "fern-cli-sdk"\nversion = "2.0.0"');
         expect(lockResult).not.toContain('name = "fern-cli-sdk"\nversion = "0.18.1"');
+    });
+
+    it("applies the customer's package identity to Cargo.toml and Cargo.lock together", async () => {
+        await writeFile(path.join(tmpDir, "Cargo.toml"), TEMPLATE_CARGO_TOML);
+        await writeFile(path.join(tmpDir, "Cargo.lock"), TEMPLATE_CARGO_LOCK);
+
+        await patchCargoToml({
+            outputDir: tmpDir,
+            binaryName: "agentmail",
+            version: "2.0.0",
+            packageIdentity: {
+                name: "agentmail-cli",
+                repository: "https://github.com/agentmail-to/agentmail-cli-fern",
+                authors: ["AgentMail <support@agentmail.cc>"]
+            }
+        });
+
+        const result = await readFile(path.join(tmpDir, "Cargo.toml"), "utf-8");
+        expect(result).toContain('name = "agentmail-cli"');
+        expect(result).toContain('name = "agentmail"'); // the [[bin]] entry
+        expect(result).toContain('name = "fern_cli_sdk"'); // the [lib] entry
+        expect(result).not.toContain('name = "fern-cli-sdk"');
+        expect(result).not.toContain("hey@buildwithfern.com");
+
+        const lockResult = await readFile(path.join(tmpDir, "Cargo.lock"), "utf-8");
+        expect(lockResult).toContain('name = "agentmail-cli"\nversion = "2.0.0"');
+        expect(lockResult).not.toContain('name = "fern-cli-sdk"');
+    });
+
+    it("keeps Fern's package identity when the customer sets none", async () => {
+        await writeFile(path.join(tmpDir, "Cargo.toml"), TEMPLATE_CARGO_TOML);
+        await writeFile(path.join(tmpDir, "Cargo.lock"), TEMPLATE_CARGO_LOCK);
+
+        await patchCargoToml({ outputDir: tmpDir, binaryName: "acme-cli", version: "2.0.0" });
+
+        const result = await readFile(path.join(tmpDir, "Cargo.toml"), "utf-8");
+        expect(result).toContain('name = "fern-cli-sdk"');
     });
 
     it("throws when none of the template anchors are present", async () => {

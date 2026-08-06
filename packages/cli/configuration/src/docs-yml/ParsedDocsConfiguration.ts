@@ -51,6 +51,7 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
         | {
               prioritizeCurrentProduct: boolean | undefined;
               defaultFilterByCurrentProduct: boolean | undefined;
+              externalSitemaps: string[] | undefined;
           }
         | undefined;
 }
@@ -543,6 +544,8 @@ export type ParsedLibraryInputConfiguration =
           git: string;
           /** Optional path within the repository to the library source */
           subpath: string | undefined;
+          /** Optional git ref (branch, tag, or commit SHA) to check out */
+          ref: string | undefined;
       }
     | {
           type: "path";

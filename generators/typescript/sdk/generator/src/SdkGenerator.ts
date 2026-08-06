@@ -126,6 +126,7 @@ export declare namespace SdkGenerator {
         includeOtherInUnionTypes: boolean;
         enableForwardCompatibleEnums: boolean;
         requireDefaultEnvironment: boolean;
+        requireBaseUrl: boolean;
         defaultTimeout: number | "infinity" | undefined;
         skipResponseValidation: boolean;
         extraDependencies: Record<string, string>;
@@ -159,6 +160,7 @@ export declare namespace SdkGenerator {
         packagePath: string | undefined;
         omitFernHeaders: boolean;
         includePlatformHeaders: boolean;
+        allowUserAgentAppInfo: boolean;
         useDefaultRequestParameterValues: boolean;
         packageManager: "pnpm" | "yarn";
         generateReadWriteOnlyTypes: boolean;
@@ -176,6 +178,7 @@ export declare namespace SdkGenerator {
         resolveQueryParameterNameConflicts: boolean;
         maxRetries: number | undefined;
         alwaysSendAuth: boolean;
+        optionalAuth: boolean;
         generateReactQueryHooks: boolean;
     }
 }
@@ -298,6 +301,11 @@ export class SdkGenerator {
         // because RoutingAuthProvider requires endpoint metadata to function
         if (intermediateRepresentation.auth.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity) {
             config.generateEndpointMetadata = true;
+        }
+        // `baseUrl` cannot be required for multi-base-URL APIs: the generated clients read each
+        // URL off the environment value, so `environment` must stay required for them.
+        if (intermediateRepresentation.environments?.environments.type === "multipleBaseUrls") {
+            config.requireBaseUrl = false;
         }
         this.config = config;
 
@@ -435,10 +443,13 @@ export class SdkGenerator {
             allowCustomFetcher: config.allowCustomFetcher,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
             requireDefaultEnvironment: config.requireDefaultEnvironment,
+            requireBaseUrl: config.requireBaseUrl,
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
             baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer,
-            caseConverter
+            caseConverter,
+            optionalAuth: this.config.optionalAuth,
+            allowUserAgentAppInfo: config.allowUserAgentAppInfo
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
@@ -534,6 +545,7 @@ export class SdkGenerator {
             allowCustomFetcher: config.allowCustomFetcher,
             generateWebSocketClients: this.generateWebSocketClients,
             requireDefaultEnvironment: config.requireDefaultEnvironment,
+            requireBaseUrl: config.requireBaseUrl,
             defaultTimeout: config.defaultTimeout,
             npmPackage,
             includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,
@@ -557,6 +569,7 @@ export class SdkGenerator {
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
             omitFernHeaders: config.omitFernHeaders,
             includePlatformHeaders: config.includePlatformHeaders,
+            allowUserAgentAppInfo: config.allowUserAgentAppInfo,
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
             caseConverter: this.case
@@ -593,6 +606,7 @@ export class SdkGenerator {
             relativeTestPath: this.relativeTestPath,
             neverThrowErrors: config.neverThrowErrors,
             generateReadWriteOnlyTypes: config.generateReadWriteOnlyTypes,
+            requireBaseUrl: config.requireBaseUrl,
             testFramework: config.testFramework,
             useLegacyExports: config.useLegacyExports,
             shouldBundle: config.shouldBundle,
@@ -609,6 +623,7 @@ export class SdkGenerator {
                 fetchSupport: config.fetchSupport,
                 allowCustomFetcher: config.allowCustomFetcher,
                 generateSubpackageExports: config.generateSubpackageExports,
+                requireBaseUrl: config.requireBaseUrl,
                 reactQueryConfig: config.generateReactQueryHooks
                     ? {
                           clientClassName: naming.client,
@@ -1587,7 +1602,8 @@ export class SdkGenerator {
                 authScheme,
                 neverThrowErrors: this.config.neverThrowErrors,
                 includeSerdeLayer: this.config.includeSerdeLayer,
-                shouldUseWrapper
+                shouldUseWrapper,
+                optionalAuth: this.config.optionalAuth
             });
             if (!authProvidersGenerator.shouldWriteFile()) {
                 continue;
@@ -1609,7 +1625,8 @@ export class SdkGenerator {
                 authScheme: { type: "any" },
                 neverThrowErrors: this.config.neverThrowErrors,
                 includeSerdeLayer: this.config.includeSerdeLayer,
-                shouldUseWrapper
+                shouldUseWrapper,
+                optionalAuth: this.config.optionalAuth
             });
             this.withSourceFile({
                 filepath: anyAuthProvidersGenerator.getFilePath(),
@@ -1625,7 +1642,8 @@ export class SdkGenerator {
                 authScheme: { type: "routing" },
                 neverThrowErrors: this.config.neverThrowErrors,
                 includeSerdeLayer: this.config.includeSerdeLayer,
-                shouldUseWrapper
+                shouldUseWrapper,
+                optionalAuth: this.config.optionalAuth
             });
             this.withSourceFile({
                 filepath: routingAuthProvidersGenerator.getFilePath(),

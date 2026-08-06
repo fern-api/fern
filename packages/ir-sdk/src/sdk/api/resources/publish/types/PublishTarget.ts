@@ -8,7 +8,10 @@ export type PublishTarget =
     | FernIr.PublishTarget.Maven
     | FernIr.PublishTarget.Pypi
     | FernIr.PublishTarget.Crates
-    | FernIr.PublishTarget.Go;
+    | FernIr.PublishTarget.Go
+    | FernIr.PublishTarget.Nuget
+    | FernIr.PublishTarget.Rubygems
+    | FernIr.PublishTarget.Packagist;
 
 export namespace PublishTarget {
     export interface Postman extends FernIr.PostmanPublishTarget, _Utils {
@@ -35,6 +38,18 @@ export namespace PublishTarget {
         type: "go";
     }
 
+    export interface Nuget extends FernIr.NugetPublishTarget, _Utils {
+        type: "nuget";
+    }
+
+    export interface Rubygems extends FernIr.RubyGemsPublishTarget, _Utils {
+        type: "rubygems";
+    }
+
+    export interface Packagist extends FernIr.PackagistPublishTarget, _Utils {
+        type: "packagist";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.PublishTarget._Visitor<_Result>) => _Result;
     }
@@ -46,6 +61,9 @@ export namespace PublishTarget {
         pypi: (value: FernIr.PypiPublishTarget) => _Result;
         crates: (value: FernIr.CratesPublishTarget) => _Result;
         go: (value: FernIr.GoPublishTarget) => _Result;
+        nuget: (value: FernIr.NugetPublishTarget) => _Result;
+        rubygems: (value: FernIr.RubyGemsPublishTarget) => _Result;
+        packagist: (value: FernIr.PackagistPublishTarget) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -126,6 +144,45 @@ export const PublishTarget = {
         };
     },
 
+    nuget: (value: FernIr.NugetPublishTarget): FernIr.PublishTarget.Nuget => {
+        return {
+            ...value,
+            type: "nuget",
+            _visit: function <_Result>(
+                this: FernIr.PublishTarget.Nuget,
+                visitor: FernIr.PublishTarget._Visitor<_Result>,
+            ) {
+                return FernIr.PublishTarget._visit(this, visitor);
+            },
+        };
+    },
+
+    rubygems: (value: FernIr.RubyGemsPublishTarget): FernIr.PublishTarget.Rubygems => {
+        return {
+            ...value,
+            type: "rubygems",
+            _visit: function <_Result>(
+                this: FernIr.PublishTarget.Rubygems,
+                visitor: FernIr.PublishTarget._Visitor<_Result>,
+            ) {
+                return FernIr.PublishTarget._visit(this, visitor);
+            },
+        };
+    },
+
+    packagist: (value: FernIr.PackagistPublishTarget): FernIr.PublishTarget.Packagist => {
+        return {
+            ...value,
+            type: "packagist",
+            _visit: function <_Result>(
+                this: FernIr.PublishTarget.Packagist,
+                visitor: FernIr.PublishTarget._Visitor<_Result>,
+            ) {
+                return FernIr.PublishTarget._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.PublishTarget, visitor: FernIr.PublishTarget._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "postman":
@@ -140,6 +197,12 @@ export const PublishTarget = {
                 return visitor.crates(value);
             case "go":
                 return visitor.go(value);
+            case "nuget":
+                return visitor.nuget(value);
+            case "rubygems":
+                return visitor.rubygems(value);
+            case "packagist":
+                return visitor.packagist(value);
             default:
                 return visitor._other(value);
         }

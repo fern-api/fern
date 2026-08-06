@@ -19,6 +19,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.folder_a.service.get_direct_thread
+        #
         # @return [Seed::FolderD::Service::Types::Response]
         def get_direct_thread(request_options: {}, **_params)
           request = Seed::Internal::JSON::Request.new(

@@ -1,4 +1,79 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.44.2
+  changelogEntry:
+    - summary: |
+        Fix discriminated union variants silently dropping inherited properties. When a variant's
+        referenced object type got all of its properties from `extends`, the variant was inlined to
+        an empty struct, so the payload deserialized successfully but every field was discarded.
+        Such types are no longer inlined and keep their `#[serde(flatten)]` wrapper.
+
+        Note: this changes the generated public API for affected unions. A variant that was inlined
+        (e.g. `FooExtended { age }`, constructor `foo_extended(age: i64)`) now wraps the referenced
+        type (`FooExtended { data: FooExtended }`, constructor `foo_extended(data: FooExtended)`), so
+        consumers on a prior version with `extends`-based union variants may need to update call sites
+        when regenerating.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 66
+- version: 0.44.1
+  changelogEntry:
+    - summary: |
+        Apply client-level custom headers to the OAuth token request. The client-credentials
+        token exchange was built directly on the underlying HTTP client, so it was the only
+        request that skipped `ClientConfig.custom_headers` — APIs whose gateway requires a
+        header on the token endpoint rejected the exchange with a 401, and the
+        `X-Fern-SDK-*` headers were missing from token requests.
+
+        Request-level headers and auth headers are intentionally still not applied: the token
+        is cached and shared across requests, and the token request is what produces the
+        credential auth headers would carry.
+      type: fix
+    - summary: |
+        Encode the OAuth token request to match the token endpoint's declared content type. The
+        client-credentials exchange previously always sent a JSON body, so APIs whose token
+        endpoint expects `application/x-www-form-urlencoded` (the OAuth 2.0 default per RFC 6749
+        §4.4.2) rejected the exchange. The content type is now resolved from the referenced
+        endpoint in the IR: form-encoded when the spec declares it, JSON otherwise — so existing
+        JSON token endpoints are unaffected.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 66
+- version: 0.44.0
+  changelogEntry:
+    - summary: |
+        Add support for per-endpoint auth routing. When the API-level auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+        its IR `security` field (OR across the list of requirements, AND within a requirement,
+        and no auth when `security` is empty), instead of applying every configured credential
+        to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+        is unchanged.
+        Inferred auth is not supported by the Rust SDK, so an endpoint whose only satisfiable
+        requirement is inferred auth returns a configuration error.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 66
+- version: 0.43.1
+  changelogEntry:
+    - summary: |
+        Escape Rust reserved keywords in generated enum variant names. An enum
+        value that PascalCases onto a keyword (e.g. `self` -> `Self`) is now
+        emitted as `Self_` with the wire value preserved, instead of the
+        unparseable `pub enum Foo { Self, ... }`. Generated code examples
+        (README, reference docs, snippets, and doc-test comments) now reference
+        the same keyword-safe variant name so they compile too.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 66
+- version: 0.43.0
+  changelogEntry:
+    - summary: |
+        Endpoint methods now include a usage example in their rustdoc comments (under a
+        `# Examples` section), so IDEs surface a ready-to-use code snippet on hover. The
+        examples are the same dynamic snippets used for the README and reference.md, and
+        are fenced with ```no_run so `cargo test` doctests compile but do not execute them.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 66
 - version: 0.42.2
   changelogEntry:
     - summary: |

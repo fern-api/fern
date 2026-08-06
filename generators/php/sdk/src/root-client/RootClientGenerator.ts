@@ -5,6 +5,7 @@ import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { getRoutingSchemes } from "../auth/RoutingAuthProviderGenerator.js";
 import { getOAuthTokenRequestProperties } from "../oauth/oauthTokenRequestProperties.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -30,6 +31,10 @@ interface ConstructorParameter {
     docs?: string;
     header?: HeaderInfo;
     environmentVariable?: string;
+    /**
+     * Whether this parameter comes from a global API header (as opposed to an auth scheme).
+     */
+    isGlobalHeader?: boolean;
     clientDefault?: FernIr.Literal;
 }
 
@@ -58,6 +63,111 @@ const BEARER_HEADER_INFO: HeaderInfo = {
 
 const GET_FROM_ENV_OR_THROW = "getFromEnvOrThrow";
 const GET_PLATFORM_USER_AGENT = "getPlatformUserAgent";
+const APPEND_APP_INFO_TO_USER_AGENT = "appendAppInfoToUserAgent";
+
+/**
+ * Builds the self-contained `appendAppInfoToUserAgent` helper emitted into the
+ * generated root client (only when `allowUserAgentAppInfo` is enabled). It is
+ * standalone so that clients which do not opt in keep byte-identical generated
+ * output, and never touches the shared always-shipped core-utilities.
+ *
+ * Sanitizes caller-supplied values: `name`/`version` are token-encoded (every
+ * non-RFC-7230 `tchar` is percent-encoded, including spaces, control characters and
+ * CR/LF) and `comment` has its delimiters (`(`, `)`, `\`) and control characters
+ * (incl. CR/LF) escaped, so the untrusted values cannot inject additional header
+ * content. Each value is trimmed before checking for blankness and before encoding,
+ * so blank values are treated as absent rather than encoded into whitespace tokens.
+ * Formats the appended product token as `{name}/{version} ({comment})`, dropping
+ * `/version` and ` (comment)` when blank, and returns the User-Agent unchanged when
+ * `appInfo`/`name` is absent.
+ *
+ * Exported so the emitted PHP can be exercised directly by unit tests.
+ */
+export function buildAppendAppInfoToUserAgentMethod(): php.Method {
+    return php.method({
+        access: "private",
+        static_: true,
+        name: APPEND_APP_INFO_TO_USER_AGENT,
+        return_: php.Type.string(),
+        parameters: [
+            php.parameter({ name: "userAgent", type: php.Type.string() }),
+            php.parameter({
+                name: "appInfo",
+                type: php.Type.optional(
+                    php.Type.typeDict(
+                        [
+                            { key: "name", valueType: php.Type.string() },
+                            { key: "version", valueType: php.Type.string(), optional: true },
+                            { key: "comment", valueType: php.Type.string(), optional: true }
+                        ],
+                        { multiline: false }
+                    )
+                )
+            })
+        ],
+        body: php.codeblock((writer) => {
+            writer.controlFlow("if", php.codeblock("$appInfo === null"));
+            writer.writeTextStatement("return $userAgent");
+            writer.endControlFlow();
+            writer.writeLine();
+
+            // RFC 7230 token = 1*tchar. Any character outside that set is
+            // percent-encoded so it cannot break out of the product token or inject
+            // additional header content (spaces, control characters, CR/LF).
+            writer.writeLine("$encodeToken = static function (string $value): string {");
+            writer.writeLine(
+                "    return preg_replace_callback('/[^!#$%&\\'*+\\-.^_`|~0-9A-Za-z]/', static function (array $matches): string {"
+            );
+            writer.writeLine("        $encoded = '';");
+            writer.writeLine("        foreach (str_split($matches[0]) as $char) {");
+            writer.writeLine("            $encoded .= '%' . strtoupper(bin2hex($char));");
+            writer.writeLine("        }");
+            writer.writeLine("        return $encoded;");
+            writer.writeLine("    }, $value) ?? '';");
+            writer.writeLine("};");
+            writer.writeLine();
+
+            // Escape the comment delimiters `(`, `)`, `\` and control characters
+            // (0x00-0x1F, 0x7F, incl. CR/LF) so a caller-supplied comment cannot
+            // terminate the comment group early or inject additional header content.
+            writer.writeLine("$encodeComment = static function (string $value): string {");
+            writer.writeLine(
+                "    return preg_replace_callback('/[()\\\\\\\\\\x00-\\x1f\\x7f]/', static function (array $matches): string {"
+            );
+            writer.writeLine("        $encoded = '';");
+            writer.writeLine("        foreach (str_split($matches[0]) as $char) {");
+            writer.writeLine("            $encoded .= '%' . strtoupper(bin2hex($char));");
+            writer.writeLine("        }");
+            writer.writeLine("        return $encoded;");
+            writer.writeLine("    }, $value) ?? '';");
+            writer.writeLine("};");
+            writer.writeLine();
+
+            // `name` is a required key of the appInfo shape, so no `?? ''` fallback
+            // (PHPStan level max flags the redundant null-coalesce otherwise).
+            writer.writeTextStatement("$name = $encodeToken(trim($appInfo['name']))");
+            writer.controlFlow("if", php.codeblock("$name === ''"));
+            writer.writeTextStatement("return $userAgent");
+            writer.endControlFlow();
+            writer.writeLine();
+
+            writer.writeTextStatement("$productToken = $name");
+            writer.writeTextStatement("$version = $encodeToken(trim($appInfo['version'] ?? ''))");
+            writer.controlFlow("if", php.codeblock("$version !== ''"));
+            writer.writeTextStatement("$productToken .= '/' . $version");
+            writer.endControlFlow();
+            writer.writeLine();
+
+            writer.writeTextStatement("$comment = $encodeComment(trim($appInfo['comment'] ?? ''))");
+            writer.controlFlow("if", php.codeblock("$comment !== ''"));
+            writer.writeTextStatement("$productToken .= ' (' . $comment . ')'");
+            writer.endControlFlow();
+            writer.writeLine();
+
+            writer.writeTextStatement("return $userAgent . ' ' . $productToken");
+        })
+    });
+}
 
 export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private readonly case: CaseConverter;
@@ -106,9 +216,16 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             );
         }
 
-        // Add field for OAuth token provider if using client credentials OAuth
+        // Add field for OAuth token provider if using client credentials OAuth.
+        // Under ENDPOINT_SECURITY the provider is owned by the RoutingAuthProvider
+        // instead, so no root-level field is emitted.
         const oauth = this.context.getOauth();
-        if (oauth != null && oauth.configuration.type === "clientCredentials" && this.shouldUseOAuthProvider()) {
+        if (
+            !this.context.isEndpointSecurity() &&
+            oauth != null &&
+            oauth.configuration.type === "clientCredentials" &&
+            this.shouldUseOAuthProvider()
+        ) {
             class_.addField(
                 php.field({
                     name: "$oauthTokenProvider",
@@ -125,7 +242,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         // Add field for inferred auth provider if using inferred auth
         const inferredAuth = this.context.getInferredAuth();
-        if (inferredAuth != null && !this.shouldUseOAuthProvider()) {
+        if (!this.context.isEndpointSecurity() && inferredAuth != null && !this.shouldUseOAuthProvider()) {
             class_.addField(
                 php.field({
                     name: "$inferredAuthProvider",
@@ -136,6 +253,21 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             namespace: this.context.getCoreNamespace()
                         })
                     )
+                })
+            );
+        }
+
+        // Under ENDPOINT_SECURITY, auth is routed per-endpoint through this provider
+        // rather than applied flatly to every request.
+        if (this.context.isEndpointSecurity()) {
+            class_.addField(
+                php.field({
+                    name: "$routingAuthProvider",
+                    access: "private",
+                    // Nullable to match the subclient field, which the token providers'
+                    // unauthenticated internal auth client is constructed without.
+                    type: php.Type.optional(php.Type.reference(this.context.getRoutingAuthProviderClassReference())),
+                    docs: "@phpstan-ignore-next-line Property is read in endpoint methods and passed to subclients"
                 })
             );
         }
@@ -177,7 +309,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         // getFromEnvOrThrow helper is not emitted.
         if (
             !this.isAnyAuthWithMultipleSchemes() &&
-            constructorParameters.optional.some((parameter) => parameter.environmentVariable != null)
+            !this.context.isEndpointSecurity() &&
+            constructorParameters.optional.some(
+                (parameter) =>
+                    parameter.environmentVariable != null && !(parameter.isGlobalHeader && parameter.isOptional)
+            )
         ) {
             class_.addMethod(this.getFromEnvOrThrowMethod());
         }
@@ -189,6 +325,17 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             userAgent != null
         ) {
             class_.addMethod(this.getPlatformUserAgentMethod(userAgent.value));
+        }
+
+        // Emit the self-contained appInfo appender only when the opt-in
+        // `allowUserAgentAppInfo` config is enabled and a User-Agent is actually
+        // sent, so that clients which do not opt in keep byte-identical output.
+        if (
+            !this.context.customConfig.omitFernHeaders &&
+            this.context.customConfig.allowUserAgentAppInfo &&
+            userAgent != null
+        ) {
+            class_.addMethod(this.getAppendAppInfoToUserAgentMethod());
         }
 
         return this.newRootClientFile(class_);
@@ -209,6 +356,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         // scheme's header only when its cred is present, and must only wire up a
         // token provider when that scheme's creds were actually supplied.
         const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
+        // Under ENDPOINT_SECURITY, auth is applied per-endpoint via the RoutingAuthProvider,
+        // so no auth headers are baked into the static default headers and no flat
+        // getAuthHeaders callback is installed. Each auth param stays optional and env-var
+        // fallbacks never throw (a caller may only use a subset of the schemes).
+        const endpointSecurity = this.context.isEndpointSecurity();
         const serverVariableOptions = getServerVariableOptions(
             this.context.ir.environments,
             this.case,
@@ -275,7 +427,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         const headerEntries: php.Map.Entry[] = [];
         for (const param of constructorParameters.required) {
-            if (param.header != null) {
+            // Under ENDPOINT_SECURITY, auth-scheme headers are routed per-endpoint and must
+            // not be baked into the default headers; global (non-auth) headers still are.
+            if (param.header != null && (!endpointSecurity || param.isGlobalHeader)) {
                 headerEntries.push({
                     key: php.codeblock(`'${param.header.name}'`),
                     value: this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
@@ -286,7 +440,13 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             // Under `any`-composed multi-scheme auth, env-var-backed auth headers are
             // written conditionally below (only when the cred is present) instead of
             // being baked into the static default headers map.
-            if (param.header != null && param.environmentVariable != null && !anyAuthMultiScheme) {
+            if (
+                param.header != null &&
+                param.environmentVariable != null &&
+                !anyAuthMultiScheme &&
+                (!endpointSecurity || param.isGlobalHeader) &&
+                !(param.isGlobalHeader && param.isOptional && param.clientDefault == null)
+            ) {
                 // Variables backed by an environment variable can be instantiated in-line.
                 headerEntries.push({
                     key: php.codeblock(`'${param.header.name}'`),
@@ -314,21 +474,32 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 key: php.codeblock(`'${platformHeaders.sdkName}'`),
                 value: php.codeblock(`'${this.context.getRootNamespace()}'`)
             });
-            if (this.context.version != null) {
+            const sdkVersion = this.context.getSdkVersion();
+            if (sdkVersion != null) {
                 headerEntries.push({
                     key: php.codeblock(`'${platformHeaders.sdkVersion}'`),
-                    value: php.codeblock(`'${this.context.version}'`)
+                    value: php.codeblock(`'${sdkVersion}'`)
                 });
             }
             const userAgent = this.context.getUserAgent();
             if (userAgent != null) {
+                const escapedUserAgentValue = userAgent.value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+                // The base User-Agent expression, covering all three branches: the
+                // structured platform value, the `user-agent` template value, and the
+                // default `{package}/{version}` (the latter two both surface via
+                // `userAgent.value`).
+                const baseUserAgentExpression = this.context.customConfig.includePlatformHeaders
+                    ? `self::${GET_PLATFORM_USER_AGENT}(strtolower(PHP_OS), php_uname('m'), PHP_VERSION)`
+                    : `'${escapedUserAgentValue}'`;
+                // When `allowUserAgentAppInfo` is enabled, append the caller-supplied
+                // `appInfo` product token to whichever User-Agent value the SDK would
+                // otherwise send. `$options['appInfo']` is in scope in the constructor.
+                const userAgentExpression = this.context.customConfig.allowUserAgentAppInfo
+                    ? `self::${APPEND_APP_INFO_TO_USER_AGENT}(${baseUserAgentExpression}, $${this.context.getClientOptionsName()}['${this.context.getAppInfoOptionName()}'] ?? null)`
+                    : baseUserAgentExpression;
                 headerEntries.push({
                     key: php.codeblock(`'${userAgent.header}'`),
-                    value: this.context.customConfig.includePlatformHeaders
-                        ? php.codeblock(
-                              `self::${GET_PLATFORM_USER_AGENT}(strtolower(PHP_OS), php_uname('m'), PHP_VERSION)`
-                          )
-                        : php.codeblock(`'${userAgent.value}'`)
+                    value: php.codeblock(userAgentExpression)
                 });
             }
         }
@@ -378,9 +549,15 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             writer.writeTextStatement(
                                 `$${param.name} ??= ($envValue !== false ? $envValue : '${escaped}')`
                             );
-                        } else if (anyAuthMultiScheme) {
+                        } else if (
+                            anyAuthMultiScheme ||
+                            endpointSecurity ||
+                            (param.isGlobalHeader && param.isOptional)
+                        ) {
                             // Fall back to the env var if present, but do not throw when it is
-                            // missing — the caller may be authenticating with another scheme.
+                            // missing — an optional header may simply be unset, and under
+                            // `any`-composed or endpoint-security auth the caller may be using
+                            // only a subset of the schemes.
                             writer.writeTextStatement(
                                 `$${param.name} ??= getenv('${param.environmentVariable}') ?: null`
                             );
@@ -412,7 +589,13 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 writer.write("$defaultHeaders = ");
                 writer.writeNodeStatement(headers);
                 for (const param of constructorParameters.optional) {
-                    if (param.header != null && (param.environmentVariable == null || anyAuthMultiScheme)) {
+                    if (
+                        param.header != null &&
+                        (!endpointSecurity || param.isGlobalHeader) &&
+                        (param.environmentVariable == null ||
+                            anyAuthMultiScheme ||
+                            (param.isGlobalHeader && param.isOptional && param.clientDefault == null))
+                    ) {
                         writer.controlFlow("if", php.codeblock(`$${param.name} != null`));
                         writer.write(`$defaultHeaders['${param.header.name}'] = `);
                         writer.writeNodeStatement(
@@ -443,7 +626,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 const resolvedBasicAuthSchemes = basicAuthSchemes
                     .map((scheme) => this.resolveBasicAuthScheme(scheme))
                     .filter((resolved) => resolved != null);
-                if (resolvedBasicAuthSchemes.length > 0) {
+                // Under ENDPOINT_SECURITY, basic auth is routed per-endpoint, not baked in.
+                if (resolvedBasicAuthSchemes.length > 0 && !endpointSecurity) {
                     const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory || anyAuthMultiScheme;
                     const needsControlFlow = isAuthOptional || resolvedBasicAuthSchemes.length > 1;
                     let hasWrittenIf = false;
@@ -515,7 +699,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 const inferredCredGuard =
                     inferredAuth != null ? this.getInferredAuthCredentialGuard(inferredAuth) : null;
 
-                if (hasOAuth && oauth != null) {
+                if (!endpointSecurity && hasOAuth && oauth != null) {
                     if (anyAuthMultiScheme) {
                         writer.controlFlow("if", php.codeblock(oauthCredGuard));
                     }
@@ -525,7 +709,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     }
                 }
 
-                if (hasInferredAuth && inferredAuth != null) {
+                if (!endpointSecurity && hasInferredAuth && inferredAuth != null) {
                     const guardInferred = anyAuthMultiScheme && inferredCredGuard != null;
                     if (guardInferred) {
                         writer.controlFlow("if", php.codeblock(inferredCredGuard));
@@ -560,8 +744,14 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 );
                 writer.writeLine();
 
+                // Under ENDPOINT_SECURITY, build the RoutingAuthProvider (which owns any
+                // OAuth / inferred token providers) that routes auth per-endpoint.
+                if (endpointSecurity) {
+                    this.writeRoutingAuthProviderSetup({ writer, isMultiUrl, constructorParameters });
+                }
+
                 // Build the RawClient options, including getAuthHeaders callback if using OAuth or InferredAuth
-                if (hasOAuth || hasInferredAuth) {
+                if (!endpointSecurity && (hasOAuth || hasInferredAuth)) {
                     // Only install the getAuthHeaders callback when the corresponding token
                     // provider was set up; under `any`-composed auth that only happens when
                     // the scheme's creds were supplied.
@@ -615,6 +805,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         subClientArgs.push(php.codeblock(`$this->${this.context.getClientOptionsName()}`));
                     }
 
+                    // Pass the shared RoutingAuthProvider down so subclient endpoints can
+                    // route their own auth headers.
+                    if (endpointSecurity) {
+                        subClientArgs.push(php.codeblock("$this->routingAuthProvider"));
+                    }
+
                     writer.writeNodeStatement(
                         php.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
@@ -624,6 +820,99 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
             })
         };
+    }
+
+    /**
+     * Emits the ENDPOINT_SECURITY auth wiring: constructs any OAuth / inferred token
+     * providers as locals (only when their credentials were supplied) and hands them,
+     * along with the raw bearer / header / basic credentials, to a RoutingAuthProvider
+     * stored on the client. Endpoint methods then call it per request to apply only the
+     * schemes that endpoint declares.
+     */
+    private writeRoutingAuthProviderSetup({
+        writer,
+        isMultiUrl,
+        constructorParameters
+    }: {
+        writer: php.Writer;
+        isMultiUrl: boolean;
+        constructorParameters: ConstructorParameters;
+    }): void {
+        const routingSchemes = getRoutingSchemes(this.context);
+        const oauth = this.context.getOauth();
+        const inferredAuth = this.context.getInferredAuth();
+        const hasOAuthScheme = oauth != null && oauth.configuration.type === "clientCredentials";
+        const hasInferredScheme = inferredAuth != null;
+
+        // The internal (unauthenticated) auth client used to fetch OAuth / inferred tokens must
+        // target the same base URL as the main client, otherwise the token request never reaches
+        // the configured server (e.g. a WireMock instance in wire tests). Multi-URL environments
+        // are threaded through the `$environment` constructor argument instead, so only inject the
+        // base URL here for single-URL clients.
+        const optionsName = this.context.getClientOptionsName();
+        const baseUrlOption = this.context.getBaseUrlOptionName();
+        const authRawClientOptions = isMultiUrl
+            ? "['headers' => []]"
+            : `['${baseUrlOption}' => $this->${optionsName}['${baseUrlOption}'] ?? '', 'headers' => []]`;
+
+        if (hasOAuthScheme && oauth != null) {
+            writer.writeTextStatement("$oauthTokenProvider = null");
+            writer.controlFlow("if", php.codeblock("$clientId !== null && $clientSecret !== null"));
+            this.writeOAuthProviderSetup(writer, oauth, isMultiUrl, true, "$oauthTokenProvider", authRawClientOptions);
+            writer.endControlFlow();
+        }
+
+        if (hasInferredScheme && inferredAuth != null) {
+            const inferredCredGuard = this.getInferredAuthCredentialGuard(inferredAuth);
+            writer.writeTextStatement("$inferredAuthProvider = null");
+            if (inferredCredGuard != null) {
+                writer.controlFlow("if", php.codeblock(inferredCredGuard));
+            }
+            this.writeInferredAuthProviderSetup(
+                writer,
+                inferredAuth,
+                isMultiUrl,
+                constructorParameters,
+                true,
+                "$inferredAuthProvider",
+                authRawClientOptions
+            );
+            if (inferredCredGuard != null) {
+                writer.endControlFlow();
+            }
+        }
+
+        writer.write("$this->routingAuthProvider = ");
+        writer.writeNodeStatement(
+            php.instantiateClass({
+                classReference: this.context.getRoutingAuthProviderClassReference(),
+                arguments_: routingSchemes.flatMap((scheme): php.AstNode[] => {
+                    switch (scheme.kind) {
+                        case "bearer":
+                        case "header":
+                            return [php.codeblock(`$${scheme.paramName}`)];
+                        case "basic": {
+                            const args: php.AstNode[] = [];
+                            if (scheme.usernameParam != null) {
+                                args.push(php.codeblock(`$${scheme.usernameParam}`));
+                            }
+                            if (scheme.passwordParam != null) {
+                                args.push(php.codeblock(`$${scheme.passwordParam}`));
+                            }
+                            return args;
+                        }
+                        case "oauth":
+                            return [php.codeblock("$oauthTokenProvider")];
+                        case "inferred":
+                            return [php.codeblock("$inferredAuthProvider")];
+                        default:
+                            return [];
+                    }
+                }),
+                multiline: true
+            })
+        );
+        writer.writeLine();
     }
 
     private getServerVariableParameterDocs(option: ServerVariableOption): string {
@@ -679,6 +968,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             }
         };
         const writeDefaults = (): void => {
+            // With a single variable, the enclosing guard already ensures it is non-null,
+            // so a `??=` default would be dead code (and rejected by phpstan).
+            if (serverVariableOptions.length === 1) {
+                return;
+            }
             for (const option of serverVariableOptions) {
                 if (option.variable.default != null) {
                     writer.writeTextStatement(
@@ -690,57 +984,154 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         switch (environments.type) {
             case "singleBaseUrl": {
-                const templatedEnvironment = getSingleBaseUrlTemplatedEnvironment(config);
-                if (templatedEnvironment?.urlTemplate == null) {
+                const fallbackEnvironment = getSingleBaseUrlTemplatedEnvironment(config);
+                if (fallbackEnvironment?.urlTemplate == null) {
                     return;
                 }
-                const optionsName = this.context.getClientOptionsName();
-                const phpString = urlTemplateToPhpConcatenation(
-                    templatedEnvironment.urlTemplate,
-                    serverVariableOptions
+                const templatedEnvironments = environments.environments.filter(
+                    (environment): environment is FernIr.SingleBaseUrlEnvironment & { urlTemplate: string } =>
+                        environment.urlTemplate != null
                 );
-                writer.controlFlow("if", php.codeblock(`(${anyProvided}) && !isset($this->${optionsName}['baseUrl'])`));
+                const optionsName = this.context.getClientOptionsName();
+                const environmentValueExpression = (environment: FernIr.SingleBaseUrlEnvironment): php.CodeBlock =>
+                    php.codeblock((w) => {
+                        w.writeNode(this.context.getEnvironmentsClassReference());
+                        w.write(`::${this.context.getEnvironmentName(environment.name)}->value`);
+                    });
+                writer.controlFlow("if", php.codeblock(anyProvided));
+                writer.writeTextStatement(`$baseUrl = $this->${optionsName}['baseUrl'] ?? null`);
+                writer.controlFlow(
+                    "if",
+                    php.codeblock((w) => {
+                        w.write("$baseUrl == null");
+                        for (const environment of templatedEnvironments) {
+                            w.write(" || $baseUrl === ");
+                            w.writeNode(environmentValueExpression(environment));
+                        }
+                    })
+                );
                 writeMissingDefaultGuards();
                 writeDefaults();
-                writer.writeTextStatement(`$this->${optionsName}['baseUrl'] = ${phpString}`);
+                const alternativeEnvironments = templatedEnvironments.filter(
+                    (environment) => environment.id !== fallbackEnvironment.id
+                );
+                let hasWrittenBranch = false;
+                for (const environment of alternativeEnvironments) {
+                    const condition = php.codeblock((w) => {
+                        w.write("$baseUrl === ");
+                        w.writeNode(environmentValueExpression(environment));
+                    });
+                    if (!hasWrittenBranch) {
+                        writer.controlFlow("if", condition);
+                        hasWrittenBranch = true;
+                    } else {
+                        writer.contiguousControlFlow("elseif", condition);
+                    }
+                    writer.writeTextStatement(
+                        `$this->${optionsName}['baseUrl'] = ${urlTemplateToPhpConcatenation(
+                            environment.urlTemplate,
+                            serverVariableOptions
+                        )}`
+                    );
+                }
+                if (hasWrittenBranch) {
+                    writer.alternativeControlFlow("else");
+                }
+                writer.writeTextStatement(
+                    `$this->${optionsName}['baseUrl'] = ${urlTemplateToPhpConcatenation(
+                        fallbackEnvironment.urlTemplate,
+                        serverVariableOptions
+                    )}`
+                );
+                if (hasWrittenBranch) {
+                    writer.endControlFlow();
+                }
+                writer.endControlFlow();
                 writer.endControlFlow();
                 writer.writeLine();
                 return;
             }
             case "multipleBaseUrls": {
-                const templatedEnvironment = getMultipleBaseUrlsTemplatedEnvironment(config);
-                if (templatedEnvironment?.urlTemplates == null) {
+                const fallbackEnvironment = getMultipleBaseUrlsTemplatedEnvironment(config);
+                if (fallbackEnvironment?.urlTemplates == null) {
                     return;
                 }
-                const templates = templatedEnvironment.urlTemplates;
-                const staticUrls = templatedEnvironment.urls;
-                writer.controlFlow("if", php.codeblock(`$environment == null && (${anyProvided})`));
-                writeMissingDefaultGuards();
-                writeDefaults();
-                writer.write("$environment = ");
-                writer.writeNodeStatement(
+                const templatedEnvironments = environments.environments.filter(
+                    (environment) => environment.urlTemplates != null
+                );
+                const environmentConstantExpression = (
+                    environment: FernIr.MultipleBaseUrlsEnvironment
+                ): php.CodeBlock =>
                     php.codeblock((w) => {
                         w.writeNode(this.context.getEnvironmentsClassReference());
-                        w.write("::custom(");
-                        w.indent();
-                        w.newLine();
-                        environments.baseUrls.forEach((baseUrl, index) => {
-                            const propertyName = this.case.camelSafe(baseUrl.name);
-                            const template = templates[baseUrl.id];
-                            const value =
-                                template != null
-                                    ? urlTemplateToPhpConcatenation(template, serverVariableOptions)
-                                    : `'${this.escapeSingleQuoted(staticUrls[baseUrl.id] ?? "")}'`;
-                            w.write(`${propertyName}: ${value}`);
-                            if (index < environments.baseUrls.length - 1) {
-                                w.write(",");
-                            }
+                        w.write(`::${this.context.getEnvironmentName(environment.name)}()`);
+                    });
+                const writeCustomEnvironmentAssignment = (environment: FernIr.MultipleBaseUrlsEnvironment): void => {
+                    const templates = environment.urlTemplates ?? {};
+                    const staticUrls = environment.urls;
+                    writer.write("$environment = ");
+                    writer.writeNodeStatement(
+                        php.codeblock((w) => {
+                            w.writeNode(this.context.getEnvironmentsClassReference());
+                            w.write("::custom(");
+                            w.indent();
                             w.newLine();
-                        });
-                        w.dedent();
-                        w.write(")");
+                            environments.baseUrls.forEach((baseUrl, index) => {
+                                const propertyName = this.case.camelSafe(baseUrl.name);
+                                const template = templates[baseUrl.id];
+                                const value =
+                                    template != null
+                                        ? urlTemplateToPhpConcatenation(template, serverVariableOptions)
+                                        : `'${this.escapeSingleQuoted(staticUrls[baseUrl.id] ?? "")}'`;
+                                w.write(`${propertyName}: ${value}`);
+                                if (index < environments.baseUrls.length - 1) {
+                                    w.write(",");
+                                }
+                                w.newLine();
+                            });
+                            w.dedent();
+                            w.write(")");
+                        })
+                    );
+                };
+                writer.controlFlow("if", php.codeblock(anyProvided));
+                writer.controlFlow(
+                    "if",
+                    php.codeblock((w) => {
+                        w.write("$environment == null");
+                        for (const environment of templatedEnvironments) {
+                            w.write(" || $environment == ");
+                            w.writeNode(environmentConstantExpression(environment));
+                        }
                     })
                 );
+                writeMissingDefaultGuards();
+                writeDefaults();
+                const alternativeEnvironments = templatedEnvironments.filter(
+                    (environment) => environment.id !== fallbackEnvironment.id
+                );
+                let hasWrittenBranch = false;
+                for (const environment of alternativeEnvironments) {
+                    const condition = php.codeblock((w) => {
+                        w.write("$environment == ");
+                        w.writeNode(environmentConstantExpression(environment));
+                    });
+                    if (!hasWrittenBranch) {
+                        writer.controlFlow("if", condition);
+                        hasWrittenBranch = true;
+                    } else {
+                        writer.contiguousControlFlow("elseif", condition);
+                    }
+                    writeCustomEnvironmentAssignment(environment);
+                }
+                if (hasWrittenBranch) {
+                    writer.alternativeControlFlow("else");
+                }
+                writeCustomEnvironmentAssignment(fallbackEnvironment);
+                if (hasWrittenBranch) {
+                    writer.endControlFlow();
+                }
+                writer.endControlFlow();
                 writer.endControlFlow();
                 writer.writeLine();
                 return;
@@ -819,6 +1210,25 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         });
     }
 
+    /**
+     * Emits the self-contained `appendAppInfoToUserAgent` helper into the generated
+     * root client (only when `allowUserAgentAppInfo` is enabled). It is standalone so
+     * that clients which do not opt in keep byte-identical generated output.
+     *
+     * Sanitizes caller-supplied values: `name`/`version` are token-encoded (every
+     * non-RFC-7230 `tchar` is percent-encoded, including spaces, control characters
+     * and CR/LF) and `comment` has its delimiters (`(`, `)`, `\`) and control
+     * characters escaped, so the untrusted values cannot inject additional header
+     * content. Each value is trimmed before checking for blankness and before
+     * encoding, so blank values are treated as absent rather than encoded into
+     * whitespace tokens. Formats the appended product token as
+     * `{name}/{version} ({comment})`, dropping `/version` and ` (comment)` when blank,
+     * and returns the User-Agent unchanged when `appInfo`/`name` is absent.
+     */
+    private getAppendAppInfoToUserAgentMethod(): php.Method {
+        return buildAppendAppInfoToUserAgentMethod();
+    }
+
     private getConstructorParameters(): ConstructorParameters {
         const allParameters: ConstructorParameter[] = [];
         const requiredParameters: ConstructorParameter[] = [];
@@ -833,7 +1243,17 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             allParameters.push(this.getParameterForHeader(header));
         }
 
-        for (const param of allParameters) {
+        // Under ENDPOINT_SECURITY multiple schemes can derive the same credential parameter
+        // (e.g. an OAuth scheme and an inferred-auth scheme that share a token endpoint both
+        // surface `clientId`/`clientSecret`). Collapse duplicates by name so the generated
+        // constructor stays valid PHP.
+        const dedupedParameters = this.context.isEndpointSecurity()
+            ? allParameters.filter(
+                  (param, index) => allParameters.findIndex((other) => other.name === param.name) === index
+              )
+            : allParameters;
+
+        for (const param of dedupedParameters) {
             if (param.isOptional || param.environmentVariable != null || param.clientDefault != null) {
                 optionalParameters.push(param);
                 continue;
@@ -853,7 +1273,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         }
 
         return {
-            all: allParameters,
+            all: dedupedParameters,
             required: requiredParameters,
             optional: optionalParameters,
             literal: literalParameters
@@ -861,7 +1281,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
     }
 
     private getParameterForAuthScheme(scheme: FernIr.AuthScheme): ConstructorParameter[] {
-        const isOptional = !this.context.ir.sdkConfig.isAuthMandatory || this.isAnyAuthWithMultipleSchemes();
+        const isOptional =
+            !this.context.ir.sdkConfig.isAuthMandatory ||
+            this.isAnyAuthWithMultipleSchemes() ||
+            this.context.isEndpointSecurity();
         switch (scheme.type) {
             case "bearer": {
                 const name = this.context.getParameterName(scheme.token);
@@ -1012,6 +1435,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             docs: header.docs,
             isOptional: this.context.isOptional(header.valueType),
             typeReference: header.valueType,
+            environmentVariable: header.env,
+            isGlobalHeader: true,
             clientDefault: header.clientDefault
         };
     }
@@ -1125,7 +1550,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         writer: php.Writer,
         oauth: FernIr.OAuthScheme,
         isMultiUrl: boolean,
-        guarded = false
+        guarded = false,
+        targetVar = "$this->oauthTokenProvider",
+        authRawClientOptions = "['headers' => []]"
     ): void {
         const tokenEndpointReference = oauth.configuration.tokenEndpoint.endpointReference;
         const subpackageId = tokenEndpointReference.subpackageId;
@@ -1148,7 +1575,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         writer.write("$authRawClient = new ");
         writer.writeNode(this.context.rawClient.getClassReference());
-        writer.writeLine("(['headers' => []]);");
+        writer.writeLine(`(${authRawClientOptions});`);
 
         writer.write("$authClient = new ");
         writer.writeNode(authClientClassReference);
@@ -1158,7 +1585,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             writer.writeLine("($authRawClient);");
         }
 
-        writer.write("$this->oauthTokenProvider = new ");
+        writer.write(`${targetVar} = new `);
         writer.writeNode(oauthTokenProviderClassReference);
         // When wrapped in a credential guard (any-composed auth), clientId/clientSecret
         // are non-null inside the block, so the `?? ''` fallback would be redundant.
@@ -1185,7 +1612,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
     }
 
     private getParametersForInferredAuth(scheme: FernIr.InferredAuthScheme): ConstructorParameter[] {
-        const isOptional = !this.context.ir.sdkConfig.isAuthMandatory || this.isAnyAuthWithMultipleSchemes();
+        const isOptional =
+            !this.context.ir.sdkConfig.isAuthMandatory ||
+            this.isAnyAuthWithMultipleSchemes() ||
+            this.context.isEndpointSecurity();
         const parameters: ConstructorParameter[] = [];
 
         // Get the token endpoint to extract request properties
@@ -1257,7 +1687,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         inferredAuth: FernIr.InferredAuthScheme,
         isMultiUrl: boolean,
         constructorParameters: ConstructorParameters,
-        guarded = false
+        guarded = false,
+        targetVar = "$this->inferredAuthProvider",
+        authRawClientOptions = "['headers' => []]"
     ): void {
         const tokenEndpointReference = inferredAuth.tokenEndpoint.endpoint;
         const subpackageId = tokenEndpointReference.subpackageId;
@@ -1280,7 +1712,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         writer.write("$authRawClient = new ");
         writer.writeNode(this.context.rawClient.getClassReference());
-        writer.writeLine("(['headers' => []]);");
+        writer.writeLine(`(${authRawClientOptions});`);
 
         writer.write("$authClient = new ");
         writer.writeNode(authClientClassReference);
@@ -1347,7 +1779,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         writer.dedent();
         writer.writeLine("];");
 
-        writer.write("$this->inferredAuthProvider = new ");
+        writer.write(`${targetVar} = new `);
         writer.writeNode(inferredAuthProviderClassReference);
         writer.writeLine("($authClient, $inferredAuthOptions);");
         writer.writeLine();

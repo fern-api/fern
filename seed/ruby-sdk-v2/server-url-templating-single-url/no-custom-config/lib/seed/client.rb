@@ -10,6 +10,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.get_users
+    #
     # @return [Array[Seed::Types::User]]
     def get_users(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
@@ -38,6 +41,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     # @option params [String] :user_id
+    #
+    # @example
+    #   client.get_user(user_id: "userId")
     #
     # @return [Seed::Types::User]
     def get_user(request_options: {}, **params)
@@ -69,10 +75,13 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, region: nil, server_url_environment: nil, max_retries: 2)
-      if base_url.nil? && (!region.nil? || !server_url_environment.nil?)
+      if !region.nil? || !server_url_environment.nil?
         region_value = region.nil? ? "us-east-1" : region
         server_url_environment_value = server_url_environment.nil? ? "prod" : server_url_environment
-        base_url = "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1"
+        environment_url_templates = {
+          Seed::Environment::REGIONAL_API_SERVER => "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1"
+        }
+        base_url = base_url.nil? ? "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1" : environment_url_templates.fetch(base_url, base_url)
       end
 
       @raw_client = Seed::Internal::Http::RawClient.new(

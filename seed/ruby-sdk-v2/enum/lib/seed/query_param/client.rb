@@ -22,6 +22,12 @@ module Seed
       # @option params [Seed::Types::ColorOrOperand] :operand_or_color
       # @option params [Seed::Types::ColorOrOperand, nil] :maybe_operand_or_color
       #
+      # @example
+      #   client.query_param.send_(
+      #     operand: ">",
+      #     operand_or_color: "red"
+      #   )
+      #
       # @return [untyped]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -61,6 +67,9 @@ module Seed
       # @option params [Seed::Types::Operand, nil] :maybe_operand
       # @option params [Seed::Types::ColorOrOperand] :operand_or_color
       # @option params [Seed::Types::ColorOrOperand, nil] :maybe_operand_or_color
+      #
+      # @example
+      #   client.query_param.send_list
       #
       # @return [untyped]
       def send_list(request_options: {}, **params)

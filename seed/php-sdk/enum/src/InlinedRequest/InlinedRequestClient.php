@@ -48,6 +48,16 @@ class InlinedRequestClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->inlinedRequest->send(
+     *     new SendEnumInlinedRequest([
+     *         'operand' => Operand::GreaterThan->value,
+     *         'operandOrColor' => Color::Red->value,
+     *     ]),
+     * );
+     * ```
+     *
      * @param SendEnumInlinedRequest $request
      * @param ?array{
      *   baseUrl?: string,

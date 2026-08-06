@@ -13,10 +13,9 @@
 
 ```go
 client.Echo(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -56,11 +55,13 @@ client.Echo(
 <dd>
 
 ```go
-client.Echo(
-        context.TODO(),
-        request,
-    )
+request := &fern.Type{
+    BasicType: fern.BasicTypePrimitive,
 }
+client.CreateType(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -102,10 +103,9 @@ client.Echo(
 
 ```go
 client.File.Notification.Service.GetException(
-        context.TODO(),
-        "notification-hsy129x",
-    )
-}
+    context.TODO(),
+    "notification-hsy129x",
+)
 ```
 </dd>
 </dl>
@@ -161,14 +161,13 @@ This endpoint returns a file by its name.
 
 ```go
 request := &file.GetFileRequest{
-        XFileAPIVersion: "0.0.2",
-    }
-client.File.Service.GetFile(
-        context.TODO(),
-        "file.txt",
-        request,
-    )
+    XFileAPIVersion: "0.0.2",
 }
+client.File.Service.GetFile(
+    context.TODO(),
+    "file.txt",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -224,10 +223,9 @@ This endpoint checks the health of a resource.
 
 ```go
 client.Health.Service.Check(
-        context.TODO(),
-        "id-2sdx82h",
-    )
-}
+    context.TODO(),
+    "id-2sdx82h",
+)
 ```
 </dd>
 </dl>
@@ -282,9 +280,8 @@ This endpoint checks the health of the service.
 
 ```go
 client.Health.Service.Ping(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -311,10 +308,9 @@ client.Health.Service.Ping(
 
 ```go
 client.Service.GetMovie(
-        context.TODO(),
-        "movie-c06a4ad7",
-    )
-}
+    context.TODO(),
+    "movie-c06a4ad7",
+)
 ```
 </dd>
 </dl>
@@ -355,33 +351,32 @@ client.Service.GetMovie(
 
 ```go
 request := &fern.Movie{
-        ID: "movie-c06a4ad7",
-        Prequel: fern.String(
-            "movie-cv9b914f",
-        ),
-        Title: "The Boy and the Heron",
-        From: "Hayao Miyazaki",
-        Rating: 8,
-        Tag: "tag-wf9as23d",
-        Metadata: map[string]any{
-            "actors": []any{
-                "Christian Bale",
-                "Florence Pugh",
-                "Willem Dafoe",
-            },
-            "ratings": map[string]any{
-                "imdb": 7.6,
-                "rottenTomatoes": 97,
-            },
-            "releaseDate": "2023-12-08",
+    ID: "movie-c06a4ad7",
+    Prequel: fern.String(
+        "movie-cv9b914f",
+    ),
+    Title: "The Boy and the Heron",
+    From: "Hayao Miyazaki",
+    Rating: 8,
+    Tag: "tag-wf9as23d",
+    Metadata: map[string]any{
+        "actors": []any{
+            "Christian Bale",
+            "Florence Pugh",
+            "Willem Dafoe",
         },
-        Revenue: int64(1000000),
-    }
-client.Service.CreateMovie(
-        context.TODO(),
-        request,
-    )
+        "ratings": map[string]any{
+            "imdb": 7.6,
+            "rottenTomatoes": 97,
+        },
+        "releaseDate": "2023-12-08",
+    },
+    Revenue: int64(1000000),
 }
+client.Service.CreateMovie(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -422,21 +417,20 @@ client.Service.CreateMovie(
 
 ```go
 request := &fern.GetMetadataRequest{
-        Shallow: fern.Bool(
-            false,
+    Shallow: fern.Bool(
+        false,
+    ),
+    Tag: []*string{
+        fern.String(
+            "development",
         ),
-        Tag: []*string{
-            fern.String(
-                "development",
-            ),
-        },
-        XAPIVersion: "0.0.1",
-    }
-client.Service.GetMetadata(
-        context.TODO(),
-        request,
-    )
+    },
+    XAPIVersion: "0.0.1",
 }
+client.Service.GetMetadata(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -493,50 +487,60 @@ client.Service.GetMetadata(
 
 ```go
 request := &fern.BigEntity{
-        CastMember: &fern.CastMember{
-            Actor: &fern.Actor{
-                Name: "name",
-                ID: "id",
-            },
-        },
-        ExtendedMovie: &fern.ExtendedMovie{
-            ID: "id",
-            Prequel: fern.String(
-                "prequel",
-            ),
-            Title: "title",
-            From: "from",
-            Rating: 1.1,
-            Tag: "tag",
-            Book: fern.String(
-                "book",
-            ),
-            Metadata: map[string]any{
-                "metadata": map[string]any{
-                    "key": "value",
-                },
-            },
-            Revenue: int64(1000000),
-            Cast: []string{
-                "cast",
-                "cast",
-            },
-        },
-        Entity: &fern.Entity{
-            Type: &fern.Type{
-                BasicType: fern.BasicTypePrimitive,
-            },
+    CastMember: &fern.CastMember{
+        Actor: &fern.Actor{
             Name: "name",
+            ID: "id",
         },
-        Metadata: &fern.Metadata{
-            Extra: map[string]string{
-                "extra": "extra",
-            },
-            Tags: []string{
-                "tags",
+    },
+    ExtendedMovie: &fern.ExtendedMovie{
+        ID: "id",
+        Prequel: fern.String(
+            "prequel",
+        ),
+        Title: "title",
+        From: "from",
+        Rating: 1.1,
+        Tag: "tag",
+        Book: fern.String(
+            "book",
+        ),
+        Metadata: map[string]any{
+            "metadata": map[string]any{
+                "key": "value",
             },
         },
-        CommonMetadata: &commons.Metadata{
+        Revenue: int64(1000000),
+        Cast: []string{
+            "cast",
+            "cast",
+        },
+    },
+    Entity: &fern.Entity{
+        Type: &fern.Type{
+            BasicType: fern.BasicTypePrimitive,
+        },
+        Name: "name",
+    },
+    Metadata: &fern.Metadata{
+        Extra: map[string]string{
+            "extra": "extra",
+        },
+        Tags: []string{
+            "tags",
+        },
+    },
+    CommonMetadata: &commons.Metadata{
+        ID: "id",
+        Data: map[string]string{
+            "data": "data",
+        },
+        JSONString: fern.String(
+            "jsonString",
+        ),
+    },
+    EventInfo: &commons.EventInfo{
+        Metadata: &commons.Metadata{
             ID: "id",
             Data: map[string]string{
                 "data": "data",
@@ -545,177 +549,166 @@ request := &fern.BigEntity{
                 "jsonString",
             ),
         },
-        EventInfo: &commons.EventInfo{
-            Metadata: &commons.Metadata{
-                ID: "id",
-                Data: map[string]string{
-                    "data": "data",
-                },
-                JSONString: fern.String(
-                    "jsonString",
-                ),
-            },
+    },
+    Data: &commons.Data{},
+    Migration: &fern.Migration{
+        Name: "name",
+        Status: fern.MigrationStatusRunning,
+    },
+    Exception: &fern.Exception{
+        Generic: &fern.ExceptionInfo{
+            ExceptionType: "exceptionType",
+            ExceptionMessage: "exceptionMessage",
+            ExceptionStacktrace: "exceptionStacktrace",
         },
-        Data: &commons.Data{},
-        Migration: &fern.Migration{
-            Name: "name",
-            Status: fern.MigrationStatusRunning,
-        },
-        Exception: &fern.Exception{
-            Generic: &fern.ExceptionInfo{
-                ExceptionType: "exceptionType",
-                ExceptionMessage: "exceptionMessage",
-                ExceptionStacktrace: "exceptionStacktrace",
-            },
-        },
-        Test: &fern.Test{},
-        Node: &fern.Node{
-            Name: "name",
-            Nodes: []*fern.Node{
-                &fern.Node{
-                    Name: "name",
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                        },
-                        &fern.Node{
-                            Name: "name",
-                        },
+    },
+    Test: &fern.Test{},
+    Node: &fern.Node{
+        Name: "name",
+        Nodes: []*fern.Node{
+            &fern.Node{
+                Name: "name",
+                Nodes: []*fern.Node{
+                    &fern.Node{
+                        Name: "name",
                     },
-                    Trees: []*fern.Tree{
-                        &fern.Tree{
-                            Nodes: []*fern.Node{},
-                        },
-                        &fern.Tree{
-                            Nodes: []*fern.Node{},
-                        },
+                    &fern.Node{
+                        Name: "name",
                     },
                 },
-                &fern.Node{
-                    Name: "name",
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                        },
-                        &fern.Node{
-                            Name: "name",
-                        },
+                Trees: []*fern.Tree{
+                    &fern.Tree{
+                        Nodes: []*fern.Node{},
                     },
-                    Trees: []*fern.Tree{
-                        &fern.Tree{
-                            Nodes: []*fern.Node{},
-                        },
-                        &fern.Tree{
-                            Nodes: []*fern.Node{},
-                        },
+                    &fern.Tree{
+                        Nodes: []*fern.Node{},
                     },
                 },
             },
-            Trees: []*fern.Tree{
-                &fern.Tree{
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
+            &fern.Node{
+                Name: "name",
+                Nodes: []*fern.Node{
+                    &fern.Node{
+                        Name: "name",
+                    },
+                    &fern.Node{
+                        Name: "name",
                     },
                 },
-                &fern.Tree{
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
+                Trees: []*fern.Tree{
+                    &fern.Tree{
+                        Nodes: []*fern.Node{},
+                    },
+                    &fern.Tree{
+                        Nodes: []*fern.Node{},
                     },
                 },
             },
         },
-        Directory: &fern.Directory{
-            Name: "name",
-            Files: []*fern.File{
-                &fern.File{
-                    Name: "name",
-                    Contents: "contents",
-                },
-                &fern.File{
-                    Name: "name",
-                    Contents: "contents",
+        Trees: []*fern.Tree{
+            &fern.Tree{
+                Nodes: []*fern.Node{
+                    &fern.Node{
+                        Name: "name",
+                        Nodes: []*fern.Node{},
+                        Trees: []*fern.Tree{},
+                    },
+                    &fern.Node{
+                        Name: "name",
+                        Nodes: []*fern.Node{},
+                        Trees: []*fern.Tree{},
+                    },
                 },
             },
-            Directories: []*fern.Directory{
-                &fern.Directory{
-                    Name: "name",
-                    Files: []*fern.File{
-                        &fern.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                        &fern.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
+            &fern.Tree{
+                Nodes: []*fern.Node{
+                    &fern.Node{
+                        Name: "name",
+                        Nodes: []*fern.Node{},
+                        Trees: []*fern.Tree{},
                     },
-                    Directories: []*fern.Directory{
-                        &fern.Directory{
-                            Name: "name",
-                        },
-                        &fern.Directory{
-                            Name: "name",
-                        },
-                    },
-                },
-                &fern.Directory{
-                    Name: "name",
-                    Files: []*fern.File{
-                        &fern.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                        &fern.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                    },
-                    Directories: []*fern.Directory{
-                        &fern.Directory{
-                            Name: "name",
-                        },
-                        &fern.Directory{
-                            Name: "name",
-                        },
+                    &fern.Node{
+                        Name: "name",
+                        Nodes: []*fern.Node{},
+                        Trees: []*fern.Tree{},
                     },
                 },
             },
         },
-        Moment: &fern.Moment{
-            ID: uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            Date: fern.MustParseDate(
-                "2023-01-15",
-            ),
-            Datetime: fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
+    },
+    Directory: &fern.Directory{
+        Name: "name",
+        Files: []*fern.File{
+            &fern.File{
+                Name: "name",
+                Contents: "contents",
+            },
+            &fern.File{
+                Name: "name",
+                Contents: "contents",
+            },
         },
-    }
-client.Service.CreateBigEntity(
-        context.TODO(),
-        request,
-    )
+        Directories: []*fern.Directory{
+            &fern.Directory{
+                Name: "name",
+                Files: []*fern.File{
+                    &fern.File{
+                        Name: "name",
+                        Contents: "contents",
+                    },
+                    &fern.File{
+                        Name: "name",
+                        Contents: "contents",
+                    },
+                },
+                Directories: []*fern.Directory{
+                    &fern.Directory{
+                        Name: "name",
+                    },
+                    &fern.Directory{
+                        Name: "name",
+                    },
+                },
+            },
+            &fern.Directory{
+                Name: "name",
+                Files: []*fern.File{
+                    &fern.File{
+                        Name: "name",
+                        Contents: "contents",
+                    },
+                    &fern.File{
+                        Name: "name",
+                        Contents: "contents",
+                    },
+                },
+                Directories: []*fern.Directory{
+                    &fern.Directory{
+                        Name: "name",
+                    },
+                    &fern.Directory{
+                        Name: "name",
+                    },
+                },
+            },
+        },
+    },
+    Moment: &fern.Moment{
+        ID: uuid.MustParse(
+            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        ),
+        Date: fern.MustParseDate(
+            "2023-01-15",
+        ),
+        Datetime: fern.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
+        ),
+    },
 }
+client.Service.CreateBigEntity(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -756,10 +749,9 @@ client.Service.CreateBigEntity(
 
 ```go
 client.Service.RefreshToken(
-        context.TODO(),
-        nil,
-    )
-}
+    context.TODO(),
+    nil,
+)
 ```
 </dd>
 </dl>

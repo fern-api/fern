@@ -5,6 +5,8 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedExhaustive from "../../../index.js";
 
 export class BadRequestBody extends errors.SeedExhaustiveError {
+    public declare readonly body: SeedExhaustive.BadObjectRequestInfo;
+
     constructor(body: SeedExhaustive.BadObjectRequestInfo, rawResponse?: core.RawResponse) {
         super({
             message: "BadRequestBody",

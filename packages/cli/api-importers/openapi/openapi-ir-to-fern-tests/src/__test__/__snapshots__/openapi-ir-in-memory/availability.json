@@ -406,6 +406,7 @@
     "additionalPropertiesDefaultsTo": false,
     "typeDatesAsStrings": false,
     "preserveSingleSchemaOneOf": false,
+    "preserveOneOfInAllOf": false,
     "inlineAllOfSchemas": false,
     "resolveAliases": false,
     "groupMultiApiEnvironments": false,
@@ -420,6 +421,7 @@
     "coerceConstsTo": "enums-coerceable-to-literals",
     "respectByteFormat": false,
     "shouldInferDiscriminatedUnionBaseProperties": false,
-    "disambiguateRequestNames": true
+    "disambiguateRequestNames": true,
+    "ignoreTags": false
   }
 }

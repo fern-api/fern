@@ -30,24 +30,23 @@ that must still be sent on the wire when provided.
 
 ```go
 request := &fern.AuthorizeRequest{
-        ClientID: "client_abc123",
-        RedirectURI: "https://example.com/callback",
-        CodeChallenge: "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM",
-        CodeChallengeMethod: fern.String(
-            "S256",
-        ),
-        Scope: fern.String(
-            "read write",
-        ),
-        State: fern.String(
-            "xyz",
-        ),
-    }
-client.Oauth.Authorize(
-        context.TODO(),
-        request,
-    )
+    ClientID: "client_abc123",
+    RedirectURI: "https://example.com/callback",
+    CodeChallenge: "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM",
+    CodeChallengeMethod: fern.String(
+        "S256",
+    ),
+    Scope: fern.String(
+        "read write",
+    ),
+    State: fern.String(
+        "xyz",
+    ),
 }
+client.Oauth.Authorize(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

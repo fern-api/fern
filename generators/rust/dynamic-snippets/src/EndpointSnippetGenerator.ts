@@ -873,8 +873,9 @@ export class EndpointSnippetGenerator {
                         if (namedType.values.length > 0) {
                             const firstVariant = namedType.values[0];
                             if (firstVariant) {
-                                const rawVariantName = firstVariant.name.pascalCase.unsafeName;
-                                const variantName = this.context.escapeRustReservedType(rawVariantName);
+                                // Use the keyword-safe name so the reference matches the generated
+                                // variant declaration (e.g. `self` becomes `Self_`, not `Self`).
+                                const variantName = firstVariant.name.pascalCase.safeName;
                                 return rust.Expression.raw(`${typeName}::${variantName}`);
                             }
                         }

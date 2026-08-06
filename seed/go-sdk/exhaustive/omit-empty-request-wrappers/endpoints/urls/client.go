@@ -33,6 +33,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Endpoints.URLs.WithMixedCase(
+//	    context.TODO(),
+//	)
 func (c *Client) WithMixedCase(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -47,6 +52,11 @@ func (c *Client) WithMixedCase(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.URLs.NoEndingSlash(
+//	    context.TODO(),
+//	)
 func (c *Client) NoEndingSlash(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -61,6 +71,11 @@ func (c *Client) NoEndingSlash(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.URLs.WithEndingSlash(
+//	    context.TODO(),
+//	)
 func (c *Client) WithEndingSlash(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -75,6 +90,11 @@ func (c *Client) WithEndingSlash(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.URLs.WithUnderscores(
+//	    context.TODO(),
+//	)
 func (c *Client) WithUnderscores(
 	ctx context.Context,
 	opts ...option.RequestOption,

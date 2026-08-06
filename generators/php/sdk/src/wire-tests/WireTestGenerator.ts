@@ -1,4 +1,4 @@
-import { CaseConverter, File, GeneratorError } from "@fern-api/base-generator";
+import { CaseConverter, File, GeneratorError, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { php } from "@fern-api/php-codegen";
@@ -293,7 +293,13 @@ export class WireTestGenerator {
                 }
             });
             const snippetAst = await this.dynamicSnippetsGenerator.generateSnippetAst(snippetRequest, {
-                skipClientInstantiation: true
+                skipClientInstantiation: true,
+                // Only disambiguate by endpointId under endpoint-security. There every endpoint
+                // shares the same method+path (e.g. `GET /users`) but declares a different auth
+                // scheme, so location-based resolution would otherwise collapse them all onto the
+                // first endpoint. Restricting this to endpoint-security keeps every other fixture's
+                // generated wire tests byte-for-byte unchanged.
+                endpointId: this.context.isEndpointSecurity() ? endpoint.id : undefined
             });
 
             const isPaginated = endpoint.pagination != null && this.context.config.generatePaginatedClients === true;
@@ -326,6 +332,21 @@ export class WireTestGenerator {
     ${queryParamsCode},
     1
 )`);
+
+                    // Under endpoint-security, assert that only the auth header(s) for this
+                    // endpoint's declared scheme(s) were sent and every other scheme's header
+                    // is absent.
+                    if (this.context.isEndpointSecurity()) {
+                        const authHeaderMatchers = this.buildAuthHeaderMatchers(endpoint);
+                        if (authHeaderMatchers != null) {
+                            writer.writeStatement(`$this->verifyAuthHeaders(
+    $testId,
+    "${endpoint.method}",
+    "${basePath}",
+    ${authHeaderMatchers}
+)`);
+                        }
+                    }
                 })
             });
         } catch (error) {
@@ -531,11 +552,133 @@ export class WireTestGenerator {
             this.addInferredAuthParams(inferredAuth, authParams);
         }
 
-        if (authParams.length === 0) {
+        // Under endpoint-security multiple schemes can derive the same named argument (e.g.
+        // an OAuth scheme and an inferred-auth scheme sharing a token endpoint both surface
+        // `clientId`/`clientSecret`). Collapse duplicates by the argument name (the text before
+        // the first `:`) so the generated `new Client(...)` call stays valid PHP. Non
+        // endpoint-security fixtures never produce duplicates, so this is a no-op for them.
+        const dedupedParams = authParams.filter((param, index) => {
+            const name = param.split(":")[0];
+            return authParams.findIndex((other) => other.split(":")[0] === name) === index;
+        });
+
+        if (dedupedParams.length === 0) {
             return "";
         }
 
-        return authParams.map((param) => `${param},\n    `).join("");
+        return dedupedParams.map((param) => `${param},\n    `).join("");
+    }
+
+    /**
+     * Builds a PHP array-literal of WireMock header matchers describing the auth headers that
+     * must (and must not) be present for the given endpoint under endpoint-security routing.
+     * Returns null when the API has no auth headers in play.
+     *
+     * The endpoint routes to the first satisfiable security requirement; since the wire-test
+     * client is constructed with credentials for every scheme, that is always the first
+     * requirement (`endpoint.security[0]`). The headers contributed by that requirement's
+     * schemes are expected present; every other scheme's header is expected absent. Endpoints
+     * with no declared security (e.g. the token endpoint) expect all auth headers absent.
+     */
+    private buildAuthHeaderMatchers(endpoint: FernIr.HttpEndpoint): string | null {
+        const schemeHeaderInfoByKey = this.getSchemeHeaderInfoByKey();
+        if (schemeHeaderInfoByKey.size === 0) {
+            return null;
+        }
+
+        // All auth header names across every scheme in the API.
+        const allHeaderNames = new Set<string>();
+        for (const info of schemeHeaderInfoByKey.values()) {
+            allHeaderNames.add(info.headerName);
+        }
+
+        // The scheme keys satisfied for this endpoint (first requirement, or none).
+        const firstRequirement = endpoint.security?.[0];
+        const presentSchemeKeys = firstRequirement != null ? Object.keys(firstRequirement) : [];
+
+        // Collect the distinct value prefixes contributing to each present header name so that
+        // a single-scheme header can be pinned to its prefix (e.g. "Bearer "/"Basic ").
+        const presentPrefixesByHeader = new Map<string, Set<string | undefined>>();
+        for (const schemeKey of presentSchemeKeys) {
+            const info = schemeHeaderInfoByKey.get(schemeKey);
+            if (info == null) {
+                continue;
+            }
+            const prefixes = presentPrefixesByHeader.get(info.headerName) ?? new Set<string | undefined>();
+            prefixes.add(info.valuePrefix);
+            presentPrefixesByHeader.set(info.headerName, prefixes);
+        }
+
+        const entries: string[] = [];
+        for (const headerName of Array.from(allHeaderNames).sort()) {
+            const prefixes = presentPrefixesByHeader.get(headerName);
+            if (prefixes == null) {
+                // Header not routed for this endpoint: assert it is absent.
+                entries.push(`        '${headerName}' => ['absent' => true]`);
+                continue;
+            }
+            // Header routed: assert present, pinned to the value prefix when unambiguous.
+            const onlyPrefix = prefixes.size === 1 ? Array.from(prefixes)[0] : undefined;
+            const matcher =
+                onlyPrefix != null && /^[A-Za-z0-9 ]+$/.test(onlyPrefix)
+                    ? `['matches' => '${onlyPrefix}.*']`
+                    : `['matches' => '.*']`;
+            entries.push(`        '${headerName}' => ${matcher}`);
+        }
+
+        if (entries.length === 0) {
+            return null;
+        }
+
+        return `[\n${entries.join(",\n")},\n    ]`;
+    }
+
+    /**
+     * Maps each auth scheme's routing key to the wire header it produces and (when known) the
+     * value prefix the SDK writes. Mirrors the header construction in RoutingAuthProvider:
+     * bearer/basic/oauth/inferred all write `Authorization`, header schemes write their own
+     * header. Literal-valued header schemes are baked into requests, not routed as auth.
+     */
+    private getSchemeHeaderInfoByKey(): Map<string, { headerName: string; valuePrefix: string | undefined }> {
+        const result = new Map<string, { headerName: string; valuePrefix: string | undefined }>();
+        for (const scheme of this.context.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer":
+                    result.set(scheme.key, { headerName: "Authorization", valuePrefix: "Bearer " });
+                    break;
+                case "basic":
+                    result.set(scheme.key, { headerName: "Authorization", valuePrefix: "Basic " });
+                    break;
+                case "header": {
+                    if (this.context.maybeLiteral(scheme.valueType) != null) {
+                        break;
+                    }
+                    result.set(scheme.key, {
+                        headerName: getWireValue(scheme.name),
+                        valuePrefix: scheme.prefix != null ? `${scheme.prefix} ` : undefined
+                    });
+                    break;
+                }
+                case "oauth": {
+                    const credentials = scheme.configuration;
+                    result.set(scheme.key, {
+                        headerName: credentials.tokenHeader ?? "Authorization",
+                        valuePrefix: credentials.tokenPrefix ?? "Bearer "
+                    });
+                    break;
+                }
+                case "inferred": {
+                    const header = scheme.tokenEndpoint.authenticatedRequestHeaders[0];
+                    const headerName = header?.headerName ?? "Authorization";
+                    const valuePrefix = header?.valuePrefix ?? (headerName === "Authorization" ? "Bearer " : undefined);
+                    result.set(scheme.key, { headerName, valuePrefix });
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+        return result;
     }
 
     private addInferredAuthParams(scheme: FernIr.InferredAuthScheme, authParams: string[]): void {

@@ -14,13 +14,12 @@
 
 ```go
 request := &fern.TestRequest{
-        For: "for",
-    }
-client.Package.Test(
-        context.TODO(),
-        request,
-    )
+    For: "for",
 }
+client.Package.Test(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

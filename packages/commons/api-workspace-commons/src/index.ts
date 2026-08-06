@@ -5,6 +5,7 @@ export * from "./computeSemanticVersion.js";
 export { detectCiProvider, detectInvocationSource } from "./detectInvocationSource.js";
 export * from "./FernFile.js";
 export * from "./FernWorkspace.js";
+export * from "./getFilesystemPublishTarget.js";
 export { getOriginGitCommit, getOriginGitCommitIsDirty } from "./getOriginGitCommit.js";
 export * from "./openapi/index.js";
 export * from "./Source.js";

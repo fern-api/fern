@@ -19,6 +19,7 @@ import type { IrSummary } from "./ir.js";
 import { patchCargoLockForSdk, patchCargoLockForTypes, patchCargoToml } from "./patchCargoToml.js";
 import { patchDistWorkspaceToml } from "./patchDistWorkspace.js";
 import type { ResolvedOutputConfig } from "./resolveOutputConfig.js";
+import { generateWireTests } from "./wireTests/index.js";
 import { writeGitignore } from "./writeGitignore.js";
 
 export type PipelineOutcome =
@@ -60,7 +61,12 @@ export async function runPipeline(args: {
     // (e.g. missing apiDisplayName + no customConfig override)
     // rather than half-producing output.
     const binaryName = deriveBinaryName({ customConfig, ir });
-    const authBindings = detectAuthBindings({ auth: ir.auth, binaryName });
+    const authBindings = detectAuthBindings({
+        auth: ir.auth,
+        binaryName,
+        services: ir.services,
+        environments: ir.environments
+    });
     const globalParamBindings = detectGlobalParams({ globalParameters: ir.globalParameters });
 
     await mkdir(outputDir, { recursive: true });
@@ -83,7 +89,12 @@ export async function runPipeline(args: {
     //      Build+test jobs are always emitted; publish jobs only when
     //      npm publish info is present.
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
-    await patchCargoToml({ outputDir, binaryName, version: outputConfig.version });
+    await patchCargoToml({
+        outputDir,
+        binaryName,
+        version: outputConfig.version,
+        packageIdentity: customConfig.packageIdentity
+    });
     await patchDistWorkspaceToml({ outputDir });
     const customCommands = customConfig.customCommands !== false && irFilepath != null;
     await copySpecs({
@@ -93,9 +104,26 @@ export async function runPipeline(args: {
         globalParamBindings,
         specsDir,
         customCommands,
-        rootGroup: customConfig.rootGroup
+        rootGroup: customConfig.rootGroup,
+        userAgentSuffixFlag: customConfig.userAgentSuffixFlag
     });
     await writeGitignore(outputDir);
+
+    // Wire tests (opt-in): emit the mock-driven integration suite after the
+    // specs + main.rs are on disk, since the harness resolves command chains
+    // by loading the same baked specs copySpecs just wrote. Requires the IR
+    // file for endpoint examples.
+    if (customConfig.generateWireTests === true && irFilepath != null) {
+        await generateWireTests({
+            outputDir,
+            binaryName,
+            irFilepath,
+            specsDir,
+            rootGroup: customConfig.rootGroup,
+            authBindings
+        });
+    }
+
     await emitReadme({
         outputDir,
         binaryName,
@@ -162,14 +190,20 @@ export async function runPipeline(args: {
     // Wire up path dependencies and workspace members for generated crates.
     if (typesCrateName != null || sdkCrateName != null) {
         await patchCargoToml({ outputDir, binaryName, typesCrateName, sdkCrateName });
+        const packageName = customConfig.packageIdentity?.name;
         if (typesCrateName != null) {
             // When the SDK crate exists, the CLI binary depends on the
             // SDK (which re-exports types) — so skip adding types as a
             // direct dep of fern-cli-sdk in the lockfile.
-            await patchCargoLockForTypes({ outputDir, typesCrateName, skipCliDep: sdkCrateName != null });
+            await patchCargoLockForTypes({
+                outputDir,
+                typesCrateName,
+                skipCliDep: sdkCrateName != null,
+                packageName
+            });
         }
         if (sdkCrateName != null && typesCrateName != null) {
-            await patchCargoLockForSdk({ outputDir, sdkCrateName, typesCrateName });
+            await patchCargoLockForSdk({ outputDir, sdkCrateName, typesCrateName, packageName });
         }
         await patchDistWorkspaceToml({ outputDir, typesCrateName, sdkCrateName });
     }

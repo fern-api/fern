@@ -81,6 +81,95 @@ describe("mergeWithOverrides", () => {
         });
     });
 
+    it("should merge parameters by name and location rather than by position", () => {
+        const data = {
+            parameters: [
+                { name: "cursor", in: "query", schema: { type: "string" } },
+                { name: "limit", in: "query", schema: { type: "integer" } },
+                { name: "color", in: "query", schema: { type: "string" } }
+            ]
+        };
+
+        const overrides = {
+            parameters: [
+                {
+                    name: "color",
+                    in: "query",
+                    explode: false,
+                    schema: { type: "array", items: { type: "string", enum: ["red", "green", "blue"] } }
+                }
+            ]
+        };
+
+        const result = mergeWithOverrides({ data, overrides });
+
+        expect(result).toEqual({
+            parameters: [
+                { name: "cursor", in: "query", schema: { type: "string" } },
+                { name: "limit", in: "query", schema: { type: "integer" } },
+                {
+                    name: "color",
+                    in: "query",
+                    explode: false,
+                    schema: { type: "array", items: { type: "string", enum: ["red", "green", "blue"] } }
+                }
+            ]
+        });
+    });
+
+    it("should not merge a parameter override into a same-named parameter in another location", () => {
+        const data = {
+            parameters: [{ name: "id", in: "path", schema: { type: "string" } }]
+        };
+
+        const result = mergeWithOverrides({
+            data,
+            overrides: { parameters: [{ name: "id", in: "query", description: "the query id" }] }
+        });
+
+        expect(result).toEqual({
+            parameters: [
+                { name: "id", in: "path", schema: { type: "string" } },
+                { name: "id", in: "query", description: "the query id" }
+            ]
+        });
+    });
+
+    it("should merge index-aligned diffs by position when they omit the parameter location", () => {
+        const data = {
+            parameters: [
+                { name: "cursor", in: "query", schema: { type: "string" } },
+                { name: "limit", in: "query", schema: { type: "integer" } }
+            ]
+        };
+
+        const result = mergeWithOverrides({
+            data,
+            overrides: { parameters: [{ name: "limit" }, { name: "cursor" }] }
+        });
+
+        expect(result).toEqual({
+            parameters: [
+                { name: "limit", in: "query", schema: { type: "string" } },
+                { name: "cursor", in: "query", schema: { type: "integer" } }
+            ]
+        });
+    });
+
+    it("should append parameters that match nothing", () => {
+        const result = mergeWithOverrides({
+            data: { parameters: [{ name: "cursor", in: "query" }] },
+            overrides: { parameters: [{ name: "limit", in: "query", schema: { type: "integer" } }] }
+        });
+
+        expect(result).toEqual({
+            parameters: [
+                { name: "cursor", in: "query" },
+                { name: "limit", in: "query", schema: { type: "integer" } }
+            ]
+        });
+    });
+
     it("should replace arrays of primitives", () => {
         const data = {
             tags: ["tag1", "tag2"]

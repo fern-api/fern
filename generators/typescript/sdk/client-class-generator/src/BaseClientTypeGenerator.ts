@@ -14,6 +14,7 @@ export declare namespace BaseClientTypeGenerator {
         ir: FernIr.IntermediateRepresentation;
         omitFernHeaders: boolean;
         includePlatformHeaders: boolean;
+        allowUserAgentAppInfo: boolean;
         retainOriginalCasing: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         caseConverter: CaseConverter;
@@ -21,6 +22,89 @@ export declare namespace BaseClientTypeGenerator {
 }
 
 const OPTIONS_PARAMETER_NAME = "options";
+const APPEND_APP_INFO_HELPER_NAME = "appendAppInfoToUserAgent";
+
+/**
+ * Source for the self-contained `appendAppInfoToUserAgent` helper emitted into the
+ * generated base client when `allowUserAgentAppInfo` is enabled. It is intentionally
+ * standalone (rather than reusing the shared `core/runtime` utility) so that clients
+ * which do not opt into `allowUserAgentAppInfo` keep byte-identical generated output
+ * and the shared core-utilities are never modified.
+ *
+ * Sanitizes caller-supplied values: `name`/`version` are token-encoded (every
+ * non-RFC-7230 `tchar` is percent-encoded, including spaces, control characters and
+ * CR/LF) and `comment` has its delimiters (`(`, `)`, `\`) and control characters
+ * (incl. CR/LF) escaped, so the untrusted values cannot inject additional header
+ * content. Each value is trimmed before encoding so blank values are treated as
+ * absent rather than encoded into whitespace tokens. Formats the appended product
+ * token as `{name}/{version} ({comment})`, dropping `/version` and ` (comment)` when
+ * blank, and returns the User-Agent unchanged when `appInfo`/`name` is absent.
+ */
+const APPEND_APP_INFO_HELPER_SOURCE = `
+function ${APPEND_APP_INFO_HELPER_NAME}(
+    userAgent: string,
+    appInfo: { name: string; version?: string; comment?: string } | undefined
+): string {
+    if (appInfo == null) {
+        return userAgent;
+    }
+    const percentEncodeChar = (char: string): string => {
+        let encoded = "";
+        for (const byte of new TextEncoder().encode(char)) {
+            encoded += \`%\${byte.toString(16).toUpperCase().padStart(2, "0")}\`;
+        }
+        return encoded;
+    };
+    // RFC 7230 token = 1*tchar. Any character outside that set is percent-encoded so
+    // it cannot break out of the product token or inject additional header content.
+    const encodeToken = (value: string): string =>
+        value.replace(/[^!#$%&'*+\\-.^_\`|~0-9A-Za-z]/g, percentEncodeChar);
+    // Escape the comment delimiters \`(\`, \`)\`, \`\\\` and control characters (0x00-0x1F,
+    // 0x7F, incl. CR/LF) so a caller-supplied comment cannot terminate the comment
+    // group early or inject additional header content. Code points are compared rather
+    // than matched with a regex range so the emitted code does not trip lint rules that
+    // ban control characters in regular expressions.
+    const encodeComment = (value: string): string =>
+        Array.from(value)
+            .map((char) => {
+                const codePoint = char.codePointAt(0) ?? 0;
+                return char === "(" || char === ")" || char === "\\\\" || codePoint <= 0x1f || codePoint === 0x7f
+                    ? percentEncodeChar(char)
+                    : char;
+            })
+            .join("");
+
+    const name = encodeToken((appInfo.name ?? "").trim());
+    if (name.length === 0) {
+        return userAgent;
+    }
+    let productToken = name;
+    const version = encodeToken((appInfo.version ?? "").trim());
+    if (version.length > 0) {
+        productToken += \`/\${version}\`;
+    }
+    const comment = encodeComment((appInfo.comment ?? "").trim());
+    if (comment.length > 0) {
+        productToken += \` (\${comment})\`;
+    }
+    return \`\${userAgent} \${productToken}\`;
+}`;
+
+/**
+ * Splits a `{name}/{version}` User-Agent product token into its parts so the version can
+ * be recombined with the runtime-resolved platform segments. A value without a separator
+ * is treated as the product name.
+ */
+function splitUserAgentCoordinate(value: string): { name: string; version: string } {
+    const separatorIndex = value.lastIndexOf("/");
+    const version = separatorIndex < 0 ? "" : value.slice(separatorIndex + 1);
+    // The product name may itself contain a separator (e.g. `@acme/sdk`), so only split off a
+    // trailing segment that looks like a version.
+    if (!/^v?\d/.test(version)) {
+        return { name: value, version: "" };
+    }
+    return { name: value.slice(0, separatorIndex), version };
+}
 
 export class BaseClientTypeGenerator {
     public static readonly OPTIONS_PARAMETER_NAME = OPTIONS_PARAMETER_NAME;
@@ -28,6 +112,7 @@ export class BaseClientTypeGenerator {
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly omitFernHeaders: boolean;
     private readonly includePlatformHeaders: boolean;
+    private readonly allowUserAgentAppInfo: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly caseConverter: CaseConverter;
@@ -37,6 +122,7 @@ export class BaseClientTypeGenerator {
         ir,
         omitFernHeaders,
         includePlatformHeaders,
+        allowUserAgentAppInfo,
         retainOriginalCasing,
         parameterNaming,
         caseConverter
@@ -45,6 +131,7 @@ export class BaseClientTypeGenerator {
         this.ir = ir;
         this.omitFernHeaders = omitFernHeaders;
         this.includePlatformHeaders = includePlatformHeaders;
+        this.allowUserAgentAppInfo = allowUserAgentAppInfo;
         this.retainOriginalCasing = retainOriginalCasing;
         this.parameterNaming = parameterNaming;
         this.caseConverter = caseConverter;
@@ -169,6 +256,37 @@ export type BaseClientOptions = {
     private generateNormalizeClientOptionsFunction(context: FileContext): void {
         const fernHeaderEntries: [string, ts.Expression][] = [];
 
+        // Tracks whether the emitted `appendAppInfoToUserAgent` helper is actually
+        // referenced, so we only emit its definition when it is used.
+        let usesAppInfoHelper = false;
+
+        // When the opt-in `allowUserAgentAppInfo` config is set, the caller's
+        // `appInfo` product token is appended to whichever User-Agent value the SDK
+        // would otherwise send. `options?.appInfo` is in scope inside the generated
+        // `normalizeClientOptions` function. Rather than modifying the shared
+        // `getUserAgent` core-utility, we wrap the computed User-Agent expression
+        // (for all three branches) in a self-contained `appendAppInfoToUserAgent`
+        // helper emitted into this generated file, keeping the shared core-utilities
+        // byte-identical for callers that do not opt in.
+        const withAppInfo = (userAgent: ts.Expression): ts.Expression => {
+            if (!this.allowUserAgentAppInfo) {
+                return userAgent;
+            }
+            usesAppInfoHelper = true;
+            return ts.factory.createCallExpression(
+                ts.factory.createIdentifier(APPEND_APP_INFO_HELPER_NAME),
+                undefined,
+                [
+                    userAgent,
+                    ts.factory.createPropertyAccessChain(
+                        ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                        ts.factory.createIdentifier("appInfo")
+                    )
+                ]
+            );
+        };
+
         if (!this.omitFernHeaders) {
             // X-Fern-Language header
             fernHeaderEntries.push([
@@ -194,25 +312,40 @@ export type BaseClientOptions = {
             // that consolidates the platform + runtime information. This supersedes
             // the default `{package}/{version}` User-Agent, and the discrete
             // X-Fern-Runtime / X-Fern-Runtime-Version headers are dropped.
-            const useRichUserAgent = this.includePlatformHeaders && context.npmPackage != null;
+            // The IR value already reflects the resolved `user-agent` template when one is
+            // configured, so it takes precedence over the npm package coordinate.
+            const irUserAgent = this.ir.sdkConfig.platformHeaders.userAgent;
+            const coordinate =
+                irUserAgent != null
+                    ? splitUserAgentCoordinate(irUserAgent.value)
+                    : context.npmPackage != null
+                      ? { name: context.npmPackage.packageName, version: context.npmPackage.version }
+                      : undefined;
+            const useRichUserAgent = this.includePlatformHeaders && coordinate != null && coordinate.version.length > 0;
 
-            if (useRichUserAgent && context.npmPackage != null) {
+            if (useRichUserAgent && coordinate != null) {
                 fernHeaderEntries.push([
-                    "User-Agent",
-                    context.coreUtilities.runtime.userAgent._invoke(
-                        ts.factory.createStringLiteral(context.npmPackage.packageName),
-                        ts.factory.createStringLiteral(context.npmPackage.version)
+                    irUserAgent?.header ?? "User-Agent",
+                    withAppInfo(
+                        context.coreUtilities.runtime.userAgent._invoke(
+                            ts.factory.createStringLiteral(coordinate.name),
+                            ts.factory.createStringLiteral(coordinate.version)
+                        )
                     )
                 ]);
             } else if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
                 fernHeaderEntries.push([
                     this.ir.sdkConfig.platformHeaders.userAgent.header,
-                    ts.factory.createStringLiteral(this.ir.sdkConfig.platformHeaders.userAgent.value)
+                    withAppInfo(ts.factory.createStringLiteral(this.ir.sdkConfig.platformHeaders.userAgent.value))
                 ]);
             } else if (context.npmPackage != null) {
                 fernHeaderEntries.push([
                     "User-Agent",
-                    ts.factory.createStringLiteral(`${context.npmPackage.packageName}/${context.npmPackage.version}`)
+                    withAppInfo(
+                        ts.factory.createStringLiteral(
+                            `${context.npmPackage.packageName}/${context.npmPackage.version}`
+                        )
+                    )
                 ]);
             }
 
@@ -256,7 +389,7 @@ export type BaseClientOptions = {
         }
 
         const rootPathParamDefaults = this.getRootPathParameterDefaults();
-        const serverVariableInterpolation = this.getServerVariableInterpolation();
+        const serverVariableInterpolation = this.getServerVariableInterpolation(context);
 
         const functionCode = `
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
@@ -270,6 +403,10 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
 }`;
 
         context.sourceFile.addStatements(functionCode);
+
+        if (usesAppInfoHelper) {
+            context.sourceFile.addStatements(APPEND_APP_INFO_HELPER_SOURCE);
+        }
     }
 
     /**
@@ -278,7 +415,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
      * provided the base URL is rebuilt from the environment's URL template(s) using those values.
      * Returns empty strings when the API declares no server variables, leaving output unchanged.
      */
-    private getServerVariableInterpolation(): { section: string; returnFields: string } {
+    private getServerVariableInterpolation(context: FileContext): { section: string; returnFields: string } {
         const empty = { section: "", returnFields: "" };
         const options = getServerVariableOptions(this.ir, this.caseConverter);
         if (options.length === 0) {
@@ -299,44 +436,76 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
                 return `        const ${localName} = ${OPTIONS_PARAMETER_NAME}?.${getPropertyKey(optionName)} ?? ${fallback};`;
             })
             .join("\n");
+        const environmentsEnum = getTextOfTsNode(context.environments.getReferenceToEnvironmentsEnum().getExpression());
 
         switch (environments.type) {
             case "singleBaseUrl": {
-                const templatedEnvironment = environments.environments.find((env) => env.urlTemplate != null);
-                if (templatedEnvironment?.urlTemplate == null) {
+                const templatedEnvironments = environments.environments.flatMap((env) =>
+                    env.urlTemplate != null ? [{ env, urlTemplate: env.urlTemplate }] : []
+                );
+                const firstTemplate = templatedEnvironments[0]?.urlTemplate;
+                if (firstTemplate == null) {
                     return empty;
                 }
-                const literal = urlTemplateToTemplateLiteral(templatedEnvironment.urlTemplate, options);
+                const entries = templatedEnvironments.map(({ env, urlTemplate }) => {
+                    const environmentName = this.caseConverter.pascalUnsafe(env.name);
+                    const literal = urlTemplateToTemplateLiteral(urlTemplate, options);
+                    return `                [${environmentsEnum}.${environmentName}, ${literal}],`;
+                });
                 const section = `    let baseUrl = ${OPTIONS_PARAMETER_NAME}?.baseUrl;
     if (${condition}) {
 ${localDeclarations}
-        baseUrl = ${literal};
+        if (baseUrl == null) {
+            const _environmentUrls = new Map<unknown, string>([
+${entries.join("\n")}
+            ]);
+            baseUrl = _environmentUrls.get(${OPTIONS_PARAMETER_NAME}?.environment) ?? ${urlTemplateToTemplateLiteral(firstTemplate, options)};
+        }
     }
 
 `;
                 return { section, returnFields: "\n        baseUrl," };
             }
             case "multipleBaseUrls": {
-                const templatedEnvironment = environments.environments.find((env) => env.urlTemplates != null);
-                if (templatedEnvironment?.urlTemplates == null) {
+                const templatedEnvironments = environments.environments.filter((env) => env.urlTemplates != null);
+                const firstTemplatedEnvironment = templatedEnvironments[0];
+                if (firstTemplatedEnvironment == null) {
                     return empty;
                 }
-                const templates = templatedEnvironment.urlTemplates;
-                const staticUrls = templatedEnvironment.urls;
-                const entries = environments.baseUrls.map((baseUrl) => {
-                    const propertyKey = getPropertyKey(this.caseConverter.camelUnsafe(baseUrl.name));
-                    const template = templates[baseUrl.id];
-                    if (template != null) {
-                        return `            ${propertyKey}: ${urlTemplateToTemplateLiteral(template, options)},`;
-                    }
-                    return `            ${propertyKey}: ${JSON.stringify(staticUrls[baseUrl.id] ?? "")},`;
+                const environmentUrlsType = getTextOfTsNode(
+                    context.environments.getReferenceToEnvironmentUrls().getTypeNode()
+                );
+                const getUrlEntries = (env: FernIr.MultipleBaseUrlsEnvironment, indent: string): string[] =>
+                    environments.baseUrls.map((baseUrl) => {
+                        const propertyKey = getPropertyKey(this.caseConverter.camelUnsafe(baseUrl.name));
+                        const template = env.urlTemplates?.[baseUrl.id];
+                        if (template != null) {
+                            return `${indent}${propertyKey}: ${urlTemplateToTemplateLiteral(template, options)},`;
+                        }
+                        return `${indent}${propertyKey}: ${JSON.stringify(env.urls[baseUrl.id] ?? "")},`;
+                    });
+                const entries = templatedEnvironments.map((env) => {
+                    const environmentName = this.caseConverter.pascalUnsafe(env.name);
+                    return `                [
+                    ${environmentsEnum}.${environmentName},
+                    {
+${getUrlEntries(env, "                        ").join("\n")}
+                    },
+                ],`;
                 });
                 const section = `    let environment = ${OPTIONS_PARAMETER_NAME}?.environment;
     if (${condition}) {
 ${localDeclarations}
-        environment = {
+        if (environment == null) {
+            environment = {
+${getUrlEntries(firstTemplatedEnvironment, "                ").join("\n")}
+            };
+        } else {
+            const _environmentUrls = new Map<unknown, ${environmentUrlsType}>([
 ${entries.join("\n")}
-        };
+            ]);
+            environment = _environmentUrls.get(environment) ?? environment;
+        }
     }
 
 `;
@@ -629,80 +798,14 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
 
                     let value: ts.Expression;
                     if (literalValue != null) {
-                        if (typeof literalValue === "boolean") {
-                            const booleanLiteral = literalValue ? ts.factory.createTrue() : ts.factory.createFalse();
-                            value = ts.factory.createCallExpression(
-                                ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createParenthesizedExpression(
-                                        ts.factory.createBinaryExpression(
-                                            ts.factory.createPropertyAccessChain(
-                                                ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                ts.factory.createIdentifier(headerName)
-                                            ),
-                                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                            booleanLiteral
-                                        )
-                                    ),
-                                    ts.factory.createIdentifier("toString")
-                                ),
-                                undefined,
-                                []
-                            );
-                        } else {
-                            value = ts.factory.createBinaryExpression(
-                                ts.factory.createPropertyAccessChain(
-                                    ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                    ts.factory.createIdentifier(headerName)
-                                ),
-                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                ts.factory.createStringLiteral(literalValue.toString())
-                            );
-                        }
+                        value = this.buildRootHeaderValue({ headerName, envVar: undefined, fallback: literalValue });
                     } else {
                         const clientDefaultVal = getClientDefaultValue(header.clientDefault);
-                        if (clientDefaultVal != null && !typeContainsNullable(header.valueType, context)) {
-                            if (typeof clientDefaultVal === "boolean") {
-                                const booleanLiteral = clientDefaultVal
-                                    ? ts.factory.createTrue()
-                                    : ts.factory.createFalse();
-                                value = ts.factory.createCallExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createParenthesizedExpression(
-                                            ts.factory.createBinaryExpression(
-                                                ts.factory.createPropertyAccessChain(
-                                                    ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                    ts.factory.createIdentifier(headerName)
-                                                ),
-                                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                                booleanLiteral
-                                            )
-                                        ),
-                                        ts.factory.createIdentifier("toString")
-                                    ),
-                                    undefined,
-                                    []
-                                );
-                            } else {
-                                value = ts.factory.createBinaryExpression(
-                                    ts.factory.createPropertyAccessChain(
-                                        ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                        ts.factory.createIdentifier(headerName)
-                                    ),
-                                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                    ts.factory.createStringLiteral(clientDefaultVal.toString())
-                                );
-                            }
-                        } else {
-                            value = ts.factory.createPropertyAccessChain(
-                                ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                ts.factory.createIdentifier(this.getOptionKeyForHeader(header, context))
-                            );
-                        }
+                        const fallback =
+                            clientDefaultVal != null && !typeContainsNullable(header.valueType, context)
+                                ? clientDefaultVal
+                                : undefined;
+                        value = this.buildRootHeaderValue({ headerName, envVar: header.env, fallback });
                     }
 
                     return {
@@ -742,6 +845,74 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
         }
 
         return headers;
+    }
+
+    /**
+     * Builds the value expression for a root (global) header, coalescing in
+     * precedence order: the client option, then the environment variable
+     * fallback (when the header declares an `env`), then the client default.
+     */
+    private buildRootHeaderValue({
+        headerName,
+        envVar,
+        fallback
+    }: {
+        headerName: string;
+        envVar: string | undefined;
+        fallback: string | boolean | undefined;
+    }): ts.Expression {
+        const operands: ts.Expression[] = [
+            ts.factory.createPropertyAccessChain(
+                ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                ts.factory.createIdentifier(headerName)
+            )
+        ];
+
+        if (envVar != null) {
+            operands.push(
+                ts.factory.createElementAccessChain(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier("process"),
+                        ts.factory.createIdentifier("env")
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                    ts.factory.createStringLiteral(envVar)
+                )
+            );
+        }
+
+        let wrapWithToString = false;
+        if (fallback != null) {
+            if (typeof fallback === "boolean") {
+                wrapWithToString = true;
+                operands.push(fallback ? ts.factory.createTrue() : ts.factory.createFalse());
+            } else {
+                operands.push(ts.factory.createStringLiteral(fallback.toString()));
+            }
+        }
+
+        const first = operands[0];
+        if (operands.length === 1 && first != null) {
+            return first;
+        }
+
+        const coalesced = operands.reduce((left, right) =>
+            ts.factory.createBinaryExpression(left, ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken), right)
+        );
+
+        if (wrapWithToString) {
+            return ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createParenthesizedExpression(coalesced),
+                    ts.factory.createIdentifier("toString")
+                ),
+                undefined,
+                []
+            );
+        }
+
+        return coalesced;
     }
 
     private getOptionKeyForHeader(header: FernIr.HttpHeader, context: FileContext): string {

@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.homepage.get_homepage_problems
+      #
       # @return [Array[String]]
       def get_homepage_problems(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -45,6 +48,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.homepage.set_homepage_problems(request: %w[string string])
       #
       # @return [untyped]
       def set_homepage_problems(request_options: {}, **params)

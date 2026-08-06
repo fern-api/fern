@@ -13,6 +13,28 @@ impl ReportingClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use inline_enum_type_name_override_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = InlineEnumTypeNameOverrideClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .reporting
+    ///         .load(
+    ///             &LoadRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn load(
         &self,
         request: &LoadRequest,

@@ -5,7 +5,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { diffLines } from "diff";
 import fs from "fs";
 import { resolve } from "path";
-import { afterEach, beforeEach } from "vitest";
+import { afterEach, beforeEach, vi } from "vitest";
 
 import { parseImagePaths, replaceImagePathsAndUrls } from "../parseImagePaths.js";
 
@@ -1440,5 +1440,183 @@ describe("overlap prevention: mixed simple and complex expressions", () => {
         // Verify the output is well-formed (no corrupted text from overlapping edits)
         expect(result).toContain("<Component");
         expect(result).toContain("/>");
+    });
+});
+
+describe("markdown image titles", () => {
+    it("should resolve the path of an image with a title", () => {
+        const page = 'This is a test page with an image ![image](path/to/image.png "My title")';
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
+        expect(result.markdown.trim()).toBe(
+            'This is a test page with an image ![image](/Volume/git/fern/my/docs/folder/path/to/image.png "My title")'
+        );
+    });
+
+    it("should replace an image with a title with its file ID, preserving the title", () => {
+        const page = '![image](path/to/image.png "My title")';
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "titled-image-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
+        expect(result.trim()).toBe('![image](file:titled-image-id "My title")');
+    });
+
+    it("should support single-quoted and parenthesized titles", () => {
+        const page = ["![a](path/to/a.png 'single')", "![b](path/to/b.png (parens))"].join("\n");
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/a.png"), "a-id"],
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/b.png"), "b-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("![a](file:a-id 'single')");
+        expect(result).toContain("![b](file:b-id (parens))");
+    });
+
+    it("should preserve the title alongside an anchor", () => {
+        const page = '![image](path/to/image.png#anchor "My title")';
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "anchored-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
+        expect(result.trim()).toBe('![image](file:anchored-id#anchor "My title")');
+    });
+
+    it("should leave external images with titles untouched", () => {
+        const page = '![image](https://example.com/image.png "My title")';
+        const result = parseImagePaths(page, PATHS, CONTEXT);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toBe('![image](https://example.com/image.png "My title")');
+    });
+
+    it("should handle titles with the streaming parser for large files", () => {
+        vi.stubEnv("FERN_DOCS_LARGE_FILE_BYTES", "10");
+        const logSpy = vi.spyOn(console, "debug").mockImplementation(() => undefined);
+
+        const page = '![image](path/to/image.png "My title")';
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const logged = logSpy.mock.calls.flat().join("\n");
+        logSpy.mockRestore();
+
+        // guards against silently exercising the mdast path instead
+        expect(logged).toContain("Using streaming parser for large file");
+        expect(parseResult.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
+
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "streamed-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
+        expect(result.trim()).toBe('![image](file:streamed-id "My title")');
+
+        vi.unstubAllEnvs();
+    });
+
+    it("should not swallow the title when the destination has an unterminated angle bracket", () => {
+        vi.stubEnv("FERN_DOCS_LARGE_FILE_BYTES", "10");
+        const result = parseImagePaths('![image](<path/to/image.png "My title")', PATHS, CONTEXT);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/<path/to/image.png"]);
+        expect(result.markdown.trim()).toBe('![image](/Volume/git/fern/my/docs/folder/<path/to/image.png "My title")');
+        vi.unstubAllEnvs();
+    });
+
+    it("should rewrite a relative markdown link that specifies a title", () => {
+        const page = '[other page](./other.mdx "My title")';
+        const result = replaceImagePathsAndUrls(
+            page,
+            new Map(),
+            { [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/other.mdx")]: "docs/other" },
+            PATHS,
+            CONTEXT
+        );
+        expect(result.trim()).toBe('[other page](/docs/other "My title")');
+    });
+
+    it("should rewrite a relative markdown link with both an anchor and a title", () => {
+        const page = "[other page](./other.mdx#section 'My title')";
+        const result = replaceImagePathsAndUrls(
+            page,
+            new Map(),
+            { [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/other.mdx")]: "docs/other" },
+            PATHS,
+            CONTEXT
+        );
+        expect(result.trim()).toBe("[other page](/docs/other#section 'My title')");
+    });
+});
+
+describe("literal angle brackets in prose", () => {
+    const IMAGE_PATH = AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png");
+    const fileIds = new Map([[IMAGE_PATH, "leaf-id"]]);
+
+    function roundTrip(page: string): string {
+        const parsed = parseImagePaths(page, PATHS, CONTEXT);
+        return replaceImagePathsAndUrls(parsed.markdown, fileIds, {}, PATHS, CONTEXT);
+    }
+
+    it.each([
+        ["comparison operator in inline code", "Outliers are `is < Q1 - 1.5*IQR`."],
+        ["comparison operator in plain text", "Keep the tolerance < 5 percent."],
+        ["less-than-or-equal in inline code", "Show deals below the margin (filter is `<=`)."],
+        ["escaped angle bracket", "Use \\<placeholder\\> for the name."],
+        ["angle bracket inside a fenced code block", "```js\nif (a < b) {\n  send();\n}\n```"]
+    ])("replaces a later image path when the page contains a %s", (_name, prose) => {
+        const page = `${prose}\n\n![leaf](path/to/image.png)\n`;
+        expect(roundTrip(page).trim()).toBe(`${prose}\n\n![leaf](file:leaf-id)`.trim());
+    });
+
+    it("replaces images that follow an unterminated tag-like construct", () => {
+        const page = "Pass `<div` to the helper.\n\n![leaf](path/to/image.png)\n";
+        expect(roundTrip(page)).toContain("file:leaf-id");
+    });
+
+    it("still rewrites src on real tags", () => {
+        const page = 'The width must be < 100.\n\n<img src="path/to/image.png" />\n';
+        const result = roundTrip(page);
+        expect(result).toContain('src="file:leaf-id"');
+        expect(result).toContain("must be < 100");
+    });
+
+    it("still rewrites links after a literal angle bracket", () => {
+        const page = "Values where a < b.\n\n[other page](./other.mdx)\n";
+        const result = replaceImagePathsAndUrls(
+            page,
+            new Map(),
+            { [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/other.mdx")]: "docs/other" },
+            PATHS,
+            CONTEXT
+        );
+        expect(result).toContain("[other page](/docs/other)");
+    });
+
+    it("replaces the image path on both the streaming and AST paths", () => {
+        vi.stubEnv("FERN_DOCS_LARGE_FILE_BYTES", "10");
+        const page = "Outliers are `is < Q1`.\n\n![leaf](path/to/image.png)\n";
+        const parsed = parseImagePaths(page, PATHS, CONTEXT);
+        expect(parsed.filepaths).toEqual([IMAGE_PATH]);
+        expect(replaceImagePathsAndUrls(parsed.markdown, fileIds, {}, PATHS, CONTEXT)).toContain("file:leaf-id");
+        vi.unstubAllEnvs();
+    });
+
+    it("does not leave a local filesystem path in the published markdown", () => {
+        const page = "Outliers are `is < Q1`.\n\n![leaf](path/to/image.png)\n";
+        expect(roundTrip(page)).not.toContain("/Volume/git/fern");
+    });
+
+    it.each([
+        ["unmatched backtick in prose", "The a`b operator is odd."],
+        ["backtick inside an indented fence", "- Example:\n\n    ```\n    a ` b\n    ```"],
+        ["unterminated fence", "```js\nconst a = 1;"],
+        ["windows line endings around an unterminated tag-like construct", "Pass `<div` here.\r\n\r\n"]
+    ])("replaces a later image path when the page contains an %s", (_name, prose) => {
+        const page = `${prose}\n\n![leaf](path/to/image.png)\n`;
+        expect(roundTrip(page)).toContain("file:leaf-id");
+    });
+
+    it("does not rewrite an image inside a fenced code block", () => {
+        const page = "```\n![leaf](path/to/image.png)\n```\n";
+        expect(roundTrip(page)).toContain("![leaf](path/to/image.png)");
     });
 });

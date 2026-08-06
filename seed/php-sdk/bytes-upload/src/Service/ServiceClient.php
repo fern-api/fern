@@ -48,6 +48,11 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->upload();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -86,6 +91,15 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->uploadWithQueryParams(
+     *     new UploadWithQueryParamsRequest([
+     *         'model' => 'nova-2',
+     *     ]),
+     * );
+     * ```
+     *
      * @param UploadWithQueryParamsRequest $request
      * @param ?array{
      *   baseUrl?: string,

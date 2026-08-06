@@ -56,6 +56,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     packagePath: z.optional(z.string()),
     omitFernHeaders: z.optional(z.boolean()),
     includePlatformHeaders: z.optional(z.boolean()),
+    allowUserAgentAppInfo: z.optional(z.boolean()),
     useDefaultRequestParameterValues: z.optional(z.boolean()),
     packageManager: z.optional(z.enum(["pnpm", "yarn"])),
     flattenRequestParameters: z.optional(z.boolean()),
@@ -84,6 +85,10 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     serdeLayer: z.optional(z.boolean()),
     private: z.optional(z.boolean()),
     requireDefaultEnvironment: z.optional(z.boolean()),
+    // When true, the client's `baseUrl` option becomes required and the `environment`
+    // option becomes optional. Intended for APIs whose consumers always supply a URL
+    // explicitly and have no concept of named environments.
+    requireBaseUrl: z.optional(z.boolean()),
     retainOriginalCasing: z.optional(z.boolean()),
     useBigInt: z.optional(z.boolean()),
     useBrandedStringAliases: z.optional(z.boolean()),
@@ -92,6 +97,15 @@ export const TypescriptCustomConfigSchema = z.strictObject({
 
     resolveQueryParameterNameConflicts: z.optional(z.boolean()),
     alwaysSendAuth: z.optional(z.boolean()),
+    // When true, makes client auth parameters optional even when the spec
+    // mandates auth on all endpoints (isAuthMandatory=true), and sends requests
+    // unauthenticated instead of throwing when no credentials are supplied.
+    // Useful for hand-maintained wrapper clients that authenticate via external
+    // means. Orthogonal to `alwaysSendAuth`, which decides which endpoints get
+    // auth headers: with both enabled, endpoints that don't require auth still
+    // get auth headers when credentials are supplied, and no endpoint gets them
+    // when credentials are absent.
+    "optional-auth": z.optional(z.boolean()),
     generateReactQueryHooks: z.optional(z.boolean()),
 
     // beta (not in docs)

@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support webhook body-hash binding in generated signature verification helpers.
+    When a webhook signature declares a body-hash binding, the helper now recomputes
+    the encoded hash of the raw request body, extracts the transmitted hash from the
+    configured query parameter of the notification URL, and timing-safe-compares them
+    (failing closed) before verifying the outer HMAC over the verbatim notification URL.
+  type: feat

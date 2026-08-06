@@ -14,6 +14,15 @@ export function getClientAccessPath(service: FernIr.HttpService, caseConverter: 
 /**
  * Gets the OAuth client credentials scheme from the IR auth configuration.
  */
+/**
+ * Whether the API applies auth per-endpoint (each endpoint declares its own
+ * schemes) rather than flatly on every request. In this mode auth headers are
+ * routed per-endpoint via RequestOptions.AuthHeadersForEndpoint.
+ */
+export function isEndpointSecurity(ir: FernIr.IntermediateRepresentation): boolean {
+    return ir.auth != null && ir.auth.requirement === "ENDPOINT_SECURITY";
+}
+
 export function getOAuthClientCredentialsScheme(ir: FernIr.IntermediateRepresentation): FernIr.OAuthScheme | undefined {
     if (ir.auth == null) {
         return undefined;
@@ -105,6 +114,16 @@ export function isPlainStringType(typeRef: FernIr.TypeReference): boolean {
     }
     if (typeRef.type === "primitive") {
         return typeRef.primitive.v1 === FernIr.PrimitiveTypeV1.String;
+    }
+    return false;
+}
+
+/**
+ * Returns true if the given type reference is a non-optional, non-nullable boolean primitive.
+ */
+export function isPlainBooleanType(typeRef: FernIr.TypeReference): boolean {
+    if (typeRef.type === "primitive") {
+        return typeRef.primitive.v1 === FernIr.PrimitiveTypeV1.Boolean;
     }
     return false;
 }

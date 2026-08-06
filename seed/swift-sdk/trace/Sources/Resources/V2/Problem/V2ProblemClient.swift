@@ -9,6 +9,19 @@ public final class V2ProblemClient: Sendable {
 
     /// Returns lightweight versions of all problems
     ///
+    /// ```swift
+    /// import Foundation
+    /// import Trace
+    ///
+    /// private func main() async throws {
+    ///     let client = TraceClient(token: "<token>")
+    ///
+    ///     _ = try await client.v2.v3.problem.getLightweightProblems()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getLightweightProblems(requestOptions: RequestOptions? = nil) async throws -> [LightweightProblemInfoV2] {
         return try await httpClient.performRequest(
@@ -20,6 +33,19 @@ public final class V2ProblemClient: Sendable {
     }
 
     /// Returns latest versions of all problems
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Trace
+    ///
+    /// private func main() async throws {
+    ///     let client = TraceClient(token: "<token>")
+    ///
+    ///     _ = try await client.v2.v3.problem.getProblems()
+    /// }
+    ///
+    /// try await main()
+    /// ```
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemInfoV2] {
@@ -33,6 +59,19 @@ public final class V2ProblemClient: Sendable {
 
     /// Returns latest version of a problem
     ///
+    /// ```swift
+    /// import Foundation
+    /// import Trace
+    ///
+    /// private func main() async throws {
+    ///     let client = TraceClient(token: "<token>")
+    ///
+    ///     _ = try await client.v2.v3.problem.getLatestProblem(problemId: "problemId")
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getLatestProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2 {
         return try await httpClient.performRequest(
@@ -44,6 +83,22 @@ public final class V2ProblemClient: Sendable {
     }
 
     /// Returns requested version of a problem
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Trace
+    ///
+    /// private func main() async throws {
+    ///     let client = TraceClient(token: "<token>")
+    ///
+    ///     _ = try await client.v2.v3.problem.getProblemVersion(
+    ///         problemId: "problemId",
+    ///         problemVersion: "1"
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getProblemVersion(problemId: String, problemVersion: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2 {

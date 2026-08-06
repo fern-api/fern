@@ -23,6 +23,9 @@ module Seed
           # @option request_options [Integer] :timeout_in_seconds
           # @option params [Seed::Types::ID] :id
           #
+          # @example
+          #   client.user.events.metadata.get_metadata(id: "id")
+          #
           # @return [Seed::User::Events::Metadata::Types::Metadata]
           def get_metadata(request_options: {}, **params)
             params = Seed::Internal::Types::Utils.normalize_keys(params)

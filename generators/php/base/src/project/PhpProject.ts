@@ -1,9 +1,10 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
 import { Eta } from "eta";
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { copyFile, mkdir, readFile, writeFile } from "fs/promises";
 import { cloneDeep, isArray, mergeWith } from "lodash-es";
 import path from "path";
 
@@ -23,6 +24,10 @@ const TESTS_DIRECTORY_NAME = "tests";
 const CUSTOM_LICENSE_NAME = "LicenseRef-LICENSE";
 
 const COMPOSER_JSON_FILENAME = "composer.json";
+
+// In the Docker execution environment (local generation), the license file is mounted here.
+// For remote generation, Fiddle handles writing the LICENSE file after generation.
+const DOCKER_LICENSE_PATH = "/tmp/LICENSE";
 
 /**
  * In memory representation of a PHP project.
@@ -71,6 +76,34 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         await this.createUtilsDirectory();
         await this.createGitHubWorkflowsDirectory();
         await this.createComposerJson();
+        await this.writeLicenseFile();
+    }
+
+    private async writeLicenseFile(): Promise<void> {
+        const licenseConfig = this.context.config.license;
+        if (licenseConfig?.type !== "custom") {
+            return;
+        }
+
+        const licenseFileName = licenseConfig.filename ?? "LICENSE";
+        const destinationPath = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(licenseFileName));
+
+        try {
+            await copyFile(DOCKER_LICENSE_PATH, destinationPath);
+            this.context.logger.debug(`Successfully copied LICENSE file to ${destinationPath}`);
+        } catch (error) {
+            // File not found is expected for remote generation where Fiddle handles it.
+            if (error instanceof Error && "code" in error && error.code === "ENOENT") {
+                this.context.logger.debug(
+                    `Custom license file not found at ${DOCKER_LICENSE_PATH}. This is expected for remote generation.`
+                );
+            } else {
+                // Log other errors for debugging while maintaining backwards compatibility.
+                this.context.logger.warn(
+                    `Failed to copy custom license file from ${DOCKER_LICENSE_PATH} to ${destinationPath}: ${extractErrorMessage(error)}`
+                );
+            }
+        }
     }
 
     private static getPackagePathPrefix(packagePath?: string): string {
@@ -321,7 +354,7 @@ class ComposerJson {
     private build(): Record<string, unknown> {
         let composerJson: Record<string, unknown> = {
             name: this.context.getPackageName(),
-            version: this.context.version ?? "0.0.0",
+            version: this.context.getSdkVersion() ?? "0.0.0",
             description: `${this.projectName} PHP Library`,
             keywords: [this.context.config.organization, "api", "sdk"],
             license: this.license ?? [],

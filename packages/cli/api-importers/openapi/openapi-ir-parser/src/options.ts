@@ -69,6 +69,13 @@ export interface ParseOpenAPIOptions {
     preserveSingleSchemaOneOf: boolean;
 
     /**
+     * If true, an allOf whose members include a oneOf/anyOf is distributed into a union, where each
+     * variant is the union member merged with the remaining allOf members. If false, the variants'
+     * properties are flattened into a single object and marked optional.
+     */
+    preserveOneOfInAllOf: boolean;
+
+    /**
      * If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.
      * This is useful for organizations with multiple APIs deployed to the same set of environments.
      */
@@ -149,6 +156,14 @@ export interface ParseOpenAPIOptions {
      * Defaults to true.
      */
     disambiguateRequestNames: boolean;
+
+    /**
+     * If true, ignore operation-level tags when determining the SDK structure.
+     * Endpoints fall back to the root package (or their namespace) and method
+     * names are derived from each operation's operationId.
+     * Defaults to false.
+     */
+    ignoreTags: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -175,6 +190,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     additionalPropertiesDefaultsTo: false,
     typeDatesAsStrings: false,
     preserveSingleSchemaOneOf: false,
+    preserveOneOfInAllOf: false,
     inlineAllOfSchemas: false,
     resolveAliases: false,
     groupMultiApiEnvironments: false,
@@ -189,7 +205,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     coerceConstsTo: "enums-coerceable-to-literals",
     respectByteFormat: false,
     shouldInferDiscriminatedUnionBaseProperties: false,
-    disambiguateRequestNames: true
+    disambiguateRequestNames: true,
+    ignoreTags: false
 };
 
 function mergeOptions<T extends object>(params: {

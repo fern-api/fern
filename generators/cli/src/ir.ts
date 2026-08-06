@@ -19,6 +19,17 @@ export interface IrSummary {
     apiDisplayName: string | undefined;
     auth: { schemes: FernIr.AuthScheme[] };
     globalParameters: FernIr.GlobalParameter[];
+    /**
+     * The IR's services, keyed by service id. Used to resolve an OAuth
+     * client-credentials scheme's `tokenEndpoint.endpointReference` to a
+     * concrete request path when wiring the token URL.
+     */
+    services: Record<string, FernIr.HttpService>;
+    /**
+     * The IR's environment configuration, if the API declares one. Used
+     * to resolve the base URL the OAuth token endpoint path is joined to.
+     */
+    environments: FernIr.EnvironmentsConfig | undefined;
 }
 
 /**
@@ -40,6 +51,33 @@ export interface IrSummary {
  * catches and surfaces these to the user.
  */
 export async function readIr(irFilepath: string): Promise<IrSummary> {
+    const ir = await readFullIr(irFilepath);
+
+    return {
+        apiDisplayName: ir.apiDisplayName,
+        auth: { schemes: ir.auth.schemes },
+        globalParameters: ir.globalParameters ?? [],
+        services: ir.services,
+        environments: ir.environments
+    };
+}
+
+/**
+ * Parse the IR file and return the full, typed
+ * `FernIr.IntermediateRepresentation`.
+ *
+ * `readIr` narrows this to the slice the codegen pipeline consumes for
+ * binary identity and auth wiring; the wire-test generator instead needs
+ * the whole IR — every service, endpoint, and endpoint example — to derive
+ * mock-server stubs and CLI invocations. Rather than widen `IrSummary` into
+ * a near-copy of the IR, wire tests read the full value through this
+ * sibling. Both go through the same permissive `IrSerialization` parse, so
+ * a newer IR doesn't hard-fail the generator.
+ *
+ * Throws with the file path included if the file is missing, the JSON is
+ * malformed, or the structure doesn't match the SDK's schema at all.
+ */
+export async function readFullIr(irFilepath: string): Promise<FernIr.IntermediateRepresentation> {
     const raw = await readFile(irFilepath, "utf-8");
     const json: unknown = JSON.parse(raw);
 
@@ -53,11 +91,5 @@ export async function readIr(irFilepath: string): Promise<IrSummary> {
         throw new Error(`Failed to parse IR from ${irFilepath}: ${JSON.stringify(parsed.errors, null, 4)}`);
     }
 
-    const ir = parsed.value;
-
-    return {
-        apiDisplayName: ir.apiDisplayName,
-        auth: { schemes: ir.auth.schemes },
-        globalParameters: ir.globalParameters ?? []
-    };
+    return parsed.value;
 }

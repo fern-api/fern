@@ -997,6 +997,14 @@ types:
           - `timeline` renders the searchable timeline-of-cards layout.
           - `classic` renders the legacy stacked-entries layout with a per-page table of contents.
 
+      show-nav-availability-badges:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)
+          are rendered inline next to navigation items in the sidebar. Defaults to false. The page-header
+          availability badge is unaffected by this setting.
+
   DocsSettingsConfig:
     properties:
       search-text:
@@ -1564,6 +1572,12 @@ types:
         docs: |
           Optional path within the repository to the library source.
           Example: django/core
+      ref:
+        type: optional<string>
+        docs: |
+          Git ref (branch, tag, or commit SHA) to check out.
+          Defaults to the repository's default branch when omitted.
+          Example: feature/my-fix
 
   PathLibraryInputSchema:
     docs: Configuration for using a local filesystem path as library source. (Not yet implemented)
@@ -2310,6 +2324,11 @@ types:
         type: optional<boolean>
         docs: |
           Deprecated: Use `multi-source: true` on the instance instead. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
+      external-sitemaps:
+        type: optional<list<string>>
+        availability: pre-release
+        docs: |
+          Experimental flag: a list of absolute URLs pointing to external sitemaps (`sitemap.xml`). Their pages are fetched and indexed in search alongside this site's documentation (tagged to the same domain), but are flagged as third-party so they rank below all first-party documentation.
 
   PlaygroundSettings:
     properties:
@@ -2324,6 +2343,11 @@ types:
         type: optional<integer>
         docs: |
           The maximum number of websocket messages per connection in the playground.
+      "send-optional-defaults":
+        type: optional<boolean>
+        docs: |
+          When true, optional parameters that declare a default (or x-fern-default) are
+          pre-filled and sent from the API Explorer playground. Defaults to false.
 
   PlaygroundButtonSettings:
     properties:

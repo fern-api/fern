@@ -15,6 +15,9 @@ func do() {
         ),
     )
     request := &fern.SendLiteralsInlinedRequest{
+        Context: fern.String(
+            "You're super wise",
+        ),
         Query: "What is the weather today",
         Temperature: fern.Float64(
             10.1,

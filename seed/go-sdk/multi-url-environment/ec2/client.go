@@ -34,6 +34,15 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.BootInstanceRequest{
+//	    Size: "size",
+//	}
+//	client.Ec2.BootInstance(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) BootInstance(
 	ctx context.Context,
 	request *fern.BootInstanceRequest,

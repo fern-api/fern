@@ -373,6 +373,8 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 	})
 
 	t.Run("nil input returns empty values", func(t *testing.T) {
+		defer setApplyQueryDefaultsOnNilRequest(false)()
+
 		defaults := map[string]any{
 			"name": "default-name",
 			"age":  25,
@@ -392,4 +394,72 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 		require.NoError(t, err)
 		assert.Empty(t, values)
 	})
+
+	t.Run("nil input applies defaults when enabled", func(t *testing.T) {
+		defer setApplyQueryDefaultsOnNilRequest(true)()
+
+		defaults := map[string]any{
+			"name": "default-name",
+			"age":  25,
+		}
+
+		// Test with nil
+		values, err := QueryValuesWithDefaults(nil, defaults)
+		require.NoError(t, err)
+		assert.Equal(t, "age=25&name=default-name", values.Encode())
+
+		// Test with nil pointer
+		type example struct {
+			Name string `json:"name" url:"name"`
+		}
+		var nilPtr *example
+		values, err = QueryValuesWithDefaults(nilPtr, defaults)
+		require.NoError(t, err)
+		assert.Equal(t, "age=25&name=default-name", values.Encode())
+	})
+
+	t.Run("nil input without defaults returns empty values when enabled", func(t *testing.T) {
+		defer setApplyQueryDefaultsOnNilRequest(true)()
+
+		type example struct {
+			Name string `json:"name" url:"name"`
+		}
+		var nilPtr *example
+
+		values, err := QueryValuesWithDefaults(nilPtr, nil)
+		require.NoError(t, err)
+		assert.Empty(t, values)
+	})
+
+	t.Run("nil input matches zero-value struct when enabled", func(t *testing.T) {
+		defer setApplyQueryDefaultsOnNilRequest(true)()
+
+		type example struct {
+			IncludeTotals *bool `json:"include_totals,omitempty" url:"include_totals,omitempty"`
+		}
+		defaults := map[string]any{
+			"include_totals": true,
+		}
+
+		var nilPtr *example
+		nilValues, err := QueryValuesWithDefaults(nilPtr, defaults)
+		require.NoError(t, err)
+
+		zeroValues, err := QueryValuesWithDefaults(&example{}, defaults)
+		require.NoError(t, err)
+
+		assert.Equal(t, "include_totals=true", nilValues.Encode())
+		assert.Equal(t, zeroValues.Encode(), nilValues.Encode())
+	})
+}
+
+// setApplyQueryDefaultsOnNilRequest sets the flag emitted by the
+// applyQueryDefaultsOnNilRequest generator option, and returns a
+// function that restores its previous value.
+func setApplyQueryDefaultsOnNilRequest(value bool) func() {
+	previous := applyQueryDefaultsOnNilRequest
+	applyQueryDefaultsOnNilRequest = value
+	return func() {
+		applyQueryDefaultsOnNilRequest = previous
+	}
 }

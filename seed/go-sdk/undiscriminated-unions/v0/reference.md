@@ -14,13 +14,12 @@
 
 ```go
 request := &fern.MyUnion{
-        String: "string",
-    }
-client.Union.Get(
-        context.TODO(),
-        request,
-    )
+    String: "string",
 }
+client.Union.Get(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -61,9 +60,8 @@ client.Union.Get(
 
 ```go
 client.Union.GetMetadata(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -89,17 +87,16 @@ client.Union.GetMetadata(
 
 ```go
 request := &fern.MetadataUnion{
-        OptionalMetadata: map[string]any{
-            "string": map[string]any{
-                "key": "value",
-            },
+    OptionalMetadata: map[string]any{
+        "string": map[string]any{
+            "key": "value",
         },
-    }
-client.Union.UpdateMetadata(
-        context.TODO(),
-        request,
-    )
+    },
 }
+client.Union.UpdateMetadata(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -140,19 +137,18 @@ client.Union.UpdateMetadata(
 
 ```go
 request := &fern.Request{
-        Union: &fern.MetadataUnion{
-            OptionalMetadata: map[string]any{
-                "string": map[string]any{
-                    "key": "value",
-                },
+    Union: &fern.MetadataUnion{
+        OptionalMetadata: map[string]any{
+            "string": map[string]any{
+                "key": "value",
             },
         },
-    }
-client.Union.Call(
-        context.TODO(),
-        request,
-    )
+    },
 }
+client.Union.Call(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -193,13 +189,12 @@ client.Union.Call(
 
 ```go
 request := &fern.UnionWithDuplicateTypes{
-        String: "string",
-    }
-client.Union.DuplicateTypesUnion(
-        context.TODO(),
-        request,
-    )
+    String: "string",
 }
+client.Union.DuplicateTypesUnion(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -240,13 +235,12 @@ client.Union.DuplicateTypesUnion(
 
 ```go
 request := &fern.NestedUnionRoot{
-        String: "string",
-    }
-client.Union.NestedUnions(
-        context.TODO(),
-        request,
-    )
+    String: "string",
 }
+client.Union.NestedUnions(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -287,13 +281,12 @@ client.Union.NestedUnions(
 
 ```go
 request := &fern.OuterNestedUnion{
-        String: "string",
-    }
-client.Union.NestedObjectUnions(
-        context.TODO(),
-        request,
-    )
+    String: "string",
 }
+client.Union.NestedObjectUnions(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -334,16 +327,15 @@ client.Union.NestedObjectUnions(
 
 ```go
 request := &fern.AliasedObjectUnion{
-        AliasedLeafA: &fern.LeafObjectA{
-            OnlyInA: "onlyInA",
-            SharedNumber: 1,
-        },
-    }
-client.Union.AliasedObjectUnion(
-        context.TODO(),
-        request,
-    )
+    AliasedLeafA: &fern.LeafObjectA{
+        OnlyInA: "onlyInA",
+        SharedNumber: 1,
+    },
 }
+client.Union.AliasedObjectUnion(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -384,20 +376,19 @@ client.Union.AliasedObjectUnion(
 
 ```go
 request := &fern.UnionWithBaseProperties{
-        NamedMetadata: &fern.NamedMetadata{
-            Name: "name",
-            Value: map[string]any{
-                "value": map[string]any{
-                    "key": "value",
-                },
+    NamedMetadata: &fern.NamedMetadata{
+        Name: "name",
+        Value: map[string]any{
+            "value": map[string]any{
+                "key": "value",
             },
         },
-    }
-client.Union.GetWithBaseProperties(
-        context.TODO(),
-        request,
-    )
+    },
 }
+client.Union.GetWithBaseProperties(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -438,18 +429,17 @@ client.Union.GetWithBaseProperties(
 
 ```go
 request := &fern.PaymentRequest{
-        PaymentMethod: &fern.PaymentMethodUnion{
-            TokenizeCard: &fern.TokenizeCard{
-                Method: "card",
-                CardNumber: "1234567890123456",
-            },
+    PaymentMethod: &fern.PaymentMethodUnion{
+        TokenizeCard: &fern.TokenizeCard{
+            Method: "card",
+            CardNumber: "1234567890123456",
         },
-    }
-client.Union.TestCamelCaseProperties(
-        context.TODO(),
-        request,
-    )
+    },
 }
+client.Union.TestCamelCaseProperties(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

@@ -34,6 +34,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Homepage.GetHomepageProblems(
+//	    context.TODO(),
+//	)
 func (c *Client) GetHomepageProblems(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -48,6 +53,16 @@ func (c *Client) GetHomepageProblems(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := []common.ProblemID{
+//	    "string",
+//	    "string",
+//	}
+//	client.Homepage.SetHomepageProblems(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) SetHomepageProblems(
 	ctx context.Context,
 	request []common.ProblemID,

@@ -22,7 +22,7 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
-	if options.BaseURL == "" && (options.Region != "" || options.ServerURLEnvironment != "") {
+	if options.Region != "" || options.ServerURLEnvironment != "" {
 		region := options.Region
 		if region == "" {
 			region = "us-east-1"
@@ -31,11 +31,14 @@ func NewClient(opts ...option.RequestOption) *Client {
 		if serverURLEnvironment == "" {
 			serverURLEnvironment = "prod"
 		}
-		options.BaseURL = fmt.Sprintf(
-			"https://api.%s.%s.example.com/v1",
-			region,
-			serverURLEnvironment,
-		)
+		switch options.BaseURL {
+		case "", fern.Environments.RegionalAPIServer:
+			options.BaseURL = fmt.Sprintf(
+				"https://api.%s.%s.example.com/v1",
+				region,
+				serverURLEnvironment,
+			)
+		}
 	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
@@ -51,6 +54,11 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	client.GetUsers(
+//	    context.TODO(),
+//	)
 func (c *Client) GetUsers(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -65,6 +73,15 @@ func (c *Client) GetUsers(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.GetUserRequest{
+//	    UserID: "userId",
+//	}
+//	client.GetUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetUser(
 	ctx context.Context,
 	request *fern.GetUserRequest,

@@ -11,6 +11,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { upperFirst } from "lodash-es";
 import { RubyProject } from "../project/RubyProject.js";
 import { buildRubyTypeFileName } from "../utils/fileName.js";
+import { getFilesystemRubyGemsPublishTarget } from "./filesystem-rubygems-publish-target.js";
 import { RubyTypeMapper } from "./RubyTypeMapper.js";
 
 /**
@@ -77,7 +78,7 @@ export abstract class AbstractRubyGeneratorContext<
     public getGemName(): string {
         // Priority: package name from publish config > folder name
         // This is used for the gemspec spec.name and should match the exact gem name for publishing
-        const packageName = getPackageName(this.config);
+        const packageName = getPackageName(this.config) ?? getFilesystemRubyGemsPublishTarget(this.ir)?.packageName;
         return packageName ?? this.getRootFolderName();
     }
 
@@ -97,6 +98,10 @@ export abstract class AbstractRubyGeneratorContext<
                 return defaultVersion;
             },
             downloadFiles: () => {
+                const filesystemVersion = getFilesystemRubyGemsPublishTarget(this.ir)?.version;
+                if (filesystemVersion != null) {
+                    return filesystemVersion;
+                }
                 this.logger.warn(
                     `File download output configuration doesn't have a configured version number, defaulting to ${defaultVersion}`
                 );

@@ -12,6 +12,9 @@ module Seed
     # @option params [String] :region
     # @option params [String, nil] :limit
     #
+    # @example
+    #   client.test_get(region: "region")
+    #
     # @return [Seed::Types::TestGetResponse]
     def test_get(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -52,6 +55,7 @@ module Seed
           "X-Fern-Language" => "Ruby",
           "X-API-Version" => api_version.to_s
         },
+        overridable_headers: %w[X-API-Version],
         max_retries: max_retries
       )
     end

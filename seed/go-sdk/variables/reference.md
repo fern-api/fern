@@ -14,10 +14,9 @@
 
 ```go
 client.Service.Post(
-        context.TODO(),
-        "<endpointParam>",
-    )
-}
+    context.TODO(),
+    "<endpointParam>",
+)
 ```
 </dd>
 </dl>

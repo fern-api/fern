@@ -682,6 +682,137 @@ describe("AutoVersionStep.execute() — pipeline baseVersion overrides diff extr
     });
 });
 
+describe("AutoVersionStep.execute() — placeholder is never treated as a previous version", () => {
+    let repo: TwoGenerations;
+
+    beforeEach(async () => {
+        mockAnalyzeSdkDiff.mockReset();
+        mockConsolidateChangelog.mockReset();
+        repo = await setupTwoGenerations({
+            previousVersion: "1.0.0",
+            featureFile: {
+                path: "src/newFeature.ts",
+                content: "export function newFeature(): number {\n    return 42;\n}\n"
+            }
+        });
+    });
+
+    afterEach(async () => {
+        await repo.cleanup();
+    });
+
+    it("ignores a placeholder baseVersion instead of bumping it to 0.0.0-fern-placeholder.0", async () => {
+        // Repos that derive their published version from git tags at release time keep the
+        // placeholder committed in package.json/.fern/metadata.json, so fiddle hands us
+        // baseVersion=0.0.0-fern-placeholder. The placeholder is a valid semver pre-release,
+        // so it used to be accepted and advanced as one.
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: "MINOR",
+            message: "feat: add newFeature helper",
+            changelog_entry: "### Added\n- newFeature()",
+            version_bump_reason: "New public API."
+        });
+
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), {
+            ...baseConfig,
+            baseVersion: "0.0.0-fern-placeholder"
+        });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("1.0.0");
+        expect(result.version).toBe("1.1.0");
+
+        const pkg = JSON.parse(readFileSync(join(repo.repoPath, "package.json"), "utf-8")) as {
+            version: string;
+        };
+        expect(pkg.version).toBe("1.1.0");
+    });
+
+    it("ignores an already-mutated placeholder baseVersion (0.0.0-fern-placeholder.0)", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: "PATCH",
+            message: "fix: minor",
+            changelog_entry: "",
+            version_bump_reason: "Internal."
+        });
+
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), {
+            ...baseConfig,
+            baseVersion: "0.0.0-fern-placeholder.0"
+        });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("1.0.0");
+        expect(result.version).toBe("1.0.1");
+    });
+});
+
+describe("AutoVersionStep.execute() — placeholder in every resolution source", () => {
+    let repo: TwoGenerations;
+
+    beforeEach(async () => {
+        mockAnalyzeSdkDiff.mockReset();
+        mockConsolidateChangelog.mockReset();
+        // Both generations carry the placeholder (the repo never commits a real version,
+        // deriving it from git tags at release time instead), so no source yields a real
+        // previous version.
+        repo = await setupTwoGenerations({
+            previousVersion: "0.0.0-fern-placeholder",
+            featureFile: {
+                path: "src/newFeature.ts",
+                content: "export function newFeature(): number {\n    return 42;\n}\n"
+            }
+        });
+    });
+
+    afterEach(async () => {
+        await repo.cleanup();
+    });
+
+    it("falls back to the initial version rather than advancing the placeholder", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: "MINOR",
+            message: "feat: add newFeature helper",
+            changelog_entry: "### Added\n- newFeature()",
+            version_bump_reason: "New public API."
+        });
+
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), {
+            ...baseConfig,
+            baseVersion: "0.0.0-fern-placeholder"
+        });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.success).toBe(true);
+        expect(result.version).toBe("0.0.1");
+
+        const pkg = JSON.parse(readFileSync(join(repo.repoPath, "package.json"), "utf-8")) as {
+            version: string;
+        };
+        expect(pkg.version).toBe("0.0.1");
+    });
+});
+
 describe("AutoVersionStep.execute() — pre-release version handling", () => {
     let repo: TwoGenerations;
 

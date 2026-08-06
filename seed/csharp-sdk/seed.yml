@@ -219,6 +219,10 @@ fixtures:
     - customConfig:
         include-platform-headers: true
       outputFolder: include-platform-headers
+    - customConfig:
+        include-platform-headers: true
+        allow-user-agent-app-info: true
+      outputFolder: allow-user-agent-app-info
   multi-url-environment:
     - customConfig:
         pascal-case-environments: false
@@ -226,12 +230,21 @@ fixtures:
     - customConfig:
         environment-class-name: CustomEnvironment
       outputFolder: environment-class-name
+  csharp-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
   server-url-templating:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        server-url-variables: false
   server-url-templating-single-url:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        server-url-variables: false
   exhaustive:
     - customConfig:
         explicit-namespaces: true
@@ -450,3 +463,7 @@ fixtures:
       outputFolder: auto-generate-idempotency-key
 allowedFailures:
   - oauth-client-credentials-custom
+  # CLI-specific OAuth fixture: the full IR client-credentials contract (custom
+  # token request properties) produces C# OAuth-provider code that doesn't compile.
+  # Exercised by the CLI generator.
+  - cli-oauth

@@ -34,6 +34,17 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := map[string]any{
+//	    "string": map[string]any{
+//	        "key": "value",
+//	    },
+//	}
+//	client.Optional.SendOptionalBody(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) SendOptionalBody(
 	ctx context.Context,
 	request map[string]any,
@@ -50,6 +61,15 @@ func (c *Client) SendOptionalBody(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.SendOptionalBodyRequest{
+//	    Message: "message",
+//	}
+//	client.Optional.SendOptionalTypedBody(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) SendOptionalTypedBody(
 	ctx context.Context,
 	request *fern.SendOptionalBodyRequest,
@@ -68,6 +88,20 @@ func (c *Client) SendOptionalTypedBody(
 
 // Tests optional(nullable(T)) where T has only optional properties.
 // This should not generate wire tests expecting {} when Optional.empty() is passed.
+//
+// Example:
+//
+//	request := &fern.DeployParams{
+//	    UpdateDraft: fern.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Optional.SendOptionalNullableWithAllOptionalProperties(
+//	    context.TODO(),
+//	    "actionId",
+//	    "id",
+//	    request,
+//	)
 func (c *Client) SendOptionalNullableWithAllOptionalProperties(
 	ctx context.Context,
 	actionID string,

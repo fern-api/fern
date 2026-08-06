@@ -84,6 +84,7 @@ export interface APIDefinitionSettings {
     additionalPropertiesDefaultsTo: boolean | undefined;
     typeDatesAsStrings: boolean | undefined;
     preserveSingleSchemaOneOf: boolean | undefined;
+    preserveOneOfInAllOf: boolean | undefined;
     inlineAllOfSchemas: boolean | undefined;
     resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;
@@ -100,6 +101,7 @@ export interface APIDefinitionSettings {
     coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     shouldInferDiscriminatedUnionBaseProperties: boolean | undefined;
     disambiguateRequestNames: boolean | undefined;
+    ignoreTags: boolean | undefined;
 }
 
 export interface GitSource {

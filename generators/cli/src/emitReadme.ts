@@ -244,6 +244,9 @@ function generateAuthentication(args: { binaryName: string; authBindings: Detect
         for (const envVar of binding.envVars) {
             envLines.push(`export ${envVar}="${placeholderForKind(binding.kind)}"`);
         }
+        for (const envVar of binding.optionalEnvVars ?? []) {
+            envLines.push(`# export ${envVar}="${placeholderForKind(binding.kind)}" # optional`);
+        }
     }
     return new Block({
         id: "AUTHENTICATION",
@@ -400,6 +403,13 @@ function placeholderForKind(kind: DetectedAuthBinding["kind"]): string {
             return "<your api key>";
         case "basic":
             return "<your credential>";
+        case "oauth-client-credentials":
+            return "<your OAuth client credential>";
+        case "oauth-authorization-code":
+        case "oauth-device-code":
+            // Public-client login flows authenticate via `<bin> auth login`, not an env var, so
+            // these bindings carry no env vars and this placeholder is never actually rendered.
+            return "<obtained via `auth login`>";
     }
 }
 

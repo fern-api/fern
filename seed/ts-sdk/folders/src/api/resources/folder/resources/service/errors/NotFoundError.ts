@@ -4,6 +4,8 @@ import type * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
 
 export class NotFoundError extends errors.SeedApiError {
+    public declare readonly body: string;
+
     constructor(body: string, rawResponse?: core.RawResponse) {
         super({
             message: "NotFoundError",

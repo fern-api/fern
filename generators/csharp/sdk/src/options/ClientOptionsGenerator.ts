@@ -4,6 +4,7 @@ import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
+import { isEndpointSecurity } from "../endpoint/request/endpointAuthHeaders.js";
 import { getServerVariableOptions } from "../root-client/serverVariables.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
@@ -33,6 +34,8 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
     private environmentExplicitlySetField: ast.Field | undefined;
     private serverVariableFields: ast.Field[] = [];
     private unifiedFields: UnifiedField[] = [];
+    /** The opt-in `AppInfo` field, present only when `allow-user-agent-app-info` is enabled. */
+    private appInfoField: ast.Field | undefined;
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
@@ -45,7 +48,11 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
             optional: false,
             includeInitializer: true
         };
-        const serverVariableOptions = getServerVariableOptions(this.context.ir.environments, this.case);
+        const serverVariableOptions = getServerVariableOptions(
+            this.context.ir.environments,
+            this.case,
+            this.settings.serverUrlVariables
+        );
         this.createBaseUrlField(class_, serverVariableOptions.length > 0);
         this.addServerVariableFields(class_, serverVariableOptions);
         this.baseOptionsGenerator.getHttpClientField(class_, optionArgs);
@@ -66,6 +73,25 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
         this.baseOptionsGenerator.getMaxRetriesField(class_, optionArgs);
         this.baseOptionsGenerator.getTimeoutField(class_, optionArgs);
         this.baseOptionsGenerator.getLiteralHeaderOptions(class_, optionArgs);
+
+        // The opt-in `allow-user-agent-app-info` client option. The sanitized
+        // product token built from these fields is appended to the SDK's
+        // `User-Agent` header by the root client. Only emitted when the flag is on so
+        // default-off output is byte-identical.
+        if (this.settings.allowUserAgentAppInfo) {
+            this.appInfoField = class_.addField({
+                origin: class_.explicit("AppInfo"),
+                access: ast.Access.Public,
+                get: true,
+                init: true,
+                type: this.Types.AppInfo.asOptional(),
+                summary: "Application information appended to the `User-Agent` header as an RFC 9110 product token."
+            });
+        }
+
+        if (isEndpointSecurity(this.context)) {
+            this.addEndpointSecurityAuthRouting(class_);
+        }
 
         if (this.settings.unifiedClientOptions) {
             this.addUnifiedAuthAndHeaderFields(class_);
@@ -496,6 +522,78 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
         }
     }
 
+    /**
+     * In endpoint-security mode, each endpoint applies only the auth scheme(s) it declares.
+     * The root client stores each scheme's ready-to-send headers (keyed by the scheme's IR key)
+     * in `AuthHeaderSchemes`, and `GetAuthHeadersForEndpoint` routes them per request: it picks
+     * the first requirement whose schemes ALL have credentials available (OR across the list,
+     * AND within a requirement), combines those schemes' headers, and throws naming the missing
+     * schemes when none is satisfiable. Mirrors the TypeScript RoutingAuthProvider.
+     */
+    private addEndpointSecurityAuthRouting(class_: ast.Class): void {
+        const headersType = this.Types.Headers;
+        class_.addField({
+            origin: class_.explicit("AuthHeaderSchemes"),
+            access: ast.Access.Internal,
+            get: true,
+            set: true,
+            type: this.Collection.map(this.Primitive.string, headersType),
+            initializer: this.csharp.codeblock("new()"),
+            summary:
+                "Per-scheme auth headers, keyed by auth-scheme key, populated by the root client.\nUsed to route auth headers per endpoint based on each endpoint's declared security."
+        });
+
+        class_.addMethod({
+            access: ast.Access.Internal,
+            name: "GetAuthHeadersForEndpoint",
+            return_: headersType,
+            isAsync: false,
+            parameters: [
+                this.csharp.parameter({
+                    name: "security",
+                    type: this.Collection.array(this.Collection.array(this.Primitive.string))
+                })
+            ],
+            summary: "Resolves the auth headers that apply to an endpoint with the given security requirements.",
+            body: this.csharp.codeblock((writer) => {
+                writer.write("var result = new ");
+                writer.writeNode(headersType);
+                writer.writeLine("();");
+                writer.controlFlow("if", this.csharp.codeblock("security.Length == 0"));
+                writer.writeLine("return result;");
+                writer.endControlFlow();
+                writer.controlFlow("foreach", this.csharp.codeblock("var requirement in security"));
+                writer.controlFlow(
+                    "if",
+                    this.csharp.codeblock(
+                        "Array.TrueForAll(requirement, schemeKey => AuthHeaderSchemes.ContainsKey(schemeKey))"
+                    )
+                );
+                writer.controlFlow("foreach", this.csharp.codeblock("var schemeKey in requirement"));
+                writer.controlFlow("foreach", this.csharp.codeblock("var header in AuthHeaderSchemes[schemeKey]"));
+                writer.writeLine("result[header.Key] = header.Value;");
+                writer.endControlFlow();
+                writer.endControlFlow();
+                writer.writeLine("return result;");
+                writer.endControlFlow();
+                writer.endControlFlow();
+                writer.writeLine(
+                    "var missing = string.Join(" +
+                        '" OR ", ' +
+                        "Array.ConvertAll(security, requirement => string.Join(" +
+                        '" AND ", ' +
+                        "Array.FindAll(requirement, schemeKey => !AuthHeaderSchemes.ContainsKey(schemeKey)))));"
+                );
+                writer.writeLine("throw new InvalidOperationException(");
+                writer.writeLine(
+                    '"No authentication credentials provided that satisfy the endpoint\'s security requirements. "'
+                );
+                writer.writeLine('+ "Please provide credentials for: " + missing');
+                writer.writeLine(");");
+            })
+        });
+    }
+
     private getCloneMethod(cls: ast.Class): void {
         // TODO: add the GRPC options here eventually
         // TODO: iterate over all public fields and generate the clone logic
@@ -534,7 +632,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                       `(new Dictionary<string, `,
                       this.Types.HeaderValue,
                       `>(Headers)),
-    AdditionalHeaders = AdditionalHeaders,${unifiedFieldLines}
+    AdditionalHeaders = AdditionalHeaders,${unifiedFieldLines}${this.appInfoField ? `\n    ${this.appInfoField.name} = ${this.appInfoField.name},` : ""}
     ${this.settings.includeExceptionHandler ? "ExceptionHandler = ExceptionHandler.Clone()," : ""}
 }`
                   );
@@ -607,6 +705,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                 writer.writeLine("AdditionalHeaders = other.AdditionalHeaders;");
                 for (const field of this.unifiedFields) {
                     writer.writeLine(`${field.name} = other.${field.name};`);
+                }
+                if (this.appInfoField) {
+                    writer.writeLine(`${this.appInfoField.name} = other.${this.appInfoField.name};`);
                 }
                 if (this.settings.includeExceptionHandler) {
                     writer.writeLine("ExceptionHandler = other.ExceptionHandler.Clone();");

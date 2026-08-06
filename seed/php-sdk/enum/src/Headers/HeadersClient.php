@@ -48,6 +48,17 @@ class HeadersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->headers->send(
+     *     new SendEnumAsHeaderRequest([
+     *         'operand' => Operand::GreaterThan->value,
+     *         'maybeOperand' => Operand::GreaterThan->value,
+     *         'operandOrColor' => Color::Red->value,
+     *     ]),
+     * );
+     * ```
+     *
      * @param SendEnumAsHeaderRequest $request
      * @param ?array{
      *   baseUrl?: string,

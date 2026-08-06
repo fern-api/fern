@@ -19,6 +19,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :team_member_id
       #
+      # @example
+      #   client.team_member.update_team_member(team_member_id: "team_member_id")
+      #
       # @return [Seed::Types::TeamMember]
       def update_team_member(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

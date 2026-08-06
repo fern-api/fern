@@ -52,7 +52,8 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern.endpoint-security-auth/0.0.1");
                 put("X-Fern-Language", "JAVA");
-                put("X-Fern-SDK-Name", "com.seed.fern:endpoint-security-auth-sdk");
+                put("X-Fern-SDK-Name", "com.fern:endpoint-security-auth");
+                put("X-Fern-SDK-Version", "0.0.1");
             }
         });
         this.headerSuppliers = headerSuppliers;
@@ -126,6 +127,9 @@ public final class ClientOptions {
     }
 
     public Map<String, String> getAuthHeaders(EndpointMetadata endpointMetadata) {
+        if (this.authProvider == null) {
+            return new HashMap<>();
+        }
         return this.authProvider.getAuthHeaders(endpointMetadata);
     }
 

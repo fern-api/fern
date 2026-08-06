@@ -55,6 +55,19 @@ public final class ApiClient: Sendable {
 
     /// Returns a paginated list of all plants currently in the store inventory.
     ///
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.listPlants()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func listPlants(requestOptions: RequestOptions? = nil) async throws -> [Plant] {
         return try await httpClient.performRequest(
@@ -66,6 +79,19 @@ public final class ApiClient: Sendable {
     }
 
     /// Retrieve details about a specific plant by its unique identifier.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.getPlant(plantId: "plantId")
+    /// }
+    ///
+    /// try await main()
+    /// ```
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getPlant(plantId: String, requestOptions: RequestOptions? = nil) async throws -> Plant {

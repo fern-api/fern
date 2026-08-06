@@ -140,6 +140,23 @@ export class HttpEndpointGenerator {
             }
         }
 
+        // Under endpoint-security, route this endpoint's declared auth schemes into the
+        // request headers. The routing provider (held by the RawClient) returns only the
+        // headers for the schemes this endpoint requires; the flat client headers carry
+        // no auth. Merge them under any explicit headers so caller/SDK headers win.
+        if (this.context.isEndpointSecurity()) {
+            const securityLiteral = this.getEndpointSecurityLiteral(endpoint);
+            const authHeadersExpression = `@client.auth_headers_for_endpoint(security: ${securityLiteral})`;
+            if (headerBagReference == null) {
+                statements.push(ruby.codeblock(`${HEADER_PARAMETER_BAG_NAME} = ${authHeadersExpression}`));
+                headerBagReference = HEADER_PARAMETER_BAG_NAME;
+            } else {
+                statements.push(
+                    ruby.codeblock(`${headerBagReference} = ${authHeadersExpression}.merge(${headerBagReference})`)
+                );
+            }
+        }
+
         const baseUrlName = this.getBaseUrlNameForEndpoint(endpoint);
         const sendRequestCodeBlock = rawClient.sendRequest({
             baseUrl: ruby.codeblock(""),
@@ -162,6 +179,7 @@ export class HttpEndpointGenerator {
         });
 
         const enhancedDocstring = this.generateEnhancedDocstring({ endpoint, request });
+        const codeExample = this.getEndpointCodeExample({ endpoint });
         const splatOptionDocs = this.generateSplatOptionDocs({ endpoint });
         const requestOptionsDocs = this.generateRequestOptionsDocs();
 
@@ -327,6 +345,7 @@ export class HttpEndpointGenerator {
                 })
             },
             splatOptionDocs: [...requestOptionsDocs, ...splatOptionDocs],
+            codeExample,
             statements
         });
     }
@@ -595,6 +614,17 @@ export class HttpEndpointGenerator {
         return endpoint.docs ?? "";
     }
 
+    private getEndpointCodeExample({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string | undefined {
+        const exampleCall = this.context.maybeGetExampleEndpointCall(endpoint);
+        if (exampleCall == null) {
+            return undefined;
+        }
+        return this.context.snippetGenerator.getSingleEndpointSnippet({
+            endpoint,
+            example: exampleCall
+        })?.endpointCall;
+    }
+
     private generateRequestOptionsDocs(): string[] {
         const optionTags: string[] = [];
         optionTags.push("@option request_options [String] :base_url");
@@ -648,6 +678,27 @@ export class HttpEndpointGenerator {
         normalized = normalized.replace(/(^|,\s*)nil(?:,\s*nil)+(?=,|\]|$)/g, "$1nil");
         normalized = normalized.replace(/Hash\[untyped,\s*untyped\]/g, "Hash");
         return normalized;
+    }
+
+    /**
+     * Renders the endpoint's static `security` requirement as a Ruby literal for
+     * `auth_headers_for_endpoint(security:)`: an array of hashes mapping each scheme
+     * key to its (possibly empty) list of scopes, e.g. `[{ "Bearer" => [] }]` or
+     * `[{ "OAuth" => ["read-only"] }]`. Returns `nil` when the endpoint declares no
+     * security (the routing method then applies no auth).
+     */
+    private getEndpointSecurityLiteral(endpoint: FernIr.HttpEndpoint): string {
+        if (endpoint.security == null) {
+            return "nil";
+        }
+        const requirements = endpoint.security.map((requirement) => {
+            const entries = Object.entries(requirement).map(([schemeKey, scopes]) => {
+                const scopesLiteral = `[${scopes.map((scope) => JSON.stringify(scope)).join(", ")}]`;
+                return `${JSON.stringify(schemeKey)} => ${scopesLiteral}`;
+            });
+            return entries.length > 0 ? `{ ${entries.join(", ")} }` : "{}";
+        });
+        return `[${requirements.join(", ")}]`;
     }
 
     private getBaseUrlNameForEndpoint(endpoint: FernIr.HttpEndpoint): string | undefined {

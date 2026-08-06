@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/ast",
+                "method": "POST",
+                "identifier_override": "endpoint_.createAst"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreateAstAsync(new AstNode(new AstNode.Llm(new AstNodeLlm { Model = \"model\" })));\n"
+            }
+        }
+    ]
+}

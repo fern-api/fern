@@ -307,7 +307,8 @@ export const LayoutConfig = z.object({
     "hide-nav-links": z.boolean().optional(),
     "hide-feedback": z.boolean().optional(),
     "mobile-toc": z.boolean().optional(),
-    "changelog-layout": ChangelogLayout.optional()
+    "changelog-layout": ChangelogLayout.optional(),
+    "show-nav-availability-badges": z.boolean().optional()
 });
 
 // ===== Settings =====
@@ -460,7 +461,8 @@ export const PlaygroundSettings = z.object({
     environments: z.array(z.string()).optional(),
     button: PlaygroundButtonSettings.optional(),
     oauth: z.boolean().optional(),
-    "limit-websocket-messages-per-connection": z.number().int().optional()
+    "limit-websocket-messages-per-connection": z.number().int().optional(),
+    "send-optional-defaults": z.boolean().optional()
 });
 
 // ===== Announcement =====
@@ -625,14 +627,16 @@ export const ExperimentalConfig = z.object({
     "ai-examples": z.boolean().optional(),
     "ai-example-style-instructions": z.string().optional(),
     "exclude-apis": z.boolean().optional(),
-    "basepath-aware": z.boolean().optional()
+    "basepath-aware": z.boolean().optional(),
+    "external-sitemaps": z.array(z.string()).optional()
 });
 
 // ===== Library schemas =====
 
 export const GitLibraryInputSchema = z.object({
     git: z.string(),
-    subpath: z.string().optional()
+    subpath: z.string().optional(),
+    ref: z.string().optional()
 });
 
 export const PathLibraryInputSchema = z.object({

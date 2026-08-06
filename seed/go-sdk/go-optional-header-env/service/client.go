@@ -28,6 +28,10 @@ func NewClient(options *core.RequestOptions) *Client {
 			options.Version = &value
 		}
 	}
+	if options.Version == nil {
+		versionDefault := "2024-01-01"
+		options.Version = &versionDefault
+	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,
@@ -43,6 +47,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // GET request with a version header
+//
+// Example:
+//
+//	client.Service.GetWithAPIVersion(
+//	    context.TODO(),
+//	)
 func (c *Client) GetWithAPIVersion(
 	ctx context.Context,
 	opts ...option.RequestOption,

@@ -1,4 +1,133 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.18.1
+  changelogEntry:
+    - summary: |
+        The generated `composer.json` version (and the fallback User-Agent header) now honors
+        the version passed via `fern generate --version` for `local-file-system` output,
+        instead of always defaulting to `0.0.0`. The Composer package name also falls back to
+        the CLI-provided package name when `packageName` is not set in `generators.yml`.
+      type: fix
+  createdAt: "2026-08-05"
+  irVersion: 67
+- version: 2.18.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `allowUserAgentAppInfo` config (default `false`). When enabled, the
+        generated client accepts an optional `appInfo` client option
+        (`array{name: string, version?: string, comment?: string}`) whose product token is
+        appended to the `User-Agent` header for all three branches (the structured platform
+        value, the configured `user-agent` template value, and the default
+        `{package}/{version}`), producing e.g. `acme/sdk/1.0.0 partner-app/3.1.0 (+https://partner.example)`
+        per RFC 9110. Caller-supplied values are sanitized (name/version percent-encoded to
+        RFC 7230 tchars; comment delimiters and control characters escaped) and trimmed
+        before encoding, so untrusted values cannot inject additional header content. The
+        header is still overridable by an explicit `User-Agent` and suppressed by
+        `omitFernHeaders`. Default-off output is byte-identical.
+      type: feat
+  createdAt: "2026-08-03"
+  irVersion: 67
+- version: 2.17.0
+  changelogEntry:
+    - summary: |
+        Add an `encode-path-params` config option (default `false`). When enabled, generated clients
+        pass path parameter values through `RawClient::encodePathParam()` at the point they are
+        substituted into the path template, so a value containing `/` or `..` can no longer change which
+        endpoint the request resolves to. The default `false` preserves the existing (unencoded)
+        behavior; TypeScript, Go, Java, and C# already encode path params.
+      type: feat
+  createdAt: "2026-08-02"
+  irVersion: 67
+- version: 2.16.0
+  changelogEntry:
+    - summary: |
+        Add support for per-endpoint auth routing. When the API-level auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+        its IR `security` field (OR across the list of requirements, AND within a requirement,
+        and no auth when `security` is empty), instead of applying every configured credential
+        to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+        is unchanged.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 2.15.0
+  changelogEntry:
+    - summary: |
+        Support webhook body-hash binding in generated signature verification helpers.
+        When a webhook signature declares a body-hash binding, the helper now recomputes
+        the encoded hash of the raw request body, extracts the transmitted hash from the
+        configured query parameter of the notification URL, and timing-safe-compares them
+        (failing closed) before verifying the outer HMAC over the verbatim notification URL.
+      type: feat
+    - summary: |
+        Generate HMAC webhook signature verification helpers from the IR.
+      type: feat
+    - summary: |
+        Extend the generated `verifySignature` webhook helper with Twilio-compatible
+        verification, mirroring the TypeScript reference:
+        - Multi-value form params: when `payloadFormat.bodySort` is set, the request-body
+          parameter accepts either a raw string or a `string|array` multimap of POST body
+          parameters whose values are a string or a list of strings; keys are sorted, each
+          key's values are deduped and sorted, and `key . value` pairs are concatenated with
+          no separator before signing.
+        - Runtime body-hash branch: when a `bodyHashBinding` is configured, the configured
+          query parameter is read from the notification URL at runtime. When present (JSON) the
+          raw body is hashed and constant-time compared and the signature is checked over the
+          URL only; when absent (classic form) the signature is checked over the URL + params
+          with no body-hash check.
+        - No-throw: the verifier is a pure boolean. Every throw on the verification path (null
+          or empty inputs, a missing/malformed timestamp) now returns `false`.
+        - URL any-match normalization: when `notificationUrlNormalization` is configured, the
+          signature is verified against several normalized notification-URL candidates
+          (standard-port/no-port variants and legacy query re-encoding), accepting on the first
+          constant-time match. A stdlib-only `notificationUrlCandidates` method (using
+          `parse_url`/`http_build_query`) is added to the `WebhookSignature` core utility.
+        Output is unchanged for webhooks that do not configure these fields, other than the
+        no-throw behavior which applies to all generated helpers.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 2.14.1
+  changelogEntry:
+    - summary: |
+        Render the selected environment's URL template(s) when server URL variables
+        (e.g. region) are provided alongside a named environment. Previously the
+        first environment's template was always used, so
+        `new Client(environment: Environments::Staging(), region: 'ie1')` resolved
+        to Production-shaped URLs. A custom environment or explicitly provided
+        base URL is left untouched.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 2.14.0
+  changelogEntry:
+    - summary: |
+        Include a usage code example in each endpoint method's PHPDoc block, so IDEs
+        (PhpStorm, Intelephense) surface an example on hover.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 2.13.4
+  changelogEntry:
+    - summary: |
+        Global API headers configured with an `env` fallback (e.g. `X-Twilio-Version` with
+        `env: TWILIO_VERSION`) now fall back to the environment variable in the root client
+        constructor when the parameter is not passed explicitly. Optional headers never throw
+        when both the parameter and the environment variable are missing.
+      type: fix
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 2.13.3
+  changelogEntry:
+    - summary: |
+        Emit a standalone `LICENSE` file at the repo root when a custom license is
+        configured (`license: { custom: ./LICENSE }` in the generator's `github` block).
+        Previously the PHP generator only set the `license` field in `composer.json` and
+        never wrote the license file itself, so GitHub license detection and compliance
+        scanners reported no license. This brings the PHP generator to parity with the
+        TypeScript, Python, Java, and Go generators.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
 - version: 2.13.2
   changelogEntry:
     - summary: |

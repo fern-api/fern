@@ -130,6 +130,35 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    /**
+     * If true, the SDK version reported in the telemetry headers ({@code X-Fern-SDK-Version} and the version segment of
+     * {@code User-Agent}) is resolved at runtime from the jar manifest's {@code Implementation-Version} attribute
+     * instead of being baked in as a literal at generation time. This lets the reported version track the
+     * actually-published artifact version (e.g. when an external tool such as release-please sets the published version
+     * after generation) rather than a version the SDK may never publish. Falls back to the generation-time version when
+     * the manifest attribute is absent (e.g. running from unpackaged classes). Opt-in and disabled by default so
+     * existing generated output is unchanged. When enabled, the header is still subject to {@link #omitFernHeaders()}.
+     */
+    @Value.Default
+    @JsonProperty("runtime-version")
+    default Boolean runtimeVersion() {
+        return false;
+    }
+
+    /**
+     * If true, the generated client exposes an optional {@code appInfo(name, version, comment)} builder option whose
+     * product token is appended to the {@code User-Agent} header the SDK would otherwise send (following RFC 9110
+     * §10.1.5), producing e.g. {@code {sdk}/{version} ... partner-app/3.1.0 (+https://partner.example)}.
+     * Caller-supplied values are sanitized (name/version percent-encoded to RFC 7230 {@code tchar}s; comment delimiters
+     * and control characters escaped). Opt-in and disabled by default so existing generated output is unchanged. The
+     * header is still overridable by an explicit {@code User-Agent} and suppressed by {@link #omitFernHeaders()}.
+     */
+    @Value.Default
+    @JsonProperty("allowUserAgentAppInfo")
+    default Boolean allowUserAgentAppInfo() {
+        return false;
+    }
+
     @Value.Default
     @JsonProperty("retry-status-codes")
     default String retryStatusCodes() {

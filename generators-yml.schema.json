@@ -205,6 +205,14 @@
   },
   "additionalProperties": false,
   "definitions": {
+    "fernDefinition.auth.OAuthFlowTypeSchema": {
+      "type": "string",
+      "enum": [
+        "client-credentials",
+        "authorization-code",
+        "device-code"
+      ]
+    },
     "fernDefinition.auth.AuthScope": {
       "type": "string"
     },
@@ -404,6 +412,62 @@
       ],
       "additionalProperties": false
     },
+    "fernDefinition.auth.RedirectUriWithBackupPortsSchema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The primary loopback callback URI, e.g. `http://127.0.0.1:8484/callback`."
+        },
+        "ports": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Backup loopback ports, tried in order when the port in `url` is busy. Each reuses the host and path of `url` (only the port differs) and must be pre-registered with the authorization server."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false,
+      "description": "A loopback callback URI with additional backup ports for the authorization-code flow."
+    },
+    "fernDefinition.auth.RedirectUriSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.auth.RedirectUriWithBackupPortsSchema"
+        }
+      ]
+    },
+    "fernDefinition.auth.OAuthPkceSchema": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The PKCE code challenge method. Only 'S256' is supported. Defaults to 'S256'."
+        }
+      },
+      "additionalProperties": false,
+      "description": "PKCE (RFC 7636) configuration for the authorization-code flow."
+    },
     "fernDefinition.auth.OAuthSchemeSchema": {
       "type": "object",
       "properties": {
@@ -421,7 +485,8 @@
           "const": "oauth"
         },
         "type": {
-          "const": "client-credentials"
+          "$ref": "#/definitions/fernDefinition.auth.OAuthFlowTypeSchema",
+          "description": "The OAuth flow. Defaults to 'client-credentials'."
         },
         "scopes": {
           "oneOf": [
@@ -430,26 +495,6 @@
               "items": {
                 "$ref": "#/definitions/fernDefinition.auth.AuthScope"
               }
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "client-id-env": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "client-secret-env": {
-          "oneOf": [
-            {
-              "type": "string"
             },
             {
               "type": "null"
@@ -478,8 +523,37 @@
           ],
           "description": "Sets the token header key name. Defaults to 'Authorization'"
         },
+        "client-id-env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The environment variable holding the client ID. Used by the client-credentials flow and, for the public-client flows, as an alternative to a literal `client-id`."
+        },
+        "client-secret-env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "get-token": {
-          "$ref": "#/definitions/fernDefinition.auth.OAuthGetTokenEndpointSchema"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.auth.OAuthGetTokenEndpointSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The token endpoint for the client-credentials flow. Required for that flow."
         },
         "refresh-token": {
           "oneOf": [
@@ -490,12 +564,144 @@
               "type": "null"
             }
           ]
+        },
+        "client-id": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The public client ID (literal). Public clients do not use a client secret. Required for the authorization-code and device-code flows (an environment-variable client ID via `client-id-env` is not yet supported for these flows)."
+        },
+        "authorization-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The authorization (consent) endpoint URL. Required for the authorization-code flow."
+        },
+        "device-authorization-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The device authorization endpoint URL. Required for the device-code flow."
+        },
+        "token-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The token endpoint URL. Required for the authorization-code and device-code flows."
+        },
+        "refresh-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The token refresh endpoint URL. Defaults to `token-url` when omitted."
+        },
+        "redirect-uri": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.auth.RedirectUriSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The loopback redirect (callback) URI for the authorization-code flow. Must be a loopback host over http — `127.0.0.1` (recommended, RFC 8252 §7.3) or `localhost` — with any path; the generated CLI binds and sends this URI exactly, so it must match the redirect registered with the authorization server (e.g. `http://127.0.0.1:8484/callback` or `http://localhost:8484/callback`). Provide a bare string to pin a single port, or an object with `url` plus `ports` to add backup ports tried when the primary is busy. Omit it entirely to use an ephemeral (OS-assigned) port."
+        },
+        "pkce": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.auth.OAuthPkceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PKCE configuration for the authorization-code flow. PKCE is always applied for that flow."
+        },
+        "authorization-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters appended to the authorization request (e.g. `audience`)."
+        },
+        "device-authorization-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters included in the device authorization request."
+        },
+        "token-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters included in the token exchange request."
+        },
+        "refresh-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters included in the refresh request."
         }
       },
       "required": [
         "scheme",
-        "type",
-        "get-token"
+        "type"
       ],
       "additionalProperties": false
     },
@@ -2384,6 +2590,17 @@
           ],
           "description": "If true, preserve oneOf structures with a single schema.\nIf false, unwrap oneOf structures with a single schema.\nDefaults to false."
         },
+        "preserve-one-of-in-all-of": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each\nvariant is the union member merged with the remaining allOf members.\nIf false, the variants' properties are flattened into a single object and marked optional.\nDefaults to false."
+        },
         "inline-all-of-schemas": {
           "oneOf": [
             {
@@ -2449,6 +2666,17 @@
             }
           ],
           "description": "If true, disambiguate generated request wrapper names that collide with\ncomponent schema names by replacing the \"Request\" suffix with \"Body\".\nIf false, keep the original \"Request\" suffix regardless of collisions.\nDefaults to true."
+        },
+        "ignore-tags": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, ignore operation-level tags when determining the SDK structure.\nEndpoints fall back to the root package (or their namespace) and method\nnames are derived from each operation's operationId.\nDefaults to false."
         }
       },
       "additionalProperties": false
@@ -3033,6 +3261,17 @@
           ],
           "description": "If true, preserve oneOf structures with a single schema.\nIf false, unwrap oneOf structures with a single schema.\nDefaults to false."
         },
+        "preserve-one-of-in-all-of": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each\nvariant is the union member merged with the remaining allOf members.\nIf false, the variants' properties are flattened into a single object and marked optional.\nDefaults to false."
+        },
         "inline-all-of-schemas": {
           "oneOf": [
             {
@@ -3098,6 +3337,17 @@
             }
           ],
           "description": "If true, disambiguate generated request wrapper names that collide with\ncomponent schema names by replacing the \"Request\" suffix with \"Body\".\nIf false, keep the original \"Request\" suffix regardless of collisions.\nDefaults to true."
+        },
+        "ignore-tags": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, ignore operation-level tags when determining the SDK structure.\nEndpoints fall back to the root package (or their namespace) and method\nnames are derived from each operation's operationId.\nDefaults to false."
         },
         "respect-nullable-schemas": {
           "oneOf": [

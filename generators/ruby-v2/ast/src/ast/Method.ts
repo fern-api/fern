@@ -46,6 +46,10 @@ export declare namespace Method {
         statements?: AstNode[];
         /* YARD @option tags for the keyword splat parameter. */
         splatOptionDocs?: string[];
+        /* Usage example rendered as a YARD @example tag. */
+        codeExample?: string;
+        /* Trailing comment appended to the method signature line (e.g. a `rubocop:disable` directive). */
+        inlineComment?: string;
     }
 }
 
@@ -62,6 +66,8 @@ export class Method extends AstNode {
     private readonly statements: AstNode[];
     public readonly returnType: Type;
     private readonly splatOptionDocs: string[];
+    private readonly codeExample: string | undefined;
+    private readonly inlineComment: string | undefined;
 
     constructor({
         name,
@@ -71,7 +77,9 @@ export class Method extends AstNode {
         parameters,
         returnType,
         statements,
-        splatOptionDocs
+        splatOptionDocs,
+        codeExample,
+        inlineComment
     }: Method.Args) {
         super();
 
@@ -87,6 +95,8 @@ export class Method extends AstNode {
         this.returnType = returnType ?? Type.untyped();
         this.statements = statements ?? [];
         this.splatOptionDocs = splatOptionDocs ?? [];
+        this.codeExample = codeExample;
+        this.inlineComment = inlineComment;
     }
 
     public addStatement(statement: AstNode): void {
@@ -144,8 +154,19 @@ export class Method extends AstNode {
             writer.writeLine(`# ${optionDoc}`);
         }
 
+        const codeExample = this.codeExample?.trim();
+        if (codeExample) {
+            if (this.docstring || hasAnyParameters || this.splatOptionDocs.length > 0) {
+                writer.writeLine("#");
+            }
+            writer.writeLine("# @example");
+            for (const line of codeExample.split("\n")) {
+                writer.writeLine(line.trim() === "" ? "#" : `#   ${line.trimEnd()}`);
+            }
+        }
+
         if (this.returnType != null) {
-            if (hasAnyParameters || this.docstring) {
+            if (hasAnyParameters || this.docstring || codeExample) {
                 writer.writeLine("#");
             }
             writer.write(`# @return [`);
@@ -186,6 +207,10 @@ export class Method extends AstNode {
             });
 
             writer.write(")");
+        }
+
+        if (this.inlineComment != null) {
+            writer.write(` # ${this.inlineComment}`);
         }
 
         if (this.statements.length) {

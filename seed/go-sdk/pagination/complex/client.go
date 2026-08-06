@@ -34,6 +34,32 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.SearchRequest{
+//	    Pagination: &fern.StartingAfterPaging{
+//	        PerPage: 1,
+//	        StartingAfter: fern.String(
+//	            "starting_after",
+//	        ),
+//	    },
+//	    Query: &fern.SearchRequestQuery{
+//	        SingleFilterSearchRequest: &fern.SingleFilterSearchRequest{
+//	            Field: fern.String(
+//	                "field",
+//	            ),
+//	            Operator: fern.SingleFilterSearchRequestOperatorEquals.Ptr(),
+//	            Value: fern.String(
+//	                "value",
+//	            ),
+//	        },
+//	    },
+//	}
+//	client.Complex.Search(
+//	    context.TODO(),
+//	    "index",
+//	    request,
+//	)
 func (c *Client) Search(
 	ctx context.Context,
 	index string,

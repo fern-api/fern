@@ -35,7 +35,8 @@ function createMockContext(): any {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             }),
             getReferenceToType: (typeRef: FernIr.TypeReference) => {
@@ -612,7 +613,8 @@ describe("appendPropertyToFormData", () => {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             );
             const property = createBodyProperty("obj", objectType);
@@ -621,7 +623,8 @@ describe("appendPropertyToFormData", () => {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             });
             const stmt = appendPropertyToFormData({
@@ -677,6 +680,7 @@ describe("appendPropertyToFormData", () => {
                 "MyUnion",
                 FernIr.Type.union({
                     discriminant: createNameAndWireValue("type"),
+                    inheritedBaseProperties: undefined,
                     extends: [],
                     baseProperties: [],
                     types: [],
@@ -688,6 +692,7 @@ describe("appendPropertyToFormData", () => {
             const context = createMockContextWithDeclarations({
                 type_MyUnion: FernIr.Type.union({
                     discriminant: createNameAndWireValue("type"),
+                    inheritedBaseProperties: undefined,
                     extends: [],
                     baseProperties: [],
                     types: [],
@@ -843,7 +848,8 @@ function createMockContextWithDeclarations(declarations: Record<string, FernIr.T
                 properties: [],
                 extends: [],
                 extraProperties: false,
-                extendedProperties: undefined
+                extendedProperties: undefined,
+                deferredUnionBaseProperties: undefined
             })
         };
     };

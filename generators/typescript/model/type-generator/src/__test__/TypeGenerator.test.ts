@@ -75,7 +75,8 @@ describe("TypeGenerator", () => {
                 properties: [],
                 extends: [],
                 extraProperties: false,
-                extendedProperties: undefined
+                extendedProperties: undefined,
+                deferredUnionBaseProperties: undefined
             });
             const result = generator.generateType(createBaseArgs(shape));
             expect(result.type).toBe("object");
@@ -102,6 +103,7 @@ describe("TypeGenerator", () => {
             const generator = createDefaultGenerator();
             const shape = FernIr.Type.union({
                 discriminant: createNameAndWireValue("type", "type"),
+                inheritedBaseProperties: undefined,
                 extends: [],
                 types: [],
                 baseProperties: [],

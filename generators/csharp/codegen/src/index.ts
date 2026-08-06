@@ -7,6 +7,10 @@ export {
     type TAbsoluteFilePath,
     type TRelativeFilePath
 } from "./context/common.js";
+export {
+    type FilesystemNugetPublishTarget,
+    getFilesystemNugetPublishTarget
+} from "./context/filesystem-nuget-publish-target.js";
 export { Generation } from "./context/generation-info.js";
 export * from "./context/index.js";
 export { NameRegistry } from "./context/name-registry.js";

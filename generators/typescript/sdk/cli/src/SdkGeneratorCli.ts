@@ -55,6 +55,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             enableForwardCompatibleEnums: parsed?.enableForwardCompatibleEnums ?? false,
             requireDefaultEnvironment: parsed?.requireDefaultEnvironment ?? false,
+            requireBaseUrl: parsed?.requireBaseUrl ?? false,
             defaultTimeout: resolveTimeoutInMilliseconds(parsed),
             skipResponseValidation: noSerdeLayer || (parsed?.skipResponseValidation ?? true),
             extraDependencies: parsed?.extraDependencies ?? {},
@@ -89,6 +90,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
             includePlatformHeaders: parsed?.includePlatformHeaders ?? false,
+            allowUserAgentAppInfo: parsed?.allowUserAgentAppInfo ?? false,
             useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
             packageManager: parsed?.packageManager ?? "pnpm",
             generateReadWriteOnlyTypes: parsed?.experimentalGenerateReadWriteOnlyTypes ?? false,
@@ -106,6 +108,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             customPagerName: parsed?.customPagerName ?? "CustomPager",
             resolveQueryParameterNameConflicts: parsed?.resolveQueryParameterNameConflicts ?? false,
             alwaysSendAuth: parsed?.alwaysSendAuth ?? false,
+            optionalAuth: parsed?.["optional-auth"] ?? false,
             maxRetries: parsed?.maxRetries,
             retryStatusCodes: parsed?.retryStatusCodes ?? "legacy",
             generateReactQueryHooks: parsed?.generateReactQueryHooks ?? false
@@ -223,6 +226,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
                 enableForwardCompatibleEnums: customConfig.enableForwardCompatibleEnums,
                 requireDefaultEnvironment: customConfig.requireDefaultEnvironment,
+                requireBaseUrl: customConfig.requireBaseUrl,
                 defaultTimeout: customConfig.defaultTimeout,
                 skipResponseValidation: customConfig.skipResponseValidation,
                 extraDevDependencies: customConfig.extraDevDependencies,
@@ -255,6 +259,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 packagePath: customConfig.packagePath,
                 omitFernHeaders: customConfig.omitFernHeaders ?? false,
                 includePlatformHeaders: customConfig.includePlatformHeaders ?? false,
+                allowUserAgentAppInfo: customConfig.allowUserAgentAppInfo ?? false,
                 useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false,
                 packageManager: customConfig.packageManager,
                 generateReadWriteOnlyTypes: customConfig.generateReadWriteOnlyTypes,
@@ -273,6 +278,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 resolveQueryParameterNameConflicts: customConfig.resolveQueryParameterNameConflicts,
                 maxRetries: customConfig.maxRetries,
                 alwaysSendAuth: customConfig.alwaysSendAuth,
+                optionalAuth: customConfig.optionalAuth,
                 generateReactQueryHooks: customConfig.generateReactQueryHooks
             }
         });

@@ -553,7 +553,8 @@ function convertSettingsConfig(
         defaultSearchFilters: defaultFilterByCurrentProduct,
         search: {
             prioritizeCurrentProduct,
-            defaultFilterByCurrentProduct
+            defaultFilterByCurrentProduct,
+            externalSitemaps: undefined
         },
         language: settings.language ?? "en",
         disableSearch: settings.disableSearch ?? false,
@@ -665,6 +666,10 @@ function convertLayoutConfig(
         // fern-platform companion PR. Part of the `as unknown as` cast below
         // until the published FDR SDK adds `changelogLayout`.
         changelogLayout: layout.changelogLayout,
+        // Opt-in (default off, resolved by the fern-platform companion PR):
+        // when true the sidebar renders inline availability badges. Part of the
+        // `as unknown as` cast below until the published FDR SDK adds the field.
+        showNavAvailabilityBadges: layout.showNavAvailabilityBadges,
         tabsAlignment: resolvedTabsAlignment
     } as unknown as docsYml.ParsedDocsConfiguration["layout"];
 }
@@ -1646,7 +1651,7 @@ function parseLibrariesConfiguration(
     const result: Record<string, docsYml.ParsedLibraryConfiguration> = {};
     for (const [name, config] of Object.entries(libraries)) {
         const input: docsYml.ParsedLibraryInputConfiguration = isGitLibraryInput(config.input)
-            ? { type: "git", git: config.input.git, subpath: config.input.subpath }
+            ? { type: "git", git: config.input.git, subpath: config.input.subpath, ref: config.input.ref }
             : { type: "path", path: config.input.path };
         result[name] = {
             input,

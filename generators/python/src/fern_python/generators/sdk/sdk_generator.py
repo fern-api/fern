@@ -40,6 +40,7 @@ from fern_python.generators.sdk.context.sdk_generator_context_impl import (
 from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
+from fern_python.generators.sdk.webhooks_helper_generator import WebhooksHelperGenerator
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.utils import resolve_name
@@ -149,7 +150,7 @@ class SdkGenerator(AbstractGenerator):
         # accordingly so SDKs that still support older Python fall back to not
         # installing the extra rather than pinning to a vulnerable aiohttp.
         project.add_dependency(
-            dependency=AST.Dependency(name="httpx-aiohttp", version="0.1.8", optional=True, python=">=3.10")
+            dependency=AST.Dependency(name="httpx-aiohttp", version="^0.1.8", optional=True, python=">=3.10")
         )
         project.add_dependency(
             dependency=AST.Dependency(name="aiohttp", version=">=3.14.1,<4", optional=True, python=">=3.10")
@@ -336,6 +337,10 @@ class SdkGenerator(AbstractGenerator):
             context=context,
             project=project,
         )
+
+        # Generate webhook signature verification helpers (WebhooksHelper) for
+        # any webhooks that declare HMAC signature verification in the IR.
+        WebhooksHelperGenerator(context=context, project=project).generate()
 
         # Generate test_aiohttp_autodetect.py test file (skip when embedding —
         # the host project owns its own tests/ directory).

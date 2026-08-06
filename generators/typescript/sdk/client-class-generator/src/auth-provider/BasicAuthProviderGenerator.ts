@@ -20,6 +20,7 @@ export declare namespace BasicAuthProviderGenerator {
         neverThrowErrors: boolean;
         isAuthMandatory: boolean;
         shouldUseWrapper: boolean;
+        optionalAuth?: boolean;
     }
 }
 
@@ -35,6 +36,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     private readonly neverThrowErrors: boolean;
     private readonly isAuthMandatory: boolean;
     private readonly shouldUseWrapper: boolean;
+    private readonly optionalAuth: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: BasicAuthProviderGenerator.Init) {
@@ -43,6 +45,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         this.neverThrowErrors = init.neverThrowErrors;
         this.isAuthMandatory = init.isAuthMandatory;
         this.shouldUseWrapper = init.shouldUseWrapper;
+        this.optionalAuth = init.optionalAuth ?? false;
         this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
     }
 
@@ -369,7 +372,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
             )
         );
 
-        if (this.neverThrowErrors) {
+        if (this.neverThrowErrors || this.optionalAuth) {
             const errorAction = "return { headers: {} };";
             return `
 ${buildNullChecks(errorAction)}

@@ -31,6 +31,7 @@ export interface SdkCustomConfig {
     includeOtherInUnionTypes: boolean;
     enableForwardCompatibleEnums: boolean;
     requireDefaultEnvironment: boolean;
+    requireBaseUrl: boolean;
     /**
      * Effective default request timeout in milliseconds. Resolved from the
      * `defaultTimeout` config key, falling back to the deprecated
@@ -70,6 +71,7 @@ export interface SdkCustomConfig {
     packagePath: string | undefined;
     omitFernHeaders: boolean | undefined;
     includePlatformHeaders: boolean | undefined;
+    allowUserAgentAppInfo: boolean | undefined;
     useDefaultRequestParameterValues: boolean | undefined;
     packageManager: "pnpm" | "yarn";
     generateReadWriteOnlyTypes: boolean;
@@ -88,6 +90,7 @@ export interface SdkCustomConfig {
     resolveQueryParameterNameConflicts: boolean;
     maxRetries: number | undefined;
     alwaysSendAuth: boolean;
+    optionalAuth: boolean;
     retryStatusCodes: "legacy" | "recommended";
     generateReactQueryHooks: boolean;
 }

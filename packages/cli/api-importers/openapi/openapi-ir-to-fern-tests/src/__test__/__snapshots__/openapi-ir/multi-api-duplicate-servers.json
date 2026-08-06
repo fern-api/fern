@@ -4,8 +4,8 @@
   "servers": [
     {
       "type": "grouped",
-      "name": "STG",
-      "description": "STG environment",
+      "name": "Staging",
+      "description": "Staging environment",
       "urls": {
         "stage": {
           "url": "https://api.stage.example.com"

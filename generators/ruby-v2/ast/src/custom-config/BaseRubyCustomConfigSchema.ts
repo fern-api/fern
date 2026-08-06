@@ -36,6 +36,10 @@ export const BaseRubyCustomConfigSchema = z.object({
     // Opt-in: emit the X-Fern-Runtime, X-Fern-Runtime-Version, and X-Fern-Platform
     // observability headers. Disabled by default so existing output is unchanged.
     includePlatformHeaders: z.boolean().optional(),
+    // Opt-in: expose an optional `app_info` client keyword whose product token is
+    // appended to the User-Agent header (RFC 9110). Disabled by default so existing
+    // output is byte-identical.
+    allowUserAgentAppInfo: z.boolean().optional(),
     // RuboCop Naming/VariableNumber style for field names with numbers
     // - "snake_case": requires underscores before numbers (e.g., recaptcha_v_2) - default
     // - "normalcase": allows numbers without underscores (e.g., recaptcha_v2, office365)

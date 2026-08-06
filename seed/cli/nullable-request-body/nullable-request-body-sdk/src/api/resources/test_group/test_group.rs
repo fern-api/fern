@@ -22,6 +22,33 @@ impl TestGroupClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use nullable_request_body_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = NullableRequestBodyClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .test_group
+    ///         .test_method_name(
+    ///             &"path_param".to_string(),
+    ///             &TestMethodNameRequest {
+    ///                 body: Some(PlainObject {
+    ///                     ..Default::default()
+    ///                 }),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn test_method_name(
         &self,
         path_param: &str,

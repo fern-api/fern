@@ -49,7 +49,8 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern.inferred-auth-implicit-no-expiry/0.0.1");
                 put("X-Fern-Language", "JAVA");
-                put("X-Fern-SDK-Name", "com.seed.fern:inferred-auth-implicit-no-expiry-sdk");
+                put("X-Fern-SDK-Name", "com.fern:inferred-auth-implicit-no-expiry");
+                put("X-Fern-SDK-Version", "0.0.1");
             }
         });
         this.headerSuppliers = headerSuppliers;

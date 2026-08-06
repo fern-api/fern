@@ -14,10 +14,9 @@
 
 ```go
 client.User.Get(
-        context.TODO(),
-        "id",
-    )
-}
+    context.TODO(),
+    "id",
+)
 ```
 </dd>
 </dl>

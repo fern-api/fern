@@ -35,6 +35,17 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Add a movie to the database
+//
+// Example:
+//
+//	request := &fern.CreateMovieRequest{
+//	    Title: "title",
+//	    Rating: 1.1,
+//	}
+//	client.Imdb.CreateMovie(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateMovie(
 	ctx context.Context,
 	request *fern.CreateMovieRequest,

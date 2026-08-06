@@ -14,6 +14,15 @@ import { Comments } from "../utils/comments.js";
 
 const TOKEN_PARAMETER_NAME = "token";
 
+/** Client keyword exposed when `allowUserAgentAppInfo` is enabled. */
+const APP_INFO_PARAMETER_NAME = "app_info";
+
+/** Instance member the single flat auth provider is assigned to (ALL/ANY auth). */
+const AUTH_PROVIDER_MEMBER = "@auth_provider";
+/** Instance members the OAuth / inferred providers are assigned to under endpoint-security. */
+const OAUTH_PROVIDER_MEMBER = "@oauth_provider";
+const INFERRED_AUTH_PROVIDER_MEMBER = "@inferred_auth_provider";
+
 /**
  * Initializer keyword names already used by the client. A server URL variable whose
  * name collides with one of these is exposed under a `server_url_`-prefixed name so it
@@ -25,7 +34,8 @@ const RESERVED_OPTION_NAMES = new Set<string>([
     "max_retries",
     "token",
     "client",
-    "request_options"
+    "request_options",
+    APP_INFO_PARAMETER_NAME
 ]);
 
 interface InferredAuthParameter {
@@ -150,6 +160,20 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         });
         parameters.push(maxRetriesParameter);
 
+        // When the opt-in `allowUserAgentAppInfo` config is enabled, expose an optional
+        // `app_info` keyword whose product token is appended to the User-Agent header.
+        // Gated so flag-off client.rb keeps byte-identical output.
+        if (this.emitAppInfoOption()) {
+            parameters.push(
+                ruby.parameters.keyword({
+                    name: APP_INFO_PARAMETER_NAME,
+                    type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.class_({ name: "Symbol" }), ruby.Type.string())),
+                    initializer: ruby.nilValue(),
+                    docs: "Optional application info ({ name:, version:, comment: }) appended to the User-Agent header."
+                })
+            );
+        }
+
         // Sort parameters: required (no initializer) before optional (with initializer)
         const sortedParameters = [...parameters].sort((a, b) => {
             const aOptional = a.initializer != null ? 1 : 0;
@@ -181,6 +205,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         // `any` order and how the TS/Rust `AnyAuthProvider` tries schemes in order).
         const inferredAuth = this.context.getInferredAuth();
         const oauthAuth = this.context.getOAuthAuth();
+        const isEndpointSecurity = this.context.isEndpointSecurity();
         const useOAuthProvider = this.shouldUseOAuthProvider(inferredAuth, oauthAuth);
 
         // Under `any`-composed auth with more than one scheme, each scheme's
@@ -192,7 +217,28 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         // provider scheme we keep the existing eager behavior.
         const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
 
-        if (oauthAuth != null && useOAuthProvider) {
+        if (isEndpointSecurity) {
+            // Under endpoint-security every provider-based scheme may be routed to by
+            // some endpoint, so instantiate each one (rather than picking a single
+            // deterministic provider). Each is gated on its own credentials so it stays
+            // nil when the caller did not supply them, and the routing provider treats a
+            // nil sub-provider as "credentials unavailable". Providers resolve tokens
+            // lazily on first use, so instantiating both is cheap.
+            if (oauthAuth != null) {
+                method.addStatement(
+                    this.getOAuthInitializationStatement(oauthAuth, /* gateOnCredentials */ true, OAUTH_PROVIDER_MEMBER)
+                );
+            }
+            if (inferredAuth != null) {
+                method.addStatement(
+                    this.getInferredAuthInitializationStatement(
+                        inferredAuth,
+                        /* gateOnCredentials */ true,
+                        INFERRED_AUTH_PROVIDER_MEMBER
+                    )
+                );
+            }
+        } else if (oauthAuth != null && useOAuthProvider) {
             method.addStatement(this.getOAuthInitializationStatement(oauthAuth, anyAuthMultiScheme));
         } else if (inferredAuth != null) {
             method.addStatement(this.getInferredAuthInitializationStatement(inferredAuth, anyAuthMultiScheme));
@@ -218,7 +264,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const hasBasicAuth = basicAuthSchemes.length > 0;
         const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
         const conditionalHeaderStatements = this.getConditionalGlobalHeaderStatements();
-        const buildHeadersVariable = hasBasicAuth || conditionalHeaderStatements.length > 0;
+        // Under endpoint-security, auth headers (bearer, header, basic) are NOT baked
+        // into the RawClient's default headers; they are routed per-endpoint via the
+        // routing auth provider. So the flat basic-auth header block is suppressed.
+        const emitFlatAuth = !isEndpointSecurity;
+        const basicAuthSchemesToEmit = emitFlatAuth ? basicAuthSchemes : [];
+        const buildHeadersVariable = basicAuthSchemesToEmit.length > 0 || conditionalHeaderStatements.length > 0;
 
         method.addStatement(
             ruby.codeblock((writer) => {
@@ -226,12 +277,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     // Build headers in a variable so we can conditionally add
                     // basic auth and nilable global headers
                     writer.write(`headers = `);
-                    writer.writeNode(this.getRawClientHeaders());
+                    writer.writeNode(this.getRawClientHeaders({ includeAuth: emitFlatAuth }));
                     writer.newLine();
                     let isFirstBlock = true;
                     let emittedAnyBlock = false;
-                    for (let i = 0; i < basicAuthSchemes.length; i++) {
-                        const basicAuthScheme = basicAuthSchemes[i];
+                    for (let i = 0; i < basicAuthSchemesToEmit.length; i++) {
+                        const basicAuthScheme = basicAuthSchemesToEmit[i];
                         if (basicAuthScheme == null) {
                             continue;
                         }
@@ -262,7 +313,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                             continue;
                         }
                         const authHeaderStmt = `headers["Authorization"] = "Basic #{Base64.strict_encode64(${credentialStr})}"`;
-                        if (basicAuthSchemes.length > 1) {
+                        if (basicAuthSchemesToEmit.length > 1) {
                             // Multiple basic-auth schemes: emit as an if/elsif chain so
                             // only one scheme is applied at runtime. Modifier form isn't
                             // applicable when there are alternative branches.
@@ -285,7 +336,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                             writer.writeLine(authHeaderStmt);
                         }
                     }
-                    if (emittedAnyBlock && basicAuthSchemes.length > 1) {
+                    if (emittedAnyBlock && basicAuthSchemesToEmit.length > 1) {
                         writer.writeLine(`end`);
                     }
                 }
@@ -318,10 +369,25 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     writer.writeLine(`headers: headers,`);
                 } else {
                     writer.write(`headers: `);
-                    writer.writeNode(this.getRawClientHeaders());
+                    writer.writeNode(this.getRawClientHeaders({ includeAuth: emitFlatAuth }));
                     writer.writeLine(`,`);
                 }
-                if (hasAuthProvider) {
+                // Global headers are the only client-level headers a request may replace via
+                // `additional_headers`; SDK metadata and auth headers stay protected.
+                const overridableHeaderNames = this.getOverridableHeaderNames();
+                if (overridableHeaderNames.length > 0) {
+                    writer.writeLine(`overridable_headers: %w[${overridableHeaderNames.join(" ")}],`);
+                }
+                if (isEndpointSecurity) {
+                    // Under endpoint-security, the RawClient is given a routing auth
+                    // provider that holds every scheme's credentials. It contributes no
+                    // flat auth headers on each request; instead each endpoint calls
+                    // `auth_headers_for_endpoint` with its declared security to get only
+                    // the headers it needs.
+                    writer.write(`auth_provider: `);
+                    writer.writeNode(this.getRoutingAuthProviderInstantiation());
+                    writer.writeLine(`,`);
+                } else if (hasAuthProvider) {
                     // Pass the auth provider into the RawClient so its `auth_headers`
                     // are resolved on EVERY request rather than baked once here. This
                     // lets token-based providers (OAuth client-credentials, inferred
@@ -338,6 +404,65 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         );
 
         return method;
+    }
+
+    /**
+     * Builds the `Internal::RoutingAuthProvider.new(...)` expression, forwarding each
+     * auth scheme's credentials: the bearer token, each header-auth value, the basic
+     * username/password (respecting omit), and the OAuth / inferred token providers
+     * (nil when their credentials were not supplied).
+     */
+    private getRoutingAuthProviderInstantiation(): ruby.AstNode {
+        const keywordArguments: string[] = [];
+
+        const bearerAuth = this.context.getBearerAuth();
+        if (bearerAuth != null) {
+            keywordArguments.push(`${TOKEN_PARAMETER_NAME}: ${TOKEN_PARAMETER_NAME}`);
+        }
+        for (const headerScheme of this.context.getHeaderAuthSchemes()) {
+            const paramName = this.case.snakeSafe(headerScheme.name);
+            keywordArguments.push(`${paramName}: ${paramName}`);
+        }
+        const basicAuth = this.context.getBasicAuth();
+        if (basicAuth != null) {
+            if (basicAuth.usernameOmit !== true) {
+                const usernameName = this.case.snakeSafe(basicAuth.username);
+                keywordArguments.push(`${usernameName}: ${usernameName}`);
+            }
+            if (basicAuth.passwordOmit !== true) {
+                const passwordName = this.case.snakeSafe(basicAuth.password);
+                keywordArguments.push(`${passwordName}: ${passwordName}`);
+            }
+        }
+        if (this.context.getOAuthAuth() != null) {
+            keywordArguments.push(`oauth_provider: ${OAUTH_PROVIDER_MEMBER}`);
+        }
+        if (this.context.getInferredAuth() != null) {
+            keywordArguments.push(`inferred_auth_provider: ${INFERRED_AUTH_PROVIDER_MEMBER}`);
+        }
+
+        return ruby.codeblock((writer) => {
+            writer.writeNode(this.getRoutingAuthProviderClassReference());
+            if (keywordArguments.length === 0) {
+                writer.write(`.new`);
+                return;
+            }
+            writer.writeLine(`.new(`);
+            writer.indent();
+            keywordArguments.forEach((argument, index) => {
+                writer.writeLine(`${argument}${index < keywordArguments.length - 1 ? "," : ""}`);
+            });
+            writer.dedent();
+            writer.write(`)`);
+        });
+    }
+
+    private getRoutingAuthProviderClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "RoutingAuthProvider",
+            modules: [this.context.getRootModule().name, "Internal"],
+            fullyQualified: true
+        });
     }
 
     /**
@@ -372,7 +497,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
     private getInferredAuthInitializationStatement(
         scheme: FernIr.InferredAuthScheme,
-        anyAuthMultiScheme: boolean
+        gateOnCredentials: boolean,
+        targetMember: string = AUTH_PROVIDER_MEMBER
     ): ruby.AstNode {
         const inferredParams = this.getParametersForInferredAuth(scheme);
 
@@ -393,7 +519,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         // its (non-optional) credential params being present, so the provider (and
         // its token request) is only created when the caller actually supplied them.
         // A set-but-empty string is treated the same as absent (`.to_s.empty?`).
-        const gatedParams = anyAuthMultiScheme
+        const gatedParams = gateOnCredentials
             ? inferredParams.filter((param) => param != null && !param.isOptional)
             : [];
         const inferredGuard =
@@ -473,7 +599,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
             // Create the auth provider with auth_client and options
             writer.writeLine(`# Create the auth provider with the auth client and credentials`);
-            writer.write(`@auth_provider = `);
+            writer.write(`${targetMember} = `);
             writer.writeNode(this.getInferredAuthProviderClassReference());
             writer.writeLine(`.new(`);
             writer.indent();
@@ -545,7 +671,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return [rootModuleName, "Auth"];
     }
 
-    private getOAuthInitializationStatement(scheme: FernIr.OAuthScheme, anyAuthMultiScheme: boolean): ruby.AstNode {
+    private getOAuthInitializationStatement(
+        scheme: FernIr.OAuthScheme,
+        gateOnCredentials: boolean,
+        targetMember: string = AUTH_PROVIDER_MEMBER
+    ): ruby.AstNode {
         if (scheme.configuration.type !== "clientCredentials") {
             return ruby.codeblock("");
         }
@@ -563,7 +693,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
 
         return ruby.codeblock((writer) => {
-            if (anyAuthMultiScheme) {
+            if (gateOnCredentials) {
                 // Under `any`-composed multi-scheme auth OAuth is a fallback. Only
                 // instantiate the provider (which fires a synchronous token request)
                 // when both credentials were supplied (treating a set-but-empty
@@ -623,7 +753,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
             // Create the OAuth provider with the auth client and credentials
             writer.writeLine(`# Create the OAuth provider with the auth client and credentials`);
-            writer.write(`@auth_provider = `);
+            writer.write(`${targetMember} = `);
             writer.writeNode(this.getOAuthProviderClassReference());
             writer.writeLine(`.new(`);
             writer.indent();
@@ -635,7 +765,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             writer.writeLine(` }`);
             writer.dedent();
             writer.writeLine(`)`);
-            if (anyAuthMultiScheme) {
+            if (gateOnCredentials) {
                 writer.dedent();
                 writer.writeLine(`end`);
             }
@@ -645,18 +775,27 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     private getAuthenticationParameters(): ruby.KeywordParameter[] {
         const parameters: ruby.KeywordParameter[] = [];
 
+        // Under endpoint-security, auth is resolved per-endpoint, so a caller may use only one
+        // scheme (e.g. pure OAuth) and must be able to omit the others. A credential without an
+        // env-var default therefore defaults to nil instead of being a required keyword argument;
+        // otherwise a pure-OAuth user cannot construct the client without also passing an API key.
+        const isEndpointSecurity = this.context.isEndpointSecurity();
+        const credentialInitializer = (envVar: string | undefined) => {
+            if (envVar != null) {
+                return ruby.codeblock((writer) => {
+                    writer.write(`ENV.fetch("${envVar}", nil)`);
+                });
+            }
+            return isEndpointSecurity ? ruby.nilValue() : undefined;
+        };
+
         for (const scheme of this.context.ir.auth.schemes) {
             switch (scheme.type) {
                 case "bearer": {
                     const param = ruby.parameters.keyword({
                         name: TOKEN_PARAMETER_NAME,
                         type: ruby.Type.string(),
-                        initializer:
-                            scheme.tokenEnvVar != null
-                                ? ruby.codeblock((writer) => {
-                                      writer.write(`ENV.fetch("${scheme.tokenEnvVar}", nil)`);
-                                  })
-                                : undefined,
+                        initializer: credentialInitializer(scheme.tokenEnvVar),
                         docs: undefined
                     });
                     parameters.push(param);
@@ -666,12 +805,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     const param = ruby.parameters.keyword({
                         name: this.case.snakeSafe(scheme.name),
                         type: ruby.Type.string(),
-                        initializer:
-                            scheme.headerEnvVar != null
-                                ? ruby.codeblock((writer) => {
-                                      writer.write(`ENV.fetch("${scheme.headerEnvVar}", nil)`);
-                                  })
-                                : undefined,
+                        initializer: credentialInitializer(scheme.headerEnvVar),
                         docs: undefined
                     });
                     parameters.push(param);
@@ -685,12 +819,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         const usernameParam = ruby.parameters.keyword({
                             name: this.case.snakeSafe(scheme.username),
                             type: ruby.Type.string(),
-                            initializer:
-                                scheme.usernameEnvVar != null
-                                    ? ruby.codeblock((writer) => {
-                                          writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
-                                      })
-                                    : undefined,
+                            initializer: credentialInitializer(scheme.usernameEnvVar),
                             docs: undefined
                         });
                         parameters.push(usernameParam);
@@ -699,12 +828,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         const passwordParam = ruby.parameters.keyword({
                             name: this.case.snakeSafe(scheme.password),
                             type: ruby.Type.string(),
-                            initializer:
-                                scheme.passwordEnvVar != null
-                                    ? ruby.codeblock((writer) => {
-                                          writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
-                                      })
-                                    : undefined,
+                            initializer: credentialInitializer(scheme.passwordEnvVar),
                             docs: undefined
                         });
                         parameters.push(passwordParam);
@@ -734,11 +858,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     parameters.push(
                         ruby.parameters.keyword({
                             name: "client_id",
-                            type: clientIdEnvVar != null ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
-                            initializer:
-                                clientIdEnvVar != null
-                                    ? ruby.codeblock(`ENV.fetch("${clientIdEnvVar}", nil)`)
-                                    : undefined,
+                            type:
+                                clientIdEnvVar != null || isEndpointSecurity
+                                    ? ruby.Type.nilable(ruby.Type.string())
+                                    : ruby.Type.string(),
+                            initializer: credentialInitializer(clientIdEnvVar),
                             docs: undefined
                         })
                     );
@@ -746,11 +870,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         ruby.parameters.keyword({
                             name: "client_secret",
                             type:
-                                clientSecretEnvVar != null ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
-                            initializer:
-                                clientSecretEnvVar != null
-                                    ? ruby.codeblock(`ENV.fetch("${clientSecretEnvVar}", nil)`)
-                                    : undefined,
+                                clientSecretEnvVar != null || isEndpointSecurity
+                                    ? ruby.Type.nilable(ruby.Type.string())
+                                    : ruby.Type.string(),
+                            initializer: credentialInitializer(clientSecretEnvVar),
                             docs: undefined
                         })
                     );
@@ -759,8 +882,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         parameters.push(
                             ruby.parameters.keyword({
                                 name: additionalName,
-                                type: ruby.Type.string(),
-                                initializer: undefined,
+                                type: isEndpointSecurity ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
+                                initializer: isEndpointSecurity ? ruby.nilValue() : undefined,
                                 docs: undefined
                             })
                         );
@@ -868,6 +991,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     }
 
     /**
+     * The wire names of the global headers a request may replace via `additional_headers`.
+     * Literal global headers are excluded: their value is fixed by the API definition.
+     */
+    private getOverridableHeaderNames(): string[] {
+        return this.getNonLiteralGlobalHeaders().map((header) => getWireValue(header.name));
+    }
+
+    /**
      * Statements that conditionally add global headers whose value may be nil at
      * construction time (no clientDefault), e.g.
      * `headers["X-Api-Version"] = api_version.to_s unless api_version.nil?`.
@@ -955,7 +1086,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return undefined;
     }
 
-    private getRawClientHeaders(): ruby.TypeLiteral {
+    private getRawClientHeaders({ includeAuth = true }: { includeAuth?: boolean } = {}): ruby.TypeLiteral {
         const headers: ruby.HashEntry[] = [];
 
         if (!this.context.customConfig.omitFernHeaders) {
@@ -969,14 +1100,29 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 headers.push({
                     key: ruby.TypeLiteral.string("User-Agent"),
                     value: ruby.codeblock(
-                        `${rootModuleName}::Internal::Http::RawClient.user_agent(${JSON.stringify(userAgent.value)})`
+                        this.wrapUserAgentWithAppInfo(
+                            `${rootModuleName}::Internal::Http::RawClient.user_agent(${JSON.stringify(userAgent.value).replace(/#(?=[{$@])/g, "\\#")})`
+                        )
                     )
                 });
             } else if (userAgent != null) {
-                headers.push({
-                    key: ruby.TypeLiteral.string("User-Agent"),
-                    value: ruby.TypeLiteral.string(userAgent.value)
-                });
+                // Covers both the configured `user-agent` template value and the default
+                // `{package}/{version}` (both surface via userAgent.value). When
+                // appInfo is enabled the base value is wrapped so the app product token
+                // is appended; otherwise it stays a plain string literal (byte-identical).
+                if (this.emitAppInfoOption()) {
+                    headers.push({
+                        key: ruby.TypeLiteral.string("User-Agent"),
+                        value: ruby.codeblock(
+                            this.wrapUserAgentWithAppInfo(JSON.stringify(userAgent.value).replace(/#(?=[{$@])/g, "\\#"))
+                        )
+                    });
+                } else {
+                    headers.push({
+                        key: ruby.TypeLiteral.string("User-Agent"),
+                        value: ruby.TypeLiteral.string(userAgent.value)
+                    });
+                }
             }
 
             headers.push({
@@ -985,7 +1131,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             });
         }
 
-        for (const header of this.context.ir.auth.schemes) {
+        // In endpoint-security mode, auth headers are NOT baked into the RawClient's
+        // default headers; each endpoint routes its own schemes via the routing auth
+        // provider. So the flat per-scheme header emission is skipped here.
+        for (const header of includeAuth ? this.context.ir.auth.schemes : []) {
             switch (header.type) {
                 case "bearer":
                     headers.push({
@@ -1062,6 +1211,34 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         }
 
         return ruby.TypeLiteral.hash(headers);
+    }
+
+    /**
+     * Whether to expose the opt-in `app_info` client keyword and emit the User-Agent
+     * appendix. Gated on the `allowUserAgentAppInfo` config, and suppressed entirely
+     * when `omitFernHeaders` is set (no User-Agent is sent in that case), so flag-off
+     * output stays byte-identical.
+     */
+    private emitAppInfoOption(): boolean {
+        return (
+            this.context.customConfig.allowUserAgentAppInfo === true &&
+            !this.context.customConfig.omitFernHeaders &&
+            this.context.ir.sdkConfig.platformHeaders.userAgent != null
+        );
+    }
+
+    /**
+     * Wraps a base User-Agent expression so the caller-supplied `app_info` product
+     * token is appended (via RawClient.append_app_info). Returns the base expression
+     * unchanged when appInfo is not enabled, so non-opted-in output is byte-identical.
+     * @param baseExpression The Ruby expression producing the base User-Agent value.
+     */
+    private wrapUserAgentWithAppInfo(baseExpression: string): string {
+        if (!this.emitAppInfoOption()) {
+            return baseExpression;
+        }
+        const rootModuleName = this.context.getRootModule().name;
+        return `${rootModuleName}::Internal::Http::RawClient.append_app_info(${baseExpression}, ${APP_INFO_PARAMETER_NAME})`;
     }
 
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
@@ -1163,9 +1340,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     /**
      * Emits the interpolation of server URL variables (e.g. region/edge) into the base URL.
      * When any server variable is provided at construction time, the base URL(s) are rebuilt
-     * from the environment's URL template(s), falling back to each variable's default (or its
-     * first allowed value). For a single base URL, an explicitly supplied `base_url` always
-     * takes precedence and suppresses interpolation.
+     * from the SELECTED environment's URL template(s), falling back to each variable's default
+     * (or its first allowed value). A base_url/environment that is not a known environment
+     * constant (a custom URL) is never overridden; when none is given, the first templated
+     * environment's template(s) are used.
      * Returns undefined when the API declares no server variables (behavior unchanged).
      */
     private getServerVariableInterpolationStatement(options: ServerVariableOption[]): ruby.AstNode | undefined {
@@ -1177,7 +1355,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             return undefined;
         }
         const environments = config.environments;
-        const condition = options.map(({ optionName }) => `!${optionName}.nil?`).join(" || ");
+        // A single negated condition must use `unless` to satisfy rubocop's Style/NegatedIf.
+        const firstOptionName = options[0]?.optionName;
+        const guard =
+            options.length === 1 && firstOptionName != null
+                ? `unless ${firstOptionName}.nil?`
+                : `if ${options.map(({ optionName }) => `!${optionName}.nil?`).join(" || ")}`;
 
         const writeLocalDeclarations = (writer: ruby.Writer): void => {
             for (const { optionName, localName, variable } of options) {
@@ -1197,57 +1380,101 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
         };
 
+        const environmentConstantReference = (name: FernIr.NameOrString): string => {
+            return `${this.context.getRootModuleName()}::${this.context.getEnvironmentsClassReference().name}::${this.case.screamingSnakeSafe(name)}`;
+        };
+
         switch (environments.type) {
             case "singleBaseUrl": {
-                const templatedEnvironment = environments.environments.find((env) => env.urlTemplate != null);
-                if (templatedEnvironment?.urlTemplate == null) {
+                const templatedEnvironments = environments.environments.filter((env) => env.urlTemplate != null);
+                const firstTemplate = templatedEnvironments[0]?.urlTemplate;
+                if (firstTemplate == null) {
                     return undefined;
                 }
-                const template = templatedEnvironment.urlTemplate;
                 return ruby.codeblock((writer) => {
-                    // Only rebuild the base URL from the template when the caller did not pass an
-                    // explicit base_url; an explicitly supplied base_url always takes precedence.
-                    writer.writeLine(`if base_url.nil? && (${condition})`);
+                    writer.writeLine(guard);
                     writer.indent();
                     writeLocalDeclarations(writer);
-                    writer.writeLine(`base_url = ${this.urlTemplateToRubyString(template, options)}`);
+                    // Map each environment constant to its URL template so the SELECTED
+                    // environment's template is rendered. A base_url that is not an
+                    // environment constant (a custom URL) is left untouched; when no
+                    // base_url is given, the first templated environment is used.
+                    writer.writeLine(`environment_url_templates = {`);
+                    writer.indent();
+                    templatedEnvironments.forEach((env, index) => {
+                        if (env.urlTemplate == null) {
+                            return;
+                        }
+                        const entry = `${environmentConstantReference(env.name)} => ${this.urlTemplateToRubyString(env.urlTemplate, options)}`;
+                        writer.writeLine(`${entry}${index < templatedEnvironments.length - 1 ? "," : ""}`);
+                    });
+                    writer.dedent();
+                    writer.writeLine(`}`);
+                    writer.writeLine(
+                        `base_url = base_url.nil? ? ${this.urlTemplateToRubyString(firstTemplate, options)} : environment_url_templates.fetch(base_url, base_url)`
+                    );
                     writer.dedent();
                     writer.writeLine(`end`);
                 });
             }
             case "multipleBaseUrls": {
-                const templatedEnvironment = environments.environments.find((env) => env.urlTemplates != null);
-                if (templatedEnvironment?.urlTemplates == null) {
+                const templatedEnvironments = environments.environments.filter((env) => env.urlTemplates != null);
+                if (templatedEnvironments.length === 0) {
                     return undefined;
                 }
-                const templates = templatedEnvironment.urlTemplates;
-                const staticUrls = templatedEnvironment.urls;
-                const entries = environments.baseUrls.map((baseUrl) => {
-                    const key = this.case.snakeSafe(baseUrl.name);
-                    const template = templates[baseUrl.id];
-                    if (template != null) {
-                        return `${key}: ${this.urlTemplateToRubyString(template, options)}`;
-                    }
-                    const staticUrl = staticUrls[baseUrl.id];
-                    if (staticUrl == null) {
-                        throw new Error(
-                            `Base URL "${baseUrl.id}" has neither a URL template nor a static URL; ` +
-                                "cannot generate server URL variable interpolation."
-                        );
-                    }
-                    return `${key}: ${JSON.stringify(staticUrl)}`;
-                });
-                return ruby.codeblock((writer) => {
-                    writer.writeLine(`if ${condition}`);
-                    writer.indent();
-                    writeLocalDeclarations(writer);
-                    writer.writeLine(`environment = {`);
+                const entriesForEnvironment = (environment: FernIr.MultipleBaseUrlsEnvironment): string[] => {
+                    return environments.baseUrls.map((baseUrl) => {
+                        const key = this.case.snakeSafe(baseUrl.name);
+                        const template = environment.urlTemplates?.[baseUrl.id];
+                        if (template != null) {
+                            return `${key}: ${this.urlTemplateToRubyString(template, options)}`;
+                        }
+                        const staticUrl = environment.urls[baseUrl.id];
+                        if (staticUrl == null) {
+                            throw new Error(
+                                `Base URL "${baseUrl.id}" has neither a URL template nor a static URL; ` +
+                                    "cannot generate server URL variable interpolation."
+                            );
+                        }
+                        return `${key}: ${JSON.stringify(staticUrl)}`;
+                    });
+                };
+                const writeEntries = (writer: ruby.Writer, entries: string[], suffix: string): void => {
+                    writer.writeLine(`{`);
                     writer.indent();
                     entries.forEach((entry, index) => {
                         writer.writeLine(`${entry}${index < entries.length - 1 ? "," : ""}`);
                     });
                     writer.dedent();
+                    writer.writeLine(`}${suffix}`);
+                };
+                const firstTemplatedEnvironment = templatedEnvironments[0];
+                if (firstTemplatedEnvironment == null) {
+                    return undefined;
+                }
+                return ruby.codeblock((writer) => {
+                    writer.writeLine(guard);
+                    writer.indent();
+                    writeLocalDeclarations(writer);
+                    // Map each environment constant to its formatted URLs so EVERY host of
+                    // the SELECTED environment is rendered from that environment's
+                    // templates. A custom environment hash is left untouched; when no
+                    // environment is given, the first templated environment is used.
+                    writer.writeLine(`environment_url_templates = {`);
+                    writer.indent();
+                    templatedEnvironments.forEach((env, index) => {
+                        writer.write(`${environmentConstantReference(env.name)} => `);
+                        writeEntries(
+                            writer,
+                            entriesForEnvironment(env),
+                            index < templatedEnvironments.length - 1 ? "," : ""
+                        );
+                    });
+                    writer.dedent();
                     writer.writeLine(`}`);
+                    writer.writeLine(`environment = environment_url_templates.fetch(environment, environment)`);
+                    writer.write(`environment ||= `);
+                    writeEntries(writer, entriesForEnvironment(firstTemplatedEnvironment), "");
                     writer.dedent();
                     writer.writeLine(`end`);
                 });

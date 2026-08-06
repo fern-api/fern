@@ -85,6 +85,13 @@ fixtures:
       outputFolder: github-no-publish
       outputMode: github
       outputVersion: "1.0.0"
+    # Opt-in wire tests — emits `wiremock/wire-test-cases.json` and
+    # `tests/wire_test.rs`. seed's `cargo test --all-features` compiles and
+    # runs the emitted suite (in-process wiremock, no docker), so this is the
+    # "wire tests run on every generation" guarantee in CI.
+    - customConfig:
+        generateWireTests: true
+      outputFolder: with-wire-tests
   # x-fern-global-parameters — exercises the global parameter codegen
   # path: IR-driven GlobalParameter[] → detectGlobalParams.ts →
   # .global_parameter(GlobalParameter { ... }) calls in main.rs.
@@ -104,6 +111,49 @@ fixtures:
     - customConfig:
         binaryName: acme-versioned
       outputFolder: no-custom-config
+    # Namespaced multi-spec wire tests. Exercises the harness's command-prefix
+    # resolution: each spec is bound under its own namespace (`v1`, `v2`), so
+    # commands nest as `<bin> v1 users list` / `<bin> v2 users list`. Confirms
+    # the harness prefixes resolved command chains with the spec namespace to
+    # match the CLI's `.spec_under(<ns>, ...)` command tree.
+    - customConfig:
+        binaryName: acme-versioned
+        generateWireTests: true
+      outputFolder: with-wire-tests
+  cli-oauth:
+    - customConfig:
+        binaryName: oauth-test
+        customCommands: false
+      outputFolder: client-credentials
+  # OAuth client-credentials wire tests. Exercises the token-endpoint mock
+  # end-to-end: the harness stubs `POST /identity/token` on every mock server
+  # so the client-credentials exchange succeeds before each authenticated
+  # request (`plants list` / `plants get`). The token endpoint (`identity
+  # getToken`) is excluded from the case list since the CLI consumes it
+  # internally. Groups here (`identity`, `plants`) deliberately avoid the
+  # reserved `auth` built-in command, so every emitted case is reachable.
+  oauth-client-credentials-openapi:
+    - customConfig:
+        binaryName: plant-store
+        generateWireTests: true
+      outputFolder: with-wire-tests
+  # Reserved-keyword regression guard. The `CreatedBy` enum's `self` value
+  # PascalCases to the Rust keyword `Self`, which must be escaped in the
+  # embedded types crate or the CLI won't `cargo build`. Because the wire test
+  # compiles the whole generated crate before running, this fixture catches
+  # any keyword-escaping regression at `cargo test` time. See fern#17183.
+  cli-reserved-keywords:
+    - customConfig:
+        generateWireTests: true
+      outputFolder: with-wire-tests
+  # Namespace stutter-elision guard. The spec is grouped under `v1` and mounted
+  # under namespace `v1`, so the CLI hoists it to `<bin> v1 list`. The wire test
+  # drives that command; it fails at `cargo test` if the harness's
+  # merge_into_path mirror (collect_spec_commands) regresses to `v1 v1 list`.
+  cli-namespace-stutter:
+    - customConfig:
+        generateWireTests: true
+      outputFolder: with-wire-tests
 
 # Alpha-quality coverage: the SDK template only handles happy-path
 # OpenAPI specs. Seed iterates every test-definition by default; fixtures
@@ -135,6 +185,7 @@ allowedFailures:
   - client-side-params
   - content-type
   - cross-package-type-names
+  - csharp-global-header-env
   - dollar-string-examples
   - empty-clients
   - endpoint-security-auth
@@ -190,6 +241,7 @@ allowedFailures:
   - pagination-custom
   - pagination-uri-path
   - path-parameters
+  - php-global-header-env
   - plain-text
   - property-access
   - public-object
