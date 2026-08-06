@@ -1627,6 +1627,17 @@ describe("literal angle brackets in prose", () => {
         expect(result).not.toContain("/Volume/git/fern");
     });
 
+    it.each([
+        ["bracketed prose on the previous line", "See [1] for details.\n![leaf](path/to/image.png)"],
+        ["a table row with bracketed text", "| [Docs] | ![leaf](path/to/image.png) |"],
+        ["a keyboard key in prose", "Press [Enter].\n![leaf](path/to/image.png)"],
+        ["an image label with no destination", "![leaf]\n![leaf](path/to/image.png)"]
+    ])("resolves an image preceded by %s", (_name, page) => {
+        const result = roundTrip(page);
+        expect(result).toContain("file:leaf-id");
+        expect(result).not.toContain("/Volume/git/fern");
+    });
+
     it("resolves an image that follows one with brackets in its alt text", () => {
         const page = "![Filter [Top N] menu](path/to/image.png)\n\n![plain](path/to/image.png)\n";
         expect(roundTrip(page).match(/file:leaf-id/g)).toHaveLength(2);

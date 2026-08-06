@@ -155,12 +155,45 @@ function findInlineCodeEnd(content: string, start: number): number | null {
  */
 function findLabelEnd(content: string, start: number): number | null {
     const limit = findScanLimit(content, start);
-    let i = start + 1;
+    let depth = 0;
+    let i = start;
 
     while (i < limit) {
         if (content[i] === "\\") {
             i += 2;
             continue;
+        }
+        if (content[i] === "[") {
+            depth++;
+        } else if (content[i] === "]") {
+            depth--;
+            if (depth === 0) {
+                if (content[i + 1] === "(") {
+                    return i;
+                }
+                // The label's brackets are unbalanced because some were escaped — as mdast
+                // serialization produces for `![a [b] c]`. Keep looking for the destination, but
+                // give up at the next `[` so a bracket pair without one can't absorb a later
+                // image or link.
+                return findLabelEndBeforeNextBracket(content, i + 1, limit);
+            }
+        }
+        i++;
+    }
+
+    return null;
+}
+
+function findLabelEndBeforeNextBracket(content: string, start: number, limit: number): number | null {
+    let i = start;
+
+    while (i < limit) {
+        if (content[i] === "\\") {
+            i += 2;
+            continue;
+        }
+        if (content[i] === "[") {
+            return null;
         }
         if (content[i] === "]" && content[i + 1] === "(") {
             return i;
