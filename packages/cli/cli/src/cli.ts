@@ -83,6 +83,8 @@ import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAP
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
 import { installDependencies } from "./commands/install-dependencies/installDependencies.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
+import { installMcpServer } from "./commands/mcp/installMcpServer.js";
+import { MCP_CLIENTS, McpClient } from "./commands/mcp/mcpConfig.js";
 import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
 import {
@@ -276,6 +278,7 @@ async function tryRunCli(cliContext: CliContext) {
     addRegisterV2Command(cli, cliContext);
     addLoginCommand(cli, cliContext);
     addLogoutCommand(cli, cliContext);
+    addMcpCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
     addDocsCommand(cli, cliContext);
@@ -1656,6 +1659,41 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             });
         }
     );
+}
+
+function addMcpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("mcp", "Manage the Fern MCP server", (yargs) => {
+        yargs
+            .command(
+                "install",
+                "Connect your coding agent to the Fern MCP server using your Fern login",
+                (installYargs) =>
+                    installYargs
+                        .option("client", {
+                            type: "string",
+                            array: true,
+                            choices: MCP_CLIENTS,
+                            description:
+                                "The coding agent(s) to configure. Defaults to every one found on this machine."
+                        })
+                        .option("organization", {
+                            alias: "org",
+                            type: "string",
+                            description: "The organization to connect to. Defaults to the one in `fern.config.json`."
+                        }),
+                async (argv) => {
+                    cliContext.instrumentPostHogEvent({ command: "fern mcp install" });
+                    await cliContext.runTask(async (context) => {
+                        await installMcpServer({
+                            clients: argv.client as McpClient[] | undefined,
+                            organization: argv.organization ?? (await getOrganization(cliContext)),
+                            context
+                        });
+                    });
+                }
+            )
+            .demandCommand(1, "Specify a subcommand, e.g. `fern mcp install`.");
+    });
 }
 
 function addLogoutCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
