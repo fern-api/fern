@@ -148,27 +148,22 @@ function findInlineCodeEnd(content: string, start: number): number | null {
 }
 
 /**
- * Returns the index of the `]` closing the label that opens at `start`, or null when there is
- * none. Labels may contain balanced brackets (`![Filter [Top N] menu](path.png)`), so stopping at
- * the first `]` would misread the label and leave the destination unresolved.
+ * Returns the index of the `]` that ends the label opening at `start` and is followed by an inline
+ * destination, or null when there is none on the same block. Labels may contain brackets of their
+ * own (`![Filter [Top N] menu](path.png)`), so stopping at the first `]` would misread the label
+ * and leave the destination unresolved.
  */
 function findLabelEnd(content: string, start: number): number | null {
     const limit = findScanLimit(content, start);
-    let depth = 0;
-    let i = start;
+    let i = start + 1;
 
     while (i < limit) {
         if (content[i] === "\\") {
             i += 2;
             continue;
         }
-        if (content[i] === "[") {
-            depth++;
-        } else if (content[i] === "]") {
-            depth--;
-            if (depth === 0) {
-                return i;
-            }
+        if (content[i] === "]" && content[i + 1] === "(") {
+            return i;
         }
         i++;
     }

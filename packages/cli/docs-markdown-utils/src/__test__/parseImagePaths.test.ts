@@ -1619,7 +1619,8 @@ describe("literal angle brackets in prose", () => {
         ["balanced brackets in image alt text", "![Filter [Top N] menu](path/to/image.png)"],
         ["nested brackets in image alt text", "![a [b [c] d] e](path/to/image.png)"],
         ["escaped brackets in image alt text", "![Filter \\[Top N\\] menu](path/to/image.png)"],
-        ["empty brackets in image alt text", "![Filter [] menu](path/to/image.png)"]
+        ["empty brackets in image alt text", "![Filter [] menu](path/to/image.png)"],
+        ["unbalanced brackets in image alt text", "![Filter \\[Top N] menu](path/to/image.png)"]
     ])("resolves an image with %s", (_name, page) => {
         const result = roundTrip(page);
         expect(result).toContain("file:leaf-id");
