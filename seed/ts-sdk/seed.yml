@@ -63,6 +63,12 @@ fixtures:
       customConfig:
         streamType: wrapper
         testFramework: jest
+  streaming-parameter:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: stream-condition-overloads
+      customConfig:
+        generateStreamConditionOverloads: true
   audiences:
     - outputFolder: no-custom-config
       customConfig: null

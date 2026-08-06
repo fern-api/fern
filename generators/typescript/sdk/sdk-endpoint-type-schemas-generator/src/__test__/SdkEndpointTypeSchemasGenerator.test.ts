@@ -1165,7 +1165,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             expect(getTextOfTsNode(result)).toMatchSnapshot();
         });
 
-        it("throws for streamParameter response type", () => {
+        it("deserializes the non-streaming response of a streamParameter response type", () => {
             const endpoint = createHttpEndpoint();
             const endpointWithResponse: FernIr.HttpEndpoint = {
                 ...endpoint,
@@ -1192,10 +1192,9 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithResponse });
             const context = createMockFileContext();
+            schemas.writeToFile(context);
             const ref = ts.factory.createIdentifier("response");
-            expect(() => schemas.deserializeResponse(ref, context)).toThrow(
-                "Cannot deserialize streaming response in deserializeResponse"
-            );
+            expect(getTextOfTsNode(schemas.deserializeResponse(ref, context))).toMatchSnapshot();
         });
     });
 

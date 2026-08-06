@@ -180,6 +180,7 @@ export declare namespace SdkGenerator {
         alwaysSendAuth: boolean;
         optionalAuth: boolean;
         generateReactQueryHooks: boolean;
+        generateStreamConditionOverloads: boolean;
     }
 }
 
@@ -562,7 +563,8 @@ export class SdkGenerator {
             generateEndpointMetadata: config.generateEndpointMetadata,
             parameterNaming: config.parameterNaming,
             offsetSemantics: config.offsetSemantics,
-            alwaysSendAuth: config.alwaysSendAuth
+            alwaysSendAuth: config.alwaysSendAuth,
+            generateStreamConditionOverloads: config.generateStreamConditionOverloads
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,
