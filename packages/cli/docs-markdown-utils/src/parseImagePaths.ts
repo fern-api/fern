@@ -147,6 +147,35 @@ function findInlineCodeEnd(content: string, start: number): number | null {
     return null;
 }
 
+/**
+ * Returns the index of the `]` closing the label that opens at `start`, or null when there is
+ * none. Labels may contain balanced brackets (`![Filter [Top N] menu](path.png)`), so stopping at
+ * the first `]` would misread the label and leave the destination unresolved.
+ */
+function findLabelEnd(content: string, start: number): number | null {
+    const limit = findScanLimit(content, start);
+    let depth = 0;
+    let i = start;
+
+    while (i < limit) {
+        if (content[i] === "\\") {
+            i += 2;
+            continue;
+        }
+        if (content[i] === "[") {
+            depth++;
+        } else if (content[i] === "]") {
+            depth--;
+            if (depth === 0) {
+                return i;
+            }
+        }
+        i++;
+    }
+
+    return null;
+}
+
 function streamingScanForImages(
     content: string,
     metadata: AbsolutePathMetadata
@@ -217,22 +246,14 @@ function parseMarkdownImage(
     start: number,
     metadata: AbsolutePathMetadata
 ): MarkdownImageParseResult | null {
-    let i = start + 2;
     const len = content.length;
+    const labelEnd = findLabelEnd(content, start + 1);
 
-    while (i < len && content[i] !== "]") {
-        if (content[i] === "\\") {
-            i += 2;
-        } else {
-            i++;
-        }
-    }
-
-    if (i >= len || content[i] !== "]" || content[i + 1] !== "(") {
+    if (labelEnd == null || content[labelEnd + 1] !== "(") {
         return null;
     }
 
-    i += 2;
+    let i = labelEnd + 2;
     const urlStart = i;
     let parenDepth = 1;
 
@@ -317,22 +338,14 @@ function parseMarkdownLink(
     start: number,
     metadata: AbsolutePathMetadata
 ): { nextIndex: number } | null {
-    let i = start + 1;
     const len = content.length;
+    const labelEnd = findLabelEnd(content, start);
 
-    while (i < len && content[i] !== "]") {
-        if (content[i] === "\\") {
-            i += 2;
-        } else {
-            i++;
-        }
-    }
-
-    if (i >= len || content[i] !== "]" || content[i + 1] !== "(") {
+    if (labelEnd == null || content[labelEnd + 1] !== "(") {
         return null;
     }
 
-    i += 2;
+    let i = labelEnd + 2;
     let parenDepth = 1;
 
     while (i < len && parenDepth > 0) {
@@ -899,16 +912,10 @@ export function replaceImagePathsAndUrls(
                 continue;
             }
         } else if (content[i] === "[" && content[i - 1] !== "!") {
-            let j = i + 1;
-            while (j < len && content[j] !== "]") {
-                if (content[j] === "\\") {
-                    j += 2;
-                } else {
-                    j++;
-                }
-            }
-            if (j < len && content[j] === "]" && content[j + 1] === "(") {
-                j += 2;
+            const labelEnd = findLabelEnd(content, i);
+            let j = labelEnd ?? len;
+            if (labelEnd != null && content[labelEnd + 1] === "(") {
+                j = labelEnd + 2;
                 const urlStart = j;
                 let parenDepth = 1;
                 while (j < len && parenDepth > 0) {
