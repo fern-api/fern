@@ -1,5 +1,6 @@
 use std::collections::{HashMap};
 use std::time::{Duration};
+use crate::core::{TransportOverride};
 
 #[derive(Debug, Clone)]
 pub struct ClientConfig {
@@ -16,6 +17,7 @@ pub struct ClientConfig {
     pub max_retries: u32,
     pub custom_headers: HashMap<String, String>,
     pub user_agent: String,
+    pub transport: TransportOverride,
 }
 impl Default for ClientConfig {
     fn default() -> Self {
@@ -36,7 +38,8 @@ impl Default for ClientConfig {
             ("X-Fern-SDK-Name".to_string(), "test_api".to_string()),
             ("X-Fern-SDK-Version".to_string(), "0.1.0".to_string()),
         ]),
-        user_agent: "TestAPI Rust SDK".to_string()
+        user_agent: "TestAPI Rust SDK".to_string(),
+        transport: TransportOverride::default()
     }
 }
 }

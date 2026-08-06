@@ -396,6 +396,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
         lines.push("mod utils;");
         lines.push("pub mod pagination;");
+        lines.push("pub mod test_transport;");
         if (hasDateTime) {
             lines.push("pub mod flexible_datetime;");
         }
@@ -410,8 +411,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
         lines.push("");
         lines.push(
-            "pub use http_client::{ByteStream, HttpClient, OAuthConfig, OAuthTokenExchangeConfig, RawResponse, RequestExecutor};"
+            "pub use http_client::{ByteStream, HttpClient, OAuthConfig, OAuthTokenExchangeConfig, RawResponse, ReqwestTransport, RequestExecutor, Transport, TransportError, TransportOverride};"
         );
+        lines.push("pub use test_transport::{CannedResponse, CapturingTransport, RecordedRequest};");
         lines.push("pub use oauth_token_provider::OAuthTokenProvider;");
         lines.push("pub use request_options::RequestOptions;");
         lines.push("pub use query_parameter_builder::{QueryBuilder, QueryBuilderError, parse_structured_query};");
