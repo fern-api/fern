@@ -286,9 +286,17 @@ describe("examples that omit the request body", () => {
             const endpoint = service?.endpoints.find((e) => getOriginalName(e.name) === endpointName);
             const examples = (endpoint?.userSpecifiedExamples ?? []).map((e) => e.example);
             expect(examples.map((e) => e?.name)).toEqual(["withoutBody", "withBody"]);
-            expect(examples[0]?.request).toBeUndefined();
             expect(examples[1]?.request).toBeDefined();
         }
+
+        // an inlined body is simply absent, while a referenced optional<T> body keeps the
+        // empty reference example it has always produced
+        const inlined = service?.endpoints.find((e) => getOriginalName(e.name) === "inlinedBody");
+        expect(inlined?.userSpecifiedExamples[0]?.example?.request).toBeUndefined();
+
+        const referenced = service?.endpoints.find((e) => getOriginalName(e.name) === "referencedBody");
+        const referencedRequest = referenced?.userSpecifiedExamples[0]?.example?.request;
+        expect(referencedRequest?.type).toEqual("reference");
     }, 200_000);
 });
 
