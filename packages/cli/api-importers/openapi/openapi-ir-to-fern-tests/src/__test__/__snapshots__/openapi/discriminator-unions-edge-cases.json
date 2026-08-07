@@ -30,7 +30,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/animal",
-              "request": "Animal",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "Animal",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -62,7 +67,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/payment",
-              "request": "Payment",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "Payment",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -92,7 +102,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/shape",
-              "request": "Shape",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "Shape",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -273,7 +288,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: Animal
+      request:
+        body:
+          type: Animal
+          optional: true
       response:
         docs: Success
         type: Animal
@@ -292,7 +310,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: Shape
+      request:
+        body:
+          type: Shape
+          optional: true
       response:
         docs: Success
         type: Shape
@@ -310,7 +331,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: Payment
+      request:
+        body:
+          type: Payment
+          optional: true
       response:
         docs: Success
         type: Payment

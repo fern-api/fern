@@ -66,6 +66,11 @@ export function validateRequest({
             })
         );
     } else {
+        // an omitted request represents a call with no request body, which the endpoint
+        // permits when its body is optional
+        if (example == null && typeof body !== "string" && body.optional) {
+            return violations;
+        }
         violations.push(
             ...ExampleValidators.validateTypeReferenceExample({
                 rawTypeReference: typeof body === "string" ? body : body.type,

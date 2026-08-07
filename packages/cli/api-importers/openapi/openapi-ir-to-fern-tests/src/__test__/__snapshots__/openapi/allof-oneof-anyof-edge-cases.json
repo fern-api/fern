@@ -31,7 +31,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/extended",
-              "request": "Extended",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "Extended",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -55,7 +60,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/flexible",
-              "request": "FlexibleValue",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "FlexibleValue",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -84,7 +94,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/pet",
-              "request": "Pet",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "Pet",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -406,7 +421,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: Extended
+      request:
+        body:
+          type: Extended
+          optional: true
       response:
         docs: Success
         type: Extended
@@ -426,7 +444,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: Pet
+      request:
+        body:
+          type: Pet
+          optional: true
       response:
         docs: Success
         type: Pet
@@ -443,7 +464,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: FlexibleValue
+      request:
+        body:
+          type: FlexibleValue
+          optional: true
       response:
         docs: Success
         type: FlexibleValue

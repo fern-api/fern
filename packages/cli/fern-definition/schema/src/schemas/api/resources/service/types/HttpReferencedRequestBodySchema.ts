@@ -4,4 +4,10 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface HttpReferencedRequestBodySchema extends FernDefinition.WithDocsSchema {
     type: string;
+    /**
+     * Whether the endpoint may be called without a request body. When true, an
+     * example may omit `request`. Populated from `requestBody.required` when
+     * importing from OpenAPI.
+     */
+    optional?: boolean;
 }

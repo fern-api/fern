@@ -678,6 +678,8 @@ function getRequest({
                 declarationDepth: 0,
                 variant
             });
+            // per the OpenAPI spec, requestBody.required defaults to false
+            const isOptionalBody = request.type === "json" && request.required !== true;
             const requestValue: RawSchemas.HttpRequestSchema = {
                 body: requestTypeReference
             };
@@ -718,9 +720,22 @@ function getRequest({
                 requestValue.docs == null &&
                 (requestValue["content-type"] == null || requestValue["content-type"] === "application/json");
 
+            if (canCollapse) {
+                const collapsedBody = requestValue.body as string;
+                return {
+                    schemaIdsToExclude: [],
+                    // the shorthand cannot express optionality, so keep the object form for optional bodies
+                    value: isOptionalBody ? { body: { type: collapsedBody, optional: true } } : collapsedBody
+                };
+            }
+
+            if (isOptionalBody && typeof requestValue.body === "string") {
+                requestValue.body = { type: requestValue.body, optional: true };
+            }
+
             return {
                 schemaIdsToExclude: [],
-                value: canCollapse ? (requestValue.body as string) : requestValue
+                value: requestValue
             };
         }
 
