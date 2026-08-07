@@ -82,11 +82,12 @@ jobs:
           MISSING=0
           FAILED=0
 
-          # Head branches of closed-but-unmerged PRs that live in this repo (not forks)
+          # Head branches of closed-but-unmerged PRs that live in this repo (not forks),
+          # keeping only the most recently closed PR per branch
           gh pr list --repo "$GITHUB_REPOSITORY" --state closed --limit 1000 \
             --json number,headRefName,closedAt,mergedAt,headRepositoryOwner \
-            --jq '.[] | select(.mergedAt == null) | [.number, .headRefName, .closedAt, (.headRepositoryOwner.login // "")] | @tsv' \
-            | sort -u -t$'\t' -k2,2 > closed-pr-branches.tsv
+            --jq '[.[] | select(.mergedAt == null)] | group_by(.headRefName) | map(max_by(.closedAt)) | .[] | [.number, .headRefName, .closedAt, (.headRepositoryOwner.login // "")] | @tsv' \
+            > closed-pr-branches.tsv
 
           while IFS=$'\t' read -r PR BRANCH CLOSED_AT HEAD_OWNER; do
             [[ -z "$BRANCH" ]] && continue
@@ -108,9 +109,11 @@ jobs:
               continue
             fi
 
-            # The branch may have been reused by a newer open PR
+            # The branch may have been reused by a newer open PR, or be the base of a
+            # stacked open PR (deleting it would close that PR)
             OPEN_PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH" --state open --json number --jq 'length')
-            if [[ "$OPEN_PR" -gt 0 ]]; then
+            OPEN_BASE_PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --base "$BRANCH" --state open --json number --jq 'length')
+            if [[ "$OPEN_PR" -gt 0 ]] || [[ "$OPEN_BASE_PR" -gt 0 ]]; then
               echo "Skipped (open PR): ${BRANCH}"
               SKIPPED_OPEN_PR=$((SKIPPED_OPEN_PR + 1))
               continue
