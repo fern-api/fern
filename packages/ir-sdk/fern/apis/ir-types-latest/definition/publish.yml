@@ -44,6 +44,7 @@ types:
       go: GoPublishTarget
       nuget: NugetPublishTarget
       rubygems: RubyGemsPublishTarget
+      packagist: PackagistPublishTarget
 
   PostmanPublishTarget:
     properties:
@@ -86,6 +87,11 @@ types:
       packageName: optional<string>
 
   NugetPublishTarget:
+    properties:
+      version: optional<string>
+      packageName: optional<string>
+
+  PackagistPublishTarget:
     properties:
       version: optional<string>
       packageName: optional<string>

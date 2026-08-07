@@ -59,6 +59,94 @@ interface ImageOccurrence {
     type: "markdown-image" | "markdown-link" | "jsx-src" | "jsx-href";
 }
 
+const JSX_TAG_NAME_START_REGEX = /[A-Za-z]/;
+
+/**
+ * A `<` only opens a tag when a tag name (or `/`) follows it and it isn't escaped. Comparisons in
+ * prose such as `a < b`, `<=`, or `\<` are literal text: scanning them as tags makes the scan run
+ * to the next `>` anywhere in the page, silently skipping every image and link in between.
+ */
+function isJsxTagStart(content: string, index: number): boolean {
+    if (content[index] !== "<" || content[index - 1] === "\\") {
+        return false;
+    }
+    const nameStart = content[index + 1] === "/" ? content[index + 2] : content[index + 1];
+    return nameStart != null && JSX_TAG_NAME_START_REGEX.test(nameStart);
+}
+
+const BLANK_LINE_REGEX = /\n[ \t]*\r?\n/;
+const CODE_FENCE_REGEX = /^[ \t]*(`{3,}|~{3,})/;
+
+/**
+ * Neither tags nor code spans span a blank line, so scans for them are bounded there. Without a
+ * bound, an unterminated construct consumes the remainder of the page.
+ */
+function findScanLimit(content: string, start: number): number {
+    const blankLine = BLANK_LINE_REGEX.exec(content.slice(start));
+    return blankLine == null ? content.length : start + blankLine.index;
+}
+
+/**
+ * Skips a fenced code block that opens at `start` (which must be a line start), returning the index
+ * just past its closing fence. Returns null when no fence opens there or the fence is never closed,
+ * so an unterminated fence cannot swallow the rest of the page.
+ */
+function findCodeFenceEnd(content: string, start: number): number | null {
+    const lineEnd = content.indexOf("\n", start);
+    const line = content.slice(start, lineEnd === -1 ? content.length : lineEnd);
+    const fence = CODE_FENCE_REGEX.exec(line)?.[1];
+    if (fence == null || lineEnd === -1) {
+        return null;
+    }
+
+    const closingFenceRegex = new RegExp(`^[ \\t]*${fence[0] === "\`" ? "`" : "~"}{${fence.length},}[ \\t\\r]*$`);
+    let i = lineEnd + 1;
+    while (i <= content.length) {
+        const nextLineEnd = content.indexOf("\n", i);
+        const end = nextLineEnd === -1 ? content.length : nextLineEnd;
+        if (closingFenceRegex.test(content.slice(i, end))) {
+            return end;
+        }
+        if (nextLineEnd === -1) {
+            return null;
+        }
+        i = nextLineEnd + 1;
+    }
+    return null;
+}
+
+/**
+ * Skips an inline code span opening at `start`, returning the index just past its closing backtick
+ * run. A code span closes only on a run of the same length and cannot contain a blank line; when
+ * there is no such closing run the backticks are literal text and null is returned, so a stray
+ * backtick cannot make the rest of the page look like code.
+ */
+function findInlineCodeEnd(content: string, start: number): number | null {
+    const limit = findScanLimit(content, start);
+    let runLength = 0;
+    while (content[start + runLength] === "`") {
+        runLength++;
+    }
+
+    let i = start + runLength;
+    while (i < limit) {
+        if (content[i] !== "`") {
+            i++;
+            continue;
+        }
+        let closingRunLength = 0;
+        while (content[i + closingRunLength] === "`") {
+            closingRunLength++;
+        }
+        if (closingRunLength === runLength) {
+            return i + closingRunLength;
+        }
+        i += closingRunLength;
+    }
+
+    return null;
+}
+
 function streamingScanForImages(
     content: string,
     metadata: AbsolutePathMetadata
@@ -67,47 +155,45 @@ function streamingScanForImages(
     const edits: Edit[] = [];
     let i = 0;
     const len = content.length;
-    let inCodeFence = false;
-    let inInlineCode = false;
 
     while (i < len) {
         if (i === 0 || content[i - 1] === "\n") {
-            if (content.slice(i, i + 3) === "```") {
-                inCodeFence = !inCodeFence;
-                i += 3;
+            const fenceEnd = findCodeFenceEnd(content, i);
+            if (fenceEnd != null) {
+                i = fenceEnd;
                 continue;
             }
         }
 
-        if (!inCodeFence) {
-            if (content[i] === "`" && (i === 0 || content[i - 1] !== "\\")) {
-                inInlineCode = !inInlineCode;
-                i++;
+        if (content[i] === "`" && content[i - 1] !== "\\") {
+            const inlineCodeEnd = findInlineCodeEnd(content, i);
+            if (inlineCodeEnd != null) {
+                i = inlineCodeEnd;
                 continue;
             }
+            i++;
+            continue;
+        }
 
-            if (!inInlineCode) {
-                if (content[i] === "!" && content[i + 1] === "[") {
-                    const result = parseMarkdownImage(content, i, metadata);
-                    if (result) {
-                        filepaths.add(result.filepath);
-                        edits.push(result.edit);
-                        i = result.nextIndex;
-                        continue;
-                    }
-                } else if (content[i] === "[" && content[i - 1] !== "!") {
-                    const result = parseMarkdownLink(content, i, metadata);
-                    if (result) {
-                        i = result.nextIndex;
-                        continue;
-                    }
-                } else if (content[i] === "<") {
-                    const result = parseJsxTag(content, i, metadata, filepaths, edits);
-                    if (result) {
-                        i = result.nextIndex;
-                        continue;
-                    }
-                }
+        if (content[i] === "!" && content[i + 1] === "[") {
+            const result = parseMarkdownImage(content, i, metadata);
+            if (result) {
+                filepaths.add(result.filepath);
+                edits.push(result.edit);
+                i = result.nextIndex;
+                continue;
+            }
+        } else if (content[i] === "[" && content[i - 1] !== "!") {
+            const result = parseMarkdownLink(content, i, metadata);
+            if (result) {
+                i = result.nextIndex;
+                continue;
+            }
+        } else if (content[i] === "<") {
+            const result = parseJsxTag(content, i, metadata, filepaths, edits);
+            if (result) {
+                i = result.nextIndex;
+                continue;
             }
         }
 
@@ -273,20 +359,27 @@ function parseJsxTag(
     filepaths: Set<AbsoluteFilePath>,
     edits: Edit[]
 ): { nextIndex: number } | null {
-    let i = start + 1;
-    const len = content.length;
+    if (!isJsxTagStart(content, start)) {
+        return null;
+    }
 
-    while (i < len && content[i] !== ">" && content[i] !== " " && content[i] !== "\n") {
+    let i = start + 1;
+    const limit = findScanLimit(content, start);
+    // Buffered so a `<` that turns out not to be a tag leaves no edits behind.
+    const tagFilepaths: AbsoluteFilePath[] = [];
+    const tagEdits: Edit[] = [];
+
+    while (i < limit && content[i] !== ">" && content[i] !== " " && content[i] !== "\n") {
         i++;
     }
 
-    while (i < len && content[i] !== ">") {
-        while (i < len && (content[i] === " " || content[i] === "\n")) {
+    while (i < limit && content[i] !== ">") {
+        while (i < limit && (content[i] === " " || content[i] === "\n")) {
             i++;
         }
 
         const attrStart = i;
-        while (i < len && content[i] !== "=" && content[i] !== ">" && content[i] !== " " && content[i] !== "\n") {
+        while (i < limit && content[i] !== "=" && content[i] !== ">" && content[i] !== " " && content[i] !== "\n") {
             i++;
         }
 
@@ -294,7 +387,7 @@ function parseJsxTag(
 
         if (content[i] === "=") {
             i++;
-            while (i < len && (content[i] === " " || content[i] === "\n")) {
+            while (i < limit && (content[i] === " " || content[i] === "\n")) {
                 i++;
             }
 
@@ -302,7 +395,7 @@ function parseJsxTag(
                 const quote = content[i];
                 i++;
                 const valueStart = i;
-                while (i < len && content[i] !== quote) {
+                while (i < limit && content[i] !== quote) {
                     if (content[i] === "\\") {
                         i += 2;
                     } else {
@@ -316,15 +409,15 @@ function parseJsxTag(
                     const src = trimAnchor(value);
                     const resolvedPath = resolvePath(src, metadata);
                     if (src && resolvedPath) {
-                        filepaths.add(resolvedPath);
-                        edits.push({ start: valueStart, end: valueStart + value.length, replacement: resolvedPath });
+                        tagFilepaths.push(resolvedPath);
+                        tagEdits.push({ start: valueStart, end: valueStart + value.length, replacement: resolvedPath });
                     }
                 }
             } else if (content[i] === "{") {
                 i++;
                 let braceDepth = 1;
                 const exprStart = i;
-                while (i < len && braceDepth > 0) {
+                while (i < limit && braceDepth > 0) {
                     if (content[i] === "{") {
                         braceDepth++;
                     } else if (content[i] === "}") {
@@ -340,8 +433,8 @@ function parseJsxTag(
                         const src = trimAnchor(value);
                         const resolvedPath = resolvePath(src, metadata);
                         if (src && resolvedPath) {
-                            filepaths.add(resolvedPath);
-                            edits.push({
+                            tagFilepaths.push(resolvedPath);
+                            tagEdits.push({
                                 start: exprStart + 1,
                                 end: exprStart + 1 + value.length,
                                 replacement: resolvedPath
@@ -354,8 +447,8 @@ function parseJsxTag(
                         const src = trimAnchor(value);
                         const resolvedPath = resolvePath(src, metadata);
                         if (src && resolvedPath) {
-                            filepaths.add(resolvedPath);
-                            edits.push({
+                            tagFilepaths.push(resolvedPath);
+                            tagEdits.push({
                                 start: exprStart + 1,
                                 end: exprStart + 1 + value.length,
                                 replacement: resolvedPath
@@ -367,9 +460,15 @@ function parseJsxTag(
         }
     }
 
-    if (i < len && content[i] === ">") {
-        i++;
+    if (i >= limit || content[i] !== ">") {
+        return null;
     }
+    i++;
+
+    for (const filepath of tagFilepaths) {
+        filepaths.add(filepath);
+    }
+    edits.push(...tagEdits);
 
     return { nextIndex: i };
 }
@@ -767,6 +866,24 @@ export function replaceImagePathsAndUrls(
     const len = content.length;
 
     while (i < len) {
+        if (i === 0 || content[i - 1] === "\n") {
+            const fenceEnd = findCodeFenceEnd(content, i);
+            if (fenceEnd != null) {
+                i = fenceEnd;
+                continue;
+            }
+        }
+
+        if (content[i] === "`" && content[i - 1] !== "\\") {
+            const inlineCodeEnd = findInlineCodeEnd(content, i);
+            if (inlineCodeEnd != null) {
+                i = inlineCodeEnd;
+                continue;
+            }
+            i++;
+            continue;
+        }
+
         if (content[i] === "!" && content[i + 1] === "[") {
             const result = parseMarkdownImage(content, i, metadata);
             if (result) {
@@ -807,6 +924,10 @@ export function replaceImagePathsAndUrls(
                         j++;
                     }
                 }
+                if (parenDepth !== 0) {
+                    i++;
+                    continue;
+                }
                 const urlEnd = j - 1;
                 const href = content.slice(urlStart, urlEnd).trim();
                 const destination = splitDestinationAndTitle(href);
@@ -828,18 +949,21 @@ export function replaceImagePathsAndUrls(
                 i = j;
                 continue;
             }
-        } else if (content[i] === "<") {
+        } else if (isJsxTagStart(content, i)) {
+            const limit = findScanLimit(content, i);
+            // Edits collected while scanning are discarded unless the tag is properly terminated.
+            const editsBeforeTag = edits.length;
             let j = i + 1;
-            while (j < len && content[j] !== ">" && content[j] !== " " && content[j] !== "\n") {
+            while (j < limit && content[j] !== ">" && content[j] !== " " && content[j] !== "\n") {
                 j++;
             }
-            while (j < len && content[j] !== ">") {
-                while (j < len && (content[j] === " " || content[j] === "\n")) {
+            while (j < limit && content[j] !== ">") {
+                while (j < limit && (content[j] === " " || content[j] === "\n")) {
                     j++;
                 }
                 const attrStart = j;
                 while (
-                    j < len &&
+                    j < limit &&
                     content[j] !== "=" &&
                     content[j] !== ">" &&
                     content[j] !== " " &&
@@ -854,7 +978,7 @@ export function replaceImagePathsAndUrls(
                     // Skip past the closing }
                     let braceDepth = 0;
                     j = attrStart;
-                    while (j < len) {
+                    while (j < limit) {
                         if (content[j] === "{") {
                             braceDepth++;
                         } else if (content[j] === "}") {
@@ -866,7 +990,7 @@ export function replaceImagePathsAndUrls(
                         } else if (content[j] === '"' || content[j] === "'") {
                             const q = content[j];
                             j++;
-                            while (j < len && content[j] !== q) {
+                            while (j < limit && content[j] !== q) {
                                 if (content[j] === "\\") {
                                     j++;
                                 }
@@ -879,7 +1003,7 @@ export function replaceImagePathsAndUrls(
                 }
                 if (content[j] === "=") {
                     j++;
-                    while (j < len && (content[j] === " " || content[j] === "\n")) {
+                    while (j < limit && (content[j] === " " || content[j] === "\n")) {
                         j++;
                     }
                     // Handle plain quotes: attr="value" or attr='value'
@@ -887,7 +1011,7 @@ export function replaceImagePathsAndUrls(
                     const isCurlyWrapped = content[j] === "{";
                     if (isCurlyWrapped) {
                         j++; // skip {
-                        while (j < len && (content[j] === " " || content[j] === "\n")) {
+                        while (j < limit && (content[j] === " " || content[j] === "\n")) {
                             j++;
                         }
                     }
@@ -895,7 +1019,7 @@ export function replaceImagePathsAndUrls(
                         const quote = content[j];
                         j++;
                         const valueStart = j;
-                        while (j < len && content[j] !== quote) {
+                        while (j < limit && content[j] !== quote) {
                             if (content[j] === "\\") {
                                 j += 2;
                             } else {
@@ -905,10 +1029,10 @@ export function replaceImagePathsAndUrls(
                         const value = content.slice(valueStart, j);
                         j++; // skip closing quote
                         if (isCurlyWrapped) {
-                            while (j < len && (content[j] === " " || content[j] === "\n")) {
+                            while (j < limit && (content[j] === " " || content[j] === "\n")) {
                                 j++;
                             }
-                            if (j < len && content[j] === "}") {
+                            if (j < limit && content[j] === "}") {
                                 j++; // skip }
                             }
                         }
@@ -947,7 +1071,7 @@ export function replaceImagePathsAndUrls(
                         hasUnhandledExpressions = true;
                         // Skip past the closing }
                         let braceDepth = 1;
-                        while (j < len && braceDepth > 0) {
+                        while (j < limit && braceDepth > 0) {
                             if (content[j] === "{") {
                                 braceDepth++;
                             } else if (content[j] === "}") {
@@ -955,7 +1079,7 @@ export function replaceImagePathsAndUrls(
                             } else if (content[j] === '"' || content[j] === "'") {
                                 const q = content[j];
                                 j++;
-                                while (j < len && content[j] !== q) {
+                                while (j < limit && content[j] !== q) {
                                     if (content[j] === "\\") {
                                         j++;
                                     }
@@ -967,9 +1091,12 @@ export function replaceImagePathsAndUrls(
                     }
                 }
             }
-            if (j < len && content[j] === ">") {
-                j++;
+            if (j >= limit || content[j] !== ">") {
+                edits.length = editsBeforeTag;
+                i++;
+                continue;
             }
+            j++;
             i = j;
             continue;
         }

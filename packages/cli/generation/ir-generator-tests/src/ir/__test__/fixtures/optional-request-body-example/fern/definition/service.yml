@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    referencedBody:
+      path: /referenced
+      method: POST
+      request:
+        body: optional<RefundRequest>
+      response: RefundResponse
+      examples:
+        - name: withoutBody
+          response:
+            body:
+              ok: true
+        - name: withBody
+          request:
+            amount: 60
+          response:
+            body:
+              ok: true
+    inlinedBody:
+      path: /inlined
+      method: POST
+      request:
+        name: InlinedRefundRequest
+        body:
+          optional: true
+          properties:
+            amount: double
+      response: RefundResponse
+      examples:
+        - name: withoutBody
+          response:
+            body:
+              ok: true
+        - name: withBody
+          request:
+            amount: 60
+          response:
+            body:
+              ok: true
+
+types:
+  RefundRequest:
+    properties:
+      amount: optional<double>
+  RefundResponse:
+    properties:
+      ok: boolean

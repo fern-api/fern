@@ -209,6 +209,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     customPagerClassName: this.rubyContext.customConfig.customPagerName,
                     omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
                     includePlatformHeaders: this.rubyContext.customConfig.includePlatformHeaders,
+                    allowUserAgentAppInfo: this.rubyContext.customConfig.allowUserAgentAppInfo,
                     maxRetries: this.rubyContext.customConfig.maxRetries,
                     retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
                     endpointSecurity: this.rubyContext.ir.auth.requirement === "ENDPOINT_SECURITY"
@@ -224,6 +225,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         customPagerClassName,
         omitFernHeaders,
         includePlatformHeaders,
+        allowUserAgentAppInfo,
         maxRetries,
         retryStatusCodes,
         endpointSecurity
@@ -234,6 +236,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         customPagerClassName?: string;
         omitFernHeaders?: boolean;
         includePlatformHeaders?: boolean;
+        allowUserAgentAppInfo?: boolean;
         maxRetries?: number;
         retryStatusCodes?: string;
         endpointSecurity?: boolean;
@@ -246,6 +249,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 customPagerClassName,
                 omitFernHeaders,
                 includePlatformHeaders,
+                allowUserAgentAppInfo,
                 maxRetries,
                 endpointSecurity
             })
@@ -308,6 +312,7 @@ function getTemplateVariables({
     customPagerClassName,
     omitFernHeaders,
     includePlatformHeaders,
+    allowUserAgentAppInfo,
     maxRetries,
     endpointSecurity
 }: {
@@ -316,6 +321,7 @@ function getTemplateVariables({
     customPagerClassName?: string;
     omitFernHeaders?: boolean;
     includePlatformHeaders?: boolean;
+    allowUserAgentAppInfo?: boolean;
     maxRetries?: number;
     endpointSecurity?: boolean;
 }): Record<string, unknown> {
@@ -328,6 +334,9 @@ function getTemplateVariables({
         custom_pager_class_name: customPagerClassName ?? "CustomPager",
         omitFernHeaders: omitFernHeaders ?? false,
         includePlatformHeaders: includePlatformHeaders ?? false,
+        // Emits the RawClient.append_app_info helper only when the opt-in flag is on,
+        // so flag-off raw_client.rb stays byte-identical.
+        allowUserAgentAppInfo: allowUserAgentAppInfo ?? false,
         defaultMaxRetries: maxRetries ?? 2,
         // Emits the RawClient#auth_headers_for_endpoint delegator only for
         // endpoint-security SDKs, so ALL/ANY SDKs see zero change to raw_client.rb.

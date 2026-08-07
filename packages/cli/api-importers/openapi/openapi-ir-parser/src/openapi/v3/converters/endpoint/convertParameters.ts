@@ -172,7 +172,7 @@ export function convertParameters({
         const convertedParameter = {
             name: resolvedParameter.name,
             schema,
-            description: resolvedParameter.description,
+            description: getParameterDescription(resolvedParameter),
             parameterNameOverride: getParameterName(resolvedParameter),
             availability,
             source,
@@ -222,6 +222,21 @@ const HEADERS_TO_SKIP = new Set([
     "content-disposition",
     "x-ping-custom-domain"
 ]);
+
+/**
+ * A parameter's description may be declared either on the parameter object or inside the
+ * parameter's (inline) schema; both are valid OpenAPI. A description on a referenced schema is
+ * left alone, since it belongs to the named type.
+ */
+function getParameterDescription(parameter: OpenAPIV3.ParameterObject): string | undefined {
+    if (parameter.description != null) {
+        return parameter.description;
+    }
+    if (parameter.schema == null || isReferenceObject(parameter.schema)) {
+        return undefined;
+    }
+    return parameter.schema.description;
+}
 
 /**
  * Gets the explode value for a query parameter, applying smart default logic.

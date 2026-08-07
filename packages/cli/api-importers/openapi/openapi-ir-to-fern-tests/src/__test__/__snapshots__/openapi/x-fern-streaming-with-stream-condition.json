@@ -33,6 +33,7 @@
               "path": "/v2/chats",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "query": {
                       "docs": "The chat message or question.",
@@ -94,6 +95,7 @@
               "path": "/v2/chats",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "query": {
                       "docs": "The chat message or question.",
@@ -393,6 +395,7 @@
             stream_response:
               type: literal<true>
               docs: Indicates whether the response should be streamed or not.
+          optional: true
         content-type: application/json
       response-stream:
         docs: ''
@@ -437,6 +440,7 @@
             stream_response:
               type: literal<false>
               docs: Indicates whether the response should be streamed or not.
+          optional: true
         content-type: application/json
       response:
         docs: ''

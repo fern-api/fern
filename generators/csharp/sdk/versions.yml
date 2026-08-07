@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.80.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `allow-user-agent-app-info` config. When enabled, generated clients expose an
+        optional `AppInfo` client option (`Name`, `Version?`, `Comment?`) whose sanitized product
+        token is appended to whatever `User-Agent` the SDK would otherwise send
+        (`{sdk}/{version} ... {product}/{product-version} ({comment})`), following RFC 9110.
+        Disabled by default, so existing generated output is byte-identical, and it composes with
+        `include-platform-headers`, the configured `user-agent` template value, and the
+        `user-agent-name-from-package` fallback. Caller-supplied values are trimmed and encoded
+        (name/version percent-encoded to RFC 7230 `tchar`; comment delimiters `(`, `)`, `\` and
+        control characters incl. CR/LF escaped), so untrusted values cannot inject header content.
+        Still overridable by an explicit `User-Agent` header and suppressed by `omit-fern-headers`.
+        Works in both unified and non-unified client-options modes; generated code compiles for
+        `net462`, `net8.0`, and `netstandard2.0`.
+      type: feat
+  createdAt: "2026-08-03"
+  irVersion: 67
 - version: 2.79.4
   changelogEntry:
     - summary: |

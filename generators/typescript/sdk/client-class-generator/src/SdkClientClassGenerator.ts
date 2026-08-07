@@ -17,6 +17,7 @@ export declare namespace SdkClientClassGenerator {
         allowCustomFetcher: boolean;
         generateWebSocketClients: boolean;
         requireDefaultEnvironment: boolean;
+        requireBaseUrl: boolean;
         defaultTimeout: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
         includeContentHeadersOnFileDownloadResponse: boolean;
@@ -56,6 +57,7 @@ export class SdkClientClassGenerator {
     private readonly allowCustomFetcher: boolean;
     private readonly generateWebSocketClients: boolean;
     private readonly requireDefaultEnvironment: boolean;
+    private readonly requireBaseUrl: boolean;
     private readonly defaultTimeout: number | "infinity" | undefined;
     private readonly npmPackage: NpmPackage | undefined;
     private readonly includeContentHeadersOnFileDownloadResponse: boolean;
@@ -84,6 +86,7 @@ export class SdkClientClassGenerator {
         allowCustomFetcher,
         generateWebSocketClients,
         requireDefaultEnvironment,
+        requireBaseUrl,
         defaultTimeout,
         npmPackage,
         includeContentHeadersOnFileDownloadResponse,
@@ -111,6 +114,7 @@ export class SdkClientClassGenerator {
         this.allowCustomFetcher = allowCustomFetcher;
         this.generateWebSocketClients = generateWebSocketClients;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
+        this.requireBaseUrl = requireBaseUrl;
         this.defaultTimeout = defaultTimeout;
         this.npmPackage = npmPackage;
         this.includeContentHeadersOnFileDownloadResponse = includeContentHeadersOnFileDownloadResponse;
@@ -151,6 +155,7 @@ export class SdkClientClassGenerator {
             allowCustomFetcher: this.allowCustomFetcher,
             generateWebSocketClients: this.generateWebSocketClients,
             requireDefaultEnvironment: this.requireDefaultEnvironment,
+            requireBaseUrl: this.requireBaseUrl,
             defaultTimeout: this.defaultTimeout,
             includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: this.includeSerdeLayer,

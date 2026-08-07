@@ -1,4 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.21.1
+  changelogEntry:
+    - summary: |
+        Fix `additional_headers` in a request's options being unable to override a global header that was
+        set at client construction. Every default header was protected from `additional_headers`, so a
+        caller who configured a global header on the client (e.g. `X-Greenhouse-Id`) could not vary it per
+        request — the per-request value was silently dropped. The API's non-literal global headers are
+        now overridable per request, while SDK metadata (`User-Agent`, `X-Fern-*`), auth headers, and
+        literal headers stay protected as before.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 67
+- version: 1.21.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `allowUserAgentAppInfo` config (default `false`). When enabled, the
+        generated client accepts an optional `app_info` keyword
+        (`{ name:, version:, comment: }`) whose product token is appended to the
+        `User-Agent` header for all three branches (the structured platform value, the
+        configured `user-agent` template value, and the default `{package}/{version}`),
+        producing e.g. `acme/0.0.1 partner-app/3.1.0 (+https://partner.example)` per
+        RFC 9110. Caller-supplied values are sanitized (name/version percent-encoded to
+        RFC 7230 tchars; comment delimiters and control characters escaped) and trimmed
+        before encoding, so untrusted values cannot inject additional header content. The
+        header is still overridable by an explicit `User-Agent` and suppressed by
+        `omitFernHeaders`. Default-off output is byte-identical.
+      type: feat
+  createdAt: "2026-08-03"
+  irVersion: 67
 - version: 1.20.2
   changelogEntry:
     - summary: |

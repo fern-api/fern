@@ -21,6 +21,16 @@ const goLanguageHeader = "Go"
 // structured User-Agent header value when includePlatformHeaders is enabled.
 const platformUserAgentFunc = "platformUserAgent"
 
+// appInfoTypeName is the name of the generated public struct carrying the opt-in
+// User-Agent appInfo (name/version/comment), emitted only when
+// allowUserAgentAppInfo is enabled.
+const appInfoTypeName = "AppInfo"
+
+// appendAppInfoFunc is the name of the generated helper that appends a sanitized
+// appInfo product token to a base User-Agent value. Emitted into core only when
+// allowUserAgentAppInfo is enabled (and a User-Agent is actually written).
+const appendAppInfoFunc = "appendAppInfoToUserAgent"
+
 var (
 	//go:embed sdk/core/api_error.go
 	apiErrorFile string
@@ -478,6 +488,11 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("MaxStreamReconnectAttempts uint")
 	f.P("DisableStreamReconnection bool")
 	f.P("DisableRetries bool")
+	if f.userAgent.emitsAppInfo() {
+		// Optional application info appended to the User-Agent header. Set via
+		// option.WithUserAgentAppInfo.
+		f.P(appInfoTypeName, " *", appInfoTypeName)
+	}
 	if hasOAuth || hasInferred {
 		f.P("tokenGetter TokenGetter")
 	}
@@ -586,7 +601,18 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig))
+		if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig)); err != nil {
+			return err
+		}
+		// Emit the AppInfo type alongside its consumers (the AppInfo field,
+		// AppInfoOption, and option.WithUserAgentAppInfo) whenever the feature is
+		// enabled, independent of sdkVersion/PlatformHeaders. Otherwise the core
+		// package references an undefined core.AppInfo for versionless (local /
+		// downloadFiles) generation or IRs without platform headers.
+		if f.userAgent.emitsAppInfo() {
+			f.writeAppInfoType()
+		}
+		return nil
 	}
 
 	// Generate the ToHeader method.
@@ -755,6 +781,15 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 
 	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig)); err != nil {
 		return err
+	}
+
+	// Emit the AppInfo type alongside its consumers (the AppInfo field,
+	// AppInfoOption, and option.WithUserAgentAppInfo) whenever the feature is
+	// enabled, independent of sdkVersion/PlatformHeaders. Otherwise the core
+	// package references an undefined core.AppInfo for versionless (local /
+	// downloadFiles) generation or IRs without platform headers.
+	if f.userAgent.emitsAppInfo() {
+		f.writeAppInfoType()
 	}
 
 	return nil
@@ -952,7 +987,7 @@ func (f *fileWriter) writePlatformHeaders(
 	moduleConfig *ModuleConfig,
 	sdkVersion string,
 ) error {
-	if sdkVersion == "" || f.omitFernHeaders {
+	if sdkVersion == "" || f.userAgent.omitFernHeaders {
 		f.P("func (r *RequestOptions) cloneHeader() http.Header {")
 		f.P("return r.HTTPHeader.Clone()")
 		f.P("}")
@@ -965,18 +1000,35 @@ func (f *fileWriter) writePlatformHeaders(
 		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkName, moduleConfig.Path))
 		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkVersion, sdkVersion))
 		if sdkConfig.PlatformHeaders.UserAgent != nil {
-			if f.includePlatformHeaders {
+			// Base is the User-Agent value the SDK would otherwise send: either the
+			// structured, runtime-computed value (includePlatformHeaders) or the raw
+			// configured/default value.
+			var userAgentExpr string
+			if f.userAgent.includePlatformHeaders {
 				// Consolidate runtime/platform observability into a single structured
 				// User-Agent header, computed at runtime.
-				f.P(fmt.Sprintf("headers.Set(%q, %s(%q))", sdkConfig.PlatformHeaders.UserAgent.Header(), platformUserAgentFunc, sdkConfig.PlatformHeaders.UserAgent.Value))
+				userAgentExpr = fmt.Sprintf("%s(%q)", platformUserAgentFunc, sdkConfig.PlatformHeaders.UserAgent.Value)
 			} else {
-				f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.UserAgent.Header(), sdkConfig.PlatformHeaders.UserAgent.Value))
+				userAgentExpr = fmt.Sprintf("%q", sdkConfig.PlatformHeaders.UserAgent.Value)
 			}
+			if f.userAgent.emitsAppInfo() {
+				// When enabled, the caller's appInfo product token is appended to
+				// whatever User-Agent the SDK would otherwise send (all branches).
+				userAgentExpr = fmt.Sprintf("%s(%s, r.%s)", appendAppInfoFunc, userAgentExpr, appInfoTypeName)
+			}
+			f.P(fmt.Sprintf("headers.Set(%q, %s)", sdkConfig.PlatformHeaders.UserAgent.Header(), userAgentExpr))
 		}
 		f.P("return headers")
 		f.P("}")
-		if f.includePlatformHeaders && sdkConfig.PlatformHeaders.UserAgent != nil {
+		if f.userAgent.includePlatformHeaders && sdkConfig.PlatformHeaders.UserAgent != nil {
 			f.writePlatformUserAgentFunc()
+		}
+		if f.userAgent.emitsAppInfo() && sdkConfig.PlatformHeaders.UserAgent != nil {
+			// The AppInfo type itself is emitted unconditionally by
+			// WriteRequestOptionsDefinition (gated only on emitsAppInfo) so it is
+			// always defined alongside its consumers. The appender helper is emitted
+			// here only when a User-Agent header is actually written.
+			f.writeAppendAppInfoFunc()
 		}
 	}
 	return nil
@@ -1017,6 +1069,113 @@ func (f *fileWriter) writePlatformUserAgentFunc() {
 	f.P("}")
 }
 
+// writeAppInfoType emits the public AppInfo struct into core/request_option.go.
+// It is emitted whenever the feature is enabled (emitsAppInfo) so the AppInfo
+// field, AppInfoOption, and option.WithUserAgentAppInfo always resolve, even for
+// APIs that do not declare a User-Agent platform header.
+func (f *fileWriter) writeAppInfoType() {
+	f.P()
+	f.P("// ", appInfoTypeName, " is optional application information whose product token is")
+	f.P("// appended to the User-Agent header (see WithUserAgentAppInfo). The Name is")
+	f.P("// required; when it is blank the User-Agent is left unchanged. Version and")
+	f.P("// Comment are optional and omitted from the token when blank.")
+	f.P("type ", appInfoTypeName, " struct {")
+	f.P("Name string")
+	f.P("Version string")
+	f.P("Comment string")
+	f.P("}")
+}
+
+// writeAppendAppInfoFunc emits the appendAppInfoToUserAgent helper (and its
+// token/comment encoders) into core/request_option.go. Emitted only when the
+// feature is enabled and a User-Agent is actually written, so flag-off output
+// stays byte-identical and the shared core-utilities are never modified.
+//
+// The helper appends a sanitized RFC 9110 product token
+// ("{name}/{version} ({comment})") to whatever User-Agent the SDK would
+// otherwise send. Each field is trimmed before the blank check and before
+// encoding, so blank values are dropped rather than encoded into whitespace
+// tokens. name/version are percent-encoded down to RFC 7230 tchar and the
+// comment's delimiters ("(", ")", "\") and control characters (incl. CR/LF) are
+// escaped, so caller-supplied values cannot inject additional header content.
+func (f *fileWriter) writeAppendAppInfoFunc() {
+	fmtPackage := f.scope.AddImport("fmt")
+	stringsPackage := f.scope.AddImport("strings")
+	utf8Package := f.scope.AddImport("unicode/utf8")
+
+	f.P()
+	// Percent-encoder helper (shared by token and comment encoders).
+	f.P("// ", appendAppInfoFunc, "PercentEncode percent-encodes a single rune from its")
+	f.P("// UTF-8 bytes (e.g. '\\n' -> \"%0A\"), so untrusted values cannot inject header content.")
+	f.P("func ", appendAppInfoFunc, "PercentEncode(b *", stringsPackage, ".Builder, r rune) {")
+	f.P("var buf [", utf8Package, ".UTFMax]byte")
+	f.P("n := ", utf8Package, ".EncodeRune(buf[:], r)")
+	f.P("for _, c := range buf[:n] {")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\"%%%02X\", c))")
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	// Token encoder: keep RFC 7230 tchar, percent-encode everything else.
+	f.P("// ", appendAppInfoFunc, "EncodeToken keeps RFC 7230 token characters (tchar) and")
+	f.P("// percent-encodes everything else (spaces, control characters, CR/LF included).")
+	f.P("func ", appendAppInfoFunc, "EncodeToken(value string) string {")
+	f.P("var b ", stringsPackage, ".Builder")
+	f.P("for _, r := range value {")
+	f.P("switch {")
+	f.P("case r >= 'a' && r <= 'z', r >= 'A' && r <= 'Z', r >= '0' && r <= '9':")
+	f.P("b.WriteRune(r)")
+	f.P("case ", stringsPackage, ".ContainsRune(\"!#$%&'*+-.^_`|~\", r):")
+	f.P("b.WriteRune(r)")
+	f.P("default:")
+	f.P(appendAppInfoFunc, "PercentEncode(&b, r)")
+	f.P("}")
+	f.P("}")
+	f.P("return b.String()")
+	f.P("}")
+	f.P()
+
+	// Comment encoder: escape delimiters and control characters only.
+	f.P("// ", appendAppInfoFunc, "EncodeComment escapes the comment delimiters '(', ')', '\\\\'")
+	f.P("// and control characters (0x00-0x1F, 0x7F, incl. CR/LF) so a caller-supplied")
+	f.P("// comment cannot terminate the comment group early or inject header content.")
+	f.P("func ", appendAppInfoFunc, "EncodeComment(value string) string {")
+	f.P("var b ", stringsPackage, ".Builder")
+	f.P("for _, r := range value {")
+	f.P("if r == '(' || r == ')' || r == '\\\\' || r < 0x20 || r == 0x7F {")
+	f.P(appendAppInfoFunc, "PercentEncode(&b, r)")
+	f.P("} else {")
+	f.P("b.WriteRune(r)")
+	f.P("}")
+	f.P("}")
+	f.P("return b.String()")
+	f.P("}")
+	f.P()
+
+	// The appender itself.
+	f.P("// ", appendAppInfoFunc, " appends the sanitized appInfo product token")
+	f.P("// (\"{name}/{version} ({comment})\", RFC 9110) to the given User-Agent value.")
+	f.P("// Each field is trimmed before the blank check and before encoding; a blank")
+	f.P("// name leaves the User-Agent unchanged.")
+	f.P("func ", appendAppInfoFunc, "(userAgent string, appInfo *", appInfoTypeName, ") string {")
+	f.P("if appInfo == nil {")
+	f.P("return userAgent")
+	f.P("}")
+	f.P("name := ", appendAppInfoFunc, "EncodeToken(", stringsPackage, ".TrimSpace(appInfo.Name))")
+	f.P("if name == \"\" {")
+	f.P("return userAgent")
+	f.P("}")
+	f.P("productToken := name")
+	f.P("if version := ", appendAppInfoFunc, "EncodeToken(", stringsPackage, ".TrimSpace(appInfo.Version)); version != \"\" {")
+	f.P("productToken += \"/\" + version")
+	f.P("}")
+	f.P("if comment := ", appendAppInfoFunc, "EncodeComment(", stringsPackage, ".TrimSpace(appInfo.Comment)); comment != \"\" {")
+	f.P("productToken += \" (\" + comment + \")\"")
+	f.P("}")
+	f.P("return userAgent + \" \" + productToken")
+	f.P("}")
+}
+
 func (f *fileWriter) writeRequestOptionStructs(
 	auth *ir.ApiAuth,
 	headers []*ir.HttpHeader,
@@ -1051,6 +1210,12 @@ func (f *fileWriter) writeRequestOptionStructs(
 	}
 	f.writeMarkerOptionStruct("WithoutStreamReconnectionOption", "DisableStreamReconnection", asIdempotentRequestOption)
 	f.writeMarkerOptionStruct("WithoutRetriesOption", "DisableRetries", asIdempotentRequestOption)
+
+	if f.userAgent.emitsAppInfo() {
+		if err := f.writeOptionStruct(appInfoTypeName, "*"+appInfoTypeName, true, asIdempotentRequestOption); err != nil {
+			return err
+		}
+	}
 
 	if isMultiURL {
 		if err := f.writeOptionStruct("Environment", "interface{}", true, asIdempotentRequestOption); err != nil {
@@ -1410,6 +1575,24 @@ func (f *fileWriter) WriteRequestOptions(
 	f.P("return &core.WithoutRetriesOption{}")
 	f.P("}")
 	f.P()
+
+	// Generate the opt-in WithUserAgentAppInfo option.
+	if f.userAgent.emitsAppInfo() {
+		f.P("// WithUserAgentAppInfo appends an application product token to the User-Agent")
+		f.P("// header sent by the client (\"{name}/{version} ({comment})\", RFC 9110). The")
+		f.P("// version and comment are optional; pass \"\" to omit them. Caller-supplied")
+		f.P("// values are sanitized before being written to the header.")
+		f.P("func WithUserAgentAppInfo(name, version, comment string) *core.", appInfoTypeName, "Option {")
+		f.P("return &core.", appInfoTypeName, "Option{")
+		f.P(appInfoTypeName, ": &core.", appInfoTypeName, "{")
+		f.P("Name: name,")
+		f.P("Version: version,")
+		f.P("Comment: comment,")
+		f.P("},")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
 
 	// Generate the WithEnvironment option for multi-URL environments.
 	if isMultipleBaseUrlsEnvironment(environmentsConfig) {

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix OpenAPI import dropping the `null` branch of a `anyOf`/`oneOf` when a schema
+    that contains such a branch is referenced via `$ref`. References to these schemas
+    are now correctly treated as nullable, so generators that distinguish optional from
+    nullable (e.g. TypeScript) emit `| null` instead of silently dropping it.
+  type: fix

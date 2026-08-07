@@ -108,6 +108,13 @@ export const CsharpConfigSchema = z.object({
     // Off by default so existing generated output is unchanged. Still subject to
     // `omit-fern-headers`.
     "include-platform-headers": z.boolean().optional(),
+    // When true, generated clients accept an `AppInfo` client option (`Name`,
+    // `Version?`, `Comment?`) whose sanitized product token is appended to whatever
+    // `User-Agent` the SDK would otherwise send (`{sdk}/{version} ... {product}/{ver}
+    // ({comment})`), following RFC 9110. Off by default so existing generated output
+    // is unchanged. Independent of `include-platform-headers`; still overridable by an
+    // explicit `User-Agent` header and suppressed by `omit-fern-headers`.
+    "allow-user-agent-app-info": z.boolean().optional(),
     "unified-client-options": z.boolean().optional(),
     // When true (default), server URL variables declared on the API's environments (e.g. region)
     // are exposed as ClientOptions properties and interpolated into the environment URL template(s)

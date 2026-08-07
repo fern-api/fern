@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Apply client-level custom headers to the OAuth token request. The client-credentials
+    token exchange was built directly on the underlying HTTP client, so it was the only
+    request that skipped `ClientConfig.custom_headers` — APIs whose gateway requires a
+    header on the token endpoint rejected the exchange with a 401, and the
+    `X-Fern-SDK-*` headers were missing from token requests.
+
+    Request-level headers and auth headers are intentionally still not applied: the token
+    is cached and shared across requests, and the token request is what produces the
+    credential auth headers would carry.
+  type: fix

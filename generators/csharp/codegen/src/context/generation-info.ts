@@ -240,6 +240,8 @@ export class Generation {
         omitFernHeaders: () => this.customConfig["omit-fern-headers"] ?? false,
         /** When true, emits the platform observability headers (X-Fern-Runtime, X-Fern-Runtime-Version, X-Fern-Platform). Default: false. Still subject to omitFernHeaders. */
         includePlatformHeaders: () => this.customConfig["include-platform-headers"] ?? false,
+        /** When true, exposes an `AppInfo` client option whose sanitized product token is appended to the `User-Agent` header (RFC 9110). Default: false. Independent of includePlatformHeaders; still subject to omitFernHeaders. */
+        allowUserAgentAppInfo: () => this.customConfig["allow-user-agent-app-info"] ?? false,
         /** When true, falls back to `<NuGetPackageId>/<version>` for the `User-Agent` header when the IR doesn't supply one. Default: false. */
         userAgentNameFromPackage: () => this.customConfig["user-agent-name-from-package"] ?? false,
         /** When true, moves auth params and IR headers into ClientOptions so the constructor takes only named arguments. Default: false. */
@@ -575,6 +577,15 @@ export class Generation {
         ClientOptions: () =>
             this.csharp.classReference({
                 origin: this.model.staticExplicit("ClientOptions"),
+                namespace: this.namespaces.publicCoreClasses
+            }),
+        /**
+         * Optional application-info product token appended to the `User-Agent`
+         * header. Only generated when the `allow-user-agent-app-info` config is on.
+         */
+        AppInfo: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("AppInfo"),
                 namespace: this.namespaces.publicCoreClasses
             }),
         /** Low-level HTTP client wrapper for making raw API calls */

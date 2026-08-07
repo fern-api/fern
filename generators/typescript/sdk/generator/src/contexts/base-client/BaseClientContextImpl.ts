@@ -18,6 +18,8 @@ export declare namespace BaseClientContextImpl {
         intermediateRepresentation: FernIr.IntermediateRepresentation;
         allowCustomFetcher: boolean;
         requireDefaultEnvironment: boolean;
+        // When true, `baseUrl` is a required client option and `environment` is optional.
+        requireBaseUrl: boolean;
         retainOriginalCasing: boolean;
         generateIdempotentRequestOptions: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -25,6 +27,9 @@ export declare namespace BaseClientContextImpl {
         caseConverter: CaseConverter;
         // When true, treat auth as optional even when the spec mandates it.
         optionalAuth: boolean;
+        // When true, expose an optional `appInfo` client option whose product
+        // token is appended to the User-Agent header.
+        allowUserAgentAppInfo: boolean;
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -41,12 +46,14 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly allowCustomFetcher: boolean;
     private readonly requireDefaultEnvironment: boolean;
+    private readonly requireBaseUrl: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
     private readonly case: CaseConverter;
     private readonly optionalAuth: boolean;
+    private readonly allowUserAgentAppInfo: boolean;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -68,22 +75,26 @@ export class BaseClientContextImpl implements BaseClientContext {
         intermediateRepresentation,
         allowCustomFetcher,
         requireDefaultEnvironment,
+        requireBaseUrl,
         retainOriginalCasing,
         generateIdempotentRequestOptions,
         parameterNaming,
         baseClientTypeDeclarationReferencer,
         caseConverter,
-        optionalAuth
+        optionalAuth,
+        allowUserAgentAppInfo
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
+        this.requireBaseUrl = requireBaseUrl;
         this.retainOriginalCasing = retainOriginalCasing;
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.parameterNaming = parameterNaming;
         this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
         this.case = caseConverter;
         this.optionalAuth = optionalAuth;
+        this.allowUserAgentAppInfo = allowUserAgentAppInfo;
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -187,7 +198,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                         generatedEnvironments.getTypeForUserSuppliedEnvironment(context)
                     )
                 ),
-                hasQuestionToken: generatedEnvironments.hasDefaultEnvironment()
+                hasQuestionToken: generatedEnvironments.hasDefaultEnvironment() || this.requireBaseUrl
             });
         }
 
@@ -199,7 +210,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                 )
             ),
-            hasQuestionToken: true,
+            hasQuestionToken: !this.requireBaseUrl,
             docs: ["Specify a custom URL to connect the client to."]
         });
 
@@ -281,6 +292,18 @@ export class BaseClientContextImpl implements BaseClientContext {
                 type: generatedVersion.getEnumValueUnion(),
                 hasQuestionToken: generatedVersion.hasDefaultVersion(),
                 docs: [`Override the ${getWireValue(header.name)} header`]
+            });
+        }
+
+        if (this.allowUserAgentAppInfo) {
+            properties.push({
+                kind: StructureKind.PropertySignature,
+                docs: [
+                    "Identifies the calling application. Its product token is appended to the User-Agent header sent by the SDK."
+                ],
+                name: "appInfo",
+                type: "{ name: string; version?: string; comment?: string }",
+                hasQuestionToken: true
             });
         }
 

@@ -190,7 +190,10 @@ types:
                 "headers": undefined,
                 "name": "SearchRequest",
                 "path-parameters": {
-                  "id": "string",
+                  "id": {
+                    "docs": "Bookmark ID",
+                    "type": "string",
+                  },
                   "organization_id": "string",
                 },
                 "query-parameters": undefined,
@@ -262,7 +265,9 @@ service:
         name: SearchRequest
         path-parameters:
           organization_id: string
-          id: string
+          id:
+            type: string
+            docs: Bookmark ID
         body:
           properties:
             access:

@@ -269,6 +269,37 @@ it("availability", async () => {
     });
 }, 200_000);
 
+describe("examples that omit the request body", () => {
+    const OPTIONAL_REQUEST_BODY_DIR = path.join(__dirname, "fixtures/optional-request-body-example/fern");
+
+    it("keeps the example and generates no request body", async () => {
+        const ir = await generateIRFromPath({
+            absolutePathToWorkspace: AbsoluteFilePath.of(OPTIONAL_REQUEST_BODY_DIR),
+            workspaceName: "optionalRequestBodyExample",
+            audiences: { type: "all" }
+        });
+
+        const service = Object.values(ir.services)[0];
+        expect(service).toBeDefined();
+
+        for (const endpointName of ["referencedBody", "inlinedBody"]) {
+            const endpoint = service?.endpoints.find((e) => getOriginalName(e.name) === endpointName);
+            const examples = (endpoint?.userSpecifiedExamples ?? []).map((e) => e.example);
+            expect(examples.map((e) => e?.name)).toEqual(["withoutBody", "withBody"]);
+            expect(examples[1]?.request).toBeDefined();
+        }
+
+        // an inlined body is simply absent, while a referenced optional<T> body keeps the
+        // empty reference example it has always produced
+        const inlined = service?.endpoints.find((e) => getOriginalName(e.name) === "inlinedBody");
+        expect(inlined?.userSpecifiedExamples[0]?.example?.request).toBeUndefined();
+
+        const referenced = service?.endpoints.find((e) => getOriginalName(e.name) === "referencedBody");
+        const referencedRequest = referenced?.userSpecifiedExamples[0]?.example?.request;
+        expect(referencedRequest?.type).toEqual("reference");
+    }, 200_000);
+});
+
 it("docs", async () => {
     const DOCS_DIR = path.join(__dirname, "fixtures/docs/fern");
     await generateAndSnapshotIRFromPath({

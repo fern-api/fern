@@ -34,6 +34,8 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
     private environmentExplicitlySetField: ast.Field | undefined;
     private serverVariableFields: ast.Field[] = [];
     private unifiedFields: UnifiedField[] = [];
+    /** The opt-in `AppInfo` field, present only when `allow-user-agent-app-info` is enabled. */
+    private appInfoField: ast.Field | undefined;
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
@@ -71,6 +73,21 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
         this.baseOptionsGenerator.getMaxRetriesField(class_, optionArgs);
         this.baseOptionsGenerator.getTimeoutField(class_, optionArgs);
         this.baseOptionsGenerator.getLiteralHeaderOptions(class_, optionArgs);
+
+        // The opt-in `allow-user-agent-app-info` client option. The sanitized
+        // product token built from these fields is appended to the SDK's
+        // `User-Agent` header by the root client. Only emitted when the flag is on so
+        // default-off output is byte-identical.
+        if (this.settings.allowUserAgentAppInfo) {
+            this.appInfoField = class_.addField({
+                origin: class_.explicit("AppInfo"),
+                access: ast.Access.Public,
+                get: true,
+                init: true,
+                type: this.Types.AppInfo.asOptional(),
+                summary: "Application information appended to the `User-Agent` header as an RFC 9110 product token."
+            });
+        }
 
         if (isEndpointSecurity(this.context)) {
             this.addEndpointSecurityAuthRouting(class_);
@@ -615,7 +632,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                       `(new Dictionary<string, `,
                       this.Types.HeaderValue,
                       `>(Headers)),
-    AdditionalHeaders = AdditionalHeaders,${unifiedFieldLines}
+    AdditionalHeaders = AdditionalHeaders,${unifiedFieldLines}${this.appInfoField ? `\n    ${this.appInfoField.name} = ${this.appInfoField.name},` : ""}
     ${this.settings.includeExceptionHandler ? "ExceptionHandler = ExceptionHandler.Clone()," : ""}
 }`
                   );
@@ -688,6 +705,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                 writer.writeLine("AdditionalHeaders = other.AdditionalHeaders;");
                 for (const field of this.unifiedFields) {
                     writer.writeLine(`${field.name} = other.${field.name};`);
+                }
+                if (this.appInfoField) {
+                    writer.writeLine(`${this.appInfoField.name} = other.${this.appInfoField.name};`);
                 }
                 if (this.settings.includeExceptionHandler) {
                     writer.writeLine("ExceptionHandler = other.ExceptionHandler.Clone();");

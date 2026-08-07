@@ -374,9 +374,32 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             });
         }
 
+        // When the opt-in `allowUserAgentAppInfo` config is enabled, the generated
+        // client accepts an optional `appInfo` product token whose value is appended
+        // to the `User-Agent` header. This key is only surfaced when the flag is on so
+        // that clients which do not opt in keep byte-identical generated output.
+        if (this.customConfig.allowUserAgentAppInfo) {
+            options.push({
+                key: this.getAppInfoOptionName(),
+                valueType: php.Type.typeDict(
+                    [
+                        { key: "name", valueType: php.Type.string() },
+                        { key: "version", valueType: php.Type.string(), optional: true },
+                        { key: "comment", valueType: php.Type.string(), optional: true }
+                    ],
+                    { multiline: false }
+                ),
+                optional: true
+            });
+        }
+
         return php.Type.typeDict(options, {
             multiline: true
         });
+    }
+
+    public getAppInfoOptionName(): string {
+        return "appInfo";
     }
 
     public getRequestOptionsType({ endpoint }: { endpoint: FernIr.HttpEndpoint }): php.Type {
@@ -500,10 +523,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
             return this.ir.sdkConfig.platformHeaders.userAgent;
         }
-        if (this.version != null) {
+        const version = this.getSdkVersion();
+        if (version != null) {
             return {
                 header: "User-Agent",
-                value: `${this.getPackageName()}/${this.version}`
+                value: `${this.getPackageName()}/${version}`
             };
         }
         return undefined;

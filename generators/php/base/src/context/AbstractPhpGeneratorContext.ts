@@ -13,6 +13,7 @@ import { camelCase, upperFirst } from "lodash-es";
 import { AsIsFiles } from "../AsIs.js";
 import { TRAITS_DIRECTORY } from "../constants.js";
 import { PhpProject } from "../project/PhpProject.js";
+import { getFilesystemPackagistPublishTarget } from "./filesystem-packagist-publish-target.js";
 import { PhpAttributeMapper } from "./PhpAttributeMapper.js";
 import { PhpTypeMapper } from "./PhpTypeMapper.js";
 
@@ -55,7 +56,20 @@ export abstract class AbstractPhpGeneratorContext<
         if (this.customConfig.packageName != null) {
             return this.customConfig.packageName;
         }
+        const filesystemPackageName = getFilesystemPackagistPublishTarget(this.ir)?.packageName;
+        if (filesystemPackageName != null) {
+            return filesystemPackageName;
+        }
         return `${this.config.organization}/${this.config.organization}`;
+    }
+
+    /**
+     * The SDK version to stamp into generated metadata (e.g. `composer.json`).
+     * Resolves from the output mode's version (github/publish) and falls back to
+     * the `packagist` filesystem publish target for local-file-system output.
+     */
+    public getSdkVersion(): string | undefined {
+        return this.version ?? getFilesystemPackagistPublishTarget(this.ir)?.version;
     }
 
     public getSubpackageOrThrow(subpackageId: FernIr.SubpackageId): FernIr.Subpackage {

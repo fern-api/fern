@@ -39,6 +39,36 @@ service:
             foo: 123
             bar: hello
             extraProperty: true
+    e:
+      path: ""
+      method: GET
+      request:
+        body:
+          optional: true
+          properties:
+            foo: integer
+      examples:
+        - {}
+        - request:
+            foo: 123
+    f:
+      path: ""
+      method: GET
+      request:
+        body:
+          properties:
+            foo: optional<integer>
+      examples:
+        - {}
+    g:
+      path: ""
+      method: GET
+      request:
+        body: optional<ObjectWithFoo>
+      examples:
+        - {}
+        - request:
+            foo: 123
 
 types:
   ObjectWithFoo:

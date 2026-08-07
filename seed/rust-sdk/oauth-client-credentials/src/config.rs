@@ -40,6 +40,7 @@ impl Default for ClientConfig {
                 ]),
                 access_token_property: "access_token".to_string(),
                 expires_in_property: "expires_in".to_string(),
+                form_encoded: true,
             }),
             timeout: Duration::from_secs(60),
             max_retries: 3,

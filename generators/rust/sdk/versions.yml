@@ -1,4 +1,43 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.44.2
+  changelogEntry:
+    - summary: |
+        Fix discriminated union variants silently dropping inherited properties. When a variant's
+        referenced object type got all of its properties from `extends`, the variant was inlined to
+        an empty struct, so the payload deserialized successfully but every field was discarded.
+        Such types are no longer inlined and keep their `#[serde(flatten)]` wrapper.
+
+        Note: this changes the generated public API for affected unions. A variant that was inlined
+        (e.g. `FooExtended { age }`, constructor `foo_extended(age: i64)`) now wraps the referenced
+        type (`FooExtended { data: FooExtended }`, constructor `foo_extended(data: FooExtended)`), so
+        consumers on a prior version with `extends`-based union variants may need to update call sites
+        when regenerating.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 66
+- version: 0.44.1
+  changelogEntry:
+    - summary: |
+        Apply client-level custom headers to the OAuth token request. The client-credentials
+        token exchange was built directly on the underlying HTTP client, so it was the only
+        request that skipped `ClientConfig.custom_headers` — APIs whose gateway requires a
+        header on the token endpoint rejected the exchange with a 401, and the
+        `X-Fern-SDK-*` headers were missing from token requests.
+
+        Request-level headers and auth headers are intentionally still not applied: the token
+        is cached and shared across requests, and the token request is what produces the
+        credential auth headers would carry.
+      type: fix
+    - summary: |
+        Encode the OAuth token request to match the token endpoint's declared content type. The
+        client-credentials exchange previously always sent a JSON body, so APIs whose token
+        endpoint expects `application/x-www-form-urlencoded` (the OAuth 2.0 default per RFC 6749
+        §4.4.2) rejected the exchange. The content type is now resolved from the referenced
+        endpoint in the IR: form-encoded when the spec declares it, JSON otherwise — so existing
+        JSON token endpoints are unaffected.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 66
 - version: 0.44.0
   changelogEntry:
     - summary: |

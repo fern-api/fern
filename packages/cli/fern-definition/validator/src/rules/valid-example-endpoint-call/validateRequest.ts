@@ -31,6 +31,20 @@ export function validateRequest({
             });
         }
     } else if (isInlineRequestBody(body)) {
+        // an omitted request represents a call with no request body, which the endpoint
+        // only permits when its body is optional
+        if (example == null) {
+            if (body.optional) {
+                return violations;
+            }
+            violations.push({
+                severity: "fatal",
+                message:
+                    "This endpoint requires a request body, so its examples must specify request. " +
+                    "Mark the body optional to allow calling the endpoint without one."
+            });
+            return violations;
+        }
         violations.push(
             ...ExampleValidators.validateObjectExample({
                 typeName: undefined,

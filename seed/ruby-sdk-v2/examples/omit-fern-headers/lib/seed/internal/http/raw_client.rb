@@ -21,15 +21,19 @@ module Seed
         # @param max_retries [Integer] The number of times to retry a failed request, defaults to 2.
         # @param timeout [Float] The timeout for the request, defaults to 60.0 seconds.
         # @param headers [Hash] The headers for the request.
+        # @param overridable_headers [Array<String>] The names of the client-level headers a request
+        #   may replace via `additional_headers`. Holds the API's global headers; SDK metadata and
+        #   auth headers are absent from it and so stay protected.
         # @param auth_provider [Object, nil] An optional auth provider responding to
         #   `auth_headers`. When present its headers are resolved on every request so
         #   token-based schemes (e.g. OAuth) can refresh an expired token mid-session.
-        def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {}, auth_provider: nil)
+        def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {}, overridable_headers: [], auth_provider: nil)
           @base_url = base_url
           @max_retries = max_retries
           @timeout = timeout
           @auth_provider = auth_provider
           @default_headers = headers
+          @overridable_headers = overridable_headers.to_set { |name| name.to_s.downcase }
         end
 
         # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.
@@ -46,7 +50,7 @@ module Seed
             http_request = build_http_request(
               url:,
               method: request.method,
-              headers: request.encode_headers(protected_keys: @default_headers.keys + auth_headers.keys),
+              headers: request.encode_headers(protected_keys: protected_header_keys + auth_headers.keys),
               body: request.encode_body,
               auth_headers: auth_headers
             )
@@ -67,6 +71,15 @@ module Seed
           end
 
           response
+        end
+
+        # The client-level header names that `additional_headers` must not replace: every default
+        # header except the API's global headers, which are overridable per request.
+        # @return [Array<Symbol, String>] The protected header names.
+        def protected_header_keys
+          return @default_headers.keys if @overridable_headers.empty?
+
+          @default_headers.keys.reject { |name| @overridable_headers.include?(name.to_s.downcase) }
         end
 
         # Determines if a request should be retried based on the response status code.
