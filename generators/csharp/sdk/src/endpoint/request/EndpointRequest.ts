@@ -42,7 +42,7 @@ export abstract class EndpointRequest extends WithGeneration {
 
     /**
      * Whether the request parameter may be omitted by callers, in which case it is
-     * generated with a `= null` default.
+     * generated with a default value (`= null`, or `= default` for the `Optional<T>` wrapper).
      */
     public isOptional(): boolean {
         return false;

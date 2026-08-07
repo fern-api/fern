@@ -32,7 +32,37 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     }
 
     public override isOptional(): boolean {
-        return this.requestBodyShape.type === "container" && this.requestBodyShape.container.type === "optional";
+        return this.resolvesToOptional(this.requestBodyShape);
+    }
+
+    /**
+     * Aliases and nullable wrappers both map onto a nullable C# parameter, so they have to be
+     * unwrapped before deciding whether the body is optional.
+     */
+    private resolvesToOptional(reference: TypeReference): boolean {
+        if (reference.type === "container") {
+            if (reference.container.type === "optional") {
+                return true;
+            }
+            if (reference.container.type === "nullable") {
+                return this.resolvesToOptional(reference.container.nullable);
+            }
+            return false;
+        }
+        if (reference.type === "named") {
+            const shape = this.context.model.dereferenceType(reference.typeId).typeDeclaration.shape;
+            if (shape.type !== "alias") {
+                return false;
+            }
+            // An alias' resolvedType is already resolved through any chain of aliases.
+            const resolved = shape.resolvedType;
+            return (
+                resolved.type === "container" &&
+                (resolved.container.type === "optional" ||
+                    (resolved.container.type === "nullable" && this.resolvesToOptional(resolved.container.nullable)))
+            );
+        }
+        return false;
     }
 
     public getParameterType(): ast.Type {

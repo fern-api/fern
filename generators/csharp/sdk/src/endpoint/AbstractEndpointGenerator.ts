@@ -130,10 +130,15 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
      */
     private getRequestParameter(request: EndpointRequest): ast.Parameter {
         const type = request.getParameterType();
+        const name = request.getParameterName();
+        if (!request.isOptional()) {
+            return this.csharp.parameter({ type, name });
+        }
+        // Optional<T> is a struct, so `= null` is not a valid default for the explicit wrapper.
         return this.csharp.parameter({
             type,
-            name: request.getParameterName(),
-            initializer: request.isOptional() ? (is.OptionalWrapper(type) ? "default" : "null") : undefined
+            name,
+            initializer: is.OptionalWrapper(type) ? "default" : "null"
         });
     }
 
