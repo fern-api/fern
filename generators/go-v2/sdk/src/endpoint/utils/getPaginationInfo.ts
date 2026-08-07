@@ -30,10 +30,11 @@ export function getPaginationInfo({
     const nextPageType = getNextPageType({ context, pagination });
     const pageRequestType = getPageRequestType({ context, pageType });
     const requestPagePropertyReference = getPagePropertyReference({
-        variableName: "request",
+        variableName: getRequestVariableName({ signature }),
         pagination,
         caseConverter: context.caseConverter
     });
+    const requestBodyPagePropertyReference = getRequestBodyPagePropertyReference({ context, pagination, signature });
     const pagePropertyFormat = getPageValueFormat({ context, pagination });
     const requestPagePropertyFormat = getPageValueFormat({ context, pagination });
     return {
@@ -44,6 +45,7 @@ export function getPaginationInfo({
             pageType,
             pageRequestType,
             pagePropertyFormat,
+            requestBodyPagePropertyReference,
             endpoint,
             errorDecoder
         }),
@@ -54,7 +56,8 @@ export function getPaginationInfo({
             pageType,
             nextPageType,
             requestPagePropertyReference,
-            requestPagePropertyFormat
+            requestPagePropertyFormat,
+            requestBodyPagePropertyReference
         }),
         initializePager: getInitializePager({ context, pagination, callerReference }),
         callGetPage: getCallGetPage({ pagination, pageType, requestPagePropertyReference })
@@ -68,6 +71,7 @@ function getPrepareCall({
     pageType,
     pageRequestType,
     pagePropertyFormat,
+    requestBodyPagePropertyReference,
     endpoint,
     errorDecoder
 }: {
@@ -77,10 +81,16 @@ function getPrepareCall({
     pageType: go.Type;
     pageRequestType: go.Type;
     pagePropertyFormat: go.AstNode;
+    requestBodyPagePropertyReference: string | undefined;
     endpoint: FernIr.HttpEndpoint;
     errorDecoder: go.CodeBlock | undefined;
 }): go.AstNode {
-    const pagePropertySetter = getPagePropertySetter({ pagination, pageType, pagePropertyFormat });
+    const pagePropertySetter = getPagePropertySetter({
+        pagination,
+        pageType,
+        pagePropertyFormat,
+        requestBodyPagePropertyReference
+    });
     return go.codeblock((writer) => {
         writer.write("prepareCall := ");
         writer.writeNode(
@@ -124,7 +134,8 @@ function getReadPageResponse({
     pageType,
     nextPageType,
     requestPagePropertyReference,
-    requestPagePropertyFormat
+    requestPagePropertyFormat,
+    requestBodyPagePropertyReference
 }: {
     context: SdkGeneratorContext;
     pagination: FernIr.Pagination;
@@ -133,12 +144,14 @@ function getReadPageResponse({
     nextPageType: go.Type | undefined;
     requestPagePropertyReference: go.AstNode;
     requestPagePropertyFormat: go.AstNode;
+    requestBodyPagePropertyReference: string | undefined;
 }): go.AstNode {
     const initializer = getPagePropertyInitializer({
         pagination,
         pageType,
         requestPagePropertyReference,
-        requestPagePropertyFormat
+        requestPagePropertyFormat,
+        requestBodyPagePropertyReference
     });
     const responseType = signature.returnType ?? go.Type.any();
     return go.codeblock((writer) => {
@@ -499,15 +512,22 @@ function getResponsePropertySetter({
 function getPagePropertySetter({
     pagination,
     pageType,
-    pagePropertyFormat
+    pagePropertyFormat,
+    requestBodyPagePropertyReference
 }: {
     pagination: FernIr.Pagination;
     pageType: go.Type;
     pagePropertyFormat: go.AstNode;
+    requestBodyPagePropertyReference: string | undefined;
 }): go.AstNode {
     switch (pagination.type) {
         case "cursor":
         case "offset":
+            if (requestBodyPagePropertyReference != null) {
+                return go.codeblock((writer) => {
+                    writer.writeLine(`${requestBodyPagePropertyReference} = ${PAGE_REQUEST_CURSOR_NAME}`);
+                });
+            }
             return go.codeblock((writer) => {
                 if (pageType.isOptional()) {
                     writer.writeLine(`if ${PAGE_REQUEST_CURSOR_NAME} != nil {`);
@@ -544,15 +564,20 @@ function getPagePropertyInitializer({
     pagination,
     pageType,
     requestPagePropertyReference,
-    requestPagePropertyFormat
+    requestPagePropertyFormat,
+    requestBodyPagePropertyReference
 }: {
     pagination: FernIr.Pagination;
     pageType: go.Type;
     requestPagePropertyReference: go.AstNode;
     requestPagePropertyFormat: go.AstNode;
+    requestBodyPagePropertyReference: string | undefined;
 }): go.AstNode | undefined {
     switch (pagination.type) {
         case "offset": {
+            if (requestBodyPagePropertyReference != null) {
+                return getRequestBodyOffsetInitializer({ pageType, requestBodyPagePropertyReference });
+            }
             return go.codeblock((writer) => {
                 if (pageType.isOptional()) {
                     writer.writeNode(getOffsetInitializer({ pageType }));
@@ -590,6 +615,28 @@ function getPagePropertyInitializer({
         default:
             assertNever(pagination);
     }
+}
+
+function getRequestBodyOffsetInitializer({
+    pageType,
+    requestBodyPagePropertyReference
+}: {
+    pageType: go.Type;
+    requestBodyPagePropertyReference: string;
+}): go.AstNode {
+    return go.codeblock((writer) => {
+        if (!pageType.isOptional()) {
+            writer.writeLine(`next := ${requestBodyPagePropertyReference}`);
+            return;
+        }
+        writer.writeNode(getOffsetInitializer({ pageType }));
+        writer.newLine();
+        writer.writeLine(`if ${requestBodyPagePropertyReference} != nil {`);
+        writer.indent();
+        writer.writeLine(`next = *${requestBodyPagePropertyReference}`);
+        writer.dedent();
+        writer.writeLine("}");
+    });
 }
 
 function getOffsetInitializer({ pageType }: { pageType: go.Type }): go.AstNode {
@@ -875,6 +922,40 @@ function getPagePropertyReference({
         default:
             assertNever(pagination);
     }
+}
+
+/**
+ * The page property lives on the request body, so the pager advances it by setting the field on the
+ * request before every call instead of updating the query string.
+ */
+function getRequestBodyPagePropertyReference({
+    context,
+    pagination,
+    signature
+}: {
+    context: SdkGeneratorContext;
+    pagination: FernIr.Pagination;
+    signature: EndpointSignatureInfo;
+}): string | undefined {
+    switch (pagination.type) {
+        case "cursor":
+        case "offset": {
+            if (pagination.page.property.type !== "body" || signature.request == null) {
+                return undefined;
+            }
+            return `${signature.request.getRequestParameterName()}.${context.getFieldName(pagination.page.property.name)}`;
+        }
+        case "custom":
+        case "uri":
+        case "path":
+            return undefined;
+        default:
+            assertNever(pagination);
+    }
+}
+
+function getRequestVariableName({ signature }: { signature: EndpointSignatureInfo }): string {
+    return signature.request?.getRequestParameterName() ?? "request";
 }
 
 function getResponsePropertyReference({
