@@ -6,4 +6,10 @@ export interface HttpInlineRequestBodySchema {
     extends?: FernDefinition.ObjectExtendsSchema;
     "extra-properties"?: boolean;
     properties?: Record<string, FernDefinition.HttpInlineRequestBodyPropertySchema>;
+    /**
+     * Whether the endpoint may be called without a request body. When true, an
+     * example may omit `request`. Populated from `requestBody.required` when
+     * importing from OpenAPI.
+     */
+    optional?: boolean;
 }

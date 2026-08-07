@@ -213,7 +213,8 @@ export function convertHttpOperation({
                             }),
                             requestBreadcrumbs,
                             source,
-                            namespace: context.namespace
+                            namespace: context.namespace,
+                            bodyRequired: resolvedRequestBody.required
                         });
 
                         // if request has query params or headers and body is not an object, then use `Body`
@@ -232,7 +233,8 @@ export function convertHttpOperation({
                                 context,
                                 requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
                                 source,
-                                namespace: context.namespace
+                                namespace: context.namespace,
+                                bodyRequired: resolvedRequestBody.required
                             });
                         } else if (operation.requestBody != null) {
                             convertedRequest = convertRequest({
@@ -243,7 +245,8 @@ export function convertHttpOperation({
                                 context,
                                 requestBreadcrumbs: [...requestBreadcrumbs],
                                 source,
-                                namespace: context.namespace
+                                namespace: context.namespace,
+                                bodyRequired: resolvedRequestBody.required
                             });
                         }
 
@@ -269,7 +272,8 @@ export function convertHttpOperation({
                 }),
                 requestBreadcrumbs,
                 source,
-                namespace: context.namespace
+                namespace: context.namespace,
+                bodyRequired: resolvedRequestBody.required
             });
 
             // if request has query params or headers and body is not an object, then use `Body`
@@ -287,7 +291,8 @@ export function convertHttpOperation({
                     context,
                     requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
                     source,
-                    namespace: context.namespace
+                    namespace: context.namespace,
+                    bodyRequired: resolvedRequestBody.required
                 });
             } else if (operation.requestBody != null) {
                 convertedRequest = convertToSingleRequest({
@@ -297,7 +302,8 @@ export function convertHttpOperation({
                     context,
                     requestBreadcrumbs: [...requestBreadcrumbs],
                     source,
-                    namespace: context.namespace
+                    namespace: context.namespace,
+                    bodyRequired: resolvedRequestBody.required
                 });
             }
 

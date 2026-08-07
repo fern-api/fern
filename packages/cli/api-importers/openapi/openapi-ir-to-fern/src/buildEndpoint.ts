@@ -908,6 +908,10 @@ function getRequest({
         if (request.additionalProperties) {
             requestBodySchema["extra-properties"] = true;
         }
+        // per the OpenAPI spec, requestBody.required defaults to false
+        if (request.type === "json" && request.required !== true) {
+            requestBodySchema.optional = true;
+        }
 
         const convertedRequestValue: RawSchemas.HttpRequestSchema = {
             name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,

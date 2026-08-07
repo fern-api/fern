@@ -27,8 +27,9 @@ service:
       request:
         name: InlinedRefundRequest
         body:
+          optional: true
           properties:
-            amount: optional<double>
+            amount: double
       response: RefundResponse
       examples:
         - name: withoutBody

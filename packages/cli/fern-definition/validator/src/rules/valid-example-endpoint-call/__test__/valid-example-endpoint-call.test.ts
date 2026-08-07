@@ -343,7 +343,9 @@ describe("valid-example-endpoint-call", () => {
                 severity: "fatal"
             },
             {
-                message: 'Example is missing required property "request.foo"',
+                message:
+                    "This endpoint requires a request body, so its examples must specify request. " +
+                    "Mark the body optional to allow calling the endpoint without one.",
                 nodePath: [
                     "service",
                     "endpoints",

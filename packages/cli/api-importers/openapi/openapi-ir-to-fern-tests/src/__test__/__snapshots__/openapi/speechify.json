@@ -1201,6 +1201,7 @@ simba-turbo ModelTurbo",
               "path": "/v1/audio/speech",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "audio_format": {
                       "default": "wav",
@@ -1704,6 +1705,7 @@ service:
               docs: >-
                 Id of the voice to be used for synthesizing speech. Refer to
                 /v1/voices endpoint for available voices
+          optional: true
         content-type: application/json
       response:
         docs: ''
@@ -1859,6 +1861,7 @@ service:
               "path": "/v1/auth/token",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "grant_type": {
                       "docs": "in: body",
@@ -2000,6 +2003,7 @@ service:
                 requested for
 
                 in: body
+          optional: true
         content-type: application/json
       response:
         docs: >-
