@@ -22,7 +22,6 @@
               "path": "/test",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "color": "optional<Color>",
                     "empty": "optional<EmptyEnum>",
@@ -212,7 +211,6 @@
             role: optional<Role>
             version: optional<ApiVersion>
             mixed: optional<MixedCase>
-          optional: true
         content-type: application/json
       examples:
         - request: {}

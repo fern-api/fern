@@ -118,7 +118,6 @@
               "path": "/success-inline-alpha-body",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "fine_setting": "optional<boolean>",
                   },
@@ -157,7 +156,6 @@
               "path": "/success-inline-beta-body",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "fine_setting": "optional<boolean>",
                   },
@@ -196,7 +194,6 @@
               "path": "/success-inline-legacy-body",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "fine_setting": "optional<boolean>",
                   },
@@ -235,7 +232,6 @@
               "path": "/success-inline-object-deprecation",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "fine_setting": "optional<boolean>",
                   },
@@ -274,7 +270,6 @@
               "path": "/success-inline-preview-body",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "fine_setting": "optional<boolean>",
                   },
@@ -312,7 +307,6 @@
               "path": "/success-inline-property-deprecation",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "deprecated_setting": {
                       "availability": "deprecated",
@@ -354,7 +348,6 @@
               "path": "/success-ref",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "deprecated_setting": {
                       "availability": "deprecated",
@@ -491,7 +484,6 @@
               type: optional<boolean>
               availability: deprecated
             new_setting: optional<boolean>
-          optional: true
         content-type: application/json
       response:
         docs: OK
@@ -515,7 +507,6 @@
               type: optional<boolean>
               availability: deprecated
             new_setting: optional<boolean>
-          optional: true
         content-type: application/json
       response:
         docs: OK
@@ -536,7 +527,6 @@
         body:
           properties:
             fine_setting: optional<boolean>
-          optional: true
         content-type: application/json
       response:
         docs: OK
@@ -558,7 +548,6 @@
         body:
           properties:
             fine_setting: optional<boolean>
-          optional: true
         content-type: application/json
       response:
         docs: OK
@@ -580,7 +569,6 @@
         body:
           properties:
             fine_setting: optional<boolean>
-          optional: true
         content-type: application/json
       response:
         docs: OK
@@ -602,7 +590,6 @@
         body:
           properties:
             fine_setting: optional<boolean>
-          optional: true
         content-type: application/json
       response:
         docs: OK
@@ -624,7 +611,6 @@
         body:
           properties:
             fine_setting: optional<boolean>
-          optional: true
         content-type: application/json
       response:
         docs: OK

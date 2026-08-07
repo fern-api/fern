@@ -17,7 +17,6 @@
               "path": "/v1/audio",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "id": {
                       "docs": "",
@@ -48,7 +47,6 @@
               "path": "/v1/audio/stream",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "id": {
                       "docs": "",
@@ -93,7 +91,6 @@
             id:
               type: optional<string>
               docs: ''
-          optional: true
         content-type: application/json
       response:
         docs: ''
@@ -111,7 +108,6 @@
             id:
               type: optional<string>
               docs: ''
-          optional: true
         content-type: application/json
       response:
         docs: ''

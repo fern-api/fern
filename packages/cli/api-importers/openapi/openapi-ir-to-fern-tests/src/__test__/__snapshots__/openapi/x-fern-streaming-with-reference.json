@@ -30,7 +30,6 @@
               "path": "/v2/chat",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "message": "string",
                     "stream": "literal<false>",
@@ -74,7 +73,6 @@
               "path": "/v2/chat",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "message": "string",
                     "stream": "literal<true>",
@@ -161,7 +159,6 @@
           properties:
             stream: literal<true>
             message: string
-          optional: true
         content-type: application/json
       response-stream:
         docs: ''
@@ -185,7 +182,6 @@
           properties:
             stream: literal<false>
             message: string
-          optional: true
         content-type: application/json
       response:
         docs: ''
@@ -256,7 +252,6 @@ types:
               "path": "/completions/chat",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "prompt": "string",
                     "stream": "literal<false>",
@@ -300,7 +295,6 @@ types:
               "path": "/completions/chat",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "prompt": "string",
                     "stream": "literal<true>",
@@ -346,7 +340,6 @@ types:
               "path": "/completions/chat/{conversation_id}/resume",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "prompt": "string",
                     "stream": "literal<false>",
@@ -395,7 +388,6 @@ types:
               "path": "/completions/chat/{conversation_id}/resume",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "prompt": "string",
                     "stream": "literal<true>",
@@ -442,7 +434,6 @@ service:
           properties:
             stream: literal<true>
             prompt: string
-          optional: true
         content-type: application/json
       response-stream:
         docs: ''
@@ -466,7 +457,6 @@ service:
           properties:
             stream: literal<false>
             prompt: string
-          optional: true
         content-type: application/json
       response:
         docs: ''
@@ -492,7 +482,6 @@ service:
           properties:
             stream: literal<true>
             prompt: string
-          optional: true
         content-type: application/json
       response-stream:
         docs: ''
@@ -520,7 +509,6 @@ service:
           properties:
             stream: literal<false>
             prompt: string
-          optional: true
         content-type: application/json
       response:
         docs: ''

@@ -678,8 +678,7 @@ function getRequest({
                 declarationDepth: 0,
                 variant
             });
-            // per the OpenAPI spec, requestBody.required defaults to false
-            const isOptionalBody = request.type === "json" && request.required !== true;
+            const isOptionalBody = isOptionalJsonBody(request);
             const requestValue: RawSchemas.HttpRequestSchema = {
                 body: requestTypeReference
             };
@@ -925,8 +924,7 @@ function getRequest({
         if (request.additionalProperties) {
             requestBodySchema["extra-properties"] = true;
         }
-        // per the OpenAPI spec, requestBody.required defaults to false
-        if (request.type === "json" && request.required !== true) {
+        if (isOptionalJsonBody(request)) {
             requestBodySchema.optional = true;
         }
 
@@ -1034,6 +1032,21 @@ function getRequest({
     } else {
         assertNever(request);
     }
+}
+
+/**
+ * Whether the endpoint may be called without a request body.
+ *
+ * Only JSON requests carry `requestBody.required` in the OpenAPI IR. The flag must be set
+ * explicitly to false: while the OpenAPI spec defaults it to false when absent, the vast
+ * majority of specs omit it for bodies that are in practice required, so treating absence as
+ * optional would stop example omission from being validated almost everywhere.
+ *
+ * This is validation-only metadata: it lets an example omit `request`, and is not carried into
+ * the IR, so it does not make the request parameter optional in a generated SDK.
+ */
+function isOptionalJsonBody(request: Request): boolean {
+    return request.type === "json" && request.required === false;
 }
 
 function endpointRequestSupportsInlinedPathParameters({

@@ -22,7 +22,6 @@
               "path": "/v1/users",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "private_property": "optional<string>",
                     "public_property": {
@@ -91,7 +90,6 @@
               audiences:
                 - public
             private_property: optional<string>
-          optional: true
         content-type: application/json
       examples:
         - request: {}

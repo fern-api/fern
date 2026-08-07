@@ -22,7 +22,6 @@
               "path": "/form",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "form_fields": {
                       "docs": "Array of form fields with different types",
@@ -139,7 +138,6 @@
             form_fields:
               type: optional<list<FormFieldBase>>
               docs: Array of form fields with different types
-          optional: true
         content-type: application/json
       examples:
         - request: {}

@@ -94,6 +94,32 @@
                 "openapi": "../openapi.yml",
               },
             },
+            "unspecifiedRefund": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "id": "id",
+                  },
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/refunds/{id}/unspecified",
+              "request": {
+                "body": "RefundRequest",
+                "content-type": "application/json",
+                "name": "UnspecifiedRefundRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
           },
           "source": {
             "openapi": "../openapi.yml",
@@ -161,6 +187,21 @@
         path-parameters:
           id: string
         name: RequiredRefundRequest
+        content-type: application/json
+      examples:
+        - path-parameters:
+            id: id
+          request: {}
+    unspecifiedRefund:
+      path: /refunds/{id}/unspecified
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: RefundRequest
+        path-parameters:
+          id: string
+        name: UnspecifiedRefundRequest
         content-type: application/json
       examples:
         - path-parameters:

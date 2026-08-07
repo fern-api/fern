@@ -58,6 +58,25 @@ paths:
       responses:
         "204":
           description: ok
+  # a body that omits `required` is treated as required: only an explicit
+  # `required: false` marks the body optional
+  /refunds/{id}/unspecified:
+    post:
+      operationId: unspecifiedRefund
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefundRequest"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: ok
 components:
   schemas:
     RefundRequest:

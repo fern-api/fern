@@ -33,12 +33,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/account",
-              "request": {
-                "body": {
-                  "optional": true,
-                  "type": "Account",
-                },
-              },
+              "request": "Account",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -74,7 +69,6 @@
               "path": "/user",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "confirmPassword": "optional<string>",
                     "email": "string",
@@ -176,7 +170,6 @@
             password: string
             confirmPassword: optional<string>
             email: string
-          optional: true
         content-type: application/json
       response:
         docs: Success
@@ -199,10 +192,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body:
-          type: Account
-          optional: true
+      request: Account
       response:
         docs: Success
         type: Account

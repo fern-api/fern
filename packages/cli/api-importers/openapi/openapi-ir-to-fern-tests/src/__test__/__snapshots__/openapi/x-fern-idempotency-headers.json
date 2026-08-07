@@ -26,7 +26,6 @@
               "path": "/send",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "send": {
                       "audiences": [
@@ -75,7 +74,6 @@
               type: optional<boolean>
               audiences:
                 - public
-          optional: true
         content-type: application/json
       response:
         docs: Success!

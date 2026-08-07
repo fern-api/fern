@@ -101,7 +101,6 @@
               "path": "/user/{userId}",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "stream": "literal<false>",
                   },
@@ -149,7 +148,6 @@
               "path": "/user/{userId}",
               "request": {
                 "body": {
-                  "optional": true,
                   "properties": {
                     "stream": "literal<true>",
                   },
@@ -196,7 +194,6 @@ service:
         body:
           properties:
             stream: literal<true>
-          optional: true
         content-type: application/json
       response-stream:
         docs: ''
@@ -223,7 +220,6 @@ service:
         body:
           properties:
             stream: literal<false>
-          optional: true
         content-type: application/json
       response:
         docs: ''

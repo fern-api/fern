@@ -282,7 +282,7 @@ describe("examples that omit the request body", () => {
         const service = Object.values(ir.services)[0];
         expect(service).toBeDefined();
 
-        for (const endpointName of ["referencedBody", "inlinedBody"]) {
+        for (const endpointName of ["referencedBody", "optionalReferencedBody", "inlinedBody"]) {
             const endpoint = service?.endpoints.find((e) => getOriginalName(e.name) === endpointName);
             const examples = (endpoint?.userSpecifiedExamples ?? []).map((e) => e.example);
             expect(examples.map((e) => e?.name)).toEqual(["withoutBody", "withBody"]);
@@ -297,6 +297,12 @@ describe("examples that omit the request body", () => {
         const referenced = service?.endpoints.find((e) => getOriginalName(e.name) === "referencedBody");
         const referencedRequest = referenced?.userSpecifiedExamples[0]?.example?.request;
         expect(referencedRequest?.type).toEqual("reference");
+
+        // a referenced body marked `optional: true` is required in the IR, but an example that
+        // omits `request` still produces a call with no body
+        const optionalReferenced = service?.endpoints.find((e) => getOriginalName(e.name) === "optionalReferencedBody");
+        expect(optionalReferenced?.requestBody?.type).toEqual("reference");
+        expect(optionalReferenced?.userSpecifiedExamples[0]?.example?.request).toBeUndefined();
     }, 200_000);
 });
 

@@ -431,7 +431,12 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.RequestBody);
         if (request.body != null) {
-            args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
+            const bodyArg = this.getBodyRequestArg({ body: request.body, value: snippet.requestBody });
+            // a nop literal writes nothing (e.g. an example that omits an optional request body),
+            // so including it would emit a dangling argument delimiter.
+            if (!ts.TypeLiteral.isNop(bodyArg)) {
+                args.push(bodyArg);
+            }
         }
         this.context.errors.unscope();
 
