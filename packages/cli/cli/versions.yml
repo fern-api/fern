@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.92.0
+  changelogEntry:
+    - summary: |
+        Allow endpoint examples to omit the request body when the body is a reference to a
+        shared schema. Previously only inlined request bodies supported omitting `request`,
+        so endpoints whose request schema was reused elsewhere still failed with
+        `Expected example to be an object. Example is: undefined`.
+      type: fix
+    - summary: |
+        Add the OpenAPI setting `respect-optional-request-body`. When enabled, a JSON request body that
+        OpenAPI does not mark as required (`requestBody.required` absent or `false`) becomes an optional
+        request body in the generated Fern Definition, so generated SDKs accept a call without a body and
+        snippets for examples that omit `request` match the generated method signature. Defaults to `false`,
+        which preserves the current behavior where the optionality is only used to validate examples.
+      type: feat
+  createdAt: "2026-08-07"
+  irVersion: 67
 - version: 5.91.0
   changelogEntry:
     - summary: |
