@@ -784,3 +784,93 @@ describe("LocalTaskHandler - Regression: version='AUTO' must use magic placehold
         expect(mockExtractPreviousVersion).toHaveBeenCalledWith(expect.anything(), "v0.0.0-fern-placeholder");
     });
 });
+
+describe("LocalTaskHandler - Regression: placeholder versions are never treated as a previous version", () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+        mockWithOptions.mockReturnValue({
+            AnalyzeSdkDiff: mockAnalyzeSdkDiff
+        });
+        mockChunkDiff.mockReturnValue(["cleaned diff content"]);
+        mockLoggingExeca.mockResolvedValue({ stdout: "", exitCode: 0 });
+    });
+
+    async function createTaskHandler() {
+        const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
+        return new LocalTaskHandler({
+            // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
+            context: mockContext as any,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToTmpOutputDirectory: "/tmp/output" as any,
+            absolutePathToTmpSnippetJSON: undefined,
+            absolutePathToLocalSnippetTemplateJSON: undefined,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToLocalOutput: "/tmp/local-output" as any,
+            absolutePathToLocalSnippetJSON: undefined,
+            absolutePathToTmpSnippetTemplatesJSON: undefined,
+            version: "AUTO",
+            ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
+            isWhitelabel: false,
+            generatorLanguage: "typescript",
+            absolutePathToSpecRepo: undefined
+        });
+    }
+
+    function metadataReturns(version: string) {
+        mockLoggingExeca.mockImplementation((_logger: unknown, cmd: string, args: string[]) => {
+            if (cmd === "git" && args[0] === "show" && args[1] === "HEAD:.fern/metadata.json") {
+                return Promise.resolve({
+                    stdout: JSON.stringify({ sdkVersion: version }),
+                    exitCode: 0
+                });
+            }
+            return Promise.resolve({ stdout: "", exitCode: 0 });
+        });
+    }
+
+    it("ignores a placeholder extracted from the diff and uses metadata.json instead", async () => {
+        mockExtractPreviousVersion.mockReturnValue("0.0.0-fern-placeholder");
+        metadataReturns("1.5.0");
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.PATCH,
+            message: "fix: update SDK",
+            changelog_entry: ""
+        });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result?.version).toBe("1.5.1");
+    });
+
+    it("ignores a placeholder that a previous run already advanced", async () => {
+        mockExtractPreviousVersion.mockReturnValue("0.0.0-fern-placeholder.0");
+        metadataReturns("2.0.0");
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.MINOR,
+            message: "feat: add helper",
+            changelog_entry: ""
+        });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result?.version).toBe("2.1.0");
+    });
+
+    it("falls back to the initial version when every source only has the placeholder", async () => {
+        mockExtractPreviousVersion.mockReturnValue("0.0.0-fern-placeholder");
+        metadataReturns("0.0.0-fern-placeholder");
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.PATCH,
+            message: "fix: update SDK",
+            changelog_entry: ""
+        });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result?.version).toBe("0.0.1");
+        expect(result?.version).not.toContain("fern-placeholder");
+    });
+});
