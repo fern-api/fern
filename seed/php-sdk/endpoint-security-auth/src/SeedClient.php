@@ -87,14 +87,14 @@ class SeedClient
 
         $oauthTokenProvider = null;
         if ($clientId !== null && $clientSecret !== null) {
-            $authRawClient = new RawClient(['baseUrl' => $this->options['baseUrl'] ?? '', 'headers' => []]);
+            $authRawClient = new RawClient(isset($this->options['baseUrl']) ? ['baseUrl' => $this->options['baseUrl'], 'headers' => []] : ['headers' => []]);
             $authClient = new AuthClient($authRawClient);
             $oauthTokenProvider = new OAuthTokenProvider($clientId, $clientSecret, $authClient);
 
         }
         $inferredAuthProvider = null;
         if ($clientId !== null && $clientSecret !== null) {
-            $authRawClient = new RawClient(['baseUrl' => $this->options['baseUrl'] ?? '', 'headers' => []]);
+            $authRawClient = new RawClient(isset($this->options['baseUrl']) ? ['baseUrl' => $this->options['baseUrl'], 'headers' => []] : ['headers' => []]);
             $authClient = new AuthClient($authRawClient);
             $inferredAuthOptions = [
                 'clientId' => $clientId,

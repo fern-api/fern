@@ -700,15 +700,17 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     inferredAuth != null ? this.getInferredAuthCredentialGuard(inferredAuth) : null;
 
                 // The internal (unauthenticated) auth client used to fetch OAuth / inferred tokens
-                // must target the same base URL as the main client, otherwise the token request
-                // never reaches the configured server (e.g. a WireMock instance in wire tests).
-                // Multi-URL environments are threaded through the `$environment` constructor
-                // argument instead, so only inject the base URL here for single-URL clients.
+                // must target the same base URL as the main client when one is configured,
+                // otherwise the token request never reaches the configured server (e.g. a
+                // WireMock instance in wire tests). When no base URL is supplied the key is
+                // omitted so the default-environment fallback still applies. Multi-URL
+                // environments are threaded through the `$environment` constructor argument
+                // instead, so only inject the base URL here for single-URL clients.
                 const clientOptionsName = this.context.getClientOptionsName();
                 const clientBaseUrlOption = this.context.getBaseUrlOptionName();
                 const authRawClientOptions = isMultiUrl
                     ? "['headers' => []]"
-                    : `['${clientBaseUrlOption}' => $this->${clientOptionsName}['${clientBaseUrlOption}'] ?? '', 'headers' => []]`;
+                    : `isset($this->${clientOptionsName}['${clientBaseUrlOption}']) ? ['${clientBaseUrlOption}' => $this->${clientOptionsName}['${clientBaseUrlOption}'], 'headers' => []] : ['headers' => []]`;
 
                 if (!endpointSecurity && hasOAuth && oauth != null) {
                     if (anyAuthMultiScheme) {
@@ -873,7 +875,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         const baseUrlOption = this.context.getBaseUrlOptionName();
         const authRawClientOptions = isMultiUrl
             ? "['headers' => []]"
-            : `['${baseUrlOption}' => $this->${optionsName}['${baseUrlOption}'] ?? '', 'headers' => []]`;
+            : `isset($this->${optionsName}['${baseUrlOption}']) ? ['${baseUrlOption}' => $this->${optionsName}['${baseUrlOption}'], 'headers' => []] : ['headers' => []]`;
 
         if (hasOAuthScheme && oauth != null) {
             writer.writeTextStatement("$oauthTokenProvider = null");
