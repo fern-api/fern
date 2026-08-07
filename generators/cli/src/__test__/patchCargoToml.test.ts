@@ -6,13 +6,13 @@ import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import {
     addSdkCrateToLock,
     addTypesCrateToLock,
-    parseGeneratedCrateManifest,
-    renderLockDependencyList,
     applyCargoTomlPatch,
     applyPackageIdentityPatch,
+    parseGeneratedCrateManifest,
     patchCargoLockVersion,
     patchCargoToml,
-    renameCargoLockPackage
+    renameCargoLockPackage,
+    renderLockDependencyList
 } from "../patchCargoToml.js";
 
 /**
