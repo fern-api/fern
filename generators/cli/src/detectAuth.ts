@@ -1,5 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
+import type { TokenCommandConfig } from "./customConfig.js";
 import { toEnvVarPrefix } from "./identity.js";
 
 /**
@@ -92,8 +93,14 @@ export function detectAuthBindings(args: {
     services?: Record<string, FernIr.HttpService>;
     /** IR environments, used to resolve the OAuth token endpoint base URL. */
     environments?: FernIr.EnvironmentsConfig;
+    /**
+     * Command-backed login flows keyed by auth-scheme name, from the
+     * generator's `customConfig.tokenCommands`. When a scheme is present here,
+     * its default binding is replaced by a `CommandLoginFlow`.
+     */
+    tokenCommands?: Record<string, TokenCommandConfig>;
 }): DetectedAuthBinding[] {
-    const { auth, binaryName, services = {}, environments } = args;
+    const { auth, binaryName, services = {}, environments, tokenCommands = {} } = args;
     const envPrefix = toEnvVarPrefix(binaryName);
 
     // When the spec declares more than one `header` API-key scheme, a shared
@@ -105,12 +112,89 @@ export function detectAuthBindings(args: {
 
     const bindings: DetectedAuthBinding[] = [];
     for (const scheme of auth.schemes) {
-        const binding = bindingForScheme({ scheme, envPrefix, multipleHeaderSchemes, services, environments });
+        const binding = bindingForScheme({
+            scheme,
+            envPrefix,
+            multipleHeaderSchemes,
+            services,
+            environments,
+            tokenCommands
+        });
         if (binding != null) {
             bindings.push(binding);
         }
     }
     return bindings;
+}
+
+/**
+ * The auth-scheme name each variant is keyed by (matches
+ * `customConfig.tokenCommands`'s keys). Only the credential-bearing variants
+ * are named; interactive/inferred variants aren't command-backed.
+ */
+function schemeKey(scheme: FernIr.AuthScheme): string | null {
+    return visitDiscriminatedUnion(scheme)._visit<string | null>({
+        bearer: (bearer) => bearer.key,
+        header: (header) => header.key,
+        basic: (basic) => basic.key,
+        oauth: (oauth) => oauth.key,
+        inferred: () => null,
+        _other: () => null
+    });
+}
+
+/**
+ * Reads the literal wire value of a header scheme's name — the actual HTTP
+ * header sent on the wire (e.g. `Authentication`).
+ */
+function headerWireValue(name: FernIr.NameAndWireValueOrString): string {
+    return typeof name === "string" ? name : name.wireValue;
+}
+
+/**
+ * Emit a `CommandLoginFlow` for a scheme configured with a token command.
+ * The header/prefix default from the scheme (a `header` scheme contributes its
+ * wire header name + prefix; a `bearer` scheme contributes `Authorization` +
+ * `Bearer`) and may be overridden in config. When neither config nor scheme
+ * pins a value, the setter is omitted and the SDK default applies.
+ */
+function commandLoginFlowBinding(args: { scheme: FernIr.AuthScheme; config: TokenCommandConfig }): DetectedAuthBinding {
+    const { scheme, config } = args;
+    const key = schemeKey(scheme) ?? "";
+
+    const derived = visitDiscriminatedUnion(scheme)._visit<{ header?: string; prefix?: string }>({
+        header: (header) => ({ header: headerWireValue(header.name), prefix: header.prefix }),
+        bearer: () => ({ header: "Authorization", prefix: "Bearer" }),
+        basic: () => ({}),
+        oauth: () => ({}),
+        inferred: () => ({}),
+        _other: () => ({})
+    });
+    // Treat an empty configured header as absent so it falls back to the
+    // scheme's wire header (an empty header name would make the generated CLI
+    // reject every authenticated request). `??` alone keeps `""`, so guard
+    // explicitly. An empty `prefix`, by contrast, is a deliberate "no prefix"
+    // override and is dropped below.
+    const header = config.header != null && config.header !== "" ? config.header : derived.header;
+    const prefix = config.prefix ?? derived.prefix;
+
+    let rustCall = `.login_flow(CommandLoginFlow::new(${rustString(key)}).command(${rustString(config.command)})`;
+    if (header != null && header !== "") {
+        rustCall += `.header(${rustString(header)})`;
+    }
+    if (prefix != null && prefix !== "") {
+        rustCall += `.prefix(${rustString(prefix)})`;
+    }
+    rustCall += ")";
+
+    return {
+        schemeName: key,
+        rustCall,
+        placement: "root",
+        authTypeImport: "CommandLoginFlow",
+        envVars: [],
+        kind: "header"
+    };
 }
 
 function bindingForScheme(args: {
@@ -119,8 +203,17 @@ function bindingForScheme(args: {
     multipleHeaderSchemes: boolean;
     services: Record<string, FernIr.HttpService>;
     environments: FernIr.EnvironmentsConfig | undefined;
+    tokenCommands: Record<string, TokenCommandConfig>;
 }): DetectedAuthBinding | null {
-    const { scheme, envPrefix, multipleHeaderSchemes, services, environments } = args;
+    const { scheme, envPrefix, multipleHeaderSchemes, services, environments, tokenCommands } = args;
+
+    // A configured token command replaces the scheme's default env-var binding
+    // with a command-backed login flow that mints/caches/refreshes the token.
+    const key = schemeKey(scheme);
+    if (key != null && tokenCommands[key] != null) {
+        return commandLoginFlowBinding({ scheme, config: tokenCommands[key] });
+    }
+
     return visitDiscriminatedUnion(scheme)._visit<DetectedAuthBinding | null>({
         bearer: (bearer) => {
             const env = bearer.tokenEnvVar ?? `${envPrefix}_TOKEN`;

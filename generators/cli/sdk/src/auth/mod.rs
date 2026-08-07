@@ -34,6 +34,7 @@
 //! All public types and functions are re-exported at the module root.
 
 pub mod builder;
+pub mod command;
 pub mod compose;
 pub mod credential;
 pub mod error;
@@ -55,6 +56,7 @@ pub use builder::{
     collect_binding_cli_args, finalize_bindings, render_auth_help_section, render_auth_layers_help,
     AuthStrategy, SchemeBinding,
 };
+pub use command::{CommandKeyringProvider, CommandLoginFlow};
 pub use compose::{AllAuthProvider, AnyAuthProvider, LayeredAuthProvider, RoutingAuthProvider};
 pub use credential::AuthCredentialSource;
 pub use error::handle_error_response;

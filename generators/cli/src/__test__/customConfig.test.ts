@@ -176,4 +176,54 @@ describe("validateCustomConfig", () => {
             /packageIdentity: expected an object, got array/
         );
     });
+
+    it("accepts a tokenCommands entry with only a command", () => {
+        expect(validateCustomConfig({ tokenCommands: { MyAuth: { command: "gcloud print-identity-token" } } })).toEqual(
+            { tokenCommands: { MyAuth: { command: "gcloud print-identity-token" } } }
+        );
+    });
+
+    it("accepts a tokenCommands entry with command, header, and prefix", () => {
+        expect(
+            validateCustomConfig({
+                tokenCommands: { MyAuth: { command: "mint", header: "Authentication", prefix: "Bearer" } }
+            })
+        ).toEqual({ tokenCommands: { MyAuth: { command: "mint", header: "Authentication", prefix: "Bearer" } } });
+    });
+
+    it("throws on non-object tokenCommands", () => {
+        expect(() => validateCustomConfig({ tokenCommands: "mint" })).toThrow(
+            /tokenCommands: expected an object, got string/
+        );
+        expect(() => validateCustomConfig({ tokenCommands: [] })).toThrow(
+            /tokenCommands: expected an object, got array/
+        );
+    });
+
+    it("throws on a non-object tokenCommands entry", () => {
+        expect(() => validateCustomConfig({ tokenCommands: { MyAuth: "mint" } })).toThrow(
+            /tokenCommands.MyAuth: expected an object/
+        );
+    });
+
+    it("throws on a missing, empty, or whitespace-only command", () => {
+        expect(() => validateCustomConfig({ tokenCommands: { MyAuth: {} } })).toThrow(
+            /tokenCommands.MyAuth.command: expected a non-empty string/
+        );
+        expect(() => validateCustomConfig({ tokenCommands: { MyAuth: { command: "" } } })).toThrow(
+            /tokenCommands.MyAuth.command: expected a non-empty string/
+        );
+        expect(() => validateCustomConfig({ tokenCommands: { MyAuth: { command: "   " } } })).toThrow(
+            /tokenCommands.MyAuth.command: expected a non-empty string/
+        );
+    });
+
+    it("throws on non-string header or prefix", () => {
+        expect(() => validateCustomConfig({ tokenCommands: { MyAuth: { command: "mint", header: 42 } } })).toThrow(
+            /tokenCommands.MyAuth.header: expected a string, got number/
+        );
+        expect(() => validateCustomConfig({ tokenCommands: { MyAuth: { command: "mint", prefix: true } } })).toThrow(
+            /tokenCommands.MyAuth.prefix: expected a string, got boolean/
+        );
+    });
 });
