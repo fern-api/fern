@@ -143,6 +143,8 @@ export function convertWebhookOperation({
                 requestBreadcrumbs: [...baseBreadcrumbs, "Payload"],
                 source,
                 namespace: context.namespace,
+                // carried for IR fidelity; a webhook payload is built as a type reference,
+                // so nothing downstream reads its requiredness today
                 bodyRequired: resolvedRequestBody.required
             })
         )
