@@ -14,6 +14,7 @@ import { DefaultValueExtractor } from "../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator.js";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
+import { EndpointRequest } from "./request/EndpointRequest.js";
 import { getEndpointRequest } from "./utils/getEndpointRequest.js";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
 import { isPagerPagination } from "./utils/isPagerPagination.js";
@@ -93,13 +94,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
             endpoint,
             serviceId
         });
-        const requestParameter =
-            request != null
-                ? this.csharp.parameter({
-                      type: request.getParameterType(),
-                      name: request.getParameterName()
-                  })
-                : undefined;
+        const requestParameter = request != null ? this.getRequestParameter(request) : undefined;
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({
             endpoint,
             requestParameter
@@ -127,6 +122,19 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
             requestParameter,
             returnType
         };
+    }
+
+    /**
+     * Optional request bodies get a default value so that callers, and the snippets generated for
+     * examples that omit the body, can leave the argument off entirely.
+     */
+    private getRequestParameter(request: EndpointRequest): ast.Parameter {
+        const type = request.getParameterType();
+        return this.csharp.parameter({
+            type,
+            name: request.getParameterName(),
+            initializer: request.isOptional() ? (is.OptionalWrapper(type) ? "default" : "null") : undefined
+        });
     }
 
     protected getPagerReturnType(endpoint: HttpEndpoint): ast.Type {

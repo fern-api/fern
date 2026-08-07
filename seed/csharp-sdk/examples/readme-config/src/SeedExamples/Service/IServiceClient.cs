@@ -27,7 +27,7 @@ public partial interface IServiceClient
     );
 
     WithRawResponseTask RefreshTokenAsync(
-        RefreshTokenRequest? request,
+        RefreshTokenRequest? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

@@ -53,7 +53,7 @@ public partial interface IContainerClient
     );
 
     WithRawResponseTask<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
-        ObjectWithRequiredField? request,
+        ObjectWithRequiredField? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

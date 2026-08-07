@@ -13,7 +13,7 @@ public partial class OptionalClient : IOptionalClient
     }
 
     private async Task<WithRawResponse<string>> SendOptionalBodyAsyncCore(
-        Dictionary<string, object?>? request,
+        Dictionary<string, object?>? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -95,7 +95,7 @@ public partial class OptionalClient : IOptionalClient
     }
 
     private async Task<WithRawResponse<string>> SendOptionalTypedBodyAsyncCore(
-        SendOptionalBodyRequest? request,
+        SendOptionalBodyRequest? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -181,7 +181,7 @@ public partial class OptionalClient : IOptionalClient
     > SendOptionalNullableWithAllOptionalPropertiesAsyncCore(
         string actionId,
         string id,
-        DeployParams? request,
+        DeployParams? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -278,7 +278,7 @@ public partial class OptionalClient : IOptionalClient
     /// );
     /// </code></example>
     public WithRawResponseTask<string> SendOptionalBodyAsync(
-        Dictionary<string, object?>? request,
+        Dictionary<string, object?>? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -294,7 +294,7 @@ public partial class OptionalClient : IOptionalClient
     /// );
     /// </code></example>
     public WithRawResponseTask<string> SendOptionalTypedBodyAsync(
-        SendOptionalBodyRequest? request,
+        SendOptionalBodyRequest? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -318,7 +318,7 @@ public partial class OptionalClient : IOptionalClient
     public WithRawResponseTask<DeployResponse> SendOptionalNullableWithAllOptionalPropertiesAsync(
         string actionId,
         string id,
-        DeployParams? request,
+        DeployParams? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

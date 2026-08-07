@@ -1,0 +1,4 @@
+- summary: |
+    Generate `= null` defaults for optional request body parameters, so that snippets
+    for examples that omit the request body compile.
+  type: fix

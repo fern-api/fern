@@ -3,13 +3,13 @@ namespace SeedObjectsWithImports;
 public partial interface IOptionalClient
 {
     WithRawResponseTask<string> SendOptionalBodyAsync(
-        Dictionary<string, object?>? request,
+        Dictionary<string, object?>? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
     WithRawResponseTask<string> SendOptionalTypedBodyAsync(
-        SendOptionalBodyRequest? request,
+        SendOptionalBodyRequest? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
@@ -21,7 +21,7 @@ public partial interface IOptionalClient
     WithRawResponseTask<DeployResponse> SendOptionalNullableWithAllOptionalPropertiesAsync(
         string actionId,
         string id,
-        DeployParams? request,
+        DeployParams? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

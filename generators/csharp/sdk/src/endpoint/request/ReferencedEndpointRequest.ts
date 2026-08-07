@@ -31,6 +31,10 @@ export class ReferencedEndpointRequest extends EndpointRequest {
         this.requestBodyShape = requestBodyShape;
     }
 
+    public override isOptional(): boolean {
+        return this.requestBodyShape.type === "container" && this.requestBodyShape.container.type === "optional";
+    }
+
     public getParameterType(): ast.Type {
         return this.context.csharpTypeMapper.convert({
             reference: this.requestBodyShape
