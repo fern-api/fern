@@ -1,0 +1,18 @@
+- summary: |
+    `--json` is usable again on commands with a `const` or defaulted body field.
+    Such a field carries a clap default, so it appeared in the collected
+    parameters on *every* invocation — and the executor treats any body-located
+    parameter as a per-field body flag and refuses to combine it with `--json`.
+    The result was `Cannot combine --json with per-field body flags (--type)` for
+    a flag the user never passed and could not avoid, making `--json`
+    permanently impossible on those commands. Any spec with `const`
+    discriminators hits it; four ElevenLabs endpoints did.
+
+    Body-located parameters whose value came from a default are now omitted when
+    a whole-body `--json` is supplied: an explicit `--json` is the user's intent
+    for the whole body, so it wins over defaults. Everything else is unchanged —
+    without `--json` the default still reaches the body (so `const` fields are
+    still sent on the flag-driven path), a per-field flag the user actually typed
+    still conflicts with `--json` as intended, and the exemption is scoped to
+    body params so a defaulted query, path, or header value still applies.
+  type: fix
