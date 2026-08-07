@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.80.1
+  changelogEntry:
+    - summary: |
+        Fix generated mock server tests for examples that omit an optional request body. The
+        stub no longer matches on a `Content-Type` header that the bodyless request does not send.
+      type: fix
+  createdAt: "2026-08-07"
+  irVersion: 67
 - version: 2.80.0
   changelogEntry:
     - summary: |
