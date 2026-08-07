@@ -1,0 +1,6 @@
+- summary: |
+    Support server URL variable templating. Environments with templated URLs now expose an
+    `ApiEnvironment.url(...)` method that substitutes the variables (falling back to their defaults),
+    and the root client accepts each variable as an initializer parameter. APIs with multiple base
+    URLs are unaffected, as Swift does not generate environments for them yet.
+  type: feat
