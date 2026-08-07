@@ -1,4 +1,38 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.91.0
+  changelogEntry:
+    - summary: |
+        Add `fern mcp install`, which connects Claude Code, Cursor, and Codex to the Fern MCP server
+        using your existing `fern login` token instead of a separate OAuth flow. By default it configures
+        every one of those agents found on the machine; pass `--client` to pick, and `--org` to override
+        the organization from `fern.config.json`.
+      type: feat
+    - summary: |
+        Fix `fern check` failing with "Expected example to be an object. Example is: undefined" when an
+        endpoint example omits `request` for an endpoint whose inlined request body has no required
+        properties. Omitting `request` now produces an example with no request body instead of a
+        validation error, and such examples are no longer dropped from the generated IR. Examples that
+        omit a body with required properties are still rejected.
+      type: fix
+    - summary: |
+        Add git-ref-based docs versioning. A version entry in `docs.yml` can now name a
+        git `ref:` (a branch, tag, or commit SHA) instead of pointing only at the working
+        tree. On publish, the CLI resolves the ref to a commit, materializes the repository
+        at that commit, and builds that version's pages, navigation, assets, API definitions,
+        and committed library output from the ref, composed with the current branch's theme,
+        shell, and `versions:` metadata. Branch refs are resolved to their latest commit on
+        the remote; tags and commit SHAs are immutable. `fern docs dev` builds only the
+        working-tree version (git-ref-backed versions are built on publish).
+      type: feat
+    - summary: |
+        Preserve `requestBody.required` when importing from OpenAPI. Endpoints whose request body is not
+        required are now marked `optional` in the generated Fern definition, so an example may omit
+        `request` only when the endpoint actually permits a call with no body. Examples that omit
+        `request` for a required body are rejected again, with an error that names the cause instead of
+        reporting an undefined example.
+      type: fix
+  createdAt: "2026-08-07"
+  irVersion: 67
 - version: 5.90.1
   changelogEntry:
     - summary: |
