@@ -545,9 +545,7 @@ function getPagePropertySetter({
                     writer.writeLine(
                         `${PAGED_REQUEST_VARIABLE_NAME} := *${requestBodyPageProperty.requestParameterName}`
                     );
-                    writer.writeLine(
-                        `${requestBodyPageProperty.pagedRequestReference} = ${PAGE_REQUEST_CURSOR_NAME}`
-                    );
+                    writer.writeLine(`${requestBodyPageProperty.pagedRequestReference} = ${PAGE_REQUEST_CURSOR_NAME}`);
                 });
             }
             return go.codeblock((writer) => {
