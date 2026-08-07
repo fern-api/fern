@@ -466,8 +466,8 @@
       request:
         body:
           type: InteractStreamRequest
-          optional: true
           docs: Parameters for creating an interaction (model OR agent).
+          optional: true
         content-type: application/json
       response-stream:
         docs: ''
@@ -489,8 +489,8 @@
       request:
         body:
           type: InteractRequest
-          optional: true
           docs: Parameters for creating an interaction (model OR agent).
+          optional: true
         content-type: application/json
       response:
         docs: ''

@@ -722,12 +722,10 @@ function getRequest({
             // expressed on the body itself, which rules out the scalar shorthand.
             const bodyOptional = request.type === "json" && request.required !== true;
             if (bodyOptional) {
-                const docs = getDocsFromTypeReference(requestTypeReference);
-                const optionalBody: RawSchemas.HttpReferencedRequestBodySchema = {
-                    type: getTypeFromTypeReference(requestTypeReference),
-                    optional: true,
-                    ...(docs != null ? { docs } : {})
-                };
+                const optionalBody: RawSchemas.HttpReferencedRequestBodySchema =
+                    typeof requestTypeReference === "string"
+                        ? { type: requestTypeReference, optional: true }
+                        : { ...requestTypeReference, optional: true };
                 return {
                     schemaIdsToExclude: [],
                     value: canCollapse ? { body: optionalBody } : { ...requestValue, body: optionalBody }

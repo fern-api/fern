@@ -1602,6 +1602,12 @@ types:
                   "docs": "Binary input data",
                   "optional": true,
                   "type": "string",
+                  "validation": {
+                    "format": "binary",
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "content-type": "application/json",
                 "name": "BlobsStoreRequest",
@@ -1707,8 +1713,10 @@ service:
       request:
         body:
           type: string
-          optional: true
           docs: Binary input data
+          validation:
+            format: binary
+          optional: true
         path-parameters:
           key:
             type: string
