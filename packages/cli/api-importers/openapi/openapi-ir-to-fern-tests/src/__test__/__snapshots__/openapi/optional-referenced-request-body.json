@@ -109,7 +109,10 @@
               "pagination": undefined,
               "path": "/refunds/{id}/unspecified",
               "request": {
-                "body": "RefundRequest",
+                "body": {
+                  "optional": true,
+                  "type": "RefundRequest",
+                },
                 "content-type": "application/json",
                 "name": "UnspecifiedRefundRequest",
                 "path-parameters": {
@@ -198,7 +201,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: RefundRequest
+        body:
+          type: RefundRequest
+          optional: true
         path-parameters:
           id: string
         name: UnspecifiedRefundRequest

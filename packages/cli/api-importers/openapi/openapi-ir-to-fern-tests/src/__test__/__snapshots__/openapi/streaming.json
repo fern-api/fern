@@ -29,6 +29,7 @@
               "path": "/v1/users",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "id": {
                       "docs": "",
@@ -74,6 +75,7 @@
               "path": "/v1/users",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "id": {
                       "docs": "",
@@ -120,6 +122,7 @@
               "path": "/v2/users",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "id": {
                       "docs": "",
@@ -167,6 +170,7 @@
               "path": "/v2/users",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "id": {
                       "docs": "",
@@ -212,6 +216,7 @@
               "path": "/v3/users",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "id": {
                       "docs": "",
@@ -259,6 +264,7 @@
               "path": "/v3/users",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "id": {
                       "docs": "",
@@ -423,6 +429,7 @@
               type: optional<string>
               docs: ''
             stream: literal<true>
+          optional: true
         content-type: application/json
       response-stream:
         docs: ''
@@ -447,6 +454,7 @@
               type: optional<string>
               docs: ''
             stream: literal<false>
+          optional: true
         content-type: application/json
       response:
         docs: ''
@@ -471,6 +479,7 @@
               type: optional<string>
               docs: ''
             stream: literal<true>
+          optional: true
         content-type: application/json
       response-stream:
         docs: ''
@@ -497,6 +506,7 @@
               type: optional<string>
               docs: ''
             stream: literal<false>
+          optional: true
         content-type: application/json
       response:
         docs: ''
@@ -523,6 +533,7 @@
               type: optional<string>
               docs: ''
             stream: literal<true>
+          optional: true
         content-type: application/json
       response-stream:
         docs: ''
@@ -549,6 +560,7 @@
               type: optional<string>
               docs: ''
             stream: literal<false>
+          optional: true
         content-type: application/json
       response:
         docs: ''

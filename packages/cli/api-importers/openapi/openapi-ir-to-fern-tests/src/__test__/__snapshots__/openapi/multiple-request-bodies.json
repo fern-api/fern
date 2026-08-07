@@ -34,6 +34,7 @@
               "path": "/documents/upload",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "author": "optional<string>",
                     "tags": "optional<list<string>>",
@@ -160,6 +161,7 @@ service:
             title: optional<string>
             author: optional<string>
             tags: optional<list<string>>
+          optional: true
         content-type: application/json
       response:
         docs: Successful response

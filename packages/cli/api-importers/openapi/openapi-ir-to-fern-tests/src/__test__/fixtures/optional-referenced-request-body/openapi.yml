@@ -58,8 +58,7 @@ paths:
       responses:
         "204":
           description: ok
-  # a body that omits `required` is treated as required: only an explicit
-  # `required: false` marks the body optional
+  # a body that omits `required` follows the OpenAPI default and is optional
   /refunds/{id}/unspecified:
     post:
       operationId: unspecifiedRefund

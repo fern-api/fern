@@ -25,7 +25,12 @@
               "method": "PATCH",
               "pagination": undefined,
               "path": "/settings",
-              "request": "Settings",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "Settings",
+                },
+              },
               "response": {
                 "docs": "OK",
                 "status-code": 200,
@@ -90,7 +95,10 @@
       method: PATCH
       source:
         openapi: ../openapi.yml
-      request: Settings
+      request:
+        body:
+          type: Settings
+          optional: true
       response:
         docs: OK
         type: Settings

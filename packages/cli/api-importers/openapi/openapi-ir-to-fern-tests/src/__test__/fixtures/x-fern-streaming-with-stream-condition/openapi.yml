@@ -71,7 +71,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/InteractionStreamedResponse"
   # Regression for requestBody.required propagation: the stream-condition converter rebuilds the
-  # request body, so `required` has to survive it. An explicit `required: false` becomes
+  # request body, so `required` has to survive it. A body that is not required becomes
   # `optional: true` here, while the `required: true` operation below must not.
   /v2/summaries:
     post:
