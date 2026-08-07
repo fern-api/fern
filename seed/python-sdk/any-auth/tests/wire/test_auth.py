@@ -9,4 +9,4 @@ def test_auth_get_token() -> None:
         client_id="client_id",
         client_secret="client_secret",
     )
-    verify_request_count(test_id, "POST", "/token", None, 1)
+    verify_request_count(test_id, "POST", "/token", None, 2)

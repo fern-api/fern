@@ -46,7 +46,6 @@ def get_client(test_id: str) -> SeedAnyAuth:
         return SeedAnyAuth(
             base_url=base_url,
             headers=test_headers,
-            token="test_token",
             api_key="test_api_key",
             client_id="test_client_id",
             client_secret="test_client_secret",
@@ -57,7 +56,6 @@ def get_client(test_id: str) -> SeedAnyAuth:
     return SeedAnyAuth(
         base_url=base_url,
         httpx_client=httpx.Client(headers=test_headers),
-        token="test_token",
         api_key="test_api_key",
         client_id="test_client_id",
         client_secret="test_client_secret",

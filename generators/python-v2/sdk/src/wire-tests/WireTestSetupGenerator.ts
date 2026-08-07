@@ -756,12 +756,15 @@ def pytest_unconfigure(config: pytest.Config) -> None:
 
         switch (scheme.type) {
             case "bearer":
+                // With OAuth present the shared token slot is populated by the OAuth
+                // provider (via client_id/client_secret) and the generated constructor
+                // overloads make token mutually exclusive with client credentials, so
+                // bearer adds nothing.
+                if (hasOAuthScheme) {
+                    break;
+                }
                 if (isEndpointSecurity) {
-                    // With OAuth present the shared token slot is populated by the OAuth
-                    // provider (via client_id/client_secret), so bearer adds nothing.
-                    if (!hasOAuthScheme) {
-                        params.push(`        token=lambda: "test_token",`);
-                    }
+                    params.push(`        token=lambda: "test_token",`);
                 } else {
                     // Bearer auth uses a token parameter
                     params.push(`        ${this.context.caseConverter.snakeSafe(scheme.token)}="test_token",`);
