@@ -1,5 +1,5 @@
 import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
-import { escapeSwiftStringLiteralContent } from "@fern-api/swift-codegen";
+import { escapeReservedKeyword, escapeSwiftStringLiteralContent } from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 export interface ServerUrlVariable {
@@ -60,7 +60,7 @@ export function urlTemplateToStringLiteral(template: string, variables: ServerUr
     const interpolationsById = new Map(
         variables.map(({ variable, name }) => [
             variable.id,
-            `\\(${name} ?? "${escapeSwiftStringLiteralContent(variable.default ?? "")}")`
+            `\\(${escapeReservedKeyword(name)} ?? "${escapeSwiftStringLiteralContent(variable.default ?? "")}")`
         ])
     );
     let literal = "";

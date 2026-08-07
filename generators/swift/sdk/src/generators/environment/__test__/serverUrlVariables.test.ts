@@ -115,6 +115,24 @@ describe("urlTemplateToStringLiteral", () => {
         );
     });
 
+    it("escapes variable names that are Swift keywords", () => {
+        const keywordVariables = getServerUrlVariables({
+            environments: makeEnvironments([
+                {
+                    name: "Production",
+                    url: "https://https.example.com",
+                    urlTemplate: "https://{protocol}.example.com",
+                    urlVariables: [makeVariable("protocol", "https")]
+                }
+            ]),
+            caseConverter,
+            reservedParameterNames: new Set()
+        });
+        expect(urlTemplateToStringLiteral("https://{protocol}.example.com", keywordVariables)).toBe(
+            '"https://\\(`protocol` ?? "https").example.com"'
+        );
+    });
+
     it("leaves unrecognized placeholders literal", () => {
         expect(urlTemplateToStringLiteral("https://{tenant}.example.com", variables)).toBe(
             '"https://{tenant}.example.com"'
