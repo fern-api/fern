@@ -17,6 +17,9 @@ export declare namespace RootClientGenerator {
 
 type BearerTokenParamType = "string" | "async-provider";
 
+/** The local the templated base URL is resolved into before it is passed along. */
+const RESOLVED_BASE_URL_VARIABLE_NAME = "resolvedBaseURL";
+
 export class RootClientGenerator {
     private readonly symbol: swift.Symbol;
     private readonly package_: FernIr.Package;
@@ -43,13 +46,58 @@ export class RootClientGenerator {
     }
 
     private get baseUrlParam() {
-        return swift.functionParameter({
-            argumentLabel: "baseURL",
-            unsafeName: "baseURL",
-            type: this.referencer.referenceSwiftType("String"),
-            defaultValue: this.getDefaultBaseUrl(),
-            docsContent:
-                "The base URL to use for requests from the client. If not provided, the default base URL will be used."
+        // When the base URL is templated, it is resolved from the server URL variables inside the
+        // initializer, so the parameter is optional rather than defaulted.
+        return this.usesServerUrlVariables
+            ? swift.functionParameter({
+                  argumentLabel: "baseURL",
+                  unsafeName: "baseURL",
+                  type: swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
+                  defaultValue: swift.Expression.nil(),
+                  docsContent:
+                      "The base URL to use for requests from the client. If not provided, the default base URL is resolved from the server URL variables."
+              })
+            : swift.functionParameter({
+                  argumentLabel: "baseURL",
+                  unsafeName: "baseURL",
+                  type: this.referencer.referenceSwiftType("String"),
+                  defaultValue: this.getDefaultBaseUrl(),
+                  docsContent:
+                      "The base URL to use for requests from the client. If not provided, the default base URL will be used."
+              });
+    }
+
+    private get usesServerUrlVariables(): boolean {
+        return this.sdkGeneratorContext.serverUrlVariables.length > 0 && this.getDefaultEnvironmentCase() != null;
+    }
+
+    private get serverUrlVariableParams(): swift.FunctionParameter[] {
+        return this.sdkGeneratorContext.serverUrlVariables.map(({ variable, name }) =>
+            swift.functionParameter({
+                argumentLabel: name,
+                unsafeName: name,
+                type: swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
+                defaultValue: swift.Expression.nil(),
+                docsContent: `The \`${variable.id}\` server URL variable, substituted into the base URL. Defaults to "${variable.default ?? ""}".`
+            })
+        );
+    }
+
+    /**
+     * Declares the base URL to pass to the designated initializer, falling back to the default
+     * environment's URL resolved from the server URL variables.
+     */
+    private get resolvedBaseUrlStatement(): swift.Statement {
+        const defaultEnvironmentUrl = swift.Expression.methodCall({
+            target: this.getDefaultEnvironmentCaseExpressionOrThrow(),
+            methodName: "url",
+            arguments_: this.sdkGeneratorContext.serverUrlVariables.map(({ name }) =>
+                swift.functionArgument({ label: name, value: swift.Expression.reference(name) })
+            )
+        });
+        return swift.Statement.constantDeclaration({
+            unsafeName: RESOLVED_BASE_URL_VARIABLE_NAME,
+            value: swift.Expression.rawValue(`baseURL ?? ${defaultEnvironmentUrl.toString()}`)
         });
     }
 
@@ -168,7 +216,9 @@ export class RootClientGenerator {
         const designatedInitializerArgs: swift.FunctionArgument[] = [
             swift.functionArgument({
                 label: "baseURL",
-                value: swift.Expression.reference("baseURL")
+                value: swift.Expression.reference(
+                    this.usesServerUrlVariables ? RESOLVED_BASE_URL_VARIABLE_NAME : "baseURL"
+                )
             }),
             swift.functionArgument({
                 label: "headerAuth",
@@ -317,6 +367,10 @@ export class RootClientGenerator {
 
         const bodyStatements: swift.Statement[] = [];
 
+        if (this.usesServerUrlVariables) {
+            bodyStatements.push(this.resolvedBaseUrlStatement);
+        }
+
         if (globalHeaders.length > 0) {
             bodyStatements.push(
                 swift.Statement.variableDeclaration({
@@ -390,6 +444,9 @@ export class RootClientGenerator {
         bearerTokenParamType: BearerTokenParamType;
     }): swift.FunctionParameter[] {
         const params: swift.FunctionParameter[] = [this.baseUrlParam];
+        if (this.usesServerUrlVariables) {
+            params.push(...this.serverUrlVariableParams);
+        }
         const authSchemes = this.getAuthSchemeParameters();
         if (authSchemes.header) {
             params.push(authSchemes.header.param);
@@ -534,36 +591,54 @@ export class RootClientGenerator {
         });
     }
 
-    private getDefaultBaseUrl() {
+    /**
+     * The environment the client defaults to, i.e. the one marked as default or, failing that, the
+     * first one. Undefined unless the API has single-base-URL environments.
+     */
+    private getDefaultEnvironmentCase(): FernIr.SingleBaseUrlEnvironment | undefined {
         if (this.sdkGeneratorContext.ir.environments == null) {
             return undefined;
         }
 
-        if (this.sdkGeneratorContext.ir.environments.environments.type === "singleBaseUrl") {
+        const environments = this.sdkGeneratorContext.ir.environments.environments;
+        if (environments.type === "singleBaseUrl") {
             const defaultEnvId = this.sdkGeneratorContext.ir.environments.defaultEnvironment;
-
             // If no default environment is specified, use the first environment
-            const defaultEnvironment = this.sdkGeneratorContext.ir.environments.environments.environments.find(
-                (e, idx) => (defaultEnvId == null ? idx === 0 : e.id === defaultEnvId)
+            return environments.environments.find((e, idx) =>
+                defaultEnvId == null ? idx === 0 : e.id === defaultEnvId
             );
-            if (defaultEnvironment != null) {
-                const environmentSymbol = this.sdkGeneratorContext.project.nameRegistry.getEnvironmentSymbolOrThrow();
-                const environmentRef = this.sdkGeneratorContext.project.nameRegistry.reference({
-                    fromSymbol: this.symbol,
-                    toSymbol: environmentSymbol
-                });
-                return swift.Expression.memberAccess({
-                    target: swift.Expression.reference(environmentRef),
-                    memberName: `${this.sdkGeneratorContext.caseConverter.camelUnsafe(defaultEnvironment.name)}.rawValue`
-                });
-            }
-            return undefined;
-        } else if (this.sdkGeneratorContext.ir.environments.environments.type === "multipleBaseUrls") {
+        } else if (environments.type === "multipleBaseUrls") {
             // TODO(kafkas): Handle multiple environments
             return undefined;
         } else {
-            assertNever(this.sdkGeneratorContext.ir.environments.environments);
+            assertNever(environments);
         }
+    }
+
+    private getDefaultEnvironmentCaseExpressionOrThrow(): swift.Expression {
+        const defaultEnvironment = this.getDefaultEnvironmentCase();
+        if (defaultEnvironment == null) {
+            throw new Error("Cannot reference the default environment because the API declares none");
+        }
+        const environmentSymbol = this.sdkGeneratorContext.project.nameRegistry.getEnvironmentSymbolOrThrow();
+        const environmentRef = this.sdkGeneratorContext.project.nameRegistry.reference({
+            fromSymbol: this.symbol,
+            toSymbol: environmentSymbol
+        });
+        return swift.Expression.memberAccess({
+            target: swift.Expression.reference(environmentRef),
+            memberName: this.sdkGeneratorContext.caseConverter.camelUnsafe(defaultEnvironment.name)
+        });
+    }
+
+    private getDefaultBaseUrl() {
+        if (this.getDefaultEnvironmentCase() == null) {
+            return undefined;
+        }
+        return swift.Expression.memberAccess({
+            target: this.getDefaultEnvironmentCaseExpressionOrThrow(),
+            memberName: "rawValue"
+        });
     }
 
     private getAuthSchemeParameters() {
