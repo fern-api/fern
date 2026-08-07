@@ -1402,8 +1402,32 @@ async fn handle_json_response(
                 Some(EndpointPagination::Uri { next_uri, .. }) => {
                     match get_nested_str(&json_val, next_uri) {
                         Some(url) if !url.is_empty() => {
-                            *page_state = PageState::NextUrl(Some(url.to_string()));
-                            true
+                            // The response chooses the next request's URL, so it
+                            // must not be able to steer it off-host and take the
+                            // credential with it.
+                            let base = page_state
+                                .url_override()
+                                .unwrap_or(request_url)
+                                .to_string();
+                            match crate::http::check_pagination_target(
+                                &pagination.cli_name,
+                                &base,
+                                url,
+                            ) {
+                                Ok(()) => {
+                                    *page_state = PageState::NextUrl(Some(url.to_string()));
+                                    true
+                                }
+                                Err(e) => {
+                                    tracing::warn!(
+                                        next_uri = %url,
+                                        base_url = %base,
+                                        error = %e,
+                                        "refusing x-fern-pagination next_uri; halting pagination"
+                                    );
+                                    false
+                                }
+                            }
                         }
                         _ => false,
                     }
@@ -1418,7 +1442,19 @@ async fn handle_json_response(
                                 .url_override()
                                 .unwrap_or(request_url)
                                 .to_string();
-                            match resolve_next_path(&base, path) {
+                            match resolve_next_path(&base, path).and_then(|resolved| {
+                                // `next_path` may be an absolute URL, which
+                                // replaces the base's origin — so the resolved
+                                // target needs the same host check as the `Uri`
+                                // variant. Checked after resolution so a relative
+                                // path is judged on what it actually resolves to.
+                                crate::http::check_pagination_target(
+                                    &pagination.cli_name,
+                                    &base,
+                                    &resolved,
+                                )
+                                .map(|()| resolved)
+                            }) {
                                 Ok(resolved) => {
                                     *page_state = PageState::NextUrl(Some(resolved));
                                     true
@@ -9392,6 +9428,140 @@ mod tests {
             PageState::Cursor(Some(ref t)) => assert_eq!(t, "next-tok"),
             other => panic!("expected Cursor(Some(\"next-tok\")), got {other:?}"),
         }
+    }
+
+    /// Drive `handle_json_response` for a pagination variant and report whether
+    /// it chose to continue, plus the resulting page state.
+    async fn paginate_once(
+        endpoint_pag: &EndpointPagination,
+        body: &str,
+        request_url: &str,
+    ) -> (bool, PageState) {
+        let pagination = PaginationConfig {
+            page_all: true,
+            page_limit: 10,
+            page_delay_ms: 0,
+            cli_name: "pageguard".to_string(),
+            ..PaginationConfig::default()
+        };
+        let pipeline = crate::formatter::OutputPipeline::default();
+        let mut pages_fetched = 0u32;
+        let mut page_state = PageState::initial(Some(endpoint_pag));
+        let mut captured = Vec::new();
+        let mut pager = None;
+        let cont = handle_json_response(
+            body,
+            &pagination,
+            Some(endpoint_pag),
+            &pipeline,
+            &mut pages_fetched,
+            &mut page_state,
+            false,
+            &mut captured,
+            request_url,
+            &[],
+            None,
+            false,
+            "test-op",
+            &mut pager,
+        )
+        .await
+        .unwrap();
+        (cont, page_state)
+    }
+
+    #[tokio::test]
+    #[serial_test::serial]
+    async fn test_pagination_uri_refuses_a_cross_host_next_url() {
+        // `next_uri` is taken from the response body, so without a guard the
+        // server picks the next request's host — and the credential goes with
+        // it. Pagination must halt instead of following.
+        // The guard must be active; `#[serial]` keeps this from racing other
+        // env-touching tests.
+        std::env::remove_var("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+        let pag = EndpointPagination::Uri {
+            next_uri: "next".into(),
+            results: "items".into(),
+        };
+        let (cont, state) = paginate_once(
+            &pag,
+            r#"{"items":[1],"next":"https://evil.example.net/v1/things?cursor=2"}"#,
+            "https://api.example.com/v1/things",
+        )
+        .await;
+        assert!(!cont, "pagination must not continue to another host");
+        assert!(
+            !matches!(state, PageState::NextUrl(Some(_))),
+            "the off-host URL must not be stored as the next page, got {state:?}"
+        );
+    }
+
+    #[tokio::test]
+    #[serial_test::serial]
+    async fn test_pagination_uri_follows_a_same_host_next_url() {
+        // The guard must be active; `#[serial]` keeps this from racing other
+        // env-touching tests.
+        std::env::remove_var("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+        let pag = EndpointPagination::Uri {
+            next_uri: "next".into(),
+            results: "items".into(),
+        };
+        let (cont, state) = paginate_once(
+            &pag,
+            r#"{"items":[1],"next":"https://api.example.com/v1/things?cursor=2"}"#,
+            "https://api.example.com/v1/things",
+        )
+        .await;
+        assert!(cont, "same-host pagination must still work");
+        assert_eq!(
+            state.url_override(),
+            Some("https://api.example.com/v1/things?cursor=2")
+        );
+    }
+
+    #[tokio::test]
+    #[serial_test::serial]
+    async fn test_pagination_path_refuses_an_absolute_cross_host_next_path() {
+        // `next_path` is usually relative, but an absolute URL replaces the
+        // base's origin — the same hole by a different route.
+        // The guard must be active; `#[serial]` keeps this from racing other
+        // env-touching tests.
+        std::env::remove_var("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+        let pag = EndpointPagination::Path {
+            next_path: "next".into(),
+            results: "items".into(),
+        };
+        let (cont, state) = paginate_once(
+            &pag,
+            r#"{"items":[1],"next":"https://evil.example.net/v1/things?cursor=2"}"#,
+            "https://api.example.com/v1/things",
+        )
+        .await;
+        assert!(!cont, "an absolute off-host next_path must not be followed");
+        assert!(!matches!(state, PageState::NextUrl(Some(_))), "got {state:?}");
+    }
+
+    #[tokio::test]
+    #[serial_test::serial]
+    async fn test_pagination_path_still_resolves_a_relative_next_path() {
+        // The guard must be active; `#[serial]` keeps this from racing other
+        // env-touching tests.
+        std::env::remove_var("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+        let pag = EndpointPagination::Path {
+            next_path: "next".into(),
+            results: "items".into(),
+        };
+        let (cont, state) = paginate_once(
+            &pag,
+            r#"{"items":[1],"next":"/v1/things?cursor=2"}"#,
+            "https://api.example.com/v1/things",
+        )
+        .await;
+        assert!(cont, "relative pagination must be unaffected by the guard");
+        assert_eq!(
+            state.url_override(),
+            Some("https://api.example.com/v1/things?cursor=2")
+        );
     }
 
     #[tokio::test]

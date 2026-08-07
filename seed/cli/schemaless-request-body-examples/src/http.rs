@@ -596,6 +596,52 @@ fn origin_only(url: &reqwest::Url) -> String {
     }
 }
 
+/// Refuse a pagination target that crosses a host boundary.
+///
+/// The same trust boundary the redirect policy above guards, reached by a
+/// different route: `x-fern-pagination`'s `Uri` variant takes a
+/// server-supplied next-page URL and the `Path` variant resolves one that may
+/// be absolute, so in both cases the *response* chooses where the next request
+/// goes. Following that to another host resends the credential — including a
+/// spec-declared custom header (`xi-api-key`, `X-API-Key`) that reqwest cannot
+/// know to strip — so the same rule applies: refuse to leave the host.
+///
+/// Host-only comparison, matching [`crosses_host`]: an `http` -> `https`
+/// upgrade or a port change stays within one operator's infrastructure. A
+/// `next` that is relative (or otherwise not an absolute URL) cannot redirect
+/// anywhere, so it is allowed without inspection.
+///
+/// Opt out with `<PREFIX>_ALLOW_CROSS_HOST_PAGINATION`, deliberately separate
+/// from the redirect opt-out: allowing a redirect is not consent to let a
+/// response body steer the next request.
+pub(crate) fn check_pagination_target(
+    cli_name: &str,
+    base_url: &str,
+    next_url: &str,
+) -> Result<(), String> {
+    let Ok(next) = reqwest::Url::parse(next_url) else {
+        // Relative — inherits the base's origin, so there is nothing to cross.
+        return Ok(());
+    };
+    let base = reqwest::Url::parse(base_url)
+        .map_err(|e| format!("base URL `{base_url}` is not a valid URL: {e}"))?;
+    if !crosses_host(&base, &next) {
+        return Ok(());
+    }
+    let prefix = cli_name.to_uppercase().replace('-', "_");
+    let allow_key = scoped(&prefix, "_ALLOW_CROSS_HOST_PAGINATION");
+    if first_env_truthy([allow_key.clone()]).is_some() {
+        return Ok(());
+    }
+    Err(format!(
+        "refusing to follow a pagination link from {} to {}: it crosses a host boundary, and a \
+         credential carried in a custom header would be sent to the new host. If this is \
+         expected, set {allow_key}=1 to allow it.",
+        origin_only(&base),
+        origin_only(&next),
+    ))
+}
+
 fn first_env<S: AsRef<str>>(keys: impl IntoIterator<Item = S>) -> Option<String> {
     keys.into_iter().find_map(|k| {
         let k = k.as_ref();
@@ -1556,6 +1602,114 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
                 .unwrap_or_default()
                 .is_empty(),
             "the credential-bearing request must never reach the redirect target"
+        );
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn pagination_target_on_the_same_host_is_allowed() {
+        let mut env = EnvGuard::default();
+        env.unset("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+
+        // Same host, deeper path.
+        assert!(check_pagination_target(
+            "pageguard",
+            "https://api.example.com/v1/things",
+            "https://api.example.com/v1/things?cursor=2"
+        )
+        .is_ok());
+        // Scheme upgrade and port change stay within one operator's infra —
+        // same rule as `crosses_host` applies to redirects.
+        assert!(check_pagination_target(
+            "pageguard",
+            "http://api.example.com/v1/things",
+            "https://api.example.com/v1/things?cursor=2"
+        )
+        .is_ok());
+        assert!(check_pagination_target(
+            "pageguard",
+            "https://api.example.com/v1/things",
+            "https://api.example.com:8443/v1/things?cursor=2"
+        )
+        .is_ok());
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn relative_pagination_target_is_allowed_without_inspection() {
+        let mut env = EnvGuard::default();
+        env.unset("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+
+        // A relative target inherits the base origin, so it cannot cross hosts.
+        for next in ["/v1/things?cursor=2", "things?cursor=2", "?cursor=2"] {
+            assert!(
+                check_pagination_target("pageguard", "https://api.example.com/v1/things", next)
+                    .is_ok(),
+                "relative target {next} should be allowed"
+            );
+        }
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn cross_host_pagination_target_is_refused() {
+        let mut env = EnvGuard::default();
+        env.unset("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+
+        let err = check_pagination_target(
+            "pageguard",
+            "https://api.example.com/v1/things",
+            "https://evil.example.net/v1/things?cursor=2",
+        )
+        .expect_err("a cross-host pagination link must be refused");
+
+        assert!(
+            err.contains("https://api.example.com") && err.contains("https://evil.example.net"),
+            "the error should name both origins, got: {err}"
+        );
+        assert!(
+            err.contains("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION"),
+            "the error should name the opt-out, got: {err}"
+        );
+        // The origin only — a pagination link's query string can itself carry a
+        // credential, so it must not be echoed into logs.
+        assert!(
+            !err.contains("cursor=2"),
+            "the error must not echo the target's query string, got: {err}"
+        );
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn cross_host_pagination_target_is_allowed_when_explicitly_enabled() {
+        let mut env = EnvGuard::default();
+        env.set("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION", "1");
+
+        assert!(check_pagination_target(
+            "pageguard",
+            "https://api.example.com/v1/things",
+            "https://cdn.example.net/v1/things?cursor=2"
+        )
+        .is_ok());
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn pagination_opt_out_is_separate_from_the_redirect_opt_out() {
+        // Allowing redirects is not consent to let a response body steer the
+        // next request, so the redirect key must not unlock pagination.
+        let mut env = EnvGuard::default();
+        env.unset("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+        env.set("PAGEGUARD_ALLOW_CROSS_HOST_REDIRECTS", "1");
+
+        assert!(
+            check_pagination_target(
+                "pageguard",
+                "https://api.example.com/v1/things",
+                "https://evil.example.net/v1/things"
+            )
+            .is_err(),
+            "the redirect opt-out must not enable cross-host pagination"
         );
     }
 
