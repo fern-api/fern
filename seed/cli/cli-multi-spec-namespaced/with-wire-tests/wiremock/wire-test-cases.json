@@ -16,6 +16,7 @@
   ],
   "authMock": null,
   "loginTokenSetup": null,
+  "endpointSecurityAuth": false,
   "cases": [
     {
       "id": "listusers",
@@ -25,6 +26,7 @@
       "body": null,
       "queryMatchers": [],
       "headerMatchers": [],
+      "requiresAuth": false,
       "response": {
         "status": 200,
         "body": "[\n  {\n    \"id\": \"id\",\n    \"email\": \"email\"\n  }\n]"
@@ -38,6 +40,7 @@
       "body": null,
       "queryMatchers": [],
       "headerMatchers": [],
+      "requiresAuth": false,
       "response": {
         "status": 200,
         "body": "[\n  {\n    \"id\": \"id\",\n    \"profile\": {\n      \"email\": \"email\",\n      \"displayName\": \"displayName\"\n    }\n  }\n]"
@@ -51,6 +54,7 @@
       "body": null,
       "queryMatchers": [],
       "headerMatchers": [],
+      "requiresAuth": false,
       "response": {
         "status": 422,
         "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
@@ -65,6 +69,7 @@
       "body": null,
       "queryMatchers": [],
       "headerMatchers": [],
+      "requiresAuth": false,
       "response": {
         "status": 422,
         "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"

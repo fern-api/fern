@@ -3308,12 +3308,7 @@ fn resolve_upload_mime(
         .unwrap_or_else(|| "application/octet-stream".to_string());
 
     // Strip CR/LF and other control characters to prevent MIME header injection.
-    let sanitized: String = raw.chars().filter(|c| !c.is_control()).collect();
-    if sanitized.is_empty() {
-        "application/octet-stream".to_string()
-    } else {
-        sanitized
-    }
+    sanitize_mime(raw)
 }
 
 /// Simple MIME type inference from file extension.
@@ -3340,8 +3335,20 @@ fn mime_from_extension(path: &str) -> Option<String> {
         "ico" => "image/x-icon",
         "mp3" => "audio/mpeg",
         "wav" => "audio/wav",
+        // Speech-to-text and dubbing endpoints take these routinely, and a
+        // server that validates the part's media type rejects an upload
+        // labelled `application/octet-stream`.
+        "m4a" => "audio/mp4",
+        "aac" => "audio/aac",
+        "flac" => "audio/flac",
+        "ogg" | "oga" => "audio/ogg",
+        "opus" => "audio/opus",
+        "aif" | "aiff" => "audio/aiff",
         "mp4" => "video/mp4",
         "webm" => "video/webm",
+        "mov" => "video/quicktime",
+        // Accepted by document-ingestion endpoints (e.g. knowledge bases).
+        "epub" => "application/epub+zip",
         "md" | "markdown" => "text/markdown",
         "yaml" | "yml" => "application/yaml",
         "toml" => "application/toml",
@@ -3462,11 +3469,43 @@ fn build_multipart_stream(
     ))
 }
 
-/// Resolve a file part's `Content-Type`. A per-part value from the OpenAPI
-/// `encoding` object wins; otherwise the OAS default for a binary part,
-/// `application/octet-stream`, applies.
-fn file_part_mime(content_type: Option<&str>) -> &str {
-    content_type.unwrap_or("application/octet-stream")
+/// Resolve a file part's `Content-Type`:
+///
+/// 1. A per-part value from the OpenAPI `encoding` object (explicit wins)
+/// 2. Inference from the file's extension
+/// 3. `application/octet-stream`
+///
+/// Same precedence [`resolve_upload_mime`] already applies to binary request
+/// bodies — this path previously skipped step 2 and labelled *every* upload
+/// `application/octet-stream`. That is the OAS default for a binary part and so
+/// technically conformant, but servers that validate a part's media type reject
+/// it outright: ElevenLabs' knowledge-base upload, for one, answers
+/// `Invalid file type. Allowed types are ['application/pdf', 'text/plain', …]`
+/// for a `.txt` file the CLI mislabelled. Since most specs omit `encoding`
+/// entirely, that made uploads impossible against any strict server.
+///
+/// `file_name` is `None` when the payload is not the file's native bytes —
+/// stdin, or an `@text`/`@data` transform that rewrites the content (a base64
+/// re-encoding of a PNG is not `image/png`). Those keep the octet-stream
+/// default rather than claiming a type the bytes no longer have.
+fn file_part_mime(content_type: Option<&str>, file_name: Option<&str>) -> String {
+    let raw = content_type
+        .map(|s| s.to_string())
+        .or_else(|| file_name.and_then(mime_from_extension))
+        .unwrap_or_else(|| "application/octet-stream".to_string());
+    sanitize_mime(raw)
+}
+
+/// Strip control characters from a resolved MIME type to prevent header
+/// injection via user-controlled paths or spec metadata, falling back to
+/// `application/octet-stream` if nothing survives.
+fn sanitize_mime(raw: String) -> String {
+    let sanitized: String = raw.chars().filter(|c| !c.is_control()).collect();
+    if sanitized.is_empty() {
+        "application/octet-stream".to_string()
+    } else {
+        sanitized
+    }
 }
 
 /// Build a `reqwest::multipart::Form` from the collected CLI flag values.
@@ -3522,7 +3561,6 @@ async fn build_multipart_form(
                     form = form.part(name.clone(), literal_part);
                     continue;
                 }
-                let mime = file_part_mime(content_type.as_deref());
                 // Parse the raw stored path so we know which encoding the
                 // user asked for (`Auto` → raw bytes, `Text` → UTF-8 only,
                 // `Data` → always base64 — FER-10532). Stdin (`@-` / `-`)
@@ -3573,9 +3611,20 @@ async fn build_multipart_form(
                     )?
                     .into_bytes(),
                 };
+                // Resolved here, not before the read: inferring the media type
+                // from the extension needs the resolved file name, and only the
+                // untransformed `Auto` path still carries the file's own bytes.
+                let mime = file_part_mime(
+                    content_type.as_deref(),
+                    if mode == AtMode::Auto && !is_stdin {
+                        Some(file_name.as_str())
+                    } else {
+                        None
+                    },
+                );
                 let file_part = reqwest::multipart::Part::bytes(part_bytes)
                     .file_name(file_name)
-                    .mime_str(mime)
+                    .mime_str(&mime)
                     .map_err(|e| {
                         CliError::Validation(format!(
                             "Invalid Content-Type '{mime}' for multipart field '{name}': {e}"
@@ -4771,11 +4820,51 @@ mod tests {
 
     #[test]
     fn test_file_part_mime_defaults_and_override() {
-        // No per-part content type → OAS binary default.
-        assert_eq!(file_part_mime(None), "application/octet-stream");
-        // An encoding-supplied content type wins.
-        assert_eq!(file_part_mime(Some("image/png")), "image/png");
-        assert_eq!(file_part_mime(Some("text/plain")), "text/plain");
+        // Neither an encoding entry nor a usable file name → OAS binary default.
+        assert_eq!(file_part_mime(None, None), "application/octet-stream");
+        // An encoding-supplied content type wins, even over the extension.
+        assert_eq!(file_part_mime(Some("image/png"), None), "image/png");
+        assert_eq!(file_part_mime(Some("text/plain"), None), "text/plain");
+        assert_eq!(
+            file_part_mime(Some("application/pdf"), Some("notes.txt")),
+            "application/pdf"
+        );
+    }
+
+    #[test]
+    fn test_file_part_mime_infers_from_extension_when_spec_is_silent() {
+        // Most specs omit `encoding` entirely. Labelling these parts
+        // `application/octet-stream` makes servers that validate a part's media
+        // type reject the upload — every type below is one such server's
+        // allow-list entry that the CLI previously could not satisfy.
+        assert_eq!(file_part_mime(None, Some("doc.txt")), "text/plain");
+        assert_eq!(file_part_mime(None, Some("paper.pdf")), "application/pdf");
+        assert_eq!(file_part_mime(None, Some("notes.md")), "text/markdown");
+        assert_eq!(file_part_mime(None, Some("page.html")), "text/html");
+        assert_eq!(file_part_mime(None, Some("book.epub")), "application/epub+zip");
+        assert_eq!(
+            file_part_mime(None, Some("report.docx")),
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        );
+        // Audio, for the speech-to-text and dubbing endpoints.
+        assert_eq!(file_part_mime(None, Some("clip.mp3")), "audio/mpeg");
+        assert_eq!(file_part_mime(None, Some("clip.m4a")), "audio/mp4");
+        assert_eq!(file_part_mime(None, Some("clip.flac")), "audio/flac");
+        // Unrecognized or absent extension falls back to the OAS default.
+        assert_eq!(file_part_mime(None, Some("archive.xyz")), "application/octet-stream");
+        assert_eq!(file_part_mime(None, Some("README")), "application/octet-stream");
+    }
+
+    #[test]
+    fn test_file_part_mime_is_case_insensitive_and_injection_safe() {
+        assert_eq!(file_part_mime(None, Some("CLIP.MP3")), "audio/mpeg");
+        // A control character in a spec-supplied value cannot smuggle a header
+        // break into the multipart preamble.
+        assert_eq!(
+            file_part_mime(Some("text/plain\r\nX-Injected: 1"), None),
+            "text/plainX-Injected: 1"
+        );
+        assert_eq!(file_part_mime(Some("\r\n"), None), "application/octet-stream");
     }
 
     /// Send a built multipart form to a local mock server and return the raw
@@ -4844,9 +4933,34 @@ mod tests {
         );
         assert!(
             body.contains("Content-Type: application/octet-stream"),
-            "file part should default to octet-stream; got: {body}"
+            "file part with an unrecognized extension should default to octet-stream; got: {body}"
         );
         assert!(body.contains("payload-bytes"), "file bytes should stream; got: {body}");
+    }
+
+    #[tokio::test]
+    async fn test_build_multipart_form_file_part_infers_content_type_from_extension() {
+        // The regression that made uploads unusable: with no `encoding` entry —
+        // which is what most specs have — every part went out as
+        // `application/octet-stream`, and servers that validate a part's media
+        // type rejected the request outright.
+        let tmp = std::env::temp_dir().join("fern_multipart_inferred.txt");
+        std::fs::write(&tmp, b"plain-text-payload").unwrap();
+        let body = multipart_body_string(vec![MultipartPart::File {
+            name: "file".into(),
+            path: tmp.to_string_lossy().into_owned(),
+            content_type: None,
+        }])
+        .await;
+        let _ = std::fs::remove_file(&tmp);
+        assert!(
+            body.contains("Content-Type: text/plain"),
+            "a .txt part should be labelled text/plain; got: {body}"
+        );
+        assert!(
+            !body.contains("Content-Type: application/octet-stream"),
+            "the octet-stream default must not survive a recognized extension; got: {body}"
+        );
     }
 
     #[tokio::test]

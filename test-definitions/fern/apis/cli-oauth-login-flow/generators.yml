@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# A *public-client* OAuth login flow (authorization-code + PKCE), as opposed to
+# the client-credentials flow in `cli-oauth`. The distinction matters for the CLI
+# wire tests: client-credentials produces a manifest `authMock` (a token endpoint
+# the harness stubs), while a login flow produces `loginTokenSetup` — the harness
+# seeds a token via `auth login --with-token` and then asserts the request-time
+# keyring -> `Authorization: Bearer <token>` injection. Nothing exercised that
+# second path before this fixture, which is how a bug that demanded the bearer
+# from *unauthenticated* endpoints reached a customer.
+auth-schemes:
+  OAuth2:
+    scheme: oauth
+    type: authorization-code
+    client-id: login-flow-test-client
+    authorization-url: https://api.example.com/oauth/authorize
+    token-url: https://api.example.com/oauth/token
+    scopes:
+      - read:widgets
+api:
+  auth: OAuth2
+  specs:
+    - openapi: ./openapi.yml
+
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: latest
+        ir-version: latest

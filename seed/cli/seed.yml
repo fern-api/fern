@@ -4,12 +4,19 @@ image: fernapi/fern-cli-generator
 changelogLocation: ../../generators/cli/versions.yml
 
 buildScripts:
+  # `--locked` is load-bearing, not cosmetic: it makes seed fail when the
+  # generated Cargo.lock does not resolve against the generated Cargo.toml.
+  # Without it cargo silently re-resolves, so a lock missing a package still
+  # built — while `cargo metadata --locked` and `cargo audit` failed in the
+  # customer's repo, quietly disabling dependency auditing. See
+  # patchCargoToml.ts, which derives the generated crates' lock stanzas from
+  # their real manifests and fails generation if the shipped lock is short.
   compileScript:
     commands:
-      - cargo build --all-features --tests
+      - cargo build --locked --all-features --tests
   testScript:
     commands:
-      - cargo test --all-features
+      - cargo test --locked --all-features
 
 publish:
   preBuildCommands:
@@ -172,6 +179,23 @@ fixtures:
   # a field fails at `cargo test`.
   openapi-path-param-body-collision:
     - customConfig:
+        generateWireTests: true
+      outputFolder: with-wire-tests
+  # Public-client login flow (authorization-code + PKCE) wire coverage. The only
+  # fixture whose manifest carries `loginTokenSetup`: the harness seeds a token
+  # via `auth login --with-token` and asserts business requests carry
+  # `Authorization: Bearer <token>`, exercising the request-time keyring
+  # provider. The spec deliberately mixes authenticated operations (`widgets`)
+  # with `security: []` ones (`tokens exchange`, `system health`) so the fixture
+  # pins the *gate* as well as the assertion: an endpoint declaring no auth must
+  # not be required to send a credential. Requiring one made its mock
+  # unmatchable — the CLI correctly sends nothing, nothing matches, and the case
+  # failed for a reason unrelated to what it tests. That shipped because no
+  # fixture reached this path (`oauth-pkce` is a Fern-definition workspace, so
+  # the CLI generator skips it; `cli-oauth` is client-credentials).
+  cli-oauth-login-flow:
+    - customConfig:
+        binaryName: login-flow
         generateWireTests: true
       outputFolder: with-wire-tests
 

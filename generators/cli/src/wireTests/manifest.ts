@@ -54,6 +54,27 @@ export interface WireTestCase {
      */
     headerMatchers: Array<{ name: string; equalTo?: string; matches?: string }>;
     /**
+     * Whether this endpoint declares auth, straight from the IR's
+     * `endpoint.auth`. The harness only asserts credential injection on cases
+     * where it's `true`.
+     *
+     * The IR is the oracle here for the same reason it is for
+     * {@link WireTestCase.multipartFields}: it already resolves the full
+     * OpenAPI security picture (root `security`, per-operation overrides, and
+     * `security: []` opt-outs), so the harness inherits that instead of
+     * re-deriving it. An endpoint that declares no auth cannot be required to
+     * carry a credential — a mock that demands one never matches, the CLI gets
+     * no response, and the case fails for a reason that has nothing to do with
+     * the endpoint under test. The token endpoint of an OAuth flow is the
+     * common instance: it authenticates with client credentials in the body and
+     * correctly sends no bearer.
+     *
+     * Deliberately *not* the inverse assertion: `requiresAuth: false` does not
+     * forbid a credential header. Specs under-declare security often enough
+     * that forbidding it would manufacture failures on correct CLIs.
+     */
+    requiresAuth: boolean;
+    /**
      * multipart/form-data fields, present only when the endpoint's request body
      * is a file upload. Derived from the IR — *not* the runtime's own multipart
      * classifier — so the harness drives each field the way the spec intends: a
@@ -65,7 +86,7 @@ export interface WireTestCase {
      * fields the request may omit — used to synthesize an "optional file omitted"
      * variant (see {@link WireTestCase.omitOptionalFiles}).
      */
-    multipartFields?: Array<{ wireName: string; isFile: boolean; isOptional: boolean }>;
+    multipartFields?: MultipartFieldSpec[];
     /**
      * When true, this is a negative twin of a happy-path case: the mock serves a
      * non-2xx response (with a non-empty JSON error body) and the harness asserts
@@ -134,7 +155,32 @@ export interface WireTestManifest {
      * Null for client-credentials / non-login-flow CLIs.
      */
     loginTokenSetup: LoginTokenSetup | null;
+    /**
+     * True when the IR's auth requirement is `ENDPOINT_SECURITY` — each endpoint
+     * declares which scheme it uses, and the CLI sends only that one. The
+     * harness then can't assume the login-flow bearer applies to every
+     * auth-declaring endpoint, so it skips the bearer assertion wholesale
+     * (`mock-utils` skips its aggregate auth-header matchers in this mode for
+     * exactly the same reason — see its `isEndpointSecurity` branch).
+     */
+    endpointSecurityAuth: boolean;
     cases: WireTestCase[];
+}
+
+/** One `multipart/form-data` field, derived from the IR's file-upload request body. */
+export interface MultipartFieldSpec {
+    wireName: string;
+    isFile: boolean;
+    /** Whether the request may omit it — drives the "optional file omitted" variant. */
+    isOptional: boolean;
+    /**
+     * The spec's `encoding.<field>.contentType`, when declared. The harness
+     * requires the part to carry it, so a runtime that ignores a declared media
+     * type fails the match. Absent for the common case of a spec that declares
+     * no `encoding` object at all — the harness then expects the type the CLI
+     * infers from the file's extension.
+     */
+    contentType?: string;
 }
 
 /** Instructs the harness to seed a keyring token before driving business requests. */
@@ -277,6 +323,7 @@ export function buildWireTestManifest(
         authEnvVars: options.authEnvVars,
         authMock: buildAuthMock(options.oauthTokenEndpoint ?? null),
         loginTokenSetup: buildLoginTokenSetup(options.loginFlowSchemes ?? []),
+        endpointSecurityAuth: ir.auth.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity,
         cases
     };
 }
@@ -397,6 +444,7 @@ function buildCase(args: {
         body,
         queryMatchers: extractQueryMatchers(mapping),
         headerMatchers: extractHeaderMatchers(mapping),
+        requiresAuth: endpoint.auth,
         ...(multipartFields != null ? { multipartFields } : {}),
         response: {
             status: mapping.response.status,
@@ -457,21 +505,25 @@ function buildOptionalFileOmittedVariant(positive: WireTestCase, usedIds: Set<st
  * an optional file) is what we want the wire test to expose, so it must not be
  * the oracle. Returns `undefined` for non-file-upload endpoints.
  */
-function extractMultipartFields(
-    endpoint: FernIr.HttpEndpoint
-): Array<{ wireName: string; isFile: boolean; isOptional: boolean }> | undefined {
+function extractMultipartFields(endpoint: FernIr.HttpEndpoint): MultipartFieldSpec[] | undefined {
     const requestBody = endpoint.requestBody;
     if (requestBody == null || requestBody.type !== "fileUpload") {
         return undefined;
     }
-    const fields: Array<{ wireName: string; isFile: boolean; isOptional: boolean }> = [];
+    const fields: MultipartFieldSpec[] = [];
     for (const property of requestBody.properties) {
         switch (property.type) {
             case "file": {
-                // Both single-file and file-array variants carry `key` + `isOptional`.
+                // Both single-file and file-array variants carry `key` + `isOptional`
+                // + `contentType` (the spec's `encoding.<field>.contentType`).
                 const wireName = getWireValue(property.value.key);
                 if (wireName != null && wireName !== "") {
-                    fields.push({ wireName, isFile: true, isOptional: property.value.isOptional });
+                    fields.push({
+                        wireName,
+                        isFile: true,
+                        isOptional: property.value.isOptional,
+                        ...(property.value.contentType != null ? { contentType: property.value.contentType } : {})
+                    });
                 }
                 break;
             }

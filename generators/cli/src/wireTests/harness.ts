@@ -86,6 +86,11 @@ struct Manifest {
     auth_mock: Option<AuthMock>,
     #[serde(rename = "loginTokenSetup")]
     login_token_setup: Option<LoginTokenSetup>,
+    /// \`ENDPOINT_SECURITY\` auth: each endpoint picks its own scheme, so no single
+    /// credential can be required across the board. Suppresses the bearer
+    /// assertion entirely.
+    #[serde(rename = "endpointSecurityAuth", default)]
+    endpoint_security_auth: bool,
     cases: Vec<Case>,
 }
 
@@ -122,6 +127,12 @@ struct Case {
     query_matchers: Vec<QueryMatcher>,
     #[serde(rename = "headerMatchers", default)]
     header_matchers: Vec<HeaderMatcher>,
+    /// Whether the endpoint declares auth (from the IR). Gates the credential
+    /// assertions below: an endpoint that declares none cannot be required to
+    /// send one. Defaults to \`false\` so an older manifest degrades to "assert
+    /// nothing" rather than "assert a credential nobody sends".
+    #[serde(rename = "requiresAuth", default)]
+    requires_auth: bool,
     #[serde(rename = "multipartFields", default)]
     multipart_fields: Vec<MultipartFieldSpec>,
     #[serde(rename = "expectError", default)]
@@ -139,6 +150,10 @@ struct MultipartFieldSpec {
     is_file: bool,
     #[serde(rename = "isOptional", default)]
     is_optional: bool,
+    /// The spec's \`encoding.<field>.contentType\`, when declared. \`None\` for the
+    /// common spec that declares no \`encoding\` object.
+    #[serde(rename = "contentType", default)]
+    content_type: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -163,6 +178,33 @@ struct ExpectedResponse {
 
 fn load_manifest() -> Manifest {
     serde_json::from_str(MANIFEST).expect("wire-test-cases.json is valid JSON")
+}
+
+/// Matcher asserting a substring is **absent** from the request body.
+/// \`wiremock\` ships only positive body matchers, but proving the CLI emitted
+/// *no* part for a field it was supposed to omit needs a negative one.
+struct BodyDoesNotContain(String);
+
+impl wiremock::Match for BodyDoesNotContain {
+    fn matches(&self, request: &wiremock::Request) -> bool {
+        !String::from_utf8_lossy(&request.body).contains(&self.0)
+    }
+}
+
+/// The literal \`Content-Disposition\` fragment reqwest emits for a multipart
+/// field named \`field\`, or \`None\` when reqwest would percent-encode the name
+/// (\`name*=utf-8''…\`) instead of writing it verbatim, which happens for
+/// non-ASCII names and for names containing \`"\`, \`%\`, CR or LF. Returning
+/// \`None\` keeps the harness from requiring a fragment that will never appear.
+fn content_disposition_name(field: &str) -> Option<String> {
+    let is_verbatim = field
+        .chars()
+        .all(|ch| ch.is_ascii() && !matches!(ch, '"' | '%' | '\\r' | '\\n' | '\\\\'));
+    if is_verbatim {
+        Some(format!("name=\\"{field}\\""))
+    } else {
+        None
+    }
 }
 
 /// Normalize a URL path for comparison: ensure a leading slash and drop any
@@ -443,6 +485,75 @@ fn substitute_path(template: &str, params: &serde_json::Map<String, serde_json::
     path
 }
 
+/// Render the requests the mock server actually received, for diagnostics.
+fn describe_received(requests: &[wiremock::Request]) -> String {
+    if requests.is_empty() {
+        return "  (the server received no requests at all)".to_string();
+    }
+    requests
+        .iter()
+        .enumerate()
+        .map(|(index, request)| {
+            let headers: Vec<String> = request
+                .headers
+                .iter()
+                .map(|(name, value)| format!("{}: {}", name, value.to_str().unwrap_or("<non-utf8>")))
+                .collect();
+            let body = String::from_utf8_lossy(&request.body);
+            let body = if body.chars().count() > 2000 {
+                format!("{}… <truncated>", body.chars().take(2000).collect::<String>())
+            } else {
+                body.to_string()
+            };
+            format!(
+                "  #{} {} {}\\n     headers: {}\\n     body: {}",
+                index + 1,
+                request.method,
+                request.url,
+                headers.join(", "),
+                body
+            )
+        })
+        .collect::<Vec<_>>()
+        .join("\n")
+}
+
+/// Assert the case's mock matched exactly one request, with everything needed to
+/// debug a miss: the command, the process outcome, and the requests the server
+/// actually saw next to what the mock demanded.
+///
+/// Every case type routes through this, so a matcher miss reads the same whether
+/// the CLI was expected to succeed or fail. Relying on \`MockServer\`'s drop-time
+/// verification instead would report a bare "expected 1, got 0" with no command,
+/// no stderr, and no way to tell "never sent the request" from "sent the wrong
+/// one" — which is exactly the failure mode negative cases hit, since a CLI that
+/// dies early still satisfies their non-zero-exit assertion.
+#[allow(clippy::too_many_arguments)]
+async fn assert_request_matched(
+    id: &str,
+    guard: &wiremock::MockGuard,
+    server: &MockServer,
+    binary_name: &str,
+    args: &[String],
+    exit_code: Option<i32>,
+    stdout: &str,
+    stderr: &str,
+    expected_method: &str,
+    expected_path: &str,
+) {
+    let matched = guard.received_requests().await;
+    if matched.len() == 1 {
+        return;
+    }
+    let received = server.received_requests().await.unwrap_or_default();
+    panic!(
+        "{id}: mock matched {} requests, expected exactly 1.\\n  expected: {expected_method} {expected_path}\\n  command: {binary_name} {}\\n  exit code: {exit_code:?}\\n  stdout: {stdout}\\n  stderr: {stderr}\\n  requests the server received:\\n{}\\n  note: a request listed above that was not matched means a query, header, or body matcher rejected it — diff it against this case in wiremock/wire-test-cases.json",
+        matched.len(),
+        args.join(" "),
+        describe_received(&received)
+    );
+}
+
 async fn run_case(id: &str) {
     let manifest = load_manifest();
     let case = manifest
@@ -490,39 +601,82 @@ async fn run_case(id: &str) {
     // text part (the optional-file bug) fails to match and the test fails.
     let mut body_flag_args: Vec<String> = Vec::new();
     let mut required_body_substrings: Vec<String> = Vec::new();
+    let mut forbidden_body_substrings: Vec<String> = Vec::new();
 
     if command.is_multipart {
         std::fs::create_dir_all(&fixtures_dir).expect("create multipart fixture dir");
         for field in &case.multipart_fields {
             // Exercise the valid "optional file omitted" shape: drop optional
-            // file fields, send only what's required, and assert the request
-            // still succeeds and carries no bogus part for the omitted field.
+            // file fields and send only what's required. The field must then be
+            // *absent* from the wire body — asserted below via
+            // \`forbidden_body_substrings\`, since a runtime that turns an absent
+            // optional file into an empty (or path-valued) part would otherwise
+            // pass unnoticed.
             if case.omit_optional_files && field.is_file && field.is_optional {
+                if let Some(disposition) = content_disposition_name(&field.wire_name) {
+                    forbidden_body_substrings.push(disposition);
+                }
                 continue;
             }
             let flag = fern_cli_sdk::to_kebab_flag(&field.wire_name);
             // Every part sent must name itself in its Content-Disposition, so a
-            // dropped or misnamed part fails the match.
-            required_body_substrings.push(format!("name=\\"{}\\"", field.wire_name));
+            // dropped or misnamed part fails the match. Skipped for names
+            // reqwest percent-encodes (\`name*=utf-8''…\`) rather than emitting
+            // verbatim — there the value/marker checks below carry the assertion.
+            let disposition = content_disposition_name(&field.wire_name);
             if field.is_file {
                 let marker = format!("wire-fixture-{id}-{}-bytes", field.wire_name);
-                let file_path = fixtures_dir.join(&field.wire_name);
+                // The fixture carries a \`.txt\` extension deliberately. A part's
+                // media type is resolved as declared-\`encoding\` → extension →
+                // \`application/octet-stream\`, and an extensionless fixture would
+                // only ever exercise that last fallback — which is precisely the
+                // regression worth guarding: labelling every upload
+                // \`application/octet-stream\` makes servers that validate a part's
+                // media type reject it (ElevenLabs' knowledge-base upload answers
+                // \`Invalid file type\` for a mislabelled \`.txt\`).
+                let file_name = format!("{}.txt", field.wire_name);
+                let file_path = fixtures_dir.join(&file_name);
                 std::fs::write(&file_path, marker.as_bytes()).expect("write multipart fixture file");
                 body_flag_args.push(format!("--{flag}"));
                 body_flag_args.push(file_path.to_string_lossy().into_owned());
-                // A file part carries \`filename="..."\` *and* the file's bytes.
-                // The optional-file bug sends the path as a text part — no
-                // filename attribute and none of the marker bytes — so both
+                // A file part carries \`filename="..."\` *on its own
+                // Content-Disposition* and the file's bytes. Requiring the
+                // \`name="…"; filename="\` pair (not a bare \`filename="\`) binds the
+                // attribute to *this* field, so a sibling file part can't satisfy
+                // it. The optional-file bug sends the path as a text part — no
+                // filename on that part and none of the marker bytes — so both
                 // checks fail and the test catches it.
-                required_body_substrings.push("filename=\\"".to_string());
+                // The part's own \`Content-Type\` is pinned in the same substring as
+                // its disposition, because reqwest emits them on consecutive
+                // lines. Asserting \`Content-Type\` alone would be satisfied by any
+                // sibling part; this binds it to *this* field. Expected value: the
+                // spec's declared \`encoding\` type when there is one, otherwise the
+                // type inferred from the fixture's extension.
+                let expected_mime = field.content_type.clone().unwrap_or_else(|| "text/plain".to_string());
+                if let Some(disposition) = &disposition {
+                    required_body_substrings.push(format!(
+                        "{disposition}; filename=\\"{file_name}\\"\\r\\nContent-Type: {expected_mime}"
+                    ));
+                } else {
+                    required_body_substrings.push("filename=\\"".to_string());
+                    required_body_substrings.push(format!("Content-Type: {expected_mime}"));
+                }
                 required_body_substrings.push(marker);
             } else {
-                let value = case
-                    .body
-                    .get(&field.wire_name)
-                    .and_then(|v| v.as_str())
-                    .map(str::to_string)
-                    .unwrap_or_else(|| format!("wire-fixture-{id}-{}", field.wire_name));
+                if let Some(disposition) = disposition {
+                    required_body_substrings.push(disposition);
+                }
+                // Prefer the IR example's value. Non-string scalars (and nested
+                // objects) are rendered as JSON text — a CLI flag only ever
+                // carries a string, and asserting the rendered form is what
+                // catches a runtime that reformats it.
+                let value = match case.body.get(&field.wire_name) {
+                    Some(serde_json::Value::String(text)) => text.clone(),
+                    Some(serde_json::Value::Null) | None => {
+                        format!("wire-fixture-{id}-{}", field.wire_name)
+                    }
+                    Some(other) => other.to_string()
+                };
                 body_flag_args.push(format!("--{flag}"));
                 body_flag_args.push(value.clone());
                 required_body_substrings.push(value);
@@ -626,8 +780,16 @@ async fn run_case(id: &str) {
     }
     // For login-flow schemes, require the exact bearer we seeded — this is what verifies the
     // request-time keyring → \`Authorization: Bearer <token>\` injection end to end.
-    if let Some(setup) = &manifest.login_token_setup {
-        mock = mock.and(match_header("authorization", format!("Bearer {}", setup.token).as_str()));
+    //
+    // Only on endpoints that declare auth. An unauthenticated operation is not
+    // expected to carry the bearer, so demanding one would make its mock
+    // unmatchable and fail the case for a reason unrelated to what it tests. An
+    // OAuth token endpoint exposed as a normal command is the canonical case:
+    // it sends client credentials in the body and no \`Authorization\` header.
+    if case.requires_auth && !manifest.endpoint_security_auth {
+        if let Some(setup) = &manifest.login_token_setup {
+            mock = mock.and(match_header("authorization", format!("Bearer {}", setup.token).as_str()));
+        }
     }
     // Assert the *request body* the CLI sends, not just its method/path. For an
     // opaque JSON body, require the example fields to be present with the right
@@ -636,13 +798,29 @@ async fn run_case(id: &str) {
     // A request with a wrong, missing, or mis-serialized body won't match this
     // mock, so the CLI gets no response and the test fails.
     if command.is_multipart || command.is_binary {
+        if command.is_multipart {
+            // The parts are worthless under the wrong media type, and reqwest
+            // only sets this when the body was actually built as a form.
+            mock = mock.and(match_header_regex("content-type", "^multipart/form-data"));
+        }
         for substring in &required_body_substrings {
             mock = mock.and(match_body_contains(substring.clone()));
+        }
+        // Fields the case deliberately omitted must not appear at all.
+        for substring in &forbidden_body_substrings {
+            mock = mock.and(BodyDoesNotContain(substring.clone()));
         }
     } else if command.has_json_body && !case.body.is_null() {
         mock = mock.and(match_body_partial_json(case.body.clone()));
     }
-    mock.respond_with(template).expect(1).mount(&server).await;
+    // Registered *scoped* rather than mounted: a \`MockGuard\` exposes the
+    // per-mock matched count, which \`assert_request_matched\` turns into a
+    // failure message carrying the command and process output. The guard's own
+    // drop-time check stays as a backstop, and it no-ops while panicking, so a
+    // failed assertion below surfaces once and cleanly.
+    let mock_guard = server
+        .register_as_scoped(mock.respond_with(template).expect(1).named(format!("case {id}")))
+        .await;
 
     let mut args: Vec<String> = command.chain.clone();
     args.push("--base-url".to_string());
@@ -716,11 +894,49 @@ async fn run_case(id: &str) {
             "expected an error message on stderr for {id} (a {} response), got empty stderr",
             case.response.status
         );
+        // A non-zero exit alone proves nothing: the CLI must have failed
+        // *because of the mocked response*, not before it ever made the call.
+        // Without this, a bad command line, a rejected body, or a startup panic
+        // all pass this branch silently.
+        assert_request_matched(
+            id,
+            &mock_guard,
+            &server,
+            &manifest.binary_name,
+            &args,
+            output.status.code(),
+            &stdout,
+            &stderr,
+            &case.method,
+            &expected_path,
+        )
+        .await;
         return;
     }
 
+    // Request shape first, process outcome second. When a matcher rejects the
+    // request the mock server answers 404, the CLI faithfully reports that
+    // 404, and it exits non-zero — so checking the exit code first would blame
+    // the CLI for a mock that never matched, and report "exited 1" with no hint
+    // that the request itself was the problem. Asserting the match first names
+    // the root cause and shows the request next to what was expected; a genuine
+    // CLI failure still falls through to the exit-code assertion below.
+    assert_request_matched(
+        id,
+        &mock_guard,
+        &server,
+        &manifest.binary_name,
+        &args,
+        output.status.code(),
+        &stdout,
+        &stderr,
+        &case.method,
+        &expected_path,
+    )
+    .await;
+
     // Primary assertion (mirrors the SDK wire tests: the call succeeds, and
-    // \`Mock::expect(1)\` verifies exactly one matching request on server drop).
+    // \`Mock::expect(1)\` verifies exactly one matching request).
     assert!(
         output.status.success(),
         "CLI exited with {:?}\n  command: {} {}\n  stdout: {stdout}\n  stderr: {stderr}",

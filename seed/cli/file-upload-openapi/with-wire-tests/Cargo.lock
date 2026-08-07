@@ -19,9 +19,9 @@ dependencies = [
 
 [[package]]
 name = "android_system_properties"
-version = "0.1.5"
+version = "0.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "819e7219dbd41043ac279b19830f2efc897156490d7fd6ea916720117ee66311"
+checksum = "ae221649c9976a6f6c56ae1facf410f3ddb33cc661c4b7b61020a912d4237fbc"
 dependencies = [
  "libc",
 ]
@@ -83,34 +83,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2a4385e2e34eb35d6b3efe798b9eb88096925d87726c0798709bf56d9ed84af3"
 
 [[package]]
-name = "api_sdk"
-version = "0.1.0"
-dependencies = [
- "api_types",
- "base64",
- "bytes",
- "futures",
- "reqwest",
- "serde",
- "serde_json",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
-name = "api_types"
-version = "0.0.0"
-dependencies = [
- "base64",
- "chrono",
- "num-bigint",
- "ordered-float",
- "reqwest",
- "serde",
- "serde_json",
-]
-
-[[package]]
 name = "assert-json-diff"
 version = "2.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -130,6 +102,28 @@ dependencies = [
  "compression-core",
  "pin-project-lite",
  "tokio",
+]
+
+[[package]]
+name = "async-stream"
+version = "0.3.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0b5a71a6f37880a80d1d7f19efd781e4b5de42c88f0722cc13bcb6cc2cfe8476"
+dependencies = [
+ "async-stream-impl",
+ "futures-core",
+ "pin-project-lite",
+]
+
+[[package]]
+name = "async-stream-impl"
+version = "0.3.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c7c24de15d275a1ecfd47a380fb4d5ec9bfe0933f309ed5e705b775596a3574d"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
@@ -496,9 +490,10 @@ dependencies = [
  "api_sdk",
  "base64",
  "bytes",
- "clap",
+ "chrono",
  "clap_complete",
  "clap_mangen",
+ "clap",
  "dotenvy",
  "form_urlencoded",
  "futures-util",
@@ -507,25 +502,29 @@ dependencies = [
  "jmespath",
  "keyring",
  "libc",
+ "num-bigint",
+ "ordered-float",
  "percent-encoding",
+ "pin-project",
  "rand 0.8.6",
+ "reqwest-sse",
  "reqwest",
  "secrecy",
- "serde",
- "serde_json",
  "serde_json_path",
+ "serde_json",
  "serde_qs",
  "serde_yaml",
+ "serde",
  "serial_test",
  "sha2",
  "tempfile",
  "thiserror 2.0.18",
- "tokio",
  "tokio-tungstenite",
  "tokio-util",
- "tracing",
+ "tokio",
  "tracing-appender",
  "tracing-subscriber",
+ "tracing",
  "unicode-normalization",
  "webbrowser",
  "wiremock",
@@ -1464,6 +1463,26 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9b4f627cb1b25917193a259e49bdad08f671f8d9708acfd5fe0a8c1455d87220"
 
 [[package]]
+name = "pin-project"
+version = "1.1.13"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2466b2336ed02bcdca6b294417127b90ec92038d1d5c4fbeac971a922e0e0924"
+dependencies = [
+ "pin-project-internal",
+]
+
+[[package]]
+name = "pin-project-internal"
+version = "1.1.13"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c96395f0a926bc13b1c17622aaddda1ecb55d49c8f1bf9777e4d877800a43f8b"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "pin-project-lite"
 version = "0.2.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1693,6 +1712,7 @@ dependencies = [
  "bytes",
  "futures-core",
  "futures-util",
+ "h2",
  "http",
  "http-body",
  "http-body-util",
@@ -1726,6 +1746,19 @@ dependencies = [
  "wasm-bindgen-futures",
  "wasm-streams",
  "web-sys",
+]
+
+[[package]]
+name = "reqwest-sse"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "60e0aedd78f3626aad0ac3352f6128b73d3b617080da13fbaf8d168dad82de89"
+dependencies = [
+ "async-stream",
+ "reqwest",
+ "tokio",
+ "tokio-stream",
+ "tokio-util",
 ]
 
 [[package]]
@@ -2383,6 +2416,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1729aa945f29d91ba541258c8df89027d5792d85a8841fb65e8bf0f4ede4ef61"
 dependencies = [
  "rustls",
+ "tokio",
+]
+
+[[package]]
+name = "tokio-stream"
+version = "0.1.19"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a3d06f0b082ba57c26b79407372e57cf2a1e28124f78e9479fe80322cf53420b"
+dependencies = [
+ "futures-core",
+ "pin-project-lite",
  "tokio",
 ]
 
@@ -3187,3 +3231,31 @@ name = "zmij"
 version = "1.0.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b8848ee67ecc8aedbaf3e4122217aff892639231befc6a1b58d29fff4c2cabaa"
+
+[[package]]
+name = "api_types"
+version = "0.0.0"
+dependencies = [
+ "base64",
+ "chrono",
+ "num-bigint",
+ "ordered-float",
+ "reqwest",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "api_sdk"
+version = "0.1.0"
+dependencies = [
+ "api_types",
+ "base64",
+ "bytes",
+ "futures",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "thiserror 1.0.69",
+ "tokio",
+]
