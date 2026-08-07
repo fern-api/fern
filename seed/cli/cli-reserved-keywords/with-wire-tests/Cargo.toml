@@ -49,7 +49,40 @@ futures-util = "0.3"
 httpdate = "1"
 libc = "0.2"
 percent-encoding = "2.3.2"
-reqwest = { version = "0.12", features = ["json", "multipart", "stream"], default-features = false }
+# `gzip` is not used by this crate directly — it is declared so the shipped
+# Cargo.lock contains the gzip dependency closure. The generated API SDK crate
+# enables `reqwest/gzip`, and because Cargo unifies features across a workspace
+# reqwest is built with it regardless; without it declared here the lock is
+# missing `async-compression` & friends and the generated output fails
+# `cargo build --locked` / `cargo audit`. See patchCargoToml.ts, which inserts
+# the generated crates into the lock but cannot resolve their registry closure.
+reqwest = { version = "0.12", features = ["json", "multipart", "stream", "gzip"], default-features = false }
+
+# --- Lock-closure-only dependencies ---
+#
+# Not used by this crate. They are declared `optional` and enabled by no
+# feature, so they never enter the build graph — but Cargo.lock records the
+# whole dependency graph regardless of features, so declaring them here pins
+# them (and their transitive closure) in the shipped lock.
+#
+# Why that is needed: the generated model/SDK crates depend on these, and
+# `patchCargoToml.ts` inserts those crates into the lock as workspace members
+# without being able to resolve their registry closure. Any package they need
+# that is absent from this lock makes the generated output fail
+# `cargo build --locked`, `cargo metadata --locked` and `cargo audit` — which
+# fails silently in the sense that the build still works, so dependency
+# auditing is quietly disabled instead of erroring.
+#
+# Versions must match what the model generator emits (see
+# generators/rust/model). If a generated crate gains a dependency, add it here.
+chrono = { version = "0.4", features = ["serde"], optional = true }
+num-bigint = { version = "0.4", features = ["serde"], optional = true }
+ordered-float = { version = "4.5", features = ["serde"], optional = true }
+# Added by the generated SDK crate for specs with server-sent events (see
+# AbstractRustGeneratorContext, which declares these two behind an `sse` feature).
+reqwest-sse = { version = "0.1", optional = true }
+pin-project = { version = "1.1", optional = true }
+
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 serde_json_path = "0.7"

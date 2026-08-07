@@ -66,18 +66,30 @@ describe("buildWireTestManifest", () => {
         });
 
         expect(manifest.binaryName).toBe("acme-cli");
-        expect(manifest.cases).toHaveLength(1);
+        // One positive case plus its negative (non-2xx) twin.
+        expect(manifest.cases).toHaveLength(2);
 
         const testCase = manifest.cases[0];
         expect(testCase?.method).toBe("GET");
         expect(testCase?.path).toBe("/users");
         expect(testCase?.params).toEqual({ limit: 5 });
         expect(testCase?.body).toBeNull();
+        expect(testCase?.expectError).toBeFalsy();
         expect(testCase?.response.status).toBe(200);
         expect(JSON.parse(testCase?.response.body ?? "")).toEqual({ results: ["alice"] });
         // The scalar query param is carried as a matcher so the mock enforces it.
         expect(testCase?.queryMatchers).toEqual([{ name: "limit", value: "5" }]);
         expect(testCase?.headerMatchers).toEqual([]);
+
+        // The negative twin reuses the request shape (so the request is still
+        // matched exactly) but forces a non-2xx response the CLI must surface.
+        const negativeCase = manifest.cases[1];
+        expect(negativeCase?.expectError).toBe(true);
+        expect(negativeCase?.method).toBe("GET");
+        expect(negativeCase?.path).toBe("/users");
+        expect(negativeCase?.params).toEqual({ limit: 5 });
+        expect(negativeCase?.response.status).toBeGreaterThanOrEqual(400);
+        expect(negativeCase?.response.body).not.toBe("");
     });
 
     it("emits an auth-header matcher for an authenticated bearer endpoint", () => {
@@ -116,6 +128,45 @@ describe("buildWireTestManifest", () => {
         });
         // mock-utils emits a presence-only Authorization matcher for bearer auth.
         expect(manifest.cases[0]?.headerMatchers).toEqual([{ name: "Authorization", matches: "Bearer .+" }]);
+        // The endpoint declares auth, so credential assertions apply to it.
+        expect(manifest.cases[0]?.requiresAuth).toBe(true);
+    });
+
+    it("carries the endpoint's auth requirement onto every case and its twins", () => {
+        // The single-endpoint fixture declares `auth: false`. Nothing may then
+        // require a credential from it — the harness gates its bearer assertion
+        // on this flag, so an unauthenticated endpoint (an OAuth token endpoint
+        // exposed as a command being the common case) isn't asked for a header
+        // it correctly never sends.
+        const manifest = buildWireTestManifest(makeSingleEndpointIr(), {
+            binaryName: "acme-cli",
+            rootGroup: null,
+            specs: [],
+            authEnvVars: []
+        });
+        for (const testCase of manifest.cases) {
+            expect(testCase.requiresAuth).toBe(false);
+        }
+        // Twins inherit it rather than re-deriving — a negative twin must assert
+        // the same request shape as the positive it mirrors.
+        expect(manifest.cases.some((testCase) => testCase.expectError === true)).toBe(true);
+    });
+
+    it("flags endpoint-security auth so the harness drops blanket credential assertions", () => {
+        const options = {
+            binaryName: "acme-cli",
+            rootGroup: null,
+            specs: [],
+            authEnvVars: []
+        };
+        expect(buildWireTestManifest(makeSingleEndpointIr(), options).endpointSecurityAuth).toBe(false);
+
+        // Under ENDPOINT_SECURITY each endpoint declares its own scheme, so no
+        // one credential holds across the board and the harness must not demand
+        // the login-flow bearer even on endpoints that do declare auth.
+        const endpointSecurityIr = makeSingleEndpointIr();
+        endpointSecurityIr.auth.requirement = FernIr.AuthSchemesRequirement.EndpointSecurity;
+        expect(buildWireTestManifest(endpointSecurityIr, options).endpointSecurityAuth).toBe(true);
     });
 
     it("gives each case a unique, rust-identifier-safe id", () => {
@@ -191,6 +242,7 @@ describe("renderWireTestHarness", () => {
         body: null,
         queryMatchers: [{ name: "limit", value: "5" }],
         headerMatchers: [],
+        requiresAuth: false,
         response: { status: 200, body: '{"results":[]}' }
     };
 
@@ -220,6 +272,34 @@ describe("renderWireTestHarness", () => {
         // A top-level resource matching the namespace leaf is hoisted into the
         // namespace node rather than nested a second time.
         expect(rust).toContain("resources.get(leaf.as_str())");
+    });
+
+    it("gates the login-flow bearer assertion on the endpoint declaring auth", () => {
+        const rust = renderWireTestHarness({ binaryName: "acme-cli", cases: [searchCase] });
+        // Requiring `Authorization: Bearer <seeded>` from an endpoint that
+        // declares no auth makes its mock unmatchable: the CLI correctly sends
+        // no credential, nothing matches, and the case fails for a reason
+        // unrelated to what it tests. An OAuth token endpoint exposed as a
+        // normal command hits this — it authenticates via the request body.
+        expect(rust).toContain("if case.requires_auth && !manifest.endpoint_security_auth {");
+        expect(rust).toContain('match_header("authorization", format!("Bearer {}", setup.token)');
+    });
+
+    it("verifies the matched request explicitly, with diagnostics, on both outcomes", () => {
+        const rust = renderWireTestHarness({ binaryName: "acme-cli", cases: [searchCase] });
+        // Scoped registration is what exposes the per-mock matched count;
+        // MockServer's drop-time verification cannot carry the command or the
+        // process output into its panic.
+        expect(rust).toContain("register_as_scoped(");
+        expect(rust).toContain("async fn assert_request_matched(");
+        // Both the success and the expect-error paths must reach it: a CLI that
+        // dies before making the call still satisfies a non-zero-exit assertion,
+        // so without this a negative case passes its own checks and fails later
+        // with no context.
+        const callSites = rust.match(/assert_request_matched\(\s*\n\s*id,/g) ?? [];
+        expect(callSites).toHaveLength(2);
+        // The message must distinguish "never sent" from "sent the wrong one".
+        expect(rust).toContain("requests the server received:");
     });
 
     it("rejects a case id that is not a safe Rust identifier", () => {
