@@ -3934,6 +3934,9 @@
                       "respectForwardCompatibleEnums": {
                         "type": "boolean"
                       },
+                      "respectOptionalRequestBody": {
+                        "type": "boolean"
+                      },
                       "useBytesForBinaryResponse": {
                         "type": "boolean"
                       },
@@ -4515,6 +4518,9 @@
                           "type": "boolean"
                         },
                         "respectForwardCompatibleEnums": {
+                          "type": "boolean"
+                        },
+                        "respectOptionalRequestBody": {
                           "type": "boolean"
                         },
                         "useBytesForBinaryResponse": {
