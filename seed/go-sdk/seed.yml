@@ -275,7 +275,7 @@ fixtures:
     - outputFolder: no-custom-config
       customConfig: null
   idempotency-headers:
-    - outputFolder: .
+    - outputFolder: no-custom-config
       outputVersion: 0.0.1
       customConfig:
         packageName: fern
