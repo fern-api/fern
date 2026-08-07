@@ -342,6 +342,22 @@ describe("valid-example-endpoint-call", () => {
                 name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
+            {
+                message: 'Example is missing required property "request.foo"',
+                nodePath: [
+                    "service",
+                    "endpoints",
+                    "f",
+                    {
+                        arrayIndex: 0,
+                        key: "examples"
+                    },
+                    "request"
+                ],
+                relativeFilepath: RelativeFilePath.of("request.yml"),
+                name: "valid-example-endpoint-call",
+                severity: "fatal"
+            },
 
             // response.yml
             {
