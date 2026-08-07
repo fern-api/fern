@@ -29,6 +29,7 @@ const SETTINGS_KEY_MAP: Record<string, string> = {
     "respect-readonly-schemas": "respectReadonlySchemas",
     "use-read-variant-for-responses": "useReadVariantForResponses",
     "respect-forward-compatible-enums": "respectForwardCompatibleEnums",
+    "respect-optional-request-body": "respectOptionalRequestBody",
     "use-bytes-for-binary-response": "useBytesForBinaryResponse",
     "default-form-parameter-encoding": "defaultFormParameterEncoding",
     "example-generation": "exampleGeneration",

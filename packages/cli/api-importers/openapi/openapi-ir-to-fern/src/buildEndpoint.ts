@@ -719,7 +719,17 @@ function getRequest({
                 requestValue.docs == null &&
                 (requestValue["content-type"] == null || requestValue["content-type"] === "application/json");
 
-            if (isOptionalBody) {
+            const propagateOptionality = isOptionalBody && context.options.respectOptionalRequestBody;
+
+            if (propagateOptionality) {
+                requestValue.body =
+                    typeof requestTypeReference === "string"
+                        ? wrapTypeReferenceInOptional(requestTypeReference)
+                        : {
+                              ...requestTypeReference,
+                              type: wrapTypeReferenceInOptional(requestTypeReference.type)
+                          };
+            } else if (isOptionalBody) {
                 // the shorthand cannot express optionality, so keep the object form for optional bodies
                 requestValue.body =
                     typeof requestValue.body === "string"
@@ -730,7 +740,10 @@ function getRequest({
             if (canCollapse) {
                 return {
                     schemaIdsToExclude: [],
-                    value: isOptionalBody ? { body: requestValue.body } : (requestValue.body as string)
+                    value:
+                        isOptionalBody && !propagateOptionality
+                            ? { body: requestValue.body }
+                            : (requestValue.body as string)
                 };
             }
 
@@ -1040,11 +1053,16 @@ function getRequest({
  * Only JSON requests carry `requestBody.required` in the OpenAPI IR, and per the OpenAPI spec
  * the flag defaults to false when absent.
  *
- * This is validation-only metadata: it lets an example omit `request`, and is not carried into
- * the IR, so it does not make the request parameter optional in a generated SDK.
+ * By default this is validation-only metadata: it lets an example omit `request`, and is not carried
+ * into the IR, so it does not make the request parameter optional in a generated SDK. Enable
+ * `respectOptionalRequestBody` to make the body optional in the IR (and therefore in generated SDKs).
  */
 function isOptionalJsonBody(request: Request): boolean {
     return request.type === "json" && request.required !== true;
+}
+
+function wrapTypeReferenceInOptional(typeReference: string): string {
+    return typeReference.startsWith("optional<") ? typeReference : `optional<${typeReference}>`;
 }
 
 function endpointRequestSupportsInlinedPathParameters({
