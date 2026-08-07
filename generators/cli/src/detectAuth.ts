@@ -170,11 +170,16 @@ function commandLoginFlowBinding(args: { scheme: FernIr.AuthScheme; config: Toke
         inferred: () => ({}),
         _other: () => ({})
     });
-    const header = config.header ?? derived.header;
+    // Treat an empty configured header as absent so it falls back to the
+    // scheme's wire header (an empty header name would make the generated CLI
+    // reject every authenticated request). `??` alone keeps `""`, so guard
+    // explicitly. An empty `prefix`, by contrast, is a deliberate "no prefix"
+    // override and is dropped below.
+    const header = config.header != null && config.header !== "" ? config.header : derived.header;
     const prefix = config.prefix ?? derived.prefix;
 
     let rustCall = `.login_flow(CommandLoginFlow::new(${rustString(key)}).command(${rustString(config.command)})`;
-    if (header != null) {
+    if (header != null && header !== "") {
         rustCall += `.header(${rustString(header)})`;
     }
     if (prefix != null && prefix !== "") {

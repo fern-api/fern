@@ -251,6 +251,19 @@ describe("detectAuthBindings", () => {
         );
     });
 
+    it("an empty config header falls back to the scheme-derived header", () => {
+        const bindings = detectAuthBindings({
+            auth: auth(header({ key: "MyAuth", headerName: "Authentication" })),
+            binaryName: "cohere",
+            tokenCommands: { MyAuth: { command: "mint.sh", header: "" } }
+        });
+        // An empty header must not render `.header("")` — it falls back to the
+        // scheme's wire header so the generated CLI stays valid.
+        expect(bindings[0]?.rustCall).toBe(
+            '.login_flow(CommandLoginFlow::new("MyAuth").command("mint.sh").header("Authentication"))'
+        );
+    });
+
     it("token command escapes special characters in the rendered Rust string", () => {
         const bindings = detectAuthBindings({
             auth: auth(header({ key: "MyAuth", headerName: "Authentication" })),

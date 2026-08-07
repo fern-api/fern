@@ -219,7 +219,11 @@ impl CachedToken {
     fn is_expired(&self) -> bool {
         match self.expires_at {
             Some(t) => now_epoch() >= t,
-            None => false,
+            // A command-minted token with no parseable expiry (e.g. an opaque
+            // non-JWT token) is always treated as stale so the command re-runs
+            // on the next resolve, rather than caching a token whose lifetime
+            // we can't reason about. See `resolve_bundle`.
+            None => true,
         }
     }
 }
@@ -284,17 +288,24 @@ impl CommandKeyringProvider {
         Ok(secret)
     }
 
-    /// Resolve the current bundle: reuse the keyring's if still valid,
-    /// otherwise mint and persist a fresh one.
+    /// Resolve the current bundle: reuse the keyring's if it has a known,
+    /// unexpired expiry, otherwise mint and persist a fresh one.
+    ///
+    /// A stored bundle with no expiry (`expires_at == None`) is *not* reused:
+    /// command-minted tokens without a parseable JWT `exp` are opaque and
+    /// short-lived, so reusing one indefinitely would keep sending a
+    /// credential long after it stopped working. Re-minting each time matches
+    /// the documented "runs on every invocation" behavior for such tokens.
     fn resolve_bundle(&self) -> Result<TokenBundle, CliError> {
         let store = active_store();
         if let Some(raw) = store.get(&self.cli_name, &self.scheme_name)? {
             let bundle = TokenBundle::parse_or_raw(&raw);
-            if !bundle.is_expired() {
+            if bundle.expires_at.is_some() && !bundle.is_expired() {
                 return Ok(bundle);
             }
         }
-        // No cached token, or it's expired: mint a fresh one.
+        // No cached token, an expired one, or one without a known expiry:
+        // mint a fresh one.
         mint_and_store(&self.cli_name, &self.scheme_name, &self.command)
     }
 }
@@ -527,6 +538,16 @@ mod tests {
         )
     }
 
+    /// Like [`counting_mint_command`] but prints an opaque, non-JWT token
+    /// (no parseable `exp`) that differs each run — so a changed token proves
+    /// the command re-ran.
+    fn counting_opaque_command(counter_path: &std::path::Path) -> String {
+        format!(
+            "printf x >> '{path}'; n=$(wc -c < '{path}'); printf 'opaque-%s' \"$n\"",
+            path = counter_path.display(),
+        )
+    }
+
     fn temp_counter_path(tag: &str) -> std::path::PathBuf {
         std::env::temp_dir().join(format!(
             "fern-cli-cmd-{tag}-{}-{}",
@@ -581,6 +602,34 @@ mod tests {
             std::fs::read(&counter).unwrap().len(),
             2,
             "command should have run once per resolve while expired"
+        );
+        let _ = std::fs::remove_file(&counter);
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    #[serial]
+    async fn provider_re_mints_opaque_token_each_resolve() {
+        // An opaque (non-JWT) token has no parseable expiry. It must not be
+        // cached and reused indefinitely — the command re-runs on every
+        // resolve, both in-memory and across the persisted bundle.
+        let mock = Arc::new(MockKeyringStore::new());
+        set_active_store(mock);
+        let counter = temp_counter_path("opaque");
+        let _ = std::fs::remove_file(&counter);
+        let cmd = counting_opaque_command(&counter);
+        let provider = CommandKeyringProvider::new("MyAuth", "my-cli", &cmd, "Authorization", None);
+
+        let first = provider.resolve().unwrap().expose_secret().to_string();
+        let second = provider.resolve().unwrap().expose_secret().to_string();
+
+        assert_ne!(
+            first, second,
+            "an opaque token with no expiry must be re-minted, not reused"
+        );
+        assert_eq!(
+            std::fs::read(&counter).unwrap().len(),
+            2,
+            "command should have run once per resolve for an opaque token"
         );
         let _ = std::fs::remove_file(&counter);
     }
