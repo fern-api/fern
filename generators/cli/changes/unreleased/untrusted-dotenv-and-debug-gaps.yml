@@ -26,6 +26,16 @@
     names as `--debug` so the two cannot drift apart. Non-credential headers are
     still shown in full, and the redaction no longer depends on `--debug` being
     passed.
+
+    Redaction also now recognises vendor-specific credential header names.
+    Neither the exact-match list nor spec-declared `apiKey`-in-header schemes
+    covered a spec that models its credential as a plain header *parameter* with
+    no `securitySchemes` block — ElevenLabs' `xi-api-key` is that shape (an
+    explicit header parameter on 333 operations), and both `--debug` and
+    `--dry-run` printed it in full. Header names containing `api-key`, `apikey`,
+    `api_key`, `token`, `secret`, `password` or `credential` are now treated as
+    credentials. `idempotency-key` is deliberately not matched — it is not a
+    secret and is useful when debugging retries.
   type: fix
 - summary: |
     `--debug` now works for custom commands. Every HTTP dump lived in the
