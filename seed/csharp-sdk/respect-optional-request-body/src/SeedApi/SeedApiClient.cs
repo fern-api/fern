@@ -205,7 +205,7 @@ public partial class SeedApiClient : ISeedApiClient
     }
 
     /// <example><code>
-    /// await client.RefundAsync(new RefundBody { Id = "refund-id", Body = null });
+    /// await client.RefundAsync(new RefundBody { Id = "refund-id" });
     /// </code></example>
     public WithRawResponseTask RefundAsync(
         RefundBody request,

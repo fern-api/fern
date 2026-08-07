@@ -31,7 +31,6 @@ paths:
                 - $ref: '#/components/schemas/RefundRequest'
                 - type: 'null'
             examples:
-              Full refund: {}
               Split refund:
                 value:
                   amount: 60

@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.RefundAsync(new RefundBody { Id = \"refund-id\", Body = null });\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.RefundAsync(new RefundBody { Id = \"refund-id\" });\n"
             }
         },
         {

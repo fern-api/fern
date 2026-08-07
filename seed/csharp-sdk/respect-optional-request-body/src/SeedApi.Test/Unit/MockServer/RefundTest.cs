@@ -41,10 +41,6 @@ public class RefundTest : BaseMockServerTest
     [NUnit.Framework.Test]
     public void MockServerTest_2()
     {
-        const string requestJson = """
-            null
-            """;
-
         Server
             .Given(
                 WireMock
@@ -52,12 +48,11 @@ public class RefundTest : BaseMockServerTest
                     .WithPath("/refunds/refund-id")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
-                    .WithBody(requestJson)
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(async () =>
-            await Client.RefundAsync(new RefundBody { Id = "refund-id", Body = null })
+            await Client.RefundAsync(new RefundBody { Id = "refund-id" })
         );
     }
 

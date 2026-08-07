@@ -13,6 +13,17 @@
         },
         {
             "id": {
+                "path": "/refunds/{id}",
+                "method": "POST",
+                "identifier_override": "endpoint_.refund"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/respect-optional-request-body/fern\"\n\tfernclient \"github.com/respect-optional-request-body/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Refund(\n\tcontext.TODO(),\n\t\u0026fern.RefundBody{\n\t\tID: \"refund-id\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/refunds/{id}/required",
                 "method": "POST",
                 "identifier_override": "endpoint_.requiredRefund"

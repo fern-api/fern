@@ -12,7 +12,7 @@
 <dd>
 
 ```csharp
-await client.RefundAsync(new RefundBody { Id = "refund-id", Body = null });
+await client.RefundAsync(new RefundBody { Id = "refund-id" });
 ```
 </dd>
 </dl>
