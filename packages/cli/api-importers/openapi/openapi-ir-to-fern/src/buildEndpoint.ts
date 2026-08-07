@@ -729,8 +729,11 @@ function getRequest({
                 };
             }
 
-            if (isOptionalBody && typeof requestValue.body === "string") {
-                requestValue.body = { type: requestValue.body, optional: true };
+            if (isOptionalBody) {
+                requestValue.body =
+                    typeof requestValue.body === "string"
+                        ? { type: requestValue.body, optional: true }
+                        : { ...requestValue.body, optional: true };
             }
 
             return {
