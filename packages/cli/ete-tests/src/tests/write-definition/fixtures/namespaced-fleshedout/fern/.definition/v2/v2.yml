@@ -62,6 +62,7 @@ service:
       path: /v2/chat
       request:
         body:
+          optional: true
           properties:
             documents:
               docs: >
