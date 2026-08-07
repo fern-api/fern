@@ -42,6 +42,7 @@ impl ApiClientBuilder {
     pub fn environment(mut self, environment: Environment) -> Self {
         self.config.base_url = environment.url().to_string();
         self.config.environment = Some(environment);
+        self.base_url_explicitly_set = false;
         self.apply_server_url_variables();
         self
     }

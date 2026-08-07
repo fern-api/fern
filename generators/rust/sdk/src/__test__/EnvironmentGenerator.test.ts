@@ -330,6 +330,30 @@ describe("EnvironmentGenerator", () => {
             await expect(result?.fileContents).toMatchFileSnapshot("snapshots/multi-url-templating.rs");
         });
 
+        it("should emit unrecognized placeholders literally", () => {
+            const environments = [
+                createSingleBaseUrlEnvironment("Production", "https://api.us-east-1.example.com", {
+                    urlTemplate: "https://api.{region}.example.com",
+                    urlVariables: [createServerVariable("region", "us-east-1")]
+                }),
+                createSingleBaseUrlEnvironment("Tenant", "https://tenant.example.com", {
+                    urlTemplate: "https://{tenant}.example.com",
+                    urlVariables: [createServerVariable("region", "us-east-1")]
+                })
+            ];
+
+            const environmentsConfig = {
+                environments: createSingleBaseUrlEnvironmentsUnion(environments),
+                defaultEnvironment: "ProductionId"
+            } as FernIr.EnvironmentsConfig;
+
+            const generator = new EnvironmentGenerator({
+                context: createMockContext(createMockIR(environmentsConfig))
+            });
+
+            expect(generator.generate()?.fileContents).toContain('"https://{tenant}.example.com".to_string()');
+        });
+
         it("should omit the resolver when no environment declares a template", () => {
             const environments = [createSingleBaseUrlEnvironment("Production", "https://api.example.com")];
 

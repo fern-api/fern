@@ -167,7 +167,8 @@ export function urlTemplateToFormatExpression(template: string, options: ServerV
     }
 
     if (args.length === 0) {
-        return `"${formatString}".to_string()`;
+        // Braces were escaped for `format!`; a plain string literal must carry them unescaped.
+        return `"${formatString.replaceAll("{{", "{").replaceAll("}}", "}")}".to_string()`;
     }
     return `format!("${formatString}", ${args.join(", ")})`;
 }

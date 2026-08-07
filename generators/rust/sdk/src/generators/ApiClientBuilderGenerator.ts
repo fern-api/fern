@@ -173,7 +173,10 @@ ${resolveUrl}
             const setEnvironment = isMultiUrl ? "\n        self.config.environment = Some(environment);" : "";
             const trackEnvironment =
                 this.hasServerVariables() && !isMultiUrl ? "\n        self.selected_environment = environment;" : "";
-            const reapplyVariables = this.hasServerVariables() ? "\n        self.apply_server_url_variables();" : "";
+            // The environment now owns the base URL, so an earlier explicit base URL no longer applies.
+            const reapplyVariables = this.hasServerVariables()
+                ? "\n        self.base_url_explicitly_set = false;\n        self.apply_server_url_variables();"
+                : "";
             methods.push(`    /// Set the environment, updating the base URL${envDocExtra}
     pub fn environment(mut self, environment: ${this.environmentEnumName}) -> Self {
         self.config.base_url = environment.url().to_string();${setEnvironment}${trackEnvironment}${reapplyVariables}
