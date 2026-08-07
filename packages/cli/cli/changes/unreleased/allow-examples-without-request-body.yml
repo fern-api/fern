@@ -1,0 +1,6 @@
+- summary: |
+    Allow endpoint examples to omit `request` when the endpoint has an inlined request body.
+    Previously the validator failed with `Expected example to be an object. Example is: undefined`,
+    forcing users to write `request: {}`, which rendered an empty JSON body in the docs and in
+    generated snippets. Omitting `request` now produces an example with no request body.
+  type: fix

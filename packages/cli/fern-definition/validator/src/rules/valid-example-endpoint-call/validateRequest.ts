@@ -31,6 +31,12 @@ export function validateRequest({
             });
         }
     } else if (isInlineRequestBody(body)) {
+        // Omitting `request` on an example represents a call made without a request body, which is
+        // distinct from a call made with an empty body. IR generation omits the request body for
+        // these examples, so they must not be validated against the inlined request's properties.
+        if (example == null) {
+            return violations;
+        }
         violations.push(
             ...ExampleValidators.validateObjectExample({
                 typeName: undefined,

@@ -1,0 +1,24 @@
+service:
+  base-path: /refunds
+  auth: false
+  endpoints:
+    refund:
+      method: POST
+      path: /{transactionId}
+      path-parameters:
+        transactionId: string
+      request:
+        name: RefundRequest
+        body:
+          properties:
+            amount: integer
+      examples:
+        # No request body: the endpoint may be called without one.
+        - name: Full refund
+          path-parameters:
+            transactionId: transaction_id
+        - name: Partial refund
+          path-parameters:
+            transactionId: transaction_id
+          request:
+            amount: 60
