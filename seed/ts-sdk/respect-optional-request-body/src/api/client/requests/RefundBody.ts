@@ -5,8 +5,7 @@ import type * as SeedApi from "../../index.js";
 /**
  * @example
  *     {
- *         id: "refund-id",
- *         body: undefined
+ *         id: "refund-id"
  *     }
  *
  * @example

@@ -678,7 +678,6 @@ function getRequest({
                 declarationDepth: 0,
                 variant
             });
-            const isOptionalBody = isOptionalJsonBody(request);
             const requestValue: RawSchemas.HttpRequestSchema = {
                 body: requestTypeReference
             };
@@ -719,9 +718,7 @@ function getRequest({
                 requestValue.docs == null &&
                 (requestValue["content-type"] == null || requestValue["content-type"] === "application/json");
 
-            const propagateOptionality = isOptionalBody && context.options.respectOptionalRequestBody;
-
-            if (propagateOptionality) {
+            if (context.options.respectOptionalRequestBody && isOptionalJsonBody(request)) {
                 requestValue.body =
                     typeof requestTypeReference === "string"
                         ? wrapTypeReferenceInOptional(requestTypeReference)
@@ -729,27 +726,11 @@ function getRequest({
                               ...requestTypeReference,
                               type: wrapTypeReferenceInOptional(requestTypeReference.type)
                           };
-            } else if (isOptionalBody) {
-                // the shorthand cannot express optionality, so keep the object form for optional bodies
-                requestValue.body =
-                    typeof requestValue.body === "string"
-                        ? { type: requestValue.body, optional: true }
-                        : { ...requestValue.body, optional: true };
-            }
-
-            if (canCollapse) {
-                return {
-                    schemaIdsToExclude: [],
-                    value:
-                        isOptionalBody && !propagateOptionality
-                            ? { body: requestValue.body }
-                            : (requestValue.body as string)
-                };
             }
 
             return {
                 schemaIdsToExclude: [],
-                value: requestValue
+                value: canCollapse ? (requestValue.body as string) : requestValue
             };
         }
 
@@ -1052,10 +1033,6 @@ function getRequest({
  *
  * Only JSON requests carry `requestBody.required` in the OpenAPI IR, and per the OpenAPI spec
  * the flag defaults to false when absent.
- *
- * By default this is validation-only metadata: it lets an example omit `request`, and is not carried
- * into the IR, so it does not make the request parameter optional in a generated SDK. Enable
- * `respectOptionalRequestBody` to make the body optional in the IR (and therefore in generated SDKs).
  */
 function isOptionalJsonBody(request: Request): boolean {
     return request.type === "json" && request.required !== true;

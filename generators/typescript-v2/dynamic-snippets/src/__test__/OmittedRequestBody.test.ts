@@ -61,5 +61,8 @@ describe("omitted request body", () => {
 
         expect(response.snippet).not.toContain(", )");
         expect(response.snippet).not.toContain(", }");
+        // the property is dropped rather than passed explicitly as undefined
+        expect(response.snippet).not.toContain("undefined");
+        expect(response.snippet).toContain('fields: "fields"');
     });
 });

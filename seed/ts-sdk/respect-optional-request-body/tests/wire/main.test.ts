@@ -12,7 +12,6 @@ describe("SeedApiClient", () => {
 
         const response = await client.refund({
             id: "refund-id",
-            body: undefined,
         });
         expect(response).toEqual(undefined);
     });

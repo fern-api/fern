@@ -74,12 +74,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/completions/chat-autodetect-resume",
-              "request": {
-                "body": {
-                  "optional": true,
-                  "type": "root.CreateCompletionRequest",
-                },
-              },
+              "request": "root.CreateCompletionRequest",
               "response-stream": {
                 "docs": "Success!",
                 "format": "sse",
@@ -114,12 +109,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/completions/chat",
-              "request": {
-                "body": {
-                  "optional": true,
-                  "type": "root.CreateCompletionRequest",
-                },
-              },
+              "request": "root.CreateCompletionRequest",
               "response-stream": {
                 "docs": "Success!",
                 "format": "sse",
@@ -154,12 +144,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/completions/chat-no-resume",
-              "request": {
-                "body": {
-                  "optional": true,
-                  "type": "root.CreateCompletionRequest",
-                },
-              },
+              "request": "root.CreateCompletionRequest",
               "response-stream": {
                 "docs": "Success!",
                 "format": "sse",
@@ -191,10 +176,7 @@ service:
         config.
       source:
         openapi: ../openapi.yml
-      request:
-        body:
-          type: root.CreateCompletionRequest
-          optional: true
+      request: root.CreateCompletionRequest
       response-stream:
         docs: Success!
         type: root.CompletionChunk
@@ -214,10 +196,7 @@ service:
       docs: SSE endpoint that overrides the document-level default to opt out.
       source:
         openapi: ../openapi.yml
-      request:
-        body:
-          type: root.CreateCompletionRequest
-          optional: true
+      request: root.CreateCompletionRequest
       response-stream:
         docs: Success!
         type: root.CompletionChunk
@@ -240,10 +219,7 @@ service:
         parser must honor resumable in the content-type fallback.
       source:
         openapi: ../openapi.yml
-      request:
-        body:
-          type: root.CreateCompletionRequest
-          optional: true
+      request: root.CreateCompletionRequest
       response-stream:
         docs: Success!
         type: root.CompletionChunk

@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/respect-optional-request-body\";\n\nconst client = new SeedApiClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.refund({\n    id: \"refund-id\",\n    body: undefined\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/respect-optional-request-body\";\n\nconst client = new SeedApiClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.refund({\n    id: \"refund-id\"\n});\n"
             },
             "example_identifier": "Full refund"
         },

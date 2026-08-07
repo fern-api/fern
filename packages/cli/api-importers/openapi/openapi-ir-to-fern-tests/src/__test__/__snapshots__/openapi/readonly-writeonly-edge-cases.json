@@ -33,12 +33,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/account",
-              "request": {
-                "body": {
-                  "optional": true,
-                  "type": "Account",
-                },
-              },
+              "request": "Account",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -199,10 +194,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body:
-          type: Account
-          optional: true
+      request: Account
       response:
         docs: Success
         type: Account

@@ -22,12 +22,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/test",
-              "request": {
-                "body": {
-                  "optional": true,
-                  "type": "OuterOneOf",
-                },
-              },
+              "request": "OuterOneOf",
               "source": {
                 "openapi": "../openapi.yml",
               },
@@ -85,10 +80,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body:
-          type: OuterOneOf
-          optional: true
+      request: OuterOneOf
       examples:
         - request:
             value: value

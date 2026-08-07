@@ -369,7 +369,7 @@ describe("valid-example-endpoint-call", () => {
                 nodePath: [
                     "service",
                     "endpoints",
-                    "i",
+                    "h",
                     {
                         arrayIndex: 0,
                         key: "examples"

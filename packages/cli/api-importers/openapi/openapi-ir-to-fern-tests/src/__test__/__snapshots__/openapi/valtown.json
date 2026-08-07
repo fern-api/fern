@@ -1600,7 +1600,6 @@ types:
               "request": {
                 "body": {
                   "docs": "Binary input data",
-                  "optional": true,
                   "type": "string",
                   "validation": {
                     "format": "binary",
@@ -1716,7 +1715,6 @@ service:
           docs: Binary input data
           validation:
             format: binary
-          optional: true
         path-parameters:
           key:
             type: string

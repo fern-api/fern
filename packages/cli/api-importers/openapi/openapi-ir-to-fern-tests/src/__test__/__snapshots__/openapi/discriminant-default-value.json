@@ -30,12 +30,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/settings",
-              "request": {
-                "body": {
-                  "optional": true,
-                  "type": "Settings",
-                },
-              },
+              "request": "Settings",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -149,10 +144,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body:
-          type: Settings
-          optional: true
+      request: Settings
       response:
         docs: Success
         type: Settings

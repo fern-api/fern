@@ -31,8 +31,7 @@ export class SeedApiClient {
      *
      * @example
      *     await client.refund({
-     *         id: "refund-id",
-     *         body: undefined
+     *         id: "refund-id"
      *     })
      *
      * @example
