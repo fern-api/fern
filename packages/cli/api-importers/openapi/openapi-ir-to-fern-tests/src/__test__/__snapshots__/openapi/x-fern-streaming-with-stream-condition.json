@@ -210,6 +210,210 @@
                 "openapi": "../openapi.yml",
               },
             },
+            "summarize": {
+              "auth": undefined,
+              "display-name": "Summarize",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "query": "How can I use the Vectara platform?",
+                    "stream_response": false,
+                  },
+                  "response": {
+                    "body": {
+                      "answer": "answer",
+                      "chat_id": "chat_id",
+                      "turn_id": "turn_id",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/v2/summaries",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "properties": {
+                    "query": {
+                      "docs": "The chat message or question.",
+                      "type": "string",
+                    },
+                    "stream_response": {
+                      "docs": "Indicates whether the response should be streamed or not.",
+                      "type": "literal<false>",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "SummarizeRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "",
+                "status-code": 200,
+                "type": "ChatFullResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "summarizeRequired": {
+              "auth": undefined,
+              "display-name": "Summarize with a required body",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "query": "How can I use the Vectara platform?",
+                    "stream_response": false,
+                  },
+                  "response": {
+                    "body": {
+                      "answer": "answer",
+                      "chat_id": "chat_id",
+                      "turn_id": "turn_id",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/v2/summaries/required",
+              "request": {
+                "body": {
+                  "properties": {
+                    "query": {
+                      "docs": "The chat message or question.",
+                      "type": "string",
+                    },
+                    "stream_response": {
+                      "docs": "Indicates whether the response should be streamed or not.",
+                      "type": "literal<false>",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "SummarizeRequiredRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "",
+                "status-code": 200,
+                "type": "ChatFullResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "summarizeRequired_stream": {
+              "auth": undefined,
+              "display-name": "Summarize with a required body",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "query": "How can I use the Vectara platform?",
+                    "stream_response": true,
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "chunk": "Hello, how can I help you today?",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/v2/summaries/required",
+              "request": {
+                "body": {
+                  "properties": {
+                    "query": {
+                      "docs": "The chat message or question.",
+                      "type": "string",
+                    },
+                    "stream_response": {
+                      "docs": "Indicates whether the response should be streamed or not.",
+                      "type": "literal<true>",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "SummarizeRequiredStreamRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response-stream": {
+                "docs": "",
+                "format": "json",
+                "terminator": undefined,
+                "type": "ChatStreamedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "summarize_stream": {
+              "auth": undefined,
+              "display-name": "Summarize",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "query": "How can I use the Vectara platform?",
+                    "stream_response": true,
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "chunk": "Hello, how can I help you today?",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/v2/summaries",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "properties": {
+                    "query": {
+                      "docs": "The chat message or question.",
+                      "type": "string",
+                    },
+                    "stream_response": {
+                      "docs": "Indicates whether the response should be streamed or not.",
+                      "type": "literal<true>",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "SummarizeStreamRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response-stream": {
+                "docs": "",
+                "format": "json",
+                "terminator": undefined,
+                "type": "ChatStreamedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
           },
           "source": {
             "openapi": "../openapi.yml",
@@ -500,6 +704,124 @@
             body:
               id: id
               output: output
+    summarize_stream:
+      path: /v2/summaries
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Summarize
+      request:
+        name: SummarizeStreamRequest
+        body:
+          properties:
+            query:
+              type: string
+              docs: The chat message or question.
+            stream_response:
+              type: literal<true>
+              docs: Indicates whether the response should be streamed or not.
+          optional: true
+        content-type: application/json
+      response-stream:
+        docs: ''
+        type: ChatStreamedResponse
+        format: json
+      examples:
+        - request:
+            query: How can I use the Vectara platform?
+            stream_response: true
+          response:
+            stream:
+              - chunk: Hello, how can I help you today?
+    summarize:
+      path: /v2/summaries
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Summarize
+      request:
+        name: SummarizeRequest
+        body:
+          properties:
+            query:
+              type: string
+              docs: The chat message or question.
+            stream_response:
+              type: literal<false>
+              docs: Indicates whether the response should be streamed or not.
+          optional: true
+        content-type: application/json
+      response:
+        docs: ''
+        type: ChatFullResponse
+        status-code: 200
+      examples:
+        - request:
+            query: How can I use the Vectara platform?
+            stream_response: false
+          response:
+            body:
+              chat_id: chat_id
+              turn_id: turn_id
+              answer: answer
+    summarizeRequired_stream:
+      path: /v2/summaries/required
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Summarize with a required body
+      request:
+        name: SummarizeRequiredStreamRequest
+        body:
+          properties:
+            query:
+              type: string
+              docs: The chat message or question.
+            stream_response:
+              type: literal<true>
+              docs: Indicates whether the response should be streamed or not.
+        content-type: application/json
+      response-stream:
+        docs: ''
+        type: ChatStreamedResponse
+        format: json
+      examples:
+        - request:
+            query: How can I use the Vectara platform?
+            stream_response: true
+          response:
+            stream:
+              - chunk: Hello, how can I help you today?
+    summarizeRequired:
+      path: /v2/summaries/required
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Summarize with a required body
+      request:
+        name: SummarizeRequiredRequest
+        body:
+          properties:
+            query:
+              type: string
+              docs: The chat message or question.
+            stream_response:
+              type: literal<false>
+              docs: Indicates whether the response should be streamed or not.
+        content-type: application/json
+      response:
+        docs: ''
+        type: ChatFullResponse
+        status-code: 200
+      examples:
+        - request:
+            query: How can I use the Vectara platform?
+            stream_response: false
+          response:
+            body:
+              chat_id: chat_id
+              turn_id: turn_id
+              answer: answer
   source:
     openapi: ../openapi.yml
 types:

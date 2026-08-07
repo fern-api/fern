@@ -4,6 +4,13 @@ import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } fro
 
 import { RuleViolation } from "../../Rule.js";
 
+const REQUIRED_REQUEST_BODY_VIOLATION: RuleViolation = {
+    severity: "fatal",
+    message:
+        "This endpoint requires a request body, so its examples must specify request. " +
+        "Mark the body optional to allow calling the endpoint without one."
+};
+
 export function validateRequest({
     example,
     endpoint,
@@ -33,16 +40,11 @@ export function validateRequest({
     } else if (isInlineRequestBody(body)) {
         // an omitted request represents a call with no request body, which the endpoint
         // only permits when its body is optional
-        if (example == null) {
+        if (example === undefined) {
             if (body.optional) {
                 return violations;
             }
-            violations.push({
-                severity: "fatal",
-                message:
-                    "This endpoint requires a request body, so its examples must specify request. " +
-                    "Mark the body optional to allow calling the endpoint without one."
-            });
+            violations.push(REQUIRED_REQUEST_BODY_VIOLATION);
             return violations;
         }
         violations.push(
@@ -66,20 +68,25 @@ export function validateRequest({
             })
         );
     } else {
-        violations.push(
-            ...ExampleValidators.validateTypeReferenceExample({
-                rawTypeReference: typeof body === "string" ? body : body.type,
-                example,
-                file,
-                workspace,
-                typeResolver,
-                exampleResolver,
-                breadcrumbs: ["response", "body"],
-                depth: 0
-            }).map((val): RuleViolation => {
-                return { severity: val.severity ?? "fatal", message: val.message };
-            })
-        );
+        const bodyViolations = ExampleValidators.validateTypeReferenceExample({
+            rawTypeReference: typeof body === "string" ? body : body.type,
+            example,
+            file,
+            workspace,
+            typeResolver,
+            exampleResolver,
+            breadcrumbs: ["response", "body"],
+            depth: 0
+        }).map((val): RuleViolation => {
+            return { severity: val.severity ?? "fatal", message: val.message };
+        });
+        // an omitted request against a body that isn't optional is a common mistake, so report it
+        // the same way the inlined branch does rather than with the generic type-mismatch message
+        if (example === undefined && bodyViolations.length > 0) {
+            violations.push(REQUIRED_REQUEST_BODY_VIOLATION);
+            return violations;
+        }
+        violations.push(...bodyViolations);
     }
 
     return violations;

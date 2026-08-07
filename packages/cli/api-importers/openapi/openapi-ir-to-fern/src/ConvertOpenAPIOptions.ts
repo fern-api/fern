@@ -47,6 +47,14 @@ export interface ConvertOpenAPIOptions {
     inlinePathParameters: boolean;
 
     /**
+     * If true, a JSON request body that OpenAPI does not mark as required becomes optional in the
+     * generated Fern Definition, so the body is optional in generated SDKs and examples may omit it.
+     * If false, the body stays required in the IR and its optionality is only used to validate examples.
+     * Only applies to request bodies that are emitted as type references.
+     */
+    respectOptionalRequestBody: boolean;
+
+    /**
      * If true, the converter will use the `bytes` type for binary responses.
      */
     useBytesForBinaryResponse: boolean;
@@ -137,6 +145,7 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     respectNullableSchemas: true,
     onlyIncludeReferencedSchemas: false,
     inlinePathParameters: true,
+    respectOptionalRequestBody: false,
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false,
     wrapReferencesToNullableInOptional: false,

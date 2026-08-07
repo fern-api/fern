@@ -221,6 +221,7 @@ function getRequestBody({
 
     return {
         requestBody: {
+            required: resolvedRequestBody.required,
             content: {
                 [MediaType.APPLICATION_JSON]: {
                     schema: requestBodySchemaWithLiteralProperty

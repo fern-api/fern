@@ -14771,31 +14771,7 @@
                                 "endpointHeaders": [],
                                 "serviceHeaders": [],
                                 "queryParameters": [],
-                                "request": {
-                                    "type": "reference",
-                                    "shape": {
-                                        "type": "container",
-                                        "container": {
-                                            "type": "optional",
-                                            "optional": null,
-                                            "valueType": {
-                                                "_type": "named",
-                                                "name": "RefreshTokenRequest",
-                                                "fernFilepath": {
-                                                    "allParts": [
-                                                        "types"
-                                                    ],
-                                                    "packagePath": [],
-                                                    "file": "types"
-                                                },
-                                                "displayName": null,
-                                                "typeId": "type_types:RefreshTokenRequest",
-                                                "default": null,
-                                                "inline": null
-                                            }
-                                        }
-                                    }
-                                },
+                                "request": null,
                                 "response": {
                                     "type": "ok",
                                     "value": {

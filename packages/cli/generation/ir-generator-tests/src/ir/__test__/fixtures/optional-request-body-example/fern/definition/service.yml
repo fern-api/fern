@@ -21,6 +21,19 @@ service:
           response:
             body:
               ok: true
+    requiredReferencedBody:
+      path: /required-referenced
+      method: POST
+      request:
+        body: RefundRequest
+      response: RefundResponse
+      examples:
+        - name: withBody
+          request:
+            amount: 60
+          response:
+            body:
+              ok: true
     inlinedBody:
       path: /inlined
       method: POST
