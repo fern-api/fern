@@ -1,7 +1,7 @@
 import { docsYml } from "@fern-api/configuration";
 import { describe, expect, it } from "vitest";
 
-import { DocsDefinitionResolver } from "../DocsDefinitionResolver.js";
+import { DocsDefinitionResolver } from "../../DocsDefinitionResolver.js";
 
 function convertPageActionsFor(pageActions: docsYml.ParsedPageActionsConfig | undefined): unknown {
     const resolver = Object.create(DocsDefinitionResolver.prototype) as DocsDefinitionResolver;
@@ -28,7 +28,8 @@ function makeParsedPageActions(
             vscode: false,
             mcp: true,
             custom: [],
-            skills
+            skills,
+            skillsDirectory: undefined
         }
     };
 }
@@ -40,7 +41,6 @@ describe("DocsDefinitionResolver page actions skills config", () => {
                 title: "Install agent skills",
                 description: "Skills for authoring Fern docs, maintained in our skills repo.",
                 learnMoreUrl: "https://buildwithfern.com/learn/docs/ai/agent-skills",
-                repository: "https://github.com/fern-api/skills",
                 installCommand: "npx skills add fern-api/skills --skill fern-docs",
                 skills: [
                     {
@@ -68,7 +68,6 @@ describe("DocsDefinitionResolver page actions skills config", () => {
                     title: "Install agent skills",
                     description: "Skills for authoring Fern docs, maintained in our skills repo.",
                     learnMoreUrl: "https://buildwithfern.com/learn/docs/ai/agent-skills",
-                    repository: "https://github.com/fern-api/skills",
                     installCommand: "npx skills add fern-api/skills --skill fern-docs",
                     skills: [
                         {

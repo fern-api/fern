@@ -450,7 +450,8 @@ function convertPageActions(
             custom: (pageActions.options?.custom ?? []).map((action) =>
                 convertCustomPageAction(action, absoluteFilepathToDocsConfig)
             ),
-            skills: convertSkillsPageAction(pageActions.options?.skills)
+            skills: convertSkillsPageAction(pageActions.options?.skills),
+            skillsDirectory: resolveFilepath(pageActions.options?.skills?.path, absoluteFilepathToDocsConfig)
         }
     };
 }
@@ -466,7 +467,6 @@ function convertSkillsPageAction(
         title: skills.title,
         description: skills.description,
         learnMoreUrl: skills.learnMoreUrl,
-        repository: skills.repository,
         installCommand: skills.installCommand,
         skills: skills.skills?.map((skill) => ({
             name: skill.name,

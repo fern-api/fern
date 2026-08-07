@@ -10,6 +10,7 @@ export const SkillsPageActionConfig: core.serialization.ObjectSchema<
     serializers.SkillsPageActionConfig.Raw,
     FernDocsConfig.SkillsPageActionConfig
 > = core.serialization.object({
+    path: core.serialization.string().optional(),
     title: core.serialization.string().optional(),
     description: core.serialization.string().optional(),
     learnMoreUrl: core.serialization.property("learn-more-url", core.serialization.string().optional()),
@@ -20,6 +21,7 @@ export const SkillsPageActionConfig: core.serialization.ObjectSchema<
 
 export declare namespace SkillsPageActionConfig {
     export interface Raw {
+        path?: string | null;
         title?: string | null;
         description?: string | null;
         "learn-more-url"?: string | null;
