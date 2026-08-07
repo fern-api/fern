@@ -142,7 +142,8 @@ export function convertWebhookOperation({
                 context,
                 requestBreadcrumbs: [...baseBreadcrumbs, "Payload"],
                 source,
-                namespace: context.namespace
+                namespace: context.namespace,
+                bodyRequired: resolvedRequestBody.required
             })
         )
         .filter((request) => request != null)

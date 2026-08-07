@@ -88,6 +88,7 @@
               "path": "/example",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "metadata": {
                       "docs": "Arbitrary object that will be attached as document metadata to the extracted document.",
@@ -188,6 +189,7 @@
               docs: >-
                 Arbitrary object that will be attached as document metadata to
                 the extracted document.
+          optional: true
         content-type: application/json
       response:
         docs: The sample response

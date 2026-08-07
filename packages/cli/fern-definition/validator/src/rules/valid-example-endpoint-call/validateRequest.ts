@@ -31,6 +31,11 @@ export function validateRequest({
             });
         }
     } else if (isInlineRequestBody(body)) {
+        // an omitted request represents a call with no request body, which the endpoint
+        // only permits when its body is optional
+        if (example == null && body.optional) {
+            return violations;
+        }
         violations.push(
             ...ExampleValidators.validateObjectExample({
                 typeName: undefined,
@@ -44,9 +49,7 @@ export function validateRequest({
                 typeResolver,
                 exampleResolver,
                 workspace,
-                // an omitted request means the call sends no body, which is valid so long as
-                // an empty body would be: every property of the inlined body must be optional
-                example: example ?? {},
+                example,
                 breadcrumbs: ["request"],
                 depth: 0
             }).map((val): RuleViolation => {

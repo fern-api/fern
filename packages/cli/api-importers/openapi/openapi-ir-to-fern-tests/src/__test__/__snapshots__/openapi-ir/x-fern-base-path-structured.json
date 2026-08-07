@@ -58,6 +58,7 @@
           "type": "reference"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {

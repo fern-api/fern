@@ -44,17 +44,20 @@ service:
       method: GET
       request:
         body:
+          optional: true
           properties:
-            foo: optional<integer>
+            foo: integer
       examples:
         - {}
+        - request:
+            foo: 123
     f:
       path: ""
       method: GET
       request:
         body:
           properties:
-            foo: integer
+            foo: optional<integer>
       examples:
         - {}
 

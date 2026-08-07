@@ -343,7 +343,7 @@ describe("valid-example-endpoint-call", () => {
                 severity: "fatal"
             },
             {
-                message: 'Example is missing required property "request.foo"',
+                message: "Expected example to be an object. Example is: undefined",
                 nodePath: [
                     "service",
                     "endpoints",

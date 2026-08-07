@@ -1789,6 +1789,7 @@ docs: Blobs
               "path": "/v1/email",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "attachments": {
                       "docs": "A list of attachments to add to the email",
@@ -2406,6 +2407,7 @@ service:
             replyToList:
               type: optional<EmailsSendRequestReplyToList>
               docs: A reply-to list of email addresses
+          optional: true
         content-type: application/json
       response:
         docs: Successfully sent email
@@ -5323,6 +5325,7 @@ let you get, create, and run vals.",
               "path": "/v1/run/{valname}",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "args": "optional<list<unknown>>",
                   },
@@ -5375,6 +5378,7 @@ let you get, create, and run vals.",
               "path": "/v1/vals/{val_id}",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "name": {
                       "docs": "This val’s name",
@@ -5826,6 +5830,7 @@ service:
         body:
           properties:
             args: optional<list<unknown>>
+          optional: true
         content-type: application/json
       availability: deprecated
       examples:
@@ -6015,6 +6020,7 @@ service:
                 The type of the val you want to update. Note that this does not
                 include interval vals, because they cannot be created through
                 the API yet.
+          optional: true
         content-type: application/json
       examples:
         - name: example1
