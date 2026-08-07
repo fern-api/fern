@@ -1,0 +1,4 @@
+- summary: |
+    Fix generated mock server tests for examples that omit an optional request body. The
+    stub no longer matches on a `Content-Type` header that the bodyless request does not send.
+  type: fix

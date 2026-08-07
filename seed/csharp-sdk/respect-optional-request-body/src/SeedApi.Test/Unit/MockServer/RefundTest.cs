@@ -43,11 +43,7 @@ public class RefundTest : BaseMockServerTest
     {
         Server
             .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/refunds/refund-id")
-                    .WithHeader("Content-Type", "application/json")
-                    .UsingPost()
+                WireMock.RequestBuilders.Request.Create().WithPath("/refunds/refund-id").UsingPost()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
