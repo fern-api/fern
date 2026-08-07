@@ -720,20 +720,19 @@ function getRequest({
                 requestValue.docs == null &&
                 (requestValue["content-type"] == null || requestValue["content-type"] === "application/json");
 
-            if (canCollapse) {
-                const collapsedBody = requestValue.body as string;
-                return {
-                    schemaIdsToExclude: [],
-                    // the shorthand cannot express optionality, so keep the object form for optional bodies
-                    value: isOptionalBody ? { body: { type: collapsedBody, optional: true } } : collapsedBody
-                };
-            }
-
             if (isOptionalBody) {
+                // the shorthand cannot express optionality, so keep the object form for optional bodies
                 requestValue.body =
                     typeof requestValue.body === "string"
                         ? { type: requestValue.body, optional: true }
                         : { ...requestValue.body, optional: true };
+            }
+
+            if (canCollapse) {
+                return {
+                    schemaIdsToExclude: [],
+                    value: isOptionalBody ? { body: requestValue.body } : (requestValue.body as string)
+                };
             }
 
             return {

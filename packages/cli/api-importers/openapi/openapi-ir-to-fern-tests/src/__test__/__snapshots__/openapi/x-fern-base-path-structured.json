@@ -33,12 +33,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/interactions/stream",
-              "request": {
-                "body": {
-                  "optional": true,
-                  "type": "CreateInteractionStreamRequest",
-                },
-              },
+              "request": "CreateInteractionStreamRequest",
               "response": {
                 "docs": "",
                 "status-code": 200,
@@ -76,12 +71,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/interactions/stream",
-              "request": {
-                "body": {
-                  "optional": true,
-                  "type": "CreateInteractionStreamStreamRequest",
-                },
-              },
+              "request": "CreateInteractionStreamStreamRequest",
               "response-stream": {
                 "docs": "",
                 "format": "sse",
@@ -260,10 +250,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body:
-          type: CreateInteractionStreamStreamRequest
-          optional: true
+      request: CreateInteractionStreamStreamRequest
       response-stream:
         docs: ''
         type: InteractionSseEvent
@@ -287,10 +274,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body:
-          type: CreateInteractionStreamRequest
-          optional: true
+      request: CreateInteractionStreamRequest
       response:
         docs: ''
         type: Interaction
