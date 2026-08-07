@@ -30,9 +30,6 @@ export function validateRequest({
                 message: "Unexpected request in example."
             });
         }
-    } else if (example == null) {
-        // an omitted request in an example represents a call with no request body
-        return violations;
     } else if (isInlineRequestBody(body)) {
         violations.push(
             ...ExampleValidators.validateObjectExample({
@@ -47,7 +44,9 @@ export function validateRequest({
                 typeResolver,
                 exampleResolver,
                 workspace,
-                example,
+                // an omitted request means the call sends no body, which is valid so long as
+                // an empty body would be: every property of the inlined body must be optional
+                example: example ?? {},
                 breadcrumbs: ["request"],
                 depth: 0
             }).map((val): RuleViolation => {

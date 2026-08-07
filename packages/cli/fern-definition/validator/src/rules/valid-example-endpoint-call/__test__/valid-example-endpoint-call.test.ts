@@ -247,6 +247,22 @@ describe("valid-example-endpoint-call", () => {
                 severity: "fatal"
             },
             {
+                message: "Expected example to be a string. Example is: undefined",
+                nodePath: [
+                    "service",
+                    "endpoints",
+                    "c",
+                    {
+                        arrayIndex: 0,
+                        key: "examples"
+                    },
+                    "request"
+                ],
+                relativeFilepath: RelativeFilePath.of("request.yml"),
+                name: "valid-example-endpoint-call",
+                severity: "fatal"
+            },
+            {
                 message: "Expected example to be a string. Example is: 123",
                 nodePath: [
                     "service",
@@ -318,6 +334,22 @@ describe("valid-example-endpoint-call", () => {
                     "d",
                     {
                         arrayIndex: 2,
+                        key: "examples"
+                    },
+                    "request"
+                ],
+                relativeFilepath: RelativeFilePath.of("request.yml"),
+                name: "valid-example-endpoint-call",
+                severity: "fatal"
+            },
+            {
+                message: 'Example is missing required property "request.foo"',
+                nodePath: [
+                    "service",
+                    "endpoints",
+                    "f",
+                    {
+                        arrayIndex: 0,
                         key: "examples"
                     },
                     "request"

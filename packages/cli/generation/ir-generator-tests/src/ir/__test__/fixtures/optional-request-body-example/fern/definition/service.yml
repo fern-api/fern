@@ -8,7 +8,7 @@ service:
       path: /referenced
       method: POST
       request:
-        body: RefundRequest
+        body: optional<RefundRequest>
       response: RefundResponse
       examples:
         - name: withoutBody
