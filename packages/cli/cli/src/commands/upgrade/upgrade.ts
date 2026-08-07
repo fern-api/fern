@@ -8,7 +8,7 @@ import {
 } from "@fern-api/configuration-loader";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { isVersionAhead } from "@fern-api/semver-utils";
+import { isValidVersion, isVersionAhead } from "@fern-api/semver-utils";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
@@ -157,8 +157,13 @@ async function getPreviousVersionFromGit(fernDirectory: string, logger: Logger):
  * 4. FERN_PRE_UPGRADE_VERSION environment variable (if valid)
  * 5. Fallback to projectConfig.version
  *
+ * The resolved version is always a version the CLI can parse. Range-style
+ * pins (`*`, `latest`, `1.x`) can't be ordered against migration versions, so
+ * they fall back to the currently running CLI version, or to undefined when
+ * there's no parseable version to migrate from.
+ *
  * @param options Configuration for version resolution
- * @returns The resolved source version to migrate from
+ * @returns The resolved source version to migrate from, or undefined if migrations should be skipped
  */
 async function resolveSourceVersion({
     fromVersion,
@@ -174,7 +179,7 @@ async function resolveSourceVersion({
     fernDirectory: string;
     projectConfig: { version: string };
     isLocalDev: boolean;
-}): Promise<string> {
+}): Promise<string | undefined> {
     let resolvedFromVersion = fromVersion?.trim();
     const envVersion = process.env[PREVIOUS_VERSION_ENV_VAR]?.trim();
 
@@ -216,7 +221,20 @@ async function resolveSourceVersion({
         }
     }
 
-    return resolvedFromVersion;
+    if (isValidVersion(resolvedFromVersion)) {
+        return resolvedFromVersion;
+    }
+
+    const cliVersion = cliContext.environment.packageVersion;
+    if (!isLocalDev && isValidVersion(cliVersion)) {
+        cliContext.logger.debug(
+            `Cannot migrate from version ${resolvedFromVersion}. Using the running CLI version instead: ${cliVersion}`
+        );
+        return cliVersion;
+    }
+
+    cliContext.logger.warn(`Skipping migrations because ${resolvedFromVersion} is not a version that can be migrated.`);
+    return undefined;
 }
 
 function validateVersionAhead({
@@ -418,19 +436,21 @@ export async function upgrade({
             isLocalDev
         });
 
-        cliContext.logger.info(
-            `Running migrations from ${chalk.dim(resolvedFromVersion)} → ${chalk.green(resolvedTargetVersion)}`
-        );
+        if (resolvedFromVersion != null) {
+            cliContext.logger.info(
+                `Running migrations from ${chalk.dim(resolvedFromVersion)} → ${chalk.green(resolvedTargetVersion)}`
+            );
 
-        await cliContext.runTask(async (context) => {
-            await runMigrations({
-                fromVersion: resolvedFromVersion,
-                toVersion: resolvedTargetVersion,
-                context,
-                yes: yes ?? false
+            await cliContext.runTask(async (context) => {
+                await runMigrations({
+                    fromVersion: resolvedFromVersion,
+                    toVersion: resolvedTargetVersion,
+                    context,
+                    yes: yes ?? false
+                });
             });
-        });
-        await cliContext.exitIfFailed();
+            await cliContext.exitIfFailed();
+        }
 
         const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
             draft.version = resolvedTargetVersion;
@@ -476,7 +496,13 @@ export async function upgrade({
 
     // Filter out upgrade-specific flags and build args for rerun
     const otherArgs = filterUpgradeFlags(process.argv.slice(2));
-    const rerunArgs = ["upgrade", "--from", resolvedFromVersion, "--to", resolvedTargetVersion, ...otherArgs];
+    const rerunArgs = [
+        "upgrade",
+        ...(resolvedFromVersion != null ? ["--from", resolvedFromVersion] : []),
+        "--to",
+        resolvedTargetVersion,
+        ...otherArgs
+    ];
 
     if (yes && !otherArgs.some((arg) => arg === "--yes" || arg === "-y")) {
         rerunArgs.push("--yes");
@@ -486,9 +512,7 @@ export async function upgrade({
         await rerunFernCliAtVersion({
             version: resolvedTargetVersion,
             cliContext,
-            env: {
-                [PREVIOUS_VERSION_ENV_VAR]: resolvedFromVersion
-            },
+            env: resolvedFromVersion != null ? { [PREVIOUS_VERSION_ENV_VAR]: resolvedFromVersion } : {},
             args: rerunArgs,
             throwOnError: true
         });

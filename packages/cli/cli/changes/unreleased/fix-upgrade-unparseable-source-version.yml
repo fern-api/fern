@@ -1,0 +1,5 @@
+- summary: |
+    Fix `fern upgrade` failing with "Failed to parse version: *" when the source version resolved from
+    `fern.config.json` (or its git history) is a range pin like `*`, `latest`, or `1.x`. The upgrade now
+    migrates from the running CLI version instead, or skips migrations when no parseable version is available.
+  type: fix
