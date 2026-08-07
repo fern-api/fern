@@ -282,17 +282,19 @@ describe("examples that omit the request body", () => {
         const service = Object.values(ir.services)[0];
         expect(service).toBeDefined();
 
-        for (const endpointName of ["referencedBody", "inlinedBody"]) {
+        for (const endpointName of ["referencedBody", "optionalReferencedBody", "inlinedBody"]) {
             const endpoint = service?.endpoints.find((e) => getOriginalName(e.name) === endpointName);
             const examples = (endpoint?.userSpecifiedExamples ?? []).map((e) => e.example);
             expect(examples.map((e) => e?.name)).toEqual(["withoutBody", "withBody"]);
             expect(examples[1]?.request).toBeDefined();
         }
 
-        // an inlined body is simply absent, while a referenced optional<T> body keeps the
-        // empty reference example it has always produced
-        const inlined = service?.endpoints.find((e) => getOriginalName(e.name) === "inlinedBody");
-        expect(inlined?.userSpecifiedExamples[0]?.example?.request).toBeUndefined();
+        // a body marked optional is simply absent, while a referenced optional<T> body keeps
+        // the empty reference example it has always produced
+        for (const endpointName of ["inlinedBody", "optionalReferencedBody"]) {
+            const endpoint = service?.endpoints.find((e) => getOriginalName(e.name) === endpointName);
+            expect(endpoint?.userSpecifiedExamples[0]?.example?.request).toBeUndefined();
+        }
 
         const referenced = service?.endpoints.find((e) => getOriginalName(e.name) === "referencedBody");
         const referencedRequest = referenced?.userSpecifiedExamples[0]?.example?.request;

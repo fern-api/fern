@@ -393,6 +393,11 @@ function convertExampleRequestBody({
     }
 
     if (!isInlineRequestBody(requestType)) {
+        // an example that omits the request represents a call with no request body, which is
+        // permitted when the body is optional
+        if (example.request == null && typeof requestType !== "string" && requestType.optional) {
+            return undefined;
+        }
         return ExampleRequestBody.reference(
             convertTypeReferenceExample({
                 example: example.request,

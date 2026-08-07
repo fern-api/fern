@@ -2011,6 +2011,17 @@
         },
         "type": {
           "type": "string"
+        },
+        "optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether the endpoint may be called without a request body. When true, an\nexample may omit `request`. Populated from `requestBody.required` when\nimporting from OpenAPI.\n\nThis is read by example validation only: it is not carried into the IR, so it\ndoes not make the request parameter optional in a generated SDK. Prefer\n`optional<T>` when the body should be optional in generated code as well."
         }
       },
       "required": [

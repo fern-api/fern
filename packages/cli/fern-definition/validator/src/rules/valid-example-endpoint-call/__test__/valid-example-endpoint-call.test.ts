@@ -360,6 +360,22 @@ describe("valid-example-endpoint-call", () => {
                 name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
+            {
+                message: "Expected example to be an object. Example is: undefined",
+                nodePath: [
+                    "service",
+                    "endpoints",
+                    "i",
+                    {
+                        arrayIndex: 0,
+                        key: "examples"
+                    },
+                    "request"
+                ],
+                relativeFilepath: RelativeFilePath.of("request.yml"),
+                name: "valid-example-endpoint-call",
+                severity: "fatal"
+            },
 
             // response.yml
             {

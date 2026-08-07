@@ -1,0 +1,6 @@
+- summary: |
+    Allow endpoint examples to omit `request` when the request body is a referenced type
+    that the OpenAPI spec does not mark as required. `requestBody.required` is now carried
+    onto referenced bodies as `optional`, so `fern check` accepts a call with no body and
+    IR generation keeps the example instead of dropping it.
+  type: fix

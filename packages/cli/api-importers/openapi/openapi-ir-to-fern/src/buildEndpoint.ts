@@ -718,6 +718,22 @@ function getRequest({
                 requestValue.docs == null &&
                 (requestValue["content-type"] == null || requestValue["content-type"] === "application/json");
 
+            // per the OpenAPI spec, requestBody.required defaults to false. An optional body is
+            // expressed on the body itself, which rules out the scalar shorthand.
+            const bodyOptional = request.type === "json" && request.required !== true;
+            if (bodyOptional) {
+                const docs = getDocsFromTypeReference(requestTypeReference);
+                const optionalBody: RawSchemas.HttpReferencedRequestBodySchema = {
+                    type: getTypeFromTypeReference(requestTypeReference),
+                    optional: true,
+                    ...(docs != null ? { docs } : {})
+                };
+                return {
+                    schemaIdsToExclude: [],
+                    value: canCollapse ? { body: optionalBody } : { ...requestValue, body: optionalBody }
+                };
+            }
+
             return {
                 schemaIdsToExclude: [],
                 value: canCollapse ? (requestValue.body as string) : requestValue
