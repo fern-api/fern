@@ -76,6 +76,19 @@ paths:
       responses:
         "204":
           description: ok
+  # no path parameters, so the request would otherwise collapse to a bare type reference
+  /refunds:
+    post:
+      operationId: bulkRefund
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefundRequest"
+      responses:
+        "204":
+          description: ok
 components:
   schemas:
     RefundRequest:
