@@ -60,6 +60,15 @@ service:
             foo: optional<integer>
       examples:
         - {}
+    g:
+      path: ""
+      method: GET
+      request:
+        body: optional<ObjectWithFoo>
+      examples:
+        - {}
+        - request:
+            foo: 123
 
 types:
   ObjectWithFoo:
