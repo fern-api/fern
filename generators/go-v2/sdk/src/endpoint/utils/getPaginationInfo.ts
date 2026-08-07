@@ -10,6 +10,19 @@ import { PaginationInfo } from "../PaginationInfo.js";
 const PAGE_REQUEST_VARIABLE_NAME = "pageRequest";
 const PAGE_REQUEST_CURSOR_NAME = `${PAGE_REQUEST_VARIABLE_NAME}.Cursor`;
 const PAGE_REQUEST_RESPONSE_NAME = `${PAGE_REQUEST_VARIABLE_NAME}.Response`;
+const PAGED_REQUEST_VARIABLE_NAME = "nextRequest";
+
+/**
+ * A page property that lives on the request body. The pager advances the page by setting the field on
+ * a copy of the request before every call, so that the caller's request is left untouched.
+ */
+interface RequestBodyPageProperty {
+    requestParameterName: string;
+    /** e.g. request.Cursor */
+    requestReference: string;
+    /** e.g. nextRequest.Cursor */
+    pagedRequestReference: string;
+}
 
 export function getPaginationInfo({
     context,
@@ -34,7 +47,7 @@ export function getPaginationInfo({
         pagination,
         caseConverter: context.caseConverter
     });
-    const requestBodyPagePropertyReference = getRequestBodyPagePropertyReference({ context, pagination, signature });
+    const requestBodyPageProperty = getRequestBodyPageProperty({ context, pagination, signature });
     const pagePropertyFormat = getPageValueFormat({ context, pagination });
     const requestPagePropertyFormat = getPageValueFormat({ context, pagination });
     return {
@@ -45,7 +58,7 @@ export function getPaginationInfo({
             pageType,
             pageRequestType,
             pagePropertyFormat,
-            requestBodyPagePropertyReference,
+            requestBodyPageProperty,
             endpoint,
             errorDecoder
         }),
@@ -57,7 +70,7 @@ export function getPaginationInfo({
             nextPageType,
             requestPagePropertyReference,
             requestPagePropertyFormat,
-            requestBodyPagePropertyReference
+            requestBodyPageProperty
         }),
         initializePager: getInitializePager({ context, pagination, callerReference }),
         callGetPage: getCallGetPage({ pagination, pageType, requestPagePropertyReference })
@@ -71,7 +84,7 @@ function getPrepareCall({
     pageType,
     pageRequestType,
     pagePropertyFormat,
-    requestBodyPagePropertyReference,
+    requestBodyPageProperty,
     endpoint,
     errorDecoder
 }: {
@@ -81,7 +94,7 @@ function getPrepareCall({
     pageType: go.Type;
     pageRequestType: go.Type;
     pagePropertyFormat: go.AstNode;
-    requestBodyPagePropertyReference: string | undefined;
+    requestBodyPageProperty: RequestBodyPageProperty | undefined;
     endpoint: FernIr.HttpEndpoint;
     errorDecoder: go.CodeBlock | undefined;
 }): go.AstNode {
@@ -89,8 +102,12 @@ function getPrepareCall({
         pagination,
         pageType,
         pagePropertyFormat,
-        requestBodyPagePropertyReference
+        requestBodyPageProperty
     });
+    const requestReference =
+        requestBodyPageProperty != null
+            ? go.codeblock(`&${PAGED_REQUEST_VARIABLE_NAME}`)
+            : signature.request?.getRequestReference();
     return go.codeblock((writer) => {
         writer.write("prepareCall := ");
         writer.writeNode(
@@ -114,7 +131,7 @@ function getPrepareCall({
                             endpoint,
                             optionsReference: go.codeblock("options"),
                             url: go.codeblock("nextURL"),
-                            request: signature.request?.getRequestReference(),
+                            request: requestReference,
                             response: go.codeblock(PAGE_REQUEST_RESPONSE_NAME),
                             errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined
                         })
@@ -135,7 +152,7 @@ function getReadPageResponse({
     nextPageType,
     requestPagePropertyReference,
     requestPagePropertyFormat,
-    requestBodyPagePropertyReference
+    requestBodyPageProperty
 }: {
     context: SdkGeneratorContext;
     pagination: FernIr.Pagination;
@@ -144,14 +161,14 @@ function getReadPageResponse({
     nextPageType: go.Type | undefined;
     requestPagePropertyReference: go.AstNode;
     requestPagePropertyFormat: go.AstNode;
-    requestBodyPagePropertyReference: string | undefined;
+    requestBodyPageProperty: RequestBodyPageProperty | undefined;
 }): go.AstNode {
     const initializer = getPagePropertyInitializer({
         pagination,
         pageType,
         requestPagePropertyReference,
         requestPagePropertyFormat,
-        requestBodyPagePropertyReference
+        requestBodyPageProperty
     });
     const responseType = signature.returnType ?? go.Type.any();
     return go.codeblock((writer) => {
@@ -513,19 +530,24 @@ function getPagePropertySetter({
     pagination,
     pageType,
     pagePropertyFormat,
-    requestBodyPagePropertyReference
+    requestBodyPageProperty
 }: {
     pagination: FernIr.Pagination;
     pageType: go.Type;
     pagePropertyFormat: go.AstNode;
-    requestBodyPagePropertyReference: string | undefined;
+    requestBodyPageProperty: RequestBodyPageProperty | undefined;
 }): go.AstNode {
     switch (pagination.type) {
         case "cursor":
         case "offset":
-            if (requestBodyPagePropertyReference != null) {
+            if (requestBodyPageProperty != null) {
                 return go.codeblock((writer) => {
-                    writer.writeLine(`${requestBodyPagePropertyReference} = ${PAGE_REQUEST_CURSOR_NAME}`);
+                    writer.writeLine(
+                        `${PAGED_REQUEST_VARIABLE_NAME} := *${requestBodyPageProperty.requestParameterName}`
+                    );
+                    writer.writeLine(
+                        `${requestBodyPageProperty.pagedRequestReference} = ${PAGE_REQUEST_CURSOR_NAME}`
+                    );
                 });
             }
             return go.codeblock((writer) => {
@@ -565,18 +587,21 @@ function getPagePropertyInitializer({
     pageType,
     requestPagePropertyReference,
     requestPagePropertyFormat,
-    requestBodyPagePropertyReference
+    requestBodyPageProperty
 }: {
     pagination: FernIr.Pagination;
     pageType: go.Type;
     requestPagePropertyReference: go.AstNode;
     requestPagePropertyFormat: go.AstNode;
-    requestBodyPagePropertyReference: string | undefined;
+    requestBodyPageProperty: RequestBodyPageProperty | undefined;
 }): go.AstNode | undefined {
     switch (pagination.type) {
         case "offset": {
-            if (requestBodyPagePropertyReference != null) {
-                return getRequestBodyOffsetInitializer({ pageType, requestBodyPagePropertyReference });
+            if (requestBodyPageProperty != null) {
+                return getRequestBodyOffsetInitializer({
+                    pageType,
+                    requestReference: requestBodyPageProperty.requestReference
+                });
             }
             return go.codeblock((writer) => {
                 if (pageType.isOptional()) {
@@ -619,21 +644,21 @@ function getPagePropertyInitializer({
 
 function getRequestBodyOffsetInitializer({
     pageType,
-    requestBodyPagePropertyReference
+    requestReference
 }: {
     pageType: go.Type;
-    requestBodyPagePropertyReference: string;
+    requestReference: string;
 }): go.AstNode {
     return go.codeblock((writer) => {
         if (!pageType.isOptional()) {
-            writer.writeLine(`next := ${requestBodyPagePropertyReference}`);
+            writer.writeLine(`next := ${requestReference}`);
             return;
         }
         writer.writeNode(getOffsetInitializer({ pageType }));
         writer.newLine();
-        writer.writeLine(`if ${requestBodyPagePropertyReference} != nil {`);
+        writer.writeLine(`if ${requestReference} != nil {`);
         writer.indent();
-        writer.writeLine(`next = *${requestBodyPagePropertyReference}`);
+        writer.writeLine(`next = *${requestReference}`);
         writer.dedent();
         writer.writeLine("}");
     });
@@ -924,11 +949,7 @@ function getPagePropertyReference({
     }
 }
 
-/**
- * The page property lives on the request body, so the pager advances it by setting the field on the
- * request before every call instead of updating the query string.
- */
-function getRequestBodyPagePropertyReference({
+function getRequestBodyPageProperty({
     context,
     pagination,
     signature
@@ -936,14 +957,20 @@ function getRequestBodyPagePropertyReference({
     context: SdkGeneratorContext;
     pagination: FernIr.Pagination;
     signature: EndpointSignatureInfo;
-}): string | undefined {
+}): RequestBodyPageProperty | undefined {
     switch (pagination.type) {
         case "cursor":
         case "offset": {
             if (pagination.page.property.type !== "body" || signature.request == null) {
                 return undefined;
             }
-            return `${signature.request.getRequestParameterName()}.${context.getFieldName(pagination.page.property.name)}`;
+            const requestParameterName = signature.request.getRequestParameterName();
+            const fieldName = context.getFieldName(pagination.page.property.name);
+            return {
+                requestParameterName,
+                requestReference: `${requestParameterName}.${fieldName}`,
+                pagedRequestReference: `${PAGED_REQUEST_VARIABLE_NAME}.${fieldName}`
+            };
         }
         case "custom":
         case "uri":

@@ -68,7 +68,8 @@ func (c *Client) ListWithBodyCursorPagination(
 		options.ToHeader(),
 	)
 	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
-		request.Cursor = pageRequest.Cursor
+		nextRequest := *request
+		nextRequest.Cursor = pageRequest.Cursor
 		nextURL := endpointURL
 		return &internal.CallParams{
 			URL:             nextURL,
@@ -79,7 +80,7 @@ func (c *Client) ListWithBodyCursorPagination(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
+			Request:         &nextRequest,
 			Response:        pageRequest.Response,
 		}
 	}
@@ -130,7 +131,8 @@ func (c *Client) ListWithRequiredBodyCursorPagination(
 		options.ToHeader(),
 	)
 	prepareCall := func(pageRequest *core.PageRequest[string]) *internal.CallParams {
-		request.Cursor = pageRequest.Cursor
+		nextRequest := *request
+		nextRequest.Cursor = pageRequest.Cursor
 		nextURL := endpointURL
 		return &internal.CallParams{
 			URL:             nextURL,
@@ -141,7 +143,7 @@ func (c *Client) ListWithRequiredBodyCursorPagination(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
+			Request:         &nextRequest,
 			Response:        pageRequest.Response,
 		}
 	}
@@ -197,7 +199,8 @@ func (c *Client) ListWithBodyOffsetPagination(
 		options.ToHeader(),
 	)
 	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
-		request.Page = pageRequest.Cursor
+		nextRequest := *request
+		nextRequest.Page = pageRequest.Cursor
 		nextURL := endpointURL
 		return &internal.CallParams{
 			URL:             nextURL,
@@ -208,7 +211,7 @@ func (c *Client) ListWithBodyOffsetPagination(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
+			Request:         &nextRequest,
 			Response:        pageRequest.Response,
 		}
 	}
