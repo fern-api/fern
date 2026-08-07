@@ -63,6 +63,10 @@ scripts:
           bundle exec rake test
 
 fixtures:
+  any-auth:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   basic-auth:
     - outputFolder: wire-tests
       customConfig:

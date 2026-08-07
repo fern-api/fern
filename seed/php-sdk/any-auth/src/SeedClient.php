@@ -88,7 +88,7 @@ class SeedClient
         $this->options = $options ?? [];
 
         if ($clientId !== null && $clientSecret !== null) {
-            $authRawClient = new RawClient(['headers' => []]);
+            $authRawClient = new RawClient(['baseUrl' => $this->options['baseUrl'] ?? '', 'headers' => []]);
             $authClient = new AuthClient($authRawClient);
             $this->oauthTokenProvider = new OAuthTokenProvider($clientId, $clientSecret, $authClient);
 

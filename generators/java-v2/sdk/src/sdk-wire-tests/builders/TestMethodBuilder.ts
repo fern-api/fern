@@ -163,8 +163,11 @@ export class TestMethodBuilder {
                 );
             }
 
-            // For Basic Auth APIs, validate the Authorization header contains the correct encoded credentials
-            const basicAuthHeader = this.getExpectedBasicAuthHeader();
+            // For Basic Auth APIs, validate the Authorization header contains the correct encoded credentials.
+            // Skipped when an OAuth scheme is also configured (e.g. `auth: any`): the client is
+            // constructed with every scheme's credentials and sends the OAuth Bearer token, so a
+            // request can never carry the Basic Authorization header.
+            const basicAuthHeader = isOAuth ? undefined : this.getExpectedBasicAuthHeader();
             if (basicAuthHeader) {
                 writer.writeLine("");
                 writer.writeLine("// Validate Basic Auth Authorization header");

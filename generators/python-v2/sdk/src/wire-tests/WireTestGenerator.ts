@@ -425,8 +425,13 @@ export class WireTestGenerator {
             // that route OAuth/inferred — filtered out here because it targets a different
             // path/test-id. The token endpoint is unauthenticated and, when tested directly,
             // makes exactly one request, so the doubling heuristic must not apply.
+            //
+            // The same applies when multiple auth schemes are configured (e.g. `auth: any`):
+            // the routing auth provider only authenticates endpoints declared with auth, so
+            // calling the unauthenticated token endpoint directly triggers no token prefetch.
             const expectedRequestCount =
                 !this.isEndpointSecurity() &&
+                this.context.ir.auth.schemes.length === 1 &&
                 (this.isInferredAuthTokenEndpoint(endpoint) || this.isOAuthTokenEndpoint(endpoint))
                     ? 2
                     : 1;

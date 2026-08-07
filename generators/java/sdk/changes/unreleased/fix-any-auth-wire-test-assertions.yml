@@ -1,0 +1,6 @@
+- summary: |
+    Fixed wire tests generated for APIs with `auth: any` combining Basic and OAuth schemes.
+    Tests no longer assert both a Bearer and a Basic `Authorization` header on the same
+    request; only the OAuth Bearer assertion is emitted since the client sends the OAuth
+    token when OAuth credentials are configured.
+  type: fix

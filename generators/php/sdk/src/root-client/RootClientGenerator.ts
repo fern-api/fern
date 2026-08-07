@@ -699,11 +699,29 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 const inferredCredGuard =
                     inferredAuth != null ? this.getInferredAuthCredentialGuard(inferredAuth) : null;
 
+                // The internal (unauthenticated) auth client used to fetch OAuth / inferred tokens
+                // must target the same base URL as the main client, otherwise the token request
+                // never reaches the configured server (e.g. a WireMock instance in wire tests).
+                // Multi-URL environments are threaded through the `$environment` constructor
+                // argument instead, so only inject the base URL here for single-URL clients.
+                const clientOptionsName = this.context.getClientOptionsName();
+                const clientBaseUrlOption = this.context.getBaseUrlOptionName();
+                const authRawClientOptions = isMultiUrl
+                    ? "['headers' => []]"
+                    : `['${clientBaseUrlOption}' => $this->${clientOptionsName}['${clientBaseUrlOption}'] ?? '', 'headers' => []]`;
+
                 if (!endpointSecurity && hasOAuth && oauth != null) {
                     if (anyAuthMultiScheme) {
                         writer.controlFlow("if", php.codeblock(oauthCredGuard));
                     }
-                    this.writeOAuthProviderSetup(writer, oauth, isMultiUrl, anyAuthMultiScheme);
+                    this.writeOAuthProviderSetup(
+                        writer,
+                        oauth,
+                        isMultiUrl,
+                        anyAuthMultiScheme,
+                        undefined,
+                        authRawClientOptions
+                    );
                     if (anyAuthMultiScheme) {
                         writer.endControlFlow();
                     }
@@ -719,7 +737,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         inferredAuth,
                         isMultiUrl,
                         constructorParameters,
-                        guardInferred
+                        guardInferred,
+                        undefined,
+                        authRawClientOptions
                     );
                     if (guardInferred) {
                         writer.endControlFlow();

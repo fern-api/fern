@@ -59,6 +59,10 @@ defaultCustomConfig:
   # wire tests cannot be run in seed containers due to docker-in-docker issues
   enableWireTests: false
 fixtures:
+  any-auth:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   examples:
     - outputFolder: no-custom-config
       customConfig: null
