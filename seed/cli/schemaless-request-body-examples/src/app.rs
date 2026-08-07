@@ -588,7 +588,7 @@ impl CliApp {
         T: Into<std::ffi::OsString>,
     {
         crate::reset_sigpipe();
-        let _ = dotenvy::dotenv();
+        crate::load_dotenv_filtered(&self.name);
         crate::init_logging(&self.name);
 
         self.propagate_root_auth();

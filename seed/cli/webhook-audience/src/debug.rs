@@ -222,11 +222,33 @@ pub(crate) fn dump_streaming_note(status: u16, headers: &HeaderMap, extra_sensit
     eprintln!("< [streaming response — body not buffered]");
 }
 
+/// Status + headers for a response whose body this layer never reads.
+///
+/// The SDK-executor path (custom commands) hands the response straight to the
+/// generated SDK crate, which deserializes it — so buffering the body here to
+/// print it would either consume it or double the memory for every call. The
+/// request side, which is what you actually need when diagnosing "what did the
+/// CLI send?", is dumped in full.
+pub(crate) fn dump_response_headers_only(
+    status: u16,
+    latency_ms: u64,
+    headers: &HeaderMap,
+    extra_sensitive_headers: &[&str],
+) {
+    eprintln!(
+        "* {} in {}",
+        colorize(&format!("HTTP {status}"), "36"),
+        colorize(&format!("{latency_ms}ms"), "90"),
+    );
+    print_headers("<", headers, extra_sensitive_headers);
+    eprintln!("< [body consumed by the SDK client — not buffered for --debug]");
+}
+
 /// Returns true if the header name is sensitive and should be redacted.
 ///
 /// Checks the static denylist plus any spec-derived custom auth header names
 /// (e.g., `X-Custom-Auth` from an `apiKey in: header` security scheme).
-fn is_sensitive_header(name: &str, extra_sensitive: &[&str]) -> bool {
+pub(crate) fn is_sensitive_header(name: &str, extra_sensitive: &[&str]) -> bool {
     if REDACTED_HEADERS.iter().any(|&h| h.eq_ignore_ascii_case(name)) {
         return true;
     }

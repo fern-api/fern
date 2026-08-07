@@ -67,6 +67,11 @@ pub struct CliExecutor {
     global_headers: Vec<(String, String)>,
     base_url_override: Option<String>,
     retries: RetriesConfig,
+    /// `--debug`: dump request (and response status/headers) to stderr.
+    debug: bool,
+    /// Spec-declared credential header names, so `--debug` redacts an
+    /// `apiKey`-in-header scheme's value here exactly as the OpenAPI path does.
+    sensitive_headers: Vec<String>,
 }
 
 impl CliExecutor {
@@ -91,7 +96,22 @@ impl CliExecutor {
             global_headers,
             base_url_override,
             retries: RetriesConfig::default(),
+            debug: false,
+            sensitive_headers: Vec::new(),
         }
+    }
+
+    /// Enable `--debug` HTTP dumping, redacting `sensitive_headers` on top of
+    /// the well-known credential header names.
+    ///
+    /// Separate from [`Self::new`] so existing callers are unaffected. Without
+    /// this, `--debug` was silent for custom commands — the dump lived only in
+    /// the OpenAPI executor, so the flag printed nothing on the one path a
+    /// handler uses, which is exactly when it is wanted.
+    pub fn with_debug(mut self, debug: bool, sensitive_headers: Vec<String>) -> Self {
+        self.debug = debug;
+        self.sensitive_headers = sensitive_headers;
+        self
     }
 
     /// Override the default retry configuration.
@@ -128,14 +148,45 @@ impl CliExecutor {
 
         let http_method_str = method.as_str().to_uppercase();
 
+        // Borrowed views for the debug dump; `Vec<String>` -> `&[&str]`.
+        let sensitive: Vec<&str> = self.sensitive_headers.iter().map(String::as_str).collect();
+
         let mut retry_attempt: u32 = 0;
         loop {
             let builder =
                 self.build_request(client, &method, &url, &headers, body_bytes.as_ref())?;
+            if self.debug {
+                // Dump the fully-built request — after auth and global headers
+                // are applied, so what is printed is what goes on the wire.
+                // Cloning is only done under `--debug`.
+                if let Some(built) = builder.try_clone().and_then(|b| b.build().ok()) {
+                    let body_str = built
+                        .body()
+                        .and_then(|b| b.as_bytes())
+                        .map(|b| String::from_utf8_lossy(b).to_string());
+                    crate::debug::dump_request(
+                        built.method().as_str(),
+                        built.url().as_str(),
+                        built.headers(),
+                        body_str.as_deref(),
+                        &sensitive,
+                        &[],
+                    );
+                }
+            }
+            let started = std::time::Instant::now();
 
             let resp = match builder.send().await {
                 Ok(resp) => {
                     let status = resp.status().as_u16();
+                    if self.debug {
+                        crate::debug::dump_response_headers_only(
+                            status,
+                            started.elapsed().as_millis() as u64,
+                            resp.headers(),
+                            &sensitive,
+                        );
+                    }
                     let retry_after = resp
                         .headers()
                         .get("retry-after")
@@ -604,6 +655,44 @@ mod tests {
             CliError::Api { code, .. } => assert_eq!(code, 500),
             _ => panic!("expected CliError::Api"),
         }
+    }
+
+    #[tokio::test]
+    async fn debug_dumping_does_not_alter_the_request_or_response() {
+        // `--debug` was inert on this path: every dump lived in the OpenAPI
+        // executor, so a custom command printed nothing. Now it dumps here —
+        // and dumping must stay observational, so the request still carries its
+        // auth/global headers and the response is still fully readable by the
+        // caller (the dump clones rather than consuming).
+        let mock_server = wiremock::MockServer::start().await;
+        wiremock::Mock::given(wiremock::matchers::method("POST"))
+            .and(wiremock::matchers::header("X-Custom", "value"))
+            .and(wiremock::matchers::body_string_contains("payload"))
+            .respond_with(wiremock::ResponseTemplate::new(200).set_body_string("response-body"))
+            .expect(1)
+            .mount(&mock_server)
+            .await;
+
+        let http = HttpConfig::new("test-cli").unwrap();
+        let executor = CliExecutor::new(
+            http,
+            no_auth_provider(),
+            vec![("X-Custom".into(), "value".into())],
+            None,
+        )
+        .with_debug(true, vec!["xi-api-key".to_string()]);
+
+        let client = reqwest::Client::new();
+        let request = client
+            .post(format!("{}/test", mock_server.uri()))
+            .body("payload")
+            .build()
+            .unwrap();
+
+        let resp = executor.execute_inner(request).await.unwrap();
+        assert_eq!(resp.status().as_u16(), 200);
+        // The body must survive the dump — it is handed to the SDK client next.
+        assert_eq!(resp.text().await.unwrap(), "response-body");
     }
 
     #[tokio::test]

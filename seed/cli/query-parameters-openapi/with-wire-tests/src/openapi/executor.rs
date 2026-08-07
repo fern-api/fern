@@ -2048,12 +2048,31 @@ pub async fn execute_method(
         } else {
             ""
         };
+        // `--dry-run` prints the request it *would* send, so it must redact
+        // credentials for the same reason `--debug` does. A credential reaches
+        // `header_params` whenever the spec models it as a header parameter or
+        // an `x-fern-global-headers` entry (an `apiKey`-in-header scheme is the
+        // common case), and dry-run output is routinely pasted into issues.
+        // Same predicate and spec-derived names as the debug dump, so the two
+        // can't drift apart.
+        let sensitive_header_names = spec_sensitive_header_names(doc);
+        let redacted_headers: Vec<(String, String)> = input
+            .header_params
+            .iter()
+            .map(|(name, value)| {
+                if crate::debug::is_sensitive_header(name, &sensitive_header_names) {
+                    (name.clone(), "[REDACTED]".to_string())
+                } else {
+                    (name.clone(), value.clone())
+                }
+            })
+            .collect();
         let mut dry_run_info = json!({
             "dry_run": true,
             "url": input.full_url,
             "method": method.http_method,
             "query_params": input.query_params,
-            "headers": input.header_params,
+            "headers": redacted_headers,
             "body": input.body,
             "is_multipart_upload": input.is_upload,
         });
@@ -2146,16 +2165,7 @@ pub async fn execute_method(
 
     // Derive spec-declared sensitive names for the debug dump.
     let additional_sensitive_headers: Vec<&str> = if debug {
-        doc.security_schemes
-            .values()
-            .filter_map(|s| {
-                if let crate::openapi::discovery::SecurityScheme::ApiKeyHeader { name } = s {
-                    Some(name.as_str())
-                } else {
-                    None
-                }
-            })
-            .collect()
+        spec_sensitive_header_names(doc)
     } else {
         Vec::new()
     };
@@ -3503,6 +3513,25 @@ fn build_multipart_stream(
         content_type,
         content_length,
     ))
+}
+
+/// Header names the spec itself declares as credentials — the `name` of every
+/// `apiKey`-in-header security scheme (`xi-api-key`, `X-API-Key`, …).
+///
+/// Shared by `--debug` and `--dry-run` so a header redacted in one is redacted
+/// in the other. `debug::REDACTED_HEADERS` covers the well-known names; this
+/// covers the ones only the spec knows about.
+pub(crate) fn spec_sensitive_header_names(doc: &RestDescription) -> Vec<&str> {
+    doc.security_schemes
+        .values()
+        .filter_map(|s| {
+            if let crate::openapi::discovery::SecurityScheme::ApiKeyHeader { name } = s {
+                Some(name.as_str())
+            } else {
+                None
+            }
+        })
+        .collect()
 }
 
 /// Resolve a file part's `Content-Type`:
@@ -11013,6 +11042,93 @@ async fn test_execute_method_dry_run() {
     .await;
 
     assert!(result.is_ok());
+}
+
+#[tokio::test]
+async fn test_dry_run_redacts_credential_headers() {
+    // `--dry-run` output is routinely pasted into bug reports, so it must not
+    // print the credential. The value reaches `header_params` whenever the spec
+    // models it as a header parameter — an `apiKey`-in-header scheme, which is
+    // the shape the spec below declares.
+    let mut security_schemes = HashMap::new();
+    security_schemes.insert(
+        "ApiKeyAuth".to_string(),
+        crate::openapi::discovery::SecurityScheme::ApiKeyHeader {
+            name: "xi-api-key".to_string(),
+        },
+    );
+    let doc = RestDescription {
+        root_url: "https://api.example.com/".to_string(),
+        service_path: "v1/".to_string(),
+        security_schemes,
+        ..Default::default()
+    };
+
+    let mut parameters = HashMap::new();
+    for name in ["xi-api-key", "Authorization", "X-Request-Id"] {
+        parameters.insert(
+            name.to_string(),
+            crate::openapi::discovery::MethodParameter {
+                location: Some("header".to_string()),
+                ..Default::default()
+            },
+        );
+    }
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        id: Some("things.list".to_string()),
+        path: "things".to_string(),
+        parameters,
+        ..Default::default()
+    };
+
+    let params_json = r#"{"xi-api-key":"sk-secret-value","Authorization":"Bearer tok-secret","X-Request-Id":"req-42"}"#;
+    let http_config = crate::http::HttpConfig::new("test").unwrap();
+    let out = execute_method(
+        &doc,
+        &method,
+        Some(params_json),
+        None,
+        &crate::auth::no_auth_provider(),
+        None,
+        None,
+        None,
+        None,
+        true, // dry_run
+        &PaginationConfig::default(),
+        &crate::formatter::OutputPipeline::default(),
+        true, // capture_output — returns the dry-run JSON instead of printing
+        None,
+        &http_config,
+        false,
+        false,
+        false,
+        false, // debug off: redaction must not depend on --debug
+        &[],
+        &[],
+    )
+    .await
+    .expect("dry run should succeed")
+    .expect("capture_output should return the dry-run info");
+
+    let rendered = serde_json::to_string(&out).unwrap();
+    assert!(
+        !rendered.contains("sk-secret-value"),
+        "the spec-declared api key must be redacted, got: {rendered}"
+    );
+    assert!(
+        !rendered.contains("tok-secret"),
+        "a well-known credential header must be redacted, got: {rendered}"
+    );
+    assert!(
+        rendered.contains("[REDACTED]"),
+        "redaction should be visible in the output, got: {rendered}"
+    );
+    // Non-credential headers stay legible — redaction must not blind the flag.
+    assert!(
+        rendered.contains("req-42"),
+        "non-sensitive headers should still be shown, got: {rendered}"
+    );
 }
 
 #[tokio::test]

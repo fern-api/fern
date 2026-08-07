@@ -2286,12 +2286,24 @@ impl AppContext {
     /// keeps `auth_provider` and `global_headers` internal to `AppContext`,
     /// satisfying ADR-0001 (no credential exposure via public getters).
     pub fn build_sdk_executor(&self) -> std::sync::Arc<crate::sdk_executor::CliExecutor> {
-        std::sync::Arc::new(crate::sdk_executor::CliExecutor::new(
-            self.entries[0].http_config.clone(),
-            self.entries[0].auth_provider.clone(),
-            self.entries[0].global_headers.clone(),
-            self.base_url_override.as_ref().map(|s| s.to_string()),
-        ))
+        // `--debug` is threaded in so it works for custom commands too. Spec
+        // -declared credential header names come with it, so an
+        // `apiKey`-in-header value is redacted here exactly as on the OpenAPI
+        // path rather than printed in full.
+        let sensitive_headers: Vec<String> =
+            crate::openapi::executor::spec_sensitive_header_names(&self.entries[0].doc)
+                .into_iter()
+                .map(str::to_string)
+                .collect();
+        std::sync::Arc::new(
+            crate::sdk_executor::CliExecutor::new(
+                self.entries[0].http_config.clone(),
+                self.entries[0].auth_provider.clone(),
+                self.entries[0].global_headers.clone(),
+                self.base_url_override.as_ref().map(|s| s.to_string()),
+            )
+            .with_debug(self.debug, sensitive_headers),
+        )
     }
 }
 
