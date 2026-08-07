@@ -467,3 +467,7 @@ allowedFailures:
   # token request properties) produces C# OAuth-provider code that doesn't compile.
   # Exercised by the CLI generator.
   - cli-oauth
+  # An example that omits an optional request body generates a mock-server test that
+  # matches on a Content-Type header the bodyless request does not send. Generation and
+  # compilation succeed; only the generated test fails.
+  - respect-optional-request-body
