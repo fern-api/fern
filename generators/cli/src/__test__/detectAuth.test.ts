@@ -28,11 +28,16 @@ const bearer = (overrides: { key: string; tokenEnvVar?: string }): FernIr.AuthSc
         docs: undefined
     });
 
-const header = (overrides: { key: string; headerName?: string; headerEnvVar?: string }): FernIr.AuthScheme =>
+const header = (overrides: {
+    key: string;
+    headerName?: string;
+    headerEnvVar?: string;
+    prefix?: string;
+}): FernIr.AuthScheme =>
     FernIr.AuthScheme.header({
         key: overrides.key,
         name: overrides.headerName ?? "X-Api-Key",
-        prefix: undefined,
+        prefix: overrides.prefix,
         headerEnvVar: overrides.headerEnvVar,
         headerPlaceholder: undefined,
         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
@@ -191,6 +196,81 @@ describe("detectAuthBindings", () => {
         expect(bindings[0]?.placement).toBe("binding");
         expect(bindings[1]?.rustCall).toBe('.auth(BearerAuth::new("OAuth2").env("CLOSE_TOKEN"))');
         expect(bindings[1]?.placement).toBe("root");
+    });
+
+    it("token command on a header scheme lowers to a CommandLoginFlow carrying the wire header", () => {
+        const bindings = detectAuthBindings({
+            auth: auth(header({ key: "MyAuth", headerName: "Authentication" })),
+            binaryName: "cohere",
+            tokenCommands: {
+                MyAuth: { command: "gcloud auth print-identity-token --audiences=$AUD" }
+            }
+        });
+        expect(bindings).toHaveLength(1);
+        expect(bindings[0]?.rustCall).toBe(
+            '.login_flow(CommandLoginFlow::new("MyAuth").command("gcloud auth print-identity-token --audiences=$AUD").header("Authentication"))'
+        );
+        expect(bindings[0]?.placement).toBe("root");
+        expect(bindings[0]?.authTypeImport).toBe("CommandLoginFlow");
+        expect(bindings[0]?.envVars).toEqual([]);
+    });
+
+    it("token command inherits the header scheme's prefix", () => {
+        const bindings = detectAuthBindings({
+            auth: auth(header({ key: "MyAuth", headerName: "Authentication", prefix: "Bearer" })),
+            binaryName: "cohere",
+            tokenCommands: { MyAuth: { command: "mint.sh" } }
+        });
+        expect(bindings[0]?.rustCall).toBe(
+            '.login_flow(CommandLoginFlow::new("MyAuth").command("mint.sh").header("Authentication").prefix("Bearer"))'
+        );
+    });
+
+    it("token command on a bearer scheme defaults to Authorization + Bearer", () => {
+        const bindings = detectAuthBindings({
+            auth: auth(bearer({ key: "OAuth2" })),
+            binaryName: "cohere",
+            tokenCommands: { OAuth2: { command: "mint.sh" } }
+        });
+        expect(bindings[0]?.rustCall).toBe(
+            '.login_flow(CommandLoginFlow::new("OAuth2").command("mint.sh").header("Authorization").prefix("Bearer"))'
+        );
+    });
+
+    it("config header/prefix override the scheme-derived values", () => {
+        const bindings = detectAuthBindings({
+            auth: auth(header({ key: "MyAuth", headerName: "X-Api-Key", prefix: "Token" })),
+            binaryName: "cohere",
+            tokenCommands: {
+                MyAuth: { command: "mint.sh", header: "Authentication", prefix: "" }
+            }
+        });
+        // Empty prefix override drops the prefix entirely.
+        expect(bindings[0]?.rustCall).toBe(
+            '.login_flow(CommandLoginFlow::new("MyAuth").command("mint.sh").header("Authentication"))'
+        );
+    });
+
+    it("token command escapes special characters in the rendered Rust string", () => {
+        const bindings = detectAuthBindings({
+            auth: auth(header({ key: "MyAuth", headerName: "Authentication" })),
+            binaryName: "cohere",
+            tokenCommands: { MyAuth: { command: 'sh -c "echo \\"$T\\""' } }
+        });
+        expect(bindings[0]?.rustCall).toBe(
+            '.login_flow(CommandLoginFlow::new("MyAuth").command("sh -c \\"echo \\\\\\"$T\\\\\\"\\"").header("Authentication"))'
+        );
+    });
+
+    it("schemes without a configured token command keep their default env-var binding", () => {
+        const bindings = detectAuthBindings({
+            auth: auth(header({ key: "MyAuth", headerName: "Authentication" }), bearer({ key: "OAuth2" })),
+            binaryName: "cohere",
+            tokenCommands: { MyAuth: { command: "mint.sh" } }
+        });
+        expect(bindings).toHaveLength(2);
+        expect(bindings[0]?.rustCall).toContain('CommandLoginFlow::new("MyAuth")');
+        expect(bindings[1]?.rustCall).toBe('.auth(BearerAuth::new("OAuth2").env("COHERE_TOKEN"))');
     });
 
     // The complete client-credentials binding is covered end-to-end by the

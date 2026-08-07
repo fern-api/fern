@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add command-backed login flows to the generated CLI. Configure
+    `customConfig.tokenCommands` (keyed by auth-scheme name) with a shell
+    `command` whose trimmed stdout is the token. `<bin> auth login` runs the
+    command, parses the JWT `exp`, caches the token via the existing keyring,
+    and re-mints it before expiry — including mid-process for long-lived
+    invocations. The token is applied to the scheme's header (defaulting to the
+    header scheme's wire name, or `Authorization`/`Bearer` for bearer), with
+    optional `header`/`prefix` overrides.
+  type: feat

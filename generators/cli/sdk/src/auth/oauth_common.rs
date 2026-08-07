@@ -159,6 +159,21 @@ impl TokenBundle {
         }
     }
 
+    /// Build a bundle from a token minted by a command (see
+    /// [`crate::auth::command`]). Expiry is derived from the token's JWT
+    /// `exp` claim when present, minus [`EXPIRY_BUFFER_SECS`] so the CLI
+    /// re-mints before the token actually lapses. A non-JWT token, or one
+    /// without a usable `exp`, yields no expiry (`None`) — the command runs
+    /// on every invocation instead of caching across them.
+    pub fn from_command_token(token: &str) -> Self {
+        let expires_at = jwt_exp(token).map(|exp| exp.saturating_sub(EXPIRY_BUFFER_SECS));
+        Self {
+            access_token: token.to_string(),
+            refresh_token: None,
+            expires_at,
+        }
+    }
+
     pub fn is_expired(&self) -> bool {
         match self.expires_at {
             Some(t) => now_epoch() >= t,
@@ -183,6 +198,27 @@ impl TokenBundle {
                 expires_at: None,
             },
         }
+    }
+}
+
+/// Extract the `exp` (expiry, epoch seconds) claim from a JWT without
+/// verifying its signature. Returns `None` for a non-JWT string, an
+/// undecodable payload, or a payload lacking a numeric `exp`.
+///
+/// Signature verification is intentionally omitted: the token was just
+/// minted by a trusted local command, and the CLI only reads `exp` to
+/// decide when to re-mint — it never trusts the claim for authorization.
+pub(crate) fn jwt_exp(token: &str) -> Option<u64> {
+    use base64::Engine;
+    let payload_segment = token.split('.').nth(1)?;
+    let decoded = base64::engine::general_purpose::URL_SAFE_NO_PAD
+        .decode(payload_segment)
+        .ok()?;
+    let claims: serde_json::Value = serde_json::from_slice(&decoded).ok()?;
+    match claims.get("exp")? {
+        serde_json::Value::Number(n) => n.as_u64(),
+        serde_json::Value::String(s) => s.parse().ok(),
+        _ => None,
     }
 }
 
@@ -281,6 +317,41 @@ mod tests {
     fn token_bundle_no_expires_at_never_expired() {
         let b = TokenBundle::parse_or_raw("x");
         assert!(!b.is_expired());
+    }
+
+    fn jwt_with_exp(exp: u64) -> String {
+        use base64::Engine;
+        let payload = format!("{{\"exp\":{exp}}}");
+        let encoded = base64::engine::general_purpose::URL_SAFE_NO_PAD.encode(payload.as_bytes());
+        format!("h.{encoded}.s")
+    }
+
+    #[test]
+    fn jwt_exp_reads_numeric_claim() {
+        assert_eq!(jwt_exp(&jwt_with_exp(1_715_550_000)), Some(1_715_550_000));
+    }
+
+    #[test]
+    fn jwt_exp_none_for_non_jwt() {
+        assert_eq!(jwt_exp("not-a-jwt"), None);
+        assert_eq!(jwt_exp("only.two"), None);
+    }
+
+    #[test]
+    fn from_command_token_sets_buffered_expiry() {
+        let exp = now_epoch() + 3600;
+        let bundle = TokenBundle::from_command_token(&jwt_with_exp(exp));
+        assert_eq!(bundle.expires_at, Some(exp - EXPIRY_BUFFER_SECS));
+        assert!(bundle.refresh_token.is_none());
+        assert!(!bundle.is_expired());
+    }
+
+    #[test]
+    fn from_command_token_non_jwt_has_no_expiry() {
+        let bundle = TokenBundle::from_command_token("opaque-token");
+        assert_eq!(bundle.access_token, "opaque-token");
+        assert!(bundle.expires_at.is_none());
+        assert!(!bundle.is_expired());
     }
 
     #[test]
