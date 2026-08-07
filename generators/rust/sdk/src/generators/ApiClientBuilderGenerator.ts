@@ -1,18 +1,23 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust } from "@fern-api/rust-codegen";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { URL_WITH_VARIABLES_METHOD, WITH_URL_VARIABLES_METHOD } from "../environment/EnvironmentGenerator.js";
+import { ServerVariableOption, getTemplatedServerVariableOptions } from "../environment/serverVariables.js";
 
 export class ApiClientBuilderGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly clientName: string;
     private readonly environmentEnumName: string;
+    private readonly serverVariables: ServerVariableOption[];
 
     constructor(context: SdkGeneratorContext) {
         this.context = context;
         this.clientName = context.getApiClientBuilderClientName();
         this.environmentEnumName = context.getEnvironmentEnumName();
+        this.serverVariables = getTemplatedServerVariableOptions(context.ir, context.case);
     }
 
     public generate(): RustFile {
@@ -49,20 +54,87 @@ export class ApiClientBuilderGenerator {
     }
 
     private generateStruct(): string {
+        const variableFields = this.serverVariables.map((option) => `\n    ${option.name}: Option<String>,`).join("");
+        const baseUrlField = this.hasServerVariables() ? "\n    base_url_explicitly_set: bool," : "";
+        const environmentField = this.tracksSelectedEnvironment()
+            ? `\n    selected_environment: ${this.environmentEnumName},`
+            : "";
         return `/// Builder for creating API clients with custom configuration
 pub struct ApiClientBuilder {
-    config: ClientConfig,
+    config: ClientConfig,${variableFields}${environmentField}${baseUrlField}
 }`;
     }
 
     private generateDefaultImpl(): string {
+        const variableFields = this.serverVariables.map((option) => `\n            ${option.name}: None,`).join("");
+        const baseUrlField = this.hasServerVariables() ? "\n            base_url_explicitly_set: false," : "";
+        const environmentField = this.tracksSelectedEnvironment()
+            ? `\n            selected_environment: ${this.environmentEnumName}::default(),`
+            : "";
         return `impl Default for ApiClientBuilder {
     fn default() -> Self {
         Self {
-            config: ClientConfig::default(),
+            config: ClientConfig::default(),${variableFields}${environmentField}${baseUrlField}
         }
     }
 }`;
+    }
+
+    private hasServerVariables(): boolean {
+        return this.serverVariables.length > 0;
+    }
+
+    /**
+     * Single-URL environments are not retained on ClientConfig, so the builder tracks the
+     * selected environment itself in order to re-resolve its URL template.
+     */
+    private tracksSelectedEnvironment(): boolean {
+        return this.hasServerVariables() && this.context.hasEnvironments() && !this.context.hasMultipleBaseUrls();
+    }
+
+    /**
+     * Generates one setter per server URL variable plus the private helper that re-resolves the
+     * base URL from the environment's URL template.
+     */
+    private generateServerVariableMethods(): string[] {
+        if (!this.hasServerVariables()) {
+            return [];
+        }
+
+        const methods = this.serverVariables.map(
+            (option) => `    /// Set the "${option.variable.id}" server URL variable, which is substituted into the
+    /// base URL template
+    pub fn ${option.name}(mut self, ${option.name}: impl Into<String>) -> Self {
+        self.${option.name} = Some(${option.name}.into());
+        self.apply_server_url_variables();
+        self
+    }`
+        );
+
+        const isUnset = this.serverVariables.map((option) => `self.${option.name}.is_none()`).join(" && ");
+        const arguments_ = this.serverVariables.map((option) => `self.${option.name}.as_deref()`).join(", ");
+        const resolveUrl = this.context.hasMultipleBaseUrls()
+            ? `        let environment = self
+            .config
+            .environment
+            .clone()
+            .unwrap_or_default()
+            .${WITH_URL_VARIABLES_METHOD}(${arguments_});
+        self.config.base_url = environment.url().to_string();
+        self.config.environment = Some(environment);`
+            : `        self.config.base_url = self.selected_environment.${URL_WITH_VARIABLES_METHOD}(${arguments_});`;
+
+        methods.push(`    /// Re-resolves the base URL from the environment's URL template using the configured
+    /// server URL variables. Does nothing until a variable is set, or when an explicit base URL
+    /// was provided.
+    fn apply_server_url_variables(&mut self) {
+        if self.base_url_explicitly_set || (${isUnset}) {
+            return;
+        }
+${resolveUrl}
+    }`);
+
+        return methods;
     }
 
     private generateImplBlock(): string {
@@ -74,12 +146,24 @@ pub struct ApiClientBuilder {
             ? `\n    ///\n    /// This disables environment-based URL resolution. Use \`environment()\` instead\n    /// to configure per-service URL resolution for multi-URL environments.`
             : "";
         const clearEnvironment = isMultiUrl ? "\n        config.environment = None;" : "";
-        methods.push(`    /// Create a new builder with the specified base URL${newDocExtra}
+        if (this.hasServerVariables()) {
+            methods.push(`    /// Create a new builder with the specified base URL${newDocExtra}
+    ///
+    /// An explicit base URL takes precedence over the server URL variable setters.
+    pub fn new(base_url: impl Into<String>) -> Self {
+        let mut builder = Self::default();
+        builder.config.base_url = base_url.into();${clearEnvironment.replace("config.", "builder.config.")}
+        builder.base_url_explicitly_set = true;
+        builder
+    }`);
+        } else {
+            methods.push(`    /// Create a new builder with the specified base URL${newDocExtra}
     pub fn new(base_url: impl Into<String>) -> Self {
         let mut config = ClientConfig::default();
         config.base_url = base_url.into();${clearEnvironment}
         Self { config }
     }`);
+        }
 
         // environment() setter — only when environments exist
         if (this.context.hasEnvironments()) {
@@ -87,12 +171,17 @@ pub struct ApiClientBuilder {
                 ? `\n    ///\n    /// In multi-URL environments, this enables per-service URL resolution.\n    /// Each service will use its designated URL from the environment.`
                 : "";
             const setEnvironment = isMultiUrl ? "\n        self.config.environment = Some(environment);" : "";
+            const trackEnvironment =
+                this.hasServerVariables() && !isMultiUrl ? "\n        self.selected_environment = environment;" : "";
+            const reapplyVariables = this.hasServerVariables() ? "\n        self.apply_server_url_variables();" : "";
             methods.push(`    /// Set the environment, updating the base URL${envDocExtra}
     pub fn environment(mut self, environment: ${this.environmentEnumName}) -> Self {
-        self.config.base_url = environment.url().to_string();${setEnvironment}
+        self.config.base_url = environment.url().to_string();${setEnvironment}${trackEnvironment}${reapplyVariables}
         self
     }`);
         }
+
+        methods.push(...this.generateServerVariableMethods());
 
         // Standard setter methods
         methods.push(`    /// Set the API key for authentication
@@ -180,6 +269,68 @@ pub struct ApiClientBuilder {
         return `impl ApiClientBuilder {\n${methods.join("\n\n")}\n}`;
     }
 
+    /**
+     * Returns the URL template backing `Environment::default().url()`, or undefined when the
+     * default environment has no template.
+     */
+    private getDefaultEnvironmentUrlTemplate(): string | undefined {
+        const environments = this.context.ir.environments;
+        if (environments == null) {
+            return undefined;
+        }
+        const defaultEnvironmentId = environments.defaultEnvironment;
+        return visitDiscriminatedUnion(environments.environments, "type")._visit({
+            singleBaseUrl: (config) => {
+                const environment =
+                    config.environments.find((env) => env.id === defaultEnvironmentId) ?? config.environments[0];
+                return environment?.urlTemplate ?? undefined;
+            },
+            multipleBaseUrls: (config) => {
+                const environment =
+                    config.environments.find((env) => env.id === defaultEnvironmentId) ?? config.environments[0];
+                const primaryBaseUrlId = config.baseUrls[0]?.id;
+                if (environment == null || primaryBaseUrlId == null) {
+                    return undefined;
+                }
+                return environment.urlTemplates?.[primaryBaseUrlId] ?? undefined;
+            },
+            _other: () => undefined
+        });
+    }
+
+    /**
+     * Generates tests asserting that a variable setter is interpolated into the environment's URL
+     * template and that an explicit base URL wins over the setters.
+     */
+    private generateServerVariableTests(): string {
+        const template = this.getDefaultEnvironmentUrlTemplate();
+        const option = this.serverVariables[0];
+        if (!this.hasServerVariables() || template == null || option == null) {
+            return "";
+        }
+
+        const testValue = option.variable.values?.find((value) => value !== option.variable.default) ?? "custom-value";
+        const expectedUrl = this.serverVariables.reduce(
+            (url, { variable, name }) =>
+                url.split(`{${variable.id}}`).join(name === option.name ? testValue : (variable.default ?? "")),
+            template
+        );
+
+        return `
+    #[test]
+    fn test_server_url_variable_is_substituted_into_base_url() {
+        let builder = ApiClientBuilder::default().${option.name}("${testValue}");
+        assert_eq!(builder.config.base_url, "${expectedUrl}");
+    }
+
+    #[test]
+    fn test_explicit_base_url_overrides_server_url_variables() {
+        let builder = ApiClientBuilder::new("https://custom.example.com").${option.name}("${testValue}");
+        assert_eq!(builder.config.base_url, "https://custom.example.com");
+    }
+`;
+    }
+
     private generateTests(): string {
         const environmentTest = this.context.hasEnvironments()
             ? `
@@ -194,7 +345,7 @@ pub struct ApiClientBuilder {
         return `#[cfg(test)]
 mod tests {
     use super::*;
-${environmentTest}
+${environmentTest}${this.generateServerVariableTests()}
     #[test]
     fn test_new_sets_base_url() {
         let builder = ApiClientBuilder::new("https://api.example.com");

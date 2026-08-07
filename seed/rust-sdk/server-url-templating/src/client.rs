@@ -6,11 +6,17 @@ use std::time::Duration;
 /// Builder for creating API clients with custom configuration
 pub struct ApiClientBuilder {
     config: ClientConfig,
+    region: Option<String>,
+    server_url_environment: Option<String>,
+    base_url_explicitly_set: bool,
 }
 impl Default for ApiClientBuilder {
     fn default() -> Self {
         Self {
             config: ClientConfig::default(),
+            region: None,
+            server_url_environment: None,
+            base_url_explicitly_set: false,
         }
     }
 }
@@ -19,11 +25,14 @@ impl ApiClientBuilder {
     ///
     /// This disables environment-based URL resolution. Use `environment()` instead
     /// to configure per-service URL resolution for multi-URL environments.
+    ///
+    /// An explicit base URL takes precedence over the server URL variable setters.
     pub fn new(base_url: impl Into<String>) -> Self {
-        let mut config = ClientConfig::default();
-        config.base_url = base_url.into();
-        config.environment = None;
-        Self { config }
+        let mut builder = Self::default();
+        builder.config.base_url = base_url.into();
+        builder.config.environment = None;
+        builder.base_url_explicitly_set = true;
+        builder
     }
 
     /// Set the environment, updating the base URL
@@ -33,7 +42,46 @@ impl ApiClientBuilder {
     pub fn environment(mut self, environment: Environment) -> Self {
         self.config.base_url = environment.url().to_string();
         self.config.environment = Some(environment);
+        self.apply_server_url_variables();
         self
+    }
+
+    /// Set the "region" server URL variable, which is substituted into the
+    /// base URL template
+    pub fn region(mut self, region: impl Into<String>) -> Self {
+        self.region = Some(region.into());
+        self.apply_server_url_variables();
+        self
+    }
+
+    /// Set the "environment" server URL variable, which is substituted into the
+    /// base URL template
+    pub fn server_url_environment(mut self, server_url_environment: impl Into<String>) -> Self {
+        self.server_url_environment = Some(server_url_environment.into());
+        self.apply_server_url_variables();
+        self
+    }
+
+    /// Re-resolves the base URL from the environment's URL template using the configured
+    /// server URL variables. Does nothing until a variable is set, or when an explicit base URL
+    /// was provided.
+    fn apply_server_url_variables(&mut self) {
+        if self.base_url_explicitly_set
+            || (self.region.is_none() && self.server_url_environment.is_none())
+        {
+            return;
+        }
+        let environment = self
+            .config
+            .environment
+            .clone()
+            .unwrap_or_default()
+            .with_url_variables(
+                self.region.as_deref(),
+                self.server_url_environment.as_deref(),
+            );
+        self.config.base_url = environment.url().to_string();
+        self.config.environment = Some(environment);
     }
 
     /// Set the API key for authentication
@@ -129,6 +177,21 @@ mod tests {
             builder.config.base_url,
             Environment::default().url().to_string()
         );
+    }
+
+    #[test]
+    fn test_server_url_variable_is_substituted_into_base_url() {
+        let builder = ApiClientBuilder::default().region("us-west-2");
+        assert_eq!(
+            builder.config.base_url,
+            "https://api.us-west-2.prod.example.com/v1"
+        );
+    }
+
+    #[test]
+    fn test_explicit_base_url_overrides_server_url_variables() {
+        let builder = ApiClientBuilder::new("https://custom.example.com").region("us-west-2");
+        assert_eq!(builder.config.base_url, "https://custom.example.com");
     }
 
     #[test]
