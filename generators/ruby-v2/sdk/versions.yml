@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.21.3
+  changelogEntry:
+    - summary: |
+        Wire tests no longer assert an exact `Basic` Authorization header when an OAuth
+        scheme is also configured: the test client is constructed with client credentials,
+        so the OAuth provider's dynamic Bearer token takes precedence over the static
+        Basic header at request time.
+      type: fix
+  createdAt: "2026-08-08"
+  irVersion: 67
 - version: 1.21.2
   changelogEntry:
     - summary: |
