@@ -115,6 +115,125 @@ pub trait RequestExecutor: Send + Sync {
     ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>>;
 }
 
+/// An error surfaced by a [`Transport`].
+///
+/// `reqwest::Error` cannot be constructed outside of `reqwest`, so this enum
+/// gives test transports a way to simulate a failed send (`Other`) while the
+/// default transport still reports real failures with their original type
+/// (`Network`), preserving `ApiError::Network` for callers.
+#[derive(Debug)]
+pub enum TransportError {
+    /// A failure reported by the underlying `reqwest` client.
+    Network(reqwest::Error),
+    /// A failure reported by a custom transport.
+    Other(Box<dyn std::error::Error + Send + Sync>),
+}
+
+impl std::fmt::Display for TransportError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Network(e) => write!(f, "{}", e),
+            Self::Other(e) => write!(f, "{}", e),
+        }
+    }
+}
+
+impl std::error::Error for TransportError {}
+
+impl From<TransportError> for ApiError {
+    fn from(error: TransportError) -> Self {
+        match error {
+            TransportError::Network(e) => ApiError::Network(e),
+            TransportError::Other(e) => ApiError::Executor(e),
+        }
+    }
+}
+
+/// The transport seam for HTTP execution, sitting *below* the SDK's auth,
+/// header, and retry logic.
+///
+/// By the time a request reaches a `Transport`, auth headers, custom headers,
+/// query parameters, and the serialized body have all been applied — so a
+/// transport observes exactly what would go on the wire. That makes this the
+/// seam for wire tests: swap in a recording transport and assert the outgoing
+/// request without opening a socket.
+///
+/// Contrast with [`RequestExecutor`], which is injected *above* that logic and
+/// deliberately bypasses auth, headers, and retries.
+pub trait Transport: Send + Sync {
+    fn execute(&self, request: Request) -> BoxFuture<'_, Result<Response, TransportError>>;
+}
+
+/// Carries an optional custom [`Transport`] through `ClientConfig`, so that every
+/// sub-client constructed from a config inherits the same transport.
+///
+/// This is a newtype rather than a bare `Option<Arc<dyn Transport>>` so that
+/// `ClientConfig` can keep deriving `Debug`, which `dyn Transport` cannot
+/// implement.
+#[derive(Clone, Default)]
+pub struct TransportOverride(Option<Arc<dyn Transport>>);
+
+impl TransportOverride {
+    /// No override — the SDK builds its default reqwest-backed transport.
+    pub fn none() -> Self {
+        Self(None)
+    }
+
+    /// Sends requests through `transport` instead of the default one.
+    pub fn new(transport: Arc<dyn Transport>) -> Self {
+        Self(Some(transport))
+    }
+
+    /// Returns `true` when a custom transport is set.
+    pub fn is_set(&self) -> bool {
+        self.0.is_some()
+    }
+
+    pub(crate) fn resolve(&self) -> Option<Arc<dyn Transport>> {
+        self.0.clone()
+    }
+}
+
+impl std::fmt::Debug for TransportOverride {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        // The transport itself is not Debug; report only whether one is set, so
+        // that ClientConfig's derived Debug keeps working.
+        match self.0 {
+            Some(_) => f.write_str("TransportOverride(custom)"),
+            None => f.write_str("TransportOverride(default)"),
+        }
+    }
+}
+
+impl From<Arc<dyn Transport>> for TransportOverride {
+    fn from(transport: Arc<dyn Transport>) -> Self {
+        Self::new(transport)
+    }
+}
+
+/// The default [`Transport`], backed by a `reqwest::Client`.
+pub struct ReqwestTransport {
+    client: Client,
+}
+
+impl ReqwestTransport {
+    pub fn new(client: Client) -> Self {
+        Self { client }
+    }
+}
+
+impl Transport for ReqwestTransport {
+    fn execute(&self, request: Request) -> BoxFuture<'_, Result<Response, TransportError>> {
+        let client = self.client.clone();
+        Box::pin(async move {
+            client
+                .execute(request)
+                .await
+                .map_err(TransportError::Network)
+        })
+    }
+}
+
 /// Wire-level property-name mapping for the OAuth token exchange.
 ///
 /// The token endpoint's request/response contract varies between APIs (e.g. camelCase
@@ -174,6 +293,7 @@ pub struct OAuthConfig {
 #[derive(Clone)]
 pub struct HttpClient {
     client: Client,
+    transport: Arc<dyn Transport>,
     executor: Option<Arc<dyn RequestExecutor>>,
     config: ClientConfig,
     /// Optional OAuth configuration for automatic token management
@@ -216,12 +336,35 @@ impl HttpClient {
             .build()
             .map_err(ApiError::Network)?;
 
+        // Honor a transport supplied on the config, so that every sub-client built
+        // from the same config shares it. Falls back to the reqwest transport.
+        let transport: Arc<dyn Transport> = match config.transport.resolve() {
+            Some(transport) => transport,
+            None => Arc::new(ReqwestTransport::new(client.clone())),
+        };
+
         Ok(Self {
+            transport,
             client,
             executor: None,
             config,
             oauth_config,
         })
+    }
+
+    /// Creates an HttpClient that sends requests through a custom [`Transport`].
+    ///
+    /// Unlike [`Self::with_executor`], the SDK's full request pipeline still
+    /// runs: auth headers, custom headers, and retries are applied *before* the
+    /// transport is called. This is the constructor wire tests should use, and
+    /// the one to use when hosting the SDK on a non-reqwest transport stack.
+    pub fn with_transport(
+        config: ClientConfig,
+        transport: Arc<dyn Transport>,
+    ) -> Result<Self, ApiError> {
+        let mut client = Self::new(config)?;
+        client.transport = transport;
+        Ok(client)
     }
 
     /// Creates an HttpClient with an injected request executor.
@@ -238,6 +381,7 @@ impl HttpClient {
     ) -> Self {
         let client = Client::new();
         Self {
+            transport: Arc::new(ReqwestTransport::new(client.clone())),
             client,
             executor: Some(executor),
             config,
@@ -470,11 +614,9 @@ impl HttpClient {
         let mut request = builder.build().map_err(ApiError::Network)?;
         self.apply_custom_headers(&mut request, &None)?;
 
-        let response = self
-            .client
-            .execute(request)
-            .await
-            .map_err(ApiError::Network)?;
+        // Routed through the transport (rather than the reqwest client directly) so
+        // the OAuth token exchange is observable and stubbable in wire tests.
+        let response = self.transport.execute(request).await?;
 
         let status_code = response.status().as_u16();
         if !response.status().is_success() {
@@ -545,7 +687,7 @@ impl HttpClient {
         for attempt in 0..=max_retries {
             let cloned_request = request.try_clone().ok_or(ApiError::RequestClone)?;
 
-            match self.client.execute(cloned_request).await {
+            match self.transport.execute(cloned_request).await {
                 Ok(response) if response.status().is_success() => return Ok(response),
                 Ok(response) if attempt < max_retries && Self::is_retryable_status(response.status().as_u16()) => {
                     // Exponential backoff for retryable HTTP status codes
@@ -563,11 +705,11 @@ impl HttpClient {
                     let delay = std::time::Duration::from_millis(100 * 2_u64.pow(attempt));
                     tokio::time::sleep(delay).await;
                 }
-                Err(e) => return Err(ApiError::Network(e)),
+                Err(e) => return Err(e.into()),
             }
         }
 
-        Err(ApiError::Network(last_error.unwrap()))
+        Err(last_error.unwrap().into())
     }
 
     fn is_retryable_status(status_code: u16) -> bool {

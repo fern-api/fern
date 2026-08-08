@@ -77,6 +77,10 @@ const AsIsFileSpecs = {
         relativePathToDir: "src/core",
         filename: "oauth_token_provider.rs"
     },
+    TestTransport: {
+        relativePathToDir: "src/core",
+        filename: "test_transport.rs"
+    },
     CoreMod: {
         relativePathToDir: "src/core",
         filename: "mod.rs"

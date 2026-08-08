@@ -121,6 +121,9 @@ export abstract class AbstractRustGeneratorContext<
         });
         this.dependencyManager.add("tokio", { version: "1.0", features: ["full"] });
         this.dependencyManager.add("futures", "0.3");
+        // http is needed by core::test_transport to build canned responses via
+        // reqwest's From<http::Response<T>>; version must track reqwest 0.12's.
+        this.dependencyManager.add("http", "1");
         this.dependencyManager.add("bytes", "1.0");
         this.dependencyManager.add("thiserror", "1.0");
 

@@ -29,7 +29,10 @@ export class ClientConfigGenerator {
     private generateImports() {
         const imports = [
             new UseStatement({ path: "std::collections", items: ["HashMap"] }),
-            new UseStatement({ path: "std::time", items: ["Duration"] })
+            new UseStatement({ path: "std::time", items: ["Duration"] }),
+            // TransportOverride carries an optional custom transport through the config
+            // so every sub-client built from it inherits the same one.
+            new UseStatement({ path: "crate::core", items: ["TransportOverride"] })
         ];
 
         if (this.context.hasEnvironments()) {
@@ -107,6 +110,14 @@ export class ClientConfigGenerator {
             rust.field({
                 name: "user_agent",
                 type: rust.Type.string(),
+                visibility: PUBLIC
+            }),
+            // An optional transport override. Defaults to the standard reqwest
+            // transport; wire tests set this to a recording transport, and every
+            // sub-client constructed from this config picks it up.
+            rust.field({
+                name: "transport",
+                type: rust.Type.reference(rust.reference({ name: "TransportOverride" })),
                 visibility: PUBLIC
             })
         ];
@@ -223,6 +234,10 @@ export class ClientConfigGenerator {
                     {
                         name: "user_agent",
                         value: Expression.toString(Expression.stringLiteral(userAgent))
+                    },
+                    {
+                        name: "transport",
+                        value: Expression.raw("TransportOverride::default()")
                     },
                     ...(this.context.hasMultipleBaseUrls()
                         ? [

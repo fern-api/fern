@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `Transport` seam to the generated Rust SDK so outgoing requests can be
+    asserted in process, without a mock HTTP server.
+
+    `HttpClient` now executes requests through a `Transport` trait that sits below
+    the SDK's auth, header, and retry logic. By the time a request reaches a
+    transport, auth headers, custom headers, query parameters, and the serialized
+    body are all applied, so a test transport observes exactly what would go on the
+    wire. The existing `RequestExecutor` hook is unchanged: it is injected *above*
+    that logic and deliberately bypasses auth, headers, and retries, which made it
+    unusable for asserting requests.
+
+    A new `core::test_transport` module provides `CapturingTransport`, which records
+    requests and replies from a queue of canned responses, including simulated send
+    failures for exercising the retry loop. Install it via the new
+    `ClientConfig::transport` field so that every sub-client built from the config
+    inherits it, or directly with `HttpClient::with_transport`. The OAuth token
+    exchange is routed through the transport as well, so it is stubbable too.
+
+    Behavior is unchanged when no transport is set: the SDK builds its usual
+    `reqwest`-backed transport, and real network failures still surface as
+    `ApiError::Network`.
+  type: feat
