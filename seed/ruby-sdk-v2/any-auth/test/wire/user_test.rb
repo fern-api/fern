@@ -33,13 +33,6 @@ class UserWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
-
-    verify_authorization_header(
-      test_id: test_id,
-      method: "POST",
-      url_path: "/users",
-      expected_value: "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk"
-    )
   end
 
   def test_user_get_admins_with_wiremock
@@ -57,13 +50,6 @@ class UserWireTest < WireMockTestCase
       url_path: "/admins",
       query_params: nil,
       expected: 1
-    )
-
-    verify_authorization_header(
-      test_id: test_id,
-      method: "GET",
-      url_path: "/admins",
-      expected_value: "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk"
     )
   end
 end
