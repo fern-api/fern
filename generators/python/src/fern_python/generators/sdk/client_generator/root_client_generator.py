@@ -1,6 +1,6 @@
 import typing
 from dataclasses import dataclass
-from typing import List, Optional, Sequence
+from typing import List, Optional, Sequence, Tuple
 
 import fern_python.generators.sdk.names as names
 from ..environment_generators import (
@@ -677,7 +677,16 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 RootClientConstructorParameter(
                     constructor_parameter_name=param.constructor_parameter_name,
                     type_hint=parm_type_hint,
-                    initializer=self._get_root_client_param_initializer(param),
+                    initializer=(
+                        AST.Expression("None")
+                        if (
+                            self._prefer_explicit_auth_enabled()
+                            and param.is_basic
+                            and param.environment_variable is not None
+                            and parm_type_hint.is_optional
+                        )
+                        else self._get_root_client_param_initializer(param)
+                    ),
                     docs=param.docs,
                     validation_check=(
                         AST.Expression(
@@ -755,16 +764,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         constructor_parameter_name="client_id",
                         type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
                         initializer=(
-                            AST.Expression(
-                                AST.FunctionInvocation(
-                                    function_definition=AST.Reference(
-                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                        qualified_name_excluding_import=("getenv",),
-                                    ),
-                                    args=[AST.Expression(f'"{oauth.client_id_env_var}"')],
-                                )
-                            )
-                            if oauth.client_id_env_var is not None
+                            self._get_os_getenv_expression(oauth.client_id_env_var)
+                            if oauth.client_id_env_var is not None and not self._prefer_explicit_auth_enabled()
                             else AST.Expression("None")
                         ),
                         docs=RootClientGenerator.CLIENT_ID_CONSTRUCTOR_PARAMETER_DOCS,
@@ -776,16 +777,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         constructor_parameter_name="client_secret",
                         type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
                         initializer=(
-                            AST.Expression(
-                                AST.FunctionInvocation(
-                                    function_definition=AST.Reference(
-                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                        qualified_name_excluding_import=("getenv",),
-                                    ),
-                                    args=[AST.Expression(f'"{oauth.client_secret_env_var}"')],
-                                )
-                            )
-                            if oauth.client_secret_env_var is not None
+                            self._get_os_getenv_expression(oauth.client_secret_env_var)
+                            if oauth.client_secret_env_var is not None and not self._prefer_explicit_auth_enabled()
                             else AST.Expression("None")
                         ),
                         docs=RootClientGenerator.CLIENT_SECRET_CONSTRUCTOR_PARAMETER_DOCS,
@@ -935,6 +928,45 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
         return parameters
 
+    def _prefer_explicit_auth_enabled(self) -> bool:
+        """
+        Whether explicitly provided constructor auth credentials should take precedence
+        over environment-variable defaults when selecting the auth scheme. Only applies
+        to OAuth client-credentials token-override mode alongside a basic auth scheme.
+        """
+        if not self._context.custom_config.prefer_explicit_auth:
+            return False
+        if self._context.ir.auth.requirement != ir_types.AuthSchemesRequirement.ANY:
+            return False
+        if len(self._context.ir.auth.schemes) <= 1:
+            return False
+        if self._oauth_scheme is None:
+            return False
+        oauth = self._oauth_scheme.configuration.get_as_union()
+        if oauth.type != "clientCredentials":
+            return False
+        client_wrapper_generator = ClientWrapperGenerator(
+            context=self._context,
+            generated_environment=self._generated_environment,
+        )
+        basic_auth_scheme = client_wrapper_generator._get_basic_auth_scheme()
+        if basic_auth_scheme is None:
+            return False
+        # At least one basic credential must surface as a constructor parameter for
+        # "explicitly provided basic auth" to be expressible.
+        return basic_auth_scheme.username_omit is not True or basic_auth_scheme.password_omit is not True
+
+    def _get_os_getenv_expression(self, environment_variable: str) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                    qualified_name_excluding_import=("getenv",),
+                ),
+                args=[AST.Expression(f'"{environment_variable}"')],
+            )
+        )
+
     def _get_root_client_param_initializer(self, param: ConstructorParameter) -> Optional[AST.Expression]:
         if param.environment_variable is not None:
             getenv_args = [AST.Expression(f'"{param.environment_variable}"')]
@@ -1018,14 +1050,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             client_id_param = AST.NamedFunctionParameter(
                 name="client_id",
                 type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
-                initializer=AST.Expression(
-                    AST.FunctionInvocation(
-                        function_definition=AST.Reference(
-                            import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                            qualified_name_excluding_import=("getenv",),
-                        ),
-                        args=[AST.Expression(f'"{oauth.client_id_env_var}"')],
-                    )
+                initializer=(
+                    AST.Expression("None")
+                    if self._prefer_explicit_auth_enabled()
+                    else self._get_os_getenv_expression(oauth.client_id_env_var)
                 ),
             )
         else:
@@ -1040,14 +1068,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             client_secret_param = AST.NamedFunctionParameter(
                 name="client_secret",
                 type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
-                initializer=AST.Expression(
-                    AST.FunctionInvocation(
-                        function_definition=AST.Reference(
-                            import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                            qualified_name_excluding_import=("getenv",),
-                        ),
-                        args=[AST.Expression(f'"{oauth.client_secret_env_var}"')],
-                    )
+                initializer=(
+                    AST.Expression("None")
+                    if self._prefer_explicit_auth_enabled()
+                    else self._get_os_getenv_expression(oauth.client_secret_env_var)
                 ),
             )
         else:
@@ -1493,6 +1517,43 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             if param.private_member_name is not None:
                 writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
 
+        oauth_selection_condition = "client_id is not None and client_secret is not None"
+        if self._prefer_explicit_auth_enabled():
+            # Track which credentials were passed explicitly (before applying env-var
+            # defaults) so explicitly provided basic auth wins over OAuth env vars.
+            basic_auth_scheme = client_wrapper_generator._get_basic_auth_scheme()
+            oauth_config = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+            if basic_auth_scheme is not None and oauth_config is not None and oauth_config.type == "clientCredentials":
+                basic_param_names: List[str] = []
+                env_fallbacks: List[Tuple[str, str]] = []
+                if basic_auth_scheme.username_omit is not True:
+                    username_param_name = names.get_username_constructor_parameter_name(basic_auth_scheme)
+                    basic_param_names.append(username_param_name)
+                    if basic_auth_scheme.username_env_var is not None:
+                        env_fallbacks.append((username_param_name, basic_auth_scheme.username_env_var))
+                if basic_auth_scheme.password_omit is not True:
+                    password_param_name = names.get_password_constructor_parameter_name(basic_auth_scheme)
+                    basic_param_names.append(password_param_name)
+                    if basic_auth_scheme.password_env_var is not None:
+                        env_fallbacks.append((password_param_name, basic_auth_scheme.password_env_var))
+                if len(basic_param_names) > 0:
+                    if oauth_config.client_id_env_var is not None:
+                        env_fallbacks.append(("client_id", oauth_config.client_id_env_var))
+                    if oauth_config.client_secret_env_var is not None:
+                        env_fallbacks.append(("client_secret", oauth_config.client_secret_env_var))
+                    writer.write_line("_explicit_oauth_auth = client_id is not None or client_secret is not None")
+                    writer.write_line(
+                        "_explicit_basic_auth = " + " or ".join(f"{name} is not None" for name in basic_param_names)
+                    )
+                    for param_name, env_var in env_fallbacks:
+                        writer.write(f"{param_name} = {param_name} if {param_name} is not None else ")
+                        writer.write_node(self._get_os_getenv_expression(env_var))
+                        writer.write_newline_if_last_line_not()
+                    oauth_selection_condition = (
+                        "client_id is not None and client_secret is not None"
+                        " and (_explicit_oauth_auth or not _explicit_basic_auth)"
+                    )
+
         # if token is not None:
         writer.write_line(f"if {self.TOKEN_PARAMETER_NAME} is not None:")
         with writer.indent():
@@ -1532,7 +1593,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             writer.write_newline_if_last_line_not()
 
         # elif client_id is not None and client_secret is not None:
-        writer.write_line("elif client_id is not None and client_secret is not None:")
+        writer.write_line(f"elif {oauth_selection_condition}:")
         with writer.indent():
             # Require additional OAuth params (narrows Optional[str] to str)
             if self._oauth_scheme is not None:

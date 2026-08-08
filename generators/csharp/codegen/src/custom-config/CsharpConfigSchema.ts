@@ -103,6 +103,12 @@ export const CsharpConfigSchema = z.object({
     "exception-interceptor-class-name": z.string().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "omit-fern-headers": z.boolean().optional(),
+    // When true (and the API composes OAuth client-credentials with basic auth via
+    // `auth: any`), auth credentials passed explicitly to the client constructor take
+    // precedence over environment-variable defaults when selecting the auth scheme
+    // (e.g. explicit basic auth wins over OAuth env vars). Off by default so existing
+    // behavior is unchanged.
+    "prefer-explicit-auth": z.boolean().optional(),
     // When true, emits the platform observability headers `X-Fern-Runtime`,
     // `X-Fern-Runtime-Version`, and `X-Fern-Platform` on generated SDK requests.
     // Off by default so existing generated output is unchanged. Still subject to

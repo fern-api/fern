@@ -51,6 +51,12 @@ export const BaseRubyCustomConfigSchema = z.object({
     // - "error": reports violations as errors (used in seed to enforce rubocop)
     rubocopSeverity: z.enum(["info", "warning", "error"]).optional(),
     maxRetries: z.number().int().min(0).optional(),
+    // Opt-in: when the API composes OAuth client-credentials with basic auth
+    // (`auth: any`), auth credentials passed explicitly to the client constructor
+    // take precedence over environment-variable defaults when selecting the auth
+    // scheme. Disabled by default so existing output is unchanged (OAuth env vars
+    // win over explicitly provided basic auth).
+    preferExplicitAuth: z.boolean().optional(),
     retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
 });
 
