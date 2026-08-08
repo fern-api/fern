@@ -409,8 +409,12 @@ export class WireTestGenerator {
                 // scheme's header is absent) rather than asserting a single global auth header.
                 lines.push(...this.buildEndpointSecurityAuthAssertion(endpoint, basePath));
             } else {
-                // Verify Authorization header when basic auth is configured
-                const expectedAuthHeader = this.buildExpectedAuthorizationHeader();
+                // Verify Authorization header when basic auth is configured.
+                // Skipped when an OAuth scheme is also configured: the test client is
+                // constructed with client credentials, so the OAuth provider's dynamic
+                // Bearer token overwrites the static Basic header at request time.
+                const hasOAuthScheme = this.context.ir.auth.schemes.some((scheme) => scheme.type === "oauth");
+                const expectedAuthHeader = hasOAuthScheme ? null : this.buildExpectedAuthorizationHeader();
                 if (expectedAuthHeader != null) {
                     lines.push(``);
                     lines.push(`    verify_authorization_header(`);
@@ -779,13 +783,6 @@ export class WireTestGenerator {
      * or null if no basic auth scheme is configured.
      */
     private buildExpectedAuthorizationHeader(): string | null {
-        // When an OAuth scheme is configured, the test client is constructed with
-        // client credentials, so the OAuth provider's resolved Bearer token takes
-        // precedence over the static Basic Authorization header at request time.
-        // The token value is dynamic, so no exact assertion can be made.
-        if (this.context.ir.auth.schemes.some((scheme) => scheme.type === "oauth")) {
-            return null;
-        }
         for (const scheme of this.context.ir.auth.schemes) {
             if (scheme.type === "basic") {
                 if (scheme.usernameOmit && scheme.passwordOmit) {
