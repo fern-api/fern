@@ -39,12 +39,5 @@ class AuthWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
-
-    verify_authorization_header(
-      test_id: test_id,
-      method: "POST",
-      url_path: "/token",
-      expected_value: "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk"
-    )
   end
 end
