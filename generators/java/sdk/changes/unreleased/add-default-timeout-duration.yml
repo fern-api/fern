@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a new idiomatic `default-timeout` config key that accepts a `java.time.Duration` (an
+    ISO-8601 duration string such as `PT30S`, a plain number of seconds, or the literal `infinity`
+    to disable the timeout). The `default-timeout-in-seconds` key is now deprecated but remains fully
+    supported: when only it is set, its value is converted to a `Duration`. When neither key is set,
+    the timeout still defaults to 60 seconds, so existing configurations produce identical generated
+    output.
+  type: feat

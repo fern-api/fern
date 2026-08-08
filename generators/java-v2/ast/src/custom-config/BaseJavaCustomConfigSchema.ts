@@ -36,7 +36,11 @@ export const BaseJavaCustomConfigSchema = z.object({
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "custom-pager-name": z.string().optional(),
     "offset-semantics": z.enum(["item-index", "page-index"]).optional(),
-    "default-timeout-in-seconds": z.number().optional(),
+    // The default network timeout, expressed as a java.time.Duration. The unit is intentionally
+    // omitted from the key name because Duration is the idiomatic Java representation. Accepts a
+    // number of seconds, an ISO-8601 duration string (e.g. "PT30S"), or the literal "infinity" to
+    // disable the timeout.
+    "default-timeout": z.union([z.number(), z.string()]).optional(),
     "gradle-distribution-url": z.string().optional(),
     "gradle-plugin-management": z.string().optional(),
     "gradle-central-dependency-management": z.boolean().optional(),
@@ -51,7 +55,77 @@ export const BaseJavaCustomConfigSchema = z.object({
 
     // Deprecated.
     "wrapped-aliases": z.boolean().optional(),
-    maxRetries: z.number().int().min(0).optional()
+    maxRetries: z.number().int().min(0).optional(),
+    // Deprecated: use "default-timeout" instead. Retained for backwards compatibility; when set (and
+    // "default-timeout" is not) its value is interpreted as a number of seconds.
+    "default-timeout-in-seconds": z.number().optional()
 });
 
 export type BaseJavaCustomConfigSchema = z.infer<typeof BaseJavaCustomConfigSchema>;
+
+const DEFAULT_TIMEOUT_IN_SECONDS = 60;
+const INFINITY = "infinity";
+
+/**
+ * The resolved `default-timeout`: either a finite number of whole seconds or `"infinity"` (which
+ * disables the timeout). This mirrors the v1 (Java) `DefaultTimeout` value type so both generators
+ * stay aligned.
+ */
+export type ResolvedDefaultTimeout = { type: "infinity" } | { type: "seconds"; seconds: number };
+
+/**
+ * Parses a `default-timeout` value into whole seconds or `"infinity"`. Accepts a plain number of
+ * seconds, a numeric string, an ISO-8601 duration string (e.g. `"PT30S"`, `"PT1M30S"`, `"P1DT2H"`), or
+ * the literal `"infinity"` to disable the timeout. Sub-second precision is truncated toward zero to
+ * mirror `java.time.Duration#getSeconds`, which the v1 generator uses. Returns `undefined` when the
+ * value cannot be parsed.
+ */
+export function parseDefaultTimeout(value: number | string): ResolvedDefaultTimeout | undefined {
+    if (typeof value === "number") {
+        return Number.isFinite(value) ? { type: "seconds", seconds: Math.trunc(value) } : undefined;
+    }
+    const trimmed = value.trim();
+    if (trimmed.toLowerCase() === INFINITY) {
+        return { type: "infinity" };
+    }
+    if (/^[+-]?\d+(\.\d+)?$/.test(trimmed)) {
+        return { type: "seconds", seconds: Math.trunc(Number(trimmed)) };
+    }
+    const match = /^([+-])?P(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?)?$/i.exec(trimmed);
+    if (match == null || (match[2] == null && match[3] == null && match[4] == null && match[5] == null)) {
+        return undefined;
+    }
+    const sign = match[1] === "-" ? -1 : 1;
+    const days = match[2] != null ? Number(match[2]) : 0;
+    const hours = match[3] != null ? Number(match[3]) : 0;
+    const minutes = match[4] != null ? Number(match[4]) : 0;
+    const seconds = match[5] != null ? Number(match[5]) : 0;
+    return { type: "seconds", seconds: Math.trunc(sign * (days * 86400 + hours * 3600 + minutes * 60 + seconds)) };
+}
+
+/**
+ * Resolves the effective default timeout, preferring the idiomatic `default-timeout` key and falling
+ * back to the deprecated `default-timeout-in-seconds` (interpreted as seconds) when only the latter is
+ * set. Defaults to 60 seconds when neither key is configured. This mirrors the v1 (Java) resolver,
+ * keeping the two generators aligned.
+ */
+export function resolveDefaultTimeout(
+    config: Pick<BaseJavaCustomConfigSchema, "default-timeout" | "default-timeout-in-seconds"> | undefined
+): ResolvedDefaultTimeout {
+    const defaultTimeout = config?.["default-timeout"];
+    if (defaultTimeout != null) {
+        const resolved = parseDefaultTimeout(defaultTimeout);
+        if (resolved != null) {
+            return resolved;
+        }
+    }
+    return { type: "seconds", seconds: config?.["default-timeout-in-seconds"] ?? DEFAULT_TIMEOUT_IN_SECONDS };
+}
+
+/**
+ * Returns the whole-second value used for OkHttp's `callTimeout`, where `0` disables the timeout.
+ * `"infinity"` therefore maps to `0`.
+ */
+export function defaultTimeoutToCallTimeoutSeconds(resolved: ResolvedDefaultTimeout): number {
+    return resolved.type === "infinity" ? 0 : resolved.seconds;
+}

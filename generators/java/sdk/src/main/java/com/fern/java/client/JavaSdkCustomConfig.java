@@ -16,10 +16,12 @@
 
 package com.fern.java.client;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.java.ICustomConfig;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 import org.immutables.value.Value;
@@ -73,8 +75,37 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     @JsonProperty("offset-semantics")
     Optional<String> offsetSemantics();
 
+    /**
+     * The default network timeout for generated clients, expressed as a {@link java.time.Duration}. The unit is
+     * intentionally omitted from the key name because {@code Duration} is the idiomatic Java representation. Accepts a
+     * plain number of seconds, an ISO-8601 duration string (e.g. {@code "PT30S"}), or the literal {@code "infinity"} to
+     * disable the timeout.
+     */
+    @JsonProperty("default-timeout")
+    Optional<DefaultTimeout> defaultTimeout();
+
+    /**
+     * @deprecated Use {@code default-timeout} ({@link #defaultTimeout()}) instead. This key is retained for backwards
+     *     compatibility: when it is set (and {@code default-timeout} is not), its value is interpreted as a number of
+     *     seconds.
+     */
+    @Deprecated
     @JsonProperty("default-timeout-in-seconds")
     Optional<Integer> defaultTimeoutInSeconds();
+
+    /**
+     * Resolves the effective default timeout, preferring the idiomatic {@code default-timeout} key and falling back to
+     * the deprecated {@code default-timeout-in-seconds} (interpreted as seconds) when only the latter is set. Returns
+     * {@link Optional#empty()} when neither key is configured, in which case callers should apply the default of 60
+     * seconds.
+     */
+    @JsonIgnore
+    default Optional<DefaultTimeout> resolveDefaultTimeout() {
+        if (defaultTimeout().isPresent()) {
+            return defaultTimeout();
+        }
+        return defaultTimeoutInSeconds().map(seconds -> DefaultTimeout.ofDuration(Duration.ofSeconds((long) seconds)));
+    }
 
     @Override
     @Value.Default

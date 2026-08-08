@@ -30,6 +30,7 @@ import com.fern.ir.model.types.EnumValue;
 import com.fern.ir.model.variables.VariableDeclaration;
 import com.fern.ir.model.variables.VariableId;
 import com.fern.java.client.ClientGeneratorContext;
+import com.fern.java.client.DefaultTimeout;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.generators.AbstractFileGenerator;
@@ -1830,7 +1831,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private int getDefaultTimeoutInSeconds() {
         return clientGeneratorContext
                 .getCustomConfig()
-                .defaultTimeoutInSeconds()
+                .resolveDefaultTimeout()
+                .map(DefaultTimeout::toCallTimeoutSeconds)
                 .orElse(60);
     }
 

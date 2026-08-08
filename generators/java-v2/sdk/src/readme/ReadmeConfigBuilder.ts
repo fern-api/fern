@@ -1,3 +1,4 @@
+import { resolveDefaultTimeout } from "@fern-api/java-ast";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -47,11 +48,14 @@ export class ReadmeConfigBuilder {
                 }
             }
 
-            // Customize description for Timeouts when default-timeout-in-seconds is configured
+            // Customize description for Timeouts when a default timeout is configured
             if (feature.id === FernGeneratorCli.StructuredFeatureId.Timeouts) {
                 const customConfig = parseCustomConfigOrUndefined(context.logger, context.config.customConfig);
-                const defaultTimeout = customConfig?.["default-timeout-in-seconds"] ?? 60;
-                description = `The SDK defaults to a ${defaultTimeout} second timeout. You can configure this with a timeout option at the client or request level.`;
+                const defaultTimeout = resolveDefaultTimeout(customConfig);
+                description =
+                    defaultTimeout.type === "infinity"
+                        ? "By default the SDK does not time out requests. You can configure this with a timeout option at the client or request level."
+                        : `The SDK defaults to a ${defaultTimeout.seconds} second timeout. You can configure this with a timeout option at the client or request level.`;
             }
 
             features.push({
