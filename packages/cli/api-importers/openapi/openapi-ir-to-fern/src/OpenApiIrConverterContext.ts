@@ -38,7 +38,7 @@ export class OpenApiIrConverterContext {
 
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
-    private unknownSchema: Set<number> = new Set();
+    private unknownSchema: Set<string> = new Set();
 
     /**
      * The set of referenced schema ids to include in the generated definition.
@@ -109,14 +109,15 @@ export class OpenApiIrConverterContext {
             this.builder.setDisplayName({ displayName: ir.title });
         }
 
-        const schemaByStatusCode: Record<number, Schema> = {};
+        const schemaByErrorKey: Record<string, Schema> = {};
         if (!this.enableUniqueErrorsPerEndpoint) {
             for (const endpoint of ir.endpoints) {
                 for (const [statusCodeString, error] of Object.entries(endpoint.errors)) {
                     const statusCode = parseInt(statusCodeString);
-                    const existingSchema = schemaByStatusCode[statusCode];
+                    const errorKey = getErrorSchemaKey({ statusCode, namespace: endpoint.namespace });
+                    const existingSchema = schemaByErrorKey[errorKey];
                     if (existingSchema == null && error.schema != null) {
-                        schemaByStatusCode[statusCode] = error.schema;
+                        schemaByErrorKey[errorKey] = error.schema;
                     } else if (
                         existingSchema != null &&
                         error.schema != null &&
@@ -124,7 +125,7 @@ export class OpenApiIrConverterContext {
                     ) {
                         // pass
                     } else {
-                        this.unknownSchema.add(statusCode);
+                        this.unknownSchema.add(errorKey);
                     }
                 }
             }
@@ -176,8 +177,14 @@ export class OpenApiIrConverterContext {
     /**
      * Is error an unknown schema
      */
-    public isErrorUnknownSchema(statusCode: number): boolean {
-        return this.unknownSchema.has(statusCode);
+    public isErrorUnknownSchema({
+        statusCode,
+        namespace
+    }: {
+        statusCode: number;
+        namespace: string | undefined;
+    }): boolean {
+        return this.unknownSchema.has(getErrorSchemaKey({ statusCode, namespace }));
     }
 
     /**
@@ -396,4 +403,8 @@ export class OpenApiIrConverterContext {
         }
         return this.schemaNameMapping.get(schemaId) ?? schemaId;
     }
+}
+
+function getErrorSchemaKey({ statusCode, namespace }: { statusCode: number; namespace: string | undefined }): string {
+    return namespace != null ? `${namespace}:${statusCode}` : `${statusCode}`;
 }

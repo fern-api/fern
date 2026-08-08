@@ -1,0 +1,615 @@
+{
+  "specVersion": "1.0.0",
+  "title": "Users API",
+  "servers": [
+    {
+      "url": "https://api.example.com"
+    },
+    {
+      "url": "https://api.example.com"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "listUsers",
+      "tags": [
+        "users"
+      ],
+      "namespace": "users",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListUsersRequest",
+      "response": {
+        "description": "OK",
+        "schema": {
+          "value": {
+            "generatedName": "ListUsersResponseItem",
+            "schema": "User",
+            "namespace": "users",
+            "source": {
+              "file": "../users-api.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "generatedName": "ListUsersResponse",
+          "namespace": "users",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "users"
+            }
+          ],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../users-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "400": {
+          "generatedName": "BadRequestError",
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "schema": "UsersError",
+            "namespace": "users",
+            "source": {
+              "file": "../users-api.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Bad request",
+          "source": {
+            "file": "../users-api.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "code": {
+                    "value": {
+                      "value": 1,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "name": {
+                      "value": {
+                        "value": "name",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../users-api.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "listPayments",
+      "tags": [
+        "payments"
+      ],
+      "namespace": "payments",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListPaymentsRequest",
+      "response": {
+        "description": "OK",
+        "schema": {
+          "value": {
+            "generatedName": "ListPaymentsResponseItem",
+            "schema": "Payment",
+            "namespace": "payments",
+            "source": {
+              "file": "../payments-api.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "generatedName": "ListPaymentsResponse",
+          "namespace": "payments",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "payments"
+            }
+          ],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../payments-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "400": {
+          "generatedName": "BadRequestError",
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "schema": "PaymentsError",
+            "namespace": "payments",
+            "source": {
+              "file": "../payments-api.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Bad request",
+          "source": {
+            "file": "../payments-api.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "type",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "title": {
+                    "value": {
+                      "value": "title",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/payments",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "amount": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../payments-api.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {
+      "users": {
+        "User": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userId",
+              "key": "id",
+              "schema": {
+                "generatedName": "UserId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UserId",
+                  "namespace": "users",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "users"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "users",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "users"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "userName",
+              "key": "name",
+              "schema": {
+                "generatedName": "UserName",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UserName",
+                  "namespace": "users",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "users"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "users",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "users"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "User",
+          "namespace": "users",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "users"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "../users-api.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "UsersError": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "usersErrorCode",
+              "key": "code",
+              "schema": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "UsersErrorCode",
+                "namespace": "users",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "users"
+                  }
+                ],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "usersErrorMessage",
+              "key": "message",
+              "schema": {
+                "generatedName": "UsersErrorMessage",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UsersErrorMessage",
+                  "namespace": "users",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "users"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "users",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "users"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UsersError",
+          "namespace": "users",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "users"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "../users-api.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        }
+      },
+      "payments": {
+        "Payment": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "paymentId",
+              "key": "id",
+              "schema": {
+                "generatedName": "PaymentId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "PaymentId",
+                  "namespace": "payments",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "payments"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "payments",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "payments"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "paymentAmount",
+              "key": "amount",
+              "schema": {
+                "generatedName": "PaymentAmount",
+                "value": {
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "PaymentAmount",
+                  "namespace": "payments",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "payments"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "payments",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "payments"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "Payment",
+          "namespace": "payments",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "payments"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "../payments-api.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "PaymentsError": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "paymentsErrorType",
+              "key": "type",
+              "schema": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PaymentsErrorType",
+                "namespace": "payments",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "payments"
+                  }
+                ],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "paymentsErrorTitle",
+              "key": "title",
+              "schema": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PaymentsErrorTitle",
+                "namespace": "payments",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "payments"
+                  }
+                ],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "paymentsErrorDetail",
+              "key": "detail",
+              "schema": {
+                "generatedName": "PaymentsErrorDetail",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "PaymentsErrorDetail",
+                  "namespace": "payments",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "payments"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "payments",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "payments"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PaymentsError",
+          "namespace": "payments",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "payments"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "../payments-api.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        }
+      }
+    }
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

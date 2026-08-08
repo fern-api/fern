@@ -1,0 +1,46 @@
+openapi: 3.0.1
+info:
+  title: Payments API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+paths:
+  /payments:
+    get:
+      operationId: listPayments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentsError'
+components:
+  schemas:
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: integer
+    PaymentsError:
+      type: object
+      required:
+        - type
+        - title
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        detail:
+          type: string

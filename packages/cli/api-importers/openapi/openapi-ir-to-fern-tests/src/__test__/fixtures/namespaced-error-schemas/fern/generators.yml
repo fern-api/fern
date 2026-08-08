@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ../users-api.yml
+      namespace: users
+    - openapi: ../payments-api.yml
+      namespace: payments
