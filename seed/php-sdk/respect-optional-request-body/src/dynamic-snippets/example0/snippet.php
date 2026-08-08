@@ -4,6 +4,7 @@ namespace Example;
 
 use Seed\SeedClient;
 use Seed\Requests\RefundBody;
+use Seed\Types\RefundRequest;
 
 $client = new SeedClient(
     options: [
@@ -12,5 +13,9 @@ $client = new SeedClient(
 );
 $client->refund(
     'refund-id',
-    new RefundBody([]),
+    new RefundBody([
+        'body' => new RefundRequest([
+            'amount' => 60,
+        ]),
+    ]),
 );

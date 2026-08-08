@@ -41,20 +41,6 @@ public class RefundTest : BaseMockServerTest
     [NUnit.Framework.Test]
     public void MockServerTest_2()
     {
-        Server
-            .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/refunds/refund-id").UsingPost()
-            )
-            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
-
-        Assert.DoesNotThrowAsync(async () =>
-            await Client.RefundAsync(new RefundBody { Id = "refund-id" })
-        );
-    }
-
-    [NUnit.Framework.Test]
-    public void MockServerTest_3()
-    {
         const string requestJson = """
             {
               "amount": 60
