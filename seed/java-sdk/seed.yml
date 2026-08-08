@@ -54,6 +54,10 @@ language: java
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
+  any-auth:
+    - outputFolder: .
+      customConfig:
+        enable-wire-tests: true
   exhaustive:
     - customConfig:
         enable-wire-tests: true
