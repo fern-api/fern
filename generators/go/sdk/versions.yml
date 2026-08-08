@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.55.1
+  changelogEntry:
+    - summary: |
+        Fixed WireMock stubs for wire tests of APIs with `auth: any` combining Basic and
+        OAuth/Bearer schemes: stubs now accept either Authorization form instead of
+        requiring the exact Basic header the client may not send.
+      type: fix
+    - summary: |
+        Fixed generated OAuth wire tests failing to compile when the OAuth token
+        endpoint lives in a subpackage: the pointer helper (`String`) is now
+        referenced from the root package instead of the request type's package.
+      type: fix
+  createdAt: "2026-08-08"
+  irVersion: 67
 - version: 1.55.0
   changelogEntry:
     - summary: |
