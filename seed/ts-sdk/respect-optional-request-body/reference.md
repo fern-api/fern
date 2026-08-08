@@ -13,10 +13,7 @@
 
 ```typescript
 await client.refund({
-    id: "refund-id",
-    body: {
-        amount: 60
-    }
+    id: "refund-id"
 });
 
 ```

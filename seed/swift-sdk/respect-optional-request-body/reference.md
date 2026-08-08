@@ -21,7 +21,7 @@ private func main() async throws {
     _ = try await client.refund(
         id: "refund-id",
         request: RefundRequest(
-            amount: 60
+
         )
     )
 }

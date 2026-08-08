@@ -67,11 +67,7 @@ class SeedClient
      * ```php
      * $client->refund(
      *     'refund-id',
-     *     new RefundBody([
-     *         'body' => new RefundRequest([
-     *             'amount' => 60,
-     *         ]),
-     *     ]),
+     *     new RefundBody([]),
      * );
      * ```
      *

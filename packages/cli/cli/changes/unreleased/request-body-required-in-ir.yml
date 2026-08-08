@@ -4,8 +4,13 @@
     emits `body: {type: Foo, optional: true}` in the generated Fern Definition, and hand-written
     `body: optional<Foo>` keeps its existing meaning that the body's value may be null.
 
-    This is a no-op for generated SDKs today: the body type generators see is unchanged, so output
-    is identical until a generator opts into reading the new field. It removes the need for each
-    generator to unwrap `optional<T>` before deciding how to shape the request parameter, which is
-    what made enabling the setting change calling conventions in some languages.
+    Definitions that do not set `respect-optional-request-body` are unaffected: the body type
+    generators see is unchanged, so output is byte-identical.
+
+    For definitions that do set it, the generated SDK changes. Python, Java and Rust previously
+    got a different calling convention entirely — a `request=` object instead of flattened kwargs,
+    `Optional<Body>` instead of `Body`, `&Option<Body>` instead of `&Body` — and are now back to
+    the shape they have without the setting. TypeScript and C# lose the optional parameter
+    (`request?: Body` becomes `request: Body`) until those generators opt into reading the new
+    field; restoring it is a widening and therefore not breaking.
   type: feat

@@ -13,6 +13,11 @@ export interface HttpInlineRequestBodySchema {
      *
      * This is read by example validation only: it is not carried into the IR, so it
      * does not make the request parameter optional in a generated SDK.
+     *
+     * Note the asymmetry with the identically named field on
+     * `HttpReferencedRequestBodySchema`, which does reach the IR as `required: false`. An
+     * inline body has no single type to mark omittable, so its `optional` stays
+     * validation-only.
      */
     optional?: boolean;
 }

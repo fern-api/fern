@@ -31,14 +31,7 @@ impl ApiClient {
     ///     };
     ///     let client = ApiClient::new(config).expect("Failed to build client");
     ///     client
-    ///         .refund(
-    ///             &"refund-id".to_string(),
-    ///             &RefundRequest {
-    ///                 amount: Some(60.0),
-    ///                 ..Default::default()
-    ///             },
-    ///             None,
-    ///         )
+    ///         .refund(&"refund-id".to_string(), &Default::default(), None)
     ///         .await;
     /// }
     /// ```

@@ -407,9 +407,13 @@ function convertExampleRequestBody({
 
     if (!isInlineRequestBody(requestType)) {
         const rawTypeBeingExemplified = typeof requestType !== "string" ? requestType.type : requestType;
-        // an omitted request on an optional body represents a call with no request body, rather than
-        // a body whose value is absent
-        if (example.request === undefined && isOptionalType({ rawType: rawTypeBeingExemplified, typeResolver, file })) {
+        // An omitted request represents a call with no request body. That is spelled two ways:
+        // `optional: true` says the call may omit the body, and `optional<T>` says the body's value
+        // may be absent. Both accept an example without a `request`.
+        const isOmittable =
+            (typeof requestType !== "string" && requestType.optional === true) ||
+            isOptionalType({ rawType: rawTypeBeingExemplified, typeResolver, file });
+        if (example.request === undefined && isOmittable) {
             return undefined;
         }
         return ExampleRequestBody.reference(

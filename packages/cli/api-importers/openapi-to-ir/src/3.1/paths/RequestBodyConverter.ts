@@ -159,7 +159,9 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                         contentType,
                         docs: this.description,
                         requestBodyType: convertedSchema.type,
-                        // the direct OpenAPI->IR path does not thread requestBody.required yet
+                        // TODO(fern-support): thread requestBody.required through here. The OpenAPI
+                        // RequestBodyObject carries it; this path just does not read it yet, so `undefined`
+                        // is a gap rather than deliberate "always required" semantics.
                         required: undefined,
                         v2Examples: this.convertMediaTypeObjectExamples({
                             mediaTypeObject,
@@ -198,7 +200,9 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     contentType,
                     docs: this.description,
                     requestBodyType: convertedSchema.type,
-                    // the direct OpenAPI->IR path does not thread requestBody.required yet
+                    // TODO(fern-support): thread requestBody.required through here. The OpenAPI
+                    // RequestBodyObject carries it; this path just does not read it yet, so `undefined`
+                    // is a gap rather than deliberate "always required" semantics.
                     required: undefined,
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
@@ -262,7 +266,9 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 contentType,
                 docs: this.description,
                 requestBodyType: TypeReference.unknown(),
-                // the direct OpenAPI->IR path does not thread requestBody.required yet
+                // TODO(fern-support): thread requestBody.required through here. The OpenAPI
+                // RequestBodyObject carries it; this path just does not read it yet, so `undefined`
+                // is a gap rather than deliberate "always required" semantics.
                 required: undefined,
                 v2Examples
             }),
@@ -531,7 +537,9 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 contentType,
                 docs: this.description,
                 requestBodyType: convertedSchema.type,
-                // the direct OpenAPI->IR path does not thread requestBody.required yet
+                // TODO(fern-support): thread requestBody.required through here. The OpenAPI
+                // RequestBodyObject carries it; this path just does not read it yet, so `undefined`
+                // is a gap rather than deliberate "always required" semantics.
                 required: undefined,
                 v2Examples: this.convertMediaTypeObjectExamples({
                     mediaTypeObject: modifiedMediaTypeObject,

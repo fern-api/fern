@@ -718,23 +718,24 @@ function getRequest({
                 requestValue.docs == null &&
                 (requestValue["content-type"] == null || requestValue["content-type"] === "application/json");
 
-            if (context.options.respectOptionalRequestBody && isOptionalJsonBody(request)) {
-                // `optional: true` rather than `optional<T>`: the call may omit the body, which is
-                // not the same as the body's value being nullable. The scalar shorthand cannot
-                // express it, so the object form is kept.
+            // `optional: true` rather than `optional<T>`: the call may omit the body, which is not
+            // the same as the body's value being nullable. The scalar shorthand cannot express it,
+            // so an omittable body keeps the object form even when it could otherwise collapse.
+            const isOmittableBody = context.options.respectOptionalRequestBody && isOptionalJsonBody(request);
+            if (isOmittableBody) {
                 requestValue.body =
                     typeof requestTypeReference === "string"
                         ? { type: requestTypeReference, optional: true }
                         : { ...requestTypeReference, optional: true };
-                return {
-                    schemaIdsToExclude: [],
-                    value: canCollapse ? { body: requestValue.body } : requestValue
-                };
             }
 
             return {
                 schemaIdsToExclude: [],
-                value: canCollapse ? (requestValue.body as string) : requestValue
+                value: !canCollapse
+                    ? requestValue
+                    : isOmittableBody
+                      ? { body: requestValue.body }
+                      : (requestValue.body as string)
             };
         }
 
