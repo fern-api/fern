@@ -3,3 +3,4 @@ export { getAllPages } from "./getAllPages.js";
 export { getReferencedApiSections } from "./getReferencedApiSections.js";
 export { getVersionContentRef } from "./git-versions/getVersionContentRef.js";
 export { parseAudiences, parseDocsConfiguration, resolveFilepath } from "./parseDocsConfiguration.js";
+export { type DocsConfigurationWithResolvedRedirects, resolveRedirects } from "./resolveRedirects.js";

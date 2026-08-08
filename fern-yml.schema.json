@@ -2049,26 +2049,33 @@
           "additionalProperties": false
         },
         "redirects": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "source": {
-                "type": "string"
-              },
-              "destination": {
-                "type": "string"
-              },
-              "permanent": {
-                "type": "boolean"
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "type": "string"
+                  },
+                  "destination": {
+                    "type": "string"
+                  },
+                  "permanent": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "source",
+                  "destination"
+                ],
+                "additionalProperties": false
               }
             },
-            "required": [
-              "source",
-              "destination"
-            ],
-            "additionalProperties": false
-          }
+            {
+              "type": "string"
+            }
+          ]
         },
         "check": {
           "type": "object",

@@ -590,6 +590,20 @@ export const RedirectConfig = z.object({
     permanent: z.boolean().optional()
 });
 
+/**
+ * Either an inline list of redirects, or a relative filepath to a YAML file containing only that list.
+ */
+export const RedirectsConfiguration = z.union([z.array(RedirectConfig), z.string()]);
+
+/**
+ * The contents of a standalone redirects file referenced by `redirects` in docs.yml.
+ */
+export const RedirectsFile = z
+    .object({
+        redirects: z.array(RedirectConfig.strict())
+    })
+    .strict();
+
 // ===== Check =====
 
 export const CheckRuleSeverity = z.enum(["warn", "error"]);
@@ -1019,7 +1033,7 @@ export const DocsConfiguration = z.object({
     "ai-examples": AiExamplesConfig.optional(),
     agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
-    redirects: z.array(RedirectConfig).optional(),
+    redirects: RedirectsConfiguration.optional(),
     check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: z.string().optional(),
