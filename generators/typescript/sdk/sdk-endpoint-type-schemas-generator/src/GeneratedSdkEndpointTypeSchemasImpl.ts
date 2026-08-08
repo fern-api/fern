@@ -1,5 +1,5 @@
 import { CaseConverter } from "@fern-api/base-generator";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
 import { FileContext, GeneratedSdkEndpointTypeSchemas } from "@fern-typescript/contexts";
@@ -90,8 +90,9 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                 }
             }
 
-            if (endpoint.response?.body?.type === "json") {
-                switch (endpoint.response.body.value.responseBodyType.type) {
+            const nonStreamResponseBody = getNonStreamResponse(endpoint);
+            if (nonStreamResponseBody?.type === "json") {
+                switch (nonStreamResponseBody.value.responseBodyType.type) {
                     case "primitive":
                     case "container":
                         this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -99,7 +100,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                             service,
                             endpoint,
                             typeName: GeneratedSdkEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
-                            type: endpoint.response.body.value.responseBodyType
+                            type: nonStreamResponseBody.value.responseBodyType
                         });
                         break;
                     // named response bodies are not generated - consumers should
@@ -109,15 +110,16 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                     case "unknown":
                         break;
                     default:
-                        assertNever(endpoint.response.body.value.responseBodyType);
+                        assertNever(nonStreamResponseBody.value.responseBodyType);
                 }
             }
 
-            if (endpoint.response?.body?.type === "streaming") {
-                if (endpoint.response.body.value.type === "text") {
+            const streamResponseBody = getStreamResponse(endpoint);
+            if (streamResponseBody != null) {
+                if (streamResponseBody.type === "text") {
                     throw new Error("Non-json responses are not supported");
                 }
-                switch (endpoint.response.body.value.payload.type) {
+                switch (streamResponseBody.payload.type) {
                     case "primitive":
                     case "container":
                         this.generatedStreamDataSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -125,7 +127,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                             service,
                             endpoint,
                             typeName: GeneratedSdkEndpointTypeSchemasImpl.STREAM_DATA_SCHEMA_NAME,
-                            type: endpoint.response.body.value.payload
+                            type: streamResponseBody.payload
                         });
                         break;
                     // named response bodies are not generated - consumers should
@@ -135,7 +137,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                     case "unknown":
                         break;
                     default:
-                        assertNever(endpoint.response.body.value.payload);
+                        assertNever(streamResponseBody.payload);
                 }
             }
 
@@ -263,14 +265,17 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         if (this.endpoint.response.body.type === "streaming") {
             throw new Error("Cannot deserialize streaming response in deserializeResponse");
         }
-        if (this.endpoint.response.body.type === "streamParameter") {
-            throw new Error("Cannot deserialize streaming response in deserializeResponse");
+        // A stream-condition endpoint deserializes its non-streaming response here; the
+        // streaming half goes through deserializeStreamData.
+        const responseBody = getNonStreamResponse(this.endpoint);
+        if (responseBody == null) {
+            throw new Error("Cannot deserialize response because it's not defined");
         }
-        if (this.endpoint.response.body.type === "bytes" || this.endpoint.response.body.type === "fileDownload") {
+        if (responseBody.type === "bytes" || responseBody.type === "fileDownload") {
             return referenceToRawResponse;
         }
 
-        if (this.endpoint.response.body.type === "text") {
+        if (responseBody.type === "text") {
             return ts.factory.createAsExpression(
                 referenceToRawResponse,
                 context.type.getReferenceToType(
@@ -279,21 +284,21 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             );
         }
 
-        if (this.endpoint.response.body.value.responseBodyType.type === "unknown") {
+        if (responseBody.value.responseBodyType.type === "unknown") {
             return referenceToRawResponse;
         }
 
         if (!this.includeSerdeLayer) {
             return ts.factory.createAsExpression(
                 referenceToRawResponse,
-                context.type.getReferenceToType(this.endpoint.response.body.value.responseBodyType).typeNode
+                context.type.getReferenceToType(responseBody.value.responseBodyType).typeNode
             );
         }
 
-        switch (this.endpoint.response.body.value.responseBodyType.type) {
+        switch (responseBody.value.responseBodyType.type) {
             case "named":
                 return context.typeSchema
-                    .getSchemaOfNamedType(this.endpoint.response.body.value.responseBodyType, {
+                    .getSchemaOfNamedType(responseBody.value.responseBodyType, {
                         isGeneratingSchema: false
                     })
                     .parseOrThrow(referenceToRawResponse, {
@@ -320,7 +325,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         omitUndefined: false
                     });
             default:
-                assertNever(this.endpoint.response.body.value.responseBodyType);
+                assertNever(responseBody.value.responseBodyType);
         }
     }
 
@@ -348,19 +353,20 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         referenceToRawStreamData: ts.Expression;
         context: FileContext;
     }): ts.Expression {
-        if (this.endpoint.response?.body?.type !== "streaming") {
+        const streamResponse = getStreamResponse(this.endpoint);
+        if (streamResponse == null) {
             throw new Error("Cannot deserialize stream data because it's not defined");
         }
-        if (this.endpoint.response.body?.value.type === "text") {
+        if (streamResponse.type === "text") {
             throw new Error("Cannot deserialize non-json stream data");
         }
 
-        switch (this.endpoint.response.body?.value.payload.type) {
+        switch (streamResponse.payload.type) {
             case "unknown":
                 return referenceToRawStreamData;
             case "named":
                 return context.typeSchema
-                    .getSchemaOfNamedType(this.endpoint.response.body?.value.payload, { isGeneratingSchema: false })
+                    .getSchemaOfNamedType(streamResponse.payload, { isGeneratingSchema: false })
                     .parseOrThrow(referenceToRawStreamData, {
                         allowUnrecognizedEnumValues: true,
                         allowUnrecognizedUnionMembers: true,
@@ -385,7 +391,48 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         omitUndefined: false
                     });
             default:
-                assertNever(this.endpoint.response.body?.value.payload);
+                assertNever(streamResponse.payload);
         }
     }
 }
+
+/**
+ * Returns the streaming response of an endpoint, including endpoints whose response is
+ * controlled by a `stream-condition` request property.
+ */
+function getStreamResponse(endpoint: FernIr.HttpEndpoint): FernIr.StreamingResponse | undefined {
+    const responseBody = endpoint.response?.body;
+    if (responseBody?.type === "streaming") {
+        return responseBody.value;
+    }
+    if (responseBody?.type === "streamParameter") {
+        return responseBody.streamResponse;
+    }
+    return undefined;
+}
+
+/**
+ * Returns the non-streaming response of an endpoint, including endpoints whose response is
+ * controlled by a `stream-condition` request property.
+ */
+function getNonStreamResponse(endpoint: FernIr.HttpEndpoint): NonStreamResponseBody | undefined {
+    const responseBody = endpoint.response?.body;
+    if (responseBody == null || responseBody.type === "streaming") {
+        return undefined;
+    }
+    if (responseBody.type !== "streamParameter") {
+        return responseBody;
+    }
+    return visitDiscriminatedUnion(responseBody.nonStreamResponse, "type")._visit<NonStreamResponseBody>({
+        json: (jsonResponse) => FernIr.HttpResponseBody.json(jsonResponse.value),
+        text: (textResponse) => FernIr.HttpResponseBody.text(textResponse),
+        bytes: (bytesResponse) => FernIr.HttpResponseBody.bytes(bytesResponse),
+        fileDownload: (fileDownloadResponse) => FernIr.HttpResponseBody.fileDownload(fileDownloadResponse)
+    });
+}
+
+type NonStreamResponseBody =
+    | FernIr.HttpResponseBody.Json
+    | FernIr.HttpResponseBody.FileDownload
+    | FernIr.HttpResponseBody.Text
+    | FernIr.HttpResponseBody.Bytes;

@@ -93,4 +93,5 @@ export interface SdkCustomConfig {
     optionalAuth: boolean;
     retryStatusCodes: "legacy" | "recommended";
     generateReactQueryHooks: boolean;
+    generateStreamConditionOverloads: boolean;
 }

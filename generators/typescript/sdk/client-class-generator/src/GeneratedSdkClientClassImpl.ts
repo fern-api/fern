@@ -48,6 +48,7 @@ import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-
 import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation.js";
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation.js";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation.js";
+import { GeneratedStreamParameterEndpointImplementation } from "./endpoints/GeneratedStreamParameterEndpointImplementation.js";
 import { getClientDefaultValue, isLiteralHeader } from "./endpoints/utils/isLiteralHeader.js";
 import { GeneratedWrappedService } from "./GeneratedWrappedService.js";
 import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation.js";
@@ -84,6 +85,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
         alwaysSendAuth: boolean;
+        generateStreamConditionOverloads: boolean;
     }
 }
 
@@ -130,6 +132,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
     private readonly alwaysSendAuth: boolean;
+    private readonly generateStreamConditionOverloads: boolean;
 
     constructor({
         caseConverter,
@@ -159,7 +162,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         generateEndpointMetadata,
         parameterNaming,
         offsetSemantics,
-        alwaysSendAuth
+        alwaysSendAuth,
+        generateStreamConditionOverloads
     }: GeneratedSdkClientClassImpl.Init) {
         this.case = caseConverter;
         this.isRoot = isRoot;
@@ -182,6 +186,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
         this.alwaysSendAuth = alwaysSendAuth;
+        this.generateStreamConditionOverloads = generateStreamConditionOverloads;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -315,10 +320,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             generateEndpointMetadata: this.generateEndpointMetadata,
                             parameterNaming
                         }),
-                    streamParameter: (streamParameter) =>
-                        // TODO(amckinney): For now we just generate the stream variant of the endpoint.
-                        // We need to implement both the non-streaming and streaming variants.
-                        new GeneratedStreamingEndpointImplementation({
+                    streamParameter: (streamParameter) => {
+                        const streamingEndpoint = new GeneratedStreamingEndpointImplementation({
                             packageId,
                             endpoint,
                             generatedSdkClientClass: this,
@@ -334,7 +337,27 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             streamType,
                             generateEndpointMetadata: this.generateEndpointMetadata,
                             parameterNaming
-                        }),
+                        });
+                        const nonStreamResponse = getNonStreamResponseForOverloads(streamParameter.nonStreamResponse);
+                        if (
+                            !this.generateStreamConditionOverloads ||
+                            nonStreamResponse == null ||
+                            endpoint.sdkRequest?.streamParameter == null ||
+                            // A nested condition property cannot be narrowed with an intersection type.
+                            (endpoint.sdkRequest.streamParameter.propertyPath ?? []).length > 0
+                        ) {
+                            // Without overloads we only generate the stream variant of the endpoint.
+                            return streamingEndpoint;
+                        }
+                        return new GeneratedStreamParameterEndpointImplementation({
+                            packageId,
+                            endpoint,
+                            streamParameter: endpoint.sdkRequest.streamParameter,
+                            requestParameterName: this.case.camelUnsafe(endpoint.sdkRequest.requestParameterName),
+                            streamingEndpoint,
+                            nonStreamingEndpoint: getDefaultEndpointImplementation({ response: nonStreamResponse })
+                        });
+                    },
                     text: (textResponse) => {
                         return getDefaultEndpointImplementation({
                             response: FernIr.HttpResponseBody.text(textResponse)
@@ -778,7 +801,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         signature.returnTypeWithoutPromise
                     )
                 ),
-                statements: publicStatements.map(getTextOfTsNode)
+                statements: publicStatements.map(getTextOfTsNode),
+                overloads: overloads.map((overload) => ({
+                    parameters: overload.parameters,
+                    returnType: getTextOfTsNode(
+                        context.coreUtilities.fetcher.HttpResponsePromise._getReferenceToType(
+                            overload.returnTypeWithoutPromise
+                        )
+                    ),
+                    docs: docs != null ? [docs] : undefined
+                }))
             };
 
             if (overloads.length === 0) {
@@ -801,19 +833,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 ),
                 scope: Scope.Private,
                 isAsync: true,
-                statements: internalResponseStatements.map(getTextOfTsNode),
-                overloads: overloads.map((overload) => ({
-                    parameters: overload.parameters,
-                    returnType: getTextOfTsNode(
-                        ts.factory.createTypeReferenceNode("Promise", [
-                            isPaginated
-                                ? overload.returnTypeWithoutPromise
-                                : context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
-                                      overload.returnTypeWithoutPromise
-                                  )
-                        ])
-                    )
-                }))
+                statements: internalResponseStatements.map(getTextOfTsNode)
             };
 
             if (isPaginated) {
@@ -1384,4 +1404,24 @@ function anyEndpointWithAuth({
     }
 
     return false;
+}
+
+/**
+ * Returns the non-streaming response of a `stream-condition` endpoint, or undefined
+ * if the response shape isn't supported by the overloaded implementation.
+ */
+function getNonStreamResponseForOverloads(
+    nonStreamResponse: FernIr.NonStreamHttpResponseBody
+): FernIr.HttpResponseBody.Json | FernIr.HttpResponseBody.Text | undefined {
+    switch (nonStreamResponse.type) {
+        case "json":
+            return FernIr.HttpResponseBody.json(nonStreamResponse.value);
+        case "text":
+            return FernIr.HttpResponseBody.text(nonStreamResponse);
+        case "fileDownload":
+        case "bytes":
+            return undefined;
+        default:
+            assertNever(nonStreamResponse);
+    }
 }

@@ -77,6 +77,7 @@ function createGenerator(opts?: Partial<SdkClientClassGenerator.Init>): SdkClien
         parameterNaming: "default",
         offsetSemantics: "item-index",
         alwaysSendAuth: false,
+        generateStreamConditionOverloads: false,
         ...opts
     });
 }
