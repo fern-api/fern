@@ -191,6 +191,7 @@ export class LegacyApiSpecAdapter {
             shouldUseUndiscriminatedUnionsWithLiterals: settings.preferUndiscriminatedUnionsWithLiterals,
             objectQueryParameters: settings.objectQueryParameters,
             respectForwardCompatibleEnums: settings.respectForwardCompatibleEnums,
+            respectOptionalRequestBody: settings.respectOptionalRequestBody,
             useBytesForBinaryResponse: settings.useBytesForBinaryResponse,
             defaultFormParameterEncoding: settings.defaultFormParameterEncoding,
             filter: settings.filter,

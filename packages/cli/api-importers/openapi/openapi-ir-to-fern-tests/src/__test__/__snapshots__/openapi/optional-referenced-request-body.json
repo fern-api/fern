@@ -1,0 +1,255 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "bulkRefund": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/refunds",
+              "request": "RefundRequest",
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "partialRefund": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "id": "id",
+                  },
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/refunds/{id}/partial",
+              "request": {
+                "body": {
+                  "docs": "Optional split instructions.",
+                  "type": "RefundRequest",
+                },
+                "content-type": "application/json",
+                "name": "PartialRefundRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "refund": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "id": "id",
+                  },
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/refunds/{id}",
+              "request": {
+                "body": "RefundRequest",
+                "content-type": "application/json",
+                "name": "RefundBody",
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "requiredRefund": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "id": "id",
+                  },
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/refunds/{id}/required",
+              "request": {
+                "body": "RefundRequest",
+                "content-type": "application/json",
+                "name": "RequiredRefundRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "unspecifiedRefund": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "id": "id",
+                  },
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/refunds/{id}/unspecified",
+              "request": {
+                "body": "RefundRequest",
+                "content-type": "application/json",
+                "name": "UnspecifiedRefundRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "RefundRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "amount": "optional<double>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    refund:
+      path: /refunds/{id}
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: RefundRequest
+        path-parameters:
+          id: string
+        name: RefundBody
+        content-type: application/json
+      examples:
+        - path-parameters:
+            id: id
+          request: {}
+    partialRefund:
+      path: /refunds/{id}/partial
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body:
+          type: RefundRequest
+          docs: Optional split instructions.
+        path-parameters:
+          id: string
+        name: PartialRefundRequest
+        content-type: application/json
+      examples:
+        - path-parameters:
+            id: id
+          request: {}
+    requiredRefund:
+      path: /refunds/{id}/required
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: RefundRequest
+        path-parameters:
+          id: string
+        name: RequiredRefundRequest
+        content-type: application/json
+      examples:
+        - path-parameters:
+            id: id
+          request: {}
+    unspecifiedRefund:
+      path: /refunds/{id}/unspecified
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: RefundRequest
+        path-parameters:
+          id: string
+        name: UnspecifiedRefundRequest
+        content-type: application/json
+      examples:
+        - path-parameters:
+            id: id
+          request: {}
+    bulkRefund:
+      path: /refunds
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request: RefundRequest
+      examples:
+        - request: {}
+  source:
+    openapi: ../openapi.yml
+types:
+  RefundRequest:
+    properties:
+      amount: optional<double>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Optional referenced request bodies",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Optional referenced request bodies
+",
+  },
+  "specVersion": "1.0.0",
+}

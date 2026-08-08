@@ -522,11 +522,13 @@ export class WireTestGenerator {
                     authParams.push("token: 'test-token'");
                 },
                 basic: (basicScheme) => {
+                    // Use the scheme's actual parameter names (e.g. `accountSid`/`authToken`
+                    // for custom-named basic auth), not hardcoded `username`/`password`.
                     if (!basicScheme.usernameOmit) {
-                        authParams.push("username: 'test-username'");
+                        authParams.push(`${this.context.getParameterName(basicScheme.username)}: 'test-username'`);
                     }
                     if (!basicScheme.passwordOmit) {
-                        authParams.push("password: 'test-password'");
+                        authParams.push(`${this.context.getParameterName(basicScheme.password)}: 'test-password'`);
                     }
                 },
                 header: (header) => {

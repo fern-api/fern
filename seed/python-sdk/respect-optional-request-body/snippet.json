@@ -1,0 +1,57 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "Full refund",
+            "id": {
+                "path": "/refunds/{id}",
+                "method": "POST",
+                "identifier_override": "endpoint_.refund"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.refund(\n    id=\"refund-id\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.refund(\n        id=\"refund-id\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "Split refund",
+            "id": {
+                "path": "/refunds/{id}",
+                "method": "POST",
+                "identifier_override": "endpoint_.refund"
+            },
+            "snippet": {
+                "sync_client": "from seed import RefundRequest, SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.refund(\n    id=\"refund-id\",\n    request=RefundRequest(\n        amount=60.0,\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi, RefundRequest\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.refund(\n        id=\"refund-id\",\n        request=RefundRequest(\n            amount=60.0,\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "Required refund",
+            "id": {
+                "path": "/refunds/{id}/required",
+                "method": "POST",
+                "identifier_override": "endpoint_.requiredRefund"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.required_refund(\n    id=\"refund-id\",\n    amount=60.0,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.required_refund(\n        id=\"refund-id\",\n        amount=60.0,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/refunds",
+                "method": "POST",
+                "identifier_override": "endpoint_.bulkRefund"
+            },
+            "snippet": {
+                "sync_client": "from seed import RefundRequest, SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.bulk_refund(\n    request=RefundRequest(),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi, RefundRequest\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.bulk_refund(\n        request=RefundRequest(),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

@@ -879,14 +879,14 @@ files = [
 
 [[package]]
 name = "packaging"
-version = "26.2"
+version = "26.3"
 description = "Core utilities for Python packages"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "packaging-26.2-py3-none-any.whl", hash = "sha256:5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e"},
-    {file = "packaging-26.2.tar.gz", hash = "sha256:ff452ff5a3e828ce110190feff1178bb1f2ea2281fa2075aadb987c2fb221661"},
+    {file = "packaging-26.3-py3-none-any.whl", hash = "sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"},
+    {file = "packaging-26.3.tar.gz", hash = "sha256:94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79"},
 ]
 
 [[package]]
@@ -1410,14 +1410,14 @@ files = [
 
 [[package]]
 name = "types-python-dateutil"
-version = "2.9.0.20260716"
+version = "2.9.0.20260807"
 description = "Typing stubs for python-dateutil"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "types_python_dateutil-2.9.0.20260716-py3-none-any.whl", hash = "sha256:1ae41d51a5c5f6bbeeb7f1f34df7086d55ff1605cf88d2ed71a7a276e1a7794e"},
-    {file = "types_python_dateutil-2.9.0.20260716.tar.gz", hash = "sha256:1d55d1c3024bdb4861bb6a6622c9ec800c433d87bdc5b16fb84cdd0eed4ef2cb"},
+    {file = "types_python_dateutil-2.9.0.20260807-py3-none-any.whl", hash = "sha256:54aa3707350ed7a9cc0776fd2f6739679d6967d11b40150985e81edcb86df4db"},
+    {file = "types_python_dateutil-2.9.0.20260807.tar.gz", hash = "sha256:e0b8a90d464c8684c66b7b8e4556d9074afdddcc56ca45323f0987134f9e7034"},
 ]
 
 [[package]]

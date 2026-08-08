@@ -64,6 +64,9 @@ scripts:
 
 fixtures:
   any-auth:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: prefer-explicit-auth

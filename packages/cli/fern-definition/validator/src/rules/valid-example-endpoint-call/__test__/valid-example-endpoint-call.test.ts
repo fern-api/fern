@@ -247,7 +247,9 @@ describe("valid-example-endpoint-call", () => {
                 severity: "fatal"
             },
             {
-                message: "Expected example to be a string. Example is: undefined",
+                message:
+                    "This endpoint requires a request body, so its examples must specify request. " +
+                    "Mark the body optional to allow calling the endpoint without one.",
                 nodePath: [
                     "service",
                     "endpoints",
@@ -334,6 +336,42 @@ describe("valid-example-endpoint-call", () => {
                     "d",
                     {
                         arrayIndex: 2,
+                        key: "examples"
+                    },
+                    "request"
+                ],
+                relativeFilepath: RelativeFilePath.of("request.yml"),
+                name: "valid-example-endpoint-call",
+                severity: "fatal"
+            },
+            {
+                message:
+                    "This endpoint requires a request body, so its examples must specify request. " +
+                    "Mark the body optional to allow calling the endpoint without one.",
+                nodePath: [
+                    "service",
+                    "endpoints",
+                    "f",
+                    {
+                        arrayIndex: 0,
+                        key: "examples"
+                    },
+                    "request"
+                ],
+                relativeFilepath: RelativeFilePath.of("request.yml"),
+                name: "valid-example-endpoint-call",
+                severity: "fatal"
+            },
+            {
+                message:
+                    "This endpoint requires a request body, so its examples must specify request. " +
+                    "Mark the body optional to allow calling the endpoint without one.",
+                nodePath: [
+                    "service",
+                    "endpoints",
+                    "h",
+                    {
+                        arrayIndex: 0,
                         key: "examples"
                     },
                     "request"

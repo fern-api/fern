@@ -370,14 +370,21 @@ export async function visitDocsConfigFileYamlAst({
             context.logger.debug(`[docs-ast] Processing ${versions.length} versions...`);
             await Promise.all(
                 versions.map(async (version, idx) => {
+                    await visitor.version?.({ version }, ["versions", `${idx}`]);
+                    if (version.path == null) {
+                        // Git-ref-backed versions have their content validated at build time
+                        // against the materialized ref, not the current working tree.
+                        return;
+                    }
+                    const versionPath = version.path;
                     await visitFilepath({
                         absoluteFilepathToConfiguration,
-                        rawUnresolvedFilepath: version.path,
+                        rawUnresolvedFilepath: versionPath,
                         visitor,
                         nodePath: ["versions", `${idx}`],
                         willBeUploaded: false
                     });
-                    const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), version.path);
+                    const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), versionPath);
                     const content = yaml.load((await readFile(absoluteFilepath)).toString());
                     if (await doesPathExist(absoluteFilepath)) {
                         await visitor.versionFile?.(

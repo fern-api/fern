@@ -58,6 +58,7 @@
           "type": "reference"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {
@@ -188,6 +189,7 @@
           "type": "oneOf"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {
@@ -329,6 +331,7 @@
           "type": "oneOf"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [],
         "additionalProperties": false,
         "source": {

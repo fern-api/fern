@@ -431,7 +431,12 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.RequestBody);
         if (request.body != null) {
-            args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
+            const bodyArg = this.getBodyRequestArg({ body: request.body, value: snippet.requestBody });
+            // a nop literal writes nothing (e.g. an example that omits an optional request body),
+            // so including it would emit a dangling argument delimiter.
+            if (!ts.TypeLiteral.isNop(bodyArg)) {
+                args.push(bodyArg);
+            }
         }
         this.context.errors.unscope();
 
@@ -617,8 +622,12 @@ export class EndpointSnippetGenerator {
         switch (body.type) {
             case "properties":
                 return this.getInlinedRequestBodyPropertyObjectFields({ parameters: body.value, value });
-            case "referenced":
-                return [this.getReferencedRequestBodyPropertyObjectField({ body, value })];
+            case "referenced": {
+                const field = this.getReferencedRequestBodyPropertyObjectField({ body, value });
+                // an example that omits an optional request body has no value to write, so the
+                // property is dropped rather than passed explicitly as undefined
+                return ts.TypeLiteral.isNop(field.value) ? [] : [field];
+            }
             case "fileUpload":
                 return this.getFileUploadRequestBodyObjectFields({ filePropertyInfo });
             default:

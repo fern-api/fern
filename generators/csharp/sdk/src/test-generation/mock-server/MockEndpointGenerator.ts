@@ -196,7 +196,9 @@ export class MockEndpointGenerator extends WithGeneration {
                         }
                     }
                 }
-                if (requestContentType) {
+                // an example that omits an optional request body sends no content, so the stub
+                // must not match on a content type the request will not carry
+                if (requestContentType && example.request != null) {
                     writer.write(`.WithHeader("Content-Type", "${escapeForCSharpString(requestContentType)}")`);
                 }
 

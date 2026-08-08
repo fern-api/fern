@@ -2513,6 +2513,17 @@
           ],
           "description": "Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false."
         },
+        "respect-optional-request-body": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Enables making a JSON request body that OpenAPI does not mark as required optional in the generated SDK, so callers may omit the body. Defaults to false."
+        },
         "use-bytes-for-binary-response": {
           "oneOf": [
             {
@@ -3183,6 +3194,17 @@
             }
           ],
           "description": "Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false."
+        },
+        "respect-optional-request-body": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Enables making a JSON request body that OpenAPI does not mark as required optional in the generated SDK, so callers may omit the body. Defaults to false."
         },
         "use-bytes-for-binary-response": {
           "oneOf": [

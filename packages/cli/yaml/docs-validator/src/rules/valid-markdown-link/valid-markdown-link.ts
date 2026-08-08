@@ -86,7 +86,9 @@ export const ValidMarkdownLinks: Rule = {
             editThisPage: undefined,
             uploadFiles: undefined,
             registerApi: undefined,
-            targetAudiences: undefined // not applicable for validation
+            targetAudiences: undefined, // not applicable for validation
+            // current-tree validation only; git-ref-backed versions are built at publish/preview time
+            buildRefVersions: false
         });
 
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve();

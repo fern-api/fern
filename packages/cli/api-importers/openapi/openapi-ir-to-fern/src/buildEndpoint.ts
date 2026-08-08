@@ -718,6 +718,16 @@ function getRequest({
                 requestValue.docs == null &&
                 (requestValue["content-type"] == null || requestValue["content-type"] === "application/json");
 
+            if (context.options.respectOptionalRequestBody && isOptionalJsonBody(request)) {
+                requestValue.body =
+                    typeof requestTypeReference === "string"
+                        ? wrapTypeReferenceInOptional(requestTypeReference)
+                        : {
+                              ...requestTypeReference,
+                              type: wrapTypeReferenceInOptional(requestTypeReference.type)
+                          };
+            }
+
             return {
                 schemaIdsToExclude: [],
                 value: canCollapse ? (requestValue.body as string) : requestValue
@@ -908,6 +918,9 @@ function getRequest({
         if (request.additionalProperties) {
             requestBodySchema["extra-properties"] = true;
         }
+        if (isOptionalJsonBody(request)) {
+            requestBodySchema.optional = true;
+        }
 
         const convertedRequestValue: RawSchemas.HttpRequestSchema = {
             name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
@@ -1013,6 +1026,20 @@ function getRequest({
     } else {
         assertNever(request);
     }
+}
+
+/**
+ * Whether the endpoint may be called without a request body.
+ *
+ * Only JSON requests carry `requestBody.required` in the OpenAPI IR, and per the OpenAPI spec
+ * the flag defaults to false when absent.
+ */
+function isOptionalJsonBody(request: Request): boolean {
+    return request.type === "json" && request.required !== true;
+}
+
+function wrapTypeReferenceInOptional(typeReference: string): string {
+    return typeReference.startsWith("optional<") ? typeReference : `optional<${typeReference}>`;
 }
 
 function endpointRequestSupportsInlinedPathParameters({

@@ -74,6 +74,13 @@ const dataWithRawResponse = await list(request).withRawResponse();
 return new core.Page({});"
 `;
 
+exports[`GeneratedDefaultEndpointImplementation > getStatements > generates uri pagination body that sends the request on the first page 1`] = `
+"const list = core.HttpResponsePromise.interceptFunction(async (_requestUrl: string): Promise<core.RawResponse.WithRawResponse<void>> => { const _response = await this._options.fetcher.fetch({}); return _response.body; });
+const initialRequest = core.HttpResponsePromise.interceptFunction(async (): Promise<core.RawResponse.WithRawResponse<void>> => { // build request; const _response = await this._options.fetcher.fetch({}); return _response.body; });
+const dataWithRawResponse = await initialRequest().withRawResponse();
+return new core.Page({});"
+`;
+
 exports[`GeneratedDefaultEndpointImplementation > includeCredentialsOnCrossOriginRequests > adds withCredentials to fetcher args when enabled 1`] = `
 "const _response = await this._options.fetcher.fetch({});
 return _response.body;"

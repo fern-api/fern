@@ -168,6 +168,13 @@ export class OAuthWireTestGenerator {
             writer.addImport(`${rootImportPath}/option`);
             // Add import for the request type's package
             const requestTypeAlias = writer.addImport(requestTypeRef.importPath);
+            // The pointer helper (`String`) lives at the root package, which may differ
+            // from the request type's package when the token endpoint is in a subpackage.
+            const needsPointerHelper = serviceInfo.clientIdIsPointer || serviceInfo.clientSecretIsPointer;
+            const pointerHelperAlias =
+                needsPointerHelper && requestTypeRef.importPath !== rootImportPath
+                    ? writer.addImport(rootImportPath)
+                    : requestTypeAlias;
 
             writer.newLine();
 
@@ -177,12 +184,18 @@ export class OAuthWireTestGenerator {
             writer.newLine();
 
             // Write the form URL encoded body test
-            this.writeFormEncodedBodyTest(writer, requestTypeAlias, requestTypeRef.name, serviceInfo);
+            this.writeFormEncodedBodyTest(
+                writer,
+                requestTypeAlias,
+                pointerHelperAlias,
+                requestTypeRef.name,
+                serviceInfo
+            );
             writer.newLine();
             writer.newLine();
 
             // Write the custom headers test
-            this.writeCustomHeadersTest(writer, requestTypeAlias, requestTypeRef.name, serviceInfo);
+            this.writeCustomHeadersTest(writer, requestTypeAlias, pointerHelperAlias, requestTypeRef.name, serviceInfo);
         });
     }
 
@@ -256,6 +269,7 @@ export class OAuthWireTestGenerator {
     private writeFormEncodedBodyTest(
         writer: go.Writer,
         requestTypeAlias: string,
+        pointerHelperAlias: string,
         requestTypeName: string,
         serviceInfo: OAuthServiceInfo
     ): void {
@@ -277,13 +291,13 @@ export class OAuthWireTestGenerator {
         // Generate request struct initialization based on field optionality using dynamic request type
         writer.writeLine(`\trequest := &${requestTypeAlias}.${requestTypeName}{`);
         if (serviceInfo.clientIdIsPointer) {
-            writer.writeLine(`\t\t${serviceInfo.clientIdFieldName}: ${requestTypeAlias}.String("test_client_id"),`);
+            writer.writeLine(`\t\t${serviceInfo.clientIdFieldName}: ${pointerHelperAlias}.String("test_client_id"),`);
         } else {
             writer.writeLine(`\t\t${serviceInfo.clientIdFieldName}: "test_client_id",`);
         }
         if (serviceInfo.clientSecretIsPointer) {
             writer.writeLine(
-                `\t\t${serviceInfo.clientSecretFieldName}: ${requestTypeAlias}.String("test_client_secret"),`
+                `\t\t${serviceInfo.clientSecretFieldName}: ${pointerHelperAlias}.String("test_client_secret"),`
             );
         } else {
             writer.writeLine(`\t\t${serviceInfo.clientSecretFieldName}: "test_client_secret",`);
@@ -324,6 +338,7 @@ export class OAuthWireTestGenerator {
     private writeCustomHeadersTest(
         writer: go.Writer,
         requestTypeAlias: string,
+        pointerHelperAlias: string,
         requestTypeName: string,
         serviceInfo: OAuthServiceInfo
     ): void {
@@ -349,13 +364,13 @@ export class OAuthWireTestGenerator {
         // Generate request struct initialization based on field optionality using dynamic request type
         writer.writeLine(`\trequest := &${requestTypeAlias}.${requestTypeName}{`);
         if (serviceInfo.clientIdIsPointer) {
-            writer.writeLine(`\t\t${serviceInfo.clientIdFieldName}: ${requestTypeAlias}.String("test_client_id"),`);
+            writer.writeLine(`\t\t${serviceInfo.clientIdFieldName}: ${pointerHelperAlias}.String("test_client_id"),`);
         } else {
             writer.writeLine(`\t\t${serviceInfo.clientIdFieldName}: "test_client_id",`);
         }
         if (serviceInfo.clientSecretIsPointer) {
             writer.writeLine(
-                `\t\t${serviceInfo.clientSecretFieldName}: ${requestTypeAlias}.String("test_client_secret"),`
+                `\t\t${serviceInfo.clientSecretFieldName}: ${pointerHelperAlias}.String("test_client_secret"),`
             );
         } else {
             writer.writeLine(`\t\t${serviceInfo.clientSecretFieldName}: "test_client_secret",`);

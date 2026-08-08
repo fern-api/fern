@@ -425,9 +425,19 @@ export class WireTestGenerator {
             // that route OAuth/inferred — filtered out here because it targets a different
             // path/test-id. The token endpoint is unauthenticated and, when tested directly,
             // makes exactly one request, so the doubling heuristic must not apply.
+            //
+            // When OAuth is configured (including alongside bearer via `auth: any`), the
+            // test client is constructed with client credentials — never a token — so the
+            // OAuth token provider is installed and prefetches from the token endpoint.
+            //
+            // The inferred-auth prefetch does not happen when a bearer scheme is configured
+            // alongside it: the test client is constructed with a token, so the generated
+            // client takes the token branch and never installs the inferred token provider.
+            const hasBearerScheme = this.context.ir.auth.schemes.some((scheme) => scheme.type === "bearer");
             const expectedRequestCount =
                 !this.isEndpointSecurity() &&
-                (this.isInferredAuthTokenEndpoint(endpoint) || this.isOAuthTokenEndpoint(endpoint))
+                ((!hasBearerScheme && this.isInferredAuthTokenEndpoint(endpoint)) ||
+                    this.isOAuthTokenEndpoint(endpoint))
                     ? 2
                     : 1;
             statements.push(

@@ -1,0 +1,95 @@
+openapi: 3.1.0
+info:
+  title: Optional referenced request bodies
+  version: 0.0.0
+paths:
+  /refunds/{id}:
+    post:
+      operationId: refund
+      tags:
+        - ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Full refund:
+              value: refund-id
+            Split refund:
+              value: refund-id
+      responses:
+        '204':
+          description: No content
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - $ref: '#/components/schemas/RefundRequest'
+                - type: 'null'
+            examples:
+              Split refund:
+                value:
+                  amount: 60
+  /refunds/{id}/required:
+    post:
+      operationId: requiredRefund
+      tags:
+        - ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Required refund:
+              value: refund-id
+      responses:
+        '204':
+          description: No content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefundRequest'
+            examples:
+              Required refund:
+                value:
+                  amount: 60
+  /refunds:
+    post:
+      operationId: bulkRefund
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '204':
+          description: No content
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - $ref: '#/components/schemas/RefundRequest'
+                - type: 'null'
+            examples:
+              Example1:
+                value: {}
+components:
+  schemas:
+    RefundRequest:
+      title: RefundRequest
+      type: object
+      properties:
+        amount:
+          type:
+            - number
+            - 'null'
+          format: double
+  securitySchemes: {}

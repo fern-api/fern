@@ -62,6 +62,10 @@ fixtures:
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
+  any-auth:
+    - outputFolder: .
+      customConfig:
+        enable_wire_tests: true
   basic-auth-pw-omitted:
     - customConfig:
         enable_wire_tests: true

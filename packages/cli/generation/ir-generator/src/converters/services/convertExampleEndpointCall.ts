@@ -368,6 +368,19 @@ function convertHeaders({
     };
 }
 
+function isOptionalType({
+    rawType,
+    typeResolver,
+    file
+}: {
+    rawType: string;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+}): boolean {
+    const resolvedType = typeResolver.resolveType({ type: rawType, file });
+    return resolvedType?._type === "container" && resolvedType.container._type === "optional";
+}
+
 function convertExampleRequestBody({
     endpoint,
     example,
@@ -393,10 +406,16 @@ function convertExampleRequestBody({
     }
 
     if (!isInlineRequestBody(requestType)) {
+        const rawTypeBeingExemplified = typeof requestType !== "string" ? requestType.type : requestType;
+        // an omitted request on an optional body represents a call with no request body, rather than
+        // a body whose value is absent
+        if (example.request === undefined && isOptionalType({ rawType: rawTypeBeingExemplified, typeResolver, file })) {
+            return undefined;
+        }
         return ExampleRequestBody.reference(
             convertTypeReferenceExample({
                 example: example.request,
-                rawTypeBeingExemplified: typeof requestType !== "string" ? requestType.type : requestType,
+                rawTypeBeingExemplified,
                 typeResolver,
                 exampleResolver,
                 fileContainingRawTypeReference: file,

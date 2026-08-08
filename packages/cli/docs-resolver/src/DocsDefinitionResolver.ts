@@ -27,6 +27,7 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getSnakeCaseUnsafe } from "@fern-api/ir-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { loadApis } from "@fern-api/project-loader";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -167,6 +168,19 @@ export interface DocsDefinitionResolverArgs {
      * the extra parsing work where translated API references aren't needed.
      */
     buildTranslatedApiDefinitions?: boolean;
+    /**
+     * When true, git-ref-backed docs versions are materialized and built. The publish path
+     * builds every version (default true); `fern docs dev` passes false so it previews only
+     * the working-tree version.
+     */
+    buildRefVersions?: boolean;
+    /**
+     * CLI version used to load API workspaces for git-ref-backed versions. Required for
+     * `api:` sections in ref-backed versions; the publish/preview paths pass it through.
+     */
+    cliVersion?: string;
+    /** CLI name, used only in workspace-loading diagnostics. Defaults to "fern". */
+    cliName?: string;
 }
 
 export class DocsDefinitionResolver {
@@ -180,6 +194,17 @@ export class DocsDefinitionResolver {
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
     private buildTranslatedApiDefinitions: boolean;
+    private buildRefVersions: boolean;
+    private cliVersion?: string;
+    private cliName: string;
+    /**
+     * API/OSS workspaces loaded from a git-ref-backed version's materialized checkout,
+     * cached by the ref's fern-folder path so each ref is loaded at most once.
+     */
+    private refWorkspacesByFernFolder: Map<
+        AbsoluteFilePath,
+        Promise<{ apiWorkspaces: AbstractAPIWorkspace<unknown>[]; ossWorkspaces: OSSWorkspace[] }>
+    > = new Map();
     private markdownFilesToPathName: Record<AbsoluteFilePath, string> = {} as Record<AbsoluteFilePath, string>;
 
     constructor({
@@ -192,7 +217,10 @@ export class DocsDefinitionResolver {
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
         targetAudiences,
-        buildTranslatedApiDefinitions = false
+        buildTranslatedApiDefinitions = false,
+        buildRefVersions = true,
+        cliVersion,
+        cliName = "fern"
     }: DocsDefinitionResolverArgs) {
         this.domain = domain;
         this.docsWorkspace = docsWorkspace;
@@ -204,6 +232,9 @@ export class DocsDefinitionResolver {
         this.registerApi = registerApi;
         this.targetAudiences = targetAudiences;
         this.buildTranslatedApiDefinitions = buildTranslatedApiDefinitions;
+        this.buildRefVersions = buildRefVersions;
+        this.cliVersion = cliVersion;
+        this.cliName = cliName;
     }
 
     #idgen = NodeIdGenerator.init();
@@ -424,7 +455,8 @@ export class DocsDefinitionResolver {
             rawDocsConfiguration: this.docsWorkspace.config,
             context: this.taskContext,
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
-            absoluteFilepathToDocsConfig: this.docsWorkspace.absoluteFilepathToDocsConfig
+            absoluteFilepathToDocsConfig: this.docsWorkspace.absoluteFilepathToDocsConfig,
+            buildRefVersions: this.buildRefVersions
         });
         const parseTime = performance.now() - parseStart;
         const pageCount = Object.keys(this.parsedDocsConfig.pages).length;
@@ -1131,18 +1163,66 @@ export class DocsDefinitionResolver {
         }
     }
 
+    /**
+     * Resolves the API/OSS workspaces an `api:` section should be built from. For a
+     * git-ref-backed version these are loaded (once, then cached) from the ref's
+     * materialized fern folder; otherwise they are the current working-tree workspaces.
+     */
+    private async resolveApiWorkspaces(contentSource: docsYml.VersionContentSource | undefined): Promise<{
+        apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+        ossWorkspaces: OSSWorkspace[];
+    }> {
+        if (contentSource == null) {
+            return { apiWorkspaces: this.apiWorkspaces, ossWorkspaces: this.ossWorkspaces };
+        }
+
+        const fernFolder = contentSource.absolutePathToFernFolder;
+        const existing = this.refWorkspacesByFernFolder.get(fernFolder);
+        if (existing != null) {
+            return existing;
+        }
+
+        if (this.cliVersion == null) {
+            throw new CliError({
+                message:
+                    `Cannot load API definitions for version '${contentSource.displayVersion}' ` +
+                    `(ref '${contentSource.ref}'): the CLI version is unavailable in this context.`,
+                code: CliError.Code.InternalError
+            });
+        }
+
+        const cliVersion = this.cliVersion;
+        const loadPromise = (async () => {
+            const apiWorkspaces = await loadApis({
+                cliName: this.cliName,
+                fernDirectory: fernFolder,
+                context: this.taskContext,
+                cliVersion,
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+            const ossWorkspaces = apiWorkspaces.filter(
+                (workspace): workspace is OSSWorkspace => workspace instanceof OSSWorkspace
+            );
+            return { apiWorkspaces, ossWorkspaces };
+        })();
+        this.refWorkspacesByFernFolder.set(fernFolder, loadPromise);
+        return loadPromise;
+    }
+
     private getFernWorkspaceForApiSection(
-        apiSection: docsYml.DocsNavigationItem.ApiSection
+        apiSection: docsYml.DocsNavigationItem.ApiSection,
+        apiWorkspaces: AbstractAPIWorkspace<unknown>[]
     ): AbstractAPIWorkspace<unknown> {
         if (apiSection.apiName != null) {
-            const apiWorkspace = this.apiWorkspaces.find((workspace) => {
+            const apiWorkspace = apiWorkspaces.find((workspace) => {
                 return workspace.workspaceName === apiSection.apiName;
             });
             if (apiWorkspace != null) {
                 return apiWorkspace;
             }
-        } else if (this.apiWorkspaces.length === 1 && this.apiWorkspaces[0] != null) {
-            return this.apiWorkspaces[0];
+        } else if (apiWorkspaces.length === 1 && apiWorkspaces[0] != null) {
+            return apiWorkspaces[0];
         }
         const errorMessage = apiSection.apiName
             ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
@@ -1150,14 +1230,17 @@ export class DocsDefinitionResolver {
         throw new CliError({ message: errorMessage, code: CliError.Code.ConfigError });
     }
 
-    private getOpenApiWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): OSSWorkspace {
+    private getOpenApiWorkspaceForApiSection(
+        apiSection: docsYml.DocsNavigationItem.ApiSection,
+        ossWorkspaces: OSSWorkspace[]
+    ): OSSWorkspace {
         if (apiSection.apiName != null) {
-            const ossWorkspace = this.ossWorkspaces.find((workspace) => workspace.workspaceName === apiSection.apiName);
+            const ossWorkspace = ossWorkspaces.find((workspace) => workspace.workspaceName === apiSection.apiName);
             if (ossWorkspace != null) {
                 return ossWorkspace;
             }
-        } else if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
-            return this.ossWorkspaces[0];
+        } else if (ossWorkspaces.length === 1 && ossWorkspaces[0] != null) {
+            return ossWorkspaces[0];
         }
         const errorMessage = apiSection.apiName
             ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
@@ -1567,8 +1650,8 @@ export class DocsDefinitionResolver {
         const slug = parentSlug.setVersionSlug(version.slug ?? kebabCase(version.version));
         const child =
             version.navigation.type === "tabbed"
-                ? await this.convertTabbedNavigation(id, version.navigation.items, slug)
-                : await this.toSidebarRootNode(id, version.navigation.items, slug);
+                ? await this.convertTabbedNavigation(id, version.navigation.items, slug, version.contentSource)
+                : await this.toSidebarRootNode(id, version.navigation.items, slug, version.contentSource);
         return {
             type: "version",
             id,
@@ -1595,12 +1678,13 @@ export class DocsDefinitionResolver {
     private async toSidebarRootNode(
         prefix: string,
         items: docsYml.DocsNavigationItem[],
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.SidebarRootNode> {
         const id = this.#idgen.get(`${prefix}/root`);
 
         const childrenWithNulls = await Promise.all(
-            items.map((item) => this.toNavigationChild({ prefix: id, item, parentSlug }))
+            items.map((item) => this.toNavigationChild({ prefix: id, item, parentSlug, contentSource }))
         );
         const children = childrenWithNulls.filter((child): child is FernNavigation.V1.NavigationChild => child != null);
 
@@ -1646,7 +1730,8 @@ export class DocsDefinitionResolver {
     private async toSidebarRootNodeWithVariants(
         prefix: string,
         items: docsYml.TabVariant[],
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.SidebarRootNode> {
         const id = this.#idgen.get(`${prefix}/root`);
         return {
@@ -1658,7 +1743,9 @@ export class DocsDefinitionResolver {
                     type: "varianted",
                     id,
                     collapsed: undefined,
-                    children: await Promise.all(items.map((item) => this.toVariantNode(item, id, parentSlug)))
+                    children: await Promise.all(
+                        items.map((item) => this.toVariantNode(item, id, parentSlug, contentSource))
+                    )
                 }
             ]
         };
@@ -1667,7 +1754,8 @@ export class DocsDefinitionResolver {
     private async toVariantNode(
         item: docsYml.TabVariant,
         prefix: string,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.VariantNode> {
         const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? kebabCase(item.title)}`);
         const variantSlug = parentSlug.apply({
@@ -1675,7 +1763,7 @@ export class DocsDefinitionResolver {
             skipUrlSlug: item.skipUrlSlug
         });
         const childrenWithNulls = await Promise.all(
-            item.layout.map((item) => this.toVariantChild(item, id, variantSlug))
+            item.layout.map((item) => this.toVariantChild(item, id, variantSlug, contentSource))
         );
         const children = childrenWithNulls.filter((child): child is FernNavigation.V1.VariantChild => child != null);
         return {
@@ -1702,15 +1790,16 @@ export class DocsDefinitionResolver {
     private async toVariantChild(
         item: docsYml.DocsNavigationItem,
         prefix: string,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.VariantChild | null> {
         return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.VariantChild | null>>({
             page: async (value) => this.toPageNode({ item: value, parentSlug }),
-            apiSection: async (value) => this.toApiSectionNode({ item: value, parentSlug }),
-            section: async (value) => this.toSectionNode({ prefix, item: value, parentSlug }),
+            apiSection: async (value) => this.toApiSectionNode({ item: value, parentSlug, contentSource }),
+            section: async (value) => this.toSectionNode({ prefix, item: value, parentSlug, contentSource }),
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug),
-            librarySection: async (value) => this.handleLibrarySection(value, parentSlug)
+            librarySection: async (value) => this.handleLibrarySection(value, parentSlug, contentSource)
         });
     }
 
@@ -1719,23 +1808,32 @@ export class DocsDefinitionResolver {
         item,
         parentSlug,
         hideChildren,
-        parentAvailability
+        parentAvailability,
+        contentSource
     }: {
         prefix: string;
         item: docsYml.DocsNavigationItem;
         parentSlug: FernNavigation.V1.SlugGenerator;
         hideChildren?: boolean;
         parentAvailability?: docsYml.RawSchemas.Availability;
+        contentSource?: docsYml.VersionContentSource;
     }): Promise<FernNavigation.V1.NavigationChild | null> {
         return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.NavigationChild | null>>({
             page: async (value) => this.toPageNode({ item: value, parentSlug, hideChildren, parentAvailability }),
             apiSection: async (value) =>
-                this.toApiSectionNode({ item: value, parentSlug, hideChildren, parentAvailability }),
+                this.toApiSectionNode({ item: value, parentSlug, hideChildren, parentAvailability, contentSource }),
             section: async (value) =>
-                this.toSectionNode({ prefix, item: value, parentSlug, hideChildren, parentAvailability }),
+                this.toSectionNode({
+                    prefix,
+                    item: value,
+                    parentSlug,
+                    hideChildren,
+                    parentAvailability,
+                    contentSource
+                }),
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren),
-            librarySection: async (value) => this.handleLibrarySection(value, parentSlug)
+            librarySection: async (value) => this.handleLibrarySection(value, parentSlug, contentSource)
         });
     }
 
@@ -1743,13 +1841,18 @@ export class DocsDefinitionResolver {
         item,
         parentSlug,
         hideChildren,
-        parentAvailability
+        parentAvailability,
+        contentSource
     }: {
         item: docsYml.DocsNavigationItem.ApiSection;
         parentSlug: FernNavigation.V1.SlugGenerator;
         hideChildren?: boolean;
         parentAvailability?: docsYml.RawSchemas.Availability;
+        contentSource?: docsYml.VersionContentSource;
     }): Promise<FernNavigation.V1.ApiReferenceNode> {
+        // For git-ref-backed versions the api section's definition is loaded from the ref's
+        // materialized fern folder; otherwise from the current working-tree workspaces.
+        const { apiWorkspaces, ossWorkspaces } = await this.resolveApiWorkspaces(contentSource);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
 
         let ir: IntermediateRepresentation | undefined = undefined;
@@ -1761,7 +1864,7 @@ export class DocsDefinitionResolver {
         // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
         if (useV3Parser) {
             try {
-                openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
                 ir = await openapiWorkspace.getIntermediateRepresentation({
                     context: this.taskContext,
                     audiences: item.audiences,
@@ -1778,7 +1881,7 @@ export class DocsDefinitionResolver {
         let openApiTags: Record<string, { id: string; description: string | undefined }> | undefined;
         if (item.tagDescriptionPages && useV3Parser) {
             try {
-                const workspaceForTags = openapiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item);
+                const workspaceForTags = openapiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
                 const openApiIr = await workspaceForTags.getOpenAPIIr({
                     context: this.taskContext,
                     loadAiExamples: true
@@ -1804,10 +1907,10 @@ export class DocsDefinitionResolver {
         }
         // This case runs if either the V3 parser is not enabled, or if we failed to load the OpenAPI workspace
         if (ir == null) {
-            if (this.apiWorkspaces.length === 0 && openapiError != null) {
+            if (apiWorkspaces.length === 0 && openapiError != null) {
                 throw openapiError;
             }
-            workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
+            workspace = await this.getFernWorkspaceForApiSection(item, apiWorkspaces).toFernWorkspace(
                 { context: this.taskContext },
                 {
                     enableUniqueErrorsPerEndpoint: true,
@@ -1838,7 +1941,7 @@ export class DocsDefinitionResolver {
             // for dynamic snippet generation and AI example enhancement, which require
             // access to generators.yml configuration and source file paths.
             try {
-                workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
+                workspace = await this.getFernWorkspaceForApiSection(item, apiWorkspaces).toFernWorkspace(
                     { context: this.taskContext },
                     {
                         enableUniqueErrorsPerEndpoint: true,
@@ -1878,7 +1981,7 @@ export class DocsDefinitionResolver {
         let graphqlWorkspace: OSSWorkspace | undefined = openapiWorkspace;
         if (graphqlWorkspace == null) {
             try {
-                graphqlWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                graphqlWorkspace = this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
             } catch {
                 // expected for Fern Definition APIs (no OSS workspace)
             }
@@ -2135,21 +2238,41 @@ export class DocsDefinitionResolver {
     }
 
     /**
+     * Human-readable suffix naming the version and git ref a library section is
+     * resolved at, used in warnings. Empty for working-tree versions.
+     */
+    private describeVersionSource(contentSource: docsYml.VersionContentSource | undefined): string {
+        if (contentSource == null) {
+            return "";
+        }
+        return ` at version ${contentSource.displayVersion} (ref ${contentSource.ref})`;
+    }
+
+    /**
      * Handles librarySection navigation items by reading pre-generated MDX files
-     * and _navigation.yml from the library's output directory.
+     * and _navigation.yml from the library's output directory. Warns and skips the
+     * section (returning null) when the library is unconfigured or its generated
+     * output is missing.
      */
     private async handleLibrarySection(
         item: docsYml.DocsNavigationItem.LibrarySection,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.SectionNode | null> {
-        const libraryConfig = this.parsedDocsConfig.libraries?.[item.libraryName];
+        // For git-ref-backed versions the libraries config and generated output both come
+        // from the ref; otherwise they come from the current working tree.
+        const libraries = contentSource?.libraries ?? this.parsedDocsConfig.libraries;
+        const libraryConfig = libraries?.[item.libraryName];
         if (libraryConfig == null) {
-            this.taskContext.logger.warn(`Library '${item.libraryName}' not found in libraries config. Skipping.`);
+            this.taskContext.logger.warn(
+                `Library '${item.libraryName}' not found in libraries config${this.describeVersionSource(contentSource)}. Skipping.`
+            );
             return null;
         }
 
-        const outputDir = resolve(this.docsWorkspace.absoluteFilePath, libraryConfig.output.path);
-        const navNodes = await this.loadLibraryNavNodes(item.libraryName, outputDir);
+        const baseDir = contentSource?.absolutePathToFernFolder ?? this.docsWorkspace.absoluteFilePath;
+        const outputDir = resolve(baseDir, libraryConfig.output.path);
+        const navNodes = await this.loadLibraryNavNodes(item.libraryName, outputDir, contentSource);
         if (navNodes == null) {
             return null;
         }
@@ -2196,19 +2319,20 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Load and parse the _navigation.yml for a library.
-     * Returns null (with a warning) if the file is missing or unparseable.
+     * Load and parse the _navigation.yml for a library. Returns null (with a warning)
+     * if the file is missing or unparseable, naming the version/ref when applicable.
      */
     private async loadLibraryNavNodes(
         libraryName: string,
-        outputDir: AbsoluteFilePath
+        outputDir: AbsoluteFilePath,
+        contentSource: docsYml.VersionContentSource | undefined
     ): Promise<LibraryNavNode[] | null> {
         const navFilePath = join(outputDir, RelativeFilePath.of("_navigation.yml"));
 
         if (!existsSync(navFilePath)) {
             this.taskContext.logger.warn(
-                `No _navigation.yml found for library '${libraryName}' at ${navFilePath}. ` +
-                    `Run 'fern docs md generate' first.`
+                `No _navigation.yml found for library '${libraryName}'${this.describeVersionSource(contentSource)} ` +
+                    `at ${navFilePath}. Run 'fern docs md generate' first.`
             );
             return null;
         }
@@ -2224,7 +2348,7 @@ export class DocsDefinitionResolver {
             return (jsYaml.load(yamlBody) as LibraryNavNode[] | null) ?? [];
         } catch (e) {
             this.taskContext.logger.warn(
-                `Failed to parse _navigation.yml for library '${libraryName}': ${extractErrorMessage(e)}`
+                `Failed to parse _navigation.yml for library '${libraryName}'${this.describeVersionSource(contentSource)}: ${extractErrorMessage(e)}`
             );
             return null;
         }
@@ -2380,13 +2504,15 @@ export class DocsDefinitionResolver {
         item,
         parentSlug,
         hideChildren,
-        parentAvailability
+        parentAvailability,
+        contentSource
     }: {
         prefix: string;
         item: docsYml.DocsNavigationItem.Section;
         parentSlug: FernNavigation.V1.SlugGenerator;
         hideChildren?: boolean;
         parentAvailability?: docsYml.RawSchemas.Availability;
+        contentSource?: docsYml.VersionContentSource;
     }): Promise<FernNavigation.V1.SectionNode> {
         const relativeFilePath = this.toRelativeFilepath(item.overviewAbsolutePath);
         let pageId = relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined;
@@ -2430,7 +2556,8 @@ export class DocsDefinitionResolver {
                     item: child,
                     parentSlug: childrenParentSlug,
                     hideChildren: hiddenSection,
-                    parentAvailability: item.availability ?? parentAvailability
+                    parentAvailability: item.availability ?? parentAvailability,
+                    contentSource
                 })
             )
         );
@@ -2480,27 +2607,29 @@ export class DocsDefinitionResolver {
     private async convertTabbedNavigation(
         prefix: string,
         items: docsYml.TabbedNavigation[],
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.TabbedNode> {
         const id = this.#idgen.get(`${prefix}/tabbed`);
         return {
             type: "tabbed",
             id,
             collapsed: undefined,
-            children: await Promise.all(items.map((item) => this.toTabChild(id, item, parentSlug)))
+            children: await Promise.all(items.map((item) => this.toTabChild(id, item, parentSlug, contentSource)))
         };
     }
 
     private async toTabChild(
         prefix: string,
         item: docsYml.TabbedNavigation,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.TabChild> {
         return visitDiscriminatedUnion(item.child)._visit<Promise<FernNavigation.V1.TabChild>>({
             link: ({ href, target }) => this.toTabLinkNode(item, href, target),
-            layout: ({ layout }) => this.toTabNode(prefix, item, layout, parentSlug),
+            layout: ({ layout }) => this.toTabNode(prefix, item, layout, parentSlug, contentSource),
             changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug),
-            variants: ({ variants }) => this.toTabNodeWithVariants(prefix, item, variants, parentSlug)
+            variants: ({ variants }) => this.toTabNodeWithVariants(prefix, item, variants, parentSlug, contentSource)
         });
     }
 
@@ -2547,7 +2676,8 @@ export class DocsDefinitionResolver {
         prefix: string,
         item: docsYml.TabbedNavigation,
         layout: docsYml.DocsNavigationItem[],
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.TabNode> {
         const id = this.#idgen.get(`${prefix}/tab`);
         const slug = parentSlug.apply({
@@ -2566,7 +2696,7 @@ export class DocsDefinitionResolver {
             viewers: item.viewers,
             orphaned: item.orphaned,
             pointsTo: undefined,
-            child: await this.toSidebarRootNode(id, layout, slug),
+            child: await this.toSidebarRootNode(id, layout, slug, contentSource),
             featureFlags: item.featureFlags
         };
     }
@@ -2575,7 +2705,8 @@ export class DocsDefinitionResolver {
         prefix: string,
         item: docsYml.TabbedNavigation,
         variants: docsYml.TabVariant[],
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.TabNode> {
         const id = this.#idgen.get(`${prefix}/tab`);
         const slug = parentSlug.apply({
@@ -2594,7 +2725,7 @@ export class DocsDefinitionResolver {
             viewers: item.viewers,
             orphaned: item.orphaned,
             pointsTo: undefined,
-            child: await this.toSidebarRootNodeWithVariants(id, variants, slug),
+            child: await this.toSidebarRootNodeWithVariants(id, variants, slug, contentSource),
             featureFlags: item.featureFlags
         };
     }

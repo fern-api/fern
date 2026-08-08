@@ -17,6 +17,8 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
     "use-read-variant-for-responses"?: boolean;
     /** Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false. */
     "respect-forward-compatible-enums"?: boolean;
+    /** Enables making a JSON request body that OpenAPI does not mark as required optional in the generated SDK, so callers may omit the body. Defaults to false. */
+    "respect-optional-request-body"?: boolean;
     /** Enables using the `bytes` type for binary responsesin OpenAPI specifications. Defaults to a file stream. */
     "use-bytes-for-binary-response"?: boolean;
     /** The default encoding of form parameters. Defaults to JSON. */

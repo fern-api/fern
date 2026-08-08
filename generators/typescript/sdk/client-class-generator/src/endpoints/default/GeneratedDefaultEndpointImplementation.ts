@@ -566,7 +566,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 );
             }
 
-            // Initial call: list(endpointUrl)
+            // The first page is a regular request, so that the query parameters, body and headers
+            // built from the caller's request are sent. Only subsequent pages go through `list`,
+            // since the next URL already contains all necessary parameters.
             // For path pagination, reuse the already-emitted _baseUrl identifier instead of
             // re-evaluating getBaseUrl() (which would produce a duplicate Supplier.get call).
             const initialUrl =
@@ -592,7 +594,48 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                               ? context.coreUtilities.urlUtils.join._invoke([baseUrlIdentifier, endpointPath])
                               : baseUrlIdentifier;
                       })()
-                    : this.getReferenceToBaseUrl(context);
+                    : undefined;
+            const initialRequestFnName = "initialRequest";
+            const initialRequestBody = [
+                ...(this.generateEndpointMetadata
+                    ? generateEndpointMetadata({
+                          httpEndpoint: this.endpoint,
+                          context
+                      })
+                    : []),
+                ...this.request.getBuildRequestStatements(context),
+                ...this.invokeFetcherAndReturnResponse(context, initialUrl)
+            ];
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createIdentifier(initialRequestFnName),
+                                undefined,
+                                undefined,
+                                context.coreUtilities.fetcher.HttpResponsePromise.interceptFunction(
+                                    ts.factory.createArrowFunction(
+                                        [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+                                        undefined,
+                                        [],
+                                        ts.factory.createTypeReferenceNode("Promise", [
+                                            context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
+                                                responseReturnType
+                                            )
+                                        ]),
+                                        ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                        ts.factory.createBlock(initialRequestBody, undefined)
+                                    )
+                                )
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
+
             const initialResponseVar = ts.factory.createIdentifier("dataWithRawResponse");
             statements.push(
                 ts.factory.createVariableStatement(
@@ -607,9 +650,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                     ts.factory.createCallExpression(
                                         ts.factory.createPropertyAccessExpression(
                                             ts.factory.createCallExpression(
-                                                ts.factory.createIdentifier("list"),
+                                                ts.factory.createIdentifier(initialRequestFnName),
                                                 undefined,
-                                                [initialUrl]
+                                                []
                                             ),
                                             ts.factory.createIdentifier("withRawResponse")
                                         ),

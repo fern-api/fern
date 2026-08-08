@@ -1,0 +1,7 @@
+- summary: |
+    Preserve `requestBody.required` when importing from OpenAPI. Endpoints whose request body is not
+    required are now marked `optional` in the generated Fern definition, so an example may omit
+    `request` only when the endpoint actually permits a call with no body. Examples that omit
+    `request` for a required body are rejected again, with an error that names the cause instead of
+    reporting an undefined example.
+  type: fix

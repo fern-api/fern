@@ -69,6 +69,7 @@
               "path": "/user",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "confirmPassword": "optional<string>",
                     "email": "string",
@@ -170,6 +171,7 @@
             password: string
             confirmPassword: optional<string>
             email: string
+          optional: true
         content-type: application/json
       response:
         docs: Success

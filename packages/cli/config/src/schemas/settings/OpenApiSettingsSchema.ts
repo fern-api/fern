@@ -32,6 +32,9 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
     /** Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false. */
     respectForwardCompatibleEnums: z.boolean().optional(),
 
+    /** Enables making a JSON request body that OpenAPI does not mark as required optional in the generated SDK, so callers may omit the body. Defaults to false. */
+    respectOptionalRequestBody: z.boolean().optional(),
+
     /** Enables using the `bytes` type for binary responses in OpenAPI specifications. Defaults to a file stream. */
     useBytesForBinaryResponse: z.boolean().optional(),
 
