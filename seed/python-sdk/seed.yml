@@ -50,12 +50,6 @@ customFixtureConfig:
     use_typeddict_requests: true
   outputFolder: client-filename
 fixtures:
-  any-auth:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        prefer_explicit_auth: true
-      outputFolder: prefer-explicit-auth
   alias-extends:
     - customConfig: null
       outputFolder: no-custom-config
@@ -63,9 +57,14 @@ fixtures:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
   any-auth:
-    - outputFolder: .
+    - outputFolder: wire-tests
       customConfig:
         enable_wire_tests: true
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        prefer_explicit_auth: true
+      outputFolder: prefer-explicit-auth
   basic-auth-pw-omitted:
     - customConfig:
         enable_wire_tests: true

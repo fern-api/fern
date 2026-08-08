@@ -64,7 +64,7 @@ scripts:
 
 fixtures:
   any-auth:
-    - outputFolder: .
+    - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
     - outputFolder: no-custom-config
