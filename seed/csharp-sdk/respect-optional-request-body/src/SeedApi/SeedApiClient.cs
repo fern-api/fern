@@ -149,7 +149,7 @@ public partial class SeedApiClient : ISeedApiClient
     }
 
     private async Task<RawResponse> BulkRefundAsyncCore(
-        RefundRequest? request,
+        RefundRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -205,7 +205,13 @@ public partial class SeedApiClient : ISeedApiClient
     }
 
     /// <example><code>
-    /// await client.RefundAsync(new RefundBody { Id = "refund-id" });
+    /// await client.RefundAsync(
+    ///     new RefundBody
+    ///     {
+    ///         Id = "refund-id",
+    ///         Body = new RefundRequest { Amount = 60 },
+    ///     }
+    /// );
     /// </code></example>
     public WithRawResponseTask RefundAsync(
         RefundBody request,
@@ -240,7 +246,7 @@ public partial class SeedApiClient : ISeedApiClient
     /// await client.BulkRefundAsync(new RefundRequest());
     /// </code></example>
     public WithRawResponseTask BulkRefundAsync(
-        RefundRequest? request,
+        RefundRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

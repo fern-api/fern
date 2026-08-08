@@ -15,21 +15,17 @@ paths:
           schema:
             type: string
           examples:
-            Full refund:
-              value: refund-id
             Split refund:
               value: refund-id
       responses:
         '204':
           description: No content
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
-              anyOf:
-                - $ref: '#/components/schemas/RefundRequest'
-                - type: 'null'
+              $ref: '#/components/schemas/RefundRequest'
             examples:
               Split refund:
                 value:
@@ -71,13 +67,11 @@ paths:
         '204':
           description: No content
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
-              anyOf:
-                - $ref: '#/components/schemas/RefundRequest'
-                - type: 'null'
+              $ref: '#/components/schemas/RefundRequest'
             examples:
               Example1:
                 value: {}

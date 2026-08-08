@@ -12,7 +12,13 @@
 <dd>
 
 ```csharp
-await client.RefundAsync(new RefundBody { Id = "refund-id" });
+await client.RefundAsync(
+    new RefundBody
+    {
+        Id = "refund-id",
+        Body = new RefundRequest { Amount = 60 },
+    }
+);
 ```
 </dd>
 </dl>
@@ -85,7 +91,7 @@ await client.RequiredRefundAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">BulkRefundAsync</a>(RefundRequest? { ... }) -> WithRawResponseTask</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">BulkRefundAsync</a>(RefundRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -113,7 +119,7 @@ await client.BulkRefundAsync(new RefundRequest());
 <dl>
 <dd>
 
-**request:** `RefundRequest?` 
+**request:** `RefundRequest` 
     
 </dd>
 </dl>

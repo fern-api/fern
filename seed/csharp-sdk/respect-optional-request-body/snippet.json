@@ -2,18 +2,6 @@
     "types": {},
     "endpoints": [
         {
-            "example_identifier": "Full refund",
-            "id": {
-                "path": "/refunds/{id}",
-                "method": "POST",
-                "identifier_override": "endpoint_.refund"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.RefundAsync(new RefundBody { Id = \"refund-id\" });\n"
-            }
-        },
-        {
             "example_identifier": "Split refund",
             "id": {
                 "path": "/refunds/{id}",

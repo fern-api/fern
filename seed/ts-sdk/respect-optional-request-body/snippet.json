@@ -8,18 +8,6 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/respect-optional-request-body\";\n\nconst client = new SeedApiClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.refund({\n    id: \"refund-id\"\n});\n"
-            },
-            "example_identifier": "Full refund"
-        },
-        {
-            "id": {
-                "path": "/refunds/{id}",
-                "method": "POST",
-                "identifier_override": "endpoint_.refund"
-            },
-            "snippet": {
-                "type": "typescript",
                 "client": "import { SeedApiClient } from \"@fern/respect-optional-request-body\";\n\nconst client = new SeedApiClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.refund({\n    id: \"refund-id\",\n    body: {\n        amount: 60\n    }\n});\n"
             },
             "example_identifier": "Split refund"
@@ -44,7 +32,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApi, SeedApiClient } from \"@fern/respect-optional-request-body\";\n\nconst client = new SeedApiClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.bulkRefund();\n"
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/respect-optional-request-body\";\n\nconst client = new SeedApiClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.bulkRefund({});\n"
             }
         }
     ],
