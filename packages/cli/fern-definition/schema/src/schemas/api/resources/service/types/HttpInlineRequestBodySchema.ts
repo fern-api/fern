@@ -10,6 +10,9 @@ export interface HttpInlineRequestBodySchema {
      * Whether the endpoint may be called without a request body. When true, an
      * example may omit `request`. Populated from `requestBody.required` when
      * importing from OpenAPI.
+     *
+     * This is read by example validation only: it is not carried into the IR, so it
+     * does not make the request parameter optional in a generated SDK.
      */
     optional?: boolean;
 }
