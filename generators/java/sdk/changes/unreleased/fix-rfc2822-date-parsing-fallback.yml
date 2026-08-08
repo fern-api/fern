@@ -1,0 +1,6 @@
+- summary: |
+    Add RFC 2822 (RFC 1123) date format as a fallback in DateTimeDeserializer. Previously,
+    datetime fields not explicitly annotated with Rfc2822DateTimeDeserializer would fail to
+    parse RFC 2822 dates (e.g. "Thu, 07 May 2026 14:23:38 +0000") because the fallback
+    incorrectly replaced all spaces with 'T'.
+  type: fix
