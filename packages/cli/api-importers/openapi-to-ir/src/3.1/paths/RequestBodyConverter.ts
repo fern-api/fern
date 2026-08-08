@@ -159,6 +159,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                         contentType,
                         docs: this.description,
                         requestBodyType: convertedSchema.type,
+                        // the direct OpenAPI->IR path does not thread requestBody.required yet
+                        required: undefined,
                         v2Examples: this.convertMediaTypeObjectExamples({
                             mediaTypeObject,
                             exampleGenerationStrategy: "request"
@@ -196,6 +198,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     contentType,
                     docs: this.description,
                     requestBodyType: convertedSchema.type,
+                    // the direct OpenAPI->IR path does not thread requestBody.required yet
+                    required: undefined,
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
                         exampleGenerationStrategy: "request"
@@ -258,6 +262,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 contentType,
                 docs: this.description,
                 requestBodyType: TypeReference.unknown(),
+                // the direct OpenAPI->IR path does not thread requestBody.required yet
+                required: undefined,
                 v2Examples
             }),
             streamRequestBody: undefined,
@@ -525,6 +531,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 contentType,
                 docs: this.description,
                 requestBodyType: convertedSchema.type,
+                // the direct OpenAPI->IR path does not thread requestBody.required yet
+                required: undefined,
                 v2Examples: this.convertMediaTypeObjectExamples({
                     mediaTypeObject: modifiedMediaTypeObject,
                     exampleGenerationStrategy: "request"

@@ -321,6 +321,7 @@
                                 }
                             }
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": "application/json",
                         "v2Examples": null

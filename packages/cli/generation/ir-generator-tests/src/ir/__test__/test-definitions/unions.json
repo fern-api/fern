@@ -7866,6 +7866,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -7891,6 +7892,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -8135,6 +8137,7 @@
                                 }
                             }
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -8166,6 +8169,7 @@
                                         }
                                     }
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -8933,6 +8937,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -8958,6 +8963,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
