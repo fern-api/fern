@@ -145,29 +145,45 @@ describe("first generation - no lockfile, no prior generation commits", { tags: 
 
         initRepo(repoPath);
 
-        // Only a user commit — no [fern-generated] commit for bootstrap to anchor on.
+        // Base branch has only a customer commit — no [fern-generated] commit for
+        // bootstrap to anchor on. This is the pull-request-mode repro (FER): every
+        // `fern generate` forks from a base branch that never accrued a generation
+        // commit, so bootstrap can never anchor.
         writeFileSync(join(repoPath, "README.md"), "# SDK\n");
         commitAsUser(repoPath, "initial commit");
+
+        // The generator has just written SDK output to the working tree
+        // (uncommitted), exactly as it exists when the post-generation pipeline
+        // runs replay.
+        mkdirSync(join(repoPath, "src"), { recursive: true });
+        writeFileSync(
+            join(repoPath, "src/client.ts"),
+            'export class Client {\n  baseUrl = "https://api.example.com";\n}\n'
+        );
     });
 
     afterAll(async () => {
         await cleanup?.();
     });
 
-    it("returns null report when bootstrap finds no prior generation", async () => {
+    it("initializes replay.lock on the first generation via FirstGenerationFlow", async () => {
         const result = await replayRun({ outputDir: repoPath });
 
-        // bootstrap returned generationCommit:null → replayPrepare returns null →
-        // replayRun returns a null-report result. The next `fern generate` that
-        // creates a [fern-generated] commit will establish the baseline.
-        expect(result.report).toBeNull();
-        expect(result.autoBootstrapped).toBe(false);
-        // bootstrapAttempted IS true: we entered the lockfile-missing branch and
-        // tried bootstrap, even though it couldn't anchor.
+        // With no lockfile and no prior generation commit, replay must still
+        // establish the baseline itself: FirstGenerationFlow commits the freshly
+        // generated output as [fern-generated] and writes the lockfile. This is
+        // what makes replay.lock land in the very first PR — essential for
+        // pull-request mode, where generation commits never accumulate on the
+        // base branch each `fern generate` forks from.
+        expect(result.report).not.toBeNull();
+        expect(result.report?.flow).toBe("first-generation");
+        expect(result.autoBootstrapped).toBe(true);
         expect(result.bootstrapAttempted).toBe(true);
-        expect(result.fernignoreUpdated).toBe(false);
+        expect(existsSync(join(repoPath, ".fern", "replay.lock"))).toBe(true);
+
+        // Baseline anchored on a newly created generation commit, not a prior one.
         expect(result.previousGenerationSha).toBeNull();
-        expect(result.currentGenerationSha).toBeNull();
+        expect(result.currentGenerationSha).not.toBeNull();
     });
 });
 

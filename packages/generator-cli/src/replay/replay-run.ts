@@ -136,14 +136,28 @@ export async function replayPrepare(
             state.bootstrapAttempted = true;
         }
         try {
-            const bootstrapResult = await bootstrap(outputDir, {
+            await bootstrap(outputDir, {
                 fernignoreAction: "skip",
                 force: false,
                 importHistory: false
             });
-            if (bootstrapResult.generationCommit == null) {
-                return null;
-            }
+            // Two shapes reach here, both of which we now let proceed to
+            // prepareReplay():
+            //   1. bootstrap anchored on a reachable prior `[fern-generated]`
+            //      commit and wrote the lockfile — prepareReplay reads it and
+            //      runs the normal / no-patches flow.
+            //   2. bootstrap found no prior generation commit (`generationCommit`
+            //      is null) and wrote nothing. Previously we `return null`-ed here
+            //      and skipped replay for the run, deferring initialization to a
+            //      "next" generation. That deferral never lands in pull-request
+            //      mode: each `fern generate` forks a fresh branch off the base,
+            //      which never accrues a generation commit, so bootstrap can never
+            //      anchor and replay.lock is never created. Instead, fall through:
+            //      with no lockfile on disk, prepareReplay selects
+            //      FirstGenerationFlow, which commits the freshly generated output
+            //      as the `[fern-generated]` baseline and writes the lockfile. This
+            //      initializes replay on the very first generation.
+            // Either way we auto-initialized replay from `fern generate`.
             autoBootstrapped = true;
         } catch (error) {
             logger?.warn("Replay auto-bootstrap failed, continuing without replay: " + String(error));
