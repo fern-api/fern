@@ -43,6 +43,7 @@ import com.fern.java.client.generators.ILoggerGenerator;
 import com.fern.java.client.generators.IdempotencyUtilsGenerator;
 import com.fern.java.client.generators.InferredAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.InputStreamRequestBodyGenerator;
+import com.fern.java.client.generators.KeepAliveSocketFactoryGenerator;
 import com.fern.java.client.generators.LogConfigGenerator;
 import com.fern.java.client.generators.LogLevelGenerator;
 import com.fern.java.client.generators.LoggerGenerator;
@@ -375,6 +376,13 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         ResponseDecompressionInterceptorGenerator responseDecompressionInterceptorGenerator =
                 new ResponseDecompressionInterceptorGenerator(context);
         this.addGeneratedFile(responseDecompressionInterceptorGenerator.generateFile());
+
+        // Only emit the keepalive SocketFactory when opted in, so existing generated output is unchanged.
+        if (context.getCustomConfig().tcpKeepalive().enabled()) {
+            KeepAliveSocketFactoryGenerator keepAliveSocketFactoryGenerator =
+                    new KeepAliveSocketFactoryGenerator(context);
+            this.addGeneratedFile(keepAliveSocketFactoryGenerator.generateFile());
+        }
 
         ResponseBodyInputStreamGenerator responseBodyInputStreamGenerator =
                 new ResponseBodyInputStreamGenerator(context);

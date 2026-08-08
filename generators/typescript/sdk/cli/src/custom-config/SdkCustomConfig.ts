@@ -68,6 +68,7 @@ export interface SdkCustomConfig {
     fileResponseType: "stream" | "binary-response";
     formDataSupport: "Node16" | "Node18";
     fetchSupport: "node-fetch" | "native";
+    tcpKeepalive: { enabled: boolean; idleSeconds?: number } | undefined;
     packagePath: string | undefined;
     omitFernHeaders: boolean | undefined;
     includePlatformHeaders: boolean | undefined;

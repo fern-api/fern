@@ -170,10 +170,19 @@ export declare namespace Fetcher {
 export const MANIFEST: CoreUtility.Manifest = {
     name: "fetcher",
     pathInCoreUtilities: { nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } },
-    addDependencies: (dependencyManager: DependencyManager, { formDataSupport, streamType, fetchSupport }): void => {
+    addDependencies: (
+        dependencyManager: DependencyManager,
+        { formDataSupport, streamType, fetchSupport, tcpKeepalive }
+    ): void => {
         if (formDataSupport === "Node16") {
             dependencyManager.addDependency("form-data", "^4.0.6");
             dependencyManager.addDependency("formdata-node", "^6.0.3");
+        }
+
+        if (tcpKeepalive?.enabled) {
+            // Required by the Node-only keepalive dispatcher in getFetchFn. Loaded lazily via
+            // dynamic import at runtime, so non-Node targets simply skip it.
+            dependencyManager.addDependency("undici", "^6.21.1");
         }
 
         if (fetchSupport === "node-fetch") {

@@ -116,6 +116,10 @@ fixtures:
         custom-interceptors: true
       outputFolder: custom-interceptors
     - customConfig:
+        tcp-keepalive:
+          enabled: true
+      outputFolder: tcp-keepalive
+    - customConfig:
         publish-to: central
       outputFolder: publish-to
     - publishConfig:

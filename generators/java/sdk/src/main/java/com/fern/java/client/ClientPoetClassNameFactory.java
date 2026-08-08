@@ -89,6 +89,10 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         return ClassName.get(getCorePackage(), "ResponseDecompressionInterceptor");
     }
 
+    public ClassName getKeepAliveSocketFactoryClassName() {
+        return ClassName.get(getCorePackage(), "KeepAliveSocketFactory");
+    }
+
     public ClassName getResponseBodyInputStreamClassName() {
         return ClassName.get(getCorePackage(), "ResponseBodyInputStream");
     }
