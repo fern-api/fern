@@ -4,7 +4,7 @@ import re
 import socket
 import time
 import typing
-from contextlib import asynccontextmanager, contextmanager
+from contextlib import AsyncExitStack, ExitStack, asynccontextmanager, contextmanager
 from random import random
 
 import httpx
@@ -154,6 +154,20 @@ def _retry_timeout_from_retries(retries: int) -> float:
     """Determine retry timeout using exponential backoff when no response is available."""
     backoff = min(INITIAL_RETRY_DELAY_SECONDS * pow(2.0, retries), MAX_RETRY_DELAY_SECONDS)
     return _add_symmetric_jitter(backoff)
+
+
+def _body_is_replayable(content: typing.Optional[typing.Any], files: typing.Optional[typing.Any]) -> bool:
+    """Can this request body be sent a second time?
+
+    A retry re-sends the SAME objects. `bytes` and `str` survive that; a one-shot iterator or an open
+    file handle does not, and replaying one silently sends an empty or truncated body instead of
+    failing loudly. So a request whose body cannot be replayed is returned as-is rather than retried.
+    """
+    if files:
+        return False
+    if content is None or isinstance(content, (bytes, bytearray, str)):
+        return True
+    return False
 
 
 def _should_retry(response: httpx.Response) -> bool:
@@ -568,18 +582,49 @@ class HttpClient:
                 headers=_redact_headers(_request_headers),
             )
 
-        with self.httpx_client.stream(
-            method=method,
-            url=_request_url,
-            headers=_request_headers,
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
-            timeout=timeout,
-        ) as stream:
-            yield stream
+        max_retries: int = (
+            request_options.get("max_retries", self.base_max_retries)
+            if request_options is not None
+            else self.base_max_retries
+        )
+
+        while True:
+            with ExitStack() as stack:
+                try:
+                    stream = stack.enter_context(
+                        self.httpx_client.stream(
+                            method=method,
+                            url=_request_url,
+                            headers=_request_headers,
+                            params=_encoded_params if _encoded_params else None,
+                            json=json_body,
+                            data=data_body,
+                            content=content,
+                            files=request_files,
+                            timeout=timeout,
+                        )
+                    )
+                except (httpx.ConnectError, httpx.RemoteProtocolError):
+                    if retries < max_retries and _body_is_replayable(content, request_files):
+                        time.sleep(_retry_timeout_from_retries(retries=retries))
+                        retries += 1
+                        continue
+                    raise
+
+                # Retry only BEFORE the response reaches the caller. Once it has been yielded the
+                # caller may already have consumed part of the body, and replaying the request would
+                # silently produce a truncated or duplicated stream.
+                if (
+                    _should_retry(response=stream)
+                    and retries < max_retries
+                    and _body_is_replayable(content, request_files)
+                ):
+                    time.sleep(_retry_timeout(response=stream, retries=retries))
+                    retries += 1
+                    continue
+
+                yield stream
+                return
 
 
 class AsyncHttpClient:
@@ -869,15 +914,46 @@ class AsyncHttpClient:
                 headers=_redact_headers(_request_headers),
             )
 
-        async with self.httpx_client.stream(
-            method=method,
-            url=_request_url,
-            headers=_request_headers,
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
-            timeout=timeout,
-        ) as stream:
-            yield stream
+        max_retries: int = (
+            request_options.get("max_retries", self.base_max_retries)
+            if request_options is not None
+            else self.base_max_retries
+        )
+
+        while True:
+            async with AsyncExitStack() as stack:
+                try:
+                    stream = await stack.enter_async_context(
+                        self.httpx_client.stream(
+                            method=method,
+                            url=_request_url,
+                            headers=_request_headers,
+                            params=_encoded_params if _encoded_params else None,
+                            json=json_body,
+                            data=data_body,
+                            content=content,
+                            files=request_files,
+                            timeout=timeout,
+                        )
+                    )
+                except (httpx.ConnectError, httpx.RemoteProtocolError):
+                    if retries < max_retries and _body_is_replayable(content, request_files):
+                        await asyncio.sleep(_retry_timeout_from_retries(retries=retries))
+                        retries += 1
+                        continue
+                    raise
+
+                # Retry only BEFORE the response reaches the caller. Once it has been yielded the
+                # caller may already have consumed part of the body, and replaying the request would
+                # silently produce a truncated or duplicated stream.
+                if (
+                    _should_retry(response=stream)
+                    and retries < max_retries
+                    and _body_is_replayable(content, request_files)
+                ):
+                    await asyncio.sleep(_retry_timeout(response=stream, retries=retries))
+                    retries += 1
+                    continue
+
+                yield stream
+                return
