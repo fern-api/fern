@@ -2,4 +2,4 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.bulk_refund(request: {})
+client.bulk_refund(amount: 1.1)

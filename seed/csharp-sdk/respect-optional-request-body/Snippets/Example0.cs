@@ -11,7 +11,10 @@ public partial class Examples
 
         await client.RefundAsync(
             new RefundBody {
-                Id = "refund-id"
+                Id = "refund-id",
+                Body = new RefundRequest {
+                    Amount = 60
+                }
             }
         );
     }

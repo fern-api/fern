@@ -30,7 +30,10 @@ require "seed"
 
 client = Seed::Client.new
 
-client.refund(id: "refund-id")
+client.refund(
+  id: "refund-id",
+  amount: 60
+)
 ```
 
 ## Environments
