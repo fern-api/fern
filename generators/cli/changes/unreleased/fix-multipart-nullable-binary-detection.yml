@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix optional file uploads being sent as text parts. A `multipart/form-data` property
+    typed `anyOf: [{type: string, format: binary}, {type: "null"}]` — the shape every
+    optional file gets — was not recognized as a file, so the CLI sent the filename as a
+    plain text part and the API rejected the call (e.g. `422 Expected UploadFile, received:
+    <class 'str'>`). File classification now unwraps `anyOf`/`oneOf` (resolving `$ref`
+    branches and ignoring the `null` branch), so nullable binary fields and nullable arrays
+    of binary fields upload the file contents.
+  type: fix
