@@ -680,6 +680,10 @@ function convertLayoutConfig(
         // when true the sidebar renders inline availability badges. Part of the
         // `as unknown as` cast below until the published FDR SDK adds the field.
         showNavAvailabilityBadges: layout.showNavAvailabilityBadges,
+        // Opt-out (related topics render by default, resolved by the fern-platform
+        // companion PR). Part of the `as unknown as` cast below until the published
+        // FDR SDK adds the field.
+        hideRelatedTopics: layout.hideRelatedTopics,
         tabsAlignment: resolvedTabsAlignment
     } as unknown as docsYml.ParsedDocsConfiguration["layout"];
 }

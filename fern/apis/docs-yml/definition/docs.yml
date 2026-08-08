@@ -1013,6 +1013,13 @@ types:
           are rendered inline next to navigation items in the sidebar. Defaults to false. The page-header
           availability badge is unaffected by this setting.
 
+      hide-related-topics:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `hide-related-topics` is set to true, the "Related topics" suggestions at the bottom of
+          pages will not be rendered. This can be overridden for a specific page using the frontmatter.
+
   DocsSettingsConfig:
     properties:
       search-text:

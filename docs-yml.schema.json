@@ -6158,6 +6158,17 @@
             }
           ],
           "description": "If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)\nare rendered inline next to navigation items in the sidebar. Defaults to false. The page-header\navailability badge is unaffected by this setting."
+        },
+        "hide-related-topics": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `hide-related-topics` is set to true, the \"Related topics\" suggestions at the bottom of\npages will not be rendered. This can be overridden for a specific page using the frontmatter."
         }
       },
       "additionalProperties": false

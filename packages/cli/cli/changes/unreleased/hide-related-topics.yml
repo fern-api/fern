@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `layout.hide-related-topics` to docs.yml, which turns off the "Related topics"
+    suggestions rendered at the bottom of docs pages. Individual pages can override the
+    site-wide setting with the `hide-related-topics` frontmatter key.
+  type: feat
