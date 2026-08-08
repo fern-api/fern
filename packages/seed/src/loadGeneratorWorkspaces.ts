@@ -5,6 +5,7 @@ import { access, readdir, readFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { FernSeedConfig } from "./config/index.js";
+import { validateFixtureOutputFolders } from "./validateFixtureOutputFolders.js";
 
 export interface GeneratorWorkspace {
     workspaceName: string;
@@ -58,6 +59,10 @@ export async function loadGeneratorWorkspaces(): Promise<GeneratorWorkspace[]> {
             // on stdout (e.g. `seed affected --json`) remain parseable.
             CONSOLE_LOGGER.warn(`Skipping ${workspace}: disabled in ${SEED_CONFIG_FILENAME}`);
             continue;
+        }
+        const errors = validateFixtureOutputFolders({ workspaceName: workspace, workspaceConfig });
+        if (errors.length > 0) {
+            throw new Error(`Invalid ${SEED_CONFIG_FILENAME}:\n${errors.join("\n")}`);
         }
         workspaces.push({
             absolutePathToWorkspace,
