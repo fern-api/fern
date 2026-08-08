@@ -23,12 +23,14 @@ import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
 import { ValidationViolation } from "./ValidationViolation.js";
 
-function toSeverityOverride(severity: docsYml.RawSchemas.CheckRuleSeverity): SeverityOverride {
+function toSeverityOverride(severity: docsYml.RawSchemas.CheckRuleSeverity): SeverityOverride | undefined {
     switch (severity) {
         case "error":
             return "error";
         case "warn":
             return "warning";
+        case "off":
+            return undefined;
         default:
             assertNever(severity);
     }
@@ -45,23 +47,38 @@ const CHECK_RULE_CONFIG_TO_RULE_NAME = {
     validChangelogSlug: ValidChangelogSlugRule.name
 } satisfies Record<keyof docsYml.RawSchemas.CheckRulesConfig, string>;
 
-function buildSeverityOverrides(
-    checkConfig: docsYml.RawSchemas.CheckConfig | undefined
-): Map<string, SeverityOverride> {
+/**
+ * Reads `check.rules` from docs.yml. Rules configured as `off` are collected
+ * separately: they are never initialized or run, so their setup cost (network
+ * calls, docs resolution) is skipped along with their violations. Each disabled
+ * rule is instead reported as a warning so it is visible in the check output.
+ */
+function buildRuleConfig(checkConfig: docsYml.RawSchemas.CheckConfig | undefined): {
+    severityOverrides: Map<string, SeverityOverride>;
+    disabledRules: Set<string>;
+} {
     const severityOverrides = new Map<string, SeverityOverride>();
+    const disabledRules = new Set<string>();
     const rulesConfig = checkConfig?.rules;
     if (rulesConfig == null) {
-        return severityOverrides;
+        return { severityOverrides, disabledRules };
     }
     for (const [configKey, ruleName] of Object.entries(CHECK_RULE_CONFIG_TO_RULE_NAME) as Array<
         [keyof docsYml.RawSchemas.CheckRulesConfig, string]
     >) {
         const severity = rulesConfig[configKey];
-        if (severity != null) {
-            severityOverrides.set(ruleName, toSeverityOverride(severity));
+        if (severity == null) {
+            continue;
+        }
+        const severityOverride = toSeverityOverride(severity);
+        if (severityOverride == null) {
+            disabledRules.add(ruleName);
+            severityOverrides.delete(ruleName);
+        } else if (!disabledRules.has(ruleName)) {
+            severityOverrides.set(ruleName, severityOverride);
         }
     }
-    return severityOverrides;
+    return { severityOverrides, disabledRules };
 }
 
 export async function validateDocsWorkspace(
@@ -93,8 +110,9 @@ export async function runRulesOnDocsWorkspace({
     ossWorkspaces: OSSWorkspace[];
 }): Promise<ValidationViolation[]> {
     const startMemory = process.memoryUsage();
-    const rules = [...selectedRules];
-    const severityOverrides = buildSeverityOverrides(workspace.config.check);
+    const violations: ValidationViolation[] = [];
+    const { severityOverrides, disabledRules } = buildRuleConfig(workspace.config.check);
+    const rules = selectedRules.filter((rule) => !disabledRules.has(rule.name));
     const validMarkdownLinksOverride = severityOverrides.get(ValidMarkdownLinks.name);
     // Some CLI paths still exclude `valid-markdown-links` unless broken-link checking is enabled.
     // Include it here when docs.yml configures `check.rules.broken-links` so that config takes effect
@@ -102,12 +120,19 @@ export async function runRulesOnDocsWorkspace({
     if (validMarkdownLinksOverride != null && rules.find((r) => r.name === ValidMarkdownLinks.name) == null) {
         rules.push(ValidMarkdownLinks);
     }
+    for (const disabledRule of disabledRules) {
+        violations.push({
+            name: disabledRule,
+            severity: "warning",
+            relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
+            nodePath: ["check", "rules"],
+            message: `Rule "${disabledRule}" is disabled in ${DOCS_CONFIGURATION_FILENAME} and was not run.`
+        });
+    }
     context.logger.debug(`Starting docs validation with ${rules.length} rules: ${rules.map((r) => r.name).join(", ")}`);
     context.logger.debug(
         `Initial memory usage: RSS=${(startMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(startMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
     );
-
-    const violations: ValidationViolation[] = [];
 
     const ruleCreationStart = performance.now();
     const ruleCreationResults = await Promise.all(

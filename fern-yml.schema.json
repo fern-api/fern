@@ -2080,56 +2080,64 @@
                   "type": "string",
                   "enum": [
                     "warn",
-                    "error"
+                    "error",
+                    "off"
                   ]
                 },
                 "broken-links": {
                   "type": "string",
                   "enum": [
                     "warn",
-                    "error"
+                    "error",
+                    "off"
                   ]
                 },
                 "no-non-component-refs": {
                   "type": "string",
                   "enum": [
                     "warn",
-                    "error"
+                    "error",
+                    "off"
                   ]
                 },
                 "valid-local-references": {
                   "type": "string",
                   "enum": [
                     "warn",
-                    "error"
+                    "error",
+                    "off"
                   ]
                 },
                 "no-circular-redirects": {
                   "type": "string",
                   "enum": [
                     "warn",
-                    "error"
+                    "error",
+                    "off"
                   ]
                 },
                 "valid-docs-endpoints": {
                   "type": "string",
                   "enum": [
                     "warn",
-                    "error"
+                    "error",
+                    "off"
                   ]
                 },
                 "missing-redirects": {
                   "type": "string",
                   "enum": [
                     "warn",
-                    "error"
+                    "error",
+                    "off"
                   ]
                 },
                 "valid-changelog-slug": {
                   "type": "string",
                   "enum": [
                     "warn",
-                    "error"
+                    "error",
+                    "off"
                   ]
                 }
               },

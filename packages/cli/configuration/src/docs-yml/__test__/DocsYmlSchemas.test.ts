@@ -66,4 +66,17 @@ describe("DocsYmlSchemas", () => {
         expect(parsed.check?.rules?.["valid-docs-endpoints"]).toBe("warn");
         expect(parsed.check?.rules?.["broken-links"]).toBeUndefined();
     });
+
+    it("should allow turning a check rule off", () => {
+        const parsed = DocsConfiguration.parse({
+            instances: [],
+            check: {
+                rules: {
+                    "missing-redirects": "off"
+                }
+            }
+        });
+
+        expect(parsed.check?.rules?.["missing-redirects"]).toBe("off");
+    });
 });
