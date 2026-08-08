@@ -1,0 +1,35 @@
+openapi: 3.0.0
+info:
+  title: Core API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+    description: Core Unified API
+    x-fern-server-name: Production
+  - url: https://api.stage.example.com
+    x-fern-server-name: Staging
+  - url: https://api.dev.example.com
+    x-fern-server-name: Development
+paths:
+  /widgets:
+    get:
+      summary: List widgets
+      operationId: listWidgets
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Widget"
+components:
+  schemas:
+    Widget:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string

@@ -1,0 +1,6 @@
+- summary: |
+    Fix `group-multi-api-environments` failing to produce multi-URL environments when a
+    server in one of the specs has a `description` (e.g. "Core Unified API") alongside an
+    explicit `x-fern-server-name`. Environment matching now prefers the explicit server
+    name over the description.
+  type: fix

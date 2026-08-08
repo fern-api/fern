@@ -1,0 +1,224 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "issueToken": {
+              "auth": undefined,
+              "display-name": "Issue a token",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "accessToken": "accessToken",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/token",
+              "request": {
+                "body": {
+                  "properties": {
+                    "clientId": "optional<string>",
+                    "clientSecret": "optional<string>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "TokenRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Successful response",
+                "status-code": 200,
+                "type": "TokenResponse",
+              },
+              "source": {
+                "openapi": "../auth-api.yml",
+              },
+              "url": "auth",
+            },
+            "listWidgets": {
+              "auth": undefined,
+              "display-name": "List widgets",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": [
+                      {
+                        "id": "id",
+                        "name": "name",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/widgets",
+              "response": {
+                "docs": "Successful response",
+                "status-code": 200,
+                "type": "list<Widget>",
+              },
+              "source": {
+                "openapi": "../core-api.yml",
+              },
+              "url": "api",
+            },
+          },
+          "source": {
+            "openapi": "../auth-api.yml",
+          },
+        },
+        "types": {
+          "TokenResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "accessToken": "optional<string>",
+            },
+            "source": {
+              "openapi": "../auth-api.yml",
+            },
+          },
+          "Widget": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../core-api.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listWidgets:
+      path: /widgets
+      method: GET
+      source:
+        openapi: ../core-api.yml
+      display-name: List widgets
+      response:
+        docs: Successful response
+        type: list<Widget>
+        status-code: 200
+      url: api
+      examples:
+        - response:
+            body:
+              - id: id
+                name: name
+    issueToken:
+      path: /token
+      method: POST
+      source:
+        openapi: ../auth-api.yml
+      display-name: Issue a token
+      request:
+        name: TokenRequest
+        body:
+          properties:
+            clientId: optional<string>
+            clientSecret: optional<string>
+        content-type: application/json
+      response:
+        docs: Successful response
+        type: TokenResponse
+        status-code: 200
+      url: auth
+      examples:
+        - request: {}
+          response:
+            body:
+              accessToken: accessToken
+  source:
+    openapi: ../auth-api.yml
+types:
+  Widget:
+    properties:
+      id: optional<string>
+      name: optional<string>
+    source:
+      openapi: ../core-api.yml
+  TokenResponse:
+    properties:
+      accessToken: optional<string>
+    source:
+      openapi: ../auth-api.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "Production",
+      "default-url": "api",
+      "display-name": "Core API",
+      "environments": {
+        "Development": {
+          "urls": {
+            "api": "https://api.dev.example.com",
+            "auth": "https://auth.dev.example.com",
+          },
+        },
+        "Production": {
+          "urls": {
+            "api": "https://api.example.com",
+            "auth": "https://auth.example.com",
+          },
+        },
+        "Staging": {
+          "urls": {
+            "api": "https://api.stage.example.com",
+            "auth": "https://auth.stage.example.com",
+          },
+        },
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "api",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Core API
+environments:
+  Production:
+    urls:
+      api: https://api.example.com
+      auth: https://auth.example.com
+  Staging:
+    urls:
+      api: https://api.stage.example.com
+      auth: https://auth.stage.example.com
+  Development:
+    urls:
+      api: https://api.dev.example.com
+      auth: https://auth.dev.example.com
+default-environment: Production
+default-url: api
+",
+  },
+  "specVersion": "1.0.0",
+}

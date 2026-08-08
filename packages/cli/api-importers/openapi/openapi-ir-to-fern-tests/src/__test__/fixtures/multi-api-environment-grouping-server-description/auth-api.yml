@@ -1,0 +1,43 @@
+openapi: 3.0.0
+info:
+  title: Auth API
+  version: 1.0.0
+servers:
+  - url: https://auth.example.com
+    x-fern-server-name: Production
+  - url: https://auth.stage.example.com
+    x-fern-server-name: Staging
+  - url: https://auth.dev.example.com
+    x-fern-server-name: Development
+paths:
+  /token:
+    post:
+      summary: Issue a token
+      operationId: issueToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TokenRequest"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+components:
+  schemas:
+    TokenRequest:
+      type: object
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string

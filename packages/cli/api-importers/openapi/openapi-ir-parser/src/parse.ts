@@ -212,7 +212,7 @@ interface MultiApiEndpoint extends Endpoint {
 type TypedEndpoint = StandardEndpoint | MultiApiEndpoint;
 
 function getRawEnvironmentName(server: SingleServerInput): string {
-    return String(server.description || server.name || server["x-fern-server-name"] || "default").trim();
+    return String(server.name || server["x-fern-server-name"] || server.description || "default").trim();
 }
 
 function getEnvironmentName(server: SingleServerInput): string {
