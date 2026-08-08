@@ -207,7 +207,8 @@ export class LegacyApiSpecAdapter {
             coerceConstsTo: settings.coerceConstsTo,
             shouldInferDiscriminatedUnionBaseProperties: settings.inferDiscriminatedUnionBaseProperties,
             disambiguateRequestNames: settings["disambiguate-request-names"],
-            ignoreTags: settings["ignore-tags"]
+            ignoreTags: settings["ignore-tags"],
+            respectParameterContent: settings["respect-parameter-content"]
         };
 
         const hasSettings = Object.values(result).some((v) => v != null);
