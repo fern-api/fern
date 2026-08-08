@@ -610,7 +610,7 @@ public partial class ContainerClient : IContainerClient
     }
 
     private async Task<WithRawResponse<ObjectWithRequiredField?>> GetAndReturnOptionalAsyncCore(
-        ObjectWithRequiredField? request,
+        ObjectWithRequiredField? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -829,7 +829,7 @@ public partial class ContainerClient : IContainerClient
     /// );
     /// </code></example>
     public WithRawResponseTask<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
-        ObjectWithRequiredField? request,
+        ObjectWithRequiredField? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

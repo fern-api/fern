@@ -40,6 +40,14 @@ export abstract class EndpointRequest extends WithGeneration {
         return "requestBody";
     }
 
+    /**
+     * Whether the request parameter may be omitted by callers, in which case it is
+     * generated with a default value (`= null`, or `= default` for the `Optional<T>` wrapper).
+     */
+    public isOptional(): boolean {
+        return false;
+    }
+
     public abstract getParameterType(): ast.Type;
 
     public abstract getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined;

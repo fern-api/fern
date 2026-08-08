@@ -279,7 +279,7 @@ public partial class PlaylistClient : IPlaylistClient
     private async Task<WithRawResponse<Playlist?>> UpdatePlaylistAsyncCore(
         int serviceParam,
         string playlistId,
-        UpdatePlaylistRequest? request,
+        UpdatePlaylistRequest? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -517,7 +517,7 @@ public partial class PlaylistClient : IPlaylistClient
     public WithRawResponseTask<Playlist?> UpdatePlaylistAsync(
         int serviceParam,
         string playlistId,
-        UpdatePlaylistRequest? request,
+        UpdatePlaylistRequest? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

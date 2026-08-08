@@ -15,7 +15,7 @@ public partial interface IUserClient
     );
 
     WithRawResponseTask CreateUsernameOptionalAsync(
-        CreateUsernameBodyOptionalProperties? request,
+        CreateUsernameBodyOptionalProperties? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

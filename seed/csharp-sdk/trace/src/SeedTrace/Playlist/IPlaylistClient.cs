@@ -38,7 +38,7 @@ public partial interface IPlaylistClient
     WithRawResponseTask<Playlist?> UpdatePlaylistAsync(
         int serviceParam,
         string playlistId,
-        UpdatePlaylistRequest? request,
+        UpdatePlaylistRequest? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
