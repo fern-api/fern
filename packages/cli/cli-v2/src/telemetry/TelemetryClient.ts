@@ -39,13 +39,14 @@ export class TelemetryClient {
             usingAccessToken: process.env.FERN_TOKEN != null,
             ...getRunIdProperties()
         };
-        // Disable background flushes (interval/queue-size triggered) and avoid
-        // shutdown() at exit — both log network failures directly to console.error,
-        // which we cannot intercept. Events are sent only via the explicit flush()
-        // below, which swallows failures so analytics never pollute CLI output.
+        // Disable background flushes (interval/queue-size triggered) — they log
+        // network failures directly to console.error, which we cannot intercept
+        // and would pollute CLI output. Events are sent only via the explicit,
+        // error-swallowing flush() at exit. flushAt is a large-but-bounded cap so
+        // a pathological run cannot accumulate an unshippable batch.
         this.posthog =
             apiKey != null && apiKey.length > 0 && isTelemetryEnabled
-                ? new PostHog(apiKey, { flushAt: Number.MAX_SAFE_INTEGER, flushInterval: 0 })
+                ? new PostHog(apiKey, { flushAt: 1000, flushInterval: 0 })
                 : undefined;
 
         const sentryDsn = process.env.SENTRY_DSN;
@@ -166,7 +167,13 @@ export class TelemetryClient {
         if (this.posthog != null) {
             promises.push(
                 Promise.race([
-                    this.posthog.flush().catch(() => undefined),
+                    // flush() first so shutdown()'s internal flush is a no-op and
+                    // cannot log fetch errors; shutdown() then closes the client so
+                    // no handles keep the event loop alive.
+                    this.posthog
+                        .flush()
+                        .then(() => this.posthog?.shutdown())
+                        .catch(() => undefined),
                     new Promise<void>((resolve) => setTimeout(resolve, 3000))
                 ])
             );

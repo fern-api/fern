@@ -2,20 +2,14 @@ import { getRunIdProperties } from "@fern-api/cli-telemetry";
 import type { PosthogAutomationEvent, PosthogEvent } from "@fern-api/task-context";
 import { PostHog } from "posthog-node";
 
+import { createPosthogClient } from "./createPosthogClient.js";
 import { PosthogManager } from "./PosthogManager.js";
 
 export class AccessTokenPosthogManager implements PosthogManager {
     private posthog: PostHog;
 
     constructor({ posthogApiKey }: { posthogApiKey: string }) {
-        // Disable background flushes (interval/queue-size triggered) — the library logs
-        // network failures from those directly to console.error, which we cannot
-        // intercept. Events are sent only via the explicit flush() below, which
-        // swallows failures so analytics never pollute CLI output.
-        this.posthog = new PostHog(posthogApiKey, {
-            flushAt: Number.MAX_SAFE_INTEGER,
-            flushInterval: 0
-        });
+        this.posthog = createPosthogClient(posthogApiKey);
     }
 
     public async identify(): Promise<void> {

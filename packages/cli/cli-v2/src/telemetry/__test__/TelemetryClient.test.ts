@@ -5,15 +5,16 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // vi.hoisted creates refs accessible inside vi.mock factory functions,
 // which are hoisted to the top of the file before any imports.
-const { mockCapture, mockFlush } = vi.hoisted(() => ({
+const { mockCapture, mockFlush, mockShutdown } = vi.hoisted(() => ({
     mockCapture: vi.fn(),
-    mockFlush: vi.fn().mockResolvedValue(undefined)
+    mockFlush: vi.fn().mockResolvedValue(undefined),
+    mockShutdown: vi.fn().mockResolvedValue(undefined)
 }));
 
 vi.mock("posthog-node", () => ({
     // eslint-disable-next-line func-style
     PostHog: vi.fn(function () {
-        return { capture: mockCapture, flush: mockFlush };
+        return { capture: mockCapture, flush: mockFlush, shutdown: mockShutdown };
     })
 }));
 
@@ -32,6 +33,7 @@ beforeEach(async () => {
     delete process.env["FERN_TELEMETRY_DISABLED"];
     mockCapture.mockClear();
     mockFlush.mockClear();
+    mockShutdown.mockClear();
 });
 
 afterEach(async () => {
@@ -115,6 +117,7 @@ describe("TelemetryClient", () => {
             const client = await TelemetryClient.create({ isTTY: false });
             await client.flush();
             expect(mockFlush).toHaveBeenCalledOnce();
+            expect(mockShutdown).toHaveBeenCalledOnce();
         });
 
         it("is a no-op when disabled", async () => {
@@ -122,6 +125,7 @@ describe("TelemetryClient", () => {
             const client = await TelemetryClient.create({ isTTY: false });
             await client.flush();
             expect(mockFlush).not.toHaveBeenCalled();
+            expect(mockShutdown).not.toHaveBeenCalled();
         });
     });
 
