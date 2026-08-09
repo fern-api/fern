@@ -342,7 +342,7 @@ public partial class ServiceClient : IServiceClient
     }
 
     private async Task<RawResponse> RefreshTokenAsyncCore(
-        RefreshTokenRequest? request,
+        RefreshTokenRequest? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -704,7 +704,7 @@ public partial class ServiceClient : IServiceClient
     /// await client.Service.RefreshTokenAsync();
     /// </code></example>
     public WithRawResponseTask RefreshTokenAsync(
-        RefreshTokenRequest? request,
+        RefreshTokenRequest? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

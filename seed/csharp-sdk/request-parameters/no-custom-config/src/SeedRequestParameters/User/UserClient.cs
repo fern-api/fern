@@ -127,7 +127,7 @@ public partial class UserClient : IUserClient
     }
 
     private async Task<RawResponse> CreateUsernameOptionalAsyncCore(
-        CreateUsernameBodyOptionalProperties? request,
+        CreateUsernameBodyOptionalProperties? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -330,7 +330,7 @@ public partial class UserClient : IUserClient
     /// await client.User.CreateUsernameOptionalAsync(new CreateUsernameBodyOptionalProperties());
     /// </code></example>
     public WithRawResponseTask CreateUsernameOptionalAsync(
-        CreateUsernameBodyOptionalProperties? request,
+        CreateUsernameBodyOptionalProperties? request = null,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
