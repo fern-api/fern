@@ -8,7 +8,14 @@ export class AccessTokenPosthogManager implements PosthogManager {
     private posthog: PostHog;
 
     constructor({ posthogApiKey }: { posthogApiKey: string }) {
-        this.posthog = new PostHog(posthogApiKey);
+        // Disable background flushes (interval/queue-size triggered) — the library logs
+        // network failures from those directly to console.error, which we cannot
+        // intercept. Events are sent only via the explicit flush() below, which
+        // swallows failures so analytics never pollute CLI output.
+        this.posthog = new PostHog(posthogApiKey, {
+            flushAt: Number.MAX_SAFE_INTEGER,
+            flushInterval: 0
+        });
     }
 
     public async identify(): Promise<void> {
@@ -41,7 +48,11 @@ export class AccessTokenPosthogManager implements PosthogManager {
 
     public async flush(): Promise<void> {
         try {
-            await Promise.race([this.posthog.flush(), new Promise<void>((resolve) => setTimeout(resolve, 3000))]);
+            const flushPromise = this.posthog.flush().catch(() => {
+                // Swallow late failures so a timed-out flush doesn't surface as an
+                // unhandled rejection.
+            });
+            await Promise.race([flushPromise, new Promise<void>((resolve) => setTimeout(resolve, 3000))]);
         } catch {
             // Silently swallow – analytics should never block the CLI
         }

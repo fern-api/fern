@@ -39,7 +39,14 @@ export class TelemetryClient {
             usingAccessToken: process.env.FERN_TOKEN != null,
             ...getRunIdProperties()
         };
-        this.posthog = apiKey != null && apiKey.length > 0 && isTelemetryEnabled ? new PostHog(apiKey) : undefined;
+        // Disable background flushes (interval/queue-size triggered) and avoid
+        // shutdown() at exit — both log network failures directly to console.error,
+        // which we cannot intercept. Events are sent only via the explicit flush()
+        // below, which swallows failures so analytics never pollute CLI output.
+        this.posthog =
+            apiKey != null && apiKey.length > 0 && isTelemetryEnabled
+                ? new PostHog(apiKey, { flushAt: Number.MAX_SAFE_INTEGER, flushInterval: 0 })
+                : undefined;
 
         const sentryDsn = process.env.SENTRY_DSN;
         if (sentryDsn != null && sentryDsn.length > 0 && isTelemetryEnabled) {
@@ -159,7 +166,7 @@ export class TelemetryClient {
         if (this.posthog != null) {
             promises.push(
                 Promise.race([
-                    this.posthog.shutdown().catch(() => undefined),
+                    this.posthog.flush().catch(() => undefined),
                     new Promise<void>((resolve) => setTimeout(resolve, 3000))
                 ])
             );
