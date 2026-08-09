@@ -15,8 +15,9 @@ import { CliError, TaskContext } from "@fern-api/task-context";
  * 1. `output["package-name"]` — npm, PyPI, NuGet, RubyGems, crates.io
  * 2. `output.coordinate`      — Maven (Java)
  * 3. `config.package_name`    — fallback (some generators)
- * 4. `config.module.path`     — Go SDK generator
- * 5. `config.packageName`     — PHP SDK generator (camelCase config key)
+ * 4. `config["package-name"]` — Java SDK generator (kebab-case config key)
+ * 5. `config.module.path`     — Go SDK generator
+ * 6. `config.packageName`     — PHP SDK generator (camelCase config key)
  *
  * @internal Exported for testing and reuse in generation paths
  */
@@ -42,6 +43,12 @@ export function getPackageNameFromGeneratorConfig(
         const packageName = (generatorInvocation.raw.config as { package_name?: string }).package_name;
         if (packageName != null) {
             return packageName;
+        }
+
+        // java-sdk generator uses the kebab-case package-name config key
+        const kebabCasePackageName = (generatorInvocation.raw.config as { ["package-name"]?: unknown })["package-name"];
+        if (typeof kebabCasePackageName === "string") {
+            return kebabCasePackageName;
         }
 
         // go-sdk generator uses module.path to set the package name
