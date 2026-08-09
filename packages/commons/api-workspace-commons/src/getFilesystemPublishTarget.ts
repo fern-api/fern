@@ -120,7 +120,10 @@ export function getFilesystemPublishTarget({
                     artifactId: packageName
                 };
             } else if (typeof configObj["package-prefix"] === "string" && !packageName) {
-                context.logger.warn("Java generator has package-prefix configured but packageName is missing");
+                context.logger.warn(
+                    "Java generator has package-prefix configured but no package name could be resolved. " +
+                        "Set 'package-name' (or 'group' and 'artifact') in the generator config to stamp Maven coordinates."
+                );
             }
 
             return undefined;
