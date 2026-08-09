@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.92.1
+  changelogEntry:
+    - summary: |
+        Resolve the Java generator's kebab-case `package-name` config key when computing the package
+        name for local-file-system output. Previously configs using `package-name` (without
+        `group`/`artifact`) logged a misleading "package-prefix configured but packageName is missing"
+        warning even though the name was set.
+      type: fix
+  createdAt: "2026-08-09"
+  irVersion: 67
 - version: 5.92.0
   changelogEntry:
     - summary: |
