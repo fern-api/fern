@@ -239,6 +239,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 );
             }
         } else if (oauthAuth != null && useOAuthProvider) {
+            if (this.preferExplicitAuthEnabled()) {
+                method.addStatement(this.getExplicitAuthTrackingStatement(oauthAuth));
+            }
             method.addStatement(this.getOAuthInitializationStatement(oauthAuth, anyAuthMultiScheme));
         } else if (inferredAuth != null) {
             method.addStatement(this.getInferredAuthInitializationStatement(inferredAuth, anyAuthMultiScheme));
@@ -700,7 +703,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 // string the same as absent); otherwise the caller is
                 // authenticating with another scheme (e.g. an API key) and we must
                 // not touch the token endpoint.
-                writer.writeLine(`if !client_id.to_s.empty? && !client_secret.to_s.empty?`);
+                if (this.preferExplicitAuthEnabled()) {
+                    // Explicitly provided basic auth wins over env-var-derived OAuth
+                    // credentials; explicitly provided OAuth credentials still win.
+                    writer.writeLine(
+                        `if !client_id.to_s.empty? && !client_secret.to_s.empty? && (explicit_oauth_auth || !explicit_basic_auth)`
+                    );
+                } else {
+                    writer.writeLine(`if !client_id.to_s.empty? && !client_secret.to_s.empty?`);
+                }
                 writer.indent();
             }
             // Create an unauthenticated raw client for the auth endpoint.
@@ -772,6 +783,95 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         });
     }
 
+    /**
+     * Whether explicitly provided constructor auth credentials should take precedence
+     * over environment-variable defaults when selecting the auth scheme. Opt-in via the
+     * `preferExplicitAuth` config; only applies when OAuth client-credentials is composed
+     * with a basic auth scheme (outside endpoint-security routing).
+     */
+    private preferExplicitAuthEnabled(): boolean {
+        if (this.context.customConfig.preferExplicitAuth !== true) {
+            return false;
+        }
+        if (this.context.isEndpointSecurity()) {
+            return false;
+        }
+        // The explicit-tracking locals and env-var fallbacks are only emitted in the
+        // credential-gated OAuth-provider branch of the constructor, so the flag must
+        // only activate when that exact branch is generated: `any`-composed multi-scheme
+        // auth where the OAuth provider (not an inferred-auth provider) is selected.
+        if (!this.isAnyAuthWithMultipleSchemes()) {
+            return false;
+        }
+        const oauthAuth = this.context.getOAuthAuth();
+        if (oauthAuth == null || oauthAuth.configuration.type !== "clientCredentials") {
+            return false;
+        }
+        if (!this.shouldUseOAuthProvider(this.context.getInferredAuth(), oauthAuth)) {
+            return false;
+        }
+        return this.getBasicAuthCredentialParameterNames().length > 0;
+    }
+
+    private getBasicAuthScheme(): (FernIr.AuthScheme & { type: "basic" }) | undefined {
+        return this.context.ir.auth.schemes.find((s): s is typeof s & { type: "basic" } => s.type === "basic");
+    }
+
+    private getBasicAuthCredentialParameterNames(): string[] {
+        const scheme = this.getBasicAuthScheme();
+        if (scheme == null) {
+            return [];
+        }
+        const names: string[] = [];
+        if (!scheme.usernameOmit) {
+            names.push(this.case.snakeSafe(scheme.username));
+        }
+        if (!scheme.passwordOmit) {
+            names.push(this.case.snakeSafe(scheme.password));
+        }
+        return names;
+    }
+
+    /**
+     * Emits locals recording which auth credentials were passed explicitly (before
+     * applying env-var defaults), then applies the env-var fallbacks. Used with
+     * `preferExplicitAuth` so explicitly provided basic auth wins over OAuth env vars.
+     */
+    private getExplicitAuthTrackingStatement(oauthScheme: FernIr.OAuthScheme): ruby.AstNode {
+        const basicScheme = this.getBasicAuthScheme();
+        const basicParamNames = this.getBasicAuthCredentialParameterNames();
+        const envFallbacks: Array<{ paramName: string; envVar: string }> = [];
+        if (oauthScheme.configuration.type === "clientCredentials") {
+            if (oauthScheme.configuration.clientIdEnvVar != null) {
+                envFallbacks.push({ paramName: "client_id", envVar: oauthScheme.configuration.clientIdEnvVar });
+            }
+            if (oauthScheme.configuration.clientSecretEnvVar != null) {
+                envFallbacks.push({ paramName: "client_secret", envVar: oauthScheme.configuration.clientSecretEnvVar });
+            }
+        }
+        if (basicScheme != null) {
+            if (!basicScheme.usernameOmit && basicScheme.usernameEnvVar != null) {
+                envFallbacks.push({
+                    paramName: this.case.snakeSafe(basicScheme.username),
+                    envVar: basicScheme.usernameEnvVar
+                });
+            }
+            if (!basicScheme.passwordOmit && basicScheme.passwordEnvVar != null) {
+                envFallbacks.push({
+                    paramName: this.case.snakeSafe(basicScheme.password),
+                    envVar: basicScheme.passwordEnvVar
+                });
+            }
+        }
+        return ruby.codeblock((writer) => {
+            writer.writeLine(`explicit_oauth_auth = !client_id.nil? || !client_secret.nil?`);
+            writer.writeLine(`explicit_basic_auth = ${basicParamNames.map((name) => `!${name}.nil?`).join(" || ")}`);
+            for (const { paramName, envVar } of envFallbacks) {
+                writer.writeLine(`${paramName} = ENV.fetch("${envVar}", nil) if ${paramName}.nil?`);
+            }
+        });
+    }
+
     private getAuthenticationParameters(): ruby.KeywordParameter[] {
         const parameters: ruby.KeywordParameter[] = [];
 
@@ -787,6 +887,16 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 });
             }
             return isEndpointSecurity ? ruby.nilValue() : undefined;
+        };
+        // Under preferExplicitAuth, basic and OAuth credentials default to nil so the
+        // constructor can distinguish explicitly passed values from env-var defaults;
+        // the env-var fallback is applied inside the constructor body instead.
+        const preferExplicitAuth = this.preferExplicitAuthEnabled();
+        const selectableCredentialInitializer = (envVar: string | undefined) => {
+            if (preferExplicitAuth && envVar != null) {
+                return ruby.nilValue();
+            }
+            return credentialInitializer(envVar);
         };
 
         for (const scheme of this.context.ir.auth.schemes) {
@@ -819,7 +929,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         const usernameParam = ruby.parameters.keyword({
                             name: this.case.snakeSafe(scheme.username),
                             type: ruby.Type.string(),
-                            initializer: credentialInitializer(scheme.usernameEnvVar),
+                            initializer: selectableCredentialInitializer(scheme.usernameEnvVar),
                             docs: undefined
                         });
                         parameters.push(usernameParam);
@@ -828,7 +938,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         const passwordParam = ruby.parameters.keyword({
                             name: this.case.snakeSafe(scheme.password),
                             type: ruby.Type.string(),
-                            initializer: credentialInitializer(scheme.passwordEnvVar),
+                            initializer: selectableCredentialInitializer(scheme.passwordEnvVar),
                             docs: undefined
                         });
                         parameters.push(passwordParam);
@@ -862,7 +972,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                                 clientIdEnvVar != null || isEndpointSecurity
                                     ? ruby.Type.nilable(ruby.Type.string())
                                     : ruby.Type.string(),
-                            initializer: credentialInitializer(clientIdEnvVar),
+                            initializer: selectableCredentialInitializer(clientIdEnvVar),
                             docs: undefined
                         })
                     );
@@ -873,7 +983,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                                 clientSecretEnvVar != null || isEndpointSecurity
                                     ? ruby.Type.nilable(ruby.Type.string())
                                     : ruby.Type.string(),
-                            initializer: credentialInitializer(clientSecretEnvVar),
+                            initializer: selectableCredentialInitializer(clientSecretEnvVar),
                             docs: undefined
                         })
                     );

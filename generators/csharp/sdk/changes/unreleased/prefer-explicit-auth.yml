@@ -1,0 +1,8 @@
+- summary: |
+    Add an opt-in `prefer-explicit-auth` configuration option. When enabled (and the API composes
+    OAuth client-credentials with basic auth via `auth: any`), auth credentials passed
+    explicitly to the client constructor take precedence over environment-variable
+    defaults when selecting the auth scheme — e.g. explicitly provided basic auth
+    credentials win over OAuth client ID/secret environment variables. Disabled by
+    default, so existing generated output and runtime behavior are unchanged.
+  type: feat
