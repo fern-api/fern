@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.27.1
+  changelogEntry:
+    - summary: |
+        Accept a plain string for the root client's `token` parameter when OAuth client credentials
+        are configured with a token override. The constructor overload, implementation signature, and
+        docstring previously typed `token` as `typing.Callable[[], str]` only, even though the client
+        wrapper accepts `typing.Union[str, typing.Callable[[], str]]` at runtime and the generated
+        example passes a string literal, so type checkers rejected the documented usage.
+      type: fix
+  createdAt: "2026-08-10"
+  irVersion: 67
 - version: 5.27.0
   changelogEntry:
     - summary: |
