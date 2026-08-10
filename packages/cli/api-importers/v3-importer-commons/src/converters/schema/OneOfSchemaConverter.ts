@@ -37,7 +37,7 @@ interface DiscriminatedVariant {
     typeId: TypeId;
     /** Undefined when the variant is inlined in the `oneOf`/`anyOf` rather than $ref'd. */
     ref?: string;
-    /** The variant's schema, resolved if it is a $ref. */
+    /** The variant's schema, resolved if it is a $ref */
     schema: OpenAPIV3_1.SchemaObject | undefined;
     breadcrumbs: string[];
 }
