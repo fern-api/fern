@@ -256,7 +256,7 @@ function parseMarkdownImage(
 
     const urlEnd = i - 1;
     const url = content.slice(urlStart, urlEnd).trim();
-    const rawSrc = trimAnchor(splitDestinationAndTitle(url));
+    const rawSrc = trimAnchor(unwrapDelimitedDestination(splitDestinationAndTitle(url)).path);
     const src = rawSrc != null ? unescapeMarkdownUrl(rawSrc) : undefined;
     const resolvedPath = resolvePath(src, metadata);
 
@@ -310,6 +310,18 @@ function splitDestinationAndTitle(url: string): string {
             (title.startsWith("(") && title.endsWith(")")));
 
     return isTitle ? url.slice(0, i) : url;
+}
+
+/**
+ * Angle brackets delimit a destination but are not part of the path: `<my file.png>`
+ * points at `my file.png`. Callers rewrite the path in place, so the brackets are left
+ * in the surrounding text.
+ */
+function unwrapDelimitedDestination(destination: string): { path: string; wrapped: boolean } {
+    if (destination.length >= 2 && destination.startsWith("<") && destination.endsWith(">")) {
+        return { path: destination.slice(1, -1), wrapped: true };
+    }
+    return { path: destination, wrapped: false };
 }
 
 function parseMarkdownLink(
@@ -932,18 +944,20 @@ export function replaceImagePathsAndUrls(
                 const href = content.slice(urlStart, urlEnd).trim();
                 const destination = splitDestinationAndTitle(href);
                 const hrefTitle = href.slice(destination.length);
-                const trimmedHref = trimAnchor(destination) ?? destination;
-                const hrefAnchor = trimmedHref !== destination ? destination.slice(trimmedHref.length) : "";
+                const { path: hrefPath, wrapped } = unwrapDelimitedDestination(destination);
+                const trimmedHref = trimAnchor(hrefPath) ?? hrefPath;
+                const hrefAnchor = trimmedHref !== hrefPath ? hrefPath.slice(trimmedHref.length) : "";
                 const replacedHref = getReplacedHref({
                     href: trimmedHref,
                     markdownFilesToPathName,
                     metadata
                 });
                 if (replacedHref && replacedHref.type === "replace") {
+                    const slug = replacedHref.slug + hrefAnchor;
                     edits.push({
                         start: urlStart,
                         end: urlEnd,
-                        replacement: replacedHref.slug + hrefAnchor + hrefTitle
+                        replacement: (wrapped ? `<${slug}>` : slug) + hrefTitle
                     });
                 }
                 i = j;
