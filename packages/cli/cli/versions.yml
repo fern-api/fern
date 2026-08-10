@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.92.4
+  changelogEntry:
+    - summary: |
+        Resolve image and link destinations delimited by angle brackets, e.g. `![alt](<path/to/image.png>)`.
+      type: fix
+  createdAt: "2026-08-10"
+  irVersion: 67
 - version: 5.92.3
   changelogEntry:
     - summary: |
