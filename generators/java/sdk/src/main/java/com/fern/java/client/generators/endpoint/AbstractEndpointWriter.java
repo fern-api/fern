@@ -43,6 +43,8 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -147,9 +149,10 @@ public abstract class AbstractEndpointWriter {
 
     /**
      * Whether the caller may leave the request body out of the call entirely, which the IR describes as
-     * {@code required: false} on a referenced request body. The body keeps its own type; only the extra
-     * overload distinguishes "not passed". An absent {@code required} means required, and reading the
-     * field at all is opt-in so that existing SDKs keep their signatures.
+     * {@code required: false} on a referenced request body. The body keeps its own type; only the extra overload
+     * distinguishes "not passed". An absent {@code required} means required, and reading the field at all is opt-in so
+     * that existing SDKs keep their signatures. A body whose own type is already optional keeps its existing
+     * empty-value handling, which the serialization code relies on.
      */
     public static boolean mayOmitRequestBody(ClientGeneratorContext context, HttpEndpoint endpoint) {
         return mayOmitRequestBody(
@@ -159,13 +162,19 @@ public abstract class AbstractEndpointWriter {
     }
 
     static boolean mayOmitRequestBody(
-            boolean respectOptionalRequestBody, Optional<SdkRequest> sdkRequest, Optional<HttpRequestBody> requestBody) {
+            boolean respectOptionalRequestBody,
+            Optional<SdkRequest> sdkRequest,
+            Optional<HttpRequestBody> requestBody) {
         if (!respectOptionalRequestBody) {
             return false;
         }
-        boolean isJustRequestBody =
-                sdkRequest.map(request -> request.getShape().isJustRequestBody()).orElse(false);
+        boolean isJustRequestBody = sdkRequest
+                .map(request -> request.getShape().isJustRequestBody())
+                .orElse(false);
         if (!isJustRequestBody) {
+            return false;
+        }
+        if (requestBody.map(HttpRequestBodyIsWrappedInOptional::isOptional).orElse(false)) {
             return false;
         }
         return requestBody
@@ -176,12 +185,15 @@ public abstract class AbstractEndpointWriter {
     }
 
     /**
-     * The argument the body-less overload passes on. It is cast to the body's own type because the
-     * overload that takes {@code RequestOptions} has the same arity, which leaves a bare {@code null}
-     * ambiguous between the two.
+     * The format arguments for the value the body-less overload passes on, which are the types the value's format
+     * string refers to.
      */
-    private static String nullBodyArgument(TypeName bodyTypeName) {
-        return bodyTypeName instanceof ParameterizedTypeName ? "($1T<$2T>) null" : "($T) null";
+    private static List<Object> bodyValueFormatArgs(TypeName bodyTypeName, boolean forwardsNull) {
+        if (!forwardsNull && bodyTypeName instanceof ParameterizedTypeName) {
+            ParameterizedTypeName parameterizedType = (ParameterizedTypeName) bodyTypeName;
+            return Arrays.asList(parameterizedType.rawType, parameterizedType.typeArguments.get(0));
+        }
+        return Collections.singletonList(bodyTypeName);
     }
 
     private static boolean typeNameIsOptional(TypeName typeName) {
@@ -333,9 +345,11 @@ public abstract class AbstractEndpointWriter {
                                     .getUnsafeName()))
                     .collect(Collectors.toList())
                     .get(0);
-            if (mayOmitRequestBody(clientGeneratorContext, httpEndpoint)
-                    && !typeNameIsOptional(bodyParameterSpec.type)) {
-                paramNamesWoBody.add(nullBodyArgument(bodyParameterSpec.type));
+            boolean forwardsNullBody = mayOmitRequestBody(clientGeneratorContext, httpEndpoint)
+                    && !typeNameIsOptional(bodyParameterSpec.type);
+            if (forwardsNullBody) {
+                // The overload taking RequestOptions has the same arity, so a bare null is ambiguous.
+                paramNamesWoBody.add("($T) null");
             } else if (typeNameIsOptional(bodyParameterSpec.type)) {
                 paramNamesWoBody.add("Optional.empty()");
             } else if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
@@ -347,7 +361,10 @@ public abstract class AbstractEndpointWriter {
                 paramNamesWoBody.add("$T.builder().build()");
             }
             responseParserGenerator.addEndpointWithoutRequestReturnStatement(
-                    endpointWithoutRequestBuilder, endpointWithRequestOptions, paramNamesWoBody, bodyParameterSpec);
+                    endpointWithoutRequestBuilder,
+                    endpointWithRequestOptions,
+                    paramNamesWoBody,
+                    bodyValueFormatArgs(bodyParameterSpec.type, forwardsNullBody));
             endpointWithoutRequest = endpointWithoutRequestBuilder.build();
         }
 
@@ -388,9 +405,11 @@ public abstract class AbstractEndpointWriter {
                                     .getUnsafeName()))
                     .collect(Collectors.toList())
                     .get(0);
-            if (mayOmitRequestBody(clientGeneratorContext, httpEndpoint)
-                    && !typeNameIsOptional(bodyParameterSpec.type)) {
-                paramNamesWoBodyWithRequestOptions.add(nullBodyArgument(bodyParameterSpec.type));
+            boolean forwardsNullBody = mayOmitRequestBody(clientGeneratorContext, httpEndpoint)
+                    && !typeNameIsOptional(bodyParameterSpec.type);
+            if (forwardsNullBody) {
+                // The overload taking RequestOptions has the same arity, so a bare null is ambiguous.
+                paramNamesWoBodyWithRequestOptions.add("($T) null");
             } else if (typeNameIsOptional(bodyParameterSpec.type)) {
                 paramNamesWoBodyWithRequestOptions.add("Optional.empty()");
             } else if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
@@ -404,7 +423,7 @@ public abstract class AbstractEndpointWriter {
                     endpointWithoutRequestWithRequestOptionsBuilder,
                     endpointWithRequestOptions,
                     paramNamesWoBodyWithRequestOptions,
-                    bodyParameterSpec);
+                    bodyValueFormatArgs(bodyParameterSpec.type, forwardsNullBody));
             endpointWithoutRequestWithRequestOptions = endpointWithoutRequestWithRequestOptionsBuilder.build();
         }
 

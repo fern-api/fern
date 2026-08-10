@@ -166,9 +166,9 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     }
 
     /**
-     * When true, an endpoint whose request body the API does not require also gets an overload
-     * without the body parameter, and sends no body when that overload is called. The body
-     * parameter keeps its own type. Off by default, so existing signatures are unchanged.
+     * When true, an endpoint whose request body the API does not require also gets an overload without the body
+     * parameter, and sends no body when that overload is called. The body parameter keeps its own type. Off by default,
+     * so existing signatures are unchanged.
      */
     @Value.Default
     @JsonProperty("respect-optional-request-body")

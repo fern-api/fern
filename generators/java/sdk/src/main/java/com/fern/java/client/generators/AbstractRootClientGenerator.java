@@ -281,8 +281,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             }
 
                             @Override
-                            public Boolean visitDeviceCode(
-                                    com.fern.ir.model.auth.OAuthDeviceCode deviceCode) {
+                            public Boolean visitDeviceCode(com.fern.ir.model.auth.OAuthDeviceCode deviceCode) {
                                 return false;
                             }
 
@@ -435,8 +434,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             }
 
                             @Override
-                            public Boolean visitDeviceCode(
-                                    com.fern.ir.model.auth.OAuthDeviceCode deviceCode) {
+                            public Boolean visitDeviceCode(com.fern.ir.model.auth.OAuthDeviceCode deviceCode) {
                                 return false;
                             }
 
@@ -2622,8 +2620,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             }
 
             @Override
-            public Void visitAuthorizationCode(
-                    com.fern.ir.model.auth.OAuthAuthorizationCode authorizationCode) {
+            public Void visitAuthorizationCode(com.fern.ir.model.auth.OAuthAuthorizationCode authorizationCode) {
                 return null;
             }
 

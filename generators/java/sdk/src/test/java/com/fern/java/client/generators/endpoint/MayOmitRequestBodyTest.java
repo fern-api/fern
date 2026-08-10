@@ -10,9 +10,10 @@ import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.http.HttpRequestBody;
 import com.fern.ir.model.http.HttpRequestBodyReference;
 import com.fern.ir.model.http.SdkRequest;
-import com.fern.ir.model.http.SdkRequestShape;
 import com.fern.ir.model.http.SdkRequestBodyType;
+import com.fern.ir.model.http.SdkRequestShape;
 import com.fern.ir.model.http.SdkRequestWrapper;
+import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.TypeReference;
 import java.util.Optional;
@@ -60,6 +61,13 @@ class MayOmitRequestBodyTest {
     }
 
     @Test
+    void optionalBodyType_isNotOmittable() {
+        assertThat(AbstractEndpointWriter.mayOmitRequestBody(
+                        true, Optional.of(justRequestBody()), Optional.of(optionalReferencedBody())))
+                .isFalse();
+    }
+
+    @Test
     void noRequestBody_isNotOmittable() {
         assertThat(AbstractEndpointWriter.mayOmitRequestBody(true, Optional.of(justRequestBody()), Optional.empty()))
                 .isFalse();
@@ -67,6 +75,19 @@ class MayOmitRequestBodyTest {
 
     private static HttpRequestBody referencedBody(Optional<Boolean> required) {
         return HttpRequestBody.reference(bodyReference(required));
+    }
+
+    /**
+     * A body whose own type is optional keeps its existing empty-value handling, which the serialization code relies
+     * on, so the extra overload must not take over.
+     */
+    private static HttpRequestBody optionalReferencedBody() {
+        return HttpRequestBody.reference(HttpRequestBodyReference.builder()
+                .requestBodyType(TypeReference.container(
+                        ContainerType.optional(bodyReference(Optional.empty()).getRequestBodyType())))
+                .contentType(Optional.empty())
+                .required(Optional.of(false))
+                .build());
     }
 
     private static SdkRequest justRequestBody() {
@@ -107,10 +128,8 @@ class MayOmitRequestBodyTest {
     }
 
     private static Name name(String value) {
-        SafeAndUnsafeString string = SafeAndUnsafeString.builder()
-                .unsafeName(value)
-                .safeName(value)
-                .build();
+        SafeAndUnsafeString string =
+                SafeAndUnsafeString.builder().unsafeName(value).safeName(value).build();
         return Name.builder()
                 .originalName(value)
                 .camelCase(string)

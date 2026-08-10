@@ -370,7 +370,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             }
 
             // The body-less overload passes null, so the body is only serialized when it was passed.
-            boolean mayBeOmitted = !isOptional && mayOmitRequestBody(clientGeneratorContext, this.endpoint);
+            boolean mayBeOmitted = mayOmitRequestBody(clientGeneratorContext, this.endpoint);
 
             Optional<String> requestBodyGetterName = getRequestBodyGetterName();
 
