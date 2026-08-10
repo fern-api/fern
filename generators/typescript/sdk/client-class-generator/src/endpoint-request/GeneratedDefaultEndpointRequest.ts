@@ -277,8 +277,9 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             referenceToRequestBody,
             context
         );
+        const needsNullCheck = this.mayOmitRequestBody(context) && serializedRequestBody !== referenceToRequestBody;
         return this.mergeAdditionalBodyParameters(
-            this.mayOmitRequestBody()
+            needsNullCheck
                 ? this.skipSerializationWhenBodyIsOmitted(referenceToRequestBody, serializedRequestBody)
                 : serializedRequestBody,
             context
@@ -287,10 +288,15 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
     /**
      * Whether the caller may leave the body out of the call. Absent `required` means required,
-     * so endpoints predating the field keep serializing unconditionally.
+     * so endpoints predating the field keep serializing unconditionally, as do SDKs that have not
+     * opted into reading the field.
      */
-    private mayOmitRequestBody(): boolean {
-        return this.requestBody?.type === "reference" && this.requestBody.required === false;
+    private mayOmitRequestBody(context: FileContext): boolean {
+        return (
+            context.respectOptionalRequestBody &&
+            this.requestBody?.type === "reference" &&
+            this.requestBody.required === false
+        );
     }
 
     /**

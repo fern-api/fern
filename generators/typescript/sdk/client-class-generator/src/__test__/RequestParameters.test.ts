@@ -27,8 +27,13 @@ const INTEGER_TYPE = FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefin
 // ──────────────────────────────────────────────────────────────────────────────
 
 // biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
-function createMockContext(opts?: { useDefaultValues?: boolean; useBigInt?: boolean }): any {
+function createMockContext(opts?: {
+    useDefaultValues?: boolean;
+    useBigInt?: boolean;
+    respectOptionalRequestBody?: boolean;
+}): any {
     return {
+        respectOptionalRequestBody: opts?.respectOptionalRequestBody ?? false,
         includeSerdeLayer: true,
         retainOriginalCasing: false,
         inlineFileProperties: false,

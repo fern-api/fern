@@ -284,7 +284,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             name,
                             safeName: name,
                             type: type.typeNodeWithoutUndefined,
-                            isOptional: type.isOptional || mayOmitReferencedBody(referenceToRequestBody),
+                            isOptional: type.isOptional || mayOmitReferencedBody(referenceToRequestBody, context),
                             docs: referenceToRequestBody.docs ? [referenceToRequestBody.docs] : undefined
                         };
                         properties.push(requestProperty);
@@ -658,7 +658,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             const areBodyPropertiesOptional = FernIr.HttpRequestBody._visit<boolean>(this.endpoint.requestBody, {
                 reference: (referenceToRequestBody) =>
                     this.isTypeOptional(referenceToRequestBody.requestBodyType, context) ||
-                    mayOmitReferencedBody(referenceToRequestBody),
+                    mayOmitReferencedBody(referenceToRequestBody, context),
                 inlinedRequestBody: (inlinedRequestBody) => {
                     for (const property of inlinedRequestBody.properties) {
                         if (!this.isTypeOptional(property.valueType, context)) {
@@ -985,7 +985,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             name,
             safeName: name,
             type: type.typeNodeWithoutUndefined,
-            isOptional: type.isOptional || mayOmitReferencedBody(referenceToRequestBody),
+            isOptional: type.isOptional || mayOmitReferencedBody(referenceToRequestBody, context),
             docs: referenceToRequestBody.docs ? [referenceToRequestBody.docs] : undefined
         });
         return properties;
@@ -1177,6 +1177,6 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
  * Whether the caller may leave the referenced body out of the call. Absent `required` means
  * required, which is what every endpoint predating the field relies on.
  */
-function mayOmitReferencedBody(referenceToRequestBody: FernIr.HttpRequestBodyReference): boolean {
-    return referenceToRequestBody.required === false;
+function mayOmitReferencedBody(referenceToRequestBody: FernIr.HttpRequestBodyReference, context: FileContext): boolean {
+    return context.respectOptionalRequestBody && referenceToRequestBody.required === false;
 }

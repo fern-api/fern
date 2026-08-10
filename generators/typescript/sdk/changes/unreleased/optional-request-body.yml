@@ -1,8 +1,9 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    An endpoint whose request body may be omitted now takes an optional body parameter, driven by
-    the IR's `required` field on the request body rather than by wrapping the body in `optional<T>`.
-    The parameter keeps the body's own type: `refund(id: string, request?: RefundRequest)` rather
-    than `request: RefundRequest | undefined`. When the caller omits the body, no body is sent.
+    Add `respectOptionalRequestBody`. With it enabled, an endpoint whose request body the API does
+    not require takes an optional body parameter — `refund(id: string, request?: RefundRequest)` —
+    keeping the body's own type rather than widening it to `RefundRequest | undefined`, and sending
+    no body when the caller omits it. Defaults to `false`, so signatures are unchanged until you
+    opt in.
   type: feat

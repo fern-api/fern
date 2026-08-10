@@ -62,6 +62,7 @@ function createMockContext(opts?: {
     enableInlineTypes?: boolean;
     namespaceExport?: string;
     useDefaultRequestParameterValues?: boolean;
+    respectOptionalRequestBody?: boolean;
     isOptionalFn?: (typeRef: FernIr.TypeReference) => boolean;
     isNullableFn?: (typeRef: FernIr.TypeReference) => boolean;
     hasDefaultValueFn?: (typeRef: FernIr.TypeReference) => boolean;
@@ -77,6 +78,7 @@ function createMockContext(opts?: {
     const defaultResolve = (typeRef: FernIr.TypeReference): FernIr.TypeReference => typeRef;
 
     const context = {
+        respectOptionalRequestBody: opts?.respectOptionalRequestBody ?? false,
         requestWrapper: {
             shouldInlinePathParameters: () => opts?.shouldInlinePathParameters ?? false
         },
@@ -324,7 +326,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 })
             });
             const wrapper = new GeneratedRequestWrapperImpl(init);
-            const { context, sourceFile } = createMockContext();
+            const { context, sourceFile } = createMockContext({ respectOptionalRequestBody: true });
 
             wrapper.writeToFile(context);
             // the property type stays the body type; only the question mark comes from `required`

@@ -165,6 +165,7 @@ export declare namespace SdkGenerator {
         packageManager: "pnpm" | "yarn";
         generateReadWriteOnlyTypes: boolean;
         flattenRequestParameters: boolean;
+        respectOptionalRequestBody: boolean;
         exportAllRequestsAtRoot: boolean;
         testFramework: "jest" | "vitest";
         consolidateTypeFiles: boolean;
@@ -2164,6 +2165,7 @@ export class SdkGenerator {
                 useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues,
                 generateReadWriteOnlyTypes: this.config.generateReadWriteOnlyTypes,
                 flattenRequestParameters: this.config.flattenRequestParameters,
+                respectOptionalRequestBody: this.config.respectOptionalRequestBody,
                 parameterNaming: this.config.parameterNaming,
                 resolveQueryParameterNameConflicts: this.config.resolveQueryParameterNameConflicts
             } satisfies Omit<FileContextImpl.Init, "sourceFile" | "importsManager" | "isForSnippet">;

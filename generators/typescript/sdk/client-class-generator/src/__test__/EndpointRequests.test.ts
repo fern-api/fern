@@ -33,8 +33,12 @@ const INTEGER_TYPE = FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefin
  * exercise many more context properties (requestWrapper, sdkInlinedRequestBodySchema, etc.).
  */
 // biome-ignore lint/suspicious/noExplicitAny: test mock needs to satisfy complex FileContext interface
-function createEndpointRequestMockContext(opts?: { shouldInlinePathParams?: boolean }): any {
+function createEndpointRequestMockContext(opts?: {
+    shouldInlinePathParams?: boolean;
+    respectOptionalRequestBody?: boolean;
+}): any {
     const context = {
+        respectOptionalRequestBody: opts?.respectOptionalRequestBody ?? false,
         includeSerdeLayer: true,
         retainOriginalCasing: false,
         inlineFileProperties: false,
@@ -500,6 +504,30 @@ describe("GeneratedDefaultEndpointRequest", () => {
             expect(params[0]?.type).toBe("string");
         });
 
+        it("keeps the request parameter required when the generator has not opted in", () => {
+            const sdkRequest = createSdkRequestBody({ required: false });
+            const request = new GeneratedDefaultEndpointRequest({
+                ir: createMinimalIR(),
+                packageId: { isRoot: true },
+                sdkRequest,
+                service: createHttpService(),
+                endpoint: createHttpEndpoint({ sdkRequest }),
+                requestBody: FernIr.HttpRequestBody.reference({
+                    requestBodyType: STRING_TYPE,
+                    required: false,
+                    contentType: undefined,
+                    docs: undefined,
+                    v2Examples: undefined
+                }),
+                generatedSdkClientClass: createMockSdkClientClass(),
+                retainOriginalCasing: false,
+                parameterNaming: "default",
+                caseConverter
+            });
+            const params = request.getEndpointParameters(createEndpointRequestMockContext());
+            expect(params[0]?.hasQuestionToken).toBe(false);
+        });
+
         it("makes the request parameter optional when the referenced body is not required", () => {
             const sdkRequest = createSdkRequestBody({ required: false });
             const request = new GeneratedDefaultEndpointRequest({
@@ -520,7 +548,7 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 parameterNaming: "default",
                 caseConverter
             });
-            const context = createEndpointRequestMockContext();
+            const context = createEndpointRequestMockContext({ respectOptionalRequestBody: true });
             const params = request.getEndpointParameters(context);
             expect(params).toHaveLength(1);
             expect(params[0]?.name).toBe("request");
@@ -739,7 +767,7 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 parameterNaming: "default",
                 caseConverter
             });
-            const context = createEndpointRequestMockContext();
+            const context = createEndpointRequestMockContext({ respectOptionalRequestBody: true });
             request.getBuildRequestStatements(context);
             const args = request.getFetcherRequestArgs(context);
             assert(args.body != null, "body should not be null");
