@@ -18,3 +18,9 @@
     `optional<Foo>`, so SDKs generated with the setting enabled describe the body as its own type
     until the generator opts into omitting it.
   type: chore
+
+- summary: |
+    Skip an OpenAPI example that calls an endpoint without a body the spec does not mark as required.
+    The body keeps its own type until a generator opts into omitting it, so such an example generated
+    a call missing a required argument, which does not compile.
+  type: fix

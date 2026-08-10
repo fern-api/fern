@@ -39,6 +39,11 @@ func NewClient(opts ...option.RequestOption) *Client {
 //
 //	request := &fern.RefundBody{
 //	    ID: "refund-id",
+//	    Body: &fern.RefundRequest{
+//	        Amount: fern.Float64(
+//	            60,
+//	        ),
+//	    },
 //	}
 //	client.Refund(
 //	    context.TODO(),

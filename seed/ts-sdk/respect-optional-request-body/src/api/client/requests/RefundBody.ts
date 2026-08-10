@@ -5,11 +5,6 @@ import type * as SeedApi from "../../index.js";
 /**
  * @example
  *     {
- *         id: "refund-id"
- *     }
- *
- * @example
- *     {
  *         id: "refund-id",
  *         body: {
  *             amount: 60

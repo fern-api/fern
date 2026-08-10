@@ -15,8 +15,6 @@ paths:
           schema:
             type: string
           examples:
-            Full refund:
-              value: refund-id
             Split refund:
               value: refund-id
       responses:

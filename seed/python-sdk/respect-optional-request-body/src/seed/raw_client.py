@@ -122,9 +122,6 @@ class RawSeedApi:
             json={
                 "amount": amount,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -247,9 +244,6 @@ class AsyncRawSeedApi:
             method="POST",
             json={
                 "amount": amount,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

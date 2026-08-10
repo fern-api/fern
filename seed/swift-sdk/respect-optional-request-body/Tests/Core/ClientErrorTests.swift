@@ -22,7 +22,7 @@ import Testing
             _ = try await client.refund(
                 id: "refund-id",
                 request: RefundRequest(
-
+                    amount: 60
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -58,7 +58,7 @@ import Testing
             _ = try await client.refund(
                 id: "refund-id",
                 request: RefundRequest(
-
+                    amount: 60
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -94,7 +94,7 @@ import Testing
             _ = try await client.refund(
                 id: "refund-id",
                 request: RefundRequest(
-
+                    amount: 60
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -132,7 +132,7 @@ import Testing
             _ = try await client.refund(
                 id: "refund-id",
                 request: RefundRequest(
-
+                    amount: 60
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -168,7 +168,7 @@ import Testing
             _ = try await client.refund(
                 id: "refund-id",
                 request: RefundRequest(
-
+                    amount: 60
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -206,7 +206,7 @@ import Testing
             _ = try await client.refund(
                 id: "refund-id",
                 request: RefundRequest(
-
+                    amount: 60
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -242,7 +242,7 @@ import Testing
             _ = try await client.refund(
                 id: "refund-id",
                 request: RefundRequest(
-
+                    amount: 60
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

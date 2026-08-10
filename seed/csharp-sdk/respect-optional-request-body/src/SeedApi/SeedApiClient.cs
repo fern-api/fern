@@ -172,7 +172,6 @@ public partial class SeedApiClient : ISeedApiClient
                     Body = request,
                     QueryString = _queryString,
                     Headers = _headers,
-                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -206,7 +205,13 @@ public partial class SeedApiClient : ISeedApiClient
     }
 
     /// <example><code>
-    /// await client.RefundAsync(new RefundBody { Id = "refund-id" });
+    /// await client.RefundAsync(
+    ///     new RefundBody
+    ///     {
+    ///         Id = "refund-id",
+    ///         Body = new RefundRequest { Amount = 60 },
+    ///     }
+    /// );
     /// </code></example>
     public WithRawResponseTask RefundAsync(
         RefundBody request,

@@ -4,19 +4,7 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedApiClient", () => {
-    test("refund (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-
-        server.mockEndpoint().post("/refunds/refund-id").respondWith().statusCode(200).build();
-
-        const response = await client.refund({
-            id: "refund-id",
-        });
-        expect(response).toEqual(undefined);
-    });
-
-    test("refund (2)", async () => {
+    test("refund", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { amount: 60 };
