@@ -83,3 +83,16 @@
     validation message already names an environment variable to set, since a
     flag list says nothing about it; ordinary validation errors keep the hint.
   type: fix
+- summary: |
+    De-flaked the cross-host guard tests, which ship into every generated CLI
+    and so failed `cargo test` in customers' own repositories, not just ours.
+    They all read the guard's opt-out from the *process* environment under one
+    shared `<PREFIX>`, so `#[serial]` was load-bearing for correctness rather
+    than just for tidiness: one test setting the shared variable while another
+    cleared it flipped the other's expected outcome, in whichever direction the
+    thread interleaving happened to land. That is invisible on an idle machine
+    and shows up under the contention of a loaded CI runner. Each test now uses
+    a CLI name unique to itself, so its variables cannot collide with any other
+    test's, and a future test that forgets `#[serial]` cannot reintroduce the
+    race.
+  type: fix

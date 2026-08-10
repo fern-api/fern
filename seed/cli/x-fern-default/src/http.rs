@@ -1578,6 +1578,16 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
         assert_eq!(origin_only(&url), "https://cdn.example.com:8443");
     }
 
+    /// Every guard test below uses a CLI name unique to that test, so the
+    /// `<PREFIX>_ALLOW_CROSS_HOST_*` variable it reads is its own. Sharing one
+    /// prefix made `#[serial]` load-bearing for *correctness*: the guard is
+    /// read from the process environment, so one test setting the shared
+    /// variable while another cleared it flipped the other's expected outcome
+    /// in whichever direction the interleaving landed. That is invisible on an
+    /// idle machine and shows up on a loaded CI runner. With per-test prefixes
+    /// the variables cannot collide at all, and a future test that forgets
+    /// `#[serial]` cannot reintroduce the flake.
+    ///
     /// A wiremock server that answers everything with `template`.
     async fn always_respond(template: wiremock::ResponseTemplate) -> wiremock::MockServer {
         let server = wiremock::MockServer::start().await;
@@ -1596,7 +1606,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
         // friends only. Without the policy in `build_client`, reqwest happily
         // follows the hop and hands `xi-api-key` to the redirect target.
         let mut env = EnvGuard::default();
-        env.unset("REDIRECTGUARD_ALLOW_CROSS_HOST_REDIRECTS");
+        env.unset("REDIRECTREFUSE_ALLOW_CROSS_HOST_REDIRECTS");
 
         let target = always_respond(wiremock::ResponseTemplate::new(200).set_body_string("{}")).await;
         // Same machine, different *host string* — a genuine cross-host hop
@@ -1607,7 +1617,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
         )
         .await;
 
-        let client = HttpConfig::new("redirectguard")
+        let client = HttpConfig::new("redirectrefuse")
             .expect("config")
             .build_client()
             .expect("client");
@@ -1624,7 +1634,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
             "the error should explain the refusal, got: {rendered}"
         );
         assert!(
-            rendered.contains("REDIRECTGUARD_ALLOW_CROSS_HOST_REDIRECTS"),
+            rendered.contains("REDIRECTREFUSE_ALLOW_CROSS_HOST_REDIRECTS"),
             "the error should name the opt-out, got: {rendered}"
         );
         assert!(
@@ -1638,6 +1648,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
     }
 
     #[test]
+    #[serial_test::serial]
     fn redirect_refusal_is_classified_client_side_with_the_full_reason() {
         // The refusal reason lives in the policy error, not in reqwest's own
         // Display ("error following redirect for url (...)"), so the source
@@ -1645,7 +1656,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
         let rt = tokio::runtime::Runtime::new().unwrap();
         rt.block_on(async {
             let mut env = EnvGuard::default();
-            env.unset("REDIRECTGUARD_ALLOW_CROSS_HOST_REDIRECTS");
+            env.unset("REDIRECTCLASSIFY_ALLOW_CROSS_HOST_REDIRECTS");
 
             let redirector = wiremock::MockServer::start().await;
             wiremock::Mock::given(wiremock::matchers::any())
@@ -1658,7 +1669,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
                 .mount(&redirector)
                 .await;
 
-            let cfg = HttpConfig::new("redirectguard").unwrap();
+            let cfg = HttpConfig::new("redirectclassify").unwrap();
             let client = cfg.build_client().unwrap();
             let error = client
                 .get(format!("{}/v1/thing", redirector.uri()))
@@ -1694,7 +1705,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
         // those genuinely are transient.
         let rt = tokio::runtime::Runtime::new().unwrap();
         rt.block_on(async {
-            let cfg = HttpConfig::new("redirectguard").unwrap();
+            let cfg = HttpConfig::new("redirecttransport").unwrap();
             let client = cfg.build_client().unwrap();
             // Nothing listening: a connect error, not a redirect error.
             let error = client
@@ -1713,11 +1724,11 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
     #[serial_test::serial]
     fn pagination_target_on_the_same_host_is_allowed() {
         let mut env = EnvGuard::default();
-        env.unset("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+        env.unset("PAGESAMEHOST_ALLOW_CROSS_HOST_PAGINATION");
 
         // Same host, deeper path.
         assert!(check_pagination_target(
-            "pageguard",
+            "pagesamehost",
             "https://api.example.com/v1/things",
             "https://api.example.com/v1/things?cursor=2"
         )
@@ -1725,13 +1736,13 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
         // Scheme upgrade and port change stay within one operator's infra —
         // same rule as `crosses_host` applies to redirects.
         assert!(check_pagination_target(
-            "pageguard",
+            "pagesamehost",
             "http://api.example.com/v1/things",
             "https://api.example.com/v1/things?cursor=2"
         )
         .is_ok());
         assert!(check_pagination_target(
-            "pageguard",
+            "pagesamehost",
             "https://api.example.com/v1/things",
             "https://api.example.com:8443/v1/things?cursor=2"
         )
@@ -1742,12 +1753,12 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
     #[serial_test::serial]
     fn relative_pagination_target_is_allowed_without_inspection() {
         let mut env = EnvGuard::default();
-        env.unset("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+        env.unset("PAGERELATIVE_ALLOW_CROSS_HOST_PAGINATION");
 
         // A relative target inherits the base origin, so it cannot cross hosts.
         for next in ["/v1/things?cursor=2", "things?cursor=2", "?cursor=2"] {
             assert!(
-                check_pagination_target("pageguard", "https://api.example.com/v1/things", next)
+                check_pagination_target("pagerelative", "https://api.example.com/v1/things", next)
                     .is_ok(),
                 "relative target {next} should be allowed"
             );
@@ -1758,10 +1769,10 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
     #[serial_test::serial]
     fn cross_host_pagination_target_is_refused() {
         let mut env = EnvGuard::default();
-        env.unset("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+        env.unset("PAGEREFUSE_ALLOW_CROSS_HOST_PAGINATION");
 
         let err = check_pagination_target(
-            "pageguard",
+            "pagerefuse",
             "https://api.example.com/v1/things",
             "https://evil.example.net/v1/things?cursor=2",
         )
@@ -1772,7 +1783,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
             "the error should name both origins, got: {err}"
         );
         assert!(
-            err.contains("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION"),
+            err.contains("PAGEREFUSE_ALLOW_CROSS_HOST_PAGINATION"),
             "the error should name the opt-out, got: {err}"
         );
         // The origin only — a pagination link's query string can itself carry a
@@ -1787,10 +1798,10 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
     #[serial_test::serial]
     fn cross_host_pagination_target_is_allowed_when_explicitly_enabled() {
         let mut env = EnvGuard::default();
-        env.set("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION", "1");
+        env.set("PAGEOPTIN_ALLOW_CROSS_HOST_PAGINATION", "1");
 
         assert!(check_pagination_target(
-            "pageguard",
+            "pageoptin",
             "https://api.example.com/v1/things",
             "https://cdn.example.net/v1/things?cursor=2"
         )
@@ -1803,12 +1814,12 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
         // Allowing redirects is not consent to let a response body steer the
         // next request, so the redirect key must not unlock pagination.
         let mut env = EnvGuard::default();
-        env.unset("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
-        env.set("PAGEGUARD_ALLOW_CROSS_HOST_REDIRECTS", "1");
+        env.unset("PAGEOPTOUTSPLIT_ALLOW_CROSS_HOST_PAGINATION");
+        env.set("PAGEOPTOUTSPLIT_ALLOW_CROSS_HOST_REDIRECTS", "1");
 
         assert!(
             check_pagination_target(
-                "pageguard",
+                "pageoptoutsplit",
                 "https://api.example.com/v1/things",
                 "https://evil.example.net/v1/things"
             )
@@ -1821,7 +1832,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
     #[serial_test::serial]
     async fn cross_host_redirect_is_followed_when_explicitly_allowed() {
         let mut env = EnvGuard::default();
-        env.set("REDIRECTGUARD_ALLOW_CROSS_HOST_REDIRECTS", "1");
+        env.set("REDIRECTOPTIN_ALLOW_CROSS_HOST_REDIRECTS", "1");
 
         let target = always_respond(
             wiremock::ResponseTemplate::new(200).set_body_string(r#"{"reached":true}"#),
@@ -1833,7 +1844,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
         )
         .await;
 
-        let client = HttpConfig::new("redirectguard")
+        let client = HttpConfig::new("redirectoptin")
             .expect("config")
             .build_client()
             .expect("client");
@@ -1856,7 +1867,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
         // The guard must not break ordinary same-host redirects (trailing
         // slash normalization, path rewrites, http -> https upgrades).
         let mut env = EnvGuard::default();
-        env.unset("REDIRECTGUARD_ALLOW_CROSS_HOST_REDIRECTS");
+        env.unset("REDIRECTSAMEHOST_ALLOW_CROSS_HOST_REDIRECTS");
 
         let server = wiremock::MockServer::start().await;
         wiremock::Mock::given(wiremock::matchers::path("/final"))
@@ -1871,7 +1882,7 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
             .mount(&server)
             .await;
 
-        let client = HttpConfig::new("redirectguard")
+        let client = HttpConfig::new("redirectsamehost")
             .expect("config")
             .build_client()
             .expect("client");
