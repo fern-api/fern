@@ -284,8 +284,24 @@ const CREDENTIAL_NAME_PATTERNS: &[&str] = &[
     "credential",
 ];
 
+/// Header-name prefixes that never carry a credential, checked before the
+/// pattern match below.
+///
+/// CORS response headers are the case that matters:
+/// `access-control-allow-credentials` is a routine browser-permissions flag
+/// (its value is literally `true`), but it contains the substring `credential`
+/// and so was being redacted — hiding something harmless and making `--debug`
+/// less useful for no gain.
+const NEVER_REDACTED_PREFIXES: &[&str] = &["access-control-"];
+
 fn name_looks_like_credential(name: &str) -> bool {
     let lowered = name.to_ascii_lowercase();
+    if NEVER_REDACTED_PREFIXES
+        .iter()
+        .any(|prefix| lowered.starts_with(prefix))
+    {
+        return false;
+    }
     CREDENTIAL_NAME_PATTERNS
         .iter()
         .any(|pattern| lowered.contains(pattern))
@@ -1103,6 +1119,11 @@ mod tests {
         // investigating retries.
         for name in [
             "idempotency-key",
+            // CORS response headers: `access-control-allow-credentials`
+            // contains "credential" but is a browser-permissions flag, not a
+            // secret. Redacting it hid something harmless.
+            "access-control-allow-credentials",
+            "access-control-allow-headers",
             "content-type",
             "content-length",
             "accept",

@@ -134,26 +134,41 @@ pub(crate) fn dotenv_key_is_denied(key: &str, prefix: &str) -> bool {
 /// [`DOTENV_DENIED_SUFFIXES`] are dropped. Real process environment always
 /// wins, matching `dotenvy::dotenv()`'s own precedence, so anything genuinely
 /// exported by the operator's shell still applies.
-pub fn load_dotenv_filtered(cli_name: &str) {
+/// Returns the keys that were ignored, in file order, so the caller can report
+/// them *after* logging is initialized. Warning from inside this function would
+/// be silently dropped: it runs before `init_logging`, so no subscriber exists
+/// yet and a legitimate `<PREFIX>_BASE_URL` in `.env` would appear to be
+/// ignored for no reason.
+pub fn load_dotenv_filtered(cli_name: &str) -> Vec<String> {
     let prefix = cli_name.to_uppercase().replace('-', "_");
+    let mut ignored = Vec::new();
     let Ok(entries) = dotenvy::dotenv_iter() else {
         // No `.env` (the common case) or it is unreadable — nothing to do.
-        return;
+        return ignored;
     };
     for entry in entries.flatten() {
         let (key, value) = entry;
         if dotenv_key_is_denied(&key, &prefix) {
-            tracing::warn!(
-                key = %key,
-                "ignoring {key} from .env: it controls transport or process execution, and a \
-                 .env file is not a trusted source for it. Export it from your shell instead."
-            );
+            ignored.push(key);
             continue;
         }
         // Real environment wins, as with `dotenvy::dotenv()`.
         if std::env::var_os(&key).is_none() {
             std::env::set_var(&key, &value);
         }
+    }
+    ignored
+}
+
+/// Report the keys [`load_dotenv_filtered`] dropped. Call after
+/// `init_logging`, or the messages go nowhere.
+pub fn warn_ignored_dotenv_keys(ignored: &[String]) {
+    for key in ignored {
+        tracing::warn!(
+            key = %key,
+            "ignoring {key} from .env: it controls transport or process execution, and a \
+             .env file is not a trusted source for it. Export it from your shell instead."
+        );
     }
 }
 

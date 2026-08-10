@@ -2334,6 +2334,12 @@ pub async fn execute_method(
                     break resp;
                 }
                 Err(e) => {
+                    // A refused redirect is a policy decision, not a transport
+                    // blip: retrying re-issues a request that will be refused
+                    // identically. Classify and return before `decide_retry`.
+                    if let Some(err) = crate::http::redirect_refusal_error(&e) {
+                        return Err(err);
+                    }
                     if let Some(cfg) = retries_cfg {
                         let outcome = RetryOutcome {
                             status: None,

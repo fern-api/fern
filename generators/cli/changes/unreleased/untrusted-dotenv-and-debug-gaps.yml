@@ -57,3 +57,29 @@
     `OpenApiBinding::handler(...)`, matching `CliApp::command`'s own
     documentation, with a comment explaining why the wrapper is required.
   type: fix
+- summary: |
+    Three follow-ups found while testing the above against a real CLI.
+
+    The `.env` filter's explanation never reached anyone: it warned before
+    `init_logging` ran, so with no subscriber installed yet every message was
+    dropped. A user who legitimately put `<PREFIX>_BASE_URL` in `.env` saw it
+    silently not work. The ignored keys are now collected and reported after
+    logging is initialized.
+
+    `--debug` and `--dry-run` redacted `access-control-allow-credentials`, a
+    routine CORS response header whose value is `true`, because its name contains
+    "credential". Header names beginning `access-control-` are now never treated
+    as credentials, so the header is legible again while `xi-api-key`,
+    `authorization` and other genuine credentials stay redacted.
+
+    A refused cross-host redirect was reported as `internalError` with a 500 and
+    exit code 5 — indistinguishable from the CLI genuinely breaking — and the
+    explanation reached only the structured output, leaving stderr with a bare
+    "HTTP request failed". It was also retried, re-issuing a request whose
+    outcome cannot change. It is now a client-side error: `error[validation]`
+    on stderr carrying the full reason (both origins and the opt-out variable),
+    exit code 3, and no retry. Applied in both the OpenAPI and GraphQL
+    executors. The generic `Try <cmd> --help` hint is suppressed when a
+    validation message already names an environment variable to set, since a
+    flag list says nothing about it; ordinary validation errors keep the hint.
+  type: fix

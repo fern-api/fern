@@ -596,6 +596,38 @@ fn origin_only(url: &reqwest::Url) -> String {
     }
 }
 
+/// Convert a redirect-policy failure into a client-side error, or return the
+/// original error untouched.
+///
+/// A refused cross-host redirect (and a hop-limit overrun) reaches the executor
+/// as an ordinary [`reqwest::Error`], so without this it lands in the generic
+/// transport arm and gets two things wrong. It is retried — `decide_retry` sees
+/// a transport failure and re-issues a request whose outcome cannot change —
+/// and it is reported as `internalError` with a 500, which reads as "the CLI
+/// broke" when the CLI in fact did its job. Worse, the explanation ends up only
+/// in the structured output; stderr shows a bare "HTTP request failed", so the
+/// two hosts and the opt-out variable never reach anyone reading a log.
+///
+/// Classified as [`CliError::Validation`] — the same bucket as other
+/// refused-before-sending conditions. It is a policy decision rather than
+/// malformed input, but for the person at the terminal the useful distinction is
+/// "is this mine to act on?", and it is: the message names the opt-out.
+pub(crate) fn redirect_refusal_error(error: &reqwest::Error) -> Option<CliError> {
+    if !error.is_redirect() {
+        return None;
+    }
+    // Walk the source chain: reqwest's own Display is just "error following
+    // redirect for url (...)"; the reason lives in the policy's error.
+    let mut message = error.to_string();
+    let mut source = std::error::Error::source(error);
+    while let Some(cause) = source {
+        message.push_str(": ");
+        message.push_str(&cause.to_string());
+        source = std::error::Error::source(cause);
+    }
+    Some(CliError::Validation(message))
+}
+
 /// Refuse a pagination target that crosses a host boundary.
 ///
 /// The same trust boundary the redirect policy above guards, reached by a
@@ -1603,6 +1635,78 @@ Wf86aX6PepsntZv2GYlA5UpabfT2EZICICpJ5h/iI+i341gBmLiAFQOyTDT+/wQc\n\
                 .is_empty(),
             "the credential-bearing request must never reach the redirect target"
         );
+    }
+
+    #[test]
+    fn redirect_refusal_is_classified_client_side_with_the_full_reason() {
+        // The refusal reason lives in the policy error, not in reqwest's own
+        // Display ("error following redirect for url (...)"), so the source
+        // chain has to be walked or the message reaching the user is useless.
+        let rt = tokio::runtime::Runtime::new().unwrap();
+        rt.block_on(async {
+            let mut env = EnvGuard::default();
+            env.unset("REDIRECTGUARD_ALLOW_CROSS_HOST_REDIRECTS");
+
+            let redirector = wiremock::MockServer::start().await;
+            wiremock::Mock::given(wiremock::matchers::any())
+                .respond_with(
+                    wiremock::ResponseTemplate::new(302)
+                        .insert_header("location", "http://example.com/elsewhere"),
+                )
+                // The whole point: refused once, never retried.
+                .expect(1)
+                .mount(&redirector)
+                .await;
+
+            let cfg = HttpConfig::new("redirectguard").unwrap();
+            let client = cfg.build_client().unwrap();
+            let error = client
+                .get(format!("{}/v1/thing", redirector.uri()))
+                .send()
+                .await
+                .expect_err("the guard should refuse this redirect");
+
+            let classified =
+                redirect_refusal_error(&error).expect("a redirect error must be classified");
+            match classified {
+                CliError::Validation(message) => {
+                    assert!(
+                        message.contains("crosses a host boundary"),
+                        "the policy reason must survive the source-chain walk, got: {message}"
+                    );
+                    assert!(
+                        message.contains("example.com"),
+                        "the message should name the target host, got: {message}"
+                    );
+                    assert!(
+                        message.contains("ALLOW_CROSS_HOST_REDIRECTS"),
+                        "the message should name the opt-out, got: {message}"
+                    );
+                }
+                other => panic!("expected CliError::Validation, got {other:?}"),
+            }
+        });
+    }
+
+    #[test]
+    fn non_redirect_transport_errors_are_left_alone() {
+        // Connection failures must keep falling through to the retry path —
+        // those genuinely are transient.
+        let rt = tokio::runtime::Runtime::new().unwrap();
+        rt.block_on(async {
+            let cfg = HttpConfig::new("redirectguard").unwrap();
+            let client = cfg.build_client().unwrap();
+            // Nothing listening: a connect error, not a redirect error.
+            let error = client
+                .get("http://127.0.0.1:1/nope")
+                .send()
+                .await
+                .expect_err("connect should fail");
+            assert!(
+                redirect_refusal_error(&error).is_none(),
+                "a connect error must not be reclassified as a policy refusal"
+            );
+        });
     }
 
     #[test]
