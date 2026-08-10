@@ -147,6 +147,63 @@ function findInlineCodeEnd(content: string, start: number): number | null {
     return null;
 }
 
+/**
+ * Returns the index of the `]` that ends the label opening at `start` and is followed by an inline
+ * destination, or null when there is none on the same block. Labels may contain brackets of their
+ * own (`![Filter [Top N] menu](path.png)`), so stopping at the first `]` would misread the label
+ * and leave the destination unresolved.
+ */
+function findLabelEnd(content: string, start: number): number | null {
+    const limit = findScanLimit(content, start);
+    let depth = 0;
+    let i = start;
+
+    while (i < limit) {
+        if (content[i] === "\\") {
+            i += 2;
+            continue;
+        }
+        if (content[i] === "[") {
+            depth++;
+        } else if (content[i] === "]") {
+            depth--;
+            if (depth === 0) {
+                if (content[i + 1] === "(") {
+                    return i;
+                }
+                // The label's brackets are unbalanced because some were escaped — as mdast
+                // serialization produces for `![a [b] c]`. Keep looking for the destination, but
+                // give up at the next `[` so a bracket pair without one can't absorb a later
+                // image or link.
+                return findLabelEndBeforeNextBracket(content, i + 1, limit);
+            }
+        }
+        i++;
+    }
+
+    return null;
+}
+
+function findLabelEndBeforeNextBracket(content: string, start: number, limit: number): number | null {
+    let i = start;
+
+    while (i < limit) {
+        if (content[i] === "\\") {
+            i += 2;
+            continue;
+        }
+        if (content[i] === "[") {
+            return null;
+        }
+        if (content[i] === "]" && content[i + 1] === "(") {
+            return i;
+        }
+        i++;
+    }
+
+    return null;
+}
+
 function streamingScanForImages(
     content: string,
     metadata: AbsolutePathMetadata
@@ -217,22 +274,14 @@ function parseMarkdownImage(
     start: number,
     metadata: AbsolutePathMetadata
 ): MarkdownImageParseResult | null {
-    let i = start + 2;
     const len = content.length;
+    const labelEnd = findLabelEnd(content, start + 1);
 
-    while (i < len && content[i] !== "]") {
-        if (content[i] === "\\") {
-            i += 2;
-        } else {
-            i++;
-        }
-    }
-
-    if (i >= len || content[i] !== "]" || content[i + 1] !== "(") {
+    if (labelEnd == null || content[labelEnd + 1] !== "(") {
         return null;
     }
 
-    i += 2;
+    let i = labelEnd + 2;
     const urlStart = i;
     let parenDepth = 1;
 
@@ -317,22 +366,14 @@ function parseMarkdownLink(
     start: number,
     metadata: AbsolutePathMetadata
 ): { nextIndex: number } | null {
-    let i = start + 1;
     const len = content.length;
+    const labelEnd = findLabelEnd(content, start);
 
-    while (i < len && content[i] !== "]") {
-        if (content[i] === "\\") {
-            i += 2;
-        } else {
-            i++;
-        }
-    }
-
-    if (i >= len || content[i] !== "]" || content[i + 1] !== "(") {
+    if (labelEnd == null || content[labelEnd + 1] !== "(") {
         return null;
     }
 
-    i += 2;
+    let i = labelEnd + 2;
     let parenDepth = 1;
 
     while (i < len && parenDepth > 0) {
@@ -899,16 +940,10 @@ export function replaceImagePathsAndUrls(
                 continue;
             }
         } else if (content[i] === "[" && content[i - 1] !== "!") {
-            let j = i + 1;
-            while (j < len && content[j] !== "]") {
-                if (content[j] === "\\") {
-                    j += 2;
-                } else {
-                    j++;
-                }
-            }
-            if (j < len && content[j] === "]" && content[j + 1] === "(") {
-                j += 2;
+            const labelEnd = findLabelEnd(content, i);
+            let j = labelEnd ?? len;
+            if (labelEnd != null && content[labelEnd + 1] === "(") {
+                j = labelEnd + 2;
                 const urlStart = j;
                 let parenDepth = 1;
                 while (j < len && parenDepth > 0) {

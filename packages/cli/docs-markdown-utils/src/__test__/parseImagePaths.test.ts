@@ -1615,6 +1615,50 @@ describe("literal angle brackets in prose", () => {
         expect(roundTrip(page)).toContain("file:leaf-id");
     });
 
+    it.each([
+        ["balanced brackets in image alt text", "![Filter [Top N] menu](path/to/image.png)"],
+        ["nested brackets in image alt text", "![a [b [c] d] e](path/to/image.png)"],
+        ["escaped brackets in image alt text", "![Filter \\[Top N\\] menu](path/to/image.png)"],
+        ["empty brackets in image alt text", "![Filter [] menu](path/to/image.png)"],
+        ["unbalanced brackets in image alt text", "![Filter \\[Top N] menu](path/to/image.png)"]
+    ])("resolves an image with %s", (_name, page) => {
+        const result = roundTrip(page);
+        expect(result).toContain("file:leaf-id");
+        expect(result).not.toContain("/Volume/git/fern");
+    });
+
+    it.each([
+        ["bracketed prose on the previous line", "See [1] for details.\n![leaf](path/to/image.png)"],
+        ["a table row with bracketed text", "| [Docs] | ![leaf](path/to/image.png) |"],
+        ["a keyboard key in prose", "Press [Enter].\n![leaf](path/to/image.png)"],
+        ["an image label with no destination", "![leaf]\n![leaf](path/to/image.png)"],
+        [
+            "a fully escaped bracket pair",
+            "Apply Top N to the \\[Sum of Quantity\\], like this:\n\n![leaf](path/to/image.png)"
+        ]
+    ])("resolves an image preceded by %s", (_name, page) => {
+        const result = roundTrip(page);
+        expect(result).toContain("file:leaf-id");
+        expect(result).not.toContain("/Volume/git/fern");
+    });
+
+    it("resolves an image that follows one with brackets in its alt text", () => {
+        const page = "![Filter [Top N] menu](path/to/image.png)\n\n![plain](path/to/image.png)\n";
+        expect(roundTrip(page).match(/file:leaf-id/g)).toHaveLength(2);
+    });
+
+    it("rewrites a relative link whose text contains brackets", () => {
+        const page = "[see [Top N] docs](./other.mdx)\n";
+        const result = replaceImagePathsAndUrls(
+            page,
+            new Map(),
+            { [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/other.mdx")]: "docs/other" },
+            PATHS,
+            CONTEXT
+        );
+        expect(result).toContain("(/docs/other)");
+    });
+
     it("does not rewrite an image inside a fenced code block", () => {
         const page = "```\n![leaf](path/to/image.png)\n```\n";
         expect(roundTrip(page)).toContain("![leaf](path/to/image.png)");
