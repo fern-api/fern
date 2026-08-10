@@ -1,6 +1,3 @@
 - summary: |
-    Fix images and links whose destination is delimited by angle brackets, e.g.
-    `![alt](<path/to/image.png>)`, publishing the local build path instead of the
-    uploaded file. The brackets were treated as part of the path, so the fileId
-    lookup missed and no substitution happened.
+    Resolve image and link destinations delimited by angle brackets, e.g. `![alt](<path/to/image.png>)`.
   type: fix
