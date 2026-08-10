@@ -49,7 +49,6 @@ export function getPaginationInfo({
     });
     const requestBodyPageProperty = getRequestBodyPageProperty({ context, pagination, signature });
     const pagePropertyFormat = getPageValueFormat({ context, pagination });
-    const requestPagePropertyFormat = getPageValueFormat({ context, pagination });
     return {
         prepareCall: getPrepareCall({
             context,
@@ -69,7 +68,6 @@ export function getPaginationInfo({
             pageType,
             nextPageType,
             requestPagePropertyReference,
-            requestPagePropertyFormat,
             requestBodyPageProperty
         }),
         initializePager: getInitializePager({ context, pagination, callerReference }),
@@ -151,7 +149,6 @@ function getReadPageResponse({
     pageType,
     nextPageType,
     requestPagePropertyReference,
-    requestPagePropertyFormat,
     requestBodyPageProperty
 }: {
     context: SdkGeneratorContext;
@@ -160,14 +157,12 @@ function getReadPageResponse({
     pageType: go.Type;
     nextPageType: go.Type | undefined;
     requestPagePropertyReference: go.AstNode;
-    requestPagePropertyFormat: go.AstNode;
     requestBodyPageProperty: RequestBodyPageProperty | undefined;
 }): go.AstNode {
     const initializer = getPagePropertyInitializer({
         pagination,
         pageType,
         requestPagePropertyReference,
-        requestPagePropertyFormat,
         requestBodyPageProperty
     });
     const responseType = signature.returnType ?? go.Type.any();
@@ -409,13 +404,14 @@ function getReadPageResponseBodyForOffset({
     responseType: go.Type;
 }): go.AstNode {
     return go.codeblock((writer) => {
-        const useItemIndex = offset.step != null && context.customConfig.offsetSemantics === "item-index";
-        if (useItemIndex) {
-            writer.writeLine("next += int(len(results))");
+        const nextResultsSetter = getNextResultsSetter({ context, results: pagination.results });
+        if (usesItemIndexOffset({ context, offset })) {
+            writer.writeNode(nextResultsSetter);
+            writer.writeLine(getOffsetIncrementByResultCount({ pageType }));
         } else {
             writer.writeLine("next += 1");
+            writer.writeNode(nextResultsSetter);
         }
-        writer.writeNode(getNextResultsSetter({ context, results: pagination.results }));
         writer.write("return ");
         writer.writeNode(
             go.TypeInstantiation.structPointer({
@@ -437,6 +433,29 @@ function getReadPageResponseBodyForOffset({
             })
         );
     });
+}
+
+// The offset advances by the number of items in the page, so the results must be read first.
+function getOffsetIncrementByResultCount({ pageType }: { pageType: go.Type }): string {
+    const underlying = pageType.underlying();
+    switch (underlying.internalType.type) {
+        case "int64":
+            return "next += int64(len(results))";
+        case "float64":
+            return "next += float64(len(results))";
+        default:
+            return "next += int(len(results))";
+    }
+}
+
+function usesItemIndexOffset({
+    context,
+    offset
+}: {
+    context: SdkGeneratorContext;
+    offset: FernIr.OffsetPagination;
+}): boolean {
+    return offset.step != null && context.customConfig.offsetSemantics === "item-index";
 }
 
 function getNextCursorSetter({
@@ -584,13 +603,11 @@ function getPagePropertyInitializer({
     pagination,
     pageType,
     requestPagePropertyReference,
-    requestPagePropertyFormat,
     requestBodyPageProperty
 }: {
     pagination: FernIr.Pagination;
     pageType: go.Type;
     requestPagePropertyReference: go.AstNode;
-    requestPagePropertyFormat: go.AstNode;
     requestBodyPageProperty: RequestBodyPageProperty | undefined;
 }): go.AstNode | undefined {
     switch (pagination.type) {
@@ -624,9 +641,8 @@ function getPagePropertyInitializer({
                     writer.writeLine("}");
                     return;
                 }
+                writer.write("next := ");
                 writer.writeNode(requestPagePropertyReference);
-                writer.write(" := ");
-                writer.writeNode(requestPagePropertyFormat);
                 writer.newLine();
             });
         }
