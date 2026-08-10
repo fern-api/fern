@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.17.1
+  changelogEntry:
+    - summary: |
+        Fixed wire tests generated for APIs with `auth: any` combining Basic and OAuth schemes.
+        Tests no longer assert both a Bearer and a Basic `Authorization` header on the same
+        request; only the OAuth Bearer assertion is emitted since the client sends the OAuth
+        token when OAuth credentials are configured.
+      type: fix
+  createdAt: "2026-08-08"
+  irVersion: 67
 - version: 4.17.0
   changelogEntry:
     - summary: |

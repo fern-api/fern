@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: Optional referenced request bodies
+  version: 1.0.0
+paths:
+  # the schema is shared, so the body is emitted as a type reference rather than inlined
+  /refunds/{id}:
+    post:
+      operationId: refund
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefundRequest"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: ok
+      x-fern-examples:
+        - name: Full refund
+          path-parameters:
+            id: "refund-id"
+        - name: Split refund
+          path-parameters:
+            id: "refund-id"
+          request:
+            amount: 60
+  /refunds/{id}/required:
+    post:
+      operationId: requiredRefund
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefundRequest"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: ok
+      x-fern-examples:
+        - name: Required refund
+          path-parameters:
+            id: "refund-id"
+          request:
+            amount: 60
+  # no path parameters, so the request collapses to a bare type reference
+  /refunds:
+    post:
+      operationId: bulkRefund
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefundRequest"
+      responses:
+        "204":
+          description: ok
+      x-fern-examples:
+        - name: Bulk refund without a body
+components:
+  schemas:
+    RefundRequest:
+      type: object
+      properties:
+        amount:
+          type: number

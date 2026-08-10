@@ -133,7 +133,9 @@ export const MissingRedirectsRule: Rule = {
                 editThisPage: undefined,
                 uploadFiles: undefined,
                 registerApi: undefined,
-                targetAudiences: undefined
+                targetAudiences: undefined,
+                // current-tree validation only; git-ref-backed versions are built at publish/preview time
+                buildRefVersions: false
             });
 
             const resolvedDocsDefinition = await docsDefinitionResolver.resolve();

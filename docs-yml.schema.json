@@ -1169,8 +1169,26 @@
           "type": "string"
         },
         "path": {
-          "type": "string",
-          "description": "The relative path to the version's docs.yml file."
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The relative path to the version's docs.yml file. Required unless `ref` is set,\nin which case the version's content is built from that git ref."
+        },
+        "ref": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A git ref—branch, tag, or commit SHA—whose committed content is built for this\nversion. Branches are mutable and resolve to their latest commit on the remote;\ntags and commit SHAs are immutable."
         },
         "slug": {
           "oneOf": [
@@ -1227,8 +1245,7 @@
         }
       },
       "required": [
-        "display-name",
-        "path"
+        "display-name"
       ],
       "additionalProperties": false
     },

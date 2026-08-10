@@ -269,6 +269,41 @@ it("availability", async () => {
     });
 }, 200_000);
 
+describe("examples that omit the request body", () => {
+    const OPTIONAL_REQUEST_BODY_DIR = path.join(__dirname, "fixtures/optional-request-body-example/fern");
+
+    it("keeps the example and generates no request body", async () => {
+        const ir = await generateIRFromPath({
+            absolutePathToWorkspace: AbsoluteFilePath.of(OPTIONAL_REQUEST_BODY_DIR),
+            workspaceName: "optionalRequestBodyExample",
+            audiences: { type: "all" }
+        });
+
+        const service = Object.values(ir.services)[0];
+        expect(service).toBeDefined();
+
+        for (const endpointName of ["referencedBody", "inlinedBody"]) {
+            const endpoint = service?.endpoints.find((e) => getOriginalName(e.name) === endpointName);
+            const examples = (endpoint?.userSpecifiedExamples ?? []).map((e) => e.example);
+            expect(examples.map((e) => e?.name)).toEqual(["withoutBody", "withBody"]);
+            expect(examples[1]?.request).toBeDefined();
+        }
+
+        // an example that omits `request` is a call with no body, rather than a body whose
+        // value is absent, for both inlined and `optional<T>` referenced bodies
+        const inlined = service?.endpoints.find((e) => getOriginalName(e.name) === "inlinedBody");
+        expect(inlined?.userSpecifiedExamples[0]?.example?.request).toBeUndefined();
+
+        const referenced = service?.endpoints.find((e) => getOriginalName(e.name) === "referencedBody");
+        expect(referenced?.requestBody?.type).toEqual("reference");
+        expect(referenced?.userSpecifiedExamples[0]?.example?.request).toBeUndefined();
+
+        // a required referenced body still produces a reference example
+        const requiredReferenced = service?.endpoints.find((e) => getOriginalName(e.name) === "requiredReferencedBody");
+        expect(requiredReferenced?.userSpecifiedExamples[0]?.example?.request?.type).toEqual("reference");
+    }, 200_000);
+});
+
 it("docs", async () => {
     const DOCS_DIR = path.join(__dirname, "fixtures/docs/fern");
     await generateAndSnapshotIRFromPath({

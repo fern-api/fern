@@ -520,6 +520,9 @@ types:
       respect-forward-compatible-enums:
         type: optional<boolean>
         docs: Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false.
+      respect-optional-request-body:
+        type: optional<boolean>
+        docs: Enables making a JSON request body that OpenAPI does not mark as required optional in the generated SDK, so callers may omit the body. Defaults to false.
       use-bytes-for-binary-response:
         type: optional<boolean>
         docs: Enables using the `bytes` type for binary responsesin OpenAPI specifications. Defaults to a file stream.

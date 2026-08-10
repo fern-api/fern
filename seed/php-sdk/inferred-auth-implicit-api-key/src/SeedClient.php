@@ -79,7 +79,7 @@ class SeedClient
 
         $this->options = $options ?? [];
 
-        $authRawClient = new RawClient(['headers' => []]);
+        $authRawClient = new RawClient(isset($this->options['baseUrl']) ? ['baseUrl' => $this->options['baseUrl'], 'headers' => []] : ['headers' => []]);
         $authClient = new AuthClient($authRawClient);
         $inferredAuthOptions = [
             'apiKey' => $apiKey ?? '',

@@ -1,4 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.27.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `prefer_explicit_auth` configuration option. When enabled (and the API composes
+        OAuth client-credentials with basic auth via `auth: any`), auth credentials passed
+        explicitly to the client constructor take precedence over environment-variable
+        defaults when selecting the auth scheme — e.g. explicitly provided basic auth
+        credentials win over OAuth client ID/secret environment variables. Disabled by
+        default, so existing generated output and runtime behavior are unchanged.
+      type: feat
+  createdAt: "2026-08-09"
+  irVersion: 67
+- version: 5.26.1
+  changelogEntry:
+    - summary: |
+        Fixed WireMock stubs for wire tests of APIs with `auth: any` combining Basic and
+        OAuth/Bearer schemes: stubs now accept either Authorization form instead of
+        requiring the exact Basic header the client may not send.
+      type: fix
+  createdAt: "2026-08-08"
+  irVersion: 67
 - version: 5.26.0
   changelogEntry:
     - summary: |

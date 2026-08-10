@@ -9,6 +9,7 @@ buildCli({
         DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator.buildwithfern.com",
         DEFAULT_VENUS_ORIGIN: "https://venus.buildwithfern.com",
         DEFAULT_FDR_ORIGIN: "https://registry.buildwithfern.com",
+        DEFAULT_FAI_ORIGIN: "https://fai.buildwithfern.com",
         DEFAULT_FDR_LAMBDA_DOCS_ORIGIN: "https://ykq45y6fvnszd35iv5yuuatkze0rpwuz.lambda-url.us-east-1.on.aws",
         VENUS_AUDIENCE: "venus-prod",
         FERN_DASHBOARD_URL_DEFAULT: "https://dashboard.buildwithfern.com",

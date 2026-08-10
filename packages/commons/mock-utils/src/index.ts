@@ -321,9 +321,19 @@ export class WireMock {
         const isEndpointSecurity = ir.auth.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity;
         const authHeaders: Record<string, { matches?: string; equalTo?: string }> = {};
         if (endpoint.auth && !isEndpointSecurity) {
+            // Multiple schemes can write the Authorization header (oauth, bearer, basic).
+            // Which value the client sends when several are configured (e.g. `auth: any`)
+            // is language-dependent (some send the OAuth Bearer token, others Basic
+            // credentials), so when basic collides with a bearer-like scheme the stub
+            // accepts either form instead of pinning one exact value.
+            const hasBearerLike = ir.auth.schemes.some((scheme) => scheme.type === "bearer" || scheme.type === "oauth");
             for (const scheme of ir.auth.schemes) {
                 switch (scheme.type) {
                     case "basic": {
+                        if (hasBearerLike) {
+                            authHeaders["Authorization"] = { matches: "(Bearer|Basic) .+" };
+                            break;
+                        }
                         // Compute exact Authorization header using test credentials.
                         // Access usernameOmit/passwordOmit via runtime property check
                         // (available in IR v63+ but @fern-fern/ir-sdk types may lag).
@@ -341,7 +351,10 @@ export class WireMock {
                         break;
                     }
                     case "bearer":
-                        authHeaders["Authorization"] = { matches: "Bearer .+" };
+                    case "oauth":
+                        authHeaders["Authorization"] = ir.auth.schemes.some((s) => s.type === "basic")
+                            ? { matches: "(Bearer|Basic) .+" }
+                            : { matches: "Bearer .+" };
                         break;
                     case "header": {
                         const headerName = scheme.name != null ? getWireValue(scheme.name) : undefined;

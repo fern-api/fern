@@ -16,6 +16,7 @@ export interface DocsConfigFileAstNodeTypes {
         willBeUploaded?: boolean;
     };
     markdownPage: { title: string; content: string; absoluteFilepath: AbsoluteFilePath };
+    version: { version: docsYml.RawSchemas.VersionConfig };
     versionFile: { path: string; content: unknown };
     productFile: { path: string; content: unknown };
     apiSection: {
