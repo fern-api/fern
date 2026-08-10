@@ -1631,7 +1631,8 @@ describe("literal angle brackets in prose", () => {
         ["bracketed prose on the previous line", "See [1] for details.\n![leaf](path/to/image.png)"],
         ["a table row with bracketed text", "| [Docs] | ![leaf](path/to/image.png) |"],
         ["a keyboard key in prose", "Press [Enter].\n![leaf](path/to/image.png)"],
-        ["an image label with no destination", "![leaf]\n![leaf](path/to/image.png)"]
+        ["an image label with no destination", "![leaf]\n![leaf](path/to/image.png)"],
+        ["a fully escaped bracket pair", "Apply Top N to the \\[Sum of Quantity\\], like this:\n\n![leaf](path/to/image.png)"]
     ])("resolves an image preceded by %s", (_name, page) => {
         const result = roundTrip(page);
         expect(result).toContain("file:leaf-id");
