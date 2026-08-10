@@ -734,7 +734,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -820,7 +821,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -906,7 +908,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -992,7 +995,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1078,7 +1082,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1164,7 +1169,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1250,7 +1256,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

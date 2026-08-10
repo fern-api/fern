@@ -858,7 +858,8 @@
                         "value": {
                             "type": "unknown"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -944,7 +945,8 @@
                             "type": "named",
                             "value": "type_unknown:MyObject"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

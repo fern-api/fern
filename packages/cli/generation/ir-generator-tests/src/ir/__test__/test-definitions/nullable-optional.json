@@ -37390,7 +37390,8 @@
                             "variable": null
                         }
                     ],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -37476,7 +37477,8 @@
                             "type": "named",
                             "value": "type_nullable-optional:CreateUserRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -37593,7 +37595,8 @@
                             "type": "named",
                             "value": "type_nullable-optional:UpdateUserRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -38248,7 +38251,8 @@
                             "type": "named",
                             "value": "type_nullable-optional:ComplexProfile"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -38359,7 +38363,8 @@
                             "variable": null
                         }
                     ],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -38813,7 +38818,8 @@
                             "type": "named",
                             "value": "type_nullable-optional:DeserializationTestRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -39177,7 +39183,8 @@
                             "variable": null
                         }
                     ],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

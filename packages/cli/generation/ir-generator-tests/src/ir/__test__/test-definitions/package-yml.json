@@ -985,7 +985,8 @@
                             "type": "named",
                             "value": "type_:EchoRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -1096,7 +1097,8 @@
                             "variable": null
                         }
                     ],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

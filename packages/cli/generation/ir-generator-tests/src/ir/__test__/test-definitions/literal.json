@@ -8215,7 +8215,8 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -8741,7 +8742,8 @@
                             "variable": null
                         }
                     ],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -9272,7 +9274,8 @@
                             "type": "named",
                             "value": "type_reference:SendRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

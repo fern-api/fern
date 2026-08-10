@@ -38,6 +38,17 @@ export declare namespace RequestBodyConverter {
     }
 }
 
+/**
+ * `HttpRequestBodyReference.required` is deliberately left unset on the reference paths below.
+ *
+ * The OpenAPI `requestBody.required` is available here as `this.required` — the bytes body
+ * already reads it (`isOptional: this.required === false`). Threading it into the reference
+ * bodies would give "the caller may omit this body" to every `--from-openapi` user, while today
+ * that behaviour is gated behind the `respect-optional-request-body` setting. Absent means
+ * required, so leaving it unset preserves the existing output until that gating is settled.
+ */
+const REQUEST_BODY_REQUIRED_NOT_THREADED = undefined;
+
 export class RequestBodyConverter extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter {
     private readonly contentType: string;
     private readonly mediaType: OpenAPIV3_1.MediaTypeObject;
@@ -159,10 +170,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                         contentType,
                         docs: this.description,
                         requestBodyType: convertedSchema.type,
-                        // TODO(fern-support): thread requestBody.required through here. The OpenAPI
-                        // RequestBodyObject carries it; this path just does not read it yet, so `undefined`
-                        // is a gap rather than deliberate "always required" semantics.
-                        required: undefined,
+                        required: REQUEST_BODY_REQUIRED_NOT_THREADED,
                         v2Examples: this.convertMediaTypeObjectExamples({
                             mediaTypeObject,
                             exampleGenerationStrategy: "request"
@@ -200,10 +208,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     contentType,
                     docs: this.description,
                     requestBodyType: convertedSchema.type,
-                    // TODO(fern-support): thread requestBody.required through here. The OpenAPI
-                    // RequestBodyObject carries it; this path just does not read it yet, so `undefined`
-                    // is a gap rather than deliberate "always required" semantics.
-                    required: undefined,
+                    required: REQUEST_BODY_REQUIRED_NOT_THREADED,
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
                         exampleGenerationStrategy: "request"
@@ -266,10 +271,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 contentType,
                 docs: this.description,
                 requestBodyType: TypeReference.unknown(),
-                // TODO(fern-support): thread requestBody.required through here. The OpenAPI
-                // RequestBodyObject carries it; this path just does not read it yet, so `undefined`
-                // is a gap rather than deliberate "always required" semantics.
-                required: undefined,
+                required: REQUEST_BODY_REQUIRED_NOT_THREADED,
                 v2Examples
             }),
             streamRequestBody: undefined,
@@ -537,10 +539,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 contentType,
                 docs: this.description,
                 requestBodyType: convertedSchema.type,
-                // TODO(fern-support): thread requestBody.required through here. The OpenAPI
-                // RequestBodyObject carries it; this path just does not read it yet, so `undefined`
-                // is a gap rather than deliberate "always required" semantics.
-                required: undefined,
+                required: REQUEST_BODY_REQUIRED_NOT_THREADED,
                 v2Examples: this.convertMediaTypeObjectExamples({
                     mediaTypeObject: modifiedMediaTypeObject,
                     exampleGenerationStrategy: "request"

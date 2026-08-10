@@ -12,11 +12,13 @@ export const BodyRequest: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     pathParameters: core.serialization.list(NamedParameter).optional(),
     body: ReferencedRequestBodyType.optional(),
+    bodyRequired: core.serialization.boolean().optional(),
 });
 
 export declare namespace BodyRequest {
     export interface Raw {
         pathParameters?: NamedParameter.Raw[] | null;
         body?: ReferencedRequestBodyType.Raw | null;
+        bodyRequired?: boolean | null;
     }
 }

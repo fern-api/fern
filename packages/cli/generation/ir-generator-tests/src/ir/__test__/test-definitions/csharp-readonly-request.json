@@ -1774,7 +1774,8 @@
                             "type": "named",
                             "value": "type_:CreateVendorRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

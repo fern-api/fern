@@ -4614,7 +4614,8 @@
                             "variable": null
                         }
                     ],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -5307,7 +5308,8 @@
                             "type": "named",
                             "value": "type_user:User"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

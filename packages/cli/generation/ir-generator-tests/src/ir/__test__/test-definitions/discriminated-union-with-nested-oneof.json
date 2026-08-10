@@ -2327,7 +2327,8 @@
                             "type": "named",
                             "value": "type_:AstNode"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

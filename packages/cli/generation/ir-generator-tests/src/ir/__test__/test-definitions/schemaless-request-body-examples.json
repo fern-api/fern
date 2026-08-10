@@ -2144,7 +2144,8 @@
                         "value": {
                             "type": "unknown"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

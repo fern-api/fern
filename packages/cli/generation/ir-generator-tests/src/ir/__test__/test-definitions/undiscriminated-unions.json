@@ -9440,7 +9440,8 @@
                             "type": "named",
                             "value": "type_union:MyUnion"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -9520,7 +9521,8 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -9606,7 +9608,8 @@
                             "type": "named",
                             "value": "type_union:MetadataUnion"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -9692,7 +9695,8 @@
                             "type": "named",
                             "value": "type_union:Request"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -9778,7 +9782,8 @@
                             "type": "named",
                             "value": "type_union:UnionWithDuplicateTypes"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -9864,7 +9869,8 @@
                             "type": "named",
                             "value": "type_union:NestedUnionRoot"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -9950,7 +9956,8 @@
                             "type": "named",
                             "value": "type_union:OuterNestedUnion"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -10036,7 +10043,8 @@
                             "type": "named",
                             "value": "type_union:AliasedObjectUnion"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -10122,7 +10130,8 @@
                             "type": "named",
                             "value": "type_union:UnionWithBaseProperties"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

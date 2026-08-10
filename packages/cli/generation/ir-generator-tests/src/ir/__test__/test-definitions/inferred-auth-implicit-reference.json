@@ -2664,7 +2664,8 @@
                             "type": "named",
                             "value": "type_auth:GetTokenRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -2847,7 +2848,8 @@
                             "type": "named",
                             "value": "type_auth:RefreshTokenRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -3063,7 +3065,8 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -3279,7 +3282,8 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -3456,7 +3460,8 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

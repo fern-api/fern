@@ -230,7 +230,8 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

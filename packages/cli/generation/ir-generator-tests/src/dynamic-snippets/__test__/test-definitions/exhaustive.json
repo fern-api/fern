@@ -5379,7 +5379,8 @@
                             "value": "STRING"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -5528,7 +5529,8 @@
                             "value": "type_types/object:ObjectWithRequiredField"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -5677,7 +5679,8 @@
                             "value": "STRING"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -5826,7 +5829,8 @@
                             "value": "type_types/object:ObjectWithRequiredField"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -5979,7 +5983,8 @@
                             "value": "STRING"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -6132,7 +6137,8 @@
                             "value": "type_types/object:ObjectWithRequiredField"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -6285,7 +6291,8 @@
                             "value": "type_types/union:MixedType"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -6434,7 +6441,8 @@
                             "value": "type_types/object:ObjectWithRequiredField"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -6580,7 +6588,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithOptionalField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -6726,7 +6735,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithOptionalField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -6872,7 +6882,8 @@
                         "type": "named",
                         "value": "type_types/enum:WeatherReport"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -7043,7 +7054,8 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -7189,7 +7201,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithRequiredField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -7366,7 +7379,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithRequiredField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -7543,7 +7557,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithOptionalField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -7714,7 +7729,8 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -7860,7 +7876,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithOptionalField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -8006,7 +8023,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithRequiredField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -8152,7 +8170,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithMapOfMap"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -8298,7 +8317,8 @@
                         "type": "named",
                         "value": "type_types/object:NestedObjectWithOptionalField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -8475,7 +8495,8 @@
                         "type": "named",
                         "value": "type_types/object:NestedObjectWithRequiredField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -8624,7 +8645,8 @@
                             "value": "type_types/object:NestedObjectWithRequiredField"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -8770,7 +8792,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithUnknownField"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -8916,7 +8939,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithDocumentedUnknownType"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -9062,7 +9086,8 @@
                         "type": "named",
                         "value": "type_types/object:MapOfDocumentedUnknownType"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -9208,7 +9233,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithMixedRequiredAndOptionalFields"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -9354,7 +9380,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithRequiredNestedObject"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -9500,7 +9527,8 @@
                         "type": "named",
                         "value": "type_types/object:ObjectWithDatetimeLikeString"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -9987,7 +10015,8 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -11692,7 +11721,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -12173,7 +12203,8 @@
                 ],
                 "body": {
                     "type": "bytes"
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -12962,7 +12993,8 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -13133,7 +13165,8 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -13279,7 +13312,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -13425,7 +13459,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -13571,7 +13606,8 @@
                         "type": "primitive",
                         "value": "LONG"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -13717,7 +13753,8 @@
                         "type": "primitive",
                         "value": "DOUBLE"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -13863,7 +13900,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -14009,7 +14047,8 @@
                         "type": "primitive",
                         "value": "DATE_TIME"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -14155,7 +14194,8 @@
                         "type": "primitive",
                         "value": "DATE"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -14301,7 +14341,8 @@
                         "type": "primitive",
                         "value": "UUID"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -14447,7 +14488,8 @@
                         "type": "primitive",
                         "value": "BASE_64"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -14873,7 +14915,8 @@
                         "type": "named",
                         "value": "type_types/union:Animal"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -15013,7 +15056,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -15153,7 +15197,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -15293,7 +15338,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -15433,7 +15479,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -16040,7 +16087,8 @@
                     "value": {
                         "type": "unknown"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -16141,7 +16189,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -16242,7 +16291,8 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

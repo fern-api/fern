@@ -38879,7 +38879,8 @@
                             "type": "named",
                             "value": "type_complex:SearchRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

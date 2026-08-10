@@ -2238,7 +2238,8 @@
                             "type": "named",
                             "value": "type_:Report"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

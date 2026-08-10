@@ -1447,7 +1447,8 @@
                                 "value": "type_:RefundRequest"
                             }
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

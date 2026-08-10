@@ -1359,7 +1359,8 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -1407,7 +1408,8 @@
                             "type": "named",
                             "value": "type_:RootObject"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

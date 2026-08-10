@@ -359,7 +359,8 @@
                         "type": "named",
                         "value": "type_:User"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -407,7 +408,8 @@
                         "type": "named",
                         "value": "type_:Task"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -455,7 +457,8 @@
                         "type": "named",
                         "value": "type_:Task"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

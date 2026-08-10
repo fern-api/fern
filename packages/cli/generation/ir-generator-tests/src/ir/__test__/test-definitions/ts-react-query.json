@@ -3218,7 +3218,8 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -3260,7 +3261,8 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -3340,7 +3342,8 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -3420,7 +3423,8 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -3500,7 +3504,8 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -3611,7 +3616,8 @@
                             "variable": null
                         }
                     ],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -3697,7 +3703,8 @@
                             "type": "named",
                             "value": "type_user:CreateUserRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -3814,7 +3821,8 @@
                             "type": "named",
                             "value": "type_user:UpdateUserRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -3931,7 +3939,8 @@
                             "type": "named",
                             "value": "type_user:UpdateUserRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -4042,7 +4051,8 @@
                             "variable": null
                         }
                     ],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

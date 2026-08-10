@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   carries neither content nor a `Content-Type` header. This models omittability as a property of the
   call rather than by wrapping `requestBodyType` in `optional<T>`, so generators no longer have to
   unwrap a container before deciding how to shape the request parameter.
+- Add optional `bodyRequired` to `dynamic.BodyRequest`, mirroring the field above. Snippet
+  generators only ever see the dynamic IR and cannot infer omittability from `body`, since an absent
+  `body` means the endpoint has no body at all rather than that the caller may skip one. Absent
+  means required, so snippet output is unchanged until a generator reads it.
 
 ## [v67.20.0] - 2026-07-28
 
