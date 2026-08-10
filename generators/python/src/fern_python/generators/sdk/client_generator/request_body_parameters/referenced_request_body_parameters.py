@@ -202,9 +202,10 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
 
         The body keeps its own type; only the sentinel default distinguishes "not passed"
         from an explicit ``None``. Absent ``required`` means required, which is what every
-        endpoint predating the field relies on.
+        endpoint predating the field relies on, and reading the field at all is opt-in so
+        that existing SDKs keep their signatures.
         """
-        return self._request_body.required is False
+        return self._context.custom_config.respect_optional_request_body and self._request_body.required is False
 
     def _get_properties(self, names_to_deconflict: Optional[List[str]]) -> List[NamedFunctionParameter]:
         return self.get_parameters(names_to_deconflict) + self._get_non_parameter_properties()

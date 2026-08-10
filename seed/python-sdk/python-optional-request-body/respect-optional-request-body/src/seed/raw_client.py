@@ -170,7 +170,7 @@ class RawSeedPythonOptionalRequestBody:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def batch_refund(
-        self, *, request: typing.Sequence[RefundRequest], request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Sequence[RefundRequest] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[Refund]]:
         """
         Refund a batch of payments, optionally with partial amounts.
@@ -413,7 +413,7 @@ class AsyncRawSeedPythonOptionalRequestBody:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def batch_refund(
-        self, *, request: typing.Sequence[RefundRequest], request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Sequence[RefundRequest] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[Refund]]:
         """
         Refund a batch of payments, optionally with partial amounts.

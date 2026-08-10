@@ -204,7 +204,7 @@ class SeedPythonOptionalRequestBody:
         return _response.data
 
     def batch_refund(
-        self, *, request: typing.Sequence[RefundRequest], request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Sequence[RefundRequest] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Refund]:
         """
         Refund a batch of payments, optionally with partial amounts.
@@ -506,7 +506,7 @@ class AsyncSeedPythonOptionalRequestBody:
         return _response.data
 
     async def batch_refund(
-        self, *, request: typing.Sequence[RefundRequest], request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Sequence[RefundRequest] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Refund]:
         """
         Refund a batch of payments, optionally with partial amounts.
