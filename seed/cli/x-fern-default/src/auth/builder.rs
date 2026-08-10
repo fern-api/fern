@@ -431,11 +431,26 @@ pub fn build_provider_with_strategy(
         AuthStrategy::Any => Arc::new(AnyAuthProvider::new(ordered)),
         AuthStrategy::All => Arc::new(AllAuthProvider::new(ordered)),
         AuthStrategy::Routing => {
+            // If the spec declared schemes and not one of them was bound, the
+            // two name spaces are talking past each other (typically a Fern
+            // `auth-schemes` override renaming the spec's scheme). Let the
+            // router fall back to the default rather than leave every
+            // operation unauthenticated. A partial overlap is a deliberate
+            // per-endpoint choice and keeps the strict behavior.
+            let names_disjoint = !security_schemes.is_empty()
+                && !by_name.is_empty()
+                && security_schemes
+                    .keys()
+                    .all(|name| !by_name.contains_key(name));
             // The default for unspecified endpoints is still AnyAuth over
             // all schemes — preserves the "use whatever works" fallback
             // for operations the spec didn't pin.
             let any: DynAuthProvider = Arc::new(AnyAuthProvider::new(ordered));
-            Arc::new(RoutingAuthProvider::new(by_name).with_default(any))
+            Arc::new(
+                RoutingAuthProvider::new(by_name)
+                    .with_default(any)
+                    .with_unbound_fallback(names_disjoint),
+            )
         }
     }
 }
@@ -509,6 +524,62 @@ mod tests {
         assert_eq!(p.name(), "any");
         let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(auth_header(r).as_deref(), Some("Bearer tok"));
+    }
+
+    #[tokio::test]
+    async fn renamed_scheme_still_authenticates_declared_operations() {
+        // The spec declares `BearerAuth` on its operation but the binding is
+        // registered as `CustomAuth` (a Fern `auth-schemes` override). The two
+        // name spaces are disjoint, so the endpoint must still be authed.
+        let mut requirement = HashMap::new();
+        requirement.insert("BearerAuth".to_string(), Vec::<String>::new());
+        let doc = doc_with_method_requirement(
+            &[(
+                "BearerAuth",
+                crate::openapi::discovery::SecurityScheme::HttpBearer,
+            )],
+            requirement.clone(),
+        );
+        let bindings = vec![(
+            "CustomAuth".to_string(),
+            SchemeBinding::Token(AuthCredentialSource::literal("tok")),
+        )];
+        let p = build_provider_from_doc(&doc, &bindings);
+        assert_eq!(p.name(), "routing");
+        let endpoint = EndpointAuthMetadata::with_requirements(vec![requirement]);
+        let r = p.apply(req(), &endpoint).unwrap();
+        assert_eq!(auth_header(r).as_deref(), Some("Bearer tok"));
+    }
+
+    #[tokio::test]
+    async fn unconfigured_scheme_alongside_a_bound_one_stays_unauthenticated() {
+        // Here the names do line up for `apiKey`, so `thirdParty` is a
+        // deliberate opt-out rather than a rename: attach nothing.
+        let mut requirement = HashMap::new();
+        requirement.insert("thirdParty".to_string(), Vec::<String>::new());
+        let doc = doc_with_method_requirement(
+            &[
+                (
+                    "apiKey",
+                    crate::openapi::discovery::SecurityScheme::ApiKeyHeader {
+                        name: "X-Api-Key".to_string(),
+                    },
+                ),
+                (
+                    "thirdParty",
+                    crate::openapi::discovery::SecurityScheme::HttpBearer,
+                ),
+            ],
+            requirement.clone(),
+        );
+        let bindings = vec![(
+            "apiKey".to_string(),
+            SchemeBinding::Token(AuthCredentialSource::literal("k")),
+        )];
+        let p = build_provider_from_doc(&doc, &bindings);
+        let endpoint = EndpointAuthMetadata::with_requirements(vec![requirement]);
+        let r = p.apply(req(), &endpoint).unwrap();
+        assert_eq!(header(r, "x-api-key"), None);
     }
 
     #[tokio::test]

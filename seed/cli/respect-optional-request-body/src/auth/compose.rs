@@ -272,6 +272,9 @@ pub struct RoutingAuthProvider {
     /// Fallback for endpoints with no `security` declared. Typically an
     /// [`AnyAuthProvider`] over all configured schemes.
     default: Option<DynAuthProvider>,
+    /// Whether the spec's scheme names and the registered binding names are
+    /// entirely disjoint — see [`RoutingAuthProvider::with_unbound_fallback`].
+    unbound_fallback: bool,
 }
 
 impl RoutingAuthProvider {
@@ -280,6 +283,7 @@ impl RoutingAuthProvider {
             name: "routing".to_string(),
             schemes,
             default: None,
+            unbound_fallback: false,
         }
     }
 
@@ -288,19 +292,31 @@ impl RoutingAuthProvider {
         self
     }
 
-    /// Whether none of the schemes the endpoint asks for are registered at all.
+    /// Opt into deferring to `default` for endpoints whose every declared
+    /// scheme is unregistered.
     ///
     /// This is the "the spec and the bindings disagree on names" case — e.g. a
     /// Fern `auth-schemes` override registers `CustomAuth` while the spec's
-    /// operations still reference the spec-declared `BearerAuth`. The endpoint
-    /// does require auth, so falling through to `default` (an `AnyAuthProvider`
-    /// over every configured scheme) is closer to the user's intent than sending
-    /// the request unauthenticated. A scheme that *is* registered but has no
-    /// credentials is a different story and keeps the unauthenticated path.
-    fn requirements_are_unbound(&self, requirements: &[HashMap<String, Vec<String>>]) -> bool {
-        requirements
-            .iter()
-            .all(|req| req.keys().all(|name| !self.schemes.contains_key(name)))
+    /// operations still reference the spec-declared `BearerAuth`, leaving every
+    /// operation unauthenticated. Callers must only enable it when the two name
+    /// spaces are *globally* disjoint; otherwise an operation that deliberately
+    /// references an unconfigured third-party scheme would start receiving the
+    /// user's credentials.
+    pub fn with_unbound_fallback(mut self, unbound_fallback: bool) -> Self {
+        self.unbound_fallback = unbound_fallback;
+        self
+    }
+
+    /// Whether the fallback applies: every requirement names at least one
+    /// scheme and none of those names are registered. An empty requirement is
+    /// OpenAPI's optional-auth idiom (`security: [{}, {BearerAuth: []}]`) and
+    /// is satisfiable as-is, so it must not count as unbound.
+    fn should_use_unbound_fallback(&self, requirements: &[HashMap<String, Vec<String>>]) -> bool {
+        self.unbound_fallback
+            && !requirements.is_empty()
+            && requirements.iter().all(|req| {
+                !req.is_empty() && req.keys().all(|name| !self.schemes.contains_key(name))
+            })
     }
 }
 
@@ -357,7 +373,7 @@ impl AuthProvider for RoutingAuthProvider {
                 None => self.has_credentials(),
             },
             Some(reqs) if reqs.is_empty() => true,
-            Some(reqs) if self.requirements_are_unbound(reqs) => match &self.default {
+            Some(reqs) if self.should_use_unbound_fallback(reqs) => match &self.default {
                 Some(d) => d.has_credentials(),
                 None => false,
             },
@@ -400,9 +416,18 @@ impl AuthProvider for RoutingAuthProvider {
         let Some(requirement) = satisfiable else {
             // The endpoint's schemes aren't registered under those names at all
             // (e.g. an auth-scheme override renamed them): defer to the default
-            // rather than dropping auth. See `requirements_are_unbound`.
-            if self.requirements_are_unbound(requirements) {
+            // rather than dropping auth. See `with_unbound_fallback`.
+            if self.should_use_unbound_fallback(requirements) {
                 if let Some(default) = &self.default {
+                    tracing::debug!(
+                        declared = ?requirements
+                            .iter()
+                            .flat_map(|req| req.keys().map(String::as_str))
+                            .collect::<Vec<_>>(),
+                        registered = ?self.schemes.keys().map(String::as_str).collect::<Vec<_>>(),
+                        "endpoint's security schemes are not registered under those names; \
+                         applying the default auth provider",
+                    );
                     return default.apply(request, endpoint);
                 }
             }
@@ -756,12 +781,63 @@ mod tests {
         let mut schemes: HashMap<String, DynAuthProvider> = HashMap::new();
         schemes.insert("CustomAuth".to_string(), bearer("CustomAuth", "tok"));
         let routing = RoutingAuthProvider::new(schemes)
-            .with_default(bearer("CustomAuth", "tok"));
+            .with_default(bearer("CustomAuth", "tok"))
+            .with_unbound_fallback(true);
         let mut requirement = HashMap::new();
         requirement.insert("BearerAuth".to_string(), Vec::<String>::new());
         let endpoint = EndpointAuthMetadata::with_requirements(vec![requirement]);
         let out = routing.apply(req(), &endpoint).unwrap();
         assert_eq!(auth_header(out), Some("Bearer tok".to_string()));
+        assert!(routing.has_credentials_for(&endpoint));
+    }
+
+    #[tokio::test]
+    async fn routing_unbound_fallback_is_opt_in() {
+        // Without the global name-mismatch signal, an unregistered scheme name
+        // keeps the strict behavior: attach nothing.
+        let mut schemes: HashMap<String, DynAuthProvider> = HashMap::new();
+        schemes.insert("CustomAuth".to_string(), bearer("CustomAuth", "tok"));
+        let routing = RoutingAuthProvider::new(schemes).with_default(bearer("CustomAuth", "tok"));
+        let mut requirement = HashMap::new();
+        requirement.insert("BearerAuth".to_string(), Vec::<String>::new());
+        let endpoint = EndpointAuthMetadata::with_requirements(vec![requirement]);
+        assert_eq!(auth_header(routing.apply(req(), &endpoint).unwrap()), None);
+        assert!(!routing.has_credentials_for(&endpoint));
+    }
+
+    #[tokio::test]
+    async fn routing_partially_bound_requirement_stays_unauthenticated() {
+        // One requirement names a registered scheme, so this is a real
+        // per-endpoint choice rather than a name mismatch — no fallback.
+        let mut schemes: HashMap<String, DynAuthProvider> = HashMap::new();
+        schemes.insert("apiKey".to_string(), api_key("apiKey", "X-Api-Key", "k"));
+        let routing = RoutingAuthProvider::new(schemes)
+            .with_default(bearer("bearer", "tok"))
+            .with_unbound_fallback(true);
+        let mut unbound = HashMap::new();
+        unbound.insert("ThirdPartyAuth".to_string(), Vec::<String>::new());
+        let mut bound = HashMap::new();
+        bound.insert("apiKey".to_string(), Vec::<String>::new());
+        bound.insert("MissingAuth".to_string(), Vec::<String>::new());
+        let endpoint = EndpointAuthMetadata::with_requirements(vec![unbound, bound]);
+        let out = routing.apply(req(), &endpoint).unwrap();
+        assert_eq!(auth_header(out), None);
+        assert!(!routing.has_credentials_for(&endpoint));
+    }
+
+    #[tokio::test]
+    async fn routing_optional_auth_requirement_is_not_unbound() {
+        // `security: [{}, {BearerAuth: []}]` — the empty requirement means auth
+        // is optional, so the endpoint is satisfied as-is and must not be
+        // reported as missing credentials.
+        let mut schemes: HashMap<String, DynAuthProvider> = HashMap::new();
+        schemes.insert("apiKey".to_string(), api_key("apiKey", "X-Api-Key", "k"));
+        let routing = RoutingAuthProvider::new(schemes).with_unbound_fallback(true);
+        let mut bearer_requirement = HashMap::new();
+        bearer_requirement.insert("BearerAuth".to_string(), Vec::<String>::new());
+        let endpoint =
+            EndpointAuthMetadata::with_requirements(vec![HashMap::new(), bearer_requirement]);
+        assert_eq!(auth_header(routing.apply(req(), &endpoint).unwrap()), None);
         assert!(routing.has_credentials_for(&endpoint));
     }
 
