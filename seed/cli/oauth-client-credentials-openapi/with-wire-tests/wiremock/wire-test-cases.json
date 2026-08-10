@@ -16,6 +16,7 @@
     "path": "/identity/token",
     "responseBody": "{\"access_token\":\"test-access-token\",\"expires_in\":3600}"
   },
+  "loginTokenSetup": null,
   "cases": [
     {
       "id": "list",
@@ -24,7 +25,12 @@
       "params": {},
       "body": null,
       "queryMatchers": [],
-      "headerMatchers": [],
+      "headerMatchers": [
+        {
+          "name": "token",
+          "matches": ".+"
+        }
+      ],
       "response": {
         "status": 200,
         "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"species\": \"species\"\n  }\n]"
@@ -39,7 +45,12 @@
       },
       "body": null,
       "queryMatchers": [],
-      "headerMatchers": [],
+      "headerMatchers": [
+        {
+          "name": "token",
+          "matches": ".+"
+        }
+      ],
       "response": {
         "status": 200,
         "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"species\": \"species\"\n}"

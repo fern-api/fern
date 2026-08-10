@@ -1,0 +1,7 @@
+- summary: |
+    Authenticate endpoints whose spec-declared security scheme names don't match the
+    auth scheme registered from the IR (e.g. a `generators.yml` `auth-schemes` override
+    that renames the scheme). The routing auth provider now falls back to its default
+    provider when none of an endpoint's required schemes are bound, instead of silently
+    sending the request unauthenticated.
+  type: fix

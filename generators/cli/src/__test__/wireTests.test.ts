@@ -80,7 +80,12 @@ describe("buildWireTestManifest", () => {
         expect(testCase?.headerMatchers).toEqual([]);
     });
 
-    it("emits an auth-header matcher for an authenticated bearer endpoint", () => {
+    /**
+     * The matchers under test come from the IR's auth schemes, so the endpoint
+     * itself only has to be authenticated. Returns the single case's header
+     * matchers for the given schemes.
+     */
+    function headerMatchersForSchemes(schemes: unknown[]): WireTestCase["headerMatchers"] {
         const example = {
             rootPathParameters: [],
             servicePathParameters: [],
@@ -105,7 +110,7 @@ describe("buildWireTestManifest", () => {
         };
         const ir = {
             services: { service_users: { name: { originalName: "users" }, endpoints: [endpoint] } },
-            auth: { schemes: [{ type: "bearer", key: "token" }] }
+            auth: { schemes }
         };
         // @ts-expect-error minimal fixture — only fields the builder + mock-utils read.
         const manifest = buildWireTestManifest(ir, {
@@ -114,8 +119,58 @@ describe("buildWireTestManifest", () => {
             specs: [],
             authEnvVars: ["ACME_TOKEN"]
         });
+        return manifest.cases[0]?.headerMatchers ?? [];
+    }
+
+    function oauthScheme(tokenHeader: string, tokenPrefix: string): unknown {
+        return {
+            type: "oauth",
+            key: "CustomAuth",
+            configuration: {
+                type: "clientCredentials",
+                tokenHeader,
+                tokenPrefix,
+                tokenEndpoint: { endpointReference: { endpointId: "endpoint_identity.getToken" } }
+            }
+        };
+    }
+
+    it("emits an auth-header matcher for an authenticated bearer endpoint", () => {
         // mock-utils emits a presence-only Authorization matcher for bearer auth.
-        expect(manifest.cases[0]?.headerMatchers).toEqual([{ name: "Authorization", matches: "Bearer .+" }]);
+        expect(headerMatchersForSchemes([{ type: "bearer", key: "token" }])).toEqual([
+            { name: "Authorization", matches: "Bearer .+" }
+        ]);
+    });
+
+    it("matches the OAuth scheme's configured token header with an empty prefix", () => {
+        // An empty prefix means the raw token is sent under the configured header.
+        expect(headerMatchersForSchemes([oauthScheme("token", "")])).toEqual([{ name: "token", matches: ".+" }]);
+    });
+
+    it("escapes regex metacharacters in a custom OAuth token prefix", () => {
+        expect(headerMatchersForSchemes([oauthScheme("X-Token", "Token+v1")])).toEqual([
+            { name: "X-Token", matches: "Token\\+v1 .+" }
+        ]);
+    });
+
+    it("keeps basic's exact matcher when OAuth writes a different header", () => {
+        // The two schemes don't collide on Authorization, so each is pinned
+        // independently — same as an api-key header alongside basic.
+        const matchers = headerMatchersForSchemes([
+            { type: "basic", username: { originalName: "username" }, password: { originalName: "password" } },
+            oauthScheme("token", "")
+        ]);
+        expect(matchers).toContainEqual({ name: "token", matches: ".+" });
+        expect(matchers).toContainEqual({
+            name: "Authorization",
+            equalTo: `Basic ${Buffer.from("test-username:test-password").toString("base64")}`
+        });
+    });
+
+    it("accepts either credential when basic collides with a Bearer-writing OAuth scheme", () => {
+        expect(headerMatchersForSchemes([{ type: "basic" }, oauthScheme("Authorization", "Bearer")])).toEqual([
+            { name: "Authorization", matches: "(Bearer|Basic) .+" }
+        ]);
     });
 
     it("gives each case a unique, rust-identifier-safe id", () => {
