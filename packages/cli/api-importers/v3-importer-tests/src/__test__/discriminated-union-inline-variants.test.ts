@@ -1,7 +1,7 @@
 /**
- * A `discriminator` with no `mapping` whose `oneOf` members are inline schemas has no $refs to
- * infer a mapping from, so it cannot be converted into a discriminated union. The variants must
- * still be preserved, as an undiscriminated union, rather than collapsing to an empty union.
+ * A `discriminator` with no `mapping` whose `oneOf` members are inline schemas: the discriminant
+ * values come from each member's literal discriminant property, rather than from $refs, and the
+ * variants must not be dropped.
  *
  * Uses the V3 importer (OSSWorkspace), which is the code path for docs customers.
  */
@@ -15,9 +15,8 @@ interface IRType {
     name: { name: string };
     shape: {
         _type: string;
-        types?: unknown[];
-        properties?: { name: string }[];
-        members?: { type: { _type: string; name?: string; displayName?: string } }[];
+        discriminant?: string;
+        types?: { discriminantValue: string; displayName?: string }[];
     };
 }
 
@@ -65,16 +64,17 @@ function findType(ir: IR, name: string): IRType | undefined {
 }
 
 describe("discriminator with inline oneOf variants", () => {
-    it("keeps the variants instead of producing an empty union", async () => {
+    it("infers the variants from their literal discriminant property", async () => {
         const ir = await loadIr("discriminated-union-inline-variants");
 
         const segmentation = findType(ir, "PlantSegmentation");
-        expect(segmentation?.shape._type).toBe("undiscriminatedUnion");
-        expect(segmentation?.shape.members).toHaveLength(2);
-        expect((segmentation?.shape.members ?? []).map((member) => member.type.displayName)).toEqual([
-            "Dynamic",
-            "Fixed"
+        expect(segmentation?.shape._type).toBe("union");
+        expect(segmentation?.shape.discriminant).toBe("strategy");
+        expect((segmentation?.shape.types ?? []).map((variant) => variant.discriminantValue)).toEqual([
+            "dynamic",
+            "fixed"
         ]);
+        expect((segmentation?.shape.types ?? []).map((variant) => variant.displayName)).toEqual(["Dynamic", "Fixed"]);
     }, 60_000);
 
     it("still converts a discriminator with $ref variants into a discriminated union", async () => {
