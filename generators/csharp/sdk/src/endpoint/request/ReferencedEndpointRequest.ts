@@ -7,6 +7,7 @@ type TypeReference = FernIr.TypeReference;
 type ServiceId = FernIr.ServiceId;
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { mayOmitRequestBody } from "../../utils/requestBodyUtils.js";
 import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
@@ -14,7 +15,6 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest.js";
-import { mayOmitRequestBody } from "../../utils/requestBodyUtils.js";
 import { writeEndpointAuthHeaderAdd } from "./endpointAuthHeaders.js";
 import { writeLiteralHeaders } from "./literalHeaders.js";
 
