@@ -38,14 +38,14 @@ public class RawSeedJavaOptionalRequestBodyClient {
      * Refund a payment, optionally with a partial amount.
      */
     public SeedJavaOptionalRequestBodyHttpResponse<Refund> refund(String id) {
-        return refund(id, null);
+        return refund(id, (RefundRequest) null);
     }
 
     /**
      * Refund a payment, optionally with a partial amount.
      */
     public SeedJavaOptionalRequestBodyHttpResponse<Refund> refund(String id, RequestOptions requestOptions) {
-        return refund(id, null, requestOptions);
+        return refund(id, (RefundRequest) null, requestOptions);
     }
 
     /**
@@ -120,14 +120,14 @@ public class RawSeedJavaOptionalRequestBodyClient {
      * Refund every payment, optionally with a partial amount.
      */
     public SeedJavaOptionalRequestBodyHttpResponse<List<Refund>> bulkRefund() {
-        return bulkRefund(null);
+        return bulkRefund((RefundRequest) null);
     }
 
     /**
      * Refund every payment, optionally with a partial amount.
      */
     public SeedJavaOptionalRequestBodyHttpResponse<List<Refund>> bulkRefund(RequestOptions requestOptions) {
-        return bulkRefund(null, requestOptions);
+        return bulkRefund((RefundRequest) null, requestOptions);
     }
 
     /**
@@ -286,14 +286,14 @@ public class RawSeedJavaOptionalRequestBodyClient {
      * Refund a payment, optionally with an exact amount.
      */
     public SeedJavaOptionalRequestBodyHttpResponse<Refund> refundExactAmount(String id) {
-        return refundExactAmount(id, null);
+        return refundExactAmount(id, (ExactRefundRequest) null);
     }
 
     /**
      * Refund a payment, optionally with an exact amount.
      */
     public SeedJavaOptionalRequestBodyHttpResponse<Refund> refundExactAmount(String id, RequestOptions requestOptions) {
-        return refundExactAmount(id, null, requestOptions);
+        return refundExactAmount(id, (ExactRefundRequest) null, requestOptions);
     }
 
     /**

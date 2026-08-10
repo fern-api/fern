@@ -42,7 +42,7 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
      * Refund a payment, optionally with a partial amount.
      */
     public CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> refund(String id) {
-        return refund(id, null);
+        return refund(id, (RefundRequest) null);
     }
 
     /**
@@ -50,7 +50,7 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
      */
     public CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> refund(
             String id, RequestOptions requestOptions) {
-        return refund(id, null, requestOptions);
+        return refund(id, (RefundRequest) null, requestOptions);
     }
 
     /**
@@ -141,7 +141,7 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
      * Refund every payment, optionally with a partial amount.
      */
     public CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<List<Refund>>> bulkRefund() {
-        return bulkRefund(null);
+        return bulkRefund((RefundRequest) null);
     }
 
     /**
@@ -149,7 +149,7 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
      */
     public CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<List<Refund>>> bulkRefund(
             RequestOptions requestOptions) {
-        return bulkRefund(null, requestOptions);
+        return bulkRefund((RefundRequest) null, requestOptions);
     }
 
     /**
@@ -342,7 +342,7 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
      * Refund a payment, optionally with an exact amount.
      */
     public CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> refundExactAmount(String id) {
-        return refundExactAmount(id, null);
+        return refundExactAmount(id, (ExactRefundRequest) null);
     }
 
     /**
@@ -350,7 +350,7 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
      */
     public CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> refundExactAmount(
             String id, RequestOptions requestOptions) {
-        return refundExactAmount(id, null, requestOptions);
+        return refundExactAmount(id, (ExactRefundRequest) null, requestOptions);
     }
 
     /**

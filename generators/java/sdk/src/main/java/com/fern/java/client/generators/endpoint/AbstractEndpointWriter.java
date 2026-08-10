@@ -175,6 +175,15 @@ public abstract class AbstractEndpointWriter {
                 .orElse(false);
     }
 
+    /**
+     * The argument the body-less overload passes on. It is cast to the body's own type because the
+     * overload that takes {@code RequestOptions} has the same arity, which leaves a bare {@code null}
+     * ambiguous between the two.
+     */
+    private static String nullBodyArgument(TypeName bodyTypeName) {
+        return bodyTypeName instanceof ParameterizedTypeName ? "($1T<$2T>) null" : "($T) null";
+    }
+
     private static boolean typeNameIsOptional(TypeName typeName) {
         return typeName instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
@@ -326,7 +335,7 @@ public abstract class AbstractEndpointWriter {
                     .get(0);
             if (mayOmitRequestBody(clientGeneratorContext, httpEndpoint)
                     && !typeNameIsOptional(bodyParameterSpec.type)) {
-                paramNamesWoBody.add("null");
+                paramNamesWoBody.add(nullBodyArgument(bodyParameterSpec.type));
             } else if (typeNameIsOptional(bodyParameterSpec.type)) {
                 paramNamesWoBody.add("Optional.empty()");
             } else if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
@@ -381,7 +390,7 @@ public abstract class AbstractEndpointWriter {
                     .get(0);
             if (mayOmitRequestBody(clientGeneratorContext, httpEndpoint)
                     && !typeNameIsOptional(bodyParameterSpec.type)) {
-                paramNamesWoBodyWithRequestOptions.add("null");
+                paramNamesWoBodyWithRequestOptions.add(nullBodyArgument(bodyParameterSpec.type));
             } else if (typeNameIsOptional(bodyParameterSpec.type)) {
                 paramNamesWoBodyWithRequestOptions.add("Optional.empty()");
             } else if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
