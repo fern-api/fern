@@ -14,7 +14,9 @@
 ```ruby
 client.refund(
   id: "refund-id",
-  amount: 60
+  body: {
+    amount: 60
+  }
 )
 ```
 </dd>
@@ -130,7 +132,7 @@ client.required_refund(
 <dd>
 
 ```ruby
-client.bulk_refund
+client.bulk_refund(request: {})
 ```
 </dd>
 </dl>

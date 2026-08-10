@@ -57,11 +57,10 @@ describe("SeedApiClient", () => {
     test("bulkRefund", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = {};
 
-        server.mockEndpoint().post("/refunds").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
+        server.mockEndpoint().post("/refunds").respondWith().statusCode(200).build();
 
-        const response = await client.bulkRefund({});
+        const response = await client.bulkRefund();
         expect(response).toEqual(undefined);
     });
 });

@@ -1,16 +1,13 @@
 - summary: |
-    Carry an optional request body into the IR as `required: false` on the request body reference,
-    rather than by wrapping the body type in `optional<T>`. `respect-optional-request-body` now
-    emits `body: {type: Foo, optional: true}` in the generated Fern Definition, and hand-written
-    `body: optional<Foo>` keeps its existing meaning that the body's value may be null.
+    Add a way to model an omittable request body separately from its type. `HttpRequestBodyReference`
+    gains an optional `required`, and `HttpReferencedRequestBodySchema` gains an `optional` flag that
+    maps to `required: false`. This is distinct from `body: optional<Foo>`, which says the body's
+    *value* may be null; `optional: true` says the *call* may omit the body entirely, so the request
+    carries neither content nor a `Content-Type` header.
 
-    Definitions that do not set `respect-optional-request-body` are unaffected: the body type
-    generators see is unchanged, so output is byte-identical.
-
-    For definitions that do set it, the generated SDK changes. Python, Java and Rust previously
-    got a different calling convention entirely — a `request=` object instead of flattened kwargs,
-    `Optional<Body>` instead of `Body`, `&Option<Body>` instead of `&Body` — and are now back to
-    the shape they have without the setting. TypeScript and C# lose the optional parameter
-    (`request?: Body` becomes `request: Body`) until those generators opt into reading the new
-    field; restoring it is a widening and therefore not breaking.
+    Nothing changes in generated output. The OpenAPI importer still emits `optional<Foo>` for
+    `respect-optional-request-body`, and no generator reads the new field yet. The field exists so
+    that generators can adopt it one at a time, without each having to unwrap `optional<T>` before
+    deciding how to shape the request parameter — which is what made enabling the setting change
+    calling conventions in Python, Java and Rust.
   type: feat

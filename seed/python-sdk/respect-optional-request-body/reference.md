@@ -44,7 +44,7 @@ client.refund(
 <dl>
 <dd>
 
-**request:** `RefundRequest` 
+**request:** `typing.Optional[RefundRequest]` 
     
 </dd>
 </dl>
@@ -143,13 +143,15 @@ client.required_refund(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedApi, RefundRequest
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.bulk_refund()
+client.bulk_refund(
+    request=RefundRequest(),
+)
 
 ```
 </dd>
@@ -165,7 +167,7 @@ client.bulk_refund()
 <dl>
 <dd>
 
-**request:** `RefundRequest` 
+**request:** `typing.Optional[RefundRequest]` 
     
 </dd>
 </dl>

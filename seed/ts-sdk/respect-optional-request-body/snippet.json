@@ -44,7 +44,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApi, SeedApiClient } from \"@fern/respect-optional-request-body\";\n\nconst client = new SeedApiClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.bulkRefund({});\n"
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/respect-optional-request-body\";\n\nconst client = new SeedApiClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.bulkRefund();\n"
             }
         }
     ],

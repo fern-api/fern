@@ -117,7 +117,7 @@ await client.requiredRefund({
 <dd>
 
 ```typescript
-await client.bulkRefund({});
+await client.bulkRefund();
 
 ```
 </dd>

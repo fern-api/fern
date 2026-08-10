@@ -7,6 +7,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 from .core.request_options import RequestOptions
 from .raw_client import AsyncRawSeedApi, RawSeedApi
+from .types.refund_request import RefundRequest
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -97,14 +98,18 @@ class SeedApi:
         return self._raw_client
 
     def refund(
-        self, id: str, *, amount: typing.Optional[float] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        request: typing.Optional[RefundRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
         id : str
 
-        amount : typing.Optional[float]
+        request : typing.Optional[RefundRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -124,7 +129,7 @@ class SeedApi:
             id="refund-id",
         )
         """
-        _response = self._raw_client.refund(id, amount=amount, request_options=request_options)
+        _response = self._raw_client.refund(id, request=request, request_options=request_options)
         return _response.data
 
     def required_refund(
@@ -160,12 +165,12 @@ class SeedApi:
         return _response.data
 
     def bulk_refund(
-        self, *, amount: typing.Optional[float] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Optional[RefundRequest] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
         ----------
-        amount : typing.Optional[float]
+        request : typing.Optional[RefundRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -176,14 +181,16 @@ class SeedApi:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import RefundRequest, SeedApi
 
         client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.bulk_refund()
+        client.bulk_refund(
+            request=RefundRequest(),
+        )
         """
-        _response = self._raw_client.bulk_refund(amount=amount, request_options=request_options)
+        _response = self._raw_client.bulk_refund(request=request, request_options=request_options)
         return _response.data
 
 
@@ -288,14 +295,18 @@ class AsyncSeedApi:
         return self._raw_client
 
     async def refund(
-        self, id: str, *, amount: typing.Optional[float] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        request: typing.Optional[RefundRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
         id : str
 
-        amount : typing.Optional[float]
+        request : typing.Optional[RefundRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -323,7 +334,7 @@ class AsyncSeedApi:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.refund(id, amount=amount, request_options=request_options)
+        _response = await self._raw_client.refund(id, request=request, request_options=request_options)
         return _response.data
 
     async def required_refund(
@@ -367,12 +378,12 @@ class AsyncSeedApi:
         return _response.data
 
     async def bulk_refund(
-        self, *, amount: typing.Optional[float] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Optional[RefundRequest] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
         ----------
-        amount : typing.Optional[float]
+        request : typing.Optional[RefundRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -385,7 +396,7 @@ class AsyncSeedApi:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedApi, RefundRequest
 
         client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
@@ -393,10 +404,12 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            await client.bulk_refund()
+            await client.bulk_refund(
+                request=RefundRequest(),
+            )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.bulk_refund(amount=amount, request_options=request_options)
+        _response = await self._raw_client.bulk_refund(request=request, request_options=request_options)
         return _response.data

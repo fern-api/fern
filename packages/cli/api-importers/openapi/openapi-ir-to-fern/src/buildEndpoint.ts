@@ -718,24 +718,19 @@ function getRequest({
                 requestValue.docs == null &&
                 (requestValue["content-type"] == null || requestValue["content-type"] === "application/json");
 
-            // `optional: true` rather than `optional<T>`: the call may omit the body, which is not
-            // the same as the body's value being nullable. The scalar shorthand cannot express it,
-            // so an omittable body keeps the object form even when it could otherwise collapse.
-            const isOmittableBody = context.options.respectOptionalRequestBody && isOptionalJsonBody(request);
-            if (isOmittableBody) {
+            if (context.options.respectOptionalRequestBody && isOptionalJsonBody(request)) {
                 requestValue.body =
                     typeof requestTypeReference === "string"
-                        ? { type: requestTypeReference, optional: true }
-                        : { ...requestTypeReference, optional: true };
+                        ? wrapTypeReferenceInOptional(requestTypeReference)
+                        : {
+                              ...requestTypeReference,
+                              type: wrapTypeReferenceInOptional(requestTypeReference.type)
+                          };
             }
 
             return {
                 schemaIdsToExclude: [],
-                value: !canCollapse
-                    ? requestValue
-                    : isOmittableBody
-                      ? { body: requestValue.body }
-                      : (requestValue.body as string)
+                value: canCollapse ? (requestValue.body as string) : requestValue
             };
         }
 
@@ -1041,6 +1036,10 @@ function getRequest({
  */
 function isOptionalJsonBody(request: Request): boolean {
     return request.type === "json" && request.required !== true;
+}
+
+function wrapTypeReferenceInOptional(typeReference: string): string {
+    return typeReference.startsWith("optional<") ? typeReference : `optional<${typeReference}>`;
 }
 
 function endpointRequestSupportsInlinedPathParameters({

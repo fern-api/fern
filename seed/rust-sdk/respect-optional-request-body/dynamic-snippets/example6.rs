@@ -9,10 +9,10 @@ async fn main() {
     let client = ApiClient::new(config).expect("Failed to build client");
     client
         .bulk_refund(
-            &RefundRequest {
+            &Some(RefundRequest {
                 amount: Some(1.1),
                 ..Default::default()
-            },
+            }),
             None,
         )
         .await;

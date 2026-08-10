@@ -18,5 +18,5 @@ import type * as SeedApi from "../../index.js";
  */
 export interface RefundBody {
     id: string;
-    body: SeedApi.RefundRequest;
+    body?: SeedApi.RefundRequest;
 }

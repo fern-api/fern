@@ -10,7 +10,7 @@ public record RefundBody
     public required string Id { get; set; }
 
     [JsonIgnore]
-    public required RefundRequest Body { get; set; }
+    public RefundRequest? Body { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

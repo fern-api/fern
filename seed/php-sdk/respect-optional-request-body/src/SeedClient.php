@@ -172,7 +172,7 @@ class SeedClient
      * );
      * ```
      *
-     * @param RefundRequest $request
+     * @param ?RefundRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -184,7 +184,7 @@ class SeedClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function bulkRefund(RefundRequest $request, ?array $options = null): void
+    public function bulkRefund(?RefundRequest $request = null, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
