@@ -309,6 +309,28 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(sourceFile.getText()).toMatchSnapshot();
         });
 
+        it("generates an optional body property when the referenced body is not required", () => {
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    headers: [createHttpHeader("xRequestId", STRING_TYPE, { wireValue: "X-Request-Id" })],
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        requestBodyType: STRING_TYPE,
+                        required: false,
+                        docs: undefined,
+                        contentType: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context, sourceFile } = createMockContext();
+
+            wrapper.writeToFile(context);
+            // the property type stays the body type; only the question mark comes from `required`
+            expect(sourceFile.getText()).toMatchSnapshot();
+        });
+
         it("generates interface with allowMultiple query parameter", () => {
             const init = createDefaultInit({
                 endpoint: createHttpEndpoint({

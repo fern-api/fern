@@ -388,6 +388,8 @@ export function createObjectProperty(
 export function createSdkRequestBody(opts?: {
     requestBodyType?: FernIr.TypeReference;
     contentType?: string;
+    /** Absent means required, matching the IR. */
+    required?: boolean;
 }): FernIr.SdkRequest {
     return {
         streamParameter: undefined,
@@ -396,6 +398,7 @@ export function createSdkRequestBody(opts?: {
             FernIr.SdkRequestBodyType.typeReference({
                 requestBodyType:
                     opts?.requestBodyType ?? FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                required: opts?.required,
                 contentType: opts?.contentType,
                 docs: undefined,
                 v2Examples: undefined

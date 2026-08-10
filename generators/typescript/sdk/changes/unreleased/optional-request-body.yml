@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    An endpoint whose request body may be omitted now takes an optional body parameter, driven by
+    the IR's `required` field on the request body rather than by wrapping the body in `optional<T>`.
+    The parameter keeps the body's own type: `refund(id: string, request?: RefundRequest)` rather
+    than `request: RefundRequest | undefined`. When the caller omits the body, no body is sent.
+  type: feat

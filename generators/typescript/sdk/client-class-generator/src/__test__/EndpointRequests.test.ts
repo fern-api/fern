@@ -500,6 +500,35 @@ describe("GeneratedDefaultEndpointRequest", () => {
             expect(params[0]?.type).toBe("string");
         });
 
+        it("makes the request parameter optional when the referenced body is not required", () => {
+            const sdkRequest = createSdkRequestBody({ required: false });
+            const request = new GeneratedDefaultEndpointRequest({
+                ir: createMinimalIR(),
+                packageId: { isRoot: true },
+                sdkRequest,
+                service: createHttpService(),
+                endpoint: createHttpEndpoint({ sdkRequest }),
+                requestBody: FernIr.HttpRequestBody.reference({
+                    requestBodyType: STRING_TYPE,
+                    required: false,
+                    contentType: undefined,
+                    docs: undefined,
+                    v2Examples: undefined
+                }),
+                generatedSdkClientClass: createMockSdkClientClass(),
+                retainOriginalCasing: false,
+                parameterNaming: "default",
+                caseConverter
+            });
+            const context = createEndpointRequestMockContext();
+            const params = request.getEndpointParameters(context);
+            expect(params).toHaveLength(1);
+            expect(params[0]?.name).toBe("request");
+            // the type is untouched: only the question token comes from `required`
+            expect(params[0]?.type).toBe("string");
+            expect(params[0]?.hasQuestionToken).toBe(true);
+        });
+
         it("includes wrapper parameter with wrapper sdkRequest", () => {
             const sdkRequest = createSdkRequestWrapper();
             const request = new GeneratedDefaultEndpointRequest({
@@ -686,6 +715,36 @@ describe("GeneratedDefaultEndpointRequest", () => {
             assert(args.body != null, "body should not be null");
             expect(getTextOfTsNode(args.body)).toBe(
                 "mergeAdditionalBodyParameters(serializers.testEndpoint.Request.jsonOrThrow(request), requestOptions?.additionalBodyParameters)"
+            );
+        });
+
+        it("serializes an omittable reference request body only once the caller supplies one", () => {
+            const sdkRequest = createSdkRequestBody({ required: false });
+            const referenceBody = FernIr.HttpRequestBody.reference({
+                requestBodyType: STRING_TYPE,
+                required: false,
+                contentType: undefined,
+                docs: undefined,
+                v2Examples: undefined
+            });
+            const request = new GeneratedDefaultEndpointRequest({
+                ir: createMinimalIR(),
+                packageId: { isRoot: true },
+                sdkRequest,
+                service: createHttpService(),
+                endpoint: createHttpEndpoint({ sdkRequest, requestBody: referenceBody }),
+                requestBody: referenceBody,
+                generatedSdkClientClass: createMockSdkClientClass(),
+                retainOriginalCasing: false,
+                parameterNaming: "default",
+                caseConverter
+            });
+            const context = createEndpointRequestMockContext();
+            request.getBuildRequestStatements(context);
+            const args = request.getFetcherRequestArgs(context);
+            assert(args.body != null, "body should not be null");
+            expect(getTextOfTsNode(args.body)).toBe(
+                "mergeAdditionalBodyParameters(request == null ? undefined : serializers.testEndpoint.Request.jsonOrThrow(request), requestOptions?.additionalBodyParameters)"
             );
         });
 
