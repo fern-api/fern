@@ -1,4 +1,5 @@
 import { Style } from "@fern-api/browser-compatible-base-generator";
+import { FERN_JAVA_SKIP_FORMATTING_ENV_VAR, isEnvVarTruthy } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { dynamic } from "@fern-api/ir-sdk";
 import { Config, DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
@@ -73,10 +74,15 @@ export class DynamicSnippetsJavaTestGenerator {
                 );
             }
         }
-        this.context.logger.debug("Dynamic snippets test files generated, running spotlessApply...");
+        const skipFormatting = isEnvVarTruthy(process.env[FERN_JAVA_SKIP_FORMATTING_ENV_VAR]);
+        this.context.logger.debug(
+            skipFormatting
+                ? `Dynamic snippets test files generated, skipping spotlessApply because ${FERN_JAVA_SKIP_FORMATTING_ENV_VAR} is set`
+                : "Dynamic snippets test files generated, running spotlessApply..."
+        );
         const gradlewPath = join(outputDir, RelativeFilePath.of("gradlew"));
         const gradlewExists = await doesPathExist(gradlewPath, "file");
-        if (gradlewExists) {
+        if (gradlewExists && !skipFormatting) {
             try {
                 const customConfig = this.generatorConfig.customConfig as Record<string, unknown> | undefined;
                 const enableProfiling = customConfig?.["enable-gradle-profiling"] === true;
