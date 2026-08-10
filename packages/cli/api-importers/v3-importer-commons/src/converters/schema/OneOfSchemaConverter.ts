@@ -32,6 +32,10 @@ export declare namespace OneOfSchemaConverter {
     }
 }
 
+function isUnionWithoutVariants(type: Type): boolean {
+    return type.type === "union" && type.types.length === 0;
+}
+
 export class OneOfSchemaConverter extends AbstractConverter<
     AbstractConverterContext<object>,
     OneOfSchemaConverter.Output | undefined
@@ -65,7 +69,14 @@ export class OneOfSchemaConverter extends AbstractConverter<
         // This properly handles OpenAPI oneOf with discriminator where the discriminant
         // property is defined in each variant schema
         if (this.schema.discriminator != null) {
-            return this.convertAsDiscriminatedUnion();
+            const discriminatedUnion = this.convertAsDiscriminatedUnion();
+            if (discriminatedUnion != null && !isUnionWithoutVariants(discriminatedUnion.type)) {
+                return discriminatedUnion;
+            }
+            // A discriminator whose variants cannot be resolved (e.g. inline oneOf members, which
+            // have no $ref for the mapping to be inferred from) produces a union with no variants.
+            // The undiscriminated conversion preserves the variants' shapes instead.
+            return this.convertAsUndiscriminatedUnion() ?? discriminatedUnion;
         }
 
         // Infer open-ended enums: oneOf/anyOf with [enum, string] pattern

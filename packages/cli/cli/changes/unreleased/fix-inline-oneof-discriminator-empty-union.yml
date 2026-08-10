@@ -1,0 +1,5 @@
+- summary: |
+    Fix a `oneOf` with a `discriminator` and inline (non-`$ref`) variants converting to a union with
+    no variants, which made the field render with no variants in the API reference. The variants are
+    now preserved as an undiscriminated union, since there are no `$ref`s to infer a mapping from.
+  type: fix
