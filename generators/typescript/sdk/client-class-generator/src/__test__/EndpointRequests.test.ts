@@ -27,16 +27,18 @@ const STRING_TYPE = FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined
 const OPTIONAL_STRING_TYPE = FernIr.TypeReference.container(FernIr.ContainerType.optional(STRING_TYPE));
 const INTEGER_TYPE = FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined });
 
+interface EndpointRequestMockContextOpts {
+    shouldInlinePathParams?: boolean;
+    respectOptionalRequestBody?: boolean;
+}
+
 /**
  * Creates a mock FileContext for endpoint request tests.
  * This is more comprehensive than the basic mock contexts because endpoint requests
  * exercise many more context properties (requestWrapper, sdkInlinedRequestBodySchema, etc.).
  */
 // biome-ignore lint/suspicious/noExplicitAny: test mock needs to satisfy complex FileContext interface
-function createEndpointRequestMockContext(opts?: {
-    shouldInlinePathParams?: boolean;
-    respectOptionalRequestBody?: boolean;
-}): any {
+function createEndpointRequestMockContext(opts?: EndpointRequestMockContextOpts): any {
     const context = {
         respectOptionalRequestBody: opts?.respectOptionalRequestBody ?? false,
         includeSerdeLayer: true,
