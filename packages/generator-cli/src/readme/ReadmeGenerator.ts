@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { cloneRepository } from "@fern-api/github";
 import { template } from "es-toolkit/compat";
 import { camelCase, upperFirst } from "es-toolkit/string";
@@ -254,22 +255,32 @@ export class ReadmeGenerator {
             return this.originalReadme;
         }
         if (this.readmeConfig.remote != null) {
-            const clonedRepository = await cloneRepository({
-                githubRepository: this.readmeConfig.remote.repoUrl,
-                installationToken: this.readmeConfig.remote.installationToken
-            });
-            // If a specific branch is specified, checkout that branch to get the README from it
-            if (this.readmeConfig.remote.branch != null) {
-                try {
-                    await clonedRepository.checkout(this.readmeConfig.remote.branch);
-                } catch (error) {
-                    // If checkout fails (e.g., branch doesn't exist), fall back to the default branch
-                    console.warn(
-                        `Failed to checkout branch ${this.readmeConfig.remote.branch}, using default branch instead`
-                    );
+            // The remote is only used to merge hand-written blocks into the generated README, so a
+            // failure to read it must not fail generation.
+            try {
+                const clonedRepository = await cloneRepository({
+                    githubRepository: this.readmeConfig.remote.repoUrl,
+                    installationToken: this.readmeConfig.remote.installationToken
+                });
+                // If a specific branch is specified, checkout that branch to get the README from it
+                if (this.readmeConfig.remote.branch != null) {
+                    try {
+                        await clonedRepository.checkout(this.readmeConfig.remote.branch);
+                    } catch (error) {
+                        // If checkout fails (e.g., branch doesn't exist), fall back to the default branch
+                        console.warn(
+                            `Failed to checkout branch ${this.readmeConfig.remote.branch}, using default branch instead`
+                        );
+                    }
                 }
+                return await clonedRepository.getReadme();
+            } catch (error) {
+                console.warn(
+                    `Failed to read the existing README from ${this.readmeConfig.remote.repoUrl}: ${extractErrorMessage(error)}. ` +
+                        "Generating the README without merging the existing one."
+                );
+                return undefined;
             }
-            return await clonedRepository.getReadme();
         }
         return undefined;
     }

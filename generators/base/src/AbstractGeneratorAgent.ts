@@ -33,6 +33,14 @@ export declare namespace AbstractGeneratorAgent {
     }
 }
 
+/**
+ * Preview and other non-publishing runs substitute unset environment variables with an empty
+ * string, so a blank token means "no credentials" rather than "anonymous access".
+ */
+function isNonEmptyToken(token: string | undefined): token is string {
+    return token != null && token.trim().length > 0;
+}
+
 export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGeneratorContext> {
     public README_FILENAME = "README.md";
     public SNIPPET_FILENAME = "snippet.json";
@@ -257,19 +265,21 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
 
     protected getRemote(context: GeneratorContext): FernGeneratorCli.Remote | undefined {
         const outputMode = this.config.output.mode.type === "github" ? this.config.output.mode : undefined;
-        if (outputMode?.repoUrl != null && outputMode?.installationToken != null) {
+        const installationToken = outputMode?.installationToken;
+        if (outputMode?.repoUrl != null && isNonEmptyToken(installationToken)) {
             return FernGeneratorCli.Remote.github({
                 repoUrl: outputMode.repoUrl,
-                installationToken: outputMode.installationToken
+                installationToken
             });
         }
 
         try {
             const githubConfig = this.getGitHubConfig({ context });
-            if (githubConfig.uri != null && githubConfig.token != null) {
+            const token = githubConfig.token;
+            if (githubConfig.uri != null && isNonEmptyToken(token)) {
                 return FernGeneratorCli.Remote.github({
                     repoUrl: this.normalizeRepoUrl(githubConfig.uri),
-                    installationToken: githubConfig.token
+                    installationToken: token
                 });
             }
         } catch (error) {

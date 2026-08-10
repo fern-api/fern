@@ -1,0 +1,6 @@
+- summary: |
+    Don't fail README generation when the existing README can't be read from the target
+    GitHub repository. The clone is only used to merge hand-written blocks, so failures
+    (TLS interception, missing credentials, network restrictions) now log a warning and
+    generate the README from scratch instead of aborting SDK generation.
+  type: fix
