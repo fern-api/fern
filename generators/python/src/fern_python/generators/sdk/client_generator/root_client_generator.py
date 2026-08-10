@@ -357,7 +357,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     if param.constructor_parameter_name in str_type_params:
                         writer.write_node(AST.TypeHint.str_())
                     elif param.constructor_parameter_name == RootClientGenerator.TOKEN_PARAMETER_NAME:
-                        writer.write_node(AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_()))
+                        writer.write_node(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
                     else:
                         writer.write_node(param.type_hint)
                 if param.docs is not None:
@@ -797,12 +797,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 parameters.append(
                     RootClientConstructorParameter(
                         constructor_parameter_name=self.TOKEN_PARAMETER_NAME,
-                        type_hint=AST.TypeHint.optional(
-                            AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
-                        ),
+                        type_hint=AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
                         initializer=AST.Expression("None"),
                         docs=(
-                            "Authenticate by providing a callable that returns a pre-generated bearer token. "
+                            "Authenticate by providing a pre-generated bearer token, or a callable that returns one. "
                             "In this mode, OAuth client credentials are not required."
                         ),
                     ),
@@ -1094,7 +1092,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         token_params = base_params + [
             AST.NamedFunctionParameter(
                 name=self.TOKEN_PARAMETER_NAME,
-                type_hint=AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_()),
+                type_hint=ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT,
             ),
         ]
         token_signature = AST.FunctionSignature(named_parameters=token_params)
