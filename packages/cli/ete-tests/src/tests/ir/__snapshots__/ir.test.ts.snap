@@ -15799,7 +15799,8 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -15879,7 +15880,8 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -15959,7 +15961,8 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -17611,7 +17614,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -18506,7 +18510,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -19977,7 +19982,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -20063,7 +20069,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -21110,7 +21117,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                             "type": "named",
                             "value": "type_imdb:UnknownRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -23138,7 +23146,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                             "type": "named",
                             "value": "type_imdb:CreateMovieRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -30621,7 +30630,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "type": "named",
                             "value": "type_imdb:UnknownRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -30707,7 +30717,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "type": "named",
                             "value": "type_imdb:CreateMovieRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -31033,7 +31044,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "variable": null
                         }
                     ],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -31635,7 +31647,8 @@ exports[`ir > {"name":"streaming"} 1`] = `
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "streaming"
@@ -32506,7 +32519,8 @@ exports[`ir > {"name":"variables"} 1`] = `
                             "variable": "my-variable"
                         }
                     ],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
