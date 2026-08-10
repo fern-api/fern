@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.92.3
+  changelogEntry:
+    - summary: |
+        Fix local images being published as build-machine filesystem paths when the alt text contains
+        brackets, e.g. `![Filter [Top N] menu](./assets/image.png)`. The markdown scanner ended the
+        label at the first `]`, so the destination was never resolved. Link text with brackets is
+        handled the same way, including an escaped pair in prose (`\[Sum of Quantity\]`), which
+        previously consumed the next image on the page.
+      type: fix
+  createdAt: "2026-08-10"
+  irVersion: 67
 - version: 5.92.2
   changelogEntry:
     - summary: |
