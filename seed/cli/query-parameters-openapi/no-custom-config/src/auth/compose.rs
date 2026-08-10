@@ -287,6 +287,21 @@ impl RoutingAuthProvider {
         self.default = Some(default);
         self
     }
+
+    /// Whether none of the schemes the endpoint asks for are registered at all.
+    ///
+    /// This is the "the spec and the bindings disagree on names" case — e.g. a
+    /// Fern `auth-schemes` override registers `CustomAuth` while the spec's
+    /// operations still reference the spec-declared `BearerAuth`. The endpoint
+    /// does require auth, so falling through to `default` (an `AnyAuthProvider`
+    /// over every configured scheme) is closer to the user's intent than sending
+    /// the request unauthenticated. A scheme that *is* registered but has no
+    /// credentials is a different story and keeps the unauthenticated path.
+    fn requirements_are_unbound(&self, requirements: &[HashMap<String, Vec<String>>]) -> bool {
+        requirements
+            .iter()
+            .all(|req| req.keys().all(|name| !self.schemes.contains_key(name)))
+    }
 }
 
 impl AuthProvider for RoutingAuthProvider {
@@ -342,6 +357,10 @@ impl AuthProvider for RoutingAuthProvider {
                 None => self.has_credentials(),
             },
             Some(reqs) if reqs.is_empty() => true,
+            Some(reqs) if self.requirements_are_unbound(reqs) => match &self.default {
+                Some(d) => d.has_credentials(),
+                None => false,
+            },
             Some(reqs) => reqs.iter().any(|req| {
                 req.keys().all(|name| {
                     self.schemes
@@ -379,6 +398,14 @@ impl AuthProvider for RoutingAuthProvider {
         });
 
         let Some(requirement) = satisfiable else {
+            // The endpoint's schemes aren't registered under those names at all
+            // (e.g. an auth-scheme override renamed them): defer to the default
+            // rather than dropping auth. See `requirements_are_unbound`.
+            if self.requirements_are_unbound(requirements) {
+                if let Some(default) = &self.default {
+                    return default.apply(request, endpoint);
+                }
+            }
             // No declared requirement is satisfiable. Diverges from the TS
             // generator (which throws): we let the request go out unauthed
             // so the server's 401/403 + `handle_error_response`
@@ -719,6 +746,23 @@ mod tests {
         let endpoint = EndpointAuthMetadata::with_requirements(vec![requirement]);
         let out = routing.apply(req(), &endpoint).unwrap();
         assert_eq!(auth_header(out), None);
+    }
+
+    #[tokio::test]
+    async fn routing_unbound_requirement_falls_back_to_default() {
+        // The spec's operation references a scheme name that no binding
+        // registered (an `auth-schemes` override renamed it), so the request
+        // must still be authenticated via the default provider.
+        let mut schemes: HashMap<String, DynAuthProvider> = HashMap::new();
+        schemes.insert("CustomAuth".to_string(), bearer("CustomAuth", "tok"));
+        let routing = RoutingAuthProvider::new(schemes)
+            .with_default(bearer("CustomAuth", "tok"));
+        let mut requirement = HashMap::new();
+        requirement.insert("BearerAuth".to_string(), Vec::<String>::new());
+        let endpoint = EndpointAuthMetadata::with_requirements(vec![requirement]);
+        let out = routing.apply(req(), &endpoint).unwrap();
+        assert_eq!(auth_header(out), Some("Bearer tok".to_string()));
+        assert!(routing.has_credentials_for(&endpoint));
     }
 
     // -------- has_credentials_for(endpoint) --------

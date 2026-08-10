@@ -34,7 +34,16 @@ struct Manifest {
     auth_env_vars: Vec<String>,
     #[serde(rename = "authMock")]
     auth_mock: Option<AuthMock>,
+    #[serde(rename = "loginTokenSetup")]
+    login_token_setup: Option<LoginTokenSetup>,
     cases: Vec<Case>,
+}
+
+#[derive(Deserialize)]
+struct LoginTokenSetup {
+    #[serde(rename = "schemeName")]
+    scheme_name: String,
+    token: String,
 }
 
 #[derive(Deserialize)]
@@ -333,6 +342,45 @@ async fn run_case(id: &str) {
 
     let expected_path = substitute_path(&case.path, &case.params);
 
+    // Public-client login flows (PKCE / device-code) authenticate from a keyring token that
+    // `auth login` populates. We can't drive the interactive browser/device login headlessly, so
+    // seed a token via the universal `--with-token` paste into an isolated, file-backed keyring
+    // (`FERN_CLI_CREDENTIAL_STORE=file` + a temp `HOME` — no OS-keyring prompt, hermetic per test).
+    // The request-time provider then injects it as `Authorization: Bearer <token>`, which the
+    // business mock asserts below.
+    let auth_home: Option<std::path::PathBuf> = if let Some(setup) = &manifest.login_token_setup {
+        use tokio::io::AsyncWriteExt;
+        let home = std::env::temp_dir().join(format!("{}-wire-{id}", manifest.binary_name));
+        let _ = std::fs::remove_dir_all(&home);
+        std::fs::create_dir_all(&home).expect("create isolated keyring HOME");
+        let mut login = tokio::process::Command::new(env!("CARGO_BIN_EXE_versioned-store"));
+        login
+            .args(["auth", "login", "--with-token", "--scheme", setup.scheme_name.as_str()])
+            .env("HOME", &home)
+            .env("FERN_CLI_CREDENTIAL_STORE", "file")
+            .env("NO_COLOR", "1")
+            .stdin(std::process::Stdio::piped())
+            .stdout(std::process::Stdio::piped())
+            .stderr(std::process::Stdio::piped());
+        let mut child = login.spawn().expect("spawn auth login --with-token");
+        {
+            let mut stdin = child.stdin.take().expect("login stdin");
+            stdin
+                .write_all(setup.token.as_bytes())
+                .await
+                .expect("write token to auth login stdin");
+        }
+        let login_out = child.wait_with_output().await.expect("auth login --with-token output");
+        assert!(
+            login_out.status.success(),
+            "auth login --with-token failed: {}",
+            String::from_utf8_lossy(&login_out.stderr)
+        );
+        Some(home)
+    } else {
+        None
+    };
+
     let server = MockServer::start().await;
 
     // OAuth client-credentials CLIs perform a token exchange before every
@@ -378,6 +426,11 @@ async fn run_case(id: &str) {
             mock = mock.and(match_header_regex(h.name.as_str(), pattern.as_str()));
         }
     }
+    // For login-flow schemes, require the exact bearer we seeded — this is what verifies the
+    // request-time keyring → `Authorization: Bearer <token>` injection end to end.
+    if let Some(setup) = &manifest.login_token_setup {
+        mock = mock.and(match_header("authorization", format!("Bearer {}", setup.token).as_str()));
+    }
     mock.respond_with(template).expect(1).mount(&server).await;
 
     let mut args: Vec<String> = command.chain.clone();
@@ -402,6 +455,12 @@ async fn run_case(id: &str) {
         cmd.env(var, "test");
     }
     cmd.env("NO_COLOR", "1");
+    // Same isolated file-backed keyring the token was seeded into, so the request-time provider
+    // resolves the bearer we pasted.
+    if let Some(home) = &auth_home {
+        cmd.env("HOME", home);
+        cmd.env("FERN_CLI_CREDENTIAL_STORE", "file");
+    }
 
     let output = cmd
         .output()

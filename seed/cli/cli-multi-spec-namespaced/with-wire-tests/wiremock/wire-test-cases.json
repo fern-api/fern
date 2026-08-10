@@ -15,6 +15,7 @@
     "ACME_VERSIONED_TOKEN"
   ],
   "authMock": null,
+  "loginTokenSetup": null,
   "cases": [
     {
       "id": "listusers",

@@ -46,6 +46,32 @@ export interface WireMockMapping {
     postServeActions?: unknown[];
 }
 
+/**
+ * Where an OAuth scheme applies its access token. Defaults to `Authorization: Bearer <token>`;
+ * an empty prefix means the raw token is sent.
+ */
+function getOAuthTokenPlacement(scheme: FernIr.OAuthScheme): { header: string; prefix: string } {
+    const configuration = scheme.configuration;
+    switch (configuration.type) {
+        case "clientCredentials":
+            return {
+                header: configuration.tokenHeader ?? "Authorization",
+                prefix: configuration.tokenPrefix ?? "Bearer"
+            };
+        default:
+            return { header: "Authorization", prefix: "Bearer" };
+    }
+}
+
+function writesBearerAuthorization(scheme: FernIr.OAuthScheme): boolean {
+    const { header, prefix } = getOAuthTokenPlacement(scheme);
+    return header.toLowerCase() === "authorization" && prefix === "Bearer";
+}
+
+function escapeRegExp(value: string): string {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 export class WireMock {
     public convertToWireMock(ir: FernIr.IntermediateRepresentation): WireMockStubMapping {
         const mappings: WireMockMapping[] = [];
@@ -326,7 +352,9 @@ export class WireMock {
             // is language-dependent (some send the OAuth Bearer token, others Basic
             // credentials), so when basic collides with a bearer-like scheme the stub
             // accepts either form instead of pinning one exact value.
-            const hasBearerLike = ir.auth.schemes.some((scheme) => scheme.type === "bearer" || scheme.type === "oauth");
+            const hasBearerLike = ir.auth.schemes.some(
+                (scheme) => scheme.type === "bearer" || (scheme.type === "oauth" && writesBearerAuthorization(scheme))
+            );
             for (const scheme of ir.auth.schemes) {
                 switch (scheme.type) {
                     case "basic": {
@@ -351,11 +379,24 @@ export class WireMock {
                         break;
                     }
                     case "bearer":
-                    case "oauth":
                         authHeaders["Authorization"] = ir.auth.schemes.some((s) => s.type === "basic")
                             ? { matches: "(Bearer|Basic) .+" }
                             : { matches: "Bearer .+" };
                         break;
+                    case "oauth": {
+                        // The token is only applied as `Authorization: Bearer <token>` by default;
+                        // a scheme can pin any header name and prefix (including an empty one,
+                        // meaning the raw token is sent).
+                        const { header, prefix } = getOAuthTokenPlacement(scheme);
+                        if (writesBearerAuthorization(scheme)) {
+                            authHeaders["Authorization"] = ir.auth.schemes.some((s) => s.type === "basic")
+                                ? { matches: "(Bearer|Basic) .+" }
+                                : { matches: "Bearer .+" };
+                            break;
+                        }
+                        authHeaders[header] = { matches: prefix.length > 0 ? `${escapeRegExp(prefix)} .+` : ".+" };
+                        break;
+                    }
                     case "header": {
                         const headerName = scheme.name != null ? getWireValue(scheme.name) : undefined;
                         if (headerName) {
