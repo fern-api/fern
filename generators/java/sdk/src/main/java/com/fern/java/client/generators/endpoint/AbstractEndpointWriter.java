@@ -145,6 +145,36 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
+    /**
+     * Whether the caller may leave the request body out of the call entirely, which the IR describes as
+     * {@code required: false} on a referenced request body. The body keeps its own type; only the extra
+     * overload distinguishes "not passed". An absent {@code required} means required, and reading the
+     * field at all is opt-in so that existing SDKs keep their signatures.
+     */
+    public static boolean mayOmitRequestBody(ClientGeneratorContext context, HttpEndpoint endpoint) {
+        return mayOmitRequestBody(
+                context.getCustomConfig().respectOptionalRequestBody(),
+                endpoint.getSdkRequest(),
+                endpoint.getRequestBody());
+    }
+
+    static boolean mayOmitRequestBody(
+            boolean respectOptionalRequestBody, Optional<SdkRequest> sdkRequest, Optional<HttpRequestBody> requestBody) {
+        if (!respectOptionalRequestBody) {
+            return false;
+        }
+        boolean isJustRequestBody =
+                sdkRequest.map(request -> request.getShape().isJustRequestBody()).orElse(false);
+        if (!isJustRequestBody) {
+            return false;
+        }
+        return requestBody
+                .flatMap(HttpRequestBody::getReference)
+                .flatMap(HttpRequestBodyReference::getRequired)
+                .map(required -> !required)
+                .orElse(false);
+    }
+
     private static boolean typeNameIsOptional(TypeName typeName) {
         return typeName instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
@@ -294,7 +324,10 @@ public abstract class AbstractEndpointWriter {
                                     .getUnsafeName()))
                     .collect(Collectors.toList())
                     .get(0);
-            if (typeNameIsOptional(bodyParameterSpec.type)) {
+            if (mayOmitRequestBody(clientGeneratorContext, httpEndpoint)
+                    && !typeNameIsOptional(bodyParameterSpec.type)) {
+                paramNamesWoBody.add("null");
+            } else if (typeNameIsOptional(bodyParameterSpec.type)) {
                 paramNamesWoBody.add("Optional.empty()");
             } else if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
                 // Handle parameterized types with type witness syntax
@@ -346,7 +379,10 @@ public abstract class AbstractEndpointWriter {
                                     .getUnsafeName()))
                     .collect(Collectors.toList())
                     .get(0);
-            if (typeNameIsOptional(bodyParameterSpec.type)) {
+            if (mayOmitRequestBody(clientGeneratorContext, httpEndpoint)
+                    && !typeNameIsOptional(bodyParameterSpec.type)) {
+                paramNamesWoBodyWithRequestOptions.add("null");
+            } else if (typeNameIsOptional(bodyParameterSpec.type)) {
                 paramNamesWoBodyWithRequestOptions.add("Optional.empty()");
             } else if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
                 paramNamesWoBodyWithRequestOptions.add("$1T.<$2T>absent()");
@@ -987,8 +1023,9 @@ public abstract class AbstractEndpointWriter {
                 @Override
                 public Boolean visitTypeReference(HttpRequestBodyReference typeReference) {
                     return typeReference
-                            .getRequestBodyType()
-                            .visit(new TypeReferenceUtils.TypeReferenceIsOptional(true, clientGeneratorContext));
+                                    .getRequestBodyType()
+                                    .visit(new TypeReferenceUtils.TypeReferenceIsOptional(true, clientGeneratorContext))
+                            || mayOmitRequestBody(clientGeneratorContext, httpEndpoint);
                 }
 
                 @Override

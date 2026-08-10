@@ -369,6 +369,9 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                         this.endpoint.getRequestBody().get());
             }
 
+            // The body-less overload passes null, so the body is only serialized when it was passed.
+            boolean mayBeOmitted = !isOptional && mayOmitRequestBody(clientGeneratorContext, this.endpoint);
+
             Optional<String> requestBodyGetterName = getRequestBodyGetterName();
 
             CodeBlock requestBodyGetter = CodeBlock.of("request");
@@ -403,11 +406,13 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     .addStatement("$T $L", RequestBody.class, variables.getOkhttpRequestBodyName())
                     .beginControlFlow("try");
 
-            if (isOptional) {
+            if (isOptional || mayBeOmitted) {
                 codeBlock.addStatement(
                         "$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class);
 
-                if (requestBodyGetterName.isPresent()) {
+                if (mayBeOmitted) {
+                    codeBlock.beginControlFlow("if ($N != null)", "request");
+                } else if (requestBodyGetterName.isPresent()) {
                     codeBlock.beginControlFlow("if (request.$L().isPresent())", requestBodyGetterName.get());
                 } else {
                     codeBlock.beginControlFlow("if ($N.isPresent())", "request");
@@ -433,7 +438,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             requestBodyGetter,
                             requestBodyContentType)
                     .endControlFlow();
-            if (isOptional) {
+            if (isOptional || mayBeOmitted) {
                 codeBlock.endControlFlow();
             }
             codeBlock

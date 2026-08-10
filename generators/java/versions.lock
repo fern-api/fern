@@ -10,7 +10,7 @@ com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.22.0 (8 constraints: fe65
 com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.22.0 (3 constraints: 8a1c5b58)
 com.fern.fern:generator-exec-client:0.0.806 (1 constraints: 70059d40)
 com.fern.fern:generator-exec-model:0.0.806 (1 constraints: 760ff78e)
-com.fern.fern:irV67:67.15.0 (1 constraints: 7505ec40)
+com.fern.fern:irV67:67.21.0 (1 constraints: 7205e440)
 com.google.code.findbugs:annotations:3.0.1 (5 constraints: 0b486b6a)
 com.google.code.findbugs:jsr305:3.0.2 (6 constraints: 3e53d684)
 com.google.errorprone:error_prone_annotations:2.18.0 (5 constraints: 824496e2)
