@@ -21,6 +21,25 @@ service:
           response:
             body:
               ok: true
+    optionalReferencedBody:
+      path: /optional-referenced
+      method: POST
+      request:
+        body:
+          type: RefundRequest
+          optional: true
+      response: RefundResponse
+      examples:
+        - name: withoutBody
+          response:
+            body:
+              ok: true
+        - name: withBody
+          request:
+            amount: 60
+          response:
+            body:
+              ok: true
     requiredReferencedBody:
       path: /required-referenced
       method: POST

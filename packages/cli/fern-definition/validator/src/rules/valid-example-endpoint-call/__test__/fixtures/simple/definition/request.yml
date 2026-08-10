@@ -77,6 +77,16 @@ service:
           type: ObjectWithFoo
       examples:
         - {}
+    i:
+      path: ""
+      method: GET
+      request:
+        body:
+          type: ObjectWithFoo
+          optional: true
+      examples:
+        - {}
+        - request: 123
 
 types:
   ObjectWithFoo:
