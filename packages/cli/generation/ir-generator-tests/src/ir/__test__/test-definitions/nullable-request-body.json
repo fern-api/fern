@@ -370,7 +370,7 @@
                                 }
                             }
                         },
-                        "required": null,
+                        "required": false,
                         "docs": null,
                         "contentType": "application/json",
                         "v2Examples": null

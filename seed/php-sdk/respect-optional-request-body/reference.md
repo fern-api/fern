@@ -38,7 +38,7 @@ $client->refund(
 <dl>
 <dd>
 
-**$request:** `?RefundRequest` 
+**$request:** `RefundRequest` 
     
 </dd>
 </dl>
@@ -135,7 +135,7 @@ $client->bulkRefund(
 <dl>
 <dd>
 
-**$request:** `?RefundRequest` 
+**$request:** `RefundRequest` 
     
 </dd>
 </dl>

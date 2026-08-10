@@ -8,18 +8,18 @@ use Seed\Types\RefundRequest;
 class RefundBody extends JsonSerializableType
 {
     /**
-     * @var ?RefundRequest $body
+     * @var RefundRequest $body
      */
-    public ?RefundRequest $body;
+    public RefundRequest $body;
 
     /**
      * @param array{
-     *   body?: ?RefundRequest,
+     *   body: RefundRequest,
      * } $values
      */
     public function __construct(
-        array $values = [],
+        array $values,
     ) {
-        $this->body = $values['body'] ?? null;
+        $this->body = $values['body'];
     }
 }

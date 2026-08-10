@@ -32,7 +32,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/author",
-              "request": "Author",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "Author",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -59,7 +64,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/node",
-              "request": "Node",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "Node",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -86,7 +96,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/tree",
-              "request": "TreeNode",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "TreeNode",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -243,7 +258,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: Node
+      request:
+        body:
+          type: Node
+          optional: true
       response:
         docs: Success
         type: Node
@@ -259,7 +277,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: Author
+      request:
+        body:
+          type: Author
+          optional: true
       response:
         docs: Success
         type: Author
@@ -278,7 +299,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: TreeNode
+      request:
+        body:
+          type: TreeNode
+          optional: true
       response:
         docs: Success
         type: TreeNode

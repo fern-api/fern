@@ -2001,7 +2001,7 @@
               "type": "null"
             }
           ],
-          "description": "Whether the endpoint may be called without a request body. When true, an example may\nomit `request`, and the generated SDK lets the caller omit the body. Populated from\n`requestBody.required` when importing from OpenAPI with `respect-optional-request-body`.\n\nThis is distinct from writing `body: optional<Foo>`, which says the body's *value* may\nbe null. Here the body itself may be absent, so the request carries neither content nor\na `Content-Type` header. It maps to `required: false` on the IR's request body reference."
+          "description": "Whether the endpoint may be called without a request body. When true, an example may\nomit `request`, and the generated SDK lets the caller omit the body. Populated from\n`requestBody.required` when importing from OpenAPI.\n\nThis is distinct from writing `body: optional<Foo>`, which says the body's *value* may\nbe null. Here the body itself may be absent, so the request carries neither content nor\na `Content-Type` header. It maps to `required: false` on the IR's request body reference."
         }
       },
       "required": [

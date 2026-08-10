@@ -149,7 +149,7 @@ public partial class SeedApiClient : ISeedApiClient
     }
 
     private async Task<RawResponse> BulkRefundAsyncCore(
-        RefundRequest? request,
+        RefundRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -172,6 +172,7 @@ public partial class SeedApiClient : ISeedApiClient
                     Body = request,
                     QueryString = _queryString,
                     Headers = _headers,
+                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -240,7 +241,7 @@ public partial class SeedApiClient : ISeedApiClient
     /// await client.BulkRefundAsync(new RefundRequest());
     /// </code></example>
     public WithRawResponseTask BulkRefundAsync(
-        RefundRequest? request,
+        RefundRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

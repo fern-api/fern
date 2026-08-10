@@ -38,17 +38,6 @@ export declare namespace RequestBodyConverter {
     }
 }
 
-/**
- * `HttpRequestBodyReference.required` is deliberately left unset on the reference paths below.
- *
- * The OpenAPI `requestBody.required` is available here as `this.required` — the bytes body
- * already reads it (`isOptional: this.required === false`). Threading it into the reference
- * bodies would give "the caller may omit this body" to every `--from-openapi` user, while today
- * that behaviour is gated behind the `respect-optional-request-body` setting. Absent means
- * required, so leaving it unset preserves the existing output until that gating is settled.
- */
-const REQUEST_BODY_REQUIRED_NOT_THREADED = undefined;
-
 export class RequestBodyConverter extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter {
     private readonly contentType: string;
     private readonly mediaType: OpenAPIV3_1.MediaTypeObject;
@@ -78,6 +67,14 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         this.schemaId = [...this.group, this.method, "Request"].join("_");
         this.streamingExtension = streamingExtension;
         this.queryParameters = queryParameters ?? [];
+    }
+
+    /**
+     * Absent means required, so only an explicit `requestBody.required: false` is carried through.
+     * Generators ignore it unless they opt in, which keeps the field additive for existing users.
+     */
+    private get bodyRequired(): boolean | undefined {
+        return this.required === false ? false : undefined;
     }
 
     public convert(): RequestBodyConverter.Output | undefined {
@@ -170,7 +167,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                         contentType,
                         docs: this.description,
                         requestBodyType: convertedSchema.type,
-                        required: REQUEST_BODY_REQUIRED_NOT_THREADED,
+                        required: this.bodyRequired,
                         v2Examples: this.convertMediaTypeObjectExamples({
                             mediaTypeObject,
                             exampleGenerationStrategy: "request"
@@ -208,7 +205,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     contentType,
                     docs: this.description,
                     requestBodyType: convertedSchema.type,
-                    required: REQUEST_BODY_REQUIRED_NOT_THREADED,
+                    required: this.bodyRequired,
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
                         exampleGenerationStrategy: "request"
@@ -271,7 +268,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 contentType,
                 docs: this.description,
                 requestBodyType: TypeReference.unknown(),
-                required: REQUEST_BODY_REQUIRED_NOT_THREADED,
+                required: this.bodyRequired,
                 v2Examples
             }),
             streamRequestBody: undefined,
@@ -539,7 +536,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 contentType,
                 docs: this.description,
                 requestBodyType: convertedSchema.type,
-                required: REQUEST_BODY_REQUIRED_NOT_THREADED,
+                required: this.bodyRequired,
                 v2Examples: this.convertMediaTypeObjectExamples({
                     mediaTypeObject: modifiedMediaTypeObject,
                     exampleGenerationStrategy: "request"

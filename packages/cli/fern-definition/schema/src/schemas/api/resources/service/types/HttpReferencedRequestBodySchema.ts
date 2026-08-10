@@ -7,7 +7,7 @@ export interface HttpReferencedRequestBodySchema extends FernDefinition.WithDocs
     /**
      * Whether the endpoint may be called without a request body. When true, an example may
      * omit `request`, and the generated SDK lets the caller omit the body. Populated from
-     * `requestBody.required` when importing from OpenAPI with `respect-optional-request-body`.
+     * `requestBody.required` when importing from OpenAPI.
      *
      * This is distinct from writing `body: optional<Foo>`, which says the body's *value* may
      * be null. Here the body itself may be absent, so the request carries neither content nor

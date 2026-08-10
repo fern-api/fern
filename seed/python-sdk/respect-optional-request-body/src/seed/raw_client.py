@@ -9,8 +9,6 @@ from .core.http_response import AsyncHttpResponse, HttpResponse
 from .core.jsonable_encoder import encode_path_param
 from .core.parse_error import ParsingError
 from .core.request_options import RequestOptions
-from .core.serialization import convert_and_respect_annotation_metadata
-from .types.refund_request import RefundRequest
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -22,18 +20,14 @@ class RawSeedApi:
         self._client_wrapper = client_wrapper
 
     def refund(
-        self,
-        id: str,
-        *,
-        request: typing.Optional[RefundRequest] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: str, *, amount: typing.Optional[float] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
         Parameters
         ----------
         id : str
 
-        request : typing.Optional[RefundRequest]
+        amount : typing.Optional[float]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -45,7 +39,9 @@ class RawSeedApi:
         _response = self._client_wrapper.httpx_client.request(
             f"refunds/{encode_path_param(id)}",
             method="POST",
-            json=convert_and_respect_annotation_metadata(object_=request, annotation=RefundRequest, direction="write"),
+            json={
+                "amount": amount,
+            },
             headers={
                 "content-type": "application/json",
             },
@@ -106,12 +102,12 @@ class RawSeedApi:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def bulk_refund(
-        self, *, request: typing.Optional[RefundRequest] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, amount: typing.Optional[float] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
         Parameters
         ----------
-        request : typing.Optional[RefundRequest]
+        amount : typing.Optional[float]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -123,7 +119,12 @@ class RawSeedApi:
         _response = self._client_wrapper.httpx_client.request(
             "refunds",
             method="POST",
-            json=convert_and_respect_annotation_metadata(object_=request, annotation=RefundRequest, direction="write"),
+            json={
+                "amount": amount,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -145,18 +146,14 @@ class AsyncRawSeedApi:
         self._client_wrapper = client_wrapper
 
     async def refund(
-        self,
-        id: str,
-        *,
-        request: typing.Optional[RefundRequest] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: str, *, amount: typing.Optional[float] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
         id : str
 
-        request : typing.Optional[RefundRequest]
+        amount : typing.Optional[float]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -168,7 +165,9 @@ class AsyncRawSeedApi:
         _response = await self._client_wrapper.httpx_client.request(
             f"refunds/{encode_path_param(id)}",
             method="POST",
-            json=convert_and_respect_annotation_metadata(object_=request, annotation=RefundRequest, direction="write"),
+            json={
+                "amount": amount,
+            },
             headers={
                 "content-type": "application/json",
             },
@@ -229,12 +228,12 @@ class AsyncRawSeedApi:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def bulk_refund(
-        self, *, request: typing.Optional[RefundRequest] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, amount: typing.Optional[float] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
-        request : typing.Optional[RefundRequest]
+        amount : typing.Optional[float]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -246,7 +245,12 @@ class AsyncRawSeedApi:
         _response = await self._client_wrapper.httpx_client.request(
             "refunds",
             method="POST",
-            json=convert_and_respect_annotation_metadata(object_=request, annotation=RefundRequest, direction="write"),
+            json={
+                "amount": amount,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )

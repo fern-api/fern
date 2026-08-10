@@ -220,6 +220,7 @@
               }
             },
             {
+              "docs": "Bookmark ID",
               "name": "id",
               "valueType": {
                 "primitive": {
@@ -256,6 +257,7 @@
               }
             },
             {
+              "docs": "Bookmark ID",
               "name": "id",
               "valueType": {
                 "primitive": {

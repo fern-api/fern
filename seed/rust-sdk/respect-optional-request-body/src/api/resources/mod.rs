@@ -30,13 +30,15 @@ impl ApiClient {
     ///         ..Default::default()
     ///     };
     ///     let client = ApiClient::new(config).expect("Failed to build client");
-    ///     client.refund(&"refund-id".to_string(), &None, None).await;
+    ///     client
+    ///         .refund(&"refund-id".to_string(), &Default::default(), None)
+    ///         .await;
     /// }
     /// ```
     pub async fn refund(
         &self,
         id: &str,
-        request: &Option<RefundRequest>,
+        request: &RefundRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -103,9 +105,9 @@ impl ApiClient {
     ///     let client = ApiClient::new(config).expect("Failed to build client");
     ///     client
     ///         .bulk_refund(
-    ///             &Some(RefundRequest {
+    ///             &RefundRequest {
     ///                 ..Default::default()
-    ///             }),
+    ///             },
     ///             None,
     ///         )
     ///         .await;
@@ -113,7 +115,7 @@ impl ApiClient {
     /// ```
     pub async fn bulk_refund(
         &self,
-        request: &Option<RefundRequest>,
+        request: &RefundRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

@@ -599,7 +599,7 @@
                                 }
                             }
                         },
-                        "required": null,
+                        "required": false,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -630,7 +630,7 @@
                                         }
                                     }
                                 },
-                                "required": null,
+                                "required": false,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -1474,7 +1474,7 @@
                             }
                         }
                     },
-                    "bodyRequired": null
+                    "bodyRequired": false
                 },
                 "response": {
                     "type": "json"

@@ -85,7 +85,7 @@ await client.RequiredRefundAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">BulkRefundAsync</a>(RefundRequest? { ... }) -> WithRawResponseTask</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">BulkRefundAsync</a>(RefundRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -113,7 +113,7 @@ await client.BulkRefundAsync(new RefundRequest());
 <dl>
 <dd>
 
-**request:** `RefundRequest?` 
+**request:** `RefundRequest` 
     
 </dd>
 </dl>

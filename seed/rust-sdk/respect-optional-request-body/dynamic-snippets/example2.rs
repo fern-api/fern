@@ -10,10 +10,10 @@ async fn main() {
     client
         .refund(
             &"id".to_string(),
-            &Some(RefundRequest {
+            &RefundRequest {
                 amount: Some(1.1),
                 ..Default::default()
-            }),
+            },
             None,
         )
         .await;
