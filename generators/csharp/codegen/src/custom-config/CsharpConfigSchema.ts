@@ -56,6 +56,7 @@ export const CsharpConfigSchema = z.object({
     "generate-literals": z.boolean().optional(),
     "experimental-explicit-nullable-optional": z.boolean().optional(),
     "use-default-request-parameter-values": z.boolean().optional(),
+    "respect-optional-request-body": z.boolean().optional(),
     "redact-response-body-on-error": z.boolean().optional(),
     "enable-inline-types": z.boolean().optional(),
 
