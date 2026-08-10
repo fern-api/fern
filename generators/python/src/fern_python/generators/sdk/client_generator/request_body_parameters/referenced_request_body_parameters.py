@@ -192,9 +192,19 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                     self._request_body.request_body_type,
                     in_endpoint=True,
                 ),
+                initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if self._may_be_omitted() else None,
                 raw_type=self._request_body.request_body_type,
             )
         ]
+
+    def _may_be_omitted(self) -> bool:
+        """Whether the caller may leave the body out of the call entirely.
+
+        The body keeps its own type; only the sentinel default distinguishes "not passed"
+        from an explicit ``None``. Absent ``required`` means required, which is what every
+        endpoint predating the field relies on.
+        """
+        return self._request_body.required is False
 
     def _get_properties(self, names_to_deconflict: Optional[List[str]]) -> List[NamedFunctionParameter]:
         return self.get_parameters(names_to_deconflict) + self._get_non_parameter_properties()

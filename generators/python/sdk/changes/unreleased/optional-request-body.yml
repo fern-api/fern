@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    An endpoint whose request body may be omitted now defaults that body to the `OMIT` sentinel,
+    driven by the IR's `required` field on the request body rather than by wrapping the body in
+    `optional<T>`. The parameter keeps the body's own type: `batch_refund(request: Sequence[RefundRequest] = OMIT)`
+    rather than `request: Optional[Sequence[RefundRequest]]`, so "not passed" stays distinct from an
+    explicit `None`. When the body is left out, the request carries no content and no `Content-Type`.
+  type: feat
