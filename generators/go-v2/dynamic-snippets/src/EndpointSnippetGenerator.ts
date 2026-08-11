@@ -950,11 +950,30 @@ export class EndpointSnippetGenerator {
         if (this.context.customConfig?.respectOptionalRequestBody !== true) {
             return false;
         }
-        if (request.bodyRequired !== false) {
+        if (request.bodyRequired !== false || request.body == null) {
+            return false;
+        }
+        if (!this.bodyParameterIsNilable({ body: request.body })) {
             return false;
         }
         const value = snippet.requestBody;
         return value == null || (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
+    }
+
+    /**
+     * Whether the generated body parameter accepts nil, which mirrors the condition the SDK
+     * generator applies before it lets a caller leave the body out. A value type keeps taking a
+     * value, so an example for it must keep supplying one.
+     */
+    private bodyParameterIsNilable({ body }: { body: FernIr.dynamic.ReferencedRequestBodyType }): boolean {
+        switch (body.type) {
+            case "bytes":
+                return true;
+            case "typeReference":
+                return this.context.dynamicTypeMapper.convert({ typeReference: body.value }).isNilable();
+            default:
+                assertNever(body);
+        }
     }
 
     private getFileUploadRequestBodyStructFields({
