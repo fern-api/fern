@@ -19,6 +19,10 @@ class AbstractRequestBodyParameters:
     @abstractmethod
     def is_default_body_parameter_used(self) -> bool: ...
 
+    def is_body_optional(self) -> bool:
+        """Whether the API accepts the request without a body at all."""
+        return False
+
     @abstractmethod
     def get_content(self) -> Optional[AST.Expression]: ...
 

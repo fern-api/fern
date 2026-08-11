@@ -197,6 +197,9 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             )
         ]
 
+    def is_body_optional(self) -> bool:
+        return self._may_be_omitted()
+
     def _may_be_omitted(self) -> bool:
         """Whether the caller may leave the body out of the call entirely.
 

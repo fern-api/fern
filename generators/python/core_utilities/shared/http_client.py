@@ -270,6 +270,7 @@ def get_request_body(
     data: typing.Optional[typing.Any],
     request_options: typing.Optional[RequestOptions],
     omit: typing.Optional[typing.Any],
+    optional_body: bool = False,
 ) -> typing.Tuple[typing.Optional[typing.Any], typing.Optional[typing.Any]]:
     # A whole body left at the sentinel was never passed by the caller, so it is absent
     # rather than empty: the request carries no content and no `Content-Type`.
@@ -294,9 +295,12 @@ def get_request_body(
     # Only collapse empty dict to None when the body was not explicitly provided
     # and there are no additional body parameters. This preserves explicit empty
     # bodies (e.g., when an endpoint has a request body type but all fields are optional).
-    if json_body == {} and json is None and not has_additional_body_parameters:
+    # `optional_body` marks an endpoint whose body the API does not require, where a body
+    # that ends up empty means the caller passed none of its properties, so the request is
+    # sent with no content and no `Content-Type`.
+    if json_body == {} and (json is None or optional_body) and not has_additional_body_parameters:
         json_body = None
-    if data_body == {} and data is None and not has_additional_body_parameters:
+    if data_body == {} and (data is None or optional_body) and not has_additional_body_parameters:
         data_body = None
 
     return json_body, data_body
@@ -349,6 +353,7 @@ class HttpClient:
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
+        optional_body: bool = False,
         force_multipart: typing.Optional[bool] = None,
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
@@ -361,7 +366,9 @@ class HttpClient:
         )
         timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
 
-        json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+        json_body, data_body = get_request_body(
+            json=json, data=data, request_options=request_options, omit=omit, optional_body=optional_body
+        )
 
         request_files: typing.Optional[RequestFiles] = (
             convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
@@ -512,6 +519,7 @@ class HttpClient:
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
+        optional_body: bool = False,
         force_multipart: typing.Optional[bool] = None,
     ) -> typing.Iterator[httpx.Response]:
         base_url = self.get_base_url(base_url)
@@ -533,7 +541,9 @@ class HttpClient:
         if (request_files is None or len(request_files) == 0) and force_multipart:
             request_files = FORCE_MULTIPART
 
-        json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+        json_body, data_body = get_request_body(
+            json=json, data=data, request_options=request_options, omit=omit, optional_body=optional_body
+        )
 
         data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
@@ -644,6 +654,7 @@ class AsyncHttpClient:
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
+        optional_body: bool = False,
         force_multipart: typing.Optional[bool] = None,
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
@@ -665,7 +676,9 @@ class AsyncHttpClient:
         if (request_files is None or len(request_files) == 0) and force_multipart:
             request_files = FORCE_MULTIPART
 
-        json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+        json_body, data_body = get_request_body(
+            json=json, data=data, request_options=request_options, omit=omit, optional_body=optional_body
+        )
 
         data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
@@ -810,6 +823,7 @@ class AsyncHttpClient:
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
+        optional_body: bool = False,
         force_multipart: typing.Optional[bool] = None,
     ) -> typing.AsyncIterator[httpx.Response]:
         base_url = self.get_base_url(base_url)
@@ -831,7 +845,9 @@ class AsyncHttpClient:
         if (request_files is None or len(request_files) == 0) and force_multipart:
             request_files = FORCE_MULTIPART
 
-        json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+        json_body, data_body = get_request_body(
+            json=json, data=data, request_options=request_options, omit=omit, optional_body=optional_body
+        )
 
         data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 

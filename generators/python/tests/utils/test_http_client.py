@@ -145,6 +145,43 @@ def test_omitted_body_sends_no_content() -> None:
     assert json_body3 == {"hello": "world"}
 
 
+def test_optional_body_sends_no_content_when_every_property_is_omitted() -> None:
+    """An endpoint that inlines an omittable body sends nothing once every property is omitted.
+
+    The body reaches the client as a dict of sentinels rather than as a single argument, so
+    ``optional_body`` is what tells the client that an empty result means "no body at all".
+    """
+    omit = cast(Any, ...)
+
+    json_body, data_body = get_request_body(
+        json={"amount": omit, "source": omit}, data=None, request_options=None, omit=omit, optional_body=True
+    )
+    assert json_body is None
+    assert data_body is None
+
+    # a body the API requires still goes out as `{}`
+    required_json_body, _ = get_request_body(
+        json={"amount": omit, "source": omit}, data=None, request_options=None, omit=omit
+    )
+    assert required_json_body == {}
+
+    # a property the caller did pass keeps the body
+    populated_json_body, _ = get_request_body(
+        json={"amount": 1, "source": omit}, data=None, request_options=None, omit=omit, optional_body=True
+    )
+    assert populated_json_body == {"amount": 1}
+
+    # additional body parameters keep the body, since the caller asked for them
+    with_additional_body_parameters, _ = get_request_body(
+        json={"amount": omit},
+        data=None,
+        request_options={"additional_body_parameters": {"custom": "value"}},
+        omit=omit,
+        optional_body=True,
+    )
+    assert with_additional_body_parameters == {"custom": "value"}
+
+
 def test_json_body_preserves_none_values() -> None:
     """Test that JSON bodies preserve None values (they become JSON null)."""
     json_body, data_body = get_request_body(
