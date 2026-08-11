@@ -549,6 +549,29 @@ async fn assert_request_matched(
         Err(e) => format!("transport error: {e}"),
     };
     let matched_after_probe = guard.received_requests().await.len();
+    // Byte-level comparison. `PathExactMatcher` is a plain
+    // `request.url.path() == expected` string equality, so if these render
+    // identically and still do not match, the difference is invisible
+    // (whitespace, a zero-width character) or the mock is not in the server's
+    // set at all — and those need different fixes. Rendering with `{:?}` plus a
+    // length makes the first case obvious instead of a contradiction.
+    let path_forensics = {
+        let mut lines = vec![format!(
+            "expected {:?} (len {})",
+            expected_path,
+            expected_path.len()
+        )];
+        for (index, request) in received.iter().enumerate() {
+            lines.push(format!(
+                "received[{index}] path {:?} (len {}), full url {:?}",
+                request.url.path(),
+                request.url.path().len(),
+                request.url.as_str()
+            ));
+        }
+        lines.join("
+    ")
+    };
     // Naming the spec-filled properties keeps a spec-derived value from being
     // mistaken for one an API author wrote — and points at the IR/spec
     // disagreement that made the repair necessary in the first place.
@@ -562,7 +585,9 @@ async fn assert_request_matched(
     };
     panic!(
         "{id}: mock matched {} requests, expected exactly 1.\n  expected: {expected_method} {expected_path}\n  command: {binary_name} {}\n  exit code: {exit_code:?}\n  stdout: {stdout}\n  stderr: {stderr}\n  requests the server received:\n{}\n  note: a request listed above that was not matched means a query, header, or body matcher rejected it — diff it against this case in wiremock/wire-test-cases.json{spec_filled_note}
-  self-probe: {expected_method} {probe_url} -> {probe_outcome}; mock matched {matched_after_probe} after probing (a match here means the mock is live and the CLI's request differed; no match means the mock is not matching in this environment)",
+  self-probe: {expected_method} {probe_url} -> {probe_outcome}; mock matched {matched_after_probe} after probing (a match here means the mock is live and the CLI's request differed; no match means the mock is not matching in this environment)
+  path forensics:
+    {path_forensics}",
         matched.len(),
         args.join(" "),
         describe_received(&received)
