@@ -430,7 +430,7 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
-        if (request.body != null) {
+        if (request.body != null && !this.callOmitsRequestBody({ request, snippet })) {
             const bodyArg = this.getBodyRequestArg({ body: request.body, value: snippet.requestBody });
             // a nop literal writes nothing (e.g. an example that omits an optional request body),
             // so including it would emit a dangling argument delimiter.
@@ -441,6 +441,27 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         return args;
+    }
+
+    /**
+     * Whether the call leaves the body out entirely, which the optional parameter allows. Applies
+     * only to a body the caller may omit, and only once the generator opts in to that.
+     */
+    private callOmitsRequestBody({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): boolean {
+        if (this.context.customConfig?.respectOptionalRequestBody !== true) {
+            return false;
+        }
+        if (request.bodyRequired !== false) {
+            return false;
+        }
+        const value = snippet.requestBody;
+        return value == null || (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
     }
 
     private getBodyRequestArg({
