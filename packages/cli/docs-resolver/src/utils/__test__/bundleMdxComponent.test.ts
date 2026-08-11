@@ -1,12 +1,14 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { mkdir, writeFile } from "fs/promises";
+import { mkdir, rm, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 
 import { getThirdPartyImports, maybeBundleMdxComponent } from "../bundleMdxComponent.js";
 
 const context = createMockTaskContext();
+
+const BUNDLE_CACHE_DIR_ENV_VAR = "FERN_MDX_BUNDLE_CACHE_DIR";
 
 describe("getThirdPartyImports", () => {
     it("detects bare imports", () => {
@@ -55,6 +57,17 @@ describe("getThirdPartyImports", () => {
 
     it("returns empty for code without imports", () => {
         expect(getThirdPartyImports("export const Foo = () => null;")).toEqual([]);
+    });
+
+    it("ignores node builtins", () => {
+        expect(
+            getThirdPartyImports(`
+                import { test } from "node:test";
+                import assert from "node:assert/strict";
+                import path from "path";
+                import { readFile } from "fs/promises";
+            `)
+        ).toEqual([]);
     });
 });
 
@@ -121,6 +134,50 @@ describe("maybeBundleMdxComponent", () => {
             expect(bundled).toContain("./constants");
         } finally {
             await cleanup();
+        }
+    }, 120_000);
+
+    it("reuses a cached bundle instead of running rolldown again", async () => {
+        const { path: projectDir, cleanup: cleanupProject } = await tmp.dir({ unsafeCleanup: true });
+        const { path: cacheDir, cleanup: cleanupCache } = await tmp.dir({ unsafeCleanup: true });
+        const originalCacheDir = process.env[BUNDLE_CACHE_DIR_ENV_VAR];
+        process.env[BUNDLE_CACHE_DIR_ENV_VAR] = cacheDir;
+        try {
+            const packageDir = path.join(projectDir, "node_modules", "fake-greeting-lib");
+            await mkdir(packageDir, { recursive: true });
+            await writeFile(
+                path.join(packageDir, "package.json"),
+                JSON.stringify({ name: "fake-greeting-lib", version: "1.0.0", main: "index.js" })
+            );
+            await writeFile(
+                path.join(packageDir, "index.js"),
+                `export function greet(name) { return "MARKER_FROM_FAKE_LIB " + name; }`
+            );
+
+            const componentsDir = path.join(projectDir, "components");
+            await mkdir(componentsDir, { recursive: true });
+            const componentPath = path.join(componentsDir, "Greeting.tsx");
+            const contents = [
+                `import { greet } from "fake-greeting-lib";`,
+                `export const Greeting = ({ name }) => greet(name);`
+            ].join("\n");
+            await writeFile(componentPath, contents);
+
+            const args = { absoluteFilePath: AbsoluteFilePath.of(componentPath), contents, context };
+            const bundled = await maybeBundleMdxComponent(args);
+            expect(bundled).toContain("MARKER_FROM_FAKE_LIB");
+
+            // The library is gone, so this only succeeds by reading the cache
+            await rm(path.join(projectDir, "node_modules"), { recursive: true });
+            expect(await maybeBundleMdxComponent(args)).toBe(bundled);
+        } finally {
+            if (originalCacheDir == null) {
+                delete process.env[BUNDLE_CACHE_DIR_ENV_VAR];
+            } else {
+                process.env[BUNDLE_CACHE_DIR_ENV_VAR] = originalCacheDir;
+            }
+            await cleanupCache();
+            await cleanupProject();
         }
     }, 120_000);
 });
