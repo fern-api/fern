@@ -692,11 +692,23 @@ async fn run_case(id: &str) {
     // (`FERN_CLI_CREDENTIAL_STORE=file` + a temp `HOME` — no OS-keyring prompt, hermetic per test).
     // The request-time provider then injects it as `Authorization: Bearer <token>`, which the
     // business mock asserts below.
-    let auth_home: Option<std::path::PathBuf> = if let Some(setup) = &manifest.login_token_setup {
+    // Every case gets its own hermetic, file-backed credential store — not just
+    // login-flow cases. Any CLI whose auth caches a token (client-credentials
+    // exchanges cache one) otherwise resolves `auto_store()` against the *ambient*
+    // environment: the OS keyring if one is reachable, else a file under the real
+    // `HOME`. That makes the test depend on the machine's keyring state and lets the
+    // cases in one fixture race each other over a single shared store — green on a
+    // developer box, red on a CI runner, and it writes to the developer's real
+    // keyring either way. A per-case temp `HOME` plus
+    // `FERN_CLI_CREDENTIAL_STORE=file` removes both.
+    let auth_home: std::path::PathBuf =
+        std::env::temp_dir().join(format!("{}-wire-{id}", manifest.binary_name));
+    let _ = std::fs::remove_dir_all(&auth_home);
+    std::fs::create_dir_all(&auth_home).expect("create isolated keyring HOME");
+
+    if let Some(setup) = &manifest.login_token_setup {
         use tokio::io::AsyncWriteExt;
-        let home = std::env::temp_dir().join(format!("{}-wire-{id}", manifest.binary_name));
-        let _ = std::fs::remove_dir_all(&home);
-        std::fs::create_dir_all(&home).expect("create isolated keyring HOME");
+        let home = &auth_home;
         let mut login = tokio::process::Command::new(env!("CARGO_BIN_EXE_versioned-store"));
         login
             .args(["auth", "login", "--with-token", "--scheme", setup.scheme_name.as_str()])
@@ -720,10 +732,7 @@ async fn run_case(id: &str) {
             "auth login --with-token failed: {}",
             String::from_utf8_lossy(&login_out.stderr)
         );
-        Some(home)
-    } else {
-        None
-    };
+    }
 
     let server = MockServer::start().await;
 
@@ -850,12 +859,11 @@ async fn run_case(id: &str) {
         cmd.env(&var.name, &var.value);
     }
     cmd.env("NO_COLOR", "1");
-    // Same isolated file-backed keyring the token was seeded into, so the request-time provider
+    // The per-case isolated store created above: hermetic for every auth style, and
+    // the same one a login-flow token was seeded into so the request-time provider
     // resolves the bearer we pasted.
-    if let Some(home) = &auth_home {
-        cmd.env("HOME", home);
-        cmd.env("FERN_CLI_CREDENTIAL_STORE", "file");
-    }
+    cmd.env("HOME", &auth_home);
+    cmd.env("FERN_CLI_CREDENTIAL_STORE", "file");
 
     let output = cmd
         .output()
