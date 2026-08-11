@@ -125,7 +125,15 @@ class RawClient
             $body = $this->encodeRequestBody($request, $options);
             if ($body !== null) {
                 $httpRequest = $httpRequest->withBody($body);
-            }
+            }<% if (it.respectOptionalRequestBody) { %> else {
+                // A request that sends nothing must not advertise a media type, so that a server
+                // branching on Content-Type sees a bodyless call for what it is.
+                $headers = array_filter(
+                    $headers,
+                    fn (string $name) => strtolower($name) !== 'content-type',
+                    ARRAY_FILTER_USE_KEY,
+                );
+            }<% } %>
         }
 
         foreach ($headers as $name => $value) {

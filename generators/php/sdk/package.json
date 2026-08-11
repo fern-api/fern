@@ -52,7 +52,7 @@
     "@fern-api/php-model": "workspace:*",
     "@fern-fern/generator-cli-sdk": "^0.1.5",
     "@fern-fern/generator-exec-sdk": "catalog:",
-    "@fern-fern/ir-sdk": "67.15.0",
+    "@fern-fern/ir-sdk": "67.21.0",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
     "lodash-es": "catalog:",

@@ -158,7 +158,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }: {
         filename: string;
         namespace: string;
-        extraTemplateVars?: Record<string, string>;
+        extraTemplateVars?: Record<string, string | boolean>;
     }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
 
@@ -288,7 +288,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }: {
         contents: string;
         namespace: string;
-        extraTemplateVars?: Record<string, string>;
+        extraTemplateVars?: Record<string, string | boolean>;
     }): string {
         return eta.renderString(contents, {
             namespace,
