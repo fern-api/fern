@@ -94,6 +94,8 @@ export const HeaderPosition = z.enum(["fixed", "static"]);
 
 export const ChangelogLayout = z.enum(["timeline", "classic"]);
 
+export const ApiReferenceLayout = z.enum(["indented", "cards"]);
+
 export const ProductSwitcherThemeConfig = z.enum(["default", "toggle", "tabs"]);
 
 export const LanguageSwitcherThemeConfig = z.enum(["default", "minimal"]);
@@ -308,6 +310,7 @@ export const LayoutConfig = z.object({
     "hide-feedback": z.boolean().optional(),
     "mobile-toc": z.boolean().optional(),
     "changelog-layout": ChangelogLayout.optional(),
+    "api-reference-layout": ApiReferenceLayout.optional(),
     "show-nav-availability-badges": z.boolean().optional()
 });
 
