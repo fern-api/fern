@@ -293,6 +293,35 @@ allowedFailures:
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-mandatory-auth
   - oauth-client-credentials-nested-root
+  # Its 4 wire tests fail on CI and only on CI: the mock matches 0 requests. Not
+  # a regression from the wire-test work — this fixture's generated `main.rs` and
+  # the whole of `sdk/src/auth/` are byte-identical to main, and the other 9 wire
+  # fixtures pass in the same container, in the same run, concurrently.
+  #
+  # Ruled out, with the diagnostics the harness now prints on a mismatch:
+  #   - the CLI's request. A self-probe issued from inside the test for the exact
+  #     expected method and path also gets 404.
+  #   - the matcher data. `expected "/plants" (len 7)` vs `received "/plants"
+  #     (len 7)` — byte-identical, and `PathExactMatcher` is a plain string
+  #     equality on `request.url.path()`.
+  #   - the environment/library. 13 local runs across 4 environments (arm64,
+  #     arm64 with a broken HOME, amd64 under emulation, and CI's exact
+  #     `--parallel 16` shard invocation with scripts) all pass.
+  # Deterministic on CI: 9 consecutive failures over 3 runs x 3 retries.
+  #
+  # The one structural difference from every fixture that passes: this is the
+  # only fixture with an `authMock`, so the only one that mounts a second mock on
+  # the server alongside the scoped business mock.
+  #
+  # Worth knowing before removing this line: these tests were green for ~3 months
+  # while the CLI sent no credential at all. The scheme name in this fixture's
+  # `generators.yml` (`CustomAuth`) does not match its spec's
+  # `components.securitySchemes` (`BearerAuth`), the CLI joins bindings to
+  # operations by name, finds none, and sends every request unauthenticated with
+  # exit 0 — and `mock-utils` emits no auth matcher for `oauth` schemes, so
+  # nothing checked. Both are filed separately. Green here would be the wrong
+  # outcome until the credential assertion exists.
+  - oauth-client-credentials-openapi
   - oauth-client-credentials-reference
   - oauth-client-credentials-with-variables
   - oauth-pkce
