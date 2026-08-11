@@ -504,6 +504,9 @@ fn substitute_path(template: &str, params: &serde_json::Map<String, serde_json::
 }
 
 /// Render the requests the mock server actually received, for diagnostics.
+/// Renders the full URL, query string included: a stray or missing query
+/// parameter is invisible when only the path is printed, and that is precisely
+/// the class of difference a matcher rejects.
 fn describe_received(requests: &[wiremock::Request]) -> String {
     if requests.is_empty() {
         return "  (the server received no requests at all)".to_string();
@@ -565,6 +568,25 @@ async fn assert_request_matched(
         return;
     }
     let received = server.received_requests().await.unwrap_or_default();
+    // Self-probe. The CLI's request and this one differ only in who sent them, so
+    // if the mock matches this but not the CLI's, the difference is in the request
+    // (something the dump below does not surface); if it matches neither, the mock
+    // is not matching in this environment at all. Without this the two are
+    // indistinguishable, which is exactly the wall a mock that misses only on CI
+    // puts you against. Meaningless for cases carrying body matchers — a bodyless
+    // probe cannot satisfy those — so it is reported, not asserted on.
+    let probe_url = format!("{}{}", server.uri(), expected_path);
+    let probe_method = reqwest::Method::from_bytes(expected_method.as_bytes())
+        .unwrap_or(reqwest::Method::GET);
+    let probe_outcome = match reqwest::Client::new()
+        .request(probe_method, &probe_url)
+        .send()
+        .await
+    {
+        Ok(response) => format!("HTTP {}", response.status().as_u16()),
+        Err(e) => format!("transport error: {e}"),
+    };
+    let matched_after_probe = guard.received_requests().await.len();
     // Naming the spec-filled properties keeps a spec-derived value from being
     // mistaken for one an API author wrote — and points at the IR/spec
     // disagreement that made the repair necessary in the first place.
@@ -577,7 +599,7 @@ async fn assert_request_matched(
         )
     };
     panic!(
-        "{id}: mock matched {} requests, expected exactly 1.\\n  expected: {expected_method} {expected_path}\\n  command: {binary_name} {}\\n  exit code: {exit_code:?}\\n  stdout: {stdout}\\n  stderr: {stderr}\\n  requests the server received:\\n{}\\n  note: a request listed above that was not matched means a query, header, or body matcher rejected it — diff it against this case in wiremock/wire-test-cases.json{spec_filled_note}",
+        "{id}: mock matched {} requests, expected exactly 1.\\n  expected: {expected_method} {expected_path}\\n  command: {binary_name} {}\\n  exit code: {exit_code:?}\\n  stdout: {stdout}\\n  stderr: {stderr}\\n  requests the server received:\\n{}\\n  note: a request listed above that was not matched means a query, header, or body matcher rejected it — diff it against this case in wiremock/wire-test-cases.json{spec_filled_note}\n  self-probe: {expected_method} {probe_url} -> {probe_outcome}; mock matched {matched_after_probe} after probing (a match here means the mock is live and the CLI's request differed; no match means the mock is not matching in this environment)",
         matched.len(),
         args.join(" "),
         describe_received(&received)
