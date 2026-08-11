@@ -1176,7 +1176,13 @@ describe("${serviceName}", () => {
             return;
         }
 
-        const rawRequestBody = this.getRequestExample(example.request);
+        const rawRequestBody = callOmitsRequestBody({
+            endpoint,
+            example,
+            respectOptionalRequestBody: context.respectOptionalRequestBody
+        })
+            ? undefined
+            : this.getRequestExample(example.request);
         const isSSEStreaming =
             endpoint.response?.body?.type === "streaming" && endpoint.response.body.value.type === "sse";
         const rawResponseBody = this.getResponseExample(
@@ -2097,6 +2103,42 @@ describe("${serviceName}", () => {
             }
         });
     }
+}
+
+/**
+ * Whether the generated call leaves the body out entirely, in which case the mock must not assert
+ * one. This mirrors the call the snippet generator writes: a body the caller may omit is dropped
+ * from the call when the example carries nothing for it.
+ */
+export function callOmitsRequestBody({
+    endpoint,
+    example,
+    respectOptionalRequestBody
+}: {
+    endpoint: FernIr.HttpEndpoint;
+    example: FernIr.ExampleEndpointCall;
+    respectOptionalRequestBody: boolean;
+}): boolean {
+    if (!respectOptionalRequestBody) {
+        return false;
+    }
+    if (endpoint.requestBody?.type !== "reference" || endpoint.requestBody.required !== false) {
+        return false;
+    }
+    const request = example.request;
+    if (request == null) {
+        return true;
+    }
+    return request.type === "reference" && isEmptyJsonObject(request.jsonExample);
+}
+
+function isEmptyJsonObject(jsonExample: unknown): boolean {
+    return (
+        typeof jsonExample === "object" &&
+        jsonExample != null &&
+        !Array.isArray(jsonExample) &&
+        Object.keys(jsonExample).length === 0
+    );
 }
 
 export function getHeaderValueStringLiteral(jsonExample: unknown): string {
