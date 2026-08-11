@@ -1,0 +1,11 @@
+- summary: |
+    Skip test files (`*.test.*`, `*.spec.*`, `__tests__/`) and node builtin imports when
+    bundling `experimental.mdx-components`, so a component folder containing tests no longer
+    fails docs generation.
+  type: fix
+- summary: |
+    Cache custom MDX component bundles in `FERN_MDX_BUNDLE_CACHE_DIR` when it is set, and
+    populate that cache from `fern install-dependencies`. This lets air-gapped deployments
+    bundle components ahead of time, during a phase that has network access, instead of at
+    generation time.
+  type: feat

@@ -18,6 +18,7 @@ export {
     getTranslatedAnnouncement
 } from "./applyTranslatedNavigationOverlays.js";
 export type TranslationNavigationOverlay = docsYml.TranslationNavigationOverlay;
+export { bundleMdxComponents } from "./bundleMdxComponents.js";
 export {
     DocsDefinitionResolver,
     type RegisterApiFn,
