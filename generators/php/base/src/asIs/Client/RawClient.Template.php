@@ -127,11 +127,18 @@ class RawClient
                 $httpRequest = $httpRequest->withBody($body);
             }<% if (it.respectOptionalRequestBody) { %> else {
                 // A request that sends nothing must not advertise a media type, so that a server
-                // branching on Content-Type sees a bodyless call for what it is.
+                // branching on Content-Type sees a bodyless call for what it is. Only the default
+                // media type is dropped; a Content-Type the caller asked for still goes out.
+                $defaultContentType = match (get_class($request)) {
+                    JsonApiRequest::class => "application/json",
+                    UrlEncodedApiRequest::class => "application/x-www-form-urlencoded",
+                    default => null,
+                };
                 $headers = array_filter(
                     $headers,
-                    fn (string $name) => strtolower($name) !== 'content-type',
-                    ARRAY_FILTER_USE_KEY,
+                    fn (string $value, string $name) => strtolower($name) !== 'content-type'
+                        || $value !== $defaultContentType,
+                    ARRAY_FILTER_USE_BOTH,
                 );
             }<% } %>
         }
