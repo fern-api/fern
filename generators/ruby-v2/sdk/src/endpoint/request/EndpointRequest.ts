@@ -17,6 +17,11 @@ export interface HeaderParameterCodeBlock {
 export interface RequestBodyCodeBlock {
     code?: ruby.CodeBlock;
     requestBodyReference: ruby.CodeBlock;
+    /**
+     * True when the body reference evaluates to nil for callers that pass no body,
+     * in which case the request must omit the Content-Type header as well.
+     */
+    omitContentTypeWithoutBody?: boolean;
 }
 
 export abstract class EndpointRequest {
@@ -39,6 +44,28 @@ export abstract class EndpointRequest {
     }
 
     public abstract getParameterType(): ruby.Type;
+
+    /**
+     * True when the IR marks the referenced request body as optional and the generator
+     * is configured to let callers omit it entirely.
+     */
+    protected respectsOptionalRequestBody(): boolean {
+        const requestBody = this.endpoint.requestBody;
+        return (
+            this.context.customConfig.respectOptionalRequestBody === true &&
+            requestBody != null &&
+            requestBody.type === "reference" &&
+            requestBody.required === false
+        );
+    }
+
+    /**
+     * Writes `<bodyVariableName>.empty? ? nil : ` so that an omitted optional body
+     * becomes a nil body rather than an empty object.
+     */
+    protected writeOptionalBodyGuard(writer: ruby.Writer, bodyVariableName: string): void {
+        writer.write(`${bodyVariableName}.empty? ? nil : `);
+    }
 
     /**
      * Follows alias-of-named chains to the terminal type id so request bodies

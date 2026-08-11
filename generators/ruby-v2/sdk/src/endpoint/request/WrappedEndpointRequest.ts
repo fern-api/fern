@@ -151,6 +151,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
 
         const bodyParamsVar = this.hasPathParameters() ? BODY_BAG_NAME : "params";
+        const omitContentTypeWithoutBody = this.respectsOptionalRequestBody();
 
         if (
             this.endpoint.requestBody.type === "reference" &&
@@ -169,24 +170,32 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
                     }),
                     requestBodyReference: ruby.codeblock((writer) => {
+                        if (omitContentTypeWithoutBody) {
+                            this.writeOptionalBodyGuard(writer, bodyParamsVar);
+                        }
                         if (isModule) {
                             writer.write(bodyParamsVar);
                         } else {
                             writer.writeNode(bodyTypeReference);
                             writer.write(`.new(${bodyParamsVar}).to_h`);
                         }
-                    })
+                    }),
+                    omitContentTypeWithoutBody
                 };
             }
             return {
                 requestBodyReference: ruby.codeblock((writer) => {
+                    if (omitContentTypeWithoutBody) {
+                        this.writeOptionalBodyGuard(writer, bodyParamsVar);
+                    }
                     if (isModule) {
                         writer.write(bodyParamsVar);
                     } else {
                         writer.writeNode(bodyTypeReference);
                         writer.write(`.new(${bodyParamsVar}).to_h`);
                     }
-                })
+                }),
+                omitContentTypeWithoutBody
             };
         }
 
@@ -229,15 +238,23 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
                 }),
                 requestBodyReference: ruby.codeblock((writer) => {
+                    if (omitContentTypeWithoutBody) {
+                        this.writeOptionalBodyGuard(writer, BODY_BAG_NAME);
+                    }
                     writer.write(BODY_BAG_NAME);
-                })
+                }),
+                omitContentTypeWithoutBody
             };
         }
 
         return {
             requestBodyReference: ruby.codeblock((writer) => {
+                if (omitContentTypeWithoutBody) {
+                    this.writeOptionalBodyGuard(writer, bodyParamsVar);
+                }
                 writer.write(bodyParamsVar);
-            })
+            }),
+            omitContentTypeWithoutBody
         };
     }
 

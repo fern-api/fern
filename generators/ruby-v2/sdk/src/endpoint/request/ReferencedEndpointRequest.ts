@@ -40,8 +40,13 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     }
 
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
+        const omitContentTypeWithoutBody = this.respectsOptionalRequestBody();
         return {
+            omitContentTypeWithoutBody,
             requestBodyReference: ruby.codeblock((writer) => {
+                if (omitContentTypeWithoutBody) {
+                    this.writeOptionalBodyGuard(writer, "params");
+                }
                 if (this.requestBodyShape.type === "named") {
                     const resolvedTypeId = this.resolveNamedTypeId(this.requestBodyShape.typeId);
                     const typeDeclaration = this.context.getTypeDeclarationOrThrow(resolvedTypeId);
