@@ -61,8 +61,18 @@ async function bundleDocsMdxComponents(context: TaskContext): Promise<boolean> {
         return true;
     }
 
-    const docsWorkspace = await loadDocsWorkspace({ fernDirectory, context });
-    const mdxComponents = docsWorkspace?.config.experimental?.mdxComponents;
+    let mdxComponents: string[] | undefined;
+    try {
+        const docsWorkspace = await loadDocsWorkspace({ fernDirectory, context });
+        mdxComponents = docsWorkspace?.config.experimental?.mdxComponents;
+    } catch (error) {
+        // An unparseable docs config is not this command's concern; `fern generate` reports it.
+        context.logger.debug(
+            `Skipping custom MDX component bundling, failed to load the docs config: ${error instanceof Error ? error.message : error}`
+        );
+        return true;
+    }
+
     if (mdxComponents == null || mdxComponents.length === 0) {
         return true;
     }

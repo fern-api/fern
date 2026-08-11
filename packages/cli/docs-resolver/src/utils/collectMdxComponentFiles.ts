@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, listFiles, resolve } from "@fern-api/fs-utils";
 import { stat } from "fs/promises";
 
 const MDX_COMPONENT_EXTENSIONS = "{js,ts,jsx,tsx,md,mdx}";
@@ -8,7 +8,7 @@ const MDX_COMPONENT_EXTENSIONS_REGEX = /\.(js|ts|jsx|tsx|md|mdx)$/;
  * Test files live alongside components but are not components: they import test
  * runners and other dev-only libraries that don't belong in the docs bundle.
  */
-const TEST_FILE_REGEX = /(\.(test|spec)\.[^.]+$|(^|\/)__tests__\/)/;
+const TEST_FILE_REGEX = /(\.(test|spec)\.[^.]+$|(^|[/\\])__tests__[/\\])/;
 
 /**
  * Resolves the `experimental.mdx-components` entries of a docs config to the
@@ -26,7 +26,7 @@ export async function collectMdxComponentFiles({
 
     await Promise.all(
         mdxComponents.map(async (filepath) => {
-            const absoluteFilePath = resolve(absolutePathToDocsWorkspace, RelativeFilePath.of(filepath));
+            const absoluteFilePath = resolve(absolutePathToDocsWorkspace, filepath);
             const stats = await stat(absoluteFilePath);
 
             if (stats.isDirectory()) {

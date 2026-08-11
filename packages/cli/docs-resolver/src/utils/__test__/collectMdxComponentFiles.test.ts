@@ -41,6 +41,19 @@ describe("collectMdxComponentFiles", () => {
         }
     });
 
+    it("accepts an absolute component path", async () => {
+        const { dir, cleanup } = await createDocsWorkspace();
+        try {
+            const files = await collectMdxComponentFiles({
+                absolutePathToDocsWorkspace: AbsoluteFilePath.of(dir),
+                mdxComponents: [path.join(dir, "components", "Banner.tsx")]
+            });
+            expect(files.map((file) => path.relative(dir, file))).toEqual(["components/Banner.tsx"]);
+        } finally {
+            await cleanup();
+        }
+    });
+
     it("includes a directly referenced file", async () => {
         const { dir, cleanup } = await createDocsWorkspace();
         try {
