@@ -306,6 +306,25 @@ def get_request_body(
     return json_body, data_body
 
 
+def drop_content_type_without_body(
+    headers: typing.Dict[str, typing.Any],
+    *,
+    json_body: typing.Optional[typing.Any],
+    data_body: typing.Optional[typing.Any],
+    optional_body: bool,
+) -> typing.Dict[str, typing.Any]:
+    """Strip ``Content-Type`` from a request that carries no body.
+
+    ``get_request_body`` drops the body of an ``optional_body`` endpoint when the caller
+    supplied none of it, but the endpoint still passes the content type it would have used.
+    A request that sends nothing must not advertise a media type, so a server that branches
+    on the header sees a bodyless call for what it is.
+    """
+    if not optional_body or json_body is not None or data_body is not None:
+        return headers
+    return {key: value for key, value in headers.items() if key.lower() != "content-type"}
+
+
 class HttpClient:
     def __init__(
         self,
@@ -410,6 +429,9 @@ class HttpClient:
                     **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
                 }
             )
+        )
+        _request_headers = drop_content_type_without_body(
+            _request_headers, json_body=json_body, data_body=data_body, optional_body=optional_body
         )
 
         if self.logger.is_debug():
@@ -577,6 +599,9 @@ class HttpClient:
                 }
             )
         )
+        _request_headers = drop_content_type_without_body(
+            _request_headers, json_body=json_body, data_body=data_body, optional_body=optional_body
+        )
 
         if self.logger.is_debug():
             self.logger.debug(
@@ -714,6 +739,9 @@ class AsyncHttpClient:
                     **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
                 }
             )
+        )
+        _request_headers = drop_content_type_without_body(
+            _request_headers, json_body=json_body, data_body=data_body, optional_body=optional_body
         )
 
         if self.logger.is_debug():
@@ -883,6 +911,9 @@ class AsyncHttpClient:
                     **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                 }
             )
+        )
+        _request_headers = drop_content_type_without_body(
+            _request_headers, json_body=json_body, data_body=data_body, optional_body=optional_body
         )
 
         if self.logger.is_debug():

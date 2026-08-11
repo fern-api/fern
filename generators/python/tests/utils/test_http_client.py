@@ -9,6 +9,7 @@ from core_utilities.shared.http_client import (
     HttpClient,
     _build_url,
     _should_retry,
+    drop_content_type_without_body,
     get_request_body,
     remove_none_from_dict,
 )
@@ -820,3 +821,34 @@ async def test_async_request_options_timeout_takes_precedence() -> None:
     )
     await http_client.request(path="/test", method="GET", request_options={"timeout": 30, "timeout_in_seconds": 45})
     assert dummy_client.last_request_kwargs["timeout"] == 30
+
+
+def test_drop_content_type_without_body_omits_header_for_bodyless_optional_call() -> None:
+    """An optional-body endpoint the caller left empty must not advertise a media type.
+
+    `get_request_body` drops the body, but the endpoint still hands over the content type it
+    would have used, so a server that branches on the header would see a JSON request carrying
+    nothing at all.
+    """
+    headers = {"content-type": "application/json", "authorization": "Bearer x"}
+
+    assert drop_content_type_without_body(
+        headers, json_body=None, data_body=None, optional_body=True
+    ) == {"authorization": "Bearer x"}
+
+
+def test_drop_content_type_without_body_keeps_header_when_a_body_is_sent() -> None:
+    headers = {"content-type": "application/json"}
+
+    assert (
+        drop_content_type_without_body(headers, json_body={"amount": 60}, data_body=None, optional_body=True)
+        == headers
+    )
+    assert drop_content_type_without_body(headers, json_body=None, data_body="raw", optional_body=True) == headers
+
+
+def test_drop_content_type_without_body_leaves_required_body_endpoints_alone() -> None:
+    """Without the opt-in, an endpoint keeps the header it has always sent."""
+    headers = {"Content-Type": "application/json"}
+
+    assert drop_content_type_without_body(headers, json_body=None, data_body=None, optional_body=False) == headers
