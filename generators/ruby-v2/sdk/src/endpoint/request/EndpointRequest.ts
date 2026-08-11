@@ -2,6 +2,7 @@ import { CaseConverter } from "@fern-api/base-generator";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { isUrlEncodedRequestBody } from "../../utils/requestBody.js";
 import { RawClient } from "../http/RawClient.js";
 
 export interface QueryParameterCodeBlock {
@@ -46,8 +47,9 @@ export abstract class EndpointRequest {
     public abstract getParameterType(): ruby.Type;
 
     /**
-     * True when the IR marks the referenced request body as optional and the generator
-     * is configured to let callers omit it entirely.
+     * True when the IR marks the referenced JSON request body as optional and the generator
+     * is configured to let callers omit it entirely. Form-urlencoded bodies are excluded
+     * because their request class always sends a form content type.
      */
     protected respectsOptionalRequestBody(): boolean {
         const requestBody = this.endpoint.requestBody;
@@ -55,7 +57,8 @@ export abstract class EndpointRequest {
             this.context.customConfig.respectOptionalRequestBody === true &&
             requestBody != null &&
             requestBody.type === "reference" &&
-            requestBody.required === false
+            requestBody.required === false &&
+            !isUrlEncodedRequestBody(requestBody)
         );
     }
 
