@@ -612,8 +612,8 @@ async fn run_case(id: &str) {
                 // only ever exercise that last fallback — which is precisely the
                 // regression worth guarding: labelling every upload
                 // `application/octet-stream` makes servers that validate a part's
-                // media type reject it (ElevenLabs' knowledge-base upload answers
-                // `Invalid file type` for a mislabelled `.txt`).
+                // media type reject it — a real API answered `Invalid file type`
+                // for a `.txt` mislabelled that way.
                 let file_name = format!("{}.txt", field.wire_name);
                 let file_path = fixtures_dir.join(&file_name);
                 std::fs::write(&file_path, marker.as_bytes()).expect("write multipart fixture file");

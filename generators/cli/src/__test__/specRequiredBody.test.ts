@@ -54,6 +54,130 @@ describe("reconcileRequiredBodyProperties", () => {
         expect(result.filled).toEqual(["languages"]);
     });
 
+    it("fills a required OpenAPI 3.0 `nullable: true` property with null", () => {
+        // 3.0 spells nullability as a sibling keyword rather than a union
+        // branch. Both spellings must be recognised or the repair would only
+        // work for 3.1 specs — half the specs we import.
+        const document = specWith({
+            type: "object",
+            required: ["languages"],
+            properties: { languages: { type: "array", items: { type: "string" }, nullable: true } }
+        });
+
+        const result = reconcile(document, {});
+
+        expect(result.body).toEqual({ languages: null });
+        expect(result.filled).toEqual(["languages"]);
+    });
+
+    it("fills a required 3.1 type-array nullable property with null", () => {
+        // The third spelling: `type: ["string", "null"]`.
+        const document = specWith({
+            type: "object",
+            required: ["label"],
+            properties: { label: { type: ["string", "null"] } }
+        });
+
+        expect(reconcile(document, {}).body).toEqual({ label: null });
+    });
+
+    it("uses the non-null type when a type array does not include null", () => {
+        // `type: ["string"]` is a required, non-nullable property: it needs a
+        // real value, not a null.
+        const document = specWith({
+            type: "object",
+            required: ["label"],
+            properties: { label: { type: ["string"] } }
+        });
+
+        expect(reconcile(document, {}).body).toEqual({ label: "label" });
+    });
+
+    it("recognises a oneOf null branch as well as anyOf", () => {
+        const document = specWith({
+            type: "object",
+            required: ["choice"],
+            properties: { choice: { oneOf: [{ type: "string" }, { type: "null" }] } }
+        });
+
+        expect(reconcile(document, {}).body).toEqual({ choice: null });
+    });
+
+    it("resolves a requestBody that is itself a $ref", () => {
+        // `requestBody: {$ref: '#/components/requestBodies/...'}` is common in
+        // hand-written specs and would otherwise index as "no contract".
+        const document = {
+            openapi: "3.0.3",
+            info: { title: "t", version: "1" },
+            paths: {
+                "/things": {
+                    post: {
+                        requestBody: { $ref: "#/components/requestBodies/ThingBody" },
+                        responses: { "200": { description: "ok" } }
+                    }
+                }
+            },
+            components: {
+                requestBodies: {
+                    ThingBody: {
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    required: ["name"],
+                                    properties: { name: { type: "string", nullable: true } }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const result = reconcileRequiredBodyProperties({
+            body: {},
+            method: "POST",
+            path: "/things",
+            contracts: buildRequiredBodyContracts(document)
+        });
+
+        expect(result.body).toEqual({ name: null });
+    });
+
+    it("indexes vendor and parameterized JSON media types", () => {
+        // `application/vnd.api+json`, `application/merge-patch+json`, and
+        // `application/json; charset=utf-8` all travel through `--json`.
+        for (const mediaType of [
+            "application/vnd.api+json",
+            "application/merge-patch+json",
+            "application/json; charset=utf-8"
+        ]) {
+            const document = {
+                openapi: "3.1.0",
+                info: { title: "t", version: "1" },
+                paths: {
+                    "/things": {
+                        post: {
+                            requestBody: {
+                                content: {
+                                    [mediaType]: {
+                                        schema: {
+                                            type: "object",
+                                            required: ["name"],
+                                            properties: { name: { type: "string" } }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            expect(buildRequiredBodyContracts(document).size, mediaType).toBe(1);
+        }
+    });
+
     it("leaves a body alone when every required property is already present", () => {
         const document = specWith({
             type: "object",

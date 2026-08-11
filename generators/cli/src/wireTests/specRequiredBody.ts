@@ -337,11 +337,10 @@ const MAX_BODY_DEPTH = 8;
  * are absent and descending into the ones that are present.
  *
  * Descending matters: the omission can sit inside a value the example *did*
- * supply — a required `version_id` missing from each element of a
- * `pronunciation_dictionary_locators` array is the same bug one level down, and
- * a top-level-only pass would leave it. Returns `undefined` when nothing
- * changed, so untouched cases keep their original object identity and can't
- * churn the manifest.
+ * supply — a required, nullable property missing from every element of an array
+ * the example populated is the same bug one level down, and a top-level-only
+ * pass would leave it. Returns `undefined` when nothing changed, so untouched
+ * cases keep their original object identity and can't churn the manifest.
  *
  * `filled` collects JSON-path-ish names (`locators[0].version_id`) so the
  * diagnostic points at the exact spot rather than just the root property.
