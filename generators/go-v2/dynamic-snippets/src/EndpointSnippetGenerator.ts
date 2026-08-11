@@ -729,7 +729,10 @@ export class EndpointSnippetGenerator {
         this.context.errors.scope(Scope.RequestBody);
         const requestArg: go.AstNode | undefined =
             request.body != null
-                ? this.getBodyRequestArg({ body: request.body, value: snippet.requestBody })
+                ? this.callOmitsRequestBody({ request, snippet })
+                    ? // Go has no optional parameters, so a call that leaves the body out passes nil.
+                      go.TypeInstantiation.nop()
+                    : this.getBodyRequestArg({ body: request.body, value: snippet.requestBody })
                 : undefined;
         this.context.errors.unscope();
 
@@ -929,6 +932,29 @@ export class EndpointSnippetGenerator {
             default:
                 assertNever(body);
         }
+    }
+
+    /**
+     * Whether the call leaves the body out entirely, which a nil argument expresses. Applies only to
+     * a body the caller may omit, and only once the generator opts in to that. An example that
+     * supplies nothing for the body reaches the snippet generator as an absent or empty value, since
+     * that is how the importer spells it.
+     */
+    private callOmitsRequestBody({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): boolean {
+        if (this.context.customConfig?.respectOptionalRequestBody !== true) {
+            return false;
+        }
+        if (request.bodyRequired !== false) {
+            return false;
+        }
+        const value = snippet.requestBody;
+        return value == null || (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
     }
 
     private getFileUploadRequestBodyStructFields({

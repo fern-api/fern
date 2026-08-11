@@ -20,6 +20,7 @@ export const baseGoCustomConfigSchema = z.strictObject({
     inlinePathParameters: z.boolean().optional(),
     inlineFileProperties: z.boolean().optional(),
     omitEmptyRequestWrappers: z.boolean().optional(),
+    respectOptionalRequestBody: z.boolean().optional(),
     union: z.enum(["v0", "v1"]).optional(),
     useReaderForBytesRequest: z.boolean().optional(),
     useDefaultRequestParameterValues: z.boolean().optional(),
