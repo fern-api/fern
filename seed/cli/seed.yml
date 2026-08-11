@@ -321,7 +321,11 @@ allowedFailures:
   # exit 0 — and `mock-utils` emits no auth matcher for `oauth` schemes, so
   # nothing checked. Both are filed separately. Green here would be the wrong
   # outcome until the credential assertion exists.
-  - oauth-client-credentials-openapi
+  #
+  # Must carry the `:with-wire-tests` suffix: `testWorkspaceFixtures.ts` keys a
+  # result as `<id>:<outputFolder>` whenever the two differ, then does an exact
+  # set difference against this list. The bare name matches nothing.
+  - oauth-client-credentials-openapi:with-wire-tests
   - oauth-client-credentials-reference
   - oauth-client-credentials-with-variables
   - oauth-pkce
