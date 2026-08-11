@@ -56,6 +56,96 @@ function makeSingleEndpointIr(): FernIr.IntermediateRepresentation {
     return ir;
 }
 
+/**
+ * The same minimal IR, but with an auth scheme declared and the endpoint marked
+ * as requiring auth — the combination `mock-utils` needs before it will emit
+ * stub-level auth header matchers.
+ */
+function makeAuthedIr(
+    scheme: Record<string, unknown>,
+    options: { endpointAuth?: boolean; requirement?: unknown } = {}
+): FernIr.IntermediateRepresentation {
+    const ir = makeSingleEndpointIr() as unknown as {
+        services: Record<string, { endpoints: Array<Record<string, unknown>> }>;
+        auth: Record<string, unknown>;
+    };
+    const endpoint = ir.services.service_users?.endpoints[0];
+    if (endpoint != null) {
+        endpoint.auth = options.endpointAuth ?? true;
+    }
+    ir.auth = { schemes: [scheme], ...(options.requirement != null ? { requirement: options.requirement } : {}) };
+    return ir as unknown as FernIr.IntermediateRepresentation;
+}
+
+function headerMatchersFor(ir: FernIr.IntermediateRepresentation): WireTestCase["headerMatchers"] {
+    const manifest = buildWireTestManifest(ir, {
+        binaryName: "acme-cli",
+        rootGroup: null,
+        specs: [{ file: "cli/acme-cli/openapi0.json", namespace: null }],
+        authEnvVars: []
+    });
+    return manifest.cases[0]?.headerMatchers ?? [];
+}
+
+/**
+ * Auth header matchers are what make a case fail when the CLI drops or mangles
+ * its credential header. `mock-utils` only emits them for `basic`, `bearer` and
+ * `header` schemes — its switch has no `oauth` case — so every wire-test seed
+ * fixture (unauthenticated, or OAuth) carries an empty list and leaves this path
+ * unexecuted. These pin the three shapes that do emit them, including which
+ * matcher kind each produces, since the harness dispatches on that:
+ * `equalTo` → `match_header`, `matches` → `match_header_regex`.
+ */
+describe("auth header matchers", () => {
+    it("emits a presence regex for an apiKey-in-header scheme", () => {
+        const matchers = headerMatchersFor(
+            makeAuthedIr({ type: "header", name: { wireValue: "x-api-key" }, headerEnvVar: "ACME_API_KEY" })
+        );
+
+        expect(matchers).toEqual([{ name: "x-api-key", matches: ".+" }]);
+    });
+
+    it("emits a Bearer-prefixed regex for a bearer scheme", () => {
+        const matchers = headerMatchersFor(makeAuthedIr({ type: "bearer", tokenEnvVar: "ACME_TOKEN" }));
+
+        expect(matchers).toEqual([{ name: "Authorization", matches: "Bearer .+" }]);
+    });
+
+    it("emits an exact Authorization value for a basic scheme", () => {
+        const matchers = headerMatchersFor(makeAuthedIr({ type: "basic" }));
+
+        // Exact, not a regex: the credential is fully determined by the test
+        // username/password, so a wrongly-encoded header must not match.
+        const expected = `Basic ${Buffer.from("test-username:test-password").toString("base64")}`;
+        expect(matchers).toEqual([{ name: "Authorization", equalTo: expected }]);
+    });
+
+    it("emits nothing for an endpoint that declares no auth", () => {
+        // Requiring a credential from an operation that declares none makes its
+        // mock unmatchable and fails the case for a reason unrelated to what it
+        // tests — the `security: []` operation problem.
+        const matchers = headerMatchersFor(
+            makeAuthedIr({ type: "header", name: { wireValue: "x-api-key" } }, { endpointAuth: false })
+        );
+
+        expect(matchers).toEqual([]);
+    });
+
+    it("emits nothing under ENDPOINT_SECURITY auth", () => {
+        // Each endpoint routes its own scheme there, so aggregate "require every
+        // scheme's header" matchers would demand credentials the CLI correctly
+        // does not send.
+        const matchers = headerMatchersFor(
+            makeAuthedIr(
+                { type: "header", name: { wireValue: "x-api-key" } },
+                { requirement: FernIr.AuthSchemesRequirement.EndpointSecurity }
+            )
+        );
+
+        expect(matchers).toEqual([]);
+    });
+});
+
 describe("buildWireTestManifest", () => {
     it("turns an endpoint example into a naming-independent case", () => {
         const manifest = buildWireTestManifest(makeSingleEndpointIr(), {
@@ -196,7 +286,10 @@ describe("buildWireTestManifest", () => {
             binaryName: "acme-cli",
             rootGroup: null,
             specs: [],
-            authEnvVars: ["ACME_CLIENT_ID", "ACME_CLIENT_SECRET"],
+            authEnvVars: [
+                { name: "ACME_CLIENT_ID", value: "test" },
+                { name: "ACME_CLIENT_SECRET", value: "test" }
+            ],
             oauthTokenEndpoint: {
                 method: "POST",
                 path: "/v1/oauth/token",

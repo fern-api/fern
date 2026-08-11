@@ -199,6 +199,26 @@ fixtures:
         generateWireTests: true
       outputFolder: with-wire-tests
 
+  # Auth-header matchers. `mock-utils` emits them only for `basic`, `bearer` and
+  # `header` schemes — its switch has no `oauth` case — so every other wire-test
+  # fixture (unauthenticated, or OAuth) carries an empty `headerMatchers` list and
+  # never executes the harness's header-assertion path on a real binary. These two
+  # cover both matcher kinds the harness dispatches on:
+  #   header -> `x-api-key: .+`                       (match_header_regex)
+  #   basic  -> exact `Authorization: Basic <base64>` (match_header)
+  # Each spec also carries one `security: []` operation, so the `requiresAuth`
+  # gate is pinned in the same fixture: reverting it fails exactly that case.
+  cli-header-auth:
+    - customConfig:
+        binaryName: header-auth-cli
+        generateWireTests: true
+      outputFolder: with-wire-tests
+  cli-basic-auth:
+    - customConfig:
+        binaryName: basic-auth-cli
+        generateWireTests: true
+      outputFolder: with-wire-tests
+
 # Alpha-quality coverage: the SDK template only handles happy-path
 # OpenAPI specs. Seed iterates every test-definition by default; fixtures
 # that fail because the codegen'd `main.rs` can't cope with their auth

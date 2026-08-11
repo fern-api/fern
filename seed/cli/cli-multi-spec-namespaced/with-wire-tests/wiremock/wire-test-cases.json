@@ -12,7 +12,10 @@
     }
   ],
   "authEnvVars": [
-    "ACME_VERSIONED_TOKEN"
+    {
+      "name": "ACME_VERSIONED_TOKEN",
+      "value": "test"
+    }
   ],
   "authMock": null,
   "loginTokenSetup": null,

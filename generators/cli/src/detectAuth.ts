@@ -24,6 +24,14 @@ export interface DetectedAuthBinding {
     /** Auth kind for documentation purposes. */
     kind: "bearer" | "header" | "basic" | "oauth-client-credentials" | "oauth-authorization-code" | "oauth-device-code";
     /**
+     * For `basic`, which half of the credential {@link DetectedAuthBinding.envVars}
+     * supplies — `"both"` means `[username, password]` in that order. The wire-test
+     * manifest needs it to seed the *exact* credential `mock-utils` encodes into
+     * its `Authorization: Basic <base64>` matcher; seeding the wrong half produces
+     * a valid-looking header that can never match.
+     */
+    basicHalf?: "username" | "password" | "both";
+    /**
      * For `oauth-client-credentials`, the resolved token-endpoint contract the
      * generated CLI actually calls at runtime. Consumed by the wire-test
      * generator: because the CLI performs a real token exchange before every
@@ -170,7 +178,8 @@ function bindingForScheme(args: {
                     placement: "binding",
                     authTypeImport: "AuthCredentialSource, BasicAuthProvider",
                     envVars: [usernameEnv],
-                    kind: "basic"
+                    kind: "basic",
+                    basicHalf: "username"
                 };
             }
             if (basic.usernameOmit) {
@@ -180,7 +189,8 @@ function bindingForScheme(args: {
                     placement: "binding",
                     authTypeImport: "AuthCredentialSource, BasicAuthProvider",
                     envVars: [passwordEnv],
-                    kind: "basic"
+                    kind: "basic",
+                    basicHalf: "password"
                 };
             }
             // Both halves bound → root-level typed builder. Placed at root
@@ -193,7 +203,8 @@ function bindingForScheme(args: {
                 placement: "root",
                 authTypeImport: "BasicAuth",
                 envVars: [usernameEnv, passwordEnv],
-                kind: "basic"
+                kind: "basic",
+                basicHalf: "both"
             };
         },
         // OAuth: lower each configuration variant to the matching SDK builder.

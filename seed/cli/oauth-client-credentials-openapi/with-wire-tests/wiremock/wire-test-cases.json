@@ -8,8 +8,14 @@
     }
   ],
   "authEnvVars": [
-    "PLANT_STORE_CLIENT_ID",
-    "PLANT_STORE_CLIENT_SECRET"
+    {
+      "name": "PLANT_STORE_CLIENT_ID",
+      "value": "test"
+    },
+    {
+      "name": "PLANT_STORE_CLIENT_SECRET",
+      "value": "test"
+    }
   ],
   "authMock": {
     "method": "POST",

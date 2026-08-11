@@ -81,7 +81,7 @@ struct Manifest {
     root_group: Option<String>,
     specs: Vec<SpecEntry>,
     #[serde(rename = "authEnvVars")]
-    auth_env_vars: Vec<String>,
+    auth_env_vars: Vec<AuthEnvVar>,
     #[serde(rename = "authMock")]
     auth_mock: Option<AuthMock>,
     #[serde(rename = "loginTokenSetup")]
@@ -92,6 +92,18 @@ struct Manifest {
     #[serde(rename = "endpointSecurityAuth", default)]
     endpoint_security_auth: bool,
     cases: Vec<Case>,
+}
+
+/// A credential env var the CLI reads, and the value to export.
+///
+/// The value is not always a placeholder: \`mock-utils\` matches basic auth with an
+/// exact base64 of \`test-username:test-password\`, so those halves must be seeded
+/// verbatim or the CLI sends a well-formed \`Authorization\` header that can never
+/// match its own mock. Presence-only schemes (bearer, apiKey) get \`"test"\`.
+#[derive(Deserialize)]
+struct AuthEnvVar {
+    name: String,
+    value: String,
 }
 
 #[derive(Deserialize)]
@@ -873,7 +885,7 @@ async fn run_case(id: &str) {
     cmd.args(&args);
     // Dummy credentials so auth-gated endpoints don't bail on a missing secret.
     for var in &manifest.auth_env_vars {
-        cmd.env(var, "test");
+        cmd.env(&var.name, &var.value);
     }
     cmd.env("NO_COLOR", "1");
     // Same isolated file-backed keyring the token was seeded into, so the request-time provider

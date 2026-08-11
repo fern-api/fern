@@ -150,7 +150,7 @@ export interface WireTestManifest {
      * invoking the binary, so auth-gated endpoints don't bail out on a
      * missing credential.
      */
-    authEnvVars: string[];
+    authEnvVars: Array<{ name: string; value: string }>;
     /**
      * When the CLI declares OAuth client-credentials auth, the token endpoint
      * the harness must stub on every mock server. The generated CLI performs
@@ -257,7 +257,7 @@ export function buildWireTestManifest(
         binaryName: string;
         rootGroup: string | null;
         specs: Array<{ file: string; namespace: string | null }>;
-        authEnvVars: string[];
+        authEnvVars: Array<{ name: string; value: string }>;
         /**
          * The OAuth client-credentials token endpoint, when the CLI declares
          * one. Turned into the shared `authMock` the harness mounts on every
