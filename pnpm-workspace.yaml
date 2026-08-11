@@ -178,9 +178,9 @@ catalog:
   heap-js: ^2.6.0
   htmlparser2: ^9.0.0
   husky: ^9.1.7
-  image-size: ^1.2.1
+  image-size: ^2.0.2
   is-ci: ^3.0.1
-  js-yaml: ^3.15.0
+  js-yaml: ^3.15.1
   js-yaml-source-map: ^0.2.2
   json-schema: ^0.4.0
   json-stream-stringify: ^3.1.4
@@ -247,7 +247,7 @@ catalog:
   turbo: ^2.9.14
   typescript: 5.9.3
   ua-parser-js: ^1.0.37
-  undici: ^6.27.0
+  undici: ^6.28.0
   unified: ^11.0.5
   unist-util-visit: ^5.0.0
   url-join: ^4.0.1
