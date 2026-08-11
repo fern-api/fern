@@ -1,0 +1,574 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:RefundRequest": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "RefundRequest",
+                    "camelCase": {
+                        "unsafeName": "refundRequest",
+                        "safeName": "refundRequest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "refund_request",
+                        "safeName": "refund_request"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REFUND_REQUEST",
+                        "safeName": "REFUND_REQUEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RefundRequest",
+                        "safeName": "RefundRequest"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "amount",
+                        "name": {
+                            "originalName": "amount",
+                            "camelCase": {
+                                "unsafeName": "amount",
+                                "safeName": "amount"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "amount",
+                                "safeName": "amount"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AMOUNT",
+                                "safeName": "AMOUNT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Amount",
+                                "safeName": "Amount"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DOUBLE"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:Refund": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Refund",
+                    "camelCase": {
+                        "unsafeName": "refund",
+                        "safeName": "refund"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "refund",
+                        "safeName": "refund"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REFUND",
+                        "safeName": "REFUND"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Refund",
+                        "safeName": "Refund"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "id",
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "amount",
+                        "name": {
+                            "originalName": "amount",
+                            "camelCase": {
+                                "unsafeName": "amount",
+                                "safeName": "amount"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "amount",
+                                "safeName": "amount"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AMOUNT",
+                                "safeName": "AMOUNT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Amount",
+                                "safeName": "Amount"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DOUBLE"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.refund": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "refund",
+                    "camelCase": {
+                        "unsafeName": "refund",
+                        "safeName": "refund"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "refund",
+                        "safeName": "refund"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REFUND",
+                        "safeName": "REFUND"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Refund",
+                        "safeName": "Refund"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/refunds/{id}"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                }
+                            },
+                            "wireValue": "id"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:RefundRequest"
+                    }
+                },
+                "bodyRequired": false
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.bulkRefund": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "bulkRefund",
+                    "camelCase": {
+                        "unsafeName": "bulkRefund",
+                        "safeName": "bulkRefund"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bulk_refund",
+                        "safeName": "bulk_refund"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BULK_REFUND",
+                        "safeName": "BULK_REFUND"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BulkRefund",
+                        "safeName": "BulkRefund"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/refunds"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:RefundRequest"
+                    }
+                },
+                "bodyRequired": false
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.refundWithHeader": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "refundWithHeader",
+                    "camelCase": {
+                        "unsafeName": "refundWithHeader",
+                        "safeName": "refundWithHeader"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "refund_with_header",
+                        "safeName": "refund_with_header"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REFUND_WITH_HEADER",
+                        "safeName": "REFUND_WITH_HEADER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RefundWithHeader",
+                        "safeName": "RefundWithHeader"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/refunds/with-header"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "RefundWithHeaderRequest",
+                        "camelCase": {
+                            "unsafeName": "refundWithHeaderRequest",
+                            "safeName": "refundWithHeaderRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "refund_with_header_request",
+                            "safeName": "refund_with_header_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REFUND_WITH_HEADER_REQUEST",
+                            "safeName": "REFUND_WITH_HEADER_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "RefundWithHeaderRequest",
+                            "safeName": "RefundWithHeaderRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [
+                    {
+                        "name": {
+                            "wireValue": "X-Idempotency-Key",
+                            "name": {
+                                "originalName": "X-Idempotency-Key",
+                                "camelCase": {
+                                    "unsafeName": "xIdempotencyKey",
+                                    "safeName": "xIdempotencyKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_idempotency_key",
+                                    "safeName": "x_idempotency_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_IDEMPOTENCY_KEY",
+                                    "safeName": "X_IDEMPOTENCY_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XIdempotencyKey",
+                                    "safeName": "XIdempotencyKey"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": {
+                    "type": "referenced",
+                    "bodyKey": {
+                        "originalName": "body",
+                        "camelCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BODY",
+                            "safeName": "BODY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Body",
+                            "safeName": "Body"
+                        }
+                    },
+                    "bodyType": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:RefundRequest"
+                        }
+                    }
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.batchRefund": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "batchRefund",
+                    "camelCase": {
+                        "unsafeName": "batchRefund",
+                        "safeName": "batchRefund"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "batch_refund",
+                        "safeName": "batch_refund"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BATCH_REFUND",
+                        "safeName": "BATCH_REFUND"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BatchRefund",
+                        "safeName": "BatchRefund"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/refunds/batch"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "list",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:RefundRequest"
+                        }
+                    }
+                },
+                "bodyRequired": false
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.requiredRefund": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "requiredRefund",
+                    "camelCase": {
+                        "unsafeName": "requiredRefund",
+                        "safeName": "requiredRefund"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "required_refund",
+                        "safeName": "required_refund"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REQUIRED_REFUND",
+                        "safeName": "REQUIRED_REFUND"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RequiredRefund",
+                        "safeName": "RequiredRefund"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/refunds/{id}/required"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                }
+                            },
+                            "wireValue": "id"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:RefundRequest"
+                    }
+                },
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}

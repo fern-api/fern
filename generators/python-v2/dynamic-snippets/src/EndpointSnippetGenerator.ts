@@ -492,9 +492,11 @@ export class EndpointSnippetGenerator {
         this.context.errors.scope(Scope.PathParameters);
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
 
+        const omitsRequestBody = this.callOmitsRequestBody({ request, snippet });
+
         // Get body property names to check for collisions
         let bodyPropertyNames: Set<string> = new Set();
-        if (request.body != null) {
+        if (request.body != null && !omitsRequestBody) {
             const bodyArgs = this.getBodyRequestArgs({ body: request.body, value: snippet.requestBody });
             bodyPropertyNames = new Set(bodyArgs.map((arg) => arg.name));
 
@@ -531,12 +533,33 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
-        if (request.body != null) {
+        if (request.body != null && !omitsRequestBody) {
             args.push(...this.getBodyRequestArgs({ body: request.body, value: snippet.requestBody }));
         }
         this.context.errors.unscope();
 
         return args;
+    }
+
+    /**
+     * Whether the call leaves the body out entirely, which the sentinel default allows. Applies
+     * only to a body the caller may omit, and only once the generator opts in to that.
+     */
+    private callOmitsRequestBody({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): boolean {
+        if (this.context.customConfig.respect_optional_request_body !== true) {
+            return false;
+        }
+        if (request.bodyRequired !== false) {
+            return false;
+        }
+        const value = snippet.requestBody;
+        return value == null || (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
     }
 
     private getBodyRequestArgs({
