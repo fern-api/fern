@@ -4,6 +4,8 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
+import { buildContainerEnvVars, FORWARDED_ENV_VARS } from "./buildContainerEnvVars.js";
+
 export declare namespace runContainer {
     export interface Args {
         logger: Logger;
@@ -132,9 +134,11 @@ async function tryRunContainer({
     platform?: string;
     signal?: AbortSignal;
 }): Promise<void> {
-    if (process.env["FERN_STACK_TRACK"]) {
-        envVars["FERN_STACK_TRACK"] = process.env["FERN_STACK_TRACK"];
-    }
+    const { envVars: containerEnvVars, forwardedFromHost } = buildContainerEnvVars({
+        envVars,
+        processEnv: process.env
+    });
+    logForwardedEnvVars({ logger, containerEnvVars, forwardedFromHost });
     const containerArgs = [
         "run",
         "--user",
@@ -142,7 +146,7 @@ async function tryRunContainer({
         ...(pull ? ["--pull", "always"] : []),
         ...(platform != null ? ["--platform", platform] : []),
         ...binds.flatMap((bind) => ["-v", bind]),
-        ...Object.entries(envVars).flatMap(([key, value]) => ["-e", `${key}=\"${value}\"`]),
+        ...Object.entries(containerEnvVars).flatMap(([key, value]) => ["-e", `${key}=\"${value}\"`]),
         ...Object.entries(ports).flatMap(([hostPort, containerPort]) => ["-p", `${hostPort}:${containerPort}`]),
         removeAfterCompletion ? "--rm" : "",
         imageName,
@@ -176,6 +180,31 @@ async function tryRunContainer({
 
     if (exitCode !== 0) {
         throw new Error(`Container exited with code ${exitCode}.\n${stdout}\n${stderr}`);
+    }
+}
+
+/**
+ * Surfaces host env vars that were forwarded into the container, so it is obvious in the
+ * CLI output which escape hatches are active for this run.
+ */
+function logForwardedEnvVars({
+    logger,
+    containerEnvVars,
+    forwardedFromHost
+}: {
+    logger: Logger;
+    containerEnvVars: Record<string, string>;
+    forwardedFromHost: string[];
+}): void {
+    for (const name of forwardedFromHost) {
+        logger.info(`Forwarding ${name}=${containerEnvVars[name]} into the generator container`);
+    }
+    // Log the ones we did NOT forward too, so "my env var had no effect" is diagnosable from
+    // a debug log alone rather than by inspecting the assembled `docker run` command.
+    for (const name of FORWARDED_ENV_VARS) {
+        if (!forwardedFromHost.includes(name) && containerEnvVars[name] == null) {
+            logger.debug(`${name} is not set on the host; not forwarding it into the generator container`);
+        }
     }
 }
 
@@ -261,7 +290,12 @@ export async function execInContainer({
     reject?: boolean;
 }): Promise<{ stdout: string; stderr: string; exitCode: number }> {
     const containerRunner = runner ?? "docker";
-    const envArgs = Object.entries(envVars).flatMap(([key, value]) => ["-e", `${key}=${value}`]);
+    const { envVars: containerEnvVars, forwardedFromHost } = buildContainerEnvVars({
+        envVars,
+        processEnv: process.env
+    });
+    logForwardedEnvVars({ logger, containerEnvVars, forwardedFromHost });
+    const envArgs = Object.entries(containerEnvVars).flatMap(([key, value]) => ["-e", `${key}=${value}`]);
     const { stdout, stderr, exitCode } = await loggingExeca(
         logger,
         containerRunner,
