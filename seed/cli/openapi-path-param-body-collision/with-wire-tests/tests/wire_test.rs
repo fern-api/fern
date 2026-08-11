@@ -97,6 +97,12 @@ struct Case {
     expect_error: bool,
     #[serde(rename = "omitOptionalFiles", default)]
     omit_optional_files: bool,
+    /// Body properties this case took from the OpenAPI spec because the IR
+    /// example omitted them while the spec marks them required. Reported in
+    /// failure diagnostics so a spec-derived value is never mistaken for one an
+    /// API author wrote.
+    #[serde(rename = "specFilledBodyProperties", default)]
+    spec_filled_body_properties: Vec<String>,
     response: ExpectedResponse,
 }
 
@@ -502,14 +508,26 @@ async fn assert_request_matched(
     stderr: &str,
     expected_method: &str,
     expected_path: &str,
+    spec_filled_body_properties: &[String],
 ) {
     let matched = guard.received_requests().await;
     if matched.len() == 1 {
         return;
     }
     let received = server.received_requests().await.unwrap_or_default();
+    // Naming the spec-filled properties keeps a spec-derived value from being
+    // mistaken for one an API author wrote — and points at the IR/spec
+    // disagreement that made the repair necessary in the first place.
+    let spec_filled_note = if spec_filled_body_properties.is_empty() {
+        String::new()
+    } else {
+        format!(
+            "\n  note: these required body properties came from the OpenAPI spec, not from the endpoint's example, because the example omitted them: {}",
+            spec_filled_body_properties.join(", ")
+        )
+    };
     panic!(
-        "{id}: mock matched {} requests, expected exactly 1.\n  expected: {expected_method} {expected_path}\n  command: {binary_name} {}\n  exit code: {exit_code:?}\n  stdout: {stdout}\n  stderr: {stderr}\n  requests the server received:\n{}\n  note: a request listed above that was not matched means a query, header, or body matcher rejected it — diff it against this case in wiremock/wire-test-cases.json",
+        "{id}: mock matched {} requests, expected exactly 1.\n  expected: {expected_method} {expected_path}\n  command: {binary_name} {}\n  exit code: {exit_code:?}\n  stdout: {stdout}\n  stderr: {stderr}\n  requests the server received:\n{}\n  note: a request listed above that was not matched means a query, header, or body matcher rejected it — diff it against this case in wiremock/wire-test-cases.json{spec_filled_note}",
         matched.len(),
         args.join(" "),
         describe_received(&received)
@@ -874,6 +892,7 @@ async fn run_case(id: &str) {
             &stderr,
             &case.method,
             &expected_path,
+            &case.spec_filled_body_properties,
         )
         .await;
         return;
@@ -897,6 +916,7 @@ async fn run_case(id: &str) {
         &stderr,
         &case.method,
         &expected_path,
+        &case.spec_filled_body_properties,
     )
     .await;
 

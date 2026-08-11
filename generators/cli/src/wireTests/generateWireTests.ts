@@ -6,6 +6,7 @@ import { readFullIr } from "../ir.js";
 import { renderWireTestHarness } from "./harness.js";
 import type { OAuthTokenEndpoint } from "./manifest.js";
 import { buildWireTestManifest } from "./manifest.js";
+import { loadRequiredBodyContracts } from "./specRequiredBody.js";
 
 export interface GenerateWireTestsResult {
     status: "generated" | "skipped";
@@ -54,13 +55,19 @@ export async function generateWireTests(args: {
     const loginFlowSchemes = collectLoginFlowSchemes(authBindings);
 
     const ir = await readFullIr(irFilepath);
+    // Read the specs themselves, not just their paths: they are the oracle the
+    // generated CLI validates request bodies against, so they are also the only
+    // thing that can repair an example body the CLI would reject. See
+    // `specRequiredBody.ts`.
+    const requiredBodyContracts = await loadRequiredBodyContracts(openapiSpecs.map((entry) => entry.specPath));
     const manifest = buildWireTestManifest(ir, {
         binaryName,
         rootGroup: rootGroup ?? null,
         specs,
         authEnvVars,
         oauthTokenEndpoint,
-        loginFlowSchemes
+        loginFlowSchemes,
+        requiredBodyContracts
     });
 
     if (manifest.cases.length === 0) {

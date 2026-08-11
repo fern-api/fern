@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import { isEqualToMatcher, WireMock, WireMockMapping, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { type RequiredBodyContracts, reconcileRequiredBodyProperties } from "./specRequiredBody.js";
 
 /**
  * A single wire-test case: enough to drive the generated CLI binary once
@@ -104,6 +105,19 @@ export interface WireTestCase {
      * a required one, or emits an empty/path text part when it's absent, fails.
      */
     omitOptionalFiles?: boolean;
+    /**
+     * Body properties this manifest supplied from the OpenAPI spec because the
+     * IR example omitted them while the spec marks them `required`. Present only
+     * when that repair happened, so its mere presence flags an IR/spec
+     * disagreement on this endpoint.
+     *
+     * Recorded rather than silently applied for two reasons: the values are
+     * spec-derived, not author-written, which is the first thing worth knowing if
+     * such a case ever fails; and it keeps the underlying data-quality problem
+     * visible in a diff instead of burying it. See
+     * {@link reconcileRequiredBodyProperties}.
+     */
+    specFilledBodyProperties?: string[];
     /** Expected response the mock serves and the CLI is expected to render. */
     response: {
         status: number;
@@ -255,6 +269,14 @@ export function buildWireTestManifest(
          * the harness seeds a token via `auth login --with-token` and asserts bearer injection.
          */
         loginFlowSchemes?: string[];
+        /**
+         * Per-route required-request-body contracts read from the mounted
+         * OpenAPI specs. Used to repair example bodies that omit a property the
+         * spec marks required — see {@link reconcileRequiredBodyProperties} for
+         * why the two disagree. Omitted (or empty) means no repair, which is how
+         * every case behaved before this existed.
+         */
+        requiredBodyContracts?: RequiredBodyContracts;
     }
 ): WireTestManifest {
     const stub = convertToWireMock(ir);
@@ -287,7 +309,14 @@ export function buildWireTestManifest(
         if (example == null) {
             continue;
         }
-        const testCase = buildCase({ mapping, endpoint, example, authHeaderNames, usedIds });
+        const testCase = buildCase({
+            mapping,
+            endpoint,
+            example,
+            authHeaderNames,
+            usedIds,
+            requiredBodyContracts: options.requiredBodyContracts
+        });
         if (testCase != null) {
             cases.push(testCase);
         }
@@ -393,8 +422,9 @@ function buildCase(args: {
     example: FernIr.ExampleEndpointCall;
     authHeaderNames: Set<string>;
     usedIds: Set<string>;
+    requiredBodyContracts?: RequiredBodyContracts;
 }): WireTestCase | null {
-    const { mapping, endpoint, example, authHeaderNames, usedIds } = args;
+    const { mapping, endpoint, example, authHeaderNames, usedIds, requiredBodyContracts } = args;
 
     const params: Record<string, unknown> = {};
 
@@ -433,8 +463,19 @@ function buildCase(args: {
         }
     }
 
-    const body = example.request != null ? (example.request.jsonExample ?? null) : null;
+    const exampleBody = example.request != null ? (example.request.jsonExample ?? null) : null;
     const multipartFields = extractMultipartFields(endpoint);
+    // Multipart/binary bodies never travel through `--json`, so there is no JSON
+    // body to reconcile against the spec.
+    const { body, filled: specFilledBodyProperties } =
+        multipartFields != null || requiredBodyContracts == null
+            ? { body: exampleBody, filled: [] }
+            : reconcileRequiredBodyProperties({
+                  body: exampleBody,
+                  method: mapping.request.method,
+                  path: mapping.request.urlPathTemplate,
+                  contracts: requiredBodyContracts
+              });
 
     return {
         id: uniqueId(caseIdBase(endpoint), usedIds),
@@ -446,6 +487,7 @@ function buildCase(args: {
         headerMatchers: extractHeaderMatchers(mapping),
         requiresAuth: endpoint.auth,
         ...(multipartFields != null ? { multipartFields } : {}),
+        ...(specFilledBodyProperties.length > 0 ? { specFilledBodyProperties } : {}),
         response: {
             status: mapping.response.status,
             body: mapping.response.body
