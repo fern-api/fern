@@ -2,6 +2,7 @@
     Add a `respect-optional-request-body` option. When enabled, an endpoint whose request body the API
     does not require also gets an overload without the body parameter, and calling that overload sends
     no body. The body parameter keeps its own type, so `alpha(String id, Body body)` gains a sibling
-    `alpha(String id)` rather than becoming `alpha(String id, Optional<Body> body)`. The option defaults
-    to false, so existing signatures are unchanged.
+    `alpha(String id)` rather than becoming `alpha(String id, Optional<Body> body)`. Examples that
+    supply no body render as `client.alpha(id)`. The option defaults to false, so existing signatures
+    and snippets are unchanged.
   type: feat
