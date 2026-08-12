@@ -2622,8 +2622,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 66.1.0
-        version: 66.1.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -9556,6 +9556,10 @@ packages:
 
   '@fern-api/dynamic-ir-sdk@67.12.0':
     resolution: {integrity: sha512-/PXKJPbuU/vP+lv4Ju3kc4shZo0BsWcDp/hCHArJlx8le/iRr4kOEuE00vaVBvw8vfOmKsBc0HLPahbs6uOneQ==}
+    engines: {node: '>=18.0.0'}
+
+  '@fern-api/dynamic-ir-sdk@67.21.0':
+    resolution: {integrity: sha512-GLjIZlB4dVov24hQBYEcMR21aVMUqi6hC6j463rkUR12fi93/7i0JBAs0AzIwlqpria+Xy5KtyNQT/LzitH+qQ==}
     engines: {node: '>=18.0.0'}
 
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28':
@@ -16536,6 +16540,8 @@ snapshots:
   '@fern-api/dynamic-ir-sdk@66.3.0': {}
 
   '@fern-api/dynamic-ir-sdk@67.12.0': {}
+
+  '@fern-api/dynamic-ir-sdk@67.21.0': {}
 
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28': {}
 
