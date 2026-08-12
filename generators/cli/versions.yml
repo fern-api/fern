@@ -1,4 +1,394 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.30.4
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.44.4 updates.
+      type: fix
+    - summary: |
+        The Rust SDK crate bundled into generated CLIs (`api-sdk/src/core/http_client.rs`)
+        no longer reports non-2xx responses as successes. Its `parse_response` /
+        `parse_response_raw` consulted the status code only for empty bodies, so an error
+        response carrying a payload was deserialized into the success type and returned
+        `Ok`. This did not affect commands driven by the OpenAPI binding — that path
+        checks the status in the CLI's own executor — but it did affect custom commands
+        and any code calling the bundled SDK crate directly. Picked up from
+        `@fern-api/rust-sdk`; see its changelog for details.
+      type: fix
+    - summary: |
+        Refuse pagination links that cross a host boundary. `x-fern-pagination`'s
+        `Uri` variant took the next-page URL from the response body verbatim, and its
+        `Path` variant resolved a value that may be an absolute URL — which replaces
+        the base's origin. In both cases the *response* chose where the next request
+        went, so a server (or anything able to influence its output) could redirect
+        the CLI to another host and the credential would follow. As with the redirect
+        guard, reqwest only strips the headers it hardcodes as sensitive, so a
+        spec-declared custom header (`xi-api-key`, `X-API-Key`, anything an
+        `apiKey`-in-header scheme produces) was sent to the new host verbatim.
+
+        Same host-only comparison the redirect guard uses: an `http` -> `https`
+        upgrade or a port change is unaffected, and a relative `next_path` cannot
+        cross an origin so it is allowed without inspection. Crossing to a different
+        host now halts pagination with a warning naming both origins — the origins
+        only, since a pagination link's query string can itself carry a credential.
+
+        Opt out with `<PREFIX>_ALLOW_CROSS_HOST_PAGINATION`, deliberately separate
+        from `<PREFIX>_ALLOW_CROSS_HOST_REDIRECTS`: allowing a redirect is not
+        consent to let a response body steer the next request.
+      type: fix
+    - summary: |
+        Refuse to follow redirects that cross a host boundary. reqwest strips only the
+        headers it hardcodes as sensitive (`Authorization`, `Cookie`,
+        `Proxy-Authorization`, `WWW-Authenticate`) when a redirect changes origin, so a
+        credential carried in a spec-declared *custom* header — `xi-api-key`,
+        `X-API-Key`, anything an `apiKey`-in-header scheme produces — was resent verbatim
+        to the redirect target. A redirect to an attacker-controlled host therefore
+        leaked the API key. `HeaderValue::set_sensitive` does not help: reqwest's
+        stripping consults its own list, not that flag. Even for `Authorization`-based
+        auth, where reqwest does strip, the request URL and body were still delivered to
+        the new host.
+
+        Same-host redirects (path rewrites, `http` -> `https` upgrades, port changes) are
+        unaffected. Crossing to a different host now fails with an error naming both
+        origins — path and query are omitted, since redirect targets are often pre-signed
+        URLs whose query string is itself a credential. Set
+        `<PREFIX>_ALLOW_CROSS_HOST_REDIRECTS=1` to opt back in for APIs that
+        legitimately redirect across hosts (for example a download endpoint that hands
+        off to a CDN).
+      type: fix
+    - summary: |
+        Generated projects now satisfy `cargo build --locked`, so `cargo audit` and
+        `cargo metadata --locked` work on them. Two defects combined to break this, and
+        both failed silently — the build still succeeded, so dependency auditing was
+        quietly disabled instead of erroring.
+
+        First, the `[[package]]` stanzas `patchCargoToml` writes for the generated
+        model/SDK crates were hardcoded: a placeholder `0.0.0` version and a fixed
+        dependency list. The real dependency sets vary by spec (one API's types crate
+        pulls `chrono`, another's pulls `base64`), so the stanza rarely matched the
+        manifest and Cargo demanded a lock update. The stanzas are now derived from each
+        crate's actual `Cargo.toml`, including the version-qualified form Cargo requires
+        (`"thiserror 1.0.69"`) when the lock holds two majors of a package.
+
+        Second, packages the generated crates need but the CLI SDK does not use were
+        absent from the shipped lock entirely: `chrono`, `num-bigint`, `ordered-float`,
+        the `reqwest/gzip` closure (`async-compression`, `flate2`, `miniz_oxide`, ...),
+        and `reqwest-sse` / `pin-project` for server-sent-event specs. These are now
+        declared in the template manifest as `optional` and enabled by no feature, so
+        they are pinned in the lock without entering the build graph.
+
+        Generation now fails with an actionable error if a generated crate needs a
+        package the shipped lock lacks, rather than emitting a lock that cannot resolve.
+        The seed compile/test scripts pass `--locked` so this cannot regress unnoticed.
+      type: fix
+    - summary: |
+        The CLI SDK template now declares `reqwest/gzip`, so the shipped Cargo.lock
+        contains the gzip dependency closure (required for `cargo build --locked`).
+
+        This is behavior-neutral for effectively every generated CLI: the generated API
+        SDK crate already enables `reqwest/gzip`, and Cargo unifies features across a
+        workspace, so reqwest was compiled with gzip — and `ClientBuilder::gzip` defaults
+        to true when the feature is on — regardless of this declaration. The one case it
+        changes is a CLI whose spec produces no model/SDK crate at all, which now also
+        sends `Accept-Encoding: gzip` and transparently decompresses responses. That
+        removes an inconsistency where behavior depended on whether a spec happened to
+        generate an SDK crate.
+      type: fix
+    - summary: |
+        `--json` is usable again on commands with a `const` or defaulted body field.
+        Such a field carries a clap default, so it appeared in the collected
+        parameters on *every* invocation — and the executor treats any body-located
+        parameter as a per-field body flag and refuses to combine it with `--json`.
+        The result was `Cannot combine --json with per-field body flags (--type)` for
+        a flag the user never passed and could not avoid, making `--json`
+        permanently impossible on those commands. Any spec with `const`
+        discriminators hits it; four ElevenLabs endpoints did.
+
+        Body-located parameters whose value came from a default are now omitted when
+        a whole-body `--json` is supplied: an explicit `--json` is the user's intent
+        for the whole body, so it wins over defaults. Everything else is unchanged —
+        without `--json` the default still reaches the body (so `const` fields are
+        still sent on the flag-driven path), a per-field flag the user actually typed
+        still conflicts with `--json` as intended, and the exemption is scoped to
+        body params so a defaulted query, path, or header value still applies.
+      type: fix
+    - summary: |
+        A `.env` file can no longer override transport or process-execution
+        settings. `dotenvy::dotenv()` searches the working directory and its
+        ancestors, and a generated CLI is routinely run inside repositories the
+        operator did not write — so an attacker-authored `.env` could point the CLI
+        at another host (`<PREFIX>_BASE_URL`), disable certificate verification
+        (`<PREFIX>_INSECURE`, `<PREFIX>_INSECURE_SKIP_VERIFY`), replace the trust
+        store (`<PREFIX>_CA_BUNDLE`, `SSL_CERT_FILE`, …), route traffic through a
+        proxy (`<PREFIX>_PROXY`, `HTTPS_PROXY`, …), or switch off the cross-host
+        redirect and pagination guards. Sharpest of all: `<PREFIX>_PAGER` / `PAGER`
+        names a program the CLI *executes* when paging output, making a stray `.env`
+        arbitrary command execution.
+
+        Those keys are now ignored when they come from `.env` (with a warning naming
+        the key), while everything else — credentials, `<PREFIX>_OUTPUT`, timeouts —
+        loads exactly as before. Real process environment still wins over `.env`, so
+        anything genuinely exported from the operator's shell is unaffected.
+      type: fix
+    - summary: |
+        `--dry-run` no longer prints credential headers. It renders the request the
+        CLI *would* send, and a credential reaches that output whenever the spec
+        models it as a header parameter or an `x-fern-global-headers` entry — an
+        `apiKey`-in-header scheme being the common case. Since dry-run output is
+        routinely pasted into issues, values for credential headers are now
+        `[REDACTED]`, using the same predicate and the same spec-derived header
+        names as `--debug` so the two cannot drift apart. Non-credential headers are
+        still shown in full, and the redaction no longer depends on `--debug` being
+        passed.
+
+        Redaction also now recognises vendor-specific credential header names.
+        Neither the exact-match list nor spec-declared `apiKey`-in-header schemes
+        covered a spec that models its credential as a plain header *parameter* with
+        no `securitySchemes` block — ElevenLabs' `xi-api-key` is that shape (an
+        explicit header parameter on 333 operations), and both `--debug` and
+        `--dry-run` printed it in full. Header names containing `api-key`, `apikey`,
+        `api_key`, `token`, `secret`, `password` or `credential` are now treated as
+        credentials. `idempotency-key` is deliberately not matched — it is not a
+        secret and is useful when debugging retries.
+      type: fix
+    - summary: |
+        `--debug` now works for custom commands. Every HTTP dump lived in the
+        OpenAPI executor, so a handler calling the co-generated SDK through
+        `sdk::client(ctx)` produced no debug output at all — silent at exactly the
+        moment it is wanted, while diagnosing a live API failure. The SDK executor
+        now dumps the fully-built request (after auth and global headers are
+        applied, so what is printed is what goes on the wire) plus the response
+        status and headers, with spec-declared credential headers redacted. The
+        response body is not buffered on this path — the generated SDK client
+        consumes it — so it is reported as such rather than being cloned.
+      type: fix
+    - summary: |
+        Fixed the `custom.rs` scaffold so the example it tells you to uncomment
+        compiles. `CliApp::command` takes a `CliCommandHandler` — a boxed
+        `Fn(&ArgMatches, &dyn Any)` — but the commented example passed a bare
+        closure, so following the "uncomment to get started" comment produced an
+        `E0308` on a customer's first custom command. It now wraps the closure in
+        `OpenApiBinding::handler(...)`, matching `CliApp::command`'s own
+        documentation, with a comment explaining why the wrapper is required.
+      type: fix
+    - summary: |
+        Three follow-ups found while testing the above against a real CLI.
+
+        The `.env` filter's explanation never reached anyone: it warned before
+        `init_logging` ran, so with no subscriber installed yet every message was
+        dropped. A user who legitimately put `<PREFIX>_BASE_URL` in `.env` saw it
+        silently not work. The ignored keys are now collected and reported after
+        logging is initialized.
+
+        `--debug` and `--dry-run` redacted `access-control-allow-credentials`, a
+        routine CORS response header whose value is `true`, because its name contains
+        "credential". Header names beginning `access-control-` are now never treated
+        as credentials, so the header is legible again while `xi-api-key`,
+        `authorization` and other genuine credentials stay redacted.
+
+        A refused cross-host redirect was reported as `internalError` with a 500 and
+        exit code 5 — indistinguishable from the CLI genuinely breaking — and the
+        explanation reached only the structured output, leaving stderr with a bare
+        "HTTP request failed". It was also retried, re-issuing a request whose
+        outcome cannot change. It is now a client-side error: `error[validation]`
+        on stderr carrying the full reason (both origins and the opt-out variable),
+        exit code 3, and no retry. Applied in both the OpenAPI and GraphQL
+        executors. The generic `Try <cmd> --help` hint is suppressed when a
+        validation message already names an environment variable to set, since a
+        flag list says nothing about it; ordinary validation errors keep the hint.
+      type: fix
+    - summary: |
+        De-flaked the cross-host guard tests, which ship into every generated CLI
+        and so failed `cargo test` in customers' own repositories, not just ours.
+        They all read the guard's opt-out from the *process* environment under one
+        shared `<PREFIX>`, so `#[serial]` was load-bearing for correctness rather
+        than just for tidiness: one test setting the shared variable while another
+        cleared it flipped the other's expected outcome, in whichever direction the
+        thread interleaving happened to land. That is invisible on an idle machine
+        and shows up under the contention of a loaded CI runner. Each test now uses
+        a CLI name unique to itself, so its variables cannot collide with any other
+        test's, and a future test that forgets `#[serial]` cannot reintroduce the
+        race.
+      type: fix
+    - summary: |
+        Wire tests now assert the credential header, and the basic-auth credential
+        the harness seeds is the one the mock actually expects.
+
+        `mock-utils` emits stub-level auth header matchers only for `basic`,
+        `bearer` and `header` schemes — its switch has no `oauth` case. Every
+        wire-test fixture we had was either unauthenticated or OAuth, so
+        `headerMatchers` was empty everywhere and the harness's header-assertion
+        path had never executed against a real binary, despite being implemented.
+        Two fixtures now cover both matcher kinds the harness dispatches on:
+        `cli-header-auth` (apiKey in header → `x-api-key: .+`, via
+        `match_header_regex`) and `cli-basic-auth` (exact `Authorization: Basic
+        <base64>`, via `match_header`). Each spec also carries one `security: []`
+        operation, so the `requiresAuth` gate is pinned in the same fixture.
+
+        Standing that up surfaced a real defect. The harness exported every
+        credential env var with the same placeholder, but `mock-utils` encodes basic
+        auth as an exact base64 of `test-username:test-password` — so a basic-auth
+        CLI sent a perfectly well-formed `Authorization` header that could never
+        match its own mock, and every authenticated case would have failed the
+        moment anyone enabled wire tests on such an API. The manifest now carries a
+        value per credential env var and pairs the username and password halves with
+        what `mock-utils` expects, including the `usernameOmit` / `passwordOmit`
+        single-half variants where seeding the wrong half is silently wrong.
+        Presence-only schemes keep the placeholder, since `.+` and `Bearer .+` are
+        satisfied by any non-empty value.
+      type: fix
+    - summary: |
+        Wire tests no longer depend on the machine's credential store, and no longer
+        write to the developer's real one.
+
+        The isolated file-backed store was created only for login-flow fixtures, the
+        ones that seed a token via `auth login --with-token`. Every other auth style
+        ran the CLI with the ambient `HOME` and no `FERN_CLI_CREDENTIAL_STORE`
+        override, so `auto_store()` resolved against whatever the host had: the OS
+        keyring when one was reachable, otherwise a file under the real `HOME`. Two
+        consequences. A CLI whose auth caches a token — a client-credentials exchange
+        caches one — became dependent on that ambient state, which is the shape of a
+        test that is green on a developer box and red on a CI runner. And the cases
+        within a fixture, which run concurrently, shared a single store and could race
+        over it.
+
+        Every case now gets its own temp `HOME` plus `FERN_CLI_CREDENTIAL_STORE=file`,
+        so the token cache is hermetic per test regardless of auth style. Login-flow
+        cases seed their token into that same store, so their behavior is unchanged.
+      type: fix
+    - summary: |
+        A wire-test mismatch now reports a self-probe and the full received URL.
+
+        When a mock matches zero requests, the failure could mean two very different
+        things — the mock is not matching in this environment, or the CLI sent
+        something the diagnostic does not surface — and nothing in the output told
+        them apart. The harness now issues its own request for the expected method
+        and path and reports whether the mock matched *that*, which separates the
+        two. It also prints the full received URL rather than just the path, since a
+        stray or missing query parameter is invisible otherwise and is exactly the
+        kind of difference a matcher rejects.
+
+        Reported, not asserted on: a bodyless probe cannot satisfy a case that
+        carries body matchers, so its result is informational.
+      type: fix
+    - summary: |
+        Wire tests now exercise the request side, not just the response. The
+        harness asserts JSON request bodies with a partial-JSON matcher, drives
+        multipart and binary endpoints with real temporary fixture files through
+        the generated field flags (instead of skipping them), and every positive
+        case gets a negative (non-2xx) twin that asserts the CLI exits non-zero and
+        surfaces an error. Multipart file/text classification is derived from the
+        Fern IR so a runtime regression fails the mock match rather than passing
+        silently. Endpoints whose JSON body is also flattened into per-field flags
+        are now driven via `--json` (previously skipped without asserting the body),
+        with the harness reconciling a path parameter the CLI renamed to avoid
+        colliding with a body field of the same name. Multipart assertions pin the
+        request's `multipart/form-data` content type and each part's
+        `Content-Disposition` name, bind `filename=` to the field that must carry it
+        (so a sibling file part cannot satisfy it), and a dedicated variant omits
+        optional file fields and requires the omitted field to be absent from the
+        wire body, so a runtime that turns an absent optional file into an empty or
+        path-valued part fails. Also fixes the OpenAPI multipart classifier to unwrap
+        `anyOf`/`oneOf`/`allOf` so an optional nullable binary field
+        (`anyOf: [{string, binary}, {null}]`) is recognized as a file upload.
+      type: fix
+    - summary: |
+        Bound the multipart classifier's `anyOf`/`oneOf`/`allOf` unwrapping to a
+        fixed nesting depth. A cyclic composition chain (`A: {anyOf: [B]}`,
+        `B: {anyOf: [A]}`) on a multipart property recursed until the stack
+        overflowed; because the CLI loads its baked OpenAPI spec at startup, that
+        aborted the binary on every invocation rather than failing at generate time.
+        Such a field now fails closed as a text part.
+      type: fix
+    - summary: |
+        Multipart file parts are no longer mislabelled `application/octet-stream`.
+        The OpenAPI parser synthesized that content type for every `format: binary`
+        property, which downstream was indistinguishable from a type the spec had
+        actually declared via `encoding` — so it outranked any inference and every
+        upload went out as octet-stream. Servers that validate a part's media type
+        reject that: ElevenLabs' knowledge-base upload answers `Invalid file type.
+        Allowed types are ['application/pdf', 'text/plain', …]` for a `.txt` file,
+        making those endpoints unusable from the CLI regardless of the file. The
+        parser now reports a content type only when the schema or `encoding` pins
+        one, and the request builder resolves a file part as declared `encoding` →
+        inferred from the file's extension → `application/octet-stream`. This is the
+        precedence binary request bodies already used (`resolve_upload_mime`); the
+        multipart path simply never called the existing helper. Content-character
+        sanitization is now shared by both paths, so a spec-supplied media type
+        cannot smuggle a header break into the multipart preamble. The extension
+        table also gained the audio formats speech-to-text and dubbing endpoints
+        take (`m4a`, `aac`, `flac`, `ogg`, `opus`, `aiff`) plus `epub` and `mov`.
+        Wire tests now pin each file part's `Content-Type` in the same substring as
+        its `Content-Disposition`, binding it to that field so a sibling part cannot
+        satisfy it, and their fixture files carry a real extension so the inference
+        path is exercised rather than only the octet-stream fallback.
+      type: fix
+    - summary: |
+        Wire tests no longer demand a credential from endpoints that declare none.
+        For public-client login flows the harness required
+        `Authorization: Bearer <seeded>` on *every* case, so an unauthenticated
+        operation — an OAuth token endpoint exposed as a normal command being the
+        common shape — could never match its own mock: the CLI correctly sends no
+        bearer, nothing matches, and the case failed for a reason unrelated to what
+        it tests. The manifest now carries the endpoint's `auth` flag from the IR
+        (the same signal `mock-utils` already gates its auth-header matchers on) and
+        the harness asserts the bearer only where it applies. Under
+        `ENDPOINT_SECURITY` auth, where each endpoint selects its own scheme and no
+        single credential holds across the board, the assertion is dropped
+        wholesale. The inverse is deliberately not asserted: a `requiresAuth: false`
+        endpoint may still carry a credential, since specs under-declare security
+        often enough that forbidding it would manufacture failures.
+      type: fix
+    - summary: |
+        A wire test that fails because the request never matched now says so, with
+        the command, exit code, stdout, stderr, and the requests the mock server
+        actually received alongside what was expected. Previously the harness leaned
+        on `MockServer`'s drop-time verification, which reports a bare "expected 1,
+        got 0" with no context — and on the negative-twin path it was the *only*
+        check that could fail, because a CLI that dies before ever making the call
+        still satisfies a non-zero-exit assertion. Diagnosing one meant re-running
+        its positive twin by hand. The case mock is now registered scoped so the
+        harness can read the per-mock matched count directly, and the request-match
+        assertion runs before the exit-code check on the success path: when a matcher
+        rejects a request the mock server answers 404 and the CLI faithfully reports
+        it, so checking the exit code first blamed the CLI for a mock that never
+        matched.
+      type: fix
+    - summary: |
+        Wire-test cases now repair a request body that omits a property the OpenAPI
+        spec marks `required`.
+
+        The CLI and its wire-test cases read from two different sources of truth: a
+        case body comes from an IR example, while the generated CLI validates
+        request bodies against the raw spec it embeds via `include_str!`. Those
+        disagree whenever a property is `required` in the spec but has a nullable
+        schema — `anyOf: [{type: array}, {type: null}]` is the common shape. The
+        importer models that as optional, so example generation legitimately skips
+        it, and the resulting example violates the very schema it came from. The CLI
+        then rejects its own wire-test case with `error[validation]: Missing
+        required property` and exits before any request leaves the process, so the
+        case fails having never reached the mock.
+
+        Any such property is now filled from the spec's own schema — `null` where
+        the schema permits it, which is the least-invented value and the shape that
+        actually occurs; otherwise a minimal value from the declared type, honoring
+        `const`/`enum`. The repair recurses, so a required property missing from
+        inside an array element the example did supply is fixed too. Where a value
+        can't be derived confidently the property is left absent on purpose: failing
+        exactly as before is more honest than fabricating a value that trips a
+        different validation rule.
+
+        Repaired properties are recorded on the case as `specFilledBodyProperties`
+        and named in failure diagnostics, so a spec-derived value is never mistaken
+        for one an API author wrote, and the underlying data-quality problem stays
+        visible in a diff instead of being buried.
+
+        Inert wherever the IR and the spec agree, which is every existing seed
+        fixture: no fixture's manifest gained a repair. On one real customer CLI it
+        took the suite from 670/678 to 678/678 with no change to their
+        `generators.yml`.
+      type: fix
+  createdAt: "2026-08-12"
+  irVersion: 67
 - version: 0.30.3
   changelogEntry:
     - summary: |
