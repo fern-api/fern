@@ -254,6 +254,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             const endpointWithRefBody: FernIr.HttpEndpoint = {
                 ...endpoint,
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                     contentType: undefined,
                     docs: undefined,
@@ -271,6 +272,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             const endpointWithRefBody: FernIr.HttpEndpoint = {
                 ...endpoint,
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: FernIr.TypeReference.named({
                         typeId: "type_User",
                         fernFilepath: { allParts: [], packagePath: [], file: undefined },
@@ -296,6 +298,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             const endpointWithRefBody: FernIr.HttpEndpoint = {
                 ...endpoint,
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: FernIr.TypeReference.unknown(),
                     contentType: undefined,
                     docs: undefined,
@@ -313,6 +316,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             const endpointWithRefBody: FernIr.HttpEndpoint = {
                 ...endpoint,
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: FernIr.TypeReference.container(
                         FernIr.ContainerType.list(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
                     ),
@@ -440,6 +444,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             const endpointWithRefBody: FernIr.HttpEndpoint = {
                 ...endpoint,
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                     contentType: undefined,
                     docs: undefined,
@@ -473,6 +478,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             const endpointWithBoth: FernIr.HttpEndpoint = {
                 ...endpoint,
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                     contentType: undefined,
                     docs: undefined,
@@ -504,6 +510,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             const endpointWithRefBody: FernIr.HttpEndpoint = {
                 ...endpoint,
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                     contentType: undefined,
                     docs: undefined,
@@ -523,6 +530,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             const endpointWithRefBody: FernIr.HttpEndpoint = {
                 ...endpoint,
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: FernIr.TypeReference.named({
                         typeId: "type_User",
                         fernFilepath: { allParts: [], packagePath: [], file: undefined },
@@ -548,6 +556,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             const endpointWithRefBody: FernIr.HttpEndpoint = {
                 ...endpoint,
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: FernIr.TypeReference.unknown(),
                     contentType: undefined,
                     docs: undefined,
@@ -566,6 +575,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             const endpointWithRefBody: FernIr.HttpEndpoint = {
                 ...endpoint,
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                     contentType: undefined,
                     docs: undefined,
@@ -1118,6 +1128,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             const endpointWithRefBody: FernIr.HttpEndpoint = {
                 ...endpoint,
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: FernIr.TypeReference.container(
                         FernIr.ContainerType.list(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
                     ),
@@ -1205,6 +1216,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             const endpointWithRefBody: FernIr.HttpEndpoint = {
                 ...endpoint,
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: FernIr.TypeReference.named({
                         typeId: "type_User",
                         fernFilepath: { allParts: [], packagePath: [], file: undefined },

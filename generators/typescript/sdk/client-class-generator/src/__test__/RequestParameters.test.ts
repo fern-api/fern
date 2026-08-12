@@ -162,6 +162,7 @@ describe("RequestBodyParameter", () => {
         const sdkRequest = createSdkRequest(
             FernIr.SdkRequestShape.justRequestBody(
                 FernIr.SdkRequestBodyType.typeReference({
+                    required: undefined,
                     requestBodyType,
                     contentType: undefined,
                     docs: undefined,
@@ -175,6 +176,7 @@ describe("RequestBodyParameter", () => {
             endpoint: createHttpEndpoint({ sdkRequest }),
             sdkRequest,
             requestBodyReference: {
+                required: undefined,
                 requestBodyType,
                 contentType: undefined,
                 docs: undefined,

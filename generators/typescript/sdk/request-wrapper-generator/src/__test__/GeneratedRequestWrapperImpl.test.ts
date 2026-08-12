@@ -467,6 +467,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             const init = createDefaultInit({
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: "The plant description",
                         contentType: undefined,
@@ -847,6 +848,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 retainOriginalCasing: false,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -865,6 +867,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 retainOriginalCasing: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -899,6 +902,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -916,6 +920,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: false,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -979,6 +984,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: false,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -997,6 +1003,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -1016,6 +1023,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: namedType,
                         docs: undefined,
                         contentType: undefined,
@@ -1151,6 +1159,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             const init = createDefaultInit({
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -1168,6 +1177,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             const init = createDefaultInit({
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: OPTIONAL_STRING_TYPE,
                         docs: undefined,
                         contentType: undefined,
@@ -1404,6 +1414,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: false,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         docs: "Plant data",
                         contentType: undefined,
@@ -1798,6 +1809,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: namedBodyRef,
                         contentType: undefined,
                         docs: undefined,
@@ -1844,6 +1856,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 endpoint: createHttpEndpoint({
                     queryParameters: [createQueryParameter("dryRun", OPTIONAL_STRING_TYPE)],
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: namedBodyRef,
                         contentType: undefined,
                         docs: undefined,
@@ -2032,6 +2045,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             const init = createDefaultInit({
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: OPTIONAL_STRING_TYPE,
                         contentType: undefined,
                         docs: undefined,
@@ -2049,6 +2063,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             const init = createDefaultInit({
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         contentType: undefined,
                         docs: undefined,
@@ -2297,6 +2312,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: namedBodyRef,
                         contentType: undefined,
                         docs: undefined,
@@ -2337,6 +2353,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         contentType: undefined,
                         docs: "The raw body",
@@ -2359,6 +2376,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: namedBodyRef,
                         contentType: undefined,
                         docs: undefined,
@@ -2403,6 +2421,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 enableInlineTypes: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: namedBodyRef,
                         contentType: undefined,
                         docs: undefined,
@@ -2510,6 +2529,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: false,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         contentType: undefined,
                         docs: undefined,
@@ -2528,6 +2548,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: STRING_TYPE,
                         contentType: undefined,
                         docs: undefined,
@@ -2547,6 +2568,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
                         requestBodyType: namedType,
                         contentType: undefined,
                         docs: undefined,

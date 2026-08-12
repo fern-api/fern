@@ -489,6 +489,7 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 service: createHttpService(),
                 endpoint: createHttpEndpoint({ sdkRequest }),
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: STRING_TYPE,
                     contentType: undefined,
                     docs: undefined,
@@ -616,6 +617,7 @@ describe("GeneratedDefaultEndpointRequest", () => {
                     sdkRequest
                 }),
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: STRING_TYPE,
                     contentType: undefined,
                     docs: undefined,
@@ -666,6 +668,7 @@ describe("GeneratedDefaultEndpointRequest", () => {
         it("returns json content type for reference request body", () => {
             const sdkRequest = createSdkRequestBody();
             const referenceBody = FernIr.HttpRequestBody.reference({
+                required: undefined,
                 requestBodyType: STRING_TYPE,
                 contentType: undefined,
                 docs: undefined,
@@ -722,6 +725,7 @@ describe("GeneratedDefaultEndpointRequest", () => {
         it("spreads requestOptions.additionalBodyParameters on top of a reference request body", () => {
             const sdkRequest = createSdkRequestBody();
             const referenceBody = FernIr.HttpRequestBody.reference({
+                required: undefined,
                 requestBodyType: STRING_TYPE,
                 contentType: undefined,
                 docs: undefined,
@@ -954,6 +958,7 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 service: createHttpService(),
                 endpoint: createHttpEndpoint({ sdkRequest }),
                 requestBody: FernIr.HttpRequestBody.reference({
+                    required: undefined,
                     requestBodyType: STRING_TYPE,
                     contentType: undefined,
                     docs: undefined,
