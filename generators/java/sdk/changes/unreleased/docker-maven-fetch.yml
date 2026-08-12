@@ -1,0 +1,5 @@
+- summary: |
+    Fetch the pinned Maven jars in the generator container with `curl -fsSL` and fall
+    back to the Google-hosted Maven Central mirror, so a rate-limited repo1.maven.org
+    response can no longer be written into a jar and fail the image build.
+  type: chore

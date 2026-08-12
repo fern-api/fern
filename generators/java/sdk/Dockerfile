@@ -27,23 +27,23 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
 # Replace vulnerable plexus-utils in Gradle distribution to fix GHSA-6fmv-xxpf-w3cw
 # (Directory Traversal vulnerability in extractFile method)
 RUN rm -f /opt/gradle/lib/plugins/plexus-utils-*.jar && \
-    curl -sL https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/4.0.3/plexus-utils-4.0.3.jar \
-      -o /opt/gradle/lib/plugins/plexus-utils-4.0.3.jar && \
+    { curl -fsSL --retry 3 --retry-all-errors -o /opt/gradle/lib/plugins/plexus-utils-4.0.3.jar https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/4.0.3/plexus-utils-4.0.3.jar || \
+      curl -fsSL --retry 3 --retry-all-errors -o /opt/gradle/lib/plugins/plexus-utils-4.0.3.jar https://maven-central.storage-download.googleapis.com/maven2/org/codehaus/plexus/plexus-utils/4.0.3/plexus-utils-4.0.3.jar; } && \
     echo "421ff6ed146c53a9d4eaade8f629b52b12af7187101f1bd06c2c64e904019f3c  /opt/gradle/lib/plugins/plexus-utils-4.0.3.jar" | sha256sum -c -
 
 # Replace vulnerable jackson-core in Gradle distribution to fix GHSA-72hv-8253-57qq
 # (async parser bypasses maxNumberLength constraint, leading to potential DoS)
 RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
-    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.22.0/jackson-core-2.22.0.jar \
-      -o /opt/gradle/lib/jackson-core-2.22.0.jar && \
+    { curl -fsSL --retry 3 --retry-all-errors -o /opt/gradle/lib/jackson-core-2.22.0.jar https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.22.0/jackson-core-2.22.0.jar || \
+      curl -fsSL --retry 3 --retry-all-errors -o /opt/gradle/lib/jackson-core-2.22.0.jar https://maven-central.storage-download.googleapis.com/maven2/com/fasterxml/jackson/core/jackson-core/2.22.0/jackson-core-2.22.0.jar; } && \
     echo "d2e8dd4df1e0f61b786ea06792f5bf4235d8278f158f3be6e997e955931c0c98  /opt/gradle/lib/jackson-core-2.22.0.jar" | sha256sum -c -
 
 # Replace vulnerable jackson-databind in Gradle distribution to fix
 # CVE-2026-54514 (InetSocketAddress deserialization triggers DNS lookup / SSRF)
 # CVE-2026-54515 (2.18.9 backport not yet published; using 2.22.0)
 RUN rm -f /opt/gradle/lib/jackson-databind-*.jar && \
-    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.22.0/jackson-databind-2.22.0.jar \
-      -o /opt/gradle/lib/jackson-databind-2.22.0.jar && \
+    { curl -fsSL --retry 3 --retry-all-errors -o /opt/gradle/lib/jackson-databind-2.22.0.jar https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.22.0/jackson-databind-2.22.0.jar || \
+      curl -fsSL --retry 3 --retry-all-errors -o /opt/gradle/lib/jackson-databind-2.22.0.jar https://maven-central.storage-download.googleapis.com/maven2/com/fasterxml/jackson/core/jackson-databind/2.22.0/jackson-databind-2.22.0.jar; } && \
     echo "3520a0351f294699e3e1b7a37c7a726afd81e1a89ae702ac7d47ff347fd2ecbf  /opt/gradle/lib/jackson-databind-2.22.0.jar" | sha256sum -c -
 
 # Replace vulnerable Bouncy Castle jars in Gradle distribution to fix CVE-2026-3505
@@ -52,14 +52,14 @@ RUN rm -f /opt/gradle/lib/jackson-databind-*.jar && \
 RUN rm -f /opt/gradle/lib/plugins/bcpg-jdk18on-*.jar \
           /opt/gradle/lib/plugins/bcprov-jdk18on-*.jar \
           /opt/gradle/lib/plugins/bcutil-jdk18on-*.jar && \
-    curl -sL https://repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk18on/1.84/bcpg-jdk18on-1.84.jar \
-      -o /opt/gradle/lib/plugins/bcpg-jdk18on-1.84.jar && \
+    { curl -fsSL --retry 3 --retry-all-errors -o /opt/gradle/lib/plugins/bcpg-jdk18on-1.84.jar https://repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk18on/1.84/bcpg-jdk18on-1.84.jar || \
+      curl -fsSL --retry 3 --retry-all-errors -o /opt/gradle/lib/plugins/bcpg-jdk18on-1.84.jar https://maven-central.storage-download.googleapis.com/maven2/org/bouncycastle/bcpg-jdk18on/1.84/bcpg-jdk18on-1.84.jar; } && \
     echo "c0e6303a0d7589040f400950ecee87a14b81312e84ed15e5390ebb0c4566ddab  /opt/gradle/lib/plugins/bcpg-jdk18on-1.84.jar" | sha256sum -c - && \
-    curl -sL https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk18on/1.84/bcprov-jdk18on-1.84.jar \
-      -o /opt/gradle/lib/plugins/bcprov-jdk18on-1.84.jar && \
+    { curl -fsSL --retry 3 --retry-all-errors -o /opt/gradle/lib/plugins/bcprov-jdk18on-1.84.jar https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk18on/1.84/bcprov-jdk18on-1.84.jar || \
+      curl -fsSL --retry 3 --retry-all-errors -o /opt/gradle/lib/plugins/bcprov-jdk18on-1.84.jar https://maven-central.storage-download.googleapis.com/maven2/org/bouncycastle/bcprov-jdk18on/1.84/bcprov-jdk18on-1.84.jar; } && \
     echo "64d6c5a6121fcd927152dd182cbed39afe0fda641a970d9bcc0c9cb1858b2731  /opt/gradle/lib/plugins/bcprov-jdk18on-1.84.jar" | sha256sum -c - && \
-    curl -sL https://repo1.maven.org/maven2/org/bouncycastle/bcutil-jdk18on/1.84/bcutil-jdk18on-1.84.jar \
-      -o /opt/gradle/lib/plugins/bcutil-jdk18on-1.84.jar && \
+    { curl -fsSL --retry 3 --retry-all-errors -o /opt/gradle/lib/plugins/bcutil-jdk18on-1.84.jar https://repo1.maven.org/maven2/org/bouncycastle/bcutil-jdk18on/1.84/bcutil-jdk18on-1.84.jar || \
+      curl -fsSL --retry 3 --retry-all-errors -o /opt/gradle/lib/plugins/bcutil-jdk18on-1.84.jar https://maven-central.storage-download.googleapis.com/maven2/org/bouncycastle/bcutil-jdk18on/1.84/bcutil-jdk18on-1.84.jar; } && \
     echo "b374e16963421fb9cfb01cc20d7ad8fd2f8b8188e3eef0ec0a8965e245f7619a  /opt/gradle/lib/plugins/bcutil-jdk18on-1.84.jar" | sha256sum -c -
 
 # Update packages to get latest security fixes and remove unnecessary packages
