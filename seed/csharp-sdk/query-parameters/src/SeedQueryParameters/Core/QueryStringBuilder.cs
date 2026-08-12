@@ -419,7 +419,7 @@ internal static class QueryStringBuilder
 #if NET8_0_OR_GREATER
         return SafeQueryKeyChars.Contains(c);
 #else
-        // query = *( pchar / "/" / "?" )  minus "&", "=", "+", "#"
+        // query = *( pchar / "/" / "?" )  minus "&", "=", "+", ";", "#"
         return (c >= 'A' && c <= 'Z')
             || (c >= 'a' && c <= 'z')
             || (c >= '0' && c <= '9')
@@ -434,7 +434,6 @@ internal static class QueryStringBuilder
             || c == ')'
             || c == '*'
             || c == ','
-            || c == ';'
             || c == ':'
             || c == '@'
             || c == '/'
@@ -448,7 +447,7 @@ internal static class QueryStringBuilder
 #if NET8_0_OR_GREATER
         return SafeQueryValueChars.Contains(c);
 #else
-        // query = *( pchar / "/" / "?" )  minus "&", "+", "#"
+        // query = *( pchar / "/" / "?" )  minus "&", "+", ";", "#"
         return (c >= 'A' && c <= 'Z')
             || (c >= 'a' && c <= 'z')
             || (c >= '0' && c <= '9')
@@ -463,7 +462,6 @@ internal static class QueryStringBuilder
             || c == ')'
             || c == '*'
             || c == ','
-            || c == ';'
             || c == '='
             || c == ':'
             || c == '@'
