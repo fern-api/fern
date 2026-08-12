@@ -225,7 +225,8 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
             this.coreTestFiles.push(
                 await this.createAsIsFile({
                     filename,
-                    namespace: this.context.getCoreTestsNamespace()
+                    namespace: this.context.getCoreTestsNamespace(),
+                    extraTemplateVars: this.context.getExtraTemplateVarsForFile(filename)
                 })
             );
         }

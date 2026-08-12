@@ -14,6 +14,8 @@ class JsonApiRequest extends BaseApiRequest
      * @param array<string, string> $headers Additional headers for the request (optional)
      * @param array<string, mixed> $query Query parameters for the request (optional)
      * @param mixed|null $body The JSON request body (optional)
+     * @param bool $omitContentTypeWithoutBody Whether a request that carries no body also carries no
+     *                                         Content-Type (optional)
      */
     public function __construct(
         string $baseUrl,
@@ -21,8 +23,9 @@ class JsonApiRequest extends BaseApiRequest
         HttpMethod $method,
         array $headers = [],
         array $query = [],
-        public readonly mixed $body = null
+        public readonly mixed $body = null,
+        bool $omitContentTypeWithoutBody = false
     ) {
-        parent::__construct($baseUrl, $path, $method, $headers, $query);
+        parent::__construct($baseUrl, $path, $method, $headers, $query, $omitContentTypeWithoutBody);
     }
 }

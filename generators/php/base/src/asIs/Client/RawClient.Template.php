@@ -125,7 +125,7 @@ class RawClient
             $body = $this->encodeRequestBody($request, $options);
             if ($body !== null) {
                 $httpRequest = $httpRequest->withBody($body);
-            }<% if (it.respectOptionalRequestBody) { %> else {
+            }<% if (it.respectOptionalRequestBody) { %> elseif ($request->omitContentTypeWithoutBody) {
                 // A request that sends nothing must not advertise a media type, so that a server
                 // branching on Content-Type sees a bodyless call for what it is. Only the default
                 // media type is dropped; a Content-Type the caller asked for still goes out.

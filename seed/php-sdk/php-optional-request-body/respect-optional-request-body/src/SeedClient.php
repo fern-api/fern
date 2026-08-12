@@ -102,6 +102,7 @@ class SeedClient
                     path: "/refunds/{$id}",
                     method: HttpMethod::POST,
                     body: $request,
+                    omitContentTypeWithoutBody: true,
                 ),
                 $options,
             );
@@ -160,6 +161,7 @@ class SeedClient
                     path: "/refunds",
                     method: HttpMethod::POST,
                     body: $request,
+                    omitContentTypeWithoutBody: true,
                 ),
                 $options,
             );
@@ -226,6 +228,7 @@ class SeedClient
                     method: HttpMethod::POST,
                     headers: $headers,
                     body: $request->body,
+                    omitContentTypeWithoutBody: true,
                 ),
                 $options,
             );
@@ -286,6 +289,7 @@ class SeedClient
                     path: "/refunds/{$id}/exact",
                     method: HttpMethod::POST,
                     body: $request,
+                    omitContentTypeWithoutBody: true,
                 ),
                 $options,
             );
