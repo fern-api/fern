@@ -634,6 +634,7 @@
           "file": "Custom Actions"
         }
       },
+      "displayName": "Custom Actions",
       "basePath": {
         "head": "",
         "parts": []
@@ -1579,6 +1580,7 @@
     },
     "subpackage_customActions": {
       "name": "customActions",
+      "displayName": "Custom Actions",
       "fernFilepath": {
         "allParts": [
           "customActions"

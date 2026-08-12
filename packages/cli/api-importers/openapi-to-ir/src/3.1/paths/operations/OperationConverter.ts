@@ -1261,15 +1261,30 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     private getGroupDisplayName(group: string[] | undefined): string | undefined {
-        let rawOperationTag = this.operation.tags?.[0];
-        if (rawOperationTag != null) {
-            rawOperationTag = this.context.getDisplayNameForTag(rawOperationTag);
-        }
+        const originalTag = this.operation.tags?.[0];
         const baseGroupName = group?.[group.length - 1];
-        if (baseGroupName != null && rawOperationTag != null) {
-            const lowerCaseRawOperationTag = rawOperationTag.toLowerCase().replaceAll(" ", "");
-            return lowerCaseRawOperationTag === baseGroupName ? rawOperationTag : undefined;
+        if (originalTag == null || baseGroupName == null) {
+            return undefined;
         }
-        return undefined;
+        // Tag-derived groups use the raw tag as the group leaf, so a leaf that differs from the
+        // tag came from somewhere else (for example `x-fern-sdk-group-name`) and is not named
+        // after the tag.
+        if (baseGroupName !== originalTag) {
+            return undefined;
+        }
+        const explicitDisplayName = this.context.getExplicitDisplayNameForTag(originalTag);
+        if (explicitDisplayName != null) {
+            return explicitDisplayName;
+        }
+        return readsAsDisplayLabel(originalTag) ? originalTag : undefined;
     }
+}
+
+/**
+ * Whether a tag can be shown to readers as written. Tags that contain a space, or that have no
+ * capitalization to split on, already read as labels. Anything else (`OrganizationUsers`) is left
+ * unlabeled so that consumers can split it into words themselves.
+ */
+function readsAsDisplayLabel(tag: string): boolean {
+    return tag.includes(" ") || !/[A-Z]/.test(tag);
 }

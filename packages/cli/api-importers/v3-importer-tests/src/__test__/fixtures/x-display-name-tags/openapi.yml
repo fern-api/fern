@@ -1,0 +1,62 @@
+openapi: 3.1.0
+info:
+  title: Tag display name probe
+  version: 1.0.0
+servers:
+  - url: https://example.invalid
+tags:
+  - name: BMC Credential
+    x-displayName: BMC Credential
+    description: Acronym tag whose Title Case name Fern would otherwise mangle.
+  - name: iPXE Template
+    x-displayName: Totally Different Label
+    description: Custom display name that deliberately differs from the tag name.
+  - name: VPC Peering
+    description: Known acronym without an explicit x-displayName.
+  - name: OrganizationUsers
+    description: Single-token tag left unlabeled so consumers still split it into words.
+  - name: OAuth
+    x-displayName: OAuth Operations
+    description: Tag whose operation uses an explicit SDK group.
+paths:
+  /bmc:
+    get:
+      tags:
+        - BMC Credential
+      operationId: getBmcCredential
+      responses:
+        "200":
+          description: OK
+  /ipxe:
+    get:
+      tags:
+        - iPXE Template
+      operationId: getIpxeTemplate
+      responses:
+        "200":
+          description: OK
+  /vpc:
+    get:
+      tags:
+        - VPC Peering
+      operationId: getVpcPeering
+      responses:
+        "200":
+          description: OK
+  /organization-users:
+    get:
+      tags:
+        - OrganizationUsers
+      operationId: getOrganizationUsers
+      responses:
+        "200":
+          description: OK
+  /oauth:
+    post:
+      tags:
+        - OAuth
+      x-fern-sdk-group-name: auth
+      x-fern-sdk-method-name: get-token
+      responses:
+        "200":
+          description: OK
