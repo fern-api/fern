@@ -12,6 +12,8 @@ const CACHE_DIR_NAME = ".fern";
 const BIN_DIR_NAME = "bin";
 const LOCK_TIMEOUT_MS = 120_000;
 const LOCK_RETRY_INTERVAL_MS = 200;
+const DOWNLOAD_ATTEMPTS = 3;
+const DOWNLOAD_RETRY_INTERVAL_MS = 1_000;
 
 interface PlatformInfo {
     os: string;
@@ -220,13 +222,11 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
 
     const tmpDownloadPath = AbsoluteFilePath.of(`${versionedPath}.download`);
     try {
-        const response = await fetch(downloadUrl, { redirect: "follow" });
-        if (!response.ok) {
-            logger.debug(`Failed to download buf: ${response.status} ${response.statusText}`);
+        const arrayBuffer = await downloadWithRetries(downloadUrl, logger);
+        if (arrayBuffer == null) {
             return undefined;
         }
 
-        const arrayBuffer = await response.arrayBuffer();
         await writeFile(tmpDownloadPath, new Uint8Array(arrayBuffer));
         await chmod(tmpDownloadPath, 0o755);
 
@@ -251,6 +251,43 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
         }
         return undefined;
     }
+}
+
+function isRetryableStatus(status: number): boolean {
+    return status === 408 || status === 429 || status >= 500;
+}
+
+/**
+ * Downloads `url`, retrying transient failures (network errors, 429s and 5xxs) with
+ * a linear backoff. Returns `undefined` once the attempts are exhausted.
+ */
+async function downloadWithRetries(url: string, logger: Logger): Promise<ArrayBuffer | undefined> {
+    for (let attempt = 1; attempt <= DOWNLOAD_ATTEMPTS; attempt++) {
+        let failure: string;
+        try {
+            const response = await fetch(url, { redirect: "follow" });
+            if (response.ok) {
+                return await response.arrayBuffer();
+            }
+            failure = `${response.status} ${response.statusText}`;
+            if (!isRetryableStatus(response.status)) {
+                logger.warn(`Failed to download buf ${BUF_VERSION} from ${url}: ${failure}`);
+                return undefined;
+            }
+        } catch (error) {
+            failure = error instanceof Error ? error.message : String(error);
+        }
+
+        if (attempt === DOWNLOAD_ATTEMPTS) {
+            logger.warn(
+                `Failed to download buf ${BUF_VERSION} from ${url} after ${DOWNLOAD_ATTEMPTS} attempts: ${failure}`
+            );
+            return undefined;
+        }
+        logger.warn(`Failed to download buf ${BUF_VERSION} (attempt ${attempt}): ${failure}. Retrying...`);
+        await new Promise((resolve) => setTimeout(resolve, DOWNLOAD_RETRY_INTERVAL_MS * attempt));
+    }
+    return undefined;
 }
 
 async function readVersionMarker(markerPath: AbsoluteFilePath, logger: Logger): Promise<string | undefined> {
