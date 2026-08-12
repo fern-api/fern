@@ -14,6 +14,7 @@ import {
     ExportedDirectory,
     ExportedFilePath,
     ExportsManager,
+    exampleOmitsRequestBody,
     getFullPathForEndpoint,
     getTextOfTsNode,
     ImportsManager,
@@ -1440,7 +1441,10 @@ export class SdkGenerator {
             for (const endpoint of service.endpoints) {
                 let examplesForEndpoint: FernIr.ExampleEndpointCall[] = [];
                 for (const userDefinedExample of endpoint.userSpecifiedExamples) {
-                    if (userDefinedExample.example != null) {
+                    if (
+                        userDefinedExample.example != null &&
+                        !exampleOmitsRequestBody({ endpoint, example: userDefinedExample.example })
+                    ) {
                         examplesForEndpoint.push(userDefinedExample.example);
                     }
                 }
