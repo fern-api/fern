@@ -63,7 +63,14 @@ export async function applyOverlays<T extends object>({
 
     const result = applyOpenAPIOverlay({
         data,
-        overlay
+        overlay,
+        onUnmatchedUpdate: (action) => {
+            context.logger.warn(
+                `Overlay ${absoluteFilePathToOverlay} has an update action targeting "${action.target}", ` +
+                    "which matches no node in the specification, so the update was not applied. " +
+                    "Target a parent node that exists if you intend to create this node."
+            );
+        }
     });
 
     // Write the overlaid result to a temp file for debugging/inspection

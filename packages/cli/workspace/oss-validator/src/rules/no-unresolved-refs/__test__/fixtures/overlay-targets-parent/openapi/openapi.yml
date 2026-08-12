@@ -1,0 +1,23 @@
+openapi: 3.1.0
+info:
+  title: Plant Store
+  version: 1.0.0
+paths:
+  /plants:
+    get:
+      operationId: listPlants
+      x-fern-sdk-group-name: plants
+      x-fern-sdk-method-name: list
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key

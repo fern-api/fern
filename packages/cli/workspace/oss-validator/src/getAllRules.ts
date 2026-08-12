@@ -5,6 +5,7 @@ import { NoDuplicateAuthHeaderParametersRule } from "./rules/no-duplicate-auth-h
 import { NoDuplicateOverridesRule } from "./rules/no-duplicate-overrides/index.js";
 import { NoInvalidTagNamesOrFrontmatterRule } from "./rules/no-invalid-tag-names-or-frontmatter/index.js";
 import { NoSchemaTitleCollisionsRule } from "./rules/no-schema-title-collisions/index.js";
+import { NoUnresolvedRefsRule } from "./rules/no-unresolved-refs/index.js";
 
 export function getAllRules(): Rule[] {
     return [
@@ -13,6 +14,7 @@ export function getAllRules(): Rule[] {
         NoSchemaTitleCollisionsRule,
         NoComponentSchemaCollisionsRule,
         NoInvalidTagNamesOrFrontmatterRule,
-        NoConflictingParameterNamesRule
+        NoConflictingParameterNamesRule,
+        NoUnresolvedRefsRule
     ];
 }

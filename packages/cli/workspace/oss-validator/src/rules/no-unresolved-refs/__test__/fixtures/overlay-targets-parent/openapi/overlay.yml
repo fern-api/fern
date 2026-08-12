@@ -1,0 +1,21 @@
+overlay: 1.0.0
+info:
+  title: Add an error response schema
+  version: 1.0.0
+actions:
+  - target: $.components
+    update:
+      schemas:
+        PlantErrorResponse:
+          type: object
+          properties:
+            message:
+              type: string
+  - target: $.paths['/plants'].get.responses
+    update:
+      "400":
+        description: Bad request
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlantErrorResponse"
