@@ -1,4 +1,32 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.95.0
+  changelogEntry:
+    - summary: |
+        Add a way to model an omittable request body separately from its type. `HttpRequestBodyReference`
+        gains an optional `required`, and `HttpReferencedRequestBodySchema` gains an `optional` flag that
+        maps to `required: false`. This is distinct from `body: optional<Foo>`, which says the body's
+        *value* may be null; `optional: true` says the *call* may omit the body entirely, so the request
+        carries neither content nor a `Content-Type` header.
+
+        A request body that OpenAPI does not mark as required now always carries `required: false` into
+        the IR, with its own type left alone. Generated output is unchanged: reading the field is opt-in
+        per SDK generator, through that generator's own configuration, so a language adopts it whenever
+        it is ready instead of every language having to flip at once.
+      type: feat
+    - summary: |
+        Deprecate the `respect-optional-request-body` OpenAPI setting. It is still accepted, but no longer
+        has any effect and warns when set; omittability now reaches generators through the IR regardless.
+        Endpoints whose body the spec does not mark as required no longer have that body typed as
+        `optional<Foo>`, so SDKs generated with the setting enabled describe the body as its own type
+        until the generator opts into omitting it.
+      type: chore
+    - summary: |
+        Skip an OpenAPI example that calls an endpoint without a body the spec does not mark as required.
+        The body keeps its own type until a generator opts into omitting it, so such an example generated
+        a call missing a required argument, which does not compile.
+      type: fix
+  createdAt: "2026-08-12"
+  irVersion: 67
 - version: 5.94.0
   changelogEntry:
     - summary: |
