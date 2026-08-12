@@ -999,8 +999,12 @@ export class EndpointSnippetGenerator {
         return {
             name: this.context.getMethodName(body.bodyKey),
             // The wrapped request requires the body, so an example that sends none still has to
-            // build one. An empty record renders the body's own empty builder.
-            value: this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value: value ?? {} })
+            // build one. An empty record renders the body type's own empty builder, while the
+            // other body types already render an empty value of their own from an absent one.
+            value: this.getReferencedRequestBodyPropertyTypeLiteral({
+                body: body.bodyType,
+                value: body.bodyType.type === "typeReference" ? (value ?? {}) : value
+            })
         };
     }
 
