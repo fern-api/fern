@@ -18,26 +18,30 @@ namespace SeedAliasExtends.Core;
 ///
 /// Three encoding contexts are distinguished:
 ///   Path segment (pchar): unreserved + sub-delims + ":" + "@"
-///   Query key:   query chars minus "&amp;", "=", "+", "#"
-///   Query value: query chars minus "&amp;", "+", "#"
+///   Query key:   query chars minus "&amp;", "=", "+", ";", "#"
+///   Query value: query chars minus "&amp;", "+", ";", "#"
+///
+/// ";" is percent-encoded in queries even though RFC 3986 permits it: it is a
+/// legacy parameter separator that many servers and frameworks still split on,
+/// so leaving it raw truncates the value.
 /// </summary>
 internal static class QueryStringBuilder
 {
     // ──────────────────────────────────────────────────────────────────────
     // RFC 3986 character sets
     //
-    // Query key safe:    unreserved + (sub-delims \ {& = +}) + : @ / ?
-    // Query value safe:  unreserved + (sub-delims \ {& +})   + : @ / ?
+    // Query key safe:    unreserved + (sub-delims \ {& = + ;}) + : @ / ?
+    // Query value safe:  unreserved + (sub-delims \ {& + ;})   + : @ / ?
     // Path segment safe: unreserved + sub-delims + : @
     // ──────────────────────────────────────────────────────────────────────
 
 #if NET8_0_OR_GREATER
     private static readonly SearchValues<char> SafeQueryKeyChars = SearchValues.Create(
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,;:@/?"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,:@/?"
     );
 
     private static readonly SearchValues<char> SafeQueryValueChars = SearchValues.Create(
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,;=:@/?"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,=:@/?"
     );
 
     private static readonly SearchValues<char> SafePathChars = SearchValues.Create(
@@ -45,10 +49,10 @@ internal static class QueryStringBuilder
     );
 #else
     private const string SafeQueryKeyChars =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,;:@/?";
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,:@/?";
 
     private const string SafeQueryValueChars =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,;=:@/?";
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,=:@/?";
 
     private const string SafePathChars =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$&'()*+,;=:@";
