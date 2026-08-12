@@ -30,12 +30,10 @@ class OAuthTokenProviderGenerator:
         self._refresh_client_member_name: Optional[str] = None
 
     def generate(self, source_file: SourceFile) -> None:
-        oauth_configuration: ir_types.OAuthConfiguration = self._oauth_scheme.configuration
-        oauth_configuration.visit(
-            client_credentials=lambda client_credentials: self._generate_client_credentials_classes(
-                source_file=source_file, client_credentials=client_credentials
-            )
-        )
+        oauth_configuration = self._oauth_scheme.configuration.get_as_union()
+        if oauth_configuration.type != "clientCredentials":
+            return
+        self._generate_client_credentials_classes(source_file=source_file, client_credentials=oauth_configuration)
 
     def _generate_client_credentials_classes(
         self, source_file: SourceFile, client_credentials: ir_types.OAuthClientCredentials
