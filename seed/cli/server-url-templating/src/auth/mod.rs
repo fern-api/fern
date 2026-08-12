@@ -60,8 +60,9 @@ pub use credential::AuthCredentialSource;
 pub use error::handle_error_response;
 pub use keyring_store::{
     active_store, auto_store, set_active_store, FileKeyringStore, KeyringStore, MockKeyringStore,
-    OsKeyringStore,
 };
+#[cfg(not(target_env = "musl"))]
+pub use keyring_store::OsKeyringStore;
 pub use login::{
     build_auth_command, dispatch_auth, inject_keyring_sources, inject_oauth2_caches,
     run_token_paste, DynLoginFlow, LoginContext, LoginFlow, TokenPasteLoginFlow,

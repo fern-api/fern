@@ -161,12 +161,22 @@ describe("emitPublishWorkflow", () => {
         expect(yaml).toContain("ubuntu-24.04-arm");
     });
 
-    it("installs musl-tools and conditionally builds with rustls for musl targets", async () => {
+    it("installs musl-tools and leaves feature selection to Cargo.toml", async () => {
         const yaml = await emitAndRead(baseInfo);
 
         expect(yaml).toContain("musl-tools");
-        expect(yaml).toContain("--no-default-features --features rustls");
+        expect(yaml).not.toContain("--no-default-features");
+        expect(yaml).not.toContain("--features rustls");
         expect(yaml).not.toContain("gcc-aarch64-linux-gnu");
+    });
+
+    it("gates publishing on the tag matching the crate version", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("needs: [check, compile, test, version]");
+        expect(yaml).toContain('TAG_VERSION="${GITHUB_REF_NAME#v}"');
+        expect(yaml).toContain("cargo metadata --no-deps --format-version 1");
+        expect(yaml).toContain('if [[ "${TAG_VERSION}" != "${CRATE_VERSION}" ]]; then');
     });
 
     it("sets musl-gcc as the linker and CC for musl targets", async () => {
