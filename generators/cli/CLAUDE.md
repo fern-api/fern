@@ -239,14 +239,91 @@ exchange — which honors `--base-url` — succeeds before the business request.
 The token/refresh endpoints themselves are excluded from the case list (the CLI
 consumes them internally and never exposes them as commands).
 
-**Body-modality skips:** the harness reads each endpoint's `RestMethod` and
-skips (logging why, test still passes) the ones the generic `--params`/`--json`
-driver can't feed: binary/file uploads (`--file`/`--audio`/…), multipart bodies,
-and bodies the CLI flattened into per-field flags (which reject a whole-body
-`--json`). This mirrors the SDK generator skipping endpoints it can't synthesize
-a call for. Known remaining gap: endpoints whose IR example omits a required
-body property fail the CLI's client-side schema validation — a data-quality
-signal, not a harness bug.
+**Body modalities are driven, not skipped:** the harness reads each endpoint's
+`RestMethod` and feeds the body the way that endpoint expects it — real temp
+fixture files through the per-field upload flags for binary/multipart, and the
+opaque `--json` body otherwise (including endpoints the CLI also flattened into
+per-field flags). Multipart cases additionally assert the `multipart/form-data`
+content type and, per part, its `Content-Disposition` name, its `Content-Type`,
+and `filename=` — the latter two pinned in the same substring as the
+disposition, since asserting them standalone would be satisfied by any sibling
+part. Fixture files are written with a `.txt` extension on purpose: a part's
+media type resolves as declared `encoding` → file extension →
+`application/octet-stream`, and an extensionless fixture would only ever
+exercise that last fallback.
+
+**Case twins.** Every happy-path case is expanded into variants that share its
+request shape, so one endpoint example covers several failure modes:
+
+| Variant | Suffix | Asserts |
+|---|---|---|
+| positive | — | exit 0, one matching request, rendered output matches the mocked body |
+| negative | `_error` | mock serves 422 with a non-empty JSON error body; CLI must exit non-zero *and* still have sent the correct request |
+| optional file omitted | `_optfileomitted` | optional file flags dropped; call still succeeds and the omitted field is absent from the wire body |
+
+Twins inherit the parent's matchers rather than re-deriving them — a negative
+twin that asserted a different request shape would not be testing the same call.
+
+**Auth assertions are per endpoint.** `requiresAuth` (from the IR's
+`endpoint.auth`) gates them, matching what `mock-utils` already does for its own
+auth-header matchers. Requiring a credential from an endpoint that declares none
+makes its mock unmatchable — an OAuth token endpoint exposed as a normal command
+authenticates via its request body and correctly sends no bearer. Under
+`ENDPOINT_SECURITY` auth (`endpointSecurityAuth`) the blanket bearer assertion is
+dropped entirely, since each endpoint picks its own scheme. The inverse is *not*
+asserted: an endpoint declaring no auth is still allowed to send a credential.
+
+**When a case fails**, the harness reports the command, exit code, stdout,
+stderr, and the requests the server actually received next to what was expected
+— so "never sent the request" is distinguishable from "sent the wrong one". Note
+that a matcher miss makes the mock server answer 404, which the CLI faithfully
+surfaces as a non-zero exit; the request-match assertion therefore runs *before*
+the exit-code check, or the CLI gets blamed for a mock that never matched.
+
+**Bodies are reconciled against the spec.** A case body comes from an IR
+example, but the generated CLI validates request bodies against the raw spec it
+embeds via `include_str!` (`validate_properties` in `sdk/src/openapi/executor.rs`
+reads `required` straight off the parsed spec). Those two disagree whenever a
+property is `required` in the spec but has a nullable schema — `anyOf: [{type:
+array}, {type: null}]` — because the importer models that as optional and example
+generation then legitimately skips it. The CLI rejects its own case with
+`error[validation]: Missing required property` and exits before any request is
+sent, so the case fails having never reached the mock.
+
+[`specRequiredBody.ts`](src/wireTests/specRequiredBody.ts) fills such properties
+from the spec's own schema (`null` where permitted, else a minimal typed value,
+honoring `const`/`enum`), recursing so an omission inside an array element the
+example *did* supply is fixed too. Properties it can't derive confidently are
+left absent on purpose. Repairs are recorded on the case as
+`specFilledBodyProperties` and named in failure diagnostics, so a spec-derived
+value is never mistaken for an author-written one.
+
+No seed fixture exercises this path, and can't: seed generates examples with
+optional properties **included**, while `fern generate --local` does not
+(`GenerationRunner` passes `includeOptionalRequestPropertyExamples: true`,
+`runLocalGenerationForWorkspace` passes `false`). So the omission only occurs on
+the production path — which is why this class of bug reaches customers and never
+our fixtures. Coverage is the unit tests in
+[`__test__/specRequiredBody.test.ts`](src/__test__/specRequiredBody.test.ts).
+
+The repair treats a symptom. The root cause is upstream: the importer emits a
+request example missing a required property, and classifies it as
+*user-specified*, so it outranks the autogenerated one
+(`manifest.ts` prefers `userSpecifiedExamples[0]`). Fixing it there would also
+stop SDKs typing such a property as optional when the API requires it.
+
+**Login-flow coverage** lives in `cli-oauth-login-flow:with-wire-tests` — the only
+fixture whose manifest carries `loginTokenSetup`, so the only one exercising the
+`auth login --with-token` seed plus request-time keyring → bearer injection. Its
+spec mixes authenticated operations with `security: []` ones on purpose, so it
+pins the *gate* as well as the assertion; reverting the gate fails exactly the
+unauthenticated cases and leaves the authenticated ones green. Client-credentials
+(the `authMock` path) is covered separately by
+`oauth-client-credentials-openapi:with-wire-tests`.
+
+Still unit-tested only: `ENDPOINT_SECURITY` auth (`endpointSecurityAuth`). The
+`endpoint-security-auth` test definition exists but sits in `allowedFailures`, so
+it can't host wire tests yet.
 
 No docker, no `RUN_WIRE_TESTS` gate — `wiremock` is already a `[dev-dependencies]`
 entry in `sdk/Cargo.toml`, so `seed`'s `cargo test --all-features` compiles and

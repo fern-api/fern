@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Non-2xx responses with a body are now returned as errors instead of successes.
+    `parse_response` and `parse_response_raw` only consulted the status code inside
+    their empty-body branch, so any error response that carried a payload was
+    deserialized into the success type and returned `Ok`. When the success type can
+    absorb an arbitrary object — all-optional fields, a bare `Value`, a defaulted
+    collection — the call looked like an empty-but-successful result: a 401 surfaced
+    as "no results found" and the process exited 0, which a calling script reads as
+    "nothing to do". The status is now checked before deserialization in both
+    methods, and the response body is carried through as the `ApiError::Http`
+    message so the server's own error detail reaches the caller.
+
+    This also closes the gap left by the executor path: `send_request`
+    short-circuits to `executor.execute(...)` when a custom `RequestExecutor` is
+    installed, bypassing `execute_with_retries` — previously the only place the
+    status was inspected. Checking in the parsers covers both paths.
+  type: fix

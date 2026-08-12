@@ -4,12 +4,19 @@ image: fernapi/fern-cli-generator
 changelogLocation: ../../generators/cli/versions.yml
 
 buildScripts:
+  # `--locked` is load-bearing, not cosmetic: it makes seed fail when the
+  # generated Cargo.lock does not resolve against the generated Cargo.toml.
+  # Without it cargo silently re-resolves, so a lock missing a package still
+  # built — while `cargo metadata --locked` and `cargo audit` failed in the
+  # customer's repo, quietly disabling dependency auditing. See
+  # patchCargoToml.ts, which derives the generated crates' lock stanzas from
+  # their real manifests and fails generation if the shipped lock is short.
   compileScript:
     commands:
-      - cargo build --all-features --tests
+      - cargo build --locked --all-features --tests
   testScript:
     commands:
-      - cargo test --all-features
+      - cargo test --locked --all-features
 
 publish:
   preBuildCommands:
@@ -154,6 +161,63 @@ fixtures:
     - customConfig:
         generateWireTests: true
       outputFolder: with-wire-tests
+  # Multipart/form-data wire coverage. The `POST /upload-file` operation has an
+  # optional `file` field typed `anyOf: [{string, binary}, {type: null}]` — the
+  # canonical shape the harness must drive with a real fixture file (not the
+  # filename as a text part). The harness writes a temp file, passes it via the
+  # per-field `--file` flag, and asserts the multipart body carries the file
+  # bytes, so a regression that sends the path string instead fails at
+  # `cargo test`.
+  file-upload-openapi:
+    - customConfig:
+        generateWireTests: true
+      outputFolder: with-wire-tests
+  # JSON request-body wire coverage. `PATCH /Profiles/{profileId}/Identifiers/
+  # {idType}` carries an inlined JSON body (`idType`/`oldValue`/`newValue`) that
+  # also collides with a path param name. The harness asserts the request body
+  # the CLI sends matches the example, so a body that drops/renames/mis-serializes
+  # a field fails at `cargo test`.
+  openapi-path-param-body-collision:
+    - customConfig:
+        generateWireTests: true
+      outputFolder: with-wire-tests
+  # Public-client login flow (authorization-code + PKCE) wire coverage. The only
+  # fixture whose manifest carries `loginTokenSetup`: the harness seeds a token
+  # via `auth login --with-token` and asserts business requests carry
+  # `Authorization: Bearer <token>`, exercising the request-time keyring
+  # provider. The spec deliberately mixes authenticated operations (`widgets`)
+  # with `security: []` ones (`tokens exchange`, `system health`) so the fixture
+  # pins the *gate* as well as the assertion: an endpoint declaring no auth must
+  # not be required to send a credential. Requiring one made its mock
+  # unmatchable — the CLI correctly sends nothing, nothing matches, and the case
+  # failed for a reason unrelated to what it tests. That shipped because no
+  # fixture reached this path (`oauth-pkce` is a Fern-definition workspace, so
+  # the CLI generator skips it; `cli-oauth` is client-credentials).
+  cli-oauth-login-flow:
+    - customConfig:
+        binaryName: login-flow
+        generateWireTests: true
+      outputFolder: with-wire-tests
+
+  # Auth-header matchers. `mock-utils` emits them only for `basic`, `bearer` and
+  # `header` schemes — its switch has no `oauth` case — so every other wire-test
+  # fixture (unauthenticated, or OAuth) carries an empty `headerMatchers` list and
+  # never executes the harness's header-assertion path on a real binary. These two
+  # cover both matcher kinds the harness dispatches on:
+  #   header -> `x-api-key: .+`                       (match_header_regex)
+  #   basic  -> exact `Authorization: Basic <base64>` (match_header)
+  # Each spec also carries one `security: []` operation, so the `requiresAuth`
+  # gate is pinned in the same fixture: reverting it fails exactly that case.
+  cli-header-auth:
+    - customConfig:
+        binaryName: header-auth-cli
+        generateWireTests: true
+      outputFolder: with-wire-tests
+  cli-basic-auth:
+    - customConfig:
+        binaryName: basic-auth-cli
+        generateWireTests: true
+      outputFolder: with-wire-tests
 
 # Alpha-quality coverage: the SDK template only handles happy-path
 # OpenAPI specs. Seed iterates every test-definition by default; fixtures
@@ -229,6 +293,39 @@ allowedFailures:
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-mandatory-auth
   - oauth-client-credentials-nested-root
+  # Its 4 wire tests fail on CI and only on CI: the mock matches 0 requests. Not
+  # a regression from the wire-test work — this fixture's generated `main.rs` and
+  # the whole of `sdk/src/auth/` are byte-identical to main, and the other 9 wire
+  # fixtures pass in the same container, in the same run, concurrently.
+  #
+  # Ruled out, with the diagnostics the harness now prints on a mismatch:
+  #   - the CLI's request. A self-probe issued from inside the test for the exact
+  #     expected method and path also gets 404.
+  #   - the matcher data. `expected "/plants" (len 7)` vs `received "/plants"
+  #     (len 7)` — byte-identical, and `PathExactMatcher` is a plain string
+  #     equality on `request.url.path()`.
+  #   - the environment/library. 13 local runs across 4 environments (arm64,
+  #     arm64 with a broken HOME, amd64 under emulation, and CI's exact
+  #     `--parallel 16` shard invocation with scripts) all pass.
+  # Deterministic on CI: 9 consecutive failures over 3 runs x 3 retries.
+  #
+  # The one structural difference from every fixture that passes: this is the
+  # only fixture with an `authMock`, so the only one that mounts a second mock on
+  # the server alongside the scoped business mock.
+  #
+  # Worth knowing before removing this line: these tests were green for ~3 months
+  # while the CLI sent no credential at all. The scheme name in this fixture's
+  # `generators.yml` (`CustomAuth`) does not match its spec's
+  # `components.securitySchemes` (`BearerAuth`), the CLI joins bindings to
+  # operations by name, finds none, and sends every request unauthenticated with
+  # exit 0 — and `mock-utils` emits no auth matcher for `oauth` schemes, so
+  # nothing checked. Both are filed separately. Green here would be the wrong
+  # outcome until the credential assertion exists.
+  #
+  # Must carry the `:with-wire-tests` suffix: `testWorkspaceFixtures.ts` keys a
+  # result as `<id>:<outputFolder>` whenever the two differ, then does an exact
+  # set difference against this list. The bare name matches nothing.
+  - oauth-client-credentials-openapi:with-wire-tests
   - oauth-client-credentials-reference
   - oauth-client-credentials-with-variables
   - oauth-pkce

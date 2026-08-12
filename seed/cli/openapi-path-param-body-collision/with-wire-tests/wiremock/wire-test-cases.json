@@ -1,0 +1,59 @@
+{
+  "binaryName": "path-param-body-collision",
+  "rootGroup": null,
+  "specs": [
+    {
+      "file": "cli/path-param-body-collision/openapi0.json",
+      "namespace": null
+    }
+  ],
+  "authEnvVars": [],
+  "authMock": null,
+  "loginTokenSetup": null,
+  "endpointSecurityAuth": false,
+  "cases": [
+    {
+      "id": "updateprofileidentifier",
+      "method": "PATCH",
+      "path": "/Profiles/{profileId}/Identifiers/{idTypePathParam}",
+      "params": {
+        "profileId": "profile_123",
+        "idTypePathParam": "email"
+      },
+      "body": {
+        "idType": "phone",
+        "oldValue": "+13175556789",
+        "newValue": "+13175556798"
+      },
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 200,
+        "body": "{\n  \"message\": \"ok\"\n}"
+      }
+    },
+    {
+      "id": "updateprofileidentifier_error",
+      "method": "PATCH",
+      "path": "/Profiles/{profileId}/Identifiers/{idTypePathParam}",
+      "params": {
+        "profileId": "profile_123",
+        "idTypePathParam": "email"
+      },
+      "body": {
+        "idType": "phone",
+        "oldValue": "+13175556789",
+        "newValue": "+13175556798"
+      },
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
+    }
+  ]
+}

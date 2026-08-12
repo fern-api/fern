@@ -628,13 +628,21 @@ impl HttpClient {
         let status = response.status().as_u16();
         let text = response.text().await.map_err(ApiError::Network)?;
 
+        // The status is authoritative, and it must be consulted *before* the
+        // body is deserialized. An error payload that happens to fit `T` —
+        // all-optional fields, a bare `Value`, an empty collection — would
+        // otherwise be returned as a successful call, so a 401 surfaces as
+        // "no results" and the caller has no way to tell: `T` carries no
+        // status. The body is preserved as the error message so the server's
+        // own detail reaches the caller.
+        if status >= 400 {
+            return Err(ApiError::Http {
+                status,
+                message: text,
+            });
+        }
+
         if text.is_empty() {
-            if status >= 400 {
-                return Err(ApiError::Http {
-                    status,
-                    message: String::new(),
-                });
-            }
             return serde_json::from_value(serde_json::Value::Null).map_err(|_| ApiError::Http {
                 status,
                 message: String::new(),
@@ -652,13 +660,18 @@ impl HttpClient {
         let headers = response.headers().clone();
         let text = response.text().await.map_err(ApiError::Network)?;
 
+        // Same contract as `parse_response`: a non-2xx is an error even though
+        // `RawResponse` could carry the status, because the success type `T`
+        // would still have to absorb an error payload. Callers that need the
+        // raw status of a failure read it off `ApiError::Http`.
+        if status_code >= 400 {
+            return Err(ApiError::Http {
+                status: status_code,
+                message: text,
+            });
+        }
+
         if text.is_empty() {
-            if status_code >= 400 {
-                return Err(ApiError::Http {
-                    status: status_code,
-                    message: String::new(),
-                });
-            }
             return serde_json::from_value(serde_json::Value::Null)
                 .map(|body| RawResponse {
                     body,
@@ -829,6 +842,114 @@ mod tests {
         assert!(!HttpClient::is_retryable_status(400));
         assert!(!HttpClient::is_retryable_status(401));
         assert!(!HttpClient::is_retryable_status(404));
+    }
+
+    /// A payload shaped so that it deserializes cleanly from *any* JSON object,
+    /// including an error body. This is what makes the status check load-bearing:
+    /// with an all-optional success type, deserialization alone cannot tell a
+    /// result from an error.
+    #[derive(Debug, Default, serde::Deserialize)]
+    struct PermissivePayload {
+        #[serde(default)]
+        agents: Vec<String>,
+    }
+
+    /// Serve one raw HTTP response on an ephemeral port and return its URL.
+    /// Avoids a dev-dependency on a mock-server crate: the point is to obtain a
+    /// genuine `reqwest::Response` so the parsers are exercised on the real path
+    /// rather than through a hand-built stand-in.
+    async fn serve_once(status_line: &'static str, body: &'static str) -> String {
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0")
+            .await
+            .expect("bind ephemeral port");
+        let url = format!("http://{}/", listener.local_addr().expect("local addr"));
+        tokio::spawn(async move {
+            if let Ok((mut socket, _)) = listener.accept().await {
+                use tokio::io::{AsyncReadExt, AsyncWriteExt};
+                let mut discard = [0u8; 1024];
+                let _ = socket.read(&mut discard).await;
+                let response = format!(
+                    "HTTP/1.1 {status_line}\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
+                    body.len()
+                );
+                let _ = socket.write_all(response.as_bytes()).await;
+                let _ = socket.flush().await;
+            }
+        });
+        url
+    }
+
+    fn test_client() -> HttpClient {
+        HttpClient::new(ClientConfig::default()).expect("construct client")
+    }
+
+    #[tokio::test]
+    async fn test_parse_response_errors_on_non_2xx_with_a_deserializable_body() {
+        // Regression: the status check used to live inside the `text.is_empty()`
+        // branch, so a non-2xx carrying a body was deserialized and returned
+        // `Ok`. With a permissive success type the call then looked like an
+        // empty-but-successful result — a 401 reported as "no agents found",
+        // exit code 0, which a script reads as "nothing to do".
+        let url = serve_once("401 Unauthorized", r#"{"detail":"invalid api key"}"#).await;
+        let response = reqwest::get(&url).await.expect("request completes");
+
+        let result: Result<PermissivePayload, ApiError> =
+            test_client().parse_response(response).await;
+
+        match result {
+            Err(ApiError::Http { status, message }) => {
+                assert_eq!(status, 401);
+                assert!(
+                    message.contains("invalid api key"),
+                    "the server's error detail must reach the caller, got: {message}"
+                );
+            }
+            Err(other) => panic!("expected ApiError::Http, got {other:?}"),
+            Ok(_) => panic!("a 401 with a body must not be reported as success"),
+        }
+    }
+
+    #[tokio::test]
+    async fn test_parse_response_raw_errors_on_non_2xx_with_a_deserializable_body() {
+        let url = serve_once("500 Internal Server Error", r#"{"agents":[]}"#).await;
+        let response = reqwest::get(&url).await.expect("request completes");
+
+        let result: Result<RawResponse<PermissivePayload>, ApiError> =
+            test_client().parse_response_raw(response).await;
+
+        match result {
+            Err(ApiError::Http { status, .. }) => assert_eq!(status, 500),
+            Err(other) => panic!("expected ApiError::Http, got {other:?}"),
+            Ok(_) => panic!("a 500 with a body must not be reported as success"),
+        }
+    }
+
+    #[tokio::test]
+    async fn test_parse_response_still_succeeds_on_2xx() {
+        // The status gate must not swallow the happy path.
+        let url = serve_once("200 OK", r#"{"agents":["one","two"]}"#).await;
+        let response = reqwest::get(&url).await.expect("request completes");
+
+        let parsed: PermissivePayload = test_client()
+            .parse_response(response)
+            .await
+            .expect("a 200 must deserialize");
+
+        assert_eq!(parsed.agents, vec!["one", "two"]);
+    }
+
+    #[tokio::test]
+    async fn test_parse_response_raw_still_exposes_status_on_2xx() {
+        let url = serve_once("201 Created", r#"{"agents":["one"]}"#).await;
+        let response = reqwest::get(&url).await.expect("request completes");
+
+        let raw: RawResponse<PermissivePayload> = test_client()
+            .parse_response_raw(response)
+            .await
+            .expect("a 201 must deserialize");
+
+        assert_eq!(raw.status_code, 201);
+        assert_eq!(raw.body.agents, vec!["one"]);
     }
 
     /// Accepts a single connection, returns the raw request text and replies with a token.

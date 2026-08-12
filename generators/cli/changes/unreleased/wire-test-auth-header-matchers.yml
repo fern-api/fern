@@ -1,0 +1,27 @@
+- summary: |
+    Wire tests now assert the credential header, and the basic-auth credential
+    the harness seeds is the one the mock actually expects.
+
+    `mock-utils` emits stub-level auth header matchers only for `basic`,
+    `bearer` and `header` schemes — its switch has no `oauth` case. Every
+    wire-test fixture we had was either unauthenticated or OAuth, so
+    `headerMatchers` was empty everywhere and the harness's header-assertion
+    path had never executed against a real binary, despite being implemented.
+    Two fixtures now cover both matcher kinds the harness dispatches on:
+    `cli-header-auth` (apiKey in header → `x-api-key: .+`, via
+    `match_header_regex`) and `cli-basic-auth` (exact `Authorization: Basic
+    <base64>`, via `match_header`). Each spec also carries one `security: []`
+    operation, so the `requiresAuth` gate is pinned in the same fixture.
+
+    Standing that up surfaced a real defect. The harness exported every
+    credential env var with the same placeholder, but `mock-utils` encodes basic
+    auth as an exact base64 of `test-username:test-password` — so a basic-auth
+    CLI sent a perfectly well-formed `Authorization` header that could never
+    match its own mock, and every authenticated case would have failed the
+    moment anyone enabled wire tests on such an API. The manifest now carries a
+    value per credential env var and pairs the username and password halves with
+    what `mock-utils` expects, including the `usernameOmit` / `passwordOmit`
+    single-half variants where seeding the wrong half is silently wrong.
+    Presence-only schemes keep the placeholder, since `.+` and `Bearer .+` are
+    satisfied by any non-empty value.
+  type: fix

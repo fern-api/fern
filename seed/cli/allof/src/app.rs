@@ -588,8 +588,12 @@ impl CliApp {
         T: Into<std::ffi::OsString>,
     {
         crate::reset_sigpipe();
-        let _ = dotenvy::dotenv();
+        // Collect now, report after `init_logging` — a warning emitted before the
+        // subscriber exists is dropped, which would leave a user whose `.env`
+        // setting was ignored with no explanation at all.
+        let ignored_dotenv_keys = crate::load_dotenv_filtered(&self.name);
         crate::init_logging(&self.name);
+        crate::warn_ignored_dotenv_keys(&ignored_dotenv_keys);
 
         self.propagate_root_auth();
         self.propagate_root_global_parameters();
@@ -961,6 +965,12 @@ impl CliApp {
         let (merged_subtree, leaf_map, binding_cmds) =
             merge_binding_subtrees(&self.bindings)?;
 
+        // Does the spec itself claim a top-level `auth` group? When it
+        // does, the built-in credential subcommands are folded into it
+        // (see `graft_builtin_command`) and `auth <op>` operations owned
+        // by the spec must reach their binding instead of `dispatch_auth`.
+        let spec_owns_auth = merged_subtree.find_subcommand("auth").is_some();
+
         // Graft the merged subtree's subcommands and binding-level
         // global args / about / after_help into the root cli, reusing
         // the per-binding commands already built above.
@@ -976,10 +986,9 @@ impl CliApp {
         // `auth` is always grafted, even on binaries that declare no OAuth
         // flow — `auth login --with-token` is the universal credential
         // entry point that ships on every Fern CLI (ADR-0007 § always-graft).
-        cli = cli
-            .subcommand(crate::completions::completion_command())
-            .subcommand(crate::man::man_command())
-            .subcommand(crate::auth::login::build_auth_command());
+        cli = graft_builtin_command(cli, crate::completions::completion_command());
+        cli = graft_builtin_command(cli, crate::man::man_command());
+        cli = graft_builtin_command(cli, crate::auth::login::build_auth_command());
 
         // 1d. Apply Tier 1 deferred operations (alias, hide, stability)
         // before completion/man generation so aliases appear in tab-
@@ -1063,15 +1072,25 @@ impl CliApp {
         // 3a. Intercept the always-grafted `auth` subcommand before binding
         // resolution — it's framework-owned, not spec-owned, and runs
         // synchronously without touching any binding (ADR-0007 § always-graft).
+        //
+        // When the spec also declares an `auth` group, only the built-in
+        // credential subcommands are intercepted; everything else under
+        // `auth` belongs to the spec and falls through to its binding.
         if let Some(("auth", auth_matches)) = matches.subcommand() {
-            crate::auth::login::dispatch_auth(
-                auth_matches,
-                &self.name,
-                &self.auth_bindings,
-                &self.login_flows,
-                out,
-            )?;
-            return Ok(PipelineOutcome::Success);
+            let builtin_sub = matches!(
+                auth_matches.subcommand_name(),
+                Some("login" | "logout" | "status")
+            );
+            if builtin_sub || !spec_owns_auth {
+                crate::auth::login::dispatch_auth(
+                    auth_matches,
+                    &self.name,
+                    &self.auth_bindings,
+                    &self.login_flows,
+                    out,
+                )?;
+                return Ok(PipelineOutcome::Success);
+            }
         }
 
         // 4a. Check CLI-level custom commands first.
@@ -1178,18 +1197,13 @@ fn graft_merged_subtree(
     merged_subtree: clap::Command,
     title_set: bool,
 ) -> clap::Command {
-    // 1. Attach every top-level subcommand from the merged subtree.
-    //    Skip subcommands named `completion`, `man`, or `auth` — the
-    //    built-in counterparts are registered AFTER this graft (at
-    //    step 1c in `CliApp::run`) and clap panics on duplicate
-    //    top-level subcommands. `auth` is the always-grafted framework
-    //    surface for `auth login` / `logout` / `status` (ADR-0007).
-    //    No known spec uses these names, but the guard matches the old
-    //    pre-refactor behavior and keeps us safe against adversarial specs.
+    // 1. Attach every top-level subcommand from the merged subtree,
+    //    including groups named `completion`, `man`, or `auth`. The
+    //    built-in counterparts are registered AFTER this graft (at step
+    //    1c in `CliApp::run`) via `graft_builtin_command`, which folds
+    //    them into a spec-owned group of the same name rather than
+    //    letting clap see a duplicate top-level subcommand.
     for sub in merged_subtree.get_subcommands().cloned() {
-        if matches!(sub.get_name(), "completion" | "man" | "auth") {
-            continue;
-        }
         cli = cli.subcommand(sub);
     }
 
@@ -1232,6 +1246,36 @@ fn graft_merged_subtree(
         cli = cli.after_help(deduplicate_after_help(&after_help_sections));
     }
     cli
+}
+
+/// Graft a framework-owned built-in command (`completion`, `man`, `auth`)
+/// into `cli`.
+///
+/// When no spec-owned group shares the built-in's name this is a plain
+/// `.subcommand(...)`. When one does — e.g. an API with an `auth` resource
+/// group — the built-in's subcommands are folded into the spec-owned group
+/// so both surfaces stay reachable (`<bin> auth login` and `<bin> auth me`).
+/// Exact leaf collisions follow the `graft_subcommand` rule: the
+/// framework-owned leaf wins.
+fn graft_builtin_command(cli: clap::Command, builtin: clap::Command) -> clap::Command {
+    let name = builtin.get_name().to_string();
+    if cli.find_subcommand(&name).is_none() {
+        return cli.subcommand(builtin);
+    }
+
+    let builtin_subs: Vec<clap::Command> = builtin.get_subcommands().cloned().collect();
+    if builtin_subs.is_empty() {
+        // Leaf built-in (`completion`, `man`) — nothing to fold, and both
+        // are intercepted pre-clap anyway, so the built-in wins.
+        return cli.mut_subcommand(name, move |_spec_owned| builtin);
+    }
+    cli.mut_subcommand(name, move |spec_owned| {
+        let mut merged = spec_owned;
+        for sub in builtin_subs {
+            merged = crate::custom_commands::graft_subcommand(merged, &[], sub);
+        }
+        merged
+    })
 }
 
 /// `(binding_idx, full_leaf_path)` for every leaf in a merged command tree.
@@ -1678,6 +1722,62 @@ mod tests {
         // Sanity check the disjoint user-facing subtrees survived too.
         assert!(merged.find_subcommand("users").is_some());
         assert!(merged.find_subcommand("posts").is_some());
+    }
+
+    #[test]
+    fn graft_builtin_folds_into_spec_owned_group() {
+        // A spec that declares its own `auth` resource group keeps every
+        // operation in it, and still gets the built-in credential
+        // subcommands folded in alongside.
+        let spec = clap::Command::new("root").subcommand(
+            clap::Command::new("auth")
+                .subcommand(clap::Command::new("me"))
+                .subcommand(clap::Command::new("revoke")),
+        );
+        let cli = graft_builtin_command(spec, crate::auth::login::build_auth_command());
+
+        let auth = cli.find_subcommand("auth").expect("auth group survives");
+        for name in ["me", "revoke", "login", "logout", "status"] {
+            assert!(
+                auth.find_subcommand(name).is_some(),
+                "`auth {name}` should be reachable",
+            );
+        }
+
+        // And the merged tree actually parses the spec-owned operation.
+        let matches = cli
+            .clone()
+            .try_get_matches_from(["root", "auth", "me"])
+            .expect("`auth me` should parse");
+        let (path, _) = resolve_op_path(&matches);
+        assert_eq!(path, p(&["auth", "me"]));
+    }
+
+    #[test]
+    fn graft_builtin_wins_on_exact_leaf_collision() {
+        // A spec operation named exactly like a built-in loses to the
+        // framework leaf — same rule as `graft_subcommand`.
+        let spec = clap::Command::new("root").subcommand(
+            clap::Command::new("auth")
+                .subcommand(clap::Command::new("login").about("spec-owned")),
+        );
+        let cli = graft_builtin_command(spec, crate::auth::login::build_auth_command());
+
+        let login = cli
+            .find_subcommand("auth")
+            .and_then(|a| a.find_subcommand("login"))
+            .expect("login present");
+        assert!(login.get_arguments().any(|a| a.get_id() == "with-token"));
+    }
+
+    #[test]
+    fn graft_builtin_registers_when_no_collision() {
+        let cli = graft_builtin_command(
+            clap::Command::new("root").subcommand(clap::Command::new("users")),
+            crate::auth::login::build_auth_command(),
+        );
+        assert!(cli.find_subcommand("auth").is_some());
+        assert!(cli.find_subcommand("users").is_some());
     }
 
     #[test]

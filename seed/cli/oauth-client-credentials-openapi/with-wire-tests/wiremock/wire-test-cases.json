@@ -8,14 +8,22 @@
     }
   ],
   "authEnvVars": [
-    "PLANT_STORE_CLIENT_ID",
-    "PLANT_STORE_CLIENT_SECRET"
+    {
+      "name": "PLANT_STORE_CLIENT_ID",
+      "value": "test"
+    },
+    {
+      "name": "PLANT_STORE_CLIENT_SECRET",
+      "value": "test"
+    }
   ],
   "authMock": {
     "method": "POST",
     "path": "/identity/token",
     "responseBody": "{\"access_token\":\"test-access-token\",\"expires_in\":3600}"
   },
+  "loginTokenSetup": null,
+  "endpointSecurityAuth": false,
   "cases": [
     {
       "id": "list",
@@ -25,6 +33,7 @@
       "body": null,
       "queryMatchers": [],
       "headerMatchers": [],
+      "requiresAuth": true,
       "response": {
         "status": 200,
         "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"species\": \"species\"\n  }\n]"
@@ -40,10 +49,43 @@
       "body": null,
       "queryMatchers": [],
       "headerMatchers": [],
+      "requiresAuth": true,
       "response": {
         "status": 200,
         "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"species\": \"species\"\n}"
       }
+    },
+    {
+      "id": "list_error",
+      "method": "GET",
+      "path": "/plants",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": true,
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
+    },
+    {
+      "id": "get_error",
+      "method": "GET",
+      "path": "/plants/{plantId}",
+      "params": {
+        "plantId": "plantId"
+      },
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": true,
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
     }
   ]
 }

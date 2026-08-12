@@ -8,9 +8,11 @@ import {
     addTypesCrateToLock,
     applyCargoTomlPatch,
     applyPackageIdentityPatch,
+    parseGeneratedCrateManifest,
     patchCargoLockVersion,
     patchCargoToml,
-    renameCargoLockPackage
+    renameCargoLockPackage,
+    renderLockDependencyList
 } from "../patchCargoToml.js";
 
 /**
@@ -187,18 +189,134 @@ describe("renameCargoLockPackage", () => {
 });
 
 describe("generated crate lockfile entries after a package rename", () => {
+    const TYPES_MANIFEST = {
+        version: "0.0.0",
+        dependencies: [
+            { name: "serde", versionReq: "1" },
+            { name: "serde_json", versionReq: "1" }
+        ]
+    };
+    const SDK_MANIFEST = {
+        version: "0.1.0",
+        dependencies: [
+            { name: "agentmail_types", versionReq: undefined },
+            { name: "serde", versionReq: "1.0" },
+            { name: "tokio", versionReq: "1.0" }
+        ]
+    };
+
     it("adds the types crate to the renamed CLI crate's dependency list", () => {
         const renamed = renameCargoLockPackage(TEMPLATE_CARGO_LOCK, "agentmail-cli");
-        const patched = addTypesCrateToLock(renamed, "agentmail-types", false, "agentmail-cli");
+        const patched = addTypesCrateToLock(renamed, "agentmail-types", TYPES_MANIFEST, false, "agentmail-cli");
         const cliEntry = patched.slice(patched.indexOf('name = "agentmail-cli"'));
         expect(cliEntry.slice(0, cliEntry.indexOf("]"))).toContain('"agentmail_types"');
     });
 
     it("adds the SDK crate to the renamed CLI crate's dependency list", () => {
         const renamed = renameCargoLockPackage(TEMPLATE_CARGO_LOCK, "agentmail-cli");
-        const patched = addSdkCrateToLock(renamed, "agentmail-sdk", "agentmail-types", "agentmail-cli");
+        const patched = addSdkCrateToLock(renamed, "agentmail-sdk", "agentmail-types", SDK_MANIFEST, "agentmail-cli");
         const cliEntry = patched.slice(patched.indexOf('name = "agentmail-cli"'));
         expect(cliEntry.slice(0, cliEntry.indexOf("]"))).toContain('"agentmail_sdk"');
+    });
+
+    it("stamps the crate's real version, not a placeholder", () => {
+        const renamed = renameCargoLockPackage(TEMPLATE_CARGO_LOCK, "agentmail-cli");
+        const patched = addSdkCrateToLock(renamed, "agentmail-sdk", "agentmail-types", SDK_MANIFEST, "agentmail-cli");
+        // A placeholder version made Cargo treat the stanza as a different
+        // package and demand a lock update, breaking `--locked`.
+        expect(patched).toContain('name = "agentmail_sdk"\nversion = "0.1.0"');
+    });
+
+    it("fails loudly when a generated crate needs a package the shipped lock lacks", () => {
+        const renamed = renameCargoLockPackage(TEMPLATE_CARGO_LOCK, "agentmail-cli");
+        expect(() =>
+            addTypesCrateToLock(
+                renamed,
+                "agentmail-types",
+                { version: "0.0.0", dependencies: [{ name: "totally-absent-crate", versionReq: "1" }] },
+                false,
+                "agentmail-cli"
+            )
+        ).toThrow(/totally-absent-crate/);
+    });
+});
+
+describe("parseGeneratedCrateManifest", () => {
+    it("reads the version and dependency names the Rust generators emit", () => {
+        const manifest = parseGeneratedCrateManifest(
+            [
+                "[package]",
+                'name = "api_sdk"',
+                'version = "0.1.0"',
+                'edition = "2021"',
+                "",
+                "[dependencies]",
+                'base64 = "0.22"',
+                'reqwest = { version = "0.12", features = ["json"], default-features = false }',
+                'thiserror = "1.0"',
+                "",
+                "[dev-dependencies]",
+                'tokio-test = "0.4"',
+                "",
+                "[features]",
+                'default = ["multipart"]',
+                "",
+                "[dependencies.api_types]",
+                'path = "../api-types"'
+            ].join("\n")
+        );
+
+        expect(manifest.version).toBe("0.1.0");
+        expect(manifest.dependencies.map((d) => d.name).sort()).toEqual([
+            "api_types",
+            "base64",
+            "reqwest",
+            "thiserror"
+        ]);
+        // Version requirements are needed to disambiguate a package the lock
+        // holds two majors of.
+        expect(manifest.dependencies.find((d) => d.name === "reqwest")?.versionReq).toBe("0.12");
+        expect(manifest.dependencies.find((d) => d.name === "thiserror")?.versionReq).toBe("1.0");
+    });
+});
+
+describe("renderLockDependencyList", () => {
+    const LOCK_WITH_TWO_THISERRORS = [
+        "[[package]]",
+        'name = "thiserror"',
+        'version = "1.0.69"',
+        "",
+        "[[package]]",
+        'name = "thiserror"',
+        'version = "2.0.3"',
+        "",
+        "[[package]]",
+        'name = "serde"',
+        'version = "1.0.0"',
+        ""
+    ].join("\n");
+
+    it("version-qualifies a package the lock holds more than one major of", () => {
+        const refs = renderLockDependencyList(
+            LOCK_WITH_TWO_THISERRORS,
+            [
+                { name: "thiserror", versionReq: "1.0" },
+                { name: "serde", versionReq: "1" }
+            ],
+            []
+        );
+        // Cargo writes `"thiserror 1.0.69"` when the name alone is ambiguous,
+        // and a bare name when it is not.
+        expect(refs).toEqual(["serde", "thiserror 1.0.69"]);
+    });
+
+    it("exempts sibling generated crates, which are appended in the same pass", () => {
+        const refs = renderLockDependencyList(
+            LOCK_WITH_TWO_THISERRORS,
+            [{ name: "acme_types", versionReq: undefined }],
+            ["acme_types"]
+        );
+        expect(refs).toEqual(["acme_types"]);
     });
 });
 

@@ -135,6 +135,13 @@ describe("detectAuthBindings", () => {
         );
         expect(bindings[0]?.placement).toBe("root");
         expect(bindings[0]?.authTypeImport).toBe("BasicAuth");
+        // `envVars` order is load-bearing: the wire-test manifest pairs
+        // `envVars[0]` with mock-utils' `test-username` and `envVars[1]` with
+        // `test-password` to satisfy its exact `Authorization: Basic <base64>`
+        // matcher. Reordering these silently makes every basic-auth wire case
+        // unmatchable.
+        expect(bindings[0]?.basicHalf).toBe("both");
+        expect(bindings[0]?.envVars).toEqual(["CLOSE_USER", "CLOSE_PASS"]);
     });
 
     it("basic auth with passwordOmit (Close pattern): emits auth_provider with BasicAuthProvider::username_only", () => {
@@ -147,6 +154,10 @@ describe("detectAuthBindings", () => {
         );
         expect(bindings[0]?.placement).toBe("binding");
         expect(bindings[0]?.authTypeImport).toBe("AuthCredentialSource, BasicAuthProvider");
+        // Only the username half is bound, so the manifest must seed
+        // `test-username` here — seeding the password value would build
+        // `Basic base64("test-password:")` and never match.
+        expect(bindings[0]?.basicHalf).toBe("username");
     });
 
     it("basic auth with usernameOmit: emits auth_provider with BasicAuthProvider::password_only", () => {
@@ -157,6 +168,7 @@ describe("detectAuthBindings", () => {
         expect(bindings[0]?.rustCall).toBe(
             '.auth_provider("BasicAuth", BasicAuthProvider::password_only("BasicAuth", AuthCredentialSource::from_env("ACME_PASS")))'
         );
+        expect(bindings[0]?.basicHalf).toBe("password");
     });
 
     it("basic auth with both halves omitted: skipped — nothing left to bind", () => {
