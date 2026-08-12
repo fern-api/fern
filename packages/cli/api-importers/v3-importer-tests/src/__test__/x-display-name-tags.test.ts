@@ -40,6 +40,9 @@ describe("OpenAPI tag x-displayName", () => {
         );
         expect(Object.keys(servicesByDisplayName).sort()).toEqual([
             "BMC Credential",
+            "BMC-Reset",
+            "Custom Actions",
+            "Fleet Operations",
             "Totally Different Label",
             "VPC Peering"
         ]);
@@ -51,11 +54,14 @@ describe("OpenAPI tag x-displayName", () => {
         );
         expect(Object.keys(subpackagesByDisplayName).sort()).toEqual([
             "BMC Credential",
+            "BMC-Reset",
+            "Custom Actions",
+            "Fleet Operations",
             "Totally Different Label",
             "VPC Peering"
         ]);
 
-        // An SDK group is not named after the tag, so it does not inherit the tag's label.
+        // An SDK group that does not name the tag gets no label from it.
         const authService = ir.services["service_auth"];
         const authSubpackage = ir.subpackages["subpackage_auth"];
         if (authService == null || authSubpackage == null) {
@@ -73,6 +79,15 @@ describe("OpenAPI tag x-displayName", () => {
         expect(organizationUsersService.displayName).toBeUndefined();
         expect(organizationUsersSubpackage.displayName).toBeUndefined();
 
+        // `SSH_Key` also stays unlabeled, because `sshKey` renders as "SSH Key" without help.
+        const sshKeyService = ir.services["service_sshKey"];
+        const sshKeySubpackage = ir.subpackages["subpackage_sshKey"];
+        if (sshKeyService == null || sshKeySubpackage == null) {
+            throw new Error("Expected the SSH_Key tag to produce a service and subpackage");
+        }
+        expect(sshKeyService.displayName).toBeUndefined();
+        expect(sshKeySubpackage.displayName).toBeUndefined();
+
         // Package identity still comes from the tag name, not the display label.
         // Subpackage names may be NameOrString (plain string when no casing overrides).
         const originalName = (name: (typeof ir.subpackages)[string]["name"]) =>
@@ -80,7 +95,11 @@ describe("OpenAPI tag x-displayName", () => {
         const expectedNamesByDisplayName = {
             "Totally Different Label": "iPxeTemplate",
             "BMC Credential": "bmcCredential",
-            "VPC Peering": "vpcPeering"
+            "VPC Peering": "vpcPeering",
+            "BMC-Reset": "bmcReset",
+            // An SDK group renames the package, so the label is the only place the tag survives.
+            "Custom Actions": "customactions",
+            "Fleet Operations": "fleetoperations"
         };
         for (const [displayName, expectedName] of Object.entries(expectedNamesByDisplayName)) {
             const subpackage = subpackagesByDisplayName[displayName];

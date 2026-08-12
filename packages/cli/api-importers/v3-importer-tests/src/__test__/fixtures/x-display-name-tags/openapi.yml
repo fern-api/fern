@@ -15,9 +15,18 @@ tags:
     description: Known acronym without an explicit x-displayName.
   - name: OrganizationUsers
     description: Single-token tag left unlabeled so consumers still split it into words.
+  - name: BMC-Reset
+    description: Hyphenated tag whose acronym the package name cannot carry.
+  - name: SSH_Key
+    description: Separated tag whose acronym the package name carries on its own.
+  - name: Custom Actions
+    description: Tag whose SDK group renames it to a normalized form of the tag.
+  - name: Fleet Ops
+    x-displayName: Fleet Operations
+    description: Tag whose SDK group renames it to a normalized form of the declared label.
   - name: OAuth
     x-displayName: OAuth Operations
-    description: Tag whose operation uses an explicit SDK group.
+    description: Tag whose operation uses an unrelated SDK group.
 paths:
   /bmc:
     get:
@@ -48,6 +57,40 @@ paths:
       tags:
         - OrganizationUsers
       operationId: getOrganizationUsers
+      responses:
+        "200":
+          description: OK
+  /bmc-reset:
+    post:
+      tags:
+        - BMC-Reset
+      operationId: resetBmc
+      responses:
+        "200":
+          description: OK
+  /ssh-keys:
+    get:
+      tags:
+        - SSH_Key
+      operationId: listSshKeys
+      responses:
+        "200":
+          description: OK
+  /custom-actions:
+    get:
+      tags:
+        - Custom Actions
+      x-fern-sdk-group-name: customactions
+      x-fern-sdk-method-name: list
+      responses:
+        "200":
+          description: OK
+  /fleet-ops:
+    get:
+      tags:
+        - Fleet Ops
+      x-fern-sdk-group-name: fleetoperations
+      x-fern-sdk-method-name: list
       responses:
         "200":
           description: OK

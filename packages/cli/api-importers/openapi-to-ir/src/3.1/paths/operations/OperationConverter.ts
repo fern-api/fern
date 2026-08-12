@@ -1,3 +1,4 @@
+import { titleCase } from "@fern-api/core-utils";
 import { isEndpointSecurityAuthSchemes, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ContainerType,
@@ -1266,25 +1267,49 @@ export class OperationConverter extends AbstractOperationConverter {
         if (originalTag == null || baseGroupName == null) {
             return undefined;
         }
-        // Tag-derived groups use the raw tag as the group leaf, so a leaf that differs from the
-        // tag came from somewhere else (for example `x-fern-sdk-group-name`) and is not named
-        // after the tag.
-        if (baseGroupName !== originalTag) {
+        const explicitDisplayName = this.context.getExplicitDisplayNameForTag(originalTag);
+        // Tag-derived groups keep the tag verbatim, and `x-fern-sdk-group-name` can rename a group
+        // to the tag or its declared label with the capitalization and spaces dropped, as in
+        // `customactions` for `Custom Actions`. Any other leaf belongs to a group that is not the
+        // tag, so the tag says nothing about how to label it.
+        const normalizedGroupName = normalizeForComparison(baseGroupName);
+        const groupNamesTag =
+            normalizedGroupName === normalizeForComparison(originalTag) ||
+            (explicitDisplayName != null && normalizedGroupName === normalizeForComparison(explicitDisplayName));
+        if (!groupNamesTag) {
             return undefined;
         }
-        const explicitDisplayName = this.context.getExplicitDisplayNameForTag(originalTag);
         if (explicitDisplayName != null) {
             return explicitDisplayName;
+        }
+        // A group that kept the tag verbatim also kept its word boundaries, so a consumer can split
+        // `OrganizationUsers` on its own. A renamed group has lost them, which leaves the tag as the
+        // only readable source.
+        if (baseGroupName !== originalTag) {
+            return originalTag;
         }
         return readsAsDisplayLabel(originalTag) ? originalTag : undefined;
     }
 }
 
 /**
- * Whether a tag can be shown to readers as written. Tags that contain a space, or that have no
- * capitalization to split on, already read as labels. Anything else (`OrganizationUsers`) is left
- * unlabeled so that consumers can split it into words themselves.
+ * Whether a tag can be shown to readers as written. A tag with no capitalization has none to lose,
+ * and a tag with a space already reads as a label. Otherwise the tag is only worth keeping when
+ * rebuilding it from the package name would capitalize it differently, which is what turns
+ * `BMC-Reset` into `Bmc Reset`. `OrganizationUsers` survives the round trip as
+ * `Organization Users`, so it is left unlabeled and gains word breaks it could not have on its own.
  */
 function readsAsDisplayLabel(tag: string): boolean {
-    return tag.includes(" ") || !/[A-Z]/.test(tag);
+    if (!/[A-Z]/.test(tag) || tag.includes(" ")) {
+        return true;
+    }
+    return lettersAndDigitsOf(titleCase(camelCase(tag))) !== lettersAndDigitsOf(tag);
+}
+
+function normalizeForComparison(value: string): string {
+    return value.toLowerCase().replaceAll(" ", "");
+}
+
+function lettersAndDigitsOf(value: string): string {
+    return value.replaceAll(/[^a-zA-Z0-9]/g, "");
 }
