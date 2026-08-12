@@ -2089,6 +2089,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
+      '@fern-api/dynamic-ir-sdk':
+        specifier: 67.21.0
+        version: 67.21.0
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
