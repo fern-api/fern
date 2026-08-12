@@ -4,9 +4,15 @@ import com.fern.ir.model.auth.OAuthAccessTokenRequestProperties;
 import com.fern.ir.model.auth.OAuthClientCredentials;
 import com.fern.ir.model.commons.EndpointId;
 import com.fern.ir.model.commons.EndpointReference;
+import com.fern.ir.model.http.BytesRequest;
+import com.fern.ir.model.http.FileUploadRequest;
 import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpRequestBody;
+import com.fern.ir.model.http.HttpRequestBodyReference;
 import com.fern.ir.model.http.HttpResponseBody;
 import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.InlinedRequestBody;
+import com.fern.ir.model.http.InlinedRequestBodyProperty;
 import com.fern.ir.model.http.JsonResponseBody;
 import com.fern.ir.model.http.QueryParameter;
 import com.fern.ir.model.http.RequestProperty;
@@ -396,26 +402,58 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     }
 
     /**
-     * Maps each token request property's wire value to its position in the request object, which is the order the
-     * generated staged builder expects the required properties to be set in. Empty when the request is not a plain
-     * request body reference to an object (e.g. an inlined request wrapper, whose own class controls the order).
+     * Maps each token request body property's wire value to its position in the generated request class, which is the
+     * order the staged builder expects the required properties to be set in. Empty when the request body is neither an
+     * object reference nor an inlined body (e.g. file upload or bytes, which have no builder).
      */
     private Map<String, Integer> requestBodyPropertyOrder(HttpEndpoint httpEndpoint) {
         Map<String, Integer> order = new HashMap<>();
-        httpEndpoint
-                .getSdkRequest()
-                .flatMap(sdkRequest -> sdkRequest.getShape().getJustRequestBody())
-                .flatMap(SdkRequestBodyType::getTypeReference)
-                .map(typeReference -> typeReference.getRequestBodyType())
-                .flatMap(requestBodyType ->
-                        requestBodyType.visit(new PaginationPathUtils.TypeReferenceResolver(clientGeneratorContext)))
-                .map(TypeDeclaration::getShape)
-                .flatMap(shape -> shape.getObject())
-                .ifPresent(objectDeclaration -> {
-                    for (ObjectProperty property : resolvedObjectProperties(objectDeclaration)) {
-                        order.putIfAbsent(NameUtils.getWireValue(property.getName()), order.size());
-                    }
-                });
+        if (httpEndpoint.getRequestBody().isEmpty()) {
+            return order;
+        }
+        httpEndpoint.getRequestBody().get().visit(new HttpRequestBody.Visitor<Void>() {
+            @Override
+            public Void visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
+                inlinedRequestBody.getExtendedProperties().stream()
+                        .flatMap(List::stream)
+                        .forEach(property ->
+                                order.putIfAbsent(NameUtils.getWireValue(property.getName()), order.size()));
+                for (InlinedRequestBodyProperty property : inlinedRequestBody.getProperties()) {
+                    order.putIfAbsent(NameUtils.getWireValue(property.getName()), order.size());
+                }
+                return null;
+            }
+
+            @Override
+            public Void visitReference(HttpRequestBodyReference reference) {
+                reference
+                        .getRequestBodyType()
+                        .visit(new PaginationPathUtils.TypeReferenceResolver(clientGeneratorContext))
+                        .map(TypeDeclaration::getShape)
+                        .flatMap(shape -> shape.getObject())
+                        .ifPresent(objectDeclaration -> {
+                            for (ObjectProperty property : resolvedObjectProperties(objectDeclaration)) {
+                                order.putIfAbsent(NameUtils.getWireValue(property.getName()), order.size());
+                            }
+                        });
+                return null;
+            }
+
+            @Override
+            public Void visitFileUpload(FileUploadRequest fileUpload) {
+                return null;
+            }
+
+            @Override
+            public Void visitBytes(BytesRequest bytes) {
+                return null;
+            }
+
+            @Override
+            public Void _visitUnknown(Object unknownType) {
+                return null;
+            }
+        });
         return order;
     }
 
@@ -435,6 +473,19 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .getProperty()
                 .visit(new RequestPropertyToNameVisitor())
                 .getWireValue();
+    }
+
+    private static TypeReference unwrapOptional(TypeReference typeReference) {
+        if (typeReference.isContainer()) {
+            ContainerType container = typeReference.getContainer().get();
+            if (container.isOptional()) {
+                return unwrapOptional(container.getOptional().get());
+            }
+            if (container.isNullable()) {
+                return unwrapOptional(container.getNullable().get());
+            }
+        }
+        return typeReference;
     }
 
     /**
@@ -639,8 +690,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         return CodeBlock.of(
                                 "$T.$L",
                                 clientGeneratorContext
-                                        .getPoetClassNameFactory()
-                                        .getTypeClassName(declaration.get().getName()),
+                                        .getPoetTypeNameMapper()
+                                        .convertToTypeName(false, unwrapOptional(valueType)),
                                 NameUtils.getName(enumValue.getName())
                                         .getScreamingSnakeCase()
                                         .getSafeName());
