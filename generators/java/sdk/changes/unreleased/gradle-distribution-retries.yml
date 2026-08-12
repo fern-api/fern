@@ -1,0 +1,5 @@
+- summary: |
+    Retry the Gradle wrapper run when it fails downloading the Gradle distribution. The wrapper
+    fetches the distribution on its first run and gives up on the first network error, so a
+    transient failure reaching services.gradle.org failed the whole generation.
+  type: chore
