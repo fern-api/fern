@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.21.0] - 2026-08-08
+
+- Add optional `required` to `HttpRequestBodyReference`. Absent means required, so generators that
+  do not read it are unaffected. When false, the caller may omit the body entirely and the request
+  carries neither content nor a `Content-Type` header. This models omittability as a property of the
+  call rather than by wrapping `requestBodyType` in `optional<T>`, so generators no longer have to
+  unwrap a container before deciding how to shape the request parameter.
+- Add optional `bodyRequired` to `dynamic.BodyRequest`, mirroring the field above. Snippet
+  generators only ever see the dynamic IR and cannot infer omittability from `body`, since an absent
+  `body` means the endpoint has no body at all rather than that the caller may skip one. Absent
+  means required, so snippet output is unchanged until a generator reads it.
+
 ## [v67.20.0] - 2026-07-28
 
 - Add `packagist` variant to `PublishTarget` (`PackagistPublishTarget` with optional `version` and

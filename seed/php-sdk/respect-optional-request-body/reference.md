@@ -14,7 +14,11 @@
 ```php
 $client->refund(
     'refund-id',
-    new RefundBody([]),
+    new RefundBody([
+        'body' => new RefundRequest([
+            'amount' => 60,
+        ]),
+    ]),
 );
 ```
 </dd>
@@ -38,7 +42,7 @@ $client->refund(
 <dl>
 <dd>
 
-**$request:** `?RefundRequest` 
+**$request:** `RefundRequest` 
     
 </dd>
 </dl>
@@ -135,7 +139,7 @@ $client->bulkRefund(
 <dl>
 <dd>
 
-**$request:** `?RefundRequest` 
+**$request:** `RefundRequest` 
     
 </dd>
 </dl>

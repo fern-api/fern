@@ -15,7 +15,7 @@ public partial interface ISeedApiClient
     );
 
     WithRawResponseTask BulkRefundAsync(
-        RefundRequest? request,
+        RefundRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

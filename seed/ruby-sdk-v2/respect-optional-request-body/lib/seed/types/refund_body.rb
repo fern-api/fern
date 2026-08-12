@@ -5,7 +5,7 @@ module Seed
     class RefundBody < Internal::Types::Model
       field :id, -> { String }, optional: false, nullable: false
 
-      field :body, -> { Seed::Types::RefundRequest }, optional: true, nullable: false
+      field :body, -> { Seed::Types::RefundRequest }, optional: false, nullable: false
     end
   end
 end

@@ -1307,7 +1307,8 @@
                         "type": "named",
                         "value": "type_types:SimpleStaged"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1393,7 +1394,8 @@
                         "type": "named",
                         "value": "type_types:MediumStaged"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1479,7 +1481,8 @@
                         "type": "named",
                         "value": "type_types:ComplexStaged"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1565,7 +1568,8 @@
                         "type": "named",
                         "value": "type_types:MixedStaged"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1651,7 +1655,8 @@
                         "type": "named",
                         "value": "type_types:Parent"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

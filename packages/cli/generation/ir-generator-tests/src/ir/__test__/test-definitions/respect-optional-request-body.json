@@ -187,24 +187,19 @@
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "named",
-                                    "name": "RefundRequest",
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_:RefundRequest",
-                                    "default": null,
-                                    "inline": null
-                                }
-                            }
+                            "_type": "named",
+                            "name": "RefundRequest",
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "displayName": null,
+                            "typeId": "type_:RefundRequest",
+                            "default": null,
+                            "inline": null
                         },
+                        "required": false,
                         "docs": null,
                         "contentType": "application/json",
                         "v2Examples": null
@@ -230,45 +225,6 @@
                     "v2Responses": null,
                     "errors": [],
                     "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "Full refund",
-                                "name": "Full refund",
-                                "url": "/refunds/refund-id",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [
-                                    {
-                                        "name": "id",
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "string",
-                                                    "string": {
-                                                        "original": "refund-id"
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": "refund-id"
-                                        }
-                                    }
-                                ],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": null
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        },
                         {
                             "example": {
                                 "id": "Split refund",
@@ -299,13 +255,53 @@
                                 "request": {
                                     "type": "reference",
                                     "shape": {
-                                        "type": "container",
-                                        "container": {
-                                            "type": "optional",
-                                            "optional": {
-                                                "shape": {
-                                                    "type": "named",
-                                                    "typeName": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_:RefundRequest",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "name": "RefundRequest",
+                                            "displayName": null
+                                        },
+                                        "shape": {
+                                            "type": "object",
+                                            "properties": [
+                                                {
+                                                    "name": "amount",
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "container",
+                                                            "container": {
+                                                                "type": "optional",
+                                                                "optional": {
+                                                                    "shape": {
+                                                                        "type": "primitive",
+                                                                        "primitive": {
+                                                                            "type": "double",
+                                                                            "double": 60
+                                                                        }
+                                                                    },
+                                                                    "jsonExample": 60
+                                                                },
+                                                                "valueType": {
+                                                                    "_type": "primitive",
+                                                                    "primitive": {
+                                                                        "v1": "DOUBLE",
+                                                                        "v2": {
+                                                                            "type": "double",
+                                                                            "default": null,
+                                                                            "validation": null
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": 60
+                                                    },
+                                                    "originalTypeDeclaration": {
                                                         "typeId": "type_:RefundRequest",
                                                         "fernFilepath": {
                                                             "allParts": [],
@@ -315,74 +311,10 @@
                                                         "name": "RefundRequest",
                                                         "displayName": null
                                                     },
-                                                    "shape": {
-                                                        "type": "object",
-                                                        "properties": [
-                                                            {
-                                                                "name": "amount",
-                                                                "value": {
-                                                                    "shape": {
-                                                                        "type": "container",
-                                                                        "container": {
-                                                                            "type": "optional",
-                                                                            "optional": {
-                                                                                "shape": {
-                                                                                    "type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "type": "double",
-                                                                                        "double": 60
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": 60
-                                                                            },
-                                                                            "valueType": {
-                                                                                "_type": "primitive",
-                                                                                "primitive": {
-                                                                                    "v1": "DOUBLE",
-                                                                                    "v2": {
-                                                                                        "type": "double",
-                                                                                        "default": null,
-                                                                                        "validation": null
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    "jsonExample": 60
-                                                                },
-                                                                "originalTypeDeclaration": {
-                                                                    "typeId": "type_:RefundRequest",
-                                                                    "fernFilepath": {
-                                                                        "allParts": [],
-                                                                        "packagePath": [],
-                                                                        "file": null
-                                                                    },
-                                                                    "name": "RefundRequest",
-                                                                    "displayName": null
-                                                                },
-                                                                "propertyAccess": null
-                                                            }
-                                                        ],
-                                                        "extraProperties": null
-                                                    }
-                                                },
-                                                "jsonExample": {
-                                                    "amount": 60
+                                                    "propertyAccess": null
                                                 }
-                                            },
-                                            "valueType": {
-                                                "_type": "named",
-                                                "name": "RefundRequest",
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "displayName": null,
-                                                "typeId": "type_:RefundRequest",
-                                                "default": null,
-                                                "inline": null
-                                            }
+                                            ],
+                                            "extraProperties": null
                                         }
                                     },
                                     "jsonExample": {
@@ -404,7 +336,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "4b9c3879",
+                                "id": "e8bd81a1",
                                 "url": "/refunds/id",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -432,25 +364,59 @@
                                 "request": {
                                     "type": "reference",
                                     "shape": {
-                                        "type": "container",
-                                        "container": {
-                                            "type": "optional",
-                                            "optional": null,
-                                            "valueType": {
-                                                "_type": "named",
-                                                "name": "RefundRequest",
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "displayName": null,
-                                                "typeId": "type_:RefundRequest",
-                                                "default": null,
-                                                "inline": null
-                                            }
+                                        "type": "named",
+                                        "shape": {
+                                            "type": "object",
+                                            "properties": [
+                                                {
+                                                    "name": "amount",
+                                                    "originalTypeDeclaration": {
+                                                        "name": "RefundRequest",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "displayName": null,
+                                                        "typeId": "type_:RefundRequest"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "container",
+                                                            "container": {
+                                                                "type": "optional",
+                                                                "optional": null,
+                                                                "valueType": {
+                                                                    "_type": "primitive",
+                                                                    "primitive": {
+                                                                        "v1": "DOUBLE",
+                                                                        "v2": {
+                                                                            "type": "double",
+                                                                            "default": null,
+                                                                            "validation": null
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "propertyAccess": null
+                                                }
+                                            ],
+                                            "extraProperties": null
+                                        },
+                                        "typeName": {
+                                            "name": "RefundRequest",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "displayName": null,
+                                            "typeId": "type_:RefundRequest"
                                         }
-                                    }
+                                    },
+                                    "jsonExample": {}
                                 },
                                 "response": {
                                     "type": "ok",
@@ -572,6 +538,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": "application/json",
                         "v2Examples": null
@@ -840,24 +807,19 @@
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "named",
-                                    "name": "RefundRequest",
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_:RefundRequest",
-                                    "default": null,
-                                    "inline": null
-                                }
-                            }
+                            "_type": "named",
+                            "name": "RefundRequest",
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "displayName": null,
+                            "typeId": "type_:RefundRequest",
+                            "default": null,
+                            "inline": null
                         },
+                        "required": false,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -869,24 +831,19 @@
                             "value": {
                                 "type": "typeReference",
                                 "requestBodyType": {
-                                    "_type": "container",
-                                    "container": {
-                                        "_type": "optional",
-                                        "optional": {
-                                            "_type": "named",
-                                            "name": "RefundRequest",
-                                            "fernFilepath": {
-                                                "allParts": [],
-                                                "packagePath": [],
-                                                "file": null
-                                            },
-                                            "displayName": null,
-                                            "typeId": "type_:RefundRequest",
-                                            "default": null,
-                                            "inline": null
-                                        }
-                                    }
+                                    "_type": "named",
+                                    "name": "RefundRequest",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:RefundRequest",
+                                    "default": null,
+                                    "inline": null
                                 },
+                                "required": false,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -918,43 +875,21 @@
                                 "request": {
                                     "type": "reference",
                                     "shape": {
-                                        "type": "container",
-                                        "container": {
-                                            "type": "optional",
-                                            "optional": {
-                                                "shape": {
-                                                    "type": "named",
-                                                    "typeName": {
-                                                        "typeId": "type_:RefundRequest",
-                                                        "fernFilepath": {
-                                                            "allParts": [],
-                                                            "packagePath": [],
-                                                            "file": null
-                                                        },
-                                                        "name": "RefundRequest",
-                                                        "displayName": null
-                                                    },
-                                                    "shape": {
-                                                        "type": "object",
-                                                        "properties": [],
-                                                        "extraProperties": null
-                                                    }
-                                                },
-                                                "jsonExample": {}
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_:RefundRequest",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
                                             },
-                                            "valueType": {
-                                                "_type": "named",
-                                                "name": "RefundRequest",
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "displayName": null,
-                                                "typeId": "type_:RefundRequest",
-                                                "default": null,
-                                                "inline": null
-                                            }
+                                            "name": "RefundRequest",
+                                            "displayName": null
+                                        },
+                                        "shape": {
+                                            "type": "object",
+                                            "properties": [],
+                                            "extraProperties": null
                                         }
                                     },
                                     "jsonExample": {}
@@ -974,7 +909,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "e28e0d97",
+                                "id": "97efad43",
                                 "url": "/refunds",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -986,25 +921,59 @@
                                 "request": {
                                     "type": "reference",
                                     "shape": {
-                                        "type": "container",
-                                        "container": {
-                                            "type": "optional",
-                                            "optional": null,
-                                            "valueType": {
-                                                "_type": "named",
-                                                "name": "RefundRequest",
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "displayName": null,
-                                                "typeId": "type_:RefundRequest",
-                                                "default": null,
-                                                "inline": null
-                                            }
+                                        "type": "named",
+                                        "shape": {
+                                            "type": "object",
+                                            "properties": [
+                                                {
+                                                    "name": "amount",
+                                                    "originalTypeDeclaration": {
+                                                        "name": "RefundRequest",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "displayName": null,
+                                                        "typeId": "type_:RefundRequest"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "container",
+                                                            "container": {
+                                                                "type": "optional",
+                                                                "optional": null,
+                                                                "valueType": {
+                                                                    "_type": "primitive",
+                                                                    "primitive": {
+                                                                        "v1": "DOUBLE",
+                                                                        "v2": {
+                                                                            "type": "double",
+                                                                            "default": null,
+                                                                            "validation": null
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "propertyAccess": null
+                                                }
+                                            ],
+                                            "extraProperties": null
+                                        },
+                                        "typeName": {
+                                            "name": "RefundRequest",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "displayName": null,
+                                            "typeId": "type_:RefundRequest"
                                         }
-                                    }
+                                    },
+                                    "jsonExample": {}
                                 },
                                 "response": {
                                     "type": "ok",
@@ -1248,11 +1217,8 @@
                         "bodyType": {
                             "type": "typeReference",
                             "value": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:RefundRequest"
-                                }
+                                "type": "named",
+                                "value": "type_:RefundRequest"
                             }
                         }
                     },
@@ -1437,13 +1403,11 @@
                     "body": {
                         "type": "typeReference",
                         "value": {
-                            "type": "optional",
-                            "value": {
-                                "type": "named",
-                                "value": "type_:RefundRequest"
-                            }
+                            "type": "named",
+                            "value": "type_:RefundRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": false
                 },
                 "response": {
                     "type": "json"

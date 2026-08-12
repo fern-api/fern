@@ -10357,7 +10357,8 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -10443,7 +10444,8 @@
                         "type": "named",
                         "value": "type_bigunion:BigUnion"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -10532,7 +10534,8 @@
                             "value": "type_bigunion:BigUnion"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -10643,7 +10646,8 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -10729,7 +10733,8 @@
                         "type": "named",
                         "value": "type_types:UnionWithTime"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -10840,7 +10845,8 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "body": null,
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -10926,7 +10932,8 @@
                         "type": "named",
                         "value": "type_union:Shape"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

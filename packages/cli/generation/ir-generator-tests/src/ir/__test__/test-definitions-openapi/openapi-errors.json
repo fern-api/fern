@@ -599,6 +599,7 @@
                                 }
                             }
                         },
+                        "required": false,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -629,6 +630,7 @@
                                         }
                                     }
                                 },
+                                "required": false,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -1416,7 +1418,8 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -1470,7 +1473,8 @@
                                 "type": "unknown"
                             }
                         }
-                    }
+                    },
+                    "bodyRequired": false
                 },
                 "response": {
                     "type": "json"

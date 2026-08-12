@@ -63,7 +63,7 @@ public final class ApiClient: Sendable {
     ///     _ = try await client.refund(
     ///         id: "refund-id",
     ///         request: RefundRequest(
-    ///
+    ///             amount: 60
     ///         )
     ///     )
     /// }
@@ -72,7 +72,7 @@ public final class ApiClient: Sendable {
     /// ```
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func refund(id: String, request: RefundRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func refund(id: String, request: RefundRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/refunds/\(id)",
@@ -125,7 +125,7 @@ public final class ApiClient: Sendable {
     /// ```
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func bulkRefund(request: RefundRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func bulkRefund(request: RefundRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/refunds",

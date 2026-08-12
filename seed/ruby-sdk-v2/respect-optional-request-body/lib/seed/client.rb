@@ -3,7 +3,7 @@
 module Seed
   class Client
     # @param request_options [Hash]
-    # @param params [Hash]
+    # @param params [Seed::Types::RefundRequest]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
     # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -14,9 +14,7 @@ module Seed
     # @example
     #   client.refund(
     #     id: "refund-id",
-    #     body: {
-    #       amount: 60
-    #     }
+    #     amount: 60
     #   )
     #
     # @return [untyped]
@@ -29,7 +27,7 @@ module Seed
         base_url: request_options[:base_url],
         method: "POST",
         path: "refunds/#{URI.encode_uri_component(params[:id].to_s)}",
-        body: body_params,
+        body: Seed::Types::RefundRequest.new(body_params).to_h,
         request_options: request_options
       )
       begin
@@ -85,7 +83,7 @@ module Seed
     end
 
     # @param request_options [Hash]
-    # @param params [Hash]
+    # @param params [Seed::Types::RefundRequest]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
     # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -93,7 +91,7 @@ module Seed
     # @option request_options [Integer] :timeout_in_seconds
     #
     # @example
-    #   client.bulk_refund(request: {})
+    #   client.bulk_refund
     #
     # @return [untyped]
     def bulk_refund(request_options: {}, **params)
@@ -102,7 +100,7 @@ module Seed
         base_url: request_options[:base_url],
         method: "POST",
         path: "refunds",
-        body: params,
+        body: Seed::Types::RefundRequest.new(params).to_h,
         request_options: request_options
       )
       begin

@@ -11,11 +11,13 @@ export const HttpReferencedRequestBodySchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         type: core.serialization.string(),
+        optional: core.serialization.boolean().optional(),
     })
     .extend(WithDocsSchema);
 
 export declare namespace HttpReferencedRequestBodySchema {
     export interface Raw extends WithDocsSchema.Raw {
         type: string;
+        optional?: boolean | null;
     }
 }

@@ -380,6 +380,25 @@ describe("valid-example-endpoint-call", () => {
                 name: "valid-example-endpoint-call",
                 severity: "fatal"
             },
+            // endpoint `i` is `h` plus `optional: true`, so its omitted-request example (index 0) is
+            // a valid call with no body and produces no violation. A request that *is* present is
+            // still validated against the body type.
+            {
+                message: "Expected example to be an object. Example is: 123",
+                nodePath: [
+                    "service",
+                    "endpoints",
+                    "i",
+                    {
+                        arrayIndex: 1,
+                        key: "examples"
+                    },
+                    "request"
+                ],
+                relativeFilepath: RelativeFilePath.of("request.yml"),
+                name: "valid-example-endpoint-call",
+                severity: "fatal"
+            },
 
             // response.yml
             {

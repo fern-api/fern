@@ -20,7 +20,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/refunds",
-              "request": "RefundRequest",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "RefundRequest",
+                },
+              },
               "source": {
                 "openapi": "../openapi.yml",
               },
@@ -42,6 +47,7 @@
               "request": {
                 "body": {
                   "docs": "Optional split instructions.",
+                  "optional": true,
                   "type": "RefundRequest",
                 },
                 "content-type": "application/json",
@@ -69,7 +75,10 @@
               "pagination": undefined,
               "path": "/refunds/{id}",
               "request": {
-                "body": "RefundRequest",
+                "body": {
+                  "optional": true,
+                  "type": "RefundRequest",
+                },
                 "content-type": "application/json",
                 "name": "RefundBody",
                 "path-parameters": {
@@ -121,7 +130,10 @@
               "pagination": undefined,
               "path": "/refunds/{id}/unspecified",
               "request": {
-                "body": "RefundRequest",
+                "body": {
+                  "optional": true,
+                  "type": "RefundRequest",
+                },
                 "content-type": "application/json",
                 "name": "UnspecifiedRefundRequest",
                 "path-parameters": {
@@ -160,7 +172,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: RefundRequest
+        body:
+          type: RefundRequest
+          optional: true
         path-parameters:
           id: string
         name: RefundBody
@@ -178,6 +192,7 @@
         body:
           type: RefundRequest
           docs: Optional split instructions.
+          optional: true
         path-parameters:
           id: string
         name: PartialRefundRequest
@@ -207,7 +222,9 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: RefundRequest
+        body:
+          type: RefundRequest
+          optional: true
         path-parameters:
           id: string
         name: UnspecifiedRefundRequest
@@ -221,7 +238,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: RefundRequest
+      request:
+        body:
+          type: RefundRequest
+          optional: true
       examples:
         - request: {}
   source:

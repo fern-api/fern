@@ -158,6 +158,7 @@
               "request": {
                 "body": {
                   "docs": "Parameters for creating an interaction (model OR agent).",
+                  "optional": true,
                   "type": "InteractRequest",
                 },
                 "content-type": "application/json",
@@ -196,6 +197,7 @@
               "request": {
                 "body": {
                   "docs": "Parameters for creating an interaction (model OR agent).",
+                  "optional": true,
                   "type": "InteractStreamRequest",
                 },
                 "content-type": "application/json",
@@ -669,6 +671,7 @@
         body:
           type: InteractStreamRequest
           docs: Parameters for creating an interaction (model OR agent).
+          optional: true
         content-type: application/json
       response-stream:
         docs: ''
@@ -691,6 +694,7 @@
         body:
           type: InteractRequest
           docs: Parameters for creating an interaction (model OR agent).
+          optional: true
         content-type: application/json
       response:
         docs: ''

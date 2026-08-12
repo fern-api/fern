@@ -9,13 +9,8 @@ public partial class Examples
             }
         );
 
-        await client.RequiredRefundAsync(
-            new RequiredRefundRequest {
-                Id = "id",
-                Body = new RefundRequest {
-                    Amount = 1.1
-                }
-            }
+        await client.BulkRefundAsync(
+            new RefundRequest()
         );
     }
 
