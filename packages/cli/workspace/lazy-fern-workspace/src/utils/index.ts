@@ -3,4 +3,5 @@ export { getAllOpenAPISpecs } from "./getAllOpenAPISpecs.js";
 export { loadAsyncAPI } from "./loadAsyncAPI.js";
 export { loadDependency } from "./loadDependency.js";
 export { loadOpenAPI } from "./loadOpenAPI.js";
+export type { UnresolvedRefProblem } from "./parseOpenAPI.js";
 export { type WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result.js";

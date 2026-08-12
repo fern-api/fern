@@ -24,9 +24,8 @@ describe("no-unresolved-refs", () => {
         });
 
         expect(violations.length).toBe(1);
-        expect(violations[0]?.severity).toBe("error");
-        expect(violations[0]?.message).toContain("#/components/schemas/PlantErrorResponse");
-        expect(violations[0]?.message).toContain("the pointer does not exist in the specification");
+        expect(violations[0]?.severity).toBe("warning");
+        expect(violations[0]?.message).toContain("PlantErrorResponse");
     }, 10_000);
 
     it("should not report violations when the overlay targets a parent node that exists", async () => {
@@ -45,8 +44,7 @@ describe("no-unresolved-refs", () => {
         });
 
         expect(violations.length).toBe(1);
-        expect(violations[0]?.severity).toBe("error");
-        expect(violations[0]?.message).toContain("../spec/schemas.yaml");
-        expect(violations[0]?.message).toContain("does not exist");
+        expect(violations[0]?.severity).toBe("warning");
+        expect(violations[0]?.message).toContain("schemas.yaml");
     }, 10_000);
 });

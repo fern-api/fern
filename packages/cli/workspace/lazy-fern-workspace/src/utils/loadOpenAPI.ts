@@ -7,7 +7,7 @@ import yaml from "js-yaml";
 import { OpenAPI } from "openapi-types";
 import { applyOverlays } from "../loaders/applyOverlays.js";
 import { mergeWithOverrides } from "../loaders/mergeWithOverrides.js";
-import { parseOpenAPI } from "./parseOpenAPI.js";
+import { parseOpenAPI, UnresolvedRefProblem } from "./parseOpenAPI.js";
 import { resolveDescriptionMarkdownRefs } from "./resolveDescriptionMarkdownRefs.js";
 
 /**
@@ -57,13 +57,20 @@ export async function loadOpenAPI({
     absolutePathToOpenAPI,
     absolutePathToOpenAPIOverrides,
     absolutePathToOpenAPIOverlays,
-    loadAiExamples = false
+    loadAiExamples = false,
+    onUnresolvedRefs
 }: {
     context: TaskContext;
     absolutePathToOpenAPI: AbsoluteFilePath;
     absolutePathToOpenAPIOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
     absolutePathToOpenAPIOverlays: AbsoluteFilePath | undefined;
     loadAiExamples?: boolean;
+    /**
+     * Invoked once with the `$ref`s that were still unresolved after overrides and overlays were
+     * applied. Intermediate resolution passes are ignored, since an override or overlay applied
+     * later can introduce the node a `$ref` points at.
+     */
+    onUnresolvedRefs?: (problems: UnresolvedRefProblem[]) => void;
 }): Promise<OpenAPI.Document> {
     // Inline `description: { $ref: "./*.md" }` pointers before Redocly's bundler
     // sees them — otherwise it tries to YAML-parse the markdown and mangles it.
@@ -86,10 +93,23 @@ export async function loadOpenAPI({
         throw new CliError({ message: errorMessage, code: CliError.Code.ParseError });
     }
     await resolveDescriptionMarkdownRefs(rawSpec, dirname(absolutePathToOpenAPI), context);
+
+    // Only the last resolution pass reflects the final document, so each pass replaces the
+    // problems collected by the previous one.
+    let unresolvedRefs: UnresolvedRefProblem[] = [];
+    const collectUnresolvedRefs =
+        onUnresolvedRefs != null
+            ? (): ((problem: UnresolvedRefProblem) => void) => {
+                  unresolvedRefs = [];
+                  return (problem) => unresolvedRefs.push(problem);
+              }
+            : (): undefined => undefined;
+
     const parsed = await parseOpenAPI({
         absolutePathToOpenAPI,
         logger: context.logger,
-        parsed: rawSpec
+        parsed: rawSpec,
+        onUnresolvedRef: collectUnresolvedRefs()
     });
 
     // Normalize overrides to an array for consistent processing
@@ -136,7 +156,8 @@ export async function loadOpenAPI({
             absolutePathToOpenAPI,
             absolutePathToOpenAPIOverrides: overridesFilepath,
             parsed: result,
-            logger: context.logger
+            logger: context.logger,
+            onUnresolvedRef: collectUnresolvedRefs()
         });
     }
 
@@ -214,12 +235,16 @@ export async function loadOpenAPI({
         (result !== parsed && overridesFilepaths.length === 0) || absolutePathToOpenAPIOverlays != null;
 
     if (needsFinalResolution) {
-        return await parseOpenAPI({
+        const finalResult = await parseOpenAPI({
             absolutePathToOpenAPI,
             absolutePathToOpenAPIOverlays, // Include overlay path for ref resolver
             parsed: result,
-            logger: context.logger
+            logger: context.logger,
+            onUnresolvedRef: collectUnresolvedRefs()
         });
+        onUnresolvedRefs?.(unresolvedRefs);
+        return finalResult;
     }
+    onUnresolvedRefs?.(unresolvedRefs);
     return result;
 }
