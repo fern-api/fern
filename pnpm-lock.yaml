@@ -1131,8 +1131,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: 67.15.0
-        version: 67.15.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1158,8 +1158,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 67.12.0
-        version: 67.12.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
@@ -1222,8 +1222,8 @@ importers:
         specifier: workspace:*
         version: link:../base
       '@fern-fern/ir-sdk':
-        specifier: 67.15.0
-        version: 67.15.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1273,8 +1273,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: 67.15.0
-        version: 67.15.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1502,8 +1502,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: 67.15.0
-        version: 67.15.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12
@@ -1566,8 +1566,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 66.3.0
-        version: 66.3.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -1611,8 +1611,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: 67.15.0
-        version: 67.15.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1668,8 +1668,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: 67.15.0
-        version: 67.15.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12
@@ -1731,8 +1731,8 @@ importers:
         specifier: workspace:*
         version: link:../browser-compatible-base
       '@fern-fern/ir-sdk':
-        specifier: 67.11.0
-        version: 67.11.0
+        specifier: 67.21.0
+        version: 67.21.0
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
@@ -1786,8 +1786,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 66.1.0
-        version: 66.1.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -1858,8 +1858,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: 67.11.0
-        version: 67.11.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1888,8 +1888,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^62.6.0
-        version: 62.6.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -1915,8 +1915,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: 67.11.0
-        version: 67.11.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1979,8 +1979,8 @@ importers:
         specifier: workspace:*
         version: link:../ast
       '@fern-fern/ir-sdk':
-        specifier: 67.15.0
-        version: 67.15.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12
@@ -2021,8 +2021,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 66.1.0
-        version: 66.1.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -2066,8 +2066,8 @@ importers:
         specifier: workspace:*
         version: link:../base
       '@fern-fern/ir-sdk':
-        specifier: 67.15.0
-        version: 67.15.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -2089,6 +2089,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
+      '@fern-api/dynamic-ir-sdk':
+        specifier: 67.21.0
+        version: 67.21.0
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -2123,8 +2126,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: 67.15.0
-        version: 67.15.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12
@@ -9543,15 +9546,8 @@ packages:
     peerDependencies:
       '@opentelemetry/api': ^1.9.0
 
-  '@fern-api/dynamic-ir-sdk@62.6.0':
-    resolution: {integrity: sha512-l7I5/pZ6REsNyt4mC3ws+SqlEQ1UBy1hlQOrYL3fxKjsSlRKsZS5uOSQuzIkAHpbpYKNvYattc0LhONhySYoQA==}
-
   '@fern-api/dynamic-ir-sdk@66.1.0':
     resolution: {integrity: sha512-ILT96PcT+HV1pVGVNg3cs6xnb/JRdKCJ1Tk1AO+sTxQFRRHoIwqr1KUfEQVW9iuvBsbgiApRZHfw42e5r/uMlA==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-api/dynamic-ir-sdk@66.3.0':
-    resolution: {integrity: sha512-hOfcPPkfhC5vhiZdDVxlsaAPfMQlWdswnpvQoDRhjDN+zGK+ctLiPF7jyKqwIBynG5GyS3SalI2/2r/IgcaFpA==}
     engines: {node: '>=18.0.0'}
 
   '@fern-api/dynamic-ir-sdk@67.12.0':
@@ -9617,10 +9613,6 @@ packages:
 
   '@fern-fern/ir-sdk@66.3.0':
     resolution: {integrity: sha512-BKtpmuyK98GagBSZ5CMe3oAkkwG5l3MId+/VyyyGbUV+HRrqIS+htIBlGmsNBW6fzuKK6hgOGn+Kyb2N4+Mejg==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-sdk@67.11.0':
-    resolution: {integrity: sha512-oArasMZ8Mc+NJImzxq6F1qN5wpVS9xrpa2bqZDq8axjKD/0T5nwoRdY2OhqjvhUTYLUQjGFOYeWiLmQ6XVjlhw==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/ir-sdk@67.15.0':
@@ -16537,11 +16529,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@fern-api/dynamic-ir-sdk@62.6.0': {}
-
   '@fern-api/dynamic-ir-sdk@66.1.0': {}
-
-  '@fern-api/dynamic-ir-sdk@66.3.0': {}
 
   '@fern-api/dynamic-ir-sdk@67.12.0': {}
 
@@ -16666,8 +16654,6 @@ snapshots:
   '@fern-fern/ir-sdk@66.2.0': {}
 
   '@fern-fern/ir-sdk@66.3.0': {}
-
-  '@fern-fern/ir-sdk@67.11.0': {}
 
   '@fern-fern/ir-sdk@67.15.0': {}
 

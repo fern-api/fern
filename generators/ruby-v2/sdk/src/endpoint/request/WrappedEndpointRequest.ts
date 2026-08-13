@@ -1,4 +1,4 @@
-import { GeneratorError, getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -7,10 +7,12 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { isUrlEncodedRequestBody } from "../../utils/requestBody.js";
 import { RawClient } from "../http/RawClient.js";
 import {
+    BODY_BAG_NAME,
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
-    RequestBodyCodeBlock
+    RequestBodyCodeBlock,
+    toRubySymbolArray
 } from "./EndpointRequest.js";
 
 export declare namespace WrappedEndpointRequest {
@@ -23,9 +25,7 @@ export declare namespace WrappedEndpointRequest {
     }
 }
 
-const BODY_BAG_NAME = "body_params";
 const QUERY_PARAM_NAMES_VN = "query_param_names";
-const PATH_PARAM_NAMES_VN = "path_param_names";
 const HEADER_BAG_NAME = "headers";
 
 export class WrappedEndpointRequest extends EndpointRequest {
@@ -151,6 +151,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
 
         const bodyParamsVar = this.hasPathParameters() ? BODY_BAG_NAME : "params";
+        const omitContentTypeWithoutBody = this.respectsOptionalRequestBody();
 
         if (
             this.endpoint.requestBody.type === "reference" &&
@@ -165,28 +166,35 @@ export class WrappedEndpointRequest extends EndpointRequest {
             if (this.hasPathParameters()) {
                 return {
                     code: ruby.codeblock((writer) => {
-                        writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toRubySymbolArray(this.getPathParameterNames())}`);
-                        writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
+                        this.writePathParameterExclusion(writer);
                     }),
                     requestBodyReference: ruby.codeblock((writer) => {
+                        if (omitContentTypeWithoutBody) {
+                            this.writeOptionalBodyGuard(writer, bodyParamsVar);
+                        }
                         if (isModule) {
                             writer.write(bodyParamsVar);
                         } else {
                             writer.writeNode(bodyTypeReference);
                             writer.write(`.new(${bodyParamsVar}).to_h`);
                         }
-                    })
+                    }),
+                    omitContentTypeWithoutBody
                 };
             }
             return {
                 requestBodyReference: ruby.codeblock((writer) => {
+                    if (omitContentTypeWithoutBody) {
+                        this.writeOptionalBodyGuard(writer, bodyParamsVar);
+                    }
                     if (isModule) {
                         writer.write(bodyParamsVar);
                     } else {
                         writer.writeNode(bodyTypeReference);
                         writer.write(`.new(${bodyParamsVar}).to_h`);
                     }
-                })
+                }),
+                omitContentTypeWithoutBody
             };
         }
 
@@ -225,19 +233,26 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (this.hasPathParameters()) {
             return {
                 code: ruby.codeblock((writer) => {
-                    writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toRubySymbolArray(this.getPathParameterNames())}`);
-                    writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
+                    this.writePathParameterExclusion(writer);
                 }),
                 requestBodyReference: ruby.codeblock((writer) => {
+                    if (omitContentTypeWithoutBody) {
+                        this.writeOptionalBodyGuard(writer, BODY_BAG_NAME);
+                    }
                     writer.write(BODY_BAG_NAME);
-                })
+                }),
+                omitContentTypeWithoutBody
             };
         }
 
         return {
             requestBodyReference: ruby.codeblock((writer) => {
+                if (omitContentTypeWithoutBody) {
+                    this.writeOptionalBodyGuard(writer, bodyParamsVar);
+                }
                 writer.write(bodyParamsVar);
-            })
+            }),
+            omitContentTypeWithoutBody
         };
     }
 
@@ -245,16 +260,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return isUrlEncodedRequestBody(this.endpoint.requestBody) ? "urlencoded" : "json";
     }
 
-    private getPathParameterNames(): string[] {
-        return this.endpoint.allPathParameters.map((pathParameter) => this.case.snakeSafe(pathParameter.name));
-    }
-
     private getQueryParameterNames(): string[] {
         return this.endpoint.queryParameters.map((queryParameter) => this.case.snakeSafe(queryParameter.name));
-    }
-
-    private hasPathParameters(): boolean {
-        return this.endpoint.allPathParameters.length > 0;
     }
 
     private hasQueryParameters(): boolean {
@@ -293,11 +300,4 @@ function toExplicitArray(s: string[]): string {
         return `%w[${s.join(" ")}]`;
     }
     return `["${s.join('", "')}"]`;
-}
-
-function toRubySymbolArray(s: string[]): string {
-    if (s.some((s) => s.includes(" "))) {
-        throw GeneratorError.internalError("Symbol array cannot contain spaces");
-    }
-    return `%i[${s.join(" ")}]`;
 }

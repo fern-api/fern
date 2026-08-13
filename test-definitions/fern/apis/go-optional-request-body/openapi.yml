@@ -1,0 +1,160 @@
+openapi: 3.0.3
+info:
+  title: go-optional-request-body
+  version: 1.0.0
+  description: |
+    `requestBody: {required: false}` says the caller may leave the body out, which the IR
+    carries as `required: false` on the request body reference. The schema is shared by
+    more than one operation so the importer keeps the body a reference rather than
+    inlining it, which is the only shape that carries the field.
+paths:
+  /plants/{plantId}/water:
+    post:
+      operationId: waterPlant
+      description: Water a plant, optionally with a specific amount.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WateringRequest"
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Watering"
+      x-fern-examples:
+        - name: Water without an amount
+          path-parameters:
+            plantId: "plant-id"
+          response:
+            body:
+              id: "watering-id"
+        - name: Water with an amount
+          path-parameters:
+            plantId: "plant-id"
+          request:
+            milliliters: 60
+          response:
+            body:
+              id: "watering-id"
+              milliliters: 60
+  # no path parameters, so the request collapses to a bare type reference
+  /plants/water:
+    post:
+      operationId: waterAllPlants
+      description: Water every plant, optionally with a specific amount.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WateringRequest"
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Watering"
+      x-fern-examples:
+        - name: Water every plant without an amount
+          response:
+            body:
+              - id: "watering-id"
+  # baseline: a required body keeps sending a body, opt-in or not
+  /plants/{plantId}/prune:
+    post:
+      operationId: prunePlant
+      description: Prune a plant, always with an amount.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WateringRequest"
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Watering"
+      x-fern-examples:
+        - name: Prune a plant
+          path-parameters:
+            plantId: "plant-id"
+          request:
+            milliliters: 60
+          response:
+            body:
+              id: "watering-id"
+              milliliters: 60
+  # an omittable body alongside a header, so the body lands in the request wrapper
+  /plants/{plantId}/mist:
+    post:
+      operationId: mistPlant
+      description: Mist a plant, passing the body alongside a header.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WateringRequest"
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-Idempotency-Key
+          in: header
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Watering"
+      x-fern-examples:
+        - name: Mist without an amount
+          path-parameters:
+            plantId: "plant-id"
+          response:
+            body:
+              id: "watering-id"
+components:
+  schemas:
+    WateringRequest:
+      type: object
+      properties:
+        milliliters:
+          type: number
+    Watering:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+        milliliters:
+          type: number

@@ -9,6 +9,7 @@ import { WriteablePythonFile } from "@fern-api/python-base";
 import { DynamicSnippetsGenerator } from "@fern-api/python-dynamic-snippets";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertIr } from "../utils/convertIr.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 /**
@@ -45,7 +46,7 @@ export class WireTestGenerator {
 
         // TODO(tjdbdc): Really need a migration framework for FernIr.dynamic IR
         this.snippetGenerator = new DynamicSnippetsGenerator({
-            ir: this.dynamicIr,
+            ir: convertIr(this.dynamicIr),
             config: {
                 organization: context.config.organization,
                 workspaceName: context.config.workspaceName,
