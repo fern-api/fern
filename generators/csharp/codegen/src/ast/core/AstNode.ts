@@ -140,6 +140,51 @@ export abstract class AstNode extends AbstractAstNode {
         return formatter != null ? formatter.format(stringNode) : Promise.resolve(stringNode);
     }
 
+    /**
+     * Renders the node body separately from the `using ...;` block it references. This is the C#
+     * analogue of the TypeScript AST's `toStringWithoutImports` (and the Java AST's
+     * `renderNodeWithoutImports`): `code` is the node's rendered body with no leading `using`
+     * block, and `imports` is the rendered `using ...;` block the body would otherwise need
+     * (empty string when none). This lets callers embed an invocation inside code they already
+     * own (e.g. a documentation code template) while surfacing the usings the call requires.
+     *
+     * A single write pass populates the writer's references, so `code` and `imports` are computed
+     * from the same render — exactly the split `toString` performs internally when prepending the
+     * using block. `skipGlobalQualifier` matches the user-facing snippet style (no `global::`).
+     */
+    public toStringWithoutImports({
+        namespace,
+        allNamespaceSegments,
+        allTypeClassReferences,
+        generation,
+        formatter,
+        skipGlobalQualifier = false
+    }: {
+        namespace: string;
+        allNamespaceSegments: Set<string>;
+        allTypeClassReferences: Map<string, Set<Namespace>>;
+        generation: Generation;
+        formatter?: AbstractFormatter;
+        skipGlobalQualifier?: boolean;
+    }): { code: string; imports: string } {
+        const writer = new Writer({
+            namespace,
+            allNamespaceSegments,
+            allTypeClassReferences,
+            generation,
+            skipGlobalQualifier
+        });
+        this.write(writer);
+        // `writer.toString(true)` returns only the buffer (skipping the using block), while
+        // `importsToString()` returns the using block the body references.
+        const body = writer.toString(true);
+        const imports = writer.importsToString() ?? "";
+        return {
+            code: formatter != null ? formatter.formatSync(body) : body,
+            imports
+        };
+    }
+
     public toFormattedSnippet({
         allNamespaceSegments,
         allTypeClassReferences,
