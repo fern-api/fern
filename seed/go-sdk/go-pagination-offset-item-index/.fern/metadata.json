@@ -4,7 +4,8 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": false,
-    "offsetSemantics": "item-index"
+    "offsetSemantics": "item-index",
+    "enableRequestBodyPagination": true
   },
   "originGitCommit": "DUMMY",
   "invokedBy": "ci",

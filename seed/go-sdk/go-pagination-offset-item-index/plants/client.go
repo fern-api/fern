@@ -201,14 +201,53 @@ func (c *Client) ListWithBodyOffset(
 	ctx context.Context,
 	request *fern.ListPlantsWithBodyOffsetRequest,
 	opts ...option.RequestOption,
-) (*fern.ListPlantsResponse, error) {
-	response, err := c.WithRawResponse.ListWithBodyOffset(
-		ctx,
-		request,
-		opts...,
+) (*core.Page[*int, *fern.Plant, *fern.ListPlantsResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
 	)
-	if err != nil {
-		return nil, err
+	endpointURL := baseURL + "/plants/body-offset"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
+		nextRequest := *request
+		nextRequest.Offset = pageRequest.Cursor
+		nextURL := endpointURL
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         &nextRequest,
+			Response:        pageRequest.Response,
+		}
 	}
-	return response.Body, nil
+	next := 0
+	if request.Offset != nil {
+		next = *request.Offset
+	}
+
+	readPageResponse := func(response *fern.ListPlantsResponse) *core.PageResponse[*int, *fern.Plant, *fern.ListPlantsResponse] {
+		results := response.GetPlants()
+		next += int(len(results))
+		return &core.PageResponse[*int, *fern.Plant, *fern.ListPlantsResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
+		}
+	}
+	pager := internal.NewOffsetPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, &next)
 }
