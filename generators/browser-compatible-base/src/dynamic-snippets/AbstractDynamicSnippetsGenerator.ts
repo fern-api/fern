@@ -2,6 +2,7 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { AbstractAstNode } from "../ast/index.js";
 import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext.js";
 import { AbstractEndpointSnippetGenerator } from "./AbstractEndpointSnippetGenerator.js";
+import { InvocationSnippetResponse } from "./InvocationSnippetResponse.js";
 import { Options } from "./Options.js";
 import { Result } from "./Result.js";
 
@@ -101,23 +102,27 @@ export abstract class AbstractDynamicSnippetsGenerator<
     }
 
     /**
-     * Generates just the endpoint invocation (e.g. `client.plants.update(...)`), without
-     * imports or client instantiation, for callers that render the invocation within code
-     * of their own (e.g. a documentation code template).
+     * Generates the structured pieces of an endpoint invocation for callers that render the
+     * invocation within code of their own (e.g. a documentation code template): the bare call
+     * (e.g. `client.plants.update(...)`), the imports the call requires, and the generated
+     * client class/type name.
      *
-     * Returns undefined if this generator does not support invocation-only snippets, or if
-     * the invocation cannot stand on its own (e.g. its arguments reference imported SDK
-     * types), so that callers can fall back to the complete snippet.
+     * Returns undefined only if this generator does not support invocation-only snippets, so
+     * that callers can fall back to the complete snippet. This is the capability check the
+     * multi-language fan-out relies on. When the generator does support them, invocations that
+     * reference imported SDK types (e.g. branded string aliases) return those imports in the
+     * `imports` field rather than bailing out.
      */
     public generateInvocationSync(
         request: FernIr.dynamic.EndpointSnippetRequest,
         options: Options = {}
-    ): FernIr.dynamic.EndpointSnippetResponse | undefined {
+    ): InvocationSnippetResponse | undefined {
         const endpoints = this.resolveEndpoints({ request, options });
         if (endpoints.length === 0) {
             throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
         }
-        const result = new Result();
+        let bestResponse: InvocationSnippetResponse | undefined = undefined;
+        let lastError: Error | undefined = undefined;
         for (const endpoint of endpoints) {
             const context = this.context.clone() as Context;
             const snippetGenerator = this.createSnippetGenerator(context);
@@ -125,24 +130,42 @@ export abstract class AbstractDynamicSnippetsGenerator<
                 return undefined;
             }
             try {
-                const snippet = snippetGenerator.generateInvocationSnippetSync({ endpoint, request, options });
-                if (snippet == null) {
+                const response = snippetGenerator.generateInvocationSnippetSync({ endpoint, request, options });
+                if (response == null) {
                     return undefined;
                 }
                 if (context.errors.empty()) {
-                    return {
-                        snippet,
-                        errors: undefined
-                    };
+                    return response;
                 }
-                result.update({ context, snippet });
+                if (this.shouldUpdateInvocationResponse({ candidate: response, current: bestResponse })) {
+                    bestResponse = response;
+                }
             } catch (error) {
-                if (result.err == null) {
-                    result.err = error as Error;
+                if (lastError == null) {
+                    lastError = error as Error;
                 }
             }
         }
-        return result.getResponseOrThrow({ endpoint: request.endpoint });
+        if (bestResponse != null) {
+            return bestResponse;
+        }
+        throw (
+            lastError ??
+            new Error(`Failed to generate snippet for endpoint "${request.endpoint.method} ${request.endpoint.path}"`)
+        );
+    }
+
+    private shouldUpdateInvocationResponse({
+        candidate,
+        current
+    }: {
+        candidate: InvocationSnippetResponse;
+        current: InvocationSnippetResponse | undefined;
+    }): boolean {
+        if (current == null) {
+            return true;
+        }
+        return candidate.snippet.length > current.snippet.length;
     }
 
     /**

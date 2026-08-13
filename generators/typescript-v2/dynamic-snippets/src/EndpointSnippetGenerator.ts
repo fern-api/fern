@@ -1,4 +1,4 @@
-import { Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { InvocationSnippetResponse, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { AstNode, ts } from "@fern-api/typescript-ast";
@@ -60,7 +60,7 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
         options?: Options;
-    }): string | undefined {
+    }): InvocationSnippetResponse {
         const invocation = this.callMethod({
             endpoint,
             snippet: request,
@@ -68,16 +68,18 @@ export class EndpointSnippetGenerator {
             await_: false
         });
         // The caller supplies the client and terminates the statement themselves, so the
-        // invocation is emitted as a bare expression.
-        const { code, hasImports } = invocation.toStringWithoutImports({
+        // invocation is emitted as a bare expression. When the call references SDK types
+        // (e.g. branded aliases), the imports it needs are surfaced separately so the caller
+        // can render them rather than falling back to the complete snippet.
+        const { code, imports } = invocation.toStringWithoutImports({
             customConfig: this.context.customConfig
         });
-        if (hasImports) {
-            // The arguments reference SDK types (e.g. branded aliases), which the caller
-            // cannot import on the snippet's behalf.
-            return undefined;
-        }
-        return code.trim().replace(/;$/, "");
+        return {
+            snippet: code.trim().replace(/;$/, ""),
+            imports,
+            clientName: this.context.getRootClientName(),
+            errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
+        };
     }
 
     private buildCodeBlock({

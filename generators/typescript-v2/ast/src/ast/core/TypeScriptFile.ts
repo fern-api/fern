@@ -51,6 +51,15 @@ export class TypeScriptFile extends Writer {
         return this.stringifyImports().length > 0;
     }
 
+    /**
+     * The rendered import block for everything written to this file, or an empty string when
+     * nothing references an import. Does not include the trailing blank line the full file
+     * output places between the imports and the body.
+     */
+    public getImports(): string {
+        return this.stringifyImports().trimEnd();
+    }
+
     private stringifyImports(): string {
         let result = "";
         for (const [module, references] of Object.entries(this.imports)) {
