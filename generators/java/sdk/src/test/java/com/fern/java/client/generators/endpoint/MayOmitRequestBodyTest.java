@@ -7,6 +7,7 @@ import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.NameOrString;
 import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.http.HttpMethod;
 import com.fern.ir.model.http.HttpRequestBody;
 import com.fern.ir.model.http.HttpRequestBodyReference;
 import com.fern.ir.model.http.SdkRequest;
@@ -71,6 +72,20 @@ class MayOmitRequestBodyTest {
     void noRequestBody_isNotOmittable() {
         assertThat(AbstractEndpointWriter.mayOmitRequestBody(true, Optional.of(justRequestBody()), Optional.empty()))
                 .isFalse();
+    }
+
+    /**
+     * OkHttp rejects a null body for these methods, so a call that leaves the body out sends an empty one, matching
+     * what endpoints with no request body at all already send.
+     */
+    @Test
+    void methodsRequiringABody() {
+        assertThat(AbstractEndpointWriter.requiresRequestBody(HttpMethod.POST)).isTrue();
+        assertThat(AbstractEndpointWriter.requiresRequestBody(HttpMethod.PUT)).isTrue();
+        assertThat(AbstractEndpointWriter.requiresRequestBody(HttpMethod.PATCH)).isTrue();
+        assertThat(AbstractEndpointWriter.requiresRequestBody(HttpMethod.GET)).isFalse();
+        assertThat(AbstractEndpointWriter.requiresRequestBody(HttpMethod.DELETE)).isFalse();
+        assertThat(AbstractEndpointWriter.requiresRequestBody(HttpMethod.HEAD)).isFalse();
     }
 
     private static HttpRequestBody referencedBody(Optional<Boolean> required) {

@@ -185,6 +185,15 @@ public abstract class AbstractEndpointWriter {
     }
 
     /**
+     * Whether OkHttp refuses a null body for the method, which decides how a call that leaves out an optional request
+     * body says "no body": {@code null} wherever OkHttp accepts it, and an empty body for the methods it requires one
+     * for. This mirrors what endpoints with no request body at all already send.
+     */
+    public static boolean requiresRequestBody(HttpMethod method) {
+        return method.equals(HttpMethod.POST) || method.equals(HttpMethod.PUT) || method.equals(HttpMethod.PATCH);
+    }
+
+    /**
      * The format arguments for the value the body-less overload passes on, which are the types the value's format
      * string refers to.
      */

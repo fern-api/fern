@@ -439,8 +439,14 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     .beginControlFlow("try");
 
             if (isOptional || mayBeOmitted) {
-                codeBlock.addStatement(
-                        "$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class);
+                // A call that leaves out an optional body sends no body, which OkHttp spells as a null body except
+                // for the methods it requires one for, where an empty body is the closest equivalent.
+                if (mayBeOmitted && !requiresRequestBody(httpEndpoint.getMethod())) {
+                    codeBlock.addStatement("$L = null", variables.getOkhttpRequestBodyName());
+                } else {
+                    codeBlock.addStatement(
+                            "$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class);
+                }
 
                 if (mayBeOmitted) {
                     codeBlock.beginControlFlow("if ($N != null)", "request");
