@@ -207,15 +207,22 @@ impl HttpClient {
     ///
     /// When `oauth_config` is provided, the client will automatically fetch and refresh
     /// OAuth tokens before making requests.
+    ///
+    /// When `config.reqwest_client` is set, that client is used as-is and owns all
+    /// transport-level settings (TLS, proxies, timeout, user agent); SDK-level auth,
+    /// custom headers and retries are still applied on top of it.
     pub fn new_with_oauth(
         config: ClientConfig,
         oauth_config: Option<OAuthConfig>,
     ) -> Result<Self, ApiError> {
-        let client = Client::builder()
-            .timeout(config.timeout)
-            .user_agent(&config.user_agent)
-            .build()
-            .map_err(ApiError::Network)?;
+        let client = match config.reqwest_client.clone() {
+            Some(client) => client,
+            None => Client::builder()
+                .timeout(config.timeout)
+                .user_agent(&config.user_agent)
+                .build()
+                .map_err(ApiError::Network)?,
+        };
 
         Ok(Self {
             client,
@@ -1075,6 +1082,43 @@ mod tests {
         assert!(
             raw_request.contains("x-gateway-token: sunflower"),
             "token request is missing the client's custom headers: {raw_request}"
+        );
+    }
+
+    #[tokio::test]
+    async fn test_supplied_reqwest_client_is_used_and_keeps_sdk_headers() {
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0")
+            .await
+            .expect("bind");
+        let base_url = format!("http://{}", listener.local_addr().expect("addr"));
+        // Reuses the raw-capture server above; its token-shaped body is irrelevant here,
+        // only the request it echoes back matters.
+        let server = tokio::spawn(serve_one_token_request(listener));
+
+        let config = ClientConfig {
+            base_url,
+            reqwest_client: Some(
+                Client::builder()
+                    .user_agent("custom-transport/1.0")
+                    .build()
+                    .expect("build custom client"),
+            ),
+            ..Default::default()
+        };
+        let client = HttpClient::new(config).expect("client");
+
+        let _: Result<serde_json::Value, ApiError> = client
+            .execute_request(Method::GET, "/ping", None, None, None)
+            .await;
+
+        let raw_request = server.await.expect("server");
+        assert!(
+            raw_request.contains("user-agent: custom-transport/1.0"),
+            "the supplied reqwest client must execute the request: {raw_request}"
+        );
+        assert!(
+            raw_request.contains("x-fern-language: Rust"),
+            "SDK-level headers must still be applied to a custom client: {raw_request}"
         );
     }
 

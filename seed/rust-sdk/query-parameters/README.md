@@ -16,6 +16,7 @@ The Seed Rust library provides convenient access to the Seed APIs from Rust.
   - [Timeouts](#timeouts)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Custom Client](#custom-client)
 - [Contributing](#contributing)
 
 ## Installation
@@ -193,6 +194,28 @@ let response = client.user.get_username(
     )
 )?
 .await;
+```
+
+### Custom Client
+
+The SDK builds its own `reqwest` client by default, but you can supply your own through
+`ClientConfig.reqwest_client` (or `ApiClientBuilder::reqwest_client`) when you need control over the
+transport — custom root certificates, client certificates, proxies or connection tuning. The supplied
+client is used as-is; authentication, custom headers and retries are still applied by the SDK.
+
+```rust
+use seed_query_parameters::prelude::*;
+
+let certificate = reqwest::Certificate::from_pem(&std::fs::read("ca.pem")?)?;
+let reqwest_client = reqwest::Client::builder()
+    .add_root_certificate(certificate)
+    .build()
+    .expect("Failed to build reqwest client");
+let config = ClientConfig {
+    reqwest_client: Some(reqwest_client),
+    ..Default::default()
+};
+let client = QueryParametersClient::new(config).expect("Failed to build client");
 ```
 
 ## Contributing
