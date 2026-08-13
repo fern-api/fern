@@ -34,7 +34,7 @@
   "subpackages": {
     "subpackage_anyOfExamples": {
       "description": undefined,
-      "displayName": undefined,
+      "displayName": "anyOf Examples",
       "endpoints": [
         {
           "auth": false,
