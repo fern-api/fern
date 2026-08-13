@@ -112,6 +112,58 @@ export interface CargoPackageIdentity {
 export const TEMPLATE_PACKAGE_NAME = "fern-cli-sdk";
 
 /**
+ * Point the crate's `[package]` identity at the consumer when a Homebrew
+ * formula will be published and they didn't pin these fields themselves.
+ *
+ * `packageIdentity` only rewrites the fields you set, so anything unset
+ * keeps the SDK template's Fern-owned value. That is harmless while it
+ * only lives in a `Cargo.toml` nobody reads — but cargo-dist renders the
+ * published `.rb` straight off this block, and each field lands
+ * somewhere different:
+ *
+ * | `[package]`   | Where it surfaces in the formula          |
+ * |---------------|-------------------------------------------|
+ * | `repository`  | the per-arch **release download URLs**     |
+ * | `homepage`    | `homepage "..."`                          |
+ * | `description` | `desc "..."`                              |
+ *
+ * `repository` is the load-bearing one: left at the template's value the
+ * formula's `url`s resolve to `github.com/fern-api/cli-sdk/releases/...`,
+ * where the consumer's archives do not exist — so every `brew install`
+ * 404s. The other two are cosmetic but publish Fern's branding on the
+ * consumer's own tap.
+ *
+ * Scoped to the Homebrew case on purpose: applying it unconditionally
+ * would change the `Cargo.toml` of every existing github-mode
+ * generation, which is exactly the silent-default churn the
+ * breaking-changes policy exists to prevent. Explicit values always win.
+ *
+ * Scoop needs no equivalent — its manifest reads `repoUrl` and the
+ * resolved asset name directly rather than going through `[package]`.
+ */
+export function withDistributionDefaults(args: {
+    packageIdentity: CargoPackageIdentity | undefined;
+    publishesHomebrew: boolean;
+    repoUrl: string | undefined;
+    /** Fallback `desc` for the formula, e.g. "CLI for the Acme API". */
+    description: string | undefined;
+}): CargoPackageIdentity | undefined {
+    const { packageIdentity, publishesHomebrew, repoUrl, description } = args;
+    if (!publishesHomebrew) {
+        return packageIdentity;
+    }
+    const resolved: CargoPackageIdentity = { ...packageIdentity };
+    if (repoUrl != null) {
+        resolved.repository ??= repoUrl;
+        resolved.homepage ??= repoUrl;
+    }
+    if (description != null) {
+        resolved.description ??= description;
+    }
+    return Object.keys(resolved).length > 0 ? resolved : packageIdentity;
+}
+
+/**
  * Rewrite the `[package]` block's identity fields with the customer's
  * values. Scoped to the `[package]` section so a `repository` key inside
  * a dependency table is never touched, and deliberately blind to `[lib]`
