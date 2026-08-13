@@ -105,8 +105,9 @@ export abstract class AbstractDynamicSnippetsGenerator<
      * imports or client instantiation, for callers that render the invocation within code
      * of their own (e.g. a documentation code template).
      *
-     * Returns undefined if this generator does not support invocation-only snippets, so
-     * that callers can fall back to the complete snippet.
+     * Returns undefined if this generator does not support invocation-only snippets, or if
+     * the invocation cannot stand on its own (e.g. its arguments reference imported SDK
+     * types), so that callers can fall back to the complete snippet.
      */
     public generateInvocationSync(
         request: FernIr.dynamic.EndpointSnippetRequest,
@@ -125,6 +126,9 @@ export abstract class AbstractDynamicSnippetsGenerator<
             }
             try {
                 const snippet = snippetGenerator.generateInvocationSnippetSync({ endpoint, request, options });
+                if (snippet == null) {
+                    return undefined;
+                }
                 if (context.errors.empty()) {
                     return {
                         snippet,

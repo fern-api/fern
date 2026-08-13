@@ -46,4 +46,29 @@ describe("invocation-only snippets", () => {
 
         expect(response?.snippet).toBe('mailchimp.endpoints.httpMethods.testPut("id")');
     });
+
+    it("does not generate an invocation that would reference dropped imports", () => {
+        const brandedGenerator = buildDynamicSnippetsGenerator({
+            irFilepath: AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "alias.json")),
+            config: buildGeneratorConfig({ customConfig: { useBrandedStringAliases: true } })
+        });
+
+        const response = brandedGenerator.generateInvocationSync({
+            endpoint: {
+                method: "GET" as const,
+                path: "/{typeId}"
+            },
+            baseURL: undefined,
+            environment: undefined,
+            auth: undefined,
+            pathParameters: {
+                typeId: "type-abc123"
+            },
+            queryParameters: undefined,
+            headers: undefined,
+            requestBody: undefined
+        });
+
+        expect(response).toBeUndefined();
+    });
 });

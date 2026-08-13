@@ -60,16 +60,23 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
         options?: Options;
-    }): string {
+    }): string | undefined {
         const invocation = this.callMethod({
             endpoint,
             snippet: request,
             clientVariableName: options?.clientVariableName,
             await_: false
         });
-        // The caller supplies the imports and the client, and terminates the statement
-        // themselves, so the invocation is emitted as a bare expression.
-        const code = invocation.toString({ customConfig: this.context.customConfig, omitImports: true });
+        // The caller supplies the client and terminates the statement themselves, so the
+        // invocation is emitted as a bare expression.
+        const { code, hasImports } = invocation.toStringWithoutImports({
+            customConfig: this.context.customConfig
+        });
+        if (hasImports) {
+            // The arguments reference SDK types (e.g. branded aliases), which the caller
+            // cannot import on the snippet's behalf.
+            return undefined;
+        }
         return code.trim().replace(/;$/, "");
     }
 
