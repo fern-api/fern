@@ -27,6 +27,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
     private crateVersion: string;
     private clientClassName: string;
     private sourceFiles: RustFile[] = [];
+    private writtenLicenseFilename: string | undefined;
     public readonly filenameRegistry: RustFilenameRegistry;
 
     public constructor({ context, crateName, crateVersion, clientClassName }: RustProjectConfig) {
@@ -51,6 +52,10 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         this.context.logger.debug(`mkdir ${absolutePathToSrcDirectory}`);
         await mkdir(absolutePathToSrcDirectory, { recursive: true });
 
+        // Write the LICENSE file before rendering templates: Cargo.toml only points at
+        // `license-file` if the file actually made it into the output.
+        await this.writeLicenseFile();
+
         // Write all template files (both source and project-level)
         await this.persistStaticSourceFiles();
 
@@ -59,9 +64,6 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
 
         // Write raw files
         await this.writeRawFiles();
-
-        // Write the LICENSE file when a custom license is configured
-        await this.writeLicenseFile();
     }
 
     private async writeLicenseFile(): Promise<void> {
@@ -70,13 +72,12 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             return;
         }
 
-        const destinationPath = join(
-            this.absolutePathToOutputDirectory,
-            RelativeFilePath.of(licenseConfig.filename ?? DEFAULT_LICENSE_FILENAME)
-        );
+        const filename = licenseConfig.filename ?? DEFAULT_LICENSE_FILENAME;
+        const destinationPath = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(filename));
 
         try {
             await copyFile(DOCKER_LICENSE_PATH, destinationPath);
+            this.writtenLicenseFilename = filename;
             this.context.logger.debug(`Successfully copied LICENSE file to ${destinationPath}`);
         } catch (error) {
             if (error instanceof Error && "code" in error && error.code === "ENOENT") {
@@ -1041,8 +1042,8 @@ ${availableSections}
     /**
      * Generates the license field for Cargo.toml.
      * If packageLicenseFile is set, uses `license-file` to point to a custom license file.
-     * Otherwise falls back to packageLicense, then to the license configured in generators.yml,
-     * and finally defaults to "MIT".
+     * Otherwise falls back to packageLicense, then to a custom license file this project
+     * actually wrote, and finally defaults to "MIT".
      */
     private generateLicenseField(): string {
         const { packageLicense, packageLicenseFile } = this.context.customConfig;
@@ -1052,16 +1053,8 @@ ${availableSections}
         if (packageLicense) {
             return `license = "${packageLicense}"`;
         }
-        const licenseConfig = this.context.config.license;
-        if (licenseConfig != null) {
-            const licenseField = licenseConfig._visit<string | undefined>({
-                basic: (license) => `license = "${license.id}"`,
-                custom: (license) => `license-file = "${license.filename ?? DEFAULT_LICENSE_FILENAME}"`,
-                _other: () => undefined
-            });
-            if (licenseField != null) {
-                return licenseField;
-            }
+        if (this.writtenLicenseFilename != null) {
+            return `license-file = "${this.writtenLicenseFilename}"`;
         }
         return `license = "MIT"`;
     }
