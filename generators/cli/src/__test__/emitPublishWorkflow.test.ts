@@ -207,11 +207,12 @@ describe("emitPublishWorkflow", () => {
         expect(yaml).not.toContain("--no-default-features");
     });
 
-    it("sets musl-gcc as the linker and CC for musl targets", async () => {
+    it("gives musl targets a C compiler but leaves linking to rustc, so the binary is static-pie", async () => {
         const yaml = await emitAndRead(baseInfo);
 
-        expect(yaml).toContain("CARGO_TARGET_${TARGET_UPPER}_LINKER=musl-gcc");
-        expect(yaml).toContain("CC=musl-gcc");
+        expect(yaml).toContain("CC_${TARGET_UNDERSCORE}=musl-gcc");
+        expect(yaml).not.toContain("_LINKER=musl-gcc");
+        expect(yaml).not.toContain("export CC=musl-gcc");
     });
 
     it("includes repository.url in package.json when repoUrl is provided", async () => {
