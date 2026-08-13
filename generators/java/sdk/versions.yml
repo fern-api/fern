@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.18.2
+  changelogEntry:
+    - summary: |
+        Build an empty request body in snippets for an endpoint example that omits a body the wrapped
+        request requires, instead of leaving the builder's required `body` stage unset.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
 - version: 4.18.1
   changelogEntry:
     - summary: |
