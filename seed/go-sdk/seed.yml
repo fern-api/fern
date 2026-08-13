@@ -327,9 +327,24 @@ fixtures:
     - outputFolder: .
       customConfig:
         customPagerName: PayrocPager
+  go-request-body-pagination:
+    - outputFolder: .
+      customConfig:
+        enableRequestBodyPagination: true
+  go-pagination-offset-item-index:
+    - outputFolder: .
+      customConfig:
+        offsetSemantics: item-index
+        enableRequestBodyPagination: true
   go-optional-literal-alias:
     - outputFolder: .
       customConfig: null
+  go-optional-request-body:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: respect-optional-request-body
+      customConfig:
+        respectOptionalRequestBody: true
   go-undiscriminated-union-wire-tests:
     - outputFolder: .
       customConfig:

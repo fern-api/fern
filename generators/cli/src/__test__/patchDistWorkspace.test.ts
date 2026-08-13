@@ -4,10 +4,15 @@ import path from "path";
 import url from "url";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import {
+    addToStringArray,
     addWorkspaceMember,
     applyDistWorkspacePatch,
+    applyHomebrewPatch,
+    applyRustlsPatch,
+    dropUnbuildableTargets,
     patchDistWorkspaceToml,
-    removeWorkspaceMember
+    removeWorkspaceMember,
+    setDistKey
 } from "../index.js";
 
 const SDK_DIST_WORKSPACE_PATH = path.resolve(
@@ -150,5 +155,185 @@ describe("patchDistWorkspaceToml (filesystem)", () => {
 
     it("no-op when dist-workspace.toml doesn't exist — doesn't crash if the SDK template ever drops the file", async () => {
         await expect(patchDistWorkspaceToml({ outputDir: tmpDir })).resolves.toBeUndefined();
+    });
+});
+
+describe("applyRustlsPatch", () => {
+    // Observed on a real release: both musl legs died in ~44s on
+    // `openssl-sys` ("Could not find directory of OpenSSL installation"),
+    // which skipped `host` and produced no GitHub Release at all.
+    it("switches cargo-dist builds off the crate's native-tls default", () => {
+        const patched = applyDistWorkspacePatch(TEMPLATE_DIST_TOML);
+        expect(patched).toContain("default-features = false");
+        expect(patched).toContain('features = ["rustls"]');
+    });
+
+    // rustls is what rescues musl from the openssl-sys build failure —
+    // x86_64-musl went from dying in 44s to building clean. aarch64-musl is
+    // still dropped, but for an unrelated dbus/libgcc link error; see
+    // `dropUnbuildableTargets`.
+    it("rescues x86_64-musl rather than dropping it", () => {
+        expect(applyDistWorkspacePatch(TEMPLATE_DIST_TOML)).toContain("x86_64-unknown-linux-musl");
+    });
+
+    it("is idempotent", () => {
+        const once = applyRustlsPatch(TEMPLATE_DIST_TOML);
+        expect(applyRustlsPatch(once)).toBe(once);
+    });
+
+    // Synthesising a [dist] table would turn a file with no release config
+    // into one that has some.
+    it("is a no-op when the file drives no cargo-dist build", () => {
+        const minimal = '[workspace]\nmembers = ["cargo:."]\n';
+        expect(applyRustlsPatch(minimal)).toBe(minimal);
+    });
+});
+
+describe("dropUnbuildableTargets", () => {
+    // `libdbus-sys` (via the keyring crate) fails to statically link for
+    // aarch64-musl: undefined reference to `__aarch64_ldadd4_sync`.
+    it("drops aarch64-musl but keeps x86_64-musl, which builds fine", () => {
+        const patched = applyDistWorkspacePatch(TEMPLATE_DIST_TOML);
+        expect(patched).not.toContain("aarch64-unknown-linux-musl");
+        expect(patched).toContain("x86_64-unknown-linux-musl");
+    });
+
+    it("leaves the remaining targets and their order intact", () => {
+        const patched = applyDistWorkspacePatch(TEMPLATE_DIST_TOML);
+        for (const target of [
+            "aarch64-apple-darwin",
+            "aarch64-unknown-linux-gnu",
+            "x86_64-apple-darwin",
+            "x86_64-unknown-linux-gnu",
+            "x86_64-pc-windows-msvc"
+        ]) {
+            expect(patched).toContain(target);
+        }
+    });
+
+    it("is idempotent and a no-op when the target is absent", () => {
+        const once = dropUnbuildableTargets(TEMPLATE_DIST_TOML);
+        expect(dropUnbuildableTargets(once)).toBe(once);
+        const noTargets = '[dist]\nci = "github"\n';
+        expect(dropUnbuildableTargets(noTargets)).toBe(noTargets);
+    });
+});
+
+describe("addToStringArray", () => {
+    it("appends to installers while preserving the existing entries and order", () => {
+        expect(addToStringArray('installers = ["shell", "powershell"]', "installers", "homebrew")).toBe(
+            'installers = ["shell", "powershell", "homebrew"]'
+        );
+    });
+
+    it("fills an empty array", () => {
+        expect(addToStringArray("publish-jobs = []", "publish-jobs", "homebrew")).toBe('publish-jobs = ["homebrew"]');
+    });
+
+    it("is idempotent — a second call does not duplicate the entry", () => {
+        const once = addToStringArray('installers = ["shell"]', "installers", "homebrew");
+        expect(addToStringArray(once, "installers", "homebrew")).toBe(once);
+    });
+
+    it("is a no-op when the key is absent", () => {
+        expect(addToStringArray("targets = []", "installers", "homebrew")).toBe("targets = []");
+    });
+});
+
+describe("setDistKey", () => {
+    it("appends the key to the end of the [dist] table", () => {
+        expect(setDistKey('[dist]\nci = "github"\n', "tap", "acme/homebrew-tap")).toBe(
+            '[dist]\nci = "github"\ntap = "acme/homebrew-tap"\n'
+        );
+    });
+
+    it("replaces an existing key in place rather than appending a duplicate", () => {
+        const result = setDistKey('[dist]\ntap = "old/homebrew-tap"\nci = "github"\n', "tap", "acme/homebrew-tap");
+        expect(result).toBe('[dist]\ntap = "acme/homebrew-tap"\nci = "github"\n');
+    });
+
+    it("inserts before the next section header rather than leaking into it", () => {
+        const result = setDistKey('[dist]\nci = "github"\n\n[other]\nx = 1\n', "tap", "acme/homebrew-tap");
+        expect(result).toBe('[dist]\nci = "github"\ntap = "acme/homebrew-tap"\n\n[other]\nx = 1\n');
+    });
+});
+
+describe("applyHomebrewPatch", () => {
+    it("turns on the installer, the publish job, and the tap/formula keys", () => {
+        const patched = applyHomebrewPatch(
+            applyDistWorkspacePatch(TEMPLATE_DIST_TOML),
+            { tap: "acme/homebrew-tap" },
+            "acme-cli"
+        );
+        expect(patched).toContain('installers = ["shell", "powershell", "homebrew"]');
+        expect(patched).toContain('publish-jobs = ["homebrew"]');
+        expect(patched).toContain('tap = "acme/homebrew-tap"');
+        // Formula defaults to the binary name so `brew install acme/tap/acme-cli`
+        // matches the command the README advertises.
+        expect(patched).toContain('formula = "acme-cli"');
+    });
+
+    it("prefers an explicit formula over the binary name", () => {
+        const patched = applyHomebrewPatch(
+            TEMPLATE_DIST_TOML,
+            { tap: "acme/homebrew-tap", formula: "acme" },
+            "acme-cli"
+        );
+        expect(patched).toContain('formula = "acme"');
+        expect(patched).not.toContain('formula = "acme-cli"');
+    });
+
+    it("leaves the rest of the cargo-dist config untouched", () => {
+        const base = applyDistWorkspacePatch(TEMPLATE_DIST_TOML);
+        const patched = applyHomebrewPatch(base, { tap: "acme/homebrew-tap" }, "acme-cli");
+        expect(patched).toContain('cargo-dist-version = "0.31.0"');
+        expect(patched).toContain('windows-archive = ".zip"');
+        expect(patched).toContain('targets = ["aarch64-apple-darwin"');
+    });
+});
+
+describe("patchDistWorkspaceToml — distribution", () => {
+    let outputDir: string;
+
+    beforeEach(async () => {
+        outputDir = await mkdtemp(path.join(os.tmpdir(), "distWorkspaceHomebrew-"));
+        await writeFile(path.join(outputDir, "dist-workspace.toml"), TEMPLATE_DIST_TOML);
+    });
+
+    afterEach(async () => {
+        await rm(outputDir, { recursive: true, force: true });
+    });
+
+    it("writes nothing homebrew-related when no distribution is configured", async () => {
+        await patchDistWorkspaceToml({ outputDir, binaryName: "acme-cli" });
+        const written = await readFile(path.join(outputDir, "dist-workspace.toml"), "utf-8");
+        expect(written).toBe(applyDistWorkspacePatch(TEMPLATE_DIST_TOML));
+        expect(written).not.toContain("homebrew");
+        expect(written).not.toContain("tap =");
+    });
+
+    // runPipeline calls this twice: once bare, then again with the generated
+    // crate names. The second call takes an early-return branch that only adds
+    // workspace members — the homebrew keys written by the first call must
+    // survive it, or they'd be silently dropped for every CLI with custom
+    // commands (i.e. the default).
+    it("preserves the homebrew keys across the later add-workspace-members call", async () => {
+        await patchDistWorkspaceToml({
+            outputDir,
+            binaryName: "acme-cli",
+            homebrew: { tap: "acme/homebrew-tap" }
+        });
+        await patchDistWorkspaceToml({
+            outputDir,
+            typesCrateName: "acme-cli-types",
+            sdkCrateName: "acme-cli-sdk"
+        });
+
+        const written = await readFile(path.join(outputDir, "dist-workspace.toml"), "utf-8");
+        expect(written).toContain('installers = ["shell", "powershell", "homebrew"]');
+        expect(written).toContain('publish-jobs = ["homebrew"]');
+        expect(written).toContain('tap = "acme/homebrew-tap"');
+        expect(written).toContain('"cargo:acme-cli-types"');
+        expect(written).toContain('"cargo:acme-cli-sdk"');
     });
 });

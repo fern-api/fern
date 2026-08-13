@@ -22,6 +22,8 @@ export declare namespace RawClient {
         bodyReference?: php.CodeBlock;
         /** The reference to the request body class */
         requestTypeClassReference: php.ClassReference;
+        /** Whether a call that carries no body must also carry no body content type */
+        omitContentTypeWithoutBody?: boolean;
         /** The reference to the options argument */
         optionsArgument?: php.AstNode;
     }
@@ -103,6 +105,12 @@ export class RawClient {
             arguments_.push({
                 name: "body",
                 assignment: args.bodyReference
+            });
+        }
+        if (args.omitContentTypeWithoutBody) {
+            arguments_.push({
+                name: "omitContentTypeWithoutBody",
+                assignment: php.codeblock("true")
             });
         }
         return php.codeblock((writer) => {

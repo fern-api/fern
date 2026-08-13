@@ -1,0 +1,5 @@
+- summary: |
+    Percent-encode `;` in query parameter names and values. RFC 3986 permits it, but it
+    remains a legacy parameter separator for many servers, which truncated values such as
+    `?mail2=a@example.com;%20b@example.com` at the first `;`.
+  type: fix

@@ -16,7 +16,12 @@ import type { SubClientField } from "./generateSdk.js";
 import { generateSdk } from "./generateSdk.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
-import { patchCargoLockForSdk, patchCargoLockForTypes, patchCargoToml } from "./patchCargoToml.js";
+import {
+    patchCargoLockForSdk,
+    patchCargoLockForTypes,
+    patchCargoToml,
+    withDistributionDefaults
+} from "./patchCargoToml.js";
 import { patchDistWorkspaceToml } from "./patchDistWorkspace.js";
 import type { ResolvedOutputConfig } from "./resolveOutputConfig.js";
 import { generateWireTests } from "./wireTests/index.js";
@@ -88,14 +93,30 @@ export async function runPipeline(args: {
     //      `.github/workflows/ci.yml` when output mode is `github`.
     //      Build+test jobs are always emitted; publish jobs only when
     //      npm publish info is present.
+    // Distribution channels publish *from* a tagged GitHub Release, so
+    // they're only wired up for github output mode — the same gate npm
+    // publishing already sits behind. Leaving `publish-jobs` on for a
+    // local-files generation would describe a pipeline that has no
+    // workflow to run it.
+    //
+    // Resolved before the Cargo.toml patch because enabling Homebrew also
+    // decides the crate's `homepage` — cargo-dist copies it into the
+    // published formula.
+    const distribution = outputConfig.isGithubOutput ? customConfig.distribution : undefined;
+
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
     await patchCargoToml({
         outputDir,
         binaryName,
         version: outputConfig.version,
-        packageIdentity: customConfig.packageIdentity
+        packageIdentity: withDistributionDefaults({
+            packageIdentity: customConfig.packageIdentity,
+            publishesHomebrew: distribution?.homebrew != null,
+            repoUrl: outputConfig.repoUrl,
+            description: defaultCrateDescription(ir.apiDisplayName ?? binaryName)
+        })
     });
-    await patchDistWorkspaceToml({ outputDir });
+    await patchDistWorkspaceToml({ outputDir, homebrew: distribution?.homebrew, binaryName });
     const customCommands = customConfig.customCommands !== false && irFilepath != null;
     await copySpecs({
         outputDir,
@@ -130,7 +151,9 @@ export async function runPipeline(args: {
         apiDisplayName: ir.apiDisplayName,
         authBindings,
         npmPublishInfo: outputConfig.npmPublishInfo,
-        repoUrl: outputConfig.repoUrl
+        repoUrl: outputConfig.repoUrl,
+        distribution,
+        packageName: customConfig.packageIdentity?.name
     });
     await emitReference({
         outputDir,
@@ -222,10 +245,43 @@ export async function runPipeline(args: {
         // Emit cargo-dist release workflow unconditionally for GitHub output.
         // This provides curl|bash installation via GitHub Release assets
         // regardless of whether npm publishing is configured.
-        await emitReleaseWorkflow({ outputDir });
+        //
+        // Both distribution channels live here rather than in ci.yml: they
+        // gate on the same `host` job, so neither can publish a version the
+        // other missed. cargo-dist has no Scoop support, so that job is one
+        // we render — but it belongs beside the Homebrew one all the same.
+        await emitReleaseWorkflow({
+            outputDir,
+            homebrew: distribution?.homebrew,
+            scoop:
+                distribution?.scoop != null
+                    ? {
+                          binaryName,
+                          scoop: distribution.scoop,
+                          repoUrl: outputConfig.repoUrl,
+                          license: customConfig.packageIdentity?.license,
+                          description:
+                              customConfig.packageIdentity?.description ??
+                              defaultCrateDescription(ir.apiDisplayName ?? binaryName)
+                      }
+                    : undefined
+        });
     }
 
     return { status: "generated", binaryName };
+}
+
+/**
+ * `desc` for the published Homebrew formula when the consumer pinned no
+ * `packageIdentity.description`. Mirrors `emitReadme`'s heading rule so a
+ * display name that already ends in "API" doesn't yield "… API API".
+ */
+function defaultCrateDescription(displayName: string): string {
+    // Word boundary, not `endsWith`: "ElevenLabs API Documentation" already
+    // names itself an API mid-string, and an `endsWith` check appended a
+    // second one — visible in `brew info` as "… API Documentation API".
+    const suffix = /\bAPI\b/i.test(displayName) ? "" : " API";
+    return `CLI for the ${displayName}${suffix}`;
 }
 
 /**

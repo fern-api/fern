@@ -1,0 +1,86 @@
+types:
+  User:
+    properties:
+      name: string
+      id: integer
+
+  ListUsersResponse:
+    properties:
+      next_cursor: optional<string>
+      data: list<User>
+
+  ListUsersRequiredCursorResponse:
+    properties:
+      next_cursor: string
+      data: list<User>
+
+  WithCursor:
+    properties:
+      cursor: optional<string>
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    listWithBodyCursorPagination:
+      docs: Pagination endpoint with a top-level cursor field in the request body.
+      pagination:
+        cursor: $request.cursor
+        next_cursor: $response.next_cursor
+        results: $response.data
+      method: POST
+      path: ""
+      request:
+        name: ListUsersBodyCursorPaginationRequest
+        body:
+          properties:
+            cursor: optional<string>
+            filter: optional<string>
+      response: ListUsersResponse
+
+    listWithRequiredBodyCursorPagination:
+      docs: Pagination endpoint with a required top-level cursor field in the request body.
+      pagination:
+        cursor: $request.cursor
+        next_cursor: $response.next_cursor
+        results: $response.data
+      method: POST
+      path: /required-cursor
+      request:
+        name: ListUsersRequiredBodyCursorPaginationRequest
+        body:
+          properties:
+            cursor: string
+      response: ListUsersRequiredCursorResponse
+
+    listWithBodyOffsetPagination:
+      docs: Pagination endpoint with a top-level page field in the request body.
+      pagination:
+        offset: $request.page
+        results: $response.data
+      method: POST
+      path: /offset
+      request:
+        name: ListUsersBodyOffsetPaginationRequest
+        body:
+          properties:
+            page: optional<integer>
+            limit: optional<integer>
+      response: ListUsersResponse
+
+    listWithNestedBodyCursorPagination:
+      docs: |
+        Pagination endpoint with a nested cursor field in the request body. Nested page properties are
+        not supported, so this endpoint is generated without a pager.
+      pagination:
+        cursor: $request.pagination.cursor
+        next_cursor: $response.next_cursor
+        results: $response.data
+      method: POST
+      path: /nested-cursor
+      request:
+        name: ListUsersNestedBodyCursorPaginationRequest
+        body:
+          properties:
+            pagination: optional<WithCursor>
+      response: ListUsersResponse

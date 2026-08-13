@@ -670,7 +670,7 @@ export abstract class AbstractPhpGeneratorContext<
      * Returns extra template variables for a given filename.
      * Override this method to provide custom template variables for specific files.
      */
-    public getExtraTemplateVarsForFile(_filename: string): Record<string, string> | undefined {
+    public getExtraTemplateVarsForFile(_filename: string): Record<string, string | boolean> | undefined {
         return undefined;
     }
 

@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.81.1
+  changelogEntry:
+    - summary: |
+        Percent-encode `;` in query parameter names and values. RFC 3986 permits it, but it
+        remains a legacy parameter separator for many servers, which truncated values such as
+        `?mail2=a@example.com;%20b@example.com` at the first `;`.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
 - version: 2.81.0
   changelogEntry:
     - summary: |

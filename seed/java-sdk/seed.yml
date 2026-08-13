@@ -334,6 +334,9 @@ fixtures:
   java-oauth-token-optional:
     - customConfig: null
       outputFolder: no-custom-config
+  java-oauth-token-required-enum-grant-type:
+    - customConfig: null
+      outputFolder: no-custom-config
   header-auth:
     - customConfig:
         enable-wire-tests: true

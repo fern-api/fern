@@ -18,7 +18,7 @@ export function getEndpointPageReturnType({
         return undefined;
     }
     const pagination = context.getPagination(endpoint);
-    if (pagination != null && !context.isPaginationWithRequestBodyEndpoint(endpoint)) {
+    if (pagination != null && !context.isUnsupportedRequestBodyPaginationEndpoint(endpoint)) {
         const responseType = getResponseBodyType({ context, body: response.body });
         // Check if this is custom pagination
         if (pagination.type === "custom" && context.customConfig.customPagerName != null) {

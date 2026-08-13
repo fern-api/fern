@@ -177,3 +177,84 @@ describe("validateCustomConfig", () => {
         );
     });
 });
+
+describe("validateCustomConfig — distribution", () => {
+    it("leaves distribution undefined when the block is absent", () => {
+        expect(validateCustomConfig({ binaryName: "acme" }).distribution).toBeUndefined();
+    });
+
+    it("accepts a homebrew-only block", () => {
+        expect(validateCustomConfig({ distribution: { homebrew: { tap: "acme/homebrew-tap" } } })).toEqual({
+            distribution: { homebrew: { tap: "acme/homebrew-tap" } }
+        });
+    });
+
+    it("accepts a scoop-only block", () => {
+        expect(validateCustomConfig({ distribution: { scoop: { bucket: "acme/scoop-bucket" } } })).toEqual({
+            distribution: { scoop: { bucket: "acme/scoop-bucket" } }
+        });
+    });
+
+    it("accepts both channels with every optional field set", () => {
+        const distribution = {
+            homebrew: {
+                tap: "acme/homebrew-tap",
+                formula: "acme-cli",
+                tokenEnvironmentVariable: "TAP_PAT"
+            },
+            scoop: { bucket: "acme/scoop-bucket", tokenEnvironmentVariable: "BUCKET_PAT" }
+        };
+        expect(validateCustomConfig({ distribution })).toEqual({ distribution });
+    });
+
+    it("requires tap and bucket to be <owner>/<repo>", () => {
+        expect(() => validateCustomConfig({ distribution: { homebrew: {} } })).toThrow(
+            /homebrew\.tap: undefined is not a GitHub repository/
+        );
+        expect(() => validateCustomConfig({ distribution: { homebrew: { tap: "homebrew-tap" } } })).toThrow(
+            /homebrew\.tap: "homebrew-tap" is not a GitHub repository/
+        );
+        expect(() =>
+            validateCustomConfig({ distribution: { homebrew: { tap: "https://github.com/acme/homebrew-tap" } } })
+        ).toThrow(/is not a GitHub repository/);
+        expect(() => validateCustomConfig({ distribution: { scoop: { bucket: 42 } } })).toThrow(
+            /scoop\.bucket: 42 is not a GitHub repository/
+        );
+    });
+
+    it("rejects a formula name Homebrew could not resolve to a .rb file", () => {
+        expect(() =>
+            validateCustomConfig({ distribution: { homebrew: { tap: "acme/homebrew-tap", formula: "Acme_CLI" } } })
+        ).toThrow(/not a valid Homebrew formula name/);
+    });
+
+    it("rejects a token name that would emit broken `secrets.<NAME>` YAML", () => {
+        expect(() =>
+            validateCustomConfig({
+                distribution: { homebrew: { tap: "acme/homebrew-tap", tokenEnvironmentVariable: "tap-token" } }
+            })
+        ).toThrow(/not a valid GitHub Actions secret name/);
+    });
+
+    // The built-in token is scoped to the CLI repo, so a pipeline configured
+    // with it would only fail at release time — after the tag is cut.
+    it("rejects GITHUB_TOKEN for both channels, pointing at a PAT", () => {
+        expect(() =>
+            validateCustomConfig({
+                distribution: { homebrew: { tap: "acme/homebrew-tap", tokenEnvironmentVariable: "GITHUB_TOKEN" } }
+            })
+        ).toThrow(/GITHUB_TOKEN cannot be used here.*personal access/s);
+        expect(() =>
+            validateCustomConfig({
+                distribution: { scoop: { bucket: "acme/scoop-bucket", tokenEnvironmentVariable: "GITHUB_TOKEN" } }
+            })
+        ).toThrow(/GITHUB_TOKEN cannot be used here/);
+    });
+
+    it("rejects non-object distribution values", () => {
+        expect(() => validateCustomConfig({ distribution: [] })).toThrow(/distribution: expected an object, got array/);
+        expect(() => validateCustomConfig({ distribution: { scoop: "acme/scoop-bucket" } })).toThrow(
+            /distribution\.scoop: expected an object, got string/
+        );
+    });
+});

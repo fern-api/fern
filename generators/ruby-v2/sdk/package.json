@@ -41,6 +41,7 @@
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/dynamic-ir-sdk": "67.21.0",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
@@ -53,7 +54,7 @@
     "@fern-api/ruby-model": "workspace:*",
     "@fern-fern/generator-cli-sdk": "^0.1.5",
     "@fern-fern/generator-exec-sdk": "catalog:",
-    "@fern-fern/ir-sdk": "67.15.0",
+    "@fern-fern/ir-sdk": "67.21.0",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
     "dedent": "catalog:",
