@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.57.0
+  changelogEntry:
+    - summary: |
+        Snippets for examples that omit an optional request body now pass `nil` for the body
+        parameter instead of dropping the argument, which produced snippets that did not compile.
+      type: fix
+    - summary: |
+        Add a `respectOptionalRequestBody` option. When enabled, an endpoint whose request body the API
+        does not require sends no body and no `Content-Type` header once the caller leaves that body out,
+        including when the request wrapper is passed with a nil `Body`. Examples that supply no body stop
+        rendering an empty body such as `Body: &acme.RefundRequest{}`. The option defaults to false, so
+        existing SDKs send exactly what they always have.
+      type: feat
+  createdAt: "2026-08-13"
+  irVersion: 67
 - version: 1.56.1
   changelogEntry:
     - summary: |

@@ -5,6 +5,7 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 import { isEndpointSecurity } from "../endpoint/request/endpointAuthHeaders.js";
+import { getClientCredentialsOrThrow } from "../oauth/getClientCredentials.js";
 import { getServerVariableOptions } from "../root-client/serverVariables.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
@@ -455,23 +456,24 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                 }
             ];
         } else if (scheme.type === "oauth") {
+            const configuration = getClientCredentialsOrThrow(scheme);
             const fields: UnifiedField[] = [
                 {
                     name: "ClientId",
                     type: this.Primitive.string,
                     docs: "The clientId to use for authentication.",
                     isOptional,
-                    hasEnvironmentVariable: scheme.configuration.clientIdEnvVar != null
+                    hasEnvironmentVariable: configuration.clientIdEnvVar != null
                 },
                 {
                     name: "ClientSecret",
                     type: this.Primitive.string,
                     docs: "The clientSecret to use for authentication.",
                     isOptional,
-                    hasEnvironmentVariable: scheme.configuration.clientSecretEnvVar != null
+                    hasEnvironmentVariable: configuration.clientSecretEnvVar != null
                 }
             ];
-            for (const customProperty of scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
+            for (const customProperty of configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
                 if (
                     customProperty.property.valueType.type === "container" &&
                     customProperty.property.valueType.container.type === "literal"

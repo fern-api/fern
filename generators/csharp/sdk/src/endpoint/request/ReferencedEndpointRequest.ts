@@ -7,6 +7,7 @@ type TypeReference = FernIr.TypeReference;
 type ServiceId = FernIr.ServiceId;
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { mayOmitRequestBody } from "../../utils/requestBodyUtils.js";
 import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
@@ -32,9 +33,18 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     }
 
     public getParameterType(): ast.Type {
-        return this.context.csharpTypeMapper.convert({
+        const type = this.context.csharpTypeMapper.convert({
             reference: this.requestBodyShape
         });
+        return this.mayBeOmitted() ? type.asOptional() : type;
+    }
+
+    public override getParameterInitializer(): string | undefined {
+        return this.mayBeOmitted() ? "null" : undefined;
+    }
+
+    private mayBeOmitted(): boolean {
+        return mayOmitRequestBody(this.context, this.endpoint.requestBody);
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {

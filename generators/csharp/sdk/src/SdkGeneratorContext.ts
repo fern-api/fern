@@ -331,7 +331,7 @@ export class SdkGeneratorContext extends GeneratorContext {
     public getExampleEndpointCallIfExists(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall | undefined {
         const userSpecifiedExample = endpoint.userSpecifiedExamples
             .map(({ example }) => example)
-            .find((example) => example != null && !exampleOmitsRequestBody({ endpoint, example }));
+            .find((example) => example != null && !exampleOmitsRequestBody({ context: this, endpoint, example }));
         if (userSpecifiedExample != null) {
             return userSpecifiedExample;
         }

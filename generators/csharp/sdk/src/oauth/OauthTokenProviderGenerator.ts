@@ -13,6 +13,7 @@ type ResponseProperty = FernIr.ResponseProperty;
 
 import { fail } from "assert";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { getClientCredentialsOrThrow } from "./getClientCredentials.js";
 
 export declare namespace OauthTokenProviderGenerator {
     interface Args {
@@ -23,7 +24,7 @@ export declare namespace OauthTokenProviderGenerator {
 
 export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private classReference: ast.ClassReference;
-    private scheme: OAuthScheme;
+    private configuration: FernIr.OAuthClientCredentials;
     private tokenEndpointHttpService: HttpService;
     private tokenEndpointReference: EndpointReference;
     private tokenEndpoint: HttpEndpoint;
@@ -42,13 +43,13 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
 
     constructor({ context, scheme }: OauthTokenProviderGenerator.Args) {
         super(context);
-        this.scheme = scheme;
+        this.configuration = getClientCredentialsOrThrow(scheme);
         this.classReference = this.Types.OAuthTokenProvider;
-        this.tokenEndpointReference = this.scheme.configuration.tokenEndpoint.endpointReference;
+        this.tokenEndpointReference = this.configuration.tokenEndpoint.endpointReference;
         this.tokenEndpointHttpService =
             this.context.getHttpService(this.tokenEndpointReference.serviceId) ??
             fail(`Service with id ${this.tokenEndpointReference.serviceId} not found`);
-        this.expiresIn = this.scheme.configuration.tokenEndpoint.responseProperties.expiresIn;
+        this.expiresIn = this.configuration.tokenEndpoint.responseProperties.expiresIn;
 
         this.tokenEndpoint = this.context.resolveEndpoint(
             this.tokenEndpointHttpService,
@@ -121,7 +122,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
         // don't need to be passed through. This aligns with Java's approach of skipping only
         // literals, while also keeping the optional guard to avoid adding optional-typed
         // properties as required constructor parameters.
-        for (const customProperty of this.scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
+        for (const customProperty of this.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
             if (isLiteralTypeReference(customProperty.property.valueType)) {
                 continue;
             }
@@ -148,7 +149,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                 })
             );
         }
-        const scopes = this.scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        const scopes = this.configuration.tokenEndpoint.requestProperties.scopes;
         if (scopes && !isLiteralTypeReference(scopes.property.valueType)) {
             const typeRef = this.context.csharpTypeMapper.convert({
                 reference: scopes.property.valueType
@@ -210,7 +211,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
     }
 
     private getAccessTokenBody(): ast.CodeBlock {
-        const tokenEndpoint = this.scheme.configuration.tokenEndpoint;
+        const tokenEndpoint = this.configuration.tokenEndpoint;
 
         const staleCheck = (writer: ast.Writer) => {
             writer.write(`${this.accessTokenField.name} == null`);
@@ -317,13 +318,13 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
         clientId: () =>
             this.context.getNameForField(
                 this.case.resolveNameAndWireValue(
-                    this.scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name
+                    this.configuration.tokenEndpoint.requestProperties.clientId.property.name
                 )
             ),
         secret: () =>
             this.context.getNameForField(
                 this.case.resolveNameAndWireValue(
-                    this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name
+                    this.configuration.tokenEndpoint.requestProperties.clientSecret.property.name
                 )
             )
     });
