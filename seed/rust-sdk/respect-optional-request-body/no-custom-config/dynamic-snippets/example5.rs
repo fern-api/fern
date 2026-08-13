@@ -10,7 +10,6 @@ async fn main() {
     client
         .bulk_refund(
             &RefundRequest {
-                amount: Some(1.1),
                 ..Default::default()
             },
             None,
