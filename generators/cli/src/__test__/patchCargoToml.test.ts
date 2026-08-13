@@ -93,8 +93,21 @@ dist = true`);
         const patched = applyCargoTomlPatch(TEMPLATE_CARGO_TOML, "acme-cli", "1.2.3");
         expect(patched).toContain('repository = "https://github.com/fern-api/cli-sdk"');
         expect(patched).toContain('anyhow = "1"');
-        expect(patched).toContain('default = ["native-tls"]');
+        expect(patched).toContain("default = []");
         expect(patched).toContain("[profile.dist]");
+    });
+
+    it("preserves the per-target TLS and keyring dependency tables", () => {
+        const patched = applyCargoTomlPatch(TEMPLATE_CARGO_TOML, "acme-cli", "1.2.3");
+        expect(patched).toContain(`[target.'cfg(target_env = "musl")'.dependencies]`);
+        expect(patched).toContain(`[target.'cfg(not(target_env = "musl"))'.dependencies]`);
+        // keyring is non-musl only: libdbus can't be statically linked.
+        const muslSection = patched.slice(
+            patched.indexOf(`[target.'cfg(target_env = "musl")'.dependencies]`),
+            patched.indexOf(`[target.'cfg(not(target_env = "musl"))'.dependencies]`)
+        );
+        expect(muslSection).not.toContain("keyring");
+        expect(muslSection).toContain("rustls-tls-native-roots");
     });
 
     it("throws with a clear pointer when an anchor is missing — guards against silent template drift", () => {

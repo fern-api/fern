@@ -38,18 +38,28 @@ path = "src/bin/strip_schema.rs"
 [features]
 # TLS backend selection.
 #
-#   default = ["native-tls"]
-#       Uses the OS's native TLS stack (Secure Transport on macOS, SChannel on
+# The backend is chosen per target by the `[target.'cfg(...)'.dependencies]`
+# tables below, so a plain `cargo build` produces a working binary for every
+# target we distribute: musl targets get rustls (a static binary cannot link
+# the system OpenSSL), everything else gets the platform's native stack.
+# `default` is therefore empty — a non-empty default would re-enable
+# native-tls on musl and break the build, including under build systems that
+# offer no way to pass per-target cargo flags (cargo-dist).
+#
+# The two features remain as explicit overrides:
+#
+#   native-tls   (cargo build --features native-tls)
+#       The OS's native TLS stack (Secure Transport on macOS, SChannel on
 #       Windows, OpenSSL on Linux). Honors the OS keychain / cert store —
 #       what users typically expect for an interactive CLI.
 #
-#   ["rustls"]   (cargo build --no-default-features --features rustls)
-#       Uses the pure-Rust rustls crate with Mozilla's bundled webpki roots.
-#       Produces self-contained static binaries that don't depend on system
-#       OpenSSL — preferred for distribution to varied Linux servers, scratch
-#       Docker images, and cross-compiled musl/ARM builds. Does NOT read the
-#       OS keychain; users must use `<NAME>_CA_BUNDLE` for custom roots.
-default = ["native-tls"]
+#   rustls       (cargo build --features rustls)
+#       The pure-Rust rustls crate. Produces self-contained binaries that
+#       don't depend on system OpenSSL — preferred for distribution to varied
+#       Linux servers, scratch Docker images, and cross-compiled musl/ARM
+#       builds. Does NOT read the OS keychain; users must use
+#       `<NAME>_CA_BUNDLE` for custom roots.
+default = []
 native-tls = ["reqwest/native-tls", "tokio-tungstenite/native-tls"]
 rustls = ["reqwest/rustls-tls-native-roots", "tokio-tungstenite/rustls-tls-native-roots"]
 
@@ -108,7 +118,6 @@ secrecy = "0.10"
 serde_qs = "1.1.1"
 sha2 = "0.10"
 thiserror = "2"
-keyring = { version = "3", features = ["apple-native", "windows-native", "sync-secret-service", "vendored"] }
 webbrowser = "1"
 rand = "0.8"
 tokio = { version = "1", features = ["full"] }
@@ -120,6 +129,24 @@ tracing-appender = "0.2"
 unicode-normalization = "0.1.25"
 form_urlencoded = "1"
 jmespath = "0.3"
+
+# Per-target TLS backend (see [features] above). Cargo unions the features
+# requested here with those in [dependencies], so each table only names the
+# TLS feature; the rest of the reqwest/tungstenite feature set stays in one
+# place.
+[target.'cfg(target_env = "musl")'.dependencies]
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls-native-roots"] }
+tokio-tungstenite = { version = "0.24", default-features = false, features = ["rustls-tls-native-roots"] }
+
+[target.'cfg(not(target_env = "musl"))'.dependencies]
+reqwest = { version = "0.12", default-features = false, features = ["native-tls"] }
+tokio-tungstenite = { version = "0.24", default-features = false, features = ["native-tls"] }
+# The OS keyring backend, absent on musl: `sync-secret-service` reaches D-Bus
+# through libdbus, which cannot be linked into a static binary. A musl build
+# is a static/container build, where secret-service is unreachable anyway, so
+# those binaries use the file-backed credential store (see ADR-0008 and the
+# matching `cfg(not(target_env = "musl"))` gates in src/auth/keyring_store.rs).
+keyring = { version = "3", features = ["apple-native", "windows-native", "sync-secret-service", "vendored"] }
 
 [package.metadata.dist]
 dist = false
