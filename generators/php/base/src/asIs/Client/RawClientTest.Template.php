@@ -79,7 +79,56 @@ class RawClientTest extends TestCase
         $this->assertEquals('application/json', $lastRequest->getHeaderLine('Content-Type'));
         $this->assertEquals('TestValue', $lastRequest->getHeaderLine('X-Custom-Header'));
     }
+<% if (it.respectOptionalRequestBody) { %>
+    /**
+     * @throws ClientExceptionInterface
+     */
+    public function testOmitsContentTypeWithoutBody(): void
+    {
+        $this->mockClient->append(self::createResponse(200));
 
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::POST,
+            ['X-Custom-Header' => 'TestValue'],
+            [],
+            null,
+            true
+        );
+
+        $this->rawClient->sendRequest($request);
+
+        $lastRequest = $this->mockClient->getLastRequest();
+        $this->assertInstanceOf(RequestInterface::class, $lastRequest);
+        $this->assertEquals('', $lastRequest->getHeaderLine('Content-Type'));
+        $this->assertEquals('TestValue', $lastRequest->getHeaderLine('X-Custom-Header'));
+    }
+
+    /**
+     * @throws ClientExceptionInterface
+     */
+    public function testKeepsContentTypeWithBody(): void
+    {
+        $this->mockClient->append(self::createResponse(200));
+
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::POST,
+            [],
+            [],
+            new JsonRequest(['name' => 'test']),
+            true
+        );
+
+        $this->rawClient->sendRequest($request);
+
+        $lastRequest = $this->mockClient->getLastRequest();
+        $this->assertInstanceOf(RequestInterface::class, $lastRequest);
+        $this->assertEquals('application/json', $lastRequest->getHeaderLine('Content-Type'));
+    }
+<% } %>
     /**
      * @throws ClientExceptionInterface
      */

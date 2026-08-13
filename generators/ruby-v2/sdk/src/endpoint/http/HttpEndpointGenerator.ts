@@ -166,6 +166,7 @@ export class HttpEndpointGenerator {
             queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
             headerBagReference,
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
+            omitContentTypeWithoutBody: requestBodyCodeBlock?.omitContentTypeWithoutBody,
             baseUrlName
         });
 

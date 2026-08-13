@@ -525,6 +525,12 @@ fixtures:
         pydantic_config:
           positional_single_property_constructors: true
       outputFolder: with-positional-constructors
+  python-optional-request-body:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        respect_optional_request_body: true
+      outputFolder: respect-optional-request-body
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2

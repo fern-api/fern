@@ -133,6 +133,36 @@ jobs:
           fi
       - name: Install dist
         run: ${{ matrix.install_dist.run }}
+      # cargo-dist guards the installer download with pipefail in the `plan`
+      # job but not here, where the same `curl ... | sh` runs once per matrix
+      # leg. A dead curl pipes nothing into `sh`, which exits 0, so the step
+      # above reports success and `dist build` fails two steps later with an
+      # opaque exit 127. Observed on 2 of 3 real releases.
+      #
+      # Deliberately does not branch on `matrix.install_dist.shell`: steps 1
+      # and 3 reuse the matrix's own command and shell exactly as upstream
+      # does, so this can only ever add a retry — it cannot mis-route a leg
+      # and skip the install entirely.
+      - id: dist-check
+        name: Check dist installed
+        shell: bash
+        run: |
+          if dist --version > /dev/null 2>&1; then
+            echo "ok=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=no" >> "$GITHUB_OUTPUT"
+            echo "::warning::The dist installer did not put 'dist' on PATH — most likely a transient download failure. Retrying."
+          fi
+      - name: Install dist (retry)
+        if: ${{ steps.dist-check.outputs.ok == 'no' }}
+        run: ${{ matrix.install_dist.run }}
+      - name: Verify dist
+        shell: bash
+        run: |
+          dist --version || {
+            echo "::error::The cargo-dist installer failed twice on this runner, so 'dist' is not available. This is usually a transient network failure downloading https://github.com/axodotdev/cargo-dist/releases — re-run this job."
+            exit 1
+          }
       # Get the dist-manifest
       - name: Fetch local artifacts
         uses: actions/download-artifact@v7

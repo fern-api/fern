@@ -10,6 +10,19 @@ import { PaginationInfo } from "../PaginationInfo.js";
 const PAGE_REQUEST_VARIABLE_NAME = "pageRequest";
 const PAGE_REQUEST_CURSOR_NAME = `${PAGE_REQUEST_VARIABLE_NAME}.Cursor`;
 const PAGE_REQUEST_RESPONSE_NAME = `${PAGE_REQUEST_VARIABLE_NAME}.Response`;
+const PAGED_REQUEST_VARIABLE_NAME = "nextRequest";
+
+/**
+ * A page property that lives on the request body. The pager advances the page by setting the field on
+ * a copy of the request before every call, so that the caller's request is left untouched.
+ */
+interface RequestBodyPageProperty {
+    requestParameterName: string;
+    /** e.g. request.Cursor */
+    requestReference: string;
+    /** e.g. nextRequest.Cursor */
+    pagedRequestReference: string;
+}
 
 export function getPaginationInfo({
     context,
@@ -30,12 +43,12 @@ export function getPaginationInfo({
     const nextPageType = getNextPageType({ context, pagination });
     const pageRequestType = getPageRequestType({ context, pageType });
     const requestPagePropertyReference = getPagePropertyReference({
-        variableName: "request",
+        variableName: getRequestVariableName({ signature }),
         pagination,
         caseConverter: context.caseConverter
     });
+    const requestBodyPageProperty = getRequestBodyPageProperty({ context, pagination, signature });
     const pagePropertyFormat = getPageValueFormat({ context, pagination });
-    const requestPagePropertyFormat = getPageValueFormat({ context, pagination });
     return {
         prepareCall: getPrepareCall({
             context,
@@ -44,6 +57,7 @@ export function getPaginationInfo({
             pageType,
             pageRequestType,
             pagePropertyFormat,
+            requestBodyPageProperty,
             endpoint,
             errorDecoder
         }),
@@ -54,7 +68,7 @@ export function getPaginationInfo({
             pageType,
             nextPageType,
             requestPagePropertyReference,
-            requestPagePropertyFormat
+            requestBodyPageProperty
         }),
         initializePager: getInitializePager({ context, pagination, callerReference }),
         callGetPage: getCallGetPage({ pagination, pageType, requestPagePropertyReference })
@@ -68,6 +82,7 @@ function getPrepareCall({
     pageType,
     pageRequestType,
     pagePropertyFormat,
+    requestBodyPageProperty,
     endpoint,
     errorDecoder
 }: {
@@ -77,10 +92,20 @@ function getPrepareCall({
     pageType: go.Type;
     pageRequestType: go.Type;
     pagePropertyFormat: go.AstNode;
+    requestBodyPageProperty: RequestBodyPageProperty | undefined;
     endpoint: FernIr.HttpEndpoint;
     errorDecoder: go.CodeBlock | undefined;
 }): go.AstNode {
-    const pagePropertySetter = getPagePropertySetter({ pagination, pageType, pagePropertyFormat });
+    const pagePropertySetter = getPagePropertySetter({
+        pagination,
+        pageType,
+        pagePropertyFormat,
+        requestBodyPageProperty
+    });
+    const requestReference =
+        requestBodyPageProperty != null
+            ? go.codeblock(`&${PAGED_REQUEST_VARIABLE_NAME}`)
+            : signature.request?.getRequestReference();
     return go.codeblock((writer) => {
         writer.write("prepareCall := ");
         writer.writeNode(
@@ -104,7 +129,7 @@ function getPrepareCall({
                             endpoint,
                             optionsReference: go.codeblock("options"),
                             url: go.codeblock("nextURL"),
-                            request: signature.request?.getRequestReference(),
+                            request: requestReference,
                             response: go.codeblock(PAGE_REQUEST_RESPONSE_NAME),
                             errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined
                         })
@@ -124,7 +149,7 @@ function getReadPageResponse({
     pageType,
     nextPageType,
     requestPagePropertyReference,
-    requestPagePropertyFormat
+    requestBodyPageProperty
 }: {
     context: SdkGeneratorContext;
     pagination: FernIr.Pagination;
@@ -132,13 +157,14 @@ function getReadPageResponse({
     pageType: go.Type;
     nextPageType: go.Type | undefined;
     requestPagePropertyReference: go.AstNode;
-    requestPagePropertyFormat: go.AstNode;
+    requestBodyPageProperty: RequestBodyPageProperty | undefined;
 }): go.AstNode {
     const initializer = getPagePropertyInitializer({
         pagination,
         pageType,
         requestPagePropertyReference,
-        requestPagePropertyFormat
+        requestBodyPageProperty,
+        useItemIndex: pagination.type === "offset" && usesItemIndexOffset({ context, offset: pagination })
     });
     const responseType = signature.returnType ?? go.Type.any();
     return go.codeblock((writer) => {
@@ -379,13 +405,14 @@ function getReadPageResponseBodyForOffset({
     responseType: go.Type;
 }): go.AstNode {
     return go.codeblock((writer) => {
-        const useItemIndex = offset.step != null && context.customConfig.offsetSemantics === "item-index";
-        if (useItemIndex) {
-            writer.writeLine("next += int(len(results))");
+        const nextResultsSetter = getNextResultsSetter({ context, results: pagination.results });
+        if (usesItemIndexOffset({ context, offset })) {
+            writer.writeNode(nextResultsSetter);
+            writer.writeLine(getOffsetIncrementByResultCount({ pageType }));
         } else {
             writer.writeLine("next += 1");
+            writer.writeNode(nextResultsSetter);
         }
-        writer.writeNode(getNextResultsSetter({ context, results: pagination.results }));
         writer.write("return ");
         writer.writeNode(
             go.TypeInstantiation.structPointer({
@@ -407,6 +434,29 @@ function getReadPageResponseBodyForOffset({
             })
         );
     });
+}
+
+// The offset advances by the number of items in the page, so the results must be read first.
+function getOffsetIncrementByResultCount({ pageType }: { pageType: go.Type }): string {
+    const underlying = pageType.underlying();
+    switch (underlying.internalType.type) {
+        case "int64":
+            return "next += int64(len(results))";
+        case "float64":
+            return "next += float64(len(results))";
+        default:
+            return "next += int(len(results))";
+    }
+}
+
+function usesItemIndexOffset({
+    context,
+    offset
+}: {
+    context: SdkGeneratorContext;
+    offset: FernIr.OffsetPagination;
+}): boolean {
+    return offset.step != null && context.customConfig.offsetSemantics === "item-index";
 }
 
 function getNextCursorSetter({
@@ -499,15 +549,25 @@ function getResponsePropertySetter({
 function getPagePropertySetter({
     pagination,
     pageType,
-    pagePropertyFormat
+    pagePropertyFormat,
+    requestBodyPageProperty
 }: {
     pagination: FernIr.Pagination;
     pageType: go.Type;
     pagePropertyFormat: go.AstNode;
+    requestBodyPageProperty: RequestBodyPageProperty | undefined;
 }): go.AstNode {
     switch (pagination.type) {
         case "cursor":
         case "offset":
+            if (requestBodyPageProperty != null) {
+                return go.codeblock((writer) => {
+                    writer.writeLine(
+                        `${PAGED_REQUEST_VARIABLE_NAME} := *${requestBodyPageProperty.requestParameterName}`
+                    );
+                    writer.writeLine(`${requestBodyPageProperty.pagedRequestReference} = ${PAGE_REQUEST_CURSOR_NAME}`);
+                });
+            }
             return go.codeblock((writer) => {
                 if (pageType.isOptional()) {
                     writer.writeLine(`if ${PAGE_REQUEST_CURSOR_NAME} != nil {`);
@@ -544,18 +604,27 @@ function getPagePropertyInitializer({
     pagination,
     pageType,
     requestPagePropertyReference,
-    requestPagePropertyFormat
+    requestBodyPageProperty,
+    useItemIndex
 }: {
     pagination: FernIr.Pagination;
     pageType: go.Type;
     requestPagePropertyReference: go.AstNode;
-    requestPagePropertyFormat: go.AstNode;
+    requestBodyPageProperty: RequestBodyPageProperty | undefined;
+    useItemIndex: boolean;
 }): go.AstNode | undefined {
     switch (pagination.type) {
         case "offset": {
+            if (requestBodyPageProperty != null) {
+                return getRequestBodyOffsetInitializer({
+                    pageType,
+                    requestReference: requestBodyPageProperty.requestReference,
+                    useItemIndex
+                });
+            }
             return go.codeblock((writer) => {
                 if (pageType.isOptional()) {
-                    writer.writeNode(getOffsetInitializer({ pageType }));
+                    writer.writeNode(getOffsetInitializer({ pageType, useItemIndex }));
                     writer.newLine();
                     writer.write("if ");
                     writer.writeNode(
@@ -576,9 +645,8 @@ function getPagePropertyInitializer({
                     writer.writeLine("}");
                     return;
                 }
+                writer.write("next := ");
                 writer.writeNode(requestPagePropertyReference);
-                writer.write(" := ");
-                writer.writeNode(requestPagePropertyFormat);
                 writer.newLine();
             });
         }
@@ -592,21 +660,47 @@ function getPagePropertyInitializer({
     }
 }
 
-function getOffsetInitializer({ pageType }: { pageType: go.Type }): go.AstNode {
+function getRequestBodyOffsetInitializer({
+    pageType,
+    requestReference,
+    useItemIndex
+}: {
+    pageType: go.Type;
+    requestReference: string;
+    useItemIndex: boolean;
+}): go.AstNode {
+    return go.codeblock((writer) => {
+        if (!pageType.isOptional()) {
+            writer.writeLine(`next := ${requestReference}`);
+            return;
+        }
+        writer.writeNode(getOffsetInitializer({ pageType, useItemIndex }));
+        writer.newLine();
+        writer.writeLine(`if ${requestReference} != nil {`);
+        writer.indent();
+        writer.writeLine(`next = *${requestReference}`);
+        writer.dedent();
+        writer.writeLine("}");
+    });
+}
+
+// Item-index offsets address records rather than pages, so they start at 0.
+function getOffsetInitializer({ pageType, useItemIndex }: { pageType: go.Type; useItemIndex: boolean }): go.AstNode {
     const underlying = pageType.underlying();
+    const initialOffset = useItemIndex ? 0 : 1;
     switch (underlying.internalType.type) {
         case "string":
-            return go.codeblock('var next string = "1"');
+            return go.codeblock(`var next string = "${initialOffset}"`);
         case "uuid":
             return go.codeblock("var next uuid.UUID");
         case "int":
-            return go.codeblock("next := 1");
+            return go.codeblock(`next := ${initialOffset}`);
         case "int64":
-            return go.codeblock("var next int64 = 1");
+            return go.codeblock(`var next int64 = ${initialOffset}`);
         case "float64":
-            return go.codeblock("var next float64 = 1");
+            return go.codeblock(`var next float64 = ${initialOffset}`);
         default:
-            return go.codeblock("next := 1");
+            return go.codeblock(`next := ${initialOffset}`);
     }
 }
 
@@ -875,6 +969,42 @@ function getPagePropertyReference({
         default:
             assertNever(pagination);
     }
+}
+
+function getRequestBodyPageProperty({
+    context,
+    pagination,
+    signature
+}: {
+    context: SdkGeneratorContext;
+    pagination: FernIr.Pagination;
+    signature: EndpointSignatureInfo;
+}): RequestBodyPageProperty | undefined {
+    switch (pagination.type) {
+        case "cursor":
+        case "offset": {
+            if (pagination.page.property.type !== "body" || signature.request == null) {
+                return undefined;
+            }
+            const requestParameterName = signature.request.getRequestParameterName();
+            const fieldName = context.getFieldName(pagination.page.property.name);
+            return {
+                requestParameterName,
+                requestReference: `${requestParameterName}.${fieldName}`,
+                pagedRequestReference: `${PAGED_REQUEST_VARIABLE_NAME}.${fieldName}`
+            };
+        }
+        case "custom":
+        case "uri":
+        case "path":
+            return undefined;
+        default:
+            assertNever(pagination);
+    }
+}
+
+function getRequestVariableName({ signature }: { signature: EndpointSignatureInfo }): string {
+    return signature.request?.getRequestParameterName() ?? "request";
 }
 
 function getResponsePropertyReference({

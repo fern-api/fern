@@ -1,4 +1,56 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.57.0
+  changelogEntry:
+    - summary: |
+        Snippets for examples that omit an optional request body now pass `nil` for the body
+        parameter instead of dropping the argument, which produced snippets that did not compile.
+      type: fix
+    - summary: |
+        Add a `respectOptionalRequestBody` option. When enabled, an endpoint whose request body the API
+        does not require sends no body and no `Content-Type` header once the caller leaves that body out,
+        including when the request wrapper is passed with a nil `Body`. Examples that supply no body stop
+        rendering an empty body such as `Body: &acme.RefundRequest{}`. The option defaults to false, so
+        existing SDKs send exactly what they always have.
+      type: feat
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 1.56.1
+  changelogEntry:
+    - summary: |
+        Fix the initial offset for `offsetSemantics: item-index`. Item-index offsets address records
+        rather than pages, so pagination now starts at `0` instead of `1`, which previously skipped the
+        first record of every collection. This applies to both query-parameter and request-body offsets.
+        Page-index semantics continue to start at `1`.
+      type: fix
+    - summary: |
+        Fix offset pagination emitting code that does not compile. With `offsetSemantics: item-index`
+        and a `step`, the pager read `results` before declaring it (`undefined: results`), and the
+        offset increment now matches the page type (`int`, `int64`, `float64`). Endpoints whose offset
+        is a required (non-optional) query parameter also emitted an invalid assignment to a request
+        field (`request.Offset := ...`) under either offset semantics, and now seed the initial offset
+        from the request (`next := request.Offset`).
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 1.56.0
+  changelogEntry:
+    - summary: |
+        Add the `enableRequestBodyPagination` configuration option, which generates auto-pagination for
+        endpoints whose cursor or offset is a top-level request body property (e.g.
+        `cursor: $request.cursor`). These endpoints previously generated a regular method that returned
+        the response body, so the option defaults to `false` to preserve the existing return types.
+
+        ```yaml
+        - name: fernapi/fern-go-sdk
+          config:
+            enableRequestBodyPagination: true
+        ```
+
+        Pagination configured with a nested request body property (e.g. `cursor: $request.pagination.cursor`)
+        remains unsupported.
+      type: feat
+  createdAt: "2026-08-13"
+  irVersion: 67
 - version: 1.55.1
   changelogEntry:
     - summary: |

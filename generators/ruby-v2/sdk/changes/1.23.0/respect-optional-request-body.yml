@@ -1,0 +1,6 @@
+- summary: |
+    Add the `respectOptionalRequestBody` configuration option. When enabled, an endpoint whose
+    request body the API does not require lets callers omit the body: the request then carries
+    neither a body nor a `Content-Type` header, instead of sending `{}` as `application/json`.
+    Disabled by default.
+  type: feat

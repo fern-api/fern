@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.18.1
+  changelogEntry:
+    - summary: |
+        Fix the generated OAuth token supplier when the get-token request has required properties
+        other than the client credentials. The builder calls are now ordered by the request's
+        required properties, so the staged builder's stages are satisfied in order, and hardcoded
+        values (such as `grant_type`) are written using the property's type, which means an
+        enumerated `grant_type` gets the generated enum constant instead of a string literal.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
 - version: 4.18.0
   changelogEntry:
     - summary: |

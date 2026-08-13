@@ -685,7 +685,7 @@ export class EndpointSnippetGenerator {
         );
 
         // Add body fields as keyword arguments
-        if (request.body != null && snippet.requestBody != null) {
+        if (request.body != null && snippet.requestBody != null && !this.callOmitsRequestBody({ request, snippet })) {
             switch (request.body.type) {
                 case "bytes":
                     // Not supported in Ruby snippets yet
@@ -744,6 +744,28 @@ export class EndpointSnippetGenerator {
         }
 
         return args;
+    }
+
+    /**
+     * When the generator is configured to respect optional request bodies and the IR marks
+     * the body as optional, a snippet whose example has no body omits the body arguments
+     * entirely rather than passing an empty object.
+     */
+    private callOmitsRequestBody({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): boolean {
+        if (this.context.customConfig?.respectOptionalRequestBody !== true) {
+            return false;
+        }
+        if (request.bodyRequired !== false) {
+            return false;
+        }
+        const value = snippet.requestBody;
+        return value == null || (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
     }
 
     private getBodyArgsForNonObjectType({

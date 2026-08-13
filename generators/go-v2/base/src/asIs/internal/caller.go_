@@ -61,7 +61,7 @@ type CallParams struct {
 	Request            interface{}
 	Response           interface{}
 	ResponseIsOptional bool
-	ErrorDecoder       ErrorDecoder
+	ErrorDecoder       ErrorDecoder{{OPTIONAL_REQUEST_BODY_FIELD}}
 }
 
 // CallResponse is a parsed HTTP response from an API call.
@@ -83,7 +83,7 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) (*CallResponse, e
 	)
 	if err != nil {
 		return nil, err
-	}
+	}{{OPTIONAL_REQUEST_BODY_CONTENT_TYPE}}
 
 	// If the call has been cancelled, don't issue the request.
 	if err := ctx.Err(); err != nil {
