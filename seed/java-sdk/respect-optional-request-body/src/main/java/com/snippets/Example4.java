@@ -1,6 +1,7 @@
 package com.snippets;
 
 import com.seed.api.SeedApiClient;
+import com.seed.api.requests.RequiredRefundRequest;
 import com.seed.api.types.RefundRequest;
 
 public class Example4 {
@@ -8,6 +9,10 @@ public class Example4 {
         SeedApiClient client =
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.bulkRefund(RefundRequest.builder().build());
+        client.requiredRefund(
+                "id",
+                RequiredRefundRequest.builder()
+                        .body(RefundRequest.builder().amount(1.1).build())
+                        .build());
     }
 }

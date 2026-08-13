@@ -122,7 +122,6 @@ class SeedApi:
         )
         client.refund(
             id="refund-id",
-            amount=60.0,
         )
         """
         _response = self._raw_client.refund(id, amount=amount, request_options=request_options)
@@ -319,7 +318,6 @@ class AsyncSeedApi:
         async def main() -> None:
             await client.refund(
                 id="refund-id",
-                amount=60.0,
             )
 
 

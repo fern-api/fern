@@ -1,0 +1,6 @@
+- summary: |
+    Keep endpoint examples that omit a request body the API does not require. They were dropped
+    while converting OpenAPI, so an `x-fern-examples` entry with no `request` produced no example
+    and no snippet. The example now reaches the IR, and each generator decides how to render it
+    based on whether it respects the optional request body.
+  type: fix

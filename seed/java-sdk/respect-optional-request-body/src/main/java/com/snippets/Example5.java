@@ -8,6 +8,6 @@ public class Example5 {
         SeedApiClient client =
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.bulkRefund(RefundRequest.builder().amount(1.1).build());
+        client.bulkRefund(RefundRequest.builder().build());
     }
 }

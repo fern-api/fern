@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Requests\RequiredRefundRequest;
 use Seed\Types\RefundRequest;
 
 $client = new SeedClient(
@@ -10,6 +11,11 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->bulkRefund(
-    new RefundRequest([]),
+$client->requiredRefund(
+    'id',
+    new RequiredRefundRequest([
+        'body' => new RefundRequest([
+            'amount' => 1.1,
+        ]),
+    ]),
 );
