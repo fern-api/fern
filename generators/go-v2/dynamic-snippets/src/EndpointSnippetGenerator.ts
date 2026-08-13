@@ -1,4 +1,10 @@
-import { AbstractFormatter, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import {
+    AbstractFormatter,
+    InvocationSnippetResponse,
+    Options,
+    Scope,
+    Severity
+} from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { go } from "@fern-api/go-ast";
@@ -81,6 +87,48 @@ export class EndpointSnippetGenerator {
         options?: Options;
     }): Promise<go.AstNode> {
         throw new Error("Unsupported");
+    }
+
+    /**
+     * Generates the structured pieces of an endpoint invocation for callers that render the
+     * invocation within code of their own (e.g. a documentation code template): the bare call
+     * (e.g. `client.plants.Update(...)`), the imports the call requires, and the generated
+     * client type name.
+     */
+    public generateInvocationSnippetSync({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): InvocationSnippetResponse {
+        const invocation = this.callMethod({
+            endpoint,
+            snippet: request,
+            clientVariableName: options?.clientVariableName
+        });
+        // The caller supplies the client and terminates the statement themselves, so the
+        // invocation is emitted as a bare expression with no client construction, no package or
+        // import scaffold, and no trailing terminator. When the call references SDK or stdlib
+        // types (e.g. a body value constructed with `time.Time` or a UUID) the imports it needs
+        // are surfaced separately so the caller can render them rather than falling back to the
+        // complete snippet.
+        const { code, imports } = go.renderNodeWithoutImports({
+            node: invocation,
+            packageName: SNIPPET_PACKAGE_NAME,
+            importPath: SNIPPET_IMPORT_PATH,
+            rootImportPath: this.context.rootImportPath,
+            customConfig: this.context.customConfig ?? {},
+            formatter: this.formatter
+        });
+        return {
+            snippet: code.trim(),
+            imports,
+            clientName: this.context.getClientName(),
+            errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
+        };
     }
 
     private generateWiremockTest({
@@ -214,13 +262,16 @@ export class EndpointSnippetGenerator {
         writer,
         endpoint,
         snippet,
-        includeTestIdHeader
+        includeTestIdHeader,
+        clientVariableName
     }: {
         writer: go.Writer;
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         includeTestIdHeader?: boolean;
+        clientVariableName?: string;
     }): void {
+        const clientVar = clientVariableName ?? CLIENT_VAR_NAME;
         const { otherArgs, requestArg } = this.getMethodArgs({ endpoint, snippet });
         const optionArgsInvocation = includeTestIdHeader
             ? [
@@ -242,7 +293,7 @@ export class EndpointSnippetGenerator {
             if (requestArg instanceof go.TypeInstantiation && go.TypeInstantiation.isNop(requestArg)) {
                 writer.writeNode(
                     go.invokeMethod({
-                        on: go.codeblock(CLIENT_VAR_NAME),
+                        on: go.codeblock(clientVar),
                         method: this.getMethod({ endpoint }),
                         arguments_: [
                             this.context.getContextTodoFunctionInvocation(),
@@ -260,7 +311,7 @@ export class EndpointSnippetGenerator {
                 const requestRef = go.codeblock("request");
                 writer.writeNode(
                     go.invokeMethod({
-                        on: go.codeblock(CLIENT_VAR_NAME),
+                        on: go.codeblock(clientVar),
                         method: this.getMethod({ endpoint }),
                         arguments_: [
                             this.context.getContextTodoFunctionInvocation(),
@@ -274,7 +325,7 @@ export class EndpointSnippetGenerator {
         } else {
             writer.writeNode(
                 go.invokeMethod({
-                    on: go.codeblock(CLIENT_VAR_NAME),
+                    on: go.codeblock(clientVar),
                     method: this.getMethod({ endpoint }),
                     arguments_: [this.context.getContextTodoFunctionInvocation(), ...otherArgs, ...optionArgsInvocation]
                 })
@@ -284,13 +335,15 @@ export class EndpointSnippetGenerator {
 
     private callMethod({
         endpoint,
-        snippet
+        snippet,
+        clientVariableName
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        clientVariableName?: string;
     }): go.CodeBlock {
         return go.codeblock((writer) => {
-            this.writeMethodInvocation({ writer, endpoint, snippet });
+            this.writeMethodInvocation({ writer, endpoint, snippet, clientVariableName });
         });
     }
 
