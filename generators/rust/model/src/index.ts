@@ -8,3 +8,4 @@ export * from "./ModelGeneratorContext.js";
 export * from "./object/index.js";
 export * from "./union/index.js";
 export * from "./utils/primitiveTypeUtils.js";
+export * from "./utils/queryParameterNames.js";

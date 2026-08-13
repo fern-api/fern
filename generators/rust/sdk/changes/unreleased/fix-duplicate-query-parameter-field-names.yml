@@ -1,0 +1,13 @@
+- summary: |
+    Query parameters whose wire names normalize to the same Rust identifier no
+    longer produce uncompilable code. APIs that expose inequality filters as
+    separate parameters — Twilio's `DateCreated`, `DateCreated<` and
+    `DateCreated>`, for example — all snake-cased to `date_created`, so the
+    generated request struct declared the same field several times and the
+    builder assigned it several times (`field 'date_created' specified more than
+    once`). Colliding parameters now get a numeric suffix on the Rust field
+    (`date_created`, `date_created2`, `date_created3`) while keeping their
+    original wire values, so serialization is unchanged. The same deduplication
+    is applied by the model and SDK generators, keeping struct fields, method
+    parameters, and query-building call sites in agreement.
+  type: fix

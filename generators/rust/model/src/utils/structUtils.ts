@@ -3,6 +3,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { dedupeQueryParameterNames, getQueryParameterFieldName } from "./queryParameterNames.js";
 import {
     extractNamedTypesFromTypeReference,
     getInnerTypeFromOptional,
@@ -404,12 +405,12 @@ export function convertQueryParametersToProperties(
     context: { escapeRustKeyword: (name: string) => string; case: { snakeUnsafe: (name: NameInput) => string } }
 ): { properties: FernIr.ObjectProperty[]; fieldNames: Set<string> } {
     const fieldNames = new Set<string>();
-    const properties = queryParams.map((queryParam) => {
+    const properties = dedupeQueryParameterNames(queryParams, context).map((queryParam) => {
         let valueType = queryParam.valueType;
         if (queryParam.allowMultiple) {
             valueType = FernIr.TypeReference.container(FernIr.ContainerType.list(queryParam.valueType));
         }
-        fieldNames.add(context.escapeRustKeyword(context.case.snakeUnsafe(queryParam.name)));
+        fieldNames.add(getQueryParameterFieldName(queryParam, context));
         return {
             name: queryParam.name,
             valueType,
