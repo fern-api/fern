@@ -517,10 +517,9 @@ export function buildEndpoint({
         }
     });
 
-    const examples = filterExamplesThatOmitTheBody({ endpoint, context });
-    if (examples.length > 0) {
+    if (endpoint.examples.length > 0) {
         convertedEndpoint.examples = convertEndpointExamples({
-            endpointExamples: examples,
+            endpointExamples: endpoint.examples,
             context,
             pathParameterRenames
         });
@@ -586,41 +585,6 @@ function convertEndpointAuth({
     }
 
     return endpoint.security;
-}
-
-/**
- * Drops examples that call an omittable body endpoint without a body.
- *
- * The body's own type is unchanged, so every generator still describes it as required until it
- * opts in to `required: false`. An example with no body would then be generated as a call missing
- * a required argument, which does not compile. Generators that opt in express the call through
- * their own configuration rather than through the example.
- */
-function filterExamplesThatOmitTheBody({
-    endpoint,
-    context
-}: {
-    endpoint: Endpoint;
-    context: OpenApiIrConverterContext;
-}): EndpointExample[] {
-    if (endpoint.request == null || !isOptionalJsonBody(endpoint.request)) {
-        return endpoint.examples;
-    }
-    return endpoint.examples.filter((example) => {
-        // An `x-fern-examples` entry arrives unparsed, as the raw example schema.
-        const rawExample =
-            example.type === "full" ? undefined : (example.value as RawSchemas.ExampleEndpointCallSchema | undefined);
-        const name = example.type === "full" ? example.name : rawExample?.name;
-        const hasRequest = example.type === "full" ? example.request != null : rawExample?.request != null;
-        if (hasRequest) {
-            return true;
-        }
-        context.logger.debug(
-            `Skipping the example${name != null ? ` "${name}"` : ""} for ${endpoint.method} ${endpoint.path}: ` +
-                "it has no request body, and the SDKs describe the body as required."
-        );
-        return false;
-    });
 }
 
 function convertEndpointExamples({

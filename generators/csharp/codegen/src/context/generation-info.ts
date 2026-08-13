@@ -183,6 +183,8 @@ export class Generation {
         enableExplicitNullableOptional: () => this.customConfig["experimental-explicit-nullable-optional"] ?? false,
         /** When true, generates Defaults nested class and WithDefaults() method for request records with default values. Default: false. */
         useDefaultRequestParameterValues: () => this.customConfig["use-default-request-parameter-values"] ?? false,
+        /** When true, an endpoint whose request body the API does not require takes that body as `Body? request = null`, and sends no body when the caller leaves it out. Default: false. */
+        respectOptionalRequestBody: () => this.customConfig["respect-optional-request-body"] ?? false,
         /** When true, redacts the response body in deserialization error exceptions and adds a custom ToString override to the base API exception. Default: false. */
         redactResponseBodyOnError: () => this.customConfig["redact-response-body-on-error"] ?? false,
         /** When true, generates inline types as nested classes inside a static Types class on the parent type, instead of as separate top-level files. Default: false. */

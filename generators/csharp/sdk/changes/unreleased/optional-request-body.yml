@@ -1,0 +1,7 @@
+- summary: |
+    Add a `respect-optional-request-body` option. When enabled, an endpoint whose request body the API
+    does not require takes that body as `Body? request = null`, so the caller can leave the argument out
+    and the request is sent with no body and no body content type. Examples that supply no body render
+    as `client.BulkRefundAsync()`. The option defaults to false, so existing signatures and snippets are
+    unchanged.
+  type: feat

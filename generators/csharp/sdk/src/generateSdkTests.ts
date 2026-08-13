@@ -4,6 +4,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { BaseMockServerTestGenerator } from "./test-generation/mock-server/BaseMockServerTestGenerator.js";
 import { MockServerTestGenerator } from "./test-generation/mock-server/MockServerTestGenerator.js";
+import { exampleOmitsRequestBody } from "./utils/exampleUtils.js";
 
 export function generateSdkTests({ context }: { context: SdkGeneratorContext }): CSharpFile[] {
     const files: CSharpFile[] = [];
@@ -38,6 +39,9 @@ function generateMockServerTests({ context }: { context: SdkGeneratorContext }):
                 // /v0/tools/version/1) while the SDK client sends a double-slash path (e.g.
                 // /v0/tools//version/1), resulting in a 404 from WireMock.
                 if (example != null && hasEmptyPathParameter(example)) {
+                    return false;
+                }
+                if (example != null && exampleOmitsRequestBody({ context, endpoint, example })) {
                     return false;
                 }
                 return true;

@@ -125,6 +125,12 @@ scripts:
           dotnet test "$solution_file" --no-restore --no-build -c Release
 
 fixtures:
+  respect-optional-request-body:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: respect-optional-request-body
+      customConfig:
+        respect-optional-request-body: true
   any-auth:
     - outputFolder: no-custom-config
       customConfig: null

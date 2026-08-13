@@ -2,19 +2,16 @@ using SeedApi;
 
 public partial class Examples
 {
-    public async Task Example1() {
+    public async Task Example6() {
         var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.RefundAsync(
-            new RefundBody {
-                Id = "id",
-                Body = new RefundRequest {
-                    Amount = 1.1
-                }
+        await client.BulkRefundAsync(
+            new RefundRequest {
+                Amount = 1.1
             }
         );
     }
