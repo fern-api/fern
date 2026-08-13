@@ -7866,6 +7866,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -7891,6 +7892,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -8135,6 +8137,7 @@
                                 }
                             }
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -8166,6 +8169,7 @@
                                         }
                                     }
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -8933,6 +8937,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -8958,6 +8963,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -20626,7 +20632,8 @@
                             "variable": null
                         }
                     ],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -20712,7 +20719,8 @@
                             "type": "named",
                             "value": "type_bigunion:BigUnion"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -20801,7 +20809,8 @@
                                 "value": "type_bigunion:BigUnion"
                             }
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -20912,7 +20921,8 @@
                             "variable": null
                         }
                     ],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -20998,7 +21008,8 @@
                             "type": "named",
                             "value": "type_union:Shape"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

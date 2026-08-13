@@ -153,7 +153,8 @@ export function convertToSingleRequest({
     context,
     requestBreadcrumbs,
     source,
-    namespace
+    namespace,
+    bodyRequired
 }: {
     content: Record<string, OpenAPIV3.MediaTypeObject>;
     description: string | undefined;
@@ -162,6 +163,8 @@ export function convertToSingleRequest({
     requestBreadcrumbs: string[];
     source: Source;
     namespace: string | undefined;
+    /** the OpenAPI `requestBody.required` flag, which defaults to false when absent */
+    bodyRequired: boolean | undefined;
 }): RequestWithExample | undefined {
     const octetStreamRequest = findOctetStreamRequest({ content });
 
@@ -176,7 +179,8 @@ export function convertToSingleRequest({
             context,
             requestBreadcrumbs,
             source,
-            namespace
+            namespace,
+            bodyRequired
         });
     }
 
@@ -198,7 +202,8 @@ export function convertToSingleRequest({
                     context,
                     requestBreadcrumbs,
                     source,
-                    namespace
+                    namespace,
+                    bodyRequired
                 }),
             multipart: ([mediaType, mediaTypeObject]) =>
                 convertRequest({
@@ -209,7 +214,8 @@ export function convertToSingleRequest({
                     context,
                     requestBreadcrumbs,
                     source,
-                    namespace
+                    namespace,
+                    bodyRequired
                 }),
             neither: () => undefined
         }
@@ -230,7 +236,8 @@ export function convertToSingleRequest({
             context,
             requestBreadcrumbs,
             source,
-            namespace
+            namespace,
+            bodyRequired
         });
     }
     return undefined;
@@ -302,7 +309,8 @@ export function convertRequest({
     context,
     requestBreadcrumbs,
     source,
-    namespace
+    namespace,
+    bodyRequired
 }: {
     mediaType: string;
     mediaTypeObject: OpenAPIV3.MediaTypeObject;
@@ -312,6 +320,8 @@ export function convertRequest({
     requestBreadcrumbs: string[];
     source: Source;
     namespace: string | undefined;
+    /** the OpenAPI `requestBody.required` flag, which defaults to false when absent */
+    bodyRequired: boolean | undefined;
 }): RequestWithExample | undefined {
     const sdkMethodName = getRequestSdkMethodName({ mediaTypeObject });
 
@@ -414,6 +424,7 @@ export function convertRequest({
             description: undefined,
             schema: requestSchema,
             contentType: jsonMediaObject.contentType,
+            required: bodyRequired,
             fullExamples: jsonMediaObject.examples,
             additionalProperties:
                 !isReferenceObject(jsonMediaObject.schema) &&

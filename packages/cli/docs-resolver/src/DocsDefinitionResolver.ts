@@ -21,7 +21,7 @@ import {
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, join, listFiles, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
 import { GraphQLConverter, type GraphQlOperationExamplesInput } from "@fern-api/graphql-to-fdr";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
@@ -34,7 +34,7 @@ import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/wo
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { existsSync } from "fs";
-import { readFile, stat } from "fs/promises";
+import { readFile } from "fs/promises";
 import matter from "gray-matter";
 import jsYaml from "js-yaml";
 import { camelCase, kebabCase } from "lodash-es";
@@ -78,6 +78,7 @@ import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
 import { maybeBundleMdxComponent } from "./utils/bundleMdxComponent.js";
+import { collectMdxComponentFiles } from "./utils/collectMdxComponentFiles.js";
 import { collectWellKnownSkillsFiles } from "./utils/collectWellKnownSkillsFiles.js";
 import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
@@ -771,29 +772,14 @@ export class DocsDefinitionResolver {
         if (this._parsedDocsConfig.experimental?.mdxComponents != null) {
             this.taskContext.logger.debug("Processing MDX components...");
             const mdxStart = performance.now();
-            const jsFilePaths = new Set<AbsoluteFilePath>();
-            await Promise.all(
-                this._parsedDocsConfig.experimental.mdxComponents.map(async (filepath) => {
-                    const absoluteFilePath = resolve(this.docsWorkspace.absoluteFilePath, filepath);
-
-                    // check if absoluteFilePath is a directory or a file
-                    const stats = await stat(absoluteFilePath);
-
-                    if (stats.isDirectory()) {
-                        const files = await listFiles(absoluteFilePath, "{js,ts,jsx,tsx,md,mdx}");
-
-                        files.forEach((file) => {
-                            jsFilePaths.add(file);
-                        });
-                    } else if (absoluteFilePath.match(/\.(js|ts|jsx|tsx|md|mdx)$/) != null) {
-                        jsFilePaths.add(absoluteFilePath);
-                    }
-                })
-            );
+            const jsFilePaths = await collectMdxComponentFiles({
+                absolutePathToDocsWorkspace: this.docsWorkspace.absoluteFilePath,
+                mdxComponents: this._parsedDocsConfig.experimental.mdxComponents
+            });
 
             jsFiles = Object.fromEntries(
                 await Promise.all(
-                    [...jsFilePaths].map(async (filePath): Promise<[string, string]> => {
+                    jsFilePaths.map(async (filePath): Promise<[string, string]> => {
                         const relativeFilePath = this.toRelativeFilepath(filePath);
                         const contents = (await readFile(filePath)).toString();
                         return [relativeFilePath, await this.bundleJsFileContents(filePath, contents)];
@@ -802,7 +788,7 @@ export class DocsDefinitionResolver {
             );
             const mdxTime = performance.now() - mdxStart;
             this.taskContext.logger.debug(
-                `Processed ${jsFilePaths.size} MDX component files in ${mdxTime.toFixed(0)}ms`
+                `Processed ${jsFilePaths.length} MDX component files in ${mdxTime.toFixed(0)}ms`
             );
         }
 

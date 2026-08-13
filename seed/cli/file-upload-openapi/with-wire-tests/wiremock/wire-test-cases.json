@@ -1,0 +1,102 @@
+{
+  "binaryName": "api",
+  "rootGroup": null,
+  "specs": [
+    {
+      "file": "cli/api/openapi0.json",
+      "namespace": null
+    }
+  ],
+  "authEnvVars": [],
+  "authMock": null,
+  "loginTokenSetup": null,
+  "endpointSecurityAuth": false,
+  "cases": [
+    {
+      "id": "uploadfile",
+      "method": "POST",
+      "path": "/upload-file",
+      "params": {},
+      "body": {
+        "name": "name"
+      },
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "multipartFields": [
+        {
+          "wireName": "name",
+          "isFile": false,
+          "isOptional": false
+        },
+        {
+          "wireName": "file",
+          "isFile": true,
+          "isOptional": true
+        }
+      ],
+      "response": {
+        "status": 200,
+        "body": "\"string\""
+      }
+    },
+    {
+      "id": "uploadfile_error",
+      "method": "POST",
+      "path": "/upload-file",
+      "params": {},
+      "body": {
+        "name": "name"
+      },
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "multipartFields": [
+        {
+          "wireName": "name",
+          "isFile": false,
+          "isOptional": false
+        },
+        {
+          "wireName": "file",
+          "isFile": true,
+          "isOptional": true
+        }
+      ],
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
+    },
+    {
+      "id": "uploadfile_optfileomitted",
+      "method": "POST",
+      "path": "/upload-file",
+      "params": {},
+      "body": {
+        "name": "name"
+      },
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "multipartFields": [
+        {
+          "wireName": "name",
+          "isFile": false,
+          "isOptional": false
+        },
+        {
+          "wireName": "file",
+          "isFile": true,
+          "isOptional": true
+        }
+      ],
+      "response": {
+        "status": 200,
+        "body": "\"string\""
+      },
+      "omitOptionalFiles": true
+    }
+  ]
+}

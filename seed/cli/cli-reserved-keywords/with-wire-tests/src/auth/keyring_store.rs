@@ -213,6 +213,17 @@ impl KeyringStore for FileKeyringStore {
 /// which won't persist but won't crash. The user will see this in
 /// `auth status` and can take action.
 pub fn auto_store() -> Arc<dyn KeyringStore> {
+    // Explicit override: `FERN_CLI_CREDENTIAL_STORE=file` forces the file backend, bypassing the
+    // OS keyring entirely. Useful for CI, containers, and hermetic tests (e.g. the generated wire
+    // tests) where the OS keyring is unavailable or would pop an interactive unlock prompt. The
+    // file location still honors `HOME` / `XDG_CONFIG_HOME`, so a test can redirect it to a temp dir.
+    if std::env::var_os("FERN_CLI_CREDENTIAL_STORE").is_some_and(|value| value == "file") {
+        tracing::debug!("FERN_CLI_CREDENTIAL_STORE=file; using file backend for credential storage");
+        return match FileKeyringStore::user_default() {
+            Some(store) => Arc::new(store),
+            None => Arc::new(FileKeyringStore::at_root(PathBuf::from("/tmp/fern-cli-credentials"))),
+        };
+    }
     if OsKeyringStore::probe().is_ok() {
         tracing::debug!("Using OS keyring backend for credential storage");
         return Arc::new(OsKeyringStore);

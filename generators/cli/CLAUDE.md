@@ -104,9 +104,10 @@ the path the patched Cargo.toml references).
 | [`src/copySdk.ts`](src/copySdk.ts) | Recursive copy of `/dist/sdk/` → `outputDir`. |
 | [`src/copySpecs.ts`](src/copySpecs.ts) | Reads `/fern/specs/specs-manifest.json`, copies each spec into `cli/<binaryName>/`, emits `main.rs` from a supplied list of auth bindings. |
 | [`src/patchCargoToml.ts`](src/patchCargoToml.ts) | Literal string replacements against the shipped `Cargo.toml`. Throws if no anchors matched. |
-| [`src/patchDistWorkspace.ts`](src/patchDistWorkspace.ts) | Strips Fern-specific cargo-dist metadata (npm-scope, npm-package) from the shipped `dist-workspace.toml`. |
+| [`src/patchDistWorkspace.ts`](src/patchDistWorkspace.ts) | Strips Fern-specific cargo-dist metadata (npm-scope, npm-package) from the shipped `dist-workspace.toml`; adds the Homebrew installer/publish-job/tap keys when `customConfig.distribution.homebrew` is set. |
+| [`src/emitScoopWorkflow.ts`](src/emitScoopWorkflow.ts) | Renders the `publish-scoop` job appended to `ci.yml`. cargo-dist has no Scoop support, so this channel is hand-written: poll the release for the win64 archive, hash it, render the manifest, commit to the bucket repo. |
 | [`src/identity.ts`](src/identity.ts) | `deriveBinaryName`, `toKebabCase`, `toEnvVarPrefix`. Resolves `customConfig.binaryName ?? ir.apiDisplayName`. |
-| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName`, `customCommands`, `rootGroup`, `packageIdentity`. |
+| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName`, `customCommands`, `rootGroup`, `packageIdentity`, `distribution`. |
 | [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` via `visitDiscriminatedUnion` and emits one auth binding per supported scheme, each tagged `placement: "root" \| "binding"`. Bearer, header, OAuth, and two-field basic go to root; only the `usernameOmit`/`passwordOmit` custom-provider variants stay binding-level. Synchronous — no disk reads. |
 | [`src/wireTests/`](src/wireTests/) | Opt-in (`customConfig.generateWireTests`) mock-driven integration suite. `manifest.ts` reuses `@fern-api/mock-utils` `convertToWireMock` to derive one naming-independent case per endpoint example (`{method, path, params, body, response}`) and emits `wiremock/wire-test-cases.json`. `harness.ts` renders the generic `tests/wire_test.rs`. `generateWireTests.ts` wires them together after `copySpecs`. |
 | [`build.mjs`](build.mjs) | Bundles `src/cli.ts` → `dist/cli.cjs`, copies `./sdk/` → `./dist/sdk/` with `SDK_IGNORE` (template dev files that shouldn't ship). |
@@ -159,6 +160,96 @@ same pass — `[package] name` and the lockfile must agree or
 
 `[lib] name = "fern_cli_sdk"` is deliberately **not** configurable: every
 `use fern_cli_sdk::...` in the vendored `src/` tree resolves through it.
+
+## Distribution channels
+
+Every generated CLI ships GitHub Release archives plus `curl | bash` /
+`irm | iex` installers (cargo-dist `release.yml`), and npm packages when
+`output.location: npm` is configured (`ci.yml`). Homebrew and Scoop are
+opt-in on top of that, via `customConfig.distribution`:
+
+```yaml
+config:
+  binaryName: acme-cli
+  distribution:
+    homebrew:
+      tap: acme/homebrew-tap        # required, "<owner>/<repo>"
+      formula: acme                 # optional, defaults to binaryName
+      tokenEnvironmentVariable: HOMEBREW_TAP_TOKEN   # optional, default
+    scoop:
+      bucket: acme/scoop-bucket     # required, "<owner>/<repo>"
+      tokenEnvironmentVariable: SCOOP_BUCKET_TOKEN   # optional, default
+```
+
+The two channels are **not** symmetric, because cargo-dist supports one
+and not the other:
+
+| | Homebrew | Scoop |
+|---|---|---|
+| Mechanism | cargo-dist native installer | job we render |
+| Config | `installers` / `publish-jobs` / `tap` / `formula` in `dist-workspace.toml` (`patchDistWorkspace.ts`) | none |
+| Job lives in | `release.yml` (`emitReleaseWorkflow.ts`) | `release.yml` (`emitScoopWorkflow.ts`) |
+| Artifact source | cargo-dist's own `dist-manifest.json` | polls the GitHub Release for the win64 zip |
+| Arch coverage | every target in `targets` | `64bit` only |
+
+Both jobs live in `release.yml`, gated on `host` and on cargo-dist's own
+`announcement_is_prerelease` expression. Scoop's was briefly in `ci.yml`
+to keep `release.yml` a verbatim cargo-dist artifact; that was wrong on
+three counts. `ci.yml` gated it on `check`/`compile`/`test`, which
+`release.yml` knows nothing about — so one flaky test published Homebrew
+while the bucket silently stayed behind. It needed a 30-minute poll,
+because a job in `ci.yml` cannot `needs:` a job in `release.yml`. And a
+retry cost ~12 minutes of unrelated build and test before an 8-second
+publish. `needs: host` removes all three.
+
+`emitReleaseWorkflow.ts` keeps **one** cargo-dist template ending after
+the `host` job; publish jobs and the terminal `announce` job are appended
+by `constructReleaseWorkflowYaml`, because `announce`'s `needs` list
+depends on which publish jobs are on. `emitReleaseWorkflow.test.ts`
+asserts the unconfigured output is byte-identical to a committed
+pre-Homebrew seed fixture, so the composition cannot drift from what
+cargo-dist emits.
+
+Enabling Homebrew also points `[package]` at the consumer
+(`withDistributionDefaults` in [`patchCargoToml.ts`](src/patchCargoToml.ts)).
+cargo-dist renders the `.rb` straight off that block:
+
+| `[package]` | Where it lands in the formula |
+|---|---|
+| `repository` | the per-arch **release download URLs** |
+| `homepage` | `homepage "..."` |
+| `description` | `desc "..."` |
+
+`repository` is load-bearing: left at the template's value the URLs
+resolve to `github.com/fern-api/cli-sdk/releases/...` and every
+`brew install` 404s. All three default from `repoUrl` / the API display
+name when unset. Deliberately scoped to the Homebrew case — applying
+them unconditionally would change every existing github-mode
+`Cargo.toml`. `name` is *not* defaulted (it would rename the crate and
+its `Cargo.lock` entry); it only affects archive filenames, which stay
+internally consistent either way.
+
+Three things generation cannot do, which the consumer must:
+
+1. Create the tap (`homebrew-*`) and bucket repos, **public**.
+2. Add a PAT with write access to them under the configured secret names.
+   The built-in `GITHUB_TOKEN` cannot push cross-repo — `customConfig.ts`
+   rejects it rather than emitting a pipeline that fails after the tag is
+   cut.
+3. Keep GitHub Releases public. Both channels fetch archives from the
+   release URL. This is a real asymmetry with npm, whose packages embed
+   the binary bytes and so work from a private source repo.
+
+Only honored for `output.location: github` — both channels publish *from*
+a tagged release, so `runPipeline` drops the config outside github output
+mode, the same gate npm publishing sits behind. Omitting `distribution`
+entirely leaves output byte-identical, so no generator migration is
+needed.
+
+**Known gap — no self-update awareness.** The Rust runtime has no
+installation-method detection, so `<cli> self-update` does not know to
+run `brew upgrade` / `scoop update` for a brew/scoop install. That is
+separate work in `sdk/src/`.
 
 ## Auth detection
 
@@ -239,14 +330,91 @@ exchange — which honors `--base-url` — succeeds before the business request.
 The token/refresh endpoints themselves are excluded from the case list (the CLI
 consumes them internally and never exposes them as commands).
 
-**Body-modality skips:** the harness reads each endpoint's `RestMethod` and
-skips (logging why, test still passes) the ones the generic `--params`/`--json`
-driver can't feed: binary/file uploads (`--file`/`--audio`/…), multipart bodies,
-and bodies the CLI flattened into per-field flags (which reject a whole-body
-`--json`). This mirrors the SDK generator skipping endpoints it can't synthesize
-a call for. Known remaining gap: endpoints whose IR example omits a required
-body property fail the CLI's client-side schema validation — a data-quality
-signal, not a harness bug.
+**Body modalities are driven, not skipped:** the harness reads each endpoint's
+`RestMethod` and feeds the body the way that endpoint expects it — real temp
+fixture files through the per-field upload flags for binary/multipart, and the
+opaque `--json` body otherwise (including endpoints the CLI also flattened into
+per-field flags). Multipart cases additionally assert the `multipart/form-data`
+content type and, per part, its `Content-Disposition` name, its `Content-Type`,
+and `filename=` — the latter two pinned in the same substring as the
+disposition, since asserting them standalone would be satisfied by any sibling
+part. Fixture files are written with a `.txt` extension on purpose: a part's
+media type resolves as declared `encoding` → file extension →
+`application/octet-stream`, and an extensionless fixture would only ever
+exercise that last fallback.
+
+**Case twins.** Every happy-path case is expanded into variants that share its
+request shape, so one endpoint example covers several failure modes:
+
+| Variant | Suffix | Asserts |
+|---|---|---|
+| positive | — | exit 0, one matching request, rendered output matches the mocked body |
+| negative | `_error` | mock serves 422 with a non-empty JSON error body; CLI must exit non-zero *and* still have sent the correct request |
+| optional file omitted | `_optfileomitted` | optional file flags dropped; call still succeeds and the omitted field is absent from the wire body |
+
+Twins inherit the parent's matchers rather than re-deriving them — a negative
+twin that asserted a different request shape would not be testing the same call.
+
+**Auth assertions are per endpoint.** `requiresAuth` (from the IR's
+`endpoint.auth`) gates them, matching what `mock-utils` already does for its own
+auth-header matchers. Requiring a credential from an endpoint that declares none
+makes its mock unmatchable — an OAuth token endpoint exposed as a normal command
+authenticates via its request body and correctly sends no bearer. Under
+`ENDPOINT_SECURITY` auth (`endpointSecurityAuth`) the blanket bearer assertion is
+dropped entirely, since each endpoint picks its own scheme. The inverse is *not*
+asserted: an endpoint declaring no auth is still allowed to send a credential.
+
+**When a case fails**, the harness reports the command, exit code, stdout,
+stderr, and the requests the server actually received next to what was expected
+— so "never sent the request" is distinguishable from "sent the wrong one". Note
+that a matcher miss makes the mock server answer 404, which the CLI faithfully
+surfaces as a non-zero exit; the request-match assertion therefore runs *before*
+the exit-code check, or the CLI gets blamed for a mock that never matched.
+
+**Bodies are reconciled against the spec.** A case body comes from an IR
+example, but the generated CLI validates request bodies against the raw spec it
+embeds via `include_str!` (`validate_properties` in `sdk/src/openapi/executor.rs`
+reads `required` straight off the parsed spec). Those two disagree whenever a
+property is `required` in the spec but has a nullable schema — `anyOf: [{type:
+array}, {type: null}]` — because the importer models that as optional and example
+generation then legitimately skips it. The CLI rejects its own case with
+`error[validation]: Missing required property` and exits before any request is
+sent, so the case fails having never reached the mock.
+
+[`specRequiredBody.ts`](src/wireTests/specRequiredBody.ts) fills such properties
+from the spec's own schema (`null` where permitted, else a minimal typed value,
+honoring `const`/`enum`), recursing so an omission inside an array element the
+example *did* supply is fixed too. Properties it can't derive confidently are
+left absent on purpose. Repairs are recorded on the case as
+`specFilledBodyProperties` and named in failure diagnostics, so a spec-derived
+value is never mistaken for an author-written one.
+
+No seed fixture exercises this path, and can't: seed generates examples with
+optional properties **included**, while `fern generate --local` does not
+(`GenerationRunner` passes `includeOptionalRequestPropertyExamples: true`,
+`runLocalGenerationForWorkspace` passes `false`). So the omission only occurs on
+the production path — which is why this class of bug reaches customers and never
+our fixtures. Coverage is the unit tests in
+[`__test__/specRequiredBody.test.ts`](src/__test__/specRequiredBody.test.ts).
+
+The repair treats a symptom. The root cause is upstream: the importer emits a
+request example missing a required property, and classifies it as
+*user-specified*, so it outranks the autogenerated one
+(`manifest.ts` prefers `userSpecifiedExamples[0]`). Fixing it there would also
+stop SDKs typing such a property as optional when the API requires it.
+
+**Login-flow coverage** lives in `cli-oauth-login-flow:with-wire-tests` — the only
+fixture whose manifest carries `loginTokenSetup`, so the only one exercising the
+`auth login --with-token` seed plus request-time keyring → bearer injection. Its
+spec mixes authenticated operations with `security: []` ones on purpose, so it
+pins the *gate* as well as the assertion; reverting the gate fails exactly the
+unauthenticated cases and leaves the authenticated ones green. Client-credentials
+(the `authMock` path) is covered separately by
+`oauth-client-credentials-openapi:with-wire-tests`.
+
+Still unit-tested only: `ENDPOINT_SECURITY` auth (`endpointSecurityAuth`). The
+`endpoint-security-auth` test definition exists but sits in `allowedFailures`, so
+it can't host wire tests yet.
 
 No docker, no `RUN_WIRE_TESTS` gate — `wiremock` is already a `[dev-dependencies]`
 entry in `sdk/Cargo.toml`, so `seed`'s `cargo test --all-features` compiles and

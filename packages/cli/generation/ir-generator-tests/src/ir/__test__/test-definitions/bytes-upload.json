@@ -401,7 +401,8 @@
                     "pathParameters": [],
                     "body": {
                         "type": "bytes"
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

@@ -349,6 +349,11 @@ pub async fn execute_method(
                     break resp;
                 }
                 Err(e) => {
+                    // See the OpenAPI executor: a refused redirect must not be
+                    // retried, nor reported as an internal error.
+                    if let Some(err) = crate::http::redirect_refusal_error(&e) {
+                        return Err(err);
+                    }
                     let outcome = crate::http::RetryOutcome {
                         status: None,
                         retry_after: None,

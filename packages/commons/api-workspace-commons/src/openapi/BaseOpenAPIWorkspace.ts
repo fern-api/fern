@@ -20,6 +20,7 @@ export declare namespace BaseOpenAPIWorkspace {
         exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
         useBytesForBinaryResponse: boolean | undefined;
         respectForwardCompatibleEnums: boolean | undefined;
+        respectOptionalRequestBody: boolean | undefined;
         inlineAllOfSchemas: boolean | undefined;
         resolveAliases: generatorsYml.ResolveAliases | undefined;
         groupEnvironmentsByHost: boolean | undefined;
@@ -47,6 +48,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
     public readonly useBytesForBinaryResponse: boolean | undefined;
     public readonly respectForwardCompatibleEnums: boolean | undefined;
+    public readonly respectOptionalRequestBody: boolean | undefined;
     public readonly inlineAllOfSchemas: boolean | undefined;
     public readonly resolveAliases: generatorsYml.ResolveAliases | undefined;
     public readonly groupEnvironmentsByHost: boolean | undefined;
@@ -72,6 +74,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.exampleGeneration = args.exampleGeneration;
         this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
         this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
+        this.respectOptionalRequestBody = args.respectOptionalRequestBody;
         this.inlineAllOfSchemas = args.inlineAllOfSchemas;
         this.resolveAliases = args.resolveAliases;
         this.groupEnvironmentsByHost = args.groupEnvironmentsByHost;
@@ -144,6 +147,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public respectReadonlySchemas: boolean | undefined;
     public useBytesForBinaryResponse: boolean | undefined;
     public respectForwardCompatibleEnums: boolean | undefined;
+    public respectOptionalRequestBody: boolean | undefined;
     public resolveAliases: generatorsYml.ResolveAliases | undefined;
     public groupEnvironmentsByHost: boolean | undefined;
     public multiServerStrategy: generatorsYml.MultiServerStrategy | undefined;
@@ -162,6 +166,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         this.respectReadonlySchemas = args.respectReadonlySchemas;
         this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
         this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
+        this.respectOptionalRequestBody = args.respectOptionalRequestBody;
         this.resolveAliases = args.resolveAliases;
         this.groupEnvironmentsByHost = args.groupEnvironmentsByHost;
         this.multiServerStrategy = args.multiServerStrategy;

@@ -276,6 +276,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         // provider / auth header unless that scheme's creds were actually provided.
         const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
         const endpointSecurity = this.isEndpointSecurity();
+        const preferExplicitAuth = this.preferExplicitAuthEnabled();
         const parameters: ast.Parameter[] = [];
 
         // In unified mode, check if any ClientOptions fields are truly required.
@@ -520,6 +521,22 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         );
                     }
 
+                    if (preferExplicitAuth) {
+                        // Record which credentials were passed explicitly, before the env-var
+                        // fallbacks below overwrite null parameters, so explicitly provided
+                        // basic auth wins over env-var-derived OAuth credentials.
+                        const clientIdAccess = unified ? "clientOptions.ClientId" : "clientId";
+                        const clientSecretAccess = unified ? "clientOptions.ClientSecret" : "clientSecret";
+                        innerWriter.writeTextStatement(
+                            `var explicitOAuthAuth = ${clientIdAccess} != null || ${clientSecretAccess} != null`
+                        );
+                        innerWriter.writeTextStatement(
+                            `var explicitBasicAuth = ${this.getBasicAuthCredentialAccesses(unified)
+                                .map((access) => `${access} != null`)
+                                .join(" || ")}`
+                        );
+                    }
+
                     for (const param of optionalParameters) {
                         const clientDefaultLiteral =
                             param.isGlobalHeader && param.clientDefault != null
@@ -741,7 +758,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         if (anyAuthMultiScheme) {
                             innerWriter.controlFlow(
                                 "if",
-                                this.csharp.codeblock(`${clientIdAccess} != null && ${clientSecretAccess} != null`)
+                                this.csharp.codeblock(
+                                    preferExplicitAuth
+                                        ? `${clientIdAccess} != null && ${clientSecretAccess} != null && (explicitOAuthAuth || !explicitBasicAuth)`
+                                        : `${clientIdAccess} != null && ${clientSecretAccess} != null`
+                                )
                             );
                         }
                         innerWriter.write(
@@ -1695,6 +1716,51 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      * exactly one scheme's creds), so we must not throw for missing creds and must
      * only wire up a scheme's token provider / header when its creds are present.
      */
+    /**
+     * Whether explicitly provided constructor auth credentials should take precedence
+     * over environment-variable defaults when selecting the auth scheme. Opt-in via the
+     * `prefer-explicit-auth` config; only applies when OAuth client-credentials is
+     * composed with a basic auth scheme via `auth: any` (outside endpoint-security).
+     */
+    private preferExplicitAuthEnabled(): boolean {
+        if (!this.settings.preferExplicitAuth) {
+            return false;
+        }
+        if (this.isEndpointSecurity()) {
+            return false;
+        }
+        if (!this.isAnyAuthWithMultipleSchemes()) {
+            return false;
+        }
+        if (this.oauth == null || this.oauth.configuration.type !== "clientCredentials") {
+            return false;
+        }
+        return this.getBasicAuthCredentialAccesses(false).length > 0;
+    }
+
+    /**
+     * Returns the constructor accesses for the basic auth credential parameters
+     * (excluding omitted fields), e.g. `["username", "password"]` or, in unified
+     * mode, `["clientOptions.Username", "clientOptions.Password"]`.
+     */
+    private getBasicAuthCredentialAccesses(unified: boolean): string[] {
+        const accesses: string[] = [];
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type !== "basic") {
+                continue;
+            }
+            if (!scheme.usernameOmit) {
+                const name = this.case.camelSafe(scheme.username);
+                accesses.push(unified ? `clientOptions.${this.toPascalCase(name)}` : name);
+            }
+            if (!scheme.passwordOmit) {
+                const name = this.case.camelSafe(scheme.password);
+                accesses.push(unified ? `clientOptions.${this.toPascalCase(name)}` : name);
+            }
+        }
+        return accesses;
+    }
+
     private isAnyAuthWithMultipleSchemes(): boolean {
         return this.context.ir.auth.requirement === "ANY" && this.context.ir.auth.schemes.length > 1;
     }

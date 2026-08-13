@@ -1,7 +1,9 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import { readFile, writeFile } from "fs/promises";
+import { createHash } from "crypto";
+import { mkdir, readFile, writeFile } from "fs/promises";
+import { builtinModules } from "module";
 import path from "path";
 import tmp from "tmp-promise";
 
@@ -17,6 +19,13 @@ const BUNDLEABLE_EXTENSIONS_REGEX = /\.(js|jsx|ts|tsx)$/;
  * copy of react would break hooks and context.
  */
 const RENDERER_PROVIDED_MODULES = ["react", "react-dom", "@mdx-js/react", "next"];
+
+/**
+ * Directory holding bundles produced by a previous `bundleMdxComponents` run.
+ * Set by environments that bundle ahead of time (e.g. self-hosted images bundle
+ * during the networked build phase) so that generation itself needs no network.
+ */
+const BUNDLE_CACHE_DIR_ENV_VAR = "FERN_MDX_BUNDLE_CACHE_DIR";
 
 /**
  * The rolldown version invoked via npx. Pinned so bundling is reproducible
@@ -43,16 +52,25 @@ function isRendererProvidedModule(specifier: string): boolean {
     return RENDERER_PROVIDED_MODULES.includes(getModuleName(specifier));
 }
 
+function isNodeBuiltin(specifier: string): boolean {
+    return specifier.startsWith("node:") || builtinModules.includes(getModuleName(specifier));
+}
+
 /**
  * Returns the bare (non-relative) import specifiers in the file that are not
- * provided by the docs renderer, i.e. third-party libraries that must be
- * bundled into the uploaded component source.
+ * provided by the docs renderer or by node itself, i.e. third-party libraries
+ * that must be bundled into the uploaded component source.
  */
 export function getThirdPartyImports(contents: string): string[] {
     const specifiers = new Set<string>();
     for (const match of contents.matchAll(IMPORT_SPECIFIER_REGEX)) {
         const specifier = match[1] ?? match[2] ?? match[3];
-        if (specifier == null || isRelativeImport(specifier) || isRendererProvidedModule(specifier)) {
+        if (
+            specifier == null ||
+            isRelativeImport(specifier) ||
+            isRendererProvidedModule(specifier) ||
+            isNodeBuiltin(specifier)
+        ) {
             continue;
         }
         specifiers.add(specifier);
@@ -65,6 +83,46 @@ export declare namespace maybeBundleMdxComponent {
         absoluteFilePath: AbsoluteFilePath;
         contents: string;
         context: TaskContext;
+    }
+}
+
+export function getBundleCacheDir(): string | undefined {
+    const cacheDir = process.env[BUNDLE_CACHE_DIR_ENV_VAR];
+    return cacheDir != null && cacheDir !== "" ? cacheDir : undefined;
+}
+
+/**
+ * Bundles are keyed by their input alone, so a bundle written during a build
+ * phase is reused by a later `fern generate` as long as the component source
+ * (and the rolldown version producing it) is unchanged.
+ */
+function getBundleCacheFilePath(cacheDir: string, contents: string): string {
+    const hash = createHash("sha256").update(ROLLDOWN_VERSION).update("\u0000").update(contents).digest("hex");
+    return path.join(cacheDir, `${hash}.js`);
+}
+
+async function readCachedBundle(contents: string): Promise<string | undefined> {
+    const cacheDir = getBundleCacheDir();
+    if (cacheDir == null) {
+        return undefined;
+    }
+    try {
+        return await readFile(getBundleCacheFilePath(cacheDir, contents), "utf-8");
+    } catch {
+        return undefined;
+    }
+}
+
+async function writeCachedBundle(contents: string, bundle: string, context: TaskContext): Promise<void> {
+    const cacheDir = getBundleCacheDir();
+    if (cacheDir == null) {
+        return;
+    }
+    try {
+        await mkdir(cacheDir, { recursive: true });
+        await writeFile(getBundleCacheFilePath(cacheDir, contents), bundle);
+    } catch (error) {
+        context.logger.debug(`Failed to cache MDX component bundle in ${cacheDir}: ${String(error)}`);
     }
 }
 
@@ -90,6 +148,12 @@ export async function maybeBundleMdxComponent({
     const thirdPartyImports = getThirdPartyImports(contents);
     if (thirdPartyImports.length === 0) {
         return undefined;
+    }
+
+    const cachedBundle = await readCachedBundle(contents);
+    if (cachedBundle != null) {
+        context.logger.debug(`Using pre-bundled output for ${absoluteFilePath}`);
+        return cachedBundle;
     }
 
     context.logger.debug(`Bundling ${absoluteFilePath} to inline third-party imports: ${thirdPartyImports.join(", ")}`);
@@ -124,7 +188,9 @@ export async function maybeBundleMdxComponent({
             );
         }
 
-        return await readFile(outputFilePath, "utf-8");
+        const bundle = await readFile(outputFilePath, "utf-8");
+        await writeCachedBundle(contents, bundle, context);
+        return bundle;
     } finally {
         await cleanup();
     }
@@ -138,6 +204,7 @@ function buildRolldownConfig({
     outputFilePath: string;
 }): string {
     return `const RENDERER_PROVIDED_MODULES = ${JSON.stringify(RENDERER_PROVIDED_MODULES)};
+const NODE_BUILTIN_MODULES = ${JSON.stringify(builtinModules)};
 
 function getModuleName(specifier) {
     const parts = specifier.split("/");
@@ -153,8 +220,13 @@ export default {
     tsconfig: false,
     // Relative imports resolve against the other uploaded component files in
     // the docs renderer, and renderer-provided modules (and their subpaths,
-    // e.g. react/jsx-runtime) are supplied by the renderer itself.
-    external: (id) => id.startsWith(".") || RENDERER_PROVIDED_MODULES.includes(getModuleName(id)),
+    // e.g. react/jsx-runtime) are supplied by the renderer itself. Node
+    // builtins can't be bundled for the browser and are left as-is.
+    external: (id) =>
+        id.startsWith(".") ||
+        RENDERER_PROVIDED_MODULES.includes(getModuleName(id)) ||
+        NODE_BUILTIN_MODULES.includes(getModuleName(id)) ||
+        id.startsWith("node:"),
     output: {
         file: ${JSON.stringify(outputFilePath)},
         format: "esm",

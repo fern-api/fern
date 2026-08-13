@@ -69,6 +69,7 @@
               "path": "/completions/chat",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "prompt": "string",
                     "stream": "optional<boolean>",
@@ -110,6 +111,7 @@
           properties:
             stream: optional<boolean>
             prompt: string
+          optional: true
         content-type: application/json
       response:
         docs: Success!

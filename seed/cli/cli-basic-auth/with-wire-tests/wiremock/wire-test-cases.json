@@ -1,0 +1,93 @@
+{
+  "binaryName": "basic-auth-cli",
+  "rootGroup": null,
+  "specs": [
+    {
+      "file": "cli/basic-auth-cli/openapi0.json",
+      "namespace": null
+    }
+  ],
+  "authEnvVars": [
+    {
+      "name": "BASIC_AUTH_CLI_PASSWORD",
+      "value": "test-password"
+    },
+    {
+      "name": "BASIC_AUTH_CLI_USERNAME",
+      "value": "test-username"
+    }
+  ],
+  "authMock": null,
+  "loginTokenSetup": null,
+  "endpointSecurityAuth": false,
+  "cases": [
+    {
+      "id": "list",
+      "method": "GET",
+      "path": "/widgets",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [
+        {
+          "name": "Authorization",
+          "equalTo": "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk"
+        }
+      ],
+      "requiresAuth": true,
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]"
+      }
+    },
+    {
+      "id": "health",
+      "method": "GET",
+      "path": "/health",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 200,
+        "body": "{\n  \"status\": \"status\"\n}"
+      }
+    },
+    {
+      "id": "list_error",
+      "method": "GET",
+      "path": "/widgets",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [
+        {
+          "name": "Authorization",
+          "equalTo": "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk"
+        }
+      ],
+      "requiresAuth": true,
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
+    },
+    {
+      "id": "health_error",
+      "method": "GET",
+      "path": "/health",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
+    }
+  ]
+}

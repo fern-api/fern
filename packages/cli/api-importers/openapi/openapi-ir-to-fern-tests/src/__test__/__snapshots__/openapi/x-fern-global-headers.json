@@ -108,6 +108,7 @@
               "path": "/user/{userId}",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "stream": {
                       "audiences": [
@@ -168,6 +169,7 @@
               "path": "/user/{userId}",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "stream": {
                       "audiences": [
@@ -223,6 +225,7 @@ service:
               type: literal<true>
               audiences: &ref_0
                 - public
+          optional: true
         content-type: application/json
       response-stream:
         docs: ''
@@ -257,6 +260,7 @@ service:
             stream:
               type: literal<false>
               audiences: *ref_0
+          optional: true
         content-type: application/json
       response:
         docs: ''

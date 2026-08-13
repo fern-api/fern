@@ -401,7 +401,8 @@
                             }
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -490,7 +491,8 @@
                             "value": "type_optional:SendOptionalBodyRequest"
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -643,7 +645,8 @@
                             }
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

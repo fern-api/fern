@@ -39,6 +39,7 @@ exports[`generateDynamicIR > go 1`] = `
       "request": {
         "_visit": [Function],
         "body": undefined,
+        "bodyRequired": undefined,
         "pathParameters": [],
         "type": "body",
       },

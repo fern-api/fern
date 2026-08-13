@@ -22,6 +22,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "respect-readonly-schemas": core.serialization.boolean().optional(),
         "use-read-variant-for-responses": core.serialization.boolean().optional(),
         "respect-forward-compatible-enums": core.serialization.boolean().optional(),
+        "respect-optional-request-body": core.serialization.boolean().optional(),
         "use-bytes-for-binary-response": core.serialization.boolean().optional(),
         "default-form-parameter-encoding": FormParameterEncoding.optional(),
         filter: OpenApiFilterSchema.optional(),
@@ -49,6 +50,7 @@ export declare namespace OpenApiSettingsSchema {
         "respect-readonly-schemas"?: boolean | null;
         "use-read-variant-for-responses"?: boolean | null;
         "respect-forward-compatible-enums"?: boolean | null;
+        "respect-optional-request-body"?: boolean | null;
         "use-bytes-for-binary-response"?: boolean | null;
         "default-form-parameter-encoding"?: FormParameterEncoding.Raw | null;
         filter?: OpenApiFilterSchema.Raw | null;

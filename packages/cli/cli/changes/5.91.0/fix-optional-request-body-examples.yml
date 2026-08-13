@@ -1,0 +1,7 @@
+- summary: |
+    Fix `fern check` failing with "Expected example to be an object. Example is: undefined" when an
+    endpoint example omits `request` for an endpoint whose inlined request body has no required
+    properties. Omitting `request` now produces an example with no request body instead of a
+    validation error, and such examples are no longer dropped from the generated IR. Examples that
+    omit a body with required properties are still rejected.
+  type: fix

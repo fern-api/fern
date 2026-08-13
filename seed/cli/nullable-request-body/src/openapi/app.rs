@@ -2286,12 +2286,24 @@ impl AppContext {
     /// keeps `auth_provider` and `global_headers` internal to `AppContext`,
     /// satisfying ADR-0001 (no credential exposure via public getters).
     pub fn build_sdk_executor(&self) -> std::sync::Arc<crate::sdk_executor::CliExecutor> {
-        std::sync::Arc::new(crate::sdk_executor::CliExecutor::new(
-            self.entries[0].http_config.clone(),
-            self.entries[0].auth_provider.clone(),
-            self.entries[0].global_headers.clone(),
-            self.base_url_override.as_ref().map(|s| s.to_string()),
-        ))
+        // `--debug` is threaded in so it works for custom commands too. Spec
+        // -declared credential header names come with it, so an
+        // `apiKey`-in-header value is redacted here exactly as on the OpenAPI
+        // path rather than printed in full.
+        let sensitive_headers: Vec<String> =
+            crate::openapi::executor::spec_sensitive_header_names(&self.entries[0].doc)
+                .into_iter()
+                .map(str::to_string)
+                .collect();
+        std::sync::Arc::new(
+            crate::sdk_executor::CliExecutor::new(
+                self.entries[0].http_config.clone(),
+                self.entries[0].auth_provider.clone(),
+                self.entries[0].global_headers.clone(),
+                self.base_url_override.as_ref().map(|s| s.to_string()),
+            )
+            .with_debug(self.debug, sensitive_headers),
+        )
     }
 }
 
@@ -2425,6 +2437,23 @@ pub(crate) fn collect_params_from_flags(
     //    parameters that declare enum aliases, resolve the display
     //    alias back to the wire value so the executor only ever sees
     //    what the server expects.
+    // Whether the user passed a whole-body `--json`. Body-located parameters
+    // whose value came from a *default* (a `const` field, or `x-fern-default`)
+    // must not be collected in that case: the executor treats any body key in
+    // `params` as a per-field body flag and refuses to combine it with `--json`,
+    // so a defaulted field the user never typed made `--json` impossible to use
+    // — the conflicting flag could never be absent. An explicit `--json` is the
+    // user's whole-body intent, so it wins over defaults; a per-field flag the
+    // user actually typed still conflicts, as it should.
+    let body_json_supplied = matched_args
+        .try_get_one::<String>("json")
+        .ok()
+        .flatten()
+        .is_some();
+    let is_body_param = |param_def: &crate::openapi::discovery::MethodParameter| {
+        param_def.location.as_deref() == Some("body")
+    };
+
     let mut missing_variable_bound: Vec<(String, String)> = Vec::new();
     for (param_name, param_def) in &method.parameters {
         if let Some(var_name) = param_def.variable_reference.as_deref() {
@@ -2448,6 +2477,13 @@ pub(crate) fn collect_params_from_flags(
         let arg_id = crate::openapi::commands::param_clap_arg_id(param_name);
 
         if param_def.repeated {
+            if matched_args.value_source(&arg_id)
+                == Some(clap::parser::ValueSource::DefaultValue)
+                && body_json_supplied
+                && is_body_param(param_def)
+            {
+                continue;
+            }
             if let Some(values) = matched_args.get_many::<String>(&arg_id) {
                 // A value that parses as a JSON array is spliced in element
                 // by element (`--to '["a","b"]'` ≡ `--to a --to b`); anything
@@ -2478,6 +2514,9 @@ pub(crate) fn collect_params_from_flags(
         };
         let from_default = matched_args.value_source(&arg_id)
             == Some(clap::parser::ValueSource::DefaultValue);
+        if from_default && body_json_supplied && is_body_param(param_def) {
+            continue;
+        }
         let json_value = match (from_default, &param_def.default_value) {
             (true, Some(typed)) => typed.clone(),
             _ => {
@@ -3498,6 +3537,118 @@ mod tests {
         let matches = cmd.get_matches_from(vec!["test", "--uuid", "abc-123"]);
         let result = collect_params_from_flags(&matches, &method, None).unwrap();
         assert_eq!(result.get("uuid").unwrap().as_str().unwrap(), "abc-123");
+    }
+
+    /// Method with one `const`-style body field carrying a clap default, plus a
+    /// plain body field — the shape that made `--json` unusable.
+    fn method_with_defaulted_body_field() -> crate::openapi::discovery::RestMethod {
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "type".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                ..Default::default()
+            },
+        );
+        params.insert(
+            "name".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                ..Default::default()
+            },
+        );
+        crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        }
+    }
+
+    fn command_with_defaulted_type() -> clap::Command {
+        clap::Command::new("test")
+            .arg(clap::Arg::new("type").long("type").default_value("new"))
+            .arg(clap::Arg::new("name").long("name"))
+            .arg(clap::Arg::new("json").long("json"))
+            .arg(clap::Arg::new("params").long("params"))
+    }
+
+    #[test]
+    fn test_defaulted_body_field_is_dropped_when_json_is_supplied() {
+        // The bug: `--type` carries a clap default (from a `const` field), so it
+        // was collected on every invocation and the executor rejected `--json`
+        // with "Cannot combine --json with per-field body flags (--type)" — for a
+        // flag the user never typed, and could not avoid.
+        let method = method_with_defaulted_body_field();
+        let matches = command_with_defaulted_type()
+            .get_matches_from(vec!["test", "--json", r#"{"type":"new","name":"n"}"#]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert!(
+            !result.contains_key("type"),
+            "a default-sourced body field must not look like a per-field flag under --json, got: {result:?}"
+        );
+        assert!(result.is_empty(), "no body params should be collected, got: {result:?}");
+    }
+
+    #[test]
+    fn test_defaulted_body_field_still_applies_without_json() {
+        // Without `--json` the default must still reach the body, or `const`
+        // fields would stop being sent on the flag-driven path.
+        let method = method_with_defaulted_body_field();
+        let matches = command_with_defaulted_type().get_matches_from(vec!["test", "--name", "n"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(result.get("type").unwrap().as_str().unwrap(), "new");
+        assert_eq!(result.get("name").unwrap().as_str().unwrap(), "n");
+    }
+
+    #[test]
+    fn test_explicit_body_flag_still_conflicts_with_json() {
+        // A per-field flag the user actually typed must still be collected, so
+        // the executor's mutual-exclusion check fires as intended.
+        let method = method_with_defaulted_body_field();
+        let matches = command_with_defaulted_type().get_matches_from(vec![
+            "test",
+            "--type",
+            "new",
+            "--json",
+            r#"{"name":"n"}"#,
+        ]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("type").unwrap().as_str().unwrap(),
+            "new",
+            "an explicitly-typed body flag must still conflict with --json"
+        );
+    }
+
+    #[test]
+    fn test_json_does_not_drop_defaulted_non_body_params() {
+        // The exemption is scoped to body params: a defaulted query/path/header
+        // value is not a "per-field body flag" and must survive `--json`.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "page_size".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("query".to_string()),
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("page_size").long("page-size").default_value("25"))
+            .arg(clap::Arg::new("json").long("json"))
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec!["test", "--json", r#"{"a":1}"#]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("page_size").unwrap().as_str().unwrap(),
+            "25",
+            "a defaulted query param must still be sent alongside --json"
+        );
     }
 
     #[test]

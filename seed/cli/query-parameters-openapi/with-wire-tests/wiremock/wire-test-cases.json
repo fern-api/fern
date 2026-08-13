@@ -9,6 +9,8 @@
   ],
   "authEnvVars": [],
   "authMock": null,
+  "loginTokenSetup": null,
+  "endpointSecurityAuth": false,
   "cases": [
     {
       "id": "search",
@@ -125,10 +127,133 @@
         }
       ],
       "headerMatchers": [],
+      "requiresAuth": false,
       "response": {
         "status": 200,
         "body": "{\n  \"results\": [\n    \"results\",\n    \"results\"\n  ]\n}"
       }
+    },
+    {
+      "id": "search_error",
+      "method": "GET",
+      "path": "/user/getUsername",
+      "params": {
+        "limit": 1,
+        "id": "id",
+        "date": "2023-01-15",
+        "deadline": "2024-01-15T09:30:00Z",
+        "bytes": "bytes",
+        "user": {
+          "name": "name",
+          "tags": [
+            "tags",
+            "tags"
+          ]
+        },
+        "userList": {
+          "name": "name",
+          "tags": [
+            "tags",
+            "tags"
+          ]
+        },
+        "optionalDeadline": "2024-01-15T09:30:00Z",
+        "keyValue": {
+          "keyValue": "keyValue"
+        },
+        "optionalString": "optionalString",
+        "nestedUser": {
+          "name": "name",
+          "user": {
+            "name": "name",
+            "tags": [
+              "tags",
+              "tags"
+            ]
+          }
+        },
+        "optionalUser": {
+          "name": "name",
+          "tags": [
+            "tags",
+            "tags"
+          ]
+        },
+        "excludeUser": {
+          "name": "name",
+          "tags": [
+            "tags",
+            "tags"
+          ]
+        },
+        "filter": "filter",
+        "tags": "tags",
+        "optionalTags": "optionalTags",
+        "neighbor": {
+          "name": "name",
+          "tags": [
+            "tags",
+            "tags"
+          ]
+        },
+        "neighborRequired": {
+          "name": "name",
+          "tags": [
+            "tags",
+            "tags"
+          ]
+        }
+      },
+      "body": null,
+      "queryMatchers": [
+        {
+          "name": "limit",
+          "value": "1"
+        },
+        {
+          "name": "id",
+          "value": "id"
+        },
+        {
+          "name": "date",
+          "value": "2023-01-15"
+        },
+        {
+          "name": "deadline",
+          "value": "2024-01-15T09:30:00Z"
+        },
+        {
+          "name": "bytes",
+          "value": "bytes"
+        },
+        {
+          "name": "optionalDeadline",
+          "value": "2024-01-15T09:30:00Z"
+        },
+        {
+          "name": "optionalString",
+          "value": "optionalString"
+        },
+        {
+          "name": "filter",
+          "value": "filter"
+        },
+        {
+          "name": "tags",
+          "value": "tags"
+        },
+        {
+          "name": "optionalTags",
+          "value": "optionalTags"
+        }
+      ],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
     }
   ]
 }

@@ -3900,6 +3900,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [
           {
             "name": "example1",
@@ -4433,6 +4434,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [
           {
             "value": {
@@ -4670,6 +4672,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [
           {
             "name": "example1",
@@ -6715,6 +6718,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [
           {
             "value": {
@@ -7003,6 +7007,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [
           {
             "value": {
@@ -8107,6 +8112,7 @@
           "type": "object"
         },
         "contentType": "application/json",
+        "required": true,
         "fullExamples": [
           {
             "value": {

@@ -331,6 +331,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -354,6 +355,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -868,6 +870,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -891,6 +894,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -1548,6 +1552,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -1571,6 +1576,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -2280,7 +2286,8 @@
                             "type": "named",
                             "value": "type_:User"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -2328,7 +2335,8 @@
                             "type": "named",
                             "value": "type_:Task"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -2376,7 +2384,8 @@
                             "type": "named",
                             "value": "type_:Task"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

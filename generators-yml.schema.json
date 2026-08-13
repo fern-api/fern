@@ -2513,6 +2513,17 @@
           ],
           "description": "Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false."
         },
+        "respect-optional-request-body": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Deprecated and no longer has any effect. A request body that OpenAPI does not mark as required is always described as omittable in the IR, and each SDK generator opts into that behaviour through its own configuration."
+        },
         "use-bytes-for-binary-response": {
           "oneOf": [
             {
@@ -3183,6 +3194,17 @@
             }
           ],
           "description": "Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false."
+        },
+        "respect-optional-request-body": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Deprecated and no longer has any effect. A request body that OpenAPI does not mark as required is always described as omittable in the IR, and each SDK generator opts into that behaviour through its own configuration."
         },
         "use-bytes-for-binary-response": {
           "oneOf": [

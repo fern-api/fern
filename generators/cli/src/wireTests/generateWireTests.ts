@@ -6,6 +6,7 @@ import { readFullIr } from "../ir.js";
 import { renderWireTestHarness } from "./harness.js";
 import type { OAuthTokenEndpoint } from "./manifest.js";
 import { buildWireTestManifest } from "./manifest.js";
+import { loadRequiredBodyContracts } from "./specRequiredBody.js";
 
 export interface GenerateWireTestsResult {
     status: "generated" | "skipped";
@@ -54,13 +55,19 @@ export async function generateWireTests(args: {
     const loginFlowSchemes = collectLoginFlowSchemes(authBindings);
 
     const ir = await readFullIr(irFilepath);
+    // Read the specs themselves, not just their paths: they are the oracle the
+    // generated CLI validates request bodies against, so they are also the only
+    // thing that can repair an example body the CLI would reject. See
+    // `specRequiredBody.ts`.
+    const requiredBodyContracts = await loadRequiredBodyContracts(openapiSpecs.map((entry) => entry.specPath));
     const manifest = buildWireTestManifest(ir, {
         binaryName,
         rootGroup: rootGroup ?? null,
         specs,
         authEnvVars,
         oauthTokenEndpoint,
-        loginFlowSchemes
+        loginFlowSchemes,
+        requiredBodyContracts
     });
 
     if (manifest.cases.length === 0) {
@@ -79,17 +86,59 @@ export async function generateWireTests(args: {
 }
 
 /** Dedupe the required + optional env var names across all auth bindings. */
-function collectAuthEnvVars(authBindings: DetectedAuthBinding[]): string[] {
-    const names = new Set<string>();
+/**
+ * The credential values `mock-utils` bakes into its `Authorization: Basic
+ * <base64>` matcher. That matcher is an exact `equalTo`, so the harness has to
+ * export these precise strings or a basic-auth CLI sends a correctly-formed
+ * header that can never match its own mock.
+ */
+const MOCK_UTILS_BASIC_USERNAME = "test-username";
+const MOCK_UTILS_BASIC_PASSWORD = "test-password";
+
+/** Value the harness exports for any credential whose matcher is presence-only. */
+const PRESENCE_ONLY_CREDENTIAL = "test";
+
+/**
+ * Every credential env var the harness must export, paired with the value to
+ * export.
+ *
+ * The value matters only for `basic`: `mock-utils` matches `Authorization` with
+ * an exact base64 of `test-username:test-password`, so seeding the generic
+ * placeholder would produce a header that is well-formed and still unmatchable.
+ * Bearer and apiKey schemes get presence-only matchers (`Bearer .+`, `.+`), so
+ * any non-empty value satisfies them.
+ */
+function collectAuthEnvVars(authBindings: DetectedAuthBinding[]): Array<{ name: string; value: string }> {
+    const byName = new Map<string, string>();
     for (const binding of authBindings) {
-        for (const envVar of binding.envVars) {
-            names.add(envVar);
-        }
+        binding.envVars.forEach((envVar, index) => {
+            byName.set(envVar, basicCredentialValue(binding, index) ?? PRESENCE_ONLY_CREDENTIAL);
+        });
         for (const envVar of binding.optionalEnvVars ?? []) {
-            names.add(envVar);
+            if (!byName.has(envVar)) {
+                byName.set(envVar, PRESENCE_ONLY_CREDENTIAL);
+            }
         }
     }
-    return [...names].sort();
+    return [...byName.entries()].map(([name, value]) => ({ name, value })).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/** The basic-auth half `binding.envVars[index]` supplies, if any. */
+function basicCredentialValue(binding: DetectedAuthBinding, index: number): string | undefined {
+    if (binding.kind !== "basic") {
+        return undefined;
+    }
+    switch (binding.basicHalf) {
+        case "username":
+            return MOCK_UTILS_BASIC_USERNAME;
+        case "password":
+            return MOCK_UTILS_BASIC_PASSWORD;
+        case "both":
+            // `[usernameEnv, passwordEnv]`, in that order.
+            return index === 0 ? MOCK_UTILS_BASIC_USERNAME : MOCK_UTILS_BASIC_PASSWORD;
+        default:
+            return undefined;
+    }
 }
 
 /**

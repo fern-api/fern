@@ -337,6 +337,7 @@
                         "requestBodyType": {
                             "_type": "unknown"
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -350,6 +351,7 @@
                                 "requestBodyType": {
                                     "_type": "unknown"
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -808,6 +810,7 @@
                         "requestBodyType": {
                             "_type": "unknown"
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": "application/json",
                         "v2Examples": null
@@ -2141,7 +2144,8 @@
                         "value": {
                             "type": "unknown"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

@@ -70,6 +70,67 @@ paths:
             text/event-stream:
               schema:
                 $ref: "#/components/schemas/InteractionStreamedResponse"
+  # Regression for requestBody.required propagation: the stream-condition converter rebuilds the
+  # request body, so `required` has to survive it. A body that is not required becomes
+  # `optional: true` here, while the `required: true` operation below must not.
+  /v2/summaries:
+    post:
+      tags:
+        - Summaries
+      summary: Summarize
+      operationId: createSummary
+      x-fern-streaming:
+        stream-condition: $request.stream_response
+        response:
+          $ref: "#/components/schemas/ChatFullResponse"
+        response-stream:
+          $ref: "#/components/schemas/ChatStreamedResponse"
+      x-fern-sdk-method-name: summarize
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatRequest"
+      responses:
+        "200":
+          description: A response to a summary request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatFullResponse"
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/ChatStreamedResponse"
+  /v2/summaries/required:
+    post:
+      tags:
+        - Summaries
+      summary: Summarize with a required body
+      operationId: createRequiredSummary
+      x-fern-streaming:
+        stream-condition: $request.stream_response
+        response:
+          $ref: "#/components/schemas/ChatFullResponse"
+        response-stream:
+          $ref: "#/components/schemas/ChatStreamedResponse"
+      x-fern-sdk-method-name: summarizeRequired
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatRequest"
+      responses:
+        "200":
+          description: A response to a summary request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatFullResponse"
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/ChatStreamedResponse"
 components:
   schemas:
     ChatRequest:

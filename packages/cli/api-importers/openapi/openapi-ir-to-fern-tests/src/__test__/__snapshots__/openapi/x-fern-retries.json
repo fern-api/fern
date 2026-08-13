@@ -54,7 +54,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/status",
-              "request": "root.Update",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "root.Update",
+                },
+              },
               "retries": {
                 "disabled": true,
               },
@@ -79,7 +84,10 @@ service:
       method: POST
       source:
         openapi: ../openapi.yml
-      request: root.Update
+      request:
+        body:
+          type: root.Update
+          optional: true
       examples:
         - headers:
             X-API-Key: X-API-Key
@@ -120,7 +128,12 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/status2",
-              "request": "root.Update",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "root.Update",
+                },
+              },
               "source": {
                 "openapi": "../openapi.yml",
               },
@@ -142,7 +155,10 @@ service:
       method: POST
       source:
         openapi: ../openapi.yml
-      request: root.Update
+      request:
+        body:
+          type: root.Update
+          optional: true
       examples:
         - headers:
             X-API-Key: X-API-Key

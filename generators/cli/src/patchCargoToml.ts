@@ -112,6 +112,58 @@ export interface CargoPackageIdentity {
 export const TEMPLATE_PACKAGE_NAME = "fern-cli-sdk";
 
 /**
+ * Point the crate's `[package]` identity at the consumer when a Homebrew
+ * formula will be published and they didn't pin these fields themselves.
+ *
+ * `packageIdentity` only rewrites the fields you set, so anything unset
+ * keeps the SDK template's Fern-owned value. That is harmless while it
+ * only lives in a `Cargo.toml` nobody reads — but cargo-dist renders the
+ * published `.rb` straight off this block, and each field lands
+ * somewhere different:
+ *
+ * | `[package]`   | Where it surfaces in the formula          |
+ * |---------------|-------------------------------------------|
+ * | `repository`  | the per-arch **release download URLs**     |
+ * | `homepage`    | `homepage "..."`                          |
+ * | `description` | `desc "..."`                              |
+ *
+ * `repository` is the load-bearing one: left at the template's value the
+ * formula's `url`s resolve to `github.com/fern-api/cli-sdk/releases/...`,
+ * where the consumer's archives do not exist — so every `brew install`
+ * 404s. The other two are cosmetic but publish Fern's branding on the
+ * consumer's own tap.
+ *
+ * Scoped to the Homebrew case on purpose: applying it unconditionally
+ * would change the `Cargo.toml` of every existing github-mode
+ * generation, which is exactly the silent-default churn the
+ * breaking-changes policy exists to prevent. Explicit values always win.
+ *
+ * Scoop needs no equivalent — its manifest reads `repoUrl` and the
+ * resolved asset name directly rather than going through `[package]`.
+ */
+export function withDistributionDefaults(args: {
+    packageIdentity: CargoPackageIdentity | undefined;
+    publishesHomebrew: boolean;
+    repoUrl: string | undefined;
+    /** Fallback `desc` for the formula, e.g. "CLI for the Acme API". */
+    description: string | undefined;
+}): CargoPackageIdentity | undefined {
+    const { packageIdentity, publishesHomebrew, repoUrl, description } = args;
+    if (!publishesHomebrew) {
+        return packageIdentity;
+    }
+    const resolved: CargoPackageIdentity = { ...packageIdentity };
+    if (repoUrl != null) {
+        resolved.repository ??= repoUrl;
+        resolved.homepage ??= repoUrl;
+    }
+    if (description != null) {
+        resolved.description ??= description;
+    }
+    return Object.keys(resolved).length > 0 ? resolved : packageIdentity;
+}
+
+/**
  * Rewrite the `[package]` block's identity fields with the customer's
  * values. Scoped to the `[package]` section so a `repository` key inside
  * a dependency table is never touched, and deliberately blind to `[lib]`
@@ -315,39 +367,35 @@ export async function patchCargoLockForTypes(args: {
     const { outputDir, typesCrateName, skipCliDep, packageName } = args;
     const lockPath = path.join(outputDir, "Cargo.lock");
     const contents = await readFile(lockPath, "utf-8");
-    const patched = addTypesCrateToLock(contents, typesCrateName, skipCliDep, packageName);
+    const manifest = await readGeneratedCrateManifest(outputDir, typesCrateName);
+    const patched = addTypesCrateToLock(contents, typesCrateName, manifest, skipCliDep, packageName);
     await writeFile(lockPath, patched);
 }
 
 /**
  * Pure transformation for unit-test access.
+ *
+ * The stanza is derived from `manifest` — the crate's real `Cargo.toml` — rather
+ * than hardcoded. The generated crates' dependency sets vary by spec (one API's
+ * types crate pulls `chrono`, another's pulls `base64`), and a stanza that does
+ * not mirror the manifest exactly makes Cargo reject the lock under `--locked`.
  */
 export function addTypesCrateToLock(
     cargoLock: string,
     typesCrateName: string,
+    manifest: GeneratedCrateManifest,
     skipCliDep?: boolean,
     packageName: string = TEMPLATE_PACKAGE_NAME
 ): string {
     const snakeName = typesCrateName.replace(/-/g, "_");
 
-    // 1. Append [[package]] entry for the types crate (sorted insertion
-    //    isn't strictly required by Cargo, but we append at the end for
-    //    simplicity — Cargo accepts any order).
-    const packageEntry = [
-        "",
-        "[[package]]",
-        `name = "${snakeName}"`,
-        'version = "0.0.0"',
-        "dependencies = [",
-        ' "base64",',
-        ' "chrono",',
-        ' "num-bigint",',
-        ' "ordered-float",',
-        ' "serde",',
-        ' "serde_json",',
-        "]",
-        ""
-    ].join("\n");
+    // 1. Append the [[package]] entry for the types crate. Cargo accepts any
+    //    order, so appending is fine.
+    const packageEntry = generatedCrateLockStanza(
+        snakeName,
+        manifest.version,
+        renderLockDependencyList(cargoLock, manifest.dependencies, [snakeName])
+    );
 
     let patched = cargoLock.trimEnd() + "\n" + packageEntry;
 
@@ -390,40 +438,35 @@ export async function patchCargoLockForSdk(args: {
     const { outputDir, sdkCrateName, typesCrateName, packageName } = args;
     const lockPath = path.join(outputDir, "Cargo.lock");
     const contents = await readFile(lockPath, "utf-8");
-    const patched = addSdkCrateToLock(contents, sdkCrateName, typesCrateName, packageName);
+    const manifest = await readGeneratedCrateManifest(outputDir, sdkCrateName);
+    const patched = addSdkCrateToLock(contents, sdkCrateName, typesCrateName, manifest, packageName);
     await writeFile(lockPath, patched);
 }
 
 /**
- * Pure transformation for unit-test access.
+ * Pure transformation for unit-test access. As with
+ * {@link addTypesCrateToLock}, the stanza mirrors the crate's real
+ * `Cargo.toml` — its version and full dependency set — because anything less
+ * makes Cargo reject the lock under `--locked`.
  */
 export function addSdkCrateToLock(
     cargoLock: string,
     sdkCrateName: string,
     typesCrateName: string,
+    manifest: GeneratedCrateManifest,
     packageName: string = TEMPLATE_PACKAGE_NAME
 ): string {
     const sdkSnakeName = sdkCrateName.replace(/-/g, "_");
     const typesSnakeName = typesCrateName.replace(/-/g, "_");
 
-    // 1. Append [[package]] entry for the SDK crate. Its dependencies
-    //    include the types crate plus the HTTP client stack that the
-    //    rust-sdk generator pulls in (all already in the lockfile).
-    const packageEntry = [
-        "",
-        "[[package]]",
-        `name = "${sdkSnakeName}"`,
-        'version = "0.0.0"',
-        "dependencies = [",
-        ` "${typesSnakeName}",`,
-        ' "futures",',
-        ' "reqwest",',
-        ' "serde",',
-        ' "serde_json",',
-        ' "tokio",',
-        "]",
-        ""
-    ].join("\n");
+    // 1. Append the [[package]] entry for the SDK crate. The types crate is a
+    //    sibling resolved in this same pass, so it is exempt from the
+    //    present-in-lock check.
+    const packageEntry = generatedCrateLockStanza(
+        sdkSnakeName,
+        manifest.version,
+        renderLockDependencyList(cargoLock, manifest.dependencies, [sdkSnakeName, typesSnakeName])
+    );
 
     let patched = cargoLock.trimEnd() + "\n" + packageEntry;
 
@@ -443,6 +486,153 @@ export function addSdkCrateToLock(
     }
 
     return patched;
+}
+
+/** A generated crate's identity, read from the `Cargo.toml` it ships with. */
+export interface GeneratedCrateManifest {
+    /** `[package] version`. */
+    version: string;
+    /** `[dependencies]` entries. Dev-dependencies are excluded: Cargo does not
+     *  record them for a path dependency that is not a workspace member. */
+    dependencies: Array<{ name: string; versionReq: string | undefined }>;
+}
+
+/**
+ * Parse the `[package] version` and `[dependencies]` names out of a generated
+ * crate's `Cargo.toml`.
+ *
+ * Deliberately not a full TOML parse — same convention as the rest of this
+ * module (see `requireReplace`). It handles the two shapes the Rust generators
+ * emit: inline (`name = "1.0"` / `name = { version = "1.0", … }`) and a
+ * `[dependencies.name]` sub-table.
+ */
+export function parseGeneratedCrateManifest(cargoToml: string): GeneratedCrateManifest {
+    let version: string | undefined;
+    let section = "";
+    const dependencies: Array<{ name: string; versionReq: string | undefined }> = [];
+
+    for (const rawLine of cargoToml.split("\n")) {
+        const line = rawLine.trim();
+        if (line.startsWith("#") || line.length === 0) {
+            continue;
+        }
+        const header = line.match(/^\[([^\]]+)\]$/);
+        if (header?.[1] != null) {
+            section = header[1];
+            // `[dependencies.foo]` declares `foo` itself.
+            const subTable = section.match(/^dependencies\.(.+)$/);
+            if (subTable?.[1] != null) {
+                dependencies.push({ name: subTable[1], versionReq: undefined });
+            }
+            continue;
+        }
+        const assignment = line.match(/^([A-Za-z0-9_-]+)\s*=\s*(.+)$/);
+        if (assignment?.[1] == null) {
+            continue;
+        }
+        const [, key, value = ""] = assignment;
+        if (section === "package" && key === "version" && version == null) {
+            version = value.replace(/^"|"$/g, "");
+            continue;
+        }
+        if (section === "dependencies") {
+            // `foo = "1.0"` or `foo = { version = "1.0", features = [...] }`.
+            const inlineVersion = value.startsWith("{")
+                ? value.match(/version\s*=\s*"([^"]+)"/)?.[1]
+                : value.match(/^"([^"]+)"$/)?.[1];
+            dependencies.push({ name: key, versionReq: inlineVersion });
+        }
+        // A `[dependencies.foo]` sub-table's own keys (`path`, `version`, …) are
+        // skipped: `section` is `dependencies.foo`, not `dependencies`.
+    }
+
+    if (version == null) {
+        throw new Error("patchCargoToml: generated crate Cargo.toml has no [package] version");
+    }
+    return { version, dependencies };
+}
+
+/** Every version of `name` present in the lock, in file order. */
+function lockPackageVersions(cargoLock: string, name: string): string[] {
+    const pattern = new RegExp(`\\[\\[package\\]\\]\\nname = "${escapeRegExp(name)}"\\nversion = "([^"]+)"`, "g");
+    return [...cargoLock.matchAll(pattern)].map((m) => m[1] ?? "").filter((v) => v.length > 0);
+}
+
+function escapeRegExp(value: string): string {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/** The leading major component of a version or requirement (`^1.2` -> `1`). */
+function leadingMajor(value: string): string | undefined {
+    return value.match(/(\d+)/)?.[1];
+}
+
+/**
+ * Render a generated crate's dependency list the way Cargo.lock records it:
+ * sorted, and version-qualified (`"thiserror 1.0.69"`) for any package the lock
+ * holds more than one version of — which happens whenever the CLI SDK and a
+ * generated crate pin different majors of the same dependency.
+ *
+ * Throws when a dependency is absent from the lock. That case used to produce a
+ * lock that still *built* but failed `cargo metadata --locked` and `cargo audit`
+ * — dependency auditing silently disabled rather than a visible error. Failing
+ * generation instead surfaces it at the point it can be fixed: declare the
+ * package in the CLI SDK template's own Cargo.toml so the shipped lock covers it.
+ */
+export function renderLockDependencyList(
+    cargoLock: string,
+    dependencies: GeneratedCrateManifest["dependencies"],
+    /** Names resolved within this generation rather than from the lock (the
+     *  sibling generated crates, which are appended as their own stanzas). */
+    siblingCrateNames: string[]
+): string[] {
+    const missing: string[] = [];
+    const refs = dependencies.map(({ name, versionReq }) => {
+        if (siblingCrateNames.includes(name)) {
+            return name;
+        }
+        const versions = lockPackageVersions(cargoLock, name);
+        if (versions.length === 0) {
+            missing.push(name);
+            return name;
+        }
+        if (versions.length === 1) {
+            return name;
+        }
+        const wantedMajor = versionReq != null ? leadingMajor(versionReq) : undefined;
+        const matched = wantedMajor != null ? versions.find((v) => leadingMajor(v) === wantedMajor) : undefined;
+        return `${name} ${matched ?? versions[versions.length - 1]}`;
+    });
+
+    if (missing.length > 0) {
+        throw new Error(
+            `patchCargoToml: the generated crate depends on ${missing.join(", ")}, which ` +
+                "is absent from the shipped Cargo.lock. Declare it in generators/cli/sdk/Cargo.toml " +
+                "(an unused `optional = true` entry is enough to pin it) and refresh that lock, " +
+                "otherwise the generated project fails `cargo build --locked` and `cargo audit`."
+        );
+    }
+    return [...new Set(refs)].sort((a, b) => a.localeCompare(b));
+}
+
+/** Build the `[[package]]` stanza Cargo.lock expects for a generated crate. */
+function generatedCrateLockStanza(lockName: string, version: string, dependencyRefs: string[]): string {
+    const lines = ["", "[[package]]", `name = "${lockName}"`, `version = "${version}"`];
+    if (dependencyRefs.length > 0) {
+        lines.push("dependencies = [");
+        for (const ref of dependencyRefs) {
+            lines.push(` "${ref}",`);
+        }
+        lines.push("]");
+    }
+    lines.push("");
+    return lines.join("\n");
+}
+
+/** Read a generated crate's `Cargo.toml` from the output tree. */
+async function readGeneratedCrateManifest(outputDir: string, crateDirName: string): Promise<GeneratedCrateManifest> {
+    const manifestPath = path.join(outputDir, crateDirName, "Cargo.toml");
+    return parseGeneratedCrateManifest(await readFile(manifestPath, "utf-8"));
 }
 
 /**
