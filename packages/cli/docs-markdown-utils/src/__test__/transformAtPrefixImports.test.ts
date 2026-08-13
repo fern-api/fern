@@ -196,6 +196,56 @@ Some content here.
 <Banner />`);
     });
 
+    it("should not transform imports inside fenced code blocks", () => {
+        const markdown = `---
+title: Tutorial
+---
+
+import { Banner } from '@/components/Banner'
+
+Update the imports:
+
+\`\`\`jsx showLineNumbers={false} title="content-fallback.tsx"
+import { Flex, ProgressCircle } from "@/components/ui/big-design";
+\`\`\`
+
+<Banner />`;
+        const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/guides/test.mdx");
+
+        const result = transformAtPrefixImports({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile
+        });
+
+        expect(result).toBe(`---
+title: Tutorial
+---
+
+import { Banner } from '../../components/Banner'
+
+Update the imports:
+
+\`\`\`jsx showLineNumbers={false} title="content-fallback.tsx"
+import { Flex, ProgressCircle } from "@/components/ui/big-design";
+\`\`\`
+
+<Banner />`);
+    });
+
+    it("should not transform imports inside inline code", () => {
+        const markdown = `Write \`import { Flex } from "@/components/ui/big-design"\` at the top.`;
+        const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
+
+        const result = transformAtPrefixImports({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile
+        });
+
+        expect(result).toBe(markdown);
+    });
+
     it("should handle imports in sibling directories", () => {
         const markdown = `import { Banner } from '@/docs/components/Banner'`;
         const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/guides/test.mdx");
