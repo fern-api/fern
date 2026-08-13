@@ -736,6 +736,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         if (oauthScheme == null || oauthScheme.configuration?.type !== "clientCredentials") {
             return;
         }
+        const oauthConfiguration = oauthScheme.configuration;
 
         const authServiceFernFilepath = this.getAuthServiceFernFilepath();
         if (authServiceFernFilepath == null) {
@@ -783,7 +784,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         const methodName = this.context.getMethodName(tokenEndpoint.name);
 
         // Get the request field names from the IR
-        const requestProperties = oauthScheme.configuration.tokenEndpoint.requestProperties;
+        const requestProperties = oauthConfiguration.tokenEndpoint.requestProperties;
         const clientIdFieldName = getRequestPropertyFieldName(this.context, requestProperties.clientId);
         const clientSecretFieldName = getRequestPropertyFieldName(this.context, requestProperties.clientSecret);
 
@@ -831,7 +832,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
                 // Fetch a new token from the auth endpoint
                 // Get the request type reference from the endpoint
-                const serviceId = oauthScheme.configuration.tokenEndpoint.endpointReference.serviceId;
+                const serviceId = oauthConfiguration.tokenEndpoint.endpointReference.serviceId;
                 const requestTypeRef = this.getTokenEndpointRequestTypeReference(serviceId, tokenEndpoint);
                 w.write(`response, err := authClient.${methodName}(`);
                 w.writeNode(
@@ -919,7 +920,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.writeLine('return "", 0, err');
                 w.dedent();
                 w.writeLine("}");
-                const responseProperties = oauthScheme.configuration.tokenEndpoint.responseProperties;
+                const responseProperties = oauthConfiguration.tokenEndpoint.responseProperties;
                 const accessTokenField = this.context.getFieldName(responseProperties.accessToken.property.name);
                 this.writeTokenResponse({
                     writer: w,

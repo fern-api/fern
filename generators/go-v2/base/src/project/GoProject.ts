@@ -212,8 +212,27 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
                 ? "response.StatusCode == http.StatusTooManyRequests ||\n\t\tresponse.StatusCode == http.StatusRequestTimeout ||\n\t\tresponse.StatusCode == http.StatusBadGateway ||\n\t\tresponse.StatusCode == http.StatusServiceUnavailable ||\n\t\tresponse.StatusCode == http.StatusGatewayTimeout"
                 : "response.StatusCode == http.StatusTooManyRequests ||\n\t\tresponse.StatusCode == http.StatusRequestTimeout ||\n\t\tresponse.StatusCode >= http.StatusInternalServerError";
         contents = contents.replace(/\{\{RETRY_STATUS_CHECK\}\}/g, retryStatusCheck);
+        contents = this.replaceOptionalRequestBodyPlaceholders(contents);
 
         return new File(filename.replace(".go_", ".go"), RelativeFilePath.of(""), contents);
+    }
+
+    /**
+     * Fills in the parts of the caller that only an SDK respecting an omittable request body needs.
+     * Both placeholders collapse to nothing otherwise, so an SDK that has not opted in keeps the
+     * caller it has always had.
+     */
+    private replaceOptionalRequestBodyPlaceholders(contents: string): string {
+        const respectOptionalRequestBody = this.context.customConfig.respectOptionalRequestBody ?? false;
+        const field = respectOptionalRequestBody
+            ? "\n\t// BodyIsOptional reports whether the endpoint accepts the request without a body,\n\t// so a call that sends none must not advertise a body content type either.\n\tBodyIsOptional bool"
+            : "";
+        const contentType = respectOptionalRequestBody
+            ? "\n\n\t// A request that carries no body must not claim a media type, which a server\n\t// branching on the content type would otherwise read as an empty JSON body.\n\tif params.BodyIsOptional && req.Body == nil {\n\t\treq.Header.Del(contentTypeHeader)\n\t}"
+            : "";
+        return contents
+            .replace(/\{\{OPTIONAL_REQUEST_BODY_FIELD\}\}/g, field)
+            .replace(/\{\{OPTIONAL_REQUEST_BODY_CONTENT_TYPE\}\}/g, contentType);
     }
 
     private getAsIsFilepath(filename: string): string {
