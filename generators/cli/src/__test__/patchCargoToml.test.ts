@@ -12,7 +12,8 @@ import {
     patchCargoLockVersion,
     patchCargoToml,
     renameCargoLockPackage,
-    renderLockDependencyList
+    renderLockDependencyList,
+    withDistributionDefaults
 } from "../patchCargoToml.js";
 
 /**
@@ -405,5 +406,65 @@ describe("patchCargoToml (filesystem)", () => {
         await expect(patchCargoToml({ outputDir: tmpDir, binaryName: "acme-cli", version: "1.0.0" })).rejects.toThrow(
             /anchor missing|did not match/
         );
+    });
+});
+
+describe("withDistributionDefaults", () => {
+    const repoUrl = "https://github.com/acme/acme-cli";
+    const description = "CLI for the Acme API";
+    const base = { publishesHomebrew: true, repoUrl, description };
+
+    // The load-bearing one: cargo-dist builds the formula's per-arch release
+    // download URLs from `repository`. Left at the template's value every
+    // `brew install` 404s against github.com/fern-api/cli-sdk.
+    it("points repository, homepage and description at the consumer", () => {
+        expect(withDistributionDefaults({ ...base, packageIdentity: undefined })).toEqual({
+            repository: repoUrl,
+            homepage: repoUrl,
+            description
+        });
+    });
+
+    it("preserves the other identity fields it fills alongside", () => {
+        expect(withDistributionDefaults({ ...base, packageIdentity: { name: "acme-cli", license: "MIT" } })).toEqual({
+            name: "acme-cli",
+            license: "MIT",
+            repository: repoUrl,
+            homepage: repoUrl,
+            description
+        });
+    });
+
+    it("never overrides values the consumer pinned", () => {
+        expect(
+            withDistributionDefaults({
+                ...base,
+                packageIdentity: {
+                    repository: "https://github.com/acme/other",
+                    homepage: "https://acme.com",
+                    description: "Mine"
+                }
+            })
+        ).toEqual({
+            repository: "https://github.com/acme/other",
+            homepage: "https://acme.com",
+            description: "Mine"
+        });
+    });
+
+    // Scoped to the Homebrew case: applying it unconditionally would change
+    // the Cargo.toml of every existing github-mode generation.
+    it("is inert when Homebrew is off", () => {
+        const packageIdentity = { name: "acme-cli" };
+        expect(withDistributionDefaults({ ...base, publishesHomebrew: false, packageIdentity })).toBe(packageIdentity);
+        expect(
+            withDistributionDefaults({ ...base, publishesHomebrew: false, packageIdentity: undefined })
+        ).toBeUndefined();
+    });
+
+    it("fills only what it can when the repo url is unknown", () => {
+        expect(withDistributionDefaults({ ...base, repoUrl: undefined, packageIdentity: undefined })).toEqual({
+            description
+        });
     });
 });
