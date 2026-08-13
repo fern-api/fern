@@ -11,5 +11,7 @@ $client = new SeedClient(
     ],
 );
 $client->bulkRefund(
-    new RefundRequest([]),
+    new RefundRequest([
+        'amount' => 1.1,
+    ]),
 );
