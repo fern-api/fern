@@ -12,10 +12,10 @@ $client = new SeedClient(
     ],
 );
 $client->refund(
-    'id',
+    'refund-id',
     new RefundBody([
         'body' => new RefundRequest([
-            'amount' => 1.1,
+            'amount' => 60,
         ]),
     ]),
 );

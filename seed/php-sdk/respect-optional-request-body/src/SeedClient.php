@@ -68,9 +68,7 @@ class SeedClient
      * $client->refund(
      *     'refund-id',
      *     new RefundBody([
-     *         'body' => new RefundRequest([
-     *             'amount' => 60,
-     *         ]),
+     *         'body' => new RefundRequest([]),
      *     ]),
      * );
      * ```

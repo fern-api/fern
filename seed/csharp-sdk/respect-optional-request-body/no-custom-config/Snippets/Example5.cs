@@ -10,9 +10,7 @@ public partial class Examples
         );
 
         await client.BulkRefundAsync(
-            new RefundRequest {
-                Amount = 1.1
-            }
+            new RefundRequest()
         );
     }
 

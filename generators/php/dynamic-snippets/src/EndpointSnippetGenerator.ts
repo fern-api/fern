@@ -1062,7 +1062,12 @@ export class EndpointSnippetGenerator {
     }): php.ConstructorField {
         return {
             name: this.context.getPropertyName(body.bodyKey),
-            value: this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
+            value: this.getReferencedRequestBodyPropertyTypeLiteral({
+                body: body.bodyType,
+                // The generated wrapper requires the body, so an example that omits it still has to
+                // construct one. Only an object body has an empty form to fall back on.
+                value: body.bodyType.type === "typeReference" ? (value ?? {}) : value
+            })
         };
     }
 
