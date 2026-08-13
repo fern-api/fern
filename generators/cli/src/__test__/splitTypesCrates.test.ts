@@ -1,9 +1,9 @@
-import { mkdtemp, mkdir, readFile, writeFile } from "fs/promises";
+import { MODEL_FILE_MANIFEST_PATH } from "@fern-api/rust-model";
+import { mkdir, mkdtemp, readFile, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import path from "path";
 import { describe, expect, it } from "vitest";
 import { CORE_PARTITION_KEY, TypeCratePartitionPlan } from "../planTypeCratePartitions.js";
-import { MODEL_FILE_MANIFEST_PATH } from "@fern-api/rust-model";
 import { splitTypesCrates } from "../splitTypesCrates.js";
 
 /**

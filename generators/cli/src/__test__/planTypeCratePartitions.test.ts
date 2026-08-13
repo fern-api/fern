@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import {
     CORE_PARTITION_KEY,
     type PartitionService,
-    type TypePartitionInput,
-    planTypeCratePartitions
+    planTypeCratePartitions,
+    type TypePartitionInput
 } from "../planTypeCratePartitions.js";
 
 /**

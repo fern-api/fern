@@ -18,8 +18,8 @@ import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
 import {
     patchCargoLockForSdk,
-    patchCargoLockForTypes,
     patchCargoLockForTypePartitions,
+    patchCargoLockForTypes,
     patchCargoToml,
     withDistributionDefaults
 } from "./patchCargoToml.js";

@@ -28,7 +28,6 @@ import { planTypeCratePartitions } from "./planTypeCratePartitions.js";
 import { splitTypesCrates } from "./splitTypesCrates.js";
 import {
     buildTypesCrateCargoToml,
-    buildTypesCrateLibRs,
     buildTypesCratePrelude,
     copyCoreModules,
     TYPES_MODULE_DIRECTORY
@@ -222,7 +221,7 @@ const SRC_ROOT_FILES = new Set(["lib.rs", "prelude.rs", "error.rs"]);
  * injected so sibling types re-exported by `mod.rs` are in scope.
  */
 async function restructureTypesModule(srcDir: string): Promise<void> {
-    const typesDir = path.join(srcDir, "types");
+    const typesDir = path.join(srcDir, TYPES_MODULE_DIRECTORY);
     await mkdir(typesDir, { recursive: true });
 
     const movedFiles: string[] = [];

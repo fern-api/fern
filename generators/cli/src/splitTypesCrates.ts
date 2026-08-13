@@ -13,9 +13,9 @@
  * SDK crate nor any `.fernignore`d handler needs to change.
  */
 
+import { MODEL_FILE_MANIFEST_PATH, ModelFileManifestModule } from "@fern-api/rust-model";
 import { mkdir, readdir, readFile, rename, rm, writeFile } from "fs/promises";
 import path from "path";
-import { MODEL_FILE_MANIFEST_PATH, ModelFileManifestModule } from "@fern-api/rust-model";
 import { CORE_PARTITION_KEY, TypeCratePartitionPlan } from "./planTypeCratePartitions.js";
 import {
     buildTypesCrateCargoToml,
