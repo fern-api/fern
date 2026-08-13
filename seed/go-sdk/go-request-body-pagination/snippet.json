@@ -43,6 +43,17 @@
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-request-body-pagination/fern\"\n\tfernclient \"github.com/go-request-body-pagination/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Users.ListWithRequiredBodyCursorPagination(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersRequiredBodyCursorPaginationRequest{\n\t\tCursor: \"cursor\",\n\t},\n)\n"
             }
+        },
+        {
+            "id": {
+                "path": "/users/uuid-cursor",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithUuidBodyCursorPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-request-body-pagination/fern\"\n\tfernclient \"github.com/go-request-body-pagination/fern/client\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Users.ListWithUUIDBodyCursorPagination(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersUUIDBodyCursorPaginationRequest{\n\t\tCursor: fern.UUID(\n\t\t\tuuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t),\n\t},\n)\n"
+            }
         }
     ]
 }

@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/go-request-body-pagination/fern/internal"
+	uuid "github.com/google/uuid"
 	big "math/big"
 )
 
@@ -212,6 +213,52 @@ func (l *ListUsersRequiredBodyCursorPaginationRequest) MarshalJSON() ([]byte, er
 }
 
 var (
+	listUsersUUIDBodyCursorPaginationRequestFieldCursor = big.NewInt(1 << 0)
+)
+
+type ListUsersUUIDBodyCursorPaginationRequest struct {
+	Cursor *uuid.UUID `json:"cursor,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUsersUUIDBodyCursorPaginationRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersUUIDBodyCursorPaginationRequest) SetCursor(cursor *uuid.UUID) {
+	l.Cursor = cursor
+	l.require(listUsersUUIDBodyCursorPaginationRequestFieldCursor)
+}
+
+func (l *ListUsersUUIDBodyCursorPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersUUIDBodyCursorPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersUUIDBodyCursorPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersUUIDBodyCursorPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersUUIDBodyCursorPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	listUsersRequiredCursorResponseFieldNextCursor = big.NewInt(1 << 0)
 	listUsersRequiredCursorResponseFieldData       = big.NewInt(1 << 1)
 )
@@ -397,6 +444,106 @@ func (l *ListUsersResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListUsersResponse) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listUsersUUIDCursorResponseFieldNextCursor = big.NewInt(1 << 0)
+	listUsersUUIDCursorResponseFieldData       = big.NewInt(1 << 1)
+)
+
+type ListUsersUUIDCursorResponse struct {
+	NextCursor *uuid.UUID `json:"next_cursor,omitempty" url:"next_cursor,omitempty"`
+	Data       []*User    `json:"data" url:"data"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUsersUUIDCursorResponse) GetNextCursor() *uuid.UUID {
+	if l == nil {
+		return nil
+	}
+	return l.NextCursor
+}
+
+func (l *ListUsersUUIDCursorResponse) GetData() []*User {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersUUIDCursorResponse) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUsersUUIDCursorResponse) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNextCursor sets the NextCursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersUUIDCursorResponse) SetNextCursor(nextCursor *uuid.UUID) {
+	l.NextCursor = nextCursor
+	l.require(listUsersUUIDCursorResponseFieldNextCursor)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersUUIDCursorResponse) SetData(data []*User) {
+	l.Data = data
+	l.require(listUsersUUIDCursorResponseFieldData)
+}
+
+func (l *ListUsersUUIDCursorResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersUUIDCursorResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersUUIDCursorResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUsersUUIDCursorResponse) MarshalJSON() ([]byte, error) {
+	type embed ListUsersUUIDCursorResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUsersUUIDCursorResponse) String() string {
 	if l == nil {
 		return "<nil>"
 	}

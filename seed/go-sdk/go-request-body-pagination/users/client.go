@@ -10,6 +10,7 @@ import (
 	core "github.com/go-request-body-pagination/fern/core"
 	internal "github.com/go-request-body-pagination/fern/internal"
 	option "github.com/go-request-body-pagination/fern/option"
+	uuid "github.com/google/uuid"
 )
 
 type Client struct {
@@ -35,7 +36,8 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// Pagination endpoint with a top-level cursor field in the request body.
+// Pagination endpoint with an optional top-level cursor field in the request body. An empty
+// string cursor terminates the pager, just like a null cursor does.
 //
 // Example:
 //
@@ -92,7 +94,7 @@ func (c *Client) ListWithBodyCursorPagination(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -152,6 +154,74 @@ func (c *Client) ListWithRequiredBodyCursorPagination(
 		next := response.GetNextCursor()
 		results := response.GetData()
 		return &core.PageResponse[string, *fern.User, *fern.ListUsersRequiredCursorResponse]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, request.Cursor)
+}
+
+// Pagination endpoint with an optional uuid cursor field in the request body. Only string cursors
+// treat an empty value as the last page, so this endpoint terminates on a null cursor alone.
+//
+// Example:
+//
+//	request := &fern.ListUsersUUIDBodyCursorPaginationRequest{
+//	    Cursor: fern.UUID(
+//	        uuid.MustParse(
+//	            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	        ),
+//	    ),
+//	}
+//	client.Users.ListWithUUIDBodyCursorPagination(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) ListWithUUIDBodyCursorPagination(
+	ctx context.Context,
+	request *fern.ListUsersUUIDBodyCursorPaginationRequest,
+	opts ...option.RequestOption,
+) (*core.Page[*uuid.UUID, *fern.User, *fern.ListUsersUUIDCursorResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/users/uuid-cursor"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*uuid.UUID]) *internal.CallParams {
+		nextRequest := *request
+		nextRequest.Cursor = pageRequest.Cursor
+		nextURL := endpointURL
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         &nextRequest,
+			Response:        pageRequest.Response,
+		}
+	}
+	readPageResponse := func(response *fern.ListUsersUUIDCursorResponse) *core.PageResponse[*uuid.UUID, *fern.User, *fern.ListUsersUUIDCursorResponse] {
+		var zeroValue *uuid.UUID
+		next := response.GetNextCursor()
+		results := response.GetData()
+		return &core.PageResponse[*uuid.UUID, *fern.User, *fern.ListUsersUUIDCursorResponse]{
 			Results:  results,
 			Response: response,
 			Next:     next,
