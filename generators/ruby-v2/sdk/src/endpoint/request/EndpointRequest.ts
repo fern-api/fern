@@ -1,9 +1,12 @@
-import { CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, GeneratorError } from "@fern-api/base-generator";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { isUrlEncodedRequestBody } from "../../utils/requestBody.js";
 import { RawClient } from "../http/RawClient.js";
+
+export const BODY_BAG_NAME = "body_params";
+export const PATH_PARAM_NAMES_VN = "path_param_names";
 
 export interface QueryParameterCodeBlock {
     code: ruby.CodeBlock;
@@ -70,6 +73,23 @@ export abstract class EndpointRequest {
         writer.write(`${bodyVariableName}.empty? ? nil : `);
     }
 
+    protected getPathParameterNames(): string[] {
+        return this.endpoint.allPathParameters.map((pathParameter) => this.case.snakeSafe(pathParameter.name));
+    }
+
+    protected hasPathParameters(): boolean {
+        return this.endpoint.allPathParameters.length > 0;
+    }
+
+    /**
+     * Writes the statements that split the path parameters out of `params`, so that the
+     * request body only carries the properties the endpoint actually declares as body fields.
+     */
+    protected writePathParameterExclusion(writer: ruby.Writer): void {
+        writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toRubySymbolArray(this.getPathParameterNames())}`);
+        writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
+    }
+
     /**
      * Follows alias-of-named chains to the terminal type id so request bodies
      * declared as aliases of objects are serialized through the aliased class
@@ -96,4 +116,11 @@ export abstract class EndpointRequest {
     public abstract getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined;
 
     public abstract getRequestType(): RawClient.RequestBodyType | undefined;
+}
+
+export function toRubySymbolArray(names: string[]): string {
+    if (names.some((name) => name.includes(" "))) {
+        throw GeneratorError.internalError("Symbol array cannot contain spaces");
+    }
+    return `%i[${names.join(" ")}]`;
 }
