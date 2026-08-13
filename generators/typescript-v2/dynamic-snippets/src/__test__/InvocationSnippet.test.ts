@@ -38,7 +38,14 @@ describe("invocation-only snippets", () => {
         const response = generator.generateInvocationSync(request);
 
         expect(response?.snippet).toBe('client.endpoints.httpMethods.testPut("id")');
+        expect(response?.imports).toBe("");
         expect(response?.errors).toBeUndefined();
+    });
+
+    it("exposes the generated client class name so docs can render the client instantiation", () => {
+        const response = generator.generateInvocationSync(request);
+
+        expect(response?.clientName).toBe("AcmeClient");
     });
 
     it("invokes the endpoint on the requested client variable", () => {
@@ -47,7 +54,7 @@ describe("invocation-only snippets", () => {
         expect(response?.snippet).toBe('mailchimp.endpoints.httpMethods.testPut("id")');
     });
 
-    it("does not generate an invocation that would reference dropped imports", () => {
+    it("returns the imports the invocation references instead of falling back to the full snippet", () => {
         const brandedGenerator = buildDynamicSnippetsGenerator({
             irFilepath: AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "alias.json")),
             config: buildGeneratorConfig({ customConfig: { useBrandedStringAliases: true } })
@@ -69,6 +76,11 @@ describe("invocation-only snippets", () => {
             requestBody: undefined
         });
 
-        expect(response).toBeUndefined();
+        // The branded-alias case used to return undefined; now it returns the call plus the
+        // import the call needs (the SDK namespace import), so docs can regenerate both.
+        expect(response).not.toBeUndefined();
+        expect(response?.snippet).toBe('client.get(Acme.TypeID("type-abc123"))');
+        expect(response?.imports).toContain("import");
+        expect(response?.imports).toContain("Acme");
     });
 });

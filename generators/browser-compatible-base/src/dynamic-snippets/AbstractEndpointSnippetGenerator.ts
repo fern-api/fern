@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { AbstractAstNode } from "../ast/index.js";
 import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext.js";
+import { InvocationSnippetResponse } from "./InvocationSnippetResponse.js";
 import { Options } from "./Options.js";
 
 export abstract class AbstractEndpointSnippetGenerator<Context extends AbstractDynamicSnippetsGeneratorContext> {
@@ -35,12 +36,14 @@ export abstract class AbstractEndpointSnippetGenerator<Context extends AbstractD
     }): Promise<AbstractAstNode>;
 
     /**
-     * Generates just the endpoint invocation (e.g. `client.plants.update(...)`), without
-     * imports or client instantiation, for callers that render the invocation within code
-     * of their own (e.g. a documentation code template).
+     * Generates the structured pieces of an endpoint invocation for callers that render the
+     * invocation within code of their own (e.g. a documentation code template): the bare call
+     * (e.g. `client.plants.update(...)`), the imports the call requires, and the generated
+     * client class/type name.
      *
-     * Implemented per generator; generators that do not implement it, and invocations that
-     * cannot stand on their own, fall back to the complete snippet.
+     * Implemented per generator; generators that do not implement it are detected via the
+     * absence of this method (the capability check callers rely on) and fall back to the
+     * complete snippet.
      */
     public generateInvocationSnippetSync?({
         endpoint,
@@ -50,5 +53,5 @@ export abstract class AbstractEndpointSnippetGenerator<Context extends AbstractD
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
         options?: Options;
-    }): string | undefined;
+    }): InvocationSnippetResponse | undefined;
 }

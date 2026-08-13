@@ -32,8 +32,9 @@ export abstract class AstNode extends AbstractAstNode {
     }
 
     /**
-     * Writes the node without the import statements it references. `hasImports` reports
-     * whether any were dropped, since the code is only valid on its own without them.
+     * Writes the node without the import statements it references. `imports` is the rendered
+     * import block the code would otherwise need (empty string when none), and `hasImports`
+     * reports whether any were separated out.
      */
     public toStringWithoutImports({
         customConfig,
@@ -41,9 +42,13 @@ export abstract class AstNode extends AbstractAstNode {
     }: {
         customConfig: TypescriptCustomConfigSchema | undefined;
         formatter?: AbstractFormatter;
-    }): { code: string; hasImports: boolean } {
+    }): { code: string; imports: string; hasImports: boolean } {
         const file = new TypeScriptFile({ customConfig, formatter });
         this.write(file);
-        return { code: file.toString({ omitImports: true }), hasImports: file.hasImports() };
+        return {
+            code: file.toString({ omitImports: true }),
+            imports: file.getImports(),
+            hasImports: file.hasImports()
+        };
     }
 }
