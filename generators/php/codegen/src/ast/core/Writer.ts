@@ -90,6 +90,16 @@ ${this.buffer}`;
         return namespace + "\n\n" + this.buffer;
     }
 
+    /**
+     * Returns only the `use ...;` import block the written buffer references (no `namespace ...;`
+     * header and no body), or an empty string when the buffer references no imports. This lets a
+     * caller render a node's body separately from the imports it requires — see
+     * {@link AstNode.toStringWithoutImports}.
+     */
+    public importsToString(): string {
+        return this.stringifyImports();
+    }
+
     private stringifyImports(): string {
         const referenceKeys = Object.keys(this.references);
         if (referenceKeys.length === 0) {
