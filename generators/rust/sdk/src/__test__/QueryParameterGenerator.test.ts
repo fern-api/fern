@@ -76,6 +76,8 @@ function createHttpEndpoint(name: string, queryParams: FernIr.QueryParameter[] =
             pascalCase: { unsafeName: name, safeName: name }
         },
         displayName: undefined,
+        subtitle: undefined,
+        globalParameters: undefined,
         method: "GET",
         baseUrl: undefined,
         v2BaseUrls: undefined,

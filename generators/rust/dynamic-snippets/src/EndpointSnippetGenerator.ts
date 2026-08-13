@@ -587,14 +587,42 @@ export class EndpointSnippetGenerator {
         args.push(...requestComponents.pathArgs);
 
         // Add request body
-        if (requestComponents.bodyArg != null) {
-            args.push(rust.Expression.referenceOf(requestComponents.bodyArg));
+        const bodyMayBeOmitted = this.bodyMayBeOmitted({ request });
+        if (bodyMayBeOmitted && this.callOmitsRequestBody({ snippet })) {
+            // The generated parameter is an Option, so an omitted body is spelled None
+            args.push(rust.Expression.raw("None"));
+        } else if (requestComponents.bodyArg != null) {
+            const bodyArg = rust.Expression.referenceOf(requestComponents.bodyArg);
+            args.push(bodyMayBeOmitted ? rust.Expression.functionCall("Some", [bodyArg]) : bodyArg);
         }
 
         // Add default None for RequestOptions parameter
         args.push(rust.Expression.raw("None"));
 
         return args;
+    }
+
+    /**
+     * Whether the generated body parameter is an `Option`, which mirrors the condition the SDK
+     * generator applies before it lets a caller leave the body out. Reading `bodyRequired` at all is
+     * opt-in so that existing snippets keep the shape they always had.
+     */
+    private bodyMayBeOmitted({ request }: { request: FernIr.dynamic.BodyRequest }): boolean {
+        return (
+            this.context.customConfig?.respectOptionalRequestBody === true &&
+            request.bodyRequired === false &&
+            request.body?.type === "typeReference"
+        );
+    }
+
+    /**
+     * Whether the call leaves the body out entirely, which `None` expresses. An example that supplies
+     * nothing for the body reaches the snippet generator as an absent or empty value, since that is
+     * how the importer spells it.
+     */
+    private callOmitsRequestBody({ snippet }: { snippet: FernIr.dynamic.EndpointSnippetRequest }): boolean {
+        const value = snippet.requestBody;
+        return value == null || (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
     }
 
     private getMethodArgsForInlinedRequest({

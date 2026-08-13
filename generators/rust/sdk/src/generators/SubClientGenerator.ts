@@ -7,6 +7,7 @@ import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
+import { mayOmitRequestBody } from "../utils/mayOmitRequestBody.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 
 
@@ -1123,6 +1124,9 @@ export class SubClientGenerator {
                 // Use &str instead of &String for idiomatic Rust
                 paramType = paramType === "String" ? "&str" : `&${paramType}`;
             }
+            if (requestBodyParam.optional) {
+                paramType = `Option<${paramType}>`;
+            }
             methodParams.push(`${requestBodyParam.name}: ${paramType}`);
         }
 
@@ -1243,7 +1247,7 @@ export class SubClientGenerator {
                 name: "request",
                 type: requestBodyType,
                 isRef: true,
-                optional: false
+                optional: mayOmitRequestBody({ context: this.context, endpoint })
             });
         }
     }
@@ -1689,6 +1693,10 @@ export class SubClientGenerator {
     private getRequestBody(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): string {
         const requestBodyParam = params.find((param) => param.name === "request");
         if (requestBodyParam && endpoint.requestBody) {
+            // An omitted optional body sends no body at all, and with it no Content-Type
+            if (requestBodyParam.optional) {
+                return "request.map(serde_json::to_value).transpose().map_err(ApiError::Serialization)?";
+            }
             // For referenced body with query parameters, serialize request.body
             if (endpoint.requestBody.type === "reference" && endpoint.queryParameters.length > 0) {
                 return "Some(serde_json::to_value(&request.body).map_err(ApiError::Serialization)?)";
