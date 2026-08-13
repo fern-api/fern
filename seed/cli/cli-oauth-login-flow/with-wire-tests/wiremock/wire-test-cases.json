@@ -22,7 +22,12 @@
       "params": {},
       "body": null,
       "queryMatchers": [],
-      "headerMatchers": [],
+      "headerMatchers": [
+        {
+          "name": "Authorization",
+          "matches": "Bearer .+"
+        }
+      ],
       "requiresAuth": true,
       "response": {
         "status": 200,
@@ -38,7 +43,12 @@
       },
       "body": null,
       "queryMatchers": [],
-      "headerMatchers": [],
+      "headerMatchers": [
+        {
+          "name": "Authorization",
+          "matches": "Bearer .+"
+        }
+      ],
       "requiresAuth": true,
       "response": {
         "status": 200,
@@ -83,7 +93,12 @@
       "params": {},
       "body": null,
       "queryMatchers": [],
-      "headerMatchers": [],
+      "headerMatchers": [
+        {
+          "name": "Authorization",
+          "matches": "Bearer .+"
+        }
+      ],
       "requiresAuth": true,
       "response": {
         "status": 422,
@@ -100,7 +115,12 @@
       },
       "body": null,
       "queryMatchers": [],
-      "headerMatchers": [],
+      "headerMatchers": [
+        {
+          "name": "Authorization",
+          "matches": "Bearer .+"
+        }
+      ],
       "requiresAuth": true,
       "response": {
         "status": 422,

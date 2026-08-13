@@ -1,0 +1,93 @@
+openapi: 3.1.0
+info:
+  title: OAuth token request with a required enum grant type
+  version: 1.0.0
+paths:
+  /auth/token:
+    post:
+      operationId: authorization_createToken
+      x-fern-sdk-group-name: authorization
+      x-fern-sdk-method-name: createToken
+      summary: Issue an access token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TokenRequest"
+      responses:
+        "200":
+          description: Successful token response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+  /plants/{plantId}:
+    get:
+      operationId: plants_get
+      x-fern-sdk-group-name: plants
+      x-fern-sdk-method-name: get
+      summary: Get a plant by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A plant
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    TokenRequest:
+      type: object
+      description: |
+        The grant type is required and enumerated, while the client credentials are
+        optional because they may also be sent with HTTP Basic.
+      required:
+        - grant_type
+      properties:
+        grant_type:
+          type: string
+          enum:
+            - client_credentials
+            - authorization_code
+            - refresh_token
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        scope:
+          type: string
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+      required:
+        - access_token
+        - expires_in
+    Plant:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        species:
+          type: string
+      required:
+        - id

@@ -92,6 +92,23 @@ fixtures:
       outputFolder: github-no-publish
       outputMode: github
       outputVersion: "1.0.0"
+    # Homebrew + Scoop distribution. Github output mode is required: both
+    # channels publish *from* a tagged GitHub Release, so `runPipeline`
+    # drops the config outside it. Pins the three artifacts the feature
+    # touches — the cargo-dist keys in `dist-workspace.toml`, the
+    # `publish-homebrew-formula` job in `release.yml`, and the
+    # `publish-scoop` job appended to `ci.yml` — plus the README stanzas.
+    # The diff on every *other* cli fixture must be empty: that is the
+    # mechanical proof that omitting `distribution` changes nothing.
+    - customConfig:
+        distribution:
+          homebrew:
+            tap: acme/homebrew-tap
+          scoop:
+            bucket: acme/scoop-bucket
+      outputFolder: github-distribution
+      outputMode: github
+      outputVersion: "1.0.0"
     # Opt-in wire tests — emits `wiremock/wire-test-cases.json` and
     # `tests/wire_test.rs`. seed's `cargo test --all-features` compiles and
     # runs the emitted suite (in-process wiremock, no docker), so this is the
