@@ -77,7 +77,10 @@ export class EndpointSnippetsGenerator extends WithGeneration {
                             example,
                             isUserSpecified: true
                         }))
-                ].filter(({ example }) => example == null || !exampleOmitsRequestBody({ endpoint, example }));
+                ].filter(
+                    ({ example }) =>
+                        example == null || !exampleOmitsRequestBody({ context: this.context, endpoint, example })
+                );
 
                 const snippets = await Promise.all(
                     allExamples.map(({ example, isUserSpecified }) =>

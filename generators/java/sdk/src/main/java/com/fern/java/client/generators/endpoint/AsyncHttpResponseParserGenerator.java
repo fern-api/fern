@@ -70,19 +70,10 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             MethodSpec.Builder endpointWithoutRequestBuilder,
             MethodSpec endpointWithRequestOptions,
             List<String> paramNamesWoBody,
-            ParameterSpec bodyParameterSpec) {
-        // Handle parameterized types (e.g., OptionalNullable<T>) which need type witness syntax
-        if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
-            ParameterizedTypeName paramType = (ParameterizedTypeName) bodyParameterSpec.type;
-            endpointWithoutRequestBuilder.addStatement(
-                    "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
-                    paramType.rawType,
-                    paramType.typeArguments.get(0));
-        } else {
-            endpointWithoutRequestBuilder.addStatement(
-                    "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
-                    bodyParameterSpec.type);
-        }
+            List<Object> bodyValueFormatArgs) {
+        endpointWithoutRequestBuilder.addStatement(
+                "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
+                bodyValueFormatArgs.toArray());
     }
 
     @Override
@@ -90,21 +81,11 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             MethodSpec.Builder endpointWithoutRequestWithRequestOptionsBuilder,
             MethodSpec endpointWithRequestOptions,
             List<String> paramNamesWoBodyWithRequestOptions,
-            ParameterSpec bodyParameterSpec) {
-        // Handle parameterized types (e.g., OptionalNullable<T>) which need type witness syntax
-        if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
-            ParameterizedTypeName paramType = (ParameterizedTypeName) bodyParameterSpec.type;
-            endpointWithoutRequestWithRequestOptionsBuilder.addStatement(
-                    "return " + endpointWithRequestOptions.name + "("
-                            + String.join(",", paramNamesWoBodyWithRequestOptions) + ")",
-                    paramType.rawType,
-                    paramType.typeArguments.get(0));
-        } else {
-            endpointWithoutRequestWithRequestOptionsBuilder.addStatement(
-                    "return " + endpointWithRequestOptions.name + "("
-                            + String.join(",", paramNamesWoBodyWithRequestOptions) + ")",
-                    bodyParameterSpec.type);
-        }
+            List<Object> bodyValueFormatArgs) {
+        endpointWithoutRequestWithRequestOptionsBuilder.addStatement(
+                "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBodyWithRequestOptions)
+                        + ")",
+                bodyValueFormatArgs.toArray());
     }
 
     @Override

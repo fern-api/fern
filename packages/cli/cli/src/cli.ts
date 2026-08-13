@@ -1988,7 +1988,7 @@ function addDocsThemeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
 function addDocsThemeDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "delete",
-        false,
+        "Delete a theme from Fern's cloud",
         (yargs) =>
             yargs
                 .option("name", {

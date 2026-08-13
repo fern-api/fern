@@ -1,0 +1,4 @@
+- summary: |
+    Build an empty request body in snippets for an endpoint example that omits a body the wrapped
+    request requires, instead of leaving the builder's required `body` stage unset.
+  type: fix

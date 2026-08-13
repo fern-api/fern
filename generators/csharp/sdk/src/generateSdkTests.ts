@@ -41,7 +41,7 @@ function generateMockServerTests({ context }: { context: SdkGeneratorContext }):
                 if (example != null && hasEmptyPathParameter(example)) {
                     return false;
                 }
-                if (example != null && exampleOmitsRequestBody({ endpoint, example })) {
+                if (example != null && exampleOmitsRequestBody({ context, endpoint, example })) {
                     return false;
                 }
                 return true;
