@@ -19,6 +19,7 @@ import type { IrSummary } from "./ir.js";
 import {
     patchCargoLockForSdk,
     patchCargoLockForTypes,
+    patchCargoLockForTypePartitions,
     patchCargoToml,
     withDistributionDefaults
 } from "./patchCargoToml.js";
@@ -166,13 +167,17 @@ export async function runPipeline(args: {
     // Generate the embedded types + SDK crates (on by default; opt-out via customCommands: false).
     let typesCrateName: string | undefined;
     let sdkCrateName: string | undefined;
+    let typePartitionCrateNames: string[] = [];
     let subClients: SubClientField[] = [];
     if (customCommands && irFilepath != null) {
-        typesCrateName = await generateEmbeddedTypes({
+        const typesResult = await generateEmbeddedTypes({
             irFilepath,
             outputDir,
-            binaryName
+            binaryName,
+            splitTypeCrates: customConfig.splitTypeCrates
         });
+        typesCrateName = typesResult.typesCrateName;
+        typePartitionCrateNames = typesResult.partitionCrateNames;
         await writeFernignore(outputDir, binaryName);
 
         if (typesCrateName != null) {
@@ -214,6 +219,9 @@ export async function runPipeline(args: {
     if (typesCrateName != null || sdkCrateName != null) {
         await patchCargoToml({ outputDir, binaryName, typesCrateName, sdkCrateName });
         const packageName = customConfig.packageIdentity?.name;
+        if (typePartitionCrateNames.length > 0) {
+            await patchCargoLockForTypePartitions({ outputDir, partitionCrateNames: typePartitionCrateNames });
+        }
         if (typesCrateName != null) {
             // When the SDK crate exists, the CLI binary depends on the
             // SDK (which re-exports types) — so skip adding types as a
@@ -228,7 +236,7 @@ export async function runPipeline(args: {
         if (sdkCrateName != null && typesCrateName != null) {
             await patchCargoLockForSdk({ outputDir, sdkCrateName, typesCrateName, packageName });
         }
-        await patchDistWorkspaceToml({ outputDir, typesCrateName, sdkCrateName });
+        await patchDistWorkspaceToml({ outputDir, typesCrateName, sdkCrateName, typePartitionCrateNames });
     }
 
     if (outputConfig.isGithubOutput) {

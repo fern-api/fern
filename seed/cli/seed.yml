@@ -73,6 +73,11 @@ fixtures:
   query-parameters-openapi:
     - customConfig: null
       outputFolder: no-custom-config
+    # Split type crates where every type is root-level: they all land in the
+    # shared core crate and the facade fronts it alone.
+    - customConfig:
+        splitTypeCrates: true
+      outputFolder: with-split-type-crates
     # Github output mode with npm publish info — verifies that the
     # generator emits `.github/workflows/ci.yml` and stamps the
     # resolved version into Cargo.toml.
@@ -144,6 +149,13 @@ fixtures:
         binaryName: acme-versioned
         generateWireTests: true
       outputFolder: with-wire-tests
+    # One type crate per API behind a facade, instead of a single crate holding
+    # every type. `cargo build --locked` here is what proves the split crates,
+    # their path dependencies, and the generated lock stanzas all resolve.
+    - customConfig:
+        binaryName: acme-versioned
+        splitTypeCrates: true
+      outputFolder: with-split-type-crates
   cli-oauth:
     - customConfig:
         binaryName: oauth-test
@@ -235,6 +247,13 @@ fixtures:
         binaryName: basic-auth-cli
         generateWireTests: true
       outputFolder: with-wire-tests
+    # Split type crates where a root-level type is reachable from more than one
+    # subpackage: it lands in the shared core crate, and the per-subpackage
+    # crates reference it across a crate boundary.
+    - customConfig:
+        binaryName: basic-auth-cli
+        splitTypeCrates: true
+      outputFolder: with-split-type-crates
 
 # Alpha-quality coverage: the SDK template only handles happy-path
 # OpenAPI specs. Seed iterates every test-definition by default; fixtures

@@ -1,0 +1,15 @@
+[package]
+name = "basic_auth_cli_types"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+doctest = false
+
+[dependencies]
+
+[dependencies.basic_auth_cli_types_system]
+path = "../basic-auth-cli-types-system"
+
+[dependencies.basic_auth_cli_types_widgets]
+path = "../basic-auth-cli-types-widgets"

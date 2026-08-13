@@ -422,6 +422,38 @@ export function addTypesCrateToLock(
 }
 
 /**
+ * Patch Cargo.lock to include the per-API type crates that sit behind the
+ * types facade. Same requirement as {@link patchCargoLockForTypes}: a path
+ * dependency without a `[[package]]` entry makes `cargo build --locked` fail.
+ *
+ * Must run before {@link patchCargoLockForTypes} so the facade's own stanza
+ * can resolve these as already-locked packages. `partitionCrateNames` is
+ * expected in dependency order (the shared core crate first), for the same
+ * reason.
+ */
+export async function patchCargoLockForTypePartitions(args: {
+    outputDir: string;
+    partitionCrateNames: string[];
+}): Promise<void> {
+    const { outputDir, partitionCrateNames } = args;
+    const lockPath = path.join(outputDir, "Cargo.lock");
+    let contents = await readFile(lockPath, "utf-8");
+    for (const crateName of partitionCrateNames) {
+        const manifest = await readGeneratedCrateManifest(outputDir, crateName);
+        const snakeName = crateName.replace(/-/g, "_");
+        contents =
+            contents.trimEnd() +
+            "\n" +
+            generatedCrateLockStanza(
+                snakeName,
+                manifest.version,
+                renderLockDependencyList(contents, manifest.dependencies, [snakeName])
+            );
+    }
+    await writeFile(lockPath, contents);
+}
+
+/**
  * Patch Cargo.lock to include the generated SDK crate as a workspace
  * member. Same pattern as `patchCargoLockForTypes`, but the SDK crate's
  * dependency list is different: it depends on the types crate plus

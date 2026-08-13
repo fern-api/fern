@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `splitTypeCrates`, which distributes the generated `<binaryName>-types` crate
+    across one crate per API — plus a shared core crate for types that more than one
+    API references — behind a facade crate that keeps the original crate name and
+    re-exports them.
+
+    A single crate holding every generated type is one `rustc` compilation unit, so
+    its peak memory is driven by the total amount of generated code; with enough
+    specs that is large enough to be killed on a standard CI runner. Cargo compiles
+    crates in separate processes, so splitting caps the peak at the largest single
+    API and lets the remaining crates build in parallel and cache independently.
+
+    Defaults to `false`: output is unchanged unless a consumer opts in. The CLI still
+    ships as one binary with every spec embedded, and `use <binary>_types::SomeType`
+    keeps resolving through the facade.
+  type: feat
