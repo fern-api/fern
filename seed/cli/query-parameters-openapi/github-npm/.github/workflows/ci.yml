@@ -71,6 +71,11 @@ jobs:
             | jq -r --arg manifest "${PWD}/Cargo.toml" \
               '.packages[] | select(.manifest_path == $manifest) | .version')
 
+          if [[ -z "${CRATE_VERSION}" ]]; then
+            echo "::error::Could not determine the crate version from cargo metadata (no package matched ${PWD}/Cargo.toml)."
+            exit 1
+          fi
+
           if [[ "${TAG_VERSION}" != "${CRATE_VERSION}" ]]; then
             echo "::error::Tag ${GITHUB_REF_NAME} publishes version ${TAG_VERSION}, but Cargo.toml is ${CRATE_VERSION}."
             echo "::error::The binary would report ${CRATE_VERSION} from --version while the npm packages say ${TAG_VERSION}."

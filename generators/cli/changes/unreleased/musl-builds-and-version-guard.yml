@@ -12,3 +12,8 @@
     Cargo.toml disagree, instead of publishing packages whose binary reports a
     `--version` that is not on the registry.
   type: fix
+- summary: |
+    Fail the publish workflow's version guard with a clear, actionable error when
+    the crate version can't be resolved from `cargo metadata`, instead of
+    reporting a misleading empty-string version mismatch or silently passing.
+  type: fix
