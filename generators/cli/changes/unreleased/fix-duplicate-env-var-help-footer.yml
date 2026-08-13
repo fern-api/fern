@@ -1,0 +1,7 @@
+- summary: |
+    The root `--help` of a generated CLI no longer prints the environment
+    variable table twice. The command tree already carries the runtime footer,
+    and decorating it re-appended the same block; the appended copy was joined
+    with a single newline, so the existing block-level deduplication treated
+    both copies as one atomic block and could not collapse them.
+  type: fix
