@@ -39,8 +39,8 @@ export abstract class AbstractEndpointSnippetGenerator<Context extends AbstractD
      * imports or client instantiation, for callers that render the invocation within code
      * of their own (e.g. a documentation code template).
      *
-     * Implemented per generator; generators that do not implement it fall back to the
-     * complete snippet.
+     * Implemented per generator; generators that do not implement it, and invocations that
+     * cannot stand on their own, fall back to the complete snippet.
      */
     public generateInvocationSnippetSync?({
         endpoint,
@@ -50,5 +50,5 @@ export abstract class AbstractEndpointSnippetGenerator<Context extends AbstractD
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
         options?: Options;
-    }): string;
+    }): string | undefined;
 }

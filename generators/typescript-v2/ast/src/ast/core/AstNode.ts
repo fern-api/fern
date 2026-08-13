@@ -9,29 +9,41 @@ export abstract class AstNode extends AbstractAstNode {
      */
     public async toStringAsync({
         customConfig,
-        formatter,
-        omitImports
+        formatter
     }: {
         customConfig: TypescriptCustomConfigSchema | undefined;
         formatter?: AbstractFormatter;
-        omitImports?: boolean;
     }): Promise<string> {
         const file = new TypeScriptFile({ customConfig, formatter });
         this.write(file);
-        return await file.toStringAsync({ omitImports });
+        return await file.toStringAsync();
     }
 
     public toString({
         customConfig,
-        formatter,
-        omitImports
+        formatter
     }: {
         customConfig: TypescriptCustomConfigSchema | undefined;
         formatter?: AbstractFormatter;
-        omitImports?: boolean;
     }): string {
         const file = new TypeScriptFile({ customConfig, formatter });
         this.write(file);
-        return file.toString({ omitImports });
+        return file.toString();
+    }
+
+    /**
+     * Writes the node without the import statements it references. `hasImports` reports
+     * whether any were dropped, since the code is only valid on its own without them.
+     */
+    public toStringWithoutImports({
+        customConfig,
+        formatter
+    }: {
+        customConfig: TypescriptCustomConfigSchema | undefined;
+        formatter?: AbstractFormatter;
+    }): { code: string; hasImports: boolean } {
+        const file = new TypeScriptFile({ customConfig, formatter });
+        this.write(file);
+        return { code: file.toString({ omitImports: true }), hasImports: file.hasImports() };
     }
 }

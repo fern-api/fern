@@ -44,6 +44,13 @@ export class TypeScriptFile extends Writer {
         return this.buffer;
     }
 
+    /**
+     * Whether anything written to this file references an import.
+     */
+    public hasImports(): boolean {
+        return this.stringifyImports().length > 0;
+    }
+
     private stringifyImports(): string {
         let result = "";
         for (const [module, references] of Object.entries(this.imports)) {
