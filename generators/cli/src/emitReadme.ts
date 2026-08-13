@@ -2,8 +2,10 @@ import { Block, BlockMerger, ReadmeParser } from "@fern-api/generator-cli/readme
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 
+import type { FernCliDistributionConfig } from "./customConfig.js";
 import type { DetectedAuthBinding } from "./detectAuth.js";
 import { toEnvVarPrefix } from "./identity.js";
+import { TEMPLATE_PACKAGE_NAME } from "./patchCargoToml.js";
 import type { ResolvedNpmPublishInfo } from "./resolveOutputConfig.js";
 
 /**
@@ -27,12 +29,28 @@ export async function emitReadme(args: {
     authBindings: DetectedAuthBinding[];
     npmPublishInfo: ResolvedNpmPublishInfo | undefined;
     repoUrl: string | undefined;
+    distribution?: FernCliDistributionConfig;
+    /**
+     * Cargo package name. cargo-dist names its installer scripts after the
+     * *package*, not the binary, so the two differ whenever
+     * `packageIdentity.name` is set (or left at the template default).
+     */
+    packageName?: string;
 }): Promise<void> {
-    const { outputDir, binaryName, apiDisplayName, authBindings, npmPublishInfo, repoUrl } = args;
+    const { outputDir, binaryName, apiDisplayName, authBindings, npmPublishInfo, repoUrl, distribution } = args;
+    const installerName = args.packageName ?? TEMPLATE_PACKAGE_NAME;
     const displayName = apiDisplayName ?? binaryName;
 
     const header = generateHeader({ displayName, npmPublishInfo });
-    const blocks = generateBlocks({ binaryName, displayName, authBindings, npmPublishInfo, repoUrl });
+    const blocks = generateBlocks({
+        binaryName,
+        displayName,
+        authBindings,
+        npmPublishInfo,
+        repoUrl,
+        distribution,
+        installerName
+    });
 
     const readmePath = path.join(outputDir, "README.md");
     const existing = await readExistingReadme(readmePath);
@@ -136,11 +154,13 @@ function generateBlocks(args: {
     authBindings: DetectedAuthBinding[];
     npmPublishInfo: ResolvedNpmPublishInfo | undefined;
     repoUrl: string | undefined;
+    distribution: FernCliDistributionConfig | undefined;
+    installerName: string;
 }): Block[] {
-    const { binaryName, authBindings, npmPublishInfo, repoUrl } = args;
+    const { binaryName, authBindings, npmPublishInfo, repoUrl, distribution, installerName } = args;
     const envPrefix = toEnvVarPrefix(binaryName);
     return [
-        generateInstallation({ binaryName, npmPublishInfo, repoUrl }),
+        generateInstallation({ binaryName, npmPublishInfo, repoUrl, distribution, installerName }),
         generateAuthentication({ binaryName, authBindings }),
         generateQuickStart(binaryName),
         generateUsage(binaryName),
@@ -157,21 +177,23 @@ function generateInstallation(args: {
     binaryName: string;
     npmPublishInfo: ResolvedNpmPublishInfo | undefined;
     repoUrl: string | undefined;
+    distribution: FernCliDistributionConfig | undefined;
+    installerName: string;
 }): Block {
-    const { binaryName, npmPublishInfo, repoUrl } = args;
+    const { binaryName, npmPublishInfo, repoUrl, distribution, installerName } = args;
 
     // Build the curl|bash one-liner pointing at the release-asset installer.
     // If we have a repoUrl, construct the full download URL; otherwise use
     // a placeholder that the user can fill in.
     const installerUrl =
         repoUrl != null
-            ? `${repoUrl}/releases/latest/download/${binaryName}-installer.sh`
-            : `https://github.com/<org>/<repo>/releases/latest/download/${binaryName}-installer.sh`;
+            ? `${repoUrl}/releases/latest/download/${installerName}-installer.sh`
+            : `https://github.com/<org>/<repo>/releases/latest/download/${installerName}-installer.sh`;
 
     const powershellUrl =
         repoUrl != null
-            ? `${repoUrl}/releases/latest/download/${binaryName}-installer.ps1`
-            : `https://github.com/<org>/<repo>/releases/latest/download/${binaryName}-installer.ps1`;
+            ? `${repoUrl}/releases/latest/download/${installerName}-installer.ps1`
+            : `https://github.com/<org>/<repo>/releases/latest/download/${installerName}-installer.ps1`;
 
     const sections: string[] = [
         "## Installation",
@@ -207,6 +229,35 @@ function generateInstallation(args: {
         );
     }
 
+    if (distribution?.homebrew != null) {
+        const { tap, formula } = distribution.homebrew;
+        sections.push(
+            "### Homebrew (macOS / Linux)",
+            "",
+            "```bash",
+            // The three-segment form auto-taps, so first install is one
+            // line and later `brew upgrade <name>` needs no prefix.
+            `brew install ${toBrewTapName(tap)}/${formula ?? binaryName}`,
+            "```",
+            ""
+        );
+    }
+
+    if (distribution?.scoop != null) {
+        const { bucket } = distribution.scoop;
+        sections.push(
+            "### Scoop (Windows)",
+            "",
+            "```powershell",
+            `scoop bucket add ${bucketAlias(bucket)} https://github.com/${bucket}`,
+            `scoop install ${binaryName}`,
+            "```",
+            "",
+            "> Scoop installs the x64 build. It runs on ARM64 Windows under emulation.",
+            ""
+        );
+    }
+
     sections.push(
         "### Build from source",
         "",
@@ -220,6 +271,29 @@ function generateInstallation(args: {
     );
 
     return new Block({ id: "INSTALLATION", content: lines(...sections) });
+}
+
+/**
+ * Convert a tap repository (`acme/homebrew-tap`) into the name Homebrew
+ * addresses it by (`acme/tap`) — `brew` expands `owner/name` back to the
+ * `owner/homebrew-name` repo. Left alone when the repo isn't
+ * `homebrew-` prefixed, so the emitted command still matches whatever
+ * the consumer configured.
+ */
+function toBrewTapName(tap: string): string {
+    const [owner, repo] = tap.split("/");
+    if (owner == null || repo == null) {
+        return tap;
+    }
+    return `${owner}/${repo.replace(/^homebrew-/, "")}`;
+}
+
+/**
+ * Local alias for `scoop bucket add`. Scoop lets the user pick any name;
+ * the owner reads better than `scoop-bucket` in the install snippet.
+ */
+function bucketAlias(bucket: string): string {
+    return bucket.split("/")[0] ?? bucket;
 }
 
 // ---------------------------------------------------------------------------

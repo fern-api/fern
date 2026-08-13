@@ -3,6 +3,7 @@ import { access, mkdir, mkdtemp, readFile, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import type { FernCliCustomConfig } from "../customConfig.js";
 import type { IrSummary } from "../ir.js";
 import type { ResolvedOutputConfig } from "../resolveOutputConfig.js";
 import { runPipeline } from "../runPipeline.js";
@@ -48,6 +49,11 @@ describe("runPipeline", () => {
                 'name = "fern-cli-sdk"',
                 'version = "0.0.0"',
                 'readme = "README.md"',
+                // Mirrors the real template's Fern-owned values, so the
+                // homepage-override test below is a genuine override rather
+                // than an insert into an empty block.
+                'repository = "https://github.com/fern-api/cli-sdk"',
+                'homepage = "https://github.com/fern-api/cli-sdk"',
                 "",
                 "# Rewritten by the fern-cli generator's `patchCargoToml` step — both the",
                 "# `name` and `path` are replaced with the derived binary name so users",
@@ -400,5 +406,185 @@ describe("runPipeline", () => {
         expect(ciYml).toContain("npm publish");
         expect(ciYml).toContain("x86_64-unknown-linux-musl");
         expect(ciYml).toContain("aarch64-apple-darwin");
+    });
+    // -----------------------------------------------------------------
+    // Distribution channels (Homebrew / Scoop)
+    // -----------------------------------------------------------------
+
+    const homebrewAndScoop = {
+        homebrew: { tap: "acme/homebrew-tap" },
+        scoop: { bucket: "acme/scoop-bucket" }
+    };
+
+    /**
+     * The synthetic template above omits `dist-workspace.toml`, so the
+     * homebrew patch would silently no-op. Stage a minimal one for the
+     * tests that assert on it.
+     */
+    async function stageDistWorkspace(): Promise<void> {
+        await writeFile(
+            path.join(sdkTemplateDir, "dist-workspace.toml"),
+            [
+                "[workspace]",
+                'members = ["cargo:."]',
+                "",
+                "[dist]",
+                'installers = ["shell", "powershell"]',
+                "publish-jobs = []",
+                ""
+            ].join("\n")
+        );
+    }
+
+    async function generateWithDistribution(
+        outputConfig: ResolvedOutputConfig,
+        distribution: FernCliCustomConfig["distribution"]
+    ): Promise<void> {
+        await stageSdkTemplate();
+        await stageDistWorkspace();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0", info: { title: "Acme" } } }]);
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme-cli", distribution },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig,
+            sdkTemplateDir,
+            specsDir
+        });
+    }
+
+    it("wires homebrew into dist-workspace.toml and release.yml when configured", async () => {
+        await generateWithDistribution(githubConfig, { homebrew: { tap: "acme/homebrew-tap" } });
+
+        const distToml = await readFile(path.join(outputDir, "dist-workspace.toml"), "utf-8");
+        expect(distToml).toContain('installers = ["shell", "powershell", "homebrew"]');
+        expect(distToml).toContain('publish-jobs = ["homebrew"]');
+        expect(distToml).toContain('tap = "acme/homebrew-tap"');
+        expect(distToml).toContain('formula = "acme-cli"');
+
+        const releaseYml = await readFile(path.join(outputDir, ".github", "workflows", "release.yml"), "utf-8");
+        expect(releaseYml).toContain("publish-homebrew-formula");
+        expect(releaseYml).toContain("secrets.HOMEBREW_TAP_TOKEN");
+    });
+
+    // cargo-dist copies [package] homepage verbatim into the published .rb.
+    // Left at the template's value it would advertise Fern's cli-sdk repo on
+    // the consumer's own tap.
+    it("points the crate identity at the consumer's repo when Homebrew is on", async () => {
+        await generateWithDistribution(githubConfig, { homebrew: { tap: "acme/homebrew-tap" } });
+        const cargo = await readFile(path.join(outputDir, "Cargo.toml"), "utf-8");
+        // `repository` drives the formula's per-arch release download URLs —
+        // left at the template's value, every `brew install` 404s against
+        // Fern's archived cli-sdk repo.
+        expect(cargo).toContain('repository = "https://github.com/acme/cli"');
+        expect(cargo).toContain('homepage = "https://github.com/acme/cli"');
+        expect(cargo).not.toContain("fern-api/cli-sdk");
+    });
+
+    it("never overrides identity fields the consumer pinned themselves", async () => {
+        await stageSdkTemplate();
+        await stageDistWorkspace();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0", info: { title: "Acme" } } }]);
+        await runPipeline({
+            outputDir,
+            customConfig: {
+                binaryName: "acme-cli",
+                packageIdentity: {
+                    repository: "https://github.com/acme/other",
+                    homepage: "https://acme.com",
+                    description: "Mine"
+                },
+                distribution: { homebrew: { tap: "acme/homebrew-tap" } }
+            },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig: githubConfig,
+            sdkTemplateDir,
+            specsDir
+        });
+        const cargo = await readFile(path.join(outputDir, "Cargo.toml"), "utf-8");
+        expect(cargo).toContain('repository = "https://github.com/acme/other"');
+        expect(cargo).toContain('homepage = "https://acme.com"');
+        expect(cargo).toContain('description = "Mine"');
+    });
+
+    it("wires scoop into release.yml, beside the homebrew job", async () => {
+        await generateWithDistribution(githubConfig, { scoop: { bucket: "acme/scoop-bucket" } });
+
+        const releaseYml = await readFile(path.join(outputDir, ".github", "workflows", "release.yml"), "utf-8");
+        expect(releaseYml).toContain("publish-scoop");
+        expect(releaseYml).toContain('repository: "acme/scoop-bucket"');
+
+        // ci.yml keeps only build/test + npm. Publishing lives in release.yml
+        // so both channels gate on the same `host` job and cannot drift.
+        const ciYml = await readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
+        expect(ciYml).not.toContain("scoop");
+        expect(ciYml).toContain("publish-launcher");
+    });
+
+    it("emits both channels alongside the npm pipeline", async () => {
+        await generateWithDistribution(githubConfig, homebrewAndScoop);
+
+        const ciYml = await readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
+        const releaseYml = await readFile(path.join(outputDir, ".github", "workflows", "release.yml"), "utf-8");
+        const readme = await readFile(path.join(outputDir, "README.md"), "utf-8");
+
+        expect(ciYml).toContain("npm publish");
+        expect(releaseYml).toContain("publish-homebrew-formula");
+        expect(releaseYml).toContain("publish-scoop");
+        expect(readme).toContain("brew install acme/tap/acme-cli");
+        expect(readme).toContain("scoop bucket add acme https://github.com/acme/scoop-bucket");
+    });
+
+    it("emits scoop in release.yml even when npm is not configured", async () => {
+        await generateWithDistribution(githubConfigNoNpm, { scoop: { bucket: "acme/scoop-bucket" } });
+
+        const releaseYml = await readFile(path.join(outputDir, ".github", "workflows", "release.yml"), "utf-8");
+        expect(releaseYml).toContain("publish-scoop");
+
+        const ciYml = await readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
+        expect(ciYml).not.toContain("npm publish");
+        expect(ciYml).not.toContain("scoop");
+    });
+
+    // Both channels publish *from* a GitHub Release, so there is nothing to
+    // wire up when the generator writes to local files — same gate npm
+    // publishing already sits behind.
+    it("ignores distribution config outside github output mode", async () => {
+        await generateWithDistribution(localFilesConfig, homebrewAndScoop);
+
+        const distToml = await readFile(path.join(outputDir, "dist-workspace.toml"), "utf-8");
+        expect(distToml).not.toContain("homebrew");
+        expect(distToml).not.toContain("tap =");
+
+        const readme = await readFile(path.join(outputDir, "README.md"), "utf-8");
+        expect(readme).not.toContain("brew install");
+        expect(readme).not.toContain("scoop install");
+
+        await expect(access(path.join(outputDir, ".github", "workflows"))).rejects.toThrow();
+    });
+
+    // The no-regression guarantee: an existing consumer who never sets
+    // `distribution` must get byte-identical output.
+    it("produces output identical to an unconfigured generation when distribution is absent", async () => {
+        await stageSdkTemplate();
+        await stageDistWorkspace();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0", info: { title: "Acme" } } }]);
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme-cli" },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig: githubConfig,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        const distToml = await readFile(path.join(outputDir, "dist-workspace.toml"), "utf-8");
+        expect(distToml).toContain('installers = ["shell", "powershell"]');
+        expect(distToml).toContain("publish-jobs = []");
+
+        const ciYml = await readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
+        const releaseYml = await readFile(path.join(outputDir, ".github", "workflows", "release.yml"), "utf-8");
+        expect(ciYml).not.toContain("scoop");
+        expect(releaseYml).not.toContain("homebrew");
     });
 });

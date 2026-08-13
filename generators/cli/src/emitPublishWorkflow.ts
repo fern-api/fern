@@ -23,6 +23,7 @@ const TARGETS: ReadonlyArray<{
  * Emit `.github/workflows/ci.yml` with only build+test jobs (check,
  * compile, test). Used when the output mode is `github` but no npm
  * publish info is configured.
+ *
  */
 export async function emitCiWorkflow(args: { outputDir: string; binaryName: string }): Promise<void> {
     const { outputDir, binaryName } = args;

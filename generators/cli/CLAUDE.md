@@ -104,9 +104,10 @@ the path the patched Cargo.toml references).
 | [`src/copySdk.ts`](src/copySdk.ts) | Recursive copy of `/dist/sdk/` → `outputDir`. |
 | [`src/copySpecs.ts`](src/copySpecs.ts) | Reads `/fern/specs/specs-manifest.json`, copies each spec into `cli/<binaryName>/`, emits `main.rs` from a supplied list of auth bindings. |
 | [`src/patchCargoToml.ts`](src/patchCargoToml.ts) | Literal string replacements against the shipped `Cargo.toml`. Throws if no anchors matched. |
-| [`src/patchDistWorkspace.ts`](src/patchDistWorkspace.ts) | Strips Fern-specific cargo-dist metadata (npm-scope, npm-package) from the shipped `dist-workspace.toml`. |
+| [`src/patchDistWorkspace.ts`](src/patchDistWorkspace.ts) | Strips Fern-specific cargo-dist metadata (npm-scope, npm-package) from the shipped `dist-workspace.toml`; adds the Homebrew installer/publish-job/tap keys when `customConfig.distribution.homebrew` is set. |
+| [`src/emitScoopWorkflow.ts`](src/emitScoopWorkflow.ts) | Renders the `publish-scoop` job appended to `ci.yml`. cargo-dist has no Scoop support, so this channel is hand-written: poll the release for the win64 archive, hash it, render the manifest, commit to the bucket repo. |
 | [`src/identity.ts`](src/identity.ts) | `deriveBinaryName`, `toKebabCase`, `toEnvVarPrefix`. Resolves `customConfig.binaryName ?? ir.apiDisplayName`. |
-| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName`, `customCommands`, `rootGroup`, `packageIdentity`. |
+| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName`, `customCommands`, `rootGroup`, `packageIdentity`, `distribution`. |
 | [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` via `visitDiscriminatedUnion` and emits one auth binding per supported scheme, each tagged `placement: "root" \| "binding"`. Bearer, header, OAuth, and two-field basic go to root; only the `usernameOmit`/`passwordOmit` custom-provider variants stay binding-level. Synchronous — no disk reads. |
 | [`src/wireTests/`](src/wireTests/) | Opt-in (`customConfig.generateWireTests`) mock-driven integration suite. `manifest.ts` reuses `@fern-api/mock-utils` `convertToWireMock` to derive one naming-independent case per endpoint example (`{method, path, params, body, response}`) and emits `wiremock/wire-test-cases.json`. `harness.ts` renders the generic `tests/wire_test.rs`. `generateWireTests.ts` wires them together after `copySpecs`. |
 | [`build.mjs`](build.mjs) | Bundles `src/cli.ts` → `dist/cli.cjs`, copies `./sdk/` → `./dist/sdk/` with `SDK_IGNORE` (template dev files that shouldn't ship). |
@@ -159,6 +160,96 @@ same pass — `[package] name` and the lockfile must agree or
 
 `[lib] name = "fern_cli_sdk"` is deliberately **not** configurable: every
 `use fern_cli_sdk::...` in the vendored `src/` tree resolves through it.
+
+## Distribution channels
+
+Every generated CLI ships GitHub Release archives plus `curl | bash` /
+`irm | iex` installers (cargo-dist `release.yml`), and npm packages when
+`output.location: npm` is configured (`ci.yml`). Homebrew and Scoop are
+opt-in on top of that, via `customConfig.distribution`:
+
+```yaml
+config:
+  binaryName: acme-cli
+  distribution:
+    homebrew:
+      tap: acme/homebrew-tap        # required, "<owner>/<repo>"
+      formula: acme                 # optional, defaults to binaryName
+      tokenEnvironmentVariable: HOMEBREW_TAP_TOKEN   # optional, default
+    scoop:
+      bucket: acme/scoop-bucket     # required, "<owner>/<repo>"
+      tokenEnvironmentVariable: SCOOP_BUCKET_TOKEN   # optional, default
+```
+
+The two channels are **not** symmetric, because cargo-dist supports one
+and not the other:
+
+| | Homebrew | Scoop |
+|---|---|---|
+| Mechanism | cargo-dist native installer | job we render |
+| Config | `installers` / `publish-jobs` / `tap` / `formula` in `dist-workspace.toml` (`patchDistWorkspace.ts`) | none |
+| Job lives in | `release.yml` (`emitReleaseWorkflow.ts`) | `release.yml` (`emitScoopWorkflow.ts`) |
+| Artifact source | cargo-dist's own `dist-manifest.json` | polls the GitHub Release for the win64 zip |
+| Arch coverage | every target in `targets` | `64bit` only |
+
+Both jobs live in `release.yml`, gated on `host` and on cargo-dist's own
+`announcement_is_prerelease` expression. Scoop's was briefly in `ci.yml`
+to keep `release.yml` a verbatim cargo-dist artifact; that was wrong on
+three counts. `ci.yml` gated it on `check`/`compile`/`test`, which
+`release.yml` knows nothing about — so one flaky test published Homebrew
+while the bucket silently stayed behind. It needed a 30-minute poll,
+because a job in `ci.yml` cannot `needs:` a job in `release.yml`. And a
+retry cost ~12 minutes of unrelated build and test before an 8-second
+publish. `needs: host` removes all three.
+
+`emitReleaseWorkflow.ts` keeps **one** cargo-dist template ending after
+the `host` job; publish jobs and the terminal `announce` job are appended
+by `constructReleaseWorkflowYaml`, because `announce`'s `needs` list
+depends on which publish jobs are on. `emitReleaseWorkflow.test.ts`
+asserts the unconfigured output is byte-identical to a committed
+pre-Homebrew seed fixture, so the composition cannot drift from what
+cargo-dist emits.
+
+Enabling Homebrew also points `[package]` at the consumer
+(`withDistributionDefaults` in [`patchCargoToml.ts`](src/patchCargoToml.ts)).
+cargo-dist renders the `.rb` straight off that block:
+
+| `[package]` | Where it lands in the formula |
+|---|---|
+| `repository` | the per-arch **release download URLs** |
+| `homepage` | `homepage "..."` |
+| `description` | `desc "..."` |
+
+`repository` is load-bearing: left at the template's value the URLs
+resolve to `github.com/fern-api/cli-sdk/releases/...` and every
+`brew install` 404s. All three default from `repoUrl` / the API display
+name when unset. Deliberately scoped to the Homebrew case — applying
+them unconditionally would change every existing github-mode
+`Cargo.toml`. `name` is *not* defaulted (it would rename the crate and
+its `Cargo.lock` entry); it only affects archive filenames, which stay
+internally consistent either way.
+
+Three things generation cannot do, which the consumer must:
+
+1. Create the tap (`homebrew-*`) and bucket repos, **public**.
+2. Add a PAT with write access to them under the configured secret names.
+   The built-in `GITHUB_TOKEN` cannot push cross-repo — `customConfig.ts`
+   rejects it rather than emitting a pipeline that fails after the tag is
+   cut.
+3. Keep GitHub Releases public. Both channels fetch archives from the
+   release URL. This is a real asymmetry with npm, whose packages embed
+   the binary bytes and so work from a private source repo.
+
+Only honored for `output.location: github` — both channels publish *from*
+a tagged release, so `runPipeline` drops the config outside github output
+mode, the same gate npm publishing sits behind. Omitting `distribution`
+entirely leaves output byte-identical, so no generator migration is
+needed.
+
+**Known gap — no self-update awareness.** The Rust runtime has no
+installation-method detection, so `<cli> self-update` does not know to
+run `brew upgrade` / `scoop update` for a brew/scoop install. That is
+separate work in `sdk/src/`.
 
 ## Auth detection
 

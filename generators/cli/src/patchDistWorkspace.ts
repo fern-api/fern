@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
+import type { FernCliHomebrewConfig } from "./customConfig.js";
 
 /**
  * Strip Fern-specific identifiers from the shipped `dist-workspace.toml`.
@@ -28,8 +29,17 @@ export async function patchDistWorkspaceToml(args: {
     outputDir: string;
     typesCrateName?: string;
     sdkCrateName?: string;
+    /**
+     * When set, cargo-dist's native Homebrew installer + publish job are
+     * turned on. Only meaningful on the first (crate-name-free) call —
+     * the member-adding call below reads the already-patched file back
+     * off disk, so the keys written here survive it.
+     */
+    homebrew?: FernCliHomebrewConfig;
+    /** Formula name fallback when `homebrew.formula` is unset. */
+    binaryName?: string;
 }): Promise<void> {
-    const { outputDir, typesCrateName, sdkCrateName } = args;
+    const { outputDir, typesCrateName, sdkCrateName, homebrew, binaryName } = args;
     const distTomlPath = path.join(outputDir, "dist-workspace.toml");
     let contents: string;
     try {
@@ -50,11 +60,91 @@ export async function patchDistWorkspaceToml(args: {
         return;
     }
 
-    const patched = applyDistWorkspacePatch(contents);
+    let patched = applyDistWorkspacePatch(contents);
+    if (homebrew != null) {
+        patched = applyHomebrewPatch(patched, homebrew, binaryName);
+    }
     if (patched === contents) {
         return;
     }
     await writeFile(distTomlPath, patched);
+}
+
+/**
+ * Turn on cargo-dist's Homebrew support. Purely additive: `installers`
+ * gains `"homebrew"`, `publish-jobs` gains `"homebrew"`, and the `tap` /
+ * `formula` keys cargo-dist reads at plan time are set under `[dist]`.
+ *
+ * Exported for unit-test access.
+ */
+export function applyHomebrewPatch(
+    distToml: string,
+    homebrew: FernCliHomebrewConfig,
+    binaryName: string | undefined
+): string {
+    let result = addToStringArray(distToml, "installers", "homebrew");
+    result = addToStringArray(result, "publish-jobs", "homebrew");
+    result = setDistKey(result, "tap", homebrew.tap);
+    const formula = homebrew.formula ?? binaryName;
+    if (formula != null) {
+        result = setDistKey(result, "formula", formula);
+    }
+    return result;
+}
+
+/**
+ * Append a quoted entry to a top-level TOML array (`installers`,
+ * `publish-jobs`), preserving the existing entries and their order.
+ * No-op when the entry is already present or the key is absent — the
+ * inverse of `stripNpmInstaller`, sharing its regex-over-one-line shape.
+ */
+export function addToStringArray(distToml: string, key: string, value: string): string {
+    const pattern = new RegExp(`^(${escapeRegExp(key)}\\s*=\\s*\\[)([^\\]]*)\\]`, "m");
+    return distToml.replace(pattern, (match, prefix: string, inner: string) => {
+        const items = inner
+            .split(",")
+            .map((s) => s.trim())
+            .filter((s) => s.length > 0);
+        if (items.includes(`"${value}"`)) {
+            return match;
+        }
+        return `${prefix}${[...items, `"${value}"`].join(", ")}]`;
+    });
+}
+
+/**
+ * Set a scalar string key inside the `[dist]` table. Replaces the value
+ * in place when the key already exists, otherwise appends the key at the
+ * end of the table (before the next `[section]` header, or at EOF).
+ * Appends a `[dist]` table when the file has none.
+ */
+export function setDistKey(distToml: string, key: string, value: string): string {
+    return setDistRawKey(distToml, key, `"${value}"`);
+}
+
+/**
+ * As `setDistKey`, but writes the value verbatim so non-string TOML
+ * (booleans, arrays) can be set too.
+ */
+export function setDistRawKey(distToml: string, key: string, rawValue: string): string {
+    const line = `${key} = ${rawValue}`;
+    const existing = new RegExp(`^${escapeRegExp(key)}\\s*=.*$`, "m");
+    if (existing.test(distToml)) {
+        return distToml.replace(existing, line);
+    }
+    const distHeader = distToml.match(/^\[dist\]$/m);
+    if (distHeader?.index == null) {
+        return `${distToml.endsWith("\n") ? distToml : `${distToml}\n`}\n[dist]\n${line}\n`;
+    }
+    const afterHeader = distHeader.index + distHeader[0].length;
+    const nextSection = distToml.slice(afterHeader).search(/^\[[^\]]+\]$/m);
+    const insertAt = nextSection === -1 ? distToml.length : afterHeader + nextSection;
+    const head = distToml.slice(0, insertAt).replace(/\n*$/, "\n");
+    return `${head}${line}\n${nextSection === -1 ? "" : "\n"}${distToml.slice(insertAt)}`;
+}
+
+function escapeRegExp(value: string): string {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 /**
@@ -69,6 +159,96 @@ export function applyDistWorkspacePatch(distToml: string): string {
     let result = distToml.replace(NPM_SCOPE_BLOCK, "").replace(NPM_PACKAGE_BLOCK, "");
     result = stripNpmInstaller(result);
     result = removeWorkspaceMember(result, PIPELINE_FIXTURE_MEMBER);
+    result = applyRustlsPatch(result);
+    result = dropUnbuildableTargets(result);
+    return result;
+}
+
+/**
+ * Drop `aarch64-unknown-linux-musl` from cargo-dist's target list.
+ *
+ * The CLI stores credentials in the OS keyring, which on Linux reaches
+ * secret-service through `libdbus-sys` — a C dependency. Statically
+ * linking that for aarch64-musl fails at link time with `undefined
+ * reference to __aarch64_ldadd4_sync`: GCC emits outline-atomics calls
+ * whose helpers live in libgcc, which isn't linked in a `-static`
+ * musl build. Observed on a real release; `x86_64-unknown-linux-musl`
+ * is unaffected and stays.
+ *
+ * Dropping it rather than fighting the linker is proportionate here:
+ * neither the Homebrew formula nor the Scoop manifest references musl
+ * at all, and ARM64 Alpine users keep a path because the npm publish
+ * job builds that target *natively* on an `ubuntu-24.04-arm` runner
+ * instead of cross-compiling, so it never hits this.
+ *
+ * The real fix is upstream in the SDK template — either making the
+ * keyring's secret-service backend optional or moving Linux to the
+ * dbus-free `linux-native` backend — but that changes where
+ * credentials are stored, which is not something to slip into a
+ * distribution change.
+ */
+export function dropUnbuildableTargets(distToml: string): string {
+    return removeFromStringArray(distToml, "targets", "aarch64-unknown-linux-musl");
+}
+
+/**
+ * Remove a quoted entry from a top-level TOML array, preserving the
+ * rest and their order. No-op when the entry or the key is absent.
+ */
+export function removeFromStringArray(distToml: string, key: string, value: string): string {
+    const pattern = new RegExp(`^(${escapeRegExp(key)}\\s*=\\s*\\[)([^\\]]*)\\]`, "m");
+    return distToml.replace(pattern, (_match, prefix: string, inner: string) => {
+        const items = inner
+            .split(",")
+            .map((s) => s.trim())
+            .filter((s) => s.length > 0 && s !== `"${value}"`);
+        return `${prefix}${items.join(", ")}]`;
+    });
+}
+
+/**
+ * Build every cargo-dist artifact against rustls instead of the crate's
+ * default `native-tls`.
+ *
+ * Two concrete defects this fixes, both observed on a real release:
+ *
+ *  1. **musl never built at all.** `native-tls` pulls `openssl-sys`,
+ *     whose build script needs a musl-linked OpenSSL that no GitHub
+ *     runner has. Both musl targets died in ~44s with "Could not find
+ *     directory of OpenSSL installation". Because `host` only runs when
+ *     `build-local-artifacts` succeeded or skipped, a *failed* matrix
+ *     leg meant no GitHub Release was created — so the whole
+ *     cargo-dist path (archives, shell installer, Homebrew formula)
+ *     produced nothing.
+ *
+ *  2. **The glibc binaries that did build are not portable.** The
+ *     released `x86_64-unknown-linux-gnu` executable carries
+ *     `NEEDED libssl.so.3` / `libcrypto.so.3`, so it fails to start on
+ *     any distro still on OpenSSL 1.1 — Ubuntu 20.04, Debian 11,
+ *     RHEL 8, Amazon Linux 2. That is the exact artifact `brew install`
+ *     hands to Linux users, so it would fail at their terminal rather
+ *     than in our CI.
+ *
+ * `rustls-tls-native-roots` still reads the OS trust store, so
+ * corporate/MITM root CAs keep working; what goes away is the dynamic
+ * dependency on the host's OpenSSL. This mirrors what the npm publish
+ * job in `ci.yml` already does for its musl builds
+ * (`--no-default-features --features rustls`).
+ *
+ * Applied to every github-output generation rather than only when a
+ * distribution channel is enabled: the broken musl leg and the
+ * OpenSSL-3 dependency are properties of the cargo-dist release
+ * pipeline itself, which is emitted unconditionally.
+ */
+export function applyRustlsPatch(distToml: string): string {
+    // No `[dist]` table means this file drives no cargo-dist build, so
+    // there is nothing to correct — and synthesising one would turn a
+    // file with no release config into a file that has some.
+    if (!/^\[dist\]$/m.test(distToml)) {
+        return distToml;
+    }
+    let result = setDistRawKey(distToml, "default-features", "false");
+    result = setDistRawKey(result, "features", '["rustls"]');
     return result;
 }
 
