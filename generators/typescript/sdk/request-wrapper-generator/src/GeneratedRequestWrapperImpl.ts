@@ -340,7 +340,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private getDocs(context: FileContext): string | undefined {
-        const exampleCalls = getExampleEndpointCalls(this.endpoint);
+        const exampleCalls = getExampleEndpointCalls(this.endpoint, context.respectOptionalRequestBody);
         if (exampleCalls.length === 0) {
             return undefined;
         }

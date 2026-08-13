@@ -17,6 +17,24 @@ service:
           type: RefundRequest
           optional: true
       response: Refund
+      examples:
+        # a user-specified example that leaves the body out, which stays renderable because the
+        # generated call takes the body as an optional parameter
+        - name: Full refund
+          path-parameters:
+            id: refund-id
+          response:
+            body:
+              id: refund-id
+        - name: Split refund
+          path-parameters:
+            id: refund-id
+          request:
+            amount: 60
+          response:
+            body:
+              id: refund-id
+              amount: 60
 
     # no other request properties, so the body is the only parameter: `bulkRefund(request?)`
     bulkRefund:

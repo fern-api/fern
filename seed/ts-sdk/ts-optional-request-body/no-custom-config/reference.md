@@ -26,8 +26,8 @@ Refund a payment, optionally with a partial amount.
 <dd>
 
 ```typescript
-await client.refund("id", {
-    amount: 1.1
+await client.refund("refund-id", {
+    amount: 60
 });
 
 ```

@@ -42,8 +42,8 @@ Instantiate and use the client with the following:
 import { SeedTsOptionalRequestBodyClient } from "@fern/ts-optional-request-body";
 
 const client = new SeedTsOptionalRequestBodyClient({ baseUrl: "YOUR_BASE_URL" });
-await client.refund("id", {
-    amount: 1.1
+await client.refund("refund-id", {
+    amount: 60
 });
 ```
 

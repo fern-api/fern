@@ -7,20 +7,20 @@ describe("SeedTsOptionalRequestBodyClient", () => {
     test("refund", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTsOptionalRequestBodyClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { amount: 1.1 };
-        const rawResponseBody = { id: "id", amount: 1.1 };
+        const rawRequestBody = { amount: 60 };
+        const rawResponseBody = { id: "refund-id", amount: 60 };
 
         server
             .mockEndpoint()
-            .post("/refunds/id")
+            .post("/refunds/refund-id")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.refund("id", {
-            amount: 1.1,
+        const response = await client.refund("refund-id", {
+            amount: 60,
         });
         expect(response).toEqual(rawResponseBody);
     });

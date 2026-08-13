@@ -33,8 +33,8 @@ export class SeedTsOptionalRequestBodyClient {
      * @throws {@link errors.SeedTsOptionalRequestBodyTimeoutError}
      *
      * @example
-     *     await client.refund("id", {
-     *         amount: 1.1
+     *     await client.refund("refund-id", {
+     *         amount: 60
      *     })
      */
     public refund(
