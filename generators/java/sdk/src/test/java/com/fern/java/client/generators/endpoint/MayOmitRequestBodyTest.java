@@ -84,7 +84,8 @@ class MayOmitRequestBodyTest {
         assertThat(AbstractEndpointWriter.requiresRequestBody(HttpMethod.PUT)).isTrue();
         assertThat(AbstractEndpointWriter.requiresRequestBody(HttpMethod.PATCH)).isTrue();
         assertThat(AbstractEndpointWriter.requiresRequestBody(HttpMethod.GET)).isFalse();
-        assertThat(AbstractEndpointWriter.requiresRequestBody(HttpMethod.DELETE)).isFalse();
+        assertThat(AbstractEndpointWriter.requiresRequestBody(HttpMethod.DELETE))
+                .isFalse();
         assertThat(AbstractEndpointWriter.requiresRequestBody(HttpMethod.HEAD)).isFalse();
     }
 
