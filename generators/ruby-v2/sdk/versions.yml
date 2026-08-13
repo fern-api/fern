@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.23.0
+  changelogEntry:
+    - summary: |
+        Endpoints whose request body is a referenced type no longer serialize path parameters into
+        the JSON body. With `respectOptionalRequestBody`, an omitted optional body on such an endpoint
+        now sends no body and no `Content-Type` instead of a body containing the path parameters.
+      type: fix
+    - summary: |
+        Add the `respectOptionalRequestBody` configuration option. When enabled, an endpoint whose
+        request body the API does not require lets callers omit the body: the request then carries
+        neither a body nor a `Content-Type` header, instead of sending `{}` as `application/json`.
+        Disabled by default.
+      type: feat
+  createdAt: "2026-08-13"
+  irVersion: 67
 - version: 1.22.0
   changelogEntry:
     - summary: |
