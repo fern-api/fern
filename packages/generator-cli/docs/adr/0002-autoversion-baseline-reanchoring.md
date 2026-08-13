@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted — 2026-07-10.
+Accepted — 2026-07-10. Superseded in part by [ADR 0003](./0003-autoversion-baseline-freshness.md) (2026-08-13): a reachability probe alone is not enough, because a squash-merged release leaves a recorded SHA that is stale *and* reachable. The baseline is now also checked for freshness, and the history scan matches the generation marker in squash-merge bodies rather than in subjects only — so this ADR's claim of "squash-merge-resilient" did not hold as written.
 
 ## Context
 
