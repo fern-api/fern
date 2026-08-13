@@ -9,25 +9,29 @@ export abstract class AstNode extends AbstractAstNode {
      */
     public async toStringAsync({
         customConfig,
-        formatter
+        formatter,
+        omitImports
     }: {
         customConfig: TypescriptCustomConfigSchema | undefined;
         formatter?: AbstractFormatter;
+        omitImports?: boolean;
     }): Promise<string> {
         const file = new TypeScriptFile({ customConfig, formatter });
         this.write(file);
-        return await file.toStringAsync();
+        return await file.toStringAsync({ omitImports });
     }
 
     public toString({
         customConfig,
-        formatter
+        formatter,
+        omitImports
     }: {
         customConfig: TypescriptCustomConfigSchema | undefined;
         formatter?: AbstractFormatter;
+        omitImports?: boolean;
     }): string {
         const file = new TypeScriptFile({ customConfig, formatter });
         this.write(file);
-        return file.toString();
+        return file.toString({ omitImports });
     }
 }

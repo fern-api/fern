@@ -1,0 +1,6 @@
+- summary: |
+    Dynamic snippets can now generate the endpoint invocation on its own (without imports
+    or client instantiation), so that callers such as documentation code templates can
+    render a generated SDK call inside code they author themselves. The client variable the
+    endpoint is invoked on is configurable.
+  type: feat
