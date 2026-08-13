@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.87.4
+  changelogEntry:
+    - summary: |
+        Skip endpoint examples that omit a request body the endpoint declares. The generated request
+        type requires the body, so rendering such an example produced a call missing a required
+        argument in the reference, the docstrings, the snippets and the generated tests.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
 - version: 3.87.3
   changelogEntry:
     - summary: |
