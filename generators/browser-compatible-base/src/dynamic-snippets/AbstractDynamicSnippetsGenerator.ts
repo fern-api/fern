@@ -101,6 +101,47 @@ export abstract class AbstractDynamicSnippetsGenerator<
     }
 
     /**
+     * Generates just the endpoint invocation (e.g. `client.plants.update(...)`), without
+     * imports or client instantiation, for callers that render the invocation within code
+     * of their own (e.g. a documentation code template).
+     *
+     * Returns undefined if this generator does not support invocation-only snippets, so
+     * that callers can fall back to the complete snippet.
+     */
+    public generateInvocationSync(
+        request: FernIr.dynamic.EndpointSnippetRequest,
+        options: Options = {}
+    ): FernIr.dynamic.EndpointSnippetResponse | undefined {
+        const endpoints = this.resolveEndpoints({ request, options });
+        if (endpoints.length === 0) {
+            throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
+        }
+        const result = new Result();
+        for (const endpoint of endpoints) {
+            const context = this.context.clone() as Context;
+            const snippetGenerator = this.createSnippetGenerator(context);
+            if (snippetGenerator.generateInvocationSnippetSync == null) {
+                return undefined;
+            }
+            try {
+                const snippet = snippetGenerator.generateInvocationSnippetSync({ endpoint, request, options });
+                if (context.errors.empty()) {
+                    return {
+                        snippet,
+                        errors: undefined
+                    };
+                }
+                result.update({ context, snippet });
+            } catch (error) {
+                if (result.err == null) {
+                    result.err = error as Error;
+                }
+            }
+        }
+        return result.getResponseOrThrow({ endpoint: request.endpoint });
+    }
+
+    /**
      * Resolves endpoints based on the request and options.
      * If an endpointId is specified in options, returns only that specific endpoint.
      * Otherwise, resolves all endpoints matching the endpoint location (method + path).

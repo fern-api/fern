@@ -9,8 +9,8 @@ export class TypeScriptFile extends Writer {
         super({ customConfig, formatter });
     }
 
-    public async toStringAsync(): Promise<string> {
-        const content = this.getContent();
+    public async toStringAsync({ omitImports }: { omitImports?: boolean } = {}): Promise<string> {
+        const content = this.getContent({ omitImports });
         if (this.formatter != null) {
             try {
                 return this.formatter.format(content);
@@ -21,8 +21,8 @@ export class TypeScriptFile extends Writer {
         return content;
     }
 
-    public toString(): string {
-        const content = this.getContent();
+    public toString({ omitImports }: { omitImports?: boolean } = {}): string {
+        const content = this.getContent({ omitImports });
         if (this.formatter != null) {
             try {
                 return this.formatter.formatSync(content);
@@ -33,7 +33,10 @@ export class TypeScriptFile extends Writer {
         return content;
     }
 
-    public getContent(): string {
+    public getContent({ omitImports }: { omitImports?: boolean } = {}): string {
+        if (omitImports) {
+            return this.buffer;
+        }
         const imports = this.stringifyImports();
         if (imports.length > 0) {
             return imports + "\n" + this.buffer;
