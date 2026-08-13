@@ -1,4 +1,9 @@
-import { AbstractFormatter, Options, Severity } from "@fern-api/browser-compatible-base-generator";
+import {
+    AbstractFormatter,
+    InvocationSnippetResponse,
+    Options,
+    Severity
+} from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { ruby } from "@fern-api/ruby-ast";
@@ -58,6 +63,57 @@ export class EndpointSnippetGenerator {
             return this.buildCodeBlockWithoutClient({ endpoint, snippet: request });
         }
         return this.buildCodeBlock({ endpoint, snippet: request });
+    }
+
+    /**
+     * Generates the structured pieces of an endpoint invocation for callers that render the
+     * invocation within code of their own (e.g. a documentation code template): the bare call
+     * (e.g. `client.plants.update(...)`, honoring a custom client variable name), the imports the
+     * call requires, and the generated client class name.
+     *
+     * Ruby's `imports` is always the empty string. Unlike TypeScript/PHP/C#/Java — where a call
+     * that references a type from another namespace must emit a per-symbol import/`use` line — a
+     * generated Ruby SDK references every type through the gem's module namespace (e.g.
+     * `Acme::Types::Foo`), so a bare invocation never emits a `require`. The generator's only
+     * `require` (`require "acme"`, added in {@link constructClient}) belongs to the client
+     * construction the caller owns, not to the invocation. There is therefore no import-referencing
+     * invocation case to surface for Ruby, so we return `""` rather than inventing an imports
+     * mechanism the language does not have. This is the Ruby analogue of Go always emitting
+     * `context`, inverted: Ruby's invocation imports are always empty.
+     */
+    public generateInvocationSnippetSync({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): InvocationSnippetResponse {
+        const invocation = this.callMethod({
+            endpoint,
+            snippet: request,
+            clientVariableName: options?.clientVariableName
+        });
+        // Render only the invocation node: no `client = Acme::Client.new(...)` construction and no
+        // `require` preamble. Ruby has no statement terminator to strip, but we trim defensively in
+        // case the writer ever introduces trailing whitespace/newlines.
+        const code = ruby
+            .codeblock((writer) => {
+                writer.writeNode(invocation);
+            })
+            .toString({
+                customConfig: this.context.customConfig ?? {},
+                formatter: this.formatter
+            });
+        return {
+            snippet: code.trim(),
+            // Always empty for Ruby — see the method doc comment: types are referenced via the gem
+            // namespace, so a bare invocation emits no per-symbol requires.
+            imports: "",
+            clientName: this.context.getRootClientClassName(),
+            errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
+        };
     }
 
     private buildCodeBlock({
@@ -355,13 +411,15 @@ export class EndpointSnippetGenerator {
 
     private callMethod({
         endpoint,
-        snippet
+        snippet,
+        clientVariableName
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        clientVariableName?: string;
     }): ruby.MethodInvocation {
         const invokeMethodArgs: ruby.MethodInvocation.Args = {
-            on: ruby.codeblock(CLIENT_VAR_NAME),
+            on: ruby.codeblock(clientVariableName ?? CLIENT_VAR_NAME),
             method: this.getMethod({ endpoint }),
             arguments_: []
         };
