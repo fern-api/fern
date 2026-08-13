@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix offset pagination emitting code that does not compile. With `offsetSemantics: item-index`
+    and a `step`, the pager read `results` before declaring it (`undefined: results`), and the
+    offset increment now matches the page type (`int`, `int64`, `float64`). Endpoints whose offset
+    is a required (non-optional) query parameter also emitted an invalid assignment to a request
+    field (`request.Offset := ...`) under either offset semantics, and now seed the initial offset
+    from the request (`next := request.Offset`).
+  type: fix
