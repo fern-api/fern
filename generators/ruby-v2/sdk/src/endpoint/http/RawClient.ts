@@ -10,6 +10,8 @@ export declare namespace RawClient {
         endpoint: FernIr.HttpEndpoint;
         /** reference to a variable that is the body */
         bodyReference?: ruby.CodeBlock;
+        /** whether the request must omit Content-Type when the body reference is nil */
+        omitContentTypeWithoutBody?: boolean;
         /** the path parameter id to reference */
         pathParameterReferences: Record<string, string>;
         /** the headers to pass to the endpoint */
@@ -48,7 +50,8 @@ export class RawClient {
         headerBagReference,
         queryBagReference,
         requestType,
-        baseUrlName
+        baseUrlName,
+        omitContentTypeWithoutBody
     }: RawClient.CreateHttpRequestWrapperArgs): ruby.CodeBlock | undefined {
         switch (requestType) {
             case "json":
@@ -74,6 +77,9 @@ export class RawClient {
                     }
                     if (bodyReference != null) {
                         writer.writeLine(`body: ${bodyReference},`);
+                    }
+                    if (omitContentTypeWithoutBody === true && requestType === "json") {
+                        writer.writeLine(`omit_content_type_without_body: true,`);
                     }
                     writer.writeLine(`request_options: request_options`);
                     writer.dedent();

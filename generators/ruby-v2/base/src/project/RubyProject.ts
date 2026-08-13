@@ -212,6 +212,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     allowUserAgentAppInfo: this.rubyContext.customConfig.allowUserAgentAppInfo,
                     maxRetries: this.rubyContext.customConfig.maxRetries,
                     retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
+                    respectOptionalRequestBody: this.rubyContext.customConfig.respectOptionalRequestBody,
                     endpointSecurity: this.rubyContext.ir.auth.requirement === "ENDPOINT_SECURITY"
                 })
             );
@@ -228,6 +229,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         allowUserAgentAppInfo,
         maxRetries,
         retryStatusCodes,
+        respectOptionalRequestBody,
         endpointSecurity
     }: {
         filename: string;
@@ -239,6 +241,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         allowUserAgentAppInfo?: boolean;
         maxRetries?: number;
         retryStatusCodes?: string;
+        respectOptionalRequestBody?: boolean;
         endpointSecurity?: boolean;
     }): Promise<File> {
         let rendered = replaceTemplate({
@@ -251,6 +254,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 includePlatformHeaders,
                 allowUserAgentAppInfo,
                 maxRetries,
+                respectOptionalRequestBody,
                 endpointSecurity
             })
         });
@@ -314,6 +318,7 @@ function getTemplateVariables({
     includePlatformHeaders,
     allowUserAgentAppInfo,
     maxRetries,
+    respectOptionalRequestBody,
     endpointSecurity
 }: {
     gemNamespace: string;
@@ -323,6 +328,7 @@ function getTemplateVariables({
     includePlatformHeaders?: boolean;
     allowUserAgentAppInfo?: boolean;
     maxRetries?: number;
+    respectOptionalRequestBody?: boolean;
     endpointSecurity?: boolean;
 }): Record<string, unknown> {
     return {
@@ -338,6 +344,9 @@ function getTemplateVariables({
         // so flag-off raw_client.rb stays byte-identical.
         allowUserAgentAppInfo: allowUserAgentAppInfo ?? false,
         defaultMaxRetries: maxRetries ?? 2,
+        // Emits the JSON::Request omit_content_type_without_body parameter only when the
+        // opt-in flag is on, so flag-off json/request.rb stays byte-identical.
+        respectOptionalRequestBody: respectOptionalRequestBody ?? false,
         // Emits the RawClient#auth_headers_for_endpoint delegator only for
         // endpoint-security SDKs, so ALL/ANY SDKs see zero change to raw_client.rb.
         endpointSecurity: endpointSecurity ?? false
