@@ -1358,8 +1358,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 66.1.0
-        version: 66.1.0
+        specifier: 67.21.0
+        version: 67.21.0
       '@fern-api/java-ast':
         specifier: workspace:*
         version: link:../ast
