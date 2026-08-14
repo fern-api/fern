@@ -1,20 +1,15 @@
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import type { Schema } from "@fern-api/openapi-ir";
-import { RelativeFilePath } from "@fern-api/path-utils";
+import type { FernDefinition } from "@fern-api/importer-commons";
 import { buildEnumTypeDeclaration } from "./buildTypeDeclaration.js";
-import { computeSchemaReachability } from "./computeSchemaReachability.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
-import { getDeclarationFileForSchema } from "./utils/getDeclarationFileForSchema.js";
 import { getHeaderName } from "./utils/getHeaderName.js";
-import { getEndpointNamespace } from "./utils/getNamespaceFromGroup.js";
 
 const BASIC_AUTH_SCHEME = "BasicAuthScheme";
 const BEARER_AUTH_SCHEME = "BearerAuthScheme";
 const OAUTH_SCOPE_TYPE_NAME = "OauthScope";
 const OAUTH_SCOPE_FALLBACK_TYPE_NAME = "OauthAuthorizationScope";
 
-export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
+export function buildAuthSchemes(context: OpenApiIrConverterContext): RawSchemas.TypeDeclarationSchema | undefined {
     if (context.authOverrides != null) {
         for (const [name, declaration] of Object.entries(context.authOverrides["auth-schemes"] ?? {})) {
             context.builder.addAuthScheme({
@@ -25,12 +20,11 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
         if (context.authOverrides.auth != null) {
             context.builder.setAuth(context.authOverrides.auth);
         }
-        return;
+        return undefined;
     }
 
     let setAuth = false;
-    let oauthScopeTypeName: string | undefined;
-
+    let oauthScopeType: RawSchemas.TypeDeclarationSchema | undefined;
     for (const [id, securityScheme] of Object.entries(context.ir.securitySchemes)) {
         if (securityScheme.type === "basic") {
             const basicAuthScheme: RawSchemas.BasicAuthSchemeSchema = {
@@ -187,35 +181,33 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 setAuth = true;
             }
             if (securityScheme.scopesEnum != null && securityScheme.scopesEnum.values.length > 0) {
-                oauthScopeTypeName ??= getOauthScopeTypeName(context);
-                context.builder.addType(RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME), {
-                    name: oauthScopeTypeName,
-                    schema: buildEnumTypeDeclaration(securityScheme.scopesEnum, 0).schema
-                });
+                // Preserve the existing behavior for multiple OAuth schemes: the last non-empty scope enum wins.
+                oauthScopeType = buildEnumTypeDeclaration(securityScheme.scopesEnum, 0).schema;
             }
         }
     }
+    return oauthScopeType;
 }
 
-function getOauthScopeTypeName(context: OpenApiIrConverterContext): string {
-    const reachableSchemaIds = context.options.onlyIncludeReferencedSchemas
-        ? computeSchemaReachability(context.ir)
-        : undefined;
-    const referencedSchemaIds =
-        reachableSchemaIds == null
-            ? undefined
-            : new Set([...reachableSchemaIds.requestReachable, ...reachableSchemaIds.responseReachable]);
-    const inlinedRequestSchemaIds = getInlinedRequestSchemaIds(context);
-    const occupiedTypeNames = new Set(
-        Object.entries(context.ir.groupedSchemas.rootSchemas)
-            .filter(
-                ([id, schema]) =>
-                    (referencedSchemaIds == null || referencedSchemaIds.has(id)) &&
-                    !inlinedRequestSchemaIds.has(id) &&
-                    getDeclarationFileForSchema(schema) === RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)
-            )
-            .map(([, schema]) => getSchemaName(schema).toLowerCase())
-    );
+/**
+ * Adds the OAuth scope enum after all other types have been built, so its name can be deconflicted against the
+ * declarations that were actually emitted rather than a parallel approximation.
+ */
+export function addOauthScopeType(definition: FernDefinition, oauthScopeType: RawSchemas.TypeDeclarationSchema): void {
+    const existingTypes = definition.packageMarkerFile.types ?? {};
+    const oauthScopeTypeName = getOauthScopeTypeName(Object.keys(existingTypes));
+    const { types: _, ...packageMarkerFile } = definition.packageMarkerFile;
+    definition.packageMarkerFile = {
+        types: {
+            [oauthScopeTypeName]: oauthScopeType,
+            ...existingTypes
+        },
+        ...packageMarkerFile
+    };
+}
+
+function getOauthScopeTypeName(typeNames: Iterable<string>): string {
+    const occupiedTypeNames = new Set([...typeNames].map((name) => name.toLowerCase()));
     if (!occupiedTypeNames.has(OAUTH_SCOPE_TYPE_NAME.toLowerCase())) {
         return OAUTH_SCOPE_TYPE_NAME;
     }
@@ -228,38 +220,4 @@ function getOauthScopeTypeName(context: OpenApiIrConverterContext): string {
         suffix++;
     }
     return `${OAUTH_SCOPE_FALLBACK_TYPE_NAME}${suffix}`;
-}
-
-function getInlinedRequestSchemaIds(context: OpenApiIrConverterContext): Set<string> {
-    // buildEndpoint turns these component schemas into request bodies and excludes their top-level declarations.
-    const schemaIds = new Set<string>();
-    for (const endpoint of context.ir.endpoints) {
-        const request = endpoint.request;
-        if (request == null) {
-            continue;
-        }
-        if (request.type === "multipart") {
-            if (request.name != null) {
-                schemaIds.add(request.name);
-            }
-            continue;
-        }
-        if (
-            (request.type === "json" || request.type === "formUrlEncoded") &&
-            request.schema.type === "reference" &&
-            context.getSchema(
-                request.schema.schema,
-                getEndpointNamespace(endpoint.sdkName, endpoint.namespace)
-            )?.type === "object" &&
-            !context.isResponseReachable(request.schema.schema)
-        ) {
-            schemaIds.add(request.schema.schema);
-        }
-    }
-    return schemaIds;
-}
-
-function getSchemaName(schema: Schema): string {
-    const namedSchema = schema.type === "oneOf" ? schema.value : schema;
-    return namedSchema.nameOverride ?? namedSchema.generatedName;
 }

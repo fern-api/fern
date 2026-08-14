@@ -1,0 +1,41 @@
+openapi: 3.1.0
+info:
+  title: OAuth scope webhook response
+  version: 1.0.0
+
+paths: {}
+
+webhooks:
+  status:
+    post:
+      operationId: updateStatus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OAuthScope"
+
+components:
+  schemas:
+    OAuthScope:
+      type: string
+
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            read: Read access
