@@ -133,6 +133,10 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             } catch (e) {
                 throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
+        } else {
+            context.logger.warn(
+                "Skipping README.md generation: the configured output does not include a full project."
+            );
         }
 
         try {
@@ -227,7 +231,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         endpointSnippets: Endpoint[];
     }): Promise<void> {
         if (endpointSnippets.length === 0) {
-            context.logger.debug("No snippets were produced; skipping README.md generation.");
+            context.logger.warn("Skipping README.md generation: no snippets were produced.");
             return;
         }
 

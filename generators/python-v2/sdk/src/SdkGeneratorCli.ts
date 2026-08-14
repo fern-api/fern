@@ -63,7 +63,13 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
                 context.logger.debug(`Failed to generate snippets: ${extractErrorMessage(error)}`);
             }
 
-            if (this.shouldGenerateReadme(context) && endpointSnippets.length > 0) {
+            if (!this.shouldGenerateReadme(context)) {
+                context.logger.warn(
+                    "Skipping README.md generation: the configured output does not include a full project."
+                );
+            } else if (endpointSnippets.length === 0) {
+                context.logger.warn("Skipping README.md generation: no snippets were produced.");
+            } else {
                 try {
                     await this.generateReadme({ context, endpointSnippets });
                 } catch (error) {
@@ -167,7 +173,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
         endpointSnippets: Endpoint[];
     }): Promise<void> {
         if (endpointSnippets.length === 0) {
-            context.logger.debug("No snippets were produced; skipping README.md generation.");
+            context.logger.warn("Skipping README.md generation: no snippets were produced.");
             return;
         }
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });

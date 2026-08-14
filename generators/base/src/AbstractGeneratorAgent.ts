@@ -92,6 +92,11 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             this.skippingReadme(errorMessage);
             return undefined;
         }
+        if (remote == null && this.config.output.mode.type === "github") {
+            this.logger.warn(
+                "No usable GitHub remote is available, so the existing README will not be merged; it is generated from scratch and manual edits to it are not preserved."
+            );
+        }
 
         // Load feature config
         this.logger.debug("AbstractGeneratorAgent.generateReadme: Loading feature config...");

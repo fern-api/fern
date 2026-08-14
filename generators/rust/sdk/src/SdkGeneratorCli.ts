@@ -264,6 +264,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                     );
                 }
             }
+        } else {
+            context.logger.warn(
+                "Skipping README.md and reference.md generation: the SDK is embedded inside the CLI generator."
+            );
         }
 
         // Generate wire tests if enabled
@@ -866,7 +870,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
             // If there are no endpoint snippets and no WebSocket channels, skip README generation
             if (endpointSnippets.length === 0 && !hasWebSocket) {
-                context.logger.debug(`Skipping README.md generation - no endpoint examples defined and no WebSocket channels`);
+                context.logger.warn("Skipping README.md generation: no endpoint examples are defined and there are no WebSocket channels.");
                 return;
             }
 

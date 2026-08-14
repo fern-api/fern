@@ -785,6 +785,10 @@ export class SdkGenerator {
                     throw new Error(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
                 }
             }
+        } else {
+            this.context.logger.warn(
+                "Skipping README.md and reference.md generation: no snippet filepath is configured."
+            );
         }
 
         const subpackageExportPaths = this.config.generateSubpackageExports ? this.getSubpackageExportPaths() : [];
@@ -1310,7 +1314,7 @@ export class SdkGenerator {
 
     private async generateReadme(): Promise<void> {
         if (this.endpointSnippets.length === 0) {
-            this.context.logger.debug("No snippets were produced; skipping README.md generation.");
+            this.context.logger.warn("Skipping README.md generation: no snippets were produced.");
             return;
         }
         await this.withRawFile({
@@ -1332,6 +1336,7 @@ export class SdkGenerator {
 
     private async generateReference(): Promise<void> {
         if (this.referenceConfigBuilder.isEmpty()) {
+            this.context.logger.warn("Skipping reference.md generation: no endpoint references were found.");
             return;
         }
         await this.withRawFile({

@@ -94,6 +94,8 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
             } catch (e) {
                 throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
             }
+        } else {
+            context.logger.warn("Skipping README.md and reference.md generation: no snippet filepath is configured.");
         }
 
         await context.project.persist();
@@ -247,7 +249,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         endpointSnippets: FernGeneratorExec.Endpoint[];
     }): Promise<void> {
         if (endpointSnippets.length === 0) {
-            context.logger.debug("No snippets were produced; skipping README.md generation.");
+            context.logger.warn("Skipping README.md generation: no snippets were produced.");
             return;
         }
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
