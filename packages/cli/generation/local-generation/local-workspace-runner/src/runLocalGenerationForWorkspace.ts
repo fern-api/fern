@@ -657,15 +657,22 @@ export function getPublishConfig({
 
         const irMode = generatorInvocation.raw.github.mode === "pull-request" ? "pull-request" : undefined;
 
+        // A preview run substitutes environment variables as empty strings, so a token configured as
+        // ${GITHUB_TOKEN} cannot authenticate anything. Omitting it keeps the generator from cloning the
+        // repository for README generation, which otherwise fails the whole generation inside the
+        // container. A preview run with a real token still forwards it.
+        const dropTokenForPreview = isPreview === true && !generatorInvocation.raw.github.token;
+        if (dropTokenForPreview) {
+            context.logger.warn(
+                "No usable GitHub token in preview mode, so README and reference content will not be merged from the existing repository."
+            );
+        }
+
         return FernIr.PublishingConfig.github({
             owner: parsed.owner,
             repo: parsed.repo,
             uri: generatorInvocation.raw.github.uri,
-            // A preview run publishes nothing, and environment variables are substituted as empty
-            // strings, so the token handed to the generator cannot authenticate anything. Omitting it
-            // keeps the generator from cloning the repository for README generation, which otherwise
-            // fails the whole generation inside the container.
-            token: isPreview ? undefined : generatorInvocation.raw.github.token,
+            token: dropTokenForPreview ? undefined : generatorInvocation.raw.github.token,
             mode: irMode,
             branch: generatorInvocation.raw.github.branch,
             target: getPublishTarget({

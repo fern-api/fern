@@ -11,7 +11,6 @@ import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
 import { type OutputDirectory, SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
-import { convertIr } from "./utils/convertIr.js";
 import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
 import { WireTestGenerator } from "./wire-tests/WireTestGenerator.js";
 
@@ -121,7 +120,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: convertIr(dynamicIr),
+            ir: dynamicIr,
             config: {
                 organization: context.config.organization,
                 workspaceName: context.config.workspaceName,
@@ -172,6 +171,9 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
             return;
         }
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
+        if (content == null) {
+            return;
+        }
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
         );
@@ -199,6 +201,9 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
     }): Promise<void> {
         const builder = buildReference({ context, endpointSnippets });
         const content = await context.generatorAgent.generateReference(builder);
+        if (content == null) {
+            return;
+        }
 
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)

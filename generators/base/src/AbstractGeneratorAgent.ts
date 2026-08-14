@@ -38,7 +38,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     public SNIPPET_FILENAME = "snippet.json";
     public REFERENCE_FILENAME = "reference.md";
 
-    private logger: Logger;
+    protected logger: Logger;
     private config: FernGeneratorExec.GeneratorConfig;
     private cli: GeneratorAgentClient;
     public constructor({
@@ -63,6 +63,9 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
 
     /**
      * Generates the README.md content using the given generator context.
+     *
+     * Returns undefined when the README could not be generated; README generation is best-effort and
+     * never fails the surrounding SDK generation.
      */
     public async generateReadme({
         context,
@@ -70,7 +73,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     }: {
         context: GeneratorContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
-    }): Promise<string> {
+    }): Promise<string | undefined> {
         this.logger.debug("AbstractGeneratorAgent.generateReadme: Starting README generation...");
         this.logger.debug(
             `AbstractGeneratorAgent.generateReadme: Received ${endpointSnippets.length} endpoint snippets`
@@ -86,8 +89,8 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             );
         } catch (error) {
             const errorMessage = extractErrorMessage(error);
-            this.logger.debug(`AbstractGeneratorAgent.generateReadme: FAILED to get remote config: ${errorMessage}`);
-            throw error;
+            this.skippingReadme(errorMessage);
+            return undefined;
         }
 
         // Load feature config
@@ -100,8 +103,8 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             );
         } catch (error) {
             const errorMessage = extractErrorMessage(error);
-            this.logger.debug(`AbstractGeneratorAgent.generateReadme: FAILED to load feature config: ${errorMessage}`);
-            throw error;
+            this.skippingReadme(errorMessage);
+            return undefined;
         }
 
         // Build README config
@@ -125,23 +128,44 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         } catch (error) {
             const errorMessage = extractErrorMessage(error);
             const errorStack = error instanceof Error ? error.stack : undefined;
-            this.logger.debug(`AbstractGeneratorAgent.generateReadme: FAILED to build README config: ${errorMessage}`);
             if (errorStack) {
                 this.logger.debug(`AbstractGeneratorAgent.generateReadme: Stack trace: ${errorStack}`);
             }
-            throw error;
+            this.skippingReadme(errorMessage);
+            return undefined;
         }
 
         // Call CLI
         this.logger.debug("AbstractGeneratorAgent.generateReadme: Calling CLI to generate README...");
+        let cliErrorMessage: string;
         try {
             const result = await this.cli.generateReadme({ readmeConfig });
             this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI returned ${result.length} bytes`);
             return result;
         } catch (error) {
-            const errorMessage = extractErrorMessage(error);
-            this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI FAILED with error: ${errorMessage}`);
-            throw error;
+            cliErrorMessage = extractErrorMessage(error);
+            this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI FAILED with error: ${cliErrorMessage}`);
+            if (remote == null) {
+                this.skippingReadme(cliErrorMessage);
+                return undefined;
+            }
+        }
+
+        // Reading the existing README requires cloning the remote, which fails in environments that the
+        // generator container cannot authenticate against (e.g. a TLS-intercepting corporate proxy). Retry
+        // without the remote so the README is still written, just without the repository's manual edits.
+        this.logger.warn(
+            `Failed to read the existing README from the configured repository; generating the README from scratch, so manual edits to it will not be preserved. Reason: ${cliErrorMessage}`
+        );
+        try {
+            const result = await this.cli.generateReadme({
+                readmeConfig: this.getReadmeConfig({ context, remote: undefined, featureConfig, endpointSnippets })
+            });
+            this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI returned ${result.length} bytes`);
+            return result;
+        } catch (error) {
+            this.skippingReadme(extractErrorMessage(error));
+            return undefined;
         }
     }
 
@@ -161,8 +185,11 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
 
     /**
      * Generates the reference.md content using the given builder.
+     *
+     * Returns undefined when the reference could not be generated; reference generation is best-effort
+     * and never fails the surrounding SDK generation.
      */
-    public async generateReference(builder: ReferenceConfigBuilder): Promise<string> {
+    public async generateReference(builder: ReferenceConfigBuilder): Promise<string | undefined> {
         this.logger.debug("AbstractGeneratorAgent.generateReference: Starting reference generation...");
 
         // Get language
@@ -172,8 +199,8 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             this.logger.debug(`AbstractGeneratorAgent.generateReference: Language: ${language}`);
         } catch (error) {
             const errorMessage = extractErrorMessage(error);
-            this.logger.debug(`AbstractGeneratorAgent.generateReference: FAILED to get language: ${errorMessage}`);
-            throw error;
+            this.skippingReference(errorMessage);
+            return undefined;
         }
 
         // Build reference config
@@ -201,7 +228,8 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             if (errorStack) {
                 this.logger.debug(`AbstractGeneratorAgent.generateReference: Stack trace: ${errorStack}`);
             }
-            throw error;
+            this.skippingReference(errorMessage);
+            return undefined;
         }
 
         // Call CLI
@@ -213,8 +241,19 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         } catch (error) {
             const errorMessage = extractErrorMessage(error);
             this.logger.debug(`AbstractGeneratorAgent.generateReference: CLI FAILED with error: ${errorMessage}`);
-            throw error;
+            this.skippingReference(errorMessage);
+            return undefined;
         }
+    }
+
+    private skippingReadme(reason: string): void {
+        this.logger.warn(`Skipping README generation; the rest of the SDK was generated normally. Reason: ${reason}`);
+    }
+
+    private skippingReference(reason: string): void {
+        this.logger.warn(
+            `Skipping API reference generation; the rest of the SDK was generated normally. Reason: ${reason}`
+        );
     }
 
     /**

@@ -1,0 +1,5 @@
+- summary: |
+    Do not fail SDK generation when README or API reference generation fails (for example when the
+    configured GitHub repository cannot be cloned from inside the generator container). The failure is
+    now reported as a warning and the rest of the SDK is generated normally.
+  type: fix

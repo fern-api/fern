@@ -114,6 +114,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 context,
                 endpointSnippets
             });
+            if (content == null) {
+                return;
+            }
             context.project.addRootFiles(new File("README.md", RelativeFilePath.of(""), content));
         } catch (e) {
             throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
@@ -127,6 +130,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         try {
             const builder = new ReferenceConfigAssembler(context, snippetsGenerator).buildReferenceConfigBuilder();
             const content = await context.generatorAgent.generateReference(builder);
+            if (content == null) {
+                return;
+            }
             context.project.addRootFiles(new File("reference.md", RelativeFilePath.of(""), content));
         } catch (e) {
             throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);

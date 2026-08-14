@@ -1,4 +1,5 @@
 import { AbstractGeneratorAgent, RawGithubConfig, ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { generateReadme, generateReference, githubPr, githubPush } from "@fern-api/generator-cli";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -36,14 +37,21 @@ export class SwiftGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCont
     }: {
         context: SdkGeneratorContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
-    }): Promise<string> {
-        const readmeConfig = this.getReadmeConfig({
-            context,
-            remote: this.getRemote(context),
-            featureConfig: await this.readFeatureConfig(),
-            endpointSnippets
-        });
-        return await generateReadme({ readmeConfig });
+    }): Promise<string | undefined> {
+        try {
+            const readmeConfig = this.getReadmeConfig({
+                context,
+                remote: this.getRemote(context),
+                featureConfig: await this.readFeatureConfig(),
+                endpointSnippets
+            });
+            return await generateReadme({ readmeConfig });
+        } catch (error) {
+            this.logger.warn(
+                `Skipping README generation; the rest of the SDK was generated normally. Reason: ${extractErrorMessage(error)}`
+            );
+            return undefined;
+        }
     }
 
     public getReadmeConfig(
@@ -57,9 +65,16 @@ export class SwiftGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCont
         });
     }
 
-    public override async generateReference(builder: ReferenceConfigBuilder): Promise<string> {
-        const referenceConfig = builder.build(this.getLanguage());
-        return await generateReference({ referenceConfig });
+    public override async generateReference(builder: ReferenceConfigBuilder): Promise<string | undefined> {
+        try {
+            const referenceConfig = builder.build(this.getLanguage());
+            return await generateReference({ referenceConfig });
+        } catch (error) {
+            this.logger.warn(
+                `Skipping API reference generation; the rest of the SDK was generated normally. Reason: ${extractErrorMessage(error)}`
+            );
+            return undefined;
+        }
     }
 
     public async pushToGitHubProgrammatic({ context }: { context: SdkGeneratorContext }): Promise<void> {
