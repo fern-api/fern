@@ -7,6 +7,7 @@ import { computeSchemaReachability } from "./computeSchemaReachability.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { getDeclarationFileForSchema } from "./utils/getDeclarationFileForSchema.js";
 import { getHeaderName } from "./utils/getHeaderName.js";
+import { getEndpointNamespace } from "./utils/getNamespaceFromGroup.js";
 
 const BASIC_AUTH_SCHEME = "BasicAuthScheme";
 const BEARER_AUTH_SCHEME = "BearerAuthScheme";
@@ -204,11 +205,13 @@ function getOauthScopeTypeName(context: OpenApiIrConverterContext): string {
         reachableSchemaIds == null
             ? undefined
             : new Set([...reachableSchemaIds.requestReachable, ...reachableSchemaIds.responseReachable]);
+    const inlinedRequestSchemaIds = getInlinedRequestSchemaIds(context);
     const occupiedTypeNames = new Set(
         Object.entries(context.ir.groupedSchemas.rootSchemas)
             .filter(
                 ([id, schema]) =>
                     (referencedSchemaIds == null || referencedSchemaIds.has(id)) &&
+                    !inlinedRequestSchemaIds.has(id) &&
                     getDeclarationFileForSchema(schema) === RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)
             )
             .map(([, schema]) => getSchemaName(schema).toLowerCase())
@@ -225,6 +228,35 @@ function getOauthScopeTypeName(context: OpenApiIrConverterContext): string {
         suffix++;
     }
     return `${OAUTH_SCOPE_FALLBACK_TYPE_NAME}${suffix}`;
+}
+
+function getInlinedRequestSchemaIds(context: OpenApiIrConverterContext): Set<string> {
+    // buildEndpoint turns these component schemas into request bodies and excludes their top-level declarations.
+    const schemaIds = new Set<string>();
+    for (const endpoint of context.ir.endpoints) {
+        const request = endpoint.request;
+        if (request == null) {
+            continue;
+        }
+        if (request.type === "multipart") {
+            if (request.name != null) {
+                schemaIds.add(request.name);
+            }
+            continue;
+        }
+        if (
+            (request.type === "json" || request.type === "formUrlEncoded") &&
+            request.schema.type === "reference" &&
+            context.getSchema(
+                request.schema.schema,
+                getEndpointNamespace(endpoint.sdkName, endpoint.namespace)
+            )?.type === "object" &&
+            !context.isResponseReachable(request.schema.schema)
+        ) {
+            schemaIds.add(request.schema.schema);
+        }
+    }
+    return schemaIds;
 }
 
 function getSchemaName(schema: Schema): string {
