@@ -10,9 +10,9 @@ public class Example3 {
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.requiredRefund(
-                "id",
+                "refund-id",
                 RequiredRefundRequest.builder()
-                        .body(RefundRequest.builder().amount(1.1).build())
+                        .body(RefundRequest.builder().amount(60.0).build())
                         .build());
     }
 }

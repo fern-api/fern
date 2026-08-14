@@ -21,6 +21,7 @@ type TypeReference = FernIr.TypeReference;
 
 import { RawClient } from "../endpoint/http/RawClient.js";
 import { isEndpointSecurity } from "../endpoint/request/endpointAuthHeaders.js";
+import { getClientCredentialsOrThrow } from "../oauth/getClientCredentials.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
@@ -741,7 +742,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
                     if (this.oauth != null && this.shouldUseOAuthProvider() && !endpointSecurity) {
                         const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
-                            this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
+                            getClientCredentialsOrThrow(this.oauth).tokenEndpoint.endpointReference.serviceId
                         );
 
                         // Use clientOptions (platform headers only) for OAuth token requests
@@ -969,7 +970,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         break;
                     }
                     const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
-                        this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
+                        getClientCredentialsOrThrow(this.oauth).tokenEndpoint.endpointReference.serviceId
                     );
                     const arguments_ = [
                         this.generation.Types.RawClient.new({
@@ -1415,6 +1416,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             }
         } else if (scheme.type === "oauth") {
             if (this.oauth !== null) {
+                const configuration = getClientCredentialsOrThrow(scheme);
                 return [
                     {
                         name: "clientId",
@@ -1428,7 +1430,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             })
                         }),
                         type: this.Primitive.string,
-                        environmentVariable: scheme.configuration.clientIdEnvVar,
+                        environmentVariable: configuration.clientIdEnvVar,
                         exampleValue: "client_id"
                     },
                     {
@@ -1443,7 +1445,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             })
                         }),
                         type: this.Primitive.string,
-                        environmentVariable: scheme.configuration.clientSecretEnvVar,
+                        environmentVariable: configuration.clientSecretEnvVar,
                         exampleValue: "client_secret"
                     },
                     ...this.getOAuthAdditionalConstructorParams(scheme, isOptional)
@@ -1634,11 +1636,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     private getOAuthAdditionalConstructorParams(scheme: OAuthScheme, isOptional: boolean): ConstructorParameter[] {
+        const configuration = getClientCredentialsOrThrow(scheme);
         const params: ConstructorParameter[] = [];
         // Include required, non-literal custom properties, matching Java's approach of
         // skipping only literals. Keep the optional guard to avoid adding optional-typed
         // properties as required constructor parameters.
-        for (const customProperty of scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
+        for (const customProperty of configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
             if (isLiteralTypeReference(customProperty.property.valueType)) {
                 continue;
             }
@@ -1658,7 +1661,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 exampleValue: name
             });
         }
-        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        const scopes = configuration.tokenEndpoint.requestProperties.scopes;
         if (scopes && !isLiteralTypeReference(scopes.property.valueType)) {
             const typeRef = this.context.csharpTypeMapper.convert({
                 reference: scopes.property.valueType

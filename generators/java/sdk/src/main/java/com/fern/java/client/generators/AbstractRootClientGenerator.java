@@ -281,6 +281,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             }
 
                             @Override
+                            public Boolean visitDeviceCode(com.fern.ir.model.auth.OAuthDeviceCode deviceCode) {
+                                return false;
+                            }
+
+                            @Override
+                            public Boolean visitAuthorizationCode(
+                                    com.fern.ir.model.auth.OAuthAuthorizationCode authorizationCode) {
+                                return false;
+                            }
+
+                            @Override
                             public Boolean _visitUnknown(Object unknownType) {
                                 return false;
                             }
@@ -420,6 +431,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             @Override
                             public Boolean visitClientCredentials(OAuthClientCredentials clientCredentials) {
                                 return true;
+                            }
+
+                            @Override
+                            public Boolean visitDeviceCode(com.fern.ir.model.auth.OAuthDeviceCode deviceCode) {
+                                return false;
+                            }
+
+                            @Override
+                            public Boolean visitAuthorizationCode(
+                                    com.fern.ir.model.auth.OAuthAuthorizationCode authorizationCode) {
+                                return false;
                             }
 
                             @Override
@@ -2590,6 +2612,16 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     // Base class setAuthentication is empty - subclasses provide the implementation
                     // This is intentionally empty as _TokenAuth and _CredentialsAuth override it
                 }
+            }
+
+            @Override
+            public Void visitDeviceCode(com.fern.ir.model.auth.OAuthDeviceCode deviceCode) {
+                return null;
+            }
+
+            @Override
+            public Void visitAuthorizationCode(com.fern.ir.model.auth.OAuthAuthorizationCode authorizationCode) {
+                return null;
             }
 
             @Override

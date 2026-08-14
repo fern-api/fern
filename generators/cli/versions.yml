@@ -1,4 +1,59 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.31.4
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.44.5 updates.
+      type: fix
+  createdAt: "2026-08-14"
+  irVersion: 67
+- version: 0.31.3
+  changelogEntry:
+    - summary: |
+        Restore `aarch64-unknown-linux-musl` to the generated `dist-workspace.toml`
+        target list. It was dropped because the keyring crate's secret-service
+        backend pulled libdbus, which cannot be statically linked for that target;
+        the keyring is now excluded from musl builds, so the target builds. Without
+        it the GitHub Release shipped no static ARM64 Linux binary even though the
+        npm workflow published one, leaving Graviton and ARM container users on the
+        glibc build.
+      type: fix
+  createdAt: "2026-08-14"
+  irVersion: 67
+- version: 0.31.2
+  changelogEntry:
+    - summary: |
+        Stop pointing the linker at `musl-gcc` in the generated npm publish workflow.
+        musl-gcc cannot produce a static-pie executable, so the published
+        `*-linux-musl` binaries were dynamically linked against
+        `/lib/ld-musl-*.so.1` and segfaulted on any machine without a musl loader.
+        The C dependencies still build with `musl-gcc` (via a target-scoped `CC_*`),
+        while rustc links the self-contained musl objects into a truly static binary.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 0.31.1
+  changelogEntry:
+    - summary: |
+        Select the TLS and credential-store backends per target in Cargo.toml instead
+        of via build flags, so musl targets build with a plain `cargo build`. Previously
+        the default `native-tls` feature pulled in `openssl-sys` and `keyring`'s
+        secret-service backend pulled in `libdbus-sys`, both of which fail for
+        `*-linux-musl` under cargo-dist's release workflow (which has no per-target
+        feature configuration). musl builds now use rustls and the file-backed
+        credential store.
+      type: fix
+    - summary: |
+        Fail the npm publish workflow when the release tag and the crate version in
+        Cargo.toml disagree, instead of publishing packages whose binary reports a
+        `--version` that is not on the registry.
+      type: fix
+    - summary: |
+        Fail the publish workflow's version guard with a clear, actionable error when
+        the crate version can't be resolved from `cargo metadata`, instead of
+        reporting a misleading empty-string version mismatch or silently passing.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
 - version: 0.31.0
   changelogEntry:
     - summary: |

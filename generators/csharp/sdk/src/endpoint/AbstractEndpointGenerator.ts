@@ -97,7 +97,8 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
             request != null
                 ? this.csharp.parameter({
                       type: request.getParameterType(),
-                      name: request.getParameterName()
+                      name: request.getParameterName(),
+                      initializer: request.getParameterInitializer()
                   })
                 : undefined;
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({

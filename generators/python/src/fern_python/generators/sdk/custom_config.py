@@ -126,6 +126,12 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Wire test configuration
     wire_tests: Optional[WireTestsConfig] = None
 
+    # When True, an endpoint whose request body the API does not require takes a body
+    # parameter defaulting to the OMIT sentinel, so the caller may leave it out entirely
+    # and no body is sent. Off by default — existing signatures are unchanged unless
+    # this is opted in.
+    respect_optional_request_body: bool = False
+
     # If true, treats path parameters as named parameters in endpoint functions
     inline_path_params: bool = False
 

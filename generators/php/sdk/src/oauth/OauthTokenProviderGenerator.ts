@@ -6,6 +6,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { getClientCredentialsOrThrow } from "./getClientCredentials.js";
 import {
     getOAuthTokenRequestProperties,
     isGrantTypeProperty,
@@ -25,7 +26,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     private static readonly CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
 
     private readonly case: CaseConverter;
-    private scheme: FernIr.OAuthScheme;
+    private configuration: FernIr.OAuthClientCredentials;
     private tokenEndpointHttpService: FernIr.HttpService;
     private tokenEndpointReference: FernIr.EndpointReference;
     private tokenEndpoint: FernIr.HttpEndpoint;
@@ -34,8 +35,8 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     constructor({ context, scheme }: OauthTokenProviderGenerator.Args) {
         super(context);
         this.case = context.case;
-        this.scheme = scheme;
-        this.tokenEndpointReference = this.scheme.configuration.tokenEndpoint.endpointReference;
+        this.configuration = getClientCredentialsOrThrow(scheme);
+        this.tokenEndpointReference = this.configuration.tokenEndpoint.endpointReference;
 
         const service = this.context.ir.services[this.tokenEndpointReference.serviceId];
         if (service == null) {
@@ -52,7 +53,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
         this.tokenEndpoint = endpoint;
         this.extraRequestProperties = getOAuthTokenRequestProperties(
             this.context,
-            this.scheme.configuration.tokenEndpoint.requestProperties
+            this.configuration.tokenEndpoint.requestProperties
         );
     }
 
@@ -68,7 +69,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
         class_.addMethod(this.getGetTokenMethod());
         class_.addMethod(this.getRefreshMethod());
 
-        const expiresIn = this.scheme.configuration.tokenEndpoint.responseProperties.expiresIn;
+        const expiresIn = this.configuration.tokenEndpoint.responseProperties.expiresIn;
         if (expiresIn != null) {
             class_.addMethod(this.getExpiresAtMethod());
         }
@@ -137,7 +138,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
             })
         );
 
-        const expiresIn = this.scheme.configuration.tokenEndpoint.responseProperties.expiresIn;
+        const expiresIn = this.configuration.tokenEndpoint.responseProperties.expiresIn;
         if (expiresIn != null) {
             class_.addField(
                 php.field({
@@ -186,7 +187,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                 writer.writeLine("$this->authClient = $authClient;");
                 writer.writeLine("$this->accessToken = null;");
 
-                const expiresIn = this.scheme.configuration.tokenEndpoint.responseProperties.expiresIn;
+                const expiresIn = this.configuration.tokenEndpoint.responseProperties.expiresIn;
                 if (expiresIn != null) {
                     writer.writeLine("$this->expiresAt = null;");
                 }
@@ -195,7 +196,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     }
 
     private getGetTokenMethod(): php.Method {
-        const expiresIn = this.scheme.configuration.tokenEndpoint.responseProperties.expiresIn;
+        const expiresIn = this.configuration.tokenEndpoint.responseProperties.expiresIn;
 
         return php.method({
             name: "getToken",
@@ -224,8 +225,8 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     }
 
     private getRefreshMethod(): php.Method {
-        const requestProperties = this.scheme.configuration.tokenEndpoint.requestProperties;
-        const responseProperties = this.scheme.configuration.tokenEndpoint.responseProperties;
+        const requestProperties = this.configuration.tokenEndpoint.requestProperties;
+        const responseProperties = this.configuration.tokenEndpoint.responseProperties;
 
         const clientIdProperty = this.getRequestPropertyName(requestProperties.clientId);
         const clientSecretProperty = this.getRequestPropertyName(requestProperties.clientSecret);

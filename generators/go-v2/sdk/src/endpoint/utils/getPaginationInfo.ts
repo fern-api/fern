@@ -49,7 +49,6 @@ export function getPaginationInfo({
     });
     const requestBodyPageProperty = getRequestBodyPageProperty({ context, pagination, signature });
     const pagePropertyFormat = getPageValueFormat({ context, pagination });
-    const requestPagePropertyFormat = getPageValueFormat({ context, pagination });
     return {
         prepareCall: getPrepareCall({
             context,
@@ -69,7 +68,6 @@ export function getPaginationInfo({
             pageType,
             nextPageType,
             requestPagePropertyReference,
-            requestPagePropertyFormat,
             requestBodyPageProperty
         }),
         initializePager: getInitializePager({ context, pagination, callerReference }),
@@ -151,7 +149,6 @@ function getReadPageResponse({
     pageType,
     nextPageType,
     requestPagePropertyReference,
-    requestPagePropertyFormat,
     requestBodyPageProperty
 }: {
     context: SdkGeneratorContext;
@@ -160,15 +157,14 @@ function getReadPageResponse({
     pageType: go.Type;
     nextPageType: go.Type | undefined;
     requestPagePropertyReference: go.AstNode;
-    requestPagePropertyFormat: go.AstNode;
     requestBodyPageProperty: RequestBodyPageProperty | undefined;
 }): go.AstNode {
     const initializer = getPagePropertyInitializer({
         pagination,
         pageType,
         requestPagePropertyReference,
-        requestPagePropertyFormat,
-        requestBodyPageProperty
+        requestBodyPageProperty,
+        useItemIndex: pagination.type === "offset" && usesItemIndexOffset({ context, offset: pagination })
     });
     const responseType = signature.returnType ?? go.Type.any();
     return go.codeblock((writer) => {
@@ -362,6 +358,7 @@ function getReadPageResponseBodyForCursor({
     nextPageType: go.Type | undefined;
     responseType: go.Type;
 }): go.AstNode {
+    const doneCondition = getCursorDoneCondition({ context, cursor, pageType, nextPageType });
     return go.codeblock((writer) => {
         writer.write("var zeroValue ");
         writer.writeNode(nextPageType ?? pageType);
@@ -387,7 +384,7 @@ function getReadPageResponseBodyForCursor({
                     },
                     {
                         name: "Done",
-                        value: go.TypeInstantiation.reference(go.codeblock("next == zeroValue"))
+                        value: go.TypeInstantiation.reference(go.codeblock(doneCondition))
                     }
                 ]
             })
@@ -409,13 +406,14 @@ function getReadPageResponseBodyForOffset({
     responseType: go.Type;
 }): go.AstNode {
     return go.codeblock((writer) => {
-        const useItemIndex = offset.step != null && context.customConfig.offsetSemantics === "item-index";
-        if (useItemIndex) {
-            writer.writeLine("next += int(len(results))");
+        const nextResultsSetter = getNextResultsSetter({ context, results: pagination.results });
+        if (usesItemIndexOffset({ context, offset })) {
+            writer.writeNode(nextResultsSetter);
+            writer.writeLine(getOffsetIncrementByResultCount({ pageType }));
         } else {
             writer.writeLine("next += 1");
+            writer.writeNode(nextResultsSetter);
         }
-        writer.writeNode(getNextResultsSetter({ context, results: pagination.results }));
         writer.write("return ");
         writer.writeNode(
             go.TypeInstantiation.structPointer({
@@ -439,6 +437,29 @@ function getReadPageResponseBodyForOffset({
     });
 }
 
+// The offset advances by the number of items in the page, so the results must be read first.
+function getOffsetIncrementByResultCount({ pageType }: { pageType: go.Type }): string {
+    const underlying = pageType.underlying();
+    switch (underlying.internalType.type) {
+        case "int64":
+            return "next += int64(len(results))";
+        case "float64":
+            return "next += float64(len(results))";
+        default:
+            return "next += int(len(results))";
+    }
+}
+
+function usesItemIndexOffset({
+    context,
+    offset
+}: {
+    context: SdkGeneratorContext;
+    offset: FernIr.OffsetPagination;
+}): boolean {
+    return offset.step != null && context.customConfig.offsetSemantics === "item-index";
+}
+
 function getNextCursorSetter({
     context,
     page,
@@ -452,8 +473,51 @@ function getNextCursorSetter({
         context,
         responseProperty: cursor,
         variableName: "next",
-        dereference: page.property.valueType.type !== cursor.property.valueType.type
+        dereference: dereferencesNextCursor({ page, cursor })
     });
+}
+
+function dereferencesNextCursor({
+    page,
+    cursor
+}: {
+    page: FernIr.RequestProperty;
+    cursor: FernIr.ResponseProperty;
+}): boolean {
+    return page.property.valueType.type !== cursor.property.valueType.type;
+}
+
+/**
+ * APIs commonly signal the last page with an empty cursor rather than a null one, so an empty
+ * string is terminal in addition to the zero value. Non-string cursors (e.g. uuid, int) are
+ * unaffected: their zero value already covers termination.
+ */
+function getCursorDoneCondition({
+    context,
+    cursor,
+    pageType,
+    nextPageType
+}: {
+    context: SdkGeneratorContext;
+    cursor: FernIr.CursorPagination;
+    pageType: go.Type;
+    nextPageType: go.Type | undefined;
+}): string {
+    const zeroValueCondition = "next == zeroValue";
+    const isStringCursor = context.isPrimitive({
+        typeReference: cursor.next.property.valueType,
+        primitive: FernIr.PrimitiveTypeV1.String
+    });
+    if (!isStringCursor) {
+        return zeroValueCondition;
+    }
+    const nextType = nextPageType ?? pageType;
+    if (!nextType.isOptional() || dereferencesNextCursor({ page: cursor.page, cursor: cursor.next })) {
+        // The cursor is a string value, so its zero value is already the empty string.
+        return zeroValueCondition;
+    }
+    // Short-circuits before dereferencing a nil cursor.
+    return `${zeroValueCondition} || *next == ""`;
 }
 
 function getNextResultsSetter({
@@ -584,26 +648,27 @@ function getPagePropertyInitializer({
     pagination,
     pageType,
     requestPagePropertyReference,
-    requestPagePropertyFormat,
-    requestBodyPageProperty
+    requestBodyPageProperty,
+    useItemIndex
 }: {
     pagination: FernIr.Pagination;
     pageType: go.Type;
     requestPagePropertyReference: go.AstNode;
-    requestPagePropertyFormat: go.AstNode;
     requestBodyPageProperty: RequestBodyPageProperty | undefined;
+    useItemIndex: boolean;
 }): go.AstNode | undefined {
     switch (pagination.type) {
         case "offset": {
             if (requestBodyPageProperty != null) {
                 return getRequestBodyOffsetInitializer({
                     pageType,
-                    requestReference: requestBodyPageProperty.requestReference
+                    requestReference: requestBodyPageProperty.requestReference,
+                    useItemIndex
                 });
             }
             return go.codeblock((writer) => {
                 if (pageType.isOptional()) {
-                    writer.writeNode(getOffsetInitializer({ pageType }));
+                    writer.writeNode(getOffsetInitializer({ pageType, useItemIndex }));
                     writer.newLine();
                     writer.write("if ");
                     writer.writeNode(
@@ -624,9 +689,8 @@ function getPagePropertyInitializer({
                     writer.writeLine("}");
                     return;
                 }
+                writer.write("next := ");
                 writer.writeNode(requestPagePropertyReference);
-                writer.write(" := ");
-                writer.writeNode(requestPagePropertyFormat);
                 writer.newLine();
             });
         }
@@ -642,17 +706,19 @@ function getPagePropertyInitializer({
 
 function getRequestBodyOffsetInitializer({
     pageType,
-    requestReference
+    requestReference,
+    useItemIndex
 }: {
     pageType: go.Type;
     requestReference: string;
+    useItemIndex: boolean;
 }): go.AstNode {
     return go.codeblock((writer) => {
         if (!pageType.isOptional()) {
             writer.writeLine(`next := ${requestReference}`);
             return;
         }
-        writer.writeNode(getOffsetInitializer({ pageType }));
+        writer.writeNode(getOffsetInitializer({ pageType, useItemIndex }));
         writer.newLine();
         writer.writeLine(`if ${requestReference} != nil {`);
         writer.indent();
@@ -662,21 +728,23 @@ function getRequestBodyOffsetInitializer({
     });
 }
 
-function getOffsetInitializer({ pageType }: { pageType: go.Type }): go.AstNode {
+// Item-index offsets address records rather than pages, so they start at 0.
+function getOffsetInitializer({ pageType, useItemIndex }: { pageType: go.Type; useItemIndex: boolean }): go.AstNode {
     const underlying = pageType.underlying();
+    const initialOffset = useItemIndex ? 0 : 1;
     switch (underlying.internalType.type) {
         case "string":
-            return go.codeblock('var next string = "1"');
+            return go.codeblock(`var next string = "${initialOffset}"`);
         case "uuid":
             return go.codeblock("var next uuid.UUID");
         case "int":
-            return go.codeblock("next := 1");
+            return go.codeblock(`next := ${initialOffset}`);
         case "int64":
-            return go.codeblock("var next int64 = 1");
+            return go.codeblock(`var next int64 = ${initialOffset}`);
         case "float64":
-            return go.codeblock("var next float64 = 1");
+            return go.codeblock(`var next float64 = ${initialOffset}`);
         default:
-            return go.codeblock("next := 1");
+            return go.codeblock(`next := ${initialOffset}`);
     }
 }
 

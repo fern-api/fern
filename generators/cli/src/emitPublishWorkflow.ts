@@ -200,8 +200,46 @@ jobs:
       - name: Test
         run: cargo test
 
+  # The npm packages take their version from the release tag, while the
+  # binary reports the version in Cargo.toml. Publishing when they disagree
+  # ships a package whose --version names a release that isn't on the
+  # registry, so refuse to publish instead (cargo-dist hard-fails on the
+  # same mismatch for the GitHub Release).
+  version:
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Check tag matches crate version
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          TAG_VERSION="\${GITHUB_REF_NAME#v}"
+          CRATE_VERSION=\$(cargo metadata --no-deps --format-version 1 \\
+            | jq -r --arg manifest "\${PWD}/Cargo.toml" \\
+              '.packages[] | select(.manifest_path == \$manifest) | .version')
+
+          if [[ -z "\${CRATE_VERSION}" ]]; then
+            echo "::error::Could not determine the crate version from cargo metadata (no package matched \${PWD}/Cargo.toml)."
+            exit 1
+          fi
+
+          if [[ "\${TAG_VERSION}" != "\${CRATE_VERSION}" ]]; then
+            echo "::error::Tag \${GITHUB_REF_NAME} publishes version \${TAG_VERSION}, but Cargo.toml is \${CRATE_VERSION}."
+            echo "::error::The binary would report \${CRATE_VERSION} from --version while the npm packages say \${TAG_VERSION}."
+            echo "::error::Set the generator's output version to \${TAG_VERSION} and regenerate, or tag v\${CRATE_VERSION} instead."
+            exit 1
+          fi
+          echo "Tag and crate version agree: \${TAG_VERSION}"
+
   publish:
-    needs: [check, compile, test]
+    needs: [check, compile, test, version]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: \${{ matrix.runner }}${oidcPermissions}
     strategy:
@@ -235,18 +273,22 @@ ${matrixIncludes}
           sudo apt-get update
           sudo apt-get install -y musl-tools
 
+      # The TLS backend and the keyring backend are selected per target by
+      # Cargo.toml, so no per-target feature flags are needed here.
+      #
+      # musl targets get a C compiler for the C dependencies, but not a
+      # linker: musl-gcc cannot produce static-pie, so it yields a binary
+      # that needs /lib/ld-musl-*.so.1 at runtime — which defeats the point
+      # of a musl build and crashes where that loader is absent. Left alone,
+      # rustc links the self-contained musl objects statically.
       - name: Build release binary
         shell: bash
         run: |
           if [[ "\${{ matrix.rust-target }}" == *-linux-musl ]]; then
-            TARGET_UPPER=\$(echo "\${{ matrix.rust-target }}" | tr '[:lower:]-' '[:upper:]_')
-            export "CARGO_TARGET_\${TARGET_UPPER}_LINKER=musl-gcc"
-            export CC=musl-gcc
-            cargo build --release --target \${{ matrix.rust-target }} \\
-              --no-default-features --features rustls
-          else
-            cargo build --release --target \${{ matrix.rust-target }}
+            TARGET_UNDERSCORE=\$(echo "\${{ matrix.rust-target }}" | tr '-' '_')
+            export "CC_\${TARGET_UNDERSCORE}=musl-gcc"
           fi
+          cargo build --release --target \${{ matrix.rust-target }}
 
       - name: Package and publish npm platform package${tokenEnvBlock}
         shell: bash
