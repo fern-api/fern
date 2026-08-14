@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "price": {
+      "$ref": "#/definitions/Money"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "price"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Money": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "total": {
+      "$ref": "#/definitions/Money"
+    },
+    "address": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingAddress"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "total"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Money": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "additionalProperties": false
+    },
+    "BillingAddress": {
+      "type": "object",
+      "properties": {
+        "line1": {
+          "type": "string"
+        },
+        "postalCode": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "line1"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
