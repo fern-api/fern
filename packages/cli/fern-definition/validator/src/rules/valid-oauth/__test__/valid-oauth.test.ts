@@ -285,6 +285,54 @@ describe("valid-oauth", () => {
         expect(violations.some((violation) => violation.message.includes("does not use PKCE"))).toBe(true);
     });
 
+    it("valid-callback-redirect-urls", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("valid"),
+                RelativeFilePath.of("callback-redirect-urls")
+            )
+        });
+        expect(violations).toEqual([]);
+    });
+
+    it("invalid-callback-redirect-url-scheme", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("callback-redirect-url-scheme")
+            )
+        });
+        expect(violations.some((violation) => violation.message.includes("success-redirect-url"))).toBe(true);
+        expect(
+            violations.some((violation) => violation.message.includes("error-redirect-url 'ftp://acme.com/cli/error'"))
+        ).toBe(true);
+    });
+
+    it("invalid-device-code-callback-redirect-urls", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("device-code-callback-redirect-urls")
+            )
+        });
+        expect(
+            violations.some(
+                (violation) =>
+                    violation.message.includes("no browser callback") &&
+                    violation.message.includes("success-redirect-url")
+            )
+        ).toBe(true);
+    });
+
     it("invalid-client-id-env", async () => {
         const violations = await getViolationsForRule({
             rule: ValidOauthRule,
