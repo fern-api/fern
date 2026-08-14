@@ -107,7 +107,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         try {
             const endpointSnippets = this.generateSnippets(dynamicIr, snippetsGenerator);
             if (endpointSnippets.length === 0) {
-                context.logger.warn("Skipping README.md generation: no snippets were produced.");
+                context.logger.debug("No snippets were produced; skipping README.md generation.");
                 return;
             }
             const content = await context.generatorAgent.generateReadme({

@@ -444,7 +444,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         endpointSnippets: FernGeneratorExec.Endpoint[];
     }): Promise<void> {
         if (endpointSnippets.length === 0) {
-            context.logger.warn("Skipping README.md generation: no snippets were produced.");
+            context.logger.debug("No snippets were produced; skipping README.md generation.");
             return;
         }
         const content = await context.generatorAgent.generateReadme({
@@ -463,7 +463,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
     private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
         const builder = buildReference({ context });
         if (builder == null) {
-            context.logger.warn("Skipping reference.md generation: no endpoint references were found.");
+            context.logger.debug("No endpoint references found; skipping reference.md generation.");
             return;
         }
         const content = await context.generatorAgent.generateReference(builder);

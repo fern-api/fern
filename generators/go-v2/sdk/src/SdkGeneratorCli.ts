@@ -79,10 +79,6 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
             } catch (e) {
                 throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
-        } else {
-            context.logger.warn(
-                "Skipping README.md generation: the configured output does not include a full project."
-            );
         }
 
         try {
@@ -235,7 +231,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         endpointSnippets: Endpoint[];
     }): Promise<void> {
         if (endpointSnippets.length === 0) {
-            context.logger.warn("Skipping README.md generation: no snippets were produced.");
+            context.logger.debug("No snippets were produced; skipping README.md generation.");
             return;
         }
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
