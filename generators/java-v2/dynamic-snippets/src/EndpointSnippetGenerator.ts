@@ -605,7 +605,7 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
-        if (request.body != null) {
+        if (request.body != null && !this.callOmitsRequestBody({ request, snippet })) {
             args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
         }
         this.context.errors.unscope();
@@ -617,6 +617,27 @@ export class EndpointSnippetGenerator {
         }
 
         return args;
+    }
+
+    /**
+     * Whether the call leaves the body out entirely, which the shorter overload accepts. Applies
+     * only to a body the caller may omit, and only once the generator opts in to that.
+     */
+    private callOmitsRequestBody({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): boolean {
+        if (this.context.customConfig?.["respect-optional-request-body"] !== true) {
+            return false;
+        }
+        if (request.bodyRequired !== false) {
+            return false;
+        }
+        const value = snippet.requestBody;
+        return value == null || (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
     }
 
     private usesOptionalNullable(): boolean {
@@ -998,7 +1019,13 @@ export class EndpointSnippetGenerator {
     }): java.BuilderParameter {
         return {
             name: this.context.getMethodName(body.bodyKey),
-            value: this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
+            // The wrapped request requires the body, so an example that sends none still has to
+            // build one. An empty record renders the body type's own empty builder, while the
+            // other body types already render an empty value of their own from an absent one.
+            value: this.getReferencedRequestBodyPropertyTypeLiteral({
+                body: body.bodyType,
+                value: body.bodyType.type === "typeReference" ? (value ?? {}) : value
+            })
         };
     }
 

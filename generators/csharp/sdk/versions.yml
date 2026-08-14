@@ -1,4 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.82.0
+  changelogEntry:
+    - summary: |
+        With `respect-optional-request-body` enabled, examples that omit an optional request body are no
+        longer dropped from the generated snippets and reference.
+      type: fix
+    - summary: |
+        Add a `respect-optional-request-body` option. When enabled, an endpoint whose request body the API
+        does not require takes that body as `Body? request = null`, so the caller can leave the argument out
+        and the request is sent with no body and no body content type. Examples that supply no body render
+        as `client.BulkRefundAsync()`. The option defaults to false, so existing signatures and snippets are
+        unchanged.
+      type: feat
+    - summary: |
+        Skip endpoint examples that omit a request body the endpoint declares. The generated request
+        type requires the body, so rendering such an example produced a call missing a required
+        argument in the reference, the snippets and the mock server tests.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 2.81.1
+  changelogEntry:
+    - summary: |
+        Percent-encode `;` in query parameter names and values. RFC 3986 permits it, but it
+        remains a legacy parameter separator for many servers, which truncated values such as
+        `?mail2=a@example.com;%20b@example.com` at the first `;`.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
 - version: 2.81.0
   changelogEntry:
     - summary: |

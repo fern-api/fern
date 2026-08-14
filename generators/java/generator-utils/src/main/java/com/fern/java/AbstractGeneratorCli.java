@@ -507,6 +507,24 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                                                 }
 
                                                 @Override
+                                                public Optional<MavenCoordinate> visitPackagist(
+                                                        com.fern.ir.model.publish.PackagistPublishTarget value) {
+                                                    return Optional.empty();
+                                                }
+
+                                                @Override
+                                                public Optional<MavenCoordinate> visitRubygems(
+                                                        com.fern.ir.model.publish.RubyGemsPublishTarget value) {
+                                                    return Optional.empty();
+                                                }
+
+                                                @Override
+                                                public Optional<MavenCoordinate> visitNuget(
+                                                        com.fern.ir.model.publish.NugetPublishTarget value) {
+                                                    return Optional.empty();
+                                                }
+
+                                                @Override
                                                 public Optional<MavenCoordinate> _visitUnknown(Object value) {
                                                     return Optional.empty();
                                                 }

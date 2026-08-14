@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/ApiClient.swift">refund</a>(id: String, request: RefundRequest?, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">refund</a>(id: String, request: RefundRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -21,7 +21,7 @@ private func main() async throws {
     _ = try await client.refund(
         id: "refund-id",
         request: RefundRequest(
-
+            amount: 60
         )
     )
 }
@@ -49,7 +49,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `RefundRequest?` 
+**request:** `RefundRequest` 
     
 </dd>
 </dl>
@@ -139,7 +139,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/Sources/ApiClient.swift">bulkRefund</a>(request: RefundRequest?, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">bulkRefund</a>(request: RefundRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -178,7 +178,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `RefundRequest?` 
+**request:** `RefundRequest` 
     
 </dd>
 </dl>

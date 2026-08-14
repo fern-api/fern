@@ -283,7 +283,8 @@
                         "type": "named",
                         "value": "type_:CatalogV1Id"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -369,7 +370,8 @@
                         "type": "named",
                         "value": "type_:Activity"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

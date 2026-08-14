@@ -14,7 +14,16 @@
 //!     };
 //!     let client =
 //!         OptionalReferencedRequestBodiesClient::new(config).expect("Failed to build client");
-//!     client.refund(&"refund-id".to_string(), &None, None).await;
+//!     client
+//!         .refund(
+//!             &"refund-id".to_string(),
+//!             &RefundRequest {
+//!                 amount: Some(60.0),
+//!                 ..Default::default()
+//!             },
+//!             None,
+//!         )
+//!         .await;
 //! }
 //! ```
 //!

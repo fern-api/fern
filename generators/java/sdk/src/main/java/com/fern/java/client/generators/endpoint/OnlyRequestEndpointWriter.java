@@ -138,6 +138,9 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             sdkRequestBodyType.visit(
                     new RequestBodyInitializer(builder, generatedObjectMapper, endpoint, sendContentType, contentType));
 
+            // The body-less overload sends no body, so its content type is only known at call time.
+            boolean contentTypeDependsOnBody = sendContentType && mayOmitRequestBody(clientGeneratorContext, endpoint);
+
             if (clientGeneratorContext.isEndpointSecurity()) {
                 builder.add(
                         "$T<String, String> _headers = new $T<>($L.$L($L));\n",
@@ -153,8 +156,17 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                         getEndpointMetadataCodeBlock(httpEndpoint));
             }
 
-            builder.add("$T $L = new $T.Builder()\n", Request.class, variables.getOkhttpRequestName(), Request.class)
-                    .indent()
+            if (contentTypeDependsOnBody) {
+                builder.add(
+                        "$T.Builder $L = new $T.Builder()\n",
+                        Request.class,
+                        AbstractEndpointWriter.REQUEST_BUILDER_NAME,
+                        Request.class);
+            } else {
+                builder.add(
+                        "$T $L = new $T.Builder()\n", Request.class, variables.getOkhttpRequestName(), Request.class);
+            }
+            builder.indent()
                     .add(".url(")
                     .add(inlineableHttpUrl)
                     .add(")\n")
@@ -183,7 +195,10 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
                     @Override
                     public Void visitTypeReference(HttpRequestBodyReference typeReference) {
-                        builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
+                        if (!contentTypeDependsOnBody) {
+                            builder.add(
+                                    ".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
+                        }
                         AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint)
                                 .ifPresent(acceptsHeader ->
                                         builder.add(acceptsHeader).add("\n"));
@@ -200,6 +215,23 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                         return null;
                     }
                 });
+            }
+            if (contentTypeDependsOnBody) {
+                builder.add(";\n")
+                        .unindent()
+                        .beginControlFlow("if ($N != null)", "request")
+                        .addStatement(
+                                "$L.addHeader($S, $S)",
+                                AbstractEndpointWriter.REQUEST_BUILDER_NAME,
+                                AbstractEndpointWriter.CONTENT_TYPE_HEADER,
+                                contentType)
+                        .endControlFlow()
+                        .addStatement(
+                                "$T $L = $L.build()",
+                                Request.class,
+                                variables.getOkhttpRequestName(),
+                                AbstractEndpointWriter.REQUEST_BUILDER_NAME);
+                return builder.build();
             }
             return builder.add(".build();\n").unindent().build();
         } else {
@@ -369,6 +401,9 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                         this.endpoint.getRequestBody().get());
             }
 
+            // The body-less overload passes null, so the body is only serialized when it was passed.
+            boolean mayBeOmitted = mayOmitRequestBody(clientGeneratorContext, this.endpoint);
+
             Optional<String> requestBodyGetterName = getRequestBodyGetterName();
 
             CodeBlock requestBodyGetter = CodeBlock.of("request");
@@ -403,11 +438,19 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     .addStatement("$T $L", RequestBody.class, variables.getOkhttpRequestBodyName())
                     .beginControlFlow("try");
 
-            if (isOptional) {
-                codeBlock.addStatement(
-                        "$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class);
+            if (isOptional || mayBeOmitted) {
+                // A call that leaves out an optional body sends no body, which OkHttp spells as a null body except
+                // for the methods it requires one for, where an empty body is the closest equivalent.
+                if (mayBeOmitted && !requiresRequestBody(httpEndpoint.getMethod())) {
+                    codeBlock.addStatement("$L = null", variables.getOkhttpRequestBodyName());
+                } else {
+                    codeBlock.addStatement(
+                            "$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class);
+                }
 
-                if (requestBodyGetterName.isPresent()) {
+                if (mayBeOmitted) {
+                    codeBlock.beginControlFlow("if ($N != null)", "request");
+                } else if (requestBodyGetterName.isPresent()) {
                     codeBlock.beginControlFlow("if (request.$L().isPresent())", requestBodyGetterName.get());
                 } else {
                     codeBlock.beginControlFlow("if ($N.isPresent())", "request");
@@ -433,7 +476,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             requestBodyGetter,
                             requestBodyContentType)
                     .endControlFlow();
-            if (isOptional) {
+            if (isOptional || mayBeOmitted) {
                 codeBlock.endControlFlow();
             }
             codeBlock

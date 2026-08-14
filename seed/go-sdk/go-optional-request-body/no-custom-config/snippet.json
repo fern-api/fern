@@ -1,0 +1,48 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/plants/water",
+                "method": "POST",
+                "identifier_override": "endpoint_.waterAllPlants"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-optional-request-body/fern\"\n\tfernclient \"github.com/go-optional-request-body/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.WaterAllPlants(\n\tcontext.TODO(),\n\t\u0026fern.WateringRequest{\n\t\tMilliliters: fern.Float64(\n\t\t\t1.1,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/plants/{plantId}/mist",
+                "method": "POST",
+                "identifier_override": "endpoint_.mistPlant"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-optional-request-body/fern\"\n\tfernclient \"github.com/go-optional-request-body/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.MistPlant(\n\tcontext.TODO(),\n\t\u0026fern.MistPlantRequest{\n\t\tPlantID: \"plantId\",\n\t\tIdempotencyKey: fern.String(\n\t\t\t\"idempotencyKey\",\n\t\t),\n\t\tBody: \u0026fern.WateringRequest{\n\t\t\tMilliliters: fern.Float64(\n\t\t\t\t1.1,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/plants/{plantId}/prune",
+                "method": "POST",
+                "identifier_override": "endpoint_.prunePlant"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-optional-request-body/fern\"\n\tfernclient \"github.com/go-optional-request-body/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.PrunePlant(\n\tcontext.TODO(),\n\t\u0026fern.PrunePlantRequest{\n\t\tPlantID: \"plant-id\",\n\t\tBody: \u0026fern.WateringRequest{\n\t\t\tMilliliters: fern.Float64(\n\t\t\t\t60,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/plants/{plantId}/water",
+                "method": "POST",
+                "identifier_override": "endpoint_.waterPlant"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-optional-request-body/fern\"\n\tfernclient \"github.com/go-optional-request-body/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.WaterPlant(\n\tcontext.TODO(),\n\t\u0026fern.WaterPlantRequest{\n\t\tPlantID: \"plant-id\",\n\t\tBody: \u0026fern.WateringRequest{\n\t\t\tMilliliters: fern.Float64(\n\t\t\t\t60,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}

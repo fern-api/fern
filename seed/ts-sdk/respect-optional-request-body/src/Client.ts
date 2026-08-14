@@ -31,11 +31,6 @@ export class SeedApiClient {
      *
      * @example
      *     await client.refund({
-     *         id: "refund-id"
-     *     })
-     *
-     * @example
-     *     await client.refund({
      *         id: "refund-id",
      *         body: {
      *             amount: 60
@@ -157,17 +152,17 @@ export class SeedApiClient {
      * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
-     *     await client.bulkRefund()
+     *     await client.bulkRefund({})
      */
     public bulkRefund(
-        request?: SeedApi.RefundRequest,
+        request: SeedApi.RefundRequest,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__bulkRefund(request, requestOptions));
     }
 
     private async __bulkRefund(
-        request?: SeedApi.RefundRequest,
+        request: SeedApi.RefundRequest,
         requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

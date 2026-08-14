@@ -158,6 +158,7 @@
               "typeId": "type_:Settings",
               "type": "named"
             },
+            "required": false,
             "type": "reference"
           },
           "sdkRequest": {
@@ -172,6 +173,7 @@
                   "typeId": "type_:Settings",
                   "type": "named"
                 },
+                "required": false,
                 "type": "typeReference"
               },
               "type": "justRequestBody"
@@ -472,6 +474,7 @@
             },
             "type": "typeReference"
           },
+          "bodyRequired": false,
           "type": "body"
         },
         "response": {

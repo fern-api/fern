@@ -13,6 +13,7 @@ export const BasePythonCustomConfigSchema = z.object({
     package_name: z.string().optional(),
     package_path: z.string().optional(),
     pydantic_config: PydanticConfig.optional(),
+    respect_optional_request_body: z.boolean().optional(),
     use_typeddict_requests: z.boolean().optional(),
 
     // General options.

@@ -8,12 +8,12 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .refund(
-            &"id".to_string(),
-            &Some(RefundRequest {
-                amount: Some(1.1),
+        .required_refund(
+            &"refund-id".to_string(),
+            &RefundRequest {
+                amount: Some(60.0),
                 ..Default::default()
-            }),
+            },
             None,
         )
         .await;

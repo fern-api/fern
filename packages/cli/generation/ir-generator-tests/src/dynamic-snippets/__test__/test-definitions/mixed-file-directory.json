@@ -924,7 +924,8 @@
                         "type": "named",
                         "value": "type_organization:CreateOrganizationRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

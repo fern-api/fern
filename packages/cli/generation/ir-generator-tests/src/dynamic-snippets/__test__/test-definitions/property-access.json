@@ -1326,7 +1326,8 @@
                         "type": "named",
                         "value": "type_:User"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

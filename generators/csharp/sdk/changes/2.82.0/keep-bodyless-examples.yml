@@ -1,0 +1,4 @@
+- summary: |
+    With `respect-optional-request-body` enabled, examples that omit an optional request body are no
+    longer dropped from the generated snippets and reference.
+  type: fix

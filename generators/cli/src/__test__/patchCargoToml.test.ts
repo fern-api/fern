@@ -12,7 +12,8 @@ import {
     patchCargoLockVersion,
     patchCargoToml,
     renameCargoLockPackage,
-    renderLockDependencyList
+    renderLockDependencyList,
+    withDistributionDefaults
 } from "../patchCargoToml.js";
 
 /**
@@ -92,8 +93,21 @@ dist = true`);
         const patched = applyCargoTomlPatch(TEMPLATE_CARGO_TOML, "acme-cli", "1.2.3");
         expect(patched).toContain('repository = "https://github.com/fern-api/cli-sdk"');
         expect(patched).toContain('anyhow = "1"');
-        expect(patched).toContain('default = ["native-tls"]');
+        expect(patched).toContain("default = []");
         expect(patched).toContain("[profile.dist]");
+    });
+
+    it("preserves the per-target TLS and keyring dependency tables", () => {
+        const patched = applyCargoTomlPatch(TEMPLATE_CARGO_TOML, "acme-cli", "1.2.3");
+        expect(patched).toContain(`[target.'cfg(target_env = "musl")'.dependencies]`);
+        expect(patched).toContain(`[target.'cfg(not(target_env = "musl"))'.dependencies]`);
+        // keyring is non-musl only: libdbus can't be statically linked.
+        const muslSection = patched.slice(
+            patched.indexOf(`[target.'cfg(target_env = "musl")'.dependencies]`),
+            patched.indexOf(`[target.'cfg(not(target_env = "musl"))'.dependencies]`)
+        );
+        expect(muslSection).not.toContain("keyring");
+        expect(muslSection).toContain("rustls-tls-native-roots");
     });
 
     it("throws with a clear pointer when an anchor is missing — guards against silent template drift", () => {
@@ -405,5 +419,65 @@ describe("patchCargoToml (filesystem)", () => {
         await expect(patchCargoToml({ outputDir: tmpDir, binaryName: "acme-cli", version: "1.0.0" })).rejects.toThrow(
             /anchor missing|did not match/
         );
+    });
+});
+
+describe("withDistributionDefaults", () => {
+    const repoUrl = "https://github.com/acme/acme-cli";
+    const description = "CLI for the Acme API";
+    const base = { publishesHomebrew: true, repoUrl, description };
+
+    // The load-bearing one: cargo-dist builds the formula's per-arch release
+    // download URLs from `repository`. Left at the template's value every
+    // `brew install` 404s against github.com/fern-api/cli-sdk.
+    it("points repository, homepage and description at the consumer", () => {
+        expect(withDistributionDefaults({ ...base, packageIdentity: undefined })).toEqual({
+            repository: repoUrl,
+            homepage: repoUrl,
+            description
+        });
+    });
+
+    it("preserves the other identity fields it fills alongside", () => {
+        expect(withDistributionDefaults({ ...base, packageIdentity: { name: "acme-cli", license: "MIT" } })).toEqual({
+            name: "acme-cli",
+            license: "MIT",
+            repository: repoUrl,
+            homepage: repoUrl,
+            description
+        });
+    });
+
+    it("never overrides values the consumer pinned", () => {
+        expect(
+            withDistributionDefaults({
+                ...base,
+                packageIdentity: {
+                    repository: "https://github.com/acme/other",
+                    homepage: "https://acme.com",
+                    description: "Mine"
+                }
+            })
+        ).toEqual({
+            repository: "https://github.com/acme/other",
+            homepage: "https://acme.com",
+            description: "Mine"
+        });
+    });
+
+    // Scoped to the Homebrew case: applying it unconditionally would change
+    // the Cargo.toml of every existing github-mode generation.
+    it("is inert when Homebrew is off", () => {
+        const packageIdentity = { name: "acme-cli" };
+        expect(withDistributionDefaults({ ...base, publishesHomebrew: false, packageIdentity })).toBe(packageIdentity);
+        expect(
+            withDistributionDefaults({ ...base, publishesHomebrew: false, packageIdentity: undefined })
+        ).toBeUndefined();
+    });
+
+    it("fills only what it can when the repo url is unknown", () => {
+        expect(withDistributionDefaults({ ...base, repoUrl: undefined, packageIdentity: undefined })).toEqual({
+            description
+        });
     });
 });

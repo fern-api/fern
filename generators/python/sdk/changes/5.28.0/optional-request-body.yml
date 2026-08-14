@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `respect_optional_request_body`. With it enabled, an endpoint whose request body the API does
+    not require defaults that body to the `OMIT` sentinel — `batch_refund(request: Sequence[RefundRequest] = OMIT)`
+    rather than `request: Optional[Sequence[RefundRequest]]` — so "not passed" stays distinct from an
+    explicit `None`, and a body left out means the request carries no content and no `Content-Type`.
+    Examples that supply no body render as `client.batch_refund()`. When the body inlines into keyword
+    arguments instead, leaving all of them out sends no body rather than an empty `{}`. Defaults to
+    `false`, so signatures and snippets are unchanged until you opt in.
+  type: feat
