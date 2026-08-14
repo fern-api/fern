@@ -42,6 +42,27 @@ export interface OAuthAuthorizationCode {
      * callback ports.
      */
     redirectUriBackupPorts: number[] | undefined;
+    /**
+     * An absolute http(s) URL the CLI redirects the browser to once it captures the
+     * authorization code, so a hosted page owns the branding of the final screen.
+     *
+     * This is not the OAuth `redirect_uri` and does not need registering with the
+     * authorization server: the redirect is issued by the loopback listener after the code has
+     * been captured, and neither `code` nor `state` is forwarded. When omitted, the loopback
+     * listener serves its built-in success page inline.
+     */
+    successRedirectUrl: string | undefined;
+    /**
+     * An absolute http(s) URL the CLI redirects the browser to when authorization fails —
+     * the user denies consent, the authorization server returns an `error`, or the callback is
+     * unusable (missing `code`, mismatched `state`).
+     *
+     * The `error` and `error_description` query parameters are appended so the hosted page can
+     * explain what happened: they are merged into any query string already on the URL, and
+     * inserted before a fragment if there is one. When omitted, the loopback listener serves its
+     * built-in failure page inline.
+     */
+    errorRedirectUrl: string | undefined;
     /** The scopes requested during authorization. */
     scopes: string[] | undefined;
     /** The PKCE configuration. PKCE is required for this flow. */

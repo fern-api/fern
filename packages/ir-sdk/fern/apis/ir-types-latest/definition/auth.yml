@@ -147,6 +147,27 @@ types:
           ephemeral port is used instead). Enables a fixed-port fallback set (e.g. redirectUri on
           8484 with backups [8483, 8482]) for identity providers that bind each client to specific
           callback ports.
+      successRedirectUrl:
+        type: optional<string>
+        docs: |
+          An absolute http(s) URL the CLI redirects the browser to once it captures the
+          authorization code, so a hosted page owns the branding of the final screen.
+
+          This is not the OAuth `redirect_uri` and does not need registering with the
+          authorization server: the redirect is issued by the loopback listener after the code has
+          been captured, and neither `code` nor `state` is forwarded. When omitted, the loopback
+          listener serves its built-in success page inline.
+      errorRedirectUrl:
+        type: optional<string>
+        docs: |
+          An absolute http(s) URL the CLI redirects the browser to when authorization fails —
+          the user denies consent, the authorization server returns an `error`, or the callback is
+          unusable (missing `code`, mismatched `state`).
+
+          The `error` and `error_description` query parameters are appended so the hosted page can
+          explain what happened: they are merged into any query string already on the URL, and
+          inserted before a fragment if there is one. When omitted, the loopback listener serves its
+          built-in failure page inline.
       scopes:
         type: optional<list<string>>
         docs: The scopes requested during authorization.

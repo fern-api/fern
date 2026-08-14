@@ -29,6 +29,10 @@ export interface OAuthSchemeSchema extends GeneratorsYml.fernDefinition.WithDocs
     "refresh-url"?: string;
     /** The loopback redirect (callback) URI for the authorization-code flow. Must be a loopback host over http — `127.0.0.1` (recommended, RFC 8252 §7.3) or `localhost` — with any path; the generated CLI binds and sends this URI exactly, so it must match the redirect registered with the authorization server (e.g. `http://127.0.0.1:8484/callback` or `http://localhost:8484/callback`). Provide a bare string to pin a single port, or an object with `url` plus `ports` to add backup ports tried when the primary is busy. Omit it entirely to use an ephemeral (OS-assigned) port. */
     "redirect-uri"?: GeneratorsYml.fernDefinition.RedirectUriSchema;
+    /** A page the generated CLI redirects the browser to once it captures the authorization code, for the authorization-code flow. Must be an absolute http(s) URL. This is not an OAuth `redirect_uri` and does not need registering with the authorization server — the redirect happens on the loopback listener after the code is captured, and no `code` or `state` is forwarded. Omit it to serve the CLI's built-in success page. */
+    "success-redirect-url"?: string;
+    /** A page the generated CLI redirects the browser to when authorization fails (the user denies consent, or the callback is unusable), for the authorization-code flow. Must be an absolute http(s) URL. The `error` and `error_description` query parameters are appended so the page can explain what happened — merged into any query string already on the URL, and inserted before a fragment if there is one. Omit it to serve the CLI's built-in failure page. */
+    "error-redirect-url"?: string;
     /** PKCE configuration for the authorization-code flow. PKCE is always applied for that flow. */
     pkce?: GeneratorsYml.fernDefinition.OAuthPkceSchema;
     /** Additional literal parameters appended to the authorization request (e.g. `audience`). */

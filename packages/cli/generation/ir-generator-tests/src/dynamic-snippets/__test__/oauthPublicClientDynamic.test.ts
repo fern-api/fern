@@ -49,6 +49,8 @@ describe("dynamic snippets for public-client OAuth flows", () => {
                 refreshUrl: undefined,
                 redirectUri: undefined,
                 redirectUriBackupPorts: undefined,
+                successRedirectUrl: undefined,
+                errorRedirectUrl: undefined,
                 scopes: undefined,
                 pkce: { method: FernIr.auth.OAuthPkceMethod.S256 },
                 authorizationParameters: undefined,
