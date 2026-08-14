@@ -22,6 +22,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         "ADDITIONAL_QUERY_STRING_PARAMETERS";
     private static WEBSOCKETS_FEATURE_ID: FernGeneratorCli.FeatureId = "WEBSOCKETS";
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+    private static CUSTOM_CLIENT_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_CLIENT";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
@@ -80,6 +81,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         if (wsSnippets.length > 0) {
             snippets[ReadmeSnippetBuilder.WEBSOCKETS_FEATURE_ID] = wsSnippets;
         }
+
+        // Custom reqwest client
+        snippets[ReadmeSnippetBuilder.CUSTOM_CLIENT_FEATURE_ID] = this.buildCustomClientSnippets();
 
         // Environments
         if (this.context.ir.environments != null) {
@@ -171,6 +175,22 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             const codeString = this.buildAdditionalQueryParamsCode(endpoint);
             return this.writeCode(codeString);
         });
+    }
+
+    private buildCustomClientSnippets(): string[] {
+        const codeString = `use ${this.crateName}::prelude::*;
+
+let certificate = reqwest::Certificate::from_pem(&std::fs::read("ca.pem")?)?;
+let reqwest_client = reqwest::Client::builder()
+    .add_root_certificate(certificate)
+    .build()
+    .expect("Failed to build reqwest client");
+let config = ClientConfig {
+    reqwest_client: Some(reqwest_client),
+    ..Default::default()
+};
+let ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.context.getClientName()}::new(config).expect("Failed to build client");`;
+        return [this.writeCode(codeString)];
     }
 
     private buildPaginationSnippets(): string[] {
