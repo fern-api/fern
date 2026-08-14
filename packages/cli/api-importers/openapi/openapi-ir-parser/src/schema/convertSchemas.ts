@@ -13,7 +13,7 @@ import {
 } from "@fern-api/openapi-ir";
 import { CliError } from "@fern-api/task-context";
 import { size } from "lodash-es";
-import type { OpenAPIV3 } from "openapi-types";
+import type { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { getExtension } from "../getExtension.js";
 import { OpenAPIExtension } from "../openapi/v3/extensions/extensions.js";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js";
@@ -368,7 +368,7 @@ function getTitleAsName(title: string | undefined): string | undefined {
 }
 
 export function convertSchemaObject(
-    schema: OpenAPIV3.SchemaObject | string,
+    schemaInput: OpenAPIV3.SchemaObject | string,
     wrapAsOptional: boolean,
     wrapAsNullable: boolean,
     context: SchemaParserContext,
@@ -380,9 +380,8 @@ export function convertSchemaObject(
     referencedAsRequest = false,
     fallback?: string | number | boolean | unknown[]
 ): SchemaWithExample {
-    if (typeof schema === "string") {
-        schema = { type: schema } as OpenAPIV3.SchemaObject;
-    }
+    let schema =
+        typeof schemaInput === "string" ? ({ type: schemaInput } as OpenAPIV3.SchemaObject) : { ...schemaInput };
     const nameOverride = getDisambiguatedNameOverride(schema, context, breadcrumbs.join("."));
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
@@ -461,23 +460,22 @@ export function convertSchemaObject(
     try {
         // handle type array
         if (Array.isArray(schema.type)) {
-            const nullIndex = schema.type.indexOf("null");
-            const hasNull = nullIndex !== -1;
+            const nonNullTypes = schema.type.filter((type) => type !== "null");
+            const hasNull = nonNullTypes.length !== schema.type.length;
             if (schema.type.length === 1) {
                 schema.type = schema.type[0];
             } else if (schema.type.length === 2 && hasNull) {
-                schema.type.splice(nullIndex, 1);
-                schema.type = schema.type[0];
+                schema.type = nonNullTypes[0] ?? "null";
                 schema.nullable = true;
             } else {
                 if (hasNull) {
-                    schema.type.splice(nullIndex, 1);
                     schema.nullable = true;
                 }
+                (schema as OpenAPIV3_1.SchemaObject).type = nonNullTypes;
                 if (schema.oneOf == null) {
-                    schema.oneOf = [...new Set(schema.type)];
+                    schema.oneOf = [...new Set(nonNullTypes)];
                 } else {
-                    const uniqueTypes = new Set([...schema.oneOf, ...schema.type]);
+                    const uniqueTypes = new Set([...schema.oneOf, ...nonNullTypes]);
                     schema.oneOf = [...uniqueTypes];
                 }
             }
