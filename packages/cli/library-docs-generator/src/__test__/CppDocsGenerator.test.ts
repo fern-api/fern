@@ -424,4 +424,31 @@ describe("generateCpp()", () => {
 
         expect(existsSync(join(tmpDir, "groups"))).toBe(false);
     });
+
+    it("terminates on a group tree whose subgroup references an ancestor", () => {
+        const scan = makeGroup({
+            id: "group__scan",
+            name: "scan",
+            title: "Scan",
+            functions: [makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" })]
+        });
+        // A malformed IR: the subgroup points back at its parent
+        scan.subgroups.push(makeGroup({ id: "group__nested", name: "nested", subgroups: [scan] }));
+
+        const ir = makeIr(
+            makeNamespace({
+                name: "cub",
+                path: "cub",
+                functions: [makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" })]
+            }),
+            undefined,
+            [scan]
+        );
+
+        const result = generateCpp({ ir, outputDir: tmpDir, slug: "reference/cub" });
+
+        expect(result.writtenFiles.filter((file) => file.includes("/groups/")).length).toBe(3);
+        expect(existsSync(join(tmpDir, "groups/scan/nested/index.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "groups/scan/nested/scan"))).toBe(false);
+    });
 });

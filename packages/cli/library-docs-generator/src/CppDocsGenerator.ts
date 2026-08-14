@@ -627,8 +627,9 @@ function generateGroupPages(groups: CppGroupIr[], writer: MdxFileWriter, library
     }));
     writer.writePage(indexPageKey, renderGroupsIndexPage(entries, libraryTitle));
 
+    const written = new Set<string>();
     for (const group of renderable) {
-        writeGroupPage(group, `${GROUPS_FOLDER}/${groupFolderName(group)}`, writer);
+        writeGroupPage(group, `${GROUPS_FOLDER}/${groupFolderName(group)}`, writer, written);
     }
 }
 
@@ -637,13 +638,21 @@ function generateGroupPages(groups: CppGroupIr[], writer: MdxFileWriter, library
  *
  * Links are relative to the group's own folder, matching how Fern resolves
  * links on a folder index page (the `/index` suffix is stripped from the URL).
+ *
+ * `written` tracks the groups already emitted so a group tree that references
+ * one of its ancestors terminates instead of recursing forever.
  */
-function writeGroupPage(group: CppGroupIr, dir: string, writer: MdxFileWriter): void {
+function writeGroupPage(group: CppGroupIr, dir: string, writer: MdxFileWriter, written: Set<string>): void {
+    if (written.has(group.id)) {
+        return;
+    }
+    written.add(group.id);
+
     const pageKey = `${dir}/index.mdx`;
     setCurrentPageSlugPath(pageKeyToSlugPath(pageKey));
 
     const sections = collectGroupSections(group);
-    const subgroups = group.subgroups.filter((subgroup) => groupHasContent(subgroup));
+    const subgroups = group.subgroups.filter((subgroup) => !written.has(subgroup.id) && groupHasContent(subgroup));
     const dirSegment = slugifySegment(dir.split("/").pop() ?? "");
     const subgroupEntries: GroupListEntry[] = subgroups.map((subgroup) => ({
         displayName: groupDisplayName(subgroup),
@@ -653,6 +662,6 @@ function writeGroupPage(group: CppGroupIr, dir: string, writer: MdxFileWriter): 
     writer.writePage(pageKey, renderGroupPage(group, sections, subgroupEntries));
 
     for (const subgroup of subgroups) {
-        writeGroupPage(subgroup, `${dir}/${groupFolderName(subgroup)}`, writer);
+        writeGroupPage(subgroup, `${dir}/${groupFolderName(subgroup)}`, writer, written);
     }
 }

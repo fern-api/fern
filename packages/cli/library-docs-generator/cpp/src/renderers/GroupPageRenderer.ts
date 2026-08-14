@@ -77,12 +77,19 @@ export function collectGroupSections(group: CppGroupIr): GroupSection[] {
 
 /**
  * Whether a group (or any of its subgroups) has anything to render.
+ *
+ * A group tree that references one of its ancestors would otherwise recurse
+ * forever, so already-visited groups are treated as having no content.
  */
-export function groupHasContent(group: CppGroupIr): boolean {
+export function groupHasContent(group: CppGroupIr, visited: Set<string> = new Set()): boolean {
+    if (visited.has(group.id)) {
+        return false;
+    }
+    visited.add(group.id);
     const hasMembers = [group.classes, group.functions, group.enums, group.typedefs, group.variables].some(
         (members) => members != null && members.length > 0
     );
-    return hasMembers || group.subgroups.some((subgroup) => groupHasContent(subgroup));
+    return hasMembers || group.subgroups.some((subgroup) => groupHasContent(subgroup, visited));
 }
 
 function renderEntries(entries: GroupMemberEntry[], lines: string[]): void {
@@ -111,7 +118,8 @@ export function renderGroupPage(
     const docstring = group.docstring;
 
     const title = group.title || group.name;
-    const description = docstring ? renderSegmentsPlainText(docstring.summary) : `Members of the ${title} group.`;
+    const summaryText = docstring ? renderSegmentsPlainText(docstring.summary) : "";
+    const description = summaryText.length > 0 ? summaryText : `Members of the ${title} group.`;
     lines.push(...renderFrontmatter(title, description));
 
     if (docstring?.summary && docstring.summary.length > 0) {
