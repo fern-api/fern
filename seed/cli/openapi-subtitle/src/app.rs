@@ -117,6 +117,9 @@ pub struct CliApp {
     /// Optional base URL for per-status-code error documentation links.
     /// When set, API errors append `<base_url>/<http_status_code>` to stderr.
     error_docs_base_url: Option<String>,
+    /// Human-readable product name (e.g. `ElevenLabs`) used in user-facing copy such as the
+    /// post-login greeting. Defaults to the binary name.
+    display_name: Option<String>,
 }
 
 impl CliApp {
@@ -133,6 +136,7 @@ impl CliApp {
             login_flows: Vec::new(),
             global_parameters: Vec::new(),
             error_docs_base_url: None,
+            display_name: None,
         }
     }
 
@@ -148,6 +152,18 @@ impl CliApp {
     pub fn description(mut self, d: &str) -> Self {
         self.description = Some(d.to_string());
         self
+    }
+
+    /// Set the product name used in user-facing copy (e.g. the greeting printed after
+    /// `auth login`). Defaults to the binary name.
+    pub fn display_name(mut self, name: &str) -> Self {
+        self.display_name = Some(name.to_string());
+        self
+    }
+
+    /// The product name for user-facing copy, falling back to the binary name.
+    fn resolved_display_name(&self) -> &str {
+        self.display_name.as_deref().unwrap_or(&self.name)
     }
 
     /// Set the base URL for per-status-code error documentation links.
@@ -1085,6 +1101,7 @@ impl CliApp {
                 crate::auth::login::dispatch_auth(
                     auth_matches,
                     &self.name,
+                    self.resolved_display_name(),
                     &self.auth_bindings,
                     &self.login_flows,
                     out,
@@ -1242,9 +1259,10 @@ fn graft_merged_subtree(
             after_help_sections.push(help.to_string());
         }
     }
-    if !after_help_sections.is_empty() {
-        cli = cli.after_help(deduplicate_after_help(&after_help_sections));
-    }
+    // Fern attribution closes the root help — the one surface every user of a generated CLI sees,
+    // whether or not they ever log in.
+    after_help_sections.push(crate::attribution::help_footer());
+    cli = cli.after_help(deduplicate_after_help(&after_help_sections));
     cli
 }
 

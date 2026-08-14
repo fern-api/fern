@@ -525,6 +525,34 @@ describe("copySpecs", () => {
         expect(main).not.toContain(".user_agent_suffix_flag");
     });
 
+    it("emits .display_name(...) from the IR display name, and omits it when unsafe or absent", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+        const mainRs = path.join(outputDir, BIN_DIR, "main.rs");
+
+        const base = { outputDir, binaryName: BIN, authBindings: [], globalParamBindings: [], specsDir };
+
+        await copySpecs({ ...base, displayName: "Acme Widgets" });
+        expect(await readFile(mainRs, "utf-8")).toContain('.display_name("Acme Widgets")');
+
+        await copySpecs(base);
+        expect(await readFile(mainRs, "utf-8")).not.toContain(".display_name(");
+
+        // The SDK falls back to the binary name, so an un-interpolatable name is dropped rather
+        // than emitted into a Rust string literal.
+        await copySpecs({ ...base, displayName: 'Acme"); panic!("' });
+        expect(await readFile(mainRs, "utf-8")).not.toContain(".display_name(");
+    });
+
     it("rejects an unsafe userAgentSuffixFlag (injection attempt)", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });

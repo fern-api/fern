@@ -9,6 +9,7 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("nullable-allof-extends-test")
+        .display_name("Nullable AllOf Extends Test")
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

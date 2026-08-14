@@ -34,10 +34,13 @@ The interactive public-client flows are also emitted:
 `DeviceCodeLoginFlow`, each registered via `CliApp::login_flow(...)` (which
 also wires the request-time `OAuth2KeyringProvider`). Only the fields the
 SDK builders consume are emitted: client id, authorization / device / token
-URLs, scopes, a loopback redirect port, and the extra literal parameter maps
-(`authorizationParameters` / `deviceAuthorizationParameters` / `tokenParameters`
-/ `refreshParameters` — e.g. an Auth0 `audience`), which are appended to the
-authorize/token/refresh requests with protocol-reserved keys skipped. Still not
+URLs, scopes, a loopback redirect port, the hosted callback pages
+(`successRedirectUrl` / `errorRedirectUrl` — authorization-code only, since it's
+the only flow with a browser callback to redirect), and the extra literal
+parameter maps (`authorizationParameters` / `deviceAuthorizationParameters` /
+`tokenParameters` / `refreshParameters` — e.g. an Auth0 `audience`), which are
+appended to the authorize/token/refresh requests with protocol-reserved keys
+skipped. Still not
 consumed and therefore skipped: the IR's `refreshUrl`, `tokenHeader`/`tokenPrefix`,
 and environment-variable client IDs.
 

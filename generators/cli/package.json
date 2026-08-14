@@ -45,7 +45,7 @@
     "@fern-api/rust-model": "workspace:*",
     "@fern-api/rust-sdk": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/ir-sdk": "67.18.0",
+    "@fern-fern/ir-sdk": "67.22.0",
     "@types/js-yaml": "catalog:",
     "@types/node": "catalog:",
     "commander": "^14.0.3",

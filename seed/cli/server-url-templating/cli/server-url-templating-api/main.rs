@@ -9,6 +9,7 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("server-url-templating-api")
+        .display_name("Server URL Templating API")
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

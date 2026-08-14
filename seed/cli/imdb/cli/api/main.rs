@@ -10,6 +10,7 @@ use fern_cli_sdk::auth::{BearerAuth};
 
 fn main() {
     let app = CliApp::new("api")
+        .display_name("api")
         .auth(BearerAuth::new("bearer").env("API_TOKEN"))
         .binding(
             OpenApiBinding::new()

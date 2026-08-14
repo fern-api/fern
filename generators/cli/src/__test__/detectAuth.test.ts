@@ -397,6 +397,8 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
         redirectUri?: string;
         redirectUriBackupPorts?: number[];
         scopes?: string[];
+        successRedirectUrl?: string;
+        errorRedirectUrl?: string;
         authorizationParameters?: Record<string, string>;
         tokenParameters?: Record<string, string>;
     }): FernIr.AuthScheme =>
@@ -411,6 +413,8 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
                 redirectUri: overrides.redirectUri,
                 redirectUriBackupPorts: overrides.redirectUriBackupPorts,
                 scopes: overrides.scopes,
+                successRedirectUrl: overrides.successRedirectUrl,
+                errorRedirectUrl: overrides.errorRedirectUrl,
                 pkce: { method: FernIr.OAuthPkceMethod.S256 },
                 authorizationParameters: overrides.authorizationParameters,
                 tokenParameters: overrides.tokenParameters,
@@ -506,6 +510,26 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
         });
         expect(binding?.rustCall).not.toContain(".redirect_host(");
         expect(binding?.rustCall).not.toContain(".redirect_path(");
+    });
+
+    it("emits the hosted callback page setters when redirect URLs are configured", () => {
+        const [binding] = detectAuthBindings({
+            auth: auth(
+                authorizationCode({
+                    successRedirectUrl: "https://acme.com/cli/success",
+                    errorRedirectUrl: "https://acme.com/cli/error"
+                })
+            ),
+            binaryName: "acme"
+        });
+        expect(binding?.rustCall).toContain('.success_redirect_url("https://acme.com/cli/success")');
+        expect(binding?.rustCall).toContain('.error_redirect_url("https://acme.com/cli/error")');
+    });
+
+    it("omits the hosted callback page setters when no redirect URLs are configured", () => {
+        const [binding] = detectAuthBindings({ auth: auth(authorizationCode({})), binaryName: "acme" });
+        expect(binding?.rustCall).not.toContain("success_redirect_url");
+        expect(binding?.rustCall).not.toContain("error_redirect_url");
     });
 
     it("emits no param setters when no extra params are configured (byte-identical output)", () => {

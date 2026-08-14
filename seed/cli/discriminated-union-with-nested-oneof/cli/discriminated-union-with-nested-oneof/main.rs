@@ -9,6 +9,7 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("discriminated-union-with-nested-oneof")
+        .display_name("Discriminated Union with Nested OneOf")
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

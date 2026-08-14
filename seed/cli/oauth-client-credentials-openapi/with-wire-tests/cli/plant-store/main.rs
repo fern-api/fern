@@ -10,6 +10,7 @@ use fern_cli_sdk::auth::{OAuth2Auth, OAuth2Endpoint, OAuth2RequestProperty, OAut
 
 fn main() {
     let app = CliApp::new("plant-store")
+        .display_name("OAuth Client Credentials OpenAPI")
         .auth(OAuth2Auth::new("CustomAuth").client_id_env("PLANT_STORE_CLIENT_ID").client_secret_env("PLANT_STORE_CLIENT_SECRET").token_header("token").token_prefix("").token_endpoint(OAuth2Endpoint::new("/identity/token", "/identity/token").method("POST").use_base_url_override().json_body("application/json").request_property(OAuth2RequestProperty::body(["username"], OAuth2RequestValue::ClientId)).request_property(OAuth2RequestProperty::body(["password"], OAuth2RequestValue::ClientSecret)).access_token_path(["access_token"]).expires_in_path(["expires_in"]).refresh_token_path(["refresh_token"])))
         .binding(
             OpenApiBinding::new()

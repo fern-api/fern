@@ -10,6 +10,7 @@ use fern_cli_sdk::auth::{BasicAuth};
 
 fn main() {
     let app = CliApp::new("basic-auth-cli")
+        .display_name("Basic Auth CLI")
         .auth(BasicAuth::new("BasicAuth").username_env("BASIC_AUTH_CLI_USERNAME").password_env("BASIC_AUTH_CLI_PASSWORD"))
         .binding(
             OpenApiBinding::new()

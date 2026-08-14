@@ -9,6 +9,7 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("no-content-response")
+        .display_name("no-content-response")
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

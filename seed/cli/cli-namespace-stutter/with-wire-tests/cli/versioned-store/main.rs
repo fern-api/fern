@@ -9,6 +9,7 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("versioned-store")
+        .display_name("Versioned Store")
         .binding(
             OpenApiBinding::new()
                 .spec_under("v1", include_str!("openapi0.json"))

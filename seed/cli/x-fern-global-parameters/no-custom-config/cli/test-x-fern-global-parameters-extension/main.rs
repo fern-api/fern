@@ -10,6 +10,7 @@ use fern_cli_sdk::openapi::discovery::{GlobalParameter, GlobalParameterApplyMode
 
 fn main() {
     let app = CliApp::new("test-x-fern-global-parameters-extension")
+        .display_name("Test x-fern-global-parameters extension")
         .global_parameter(GlobalParameter {
             name: "currency".into(),
             location: GlobalParameterLocation::Body,

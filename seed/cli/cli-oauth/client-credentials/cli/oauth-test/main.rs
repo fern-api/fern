@@ -7,6 +7,7 @@ use fern_cli_sdk::auth::{OAuth2Auth, OAuth2Endpoint, OAuth2RequestProperty, OAut
 
 fn main() {
     let app = CliApp::new("oauth-test")
+        .display_name("OAuth Test API")
         .auth(OAuth2Auth::new("OAuth2").client_id_env("ACME_CLIENT_ID").client_secret_env("ACME_CLIENT_SECRET").scopes(["read:pets"]).token_header("X-Access-Token").token_prefix("").token_endpoint(OAuth2Endpoint::new("https://api.example.com/token", "/token").method("POST").use_base_url_override().json_body("application/json").request_property(OAuth2RequestProperty::body(["client_id"], OAuth2RequestValue::ClientId)).request_property(OAuth2RequestProperty::body(["client_secret"], OAuth2RequestValue::ClientSecret)).request_property(OAuth2RequestProperty::body(["scopes"], OAuth2RequestValue::Scopes)).request_property(OAuth2RequestProperty::body(["grant_type"], OAuth2RequestValue::env("OAUTH_TEST_OAUTH2_TOKEN_GRANT_TYPE", true))).request_property(OAuth2RequestProperty::body(["tenant"], OAuth2RequestValue::env("OAUTH_TEST_OAUTH2_TOKEN_TENANT", false))).request_property(OAuth2RequestProperty::body(["optional_hint"], OAuth2RequestValue::optional_env("OAUTH_TEST_OAUTH2_TOKEN_OPTIONAL_HINT", false))).access_token_path(["access_token"]).expires_in_path(["expires_in"]).refresh_token_path(["refresh_token"])))
         .binding(
             OpenApiBinding::new()

@@ -9,6 +9,7 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("multi-content-type-examples")
+        .display_name("Multi Content Type Examples")
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

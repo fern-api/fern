@@ -10,6 +10,7 @@ use fern_cli_sdk::auth::{ApiKeyAuth, AuthCredentialSource};
 
 fn main() {
     let app = CliApp::new("header-auth-cli")
+        .display_name("Header Auth CLI")
         .auth(ApiKeyAuth::new("ApiKeyAuth").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("api-key"), AuthCredentialSource::from_env("HEADER_AUTH_CLI_API_KEY")])))
         .binding(
             OpenApiBinding::new()

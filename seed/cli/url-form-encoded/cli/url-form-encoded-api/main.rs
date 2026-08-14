@@ -9,6 +9,7 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("url-form-encoded-api")
+        .display_name("URL Form Encoded API")
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

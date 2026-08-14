@@ -9,6 +9,7 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("api-wide-base-path-with-default")
+        .display_name("api-wide-base-path-with-default")
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))
