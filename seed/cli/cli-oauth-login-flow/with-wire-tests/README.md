@@ -40,12 +40,13 @@ cargo build --release
 
 ## Authentication
 
-Set the following environment variable(s) before using the CLI:
+Log in before using the CLI:
 
 ```bash
+login-flow auth login
 ```
 
-A `.env` file in the working directory is also supported — the CLI auto-loads it on startup.
+Run `login-flow auth status` to see which credential is active.
 
 ## Quick start
 

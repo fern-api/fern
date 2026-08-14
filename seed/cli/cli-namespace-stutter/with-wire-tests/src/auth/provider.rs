@@ -5,6 +5,7 @@
 use std::collections::HashMap;
 use std::sync::Arc;
 
+use crate::auth::credential::CredentialRank;
 use crate::error::CliError;
 
 /// Per-request context the executor passes to providers. Maps directly to
@@ -117,6 +118,58 @@ pub trait AuthProvider: Send + Sync + std::fmt::Debug {
     /// env var / CLI flag / file to set.
     fn credential_hints(&self) -> Vec<String> {
         Vec::new()
+    }
+
+    /// Provenance of the credential this provider would send, or `None`
+    /// when it has none available.
+    ///
+    /// Cross-scheme arbitration prefers the best-ranked candidate, so a
+    /// key passed as `--api-key` wins over a token left in the keyring by
+    /// a previous `auth login` (ADR-0008). Providers that cannot describe
+    /// their source report [`CredentialRank::Opaque`], which loses every
+    /// comparison against a ranked source and leaves registration order
+    /// as the tie-breaker.
+    fn credential_rank(&self) -> Option<CredentialRank> {
+        self.has_credentials().then_some(CredentialRank::Opaque)
+    }
+
+    /// Header names this provider would actually populate on `endpoint`.
+    ///
+    /// Empty when the provider would send nothing — either because it has
+    /// no credentials or because the endpoint opted out of auth. Callers
+    /// use this to reconcile auth with credentials injected outside the
+    /// provider tree: a credential-bearing global header is withheld on
+    /// requests whose auth was already satisfied, since APIs that accept
+    /// two credential styles routinely reject receiving both.
+    fn selected_credential_headers(&self, endpoint: &EndpointAuthMetadata) -> Vec<String> {
+        if endpoint.is_explicit_anonymous() || !self.has_credentials_for(endpoint) {
+            Vec::new()
+        } else {
+            self.credential_header_names()
+        }
+    }
+
+    /// Every header name this provider tree may use to carry a credential,
+    /// whether or not it currently has one.
+    ///
+    /// These names are treated as mutually exclusive with each other: a
+    /// credential injected outside the provider tree (an
+    /// `x-fern-global-headers` entry that happens to be the API key) is
+    /// dropped from a request whose auth was satisfied by any of them, so
+    /// the CLI never sends two competing credentials at once.
+    fn credential_header_names(&self) -> Vec<String> {
+        Vec::new()
+    }
+
+    /// Why this provider has no usable credential even though one is
+    /// configured — e.g. a stored login that expired and cannot refresh.
+    ///
+    /// Preferred over [`credential_hints`](Self::credential_hints) when
+    /// reporting a missing credential, because "your session expired, run
+    /// `auth login` again" is more actionable than "set one of these
+    /// sources". `None` means the provider has nothing extra to say.
+    fn unavailable_reason(&self) -> Option<String> {
+        None
     }
 
     /// Apply the scheme to `request`. Implementations should be a no-op if

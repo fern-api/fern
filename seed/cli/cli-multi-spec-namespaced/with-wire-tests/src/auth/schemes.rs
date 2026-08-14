@@ -19,7 +19,7 @@ use base64::engine::general_purpose::STANDARD as BASE64;
 use base64::Engine;
 use secrecy::ExposeSecret;
 
-use crate::auth::credential::AuthCredentialSource;
+use crate::auth::credential::{AuthCredentialSource, CredentialRank};
 use crate::auth::provider::{AuthProvider, EndpointAuthMetadata};
 use crate::error::CliError;
 
@@ -54,6 +54,14 @@ impl AuthProvider for BearerAuthProvider {
 
     fn credential_hints(&self) -> Vec<String> {
         self.token.credential_hints()
+    }
+
+    fn credential_rank(&self) -> Option<CredentialRank> {
+        self.token.rank()
+    }
+
+    fn credential_header_names(&self) -> Vec<String> {
+        vec![reqwest::header::AUTHORIZATION.to_string()]
     }
 
     fn apply(
@@ -174,6 +182,20 @@ impl AuthProvider for BasicAuthProvider {
         hints
     }
 
+    /// The weaker of the two halves' ranks: basic auth is only as
+    /// explicitly-supplied as its least explicit component.
+    fn credential_rank(&self) -> Option<CredentialRank> {
+        if !self.has_credentials() {
+            return None;
+        }
+        let ranks = [self.username.rank(), self.password.rank()];
+        ranks.into_iter().flatten().max()
+    }
+
+    fn credential_header_names(&self) -> Vec<String> {
+        vec![reqwest::header::AUTHORIZATION.to_string()]
+    }
+
     fn apply(
         &self,
         request: reqwest::RequestBuilder,
@@ -255,6 +277,14 @@ impl AuthProvider for HeaderAuthProvider {
 
     fn credential_hints(&self) -> Vec<String> {
         self.token.credential_hints()
+    }
+
+    fn credential_rank(&self) -> Option<CredentialRank> {
+        self.token.rank()
+    }
+
+    fn credential_header_names(&self) -> Vec<String> {
+        vec![self.header_name.clone()]
     }
 
     fn apply(

@@ -289,7 +289,13 @@ impl OpenApiBinding {
         // Finalize CLI-arg-bound auth sources against parsed matches,
         // mirroring dispatch() so custom command handlers get working auth.
         let cli_auth_args = crate::auth::collect_binding_cli_args(&self.inner.auth_bindings);
-        let auth_provider = if cli_auth_args.is_empty() {
+        // A promoted credential header reads its value from a clap flag, so
+        // it needs the same rebuild-against-matches pass as a CLI-bound
+        // scheme even when no scheme itself declared a flag.
+        let has_promoted_credentials =
+            !super::app::promoted_credential_header_names(doc, &self.inner.auth_bindings)
+                .is_empty();
+        let auth_provider = if cli_auth_args.is_empty() && !has_promoted_credentials {
             prepared.auth_provider.clone()
         } else {
             let matches_arc = std::sync::Arc::new(matches.clone());
@@ -297,7 +303,8 @@ impl OpenApiBinding {
                 self.inner.auth_bindings.clone(),
                 &matches_arc,
             );
-            self.inner.build_auth_provider_from_finalized(&finalized, doc)
+            self.inner
+                .build_auth_provider_from_finalized(&finalized, doc, Some(&matches_arc))
         };
 
         let global_headers: Vec<(String, String)> = doc
@@ -374,6 +381,21 @@ impl Binding for OpenApiBinding {
         let mut merged = bindings.to_vec();
         merged.extend(std::mem::take(&mut self.inner.auth_bindings));
         self.inner.auth_bindings = merged;
+    }
+
+    /// Credential-bearing global headers, so `auth status` lists the key a
+    /// user actually sets. Silently empty when the spec fails to prepare:
+    /// reporting credentials must not be the thing that breaks `auth
+    /// status`, and every request path surfaces that error already.
+    fn promoted_auth_bindings(&self) -> Vec<(String, crate::auth::SchemeBinding)> {
+        match self.ensure_prepared() {
+            Ok(prepared) => super::app::promoted_credential_bindings(
+                &prepared.doc,
+                &self.inner.auth_bindings,
+                None,
+            ),
+            Err(_) => Vec::new(),
+        }
     }
 
     fn set_root_global_parameters(
@@ -519,7 +541,12 @@ impl Binding for OpenApiBinding {
             // If any auth source uses CLI flags, finalize them against
             // the parsed matches and rebuild the auth provider.
             let cli_auth_args = crate::auth::collect_binding_cli_args(&self.inner.auth_bindings);
-            let auth_provider = if cli_auth_args.is_empty() {
+            let has_promoted_credentials = !super::app::promoted_credential_header_names(
+                &prepared.doc,
+                &self.inner.auth_bindings,
+            )
+            .is_empty();
+            let auth_provider = if cli_auth_args.is_empty() && !has_promoted_credentials {
                 prepared.auth_provider.clone()
             } else {
                 let matches_arc = std::sync::Arc::new(root_matches.clone());
@@ -527,7 +554,11 @@ impl Binding for OpenApiBinding {
                     self.inner.auth_bindings.clone(),
                     &matches_arc,
                 );
-                self.inner.build_auth_provider_from_finalized(&finalized, &prepared.doc)
+                self.inner.build_auth_provider_from_finalized(
+                    &finalized,
+                    &prepared.doc,
+                    Some(&matches_arc),
+                )
             };
 
             // Apply server-variable substitutions to a local copy of the doc

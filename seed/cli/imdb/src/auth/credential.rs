@@ -29,6 +29,29 @@ use crate::auth::keyring_store::active_store;
 
 type CredentialClosure = Arc<dyn Fn() -> Option<String> + Send + Sync>;
 
+/// Precedence of the place a credential value came from (ADR-0008).
+///
+/// Ordered most-trusted-first: an explicit per-invocation flag beats an
+/// environment variable, which beats a stored login, which beats a file.
+/// `Opaque` covers sources whose provenance the runtime cannot rank
+/// (literals and caller-supplied closures) and always loses to a ranked
+/// source.
+///
+/// Derived `Ord` is the precedence order, so `min()` picks the winner.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub enum CredentialRank {
+    /// Supplied on this invocation's command line.
+    Cli,
+    /// Read from the process environment.
+    Env,
+    /// Read from the OS keyring / token store, i.e. a previous `auth login`.
+    Stored,
+    /// Read from a credential file on disk.
+    File,
+    /// Provenance is unknown to the runtime.
+    Opaque,
+}
+
 /// How an auth credential's value is resolved at request time.
 #[derive(Clone)]
 pub enum AuthCredentialSource {
@@ -64,13 +87,17 @@ pub enum AuthCredentialSource {
     /// (e.g. `"--api-token flag"`) so that `credential_hints()` can still
     /// report the original source after `finalize()` replaces `Cli` with
     /// a `Closure`.
-    Closure(CredentialClosure, Option<String>),
+    ///
+    /// The [`CredentialRank`] records the provenance of the wrapped
+    /// resolver so cross-scheme arbitration can still rank a finalized
+    /// `Cli` source above an env var.
+    Closure(CredentialClosure, Option<String>, CredentialRank),
     /// Read from the OS keyring (or its file fallback). Populated by
     /// `auth login` flows; resolves via the process-global active
     /// [`KeyringStore`](crate::auth::keyring_store::KeyringStore).
     ///
-    /// Sits at priority 3 in the default credential chain — below CLI
-    /// flags and env vars, above file sources (ADR-0008).
+    /// Ranks [`CredentialRank::Stored`] — below CLI flags and env vars,
+    /// above file sources (ADR-0008).
     Keyring {
         /// Keyring service name — typically the CLI's binary name.
         service: String,
@@ -113,7 +140,28 @@ impl AuthCredentialSource {
     where
         F: Fn() -> Option<String> + Send + Sync + 'static,
     {
-        AuthCredentialSource::Closure(Arc::new(f), None)
+        AuthCredentialSource::Closure(Arc::new(f), None, CredentialRank::Opaque)
+    }
+
+    /// A credential supplied on the command line, read from an
+    /// already-parsed [`clap::ArgMatches`] by arg id.
+    ///
+    /// Unlike [`cli`](Self::cli) this never asks `CliApp` to register a
+    /// flag — the arg is expected to exist already, which is what lets a
+    /// credential-bearing `x-fern-global-headers` entry reuse the flag it
+    /// already owns. `hint` is the public `--long` form shown to users.
+    pub fn cli_matched(
+        matches: &Arc<clap::ArgMatches>,
+        arg_id: impl Into<String>,
+        hint: impl Into<String>,
+    ) -> Self {
+        let m = Arc::clone(matches);
+        let id = arg_id.into();
+        AuthCredentialSource::Closure(
+            Arc::new(move || m.try_get_one::<String>(&id).ok().flatten().cloned()),
+            Some(hint.into()),
+            CredentialRank::Cli,
+        )
     }
 
     /// Bind to a keyring entry at `(service, account)`. The value is read
@@ -134,26 +182,45 @@ impl AuthCredentialSource {
     /// (to build a `HeaderValue`, base64-encode for basic auth, etc.)
     /// must opt in explicitly via [`ExposeSecret::expose_secret`].
     pub fn resolve(&self) -> Option<SecretString> {
+        self.resolve_ranked().map(|(value, _)| value)
+    }
+
+    /// Resolve the value along with the [`CredentialRank`] of whichever
+    /// source produced it. Cross-scheme arbitration uses the rank to pick
+    /// between two schemes that both have a credential available.
+    pub fn resolve_ranked(&self) -> Option<(SecretString, CredentialRank)> {
         match self {
             AuthCredentialSource::Env(name) => std::env::var(name)
                 .ok()
                 .map(|v| v.trim().to_string())
                 .filter(|v| !v.is_empty())
-                .map(SecretString::from),
+                .map(|v| (SecretString::from(v), CredentialRank::Env)),
             AuthCredentialSource::Cli(_) => None, // resolved post-finalize
-            AuthCredentialSource::File(path) => read_credential_file(path),
+            AuthCredentialSource::File(path) => {
+                read_credential_file(path).map(|v| (v, CredentialRank::File))
+            }
             AuthCredentialSource::Literal(v) if v.is_empty() => None,
-            AuthCredentialSource::Literal(v) => Some(SecretString::from(v.clone())),
-            AuthCredentialSource::Chain(sources) => sources.iter().find_map(|s| s.resolve()),
-            AuthCredentialSource::Closure(f, _) => f().filter(|v| !v.is_empty()).map(SecretString::from),
+            AuthCredentialSource::Literal(v) => {
+                Some((SecretString::from(v.clone()), CredentialRank::Opaque))
+            }
+            AuthCredentialSource::Chain(sources) => sources.iter().find_map(|s| s.resolve_ranked()),
+            AuthCredentialSource::Closure(f, _, rank) => f()
+                .filter(|v| !v.is_empty())
+                .map(|v| (SecretString::from(v), *rank)),
             AuthCredentialSource::Keyring { service, account } => active_store()
                 .get(service, account)
                 .ok()
                 .flatten()
                 .filter(|v| !v.is_empty())
-                .map(SecretString::from),
+                .map(|v| (SecretString::from(v), CredentialRank::Stored)),
             AuthCredentialSource::Missing => None,
         }
+    }
+
+    /// The rank of the source that currently satisfies this credential, or
+    /// `None` when no source resolves.
+    pub fn rank(&self) -> Option<CredentialRank> {
+        self.resolve_ranked().map(|(_, rank)| rank)
     }
 
     /// The environment-variable name backing this source, if it is an
@@ -182,12 +249,12 @@ impl AuthCredentialSource {
             AuthCredentialSource::Chain(sources) => {
                 sources.iter().flat_map(|s| s.credential_hints()).collect()
             }
-            AuthCredentialSource::Closure(_, Some(hint)) => vec![hint.clone()],
+            AuthCredentialSource::Closure(_, Some(hint), _) => vec![hint.clone()],
             AuthCredentialSource::Keyring { service, account } => {
                 vec![format!("keyring entry {service}:{account} (populated by `<bin> auth login`)")]
             }
             AuthCredentialSource::Literal(_)
-            | AuthCredentialSource::Closure(_, None)
+            | AuthCredentialSource::Closure(_, None, _)
             | AuthCredentialSource::Missing => Vec::new(),
         }
     }
@@ -215,7 +282,7 @@ impl AuthCredentialSource {
             AuthCredentialSource::Env(_)
             | AuthCredentialSource::File(_)
             | AuthCredentialSource::Literal(_)
-            | AuthCredentialSource::Closure(_, _)
+            | AuthCredentialSource::Closure(..)
             | AuthCredentialSource::Keyring { .. }
             | AuthCredentialSource::Missing => {}
         }
@@ -237,6 +304,7 @@ impl AuthCredentialSource {
                         m.try_get_one::<String>(&name).ok().flatten().cloned()
                     }),
                     Some(hint),
+                    CredentialRank::Cli,
                 )
             }
             AuthCredentialSource::Chain(sources) => {
@@ -257,7 +325,7 @@ impl std::fmt::Debug for AuthCredentialSource {
             AuthCredentialSource::File(path) => write!(f, "File({})", path.display()),
             AuthCredentialSource::Literal(_) => write!(f, "Literal(<redacted>)"),
             AuthCredentialSource::Chain(sources) => f.debug_tuple("Chain").field(sources).finish(),
-            AuthCredentialSource::Closure(_, hint) => {
+            AuthCredentialSource::Closure(_, hint, _) => {
                 if let Some(h) = hint {
                     write!(f, "Closure({h})")
                 } else {

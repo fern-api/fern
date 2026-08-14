@@ -56,8 +56,8 @@ pub use builder::{
     AuthStrategy, SchemeBinding,
 };
 pub use compose::{AllAuthProvider, AnyAuthProvider, LayeredAuthProvider, RoutingAuthProvider};
-pub use credential::AuthCredentialSource;
-pub use error::handle_error_response;
+pub use credential::{AuthCredentialSource, CredentialRank};
+pub use error::{handle_error_response, handle_error_response_with_disclosure, CredentialDisclosure};
 pub use keyring_store::{
     active_store, auto_store, set_active_store, FileKeyringStore, KeyringStore, MockKeyringStore,
 };
