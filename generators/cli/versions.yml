@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.32.1
+  changelogEntry:
+    - summary: |
+        Print the `Environment variables:` block once in the root `--help`. `build_cli`
+        already set it as the command's `after_help`, and `decorate_command` appended it
+        a second time when composing the global-header, global-parameter, and auth
+        sections.
+      type: fix
+    - summary: |
+        Restore `aarch64-unknown-linux-musl` to the generated `dist-workspace.toml`
+        target list. It was dropped because the keyring crate's secret-service
+        backend pulled libdbus, which cannot be statically linked for that target;
+        the keyring is now excluded from musl builds, so the target builds. Without
+        it the GitHub Release shipped no static ARM64 Linux binary even though the
+        npm workflow published one, leaving Graviton and ARM container users on the
+        glibc build.
+      type: fix
+  createdAt: "2026-08-14"
+  irVersion: 67
 - version: 0.32.0
   changelogEntry:
     - summary: |

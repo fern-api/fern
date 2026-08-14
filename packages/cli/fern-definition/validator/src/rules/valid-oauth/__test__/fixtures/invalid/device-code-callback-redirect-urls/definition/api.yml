@@ -1,0 +1,11 @@
+name: device-code-callback-redirect-urls
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: device-code
+    client-id: "public-client-id"
+    device-authorization-url: https://auth.example.com/device/code
+    token-url: https://auth.example.com/token
+    success-redirect-url: https://acme.com/cli/welcome
+    error-redirect-url: https://acme.com/cli/error
