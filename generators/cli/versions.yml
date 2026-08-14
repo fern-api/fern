@@ -1,4 +1,31 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.32.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.45.0 updates.
+      type: feat
+  createdAt: "2026-08-14"
+  irVersion: 67
+- version: 0.31.4
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.44.5 updates.
+      type: fix
+  createdAt: "2026-08-14"
+  irVersion: 67
+- version: 0.31.3
+  changelogEntry:
+    - summary: |
+        Restore `aarch64-unknown-linux-musl` to the generated `dist-workspace.toml`
+        target list. It was dropped because the keyring crate's secret-service
+        backend pulled libdbus, which cannot be statically linked for that target;
+        the keyring is now excluded from musl builds, so the target builds. Without
+        it the GitHub Release shipped no static ARM64 Linux binary even though the
+        npm workflow published one, leaving Graviton and ARM container users on the
+        glibc build.
+      type: fix
+  createdAt: "2026-08-14"
+  irVersion: 67
 - version: 0.31.2
   changelogEntry:
     - summary: |

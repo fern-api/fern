@@ -168,3 +168,6 @@ fixtures:
         packageLicense: "Apache-2.0"
         packageLicenseFile: "LICENSE.md"
       outputFolder: both-license-options
+    - license:
+        custom: LICENSE
+      outputFolder: custom-license-from-config

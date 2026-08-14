@@ -1,4 +1,29 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.45.0
+  changelogEntry:
+    - summary: |
+        Generated clients accept a custom `reqwest::Client`. `ClientConfig` gained a
+        `reqwest_client: Option<reqwest::Client>` field, set through the new
+        `ApiClientBuilder::reqwest_client(...)`, and `HttpClient` uses it as-is when present
+        instead of building its own. This is the transport escape hatch other Fern SDKs already
+        expose (`httpx_client` in Python, `OkHttpClient` in Java, `urlSession` in Swift), and it
+        lets callers configure root certificates, client certificates, proxies and connection
+        pooling themselves. Authentication, custom headers and retries are still applied by the
+        SDK on top of the supplied client; when the field is `None` the client is built exactly
+        as before from `timeout` and `user_agent`.
+      type: feat
+  createdAt: "2026-08-14"
+  irVersion: 66
+- version: 0.44.5
+  changelogEntry:
+    - summary: |
+        Write the LICENSE file into the generated crate when a custom license is configured
+        (`github.license.custom` or `metadata.license.custom`), matching the other SDK generators.
+        When that file is written and neither `packageLicense` nor `packageLicenseFile` is set,
+        `Cargo.toml` now points `license-file` at it instead of defaulting to MIT.
+      type: fix
+  createdAt: "2026-08-14"
+  irVersion: 66
 - version: 0.44.4
   changelogEntry:
     - summary: |

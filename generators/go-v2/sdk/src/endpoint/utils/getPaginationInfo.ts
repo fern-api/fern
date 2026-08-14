@@ -358,6 +358,7 @@ function getReadPageResponseBodyForCursor({
     nextPageType: go.Type | undefined;
     responseType: go.Type;
 }): go.AstNode {
+    const doneCondition = getCursorDoneCondition({ context, cursor, pageType, nextPageType });
     return go.codeblock((writer) => {
         writer.write("var zeroValue ");
         writer.writeNode(nextPageType ?? pageType);
@@ -383,7 +384,7 @@ function getReadPageResponseBodyForCursor({
                     },
                     {
                         name: "Done",
-                        value: go.TypeInstantiation.reference(go.codeblock("next == zeroValue"))
+                        value: go.TypeInstantiation.reference(go.codeblock(doneCondition))
                     }
                 ]
             })
@@ -472,8 +473,51 @@ function getNextCursorSetter({
         context,
         responseProperty: cursor,
         variableName: "next",
-        dereference: page.property.valueType.type !== cursor.property.valueType.type
+        dereference: dereferencesNextCursor({ page, cursor })
     });
+}
+
+function dereferencesNextCursor({
+    page,
+    cursor
+}: {
+    page: FernIr.RequestProperty;
+    cursor: FernIr.ResponseProperty;
+}): boolean {
+    return page.property.valueType.type !== cursor.property.valueType.type;
+}
+
+/**
+ * APIs commonly signal the last page with an empty cursor rather than a null one, so an empty
+ * string is terminal in addition to the zero value. Non-string cursors (e.g. uuid, int) are
+ * unaffected: their zero value already covers termination.
+ */
+function getCursorDoneCondition({
+    context,
+    cursor,
+    pageType,
+    nextPageType
+}: {
+    context: SdkGeneratorContext;
+    cursor: FernIr.CursorPagination;
+    pageType: go.Type;
+    nextPageType: go.Type | undefined;
+}): string {
+    const zeroValueCondition = "next == zeroValue";
+    const isStringCursor = context.isPrimitive({
+        typeReference: cursor.next.property.valueType,
+        primitive: FernIr.PrimitiveTypeV1.String
+    });
+    if (!isStringCursor) {
+        return zeroValueCondition;
+    }
+    const nextType = nextPageType ?? pageType;
+    if (!nextType.isOptional() || dereferencesNextCursor({ page: cursor.page, cursor: cursor.next })) {
+        // The cursor is a string value, so its zero value is already the empty string.
+        return zeroValueCondition;
+    }
+    // Short-circuits before dereferencing a nil cursor.
+    return `${zeroValueCondition} || *next == ""`;
 }
 
 function getNextResultsSetter({

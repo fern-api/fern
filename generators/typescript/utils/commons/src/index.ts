@@ -10,7 +10,8 @@ export { generateInlineAliasModule, generateInlinePropertiesModule } from "./cod
 export {
     exampleOmitsRequestBody,
     getExampleEndpointCalls,
-    getExampleEndpointCallsForTests
+    getExampleEndpointCallsForTests,
+    mayOmitRequestBody
 } from "./codegen-utils/getExampleEndpointCalls.js";
 export {
     getParameterNameForPositionalPathParameter,
