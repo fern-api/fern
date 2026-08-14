@@ -170,9 +170,9 @@ describe("splitTypesCrates", () => {
         // With no shared types, the leaf preludes must not glob core's empty
         // `types` module — that is an `unused_imports` warning per leaf, and a
         // namespaced multi-spec workspace has one leaf per spec.
-        expect(await readFile(path.join(outputDir, "types", "acme-types-v1", "src", "prelude.rs"), "utf-8")).not.toContain(
-            "acme_types_core::types::*"
-        );
+        expect(
+            await readFile(path.join(outputDir, "types", "acme-types-v1", "src", "prelude.rs"), "utf-8")
+        ).not.toContain("acme_types_core::types::*");
         // The dependency itself stays: the leaf still borrows `BuildError` and
         // the serde helpers from core.
         expect(await readFile(path.join(outputDir, "types", "acme-types-v1", "src", "error.rs"), "utf-8")).toContain(
@@ -189,14 +189,14 @@ describe("splitTypesCrates", () => {
         expect(
             await readFile(path.join(outputDir, "types", "acme-types-core", "src", "types", "mod.rs"), "utf-8")
         ).not.toContain("pub mod ");
-        expect(await readFile(path.join(outputDir, "types", "acme-types-v1", "src", "types", "mod.rs"), "utf-8")).toContain(
-            "pub use a::A;"
-        );
-        expect(await readFile(path.join(outputDir, "types", "acme-types-v2", "src", "types", "mod.rs"), "utf-8")).toContain(
-            "pub use b::B;"
-        );
-        expect(await readFile(path.join(outputDir, "types", "acme-types-v1", "src", "types", "mod.rs"), "utf-8")).not.toContain(
-            "pub use b::B;"
-        );
+        expect(
+            await readFile(path.join(outputDir, "types", "acme-types-v1", "src", "types", "mod.rs"), "utf-8")
+        ).toContain("pub use a::A;");
+        expect(
+            await readFile(path.join(outputDir, "types", "acme-types-v2", "src", "types", "mod.rs"), "utf-8")
+        ).toContain("pub use b::B;");
+        expect(
+            await readFile(path.join(outputDir, "types", "acme-types-v1", "src", "types", "mod.rs"), "utf-8")
+        ).not.toContain("pub use b::B;");
     });
 });

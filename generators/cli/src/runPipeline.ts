@@ -15,7 +15,6 @@ import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
 import type { SubClientField } from "./generateSdk.js";
 import { generateSdk } from "./generateSdk.js";
 import { deriveBinaryName } from "./identity.js";
-import type { TypePartitionCrate } from "./splitTypesCrates.js";
 import type { IrSummary } from "./ir.js";
 import {
     patchCargoLockForSdk,
@@ -26,6 +25,7 @@ import {
 } from "./patchCargoToml.js";
 import { patchDistWorkspaceToml } from "./patchDistWorkspace.js";
 import type { ResolvedOutputConfig } from "./resolveOutputConfig.js";
+import type { TypePartitionCrate } from "./splitTypesCrates.js";
 import { generateWireTests } from "./wireTests/index.js";
 import { writeGitignore } from "./writeGitignore.js";
 
