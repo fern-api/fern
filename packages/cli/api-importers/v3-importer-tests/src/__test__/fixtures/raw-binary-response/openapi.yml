@@ -1,0 +1,79 @@
+openapi: 3.1.0
+info:
+  title: Raw binary response
+  version: 1.0.0
+paths:
+  /archive:
+    get:
+      operationId: downloadArchive
+      responses:
+        "200":
+          description: A ZIP archive
+          content:
+            application/zip:
+              schema:
+                contentMediaType: application/zip
+  /component-archive:
+    get:
+      operationId: downloadComponentArchive
+      responses:
+        "200":
+          description: A ZIP archive described by a component
+          content:
+            application/zip:
+              schema:
+                $ref: "#/components/schemas/RawZip"
+  /report:
+    get:
+      operationId: downloadReport
+      responses:
+        "200":
+          description: A PDF report described by a component
+          content:
+            application/pdf:
+              schema:
+                $ref: "#/components/schemas/RawPdf"
+  /readme:
+    get:
+      operationId: getReadme
+      responses:
+        "200":
+          description: A plain-text README
+          content:
+            text/plain:
+              schema:
+                type: string
+  /diagram:
+    get:
+      operationId: getDiagram
+      responses:
+        "200":
+          description: An SVG diagram
+          content:
+            image/svg+xml:
+              schema:
+                type: string
+components:
+  schemas:
+    RawZip:
+      contentMediaType: application/zip
+    RawPdf:
+      contentMediaType: application/pdf
+    TypedUnencodedZip:
+      type: string
+      contentMediaType: application/zip
+    UntypedEncodedZip:
+      contentEncoding: base64
+      contentMediaType: application/zip
+    ConflictingFormatZip:
+      format: uuid
+      contentMediaType: application/zip
+    RawText:
+      contentMediaType: text/plain
+    SvgXml:
+      contentMediaType: image/svg+xml
+    StructuredZip:
+      contentMediaType: application/zip
+      properties:
+        value:
+          type: string
