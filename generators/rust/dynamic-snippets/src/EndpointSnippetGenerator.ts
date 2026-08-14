@@ -1,4 +1,10 @@
-import { AbstractAstNode, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import {
+    AbstractAstNode,
+    InvocationSnippetResponse,
+    Options,
+    Scope,
+    Severity
+} from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { formatRustSnippet, formatRustSnippetAsync } from "@fern-api/rust-base";
@@ -53,6 +59,56 @@ export class EndpointSnippetGenerator {
         options?: Options;
     }): Promise<AbstractAstNode> {
         throw new Error("Unsupported");
+    }
+
+    /**
+     * Generates the structured pieces of an endpoint invocation for callers that render the
+     * invocation within code of their own (e.g. a documentation code template): the bare call
+     * (e.g. `client.endpoints.foo(...).await`, honoring a custom client variable name), the imports
+     * the call requires, and the generated client struct name.
+     *
+     * Rust's `imports` is always the empty string. Unlike TypeScript/PHP/C#/Java — whose AST tracks
+     * per-symbol imports and can surface the `use`/`import` lines a call references — the Rust AST
+     * (`@fern-api/rust-codegen`) has no per-node import mechanism at all: there is no
+     * `importsToString`/`getImports`/`addImport`, and generated snippets reference every SDK type by
+     * a bare name that resolves through a single blanket glob, `use <crate>::prelude::*;`, which
+     * re-exports the whole crate. That glob is emitted once by the scaffold (see
+     * {@link getUseStatements}) and belongs to the client construction the caller owns, not to the
+     * invocation. A bare invocation therefore emits no per-symbol `use`, so we return `""` rather
+     * than inventing an imports mechanism the language and its AST do not have. This mirrors the
+     * Ruby port (types referenced via the gem namespace), not the C#/Java/PHP `{ code, imports }`
+     * helper pattern.
+     */
+    public generateInvocationSnippetSync({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): InvocationSnippetResponse {
+        // Render ONLY the invocation expression: no `let config = ...;`/`let client = ...;`
+        // construction, no `#[tokio::main] async fn main()` scaffold, and no
+        // `use <crate>::prelude::*;` preamble. We render the underlying Expression (not the
+        // `Statement`, which would append a trailing `;`).
+        const invocation = this.buildInvocationExpression({
+            endpoint,
+            snippet: request,
+            clientVariableName: options?.clientVariableName
+        });
+        const rawCode = invocation.toString();
+        // Strip a trailing statement terminator defensively; the bare Expression does not emit one,
+        // but formatting/whitespace should never leak a `;` into the invocation-only snippet.
+        const snippet = rawCode.trim().replace(/;$/, "").trim();
+        return {
+            snippet,
+            // Always empty for Rust — see the method doc comment: the AST has no per-symbol import
+            // mechanism and types resolve through the scaffold's `use <crate>::prelude::*;` glob.
+            imports: "",
+            clientName: this.getClientName(),
+            errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
+        };
     }
 
     public buildCodeComponents({
@@ -490,19 +546,38 @@ export class EndpointSnippetGenerator {
 
     private callMethod({
         endpoint,
-        snippet
+        snippet,
+        clientVariableName
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        clientVariableName?: string;
     }): rust.Statement {
         return rust.Statement.expression(
-            rust.Expression.methodCall({
-                target: rust.Expression.reference(CLIENT_VAR_NAME),
-                method: this.getMethodName({ endpoint }),
-                args: this.getMethodArgs({ endpoint, snippet }),
-                isAsync: true
-            })
+            this.buildInvocationExpression({ endpoint, snippet, clientVariableName })
         );
+    }
+
+    /**
+     * Builds the bare invocation expression (`<client>.<method>(...).await`), honoring a custom
+     * client variable name. Shared between the full snippet (wrapped in a statement) and the
+     * invocation-only snippet (rendered on its own).
+     */
+    private buildInvocationExpression({
+        endpoint,
+        snippet,
+        clientVariableName
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+        clientVariableName?: string;
+    }): rust.Expression {
+        return rust.Expression.methodCall({
+            target: rust.Expression.reference(clientVariableName ?? CLIENT_VAR_NAME),
+            method: this.getMethodName({ endpoint }),
+            args: this.getMethodArgs({ endpoint, snippet }),
+            isAsync: true
+        });
     }
 
     private getBaseUrlValue({
