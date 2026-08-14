@@ -314,6 +314,21 @@ describe("valid-oauth", () => {
         ).toBe(true);
     });
 
+    it("invalid-callback-redirect-url-control-character", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("callback-redirect-url-control-character")
+            )
+        });
+        expect(violations.some((violation) => violation.message.includes("must not contain control characters"))).toBe(
+            true
+        );
+    });
+
     it("invalid-device-code-callback-redirect-urls", async () => {
         const violations = await getViolationsForRule({
             rule: ValidOauthRule,
@@ -325,12 +340,30 @@ describe("valid-oauth", () => {
             )
         });
         expect(
-            violations.some(
+            violations.filter(
                 (violation) =>
-                    violation.message.includes("no browser callback") &&
-                    violation.message.includes("success-redirect-url")
+                    violation.message.includes("device-code flow has no browser callback") &&
+                    (violation.message.includes("success-redirect-url") ||
+                        violation.message.includes("error-redirect-url"))
             )
-        ).toBe(true);
+        ).toHaveLength(2);
+    });
+
+    it("invalid-client-credentials-callback-redirect-urls", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("client-credentials-callback-redirect-urls")
+            )
+        });
+        expect(
+            violations.filter((violation) =>
+                violation.message.includes("client-credentials flow has no browser callback")
+            )
+        ).toHaveLength(2);
     });
 
     it("invalid-client-id-env", async () => {

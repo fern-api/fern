@@ -31,7 +31,7 @@ export interface OAuthSchemeSchema extends GeneratorsYml.fernDefinition.WithDocs
     "redirect-uri"?: GeneratorsYml.fernDefinition.RedirectUriSchema;
     /** A page the generated CLI redirects the browser to once it captures the authorization code, for the authorization-code flow. Must be an absolute http(s) URL. This is not an OAuth `redirect_uri` and does not need registering with the authorization server — the redirect happens on the loopback listener after the code is captured, and no `code` or `state` is forwarded. Omit it to serve the CLI's built-in success page. */
     "success-redirect-url"?: string;
-    /** A page the generated CLI redirects the browser to when authorization fails (the user denies consent, or the callback is unusable), for the authorization-code flow. Must be an absolute http(s) URL. The `error` and `error_description` query parameters are appended so the page can explain what happened. Omit it to serve the CLI's built-in failure page. */
+    /** A page the generated CLI redirects the browser to when authorization fails (the user denies consent, or the callback is unusable), for the authorization-code flow. Must be an absolute http(s) URL. The `error` and `error_description` query parameters are appended so the page can explain what happened — merged into any query string already on the URL, and inserted before a fragment if there is one. Omit it to serve the CLI's built-in failure page. */
     "error-redirect-url"?: string;
     /** PKCE configuration for the authorization-code flow. PKCE is always applied for that flow. */
     pkce?: GeneratorsYml.fernDefinition.OAuthPkceSchema;

@@ -58,8 +58,9 @@ export interface OAuthAuthorizationCode {
      * unusable (missing `code`, mismatched `state`).
      *
      * The `error` and `error_description` query parameters are appended so the hosted page can
-     * explain what happened. When omitted, the loopback listener serves its built-in failure
-     * page inline.
+     * explain what happened: they are merged into any query string already on the URL, and
+     * inserted before a fragment if there is one. When omitted, the loopback listener serves its
+     * built-in failure page inline.
      */
     errorRedirectUrl: string | undefined;
     /** The scopes requested during authorization. */

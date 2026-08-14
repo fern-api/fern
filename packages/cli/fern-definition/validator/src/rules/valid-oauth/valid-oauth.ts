@@ -26,14 +26,15 @@ export const ValidOauthRule: Rule = {
                         return validatePublicClientFlow(oauth);
                     }
 
-                    // client-credentials flow.
+                    // client-credentials flow. It is machine-to-machine, so like device-code it has no
+                    // browser callback to brand.
+                    violations.push(...rejectCallbackRedirectUrls(oauth));
                     if (oauth["get-token"] == null) {
-                        return [
-                            {
-                                severity: "fatal",
-                                message: "OAuth client-credentials flow requires a `get-token` endpoint."
-                            }
-                        ];
+                        violations.push({
+                            severity: "fatal",
+                            message: "OAuth client-credentials flow requires a `get-token` endpoint."
+                        });
+                        return violations;
                     }
                     const tokenEndpointReference = oauth["get-token"].endpoint;
                     const resolvedTokenEndpoint = endpointResolver.resolveEndpoint({
@@ -158,7 +159,7 @@ function validatePublicClientFlow(oauth: RawSchemas.OAuthSchemeSchema): RuleViol
             }
         }
 
-        for (const field of ["success-redirect-url", "error-redirect-url"] as const) {
+        for (const field of CALLBACK_REDIRECT_URL_FIELDS) {
             const url = oauth[field];
             if (url != null) {
                 const urlError = validateCallbackRedirectUrl({ field, url });
@@ -184,17 +185,23 @@ function validatePublicClientFlow(oauth: RawSchemas.OAuthSchemeSchema): RuleViol
                     "OAuth device-code flow does not use PKCE; remove `pkce` (it applies only to the authorization-code flow)."
             });
         }
-        for (const field of ["success-redirect-url", "error-redirect-url"] as const) {
-            if (oauth[field] != null) {
-                violations.push({
-                    severity: "fatal",
-                    message: `OAuth device-code flow has no browser callback; remove \`${field}\` (it applies only to the authorization-code flow).`
-                });
-            }
-        }
+        violations.push(...rejectCallbackRedirectUrls(oauth));
     }
 
     return violations;
+}
+
+const CALLBACK_REDIRECT_URL_FIELDS = ["success-redirect-url", "error-redirect-url"] as const;
+
+/**
+ * Only the authorization-code flow has a browser callback to redirect, so these fields are rejected
+ * on every other flow rather than silently dropped.
+ */
+function rejectCallbackRedirectUrls(oauth: RawSchemas.OAuthSchemeSchema): RuleViolation[] {
+    return CALLBACK_REDIRECT_URL_FIELDS.filter((field) => oauth[field] != null).map((field) => ({
+        severity: "fatal" as const,
+        message: `OAuth ${oauth.type} flow has no browser callback; remove \`${field}\` (it applies only to the authorization-code flow).`
+    }));
 }
 
 /**
