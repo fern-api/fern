@@ -7,6 +7,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/fern-api/fern-go"
@@ -587,10 +588,14 @@ func parseMajorVersion(version string) (string, bool) {
 	return major, major != "" && major != "v0" && major != "v1"
 }
 
-// maybeAppendVersionSuffix appends the given version suffix to the
-// importPath if it doesn't already exist.
+// majorVersionSuffixPattern matches a Go major version suffix, e.g. "v2".
+var majorVersionSuffixPattern = regexp.MustCompile(`^v[0-9]+$`)
+
+// maybeAppendVersionSuffix appends the given version suffix to the importPath,
+// unless the importPath already ends in a major version suffix. The configured
+// suffix wins, even if it doesn't match the version being released.
 func maybeAppendVersionSuffix(importPath string, version string) string {
-	if path.Base(importPath) == version {
+	if majorVersionSuffixPattern.MatchString(path.Base(importPath)) {
 		return importPath
 	}
 	return path.Join(importPath, version)

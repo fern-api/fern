@@ -5,6 +5,9 @@ import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSch
 
 const DEFAULT_MODULE_PATH = "sdk";
 
+// Matches a Go major version suffix, e.g. "v2".
+const MAJOR_VERSION_SUFFIX_PATTERN = /^v\d+$/;
+
 export function resolveRootImportPath({
     config,
     customConfig
@@ -76,6 +79,9 @@ function parseMajorVersion({ config }: { config: FernGeneratorExec.config.Genera
     return `v${majorVersion}`;
 }
 
+// Appends the major version suffix to the importPath, unless the importPath already ends
+// in a major version suffix. The configured suffix wins, even if it doesn't match the
+// version being released.
 function maybeAppendMajorVersionSuffix({
     importPath,
     majorVersion
@@ -83,7 +89,7 @@ function maybeAppendMajorVersionSuffix({
     importPath: string;
     majorVersion: string;
 }): string {
-    if (basename(importPath) === majorVersion) {
+    if (MAJOR_VERSION_SUFFIX_PATTERN.test(basename(importPath))) {
         return importPath;
     }
     return `${importPath}/${majorVersion}`;
