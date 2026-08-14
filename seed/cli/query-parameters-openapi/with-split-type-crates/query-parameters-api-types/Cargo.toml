@@ -9,4 +9,4 @@ doctest = false
 [dependencies]
 
 [dependencies.query_parameters_api_types_core]
-path = "../query-parameters-api-types-core"
+path = "../types/query-parameters-api-types-core"

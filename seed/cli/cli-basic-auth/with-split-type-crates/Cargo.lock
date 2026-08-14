@@ -3233,10 +3233,23 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b8848ee67ecc8aedbaf3e4122217aff892639231befc6a1b58d29fff4c2cabaa"
 
 [[package]]
+name = "basic_auth_cli_types_core"
+version = "0.0.0"
+dependencies = [
+ "base64",
+ "chrono",
+ "num-bigint",
+ "ordered-float",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "basic_auth_cli_types_system"
 version = "0.0.0"
 dependencies = [
  "base64",
+ "basic_auth_cli_types_core",
  "chrono",
  "num-bigint",
  "ordered-float",
@@ -3249,6 +3262,7 @@ name = "basic_auth_cli_types_widgets"
 version = "0.0.0"
 dependencies = [
  "base64",
+ "basic_auth_cli_types_core",
  "chrono",
  "num-bigint",
  "ordered-float",
@@ -3260,6 +3274,7 @@ dependencies = [
 name = "basic_auth_cli_types"
 version = "0.0.0"
 dependencies = [
+ "basic_auth_cli_types_core",
  "basic_auth_cli_types_system",
  "basic_auth_cli_types_widgets",
 ]

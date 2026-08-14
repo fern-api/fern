@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "cargo:basic-auth-cli-types", "cargo:basic-auth-cli-types-system", "cargo:basic-auth-cli-types-widgets", "cargo:basic-auth-cli-sdk"]
+members = ["cargo:.", "cargo:basic-auth-cli-types", "cargo:types/basic-auth-cli-types-core", "cargo:types/basic-auth-cli-types-system", "cargo:types/basic-auth-cli-types-widgets", "cargo:basic-auth-cli-sdk"]
 
 # Config for 'dist'
 [dist]

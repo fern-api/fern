@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "cargo:acme-versioned-types", "cargo:acme-versioned-types-v1", "cargo:acme-versioned-types-v2", "cargo:acme-versioned-sdk"]
+members = ["cargo:.", "cargo:acme-versioned-types", "cargo:types/acme-versioned-types-core", "cargo:types/acme-versioned-types-v1", "cargo:types/acme-versioned-types-v2", "cargo:acme-versioned-sdk"]
 
 # Config for 'dist'
 [dist]

@@ -8,8 +8,11 @@ doctest = false
 
 [dependencies]
 
+[dependencies.acme_versioned_types_core]
+path = "../types/acme-versioned-types-core"
+
 [dependencies.acme_versioned_types_v1]
-path = "../acme-versioned-types-v1"
+path = "../types/acme-versioned-types-v1"
 
 [dependencies.acme_versioned_types_v2]
-path = "../acme-versioned-types-v2"
+path = "../types/acme-versioned-types-v2"

@@ -8,8 +8,11 @@ doctest = false
 
 [dependencies]
 
+[dependencies.basic_auth_cli_types_core]
+path = "../types/basic-auth-cli-types-core"
+
 [dependencies.basic_auth_cli_types_system]
-path = "../basic-auth-cli-types-system"
+path = "../types/basic-auth-cli-types-system"
 
 [dependencies.basic_auth_cli_types_widgets]
-path = "../basic-auth-cli-types-widgets"
+path = "../types/basic-auth-cli-types-widgets"

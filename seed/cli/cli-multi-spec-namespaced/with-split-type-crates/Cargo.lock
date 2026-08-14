@@ -3233,9 +3233,22 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b8848ee67ecc8aedbaf3e4122217aff892639231befc6a1b58d29fff4c2cabaa"
 
 [[package]]
+name = "acme_versioned_types_core"
+version = "0.0.0"
+dependencies = [
+ "base64",
+ "chrono",
+ "num-bigint",
+ "ordered-float",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "acme_versioned_types_v1"
 version = "0.0.0"
 dependencies = [
+ "acme_versioned_types_core",
  "base64",
  "chrono",
  "num-bigint",
@@ -3248,6 +3261,7 @@ dependencies = [
 name = "acme_versioned_types_v2"
 version = "0.0.0"
 dependencies = [
+ "acme_versioned_types_core",
  "base64",
  "chrono",
  "num-bigint",
@@ -3260,6 +3274,7 @@ dependencies = [
 name = "acme_versioned_types"
 version = "0.0.0"
 dependencies = [
+ "acme_versioned_types_core",
  "acme_versioned_types_v1",
  "acme_versioned_types_v2",
 ]
