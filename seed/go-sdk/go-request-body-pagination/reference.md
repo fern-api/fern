@@ -12,7 +12,8 @@
 <dl>
 <dd>
 
-Pagination endpoint with a top-level cursor field in the request body.
+Pagination endpoint with an optional top-level cursor field in the request body. An empty
+string cursor terminates the pager, just like a null cursor does.
 </dd>
 </dl>
 </dd>
@@ -122,6 +123,71 @@ client.Users.ListWithRequiredBodyCursorPagination(
 <dd>
 
 **cursor:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.ListWithUUIDBodyCursorPagination(request) -> *fern.ListUsersUUIDCursorResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint with an optional uuid cursor field in the request body. Only string cursors
+treat an empty value as the last page, so this endpoint terminates on a null cursor alone.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.ListUsersUUIDBodyCursorPaginationRequest{
+    Cursor: fern.UUID(
+        uuid.MustParse(
+            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        ),
+    ),
+}
+client.Users.ListWithUUIDBodyCursorPagination(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `*uuid.UUID` 
     
 </dd>
 </dl>

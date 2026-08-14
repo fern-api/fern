@@ -6,7 +6,6 @@ import (
     fern "github.com/go-request-body-pagination/fern"
     client "github.com/go-request-body-pagination/fern/client"
     option "github.com/go-request-body-pagination/fern/option"
-    uuid "github.com/google/uuid"
 )
 
 func do() {
@@ -15,14 +14,14 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.ListUsersUUIDBodyCursorPaginationRequest{
-        Cursor: fern.UUID(
-            uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    request := &fern.ListUsersNestedBodyCursorPaginationRequest{
+        Pagination: &fern.WithCursor{
+            Cursor: fern.String(
+                "cursor",
             ),
-        ),
+        },
     }
-    client.Users.ListWithUUIDBodyCursorPagination(
+    client.Users.ListWithNestedBodyCursorPagination(
         context.TODO(),
         request,
     )
