@@ -3,12 +3,10 @@ import { TaskContext } from "@fern-api/task-context";
 import { describe, expect, it } from "vitest";
 import { getPublishConfig } from "../runLocalGenerationForWorkspace.js";
 
-// Minimal TaskContext stub — getPublishConfig only reads `logger.debug`/`logger.warn`.
+// Minimal TaskContext stub — every log level is a no-op so a new log call inside
+// getPublishConfig fails the assertion rather than a missing-method TypeError.
 const mockContext = {
-    logger: {
-        debug: () => undefined,
-        warn: () => undefined
-    }
+    logger: new Proxy({}, { get: () => () => undefined })
     // Test mock: getPublishConfig only touches the logger.
 } as unknown as TaskContext;
 
