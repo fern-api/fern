@@ -693,6 +693,18 @@ pub(crate) fn build_global_parameter_overrides(
     Ok(out)
 }
 
+/// Append the runtime env var footer to whatever footer the command already
+/// carries. `build_command_from_doc` installs that same footer when it builds
+/// the command tree, so appending unconditionally prints the env var table
+/// twice on the root `--help`.
+pub(crate) fn append_runtime_footer(existing: Option<&str>, env_footer: &str) -> String {
+    match existing {
+        Some(s) if s.contains(env_footer.trim()) => s.to_string(),
+        Some(s) if !s.is_empty() => format!("{s}\n{env_footer}"),
+        _ => env_footer.to_string(),
+    }
+}
+
 /// Compose the root `--help` footer from the optional global-headers
 /// section, the optional global-parameters section, the optional auth
 /// section, and the always-present runtime footer. Sections are joined
@@ -1753,11 +1765,10 @@ impl CliApp {
                 .collect();
             Some(format!("Global parameters:\n{}", rows.join("\n")))
         };
-        let env_footer = super::commands::after_help_footer(&doc.name);
-        let base_footer = match existing_after_help {
-            Some(ref s) if !s.is_empty() => format!("{s}\n{env_footer}"),
-            _ => env_footer,
-        };
+        let base_footer = append_runtime_footer(
+            existing_after_help.as_deref(),
+            &super::commands::after_help_footer(&doc.name),
+        );
         cli = cli.after_help(compose_root_after_help_sections(
             global_headers_section.as_deref(),
             global_params_section.as_deref(),
@@ -3420,6 +3431,24 @@ mod tests {
         assert_eq!(
             compose_root_after_help_sections(Some(g), None, Some(a), footer),
             format!("{g}\n{a}\n{footer}"),
+        );
+    }
+
+    /// The command tree already carries the runtime env var footer, so
+    /// decorating it must not append a second copy.
+    #[test]
+    fn test_append_runtime_footer_does_not_duplicate() {
+        let env_footer =
+            "Environment variables:\n  TWILIO_BASE_URL  Override\n\nStandard env vars are also honored.";
+
+        assert_eq!(append_runtime_footer(Some(env_footer), env_footer), env_footer);
+        assert_eq!(append_runtime_footer(None, env_footer), env_footer);
+        assert_eq!(append_runtime_footer(Some(""), env_footer), env_footer);
+
+        let global = "Global headers:\n  --api-stage <STAGE>  …";
+        assert_eq!(
+            append_runtime_footer(Some(global), env_footer),
+            format!("{global}\n{env_footer}"),
         );
     }
 
