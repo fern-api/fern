@@ -4,7 +4,7 @@ module Seed
   class Client
     # Creates a plant with example JSON but no request body schema.
     #
-    # @param request_options [Hash]
+    # @param request_options [::Hash]
     # @param params [Hash]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
@@ -24,10 +24,10 @@ module Seed
     #     tags: %w[carnivorous tropical]
     #   })
     #
-    # @return [Seed::Types::CreatePlantResponse]
+    # @return [::Seed::Types::CreatePlantResponse]
     def create_plant(request_options: {}, **params)
-      params = Seed::Internal::Types::Utils.normalize_keys(params)
-      request = Seed::Internal::JSON::Request.new(
+      params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "POST",
         path: "plants",
@@ -37,20 +37,20 @@ module Seed
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::CreatePlantResponse.load(response.body)
+        ::Seed::Types::CreatePlantResponse.load(response.body)
       else
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end
 
     # Updates a plant with example JSON but no request body schema.
     #
-    # @param request_options [Hash]
+    # @param request_options [::Hash]
     # @param params [Hash]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
@@ -70,13 +70,13 @@ module Seed
     #     }
     #   )
     #
-    # @return [Seed::Types::UpdatePlantResponse]
+    # @return [::Seed::Types::UpdatePlantResponse]
     def update_plant(request_options: {}, **params)
-      params = Seed::Internal::Types::Utils.normalize_keys(params)
+      params = ::Seed::Internal::Types::Utils.normalize_keys(params)
       path_param_names = %i[plant_id]
       body_params = params.except(*path_param_names)
 
-      request = Seed::Internal::JSON::Request.new(
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "PUT",
         path: "plants/#{URI.encode_uri_component(params[:plant_id].to_s)}",
@@ -86,21 +86,21 @@ module Seed
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::UpdatePlantResponse.load(response.body)
+        ::Seed::Types::UpdatePlantResponse.load(response.body)
       else
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end
 
     # A control endpoint that has both schema and example defined.
     #
-    # @param request_options [Hash]
-    # @param params [Seed::Types::CreatePlantWithSchemaRequest]
+    # @param request_options [::Hash]
+    # @param params [::Seed::Types::CreatePlantWithSchemaRequest]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
     # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -113,26 +113,26 @@ module Seed
     #     species: "Drosera capensis"
     #   )
     #
-    # @return [Seed::Types::CreatePlantWithSchemaResponse]
+    # @return [::Seed::Types::CreatePlantWithSchemaResponse]
     def create_plant_with_schema(request_options: {}, **params)
-      params = Seed::Internal::Types::Utils.normalize_keys(params)
-      request = Seed::Internal::JSON::Request.new(
+      params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "POST",
         path: "plants/with-schema",
-        body: Seed::Types::CreatePlantWithSchemaRequest.new(params).to_h,
+        body: ::Seed::Types::CreatePlantWithSchemaRequest.new(params).to_h,
         request_options: request_options
       )
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::CreatePlantWithSchemaResponse.load(response.body)
+        ::Seed::Types::CreatePlantWithSchemaResponse.load(response.body)
       else
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end
@@ -142,7 +142,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_schemaless-request-body-examples/0.0.1",

@@ -16,7 +16,7 @@ module <%= gem_namespace %>
           #
           # @return [Hash<Symbol, Field>]
           def fields
-            @fields ||= if self < <%= gem_namespace %>::Internal::Types::Model
+            @fields ||= if self < ::<%= gem_namespace %>::Internal::Types::Model
                           superclass.fields.dup
                         else
                           {}

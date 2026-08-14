@@ -18,7 +18,7 @@ module Seed
 
         field :maybe_context, -> { String }, optional: true, nullable: false, api_name: "maybeContext"
 
-        field :object_with_literal, -> { Seed::Inlined::Types::ATopLevelLiteral }, optional: false, nullable: false, api_name: "objectWithLiteral"
+        field :object_with_literal, -> { ::Seed::Inlined::Types::ATopLevelLiteral }, optional: false, nullable: false, api_name: "objectWithLiteral"
       end
     end
   end

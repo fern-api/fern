@@ -2,8 +2,8 @@
 
 module Seed
   class Client
-    # @param request_options [Hash]
-    # @param params [Seed::Types::BulkUpdateTasksRequest]
+    # @param request_options [::Hash]
+    # @param params [::Seed::Types::BulkUpdateTasksRequest]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
     # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -17,10 +17,10 @@ module Seed
     # @example
     #   client.bulk_update_tasks
     #
-    # @return [Seed::Types::BulkUpdateTasksResponse]
+    # @return [::Seed::Types::BulkUpdateTasksResponse]
     def bulk_update_tasks(request_options: {}, **params)
-      params = Seed::Internal::Types::Utils.normalize_keys(params)
-      request_data = Seed::Types::BulkUpdateTasksRequest.new(params).to_h
+      params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+      request_data = ::Seed::Types::BulkUpdateTasksRequest.new(params).to_h
       non_body_param_names = %w[assigned_to is_complete date _fields]
       body = request_data.except(*non_body_param_names)
 
@@ -30,7 +30,7 @@ module Seed
       query_params["date"] = params[:filter_date] if params.key?(:filter_date)
       query_params["_fields"] = params[:fields] if params.key?(:fields)
 
-      request = Seed::Internal::JSON::Request.new(
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "PUT",
         path: "task/",
@@ -41,13 +41,13 @@ module Seed
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::BulkUpdateTasksResponse.load(response.body)
+        ::Seed::Types::BulkUpdateTasksResponse.load(response.body)
       else
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end
@@ -57,7 +57,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_query-param-name-conflict/0.0.1",

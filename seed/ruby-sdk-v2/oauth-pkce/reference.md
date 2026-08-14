@@ -1,6 +1,6 @@
 # Reference
 ## Oauth
-<details><summary><code>client.oauth.<a href="/lib/seed/oauth/client.rb">authorize</a>() -> Seed::Types::AuthorizeResponse</code></summary>
+<details><summary><code>client.oauth.<a href="/lib/seed/oauth/client.rb">authorize</a>() -> ::Seed::Types::AuthorizeResponse</code></summary>
 <dl>
 <dd>
 

@@ -6,13 +6,13 @@ module Seed
     # This reproduces the Pipedream issue where Emitter is a union of
     # DeployedComponent, HttpInterface, and TimerInterface.
     class MyUnion < Internal::Types::Model
-      extend Seed::Internal::Types::Union
+      extend ::Seed::Internal::Types::Union
 
-      member -> { Seed::Types::VariantA }
+      member -> { ::Seed::Types::VariantA }
 
-      member -> { Seed::Types::VariantB }
+      member -> { ::Seed::Types::VariantB }
 
-      member -> { Seed::Types::VariantC }
+      member -> { ::Seed::Types::VariantC }
     end
   end
 end

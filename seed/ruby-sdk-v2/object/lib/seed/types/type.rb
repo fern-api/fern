@@ -40,7 +40,7 @@ module Seed
 
       field :eighteen, -> { String }, optional: false, nullable: false
 
-      field :nineteen, -> { Seed::Types::Name }, optional: false, nullable: false
+      field :nineteen, -> { ::Seed::Types::Name }, optional: false, nullable: false
 
       field :twenty, -> { Integer }, optional: false, nullable: false
 

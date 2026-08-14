@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_test</a>() -> Seed::Types::RootObject</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_test</a>() -> ::Seed::Types::RootObject</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ client.get_test
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">create_test</a>(request) -> Seed::Types::RootObject</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create_test</a>(request) -> ::Seed::Types::RootObject</code></summary>
 <dl>
 <dd>
 
@@ -95,7 +95,7 @@ client.create_test
 <dl>
 <dd>
 
-**request:** `Seed::Types::RootObject` 
+**request:** `::Seed::Types::RootObject` 
     
 </dd>
 </dl>

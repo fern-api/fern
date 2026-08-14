@@ -4,9 +4,9 @@ module Seed
   module Union
     module Types
       class Key < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
-        member -> { Seed::Union::Types::KeyType }
+        member -> { ::Seed::Union::Types::KeyType }
 
         member -> { String }
       end

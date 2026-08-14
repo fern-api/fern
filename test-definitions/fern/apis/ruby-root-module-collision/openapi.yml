@@ -1,0 +1,53 @@
+openapi: 3.0.3
+info:
+  title: Ruby root module collision
+  version: 1.0.0
+paths:
+  /widgets:
+    post:
+      operationId: seed_createWidget
+      tags:
+        - Seed
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateWidgetRequest"
+      responses:
+        "200":
+          description: A widget
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Widget"
+components:
+  schemas:
+    CreateWidgetRequest:
+      type: object
+      required:
+        - name
+        - kind
+      properties:
+        name:
+          type: string
+        kind:
+          type: string
+          enum:
+            - standard
+            - premium
+    Widget:
+      type: object
+      required:
+        - id
+        - status
+      properties:
+        id:
+          type: string
+        status:
+          $ref: "#/components/schemas/WidgetStatus"
+    WidgetStatus:
+      type: string
+      enum:
+        - active
+        - inactive

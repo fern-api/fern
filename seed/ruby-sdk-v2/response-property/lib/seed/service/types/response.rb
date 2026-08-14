@@ -8,7 +8,7 @@ module Seed
 
         field :docs, -> { String }, optional: false, nullable: false
 
-        field :data, -> { Seed::Service::Types::Movie }, optional: false, nullable: false
+        field :data, -> { ::Seed::Service::Types::Movie }, optional: false, nullable: false
       end
     end
   end

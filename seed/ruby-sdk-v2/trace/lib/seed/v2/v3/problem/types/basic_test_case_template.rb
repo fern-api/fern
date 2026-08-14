@@ -10,7 +10,7 @@ module Seed
 
             field :name, -> { String }, optional: false, nullable: false
 
-            field :description, -> { Seed::V2::V3::Problem::Types::TestCaseImplementationDescription }, optional: false, nullable: false
+            field :description, -> { ::Seed::V2::V3::Problem::Types::TestCaseImplementationDescription }, optional: false, nullable: false
 
             field :expected_value_parameter_id, -> { String }, optional: false, nullable: false, api_name: "expectedValueParameterId"
           end

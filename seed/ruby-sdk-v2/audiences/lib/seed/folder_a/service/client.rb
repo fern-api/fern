@@ -4,14 +4,14 @@ module Seed
   module FolderA
     module Service
       class Client
-        # @param client [Seed::Internal::Http::RawClient]
+        # @param client [::Seed::Internal::Http::RawClient]
         #
         # @return [void]
         def initialize(client:)
           @client = client
         end
 
-        # @param request_options [Hash]
+        # @param request_options [::Hash]
         # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
@@ -24,14 +24,14 @@ module Seed
         # @example
         #   client.folder_a.service.get_direct_thread
         #
-        # @return [Seed::FolderA::Service::Types::Response]
+        # @return [::Seed::FolderA::Service::Types::Response]
         def get_direct_thread(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          params = ::Seed::Internal::Types::Utils.normalize_keys(params)
           query_params = {}
           query_params["ids"] = params[:ids] if params.key?(:ids)
           query_params["tags"] = params[:tags] if params.key?(:tags)
 
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "",
@@ -41,13 +41,13 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::FolderA::Service::Types::Response.load(response.body)
+            ::Seed::FolderA::Service::Types::Response.load(response.body)
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end

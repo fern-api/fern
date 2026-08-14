@@ -12,7 +12,7 @@ module Seed
     def initialize(base_url: nil, api_key: nil, client_id: ENV.fetch("MY_CLIENT_ID", nil), client_secret: ENV.fetch("MY_CLIENT_SECRET", nil), max_retries: 2)
       if !client_id.to_s.empty? && !client_secret.to_s.empty?
         # Create an unauthenticated client for the auth endpoint
-        auth_raw_client = Seed::Internal::Http::RawClient.new(
+        auth_raw_client = ::Seed::Internal::Http::RawClient.new(
           base_url: base_url,
           headers: {
             "X-Fern-Language" => "Ruby"
@@ -20,22 +20,22 @@ module Seed
         )
 
         # Create the auth client for token retrieval
-        auth_client = Seed::Token::Client.new(client: auth_raw_client)
+        auth_client = ::Seed::Token::Client.new(client: auth_raw_client)
 
         # Create the OAuth provider with the auth client and credentials
-        @oauth_provider = Seed::Internal::OAuthProvider.new(
+        @oauth_provider = ::Seed::Internal::OAuthProvider.new(
           auth_client: auth_client,
           options: { base_url: base_url, client_id: client_id, client_secret: client_secret }
         )
       end
 
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_ruby-endpoint-security-optional-credentials/0.0.1",
           "X-Fern-Language" => "Ruby"
         },
-        auth_provider: Seed::Internal::RoutingAuthProvider.new(
+        auth_provider: ::Seed::Internal::RoutingAuthProvider.new(
           api_key: api_key,
           oauth_provider: @oauth_provider
         ),
@@ -43,14 +43,14 @@ module Seed
       )
     end
 
-    # @return [Seed::Token::Client]
+    # @return [::Seed::Token::Client]
     def token
-      @token ||= Seed::Token::Client.new(client: @raw_client)
+      @token ||= ::Seed::Token::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::User::Client]
+    # @return [::Seed::User::Client]
     def user
-      @user ||= Seed::User::Client.new(client: @raw_client)
+      @user ||= ::Seed::User::Client.new(client: @raw_client)
     end
   end
 end

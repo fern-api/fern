@@ -28,7 +28,7 @@ client.reporting.load
 <dl>
 <dd>
 
-**cache:** `Seed::Reporting::Types::LoadRequestCache` 
+**cache:** `::Seed::Reporting::Types::LoadRequestCache` 
     
 </dd>
 </dl>
@@ -36,7 +36,7 @@ client.reporting.load
 <dl>
 <dd>
 
-**status:** `Seed::Reporting::Types::LoadRequestStatus` 
+**status:** `::Seed::Reporting::Types::LoadRequestStatus` 
     
 </dd>
 </dl>

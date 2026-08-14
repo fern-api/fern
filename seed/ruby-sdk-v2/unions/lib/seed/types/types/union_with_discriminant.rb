@@ -4,13 +4,13 @@ module Seed
   module Types
     module Types
       class UnionWithDiscriminant < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         discriminant :type
 
-        member -> { Seed::Types::Types::Foo }, key: "FOO"
+        member -> { ::Seed::Types::Types::Foo }, key: "FOO"
 
-        member -> { Seed::Types::Types::Bar }, key: "BAR"
+        member -> { ::Seed::Types::Types::Bar }, key: "BAR"
       end
     end
   end

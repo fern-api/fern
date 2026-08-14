@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">bulk_update_tasks</a>(request) -> Seed::Types::BulkUpdateTasksResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">bulk_update_tasks</a>(request) -> ::Seed::Types::BulkUpdateTasksResponse</code></summary>
 <dl>
 <dd>
 

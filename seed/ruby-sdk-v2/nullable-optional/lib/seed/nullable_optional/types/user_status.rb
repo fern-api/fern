@@ -4,7 +4,7 @@ module Seed
   module NullableOptional
     module Types
       module UserStatus
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         ACTIVE = "active"
         INACTIVE = "inactive"

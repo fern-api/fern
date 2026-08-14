@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream</a>(request) -> Seed::Completions::Types::StreamedCompletion</code></summary>
+<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream</a>(request) -> ::Seed::Completions::Types::StreamedCompletion</code></summary>
 <dl>
 <dd>
 
@@ -48,7 +48,7 @@ client.completions.stream(query: "foo")
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream_events</a>(request) -> Seed::Completions::Types::StreamEvent</code></summary>
+<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream_events</a>(request) -> ::Seed::Completions::Types::StreamEvent</code></summary>
 <dl>
 <dd>
 
@@ -96,7 +96,7 @@ client.completions.stream_events(query: "query")
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream_events_discriminant_in_data</a>(request) -> Seed::Completions::Types::StreamEventDiscriminantInData</code></summary>
+<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream_events_discriminant_in_data</a>(request) -> ::Seed::Completions::Types::StreamEventDiscriminantInData</code></summary>
 <dl>
 <dd>
 
@@ -144,7 +144,7 @@ client.completions.stream_events_discriminant_in_data(query: "query")
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream_events_context_protocol</a>(request) -> Seed::Completions::Types::StreamEventContextProtocol</code></summary>
+<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream_events_context_protocol</a>(request) -> ::Seed::Completions::Types::StreamEventContextProtocol</code></summary>
 <dl>
 <dd>
 

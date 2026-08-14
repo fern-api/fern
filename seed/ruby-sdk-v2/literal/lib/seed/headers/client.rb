@@ -3,15 +3,15 @@
 module Seed
   module Headers
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Hash]
-      # @param params [Seed::Headers::Types::SendLiteralsInHeadersRequest]
+      # @param request_options [::Hash]
+      # @param params [::Seed::Headers::Types::SendLiteralsInHeadersRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -27,10 +27,10 @@ module Seed
       #     query: "What is the weather today"
       #   )
       #
-      # @return [Seed::Types::SendResponse]
+      # @return [::Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request_data = Seed::Headers::Types::SendLiteralsInHeadersRequest.new(params).to_h
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request_data = ::Seed::Headers::Types::SendLiteralsInHeadersRequest.new(params).to_h
         non_body_param_names = %w[X-Endpoint-Version X-Async]
         body = request_data.except(*non_body_param_names)
 
@@ -40,7 +40,7 @@ module Seed
 
         headers["X-Endpoint-Version"] = "02-12-2024" unless headers.key?("X-Endpoint-Version")
         headers["X-Async"] = "true" unless headers.key?("X-Async")
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "headers",
@@ -51,18 +51,18 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::SendResponse.load(response.body)
+          ::Seed::Types::SendResponse.load(response.body)
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -80,10 +80,10 @@ module Seed
       #     }
       #   })
       #
-      # @return [Seed::Types::SendResponse]
+      # @return [::Seed::Types::SendResponse]
       def send_literals_only(request_options: {}, **_params)
         headers = { "X-Endpoint-Version" => "02-12-2024", "X-Async" => "true" }
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "headers/literals-only",
@@ -93,13 +93,13 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::SendResponse.load(response.body)
+          ::Seed::Types::SendResponse.load(response.body)
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end

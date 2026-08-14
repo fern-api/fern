@@ -3,7 +3,7 @@
 module Seed
   module Types
     module Operand
-      extend Seed::Internal::Types::Enum
+      extend ::Seed::Internal::Types::Enum
 
       GREATER_THAN = ">"
       EQUAL_TO = "="

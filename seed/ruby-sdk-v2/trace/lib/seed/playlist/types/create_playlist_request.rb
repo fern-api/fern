@@ -10,7 +10,7 @@ module Seed
 
         field :optional_datetime, -> { String }, optional: true, nullable: false, api_name: "optionalDatetime"
 
-        field :body, -> { Seed::Playlist::Types::PlaylistCreateRequest }, optional: false, nullable: false
+        field :body, -> { ::Seed::Playlist::Types::PlaylistCreateRequest }, optional: false, nullable: false
       end
     end
   end

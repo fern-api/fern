@@ -5,7 +5,7 @@ module <%= gem_namespace %>
     module Types
       # @abstract
       module Type
-        include <%= gem_namespace %>::Internal::JSON::Serializable
+        include ::<%= gem_namespace %>::Internal::JSON::Serializable
 
         # Coerces a value to this type
         #

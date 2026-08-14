@@ -13,7 +13,7 @@ module Seed
         "X-Fern-Language" => "Ruby"
       }
       headers["X-API-Version"] = version.to_s unless version.nil?
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: headers,
         overridable_headers: %w[X-API-Version],
@@ -21,9 +21,9 @@ module Seed
       )
     end
 
-    # @return [Seed::Service::Client]
+    # @return [::Seed::Service::Client]
     def service
-      @service ||= Seed::Service::Client.new(client: @raw_client)
+      @service ||= ::Seed::Service::Client.new(client: @raw_client)
     end
   end
 end

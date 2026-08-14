@@ -5,7 +5,7 @@ module Seed
     module Union
       module Types
         class MixedType < Internal::Types::Model
-          extend Seed::Internal::Types::Union
+          extend ::Seed::Internal::Types::Union
 
           member -> { Integer }
 

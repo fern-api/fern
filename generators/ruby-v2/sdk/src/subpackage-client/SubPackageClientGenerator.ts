@@ -160,14 +160,14 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
                     if (isMultiUrl) {
                         writer.writeLine(
                             `@${this.case.snakeSafe(subpackage.name)} ||= ` +
-                                `${this.getClientModuleNames().join("::")}::` +
+                                `::${this.getClientModuleNames().join("::")}::` +
                                 `${this.case.pascalSafe(subpackage.name)}::` +
                                 `Client.new(client: @client, base_url: @base_url, environment: @environment)`
                         );
                     } else {
                         writer.writeLine(
                             `@${this.case.snakeSafe(subpackage.name)} ||= ` +
-                                `${this.getClientModuleNames().join("::")}::` +
+                                `::${this.getClientModuleNames().join("::")}::` +
                                 `${this.case.pascalSafe(subpackage.name)}::` +
                                 `Client.new(client: @client)`
                         );

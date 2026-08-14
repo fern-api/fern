@@ -3,7 +3,7 @@
 module Seed
   module Types
     module PlantBaseWateringFrequency
-      extend Seed::Internal::Types::Enum
+      extend ::Seed::Internal::Types::Enum
 
       DAILY = "daily"
       WEEKLY = "weekly"

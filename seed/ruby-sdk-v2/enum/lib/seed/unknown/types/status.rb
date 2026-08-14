@@ -4,7 +4,7 @@ module Seed
   module Unknown
     module Types
       module Status
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         KNOWN = "Known"
         UNKNOWN = "Unknown"

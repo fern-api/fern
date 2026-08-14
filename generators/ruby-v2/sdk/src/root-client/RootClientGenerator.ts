@@ -1211,7 +1211,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     key: ruby.TypeLiteral.string("User-Agent"),
                     value: ruby.codeblock(
                         this.wrapUserAgentWithAppInfo(
-                            `${rootModuleName}::Internal::Http::RawClient.user_agent(${JSON.stringify(userAgent.value).replace(/#(?=[{$@])/g, "\\#")})`
+                            `::${rootModuleName}::Internal::Http::RawClient.user_agent(${JSON.stringify(userAgent.value).replace(/#(?=[{$@])/g, "\\#")})`
                         )
                     )
                 });
@@ -1348,7 +1348,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             return baseExpression;
         }
         const rootModuleName = this.context.getRootModule().name;
-        return `${rootModuleName}::Internal::Http::RawClient.append_app_info(${baseExpression}, ${APP_INFO_PARAMETER_NAME})`;
+        return `::${rootModuleName}::Internal::Http::RawClient.append_app_info(${baseExpression}, ${APP_INFO_PARAMETER_NAME})`;
     }
 
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
@@ -1368,14 +1368,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     if (isMultiUrl) {
                         writer.writeLine(
                             `@${this.case.snakeSafe(subpackage.name)} ||= ` +
-                                `${rootModule.name}::` +
+                                `::${rootModule.name}::` +
                                 `${this.case.pascalSafe(subpackage.name)}::` +
                                 `Client.new(client: @raw_client, base_url: @base_url, environment: @environment)`
                         );
                     } else {
                         writer.writeLine(
                             `@${this.case.snakeSafe(subpackage.name)} ||= ` +
-                                `${rootModule.name}::` +
+                                `::${rootModule.name}::` +
                                 `${this.case.pascalSafe(subpackage.name)}::` +
                                 `Client.new(client: @raw_client)`
                         );
@@ -1491,7 +1491,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         };
 
         const environmentConstantReference = (name: FernIr.NameOrString): string => {
-            return `${this.context.getRootModuleName()}::${this.context.getEnvironmentsClassReference().name}::${this.case.screamingSnakeSafe(name)}`;
+            return `::${this.context.getRootModuleName()}::${this.context.getEnvironmentsClassReference().name}::${this.case.screamingSnakeSafe(name)}`;
         };
 
         switch (environments.type) {

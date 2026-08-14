@@ -4,7 +4,7 @@ module Seed
   module Commons
     module Types
       class VariableType < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         discriminant :type
 
@@ -18,9 +18,9 @@ module Seed
 
         member -> { Object }, key: "CHAR_TYPE"
 
-        member -> { Seed::Commons::Types::ListType }, key: "LIST_TYPE"
+        member -> { ::Seed::Commons::Types::ListType }, key: "LIST_TYPE"
 
-        member -> { Seed::Commons::Types::MapType }, key: "MAP_TYPE"
+        member -> { ::Seed::Commons::Types::MapType }, key: "MAP_TYPE"
 
         member -> { Object }, key: "BINARY_TREE_TYPE"
 

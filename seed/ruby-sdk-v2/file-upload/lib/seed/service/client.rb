@@ -3,14 +3,14 @@
 module Seed
   module Service
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -20,7 +20,7 @@ module Seed
       #
       # @return [untyped]
       def post(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         if params[:maybe_string]
@@ -94,7 +94,7 @@ module Seed
           )
         end
 
-        request = Seed::Internal::Multipart::Request.new(
+        request = ::Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "",
@@ -104,16 +104,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -126,12 +126,12 @@ module Seed
       #
       # @return [untyped]
       def just_file(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
 
-        request = Seed::Internal::Multipart::Request.new(
+        request = ::Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/just-file",
@@ -141,16 +141,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -165,12 +165,12 @@ module Seed
       #
       # @return [untyped]
       def just_file_with_query_params(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
 
-        request = Seed::Internal::Multipart::Request.new(
+        request = ::Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/just-file-with-query-params",
@@ -180,16 +180,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -201,12 +201,12 @@ module Seed
       #
       # @return [untyped]
       def just_file_with_optional_query_params(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
 
-        request = Seed::Internal::Multipart::Request.new(
+        request = ::Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/just-file-with-optional-query-params",
@@ -216,16 +216,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -235,7 +235,7 @@ module Seed
       #
       # @return [untyped]
       def with_content_type(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
@@ -248,7 +248,7 @@ module Seed
         if params[:bar]
           body.add(
             name: "bar",
-            value: JSON.generate(Seed::Service::Types::MyObject.new(params[:bar]).to_h),
+            value: JSON.generate(::Seed::Service::Types::MyObject.new(params[:bar]).to_h),
             content_type: "application/json"
           )
         end
@@ -260,7 +260,7 @@ module Seed
           )
         end
 
-        request = Seed::Internal::Multipart::Request.new(
+        request = ::Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/with-content-type",
@@ -270,16 +270,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -289,7 +289,7 @@ module Seed
       #
       # @return [untyped]
       def with_form_encoding(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
@@ -306,7 +306,7 @@ module Seed
           )
         end
 
-        request = Seed::Internal::Multipart::Request.new(
+        request = ::Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/with-form-encoding",
@@ -316,16 +316,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -335,7 +335,7 @@ module Seed
       #
       # @return [untyped]
       def with_form_encoded_containers(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         if params[:maybe_string]
@@ -415,7 +415,7 @@ module Seed
           )
         end
 
-        request = Seed::Internal::Multipart::Request.new(
+        request = ::Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "",
@@ -425,16 +425,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -447,7 +447,7 @@ module Seed
       #
       # @return [String]
       def optional_args(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:image_file].to_form_data_part(name: "image_file")) if params[:image_file]
@@ -459,7 +459,7 @@ module Seed
           )
         end
 
-        request = Seed::Internal::Multipart::Request.new(
+        request = ::Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/optional-args",
@@ -469,16 +469,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -488,7 +488,7 @@ module Seed
       #
       # @return [String]
       def with_inline_type(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
@@ -499,7 +499,7 @@ module Seed
           )
         end
 
-        request = Seed::Internal::Multipart::Request.new(
+        request = ::Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/inline-type",
@@ -509,16 +509,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -528,7 +528,7 @@ module Seed
       #
       # @return [String]
       def with_json_property(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
@@ -539,7 +539,7 @@ module Seed
           )
         end
 
-        request = Seed::Internal::Multipart::Request.new(
+        request = ::Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/with-json-property",
@@ -549,16 +549,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -571,19 +571,19 @@ module Seed
       #
       # @return [String]
       def with_ref_body(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:image_file].to_form_data_part(name: "image_file")) if params[:image_file]
         if params[:request]
           body.add(
             name: "request",
-            value: JSON.generate(Seed::Service::Types::MyObject.new(params[:request]).to_h),
+            value: JSON.generate(::Seed::Service::Types::MyObject.new(params[:request]).to_h),
             content_type: "application/json; charset=utf-8"
           )
         end
 
-        request = Seed::Internal::Multipart::Request.new(
+        request = ::Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/with-ref-body",
@@ -593,16 +593,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -615,7 +615,7 @@ module Seed
       #
       # @return [untyped]
       def simple(request_options: {}, **_params)
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/snippet",
@@ -624,16 +624,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -643,7 +643,7 @@ module Seed
       #
       # @return [String]
       def with_literal_and_enum_types(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
@@ -666,7 +666,7 @@ module Seed
           )
         end
 
-        request = Seed::Internal::Multipart::Request.new(
+        request = ::Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/with-literal-enum",
@@ -676,12 +676,12 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end

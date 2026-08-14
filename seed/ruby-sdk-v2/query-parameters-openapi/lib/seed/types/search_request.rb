@@ -13,9 +13,9 @@ module Seed
 
       field :bytes, -> { String }, optional: false, nullable: false
 
-      field :user, -> { Seed::Types::User }, optional: false, nullable: false
+      field :user, -> { ::Seed::Types::User }, optional: false, nullable: false
 
-      field :user_list, -> { Seed::Types::User }, optional: true, nullable: false, api_name: "userList"
+      field :user_list, -> { ::Seed::Types::User }, optional: true, nullable: false, api_name: "userList"
 
       field :optional_deadline, -> { String }, optional: true, nullable: false, api_name: "optionalDeadline"
 
@@ -23,11 +23,11 @@ module Seed
 
       field :optional_string, -> { String }, optional: true, nullable: false, api_name: "optionalString"
 
-      field :nested_user, -> { Seed::Types::NestedUser }, optional: true, nullable: false, api_name: "nestedUser"
+      field :nested_user, -> { ::Seed::Types::NestedUser }, optional: true, nullable: false, api_name: "nestedUser"
 
-      field :optional_user, -> { Seed::Types::User }, optional: true, nullable: false, api_name: "optionalUser"
+      field :optional_user, -> { ::Seed::Types::User }, optional: true, nullable: false, api_name: "optionalUser"
 
-      field :exclude_user, -> { Seed::Types::User }, optional: true, nullable: false, api_name: "excludeUser"
+      field :exclude_user, -> { ::Seed::Types::User }, optional: true, nullable: false, api_name: "excludeUser"
 
       field :filter, -> { String }, optional: true, nullable: false
 
@@ -35,9 +35,9 @@ module Seed
 
       field :optional_tags, -> { String }, optional: true, nullable: false, api_name: "optionalTags"
 
-      field :neighbor, -> { Seed::Types::SearchRequestNeighbor }, optional: true, nullable: false
+      field :neighbor, -> { ::Seed::Types::SearchRequestNeighbor }, optional: true, nullable: false
 
-      field :neighbor_required, -> { Seed::Types::SearchRequestNeighborRequired }, optional: false, nullable: false, api_name: "neighborRequired"
+      field :neighbor_required, -> { ::Seed::Types::SearchRequestNeighborRequired }, optional: false, nullable: false, api_name: "neighborRequired"
     end
   end
 end

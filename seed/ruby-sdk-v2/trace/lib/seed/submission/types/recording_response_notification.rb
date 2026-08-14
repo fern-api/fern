@@ -10,9 +10,9 @@ module Seed
 
         field :line_number, -> { Integer }, optional: false, nullable: false, api_name: "lineNumber"
 
-        field :lightweight_stack_info, -> { Seed::Submission::Types::LightweightStackframeInformation }, optional: false, nullable: false, api_name: "lightweightStackInfo"
+        field :lightweight_stack_info, -> { ::Seed::Submission::Types::LightweightStackframeInformation }, optional: false, nullable: false, api_name: "lightweightStackInfo"
 
-        field :traced_file, -> { Seed::Submission::Types::TracedFile }, optional: true, nullable: false, api_name: "tracedFile"
+        field :traced_file, -> { ::Seed::Submission::Types::TracedFile }, optional: true, nullable: false, api_name: "tracedFile"
       end
     end
   end

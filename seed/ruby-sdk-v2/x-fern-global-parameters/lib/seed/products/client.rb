@@ -3,15 +3,15 @@
 module Seed
   module Products
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Hash]
-      # @param params [Seed::Products::Types::SearchProductsRequest]
+      # @param request_options [::Hash]
+      # @param params [::Seed::Products::Types::SearchProductsRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -22,14 +22,14 @@ module Seed
       # @example
       #   client.products.search(region_id: "regionId")
       #
-      # @return [Seed::Products::Types::SearchProductsResponse]
+      # @return [::Seed::Products::Types::SearchProductsResponse]
       def search(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request_data = Seed::Products::Types::SearchProductsRequest.new(params).to_h
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request_data = ::Seed::Products::Types::SearchProductsRequest.new(params).to_h
         non_body_param_names = %w[regionId]
         body = request_data.except(*non_body_param_names)
 
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "v1/products/#{URI.encode_uri_component(params[:region_id].to_s)}/search",
@@ -39,18 +39,18 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Products::Types::SearchProductsResponse.load(response.body)
+          ::Seed::Products::Types::SearchProductsResponse.load(response.body)
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -66,10 +66,10 @@ module Seed
       #     product_id: "productId"
       #   )
       #
-      # @return [Seed::Types::Product]
+      # @return [::Seed::Types::Product]
       def get(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "v1/products/#{URI.encode_uri_component(params[:region_id].to_s)}/#{URI.encode_uri_component(params[:product_id].to_s)}",
@@ -78,13 +78,13 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Product.load(response.body)
+          ::Seed::Types::Product.load(response.body)
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end

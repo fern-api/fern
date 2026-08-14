@@ -4,7 +4,7 @@ module Seed
   module Types
     module Types
       class SearchResponse < Internal::Types::Model
-        field :results, -> { Internal::Types::Array[Seed::Types::Types::Resource] }, optional: false, nullable: false
+        field :results, -> { Internal::Types::Array[::Seed::Types::Types::Resource] }, optional: false, nullable: false
 
         field :total, -> { Integer }, optional: true, nullable: false
 

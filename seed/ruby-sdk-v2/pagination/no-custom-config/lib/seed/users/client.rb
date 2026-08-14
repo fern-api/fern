@@ -3,14 +3,14 @@
 module Seed
   module Users
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -19,7 +19,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer, nil] :page
       # @option params [Integer, nil] :per_page
-      # @option params [Seed::Users::Types::Order, nil] :order
+      # @option params [::Seed::Users::Types::Order, nil] :order
       # @option params [String, nil] :starting_after
       #
       # @example
@@ -30,22 +30,22 @@ module Seed
       #     starting_after: "starting_after"
       #   )
       #
-      # @return [Seed::Users::Types::ListUsersPaginationResponse]
+      # @return [::Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_cursor_pagination(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["per_page"] = params[:per_page] if params.key?(:per_page)
         query_params["order"] = params[:order] if params.key?(:order)
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
 
-        Seed::Internal::CursorItemIterator.new(
+        ::Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :data,
           initial_cursor: query_params["starting_after"]
         ) do |next_cursor|
           query_params["starting_after"] = next_cursor
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
@@ -55,20 +55,20 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
+            parsed_response = ::Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -80,19 +80,19 @@ module Seed
       # @example
       #   client.users.list_with_mixed_type_cursor_pagination(cursor: "cursor")
       #
-      # @return [Seed::Users::Types::ListUsersMixedTypePaginationResponse]
+      # @return [::Seed::Users::Types::ListUsersMixedTypePaginationResponse]
       def list_with_mixed_type_cursor_pagination(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["cursor"] = params[:cursor] if params.key?(:cursor)
 
-        Seed::Internal::CursorItemIterator.new(
+        ::Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_,
           item_field: :data,
           initial_cursor: query_params["cursor"]
         ) do |next_cursor|
           query_params["cursor"] = next_cursor
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/users",
@@ -102,21 +102,21 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Users::Types::ListUsersMixedTypePaginationResponse.load(response.body)
+            parsed_response = ::Seed::Users::Types::ListUsersMixedTypePaginationResponse.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
       end
 
-      # @param request_options [Hash]
-      # @param params [Seed::Users::Types::ListUsersBodyCursorPaginationRequest]
+      # @param request_options [::Hash]
+      # @param params [::Seed::Users::Types::ListUsersBodyCursorPaginationRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -126,33 +126,33 @@ module Seed
       # @example
       #   client.users.list_with_mixed_type_cursor_pagination
       #
-      # @return [Seed::Users::Types::ListUsersPaginationResponse]
+      # @return [::Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_body_cursor_pagination(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        Seed::Internal::CursorItemIterator.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        ::Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :data,
           initial_cursor: query_params["cursor"]
         ) do |next_cursor|
           query_params["cursor"] = next_cursor
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/users",
-            body: Seed::Users::Types::ListUsersBodyCursorPaginationRequest.new(params).to_h,
+            body: ::Seed::Users::Types::ListUsersBodyCursorPaginationRequest.new(params).to_h,
             request_options: request_options
           )
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
+            parsed_response = ::Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
@@ -162,8 +162,8 @@ module Seed
       # This tests that the mock server correctly ignores cursor mismatches
       # when getNextPage() is called with a different cursor value.
       #
-      # @param request_options [Hash]
-      # @param params [Seed::Users::Types::ListUsersTopLevelBodyCursorPaginationRequest]
+      # @param request_options [::Hash]
+      # @param params [::Seed::Users::Types::ListUsersTopLevelBodyCursorPaginationRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -176,39 +176,39 @@ module Seed
       #     filter: "active"
       #   )
       #
-      # @return [Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse]
+      # @return [::Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse]
       def list_with_top_level_body_cursor_pagination(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        Seed::Internal::CursorItemIterator.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        ::Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_cursor,
           item_field: :data,
           initial_cursor: query_params["cursor"]
         ) do |next_cursor|
           query_params["cursor"] = next_cursor
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/users/top-level-cursor",
-            body: Seed::Users::Types::ListUsersTopLevelBodyCursorPaginationRequest.new(params).to_h,
+            body: ::Seed::Users::Types::ListUsersTopLevelBodyCursorPaginationRequest.new(params).to_h,
             request_options: request_options
           )
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse.load(response.body)
+            parsed_response = ::Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -217,7 +217,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer, nil] :page
       # @option params [Integer, nil] :per_page
-      # @option params [Seed::Users::Types::Order, nil] :order
+      # @option params [::Seed::Users::Types::Order, nil] :order
       # @option params [String, nil] :starting_after
       #
       # @example
@@ -228,23 +228,23 @@ module Seed
       #     starting_after: "starting_after"
       #   )
       #
-      # @return [Seed::Users::Types::ListUsersPaginationResponse]
+      # @return [::Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_offset_pagination(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["per_page"] = params[:per_page] if params.key?(:per_page)
         query_params["order"] = params[:order] if params.key?(:order)
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
 
-        Seed::Internal::OffsetItemIterator.new(
+        ::Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["page"],
           item_field: :data,
           has_next_field: nil,
           step: false
         ) do |next_page|
           query_params["page"] = next_page
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
@@ -254,20 +254,20 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
+            parsed_response = ::Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -276,7 +276,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer, nil] :page
       # @option params [Integer, nil] :per_page
-      # @option params [Seed::Users::Types::Order, nil] :order
+      # @option params [::Seed::Users::Types::Order, nil] :order
       # @option params [String, nil] :starting_after
       #
       # @example
@@ -287,23 +287,23 @@ module Seed
       #     starting_after: "starting_after"
       #   )
       #
-      # @return [Seed::Users::Types::ListUsersPaginationResponse]
+      # @return [::Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_double_offset_pagination(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["per_page"] = params[:per_page] if params.key?(:per_page)
         query_params["order"] = params[:order] if params.key?(:order)
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
 
-        Seed::Internal::OffsetItemIterator.new(
+        ::Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["page"],
           item_field: :data,
           has_next_field: nil,
           step: false
         ) do |next_page|
           query_params["page"] = next_page
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
@@ -313,21 +313,21 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
+            parsed_response = ::Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
       end
 
-      # @param request_options [Hash]
-      # @param params [Seed::Users::Types::ListUsersBodyOffsetPaginationRequest]
+      # @param request_options [::Hash]
+      # @param params [::Seed::Users::Types::ListUsersBodyOffsetPaginationRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -337,40 +337,40 @@ module Seed
       # @example
       #   client.users.list_with_mixed_type_cursor_pagination
       #
-      # @return [Seed::Users::Types::ListUsersPaginationResponse]
+      # @return [::Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_body_offset_pagination(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        Seed::Internal::OffsetItemIterator.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        ::Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["page"],
           item_field: :data,
           has_next_field: nil,
           step: false
         ) do |next_page|
           query_params["page"] = next_page
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/users",
-            body: Seed::Users::Types::ListUsersBodyOffsetPaginationRequest.new(params).to_h,
+            body: ::Seed::Users::Types::ListUsersBodyOffsetPaginationRequest.new(params).to_h,
             request_options: request_options
           )
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
+            parsed_response = ::Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -379,7 +379,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer, nil] :page
       # @option params [Integer, nil] :limit
-      # @option params [Seed::Users::Types::Order, nil] :order
+      # @option params [::Seed::Users::Types::Order, nil] :order
       #
       # @example
       #   client.users.list_with_cursor_pagination(
@@ -387,22 +387,22 @@ module Seed
       #     order: "asc"
       #   )
       #
-      # @return [Seed::Users::Types::ListUsersPaginationResponse]
+      # @return [::Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_offset_step_pagination(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["order"] = params[:order] if params.key?(:order)
 
-        Seed::Internal::OffsetItemIterator.new(
+        ::Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["page"],
           item_field: :data,
           has_next_field: nil,
           step: true
         ) do |next_page|
           query_params["page"] = next_page
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
@@ -412,20 +412,20 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
+            parsed_response = ::Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -434,7 +434,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer, nil] :page
       # @option params [Integer, nil] :limit
-      # @option params [Seed::Users::Types::Order, nil] :order
+      # @option params [::Seed::Users::Types::Order, nil] :order
       #
       # @example
       #   client.users.list_with_cursor_pagination(
@@ -442,22 +442,22 @@ module Seed
       #     order: "asc"
       #   )
       #
-      # @return [Seed::Users::Types::ListUsersPaginationResponse]
+      # @return [::Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_offset_pagination_has_next_page(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["order"] = params[:order] if params.key?(:order)
 
-        Seed::Internal::OffsetItemIterator.new(
+        ::Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["page"],
           item_field: :data,
           has_next_field: :has_next_page,
           step: true
         ) do |next_page|
           query_params["page"] = next_page
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
@@ -467,20 +467,20 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
+            parsed_response = ::Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -492,19 +492,19 @@ module Seed
       # @example
       #   client.users.list_with_cursor_pagination
       #
-      # @return [Seed::Users::Types::ListUsersExtendedResponse]
+      # @return [::Seed::Users::Types::ListUsersExtendedResponse]
       def list_with_extended_results(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["cursor"] = params[:cursor] if params.key?(:cursor)
 
-        Seed::Internal::CursorItemIterator.new(
+        ::Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_,
           item_field: :users,
           initial_cursor: query_params["cursor"]
         ) do |next_cursor|
           query_params["cursor"] = next_cursor
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
@@ -514,20 +514,20 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Users::Types::ListUsersExtendedResponse.load(response.body)
+            parsed_response = ::Seed::Users::Types::ListUsersExtendedResponse.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -539,19 +539,19 @@ module Seed
       # @example
       #   client.users.list_with_cursor_pagination
       #
-      # @return [Seed::Users::Types::ListUsersExtendedOptionalListResponse]
+      # @return [::Seed::Users::Types::ListUsersExtendedOptionalListResponse]
       def list_with_extended_results_and_optional_data(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["cursor"] = params[:cursor] if params.key?(:cursor)
 
-        Seed::Internal::CursorItemIterator.new(
+        ::Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_,
           item_field: :users,
           initial_cursor: query_params["cursor"]
         ) do |next_cursor|
           query_params["cursor"] = next_cursor
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
@@ -561,20 +561,20 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Users::Types::ListUsersExtendedOptionalListResponse.load(response.body)
+            parsed_response = ::Seed::Users::Types::ListUsersExtendedOptionalListResponse.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -586,19 +586,19 @@ module Seed
       # @example
       #   client.users.list_with_cursor_pagination(starting_after: "starting_after")
       #
-      # @return [Seed::Types::UsernameCursor]
+      # @return [::Seed::Types::UsernameCursor]
       def list_usernames(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
 
-        Seed::Internal::CursorItemIterator.new(
+        ::Seed::Internal::CursorItemIterator.new(
           cursor_field: :after,
           item_field: :data,
           initial_cursor: query_params["starting_after"]
         ) do |next_cursor|
           query_params["starting_after"] = next_cursor
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
@@ -608,20 +608,20 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Types::UsernameCursor.load(response.body)
+            parsed_response = ::Seed::Types::UsernameCursor.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -633,19 +633,19 @@ module Seed
       # @example
       #   client.users.list_with_cursor_pagination(starting_after: "starting_after")
       #
-      # @return [Seed::Types::UsernameCursor, nil]
+      # @return [::Seed::Types::UsernameCursor, nil]
       def list_usernames_with_optional_response(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
 
-        Seed::Internal::CursorItemIterator.new(
+        ::Seed::Internal::CursorItemIterator.new(
           cursor_field: :after,
           item_field: :data,
           initial_cursor: query_params["starting_after"]
         ) do |next_cursor|
           query_params["starting_after"] = next_cursor
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
@@ -655,19 +655,19 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
             [nil, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -679,20 +679,20 @@ module Seed
       # @example
       #   client.users.list_with_cursor_pagination
       #
-      # @return [Seed::Users::Types::UsernameContainer]
+      # @return [::Seed::Users::Types::UsernameContainer]
       def list_with_global_config(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["offset"] = params[:offset] if params.key?(:offset)
 
-        Seed::Internal::OffsetItemIterator.new(
+        ::Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["offset"],
           item_field: :results,
           has_next_field: nil,
           step: false
         ) do |next_page|
           query_params["offset"] = next_page
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
@@ -702,20 +702,20 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Users::Types::UsernameContainer.load(response.body)
+            parsed_response = ::Seed::Users::Types::UsernameContainer.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -727,20 +727,20 @@ module Seed
       # @example
       #   client.users.list_with_optional_data(page: 1)
       #
-      # @return [Seed::Users::Types::ListUsersOptionalDataPaginationResponse]
+      # @return [::Seed::Users::Types::ListUsersOptionalDataPaginationResponse]
       def list_with_optional_data(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
 
-        Seed::Internal::OffsetItemIterator.new(
+        ::Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["page"],
           item_field: :data,
           has_next_field: nil,
           step: false
         ) do |next_page|
           query_params["page"] = next_page
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users/optional-data",
@@ -750,20 +750,20 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Users::Types::ListUsersOptionalDataPaginationResponse.load(response.body)
+            parsed_response = ::Seed::Users::Types::ListUsersOptionalDataPaginationResponse.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -781,21 +781,21 @@ module Seed
       #     starting_after: "starting_after"
       #   )
       #
-      # @return [Seed::Users::Types::ListUsersAliasedDataPaginationResponse]
+      # @return [::Seed::Users::Types::ListUsersAliasedDataPaginationResponse]
       def list_with_aliased_data(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["per_page"] = params[:per_page] if params.key?(:per_page)
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
 
-        Seed::Internal::CursorItemIterator.new(
+        ::Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :data,
           initial_cursor: query_params["starting_after"]
         ) do |next_cursor|
           query_params["starting_after"] = next_cursor
-          request = Seed::Internal::JSON::Request.new(
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users/aliased-data",
@@ -805,14 +805,14 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = Seed::Users::Types::ListUsersAliasedDataPaginationResponse.load(response.body)
+            parsed_response = ::Seed::Users::Types::ListUsersAliasedDataPaginationResponse.load(response.body)
             [parsed_response, response]
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end

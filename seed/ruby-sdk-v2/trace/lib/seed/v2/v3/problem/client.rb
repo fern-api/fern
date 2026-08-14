@@ -5,7 +5,7 @@ module Seed
     module V3
       module Problem
         class Client
-          # @param client [Seed::Internal::Http::RawClient]
+          # @param client [::Seed::Internal::Http::RawClient]
           #
           # @return [void]
           def initialize(client:)
@@ -14,7 +14,7 @@ module Seed
 
           # Returns lightweight versions of all problems
           #
-          # @param request_options [Hash]
+          # @param request_options [::Hash]
           # @param _params [Hash]
           # @option request_options [String] :base_url
           # @option request_options [Hash{String => Object}] :additional_headers
@@ -25,9 +25,9 @@ module Seed
           # @example
           #   client.v2.problem.get_lightweight_problems
           #
-          # @return [Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]]
+          # @return [Array[::Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]]
           def get_lightweight_problems(request_options: {}, **_params)
-            request = Seed::Internal::JSON::Request.new(
+            request = ::Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
               path: "/problems-v2/lightweight-problem-info",
@@ -36,18 +36,18 @@ module Seed
             begin
               response = @client.send(request)
             rescue Net::HTTPRequestTimeout
-              raise Seed::Errors::TimeoutError
+              raise ::Seed::Errors::TimeoutError
             end
             code = response.code.to_i
             return if code.between?(200, 299)
 
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
 
           # Returns latest versions of all problems
           #
-          # @param request_options [Hash]
+          # @param request_options [::Hash]
           # @param _params [Hash]
           # @option request_options [String] :base_url
           # @option request_options [Hash{String => Object}] :additional_headers
@@ -58,9 +58,9 @@ module Seed
           # @example
           #   client.v2.problem.get_problems
           #
-          # @return [Array[Seed::V2::V3::Problem::Types::ProblemInfoV2]]
+          # @return [Array[::Seed::V2::V3::Problem::Types::ProblemInfoV2]]
           def get_problems(request_options: {}, **_params)
-            request = Seed::Internal::JSON::Request.new(
+            request = ::Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
               path: "/problems-v2/problem-info",
@@ -69,18 +69,18 @@ module Seed
             begin
               response = @client.send(request)
             rescue Net::HTTPRequestTimeout
-              raise Seed::Errors::TimeoutError
+              raise ::Seed::Errors::TimeoutError
             end
             code = response.code.to_i
             return if code.between?(200, 299)
 
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
 
           # Returns latest version of a problem
           #
-          # @param request_options [Hash]
+          # @param request_options [::Hash]
           # @param params [Hash]
           # @option request_options [String] :base_url
           # @option request_options [Hash{String => Object}] :additional_headers
@@ -92,10 +92,10 @@ module Seed
           # @example
           #   client.v2.problem.get_latest_problem(problem_id: "problemId")
           #
-          # @return [Seed::V2::V3::Problem::Types::ProblemInfoV2]
+          # @return [::Seed::V2::V3::Problem::Types::ProblemInfoV2]
           def get_latest_problem(request_options: {}, **params)
-            params = Seed::Internal::Types::Utils.normalize_keys(params)
-            request = Seed::Internal::JSON::Request.new(
+            params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+            request = ::Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
               path: "/problems-v2/problem-info/#{URI.encode_uri_component(params[:problem_id].to_s)}",
@@ -104,20 +104,20 @@ module Seed
             begin
               response = @client.send(request)
             rescue Net::HTTPRequestTimeout
-              raise Seed::Errors::TimeoutError
+              raise ::Seed::Errors::TimeoutError
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::V2::V3::Problem::Types::ProblemInfoV2.load(response.body)
+              ::Seed::V2::V3::Problem::Types::ProblemInfoV2.load(response.body)
             else
-              error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+              error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
             end
           end
 
           # Returns requested version of a problem
           #
-          # @param request_options [Hash]
+          # @param request_options [::Hash]
           # @param params [Hash]
           # @option request_options [String] :base_url
           # @option request_options [Hash{String => Object}] :additional_headers
@@ -133,10 +133,10 @@ module Seed
           #     problem_version: 1
           #   )
           #
-          # @return [Seed::V2::V3::Problem::Types::ProblemInfoV2]
+          # @return [::Seed::V2::V3::Problem::Types::ProblemInfoV2]
           def get_problem_version(request_options: {}, **params)
-            params = Seed::Internal::Types::Utils.normalize_keys(params)
-            request = Seed::Internal::JSON::Request.new(
+            params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+            request = ::Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
               path: "/problems-v2/problem-info/#{URI.encode_uri_component(params[:problem_id].to_s)}/version/#{URI.encode_uri_component(params[:problem_version].to_s)}",
@@ -145,13 +145,13 @@ module Seed
             begin
               response = @client.send(request)
             rescue Net::HTTPRequestTimeout
-              raise Seed::Errors::TimeoutError
+              raise ::Seed::Errors::TimeoutError
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::V2::V3::Problem::Types::ProblemInfoV2.load(response.body)
+              ::Seed::V2::V3::Problem::Types::ProblemInfoV2.load(response.body)
             else
-              error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+              error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
             end
           end

@@ -4,7 +4,7 @@ module Seed
   module Submission
     module Types
       module ExecutionSessionStatus
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         CREATING_CONTAINER = "CREATING_CONTAINER"
         PROVISIONING_CONTAINER = "PROVISIONING_CONTAINER"

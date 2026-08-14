@@ -5,7 +5,7 @@ module Seed
     module Put
       module Types
         module ErrorCategory
-          extend Seed::Internal::Types::Enum
+          extend ::Seed::Internal::Types::Enum
 
           API_ERROR = "API_ERROR"
           AUTHENTICATION_ERROR = "AUTHENTICATION_ERROR"

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_users</a>() -> Internal::Types::Array[Seed::Types::User]</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_users</a>() -> Internal::Types::Array[::Seed::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ client.get_users
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_user</a>(user_id:) -> Seed::Types::User</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_user</a>(user_id:) -> ::Seed::Types::User</code></summary>
 <dl>
 <dd>
 

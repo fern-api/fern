@@ -7,7 +7,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_enum/0.0.1",
@@ -17,29 +17,29 @@ module Seed
       )
     end
 
-    # @return [Seed::Headers::Client]
+    # @return [::Seed::Headers::Client]
     def headers
-      @headers ||= Seed::Headers::Client.new(client: @raw_client)
+      @headers ||= ::Seed::Headers::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::InlinedRequest::Client]
+    # @return [::Seed::InlinedRequest::Client]
     def inlined_request
-      @inlined_request ||= Seed::InlinedRequest::Client.new(client: @raw_client)
+      @inlined_request ||= ::Seed::InlinedRequest::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::MultipartForm::Client]
+    # @return [::Seed::MultipartForm::Client]
     def multipart_form
-      @multipart_form ||= Seed::MultipartForm::Client.new(client: @raw_client)
+      @multipart_form ||= ::Seed::MultipartForm::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::PathParam::Client]
+    # @return [::Seed::PathParam::Client]
     def path_param
-      @path_param ||= Seed::PathParam::Client.new(client: @raw_client)
+      @path_param ||= ::Seed::PathParam::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::QueryParam::Client]
+    # @return [::Seed::QueryParam::Client]
     def query_param
-      @query_param ||= Seed::QueryParam::Client.new(client: @raw_client)
+      @query_param ||= ::Seed::QueryParam::Client.new(client: @raw_client)
     end
   end
 end

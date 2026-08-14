@@ -8,7 +8,7 @@ module Seed
         # base type does NOT incorrectly derive Default in Rust. Reproduces the bug
         # where namedTypeSupportsDefault only checked properties but not extends.
         class ObjectWithRequiredExtendedField < Internal::Types::Model
-          field :required_extended, -> { Seed::Types::Object_::Types::ExtendedObjectWithInheritedEnum }, optional: false, nullable: false, api_name: "requiredExtended"
+          field :required_extended, -> { ::Seed::Types::Object_::Types::ExtendedObjectWithInheritedEnum }, optional: false, nullable: false, api_name: "requiredExtended"
         end
       end
     end

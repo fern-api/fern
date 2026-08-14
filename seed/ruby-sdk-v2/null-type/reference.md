@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.conversations.<a href="/lib/seed/conversations/client.rb">outbound_call</a>(request) -> Seed::Conversations::Types::OutboundCallConversationsResponse</code></summary>
+<details><summary><code>client.conversations.<a href="/lib/seed/conversations/client.rb">outbound_call</a>(request) -> ::Seed::Conversations::Types::OutboundCallConversationsResponse</code></summary>
 <dl>
 <dd>
 
@@ -71,7 +71,7 @@ client.conversations.outbound_call(to_phone_number: "to_phone_number")
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">get</a>(id:) -> Seed::Types::User</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">get</a>(id:) -> ::Seed::Types::User</code></summary>
 <dl>
 <dd>
 

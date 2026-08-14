@@ -8,8 +8,8 @@ module Seed
     #
     # @return [void]
     def initialize(token:, base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
-        base_url: base_url || Seed::Environment::PRODUCTION,
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
+        base_url: base_url || ::Seed::Environment::PRODUCTION,
         headers: {
           "User-Agent" => "fern_single-url-environment-default/0.0.1",
           "X-Fern-Language" => "Ruby",
@@ -19,9 +19,9 @@ module Seed
       )
     end
 
-    # @return [Seed::Dummy::Client]
+    # @return [::Seed::Dummy::Client]
     def dummy
-      @dummy ||= Seed::Dummy::Client.new(client: @raw_client)
+      @dummy ||= ::Seed::Dummy::Client.new(client: @raw_client)
     end
   end
 end

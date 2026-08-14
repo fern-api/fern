@@ -7,7 +7,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_no-content-response/0.0.1",
@@ -17,9 +17,9 @@ module Seed
       )
     end
 
-    # @return [Seed::Contacts::Client]
+    # @return [::Seed::Contacts::Client]
     def contacts
-      @contacts ||= Seed::Contacts::Client.new(client: @raw_client)
+      @contacts ||= ::Seed::Contacts::Client.new(client: @raw_client)
     end
   end
 end

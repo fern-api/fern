@@ -4,7 +4,7 @@ module Seed
   module Types
     module Types
       class UnionWithOptionalTime < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         discriminant :type
 

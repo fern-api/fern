@@ -6,7 +6,7 @@ module Seed
       class BinaryTreeNodeAndTreeValue < Internal::Types::Model
         field :node_id, -> { String }, optional: false, nullable: false, api_name: "nodeId"
 
-        field :full_tree, -> { Seed::Commons::Types::BinaryTreeValue }, optional: false, nullable: false, api_name: "fullTree"
+        field :full_tree, -> { ::Seed::Commons::Types::BinaryTreeValue }, optional: false, nullable: false, api_name: "fullTree"
       end
     end
   end

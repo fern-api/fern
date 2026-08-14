@@ -5,7 +5,7 @@ module Seed
     module Types
       # Response for deserialization test
       class DeserializationTestResponse < Internal::Types::Model
-        field :echo, -> { Seed::NullableOptional::Types::DeserializationTestRequest }, optional: false, nullable: false
+        field :echo, -> { ::Seed::NullableOptional::Types::DeserializationTestRequest }, optional: false, nullable: false
 
         field :processed_at, -> { String }, optional: false, nullable: false, api_name: "processedAt"
 

@@ -6,13 +6,13 @@ module Seed
       module Problem
         module Types
           class TestCaseImplementationReference < Internal::Types::Model
-            extend Seed::Internal::Types::Union
+            extend ::Seed::Internal::Types::Union
 
             discriminant :type
 
             member -> { String }, key: "TEMPLATE_ID"
 
-            member -> { Seed::V2::V3::Problem::Types::TestCaseImplementation }, key: "IMPLEMENTATION"
+            member -> { ::Seed::V2::V3::Problem::Types::TestCaseImplementation }, key: "IMPLEMENTATION"
           end
         end
       end

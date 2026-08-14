@@ -6,7 +6,7 @@ module Seed
       class Page < Internal::Types::Model
         field :page, -> { Integer }, optional: false, nullable: false
 
-        field :next_, -> { Seed::Users::Types::NextPage }, optional: true, nullable: false, api_name: "next"
+        field :next_, -> { ::Seed::Users::Types::NextPage }, optional: true, nullable: false, api_name: "next"
 
         field :per_page, -> { Integer }, optional: false, nullable: false
 

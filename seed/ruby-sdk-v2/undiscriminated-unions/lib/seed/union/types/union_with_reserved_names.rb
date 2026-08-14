@@ -5,7 +5,7 @@ module Seed
     module Types
       # Tests that union members named 'Type' or 'Value' don't collide with internal properties
       class UnionWithReservedNames < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         member -> { String }
 

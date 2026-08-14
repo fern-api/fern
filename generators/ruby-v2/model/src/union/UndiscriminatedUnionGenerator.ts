@@ -37,7 +37,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<
         });
         classNode.addStatement(
             ruby.codeblock((writer) => {
-                writer.write(`extend ${this.context.getRootModuleName()}::Internal::Types::Union`);
+                writer.write(`extend ::${this.context.getRootModuleName()}::Internal::Types::Union`);
                 writer.newLine();
             })
         );

@@ -4,7 +4,7 @@ module Seed
   module Reporting
     module Types
       module LoadRequestStatus
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         ACTIVE = "active"
         INACTIVE = "inactive"

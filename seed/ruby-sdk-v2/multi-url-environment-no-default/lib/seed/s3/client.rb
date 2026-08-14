@@ -3,9 +3,9 @@
 module Seed
   module S3
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       # @param base_url [String, nil]
-      # @param environment [Hash[Symbol, String], nil]
+      # @param environment [Hash[::Symbol, String], nil]
       #
       # @return [void]
       def initialize(client:, base_url: nil, environment: nil)
@@ -14,8 +14,8 @@ module Seed
         @environment = environment
       end
 
-      # @param request_options [Hash]
-      # @param params [Seed::S3::Types::GetPresignedURLRequest]
+      # @param request_options [::Hash]
+      # @param params [::Seed::S3::Types::GetPresignedURLRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -27,23 +27,23 @@ module Seed
       #
       # @return [String]
       def get_presigned_url(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || @base_url || @environment&.dig(:s3),
           method: "POST",
           path: "/s3/presigned-url",
-          body: Seed::S3::Types::GetPresignedURLRequest.new(params).to_h,
+          body: ::Seed::S3::Types::GetPresignedURLRequest.new(params).to_h,
           request_options: request_options
         )
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end

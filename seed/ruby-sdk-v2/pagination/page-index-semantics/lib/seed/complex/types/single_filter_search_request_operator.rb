@@ -4,7 +4,7 @@ module Seed
   module Complex
     module Types
       module SingleFilterSearchRequestOperator
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         EQUALS = "="
         NOT_EQUALS = "!="

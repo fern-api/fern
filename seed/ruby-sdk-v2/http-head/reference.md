@@ -40,7 +40,7 @@ client.user.head
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">list</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">list</a>() -> Internal::Types::Array[::Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 

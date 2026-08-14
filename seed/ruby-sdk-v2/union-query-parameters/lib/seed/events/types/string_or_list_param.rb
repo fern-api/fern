@@ -5,7 +5,7 @@ module Seed
     module Types
       # Either a single string or a list of strings.
       class StringOrListParam < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         member -> { String }
 

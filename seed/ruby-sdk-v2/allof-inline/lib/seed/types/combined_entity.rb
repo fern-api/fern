@@ -9,7 +9,7 @@ module Seed
 
       field :summary, -> { String }, optional: true, nullable: false
 
-      field :status, -> { Seed::Types::CombinedEntityStatus }, optional: false, nullable: false
+      field :status, -> { ::Seed::Types::CombinedEntityStatus }, optional: false, nullable: false
     end
   end
 end

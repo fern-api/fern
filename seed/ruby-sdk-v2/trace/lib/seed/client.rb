@@ -15,52 +15,52 @@ module Seed
         Authorization: "Bearer #{token}"
       }
       headers["X-Random-Header"] = x_random_header.to_s unless x_random_header.nil?
-      @raw_client = Seed::Internal::Http::RawClient.new(
-        base_url: base_url || Seed::Environment::PROD,
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
+        base_url: base_url || ::Seed::Environment::PROD,
         headers: headers,
         overridable_headers: %w[X-Random-Header],
         max_retries: max_retries
       )
     end
 
-    # @return [Seed::V2::Client]
+    # @return [::Seed::V2::Client]
     def v2
-      @v2 ||= Seed::V2::Client.new(client: @raw_client)
+      @v2 ||= ::Seed::V2::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Admin::Client]
+    # @return [::Seed::Admin::Client]
     def admin
-      @admin ||= Seed::Admin::Client.new(client: @raw_client)
+      @admin ||= ::Seed::Admin::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Homepage::Client]
+    # @return [::Seed::Homepage::Client]
     def homepage
-      @homepage ||= Seed::Homepage::Client.new(client: @raw_client)
+      @homepage ||= ::Seed::Homepage::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Migration::Client]
+    # @return [::Seed::Migration::Client]
     def migration
-      @migration ||= Seed::Migration::Client.new(client: @raw_client)
+      @migration ||= ::Seed::Migration::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Playlist::Client]
+    # @return [::Seed::Playlist::Client]
     def playlist
-      @playlist ||= Seed::Playlist::Client.new(client: @raw_client)
+      @playlist ||= ::Seed::Playlist::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Problem::Client]
+    # @return [::Seed::Problem::Client]
     def problem
-      @problem ||= Seed::Problem::Client.new(client: @raw_client)
+      @problem ||= ::Seed::Problem::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Submission::Client]
+    # @return [::Seed::Submission::Client]
     def submission
-      @submission ||= Seed::Submission::Client.new(client: @raw_client)
+      @submission ||= ::Seed::Submission::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Sysprop::Client]
+    # @return [::Seed::Sysprop::Client]
     def sysprop
-      @sysprop ||= Seed::Sysprop::Client.new(client: @raw_client)
+      @sysprop ||= ::Seed::Sysprop::Client.new(client: @raw_client)
     end
   end
 end

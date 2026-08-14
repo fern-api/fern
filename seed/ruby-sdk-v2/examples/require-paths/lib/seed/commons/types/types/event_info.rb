@@ -5,11 +5,11 @@ module Seed
     module Types
       module Types
         class EventInfo < Internal::Types::Model
-          extend Seed::Internal::Types::Union
+          extend ::Seed::Internal::Types::Union
 
           discriminant :type
 
-          member -> { Seed::Commons::Types::Types::Metadata }, key: "METADATA"
+          member -> { ::Seed::Commons::Types::Types::Metadata }, key: "METADATA"
 
           member -> { String }, key: "TAG"
         end

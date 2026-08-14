@@ -1,6 +1,6 @@
 # Reference
 ## Contacts
-<details><summary><code>client.contacts.<a href="/lib/seed/contacts/client.rb">create</a>(request) -> Seed::Types::Contact</code></summary>
+<details><summary><code>client.contacts.<a href="/lib/seed/contacts/client.rb">create</a>(request) -> ::Seed::Types::Contact</code></summary>
 <dl>
 <dd>
 
@@ -70,7 +70,7 @@ client.contacts.create(name: "name")
 </dl>
 </details>
 
-<details><summary><code>client.contacts.<a href="/lib/seed/contacts/client.rb">get</a>(id:) -> Seed::Types::Contact</code></summary>
+<details><summary><code>client.contacts.<a href="/lib/seed/contacts/client.rb">get</a>(id:) -> ::Seed::Types::Contact</code></summary>
 <dl>
 <dd>
 

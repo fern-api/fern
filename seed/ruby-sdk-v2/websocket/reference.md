@@ -1,6 +1,6 @@
 # Reference
 ## Status
-<details><summary><code>client.status.<a href="/lib/seed/status/client.rb">get_status</a>() -> Seed::Status::Types::StatusResponse</code></summary>
+<details><summary><code>client.status.<a href="/lib/seed/status/client.rb">get_status</a>() -> ::Seed::Status::Types::StatusResponse</code></summary>
 <dl>
 <dd>
 

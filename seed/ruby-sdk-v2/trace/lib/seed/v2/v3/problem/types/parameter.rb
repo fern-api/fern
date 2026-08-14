@@ -10,7 +10,7 @@ module Seed
 
             field :name, -> { String }, optional: false, nullable: false
 
-            field :variable_type, -> { Seed::Commons::Types::VariableType }, optional: false, nullable: false, api_name: "variableType"
+            field :variable_type, -> { ::Seed::Commons::Types::VariableType }, optional: false, nullable: false, api_name: "variableType"
           end
         end
       end

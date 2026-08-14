@@ -5,15 +5,15 @@ module Seed
     module Problem
       module Types
         class FunctionSignature < Internal::Types::Model
-          extend Seed::Internal::Types::Union
+          extend ::Seed::Internal::Types::Union
 
           discriminant :type
 
-          member -> { Seed::V2::Problem::Types::VoidFunctionSignature }, key: "VOID"
+          member -> { ::Seed::V2::Problem::Types::VoidFunctionSignature }, key: "VOID"
 
-          member -> { Seed::V2::Problem::Types::NonVoidFunctionSignature }, key: "NON_VOID"
+          member -> { ::Seed::V2::Problem::Types::NonVoidFunctionSignature }, key: "NON_VOID"
 
-          member -> { Seed::V2::Problem::Types::VoidFunctionSignatureThatTakesActualResult }, key: "VOID_THAT_TAKES_ACTUAL_RESULT"
+          member -> { ::Seed::V2::Problem::Types::VoidFunctionSignatureThatTakesActualResult }, key: "VOID_THAT_TAKES_ACTUAL_RESULT"
         end
       end
     end

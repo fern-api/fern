@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">upload_json_document</a>(request) -> Seed::Types::UploadDocumentResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">upload_json_document</a>(request) -> ::Seed::Types::UploadDocumentResponse</code></summary>
 <dl>
 <dd>
 

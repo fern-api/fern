@@ -3,7 +3,7 @@
 module Seed
   module Types
     module CombinedEntityStatus
-      extend Seed::Internal::Types::Enum
+      extend ::Seed::Internal::Types::Enum
 
       ACTIVE = "active"
       ARCHIVED = "archived"

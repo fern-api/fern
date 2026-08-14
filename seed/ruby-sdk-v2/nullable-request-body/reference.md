@@ -53,7 +53,7 @@ client.test_group.test_method_name(
 <dl>
 <dd>
 
-**query_param_object:** `Seed::Types::PlainObject` 
+**query_param_object:** `::Seed::Types::PlainObject` 
     
 </dd>
 </dl>
@@ -69,7 +69,7 @@ client.test_group.test_method_name(
 <dl>
 <dd>
 
-**request:** `Seed::Types::PlainObject` 
+**request:** `::Seed::Types::PlainObject` 
     
 </dd>
 </dl>

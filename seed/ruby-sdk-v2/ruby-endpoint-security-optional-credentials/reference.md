@@ -1,6 +1,6 @@
 # Reference
 ## Token
-<details><summary><code>client.token.<a href="/lib/seed/token/client.rb">get_token</a>(request) -> Seed::Token::Types::TokenResponse</code></summary>
+<details><summary><code>client.token.<a href="/lib/seed/token/client.rb">get_token</a>(request) -> ::Seed::Token::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -78,7 +78,7 @@ client.token.get_token(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_o_auth</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_o_auth</a>() -> Internal::Types::Array[::Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -118,7 +118,7 @@ client.user.get_with_o_auth
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_api_key</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_api_key</a>() -> Internal::Types::Array[::Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -158,7 +158,7 @@ client.user.get_with_api_key
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_either</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_either</a>() -> Internal::Types::Array[::Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 

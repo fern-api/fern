@@ -5,7 +5,7 @@ module Seed
     module Types
       # Nested layer 1.
       class NestedUnionL1 < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         member -> { Integer }
 
@@ -13,7 +13,7 @@ module Seed
 
         member -> { Internal::Types::Array[String] }
 
-        member -> { Seed::Union::Types::NestedUnionL2 }
+        member -> { ::Seed::Union::Types::NestedUnionL2 }
       end
     end
   end

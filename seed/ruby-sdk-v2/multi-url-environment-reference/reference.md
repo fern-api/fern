@@ -41,7 +41,7 @@ client.items.list_items
 </details>
 
 ## Auth
-<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">gettoken</a>(request) -> Seed::Auth::Types::AuthGetTokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">gettoken</a>(request) -> ::Seed::Auth::Types::AuthGetTokenResponse</code></summary>
 <dl>
 <dd>
 

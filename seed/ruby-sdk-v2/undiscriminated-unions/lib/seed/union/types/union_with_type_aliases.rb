@@ -10,7 +10,7 @@ module Seed
       #   public static implicit operator UnionWithTypeAliases(string value) => ...
       # causing CS0557 compiler error.
       class UnionWithTypeAliases < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         member -> { String }
 

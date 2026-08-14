@@ -1,6 +1,6 @@
 # Reference
 ## Vendor
-<details><summary><code>client.vendor.<a href="/lib/seed/vendor/client.rb">update_vendor</a>(vendor_id:, request) -> Seed::Types::Vendor</code></summary>
+<details><summary><code>client.vendor.<a href="/lib/seed/vendor/client.rb">update_vendor</a>(vendor_id:, request) -> ::Seed::Types::Vendor</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ client.vendor.update_vendor(
 <dl>
 <dd>
 
-**request:** `Seed::Types::UpdateVendorRequest` 
+**request:** `::Seed::Types::UpdateVendorRequest` 
     
 </dd>
 </dl>
@@ -59,7 +59,7 @@ client.vendor.update_vendor(
 </dl>
 </details>
 
-<details><summary><code>client.vendor.<a href="/lib/seed/vendor/client.rb">create_vendor</a>(request) -> Seed::Types::Vendor</code></summary>
+<details><summary><code>client.vendor.<a href="/lib/seed/vendor/client.rb">create_vendor</a>(request) -> ::Seed::Types::Vendor</code></summary>
 <dl>
 <dd>
 
@@ -124,7 +124,7 @@ client.vendor.create_vendor(name: "name")
 </details>
 
 ## Catalog
-<details><summary><code>client.catalog.<a href="/lib/seed/catalog/client.rb">create_catalog_image</a>(request) -> Seed::Types::CatalogImage</code></summary>
+<details><summary><code>client.catalog.<a href="/lib/seed/catalog/client.rb">create_catalog_image</a>(request) -> ::Seed::Types::CatalogImage</code></summary>
 <dl>
 <dd>
 
@@ -164,7 +164,7 @@ client.catalog.create_catalog_image
 </dl>
 </details>
 
-<details><summary><code>client.catalog.<a href="/lib/seed/catalog/client.rb">get_catalog_image</a>(image_id:) -> Seed::Types::CatalogImage</code></summary>
+<details><summary><code>client.catalog.<a href="/lib/seed/catalog/client.rb">get_catalog_image</a>(image_id:) -> ::Seed::Types::CatalogImage</code></summary>
 <dl>
 <dd>
 
@@ -213,7 +213,7 @@ client.catalog.get_catalog_image(image_id: "image_id")
 </details>
 
 ## TeamMember
-<details><summary><code>client.team_member.<a href="/lib/seed/team_member/client.rb">update_team_member</a>(team_member_id:, request) -> Seed::Types::TeamMember</code></summary>
+<details><summary><code>client.team_member.<a href="/lib/seed/team_member/client.rb">update_team_member</a>(team_member_id:, request) -> ::Seed::Types::TeamMember</code></summary>
 <dl>
 <dd>
 

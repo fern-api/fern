@@ -5,7 +5,7 @@ module Seed
     module Events
       module Metadata
         class Client
-          # @param client [Seed::Internal::Http::RawClient]
+          # @param client [::Seed::Internal::Http::RawClient]
           #
           # @return [void]
           def initialize(client:)
@@ -14,7 +14,7 @@ module Seed
 
           # Get event metadata.
           #
-          # @param request_options [Hash]
+          # @param request_options [::Hash]
           # @param params [Hash]
           # @option request_options [String] :base_url
           # @option request_options [Hash{String => Object}] :additional_headers
@@ -26,13 +26,13 @@ module Seed
           # @example
           #   client.user.events.metadata.get_metadata(id: "id")
           #
-          # @return [Seed::User::Events::Metadata::Types::Metadata]
+          # @return [::Seed::User::Events::Metadata::Types::Metadata]
           def get_metadata(request_options: {}, **params)
-            params = Seed::Internal::Types::Utils.normalize_keys(params)
+            params = ::Seed::Internal::Types::Utils.normalize_keys(params)
             query_params = {}
             query_params["id"] = params[:id] if params.key?(:id)
 
-            request = Seed::Internal::JSON::Request.new(
+            request = ::Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
               path: "/users/events/metadata/",
@@ -42,13 +42,13 @@ module Seed
             begin
               response = @client.send(request)
             rescue Net::HTTPRequestTimeout
-              raise Seed::Errors::TimeoutError
+              raise ::Seed::Errors::TimeoutError
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::User::Events::Metadata::Types::Metadata.load(response.body)
+              ::Seed::User::Events::Metadata::Types::Metadata.load(response.body)
             else
-              error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+              error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
             end
           end

@@ -3,7 +3,7 @@
 module Seed
   module Types
     module EnumWithSpecialCharacters
-      extend Seed::Internal::Types::Enum
+      extend ::Seed::Internal::Types::Enum
 
       BLA = "\\$bla"
       YO = "\\$yo"

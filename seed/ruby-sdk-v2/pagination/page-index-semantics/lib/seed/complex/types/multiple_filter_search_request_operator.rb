@@ -4,7 +4,7 @@ module Seed
   module Complex
     module Types
       module MultipleFilterSearchRequestOperator
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         AND = "AND"
         OR = "OR"

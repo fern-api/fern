@@ -8,7 +8,7 @@ module Seed
 
         field :name, -> { String }, optional: false, nullable: false
 
-        field :users, -> { Internal::Types::Array[Seed::User::Types::User] }, optional: false, nullable: false
+        field :users, -> { Internal::Types::Array[::Seed::User::Types::User] }, optional: false, nullable: false
       end
     end
   end

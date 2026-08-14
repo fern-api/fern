@@ -5,13 +5,13 @@ module Seed
     module Union
       module Types
         class Animal < Internal::Types::Model
-          extend Seed::Internal::Types::Union
+          extend ::Seed::Internal::Types::Union
 
           discriminant :animal
 
-          member -> { Seed::Types::Union::Types::Dog }, key: "DOG"
+          member -> { ::Seed::Types::Union::Types::Dog }, key: "DOG"
 
-          member -> { Seed::Types::Union::Types::Cat }, key: "CAT"
+          member -> { ::Seed::Types::Union::Types::Cat }, key: "CAT"
         end
       end
     end

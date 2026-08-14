@@ -5,7 +5,7 @@ module Seed
     module Common
       module Types
         class Foo < Internal::Types::Model
-          field :foo, -> { Seed::FolderC::Common::Types::Foo }, optional: true, nullable: false
+          field :foo, -> { ::Seed::FolderC::Common::Types::Foo }, optional: true, nullable: false
         end
       end
     end

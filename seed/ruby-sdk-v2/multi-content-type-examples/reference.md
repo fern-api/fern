@@ -1,6 +1,6 @@
 # Reference
 ## Clients
-<details><summary><code>client.clients.<a href="/lib/seed/clients/client.rb">create</a>(request) -> Seed::Types::ClientResponse</code></summary>
+<details><summary><code>client.clients.<a href="/lib/seed/clients/client.rb">create</a>(request) -> ::Seed::Types::ClientResponse</code></summary>
 <dl>
 <dd>
 
@@ -31,7 +31,7 @@ client.clients.create(client: {
 <dl>
 <dd>
 
-**client:** `Seed::Types::Client` 
+**client:** `::Seed::Types::Client` 
     
 </dd>
 </dl>

@@ -4,7 +4,7 @@ module Seed
   module Service
     module Types
       module ResourceStatus
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         ACTIVE = "ACTIVE"
         INACTIVE = "INACTIVE"

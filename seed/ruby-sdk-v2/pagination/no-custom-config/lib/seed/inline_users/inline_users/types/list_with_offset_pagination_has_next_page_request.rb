@@ -9,7 +9,7 @@ module Seed
 
           field :limit, -> { Integer }, optional: true, nullable: false
 
-          field :order, -> { Seed::InlineUsers::InlineUsers::Types::Order }, optional: true, nullable: false
+          field :order, -> { ::Seed::InlineUsers::InlineUsers::Types::Order }, optional: true, nullable: false
         end
       end
     end

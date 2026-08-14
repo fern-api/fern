@@ -4,13 +4,13 @@ module Seed
   module Ast
     module Types
       class ContainerValue < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         discriminant :type
 
-        member -> { Internal::Types::Array[Seed::Ast::Types::FieldValue] }, key: "LIST"
+        member -> { Internal::Types::Array[::Seed::Ast::Types::FieldValue] }, key: "LIST"
 
-        member -> { Seed::Ast::Types::FieldValue }, key: "OPTIONAL"
+        member -> { ::Seed::Ast::Types::FieldValue }, key: "OPTIONAL"
       end
     end
   end

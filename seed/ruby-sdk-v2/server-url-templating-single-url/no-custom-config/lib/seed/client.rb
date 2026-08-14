@@ -2,7 +2,7 @@
 
 module Seed
   class Client
-    # @param request_options [Hash]
+    # @param request_options [::Hash]
     # @param _params [Hash]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
@@ -13,9 +13,9 @@ module Seed
     # @example
     #   client.get_users
     #
-    # @return [Array[Seed::Types::User]]
+    # @return [Array[::Seed::Types::User]]
     def get_users(request_options: {}, **_params)
-      request = Seed::Internal::JSON::Request.new(
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "GET",
         path: "users",
@@ -24,16 +24,16 @@ module Seed
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       return if code.between?(200, 299)
 
-      error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+      error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
       raise error_class.new(response.body, code: code)
     end
 
-    # @param request_options [Hash]
+    # @param request_options [::Hash]
     # @param params [Hash]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
@@ -45,10 +45,10 @@ module Seed
     # @example
     #   client.get_user(user_id: "userId")
     #
-    # @return [Seed::Types::User]
+    # @return [::Seed::Types::User]
     def get_user(request_options: {}, **params)
-      params = Seed::Internal::Types::Utils.normalize_keys(params)
-      request = Seed::Internal::JSON::Request.new(
+      params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "GET",
         path: "users/#{URI.encode_uri_component(params[:user_id].to_s)}",
@@ -57,13 +57,13 @@ module Seed
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::User.load(response.body)
+        ::Seed::Types::User.load(response.body)
       else
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end
@@ -79,13 +79,13 @@ module Seed
         region_value = region.nil? ? "us-east-1" : region
         server_url_environment_value = server_url_environment.nil? ? "prod" : server_url_environment
         environment_url_templates = {
-          Seed::Environment::REGIONAL_API_SERVER => "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1"
+          ::Seed::Environment::REGIONAL_API_SERVER => "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1"
         }
         base_url = base_url.nil? ? "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1" : environment_url_templates.fetch(base_url, base_url)
       end
 
-      @raw_client = Seed::Internal::Http::RawClient.new(
-        base_url: base_url || Seed::Environment::REGIONAL_API_SERVER,
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
+        base_url: base_url || ::Seed::Environment::REGIONAL_API_SERVER,
         headers: {
           "User-Agent" => "fern_server-url-templating-single-url/0.0.1",
           "X-Fern-Language" => "Ruby"

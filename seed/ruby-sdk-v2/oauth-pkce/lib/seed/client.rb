@@ -7,7 +7,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_oauth-pkce/0.0.1",
@@ -17,9 +17,9 @@ module Seed
       )
     end
 
-    # @return [Seed::Oauth::Client]
+    # @return [::Seed::Oauth::Client]
     def oauth
-      @oauth ||= Seed::Oauth::Client.new(client: @raw_client)
+      @oauth ||= ::Seed::Oauth::Client.new(client: @raw_client)
     end
   end
 end

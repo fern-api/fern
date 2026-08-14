@@ -5,7 +5,7 @@ module Seed
     module Service
       module Types
         class Response < Internal::Types::Model
-          field :foo, -> { Seed::FolderB::Common::Types::Foo }, optional: true, nullable: false
+          field :foo, -> { ::Seed::FolderB::Common::Types::Foo }, optional: true, nullable: false
         end
       end
     end

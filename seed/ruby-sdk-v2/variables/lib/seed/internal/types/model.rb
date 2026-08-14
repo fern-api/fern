@@ -16,7 +16,7 @@ module Seed
           #
           # @return [Hash<Symbol, Field>]
           def fields
-            @fields ||= if self < Seed::Internal::Types::Model
+            @fields ||= if self < ::Seed::Internal::Types::Model
                           superclass.fields.dup
                         else
                           {}

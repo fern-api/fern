@@ -17,7 +17,7 @@ module Seed
 
         field :nullable_date, -> { String }, optional: false, nullable: true, api_name: "nullableDate"
 
-        field :nullable_object, -> { Seed::NullableOptional::Types::Address }, optional: false, nullable: true, api_name: "nullableObject"
+        field :nullable_object, -> { ::Seed::NullableOptional::Types::Address }, optional: false, nullable: true, api_name: "nullableObject"
 
         field :nullable_list, -> { Internal::Types::Array[String] }, optional: false, nullable: true, api_name: "nullableList"
 
@@ -31,7 +31,7 @@ module Seed
 
         field :optional_date, -> { String }, optional: true, nullable: false, api_name: "optionalDate"
 
-        field :optional_object, -> { Seed::NullableOptional::Types::Address }, optional: true, nullable: false, api_name: "optionalObject"
+        field :optional_object, -> { ::Seed::NullableOptional::Types::Address }, optional: true, nullable: false, api_name: "optionalObject"
 
         field :optional_list, -> { Internal::Types::Array[String] }, optional: true, nullable: false, api_name: "optionalList"
 
@@ -39,7 +39,7 @@ module Seed
 
         field :optional_nullable_string, -> { String }, optional: true, nullable: false, api_name: "optionalNullableString"
 
-        field :optional_nullable_object, -> { Seed::NullableOptional::Types::Address }, optional: true, nullable: false, api_name: "optionalNullableObject"
+        field :optional_nullable_object, -> { ::Seed::NullableOptional::Types::Address }, optional: true, nullable: false, api_name: "optionalNullableObject"
       end
     end
   end

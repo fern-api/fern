@@ -56,7 +56,8 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return ruby.classReference({
             modules: this.getModuleNamesForTypeId(typeId),
-            name: this.caseConverter.pascalSafe(typeDeclaration.name.name)
+            name: this.caseConverter.pascalSafe(typeDeclaration.name.name),
+            fullyQualified: true
         });
     }
 
@@ -238,7 +239,8 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getEnvironmentsClassReference(): ruby.ClassReference {
         return ruby.classReference({
             name: "Environment",
-            modules: [this.getRootModuleName()]
+            modules: [this.getRootModuleName()],
+            fullyQualified: true
         });
     }
 
@@ -260,7 +262,8 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         // Return the class reference, performing the same casing as the SingleUrlEnvironmentGenerator
         return ruby.classReference({
             name: this.caseConverter.screamingSnakeSafe(defaultEnvironment.name),
-            modules: [this.getRootModuleName(), "Environment"]
+            modules: [this.getRootModuleName(), "Environment"],
+            fullyQualified: true
         });
     }
 
@@ -271,14 +274,16 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getReferenceToInternalJSONRequest(): ruby.ClassReference {
         return ruby.classReference({
             name: "Request",
-            modules: [this.getRootModuleName(), "Internal", "JSON"]
+            modules: [this.getRootModuleName(), "Internal", "JSON"],
+            fullyQualified: true
         });
     }
 
     public getReferenceToInternalUrlEncodedRequest(): ruby.ClassReference {
         return ruby.classReference({
             name: "Request",
-            modules: [this.getRootModuleName(), "Internal", "UrlEncoded"]
+            modules: [this.getRootModuleName(), "Internal", "UrlEncoded"],
+            fullyQualified: true
         });
     }
 
@@ -294,7 +299,8 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getReferenceToInternalMultipartRequest(): ruby.ClassReference {
         return ruby.classReference({
             name: "Request",
-            modules: [this.getRootModuleName(), "Internal", "Multipart"]
+            modules: [this.getRootModuleName(), "Internal", "Multipart"],
+            fullyQualified: true
         });
     }
 
@@ -306,7 +312,8 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
                 this.getRootModuleName(),
                 ...typeDeclaration.name.fernFilepath.allParts.map((path) => this.caseConverter.pascalSafe(path)),
                 "Types"
-            ]
+            ],
+            fullyQualified: true
         });
     }
 
@@ -327,7 +334,8 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getRequestWrapperReference(serviceId: FernIr.ServiceId, requestName: NameInput): ruby.ClassReference {
         return ruby.classReference({
             name: this.caseConverter.pascalSafe(requestName),
-            modules: this.getModuleNamesForServiceId(serviceId)
+            modules: this.getModuleNamesForServiceId(serviceId),
+            fullyQualified: true
         });
     }
 

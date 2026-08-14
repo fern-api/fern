@@ -5,7 +5,7 @@ module Seed
     module InlineUsers
       module Types
         module Order
-          extend Seed::Internal::Types::Enum
+          extend ::Seed::Internal::Types::Enum
 
           ASC = "asc"
           DESC = "desc"

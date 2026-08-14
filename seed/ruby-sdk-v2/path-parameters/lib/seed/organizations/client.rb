@@ -3,14 +3,14 @@
 module Seed
   module Organizations
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -26,10 +26,10 @@ module Seed
       #     organization_id: "organization_id"
       #   )
       #
-      # @return [Seed::Organizations::Types::Organization]
+      # @return [::Seed::Organizations::Types::Organization]
       def get_organization(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/organizations/#{URI.encode_uri_component(params[:organization_id].to_s)}/",
@@ -38,18 +38,18 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Organizations::Types::Organization.load(response.body)
+          ::Seed::Organizations::Types::Organization.load(response.body)
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -67,10 +67,10 @@ module Seed
       #     user_id: "user_id"
       #   )
       #
-      # @return [Seed::User::Types::User]
+      # @return [::Seed::User::Types::User]
       def get_organization_user(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/organizations/#{URI.encode_uri_component(params[:organization_id].to_s)}/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
@@ -79,18 +79,18 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::User::Types::User.load(response.body)
+          ::Seed::User::Types::User.load(response.body)
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -108,13 +108,13 @@ module Seed
       #     limit: 1
       #   )
       #
-      # @return [Array[Seed::Organizations::Types::Organization]]
+      # @return [Array[::Seed::Organizations::Types::Organization]]
       def search_organizations(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)
 
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/organizations/#{URI.encode_uri_component(params[:organization_id].to_s)}/search",
@@ -124,12 +124,12 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end

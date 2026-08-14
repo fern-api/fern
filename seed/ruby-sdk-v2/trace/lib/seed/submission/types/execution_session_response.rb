@@ -8,9 +8,9 @@ module Seed
 
         field :execution_session_url, -> { String }, optional: true, nullable: false, api_name: "executionSessionUrl"
 
-        field :language, -> { Seed::Commons::Types::Language }, optional: false, nullable: false
+        field :language, -> { ::Seed::Commons::Types::Language }, optional: false, nullable: false
 
-        field :status, -> { Seed::Submission::Types::ExecutionSessionStatus }, optional: false, nullable: false
+        field :status, -> { ::Seed::Submission::Types::ExecutionSessionStatus }, optional: false, nullable: false
       end
     end
   end

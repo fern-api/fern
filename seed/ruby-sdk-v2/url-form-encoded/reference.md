@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">submit_form_data</a>(request) -> Seed::Types::PostSubmitResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">submit_form_data</a>(request) -> ::Seed::Types::PostSubmitResponse</code></summary>
 <dl>
 <dd>
 
@@ -58,7 +58,7 @@ client.submit_form_data(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_token</a>(request) -> Seed::Types::TokenResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_token</a>(request) -> ::Seed::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -89,7 +89,7 @@ client.get_token(
 <dl>
 <dd>
 
-**request:** `Seed::Types::TokenRequest` 
+**request:** `::Seed::Types::TokenRequest` 
     
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">get_users</a>() -> Internal::Types::Array[Seed::Nullable::Types::User]</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">get_users</a>() -> Internal::Types::Array[::Seed::Nullable::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -83,7 +83,7 @@ client.nullable.get_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">create_user</a>(request) -> Seed::Nullable::Types::User</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">create_user</a>(request) -> ::Seed::Nullable::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -141,7 +141,7 @@ client.nullable.create_user(
 <dl>
 <dd>
 
-**metadata:** `Seed::Nullable::Types::Metadata` 
+**metadata:** `::Seed::Nullable::Types::Metadata` 
     
 </dd>
 </dl>

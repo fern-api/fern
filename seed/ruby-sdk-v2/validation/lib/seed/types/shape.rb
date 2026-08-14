@@ -3,7 +3,7 @@
 module Seed
   module Types
     module Shape
-      extend Seed::Internal::Types::Enum
+      extend ::Seed::Internal::Types::Enum
 
       SQUARE = "SQUARE"
       CIRCLE = "CIRCLE"

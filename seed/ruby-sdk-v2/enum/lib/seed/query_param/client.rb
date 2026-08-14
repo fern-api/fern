@@ -3,14 +3,14 @@
 module Seed
   module QueryParam
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -18,9 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Types::Operand] :operand
-      # @option params [Seed::Types::Operand, nil] :maybe_operand
+      # @option params [::Seed::Types::Operand, nil] :maybe_operand
       # @option params [Seed::Types::ColorOrOperand] :operand_or_color
-      # @option params [Seed::Types::ColorOrOperand, nil] :maybe_operand_or_color
+      # @option params [::Seed::Types::ColorOrOperand, nil] :maybe_operand_or_color
       #
       # @example
       #   client.query_param.send_(
@@ -30,14 +30,14 @@ module Seed
       #
       # @return [untyped]
       def send_(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["operand"] = params[:operand] if params.key?(:operand)
         query_params["maybeOperand"] = params[:maybe_operand] if params.key?(:maybe_operand)
         query_params["operandOrColor"] = params[:operand_or_color] if params.key?(:operand_or_color)
         query_params["maybeOperandOrColor"] = params[:maybe_operand_or_color] if params.key?(:maybe_operand_or_color)
 
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "query",
@@ -47,16 +47,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -64,23 +64,23 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Types::Operand] :operand
-      # @option params [Seed::Types::Operand, nil] :maybe_operand
+      # @option params [::Seed::Types::Operand, nil] :maybe_operand
       # @option params [Seed::Types::ColorOrOperand] :operand_or_color
-      # @option params [Seed::Types::ColorOrOperand, nil] :maybe_operand_or_color
+      # @option params [::Seed::Types::ColorOrOperand, nil] :maybe_operand_or_color
       #
       # @example
       #   client.query_param.send_list
       #
       # @return [untyped]
       def send_list(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["operand"] = params[:operand] if params.key?(:operand)
         query_params["maybeOperand"] = params[:maybe_operand] if params.key?(:maybe_operand)
         query_params["operandOrColor"] = params[:operand_or_color] if params.key?(:operand_or_color)
         query_params["maybeOperandOrColor"] = params[:maybe_operand_or_color] if params.key?(:maybe_operand_or_color)
 
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "query-list",
@@ -90,12 +90,12 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end

@@ -48,7 +48,7 @@ client.endpoints.container.get_and_return_list_of_primitives(request: %w[string 
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_list_of_objects</a>(request) -> Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_list_of_objects</a>(request) -> Internal::Types::Array[::Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ client.endpoints.container.get_and_return_list_of_objects(request: [{
 <dl>
 <dd>
 
-**request:** `Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]` 
+**request:** `Internal::Types::Array[::Seed::Types::Object_::Types::ObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -148,7 +148,7 @@ client.endpoints.container.get_and_return_set_of_primitives(request: Set.new(["s
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_set_of_objects</a>(request) -> Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_set_of_objects</a>(request) -> Internal::Types::Array[::Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -178,7 +178,7 @@ client.endpoints.container.get_and_return_set_of_objects(request: Set.new([{
 <dl>
 <dd>
 
-**request:** `Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]` 
+**request:** `Internal::Types::Array[::Seed::Types::Object_::Types::ObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -248,7 +248,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim(request: {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_map_of_prim_to_object</a>(request) -> Internal::Types::Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_map_of_prim_to_object</a>(request) -> Internal::Types::Hash[String, ::Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -280,7 +280,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(request: {
 <dl>
 <dd>
 
-**request:** `Internal::Types::Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]` 
+**request:** `Internal::Types::Hash[String, ::Seed::Types::Object_::Types::ObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -300,7 +300,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(request: {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_map_of_prim_to_undiscriminated_union</a>(request) -> Internal::Types::Hash[String, Seed::Types::Union::Types::MixedType]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_map_of_prim_to_undiscriminated_union</a>(request) -> Internal::Types::Hash[String, ::Seed::Types::Union::Types::MixedType]</code></summary>
 <dl>
 <dd>
 
@@ -330,7 +330,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(r
 <dl>
 <dd>
 
-**request:** `Internal::Types::Hash[String, Seed::Types::Union::Types::MixedType]` 
+**request:** `Internal::Types::Hash[String, ::Seed::Types::Union::Types::MixedType]` 
     
 </dd>
 </dl>
@@ -350,7 +350,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(r
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_optional</a>(request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_optional</a>(request) -> ::Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -380,7 +380,7 @@ client.endpoints.container.get_and_return_optional(request: {
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithRequiredField` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -445,7 +445,7 @@ client.endpoints.content_type.post_json_patch_content_type(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithOptionalField` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -509,7 +509,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithOptionalField` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -530,7 +530,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
 </details>
 
 ## Endpoints Enum
-<details><summary><code>client.endpoints.enum.<a href="/lib/seed/endpoints/enum/client.rb">get_and_return_enum</a>(request) -> Seed::Types::Enum::Types::WeatherReport</code></summary>
+<details><summary><code>client.endpoints.enum.<a href="/lib/seed/endpoints/enum/client.rb">get_and_return_enum</a>(request) -> ::Seed::Types::Enum::Types::WeatherReport</code></summary>
 <dl>
 <dd>
 
@@ -558,7 +558,7 @@ client.endpoints.enum.get_and_return_enum(request: "SUNNY")
 <dl>
 <dd>
 
-**request:** `Seed::Types::Enum::Types::WeatherReport` 
+**request:** `::Seed::Types::Enum::Types::WeatherReport` 
     
 </dd>
 </dl>
@@ -627,7 +627,7 @@ client.endpoints.http_methods.test_get(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_post</a>(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_post</a>(request) -> ::Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -655,7 +655,7 @@ client.endpoints.http_methods.test_post(string: "string")
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithRequiredField` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -675,7 +675,7 @@ client.endpoints.http_methods.test_post(string: "string")
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_put</a>(id:, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_put</a>(id:, request) -> ::Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -714,7 +714,7 @@ client.endpoints.http_methods.test_put(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithRequiredField` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -734,7 +734,7 @@ client.endpoints.http_methods.test_put(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_patch</a>(id:, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_patch</a>(id:, request) -> ::Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -787,7 +787,7 @@ client.endpoints.http_methods.test_patch(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithOptionalField` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -856,7 +856,7 @@ client.endpoints.http_methods.test_delete(id: "id")
 </details>
 
 ## Endpoints Object_
-<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_optional_field</a>(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_optional_field</a>(request) -> ::Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -900,7 +900,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithOptionalField` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -920,7 +920,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_required_field</a>(request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_required_field</a>(request) -> ::Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -948,7 +948,7 @@ client.endpoints.object.get_and_return_with_required_field(string: "string")
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithRequiredField` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -968,7 +968,7 @@ client.endpoints.object.get_and_return_with_required_field(string: "string")
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_map_of_map</a>(request) -> Seed::Types::Object_::Types::ObjectWithMapOfMap</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_map_of_map</a>(request) -> ::Seed::Types::Object_::Types::ObjectWithMapOfMap</code></summary>
 <dl>
 <dd>
 
@@ -1000,7 +1000,7 @@ client.endpoints.object.get_and_return_with_map_of_map(map: {
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithMapOfMap` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithMapOfMap` 
     
 </dd>
 </dl>
@@ -1020,7 +1020,7 @@ client.endpoints.object.get_and_return_with_map_of_map(map: {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_nested_with_optional_field</a>(request) -> Seed::Types::Object_::Types::NestedObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_nested_with_optional_field</a>(request) -> ::Seed::Types::Object_::Types::NestedObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -1067,7 +1067,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::NestedObjectWithOptionalField` 
+**request:** `::Seed::Types::Object_::Types::NestedObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -1087,7 +1087,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_nested_with_required_field</a>(string:, request) -> Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_nested_with_required_field</a>(string:, request) -> ::Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1142,7 +1142,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::NestedObjectWithRequiredField` 
+**request:** `::Seed::Types::Object_::Types::NestedObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -1162,7 +1162,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_nested_with_required_field_as_list</a>(request) -> Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_nested_with_required_field_as_list</a>(request) -> ::Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1228,7 +1228,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
 <dl>
 <dd>
 
-**request:** `Internal::Types::Array[Seed::Types::Object_::Types::NestedObjectWithRequiredField]` 
+**request:** `Internal::Types::Array[::Seed::Types::Object_::Types::NestedObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -1248,7 +1248,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_unknown_field</a>(request) -> Seed::Types::Object_::Types::ObjectWithUnknownField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_unknown_field</a>(request) -> ::Seed::Types::Object_::Types::ObjectWithUnknownField</code></summary>
 <dl>
 <dd>
 
@@ -1278,7 +1278,7 @@ client.endpoints.object.get_and_return_with_unknown_field(unknown: {
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithUnknownField` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithUnknownField` 
     
 </dd>
 </dl>
@@ -1298,7 +1298,7 @@ client.endpoints.object.get_and_return_with_unknown_field(unknown: {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_documented_unknown_type</a>(request) -> Seed::Types::Object_::Types::ObjectWithDocumentedUnknownType</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_documented_unknown_type</a>(request) -> ::Seed::Types::Object_::Types::ObjectWithDocumentedUnknownType</code></summary>
 <dl>
 <dd>
 
@@ -1328,7 +1328,7 @@ client.endpoints.object.get_and_return_with_documented_unknown_type(documented_u
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithDocumentedUnknownType` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithDocumentedUnknownType` 
     
 </dd>
 </dl>
@@ -1400,7 +1400,7 @@ client.endpoints.object.get_and_return_map_of_documented_unknown_type(request: {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_mixed_required_and_optional_fields</a>(request) -> Seed::Types::Object_::Types::ObjectWithMixedRequiredAndOptionalFields</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_mixed_required_and_optional_fields</a>(request) -> ::Seed::Types::Object_::Types::ObjectWithMixedRequiredAndOptionalFields</code></summary>
 <dl>
 <dd>
 
@@ -1448,7 +1448,7 @@ client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithMixedRequiredAndOptionalFields` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithMixedRequiredAndOptionalFields` 
     
 </dd>
 </dl>
@@ -1468,7 +1468,7 @@ client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_required_nested_object</a>(request) -> Seed::Types::Object_::Types::ObjectWithRequiredNestedObject</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_required_nested_object</a>(request) -> ::Seed::Types::Object_::Types::ObjectWithRequiredNestedObject</code></summary>
 <dl>
 <dd>
 
@@ -1519,7 +1519,7 @@ client.endpoints.object.get_and_return_with_required_nested_object(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithRequiredNestedObject` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithRequiredNestedObject` 
     
 </dd>
 </dl>
@@ -1539,7 +1539,7 @@ client.endpoints.object.get_and_return_with_required_nested_object(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_datetime_like_string</a>(request) -> Seed::Types::Object_::Types::ObjectWithDatetimeLikeString</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_datetime_like_string</a>(request) -> ::Seed::Types::Object_::Types::ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>
 
@@ -1586,7 +1586,7 @@ client.endpoints.object.get_and_return_with_datetime_like_string(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithDatetimeLikeString` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithDatetimeLikeString` 
     
 </dd>
 </dl>
@@ -1607,7 +1607,7 @@ client.endpoints.object.get_and_return_with_datetime_like_string(
 </details>
 
 ## Endpoints Pagination
-<details><summary><code>client.endpoints.pagination.<a href="/lib/seed/endpoints/pagination/client.rb">list_items</a>() -> Seed::Endpoints::Pagination::Types::PaginatedResponse</code></summary>
+<details><summary><code>client.endpoints.pagination.<a href="/lib/seed/endpoints/pagination/client.rb">list_items</a>() -> ::Seed::Endpoints::Pagination::Types::PaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -2243,7 +2243,7 @@ client.endpoints.params.modify_with_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">upload_with_path</a>(param:, request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">upload_with_path</a>(param:, request) -> ::Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -2305,7 +2305,7 @@ client.endpoints.params.upload_with_path(param: "upload-path")
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">create_with_body_and_query</a>(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">create_with_body_and_query</a>(request) -> ::Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -2358,7 +2358,7 @@ client.endpoints.params.create_with_body_and_query(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Object_::Types::ObjectWithRequiredField` 
+**request:** `::Seed::Types::Object_::Types::ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -2936,7 +2936,7 @@ client.endpoints.primitive.get_and_return_base64(request: "SGVsbG8gd29ybGQh")
 </details>
 
 ## Endpoints Put
-<details><summary><code>client.endpoints.put.<a href="/lib/seed/endpoints/put/client.rb">add</a>(id:) -> Seed::Endpoints::Put::Types::PutResponse</code></summary>
+<details><summary><code>client.endpoints.put.<a href="/lib/seed/endpoints/put/client.rb">add</a>(id:) -> ::Seed::Endpoints::Put::Types::PutResponse</code></summary>
 <dl>
 <dd>
 
@@ -2985,7 +2985,7 @@ client.endpoints.put.add(id: "id")
 </details>
 
 ## Endpoints Union
-<details><summary><code>client.endpoints.union.<a href="/lib/seed/endpoints/union/client.rb">get_and_return_union</a>(request) -> Seed::Types::Union::Types::Animal</code></summary>
+<details><summary><code>client.endpoints.union.<a href="/lib/seed/endpoints/union/client.rb">get_and_return_union</a>(request) -> ::Seed::Types::Union::Types::Animal</code></summary>
 <dl>
 <dd>
 
@@ -3013,7 +3013,7 @@ client.endpoints.union.get_and_return_union
 <dl>
 <dd>
 
-**request:** `Seed::Types::Union::Types::Animal` 
+**request:** `::Seed::Types::Union::Types::Animal` 
     
 </dd>
 </dl>
@@ -3195,7 +3195,7 @@ client.endpoints.urls.with_underscores
 </details>
 
 ## InlinedRequests
-<details><summary><code>client.inlined_requests.<a href="/lib/seed/inlined_requests/client.rb">post_with_object_bodyand_response</a>(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.inlined_requests.<a href="/lib/seed/inlined_requests/client.rb">post_with_object_bodyand_response</a>(request) -> ::Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -3273,7 +3273,7 @@ client.inlined_requests.post_with_object_bodyand_response(
 <dl>
 <dd>
 
-**nested_object:** `Seed::Types::Object_::Types::ObjectWithOptionalField` 
+**nested_object:** `::Seed::Types::Object_::Types::ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -3432,7 +3432,7 @@ client.no_auth.post_with_no_auth(request: {
 </details>
 
 ## NoReqBody
-<details><summary><code>client.no_req_body.<a href="/lib/seed/no_req_body/client.rb">get_with_no_request_body</a>() -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.no_req_body.<a href="/lib/seed/no_req_body/client.rb">get_with_no_request_body</a>() -> ::Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 

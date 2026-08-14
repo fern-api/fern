@@ -1,6 +1,6 @@
 # Reference
 ## Products
-<details><summary><code>client.products.<a href="/lib/seed/products/client.rb">search</a>(region_id:, request) -> Seed::Products::Types::SearchProductsResponse</code></summary>
+<details><summary><code>client.products.<a href="/lib/seed/products/client.rb">search</a>(region_id:, request) -> ::Seed::Products::Types::SearchProductsResponse</code></summary>
 <dl>
 <dd>
 
@@ -44,7 +44,7 @@ client.products.search(region_id: "regionId")
 <dl>
 <dd>
 
-**config:** `Seed::Products::Types::SearchProductsRequestConfig` 
+**config:** `::Seed::Products::Types::SearchProductsRequestConfig` 
     
 </dd>
 </dl>
@@ -64,7 +64,7 @@ client.products.search(region_id: "regionId")
 </dl>
 </details>
 
-<details><summary><code>client.products.<a href="/lib/seed/products/client.rb">get</a>(region_id:, product_id:) -> Seed::Types::Product</code></summary>
+<details><summary><code>client.products.<a href="/lib/seed/products/client.rb">get</a>(region_id:, product_id:) -> ::Seed::Types::Product</code></summary>
 <dl>
 <dd>
 

@@ -5,7 +5,7 @@ module Seed
     module Problem
       module Types
         class TestCaseImplementationDescriptionBoard < Internal::Types::Model
-          extend Seed::Internal::Types::Union
+          extend ::Seed::Internal::Types::Union
 
           discriminant :type
 

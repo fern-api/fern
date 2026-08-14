@@ -3,7 +3,7 @@
 module Seed
   module Types
     module SpecialEnum
-      extend Seed::Internal::Types::Enum
+      extend ::Seed::Internal::Types::Enum
 
       A = ""
       B = "Hello \\\"World\\\""

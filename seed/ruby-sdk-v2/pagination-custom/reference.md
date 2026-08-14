@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_custom_pager</a>() -> Seed::Types::UsersListResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_custom_pager</a>() -> ::Seed::Types::UsersListResponse</code></summary>
 <dl>
 <dd>
 

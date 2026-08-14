@@ -3,7 +3,7 @@
 module Seed
   module Types
     module ComplexType
-      extend Seed::Internal::Types::Enum
+      extend ::Seed::Internal::Types::Enum
 
       OBJECT = "object"
       UNION = "union"

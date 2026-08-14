@@ -3,15 +3,15 @@
 module Seed
   module Types
     class ResourceList < Internal::Types::Model
-      extend Seed::Internal::Types::Union
+      extend ::Seed::Internal::Types::Union
 
-      member -> { Seed::Types::Account }
+      member -> { ::Seed::Types::Account }
 
-      member -> { Seed::Types::Patient }
+      member -> { ::Seed::Types::Patient }
 
-      member -> { Seed::Types::Practitioner }
+      member -> { ::Seed::Types::Practitioner }
 
-      member -> { Seed::Types::Script }
+      member -> { ::Seed::Types::Script }
     end
   end
 end

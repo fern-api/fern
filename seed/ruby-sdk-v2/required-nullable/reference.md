@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_foo</a>() -> Seed::Types::Foo</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_foo</a>() -> ::Seed::Types::Foo</code></summary>
 <dl>
 <dd>
 
@@ -74,7 +74,7 @@ client.get_foo(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">update_foo</a>(id:, request) -> Seed::Types::Foo</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">update_foo</a>(id:, request) -> ::Seed::Types::Foo</code></summary>
 <dl>
 <dd>
 

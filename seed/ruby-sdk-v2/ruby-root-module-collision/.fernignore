@@ -1,0 +1,2 @@
+# Preserve the runtime regression test across seed regeneration.
+test/test_root_module_collision.rb

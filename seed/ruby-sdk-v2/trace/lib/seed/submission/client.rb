@@ -3,7 +3,7 @@
 module Seed
   module Submission
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
@@ -12,7 +12,7 @@ module Seed
 
       # Returns sessionId and execution server URL for session. Spins up server.
       #
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -24,10 +24,10 @@ module Seed
       # @example
       #   client.submission.create_execution_session(language: "JAVA")
       #
-      # @return [Seed::Submission::Types::ExecutionSessionResponse]
+      # @return [::Seed::Submission::Types::ExecutionSessionResponse]
       def create_execution_session(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/sessions/create-session/#{URI.encode_uri_component(params[:language].to_s)}",
@@ -36,20 +36,20 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Submission::Types::ExecutionSessionResponse.load(response.body)
+          ::Seed::Submission::Types::ExecutionSessionResponse.load(response.body)
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end
 
       # Returns execution server URL for session. Returns empty if session isn't registered.
       #
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -61,10 +61,10 @@ module Seed
       # @example
       #   client.submission.get_execution_session(session_id: "sessionId")
       #
-      # @return [Seed::Submission::Types::ExecutionSessionResponse, nil]
+      # @return [::Seed::Submission::Types::ExecutionSessionResponse, nil]
       def get_execution_session(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/sessions/#{URI.encode_uri_component(params[:session_id].to_s)}",
@@ -73,18 +73,18 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
       # Stops execution session.
       #
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -98,8 +98,8 @@ module Seed
       #
       # @return [untyped]
       def stop_execution_session(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
           path: "/sessions/stop/#{URI.encode_uri_component(params[:session_id].to_s)}",
@@ -108,16 +108,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -128,9 +128,9 @@ module Seed
       # @example
       #   client.submission.get_execution_sessions_state
       #
-      # @return [Seed::Submission::Types::GetExecutionSessionStateResponse]
+      # @return [::Seed::Submission::Types::GetExecutionSessionStateResponse]
       def get_execution_sessions_state(request_options: {}, **_params)
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/sessions/execution-sessions-state",
@@ -139,13 +139,13 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Submission::Types::GetExecutionSessionStateResponse.load(response.body)
+          ::Seed::Submission::Types::GetExecutionSessionStateResponse.load(response.body)
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end

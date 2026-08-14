@@ -16,7 +16,7 @@ module Seed
 
         field :updated_at, -> { String }, optional: false, nullable: true, api_name: "updatedAt"
 
-        field :address, -> { Seed::NullableOptional::Types::Address }, optional: true, nullable: false
+        field :address, -> { ::Seed::NullableOptional::Types::Address }, optional: true, nullable: false
       end
     end
   end

@@ -7,7 +7,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_file-upload-openapi/0.0.1",
@@ -17,9 +17,9 @@ module Seed
       )
     end
 
-    # @return [Seed::FileUploadExample::Client]
+    # @return [::Seed::FileUploadExample::Client]
     def file_upload_example
-      @file_upload_example ||= Seed::FileUploadExample::Client.new(client: @raw_client)
+      @file_upload_example ||= ::Seed::FileUploadExample::Client.new(client: @raw_client)
     end
   end
 end

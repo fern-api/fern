@@ -3,14 +3,14 @@
 module Seed
   module Query
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -40,9 +40,9 @@ module Seed
       #     alias_optional_stream: false
       #   )
       #
-      # @return [Seed::Types::SendResponse]
+      # @return [::Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["prompt"] = params[:prompt] if params.key?(:prompt)
         query_params["optional_prompt"] = params[:optional_prompt] if params.key?(:optional_prompt)
@@ -54,7 +54,7 @@ module Seed
         query_params["alias_stream"] = params[:alias_stream] if params.key?(:alias_stream)
         query_params["alias_optional_stream"] = params[:alias_optional_stream] if params.key?(:alias_optional_stream)
 
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "query",
@@ -64,13 +64,13 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::SendResponse.load(response.body)
+          ::Seed::Types::SendResponse.load(response.body)
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end

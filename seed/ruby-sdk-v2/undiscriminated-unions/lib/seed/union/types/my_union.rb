@@ -5,7 +5,7 @@ module Seed
     module Types
       # Several different types are accepted.
       class MyUnion < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         member -> { String }
 

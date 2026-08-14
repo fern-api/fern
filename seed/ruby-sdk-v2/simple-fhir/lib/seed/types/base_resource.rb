@@ -5,9 +5,9 @@ module Seed
     class BaseResource < Internal::Types::Model
       field :id, -> { String }, optional: false, nullable: false
 
-      field :related_resources, -> { Internal::Types::Array[Seed::Types::ResourceList] }, optional: false, nullable: false
+      field :related_resources, -> { Internal::Types::Array[::Seed::Types::ResourceList] }, optional: false, nullable: false
 
-      field :memo, -> { Seed::Types::Memo }, optional: false, nullable: false
+      field :memo, -> { ::Seed::Types::Memo }, optional: false, nullable: false
     end
   end
 end

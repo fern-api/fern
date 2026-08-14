@@ -6,7 +6,7 @@ module Seed
       module Problem
         module Types
           class GetGeneratedTestCaseTemplateFileRequest < Internal::Types::Model
-            field :template, -> { Seed::V2::V3::Problem::Types::TestCaseTemplate }, optional: false, nullable: false
+            field :template, -> { ::Seed::V2::V3::Problem::Types::TestCaseTemplate }, optional: false, nullable: false
           end
         end
       end

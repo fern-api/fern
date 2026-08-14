@@ -12,7 +12,7 @@ module Seed
 
             field :problem_version, -> { Integer }, optional: false, nullable: false, api_name: "problemVersion"
 
-            field :variable_types, -> { Internal::Types::Array[Seed::Commons::Types::VariableType] }, optional: false, nullable: false, api_name: "variableTypes"
+            field :variable_types, -> { Internal::Types::Array[::Seed::Commons::Types::VariableType] }, optional: false, nullable: false, api_name: "variableTypes"
           end
         end
       end

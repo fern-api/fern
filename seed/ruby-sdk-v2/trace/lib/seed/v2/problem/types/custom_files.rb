@@ -5,13 +5,13 @@ module Seed
     module Problem
       module Types
         class CustomFiles < Internal::Types::Model
-          extend Seed::Internal::Types::Union
+          extend ::Seed::Internal::Types::Union
 
           discriminant :type
 
-          member -> { Seed::V2::Problem::Types::BasicCustomFiles }, key: "BASIC"
+          member -> { ::Seed::V2::Problem::Types::BasicCustomFiles }, key: "BASIC"
 
-          member -> { Internal::Types::Hash[Seed::Commons::Types::Language, Seed::V2::Problem::Types::Files] }, key: "CUSTOM"
+          member -> { Internal::Types::Hash[::Seed::Commons::Types::Language, ::Seed::V2::Problem::Types::Files] }, key: "CUSTOM"
         end
       end
     end

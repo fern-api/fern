@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream</a>(request) -> Seed::Completions::Types::StreamedCompletion</code></summary>
+<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream</a>(request) -> ::Seed::Completions::Types::StreamedCompletion</code></summary>
 <dl>
 <dd>
 
@@ -48,7 +48,7 @@ client.completions.stream(query: "foo")
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream_non_resumable</a>(request) -> Seed::Completions::Types::StreamedCompletion</code></summary>
+<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream_non_resumable</a>(request) -> ::Seed::Completions::Types::StreamedCompletion</code></summary>
 <dl>
 <dd>
 

@@ -7,7 +7,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_nullable-request-body/0.0.1",
@@ -17,9 +17,9 @@ module Seed
       )
     end
 
-    # @return [Seed::TestGroup::Client]
+    # @return [::Seed::TestGroup::Client]
     def test_group
-      @test_group ||= Seed::TestGroup::Client.new(client: @raw_client)
+      @test_group ||= ::Seed::TestGroup::Client.new(client: @raw_client)
     end
   end
 end

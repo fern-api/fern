@@ -4,7 +4,7 @@ module Seed
   module Admin
     module Types
       class Test < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         discriminant :type
 

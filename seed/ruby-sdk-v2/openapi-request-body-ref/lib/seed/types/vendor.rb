@@ -7,9 +7,9 @@ module Seed
 
       field :name, -> { String }, optional: false, nullable: false
 
-      field :status, -> { Seed::Types::VendorStatus }, optional: true, nullable: false
+      field :status, -> { ::Seed::Types::VendorStatus }, optional: true, nullable: false
 
-      field :update_request, -> { Seed::Types::UpdateVendorRequest }, optional: true, nullable: false
+      field :update_request, -> { ::Seed::Types::UpdateVendorRequest }, optional: true, nullable: false
     end
   end
 end

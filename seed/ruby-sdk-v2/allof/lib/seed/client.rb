@@ -2,7 +2,7 @@
 
 module Seed
   class Client
-    # @param request_options [Hash]
+    # @param request_options [::Hash]
     # @param params [Hash]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
@@ -14,13 +14,13 @@ module Seed
     # @example
     #   client.search_rule_types
     #
-    # @return [Seed::Types::RuleTypeSearchResponse]
+    # @return [::Seed::Types::RuleTypeSearchResponse]
     def search_rule_types(request_options: {}, **params)
-      params = Seed::Internal::Types::Utils.normalize_keys(params)
+      params = ::Seed::Internal::Types::Utils.normalize_keys(params)
       query_params = {}
       query_params["query"] = params[:query] if params.key?(:query)
 
-      request = Seed::Internal::JSON::Request.new(
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "GET",
         path: "rule-types",
@@ -30,19 +30,19 @@ module Seed
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::RuleTypeSearchResponse.load(response.body)
+        ::Seed::Types::RuleTypeSearchResponse.load(response.body)
       else
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end
 
-    # @param request_options [Hash]
-    # @param params [Seed::Types::RuleCreateRequest]
+    # @param request_options [::Hash]
+    # @param params [::Seed::Types::RuleCreateRequest]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
     # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -55,31 +55,31 @@ module Seed
     #     execution_context: "prod"
     #   )
     #
-    # @return [Seed::Types::RuleResponse]
+    # @return [::Seed::Types::RuleResponse]
     def create_rule(request_options: {}, **params)
-      params = Seed::Internal::Types::Utils.normalize_keys(params)
-      request = Seed::Internal::JSON::Request.new(
+      params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "POST",
         path: "rules",
-        body: Seed::Types::RuleCreateRequest.new(params).to_h,
+        body: ::Seed::Types::RuleCreateRequest.new(params).to_h,
         request_options: request_options
       )
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::RuleResponse.load(response.body)
+        ::Seed::Types::RuleResponse.load(response.body)
       else
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end
 
-    # @param request_options [Hash]
+    # @param request_options [::Hash]
     # @param _params [Hash]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
@@ -90,9 +90,9 @@ module Seed
     # @example
     #   client.list_users
     #
-    # @return [Seed::Types::UserSearchResponse]
+    # @return [::Seed::Types::UserSearchResponse]
     def list_users(request_options: {}, **_params)
-      request = Seed::Internal::JSON::Request.new(
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "GET",
         path: "users",
@@ -101,18 +101,18 @@ module Seed
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::UserSearchResponse.load(response.body)
+        ::Seed::Types::UserSearchResponse.load(response.body)
       else
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end
 
-    # @param request_options [Hash]
+    # @param request_options [::Hash]
     # @param _params [Hash]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
@@ -123,9 +123,9 @@ module Seed
     # @example
     #   client.get_entity
     #
-    # @return [Seed::Types::CombinedEntity]
+    # @return [::Seed::Types::CombinedEntity]
     def get_entity(request_options: {}, **_params)
-      request = Seed::Internal::JSON::Request.new(
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "GET",
         path: "entities",
@@ -134,18 +134,18 @@ module Seed
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::CombinedEntity.load(response.body)
+        ::Seed::Types::CombinedEntity.load(response.body)
       else
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end
 
-    # @param request_options [Hash]
+    # @param request_options [::Hash]
     # @param _params [Hash]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
@@ -156,9 +156,9 @@ module Seed
     # @example
     #   client.get_organization
     #
-    # @return [Seed::Types::Organization]
+    # @return [::Seed::Types::Organization]
     def get_organization(request_options: {}, **_params)
-      request = Seed::Internal::JSON::Request.new(
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "GET",
         path: "organizations",
@@ -167,13 +167,13 @@ module Seed
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::Organization.load(response.body)
+        ::Seed::Types::Organization.load(response.body)
       else
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end
@@ -181,8 +181,8 @@ module Seed
     # Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's
     # properties must be resolved through the nested $ref.
     #
-    # @param request_options [Hash]
-    # @param params [Seed::Types::PlantPost]
+    # @param request_options [::Hash]
+    # @param params [::Seed::Types::PlantPost]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
     # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -197,26 +197,26 @@ module Seed
     #     sun_exposure: "full"
     #   )
     #
-    # @return [Seed::Types::PlantStrict]
+    # @return [::Seed::Types::PlantStrict]
     def create_plant(request_options: {}, **params)
-      params = Seed::Internal::Types::Utils.normalize_keys(params)
-      request = Seed::Internal::JSON::Request.new(
+      params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "POST",
         path: "plants",
-        body: Seed::Types::PlantPost.new(params).to_h,
+        body: ::Seed::Types::PlantPost.new(params).to_h,
         request_options: request_options
       )
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::PlantStrict.load(response.body)
+        ::Seed::Types::PlantStrict.load(response.body)
       else
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end
@@ -224,8 +224,8 @@ module Seed
     # Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties
     # merged.
     #
-    # @param request_options [Hash]
-    # @param params [Seed::Types::TreeRecord]
+    # @param request_options [::Hash]
+    # @param params [::Seed::Types::TreeRecord]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
     # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -235,26 +235,26 @@ module Seed
     # @example
     #   client.create_tree(id: "id")
     #
-    # @return [Seed::Types::TreeRecord]
+    # @return [::Seed::Types::TreeRecord]
     def create_tree(request_options: {}, **params)
-      params = Seed::Internal::Types::Utils.normalize_keys(params)
-      request = Seed::Internal::JSON::Request.new(
+      params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "POST",
         path: "trees",
-        body: Seed::Types::TreeRecord.new(params).to_h,
+        body: ::Seed::Types::TreeRecord.new(params).to_h,
         request_options: request_options
       )
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::TreeRecord.load(response.body)
+        ::Seed::Types::TreeRecord.load(response.body)
       else
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end
@@ -264,8 +264,8 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
-        base_url: base_url || Seed::Environment::DEFAULT,
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
+        base_url: base_url || ::Seed::Environment::DEFAULT,
         headers: {
           "User-Agent" => "fern_allof/0.0.1",
           "X-Fern-Language" => "Ruby"

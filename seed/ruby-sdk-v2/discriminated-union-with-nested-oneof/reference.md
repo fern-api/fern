@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">create_ast</a>(request) -> Seed::Types::AstNode</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create_ast</a>(request) -> ::Seed::Types::AstNode</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ client.create_ast
 <dl>
 <dd>
 
-**request:** `Seed::Types::AstNode` 
+**request:** `::Seed::Types::AstNode` 
     
 </dd>
 </dl>
