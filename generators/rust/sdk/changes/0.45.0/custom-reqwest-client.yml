@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated clients accept a custom `reqwest::Client`. `ClientConfig` gained a
+    `reqwest_client: Option<reqwest::Client>` field, set through the new
+    `ApiClientBuilder::reqwest_client(...)`, and `HttpClient` uses it as-is when present
+    instead of building its own. This is the transport escape hatch other Fern SDKs already
+    expose (`httpx_client` in Python, `OkHttpClient` in Java, `urlSession` in Swift), and it
+    lets callers configure root certificates, client certificates, proxies and connection
+    pooling themselves. Authentication, custom headers and retries are still applied by the
+    SDK on top of the supplied client; when the field is `None` the client is built exactly
+    as before from `timeout` and `user_agent`.
+  type: feat

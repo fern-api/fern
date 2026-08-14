@@ -1,0 +1,6 @@
+- summary: |
+    With `respect-optional-request-body` enabled, a call that leaves out an optional request body now
+    passes a null body to OkHttp instead of an empty one, so the request carries no body at all. The
+    methods OkHttp requires a body for (POST, PUT, PATCH) still send an empty body, which is what
+    endpoints with no request body at all already send.
+  type: fix

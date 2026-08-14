@@ -14,15 +14,15 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.RequiredRefundRequest{
-        ID: "refund-id",
+    request := &fern.RefundBody{
+        ID: "id",
         Body: &fern.RefundRequest{
             Amount: fern.Float64(
-                60,
+                1.1,
             ),
         },
     }
-    client.RequiredRefund(
+    client.Refund(
         context.TODO(),
         request,
     )

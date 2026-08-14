@@ -14,6 +14,7 @@ import { upperFirst } from "lodash-es";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
+import { mayOmitRequestBody } from "../utils/mayOmitRequestBody.js";
 
 type PagingEndpoint = FernIr.HttpEndpoint & { pagination: NonNullable<FernIr.HttpEndpoint["pagination"]> };
 
@@ -200,6 +201,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             headerParameterCodeBlock?.headerParameterBagReference,
                         queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
                         requestTypeClassReference: classReference,
+                        omitContentTypeWithoutBody: mayOmitRequestBody({ context: this.context, endpoint }),
                         optionsArgument: php.variable(this.context.getRequestOptionsName())
                     })
                 );

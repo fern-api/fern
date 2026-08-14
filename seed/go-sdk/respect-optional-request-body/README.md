@@ -40,11 +40,6 @@ func do() {
     client := client.NewClient()
     request := &fern.RefundBody{
         ID: "refund-id",
-        Body: &fern.RefundRequest{
-            Amount: fern.Float64(
-                60,
-            ),
-        },
     }
     client.Refund(
         context.TODO(),

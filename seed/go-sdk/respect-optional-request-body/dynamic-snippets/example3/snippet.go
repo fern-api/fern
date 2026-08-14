@@ -15,10 +15,10 @@ func do() {
         ),
     )
     request := &fern.RequiredRefundRequest{
-        ID: "id",
+        ID: "refund-id",
         Body: &fern.RefundRequest{
             Amount: fern.Float64(
-                1.1,
+                60,
             ),
         },
     }

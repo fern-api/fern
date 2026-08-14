@@ -20,7 +20,6 @@ client = SeedApi(
 
 client.refund(
     id="refund-id",
-    amount=60,
 )
 
 ```

@@ -1,0 +1,8 @@
+- summary: |
+    Stop pointing the linker at `musl-gcc` in the generated npm publish workflow.
+    musl-gcc cannot produce a static-pie executable, so the published
+    `*-linux-musl` binaries were dynamically linked against
+    `/lib/ld-musl-*.so.1` and segfaulted on any machine without a musl loader.
+    The C dependencies still build with `musl-gcc` (via a target-scoped `CC_*`),
+    while rustc links the self-contained musl objects into a truly static binary.
+  type: fix

@@ -6,6 +6,7 @@ type ExampleEndpointCall = FernIr.ExampleEndpointCall;
 type HttpEndpoint = FernIr.HttpEndpoint;
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { exampleOmitsRequestBody } from "../../utils/exampleUtils.js";
 import { GrpcEndpointGenerator } from "../grpc/GrpcEndpointGenerator.js";
 import { HttpEndpointGenerator } from "../http/HttpEndpointGenerator.js";
 import { isPagerPagination } from "../utils/isPagerPagination.js";
@@ -76,7 +77,10 @@ export class EndpointSnippetsGenerator extends WithGeneration {
                             example,
                             isUserSpecified: true
                         }))
-                ];
+                ].filter(
+                    ({ example }) =>
+                        example == null || !exampleOmitsRequestBody({ context: this.context, endpoint, example })
+                );
 
                 const snippets = await Promise.all(
                     allExamples.map(({ example, isUserSpecified }) =>

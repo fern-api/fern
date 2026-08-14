@@ -143,6 +143,12 @@ fixtures:
     - outputFolder: with-interfaces
       customConfig:
         generateClientInterfaces: true
+  php-optional-request-body:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: respect-optional-request-body
+      customConfig:
+        respectOptionalRequestBody: true
   path-parameters:
     - outputFolder: no-custom-config
       customConfig: null

@@ -161,19 +161,58 @@ describe("emitPublishWorkflow", () => {
         expect(yaml).toContain("ubuntu-24.04-arm");
     });
 
-    it("installs musl-tools and conditionally builds with rustls for musl targets", async () => {
+    it("installs musl-tools and leaves feature selection to Cargo.toml", async () => {
         const yaml = await emitAndRead(baseInfo);
 
         expect(yaml).toContain("musl-tools");
-        expect(yaml).toContain("--no-default-features --features rustls");
+        expect(yaml).not.toContain("--no-default-features");
+        expect(yaml).not.toContain("--features rustls");
         expect(yaml).not.toContain("gcc-aarch64-linux-gnu");
     });
 
-    it("sets musl-gcc as the linker and CC for musl targets", async () => {
+    it("gates publishing on the tag matching the crate version", async () => {
         const yaml = await emitAndRead(baseInfo);
 
-        expect(yaml).toContain("CARGO_TARGET_${TARGET_UPPER}_LINKER=musl-gcc");
-        expect(yaml).toContain("CC=musl-gcc");
+        // The version job exists and publish depends on it.
+        expect(yaml).toContain("version:");
+        expect(yaml).toContain("needs: [check, compile, test, version]");
+        expect(yaml).toContain('TAG_VERSION="${GITHUB_REF_NAME#v}"');
+        expect(yaml).toContain("cargo metadata --no-deps --format-version 1");
+        expect(yaml).toContain('if [[ "${TAG_VERSION}" != "${CRATE_VERSION}" ]]; then');
+    });
+
+    it("fails clearly when the crate version can't be resolved (empty CRATE_VERSION guard)", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        // The guard must run after CRATE_VERSION is computed and before the
+        // tag comparison, so an unresolved lookup produces an actionable
+        // error rather than a misleading empty-string mismatch.
+        expect(yaml).toContain('if [[ -z "${CRATE_VERSION}" ]]; then');
+        expect(yaml).toContain(
+            "Could not determine the crate version from cargo metadata (no package matched ${PWD}/Cargo.toml)."
+        );
+
+        const crateVersionIndex = yaml.indexOf("| .version')");
+        const guardIndex = yaml.indexOf('if [[ -z "${CRATE_VERSION}" ]]; then');
+        const comparisonIndex = yaml.indexOf('if [[ "${TAG_VERSION}" != "${CRATE_VERSION}" ]]; then');
+        expect(crateVersionIndex).toBeGreaterThan(-1);
+        expect(guardIndex).toBeGreaterThan(crateVersionIndex);
+        expect(comparisonIndex).toBeGreaterThan(guardIndex);
+    });
+
+    it("does not select rustls via build flags — feature selection lives in Cargo.toml (musl regression guard)", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).not.toContain("--features rustls");
+        expect(yaml).not.toContain("--no-default-features");
+    });
+
+    it("gives musl targets a C compiler but leaves linking to rustc, so the binary is static-pie", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("CC_${TARGET_UNDERSCORE}=musl-gcc");
+        expect(yaml).not.toContain("_LINKER=musl-gcc");
+        expect(yaml).not.toContain("export CC=musl-gcc");
     });
 
     it("includes repository.url in package.json when repoUrl is provided", async () => {

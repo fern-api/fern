@@ -9,7 +9,6 @@ import {
     applyDistWorkspacePatch,
     applyHomebrewPatch,
     applyRustlsPatch,
-    dropUnbuildableTargets,
     patchDistWorkspaceToml,
     removeWorkspaceMember,
     setDistKey
@@ -169,11 +168,11 @@ describe("applyRustlsPatch", () => {
     });
 
     // rustls is what rescues musl from the openssl-sys build failure —
-    // x86_64-musl went from dying in 44s to building clean. aarch64-musl is
-    // still dropped, but for an unrelated dbus/libgcc link error; see
-    // `dropUnbuildableTargets`.
-    it("rescues x86_64-musl rather than dropping it", () => {
-        expect(applyDistWorkspacePatch(TEMPLATE_DIST_TOML)).toContain("x86_64-unknown-linux-musl");
+    // x86_64-musl went from dying in 44s to building clean.
+    it("rescues the musl targets rather than dropping them", () => {
+        const patched = applyDistWorkspacePatch(TEMPLATE_DIST_TOML);
+        expect(patched).toContain("x86_64-unknown-linux-musl");
+        expect(patched).toContain("aarch64-unknown-linux-musl");
     });
 
     it("is idempotent", () => {
@@ -189,33 +188,23 @@ describe("applyRustlsPatch", () => {
     });
 });
 
-describe("dropUnbuildableTargets", () => {
-    // `libdbus-sys` (via the keyring crate) fails to statically link for
-    // aarch64-musl: undefined reference to `__aarch64_ldadd4_sync`.
-    it("drops aarch64-musl but keeps x86_64-musl, which builds fine", () => {
-        const patched = applyDistWorkspacePatch(TEMPLATE_DIST_TOML);
-        expect(patched).not.toContain("aarch64-unknown-linux-musl");
-        expect(patched).toContain("x86_64-unknown-linux-musl");
-    });
-
-    it("leaves the remaining targets and their order intact", () => {
+describe("targets", () => {
+    // The npm workflow publishes a linux-arm64 binary for this target, so a
+    // GitHub Release without it leaves ARM64 Linux users — Graviton, ARM
+    // containers — on the glibc build.
+    it("keeps every template target, including aarch64-musl", () => {
         const patched = applyDistWorkspacePatch(TEMPLATE_DIST_TOML);
         for (const target of [
             "aarch64-apple-darwin",
             "aarch64-unknown-linux-gnu",
+            "aarch64-unknown-linux-musl",
             "x86_64-apple-darwin",
             "x86_64-unknown-linux-gnu",
+            "x86_64-unknown-linux-musl",
             "x86_64-pc-windows-msvc"
         ]) {
             expect(patched).toContain(target);
         }
-    });
-
-    it("is idempotent and a no-op when the target is absent", () => {
-        const once = dropUnbuildableTargets(TEMPLATE_DIST_TOML);
-        expect(dropUnbuildableTargets(once)).toBe(once);
-        const noTargets = '[dist]\nci = "github"\n';
-        expect(dropUnbuildableTargets(noTargets)).toBe(noTargets);
     });
 });
 

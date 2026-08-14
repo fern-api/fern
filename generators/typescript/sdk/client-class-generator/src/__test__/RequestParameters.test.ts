@@ -26,9 +26,16 @@ const INTEGER_TYPE = FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefin
 // Mock context
 // ──────────────────────────────────────────────────────────────────────────────
 
+interface MockContextOpts {
+    useDefaultValues?: boolean;
+    useBigInt?: boolean;
+    respectOptionalRequestBody?: boolean;
+}
+
 // biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
-function createMockContext(opts?: { useDefaultValues?: boolean; useBigInt?: boolean }): any {
+function createMockContext(opts?: MockContextOpts): any {
     return {
+        respectOptionalRequestBody: opts?.respectOptionalRequestBody ?? false,
         includeSerdeLayer: true,
         retainOriginalCasing: false,
         inlineFileProperties: false,
@@ -155,6 +162,7 @@ describe("RequestBodyParameter", () => {
         const sdkRequest = createSdkRequest(
             FernIr.SdkRequestShape.justRequestBody(
                 FernIr.SdkRequestBodyType.typeReference({
+                    required: undefined,
                     requestBodyType,
                     contentType: undefined,
                     docs: undefined,
@@ -168,6 +176,7 @@ describe("RequestBodyParameter", () => {
             endpoint: createHttpEndpoint({ sdkRequest }),
             sdkRequest,
             requestBodyReference: {
+                required: undefined,
                 requestBodyType,
                 contentType: undefined,
                 docs: undefined,

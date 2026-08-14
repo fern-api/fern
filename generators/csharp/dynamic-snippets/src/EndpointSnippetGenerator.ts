@@ -801,7 +801,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
         this.context.errors.scope(Scope.RequestBody);
         const bodyArg =
-            request.body != null
+            request.body != null && !this.callOmitsRequestBody({ request, snippet })
                 ? this.getBodyRequestArg({ body: request.body, value: snippet.requestBody })
                 : undefined;
         this.context.errors.unscope();
@@ -822,6 +822,27 @@ export class EndpointSnippetGenerator extends WithGeneration {
             args.push(bodyArg);
         }
         return args;
+    }
+
+    /**
+     * Whether the call leaves the body out entirely, which the parameter's null default allows.
+     * Applies only to a body the caller may omit, and only once the generator opts in to that.
+     */
+    private callOmitsRequestBody({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): boolean {
+        if (!this.settings.respectOptionalRequestBody) {
+            return false;
+        }
+        if (request.bodyRequired !== false) {
+            return false;
+        }
+        const value = snippet.requestBody;
+        return value == null || (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
     }
 
     private getPathParameterArguments({

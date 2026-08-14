@@ -11,8 +11,6 @@ public class Example0 {
 
         client.refund(
                 "refund-id",
-                RefundBody.builder()
-                        .body(RefundRequest.builder().amount(60.0).build())
-                        .build());
+                RefundBody.builder().body(RefundRequest.builder().build()).build());
     }
 }

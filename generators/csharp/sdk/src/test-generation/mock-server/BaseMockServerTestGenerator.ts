@@ -10,6 +10,7 @@ type OAuthScheme = FernIr.OAuthScheme;
 
 import { fail } from "assert";
 import { MultiUrlEnvironmentGenerator } from "../../environment/MultiUrlEnvironmentGenerator.js";
+import { getClientCredentialsOrThrow } from "../../oauth/getClientCredentials.js";
 import { RootClientGenerator } from "../../root-client/RootClientGenerator.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
@@ -255,7 +256,8 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
     }
 
     protected generateMockAuthMethod(scheme: OAuthScheme, cls: ast.Class) {
-        const shouldScope = !!scheme.configuration.refreshEndpoint;
+        const configuration = getClientCredentialsOrThrow(scheme);
+        const shouldScope = !!configuration.refreshEndpoint;
         cls.addMethod({
             access: ast.Access.Private,
             name: this.names.methods.mockOauth,
@@ -265,7 +267,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                     writer.pushScope();
                 }
                 // token endpoint
-                const tokenEndpointReference = scheme.configuration.tokenEndpoint.endpointReference;
+                const tokenEndpointReference = configuration.tokenEndpoint.endpointReference;
                 const tokenEndpointHttpService =
                     this.context.getHttpService(tokenEndpointReference.serviceId) ??
                     fail(`Service with id ${tokenEndpointReference.serviceId} not found`);
@@ -289,18 +291,17 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                     }
                     deepSetProperty(
                         jsonExample,
-                        scheme.configuration.tokenEndpoint.requestProperties.clientId.propertyPath?.map(
-                            (val) => val.name
-                        ) ?? [],
-                        scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name,
+                        configuration.tokenEndpoint.requestProperties.clientId.propertyPath?.map((val) => val.name) ??
+                            [],
+                        configuration.tokenEndpoint.requestProperties.clientId.property.name,
                         "CLIENT_ID"
                     );
                     deepSetProperty(
                         jsonExample,
-                        scheme.configuration.tokenEndpoint.requestProperties.clientSecret.propertyPath?.map(
+                        configuration.tokenEndpoint.requestProperties.clientSecret.propertyPath?.map(
                             (val) => val.name
                         ) ?? [],
-                        scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name,
+                        configuration.tokenEndpoint.requestProperties.clientSecret.property.name,
                         "CLIENT_SECRET"
                     );
                 });
@@ -320,8 +321,8 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 if (shouldScope) {
                     writer.pushScope();
                 }
-                if (scheme.configuration.refreshEndpoint) {
-                    const refreshEndpointReference = scheme.configuration.refreshEndpoint.endpointReference;
+                if (configuration.refreshEndpoint) {
+                    const refreshEndpointReference = configuration.refreshEndpoint.endpointReference;
                     const refreshEndpointHttpService =
                         this.context.getHttpService(refreshEndpointReference.serviceId) ??
                         fail(`Service with id ${refreshEndpointReference.serviceId} not found`);

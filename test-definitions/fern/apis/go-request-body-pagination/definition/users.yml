@@ -14,6 +14,11 @@ types:
       next_cursor: string
       data: list<User>
 
+  ListUsersUuidCursorResponse:
+    properties:
+      next_cursor: optional<uuid>
+      data: list<User>
+
   WithCursor:
     properties:
       cursor: optional<string>
@@ -23,7 +28,9 @@ service:
   base-path: /users
   endpoints:
     listWithBodyCursorPagination:
-      docs: Pagination endpoint with a top-level cursor field in the request body.
+      docs: |
+        Pagination endpoint with an optional top-level cursor field in the request body. An empty
+        string cursor terminates the pager, just like a null cursor does.
       pagination:
         cursor: $request.cursor
         next_cursor: $response.next_cursor
@@ -52,6 +59,23 @@ service:
           properties:
             cursor: string
       response: ListUsersRequiredCursorResponse
+
+    listWithUuidBodyCursorPagination:
+      docs: |
+        Pagination endpoint with an optional uuid cursor field in the request body. Only string cursors
+        treat an empty value as the last page, so this endpoint terminates on a null cursor alone.
+      pagination:
+        cursor: $request.cursor
+        next_cursor: $response.next_cursor
+        results: $response.data
+      method: POST
+      path: /uuid-cursor
+      request:
+        name: ListUsersUuidBodyCursorPaginationRequest
+        body:
+          properties:
+            cursor: optional<uuid>
+      response: ListUsersUuidCursorResponse
 
     listWithBodyOffsetPagination:
       docs: Pagination endpoint with a top-level page field in the request body.

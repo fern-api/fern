@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `respectOptionalRequestBody`. With it enabled, an endpoint whose request body the API does
+    not require takes an optional body parameter — `refund(id: string, request?: RefundRequest)` —
+    keeping the body's own type rather than widening it to `RefundRequest | undefined`, and sending
+    no body when the caller omits it. Examples that supply no body render as `client.refund(id)`,
+    and the generated wire test for such an example no longer asserts a request body. Defaults to
+    `false`, so signatures and snippets are unchanged until you opt in.
+  type: feat

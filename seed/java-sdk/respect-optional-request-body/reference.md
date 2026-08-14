@@ -19,7 +19,6 @@ client.refund(
         .body(
             RefundRequest
                 .builder()
-                .amount(60.0)
                 .build()
         )
         .build()

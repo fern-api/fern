@@ -86,16 +86,17 @@ export abstract class AbstractEndpointGenerator {
     }
 
     private getRequestParameter({ request }: { request: EndpointRequest }): php.Parameter {
+        const defaultInitializer = request.shouldIncludeDefaultInitializer()
+            ? php.codeblock((writer) => {
+                  writer.write("new ");
+                  writer.writeNode(request.getRequestParameterType());
+                  writer.write("()");
+              })
+            : undefined;
         return php.parameter({
             type: request.getRequestParameterType(),
             name: request.getRequestParameterName(),
-            initializer: request.shouldIncludeDefaultInitializer()
-                ? php.codeblock((writer) => {
-                      writer.write("new ");
-                      writer.writeNode(request.getRequestParameterType());
-                      writer.write("()");
-                  })
-                : undefined
+            initializer: request.getRequestParameterInitializer() ?? defaultInitializer
         });
     }
 

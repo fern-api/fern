@@ -14,11 +14,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.RefundRequest{
-        Amount: fern.Float64(
-            1.1,
-        ),
-    }
+    request := &fern.RefundRequest{}
     client.BulkRefund(
         context.TODO(),
         request,
