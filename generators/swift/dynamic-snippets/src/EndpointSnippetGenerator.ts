@@ -1,4 +1,10 @@
-import { AbstractAstNode, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import {
+    AbstractAstNode,
+    InvocationSnippetResponse,
+    Options,
+    Scope,
+    Severity
+} from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { swift } from "@fern-api/swift-codegen";
@@ -48,6 +54,60 @@ export class EndpointSnippetGenerator {
         options?: Options;
     }): Promise<AbstractAstNode> {
         throw new Error("Unsupported");
+    }
+
+    /**
+     * Generates the structured pieces of an endpoint invocation for callers that render the
+     * invocation within code of their own (e.g. a documentation code template): the bare call
+     * (e.g. `try await client.endpoints.httpMethods.testGet(id: "id")`, honoring a custom client
+     * variable name), the imports the call requires, and the generated client class name.
+     *
+     * Swift's `imports` is always the empty string. Unlike TypeScript/PHP/C#/Java — whose AST tracks
+     * per-symbol imports and can surface the `import`/`using` lines a call references — the Swift AST
+     * (`@fern-api/swift-codegen`) has no per-node import mechanism at all: its {@link swift.Writer}
+     * is a plain buffer (no `getImports`/`importsToString`/`addImport`), and generated snippets
+     * reference every SDK type by a bare name that resolves through the two module-level imports
+     * emitted once by the scaffold — `import Foundation` and `import <Module>` (see
+     * {@link generateImportFoundationStatement} / {@link generateImportModuleStatement}). Those
+     * belong to the client construction the caller owns, not to the invocation. A bare invocation
+     * therefore emits no per-symbol `import`, so we return `""` rather than inventing an imports
+     * mechanism the language and its AST do not have. This mirrors the Ruby/Rust ports (types
+     * referenced via the module/gem namespace), not the C#/Java/PHP `{ code, imports }` helper
+     * pattern.
+     */
+    public generateInvocationSnippetSync({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): InvocationSnippetResponse {
+        // Render ONLY the invocation expression: no `let client = <Root>Client(...)` construction,
+        // no `private func main() async throws { ... }` scaffold, and no `import Foundation` /
+        // `import <Module>` preamble. We render the underlying Expression (not the Statement, which
+        // for a discard-assignment would prefix `_ = `).
+        const invocation = this.generateEndpointMethodCallExpression({
+            endpoint,
+            snippet: request,
+            clientVariableName: options?.clientVariableName
+        });
+        // Swift has no statement terminator, but strip a trailing `;` defensively so formatting or
+        // whitespace can never leak one into the invocation-only snippet.
+        const snippet = invocation.toString().trim().replace(/;$/, "").trim();
+        return {
+            snippet,
+            // Always empty for Swift — see the method doc comment: the AST has no per-symbol import
+            // mechanism and types resolve through the scaffold's module-level imports.
+            imports: "",
+            clientName: this.getClientName(),
+            errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
+        };
+    }
+
+    private getClientName(): string {
+        return this.context.nameRegistry.getRootClientSymbolOrThrow().name;
     }
 
     private buildCodeBlock({
@@ -320,11 +380,13 @@ export class EndpointSnippetGenerator {
     public generateEndpointMethodCallExpression({
         endpoint,
         snippet,
-        additionalArguments = []
+        additionalArguments = [],
+        clientVariableName
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         additionalArguments?: swift.FunctionArgument[];
+        clientVariableName?: string;
     }) {
         const nonNopArguments = this.getEndpointMethodArguments({ endpoint, snippet }).filter(
             (arg) => !arg.value.isNop()
@@ -333,7 +395,7 @@ export class EndpointSnippetGenerator {
         return swift.Expression.try(
             swift.Expression.await(
                 swift.Expression.methodCall({
-                    target: swift.Expression.rawValue(CLIENT_CONST_NAME),
+                    target: swift.Expression.rawValue(clientVariableName ?? CLIENT_CONST_NAME),
                     methodName: this.getEndpointMethodName({ endpoint }),
                     arguments_: arguments_,
                     multiline: arguments_.length > 1 ? true : undefined
