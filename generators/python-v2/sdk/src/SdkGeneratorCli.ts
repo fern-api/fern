@@ -11,6 +11,7 @@ import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
 import { type OutputDirectory, SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { convertIr } from "./utils/convertIr.js";
 import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
 import { WireTestGenerator } from "./wire-tests/WireTestGenerator.js";
 
@@ -120,7 +121,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: dynamicIr,
+            ir: convertIr(dynamicIr),
             config: {
                 organization: context.config.organization,
                 workspaceName: context.config.workspaceName,
