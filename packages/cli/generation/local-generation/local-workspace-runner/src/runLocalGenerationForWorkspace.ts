@@ -275,7 +275,8 @@ export async function runLocalGenerationForWorkspace({
                     packageName,
                     context: interactiveTaskContext,
                     generateTests,
-                    generateFullProject
+                    generateFullProject,
+                    isPreview
                 });
                 if (publishConfig != null) {
                     intermediateRepresentation.publishConfig = publishConfig;
@@ -625,7 +626,8 @@ export function getPublishConfig({
     packageName,
     context,
     generateTests,
-    generateFullProject
+    generateFullProject,
+    isPreview
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     org?: FernVenusApi.Organization;
@@ -635,6 +637,7 @@ export function getPublishConfig({
     context: TaskContext;
     generateTests?: boolean;
     generateFullProject?: boolean;
+    isPreview?: boolean;
 }): FernIr.PublishingConfig | undefined {
     // When version is AUTO, substitute the language-mapped magic placeholder
     // ("0.0.0-fern-placeholder") so the version stamped into the generated SDK's
@@ -658,7 +661,11 @@ export function getPublishConfig({
             owner: parsed.owner,
             repo: parsed.repo,
             uri: generatorInvocation.raw.github.uri,
-            token: generatorInvocation.raw.github.token,
+            // A preview run publishes nothing, and environment variables are substituted as empty
+            // strings, so the token handed to the generator cannot authenticate anything. Omitting it
+            // keeps the generator from cloning the repository for README generation, which otherwise
+            // fails the whole generation inside the container.
+            token: isPreview ? undefined : generatorInvocation.raw.github.token,
             mode: irMode,
             branch: generatorInvocation.raw.github.branch,
             target: getPublishTarget({

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Stop passing the self-hosted GitHub token to generators during `fern generate --preview`.
+    Preview runs substitute environment variables as empty strings, so the generator received an
+    unusable token and attempted an authenticated clone for README generation, which failed the
+    entire generation inside the container.
+  type: fix
