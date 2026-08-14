@@ -9,7 +9,6 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("inline-enum-type-name-override")
-        .display_name("Inline Enum Type Name Override")
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

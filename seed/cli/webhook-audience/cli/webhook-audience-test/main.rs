@@ -9,7 +9,6 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("webhook-audience-test")
-        .display_name("Webhook Audience Test")
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

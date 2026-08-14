@@ -10,7 +10,6 @@ use fern_cli_sdk::auth::{BearerAuth};
 
 fn main() {
     let app = CliApp::new("acme-versioned")
-        .display_name("Users API (v1)")
         .auth(BearerAuth::new("bearerAuth").env("ACME_VERSIONED_TOKEN"))
         .binding(
             OpenApiBinding::new()

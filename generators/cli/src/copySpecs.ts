@@ -84,12 +84,6 @@ export async function copySpecs(args: {
      * flag/env name instead of the default `user-agent-suffix`.
      */
     userAgentSuffixFlag?: string;
-    /**
-     * Human-readable product name (the IR's `apiDisplayName`), emitted as
-     * `.display_name("<name>")` so user-facing copy reads "the ElevenLabs CLI"
-     * rather than "the elevenlabs CLI". Falls back to the binary name in the SDK.
-     */
-    displayName?: string;
 }): Promise<void> {
     const {
         outputDir,
@@ -99,8 +93,7 @@ export async function copySpecs(args: {
         specsDir,
         customCommands,
         rootGroup,
-        userAgentSuffixFlag,
-        displayName
+        userAgentSuffixFlag
     } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
@@ -131,8 +124,7 @@ export async function copySpecs(args: {
             globalParamBindings,
             customCommands: customCommands ?? false,
             rootGroup,
-            userAgentSuffixFlag,
-            displayName
+            userAgentSuffixFlag
         })
     );
 
@@ -225,18 +217,9 @@ function renderMainRs(args: {
     customCommands: boolean;
     rootGroup?: string;
     userAgentSuffixFlag?: string;
-    displayName?: string;
 }): string {
-    const {
-        binaryName,
-        entries,
-        authBindings,
-        globalParamBindings,
-        customCommands,
-        rootGroup,
-        userAgentSuffixFlag,
-        displayName
-    } = args;
+    const { binaryName, entries, authBindings, globalParamBindings, customCommands, rootGroup, userAgentSuffixFlag } =
+        args;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -292,12 +275,6 @@ function renderMainRs(args: {
             );
         }
         lines.push(`        .user_agent_suffix_flag("${userAgentSuffixFlag}")`);
-    }
-
-    // Product name for user-facing copy (the post-login greeting). Omitted when the IR has no
-    // display name, or when it can't be interpolated safely — the SDK falls back to the binary name.
-    if (displayName != null && displayName !== "" && SAFE_RUST_STRING_LITERAL.test(displayName)) {
-        lines.push(`        .display_name("${displayName}")`);
     }
 
     // Root-level auth bindings (typed builders)

@@ -14,10 +14,3 @@
     success markup and the `text/plain` failure response. Everything is inlined, so the last screen
     of the login flow never depends on a network request.
   type: feat
-
-- summary: |
-    Generated CLIs close their root `--help` with a "Built with Fern" line, and greet the user after
-    a successful `auth login` with `Welcome to the <API display name> CLI! Built with Fern`. The
-    greeting goes to stderr and is skipped when stderr is not a TTY, so it stays out of pipelines and
-    CI logs.
-  type: feat

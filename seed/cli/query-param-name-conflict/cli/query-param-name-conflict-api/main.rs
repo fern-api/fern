@@ -9,7 +9,6 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("query-param-name-conflict-api")
-        .display_name("Query Param Name Conflict API")
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

@@ -9,7 +9,6 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("path-param-body-collision")
-        .display_name("Path Param Body Collision")
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

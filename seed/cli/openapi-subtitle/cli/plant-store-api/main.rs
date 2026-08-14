@@ -9,7 +9,6 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("plant-store-api")
-        .display_name("Plant Store API")
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

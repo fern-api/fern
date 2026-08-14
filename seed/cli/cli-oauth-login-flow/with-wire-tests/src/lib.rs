@@ -8,7 +8,6 @@
 pub mod app;
 pub mod arg_source;
 pub mod asyncapi;
-mod attribution;
 pub mod auth;
 pub mod binding;
 pub mod cli_args;

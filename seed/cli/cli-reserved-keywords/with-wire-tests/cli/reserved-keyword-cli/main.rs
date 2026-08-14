@@ -9,7 +9,6 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("reserved-keyword-cli")
-        .display_name("Reserved Keyword CLI")
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

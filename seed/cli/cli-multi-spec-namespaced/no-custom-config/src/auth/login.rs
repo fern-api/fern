@@ -301,13 +301,12 @@ pub fn build_auth_command() -> Command {
 pub fn dispatch_auth<W: Write>(
     matches: &ArgMatches,
     cli_name: &str,
-    display_name: &str,
     auth_bindings: &[(String, SchemeBinding)],
     login_flows: &[DynLoginFlow],
     out: &mut W,
 ) -> Result<(), CliError> {
     match matches.subcommand() {
-        Some(("login", m)) => handle_login(m, cli_name, display_name, auth_bindings, login_flows),
+        Some(("login", m)) => handle_login(m, cli_name, auth_bindings, login_flows),
         Some(("logout", m)) => handle_logout(m, cli_name, auth_bindings),
         Some(("status", m)) => handle_status(m, cli_name, auth_bindings, login_flows, out),
         _ => Err(CliError::Validation(
@@ -319,7 +318,6 @@ pub fn dispatch_auth<W: Write>(
 fn handle_login(
     matches: &ArgMatches,
     cli_name: &str,
-    display_name: &str,
     auth_bindings: &[(String, SchemeBinding)],
     login_flows: &[DynLoginFlow],
 ) -> Result<(), CliError> {
@@ -355,9 +353,7 @@ fn handle_login(
             .iter()
             .find(|f| f.scheme_name() == scheme)
             .and_then(|f| f.token_paste_url().map(str::to_string));
-        run_token_paste(cli_name, &scheme, hint.as_deref())?;
-        crate::attribution::print_login_welcome(display_name);
-        return Ok(());
+        return run_token_paste(cli_name, &scheme, hint.as_deref());
     }
 
     // Run the declared flow for this scheme.
@@ -370,7 +366,6 @@ fn handle_login(
             };
             f.run(&ctx)?;
             warn_if_env_shadows(&mut std::io::stderr().lock(), cli_name, &scheme);
-            crate::attribution::print_login_welcome(display_name);
             Ok(())
         }
         None => Err(CliError::Validation(format!(
@@ -901,7 +896,7 @@ mod tests {
 
         let bindings: Vec<(String, SchemeBinding)> = vec![];
         let flows: Vec<DynLoginFlow> = vec![];
-        match handle_login(sub, "my-cli", "My CLI", &bindings, &flows) {
+        match handle_login(sub, "my-cli", &bindings, &flows) {
             Err(CliError::Validation(msg)) => {
                 assert!(
                     msg.contains("declares no auth schemes") && msg.contains("--scheme"),

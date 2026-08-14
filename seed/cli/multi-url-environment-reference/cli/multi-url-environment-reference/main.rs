@@ -10,7 +10,6 @@ use fern_cli_sdk::auth::{BearerAuth};
 
 fn main() {
     let app = CliApp::new("multi-url-environment-reference")
-        .display_name("multi-url-environment-reference")
         .auth(BearerAuth::new("BearerAuth").env("MULTI_URL_ENVIRONMENT_REFERENCE_TOKEN"))
         .binding(
             OpenApiBinding::new()

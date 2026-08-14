@@ -126,8 +126,7 @@ export async function runPipeline(args: {
         specsDir,
         customCommands,
         rootGroup: customConfig.rootGroup,
-        userAgentSuffixFlag: customConfig.userAgentSuffixFlag,
-        displayName: ir.apiDisplayName
+        userAgentSuffixFlag: customConfig.userAgentSuffixFlag
     });
     await writeGitignore(outputDir);
 

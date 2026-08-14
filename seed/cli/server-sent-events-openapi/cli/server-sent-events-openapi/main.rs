@@ -9,7 +9,6 @@ use fern_cli_sdk::openapi::OpenApiBinding;
 
 fn main() {
     let app = CliApp::new("server-sent-events-openapi")
-        .display_name("server-sent-events-openapi")
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))
