@@ -24,7 +24,7 @@ import {
     buildTypesCrateLibRs,
     buildTypesCratePrelude,
     copyCoreModules,
-    TYPE_PARTITION_DIRECTORY,
+    PARTITION_CRATES_DIRECTORY,
     TYPES_MODULE_DIRECTORY
 } from "./typesCrateScaffolding.js";
 
@@ -32,9 +32,10 @@ export interface TypePartitionCrate {
     /** Cargo package name, kebab-case. */
     crateName: string;
     /**
-     * Directory relative to the output root, e.g. `types/<crateName>`. Distinct
-     * from {@link TypePartitionCrate.crateName} because the crates are nested one
-     * level down: callers that resolve a path need this, callers that need the
+     * Directory relative to the output root, e.g.
+     * `<binary>-types/crates/<crateName>`. Distinct from
+     * {@link TypePartitionCrate.crateName} because the crates are nested inside
+     * the facade: callers that resolve a path need this, callers that need the
      * lockfile's package name need the crate name.
      */
     relativeDir: string;
@@ -58,7 +59,6 @@ export async function splitTypesCrates(args: {
     const manifest = await readModelFileManifest(typesOutputDir);
     const modulesByPartition = groupModulesByPartition({ manifest, plan });
 
-    const outputDir = path.dirname(typesOutputDir);
     const crateNamesByPartition = resolveCrateNames({ typesCrateName, partitionKeys: [...modulesByPartition.keys()] });
     const coreCrateName = requireCoreCrateName(crateNamesByPartition);
 
@@ -72,7 +72,7 @@ export async function splitTypesCrates(args: {
     for (const [partitionKey, crateName] of crateNamesByPartition) {
         const modules = modulesByPartition.get(partitionKey) ?? [];
         await writePartitionCrate({
-            crateDir: path.join(outputDir, TYPE_PARTITION_DIRECTORY, crateName),
+            crateDir: path.join(typesOutputDir, PARTITION_CRATES_DIRECTORY, crateName),
             crateName,
             modules,
             sourceTypesDir: path.join(typesOutputDir, "src", TYPES_MODULE_DIRECTORY),
@@ -88,7 +88,10 @@ export async function splitTypesCrates(args: {
             reexportCoreTypes: coreOwnsTypes,
             needsReqwest
         });
-        partitionCrates.push({ crateName, relativeDir: `${TYPE_PARTITION_DIRECTORY}/${crateName}` });
+        partitionCrates.push({
+            crateName,
+            relativeDir: `${typesCrateName}/${PARTITION_CRATES_DIRECTORY}/${crateName}`
+        });
     }
 
     await writeFacadeCrate({
@@ -300,12 +303,12 @@ async function writeFacadeCrate(args: {
             crateName: toSnakeCase(typesCrateName),
             needsReqwest: false,
             includeSerdeDependencies: false,
-            // The facade stays at the output root while the partitions live one
-            // level down, so its paths carry the subdirectory. Leaf -> core
-            // paths do not: those crates are siblings inside it.
-            pathDependencies: partitionCrates.map(({ crateName, relativeDir }) => ({
+            // The partitions live inside this crate's own directory, so the
+            // paths are relative to it and carry no `../`. Leaf -> core paths
+            // are `../<core>`: those crates are siblings inside `crates/`.
+            pathDependencies: partitionCrates.map(({ crateName }) => ({
                 crateName: toSnakeCase(crateName),
-                path: `../${relativeDir}`
+                path: `${PARTITION_CRATES_DIRECTORY}/${crateName}`
             }))
         })
     );

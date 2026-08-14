@@ -17,16 +17,19 @@ import path from "path";
 export const TYPES_MODULE_DIRECTORY = "types";
 
 /**
- * Directory at the output root that holds the per-API type crates when
- * partitioning is on.
+ * Directory *inside the facade crate* that holds the per-API type crates when
+ * partitioning is on, i.e. `<binary>-types/crates/<binary>-types-<api>/`.
  *
- * They are nested rather than left as siblings of the CLI's own files because a
- * large workspace produces one crate per API — 60+ for some consumers — and that
- * many sibling directories buries everything else in the generated repo. The
- * facade keeps its top-level position, since it is the crate the SDK and any
- * user code actually name.
+ * A large workspace produces one crate per API — 60+ for some consumers — and
+ * leaving those at the output root buries everything else in the generated repo.
+ * Nesting them under the facade means enabling the flag adds no top-level entry
+ * at all: the tree looks exactly as it did with a single types crate, and the
+ * partitions are found where they belong, inside the crate that re-exports them.
+ *
+ * Cargo permits a package to depend on one in its own subdirectory, which is
+ * what makes this legal.
  */
-export const TYPE_PARTITION_DIRECTORY = "types";
+export const PARTITION_CRATES_DIRECTORY = "crates";
 
 interface CargoPathDependency {
     /** Package name, i.e. the crate name in snake_case. */

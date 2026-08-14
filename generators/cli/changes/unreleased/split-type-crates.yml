@@ -16,9 +16,10 @@
     ships as one binary with every spec embedded, and `use <binary>_types::SomeType`
     keeps resolving through the facade.
 
-    The partition crates are emitted under a `types/` directory so a workspace with
-    many APIs adds one top-level directory rather than one per API; the facade keeps
-    its original name and position.
+    The partition crates are emitted inside the facade, at
+    `<binary>-types/crates/`, so enabling the flag adds no top-level entry to the
+    generated repo — the tree looks exactly as it did with a single types crate,
+    even for a workspace with 60 APIs.
 
     The facade's module surface is unchanged too: `BuildError` and the serde
     helpers are declared once in the shared core crate and re-exported by the

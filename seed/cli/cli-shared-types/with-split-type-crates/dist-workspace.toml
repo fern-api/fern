@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "cargo:shared-types-cli-types", "cargo:types/shared-types-cli-types-core", "cargo:types/shared-types-cli-types-billing", "cargo:types/shared-types-cli-types-catalog", "cargo:shared-types-cli-sdk"]
+members = ["cargo:.", "cargo:shared-types-cli-types", "cargo:shared-types-cli-types/crates/shared-types-cli-types-core", "cargo:shared-types-cli-types/crates/shared-types-cli-types-billing", "cargo:shared-types-cli-types/crates/shared-types-cli-types-catalog", "cargo:shared-types-cli-sdk"]
 
 # Config for 'dist'
 [dist]

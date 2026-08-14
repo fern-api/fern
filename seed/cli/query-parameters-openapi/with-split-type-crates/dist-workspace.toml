@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "cargo:query-parameters-api-types", "cargo:types/query-parameters-api-types-core", "cargo:query-parameters-api-sdk"]
+members = ["cargo:.", "cargo:query-parameters-api-types", "cargo:query-parameters-api-types/crates/query-parameters-api-types-core", "cargo:query-parameters-api-sdk"]
 
 # Config for 'dist'
 [dist]

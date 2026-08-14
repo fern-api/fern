@@ -9,10 +9,10 @@ doctest = false
 [dependencies]
 
 [dependencies.shared_types_cli_types_core]
-path = "../types/shared-types-cli-types-core"
+path = "crates/shared-types-cli-types-core"
 
 [dependencies.shared_types_cli_types_billing]
-path = "../types/shared-types-cli-types-billing"
+path = "crates/shared-types-cli-types-billing"
 
 [dependencies.shared_types_cli_types_catalog]
-path = "../types/shared-types-cli-types-catalog"
+path = "crates/shared-types-cli-types-catalog"
