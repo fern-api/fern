@@ -69,6 +69,7 @@ import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
 import { publishDocsViaLedgerPreview } from "./publishDocsLedgerPreview.js";
 import { retryWithBackoff } from "./retryWithBackoff.js";
+import { toRegisterDynamicIRsInput } from "./toRegisterDynamicIRsInput.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -487,7 +488,7 @@ export async function publishDocs({
                             orgId: CjsFdrSdk.OrgId(organization),
                             apiId: CjsFdrSdk.ApiId(effectiveApiName),
                             definition: apiDefinition,
-                            dynamicIRs: dynamicIRsByLanguage
+                            dynamicIRs: toRegisterDynamicIRsInput(dynamicIRsByLanguage)
                         }),
                     maxRetries: REGISTER_MAX_RETRIES,
                     baseDelayMs: REGISTER_BASE_DELAY_MS,
