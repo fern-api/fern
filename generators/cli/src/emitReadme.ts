@@ -297,7 +297,7 @@ function bucketAlias(bucket: string): string {
 }
 
 // ---------------------------------------------------------------------------
-// Authentication (unchanged)
+// Authentication
 // ---------------------------------------------------------------------------
 
 function generateAuthentication(args: { binaryName: string; authBindings: DetectedAuthBinding[] }): Block {
@@ -322,6 +322,27 @@ function generateAuthentication(args: { binaryName: string; authBindings: Detect
             envLines.push(`# export ${envVar}="${placeholderForKind(binding.kind)}" # optional`);
         }
     }
+    // An interactive login flow carries no environment variable, so a CLI
+    // whose only scheme is OAuth would otherwise render an empty fence
+    // under "Set the following environment variable(s)".
+    if (envLines.length === 0) {
+        return new Block({
+            id: "AUTHENTICATION",
+            content: lines(
+                "## Authentication",
+                "",
+                "Log in before using the CLI:",
+                "",
+                "```bash",
+                `${binaryName} auth login`,
+                "```",
+                "",
+                `Run \`${binaryName} auth status\` to see which credential is active.`,
+                ""
+            )
+        });
+    }
+    const hasLoginFlow = authBindings.some((binding) => LOGIN_FLOW_KINDS.has(binding.kind));
     return new Block({
         id: "AUTHENTICATION",
         content: lines(
@@ -334,10 +355,22 @@ function generateAuthentication(args: { binaryName: string; authBindings: Detect
             "```",
             "",
             "A `.env` file in the working directory is also supported — the CLI auto-loads it on startup.",
-            ""
+            "",
+            ...(hasLoginFlow
+                ? [
+                      `You can also run \`${binaryName} auth login\`. When both are available the environment variable wins — \`${binaryName} auth status\` names the active credential.`,
+                      ""
+                  ]
+                : [])
         )
     });
 }
+
+// Kinds authenticated by `auth login` rather than an environment variable.
+const LOGIN_FLOW_KINDS: ReadonlySet<DetectedAuthBinding["kind"]> = new Set([
+    "oauth-authorization-code",
+    "oauth-device-code"
+]);
 
 // ---------------------------------------------------------------------------
 // Quick start (new — layer 1 "try it now")

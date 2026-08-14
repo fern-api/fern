@@ -1082,10 +1082,21 @@ impl CliApp {
                 Some("login" | "logout" | "status")
             );
             if builtin_sub || !spec_owns_auth {
+                // Include credentials the bindings own (a credential
+                // declared as a global header) so `auth status` reports
+                // every source the CLI would send, not just root schemes.
+                let mut auth_bindings = self.auth_bindings.clone();
+                for binding in &self.bindings {
+                    for (name, promoted) in binding.promoted_auth_bindings() {
+                        if !auth_bindings.iter().any(|(n, _)| n == &name) {
+                            auth_bindings.push((name, promoted));
+                        }
+                    }
+                }
                 crate::auth::login::dispatch_auth(
                     auth_matches,
                     &self.name,
-                    &self.auth_bindings,
+                    &auth_bindings,
                     &self.login_flows,
                     out,
                 )?;

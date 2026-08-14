@@ -18,6 +18,23 @@
 
 Matches `gh` / `aws` / `gcloud` / `op`. Adding keyring is a new `AuthCredentialSource::Keyring { service, account }` variant slotted at priority 3 in the typed-builder default chains (`BearerAuth`, `ApiKeyAuth`, `OAuth2Auth`).
 
+### Cross-scheme arbitration (amendment — 2026-08-12)
+
+The chain above orders sources *within* one scheme. It says nothing about a CLI where two schemes each hold a credential, which composition resolved by registration order — an implementation detail of the builder, never a contract. Extended so the same table governs both:
+
+- `AnyAuthProvider` picks the candidate whose resolved source has the best rank (`Cli` < `Env` < `Stored` < `File` < `Opaque`), registration order breaking ties only. CLIs whose candidates share a rank behave exactly as before.
+- `RoutingAuthProvider` still decides *first* which declared security requirement to satisfy; among the satisfiable alternatives it picks the best-ranked one, ranking a requirement by its weakest scheme since all of its schemes are sent together. A per-endpoint requirement is never overridden by a better-ranked credential the endpoint doesn't accept.
+- `Opaque` covers sources whose provenance the runtime can't see (literals, caller closures) and loses every comparison, so custom providers need no special-casing.
+- A stored login that expired with no cached refresh token is **not** a credential (`has_credentials() == false`). It previously won selection and then hard-failed the command even when another scheme held a usable credential. The dead-session diagnosis moves to `unavailable_reason()`, which the missing-credential error path reports in place of a generic source list, so an OAuth-only CLI still says "your session has expired".
+
+### Credential-bearing global headers
+
+A credential can arrive as an `x-fern-global-headers` entry rather than an auth scheme, which made it a parameter injection the provider tree never saw: two mutually exclusive credentials went out together, and the auth layer believed nothing was sent even when a key was.
+
+Such a header is promoted to a scheme so it participates in arbitration, but **only on an explicit signal** — a declared `apiKey`/header security scheme naming it, or a registered auth binding for it (the per-generator `auth-schemes` path). A credential-*looking* name is never the signal: whether a secret goes on the wire is too consequential to decide from a substring match. (The same heuristic is still used to decide redaction and which hint to print, where the only cost is wording.)
+
+Promotion does not change the header's **reach**. It is injected on every request as before, including explicitly-anonymous (`security: []`) ones — an API whose key goes out everywhere returns different data anonymously, so narrowing reach would silently change results. Arbitration is *subtractive*: the promoted header is withheld only on a request where the auth layer already selected a credential of its own. Per-operation header parameters are never withheld, and non-credential global headers (`X-API-Version`, tracing headers) are untouched.
+
 ### Storage
 
 [`keyring-rs`](https://docs.rs/keyring) is the primary backend (macOS Keychain / Windows Credential Manager / Linux secret-service). When the platform's keyring is unavailable — Linux containers, CI runners, bare SSH without secret-service — the framework **falls back silently** to `~/.config/<cli>/auth-keyring.json` (0600). The filename is intentionally distinct from the pre-existing `TokenCache` file (`credentials.json`) so the two cohabit a directory without clobbering each other: binaries already using `OAuth2TokenProvider::with_cache(...)` (e.g. `xero`) continue to read/write their existing `credentials.json` untouched. `auth status` always discloses which backend is in use.
@@ -36,6 +53,9 @@ Higher-priority sources mask lower-priority ones. `auth status` lists every visi
 | Access token expired, refresh token cached | Silent refresh before request goes out; persist new tokens; proceed. (Existing `OAuth2TokenProvider` path, extended to keyring entries.) |
 | Refresh fails / refresh token revoked | Wipe the keyring entry; print `Your session has expired. Run \`<bin> auth login\` again.`; exit non-zero. |
 | 401/403 with apparently-valid token | Surface the server error verbatim. **No retry-with-refresh.** |
+| 403, any credential state | The server's status, code, message and reason are preserved and a hint is *appended*. A 403 is **never** rewritten as a synthetic `401 authError`: it means the server knows who you are and you still can't do this (RFC 7235), so "re-authenticate" is advice that cannot help. |
+| 401 with a credential on the wire | The server's error plus the source that supplied the rejected credential, so shadowing is diagnosable. |
+| 401 with nothing on the wire | Local `CliError::Auth` naming every source the user could set — the one case where the CLI knows more than the server. |
 
 ## Consequences
 

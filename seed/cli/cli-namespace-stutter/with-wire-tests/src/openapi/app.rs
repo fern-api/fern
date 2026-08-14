@@ -461,6 +461,117 @@ pub(crate) fn resolve_global_header_value(
         .map(|s| s.to_string())
 }
 
+/// A global header that an explicit declaration identifies as carrying a
+/// credential, making it visible to auth arbitration (ADR-0008).
+///
+/// Promotion is never inferred from a credential-*looking* header name:
+/// whether a secret goes on the wire is too consequential to decide from
+/// a substring match. The signal is always explicit — a declared
+/// `apiKey`/`header` security scheme naming this header, or a registered
+/// auth binding for it (the per-generator `auth-schemes` path).
+pub(crate) struct PromotedCredentialHeader<'a> {
+    pub(crate) header: &'a crate::openapi::discovery::GlobalHeader,
+    /// Security-scheme name the credential is arbitrated under.
+    pub(crate) scheme_name: String,
+    /// Whether an auth binding for `scheme_name` already exists, in which
+    /// case the credential is already arbitrable and only the duplicate
+    /// plain-header injection needs suppressing.
+    pub(crate) already_bound: bool,
+}
+
+/// Identify the global headers that explicitly carry a credential.
+///
+/// Reach is unchanged by promotion: a promoted header still goes out on
+/// every request (see the executor's injection loop). Promotion only lets
+/// the auth layer *see* the credential, so exactly one of two mutually
+/// exclusive credentials is sent when both are configured.
+pub(crate) fn promoted_credential_headers<'a>(
+    doc: &'a RestDescription,
+    auth_bindings: &[(String, crate::auth::SchemeBinding)],
+) -> Vec<PromotedCredentialHeader<'a>> {
+    use crate::openapi::discovery::SecurityScheme;
+
+    let bound = |name: &str| {
+        auth_bindings
+            .iter()
+            .any(|(bound_name, _)| bound_name.eq_ignore_ascii_case(name))
+    };
+
+    doc.global_headers
+        .iter()
+        .filter_map(|header| {
+            let declared = doc.security_schemes.iter().find(|(_, scheme)| {
+                matches!(scheme, SecurityScheme::ApiKeyHeader { name } if name.eq_ignore_ascii_case(&header.header))
+            });
+            match declared {
+                Some((scheme_name, _)) => Some(PromotedCredentialHeader {
+                    header,
+                    already_bound: bound(scheme_name),
+                    scheme_name: scheme_name.clone(),
+                }),
+                // No declared scheme, but the CLI registered an auth
+                // binding under this header's name — the per-generator
+                // `auth-schemes` declaration. Already arbitrable.
+                None if bound(&header.header) => Some(PromotedCredentialHeader {
+                    header,
+                    scheme_name: header.header.clone(),
+                    already_bound: true,
+                }),
+                None => None,
+            }
+        })
+        .collect()
+}
+
+/// Wire names of the global headers that carry a credential. The executor
+/// withholds these on a request where another mutually exclusive
+/// credential was selected.
+pub(crate) fn promoted_credential_header_names(
+    doc: &RestDescription,
+    auth_bindings: &[(String, crate::auth::SchemeBinding)],
+) -> Vec<String> {
+    promoted_credential_headers(doc, auth_bindings)
+        .into_iter()
+        .map(|p| p.header.header.clone())
+        .collect()
+}
+
+/// Synthesize auth bindings for promoted headers that don't have one yet,
+/// reusing the header's existing flag and env var so `--api-key` /
+/// `$X_API_KEY` and `--help` are unchanged.
+///
+/// `matches` is the parsed clap state when available. Without it the flag's
+/// value can't be read, so the source is left as an unresolved
+/// [`AuthCredentialSource::Cli`] — enough for `auth status` to list the flag,
+/// and the provider is rebuilt against `matches` before any request goes out.
+pub(crate) fn promoted_credential_bindings(
+    doc: &RestDescription,
+    auth_bindings: &[(String, crate::auth::SchemeBinding)],
+    matches: Option<&std::sync::Arc<clap::ArgMatches>>,
+) -> Vec<(String, crate::auth::SchemeBinding)> {
+    promoted_credential_headers(doc, auth_bindings)
+        .into_iter()
+        .filter(|p| !p.already_bound)
+        .map(|p| {
+            let mut sources = vec![match matches {
+                Some(matches) => AuthCredentialSource::cli_matched(
+                    matches,
+                    global_header_arg_id(p.header),
+                    format!("--{} flag", global_header_flag_name(p.header)),
+                ),
+                None => AuthCredentialSource::cli(global_header_flag_name(p.header)),
+            }];
+            if let Some(env) = &p.header.env {
+                sources.push(AuthCredentialSource::from_env(env));
+            }
+            (
+                p.scheme_name,
+                crate::auth::SchemeBinding::Token(AuthCredentialSource::any(sources)),
+            )
+        })
+        .collect()
+}
+
 /// True when an operation declares a `header`-located parameter with
 /// the same wire-name as a global header AND the user supplied a value
 /// for it in `params`. HTTP header names are case-insensitive per RFC
@@ -1828,13 +1939,40 @@ impl CliApp {
     /// — the CLI runs unauthenticated.
     pub(crate) fn build_auth_provider(&self, doc: &RestDescription) -> DynAuthProvider {
         let has_per_endpoint = doc.resources.values().any(resource_has_per_endpoint_security);
+        let bindings = self.bindings_with_promoted_credentials(doc, None);
         let primary = crate::auth::build_provider_with_strategy(
-            &self.auth_bindings,
+            &bindings,
             &doc.security_schemes,
             self.auth_strategy,
             has_per_endpoint,
         );
         self.wrap_auth_layers(primary)
+    }
+
+    /// The registered bindings plus one for each credential-bearing global
+    /// header that isn't already bound, so the credential participates in
+    /// arbitration instead of bypassing the auth layer as a raw header.
+    pub(crate) fn bindings_with_promoted_credentials(
+        &self,
+        doc: &RestDescription,
+        matches: Option<&std::sync::Arc<clap::ArgMatches>>,
+    ) -> Vec<(String, crate::auth::SchemeBinding)> {
+        self.bindings_with_promoted_credentials_from(&self.auth_bindings, doc, matches)
+    }
+
+    fn bindings_with_promoted_credentials_from(
+        &self,
+        base: &[(String, crate::auth::SchemeBinding)],
+        doc: &RestDescription,
+        matches: Option<&std::sync::Arc<clap::ArgMatches>>,
+    ) -> Vec<(String, crate::auth::SchemeBinding)> {
+        let promoted = promoted_credential_bindings(doc, base, matches);
+        if promoted.is_empty() {
+            return base.to_vec();
+        }
+        let mut out = base.to_vec();
+        out.extend(promoted);
+        out
     }
 
     /// Layer any registered additive providers on top of the composed
@@ -1858,10 +1996,12 @@ impl CliApp {
         &self,
         finalized: &[(String, crate::auth::SchemeBinding)],
         doc: &RestDescription,
+        matches: Option<&std::sync::Arc<clap::ArgMatches>>,
     ) -> DynAuthProvider {
         let has_per_endpoint = doc.resources.values().any(resource_has_per_endpoint_security);
+        let bindings = self.bindings_with_promoted_credentials_from(finalized, doc, matches);
         let primary = crate::auth::build_provider_with_strategy(
-            finalized,
+            &bindings,
             &doc.security_schemes,
             self.auth_strategy,
             has_per_endpoint,
@@ -5521,6 +5661,117 @@ paths:
         assert!(
             overrides.is_empty(),
             "optional with no value should be omitted: {overrides:?}"
+        );
+    }
+
+    // ------------------------------------------------------------------
+    // Credential-bearing global headers (ADR-0008 promotion)
+    // ------------------------------------------------------------------
+
+    fn doc_with_global_credential_header(
+        schemes: Vec<(&str, crate::openapi::discovery::SecurityScheme)>,
+    ) -> RestDescription {
+        RestDescription {
+            global_headers: vec![
+                crate::openapi::discovery::GlobalHeader {
+                    header: "xi-api-key".into(),
+                    name: None,
+                    optional: true,
+                    env: Some("ACME_API_KEY".into()),
+                    default: None,
+                },
+                crate::openapi::discovery::GlobalHeader {
+                    header: "X-API-Version".into(),
+                    name: None,
+                    optional: true,
+                    env: Some("ACME_API_VERSION".into()),
+                    default: None,
+                },
+            ],
+            security_schemes: schemes
+                .into_iter()
+                .map(|(name, scheme)| (name.to_string(), scheme))
+                .collect(),
+            ..Default::default()
+        }
+    }
+
+    #[test]
+    fn test_promotion_requires_a_declared_credential_scheme() {
+        use crate::openapi::discovery::SecurityScheme;
+
+        // A spec that declares the header as an api-key scheme: the header
+        // becomes arbitrable under the scheme's name.
+        let declared = doc_with_global_credential_header(vec![(
+            "ApiKeyAuth",
+            SecurityScheme::ApiKeyHeader {
+                name: "XI-API-KEY".into(),
+            },
+        )]);
+        let promoted = promoted_credential_headers(&declared, &[]);
+        assert_eq!(promoted.len(), 1, "only the credential header is promoted");
+        assert_eq!(promoted[0].header.header, "xi-api-key");
+        assert_eq!(promoted[0].scheme_name, "ApiKeyAuth");
+        assert!(!promoted[0].already_bound);
+
+        // No declaration and no binding: a credential-looking name is never
+        // enough on its own, so nothing is promoted.
+        let undeclared = doc_with_global_credential_header(vec![("OAuth", SecurityScheme::OAuth2)]);
+        assert!(promoted_credential_headers(&undeclared, &[]).is_empty());
+        assert!(promoted_credential_header_names(&undeclared, &[]).is_empty());
+    }
+
+    #[test]
+    fn test_per_generator_auth_scheme_declaration_promotes_by_binding_name() {
+        use crate::openapi::discovery::SecurityScheme;
+
+        // The per-generator `auth-schemes` path: the spec has no
+        // `securitySchemes` entry, but the CLI registered a binding named
+        // for the header, which is an explicit declaration of intent.
+        let doc = doc_with_global_credential_header(vec![("OAuth", SecurityScheme::OAuth2)]);
+        let bindings = vec![(
+            "xi-api-key".to_string(),
+            crate::auth::SchemeBinding::Token(AuthCredentialSource::from_env("ACME_API_KEY")),
+        )];
+        let promoted = promoted_credential_headers(&doc, &bindings);
+        assert_eq!(promoted.len(), 1);
+        assert!(
+            promoted[0].already_bound,
+            "an existing binding already arbitrates the credential"
+        );
+        // Already arbitrable, so no synthetic binding is added — but the
+        // header is still eligible for withholding.
+        assert!(promoted_credential_bindings(&doc, &bindings, None).is_empty());
+        assert_eq!(
+            promoted_credential_header_names(&doc, &bindings),
+            vec!["xi-api-key".to_string()]
+        );
+    }
+
+    #[test]
+    fn test_promoted_binding_reuses_the_headers_existing_flag_and_env() {
+        use crate::openapi::discovery::SecurityScheme;
+
+        let doc = doc_with_global_credential_header(vec![(
+            "ApiKeyAuth",
+            SecurityScheme::ApiKeyHeader {
+                name: "xi-api-key".into(),
+            },
+        )]);
+        let bindings = promoted_credential_bindings(&doc, &[], None);
+        assert_eq!(bindings.len(), 1);
+        assert_eq!(bindings[0].0, "ApiKeyAuth");
+        let crate::auth::SchemeBinding::Token(source) = &bindings[0].1 else {
+            panic!("expected a token binding, got: {:?}", bindings[0].1);
+        };
+        let hints = source.credential_hints().join(" ");
+        assert!(
+            hints.contains("--xi-api-key"),
+            "expected the header's own flag, got: {hints}"
+        );
+        assert!(
+            hints.contains("ACME_API_KEY"),
+            "expected the header's own env var, got: {hints}"
         );
     }
 }

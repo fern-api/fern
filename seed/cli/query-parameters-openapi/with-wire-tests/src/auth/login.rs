@@ -28,7 +28,7 @@ use std::sync::Arc;
 use clap::{Arg, ArgAction, ArgMatches, Command};
 
 use crate::auth::builder::SchemeBinding;
-use crate::auth::credential::AuthCredentialSource;
+use crate::auth::credential::{AuthCredentialSource, CredentialRank};
 use crate::auth::keyring_store::active_store;
 use crate::error::CliError;
 
@@ -486,7 +486,70 @@ fn handle_status<W: Write>(
         }
         let _ = writeln!(stderr);
     }
+
+    report_cross_scheme_arbitration(&mut stderr, cli_name, auth_bindings, login_flows);
     Ok(())
+}
+
+/// Which scheme wins when more than one holds a credential, and what that
+/// shadows.
+///
+/// Per-scheme output above only ranks sources *within* a scheme. Two schemes
+/// both holding a credential is the case that silently surprises users — a
+/// key left in the environment overriding a fresh `auth login` — so name the
+/// winner and what it shadows explicitly.
+fn report_cross_scheme_arbitration<W: Write>(
+    out: &mut W,
+    cli_name: &str,
+    auth_bindings: &[(String, SchemeBinding)],
+    login_flows: &[DynLoginFlow],
+) {
+    let mut available: Vec<(&str, CredentialRank, String)> = auth_bindings
+        .iter()
+        .filter_map(|(scheme_name, binding)| {
+            expand_sources(scheme_name, binding, login_flows, cli_name)
+                .iter()
+                .filter_map(|src| src.rank().map(|rank| (rank, describe_source(src))))
+                .min_by_key(|(rank, _)| *rank)
+                .map(|(rank, desc)| (scheme_name.as_str(), rank, desc))
+        })
+        .collect();
+    if available.len() < 2 {
+        return;
+    }
+    // Stable sort: registration order breaks ties between equal ranks, the
+    // same tie-break `AnyAuthProvider` applies.
+    available.sort_by_key(|(_, rank, _)| *rank);
+
+    let (winner, winning_rank, winning_source) = &available[0];
+    let _ = writeln!(
+        out,
+        "  {} {} ({winning_source})",
+        bold("Active credential:"),
+        green(winner)
+    );
+    for (scheme_name, _, source) in &available[1..] {
+        let _ = writeln!(
+            out,
+            "    {}",
+            dim(&format!("shadowed  {scheme_name} ({source})"))
+        );
+    }
+    if *winning_rank < CredentialRank::Stored
+        && available[1..]
+            .iter()
+            .any(|(_, rank, _)| *rank == CredentialRank::Stored)
+    {
+        let _ = writeln!(
+            out,
+            "  {}",
+            yellow(&format!(
+                "⚠ {winning_source} takes precedence over your stored login. \
+                 Unset it to use the credential from `{cli_name} auth login`."
+            ))
+        );
+    }
+    let _ = writeln!(out);
 }
 
 /// Resolve which scheme name to operate on. With one binding, infer it;
@@ -571,8 +634,8 @@ fn describe_source(s: &AuthCredentialSource) -> String {
         AuthCredentialSource::Keyring { service, account } => {
             format!("keyring entry {service}:{account}")
         }
-        AuthCredentialSource::Closure(_, Some(hint)) => hint.clone(),
-        AuthCredentialSource::Closure(_, None) => "custom resolver".to_string(),
+        AuthCredentialSource::Closure(_, Some(hint), _) => hint.clone(),
+        AuthCredentialSource::Closure(_, None, _) => "custom resolver".to_string(),
         AuthCredentialSource::Chain(_) => unreachable!("flatten_chain removes nested Chains"),
         AuthCredentialSource::Missing => "(unbound)".to_string(),
     }

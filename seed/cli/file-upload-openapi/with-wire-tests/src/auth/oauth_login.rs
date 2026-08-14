@@ -31,6 +31,7 @@ use std::time::Duration;
 use secrecy::{ExposeSecret, SecretString};
 use serde::Deserialize;
 
+use crate::auth::credential::CredentialRank;
 use crate::auth::keyring_store::active_store;
 use crate::auth::login::{LoginContext, LoginFlow};
 use crate::auth::oauth_common::{
@@ -1073,6 +1074,16 @@ impl OAuth2KeyringProvider {
         store.set(&self.cli_name, &self.scheme_name, &new_bundle.to_keyring_value()?)?;
         Ok(new_bundle.access_token)
     }
+
+    /// The stored bundle, if the keyring holds a non-empty entry.
+    fn stored_bundle(&self) -> Option<TokenBundle> {
+        active_store()
+            .get(&self.cli_name, &self.scheme_name)
+            .ok()
+            .flatten()
+            .filter(|v| !v.is_empty())
+            .map(|raw| TokenBundle::parse_or_raw(&raw))
+    }
 }
 
 impl AuthProvider for OAuth2KeyringProvider {
@@ -1080,13 +1091,16 @@ impl AuthProvider for OAuth2KeyringProvider {
         &self.scheme_name
     }
 
+    /// True only for a stored login this provider could actually use: a
+    /// live access token, or an expired one it can still refresh.
+    ///
+    /// An expired entry with no refresh token is not a credential. Counting
+    /// it as one made `apply` the only place the dead session surfaced,
+    /// which hard-failed the command even when another scheme held a
+    /// perfectly good credential.
     fn has_credentials(&self) -> bool {
-        active_store()
-            .get(&self.cli_name, &self.scheme_name)
-            .ok()
-            .flatten()
-            .map(|v| !v.is_empty())
-            .unwrap_or(false)
+        self.stored_bundle()
+            .is_some_and(|b| !b.is_expired() || b.refresh_token.is_some())
     }
 
     fn credential_hints(&self) -> Vec<String> {
@@ -1094,6 +1108,28 @@ impl AuthProvider for OAuth2KeyringProvider {
             "keyring entry {}:{} (populated by `{} auth login`)",
             self.cli_name, self.scheme_name, self.cli_name
         )]
+    }
+
+    fn credential_rank(&self) -> Option<CredentialRank> {
+        self.has_credentials().then_some(CredentialRank::Stored)
+    }
+
+    fn credential_header_names(&self) -> Vec<String> {
+        vec![reqwest::header::AUTHORIZATION.to_string()]
+    }
+
+    /// Keeps the dead-session diagnosis reachable now that
+    /// [`has_credentials`](Self::has_credentials) rejects an expired entry:
+    /// the missing-credential error path reports this instead of a generic
+    /// "set one of these sources" list.
+    fn unavailable_reason(&self) -> Option<String> {
+        let bundle = self.stored_bundle()?;
+        (bundle.is_expired() && bundle.refresh_token.is_none()).then(|| {
+            format!(
+                "Your session has expired and no refresh token is cached. Run `{} auth login` again.",
+                self.cli_name
+            )
+        })
     }
 
     fn apply(
@@ -1313,6 +1349,45 @@ mod tests {
             .unwrap();
         let auth = r.headers().get("authorization").unwrap().to_str().unwrap();
         assert_eq!(auth, "Bearer cached-acc");
+    }
+
+    #[test]
+    #[serial]
+    fn expired_entry_without_refresh_token_is_not_a_credential() {
+        // A dead session used to count as a credential, so it won a
+        // cross-scheme selection it could not honor and hard-failed the
+        // command even when another scheme held a usable credential.
+        let mock = Arc::new(MockKeyringStore::new());
+        let mut expired = TokenBundle::from_token_response("old", None, Some(3600));
+        expired.expires_at = Some(0);
+        mock.set("my-cli", "OAuth2", &expired.to_keyring_value().unwrap())
+            .unwrap();
+        set_active_store(mock);
+
+        let p = OAuth2KeyringProvider::new("OAuth2", "my-cli", "https://unused", "client");
+        assert!(!p.has_credentials());
+        assert!(p.credential_rank().is_none());
+        let reason = p
+            .unavailable_reason()
+            .expect("dead session should explain itself");
+        assert!(reason.contains("session has expired"), "got: {reason}");
+        assert!(reason.contains("my-cli auth login"), "got: {reason}");
+    }
+
+    #[test]
+    #[serial]
+    fn expired_entry_with_refresh_token_remains_a_credential() {
+        let mock = Arc::new(MockKeyringStore::new());
+        let mut expired = TokenBundle::from_token_response("old", Some("ref-1"), Some(3600));
+        expired.expires_at = Some(0);
+        mock.set("my-cli", "OAuth2", &expired.to_keyring_value().unwrap())
+            .unwrap();
+        set_active_store(mock);
+
+        let p = OAuth2KeyringProvider::new("OAuth2", "my-cli", "https://unused", "client");
+        assert!(p.has_credentials(), "a refreshable session is still usable");
+        assert_eq!(p.credential_rank(), Some(CredentialRank::Stored));
+        assert!(p.unavailable_reason().is_none());
     }
 
     #[tokio::test(flavor = "multi_thread")]

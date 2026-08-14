@@ -26,6 +26,7 @@ use secrecy::{ExposeSecret, SecretString};
 use serde::Serialize;
 use serde_json::{Map, Value};
 
+use crate::auth::credential::CredentialRank;
 use crate::auth::oauth2_contract::{OAuth2BodyEncoding, OAuth2Endpoint, OAuth2RequestLocation};
 use crate::auth::oauth_common::{
     atomic_write, config_dir, now_epoch, parse_oauth_error_message, read_oauth_env,
@@ -870,6 +871,16 @@ impl AuthProvider for OAuth2TokenProvider {
         self.has_credentials_for_url(&self.resolved_token_url(endpoint))
     }
 
+    /// Client credentials come from the environment, so the token minted
+    /// from them ranks as [`CredentialRank::Env`].
+    fn credential_rank(&self) -> Option<CredentialRank> {
+        self.has_credentials().then_some(CredentialRank::Env)
+    }
+
+    fn credential_header_names(&self) -> Vec<String> {
+        vec![self.token_header.clone()]
+    }
+
     fn credential_hints(&self) -> Vec<String> {
         if let Some(contract) = &self.contract {
             let mut env_vars = vec![
@@ -1029,6 +1040,21 @@ impl AuthProvider for MisconfiguredOAuth2Provider {
 
     fn credential_hints(&self) -> Vec<String> {
         vec![self.reason.clone()]
+    }
+
+    /// Deliberately unranked: this provider holds no credential to compare,
+    /// it exists to fail loudly. `Opaque` keeps it last in arbitration, so a
+    /// sibling scheme that *can* authenticate is preferred over erroring.
+    fn credential_rank(&self) -> Option<CredentialRank> {
+        Some(CredentialRank::Opaque)
+    }
+
+    fn credential_header_names(&self) -> Vec<String> {
+        vec![reqwest::header::AUTHORIZATION.to_string()]
+    }
+
+    fn unavailable_reason(&self) -> Option<String> {
+        Some(self.reason.clone())
     }
 
     fn apply(

@@ -4,16 +4,38 @@
 
 use std::collections::HashMap;
 
+use crate::auth::credential::CredentialRank;
 use crate::auth::provider::{AuthProvider, DynAuthProvider, EndpointAuthMetadata};
 use crate::error::CliError;
+
+/// Collect the credential header names of a set of child providers,
+/// de-duplicated case-insensitively while preserving first-seen order.
+fn union_credential_header_names<'a>(
+    providers: impl IntoIterator<Item = &'a DynAuthProvider>,
+) -> Vec<String> {
+    let mut out: Vec<String> = Vec::new();
+    for p in providers {
+        for name in p.credential_header_names() {
+            if !out.iter().any(|seen| seen.eq_ignore_ascii_case(&name)) {
+                out.push(name);
+            }
+        }
+    }
+    out
+}
 
 // ---------------------------------------------------------------------------
 // AnyAuthProvider — OR semantics.
 // ---------------------------------------------------------------------------
 
-/// Try each child provider in order. The first one with credentials applies
-/// its headers and the wrapper returns. If no child has credentials, the
-/// request goes out unauthenticated.
+/// Pick one child provider and let it apply its headers. If no child has
+/// credentials, the request goes out unauthenticated.
+///
+/// The child is chosen by [`CredentialRank`] — a credential passed on the
+/// command line beats one from the environment, which beats a stored
+/// login (ADR-0008) — with registration order breaking ties, so CLIs whose
+/// candidates all share a rank behave exactly as they did when selection
+/// was registration-order only.
 ///
 /// Mirrors the TS `AnyAuthProvider`. Used when the CLI declares multiple
 /// schemes but the OpenAPI operations don't pin one per endpoint.
@@ -29,6 +51,22 @@ impl AnyAuthProvider {
             name: "any".to_string(),
             providers,
         }
+    }
+
+    /// The child that should authenticate `endpoint`: the best-ranked
+    /// candidate that can satisfy it, earliest registration first on a tie
+    /// (`min_by_key` keeps the first of equal minima).
+    ///
+    /// The endpoint-aware filter lets nested `RoutingAuthProvider` children
+    /// tell us they can't satisfy *this* endpoint even though they have
+    /// credentials for some scheme. Leaf providers (Bearer/Basic/Header)
+    /// ignore the endpoint, so it degenerates to `has_credentials()` for
+    /// them.
+    fn select(&self, endpoint: &EndpointAuthMetadata) -> Option<&DynAuthProvider> {
+        self.providers
+            .iter()
+            .filter(|p| p.has_credentials_for(endpoint))
+            .min_by_key(|p| p.credential_rank().unwrap_or(CredentialRank::Opaque))
     }
 }
 
@@ -60,22 +98,37 @@ impl AuthProvider for AnyAuthProvider {
             .any(|p| p.has_credentials_for(endpoint))
     }
 
+    fn credential_rank(&self) -> Option<CredentialRank> {
+        self.providers
+            .iter()
+            .filter_map(|p| p.credential_rank())
+            .min()
+    }
+
+    fn credential_header_names(&self) -> Vec<String> {
+        union_credential_header_names(&self.providers)
+    }
+
+    fn selected_credential_headers(&self, endpoint: &EndpointAuthMetadata) -> Vec<String> {
+        match self.select(endpoint) {
+            Some(p) => p.selected_credential_headers(endpoint),
+            None => Vec::new(),
+        }
+    }
+
+    fn unavailable_reason(&self) -> Option<String> {
+        self.providers.iter().find_map(|p| p.unavailable_reason())
+    }
+
     fn apply(
         &self,
         request: reqwest::RequestBuilder,
         endpoint: &EndpointAuthMetadata,
     ) -> Result<reqwest::RequestBuilder, CliError> {
-        // Endpoint-aware filter: lets nested `RoutingAuthProvider` children
-        // tell us they can't satisfy *this* endpoint even though they have
-        // credentials for some scheme. Leaf providers (Bearer/Basic/Header)
-        // ignore the endpoint, so this degenerates to `has_credentials()`
-        // for them.
-        for provider in &self.providers {
-            if provider.has_credentials_for(endpoint) {
-                return provider.apply(request, endpoint);
-            }
+        match self.select(endpoint) {
+            Some(provider) => provider.apply(request, endpoint),
+            None => Ok(request),
         }
-        Ok(request)
     }
 }
 
@@ -137,6 +190,36 @@ impl AuthProvider for AllAuthProvider {
                 .providers
                 .iter()
                 .all(|p| p.has_credentials_for(endpoint))
+    }
+
+    /// The weakest child's rank: an all-auth request is only as explicitly
+    /// supplied as its least explicit scheme.
+    fn credential_rank(&self) -> Option<CredentialRank> {
+        if !self.has_credentials() {
+            return None;
+        }
+        self.providers
+            .iter()
+            .filter_map(|p| p.credential_rank())
+            .max()
+    }
+
+    fn credential_header_names(&self) -> Vec<String> {
+        union_credential_header_names(&self.providers)
+    }
+
+    fn selected_credential_headers(&self, endpoint: &EndpointAuthMetadata) -> Vec<String> {
+        if endpoint.is_explicit_anonymous() || !self.has_credentials_for(endpoint) {
+            return Vec::new();
+        }
+        self.providers
+            .iter()
+            .flat_map(|p| p.selected_credential_headers(endpoint))
+            .collect()
+    }
+
+    fn unavailable_reason(&self) -> Option<String> {
+        self.providers.iter().find_map(|p| p.unavailable_reason())
     }
 
     fn apply(
@@ -224,6 +307,37 @@ impl AuthProvider for LayeredAuthProvider {
         self.primary.has_credentials_for(endpoint)
     }
 
+    fn credential_rank(&self) -> Option<CredentialRank> {
+        self.primary.credential_rank()
+    }
+
+    fn credential_header_names(&self) -> Vec<String> {
+        let mut names = self.primary.credential_header_names();
+        for name in union_credential_header_names(&self.layers) {
+            if !names.iter().any(|seen| seen.eq_ignore_ascii_case(&name)) {
+                names.push(name);
+            }
+        }
+        names
+    }
+
+    fn selected_credential_headers(&self, endpoint: &EndpointAuthMetadata) -> Vec<String> {
+        if endpoint.is_explicit_anonymous() {
+            return Vec::new();
+        }
+        let mut selected = self.primary.selected_credential_headers(endpoint);
+        for layer in &self.layers {
+            if layer.has_credentials() {
+                selected.extend(layer.selected_credential_headers(endpoint));
+            }
+        }
+        selected
+    }
+
+    fn unavailable_reason(&self) -> Option<String> {
+        self.primary.unavailable_reason()
+    }
+
     fn apply(
         &self,
         request: reqwest::RequestBuilder,
@@ -287,6 +401,34 @@ impl RoutingAuthProvider {
         self.default = Some(default);
         self
     }
+
+    /// Whether every scheme named by `requirement` is registered and holds
+    /// a credential.
+    fn requirement_satisfiable(&self, requirement: &HashMap<String, Vec<String>>) -> bool {
+        requirement
+            .keys()
+            .all(|name| self.schemes.get(name).is_some_and(|p| p.has_credentials()))
+    }
+
+    /// The requirement to satisfy `endpoint` with: the best-ranked
+    /// satisfiable alternative, first-declared on a tie.
+    ///
+    /// A requirement is ranked by its weakest scheme, since all of them are
+    /// sent together.
+    fn best_requirement<'r>(
+        &self,
+        requirements: &'r [HashMap<String, Vec<String>>],
+    ) -> Option<&'r HashMap<String, Vec<String>>> {
+        requirements
+            .iter()
+            .filter(|req| self.requirement_satisfiable(req))
+            .min_by_key(|req| {
+                req.keys()
+                    .filter_map(|name| self.schemes.get(name)?.credential_rank())
+                    .max()
+                    .unwrap_or(CredentialRank::Opaque)
+            })
+    }
 }
 
 impl AuthProvider for RoutingAuthProvider {
@@ -342,14 +484,51 @@ impl AuthProvider for RoutingAuthProvider {
                 None => self.has_credentials(),
             },
             Some(reqs) if reqs.is_empty() => true,
-            Some(reqs) => reqs.iter().any(|req| {
-                req.keys().all(|name| {
-                    self.schemes
-                        .get(name)
-                        .is_some_and(|p| p.has_credentials())
-                })
-            }),
+            Some(reqs) => reqs.iter().any(|req| self.requirement_satisfiable(req)),
         }
+    }
+
+    fn credential_rank(&self) -> Option<CredentialRank> {
+        self.schemes
+            .values()
+            .chain(self.default.iter())
+            .filter_map(|p| p.credential_rank())
+            .min()
+    }
+
+    fn credential_header_names(&self) -> Vec<String> {
+        union_credential_header_names(self.schemes.values().chain(self.default.iter()))
+    }
+
+    /// Resolved from the *providers* the winning requirement names, not
+    /// from the scheme names themselves: a requirement's scheme name and
+    /// the header its provider populates are independent (a scheme called
+    /// `apiKeyAuth` may well set `Authorization`).
+    fn selected_credential_headers(&self, endpoint: &EndpointAuthMetadata) -> Vec<String> {
+        match &endpoint.security_requirements {
+            None => match &self.default {
+                Some(d) => d.selected_credential_headers(endpoint),
+                None => Vec::new(),
+            },
+            Some(reqs) if reqs.is_empty() => Vec::new(),
+            Some(reqs) => match self.best_requirement(reqs) {
+                Some(requirement) => {
+                    let mut names: Vec<&String> = requirement.keys().collect();
+                    names.sort();
+                    union_credential_header_names(
+                        names.into_iter().filter_map(|n| self.schemes.get(n)),
+                    )
+                }
+                None => Vec::new(),
+            },
+        }
+    }
+
+    fn unavailable_reason(&self) -> Option<String> {
+        self.schemes
+            .values()
+            .chain(self.default.iter())
+            .find_map(|p| p.unavailable_reason())
     }
 
     fn apply(
@@ -370,15 +549,7 @@ impl AuthProvider for RoutingAuthProvider {
             Some(reqs) => reqs,
         };
 
-        let satisfiable = requirements.iter().find(|req| {
-            req.keys().all(|name| {
-                self.schemes
-                    .get(name)
-                    .is_some_and(|p| p.has_credentials())
-            })
-        });
-
-        let Some(requirement) = satisfiable else {
+        let Some(requirement) = self.best_requirement(requirements) else {
             // No declared requirement is satisfiable. Diverges from the TS
             // generator (which throws): we let the request go out unauthed
             // so the server's 401/403 + `handle_error_response`

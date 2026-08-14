@@ -16,7 +16,10 @@ use futures_util::StreamExt;
 use serde_json::{json, Map, Value};
 use tokio::io::AsyncWriteExt;
 
-use crate::auth::{handle_error_response, DynAuthProvider, EndpointAuthMetadata};
+use crate::auth::{
+    handle_error_response_with_disclosure, CredentialDisclosure, DynAuthProvider,
+    EndpointAuthMetadata,
+};
 use crate::error::CliError;
 use crate::openapi::discovery::{
     BodyEncoding, MethodParameter, PaginationConfig as EndpointPagination, RestDescription,
@@ -600,6 +603,11 @@ struct ExecutionInput {
     full_url: String,
     query_params: Vec<(String, String)>,
     header_params: Vec<(String, String)>,
+    /// Names of the `header_params` entries that came from a resolved
+    /// global header rather than a per-operation parameter. A per-op value
+    /// is the caller being explicit about this request, so only the global
+    /// ones defer to the auth layer when the same credential is arbitrated.
+    global_header_names: Vec<String>,
     is_upload: bool,
 }
 
@@ -763,9 +771,11 @@ fn parse_and_validate_inputs(
     // happens upstream in `run_async`; the executor's job here is just
     // to stamp the resolved value on the request when no per-op
     // parameter already supplied it.
+    let mut global_header_names: Vec<String> = Vec::new();
     for (name, value) in extra_headers {
         if !header_params.iter().any(|(k, _)| k == name) {
             header_params.push((name.clone(), value.clone()));
+            global_header_names.push(name.clone());
         }
     }
 
@@ -859,6 +869,7 @@ fn parse_and_validate_inputs(
         full_url,
         query_params,
         header_params,
+        global_header_names,
         is_upload,
     })
 }
@@ -959,6 +970,80 @@ impl PageState {
     }
 }
 
+/// Global headers withheld from this request because the auth layer already
+/// selected a credential for it.
+///
+/// A credential-bearing global header keeps its reach — it is injected on
+/// every request, including explicitly-anonymous ones — so this is empty
+/// unless the auth layer populated a credential header of its own. Sending
+/// both a promoted `xi-api-key`-style header and the selected scheme's
+/// header would either duplicate the same credential or transmit two
+/// mutually exclusive ones, which APIs reject outright.
+///
+/// Only *global* headers are eligible: a per-operation header parameter is
+/// the caller being explicit about this one request, and is never withheld.
+fn withheld_global_credential_headers(
+    auth_provider: &DynAuthProvider,
+    auth_metadata: &EndpointAuthMetadata,
+    input: &ExecutionInput,
+) -> Vec<String> {
+    if auth_metadata.is_explicit_anonymous()
+        || auth_provider
+            .selected_credential_headers(auth_metadata)
+            .is_empty()
+    {
+        return Vec::new();
+    }
+    let arbitrated = auth_provider.credential_header_names();
+    input
+        .global_header_names
+        .iter()
+        .filter(|name| arbitrated.iter().any(|h| h.eq_ignore_ascii_case(name)))
+        .cloned()
+        .collect()
+}
+
+/// What the request actually disclosed about the caller's identity, so the
+/// error path can tell "the server rejected the credential we sent" from
+/// "we sent nothing and the user needs to configure a credential".
+///
+/// Counts both the credentials the auth layer applied and any
+/// credential-shaped header that went out on its own. The
+/// name-looks-like-a-credential heuristic is sound *here* — its only
+/// consequence is which hint the user reads — unlike promotion, where it
+/// would decide whether a secret goes on the wire.
+fn credential_disclosure(
+    doc: &RestDescription,
+    auth_provider: &DynAuthProvider,
+    auth_metadata: &EndpointAuthMetadata,
+    input: &ExecutionInput,
+) -> CredentialDisclosure {
+    let mut disclosure = CredentialDisclosure::none();
+
+    let selected = auth_provider.selected_credential_headers(auth_metadata);
+    for name in &selected {
+        disclosure = disclosure.with_source(format!("the `{name}` header"));
+    }
+    if !selected.is_empty() {
+        for hint in auth_provider.credential_hints() {
+            disclosure = disclosure.with_source(hint);
+        }
+    }
+
+    let spec_sensitive = spec_sensitive_header_names(doc);
+    let withheld = withheld_global_credential_headers(auth_provider, auth_metadata, input);
+    for (name, _) in &input.header_params {
+        if withheld.iter().any(|h| h.eq_ignore_ascii_case(name)) {
+            continue;
+        }
+        if crate::debug::is_sensitive_header(name, &spec_sensitive) {
+            disclosure = disclosure.with_source(format!("the `{name}` header"));
+        }
+    }
+
+    disclosure
+}
+
 /// Build an HTTP request with auth, query params, page token, and body/multipart attachment.
 #[allow(clippy::too_many_arguments)]
 async fn build_http_request(
@@ -1029,6 +1114,10 @@ async fn build_http_request(
         request = auth_provider.apply(request, auth_metadata)?;
     }
 
+    let withheld = withheld_global_credential_headers(auth_provider, auth_metadata, input);
+    let withheld_credential_header =
+        |name: &str| withheld.iter().any(|h| h.eq_ignore_ascii_case(name));
+
     // Prefer JSON when the API supports content negotiation (some providers
     // return XML otherwise). Only inject when the operation doesn't already
     // set an Accept header.
@@ -1042,6 +1131,9 @@ async fn build_http_request(
 
     // Send header parameters as HTTP headers
     for (name, value) in &input.header_params {
+        if withheld_credential_header(name) {
+            continue;
+        }
         if let Ok(header_value) = reqwest::header::HeaderValue::from_str(value) {
             request = request.header(name.as_str(), header_value);
         }
@@ -2042,6 +2134,8 @@ pub async fn execute_method(
         ),
     };
 
+    let auth_metadata = endpoint_metadata_for(method, base_url_override);
+
     if dry_run {
         let content_type_header = if input.body.is_some() {
             method.body_encoding.content_type()
@@ -2056,9 +2150,12 @@ pub async fn execute_method(
         // Same predicate and spec-derived names as the debug dump, so the two
         // can't drift apart.
         let sensitive_header_names = spec_sensitive_header_names(doc);
+        // Withheld credentials aren't part of the request being described.
+        let withheld = withheld_global_credential_headers(auth_provider, &auth_metadata, &input);
         let redacted_headers: Vec<(String, String)> = input
             .header_params
             .iter()
+            .filter(|(name, _)| !withheld.iter().any(|h| h.eq_ignore_ascii_case(name)))
             .map(|(name, value)| {
                 if crate::debug::is_sensitive_header(name, &sensitive_header_names) {
                     (name.clone(), "[REDACTED]".to_string())
@@ -2147,7 +2244,6 @@ pub async fn execute_method(
     let mut page_state: PageState = PageState::initial(endpoint_pag);
     let mut pages_fetched: u32 = 0;
     let mut captured_values = Vec::new();
-    let auth_metadata = endpoint_metadata_for(method, base_url_override);
 
     // Spawn an external pager when --page-all is active on a TTY.
     let fallback_label = format!(
@@ -2431,11 +2527,13 @@ pub async fn execute_method(
                     &additional_sensitive_headers,
                 );
             }
-            return handle_error_response(
+            let disclosure = credential_disclosure(doc, auth_provider, &auth_metadata, &input);
+            return handle_error_response_with_disclosure(
                 status,
                 &error_body,
                 auth_provider.as_ref(),
                 &auth_metadata,
+                &disclosure,
             );
         }
 
@@ -5854,6 +5952,7 @@ mod tests {
                 "X-Custom-Header".to_string(),
                 "header-value".to_string(),
             )],
+            global_header_names: Vec::new(),
             is_upload: false,
         };
 
@@ -5902,6 +6001,7 @@ mod tests {
             body: None,
             query_params: Vec::new(),
             header_params: vec![("Accept".to_string(), "application/xml".to_string())],
+            global_header_names: Vec::new(),
             is_upload: false,
         };
 
@@ -5947,6 +6047,7 @@ mod tests {
             body: None,
             query_params: Vec::new(),
             header_params: Vec::new(),
+            global_header_names: Vec::new(),
             is_upload: false,
         };
         // A bare bearer leaf — would normally attach Authorization.
@@ -10438,6 +10539,7 @@ mod tests {
             body: None,
             query_params: Vec::new(),
             header_params: Vec::new(),
+            global_header_names: Vec::new(),
             is_upload: false,
         };
 
@@ -10467,6 +10569,7 @@ mod tests {
             body: None,
             query_params: Vec::new(),
             header_params: Vec::new(),
+            global_header_names: Vec::new(),
             is_upload: false,
         };
 
@@ -11215,6 +11318,7 @@ async fn test_post_without_body_sets_content_length_zero() {
         body: None,
         query_params: Vec::new(),
         header_params: Vec::new(),
+        global_header_names: Vec::new(),
         is_upload: false,
     };
 
@@ -11258,6 +11362,7 @@ async fn test_post_with_body_does_not_add_content_length_zero() {
         body: Some(json!({"name": "test"})),
         query_params: Vec::new(),
         header_params: Vec::new(),
+        global_header_names: Vec::new(),
         is_upload: false,
     };
 
@@ -11299,6 +11404,7 @@ async fn test_get_does_not_set_content_length_zero() {
         body: None,
         query_params: Vec::new(),
         header_params: Vec::new(),
+        global_header_names: Vec::new(),
         is_upload: false,
     };
 
@@ -11344,6 +11450,7 @@ async fn test_bearer_header_sends_bearer_prefix() {
         body: None,
         query_params: Vec::new(),
         header_params: Vec::new(),
+        global_header_names: Vec::new(),
         is_upload: false,
     };
 
@@ -11869,4 +11976,241 @@ fn test_global_param_multiple_locations() {
     );
     let body = input.body.expect("body should have currency");
     assert_eq!(body["currency"], "EUR");
+}
+
+// ---------------------------------------------------------------------------
+// Credential arbitration on the wire (ADR-0008)
+// ---------------------------------------------------------------------------
+
+/// Build a request with `input` and `provider` and return the headers that
+/// would go out, so the mutually-exclusive-credential rules can be asserted
+/// against the actual wire state rather than an intermediate structure.
+#[cfg(test)]
+async fn built_headers(
+    input: &ExecutionInput,
+    provider: &DynAuthProvider,
+    endpoint: &EndpointAuthMetadata,
+) -> reqwest::header::HeaderMap {
+    use crate::openapi::discovery::RestMethod;
+
+    let client = crate::http::HttpConfig::new("test")
+        .unwrap()
+        .build_client()
+        .unwrap();
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "/test".to_string(),
+        ..Default::default()
+    };
+    build_http_request(
+        &client,
+        &method,
+        input,
+        provider,
+        endpoint,
+        &PageState::Cursor(None),
+        0,
+        &None,
+        None,
+        &None,
+        &PaginationConfig::default(),
+    )
+    .await
+    .unwrap()
+    .build()
+    .unwrap()
+    .headers()
+    .clone()
+}
+
+/// An input carrying a promoted credential header plus an unrelated global
+/// header, mirroring a spec whose `x-fern-global-headers` holds both.
+#[cfg(test)]
+fn input_with_global_headers() -> ExecutionInput {
+    ExecutionInput {
+        full_url: "https://example.com/test".to_string(),
+        body: None,
+        query_params: Vec::new(),
+        header_params: vec![
+            (
+                "xi-api-key".to_string(),
+                "key-from-global-header".to_string(),
+            ),
+            ("X-API-Version".to_string(), "2024-01-01".to_string()),
+        ],
+        global_header_names: vec!["xi-api-key".to_string(), "X-API-Version".to_string()],
+        is_upload: false,
+    }
+}
+
+/// Bearer + api-key-header schemes composed with OR semantics, each with
+/// the credential source it should arbitrate from.
+#[cfg(test)]
+fn any_provider(
+    bearer: crate::auth::AuthCredentialSource,
+    api_key: crate::auth::AuthCredentialSource,
+) -> DynAuthProvider {
+    std::sync::Arc::new(crate::auth::AnyAuthProvider::new(vec![
+        std::sync::Arc::new(crate::auth::BearerAuthProvider::new("oauth", bearer))
+            as DynAuthProvider,
+        std::sync::Arc::new(crate::auth::HeaderAuthProvider::new(
+            "xi-api-key",
+            "xi-api-key",
+            api_key,
+            false,
+        )) as DynAuthProvider,
+    ]))
+}
+
+#[tokio::test]
+async fn test_promoted_global_credential_is_withheld_when_another_scheme_wins() {
+    // The dual-header rejection: a stored OAuth token and a global-header API
+    // key both present sent `Authorization` *and* `xi-api-key`, which APIs
+    // offering both styles reject outright.
+    let provider = any_provider(
+        crate::auth::AuthCredentialSource::literal("oauth-token"),
+        crate::auth::AuthCredentialSource::Missing,
+    );
+    let headers = built_headers(
+        &input_with_global_headers(),
+        &provider,
+        &EndpointAuthMetadata::unspecified(),
+    )
+    .await;
+
+    assert!(
+        headers.get("authorization").is_some(),
+        "selected scheme must be sent"
+    );
+    assert!(
+        headers.get("xi-api-key").is_none(),
+        "the mutually exclusive global credential must be withheld, got: {headers:?}"
+    );
+    assert_eq!(
+        headers.get("X-API-Version").and_then(|v| v.to_str().ok()),
+        Some("2024-01-01"),
+        "an unrelated global header keeps its reach"
+    );
+}
+
+#[tokio::test]
+async fn test_promoted_credential_sent_exactly_once_when_it_is_the_winner() {
+    // The api key is the only credential: it goes out once, from the auth
+    // layer, with no duplicate from the global-header injection.
+    let provider = any_provider(
+        crate::auth::AuthCredentialSource::Missing,
+        crate::auth::AuthCredentialSource::literal("key-from-auth-layer"),
+    );
+    let headers = built_headers(
+        &input_with_global_headers(),
+        &provider,
+        &EndpointAuthMetadata::unspecified(),
+    )
+    .await;
+
+    assert!(headers.get("authorization").is_none());
+    assert_eq!(headers.get_all("xi-api-key").iter().count(), 1);
+    assert_eq!(
+        headers.get("xi-api-key").and_then(|v| v.to_str().ok()),
+        Some("key-from-auth-layer"),
+    );
+}
+
+#[tokio::test]
+async fn test_cli_flag_outranks_stored_login_across_schemes() {
+    // Source rank, not registration order: the bearer scheme is registered
+    // first and has a credential, but the api key was passed on this
+    // invocation's command line, so it wins.
+    let cmd = clap::Command::new("test").arg(clap::Arg::new("api-key").long("api-key").num_args(1));
+    let matches = std::sync::Arc::new(
+        cmd.try_get_matches_from(vec!["test", "--api-key", "key-from-flag"])
+            .unwrap(),
+    );
+    let provider = any_provider(
+        crate::auth::AuthCredentialSource::Keyring {
+            service: "acme".to_string(),
+            account: "oauth".to_string(),
+        },
+        crate::auth::AuthCredentialSource::cli_matched(&matches, "api-key", "--api-key flag"),
+    );
+    let headers = built_headers(
+        &input_with_global_headers(),
+        &provider,
+        &EndpointAuthMetadata::unspecified(),
+    )
+    .await;
+
+    assert_eq!(
+        headers.get("xi-api-key").and_then(|v| v.to_str().ok()),
+        Some("key-from-flag"),
+    );
+    assert!(
+        headers.get("authorization").is_none(),
+        "a stored login must not shadow an explicit flag, got: {headers:?}"
+    );
+}
+
+#[tokio::test]
+async fn test_anonymous_endpoint_keeps_global_credential_header() {
+    // Promotion must not narrow a global header's reach: an operation
+    // declaring `security: []` still receives it, exactly as before.
+    let provider = any_provider(
+        crate::auth::AuthCredentialSource::literal("oauth-token"),
+        crate::auth::AuthCredentialSource::Missing,
+    );
+    let headers = built_headers(
+        &input_with_global_headers(),
+        &provider,
+        &EndpointAuthMetadata::explicit_anonymous(),
+    )
+    .await;
+
+    assert_eq!(
+        headers.get("xi-api-key").and_then(|v| v.to_str().ok()),
+        Some("key-from-global-header"),
+    );
+    assert!(headers.get("authorization").is_none());
+}
+
+#[tokio::test]
+async fn test_per_operation_header_parameter_is_never_withheld() {
+    // Only *global* headers defer to arbitration. A per-operation header the
+    // caller set explicitly on this request is theirs to send.
+    let mut input = input_with_global_headers();
+    input.global_header_names.clear();
+    let provider = any_provider(
+        crate::auth::AuthCredentialSource::literal("oauth-token"),
+        crate::auth::AuthCredentialSource::Missing,
+    );
+    let headers = built_headers(&input, &provider, &EndpointAuthMetadata::unspecified()).await;
+
+    assert_eq!(
+        headers.get("xi-api-key").and_then(|v| v.to_str().ok()),
+        Some("key-from-global-header"),
+    );
+}
+
+#[tokio::test]
+async fn test_no_promotion_leaves_unrelated_global_header_untouched() {
+    // A CLI with no credential-bearing global header: the auth layer knows
+    // nothing about `X-API-Version`, so nothing changes for it.
+    let input = ExecutionInput {
+        full_url: "https://example.com/test".to_string(),
+        body: None,
+        query_params: Vec::new(),
+        header_params: vec![("X-API-Version".to_string(), "2024-01-01".to_string())],
+        global_header_names: vec!["X-API-Version".to_string()],
+        is_upload: false,
+    };
+    let provider: DynAuthProvider = std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
+        "oauth",
+        crate::auth::AuthCredentialSource::literal("oauth-token"),
+    ));
+    let headers = built_headers(&input, &provider, &EndpointAuthMetadata::unspecified()).await;
+
+    assert_eq!(
+        headers.get("X-API-Version").and_then(|v| v.to_str().ok()),
+        Some("2024-01-01"),
+    );
+    assert!(headers.get("authorization").is_some());
 }

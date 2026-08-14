@@ -130,6 +130,19 @@ pub trait Binding: Send + Sync {
     ) {
     }
 
+    /// Credential sources this binding contributes on top of the root
+    /// auth bindings, so `auth status` reports every credential the CLI
+    /// would actually send.
+    ///
+    /// A credential declared as a global header is bound by the binding
+    /// itself (it knows the spec's security schemes), not at the root —
+    /// see the promotion rules in `openapi::app`.
+    ///
+    /// Default: none.
+    fn promoted_auth_bindings(&self) -> Vec<(String, SchemeBinding)> {
+        Vec::new()
+    }
+
     /// Validate that all auth schemes referenced by the binding's spec
     /// have a corresponding entry in the auth bindings. Returns `Ok(())`
     /// if validation passes, or `Err(CliError::Validation(...))` listing

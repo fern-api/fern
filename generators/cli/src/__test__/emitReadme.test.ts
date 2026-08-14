@@ -434,6 +434,59 @@ describe("emitReadme", () => {
         const authSection = readme.split("## Authentication")[1]?.split("##")[0] ?? "";
         expect(authSection).toContain(".env");
     });
+
+    // ── Login-flow-only auth ────────────────────────────────────────
+
+    const loginFlowBinding: DetectedAuthBinding = {
+        schemeName: "OAuth",
+        rustCall: '.login_flow(PkceLoginFlow::new("OAuth"))',
+        placement: "root",
+        authTypeImport: "PkceLoginFlow",
+        envVars: [],
+        kind: "oauth-authorization-code"
+    };
+
+    it("documents `auth login` instead of an empty env-var fence for login-flow-only auth", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [loginFlowBinding],
+            npmPublishInfo: undefined,
+            repoUrl: undefined
+        });
+
+        const authSection = readme.split("## Authentication")[1]?.split("\n## ")[0] ?? "";
+        expect(authSection).toContain("acme auth login");
+        expect(authSection).toContain("acme auth status");
+        expect(authSection).not.toContain("```bash\n```");
+    });
+
+    it("names the precedence between an env var and a login flow when both exist", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [
+                {
+                    schemeName: "xi-api-key",
+                    rustCall: '.auth(ApiKeyAuth::new("xi-api-key").env("ACME_API_KEY"))',
+                    placement: "root",
+                    authTypeImport: "ApiKeyAuth",
+                    envVars: ["ACME_API_KEY"],
+                    kind: "header"
+                },
+                loginFlowBinding
+            ],
+            npmPublishInfo: undefined,
+            repoUrl: undefined
+        });
+
+        const authSection = readme.split("## Authentication")[1]?.split("\n## ")[0] ?? "";
+        expect(authSection).toContain('export ACME_API_KEY="<your api key>"');
+        expect(authSection).toContain("acme auth login");
+        expect(authSection).toContain("the environment variable wins");
+    });
 });
 
 describe("emitReadme — distribution channels", () => {
