@@ -24,8 +24,8 @@ import { createRequire } from "module";
 import path from "path";
 import { promisify } from "util";
 import { readFullIr } from "./ir.js";
-import { planTypeCratePartitions } from "./planTypeCratePartitions.js";
-import { splitTypesCrates } from "./splitTypesCrates.js";
+import { planTypeCratePartitions, validateTypeCratePlan } from "./planTypeCratePartitions.js";
+import { splitTypesCrates, type TypePartitionCrate } from "./splitTypesCrates.js";
 import {
     buildTypesCrateCargoToml,
     buildTypesCratePrelude,
@@ -117,23 +117,29 @@ export async function generateEmbeddedTypes(args: {
     await patchTypesCrate({ typesOutputDir, typesCrateName, needsReqwest, keepFernDirectory: splitTypeCrates });
 
     if (!splitTypeCrates) {
-        return { typesCrateName, partitionCrateNames: [] };
+        return { typesCrateName, partitionCrates: [] };
     }
 
-    const { partitionCrateNames } = await splitTypesCrates({
+    const ir = await readFullIr(irFilepath);
+    const plan = planTypeCratePartitions(ir);
+    // Fail before anything is moved: a plan that violates leaf -> core would
+    // otherwise surface as unresolved names in the consumer's `cargo build`.
+    validateTypeCratePlan(ir, plan);
+
+    const { partitionCrates } = await splitTypesCrates({
         typesOutputDir,
         typesCrateName,
-        plan: planTypeCratePartitions(await readFullIr(irFilepath)),
+        plan,
         needsReqwest
     });
-    return { typesCrateName, partitionCrateNames };
+    return { typesCrateName, partitionCrates };
 }
 
 export interface EmbeddedTypesResult {
     /** Crate the SDK and CLI depend on. A facade when partitioned. */
     typesCrateName: string;
     /** Per-API crates behind the facade; empty when not partitioned. */
-    partitionCrateNames: string[];
+    partitionCrates: TypePartitionCrate[];
 }
 
 /**

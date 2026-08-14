@@ -74,7 +74,8 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     # Split type crates where every type is root-level: they all land in the
-    # shared core crate and the facade fronts it alone.
+    # core crate and the facade fronts it alone, with no leaves. Also the
+    # regression fixture for root-level services owning nothing.
     - customConfig:
         splitTypeCrates: true
       outputFolder: with-split-type-crates
@@ -247,11 +248,19 @@ fixtures:
         binaryName: basic-auth-cli
         generateWireTests: true
       outputFolder: with-wire-tests
-    # Split type crates where a root-level type is reachable from more than one
-    # subpackage: it lands in the shared core crate, and the per-subpackage
-    # crates reference it across a crate boundary.
+    # Split type crates where the two subpackages share nothing: each owns its
+    # types outright, so the facade fronts two leaves and no core crate is
+    # emitted. `cli-shared-types` covers the case where a core crate exists.
     - customConfig:
         binaryName: basic-auth-cli
+        splitTypeCrates: true
+      outputFolder: with-split-type-crates
+  # The split fixture that matters: a type shared between two subpackages, so
+  # the emitted workspace is a core crate plus leaves that depend on it. See
+  # this API's generators.yml for what each path in it covers.
+  cli-shared-types:
+    - customConfig:
+        binaryName: shared-types-cli
         splitTypeCrates: true
       outputFolder: with-split-type-crates
 

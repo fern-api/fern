@@ -4,7 +4,8 @@ import {
     CORE_PARTITION_KEY,
     type PartitionService,
     planTypeCratePartitions,
-    type TypePartitionInput
+    type TypePartitionInput,
+    validateTypeCratePlan
 } from "../planTypeCratePartitions.js";
 
 /**
@@ -79,15 +80,21 @@ function objectType({
 /**
  * An endpoint under `subpackage` whose response body references `responseTypeId`,
  * which is how a service pulls a type into its partition.
+ *
+ * `responseTypeSubpackage` defaults to the service's own, since that is the
+ * common case; pass it explicitly to model a service returning a type declared
+ * somewhere else.
  */
 function endpointReturning({
     endpointId,
     subpackage,
-    responseTypeId
+    responseTypeId,
+    responseTypeSubpackage = subpackage
 }: {
     endpointId: string;
     subpackage: string;
     responseTypeId: string;
+    responseTypeSubpackage?: string;
 }): PartitionService {
     return {
         name: { fernFilepath: fernFilepath(subpackage) },
@@ -99,7 +106,7 @@ function endpointReturning({
                     body: FernIr.HttpResponseBody.json(
                         FernIr.JsonResponse.response({
                             responseBodyType: FernIr.TypeReference.named({
-                                ...declaredTypeName(responseTypeId, subpackage),
+                                ...declaredTypeName(responseTypeId, responseTypeSubpackage),
                                 default: undefined,
                                 inline: undefined
                             }),
@@ -296,5 +303,141 @@ describe("planTypeCratePartitions", () => {
         const assigned = [...plan.core.typeIds, ...plan.leaves.flatMap((partition) => partition.typeIds)];
         expect(assigned.sort()).toEqual(["ApiError", "Call", "Message", "RootType"]);
         expect(new Set(assigned).size).toBe(assigned.length);
+    });
+
+    // A service with no subpackage cannot own a crate, so the request structs
+    // generated for its endpoints fall to core. Skipping it while seeding — so
+    // that the types it alone reaches stay in the leaf that declared them —
+    // leaves core naming a type it cannot see, and the emitted workspace does
+    // not compile.
+    it("gives core the endpoints of a root-level service, and seeds their references with them", () => {
+        const plan = planTypeCratePartitions(
+            ir(
+                [objectType({ typeId: "Message", subpackage: "messaging" })],
+                [
+                    endpointReturning({
+                        endpointId: "search",
+                        subpackage: "",
+                        responseTypeId: "Message",
+                        responseTypeSubpackage: "messaging"
+                    })
+                ]
+            )
+        );
+
+        expect(plan.core.endpointIds).toEqual(["search"]);
+        expect(keyOf(plan, "Message")).toBe(CORE_PARTITION_KEY);
+        expect(plan.leaves).toEqual([]);
+    });
+
+    it("still lets a subpackage own a type a root-level service does not reach", () => {
+        const plan = planTypeCratePartitions(
+            ir(
+                [
+                    objectType({ typeId: "Message", subpackage: "messaging" }),
+                    objectType({ typeId: "Draft", subpackage: "messaging" })
+                ],
+                [
+                    endpointReturning({
+                        endpointId: "search",
+                        subpackage: "",
+                        responseTypeId: "Message",
+                        responseTypeSubpackage: "messaging"
+                    }),
+                    endpointReturning({ endpointId: "listDrafts", subpackage: "messaging", responseTypeId: "Draft" })
+                ]
+            )
+        );
+
+        // Reached from core and from `messaging`, so it has to be shared.
+        expect(keyOf(plan, "Message")).toBe(CORE_PARTITION_KEY);
+        // Reached only from `messaging`, so splitting still buys something.
+        expect(keyOf(plan, "Draft")).toBe("messaging");
+    });
+});
+
+describe("validateTypeCratePlan", () => {
+    it("accepts what the planner produces, including across a root-level service", () => {
+        const input = ir(
+            [
+                objectType({ typeId: "Message", subpackage: "messaging", references: ["ApiError"] }),
+                objectType({ typeId: "Call", subpackage: "voice", references: ["ApiError"] }),
+                objectType({ typeId: "ApiError", subpackage: "commons" }),
+                objectType({ typeId: "Draft", subpackage: "messaging" })
+            ],
+            [
+                endpointReturning({ endpointId: "send", subpackage: "messaging", responseTypeId: "Message" }),
+                endpointReturning({ endpointId: "dial", subpackage: "voice", responseTypeId: "Call" }),
+                endpointReturning({ endpointId: "listDrafts", subpackage: "messaging", responseTypeId: "Draft" }),
+                endpointReturning({
+                    endpointId: "search",
+                    subpackage: "",
+                    responseTypeId: "Message",
+                    responseTypeSubpackage: "messaging"
+                })
+            ]
+        );
+
+        expect(() => validateTypeCratePlan(input, planTypeCratePartitions(input))).not.toThrow();
+    });
+
+    it("rejects a leaf referencing another leaf, which cargo cannot express", () => {
+        const input = ir([
+            objectType({ typeId: "Message", subpackage: "messaging", references: ["Call"] }),
+            objectType({ typeId: "Call", subpackage: "voice" })
+        ]);
+
+        expect(() =>
+            validateTypeCratePlan(input, {
+                core: { key: CORE_PARTITION_KEY, typeIds: [], endpointIds: [] },
+                leaves: [
+                    { key: "messaging", typeIds: ["Message"], endpointIds: [] },
+                    { key: "voice", typeIds: ["Call"], endpointIds: [] }
+                ]
+            })
+        ).toThrow(/type "Message" is in crate "messaging" but references "Call" in crate "voice"/);
+    });
+
+    it("rejects an unassigned endpoint, since the emitter silently gives it to core", () => {
+        const input = ir(
+            [objectType({ typeId: "Message", subpackage: "messaging" })],
+            [endpointReturning({ endpointId: "send", subpackage: "messaging", responseTypeId: "Message" })]
+        );
+
+        expect(() =>
+            validateTypeCratePlan(input, {
+                core: { key: CORE_PARTITION_KEY, typeIds: [], endpointIds: [] },
+                leaves: [{ key: "messaging", typeIds: ["Message"], endpointIds: [] }]
+            })
+        ).toThrow(/endpoint "send" was not assigned to any crate/);
+    });
+
+    it("holds at the scale the split exists for", () => {
+        // No seed fixture builds more than two partitions; the motivating
+        // workspace has ~60. Assert the invariant directly instead.
+        const subpackages = Array.from({ length: 60 }, (_, index) => `api_${index}`);
+        const input = ir(
+            [
+                objectType({ typeId: "Shared", subpackage: "" }),
+                ...subpackages.map((subpackage) =>
+                    objectType({ typeId: `${subpackage}_Model`, subpackage, references: ["Shared"] })
+                )
+            ],
+            subpackages.map((subpackage) =>
+                endpointReturning({
+                    endpointId: `${subpackage}_get`,
+                    subpackage,
+                    responseTypeId: `${subpackage}_Model`
+                })
+            )
+        );
+
+        const plan = planTypeCratePartitions(input);
+
+        expect(() => validateTypeCratePlan(input, plan)).not.toThrow();
+        expect(plan.leaves).toHaveLength(60);
+        // The whole point: no crate holds everything.
+        expect(keyOf(plan, "Shared")).toBe(CORE_PARTITION_KEY);
+        expect(keyOf(plan, "api_7_Model")).toBe("api_7");
     });
 });

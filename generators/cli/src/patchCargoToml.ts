@@ -433,13 +433,15 @@ export function addTypesCrateToLock(
  */
 export async function patchCargoLockForTypePartitions(args: {
     outputDir: string;
-    partitionCrateNames: string[];
+    /** Crate name plus its directory relative to `outputDir`; the two differ
+     *  because the partitions are nested a level down from the facade. */
+    partitionCrates: Array<{ crateName: string; relativeDir: string }>;
 }): Promise<void> {
-    const { outputDir, partitionCrateNames } = args;
+    const { outputDir, partitionCrates } = args;
     const lockPath = path.join(outputDir, "Cargo.lock");
     let contents = await readFile(lockPath, "utf-8");
-    for (const crateName of partitionCrateNames) {
-        const manifest = await readGeneratedCrateManifest(outputDir, crateName);
+    for (const { crateName, relativeDir } of partitionCrates) {
+        const manifest = await readGeneratedCrateManifest(outputDir, relativeDir);
         const snakeName = crateName.replace(/-/g, "_");
         contents =
             contents.trimEnd() +

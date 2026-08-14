@@ -16,6 +16,18 @@ import path from "path";
 /** Directory under `src/` that holds the generated type modules. */
 export const TYPES_MODULE_DIRECTORY = "types";
 
+/**
+ * Directory at the output root that holds the per-API type crates when
+ * partitioning is on.
+ *
+ * They are nested rather than left as siblings of the CLI's own files because a
+ * large workspace produces one crate per API — 60+ for some consumers — and that
+ * many sibling directories buries everything else in the generated repo. The
+ * facade keeps its top-level position, since it is the crate the SDK and any
+ * user code actually name.
+ */
+export const TYPE_PARTITION_DIRECTORY = "types";
+
 interface CargoPathDependency {
     /** Package name, i.e. the crate name in snake_case. */
     crateName: string;
@@ -123,6 +135,46 @@ export function buildTypesCrateLibRs({ hasTypes }: { hasTypes: boolean }): strin
 
 /** The four core serde helper modules that the model generator references. */
 const CORE_SERDE_MODULES = ["flexible_datetime.rs", "base64_bytes.rs", "bigint_string.rs", "number_serializers.rs"];
+
+/**
+ * `src/core/mod.rs` for a crate that borrows the serde helpers from the shared
+ * crate instead of carrying its own copy.
+ *
+ * Re-exports the modules rather than their items, because generated types reach
+ * into them by path — `#[serde(with = "crate::core::flexible_datetime::offset::
+ * option")]` — and only a module re-export keeps the nested segments resolving.
+ */
+export function buildCoreModuleReexport(coreCrateName: string): string {
+    const lines = [
+        "//! Serde helpers, shared with the rest of the generated workspace.",
+        "//!",
+        "//! Re-exported from the core crate so that this crate's",
+        '//! `#[serde(with = "crate::core::...")]` attributes resolve without each',
+        "//! crate compiling its own copy of them.",
+        ""
+    ];
+    for (const filename of CORE_SERDE_MODULES) {
+        lines.push(`pub use ${coreCrateName}::core::${filename.replace(".rs", "")};`);
+    }
+    lines.push("");
+    return lines.join("\n");
+}
+
+/**
+ * `src/error.rs` for a crate that borrows `BuildError` from the shared crate.
+ *
+ * One definition for the whole workspace, so a builder error raised in one
+ * crate is the same type as one raised in another — which it would not be if
+ * every crate declared its own.
+ */
+export function buildErrorModuleReexport(coreCrateName: string): string {
+    return [
+        "//! Builder errors, shared with the rest of the generated workspace.",
+        "",
+        `pub use ${coreCrateName}::error::*;`,
+        ""
+    ].join("\n");
+}
 
 /**
  * Copy the core serde helper modules into the types crate's `src/core/`

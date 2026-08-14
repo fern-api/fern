@@ -128,6 +128,79 @@ export function planTypeCratePartitions(ir: TypePartitionInput): TypeCratePartit
 }
 
 /**
+ * Assert the invariant the emitter depends on: the only cross-crate edge is
+ * leaf -> core.
+ *
+ * {@link planTypeCratePartitions} is supposed to guarantee this by construction,
+ * so a violation is a bug in the planner rather than something a consumer can
+ * configure their way out of. It is checked anyway because the symptom otherwise
+ * surfaces as unresolved-name errors from `cargo build` in the consumer's own
+ * repo, against generated code they did not write — far from the cause. Failing
+ * here names the offending type instead, and leaves the un-split crate as a
+ * working fallback.
+ *
+ * Deliberately re-derives the reference graph rather than trusting the plan's
+ * own bookkeeping: a check that shares the planner's intermediate state would
+ * agree with it by construction and catch nothing.
+ */
+export function validateTypeCratePlan(ir: TypePartitionInput, plan: TypeCratePartitionPlan): void {
+    const partitionByTypeId = new Map<FernIr.TypeId, string>();
+    const partitionByEndpointId = new Map<FernIr.EndpointId, string>();
+    for (const partition of [plan.core, ...plan.leaves]) {
+        for (const typeId of partition.typeIds) {
+            partitionByTypeId.set(typeId, partition.key);
+        }
+        for (const endpointId of partition.endpointIds) {
+            partitionByEndpointId.set(endpointId, partition.key);
+        }
+    }
+
+    const violations: string[] = [];
+    const checkVisible = (owner: string, referenced: FernIr.TypeId, describeOwner: string): void => {
+        const home = partitionByTypeId.get(referenced);
+        // A reference to a type absent from `ir.types` is dangling; the
+        // traversal skips those too, and no file is emitted for them.
+        if (home == null || home === owner || home === CORE_PARTITION_KEY) {
+            return;
+        }
+        violations.push(`${describeOwner} is in crate "${owner}" but references "${referenced}" in crate "${home}"`);
+    };
+
+    const directReferences = buildDirectReferenceGraph(ir);
+    for (const [typeId, owner] of partitionByTypeId) {
+        for (const referenced of directReferences.get(typeId) ?? []) {
+            checkVisible(owner, referenced, `type "${typeId}"`);
+        }
+    }
+
+    for (const service of Object.values(ir.services)) {
+        for (const endpoint of service.endpoints) {
+            const owner = partitionByEndpointId.get(endpoint.id);
+            if (owner == null) {
+                // Unowned endpoints are not inert: the emitter falls back to
+                // core for them, which is what makes an unseeded reference a
+                // core -> leaf edge.
+                violations.push(`endpoint "${endpoint.id}" was not assigned to any crate`);
+                continue;
+            }
+            for (const referenced of collectEndpointReferences(endpoint, ir)) {
+                checkVisible(owner, referenced, `endpoint "${endpoint.id}"`);
+            }
+        }
+    }
+
+    if (violations.length > 0) {
+        throw new Error(
+            "Cannot split the generated types crate: the partition plan would emit a cargo workspace " +
+                "that does not compile, because a crate references a type another crate owns.\n" +
+                violations.map((violation) => `  - ${violation}`).join("\n") +
+                "\n\nThis is a bug in the CLI generator. Remove `splitTypeCrates` from your generator " +
+                "config to fall back to a single types crate, and report the API shape above."
+        );
+    }
+}
+
+/**
  * Seeds each partition with the types declared under its subpackage *and* the
  * types its endpoints reference. Endpoint references matter because the request
  * and query structs generated for an endpoint live in that endpoint's crate: a
@@ -162,10 +235,13 @@ function collectPartitionSeeds(ir: TypePartitionInput): {
     }
 
     for (const service of Object.values(ir.services)) {
-        const key = getPartitionKey(service.name.fernFilepath);
-        if (key == null) {
-            continue;
-        }
+        // A root-level service has no subpackage of its own, so the request and
+        // query structs generated for its endpoints can only be owned by core.
+        // Its type references have to be seeded from core for the same reason: a
+        // type this service is the only one to reach would otherwise be assigned
+        // to whichever leaf declared it, leaving core — which depends on no leaf
+        // — naming a type it cannot see.
+        const key = getPartitionKey(service.name.fernFilepath) ?? CORE_PARTITION_KEY;
         for (const endpoint of service.endpoints) {
             const endpointIds = endpointsByPartition.get(key);
             if (endpointIds == null) {

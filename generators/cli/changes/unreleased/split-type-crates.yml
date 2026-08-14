@@ -15,4 +15,14 @@
     Defaults to `false`: output is unchanged unless a consumer opts in. The CLI still
     ships as one binary with every spec embedded, and `use <binary>_types::SomeType`
     keeps resolving through the facade.
+
+    The partition crates are emitted under a `types/` directory so a workspace with
+    many APIs adds one top-level directory rather than one per API; the facade keeps
+    its original name and position.
+
+    The facade's module surface is unchanged too: `BuildError` and the serde
+    helpers are declared once in the shared core crate and re-exported by the
+    others, so `<binary>_types::error::BuildError` and
+    `<binary>_types::core::flexible_datetime` keep resolving, and a builder error
+    raised in one API is the same type as one raised in another.
   type: feat

@@ -15,6 +15,7 @@ import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
 import type { SubClientField } from "./generateSdk.js";
 import { generateSdk } from "./generateSdk.js";
 import { deriveBinaryName } from "./identity.js";
+import type { TypePartitionCrate } from "./splitTypesCrates.js";
 import type { IrSummary } from "./ir.js";
 import {
     patchCargoLockForSdk,
@@ -167,7 +168,7 @@ export async function runPipeline(args: {
     // Generate the embedded types + SDK crates (on by default; opt-out via customCommands: false).
     let typesCrateName: string | undefined;
     let sdkCrateName: string | undefined;
-    let typePartitionCrateNames: string[] = [];
+    let typePartitionCrates: TypePartitionCrate[] = [];
     let subClients: SubClientField[] = [];
     if (customCommands && irFilepath != null) {
         const typesResult = await generateEmbeddedTypes({
@@ -177,7 +178,7 @@ export async function runPipeline(args: {
             splitTypeCrates: customConfig.splitTypeCrates
         });
         typesCrateName = typesResult.typesCrateName;
-        typePartitionCrateNames = typesResult.partitionCrateNames;
+        typePartitionCrates = typesResult.partitionCrates;
         await writeFernignore(outputDir, binaryName);
 
         if (typesCrateName != null) {
@@ -219,8 +220,8 @@ export async function runPipeline(args: {
     if (typesCrateName != null || sdkCrateName != null) {
         await patchCargoToml({ outputDir, binaryName, typesCrateName, sdkCrateName });
         const packageName = customConfig.packageIdentity?.name;
-        if (typePartitionCrateNames.length > 0) {
-            await patchCargoLockForTypePartitions({ outputDir, partitionCrateNames: typePartitionCrateNames });
+        if (typePartitionCrates.length > 0) {
+            await patchCargoLockForTypePartitions({ outputDir, partitionCrates: typePartitionCrates });
         }
         if (typesCrateName != null) {
             // When the SDK crate exists, the CLI binary depends on the
@@ -236,7 +237,14 @@ export async function runPipeline(args: {
         if (sdkCrateName != null && typesCrateName != null) {
             await patchCargoLockForSdk({ outputDir, sdkCrateName, typesCrateName, packageName });
         }
-        await patchDistWorkspaceToml({ outputDir, typesCrateName, sdkCrateName, typePartitionCrateNames });
+        await patchDistWorkspaceToml({
+            outputDir,
+            typesCrateName,
+            sdkCrateName,
+            // cargo-dist members are paths from the workspace root, so the
+            // nested partitions are declared by directory, not crate name.
+            typePartitionMemberPaths: typePartitionCrates.map(({ relativeDir }) => relativeDir)
+        });
     }
 
     if (outputConfig.isGithubOutput) {

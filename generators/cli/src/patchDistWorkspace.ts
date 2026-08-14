@@ -29,8 +29,13 @@ export async function patchDistWorkspaceToml(args: {
     outputDir: string;
     typesCrateName?: string;
     sdkCrateName?: string;
-    /** Per-API type crates behind the types facade, when partitioning is on. */
-    typePartitionCrateNames?: string[];
+    /**
+     * Per-API type crates behind the types facade, when partitioning is on, as
+     * paths relative to the workspace root (e.g. `types/<crate>`). cargo-dist
+     * members are paths, not package names, and these crates are nested a level
+     * below the facade.
+     */
+    typePartitionMemberPaths?: string[];
     /**
      * When set, cargo-dist's native Homebrew installer + publish job are
      * turned on. Only meaningful on the first (crate-name-free) call —
@@ -41,7 +46,7 @@ export async function patchDistWorkspaceToml(args: {
     /** Formula name fallback when `homebrew.formula` is unset. */
     binaryName?: string;
 }): Promise<void> {
-    const { outputDir, typesCrateName, sdkCrateName, typePartitionCrateNames = [], homebrew, binaryName } = args;
+    const { outputDir, typesCrateName, sdkCrateName, typePartitionMemberPaths = [], homebrew, binaryName } = args;
     const distTomlPath = path.join(outputDir, "dist-workspace.toml");
     let contents: string;
     try {
@@ -55,8 +60,8 @@ export async function patchDistWorkspaceToml(args: {
         if (typesCrateName != null) {
             patched = addWorkspaceMember(patched, typesCrateName);
         }
-        for (const partitionCrateName of typePartitionCrateNames) {
-            patched = addWorkspaceMember(patched, partitionCrateName);
+        for (const memberPath of typePartitionMemberPaths) {
+            patched = addWorkspaceMember(patched, memberPath);
         }
         if (sdkCrateName != null) {
             patched = addWorkspaceMember(patched, sdkCrateName);
