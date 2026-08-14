@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/definitions/WidgetStatus"
+    }
+  },
+  "required": [
+    "id",
+    "status"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "WidgetStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive"
+      ]
+    }
+  }
+}
