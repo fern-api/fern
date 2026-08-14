@@ -357,6 +357,10 @@ fixtures:
       customConfig:
         enableWireTests: true
         exportAllRequestsAtRoot: true
+  go-nullable-wire-tests:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig:
