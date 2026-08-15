@@ -957,4 +957,24 @@ public class CasingConfigurationTest {
         root.set("casingsConfig", casingsConfig);
         return CasingConfiguration.fromIrJson(root);
     }
+
+    // ===== keyword sanitization: Java literals =====
+
+    @Nested
+    class JavaLiteralKeywordTests {
+
+        @ParameterizedTest
+        @CsvSource({"null,null_", "true,true_", "false,false_"})
+        void computeName_escapesJavaLiterals(String input, String expectedSafeName) {
+            CasingConfiguration config = buildConfig(true, "java", null);
+            CasingConfiguration.NameParts parts = config.computeName(input);
+            assertThat(parts.camelSafe).isEqualTo(expectedSafeName);
+        }
+
+        @Test
+        void computeName_ordinaryKeywordStillEscaped() {
+            CasingConfiguration config = buildConfig(true, "java", null);
+            assertThat(config.computeName("default").camelSafe).isEqualTo("default_");
+        }
+    }
 }
