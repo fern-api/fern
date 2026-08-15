@@ -964,7 +964,7 @@ public class CasingConfigurationTest {
     class JavaLiteralKeywordTests {
 
         @ParameterizedTest
-        @CsvSource({"null,null_", "true,true_", "false,false_"})
+        @CsvSource({"'null',null_", "'true',true_", "'false',false_"})
         void computeName_escapesJavaLiterals(String input, String expectedSafeName) {
             CasingConfiguration config = buildConfig(true, "java", null);
             CasingConfiguration.NameParts parts = config.computeName(input);
