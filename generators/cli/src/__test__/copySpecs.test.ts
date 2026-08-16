@@ -525,6 +525,51 @@ describe("copySpecs", () => {
         expect(main).not.toContain(".user_agent_suffix_flag");
     });
 
+    it("emits .non_credential_headers([...]) when configured", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            nonCredentialHeaders: ["x-tenant-api-key"]
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.non_credential_headers(["x-tenant-api-key"])');
+    });
+
+    it("omits .non_credential_headers(...) by default", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], globalParamBindings: [], specsDir });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).not.toContain(".non_credential_headers");
+    });
+
     it("rejects an unsafe userAgentSuffixFlag (injection attempt)", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });

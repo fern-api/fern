@@ -109,6 +109,14 @@ pub struct RestDescription {
     /// parameters with the same wire-name win.
     #[serde(default, skip)]
     pub global_headers: Vec<GlobalHeader>,
+    /// Global headers a consumer declared as *not* carrying a credential,
+    /// via the CLI generator's `nonCredentialHeaders` config. Compared
+    /// case-insensitively. These are exempt from credential arbitration:
+    /// they are sent on every request even when the auth layer selected a
+    /// credential of its own. The escape hatch for a header whose name
+    /// resembles a credential but isn't one.
+    #[serde(default, skip)]
+    pub non_credential_headers: Vec<String>,
     /// Top-level group metadata sourced from the document-root
     /// [`x-fern-groups`](https://buildwithfern.com/learn/api-definitions/openapi/extensions/groups)
     /// extension. Mirrors the upstream Fern OpenAPI importer's

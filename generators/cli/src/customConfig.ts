@@ -86,6 +86,20 @@ export interface FernCliCustomConfig {
     packageIdentity?: CargoPackageIdentity;
 
     /**
+     * Global headers to exempt from credential arbitration.
+     *
+     * A global header whose name reads as a credential (`x-api-key`,
+     * `authorization`, `*-access-token`, …) is withheld from requests
+     * where the auth layer already selected a credential, so an API that
+     * rejects two credentials at once receives exactly one. List a header
+     * here when its name matches but it carries something else, and the
+     * CLI sends it unconditionally as before.
+     *
+     * Header names are matched case-insensitively.
+     */
+    nonCredentialHeaders?: string[];
+
+    /**
      * Opt-in binary distribution channels layered on top of the GitHub
      * Release archives every generated CLI already ships.
      *
@@ -275,6 +289,20 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
         }
         result.generateWireTests = obj.generateWireTests;
     }
+    if ("nonCredentialHeaders" in obj && obj.nonCredentialHeaders !== undefined) {
+        if (!Array.isArray(obj.nonCredentialHeaders) || obj.nonCredentialHeaders.some((h) => typeof h !== "string")) {
+            throw new Error("Invalid customConfig.nonCredentialHeaders: expected an array of strings.");
+        }
+        const headers = obj.nonCredentialHeaders.filter((h): h is string => typeof h === "string");
+        for (const header of headers) {
+            if (!HTTP_HEADER_NAME_PATTERN.test(header)) {
+                throw new Error(
+                    `Invalid customConfig.nonCredentialHeaders: "${header}" is not a valid HTTP header name.`
+                );
+            }
+        }
+        result.nonCredentialHeaders = headers;
+    }
     if ("packageIdentity" in obj && obj.packageIdentity !== undefined) {
         result.packageIdentity = validatePackageIdentity(obj.packageIdentity);
     }
@@ -283,6 +311,9 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
     }
     return result;
 }
+
+/** RFC 7230 §3.2.6 token, the set of characters legal in a header name. */
+const HTTP_HEADER_NAME_PATTERN = /^[!#$%&'*+.^_`|~0-9A-Za-z-]+$/;
 
 /**
  * `<owner>/<repo>`. Both channels interpolate this straight into a

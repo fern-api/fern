@@ -217,6 +217,19 @@ impl OpenApiBinding {
         self
     }
 
+    /// Exempt global headers from credential arbitration. Delegates to
+    /// [`super::CliApp::non_credential_headers`]; emitted by the
+    /// TypeScript codegen layer from the generator's
+    /// `nonCredentialHeaders` config.
+    pub fn non_credential_headers<I, S>(mut self, headers: I) -> Self
+    where
+        I: IntoIterator<Item = S>,
+        S: Into<String>,
+    {
+        self.inner = self.inner.non_credential_headers(headers);
+        self
+    }
+
     /// Mount all spec-derived subcommands under a namespace prefix.
     ///
     /// Without a namespace the generated commands are top-level:

@@ -84,6 +84,12 @@ export async function copySpecs(args: {
      * flag/env name instead of the default `user-agent-suffix`.
      */
     userAgentSuffixFlag?: string;
+    /**
+     * When set, emit `.non_credential_headers([...])` on the
+     * OpenApiBinding chain so credential arbitration never withholds
+     * these global headers.
+     */
+    nonCredentialHeaders?: string[];
 }): Promise<void> {
     const {
         outputDir,
@@ -93,7 +99,8 @@ export async function copySpecs(args: {
         specsDir,
         customCommands,
         rootGroup,
-        userAgentSuffixFlag
+        userAgentSuffixFlag,
+        nonCredentialHeaders
     } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
@@ -124,7 +131,8 @@ export async function copySpecs(args: {
             globalParamBindings,
             customCommands: customCommands ?? false,
             rootGroup,
-            userAgentSuffixFlag
+            userAgentSuffixFlag,
+            nonCredentialHeaders
         })
     );
 
@@ -217,9 +225,18 @@ function renderMainRs(args: {
     customCommands: boolean;
     rootGroup?: string;
     userAgentSuffixFlag?: string;
+    nonCredentialHeaders?: string[];
 }): string {
-    const { binaryName, entries, authBindings, globalParamBindings, customCommands, rootGroup, userAgentSuffixFlag } =
-        args;
+    const {
+        binaryName,
+        entries,
+        authBindings,
+        globalParamBindings,
+        customCommands,
+        rootGroup,
+        userAgentSuffixFlag,
+        nonCredentialHeaders
+    } = args;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -312,6 +329,18 @@ function renderMainRs(args: {
     }
     if (rootGroup != null) {
         lines.push(`                .command_namespace("${rootGroup}")`);
+    }
+    if (nonCredentialHeaders != null && nonCredentialHeaders.length > 0) {
+        for (const header of nonCredentialHeaders) {
+            if (!SAFE_RUST_STRING_LITERAL.test(header)) {
+                throw new Error(
+                    `Unsafe nonCredentialHeaders entry "${header}": contains characters that cannot be ` +
+                        "interpolated into a Rust string literal."
+                );
+            }
+        }
+        const list = nonCredentialHeaders.map((header) => `"${header}"`).join(", ");
+        lines.push(`                .non_credential_headers([${list}])`);
     }
     // Close the binding
     lines.push("        );");

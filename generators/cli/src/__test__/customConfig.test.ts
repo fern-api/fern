@@ -257,4 +257,19 @@ describe("validateCustomConfig — distribution", () => {
             /distribution\.scoop: expected an object, got string/
         );
     });
+
+    it("accepts nonCredentialHeaders and rejects malformed entries", () => {
+        expect(validateCustomConfig({ nonCredentialHeaders: ["X-API-Version", "x-tenant-api-key"] })).toEqual({
+            nonCredentialHeaders: ["X-API-Version", "x-tenant-api-key"]
+        });
+        expect(() => validateCustomConfig({ nonCredentialHeaders: "x-api-key" })).toThrow(
+            /nonCredentialHeaders: expected an array of strings/
+        );
+        expect(() => validateCustomConfig({ nonCredentialHeaders: [42] })).toThrow(
+            /nonCredentialHeaders: expected an array of strings/
+        );
+        expect(() => validateCustomConfig({ nonCredentialHeaders: ["not a header"] })).toThrow(
+            /is not a valid HTTP header name/
+        );
+    });
 });

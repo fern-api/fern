@@ -608,6 +608,11 @@ struct ExecutionInput {
     /// is the caller being explicit about this request, so only the global
     /// ones defer to the auth layer when the same credential is arbitrated.
     global_header_names: Vec<String>,
+    /// The subset of [`Self::global_header_names`] that carries a
+    /// credential: either explicitly promoted, or identified by name (see
+    /// `openapi::app::header_name_is_credential`). Eligible to be withheld
+    /// when the auth layer selects a mutually exclusive credential.
+    credential_global_header_names: Vec<String>,
     is_upload: bool,
 }
 
@@ -869,6 +874,10 @@ fn parse_and_validate_inputs(
         full_url,
         query_params,
         header_params,
+        credential_global_header_names: crate::openapi::app::arbitrable_global_credential_headers(
+            doc,
+            &global_header_names,
+        ),
         global_header_names,
         is_upload,
     })
@@ -982,6 +991,9 @@ impl PageState {
 ///
 /// Only *global* headers are eligible: a per-operation header parameter is
 /// the caller being explicit about this one request, and is never withheld.
+/// A global header qualifies as a credential either by explicit promotion
+/// or by its name (`openapi::app::header_name_is_credential`); a consumer
+/// exempts a false positive with the generator's `nonCredentialHeaders`.
 fn withheld_global_credential_headers(
     auth_provider: &DynAuthProvider,
     auth_metadata: &EndpointAuthMetadata,
@@ -998,7 +1010,13 @@ fn withheld_global_credential_headers(
     input
         .global_header_names
         .iter()
-        .filter(|name| arbitrated.iter().any(|h| h.eq_ignore_ascii_case(name)))
+        .filter(|name| {
+            arbitrated.iter().any(|h| h.eq_ignore_ascii_case(name))
+                || input
+                    .credential_global_header_names
+                    .iter()
+                    .any(|h| h.eq_ignore_ascii_case(name))
+        })
         .cloned()
         .collect()
 }
@@ -5953,6 +5971,7 @@ mod tests {
                 "header-value".to_string(),
             )],
             global_header_names: Vec::new(),
+            credential_global_header_names: Vec::new(),
             is_upload: false,
         };
 
@@ -6002,6 +6021,7 @@ mod tests {
             query_params: Vec::new(),
             header_params: vec![("Accept".to_string(), "application/xml".to_string())],
             global_header_names: Vec::new(),
+            credential_global_header_names: Vec::new(),
             is_upload: false,
         };
 
@@ -6048,6 +6068,7 @@ mod tests {
             query_params: Vec::new(),
             header_params: Vec::new(),
             global_header_names: Vec::new(),
+            credential_global_header_names: Vec::new(),
             is_upload: false,
         };
         // A bare bearer leaf — would normally attach Authorization.
@@ -10540,6 +10561,7 @@ mod tests {
             query_params: Vec::new(),
             header_params: Vec::new(),
             global_header_names: Vec::new(),
+            credential_global_header_names: Vec::new(),
             is_upload: false,
         };
 
@@ -10570,6 +10592,7 @@ mod tests {
             query_params: Vec::new(),
             header_params: Vec::new(),
             global_header_names: Vec::new(),
+            credential_global_header_names: Vec::new(),
             is_upload: false,
         };
 
@@ -11319,6 +11342,7 @@ async fn test_post_without_body_sets_content_length_zero() {
         query_params: Vec::new(),
         header_params: Vec::new(),
         global_header_names: Vec::new(),
+        credential_global_header_names: Vec::new(),
         is_upload: false,
     };
 
@@ -11363,6 +11387,7 @@ async fn test_post_with_body_does_not_add_content_length_zero() {
         query_params: Vec::new(),
         header_params: Vec::new(),
         global_header_names: Vec::new(),
+        credential_global_header_names: Vec::new(),
         is_upload: false,
     };
 
@@ -11405,6 +11430,7 @@ async fn test_get_does_not_set_content_length_zero() {
         query_params: Vec::new(),
         header_params: Vec::new(),
         global_header_names: Vec::new(),
+        credential_global_header_names: Vec::new(),
         is_upload: false,
     };
 
@@ -11451,6 +11477,7 @@ async fn test_bearer_header_sends_bearer_prefix() {
         query_params: Vec::new(),
         header_params: Vec::new(),
         global_header_names: Vec::new(),
+        credential_global_header_names: Vec::new(),
         is_upload: false,
     };
 
@@ -12039,6 +12066,7 @@ fn input_with_global_headers() -> ExecutionInput {
             ("X-API-Version".to_string(), "2024-01-01".to_string()),
         ],
         global_header_names: vec!["xi-api-key".to_string(), "X-API-Version".to_string()],
+        credential_global_header_names: Vec::new(),
         is_upload: false,
     }
 }
@@ -12200,6 +12228,7 @@ async fn test_no_promotion_leaves_unrelated_global_header_untouched() {
         query_params: Vec::new(),
         header_params: vec![("X-API-Version".to_string(), "2024-01-01".to_string())],
         global_header_names: vec!["X-API-Version".to_string()],
+        credential_global_header_names: Vec::new(),
         is_upload: false,
     };
     let provider: DynAuthProvider = std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
@@ -12213,4 +12242,125 @@ async fn test_no_promotion_leaves_unrelated_global_header_untouched() {
         Some("2024-01-01"),
     );
     assert!(headers.get("authorization").is_some());
+}
+
+// ---------------------------------------------------------------------------
+// Credential arbitration for global headers the auth layer can't see
+// ---------------------------------------------------------------------------
+
+/// The ElevenLabs shape: the API key arrives only as an
+/// `x-fern-global-headers` entry — no security scheme, no auth binding — so
+/// the auth layer has no provider for it. It is identified by name and is
+/// only ever *withheld*, never sent anywhere it isn't sent today.
+#[cfg(test)]
+fn input_with_undeclared_credential_header() -> ExecutionInput {
+    let mut input = input_with_global_headers();
+    input.credential_global_header_names = vec!["xi-api-key".to_string()];
+    input
+}
+
+#[cfg(test)]
+fn oauth_only_provider(source: crate::auth::AuthCredentialSource) -> DynAuthProvider {
+    std::sync::Arc::new(crate::auth::BearerAuthProvider::new("oauth", source))
+}
+
+#[tokio::test]
+async fn test_undeclared_credential_header_withheld_when_a_scheme_wins() {
+    let provider = oauth_only_provider(crate::auth::AuthCredentialSource::literal("oauth-token"));
+    let headers = built_headers(
+        &input_with_undeclared_credential_header(),
+        &provider,
+        &EndpointAuthMetadata::unspecified(),
+    )
+    .await;
+
+    assert!(headers.get("authorization").is_some());
+    assert!(
+        headers.get("xi-api-key").is_none(),
+        "a credential-named global header must not accompany the selected credential, got: {headers:?}"
+    );
+    assert_eq!(
+        headers.get("X-API-Version").and_then(|v| v.to_str().ok()),
+        Some("2024-01-01"),
+        "an unrelated global header is untouched"
+    );
+}
+
+#[tokio::test]
+async fn test_undeclared_credential_header_kept_when_no_scheme_has_credentials() {
+    // Nothing was selected, so nothing is withheld: the header keeps the
+    // reach it has today. This is also the single-auth-scheme case — a CLI
+    // with no other credential never selects one.
+    let provider = oauth_only_provider(crate::auth::AuthCredentialSource::Missing);
+    let headers = built_headers(
+        &input_with_undeclared_credential_header(),
+        &provider,
+        &EndpointAuthMetadata::unspecified(),
+    )
+    .await;
+
+    assert_eq!(
+        headers.get("xi-api-key").and_then(|v| v.to_str().ok()),
+        Some("key-from-global-header"),
+    );
+}
+
+#[tokio::test]
+async fn test_undeclared_credential_header_kept_on_anonymous_endpoint() {
+    let provider = oauth_only_provider(crate::auth::AuthCredentialSource::literal("oauth-token"));
+    let headers = built_headers(
+        &input_with_undeclared_credential_header(),
+        &provider,
+        &EndpointAuthMetadata::explicit_anonymous(),
+    )
+    .await;
+
+    assert_eq!(
+        headers.get("xi-api-key").and_then(|v| v.to_str().ok()),
+        Some("key-from-global-header"),
+    );
+}
+
+#[test]
+fn test_credential_global_headers_derived_from_doc() {
+    use crate::openapi::discovery::{GlobalHeader, RestDescription, RestMethod};
+
+    let mut doc = RestDescription {
+        global_headers: vec![
+            GlobalHeader {
+                header: "xi-api-key".to_string(),
+                optional: true,
+                ..Default::default()
+            },
+            GlobalHeader {
+                header: "X-API-Version".to_string(),
+                optional: true,
+                ..Default::default()
+            },
+        ],
+        ..Default::default()
+    };
+    doc.root_url = "https://example.com".to_string();
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "/test".to_string(),
+        ..Default::default()
+    };
+    let extra_headers = vec![
+        ("xi-api-key".to_string(), "key".to_string()),
+        ("X-API-Version".to_string(), "2024-01-01".to_string()),
+    ];
+
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &extra_headers, &[])
+            .unwrap();
+    assert_eq!(input.credential_global_header_names, vec!["xi-api-key"]);
+
+    // The generator's `nonCredentialHeaders` escape hatch exempts a header
+    // whose name matches but which isn't a credential.
+    doc.non_credential_headers = vec!["XI-API-KEY".to_string()];
+    let exempted =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &extra_headers, &[])
+            .unwrap();
+    assert!(exempted.credential_global_header_names.is_empty());
 }

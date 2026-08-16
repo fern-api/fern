@@ -464,11 +464,16 @@ pub(crate) fn resolve_global_header_value(
 /// A global header that an explicit declaration identifies as carrying a
 /// credential, making it visible to auth arbitration (ADR-0008).
 ///
-/// Promotion is never inferred from a credential-*looking* header name:
-/// whether a secret goes on the wire is too consequential to decide from
-/// a substring match. The signal is always explicit — a declared
-/// `apiKey`/`header` security scheme naming this header, or a registered
-/// auth binding for it (the per-generator `auth-schemes` path).
+/// Promotion — *adding* a credential to the provider tree, with its own
+/// `auth status` row and place in source precedence — always needs an
+/// explicit signal: a declared `apiKey`/`header` security scheme naming
+/// this header, or a registered auth binding for it (the per-generator
+/// `auth-schemes` path). A credential-*looking* name is not enough to put
+/// a secret on the wire under a scheme's name.
+///
+/// An undeclared header can still be *withheld* by name — see
+/// [`header_name_is_credential`], where the only consequence is sending
+/// one credential instead of two.
 pub(crate) struct PromotedCredentialHeader<'a> {
     pub(crate) header: &'a crate::openapi::discovery::GlobalHeader,
     /// Security-scheme name the credential is arbitrated under.
@@ -520,6 +525,63 @@ pub(crate) fn promoted_credential_headers<'a>(
                 None => None,
             }
         })
+        .collect()
+}
+
+/// Exact header names that always carry a credential.
+const ARBITRABLE_CREDENTIAL_HEADERS: &[&str] = &["authorization", "proxy-authorization"];
+
+/// Substrings that mark a header name as carrying a credential for
+/// arbitration purposes.
+///
+/// Deliberately narrower than [`crate::debug`]'s redaction patterns: a
+/// false positive there costs one unreadable value in a diagnostic dump,
+/// whereas here it withholds a header from a request. So no bare `key`,
+/// `secret` or `-token` suffix — only forms that are unambiguously an API
+/// credential.
+const ARBITRABLE_CREDENTIAL_PATTERNS: &[&str] = &[
+    "api-key",
+    "apikey",
+    "api_key",
+    "access-token",
+    "auth-token",
+    "session-token",
+];
+
+/// True when a global header's *name* identifies it as a credential.
+///
+/// This is a heuristic, and it is only ever used subtractively: a matching
+/// header is never sent anywhere it isn't sent today, it is only withheld
+/// from a request where the auth layer already selected a credential of
+/// its own (see the executor's `withheld_global_credential_headers`). A
+/// CLI with no other auth scheme therefore never selects anything and is
+/// unaffected. Promotion into the provider tree still requires an explicit
+/// declaration — see [`promoted_credential_headers`].
+pub(crate) fn header_name_is_credential(name: &str) -> bool {
+    let lowered = name.to_ascii_lowercase();
+    ARBITRABLE_CREDENTIAL_HEADERS.iter().any(|h| *h == lowered)
+        || ARBITRABLE_CREDENTIAL_PATTERNS
+            .iter()
+            .any(|pattern| lowered.contains(pattern))
+}
+
+/// The subset of `global_header_names` that arbitration may withhold:
+/// credential-named headers the consumer hasn't exempted via
+/// `nonCredentialHeaders`.
+pub(crate) fn arbitrable_global_credential_headers(
+    doc: &RestDescription,
+    global_header_names: &[String],
+) -> Vec<String> {
+    global_header_names
+        .iter()
+        .filter(|name| {
+            header_name_is_credential(name)
+                && !doc
+                    .non_credential_headers
+                    .iter()
+                    .any(|exempt| exempt.eq_ignore_ascii_case(name))
+        })
+        .cloned()
         .collect()
 }
 
@@ -922,6 +984,10 @@ pub struct CliApp {
     /// from the spec's `x-fern-global-parameters` extension, letting the
     /// TypeScript codegen layer supply the authoritative set from the IR.
     pub(crate) builder_global_parameters: Vec<GlobalParameter>,
+    /// Global headers the consumer declared as *not* credentials, via the
+    /// generator's `nonCredentialHeaders` config. Copied onto the parsed
+    /// doc so credential arbitration never withholds them.
+    pub(crate) non_credential_headers: Vec<String>,
 }
 
 #[allow(dead_code)] // Methods available for binding wrappers to delegate to.
@@ -942,7 +1008,30 @@ impl CliApp {
             idempotency_header_envs: HashMap::new(),
             audiences: Vec::new(),
             builder_global_parameters: Vec::new(),
+            non_credential_headers: Vec::new(),
         }
+    }
+
+    /// Exempt global headers from credential arbitration.
+    ///
+    /// A global header whose name reads as a credential (`x-api-key`,
+    /// `authorization`, …) is withheld from requests where the auth layer
+    /// already selected a credential, so an API that rejects two
+    /// credentials at once still gets exactly one. List a header here when
+    /// its name matches but it isn't a credential, and it will be sent
+    /// unconditionally as before.
+    pub fn non_credential_headers<I, S>(mut self, headers: I) -> Self
+    where
+        I: IntoIterator<Item = S>,
+        S: Into<String>,
+    {
+        self.non_credential_headers = headers
+            .into_iter()
+            .map(Into::into)
+            .map(|s| s.trim().to_string())
+            .filter(|s| !s.is_empty())
+            .collect();
+        self
     }
 
     /// Pin the CLI surface to operations tagged with one of the given
@@ -1339,6 +1428,8 @@ impl CliApp {
         if !self.idempotency_header_envs.is_empty() {
             apply_idempotency_header_envs(&mut doc, &self.idempotency_header_envs);
         }
+
+        doc.non_credential_headers = self.non_credential_headers.clone();
 
         Ok(doc)
     }
@@ -5719,6 +5810,50 @@ paths:
         let undeclared = doc_with_global_credential_header(vec![("OAuth", SecurityScheme::OAuth2)]);
         assert!(promoted_credential_headers(&undeclared, &[]).is_empty());
         assert!(promoted_credential_header_names(&undeclared, &[]).is_empty());
+    }
+
+    #[test]
+    fn test_header_name_credential_matching_is_conservative() {
+        for name in [
+            "xi-api-key",
+            "X-API-Key",
+            "api_key",
+            "Authorization",
+            "x-access-token",
+            "X-Session-Token",
+        ] {
+            assert!(
+                header_name_is_credential(name),
+                "{name} carries a credential"
+            );
+        }
+        // Narrower than the redaction heuristic on purpose: withholding a
+        // header from a request costs more than redacting a debug line.
+        for name in [
+            "X-API-Version",
+            "Idempotency-Key",
+            "X-Request-Id",
+            "X-Trace-Secret",
+            "Content-Type",
+        ] {
+            assert!(
+                !header_name_is_credential(name),
+                "{name} is not a credential"
+            );
+        }
+    }
+
+    #[test]
+    fn test_arbitrable_global_credential_headers_honors_the_escape_hatch() {
+        let names = vec!["xi-api-key".to_string(), "X-API-Version".to_string()];
+        let mut doc = doc_with_global_credential_header(vec![]);
+        assert_eq!(
+            arbitrable_global_credential_headers(&doc, &names),
+            vec!["xi-api-key".to_string()]
+        );
+
+        doc.non_credential_headers = vec!["xi-api-key".to_string()];
+        assert!(arbitrable_global_credential_headers(&doc, &names).is_empty());
     }
 
     #[test]
