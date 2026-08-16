@@ -72,6 +72,25 @@ export interface FernCliCustomConfig {
     generateWireTests?: boolean;
 
     /**
+     * Command-backed login flows, keyed by auth-scheme name (the `key` in
+     * `generators.yml`'s `auth-schemes`). When a scheme is listed here, the
+     * generated CLI's `<bin> auth login` runs the configured command to mint
+     * a token, parses the JWT `exp` claim, caches the token in the OS keyring,
+     * and re-mints automatically when it's about to expire — so the CLI owns
+     * the token lifecycle instead of a wrapper script.
+     *
+     * This is the native path for tokens produced by a command rather than an
+     * OAuth token endpoint (e.g. Google service-account impersonation via
+     * `gcloud auth print-identity-token …`). The command runs through the
+     * platform shell; its stdout (trimmed) is the token.
+     *
+     * `header`/`prefix` default from the scheme itself — a `header` scheme
+     * contributes its literal header name and prefix, a `bearer` scheme
+     * contributes `Authorization` + `Bearer` — and may be overridden here.
+     */
+    tokenCommands?: Record<string, TokenCommandConfig>;
+
+    /**
      * Overrides the generated crate's `[package]` identity — the metadata
      * cargo (and cargo-dist's installers) publish under.
      *
@@ -98,6 +117,19 @@ export interface FernCliCustomConfig {
      * when the generator writes to local files.
      */
     distribution?: FernCliDistributionConfig;
+}
+
+/**
+ * A single command-backed login flow. `command` is required; `header` and
+ * `prefix` override the header placement derived from the auth scheme.
+ */
+export interface TokenCommandConfig {
+    /** Shell command whose trimmed stdout is the minted token. */
+    command: string;
+    /** Header the token is applied to. Defaults from the scheme. */
+    header?: string;
+    /** Prefix prepended to the token (e.g. `Bearer`). Defaults from the scheme. */
+    prefix?: string;
 }
 
 /**
@@ -275,11 +307,51 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
         }
         result.generateWireTests = obj.generateWireTests;
     }
+    if ("tokenCommands" in obj && obj.tokenCommands !== undefined) {
+        result.tokenCommands = validateTokenCommands(obj.tokenCommands);
+    }
     if ("packageIdentity" in obj && obj.packageIdentity !== undefined) {
         result.packageIdentity = validatePackageIdentity(obj.packageIdentity);
     }
     if ("distribution" in obj && obj.distribution !== undefined) {
         result.distribution = validateDistribution(obj.distribution);
+    }
+    return result;
+}
+
+function validateTokenCommands(raw: unknown): Record<string, TokenCommandConfig> {
+    if (typeof raw !== "object" || raw == null || Array.isArray(raw)) {
+        throw new Error(
+            `Invalid customConfig.tokenCommands: expected an object, got ${Array.isArray(raw) ? "array" : typeof raw}.`
+        );
+    }
+    const result: Record<string, TokenCommandConfig> = {};
+    for (const [scheme, value] of Object.entries(raw as Record<string, unknown>)) {
+        if (typeof value !== "object" || value == null || Array.isArray(value)) {
+            throw new Error(`Invalid customConfig.tokenCommands.${scheme}: expected an object.`);
+        }
+        const entry = value as Record<string, unknown>;
+        if (typeof entry.command !== "string" || entry.command.trim() === "") {
+            throw new Error(`Invalid customConfig.tokenCommands.${scheme}.command: expected a non-empty string.`);
+        }
+        const config: TokenCommandConfig = { command: entry.command };
+        if (entry.header !== undefined) {
+            if (typeof entry.header !== "string") {
+                throw new Error(
+                    `Invalid customConfig.tokenCommands.${scheme}.header: expected a string, got ${typeof entry.header}.`
+                );
+            }
+            config.header = entry.header;
+        }
+        if (entry.prefix !== undefined) {
+            if (typeof entry.prefix !== "string") {
+                throw new Error(
+                    `Invalid customConfig.tokenCommands.${scheme}.prefix: expected a string, got ${typeof entry.prefix}.`
+                );
+            }
+            config.prefix = entry.prefix;
+        }
+        result[scheme] = config;
     }
     return result;
 }

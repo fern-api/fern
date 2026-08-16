@@ -70,7 +70,8 @@ export async function runPipeline(args: {
         auth: ir.auth,
         binaryName,
         services: ir.services,
-        environments: ir.environments
+        environments: ir.environments,
+        tokenCommands: customConfig.tokenCommands
     });
     const globalParamBindings = detectGlobalParams({ globalParameters: ir.globalParameters });
 
