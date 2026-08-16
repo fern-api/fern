@@ -161,6 +161,51 @@ same pass — `[package] name` and the lockfile must agree or
 `[lib] name = "fern_cli_sdk"` is deliberately **not** configurable: every
 `use fern_cli_sdk::...` in the vendored `src/` tree resolves through it.
 
+## Split type crates
+
+By default every generated model lands in a single `<binaryName>-types` crate.
+A crate is one `rustc` compilation unit, so peak memory scales with the *total*
+volume of generated code — a 60-spec workspace produces ~3,600 model files in
+that one crate and peaks around 5 GB, enough to be killed on a standard CI
+runner. It cannot be parallelized either: a crate is indivisible.
+
+`customConfig.splitTypeCrates: true` distributes the models across one crate per
+top-level subpackage:
+
+```
+<binary>-types/                      facade — keeps the original crate name
+  crates/
+    <binary>-types-core/             BuildError + serde helpers, plus any type >1 API reaches
+    <binary>-types-<api>/            one per API, each depending only on core
+```
+
+Peak becomes the largest single crate rather than the sum, and cargo compiles
+the leaves in parallel. On a real 60-spec workspace: 5.25 GB → 1.96 GB peak,
+1m32s → 27s cold, 48s → 6s incremental (all at `-j4`).
+
+Things worth knowing before touching this code:
+
+- **The partition key is the top-level subpackage**, i.e. the per-spec
+  `namespace:` or an `x-fern-sdk-group-name` tag. A single ungrouped spec has
+  nothing to partition, so everything lands in core and the flag buys nothing.
+- **Core is always emitted**, even when no type is shared, because it is the one
+  home for `BuildError` and the serde helpers. Declaring those per crate would
+  give each API its own incompatible `BuildError`.
+- **The facade re-exports `<crate>::types::*`, not the crate root.** Globbing the
+  roots makes `core`/`prelude`/`error` ambiguous across partitions —
+  `ambiguous_glob_reexports` on every consumer build, and a hard error under
+  `-D warnings`.
+- **`validateTypeCratePlan` runs before any file moves** and asserts the only
+  cross-crate edge is leaf → core. It re-derives the reference graph rather than
+  trusting the planner, so a bad plan fails generation naming the offending type
+  instead of surfacing as unresolved names in the consumer's `cargo build`.
+- **`cli-shared-types` is the fixture that matters.** It is the only one with a
+  type shared between subpackages, so the only one producing a core crate that
+  leaves depend on. The others exercise leaves-only or core-only.
+- **cargo-dist members are paths**, so the nested partitions are declared as
+  `cargo:<binary>-types/crates/<crate>`. `cargo build` does not read
+  `dist-workspace.toml`, so validate changes there with `dist plan`.
+
 ## Distribution channels
 
 Every generated CLI ships GitHub Release archives plus `curl | bash` /

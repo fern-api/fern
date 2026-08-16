@@ -86,6 +86,22 @@ export interface FernCliCustomConfig {
     packageIdentity?: CargoPackageIdentity;
 
     /**
+     * Split the generated `<binaryName>-types` crate into one crate per API,
+     * behind a facade crate that keeps the original name and re-exports them.
+     *
+     * A single crate holding every generated type is one `rustc` compilation
+     * unit, and its peak memory is driven by the total amount of code in that
+     * unit — large enough, with many specs, to be killed on a standard CI
+     * runner. Cargo compiles crates in separate processes, so splitting caps
+     * the peak at the largest single API and lets the rest build in parallel
+     * and cache independently.
+     *
+     * Defaults to `false`, so existing generations are byte-identical until a
+     * consumer opts in. Recommended for workspaces with many specs.
+     */
+    splitTypeCrates?: boolean;
+
+    /**
      * Opt-in binary distribution channels layered on top of the GitHub
      * Release archives every generated CLI already ships.
      *
@@ -274,6 +290,14 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
             );
         }
         result.generateWireTests = obj.generateWireTests;
+    }
+    if ("splitTypeCrates" in obj && obj.splitTypeCrates !== undefined) {
+        if (typeof obj.splitTypeCrates !== "boolean") {
+            throw new Error(
+                `Invalid customConfig.splitTypeCrates: expected a boolean, got ${typeof obj.splitTypeCrates}.`
+            );
+        }
+        result.splitTypeCrates = obj.splitTypeCrates;
     }
     if ("packageIdentity" in obj && obj.packageIdentity !== undefined) {
         result.packageIdentity = validatePackageIdentity(obj.packageIdentity);

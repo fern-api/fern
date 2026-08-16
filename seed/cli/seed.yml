@@ -73,6 +73,12 @@ fixtures:
   query-parameters-openapi:
     - customConfig: null
       outputFolder: no-custom-config
+    # Split type crates where every type is root-level: they all land in the
+    # core crate and the facade fronts it alone, with no leaves. Also the
+    # regression fixture for root-level services owning nothing.
+    - customConfig:
+        splitTypeCrates: true
+      outputFolder: with-split-type-crates
     # Github output mode with npm publish info — verifies that the
     # generator emits `.github/workflows/ci.yml` and stamps the
     # resolved version into Cargo.toml.
@@ -144,6 +150,13 @@ fixtures:
         binaryName: acme-versioned
         generateWireTests: true
       outputFolder: with-wire-tests
+    # One type crate per API behind a facade, instead of a single crate holding
+    # every type. `cargo build --locked` here is what proves the split crates,
+    # their path dependencies, and the generated lock stanzas all resolve.
+    - customConfig:
+        binaryName: acme-versioned
+        splitTypeCrates: true
+      outputFolder: with-split-type-crates
   cli-oauth:
     - customConfig:
         binaryName: oauth-test
@@ -235,6 +248,21 @@ fixtures:
         binaryName: basic-auth-cli
         generateWireTests: true
       outputFolder: with-wire-tests
+    # Split type crates where the two subpackages share nothing: each owns its
+    # types outright, so the facade fronts two leaves and no core crate is
+    # emitted. `cli-shared-types` covers the case where a core crate exists.
+    - customConfig:
+        binaryName: basic-auth-cli
+        splitTypeCrates: true
+      outputFolder: with-split-type-crates
+  # The split fixture that matters: a type shared between two subpackages, so
+  # the emitted workspace is a core crate plus leaves that depend on it. See
+  # this API's generators.yml for what each path in it covers.
+  cli-shared-types:
+    - customConfig:
+        binaryName: shared-types-cli
+        splitTypeCrates: true
+      outputFolder: with-split-type-crates
 
 # Alpha-quality coverage: the SDK template only handles happy-path
 # OpenAPI specs. Seed iterates every test-definition by default; fixtures
