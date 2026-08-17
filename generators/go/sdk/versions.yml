@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.57.2
+  changelogEntry:
+    - summary: |
+        Fix JSON deserialization of `date` and `datetime` values nested in containers.
+        Lists, sets, and string-keyed maps of dates (including optional containers and
+        aliases of containers) are now unmarshaled through the internal date wrappers,
+        so date-only values such as `"2002-08-28"` no longer fail with
+        `parsing time "2002-08-28" as "2006-01-02T15:04:05Z07:00"`.
+      type: fix
+  createdAt: "2026-08-17"
+  irVersion: 67
 - version: 1.57.1
   changelogEntry:
     - summary: |
