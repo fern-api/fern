@@ -33,6 +33,24 @@ func TestMaybeAppendVersionSuffix(t *testing.T) {
 			version:    "v34",
 			expected:   "github.com/acme/acme-go/v46",
 		},
+		{
+			desc:       "leaves a configured v1 suffix alone rather than doubling it",
+			importPath: "github.com/acme/acme-go/v1",
+			version:    "v2",
+			expected:   "github.com/acme/acme-go/v1",
+		},
+		{
+			desc:       "appends the suffix when the path ends in v0",
+			importPath: "github.com/acme/acme-go/v0",
+			version:    "v2",
+			expected:   "github.com/acme/acme-go/v0/v2",
+		},
+		{
+			desc:       "appends the suffix when the path ends in a zero-padded version",
+			importPath: "github.com/acme/acme-go/v01",
+			version:    "v2",
+			expected:   "github.com/acme/acme-go/v01/v2",
+		},
 	}
 	for _, test := range tests {
 		t.Run(test.desc, func(t *testing.T) {

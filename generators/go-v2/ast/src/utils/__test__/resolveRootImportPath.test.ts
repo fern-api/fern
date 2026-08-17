@@ -55,6 +55,24 @@ describe("resolveRootModulePath", () => {
             })
         ).toBe("github.com/acme/acme-go/v46");
     });
+
+    it("leaves a configured v1 suffix alone rather than doubling it", () => {
+        expect(
+            resolveRootModulePath({
+                config: buildConfig({ version: "2.0.0" }),
+                customConfig: { importPath: "github.com/acme/acme-go/v1" }
+            })
+        ).toBe("github.com/acme/acme-go/v1");
+    });
+
+    it.each(["v0", "v01"])("appends the suffix when the configured path ends in %s", (segment) => {
+        expect(
+            resolveRootModulePath({
+                config: buildConfig({ version: "2.0.0" }),
+                customConfig: { importPath: `github.com/acme/acme-go/${segment}` }
+            })
+        ).toBe(`github.com/acme/acme-go/${segment}/v2`);
+    });
 });
 
 describe("resolveRootImportPath", () => {

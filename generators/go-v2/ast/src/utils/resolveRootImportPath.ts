@@ -6,7 +6,11 @@ import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSch
 const DEFAULT_MODULE_PATH = "sdk";
 
 // Matches a Go major version suffix, e.g. "v2".
-const MAJOR_VERSION_SUFFIX_PATTERN = /^v\d+$/;
+//
+// "v1" is deliberately matched even though the go command only permits a suffix for
+// v2 and above: if a user has configured a "/v1" suffix, leaving it alone is safer
+// than appending and producing "/v1/v2". Do not tighten this to v2 and above.
+const MAJOR_VERSION_SUFFIX_PATTERN = /^v[1-9]\d*$/;
 
 export function resolveRootImportPath({
     config,

@@ -159,6 +159,19 @@ func run(fn GeneratorFunc) (retErr error) {
 		config.ImportPath = config.Module.Path
 	}
 	if suffix, ok := parseMajorVersion(config.Version); ok {
+		if configured, ok := majorVersionSuffix(config.ImportPath); ok && configured != suffix {
+			if err := coordinator.Log(
+				generatorexec.LogLevelWarn,
+				fmt.Sprintf(
+					"The configured import path %q already ends in the major version suffix %q, which doesn't match the version being released (%s); leaving the import path unchanged.",
+					config.ImportPath,
+					configured,
+					suffix,
+				),
+			); err != nil {
+				return err
+			}
+		}
 		// Append the major version suffix for any version greater than 1.X.X.
 		//
 		// For details, see https://github.com/golang/go/issues/35732
@@ -589,13 +602,24 @@ func parseMajorVersion(version string) (string, bool) {
 }
 
 // majorVersionSuffixPattern matches a Go major version suffix, e.g. "v2".
-var majorVersionSuffixPattern = regexp.MustCompile(`^v[0-9]+$`)
+//
+// "v1" is deliberately matched even though the go command only permits a suffix for
+// v2 and above: if a user has configured a "/v1" suffix, leaving it alone is safer
+// than appending and producing "/v1/v2". Do not tighten this to v2 and above.
+var majorVersionSuffixPattern = regexp.MustCompile(`^v[1-9][0-9]*$`)
+
+// majorVersionSuffix returns the major version suffix the importPath already ends in,
+// if any.
+func majorVersionSuffix(importPath string) (string, bool) {
+	base := path.Base(importPath)
+	return base, majorVersionSuffixPattern.MatchString(base)
+}
 
 // maybeAppendVersionSuffix appends the given version suffix to the importPath,
 // unless the importPath already ends in a major version suffix. The configured
 // suffix wins, even if it doesn't match the version being released.
 func maybeAppendVersionSuffix(importPath string, version string) string {
-	if majorVersionSuffixPattern.MatchString(path.Base(importPath)) {
+	if _, ok := majorVersionSuffix(importPath); ok {
 		return importPath
 	}
 	return path.Join(importPath, version)
