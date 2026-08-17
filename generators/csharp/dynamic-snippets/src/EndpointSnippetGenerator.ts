@@ -1,4 +1,11 @@
-import { NamedArgument, Options, Scope, Severity, Style } from "@fern-api/browser-compatible-base-generator";
+import {
+    InvocationSnippetResponse,
+    NamedArgument,
+    Options,
+    Scope,
+    Severity,
+    Style
+} from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
@@ -11,6 +18,9 @@ import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
 // `SdkRequest.requestParameterName` to the default for both body and wrapped requests (see
 // DEFAULT_REQUEST_PARAMETER_NAME in convertHttpSdkRequest.ts).
 const REQUEST_PARAMETER_NAME = "request";
+
+// The generated full snippet constructs and invokes the client through a local named `client`.
+const CLIENT_VAR_NAME = "client";
 
 export class EndpointSnippetGenerator extends WithGeneration {
     private context: DynamicSnippetsGeneratorContext;
@@ -73,6 +83,65 @@ export class EndpointSnippetGenerator extends WithGeneration {
         options?: Options;
     }): Promise<ast.AstNode> {
         throw new Error("Unsupported");
+    }
+
+    /**
+     * Generates the structured pieces of an endpoint invocation for callers that render the
+     * invocation within code of their own (e.g. a documentation code template): the bare call
+     * (e.g. `client.Plants.Update(...)`), the `using ...;` block the call requires, and the
+     * generated client class name.
+     */
+    public generateInvocationSnippetSync({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): InvocationSnippetResponse {
+        const invocation = this.callMethod({
+            endpoint,
+            snippet: request,
+            clientVariableName: options?.clientVariableName
+        });
+        // The caller supplies the client and terminates the statement themselves, so the
+        // invocation is emitted as a bare expression: no `var client = new ...Client()`
+        // construction, no `Examples` class/method scaffold, and no trailing `;`. When the call
+        // references SDK or stdlib types (e.g. a body value constructed with `DateTime` or a
+        // `Guid`) the `using ...;` block it needs is surfaced separately so the caller can render
+        // it rather than falling back to the complete snippet.
+        const { code, imports } = invocation.toStringWithoutImports({
+            namespace: "Examples",
+            generation: this.generation,
+            allNamespaceSegments: new Set(),
+            allTypeClassReferences: new Map(),
+            // See generateSnippet for rationale: user-facing snippets skip the global:: qualifier.
+            skipGlobalQualifier: true
+        });
+        // The `using ...;` a caller needs to bring the root client class into scope. Rendering a
+        // bare reference to the root client on its own registers its namespace, so the split render
+        // surfaces just that client `using` block — the C# analogue of the TypeScript port's
+        // `clientImport`, computed exactly like the `imports` field above but for the root client
+        // reference alone. Empty string when the client needs no using (e.g. same namespace).
+        const { imports: clientImport } = this.Types.RootClientForSnippets.toStringWithoutImports({
+            namespace: "Examples",
+            generation: this.generation,
+            allNamespaceSegments: new Set(),
+            allTypeClassReferences: new Map(),
+            skipGlobalQualifier: true
+        });
+        return {
+            snippet: this.stripTrailingSemicolon(code.trim()),
+            imports,
+            clientImport,
+            clientName: this.Types.RootClientForSnippets.name,
+            errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
+        };
+    }
+
+    private stripTrailingSemicolon(code: string): string {
+        return code.endsWith(";") ? code.slice(0, -1).trimEnd() : code;
     }
 
     private buildCodeBlock({
@@ -152,17 +221,19 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
     private callMethod({
         endpoint,
-        snippet
+        snippet,
+        clientVariableName
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        clientVariableName?: string;
     }): ast.CodeBlock | ast.MethodInvocation {
         // if the example has *any* sample with stream set to true, then the method is an async enumerable
         const isAsyncEnumerable =
             endpoint.response?.type === "streaming" || endpoint.response?.type === "streamParameter";
 
         const invocation = this.csharp.invokeMethod({
-            on: this.csharp.codeblock("client"),
+            on: this.csharp.codeblock(clientVariableName ?? CLIENT_VAR_NAME),
             method: this.getMethod({ endpoint }),
             arguments_: this.getMethodArgs({ endpoint, snippet }),
             async: true,
