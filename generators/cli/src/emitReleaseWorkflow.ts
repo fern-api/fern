@@ -1,7 +1,21 @@
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
-import { DEFAULT_HOMEBREW_TOKEN_ENV_VAR, type FernCliHomebrewConfig } from "./customConfig.js";
+import {
+    DEFAULT_HOMEBREW_TOKEN_ENV_VAR,
+    DEFAULT_SCOOP_TOKEN_ENV_VAR,
+    type FernCliGitHubAppConfig,
+    type FernCliHomebrewConfig,
+    type ResolvedChannelAuth,
+    resolveChannelAuth
+} from "./customConfig.js";
 import { constructScoopJobYaml, type ScoopJobArgs } from "./emitScoopWorkflow.js";
+import {
+    appTokenExpression,
+    CREDENTIAL_PREFLIGHT_JOB,
+    constructAppTokenStep,
+    constructCredentialPreflightJob,
+    type PreflightCheck
+} from "./githubAppToken.js";
 
 /**
  * Emit `.github/workflows/release.yml` into the generated CLI output.
@@ -30,32 +44,94 @@ export async function emitReleaseWorkflow(args: {
     outputDir: string;
     homebrew?: FernCliHomebrewConfig;
     scoop?: ScoopJobArgs;
+    githubApp?: FernCliGitHubAppConfig;
 }): Promise<void> {
-    const { outputDir, homebrew, scoop } = args;
+    const { outputDir, homebrew, scoop, githubApp } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
-    await writeFile(path.join(workflowsDir, "release.yml"), constructReleaseWorkflowYaml({ homebrew, scoop }));
+    await writeFile(
+        path.join(workflowsDir, "release.yml"),
+        constructReleaseWorkflowYaml({ homebrew, scoop, githubApp })
+    );
 }
 
 /**
  * Pure template assembly, exported for unit-test access.
  */
-export function constructReleaseWorkflowYaml(args: { homebrew?: FernCliHomebrewConfig; scoop?: ScoopJobArgs }): string {
-    const { homebrew, scoop } = args;
+export function constructReleaseWorkflowYaml(args: {
+    homebrew?: FernCliHomebrewConfig;
+    scoop?: ScoopJobArgs;
+    githubApp?: FernCliGitHubAppConfig;
+}): string {
+    const { homebrew, scoop, githubApp } = args;
+
+    const homebrewAuth =
+        homebrew != null
+            ? resolveChannelAuth({
+                  tokenEnvironmentVariable: homebrew.tokenEnvironmentVariable,
+                  githubApp,
+                  defaultTokenSecret: DEFAULT_HOMEBREW_TOKEN_ENV_VAR
+              })
+            : undefined;
+    const scoopAuth =
+        scoop != null
+            ? resolveChannelAuth({
+                  tokenEnvironmentVariable: scoop.scoop.tokenEnvironmentVariable,
+                  githubApp,
+                  defaultTokenSecret: DEFAULT_SCOOP_TOKEN_ENV_VAR
+              })
+            : undefined;
+
     // Both channels gate on `host`, so `announce` must wait on whichever
     // are enabled — otherwise the announcement can precede a published
     // formula or manifest.
     const publishJobs: string[] = [];
     let jobs = "";
-    if (homebrew != null) {
-        jobs += constructHomebrewPublishJob(homebrew);
+
+    // One check per *distinct* credential pair, so the normal case (one
+    // shared App serving both channels) emits one step rather than two
+    // identical ones.
+    const preflightChecks = mergePreflightChecks([
+        ...(homebrewAuth?.type === "githubApp" ? [{ label: "Homebrew tap", app: homebrewAuth.app }] : []),
+        ...(scoopAuth?.type === "githubApp" ? [{ label: "Scoop bucket", app: scoopAuth.app }] : [])
+    ]);
+    // Emitted only when a channel actually uses an App, so a PAT-only
+    // generation keeps the workflow it has today. PAT secrets are not
+    // preflighted for the same reason: it would add a job to every
+    // existing distribution consumer's release pipeline.
+    const preflightJob = preflightChecks.length > 0;
+    if (preflightJob) {
+        jobs += constructCredentialPreflightJob({ checks: preflightChecks });
+    }
+
+    if (homebrew != null && homebrewAuth != null) {
+        jobs += constructHomebrewPublishJob({ homebrew, auth: homebrewAuth, preflightJob });
         publishJobs.push("publish-homebrew-formula");
     }
-    if (scoop != null) {
-        jobs += constructScoopJobYaml(scoop);
+    if (scoop != null && scoopAuth != null) {
+        jobs += constructScoopJobYaml({ ...scoop, auth: scoopAuth, preflightJob });
         publishJobs.push("publish-scoop");
     }
     return RELEASE_WORKFLOW_YAML + jobs + constructAnnounceJob(publishJobs);
+}
+
+/**
+ * Collapse checks naming the same two secrets into one, joining their
+ * labels so the emitted step still says which channels it covers.
+ *
+ * Keyed on the secret names rather than object identity: that is what
+ * actually expresses "these are the same credential", and it stays
+ * correct if the two channels ever arrive at the same pair by different
+ * routes.
+ */
+function mergePreflightChecks(checks: readonly PreflightCheck[]): PreflightCheck[] {
+    const byCredential = new Map<string, PreflightCheck>();
+    for (const check of checks) {
+        const key = `${check.app.appIdSecret} ${check.app.privateKeySecret}`;
+        const existing = byCredential.get(key);
+        byCredential.set(key, existing == null ? check : { ...existing, label: `${existing.label} / ${check.label}` });
+    }
+    return [...byCredential.values()];
 }
 
 /**
@@ -71,26 +147,66 @@ export function constructReleaseWorkflowYaml(args: { homebrew?: FernCliHomebrewC
  * `download-artifact` deliberately pulls *every* `artifacts-*` entry
  * into `Formula/` — the archives land there too, but only `*.rb` is
  * staged for commit.
+ *
+ * The App and PAT variants are assembled from **one** template rather
+ * than two copies, differing only in three interpolated slots (the extra
+ * `needs` entry, the leading token step, the checkout token) plus where
+ * `GITHUB_TOKEN` sits. Authoring a second copy of the job is how the
+ * `announcement_is_prerelease` guard below gets dropped from one branch —
+ * and a tap has no prerelease channel, so a lost guard means an RC
+ * formula becomes what every `brew upgrade` installs, with a green
+ * workflow and no error anywhere.
  */
-function constructHomebrewPublishJob(homebrew: FernCliHomebrewConfig): string {
-    const tokenVar = homebrew.tokenEnvironmentVariable ?? DEFAULT_HOMEBREW_TOKEN_ENV_VAR;
+function constructHomebrewPublishJob(args: {
+    homebrew: FernCliHomebrewConfig;
+    auth: ResolvedChannelAuth;
+    preflightJob: boolean;
+}): string {
+    const { homebrew, auth, preflightJob } = args;
+
+    // Job-level `env` can read `github`, `needs`, `vars`, `secrets`,
+    // `inputs`, `strategy` and `matrix` — but not `steps`. So in the App
+    // branch `GITHUB_TOKEN` cannot live here and moves down to the commit
+    // step; left up here it would silently render as the empty string.
+    //
+    // Nothing in this job actually reads `GITHUB_TOKEN`: `dist` is
+    // downloaded and chmod'd but never invoked, there is no `gh` call, and
+    // the `git push` authenticates off the `http.extraheader` that
+    // `actions/checkout` writes because of `persist-credentials: true`. It
+    // is inherited cargo-dist decoration, kept so the PAT branch stays
+    // byte-identical. Remove `persist-credentials` and the push breaks
+    // regardless of what this env var says.
+    const jobEnvToken = auth.type === "pat" ? `      GITHUB_TOKEN: \${{ secrets.${auth.tokenSecret} }}\n` : "";
+    const tokenStep =
+        auth.type === "githubApp"
+            ? constructAppTokenStep({ name: "Mint a tap token", app: auth.app, repo: homebrew.tap })
+            : "";
+    const checkoutToken = auth.type === "githubApp" ? appTokenExpression() : `\${{ secrets.${auth.tokenSecret} }}`;
+    const commitStepEnv =
+        auth.type === "githubApp" ? `        env:\n          GITHUB_TOKEN: ${appTokenExpression()}\n` : "";
+    // Gated on *this* channel's auth, not merely on the job existing. With
+    // a shared App and `homebrew.tokenEnvironmentVariable` still pinned,
+    // only Scoop is preflighted — making the PAT-authenticated Homebrew job
+    // wait on that check would let a bad Scoop App secret skip a publish
+    // that never touches the App.
+    const preflightNeed = preflightJob && auth.type === "githubApp" ? `      - ${CREDENTIAL_PREFLIGHT_JOB}\n` : "";
+
     return `
   publish-homebrew-formula:
     needs:
       - plan
       - host
-    runs-on: "ubuntu-22.04"
+${preflightNeed}    runs-on: "ubuntu-22.04"
     env:
-      GITHUB_TOKEN: \${{ secrets.${tokenVar} }}
-      PLAN: \${{ needs.plan.outputs.val }}
+${jobEnvToken}      PLAN: \${{ needs.plan.outputs.val }}
       GITHUB_USER: "github-actions[bot]"
       GITHUB_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
     if: \${{ !fromJson(needs.plan.outputs.val).announcement_is_prerelease || fromJson(needs.plan.outputs.val).publish_prereleases }}
     steps:
-      - uses: actions/checkout@v6
+${tokenStep}      - uses: actions/checkout@v6
         with:
           repository: "${homebrew.tap}"
-          token: \${{ secrets.${tokenVar} }}
+          token: ${checkoutToken}
           # Credentials must persist — the final step pushes the formula back.
           persist-credentials: true
           # So we have access to the formula
@@ -111,7 +227,7 @@ function constructHomebrewPublishJob(homebrew: FernCliHomebrewConfig): string {
       # This is extra complex because you can make your Formula name not match your app name
       # so we need to find the formula file based on the app name
       - name: Commit formula files
-        run: |
+${commitStepEnv}        run: |
           git config --global user.name "\${GITHUB_USER}"
           git config --global user.email "\${GITHUB_EMAIL}"
 

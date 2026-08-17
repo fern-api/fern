@@ -546,11 +546,34 @@ describe("runPipeline", () => {
         expect(ciYml).not.toContain("scoop");
     });
 
+    // The shared App reaches both emitters, and each job mints its own
+    // token scoped to its own repo — the credentials are what the channels
+    // share, not the resulting token.
+    it("wires a shared githubApp into both publish jobs", async () => {
+        await generateWithDistribution(githubConfig, {
+            githubApp: { appIdSecret: "PUBLISH_APP_ID", privateKeySecret: "PUBLISH_APP_PRIVATE_KEY" },
+            homebrew: { tap: "acme/homebrew-tap" },
+            scoop: { bucket: "acme/scoop-bucket" }
+        });
+
+        const releaseYml = await readFile(path.join(outputDir, ".github", "workflows", "release.yml"), "utf-8");
+        expect(releaseYml).toContain("preflight-distribution");
+        expect(releaseYml.match(/uses: actions\/create-github-app-token@v2/g)).toHaveLength(2);
+        expect(releaseYml).toContain("repositories: homebrew-tap");
+        expect(releaseYml).toContain("repositories: scoop-bucket");
+        // No PAT fallback anywhere once the App is configured.
+        expect(releaseYml).not.toContain("secrets.HOMEBREW_TAP_TOKEN");
+        expect(releaseYml).not.toContain("secrets.SCOOP_BUCKET_TOKEN");
+    });
+
     // Both channels publish *from* a GitHub Release, so there is nothing to
     // wire up when the generator writes to local files — same gate npm
     // publishing already sits behind.
     it("ignores distribution config outside github output mode", async () => {
-        await generateWithDistribution(localFilesConfig, homebrewAndScoop);
+        await generateWithDistribution(localFilesConfig, {
+            ...homebrewAndScoop,
+            githubApp: { appIdSecret: "PUBLISH_APP_ID", privateKeySecret: "PUBLISH_APP_PRIVATE_KEY" }
+        });
 
         const distToml = await readFile(path.join(outputDir, "dist-workspace.toml"), "utf-8");
         expect(distToml).not.toContain("homebrew");

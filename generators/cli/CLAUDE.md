@@ -108,7 +108,8 @@ the path the patched Cargo.toml references).
 | [`src/copySpecs.ts`](src/copySpecs.ts) | Reads `/fern/specs/specs-manifest.json`, copies each spec into `cli/<binaryName>/`, emits `main.rs` from a supplied list of auth bindings. |
 | [`src/patchCargoToml.ts`](src/patchCargoToml.ts) | Literal string replacements against the shipped `Cargo.toml`. Throws if no anchors matched. |
 | [`src/patchDistWorkspace.ts`](src/patchDistWorkspace.ts) | Strips Fern-specific cargo-dist metadata (npm-scope, npm-package) from the shipped `dist-workspace.toml`; adds the Homebrew installer/publish-job/tap keys when `customConfig.distribution.homebrew` is set. |
-| [`src/emitScoopWorkflow.ts`](src/emitScoopWorkflow.ts) | Renders the `publish-scoop` job appended to `ci.yml`. cargo-dist has no Scoop support, so this channel is hand-written: poll the release for the win64 archive, hash it, render the manifest, commit to the bucket repo. |
+| [`src/emitScoopWorkflow.ts`](src/emitScoopWorkflow.ts) | Renders the `publish-scoop` job appended to `release.yml`. cargo-dist has no Scoop support, so this channel is hand-written: resolve the win64 archive off the release, hash it, render the manifest, commit to the bucket repo. |
+| [`src/githubAppToken.ts`](src/githubAppToken.ts) | Renders the `actions/create-github-app-token` step (the one place `owner`/`repositories` are derived from a repo slug, shared by both publish jobs) and the `preflight-distribution` credential-check job. |
 | [`src/identity.ts`](src/identity.ts) | `deriveBinaryName`, `toKebabCase`, `toEnvVarPrefix`. Resolves `customConfig.binaryName ?? ir.apiDisplayName`. |
 | [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName`, `customCommands`, `rootGroup`, `packageIdentity`, `distribution`. |
 | [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` via `visitDiscriminatedUnion` and emits one auth binding per supported scheme, each tagged `placement: "root" \| "binding"`. Bearer, header, OAuth, and two-field basic go to root; only the `usernameOmit`/`passwordOmit` custom-provider variants stay binding-level. Synchronous — no disk reads. |
@@ -220,6 +221,11 @@ opt-in on top of that, via `customConfig.distribution`:
 config:
   binaryName: acme-cli
   distribution:
+    # Optional. Mints a short-lived installation token per job instead of
+    # reading a PAT. Applies to every channel that pins no token of its own.
+    githubApp:
+      appIdSecret: PUBLISH_APP_ID
+      privateKeySecret: PUBLISH_APP_PRIVATE_KEY
     homebrew:
       tap: acme/homebrew-tap        # required, "<owner>/<repo>"
       formula: acme                 # optional, defaults to binaryName
@@ -228,6 +234,60 @@ config:
       bucket: acme/scoop-bucket     # required, "<owner>/<repo>"
       tokenEnvironmentVariable: SCOOP_BUCKET_TOKEN   # optional, default
 ```
+
+### Push authentication
+
+Each channel resolves one mechanism via `resolveChannelAuth`, most
+specific first:
+
+1. the channel's own `tokenEnvironmentVariable`
+2. `distribution.githubApp`
+3. the channel's default PAT secret name
+
+`githubApp` is declared once for the whole block, not per channel, because
+one App normally serves both: an App can be installed on several accounts,
+and `constructAppTokenStep` passes each job its own tap/bucket `owner` so
+it mints from the right installation. Cross-org taps and buckets therefore
+need no second App. Per-channel `githubApp` is deliberately **not**
+supported — adding it later is additive, removing it would need a
+generator migration.
+
+Rung 1 above rung 2 is what makes migrating one channel at a time
+expressible (shared App, `scoop.tokenEnvironmentVariable` still pinned).
+It also means there is no mutual-exclusivity error to raise: with no
+per-channel `githubApp`, two mechanisms for one push cannot be expressed.
+
+Two constraints that shape the emitted YAML:
+
+- **Job-level `env` cannot read `steps.*`.** It sees `github`, `needs`,
+  `vars`, `secrets`, `inputs`, `strategy` and `matrix` only. So in the App
+  branch `GITHUB_TOKEN` moves from the job `env` down to the commit step;
+  left up there it renders as the empty string. Nothing in that job
+  actually reads it — `dist` is downloaded but never invoked, there is no
+  `gh` call, and the `git push` authenticates off the `http.extraheader`
+  that `actions/checkout` writes because of `persist-credentials: true`.
+  It is inherited cargo-dist decoration, kept so the PAT branch stays
+  byte-identical.
+- **Both variants come from one template.** `constructHomebrewPublishJob`
+  interpolates four slots rather than carrying two copies of the job.
+  Authoring a second copy is how the `announcement_is_prerelease` guard
+  gets dropped from one branch — and a tap has no prerelease channel, so a
+  lost guard means an RC formula becomes what every `brew upgrade`
+  installs, with a green workflow and no error. `emitReleaseWorkflow.test.ts`
+  asserts the guard's presence in the App branch specifically.
+
+`preflight-distribution` ([`githubAppToken.ts`](src/githubAppToken.ts)) is
+emitted only when a channel uses an App. It declares no `needs`, so a
+missing or malformed secret fails in ~20s instead of after
+`gh release create`. It checks the App identifier for emptiness only —
+`create-github-app-token` accepts the numeric App ID *or* the Client ID
+(`Iv23…`), so a shape assertion would reject valid config — and catches
+the two failure modes that don't describe themselves: an Actions
+*variable* is not readable as `secrets.<NAME>` and an undefined secret
+resolves to `""`, and a single-line PEM still carries its BEGIN header.
+Only the publish jobs depend on it, so a bad secret costs the formula and
+manifest but still ships archives and installers. PAT secrets are not
+preflighted: that would add a job to every existing consumer's pipeline.
 
 The two channels are **not** symmetric, because cargo-dist supports one
 and not the other:
@@ -280,10 +340,17 @@ internally consistent either way.
 Three things generation cannot do, which the consumer must:
 
 1. Create the tap (`homebrew-*`) and bucket repos, **public**.
-2. Add a PAT with write access to them under the configured secret names.
-   The built-in `GITHUB_TOKEN` cannot push cross-repo — `customConfig.ts`
-   rejects it rather than emitting a pipeline that fails after the tag is
-   cut.
+2. Supply a credential with write access to them, one of:
+   - **A GitHub App** (preferred): Contents read & write, installed on the
+     tap and bucket only — not on the CLI repo, whose built-in
+     `GITHUB_TOKEN` already covers everything in-repo. Store the App ID and
+     the full PEM as Actions **secrets** in the *generated CLI's*
+     repository, and name them in `distribution.githubApp`.
+   - **A PAT** under the channel's `tokenEnvironmentVariable`.
+
+   Either way the built-in `GITHUB_TOKEN` cannot push cross-repo, so
+   `customConfig.ts` rejects it in both places rather than emitting a
+   pipeline that fails after the tag is cut.
 3. Keep GitHub Releases public. Both channels fetch archives from the
    release URL. This is a real asymmetry with npm, whose packages embed
    the binary bytes and so work from a private source repo.

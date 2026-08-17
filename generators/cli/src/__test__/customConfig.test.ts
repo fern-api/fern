@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { validateCustomConfig } from "../customConfig.js";
+import { resolveChannelAuth, validateCustomConfig } from "../customConfig.js";
 
 describe("validateCustomConfig", () => {
     it("returns defaults (customCommands: true) for null/undefined", () => {
@@ -269,5 +269,104 @@ describe("validateCustomConfig — distribution", () => {
         expect(() => validateCustomConfig({ distribution: { scoop: "acme/scoop-bucket" } })).toThrow(
             /distribution\.scoop: expected an object, got string/
         );
+    });
+});
+
+describe("validateCustomConfig — distribution.githubApp", () => {
+    const githubApp = { appIdSecret: "PUBLISH_APP_ID", privateKeySecret: "PUBLISH_APP_PRIVATE_KEY" };
+
+    it("accepts a shared app alongside both channels", () => {
+        const distribution = {
+            githubApp,
+            homebrew: { tap: "acme/homebrew-tap" },
+            scoop: { bucket: "acme/scoop-bucket" }
+        };
+        expect(validateCustomConfig({ distribution })).toEqual({ distribution });
+    });
+
+    /**
+     * `optionalSecretName` returns `undefined` rather than throwing, so
+     * routing these through it would emit `private-key: ${{ secrets. }}`.
+     * That is not a valid Actions expression, so GitHub refuses to load
+     * `release.yml` at all — taking down archives, installers and
+     * `curl | bash` too, not just the channel whose key was mistyped.
+     */
+    it("requires both halves", () => {
+        expect(() => validateCustomConfig({ distribution: { githubApp: { appIdSecret: "PUBLISH_APP_ID" } } })).toThrow(
+            /Missing customConfig\.distribution\.githubApp\.privateKeySecret/
+        );
+        expect(() =>
+            validateCustomConfig({ distribution: { githubApp: { privateKeySecret: "PUBLISH_APP_PRIVATE_KEY" } } })
+        ).toThrow(/Missing customConfig\.distribution\.githubApp\.appIdSecret/);
+        expect(() => validateCustomConfig({ distribution: { githubApp: {} } })).toThrow(
+            /both appIdSecret and privateKeySecret are required/
+        );
+    });
+
+    it("rejects malformed secret names", () => {
+        expect(() =>
+            validateCustomConfig({ distribution: { githubApp: { ...githubApp, appIdSecret: "publish-app-id" } } })
+        ).toThrow(/is not a valid GitHub Actions secret name/);
+        expect(() =>
+            validateCustomConfig({ distribution: { githubApp: { ...githubApp, privateKeySecret: 42 } } })
+        ).toThrow(/privateKeySecret: 42 is not a valid GitHub Actions secret name/);
+    });
+
+    // The message must not tell someone already configuring a GitHub App to
+    // go create a GitHub App, which is what the PAT-oriented copy does.
+    it("rejects GITHUB_TOKEN with an app-appropriate message", () => {
+        expect(() =>
+            validateCustomConfig({ distribution: { githubApp: { ...githubApp, appIdSecret: "GITHUB_TOKEN" } } })
+        ).toThrow(/not a GitHub App credential/);
+        expect(() =>
+            validateCustomConfig({ distribution: { githubApp: { ...githubApp, privateKeySecret: "GITHUB_TOKEN" } } })
+        ).toThrow(/not a GitHub App credential/);
+    });
+
+    it("rejects a non-object githubApp", () => {
+        expect(() => validateCustomConfig({ distribution: { githubApp: "PUBLISH_APP_ID" } })).toThrow(
+            /distribution\.githubApp: expected an object, got string/
+        );
+    });
+});
+
+describe("resolveChannelAuth", () => {
+    const githubApp = { appIdSecret: "PUBLISH_APP_ID", privateKeySecret: "PUBLISH_APP_PRIVATE_KEY" };
+
+    it("falls back to the channel default when nothing is configured", () => {
+        expect(
+            resolveChannelAuth({
+                tokenEnvironmentVariable: undefined,
+                githubApp: undefined,
+                defaultTokenSecret: "HOMEBREW_TAP_TOKEN"
+            })
+        ).toEqual({ type: "pat", tokenSecret: "HOMEBREW_TAP_TOKEN" });
+    });
+
+    it("uses a shared app when the channel pins no token", () => {
+        expect(
+            resolveChannelAuth({
+                tokenEnvironmentVariable: undefined,
+                githubApp,
+                defaultTokenSecret: "SCOOP_BUCKET_TOKEN"
+            })
+        ).toEqual({ type: "githubApp", app: githubApp });
+    });
+
+    /**
+     * The one mixing case with a real use: a shared App plus
+     * `scoop.tokenEnvironmentVariable` reads as "App everywhere except
+     * Scoop, which is not migrated yet". Because the channel-level PAT is
+     * the more specific setting, this is intent rather than conflict —
+     * which is why there is no mutual-exclusivity error to raise.
+     */
+    it("lets an explicit channel token override a shared app", () => {
+        expect(
+            resolveChannelAuth({
+                tokenEnvironmentVariable: "BUCKET_PAT",
+                githubApp,
+                defaultTokenSecret: "SCOOP_BUCKET_TOKEN"
+            })
+        ).toEqual({ type: "pat", tokenSecret: "BUCKET_PAT" });
     });
 });
