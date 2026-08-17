@@ -1,5 +1,7 @@
 # Webhook Audience Test CLI
 
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Webhook%20Audience%20Test%2FCLI)
+
 Command-line interface for the Webhook Audience Test API.
 
 ## Table of contents

@@ -30,6 +30,12 @@ export interface IrSummary {
      * to resolve the base URL the OAuth token endpoint path is joined to.
      */
     environments: FernIr.EnvironmentsConfig | undefined;
+    /**
+     * The IR's `readmeConfig.whiteLabel`, defaulted to `false`. Set for orgs
+     * configured for white-labeling; suppresses the Fern shield in the
+     * generated README.
+     */
+    whiteLabel: boolean;
 }
 
 /**
@@ -58,7 +64,8 @@ export async function readIr(irFilepath: string): Promise<IrSummary> {
         auth: { schemes: ir.auth.schemes },
         globalParameters: ir.globalParameters ?? [],
         services: ir.services,
-        environments: ir.environments
+        environments: ir.environments,
+        whiteLabel: ir.readmeConfig?.whiteLabel ?? false
     };
 }
 

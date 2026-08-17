@@ -1,5 +1,7 @@
 # Schemaless Request Body Examples API CLI
 
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Schemaless%20Request%20Body%20Examples%20API%2FCLI)
+
 Command-line interface for the Schemaless Request Body Examples API.
 
 ## Table of contents

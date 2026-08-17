@@ -1,5 +1,7 @@
 # Test x-fern-global-parameters extension CLI
 
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Test%20x-fern-global-parameters%20extension%2FCLI)
+
 Command-line interface for the Test x-fern-global-parameters extension API.
 
 ## Table of contents

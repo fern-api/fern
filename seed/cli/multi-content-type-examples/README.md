@@ -1,5 +1,7 @@
 # Multi Content Type Examples CLI
 
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Multi%20Content%20Type%20Examples%2FCLI)
+
 Command-line interface for the Multi Content Type Examples API.
 
 ## Table of contents

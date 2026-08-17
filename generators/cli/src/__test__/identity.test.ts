@@ -7,7 +7,8 @@ const emptyIr = (apiDisplayName: string | undefined = undefined): IrSummary => (
     auth: { schemes: [] },
     globalParameters: [],
     services: {},
-    environments: undefined
+    environments: undefined,
+    whiteLabel: false
 });
 
 describe("toKebabCase", () => {
