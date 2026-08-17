@@ -246,6 +246,23 @@ import { Flex, ProgressCircle } from "@/components/ui/big-design";
         expect(result).toBe(markdown);
     });
 
+    it("should not throw on malformed frontmatter", () => {
+        const markdown = `---
+title: "unterminated
+---
+
+import { Banner } from '@/components/Banner'`;
+        const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
+
+        expect(() =>
+            transformAtPrefixImports({
+                markdown,
+                absolutePathToFernFolder,
+                absolutePathToMarkdownFile
+            })
+        ).not.toThrow();
+    });
+
     it("should handle imports in sibling directories", () => {
         const markdown = `import { Banner } from '@/docs/components/Banner'`;
         const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/guides/test.mdx");

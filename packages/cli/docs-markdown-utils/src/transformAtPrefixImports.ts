@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, dirname, RelativeFilePath, relative } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 import grayMatter from "gray-matter";
 import { CONTINUE, visit } from "unist-util-visit";
 import { parseMarkdownToTree } from "./parseMarkdownToTree.js";
@@ -22,34 +23,31 @@ interface Range {
  * Byte ranges of fenced code blocks and inline code spans. Import statements inside them are
  * documentation samples, not MDX imports, and must be rendered verbatim.
  */
-function getCodeRanges(markdown: string): Range[] | undefined {
-    const { content } = grayMatter(markdown);
-    // `parseMarkdownToTree` strips frontmatter, so node offsets are relative to the body.
-    if (!markdown.endsWith(content)) {
-        return undefined;
-    }
-    const bodyOffset = markdown.length - content.length;
-
+function getCodeRanges(markdown: string, context: TaskContext | undefined): Range[] | undefined {
     try {
-        const tree = parseMarkdownToTree(markdown);
+        // node offsets are relative to the body, so frontmatter is stripped here rather than by
+        // `parseMarkdownToTree`, to keep the offset base explicit.
+        const { content } = grayMatter(markdown);
+        if (!markdown.endsWith(content)) {
+            return undefined;
+        }
+        const bodyOffset = markdown.length - content.length;
+
+        const tree = parseMarkdownToTree(content);
         const ranges: Range[] = [];
-        visit(
-            tree,
-            (node: unknown) => {
-                const type = (node as { type?: string }).type;
-                return type === "code" || type === "inlineCode";
-            },
-            (node) => {
-                const start = node.position?.start.offset;
-                const end = node.position?.end.offset;
-                if (start != null && end != null) {
-                    ranges.push({ start: start + bodyOffset, end: end + bodyOffset });
-                }
-                return CONTINUE;
+        visit(tree, ["code", "inlineCode"], (node) => {
+            const start = node.position?.start.offset;
+            const end = node.position?.end.offset;
+            if (start != null && end != null) {
+                ranges.push({ start: start + bodyOffset, end: end + bodyOffset });
             }
-        );
+            return CONTINUE;
+        });
         return ranges;
-    } catch {
+    } catch (error) {
+        context?.logger.debug(
+            `Failed to locate code blocks while resolving "@/" imports; imports inside code samples may be rewritten: ${error instanceof Error ? error.message : String(error)}`
+        );
         return undefined;
     }
 }
@@ -68,23 +66,26 @@ function getCodeRanges(markdown: string): Range[] | undefined {
  * @param markdown - The markdown/MDX content to transform
  * @param absolutePathToFernFolder - The absolute path to the fern folder root
  * @param absolutePathToMarkdownFile - The absolute path to the current MDX file
+ * @param context - Optional task context used to log when code blocks cannot be located
  * @returns The transformed markdown with '@/' imports converted to relative paths
  */
 export function transformAtPrefixImports({
     markdown,
     absolutePathToFernFolder,
-    absolutePathToMarkdownFile
+    absolutePathToMarkdownFile,
+    context
 }: {
     markdown: string;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToMarkdownFile: AbsoluteFilePath;
+    context?: TaskContext;
 }): string {
     if (!markdown.includes("@/")) {
         return markdown;
     }
 
     const mdxDir = dirname(absolutePathToMarkdownFile);
-    const codeRanges = getCodeRanges(markdown);
+    const codeRanges = getCodeRanges(markdown, context);
 
     return markdown.replace(
         IMPORT_REGEX,
