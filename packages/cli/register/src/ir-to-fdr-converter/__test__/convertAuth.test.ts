@@ -26,6 +26,8 @@ const AUTHORIZATION_CODE_CONFIG = Ir.auth.OAuthConfiguration.authorizationCode({
     refreshUrl: undefined,
     redirectUri: undefined,
     redirectUriBackupPorts: undefined,
+    successRedirectUrl: undefined,
+    errorRedirectUrl: undefined,
     scopes: undefined,
     pkce: { method: Ir.auth.OAuthPkceMethod.S256 },
     authorizationParameters: undefined,

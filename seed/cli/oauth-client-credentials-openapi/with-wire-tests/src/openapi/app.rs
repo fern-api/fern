@@ -1754,7 +1754,10 @@ impl CliApp {
             Some(format!("Global parameters:\n{}", rows.join("\n")))
         };
         let env_footer = super::commands::after_help_footer(&doc.name);
+        // `build_cli` already sets the env-var footer, so appending it
+        // unconditionally renders the block twice on the root `--help`.
         let base_footer = match existing_after_help {
+            Some(ref s) if s.contains(&env_footer) => s.clone(),
             Some(ref s) if !s.is_empty() => format!("{s}\n{env_footer}"),
             _ => env_footer,
         };
@@ -3420,6 +3423,25 @@ mod tests {
         assert_eq!(
             compose_root_after_help_sections(Some(g), None, Some(a), footer),
             format!("{g}\n{a}\n{footer}"),
+        );
+    }
+
+    /// `build_cli` sets the env-var footer and `decorate_command` used to
+    /// append it again, so the root `--help` printed the section twice.
+    #[test]
+    fn test_root_help_renders_env_footer_once() {
+        let doc = RestDescription {
+            name: "channel3".into(),
+            ..Default::default()
+        };
+        let cli = crate::openapi::commands::build_cli(&doc);
+        let cli = CliApp::new("channel3").decorate_command(&doc, cli);
+
+        let after_help = cli.get_after_help().expect("footer").to_string();
+        assert_eq!(
+            after_help.matches("Environment variables:").count(),
+            1,
+            "env-var footer should appear once, got:\n{after_help}",
         );
     }
 

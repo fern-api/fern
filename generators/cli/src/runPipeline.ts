@@ -18,12 +18,14 @@ import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
 import {
     patchCargoLockForSdk,
+    patchCargoLockForTypePartitions,
     patchCargoLockForTypes,
     patchCargoToml,
     withDistributionDefaults
 } from "./patchCargoToml.js";
 import { patchDistWorkspaceToml } from "./patchDistWorkspace.js";
 import type { ResolvedOutputConfig } from "./resolveOutputConfig.js";
+import type { TypePartitionCrate } from "./splitTypesCrates.js";
 import { generateWireTests } from "./wireTests/index.js";
 import { writeGitignore } from "./writeGitignore.js";
 
@@ -166,13 +168,17 @@ export async function runPipeline(args: {
     // Generate the embedded types + SDK crates (on by default; opt-out via customCommands: false).
     let typesCrateName: string | undefined;
     let sdkCrateName: string | undefined;
+    let typePartitionCrates: TypePartitionCrate[] = [];
     let subClients: SubClientField[] = [];
     if (customCommands && irFilepath != null) {
-        typesCrateName = await generateEmbeddedTypes({
+        const typesResult = await generateEmbeddedTypes({
             irFilepath,
             outputDir,
-            binaryName
+            binaryName,
+            splitTypeCrates: customConfig.splitTypeCrates
         });
+        typesCrateName = typesResult.typesCrateName;
+        typePartitionCrates = typesResult.partitionCrates;
         await writeFernignore(outputDir, binaryName);
 
         if (typesCrateName != null) {
@@ -214,6 +220,9 @@ export async function runPipeline(args: {
     if (typesCrateName != null || sdkCrateName != null) {
         await patchCargoToml({ outputDir, binaryName, typesCrateName, sdkCrateName });
         const packageName = customConfig.packageIdentity?.name;
+        if (typePartitionCrates.length > 0) {
+            await patchCargoLockForTypePartitions({ outputDir, partitionCrates: typePartitionCrates });
+        }
         if (typesCrateName != null) {
             // When the SDK crate exists, the CLI binary depends on the
             // SDK (which re-exports types) — so skip adding types as a
@@ -228,7 +237,14 @@ export async function runPipeline(args: {
         if (sdkCrateName != null && typesCrateName != null) {
             await patchCargoLockForSdk({ outputDir, sdkCrateName, typesCrateName, packageName });
         }
-        await patchDistWorkspaceToml({ outputDir, typesCrateName, sdkCrateName });
+        await patchDistWorkspaceToml({
+            outputDir,
+            typesCrateName,
+            sdkCrateName,
+            // cargo-dist members are paths from the workspace root, so the
+            // nested partitions are declared by directory, not crate name.
+            typePartitionMemberPaths: typePartitionCrates.map(({ relativeDir }) => relativeDir)
+        });
     }
 
     if (outputConfig.isGithubOutput) {

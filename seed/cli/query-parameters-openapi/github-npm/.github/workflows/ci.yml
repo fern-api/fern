@@ -134,15 +134,19 @@ jobs:
           sudo apt-get install -y musl-tools
 
       # The TLS backend and the keyring backend are selected per target by
-      # Cargo.toml, so no per-target feature flags are needed here — musl
-      # only needs its linker pointed at musl-gcc.
+      # Cargo.toml, so no per-target feature flags are needed here.
+      #
+      # musl targets get a C compiler for the C dependencies, but not a
+      # linker: musl-gcc cannot produce static-pie, so it yields a binary
+      # that needs /lib/ld-musl-*.so.1 at runtime — which defeats the point
+      # of a musl build and crashes where that loader is absent. Left alone,
+      # rustc links the self-contained musl objects statically.
       - name: Build release binary
         shell: bash
         run: |
           if [[ "${{ matrix.rust-target }}" == *-linux-musl ]]; then
-            TARGET_UPPER=$(echo "${{ matrix.rust-target }}" | tr '[:lower:]-' '[:upper:]_')
-            export "CARGO_TARGET_${TARGET_UPPER}_LINKER=musl-gcc"
-            export CC=musl-gcc
+            TARGET_UNDERSCORE=$(echo "${{ matrix.rust-target }}" | tr '-' '_')
+            export "CC_${TARGET_UNDERSCORE}=musl-gcc"
           fi
           cargo build --release --target ${{ matrix.rust-target }}
 

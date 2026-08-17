@@ -277,7 +277,47 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             referenceToRequestBody,
             context
         );
-        return this.mergeAdditionalBodyParameters(serializedRequestBody, context);
+        const needsNullCheck = this.mayOmitRequestBody(context) && serializedRequestBody !== referenceToRequestBody;
+        return this.mergeAdditionalBodyParameters(
+            needsNullCheck
+                ? this.skipSerializationWhenBodyIsOmitted(referenceToRequestBody, serializedRequestBody)
+                : serializedRequestBody,
+            context
+        );
+    }
+
+    /**
+     * Whether the caller may leave the body out of the call. Absent `required` means required,
+     * so endpoints predating the field keep serializing unconditionally, as do SDKs that have not
+     * opted into reading the field.
+     */
+    private mayOmitRequestBody(context: FileContext): boolean {
+        return (
+            context.respectOptionalRequestBody &&
+            this.requestBody?.type === "reference" &&
+            this.requestBody.required === false
+        );
+    }
+
+    /**
+     * An omittable body is typed as the body itself rather than `optional<Body>`, so its schema
+     * rejects `undefined`. Serialize only once the caller has supplied a body.
+     */
+    private skipSerializationWhenBodyIsOmitted(
+        referenceToRequestBody: ts.Expression,
+        serializedRequestBody: ts.Expression
+    ): ts.Expression {
+        return ts.factory.createConditionalExpression(
+            ts.factory.createBinaryExpression(
+                referenceToRequestBody,
+                ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
+                ts.factory.createNull()
+            ),
+            undefined,
+            ts.factory.createIdentifier("undefined"),
+            undefined,
+            serializedRequestBody
+        );
     }
 
     /**

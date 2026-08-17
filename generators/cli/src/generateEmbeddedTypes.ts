@@ -19,10 +19,19 @@
 
 import { execFile } from "child_process";
 import { accessSync, constants } from "fs";
-import { copyFile, mkdir, readdir, readFile, rename, rm, unlink, writeFile } from "fs/promises";
+import { mkdir, readdir, readFile, rename, rm, unlink, writeFile } from "fs/promises";
 import { createRequire } from "module";
 import path from "path";
 import { promisify } from "util";
+import { readFullIr } from "./ir.js";
+import { planTypeCratePartitions, validateTypeCratePlan } from "./planTypeCratePartitions.js";
+import { splitTypesCrates, type TypePartitionCrate } from "./splitTypesCrates.js";
+import {
+    buildTypesCrateCargoToml,
+    buildTypesCratePrelude,
+    copyCoreModules,
+    TYPES_MODULE_DIRECTORY
+} from "./typesCrateScaffolding.js";
 
 const execFileAsync = promisify(execFile);
 
@@ -33,14 +42,23 @@ const execFileAsync = promisify(execFile);
  * @param outputDir  Absolute path to the CLI generator's output root.
  *                   The types crate will be written to `<outputDir>/<typesCrateName>/`.
  * @param binaryName Kebab-case CLI binary name (used to derive crate name).
- * @returns The generated crate name (e.g. `"my-api-types"`).
+ * @returns The generated crate name (e.g. `"my-api-types"`), plus any
+ *          per-API crates it fronts when partitioning is enabled.
  */
 export async function generateEmbeddedTypes(args: {
     irFilepath: string;
     outputDir: string;
     binaryName: string;
-}): Promise<string> {
-    const { irFilepath, outputDir, binaryName } = args;
+    /**
+     * When true, the generated types are distributed across one crate per API
+     * (plus a shared core crate when specs reference each other's types), and
+     * `<binaryName>-types` becomes a facade re-exporting them. Keeps the peak
+     * memory of any single `rustc` invocation proportional to the largest API
+     * rather than to the whole workspace.
+     */
+    splitTypeCrates?: boolean;
+}): Promise<EmbeddedTypesResult> {
+    const { irFilepath, outputDir, binaryName, splitTypeCrates = false } = args;
     const typesCrateName = `${binaryName}-types`;
     const typesOutputDir = path.join(outputDir, typesCrateName);
     await mkdir(typesOutputDir, { recursive: true });
@@ -55,7 +73,14 @@ export async function generateEmbeddedTypes(args: {
             path: typesOutputDir,
             mode: { type: "downloadFiles" as const }
         },
-        customConfig: { crateName: typesCrateName.replace(/-/g, "_"), coreModulePath: "crate::core" },
+        customConfig: {
+            crateName: typesCrateName.replace(/-/g, "_"),
+            coreModulePath: "crate::core",
+            // Splitting needs to know which IR element produced each generated
+            // file; filenames come from the model generator's collision
+            // registry, so they cannot be derived from the IR.
+            emitFileManifest: splitTypeCrates
+        },
         workspaceName: binaryName,
         organization: "",
         environment: { _type: "local" as const, type: "local" as const },
@@ -88,9 +113,33 @@ export async function generateEmbeddedTypes(args: {
     // The rust-model generator only emits .rs source files — it does not
     // produce Cargo.toml or the prelude module that its types import.
     // Patch the crate so it compiles as a workspace member.
-    await patchTypesCrate({ typesOutputDir, typesCrateName });
+    const needsReqwest = await sourceFilesContain(path.join(typesOutputDir, "src"), "reqwest::multipart");
+    await patchTypesCrate({ typesOutputDir, typesCrateName, needsReqwest, keepFernDirectory: splitTypeCrates });
 
-    return typesCrateName;
+    if (!splitTypeCrates) {
+        return { typesCrateName, partitionCrates: [] };
+    }
+
+    const ir = await readFullIr(irFilepath);
+    const plan = planTypeCratePartitions(ir);
+    // Fail before anything is moved: a plan that violates leaf -> core would
+    // otherwise surface as unresolved names in the consumer's `cargo build`.
+    validateTypeCratePlan(ir, plan);
+
+    const { partitionCrates } = await splitTypesCrates({
+        typesOutputDir,
+        typesCrateName,
+        plan,
+        needsReqwest
+    });
+    return { typesCrateName, partitionCrates };
+}
+
+export interface EmbeddedTypesResult {
+    /** Crate the SDK and CLI depend on. A facade when partitioned. */
+    typesCrateName: string;
+    /** Per-API crates behind the facade; empty when not partitioned. */
+    partitionCrates: TypePartitionCrate[];
 }
 
 /**
@@ -102,53 +151,23 @@ export async function generateEmbeddedTypes(args: {
  * framework writes — it's useful for standalone crates but noise inside
  * the CLI workspace.
  */
-async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: string }): Promise<void> {
-    const { typesOutputDir, typesCrateName } = args;
+async function patchTypesCrate(args: {
+    typesOutputDir: string;
+    typesCrateName: string;
+    /** Whether any generated file uses `reqwest::multipart` (file uploads). */
+    needsReqwest: boolean;
+    keepFernDirectory: boolean;
+}): Promise<void> {
+    const { typesOutputDir, typesCrateName, needsReqwest, keepFernDirectory } = args;
     const crateName = typesCrateName.replace(/-/g, "_");
-
-    // Scan generated source files for reqwest::multipart usage (emitted
-    // by the model generator's FileUploadRequestGenerator).
-    const needsReqwest = await sourceFilesContain(path.join(typesOutputDir, "src"), "reqwest::multipart");
 
     // 1. Cargo.toml — minimal lib crate with serde derives and
     //    the extra deps required by the core serde helper modules.
-    const deps = [
-        'serde = { version = "1", features = ["derive"] }',
-        'serde_json = "1"',
-        'chrono = { version = "0.4", features = ["serde"] }',
-        'base64 = "0.22"',
-        'num-bigint = { version = "0.4", features = ["serde"] }',
-        'ordered-float = { version = "4.5", features = ["serde"] }'
-    ];
-    if (needsReqwest) {
-        deps.push('reqwest = { version = "0.12", features = ["multipart"], default-features = false }');
-    }
-    const cargoToml = [
-        "[package]",
-        `name = "${crateName}"`,
-        'version = "0.0.0"',
-        'edition = "2021"',
-        "",
-        "[lib]",
-        "doctest = false",
-        "",
-        "[dependencies]",
-        ...deps,
-        ""
-    ].join("\n");
-    await writeFile(path.join(typesOutputDir, "Cargo.toml"), cargoToml);
+    await writeFile(path.join(typesOutputDir, "Cargo.toml"), buildTypesCrateCargoToml({ crateName, needsReqwest }));
 
     // 2. src/prelude.rs — re-exports the derives that every generated
     //    type file imports via `use crate::prelude::*`.
-    const preludeLines = [
-        "pub use serde::{Deserialize, Serialize};",
-        "pub use serde_json::{json, Value};",
-        "pub use std::collections::{HashMap, HashSet};",
-        "pub use std::fmt;",
-        "pub use chrono::{DateTime, FixedOffset, NaiveDate, NaiveDateTime, Utc};",
-        "pub use ordered_float::OrderedFloat;"
-    ];
-
+    //
     // If the rust-model generator emitted an error.rs with BuildError,
     // re-export it so type files that reference BuildError (builders)
     // can resolve it via `use crate::prelude::*`.
@@ -160,12 +179,10 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
     } catch (_e: unknown) {
         // no error.rs — skip
     }
-    if (hasErrorRs) {
-        preludeLines.push("pub use crate::error::BuildError;");
-    }
-
-    preludeLines.push("");
-    await writeFile(path.join(typesOutputDir, "src", "prelude.rs"), preludeLines.join("\n"));
+    await writeFile(
+        path.join(typesOutputDir, "src", "prelude.rs"),
+        buildTypesCratePrelude({ hasErrorModule: hasErrorRs })
+    );
 
     // 3. Copy core serde helper modules (flexible_datetime, base64_bytes,
     //    bigint_string, number_serializers) into the types crate so
@@ -192,7 +209,10 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
 
     // 6. Remove the .fern/ metadata directory written by the base
     //    generator framework — not needed inside a workspace member.
-    await rm(path.join(typesOutputDir, ".fern"), { recursive: true, force: true });
+    //    Retained when splitting, which reads the file manifest from it.
+    if (!keepFernDirectory) {
+        await rm(path.join(typesOutputDir, ".fern"), { recursive: true, force: true });
+    }
 }
 
 /** Files that live at the `src/` root and must NOT be moved into `src/types/`. */
@@ -207,7 +227,7 @@ const SRC_ROOT_FILES = new Set(["lib.rs", "prelude.rs", "error.rs"]);
  * injected so sibling types re-exported by `mod.rs` are in scope.
  */
 async function restructureTypesModule(srcDir: string): Promise<void> {
-    const typesDir = path.join(srcDir, "types");
+    const typesDir = path.join(srcDir, TYPES_MODULE_DIRECTORY);
     await mkdir(typesDir, { recursive: true });
 
     const movedFiles: string[] = [];
@@ -246,69 +266,6 @@ async function restructureTypesModule(srcDir: string): Promise<void> {
             }
         }
     }
-}
-
-/** The four core serde helper modules that the model generator references. */
-const CORE_SERDE_MODULES = ["flexible_datetime.rs", "base64_bytes.rs", "bigint_string.rs", "number_serializers.rs"];
-
-/**
- * Copy the core serde helper modules into the types crate's `src/core/`
- * directory and write a `mod.rs` that declares them.
- */
-async function copyCoreModules(typesOutputDir: string): Promise<void> {
-    const coreDir = path.join(typesOutputDir, "src", "core");
-    await mkdir(coreDir, { recursive: true });
-
-    const asIsDir = resolveAsIsDir();
-    for (const filename of CORE_SERDE_MODULES) {
-        await copyFile(path.join(asIsDir, filename), path.join(coreDir, filename));
-    }
-
-    const modLines = CORE_SERDE_MODULES.map((f) => `pub mod ${f.replace(".rs", "")};`);
-    modLines.push("");
-    await writeFile(path.join(coreDir, "mod.rs"), modLines.join("\n"));
-}
-
-/**
- * Resolve the directory containing the as-is Rust helper files
- * (`flexible_datetime.rs`, `base64_bytes.rs`, etc.).
- *
- * Resolution order:
- *   1. Docker / dist:cli — `dist/rust-model-dist/asIs/` (bundled).
- *   2. Monorepo dev — `@fern-api/rust-base` package's `src/asIs/`.
- */
-function resolveAsIsDir(): string {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    const scriptDir: string = import.meta.dirname ?? (typeof __dirname !== "undefined" ? __dirname : ".");
-
-    // 1. Docker / dist:cli build — bundled alongside rust-model-dist.
-    const bundled = path.resolve(scriptDir, "rust-model-dist", "asIs");
-    try {
-        accessSync(path.join(bundled, "flexible_datetime.rs"), constants.R_OK);
-        return bundled;
-    } catch (_e: unknown) {
-        // Not found — fall through.
-    }
-
-    // 2. Monorepo dev — resolve via @fern-api/rust-base.
-    try {
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        const base = import.meta.url || (typeof __filename !== "undefined" ? `file://${__filename}` : "file:///");
-        const require = createRequire(base);
-        const basePkg = require.resolve("@fern-api/rust-base/package.json");
-        const baseRoot = path.dirname(basePkg);
-        const devAsIs = path.join(baseRoot, "src", "asIs");
-        accessSync(path.join(devAsIs, "flexible_datetime.rs"), constants.R_OK);
-        return devAsIs;
-    } catch (_e: unknown) {
-        // fall through
-    }
-
-    throw new Error(
-        "Could not resolve Rust core as-is files. " +
-            "Ensure `pnpm turbo run dist:cli --filter @fern-api/rust-model` has been run, " +
-            "or that @fern-api/rust-base is installed in the workspace."
-    );
 }
 
 /**

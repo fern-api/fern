@@ -1,9 +1,13 @@
+import { mkdir, writeFile } from "fs/promises";
+import { dirname, join } from "path";
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractRustGeneratorCli, formatRustCode, RustFile } from "@fern-api/rust-base";
 import { Writer } from "@fern-api/rust-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { collectModuleExports } from "./collectModuleExports.js";
+import { MODEL_FILE_MANIFEST_PATH, ModelFileManifest } from "./ModelFileManifest.js";
 import { generateModels } from "./generateModels.js";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
 import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
@@ -88,6 +92,30 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
             logger: context.logger
         });
         context.logger.debug("Code formatting complete");
+
+        if (context.customConfig.emitFileManifest) {
+            await this.writeFileManifest(context);
+        }
+    }
+
+    /**
+     * Record which IR element produced each generated module so a caller can
+     * distribute the files across several crates without having to reimplement
+     * the filename registry's collision handling.
+     */
+    private async writeFileManifest(context: ModelGeneratorContext): Promise<void> {
+        const manifest: ModelFileManifest = {
+            modules: collectModuleExports(context).map(({ filename, moduleName, typeName, owner }) => ({
+                filename,
+                moduleName,
+                typeName,
+                owner
+            }))
+        };
+        const manifestPath = join(context.project.absolutePathToOutputDirectory, MODEL_FILE_MANIFEST_PATH);
+        await mkdir(dirname(manifestPath), { recursive: true });
+        await writeFile(manifestPath, JSON.stringify(manifest, null, 2));
+        context.logger.debug(`Wrote file manifest for ${manifest.modules.length} module(s) to ${manifestPath}`);
     }
 
     private generateLibRs(context: ModelGeneratorContext): string {
@@ -119,133 +147,9 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         writer.writeLine("//! This module contains all data structures used for API communication,");
         writer.writeLine("//! including request bodies, response types, and shared models.");
 
-        // Count different type categories for documentation
-        let requestTypeCount = 0;
-        let modelTypeCount = 0;
-
-        // Use a Set to track unique module names and prevent duplicates
-        // TODO: @iamnamananand996 - (remove this after testing it end to end) Theoretically unnecessary - registry ensures unique filenames → unique modules
-        const uniqueModuleNames = new Set<string>();
-        const moduleExports: Array<{ moduleName: string; typeName: string }> = [];
-
-        // Collect unique module names and their corresponding type names from IR types
-        if (context.ir.types) {
-            Object.entries(context.ir.types).forEach(([typeId, typeDeclaration]) => {
-                // Skip types that are inlined into discriminated union variants
-                if (context.inlinedUnionVariantTypeIds.has(typeId)) {
-                    return;
-                }
-                // Use centralized method to get unique filename and extract module name from it
-                const filename = context.getUniqueFilenameForType(typeDeclaration);
-                const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
-                const escapedModuleName = context.escapeRustKeyword(rawModuleName);
-                // Use getUniqueTypeNameForDeclaration to prevent type name conflicts
-                const typeName = context.getUniqueTypeNameForDeclaration(typeDeclaration);
-
-                // Only add if we haven't seen this module name before
-                if (!uniqueModuleNames.has(escapedModuleName)) {
-                    uniqueModuleNames.add(escapedModuleName);
-                    moduleExports.push({ moduleName: escapedModuleName, typeName });
-
-                    // Count type categories for documentation
-                    if (typeName.includes("Request") || typeName.includes("Response")) {
-                        requestTypeCount++;
-                    } else {
-                        modelTypeCount++;
-                    }
-                }
-            });
-        }
-
-        // Add inline request body types
-        for (const service of Object.values(context.ir.services)) {
-            for (const endpoint of service.endpoints) {
-                if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    const filename = context.getFilenameForInlinedRequestBody(endpoint.id);
-                    const rawModuleName = filename.replace(".rs", "");
-                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
-                    const typeName = context.getInlineRequestTypeName(endpoint.id);
-
-                    if (!uniqueModuleNames.has(escapedModuleName)) {
-                        uniqueModuleNames.add(escapedModuleName);
-                        moduleExports.push({ moduleName: escapedModuleName, typeName });
-                        requestTypeCount++; // Inline request bodies are request types
-                    }
-                }
-            }
-        }
-
-        // Add file upload request body types
-        for (const service of Object.values(context.ir.services)) {
-            for (const endpoint of service.endpoints) {
-                if (endpoint.requestBody?.type === "fileUpload") {
-                    const filename = context.getFilenameForFileUploadRequestBody(endpoint.id);
-                    const rawModuleName = filename.replace(".rs", "");
-                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
-                    const typeName = context.getFileUploadRequestTypeName(endpoint.id);
-
-                    if (!uniqueModuleNames.has(escapedModuleName)) {
-                        uniqueModuleNames.add(escapedModuleName);
-                        moduleExports.push({ moduleName: escapedModuleName, typeName });
-                        requestTypeCount++; // File upload requests are request types
-                    }
-                }
-            }
-        }
-
-        // Add query request types
-        for (const service of Object.values(context.ir.services)) {
-            for (const endpoint of service.endpoints) {
-                if (endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
-                    const filename = context.getFilenameForQueryRequest(endpoint.id);
-                    const rawModuleName = filename.replace(".rs", "");
-                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
-                    const typeName = context.getQueryRequestUniqueTypeName(endpoint.id);
-
-                    if (!uniqueModuleNames.has(escapedModuleName)) {
-                        uniqueModuleNames.add(escapedModuleName);
-                        moduleExports.push({ moduleName: escapedModuleName, typeName });
-                        requestTypeCount++; // Query requests are request types
-                    }
-                }
-            }
-        }
-
-        // Add request types for endpoints with referenced body AND query parameters
-        for (const service of Object.values(context.ir.services)) {
-            for (const endpoint of service.endpoints) {
-                if (endpoint.requestBody?.type === "reference" && endpoint.queryParameters.length > 0) {
-                    const filename = context.getFilenameForReferencedRequestWithQuery(endpoint.id);
-                    const rawModuleName = filename.replace(".rs", "");
-                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
-                    const typeName = context.getReferencedRequestWithQueryTypeName(endpoint.id);
-
-                    if (!uniqueModuleNames.has(escapedModuleName)) {
-                        uniqueModuleNames.add(escapedModuleName);
-                        moduleExports.push({ moduleName: escapedModuleName, typeName });
-                        requestTypeCount++;
-                    }
-                }
-            }
-        }
-
-        // Add bytes request body types
-        for (const service of Object.values(context.ir.services)) {
-            for (const endpoint of service.endpoints) {
-                if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
-                    const filename = context.getFilenameForBytesRequestBody(endpoint.id);
-                    const rawModuleName = filename.replace(".rs", "");
-                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
-                    const typeName = context.getBytesRequestTypeName(endpoint.id);
-
-                    if (!uniqueModuleNames.has(escapedModuleName)) {
-                        uniqueModuleNames.add(escapedModuleName);
-                        moduleExports.push({ moduleName: escapedModuleName, typeName });
-                        requestTypeCount++;
-                    }
-                }
-            }
-        }
+        const moduleExports = collectModuleExports(context);
+        const requestTypeCount = moduleExports.filter((moduleExport) => moduleExport.isRequestType).length;
+        const modelTypeCount = moduleExports.length - requestTypeCount;
 
         // Add documentation summary if we have types
         if (moduleExports.length > 0) {

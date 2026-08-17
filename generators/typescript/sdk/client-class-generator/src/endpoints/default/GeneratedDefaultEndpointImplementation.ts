@@ -158,7 +158,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
 
         const allExamples: string[] = [];
-        for (const example of getExampleEndpointCalls(this.endpoint)) {
+        for (const example of getExampleEndpointCalls(this.endpoint, context.respectOptionalRequestBody)) {
             const generatedExample = this.getExample({
                 context,
                 example,

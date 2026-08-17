@@ -26,14 +26,15 @@ export const ValidOauthRule: Rule = {
                         return validatePublicClientFlow(oauth);
                     }
 
-                    // client-credentials flow.
+                    // client-credentials flow. It is machine-to-machine, so like device-code it has no
+                    // browser callback to brand.
+                    violations.push(...rejectCallbackRedirectUrls(oauth));
                     if (oauth["get-token"] == null) {
-                        return [
-                            {
-                                severity: "fatal",
-                                message: "OAuth client-credentials flow requires a `get-token` endpoint."
-                            }
-                        ];
+                        violations.push({
+                            severity: "fatal",
+                            message: "OAuth client-credentials flow requires a `get-token` endpoint."
+                        });
+                        return violations;
                     }
                     const tokenEndpointReference = oauth["get-token"].endpoint;
                     const resolvedTokenEndpoint = endpointResolver.resolveEndpoint({
@@ -157,6 +158,16 @@ function validatePublicClientFlow(oauth: RawSchemas.OAuthSchemeSchema): RuleViol
                 }
             }
         }
+
+        for (const field of CALLBACK_REDIRECT_URL_FIELDS) {
+            const url = oauth[field];
+            if (url != null) {
+                const urlError = validateCallbackRedirectUrl({ field, url });
+                if (urlError != null) {
+                    violations.push({ severity: "fatal", message: urlError });
+                }
+            }
+        }
     } else {
         // device-code: it has no browser callback and does not use PKCE, so `redirect-uri` and
         // `pkce` are authorization-code-only. Reject them loudly rather than silently ignoring.
@@ -174,9 +185,56 @@ function validatePublicClientFlow(oauth: RawSchemas.OAuthSchemeSchema): RuleViol
                     "OAuth device-code flow does not use PKCE; remove `pkce` (it applies only to the authorization-code flow)."
             });
         }
+        violations.push(...rejectCallbackRedirectUrls(oauth));
     }
 
     return violations;
+}
+
+const CALLBACK_REDIRECT_URL_FIELDS = ["success-redirect-url", "error-redirect-url"] as const;
+
+/**
+ * Only the authorization-code flow has a browser callback to redirect, so these fields are rejected
+ * on every other flow rather than silently dropped.
+ */
+function rejectCallbackRedirectUrls(oauth: RawSchemas.OAuthSchemeSchema): RuleViolation[] {
+    return CALLBACK_REDIRECT_URL_FIELDS.filter((field) => oauth[field] != null).map((field) => ({
+        severity: "fatal" as const,
+        message: `OAuth ${oauth.type} flow has no browser callback; remove \`${field}\` (it applies only to the authorization-code flow).`
+    }));
+}
+
+/**
+ * `success-redirect-url` / `error-redirect-url` are hosted pages the generated CLI redirects the
+ * browser to from its loopback callback listener, so unlike `redirect-uri` they are ordinary remote
+ * URLs rather than loopback ones.
+ */
+function validateCallbackRedirectUrl({ field, url }: { field: string; url: string }): string | undefined {
+    let parsed: URL;
+    try {
+        parsed = new URL(url);
+    } catch {
+        return `OAuth ${field} '${url}' is not a valid URL. Use an absolute http(s) URL, e.g. https://acme.com/cli/welcome.`;
+    }
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+        return `OAuth ${field} '${url}' must use http or https — the generated CLI redirects the browser to it.`;
+    }
+    // The URL is interpolated into a `Location` response header by the generated CLI, so a control
+    // character in it would let the value break out of the header.
+    if (containsControlCharacter(url)) {
+        return `OAuth ${field} '${url}' must not contain control characters.`;
+    }
+    return undefined;
+}
+
+function containsControlCharacter(value: string): boolean {
+    for (let index = 0; index < value.length; index++) {
+        const charCode = value.charCodeAt(index);
+        if (charCode <= 0x1f || charCode === 0x7f) {
+            return true;
+        }
+    }
+    return false;
 }
 
 /**

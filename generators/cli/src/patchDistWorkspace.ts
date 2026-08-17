@@ -30,6 +30,13 @@ export async function patchDistWorkspaceToml(args: {
     typesCrateName?: string;
     sdkCrateName?: string;
     /**
+     * Per-API type crates behind the types facade, when partitioning is on, as
+     * paths relative to the workspace root (e.g. `types/<crate>`). cargo-dist
+     * members are paths, not package names, and these crates are nested a level
+     * below the facade.
+     */
+    typePartitionMemberPaths?: string[];
+    /**
      * When set, cargo-dist's native Homebrew installer + publish job are
      * turned on. Only meaningful on the first (crate-name-free) call —
      * the member-adding call below reads the already-patched file back
@@ -39,7 +46,7 @@ export async function patchDistWorkspaceToml(args: {
     /** Formula name fallback when `homebrew.formula` is unset. */
     binaryName?: string;
 }): Promise<void> {
-    const { outputDir, typesCrateName, sdkCrateName, homebrew, binaryName } = args;
+    const { outputDir, typesCrateName, sdkCrateName, typePartitionMemberPaths = [], homebrew, binaryName } = args;
     const distTomlPath = path.join(outputDir, "dist-workspace.toml");
     let contents: string;
     try {
@@ -52,6 +59,9 @@ export async function patchDistWorkspaceToml(args: {
         let patched = contents;
         if (typesCrateName != null) {
             patched = addWorkspaceMember(patched, typesCrateName);
+        }
+        for (const memberPath of typePartitionMemberPaths) {
+            patched = addWorkspaceMember(patched, memberPath);
         }
         if (sdkCrateName != null) {
             patched = addWorkspaceMember(patched, sdkCrateName);
@@ -160,50 +170,7 @@ export function applyDistWorkspacePatch(distToml: string): string {
     result = stripNpmInstaller(result);
     result = removeWorkspaceMember(result, PIPELINE_FIXTURE_MEMBER);
     result = applyRustlsPatch(result);
-    result = dropUnbuildableTargets(result);
     return result;
-}
-
-/**
- * Drop `aarch64-unknown-linux-musl` from cargo-dist's target list.
- *
- * The CLI stores credentials in the OS keyring, which on Linux reaches
- * secret-service through `libdbus-sys` — a C dependency. Statically
- * linking that for aarch64-musl fails at link time with `undefined
- * reference to __aarch64_ldadd4_sync`: GCC emits outline-atomics calls
- * whose helpers live in libgcc, which isn't linked in a `-static`
- * musl build. Observed on a real release; `x86_64-unknown-linux-musl`
- * is unaffected and stays.
- *
- * Dropping it rather than fighting the linker is proportionate here:
- * neither the Homebrew formula nor the Scoop manifest references musl
- * at all, and ARM64 Alpine users keep a path because the npm publish
- * job builds that target *natively* on an `ubuntu-24.04-arm` runner
- * instead of cross-compiling, so it never hits this.
- *
- * The real fix is upstream in the SDK template — either making the
- * keyring's secret-service backend optional or moving Linux to the
- * dbus-free `linux-native` backend — but that changes where
- * credentials are stored, which is not something to slip into a
- * distribution change.
- */
-export function dropUnbuildableTargets(distToml: string): string {
-    return removeFromStringArray(distToml, "targets", "aarch64-unknown-linux-musl");
-}
-
-/**
- * Remove a quoted entry from a top-level TOML array, preserving the
- * rest and their order. No-op when the entry or the key is absent.
- */
-export function removeFromStringArray(distToml: string, key: string, value: string): string {
-    const pattern = new RegExp(`^(${escapeRegExp(key)}\\s*=\\s*\\[)([^\\]]*)\\]`, "m");
-    return distToml.replace(pattern, (_match, prefix: string, inner: string) => {
-        const items = inner
-            .split(",")
-            .map((s) => s.trim())
-            .filter((s) => s.length > 0 && s !== `"${value}"`);
-        return `${prefix}${items.join(", ")}]`;
-    });
 }
 
 /**

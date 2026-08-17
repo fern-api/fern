@@ -149,6 +149,19 @@ describe("validateCustomConfig", () => {
         expect(() => validateCustomConfig({ generateWireTests: "yes" })).toThrow(/expected a boolean, got string/);
     });
 
+    it("accepts splitTypeCrates true/false", () => {
+        expect(validateCustomConfig({ splitTypeCrates: true })).toEqual({ splitTypeCrates: true });
+        expect(validateCustomConfig({ splitTypeCrates: false })).toEqual({ splitTypeCrates: false });
+    });
+
+    it("ignores splitTypeCrates explicitly set to undefined", () => {
+        expect(validateCustomConfig({ splitTypeCrates: undefined })).toEqual({});
+    });
+
+    it("throws on non-boolean splitTypeCrates", () => {
+        expect(() => validateCustomConfig({ splitTypeCrates: "yes" })).toThrow(/expected a boolean, got string/);
+    });
+
     it("accepts a packageIdentity block", () => {
         const packageIdentity = {
             name: "agentmail-cli",
