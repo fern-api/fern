@@ -1,5 +1,5 @@
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
-import { LogLevel, createLogger } from "@fern-api/logger";
+import { createLogger, LogLevel } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { describe, expect, it } from "vitest";
 import { AbstractGeneratorAgent } from "../AbstractGeneratorAgent.js";
