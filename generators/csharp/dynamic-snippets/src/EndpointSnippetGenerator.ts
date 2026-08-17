@@ -119,9 +119,22 @@ export class EndpointSnippetGenerator extends WithGeneration {
             // See generateSnippet for rationale: user-facing snippets skip the global:: qualifier.
             skipGlobalQualifier: true
         });
+        // The `using ...;` a caller needs to bring the root client class into scope. Rendering a
+        // bare reference to the root client on its own registers its namespace, so the split render
+        // surfaces just that client `using` block — the C# analogue of the TypeScript port's
+        // `clientImport`, computed exactly like the `imports` field above but for the root client
+        // reference alone. Empty string when the client needs no using (e.g. same namespace).
+        const { imports: clientImport } = this.Types.RootClientForSnippets.toStringWithoutImports({
+            namespace: "Examples",
+            generation: this.generation,
+            allNamespaceSegments: new Set(),
+            allTypeClassReferences: new Map(),
+            skipGlobalQualifier: true
+        });
         return {
             snippet: this.stripTrailingSemicolon(code.trim()),
             imports,
+            clientImport,
             clientName: this.Types.RootClientForSnippets.name,
             errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
         };
