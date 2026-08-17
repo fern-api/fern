@@ -2,6 +2,7 @@ import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { areRetriesDisabled } from "../utils/areRetriesDisabled.js";
 import { mayOmitRequestBody } from "../utils/mayOmitRequestBody.js";
 
 export declare namespace Caller {
@@ -150,12 +151,14 @@ export class Caller {
             },
             {
                 name: "DisableRetries",
-                value: go.TypeInstantiation.reference(
-                    go.selector({
-                        on: args.optionsReference,
-                        selector: go.codeblock("DisableRetries")
-                    })
-                )
+                value: areRetriesDisabled(args.endpoint)
+                    ? go.TypeInstantiation.bool(true)
+                    : go.TypeInstantiation.reference(
+                          go.selector({
+                              on: args.optionsReference,
+                              selector: go.codeblock("DisableRetries")
+                          })
+                      )
             },
             {
                 name: "BodyProperties",
