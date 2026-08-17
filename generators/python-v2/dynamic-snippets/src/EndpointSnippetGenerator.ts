@@ -1,4 +1,10 @@
-import { AbstractAstNode, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import {
+    AbstractAstNode,
+    InvocationSnippetResponse,
+    Options,
+    Scope,
+    Severity
+} from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
@@ -66,6 +72,52 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): python.AstNode {
         return this.callMethod({ endpoint, snippet: request });
+    }
+
+    /**
+     * Generates the structured pieces of an endpoint invocation for callers that render the
+     * invocation within code of their own (e.g. a documentation code template): the bare call
+     * (e.g. `client.plants.update(...)`), the imports the call requires, and the generated root
+     * client class name.
+     */
+    public generateInvocationSnippetSync({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): InvocationSnippetResponse {
+        const invocation = this.callMethod({
+            endpoint,
+            snippet: request,
+            clientVariableName: options?.clientVariableName
+        });
+        // The caller supplies the client and terminates the statement themselves, so the
+        // invocation is emitted as a bare expression. When the call references SDK types (e.g.
+        // an enum or an aliased request value) the imports it needs are surfaced separately so
+        // the caller can render them rather than falling back to the complete snippet. Python
+        // statements have no terminator, so no trailing character needs stripping.
+        const { code, imports } = python.renderNodeWithoutImports({
+            node: invocation,
+            modulePath: SNIPPET_MODULE_PATH
+        });
+        // Surface the import statement the caller needs to construct the root client
+        // (e.g. `from <sdk> import <RootClient>`) so it can be rendered independently of
+        // the invocation body. Rendering a bare reference to the client class yields just
+        // that import; when the client requires no import this is the empty string.
+        const { imports: clientImport } = python.renderNodeWithoutImports({
+            node: this.context.getRootClientClassReference(),
+            modulePath: SNIPPET_MODULE_PATH
+        });
+        return {
+            snippet: code.trim(),
+            imports,
+            clientName: this.context.getRootClientClassName(),
+            clientImport,
+            errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
+        };
     }
 
     private buildPythonFile({
@@ -443,13 +495,15 @@ export class EndpointSnippetGenerator {
 
     private callMethod({
         endpoint,
-        snippet
+        snippet,
+        clientVariableName
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        clientVariableName?: string;
     }): python.AstNode {
         return python.invokeMethod({
-            on: python.reference({ name: CLIENT_VAR_NAME }),
+            on: python.reference({ name: clientVariableName ?? CLIENT_VAR_NAME }),
             method: this.getMethod({ endpoint }),
             arguments_: this.getMethodArgs({ endpoint, snippet })
                 .filter((arg) => !python.TypeInstantiation.isNop(arg.value))
