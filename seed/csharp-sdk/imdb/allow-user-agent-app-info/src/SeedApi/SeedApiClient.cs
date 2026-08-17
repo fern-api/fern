@@ -66,7 +66,7 @@ public partial class SeedApiClient : ISeedApiClient
             : "";
         var runtimeVersion = global::System.Environment.Version.ToString();
         var runtime = runtimeVersion.Length > 0 ? $" dotnet/{runtimeVersion}" : " dotnet";
-        return $"Fernimdb/{global::SeedApi.Version.Current}{platform}{runtime}";
+        return $"Fernimdb/{(global::SeedApi.Version.Current)}{platform}{runtime}";
     }
 
     private static string AppendAppInfoToUserAgent(string userAgent, AppInfo? appInfo)

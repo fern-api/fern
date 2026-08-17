@@ -485,7 +485,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     userAgent: platformHeaders.userAgent,
                     packageName: this.generation.names.project.packageId,
                     csharp: this.csharp,
-                    versionValueAccess: this.context.getCurrentVersionValueAccess(),
+                    versionValueAccess: this.context.getCurrentVersionValueAccess({ inInterpolatedString: true }),
                     userAgentNameFromPackage: this.settings.userAgentNameFromPackage
                 });
                 if (userAgentEntry != null) {
@@ -1623,7 +1623,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 writer.write(buildUserAgentReturnPrefix(productName));
                 // Written via `writeNode` so the generated `Version` reference
                 // registers its using directive.
-                writer.writeNode(this.context.getCurrentVersionValueAccess());
+                writer.writeNode(this.context.getCurrentVersionValueAccess({ inInterpolatedString: true }));
                 writer.writeLine(BUILD_USER_AGENT_RETURN_SUFFIX);
             }),
             type: ast.MethodType.STATIC
