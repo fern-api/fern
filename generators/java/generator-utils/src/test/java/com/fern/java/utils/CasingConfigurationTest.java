@@ -957,4 +957,38 @@ public class CasingConfigurationTest {
         root.set("casingsConfig", casingsConfig);
         return CasingConfiguration.fromIrJson(root);
     }
+
+    // ===== keyword sanitization: all-underscore inputs =====
+
+    @Nested
+    class UnderscoreTests {
+
+        @Test
+        void computeName_singleUnderscore_isEscaped() {
+            CasingConfiguration config = buildConfig(true, "java", null);
+            CasingConfiguration.NameParts parts = config.computeName("_");
+            assertThat(parts.camelUnsafe).isEqualTo("_");
+            assertThat(parts.camelSafe).isEqualTo("__");
+        }
+
+        @Test
+        void computeName_doubleUnderscore_isAlreadyValid() {
+            CasingConfiguration config = buildConfig(true, "java", null);
+            CasingConfiguration.NameParts parts = config.computeName("__");
+            assertThat(parts.camelUnsafe).isEqualTo("__");
+            assertThat(parts.camelSafe).isEqualTo("__");
+        }
+
+        @Test
+        void computeName_tripleUnderscore_isAlreadyValid() {
+            CasingConfiguration config = buildConfig(true, "java", null);
+            assertThat(config.computeName("___").camelSafe).isEqualTo("___");
+        }
+
+        @Test
+        void computeName_ordinaryUnderscoreSeparatedName_unaffected() {
+            CasingConfiguration config = buildConfig(true, "java", null);
+            assertThat(config.computeName("user_id").camelSafe).isEqualTo("userId");
+        }
+    }
 }

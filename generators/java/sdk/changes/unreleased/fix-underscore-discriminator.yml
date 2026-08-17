@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generation failure when a discriminated union's discriminator value is a
+    single underscore (`_`). Previously the compressed-name casing logic (used to
+    reconstruct Java identifiers from the IR) collapsed an all-underscore input to
+    an empty string before it could reach the reserved-keyword check, so JavaPoet
+    rejected the resulting empty method name. All-underscore inputs are now kept
+    intact, and `_` is escaped to `__` (matching the existing convention used for
+    other reserved words), while the serialized discriminator value is unchanged.
+  type: fix

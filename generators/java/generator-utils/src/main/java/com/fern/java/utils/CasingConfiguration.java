@@ -36,12 +36,18 @@ public final class CasingConfiguration {
 
     private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("^[0-9]");
 
+    // splitWords() (and therefore toCamelCase/toBasicSnakeCase/toSmartSnakeCase) never matches
+    // underscores, so an all-underscore input collapses to "" before sanitizeName ever runs.
+    // Short-circuit that case and keep the literal underscores instead of losing them.
+    private static final Pattern ALL_UNDERSCORES = Pattern.compile("^_+$");
+
     // Match lodash words() regex: [A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+
     private static final Pattern SPLIT_WORDS_PATTERN =
             Pattern.compile("[A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+");
 
     // Java reserved keywords for keyword sanitization
     private static final Set<String> JAVA_RESERVED_KEYWORDS = Set.of(
+            "_", // reserved since Java 9 (unused lambda param), a compile error since Java 21 (JEP 456)
             "abstract",
             "assert",
             "boolean",
@@ -165,6 +171,11 @@ public final class CasingConfiguration {
 
     private NameParts computeNameInternal(String inputName) {
         String name = preprocessName(inputName);
+
+        if (ALL_UNDERSCORES.matcher(name).matches()) {
+            String safeName = sanitizeName(name);
+            return new NameParts(inputName, name, safeName, name, safeName, name, safeName, name, safeName);
+        }
 
         String camelCaseName = toCamelCase(name);
         String pascalCaseName = upperFirst(camelCaseName);
