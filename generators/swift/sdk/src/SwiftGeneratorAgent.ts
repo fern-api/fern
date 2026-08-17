@@ -1,5 +1,4 @@
 import { AbstractGeneratorAgent, RawGithubConfig, ReferenceConfigBuilder } from "@fern-api/base-generator";
-import { extractErrorMessage } from "@fern-api/core-utils";
 import { generateReadme, generateReference, githubPr, githubPush } from "@fern-api/generator-cli";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -47,10 +46,7 @@ export class SwiftGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCont
             });
             return await generateReadme({ readmeConfig });
         } catch (error) {
-            this.logger.warn(
-                `Skipping README generation; the rest of the SDK was generated normally. Reason: ${extractErrorMessage(error)}`
-            );
-            return undefined;
+            return this.skipReadmeOrThrow(error);
         }
     }
 
@@ -70,10 +66,7 @@ export class SwiftGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCont
             const referenceConfig = builder.build(this.getLanguage());
             return await generateReference({ referenceConfig });
         } catch (error) {
-            this.logger.warn(
-                `Skipping API reference generation; the rest of the SDK was generated normally. Reason: ${extractErrorMessage(error)}`
-            );
-            return undefined;
+            return this.skipReferenceOrThrow(error);
         }
     }
 

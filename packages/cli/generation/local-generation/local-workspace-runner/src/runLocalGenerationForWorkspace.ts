@@ -75,6 +75,7 @@ export async function runLocalGenerationForWorkspace({
     generateTests,
     generateFullProject,
     verify,
+    referenceOptional,
     disableTelemetry
 }: {
     token: FernToken | undefined;
@@ -101,6 +102,11 @@ export async function runLocalGenerationForWorkspace({
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
     generateTests?: boolean;
+    /**
+     * When true, README.md / reference.md generation failures are tolerated: the generator warns and
+     * skips the artifact instead of failing generation. Set by `fern generate --reference-optional`.
+     */
+    referenceOptional?: boolean;
     /**
      * When true, filesystem (local-file-system) outputs are generated as full, packageable
      * projects (pyproject.toml, README.md, etc.) instead of source-only output. Set by
@@ -427,6 +433,7 @@ export async function runLocalGenerationForWorkspace({
                     context: interactiveTaskContext,
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     outputVersionOverride: version,
+                    referenceOptional,
                     writeUnitTests: true,
                     generateOauthClients: orgBody?.oauthClientEnabled ?? false,
                     generatePaginatedClients: orgBody?.paginationEnabled ?? false,

@@ -55,6 +55,7 @@ export async function generateWorkspace({
     autoMerge,
     skipIfNoDiff,
     generateTests,
+    referenceOptional,
     automation,
     pack,
     packMode,
@@ -92,6 +93,11 @@ export async function generateWorkspace({
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
     generateTests?: boolean;
+    /**
+     * When true, README.md / reference.md generation failures are tolerated: the generator warns and
+     * skips the artifact instead of failing generation. Set by `fern generate --reference-optional`.
+     */
+    referenceOptional?: boolean;
     /**
      * When provided, this call runs in fan-out automation mode: iterate every group (ignoring
      * `default-group`), silently skip generators opted out of automation, and route per-generator
@@ -187,6 +193,7 @@ export async function generateWorkspace({
                         autoMerge,
                         skipIfNoDiff,
                         generateTests,
+                        referenceOptional,
                         generateFullProject: pack,
                         verify,
                         disableTelemetry: isTelemetryDisabled()
@@ -236,6 +243,7 @@ export async function generateWorkspace({
                         skipIfNoDiff,
                         noReplay,
                         verify,
+                        referenceOptional,
                         disableTelemetry: isTelemetryDisabled(),
                         getSpecsTarGzBuffer: getSpecsTarGz,
                         generateFullProject: pack

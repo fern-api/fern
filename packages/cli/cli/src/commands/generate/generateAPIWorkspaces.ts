@@ -51,6 +51,7 @@ export async function generateAPIWorkspaces({
     autoMerge,
     skipIfNoDiff,
     generateTests,
+    referenceOptional,
     automation,
     pack,
     packMode,
@@ -85,6 +86,11 @@ export async function generateAPIWorkspaces({
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
     generateTests?: boolean;
+    /**
+     * When true, README.md / reference.md generation failures are tolerated: the generator warns and
+     * skips the artifact instead of failing generation. Set by `fern generate --reference-optional`.
+     */
+    referenceOptional?: boolean;
     /**
      * When provided, this call runs in fan-out automation mode (see {@link AutomationRunOptions}).
      */
@@ -196,6 +202,7 @@ export async function generateAPIWorkspaces({
                     autoMerge,
                     skipIfNoDiff,
                     generateTests,
+                    referenceOptional,
                     automation,
                     pack,
                     packMode,

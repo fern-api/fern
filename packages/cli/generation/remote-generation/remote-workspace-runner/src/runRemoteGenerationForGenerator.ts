@@ -64,6 +64,7 @@ export async function runRemoteGenerationForGenerator({
     autoMerge,
     skipIfNoDiff,
     verify,
+    referenceOptional,
     noReplay,
     disableTelemetry,
     loginCommand,
@@ -104,6 +105,11 @@ export async function runRemoteGenerationForGenerator({
      * generator emits SDK files. Forwarded to {@link createAndStartJob}. Default: false.
      */
     verify?: boolean;
+    /**
+     * Whether the user passed `--reference-optional`. Sent to Fiddle on the create-job payload;
+     * once Fiddle forwards it into the generator config, README/reference failures are tolerated.
+     */
+    referenceOptional?: boolean;
     /**
      * Whether the user passed `--no-replay`. Currently a no-op on the cloud path
      * (Fiddle doesn't honor it yet — FER-10343 out-of-scope), but plumbed through
@@ -389,6 +395,7 @@ export async function runRemoteGenerationForGenerator({
         autoMerge,
         skipIfNoDiff,
         verify,
+        referenceOptional,
         loginCommand,
         specsTarGzBuffer
     });
