@@ -65,6 +65,17 @@ describe("invocation-only snippets", () => {
         expect(response?.clientName).toBe("Client");
     });
 
+    it("exposes the root-client require so callers can prepend it to a bare invocation", () => {
+        const response = generator.generateInvocationSync(request);
+
+        // Ruby references the root client class through the gem's top-level require. This is the Ruby
+        // analogue of the root-client import surfaced by TypeScript/PHP/C#/Java. Organization "acme"
+        // → module `Acme` → `require "acme"`.
+        expect(response?.clientImport).toBe('require "acme"');
+        // The bare invocation snippet itself still omits the require preamble.
+        expect(response?.snippet).not.toContain("require ");
+    });
+
     it("invokes the endpoint on the requested client variable", () => {
         const response = generator.generateInvocationSync(request, { clientVariableName: "mailchimp" });
 

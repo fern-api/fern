@@ -6,7 +6,7 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { ruby } from "@fern-api/ruby-ast";
+import { RubyFile, ruby } from "@fern-api/ruby-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 
@@ -111,9 +111,26 @@ export class EndpointSnippetGenerator {
             // Always empty for Ruby — see the method doc comment: types are referenced via the gem
             // namespace, so a bare invocation emits no per-symbol requires.
             imports: "",
+            // The Ruby analogue of the root-client import: referencing the root client class requires
+            // the gem's top-level `require`, which {@link constructClient} adds via
+            // `writer.addRequire(this.context.getRootModuleName().toLowerCase())`. We surface the same
+            // require line here so callers embedding a bare invocation can prepend it.
+            clientImport: this.getRootClientRequire(),
             clientName: this.context.getRootClientClassName(),
             errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
         };
+    }
+
+    /**
+     * Renders the `require` statement needed to reference the root client class, mirroring the
+     * require {@link constructClient} adds to the writer. Ruby's require set is stringified as
+     * `require "<path>"` (see {@link ruby.RubyFile}), so we render through a `RubyFile` to keep the
+     * exact format in a single source of truth rather than hardcoding the quoting here.
+     */
+    private getRootClientRequire(): string {
+        const file = new RubyFile({ customConfig: this.context.customConfig ?? {} });
+        file.addRequire(this.context.getRootModuleName().toLowerCase());
+        return file.toString().trim();
     }
 
     private buildCodeBlock({
