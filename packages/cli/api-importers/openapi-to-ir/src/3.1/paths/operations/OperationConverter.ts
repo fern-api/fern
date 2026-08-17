@@ -644,8 +644,9 @@ export class OperationConverter extends AbstractOperationConverter {
         }
 
         // When auth overrides are specified, use them instead of OpenAPI security.
-        // endpoint-security is the exception: it delegates auth requirements to each
-        // operation's own `security`, so the OpenAPI security must be preserved.
+        // endpoint-security is the exception: it delegates auth requirements to the spec,
+        // so the OpenAPI security must be preserved — the operation's own `security` when
+        // present, otherwise the spec-level block via the fallback below.
         if (this.context.authOverrides?.auth != null && !this.usesEndpointSecurity()) {
             return this.getDefaultSecurityFromAuthOverrides();
         }
@@ -669,8 +670,13 @@ export class OperationConverter extends AbstractOperationConverter {
             return false;
         }
 
-        // endpoint-security has no API-wide default to fall back on: an operation with no
-        // `security` of its own requires no auth.
+        // endpoint-security has no generators.yml-derived default to fall back on. A
+        // spec-level `security` block still applies: the caller checks `spec.security`
+        // before consulting this method, so returning false here leaves that inheritance
+        // intact and only declines to synthesize a default from the auth override.
+        //
+        // The single caller reaches this only when `operation.security == null`, so the
+        // checks below would be constant in this mode.
         if (this.usesEndpointSecurity()) {
             return false;
         }
