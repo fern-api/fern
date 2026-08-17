@@ -123,10 +123,31 @@ export class EndpointSnippetGenerator {
             customConfig: this.context.customConfig ?? {},
             formatter: this.formatter
         });
+        // The generated client type lives in its own package, so the caller needs the client's
+        // import in addition to any imports the bare call references. Rendering a lone reference
+        // to the root client type (with no other nodes) yields exactly that import block and
+        // nothing else, mirroring how `imports` is captured above.
+        const clientReference = go.codeblock((writer) => {
+            writer.writeNode(
+                go.typeReference({
+                    name: this.context.getClientName(),
+                    importPath: this.context.getClientImportPath()
+                })
+            );
+        });
+        const { imports: clientImport } = go.renderNodeWithoutImports({
+            node: clientReference,
+            packageName: SNIPPET_PACKAGE_NAME,
+            importPath: SNIPPET_IMPORT_PATH,
+            rootImportPath: this.context.rootImportPath,
+            customConfig: this.context.customConfig ?? {},
+            formatter: this.formatter
+        });
         return {
             snippet: code.trim(),
             imports,
             clientName: this.context.getClientName(),
+            clientImport,
             errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
         };
     }
