@@ -195,12 +195,9 @@ public final class CasingConfiguration {
         // splitWords() only recognizes letter/digit runs, so an input made entirely of
         // separators/symbols (e.g. "_", "-", "@", "-_-") produces zero words and every casing
         // variant above collapses to "". Recover a usable identifier instead of losing the name
-        // entirely: strip characters that aren't legal in a Java identifier and keep whatever's
-        // left (e.g. "$$" stays "$$", "-_-" becomes "_"); if nothing legal remains, fall back to
-        // "_" (which sanitizeName further escapes to "__", since "_" alone is reserved).
+        // entirely.
         if (camelCaseName.isEmpty() && !name.isEmpty()) {
-            String legal = ILLEGAL_IDENTIFIER_CHARS.matcher(name).replaceAll("");
-            String fallback = legal.isEmpty() ? "_" : legal;
+            String fallback = wordlessFallback(name);
             camelCaseName = fallback;
             pascalCaseName = fallback;
             snakeCaseName = fallback;
@@ -221,6 +218,23 @@ public final class CasingConfiguration {
 
     private String preprocessName(String name) {
         return name.replace("[]", "Array");
+    }
+
+    /**
+     * Fallback identifier for names that produce zero words via splitWords() (e.g. "_", "-", "@", "-_-"). Strips
+     * characters that aren't legal in a Java identifier and keeps whatever's left (e.g. "$$" stays "$$", "-_-" becomes
+     * "_"). If nothing legal remains, encodes each stripped character's code point instead of collapsing to a single
+     * shared placeholder - otherwise distinct inputs like "-" and "@" would both fall back to the same identifier and
+     * silently collide (two identically-named methods/classes) if used as sibling discriminants in the same union.
+     */
+    private static String wordlessFallback(String name) {
+        String legal = ILLEGAL_IDENTIFIER_CHARS.matcher(name).replaceAll("");
+        if (!legal.isEmpty()) {
+            return legal;
+        }
+        StringBuilder encoded = new StringBuilder("_");
+        name.codePoints().forEach(cp -> encoded.append('_').append(Integer.toHexString(cp)));
+        return encoded.toString();
     }
 
     private String sanitizeName(String name) {

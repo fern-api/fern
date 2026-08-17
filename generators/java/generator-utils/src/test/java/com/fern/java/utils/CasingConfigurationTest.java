@@ -998,19 +998,29 @@ public class CasingConfigurationTest {
     class WordlessNameTests {
 
         @Test
-        void computeName_dash_fallsBackToUnderscore() {
+        void computeName_dash_encodesCodePoint() {
+            // No legal characters remain, so the code point (0x2d) is encoded instead of
+            // collapsing to a shared placeholder - see computeName_dashAndAt_dontCollide below.
             CasingConfiguration.NameParts parts =
                     buildConfig(true, "java", null).computeName("-");
-            assertThat(parts.camelSafe).isEqualTo("__");
-            assertThat(parts.pascalSafe).isEqualTo("__");
-            assertThat(parts.snakeSafe).isEqualTo("__");
-            assertThat(parts.screamingSnakeSafe).isEqualTo("__");
+            assertThat(parts.camelSafe).isEqualTo("__2d");
+            assertThat(parts.pascalSafe).isEqualTo("__2d");
+            assertThat(parts.snakeSafe).isEqualTo("__2d");
+            assertThat(parts.screamingSnakeSafe).isEqualTo("__2D");
         }
 
         @Test
-        void computeName_at_fallsBackToUnderscore() {
+        void computeName_at_encodesCodePoint() {
             assertThat(buildConfig(true, "java", null).computeName("@").camelSafe)
-                    .isEqualTo("__");
+                    .isEqualTo("__40");
+        }
+
+        @Test
+        void computeName_dashAndAt_dontCollide() {
+            // Distinct wordless inputs must not fall back to the same identifier - that would
+            // silently generate two identically-named methods/classes for sibling discriminants.
+            CasingConfiguration config = buildConfig(true, "java", null);
+            assertThat(config.computeName("-").camelSafe).isNotEqualTo(config.computeName("@").camelSafe);
         }
 
         @Test
