@@ -440,11 +440,32 @@ describe("generateCpp()", () => {
                     title: "Scan",
                     functions: [makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" })],
                     // Doxygen emits an unnamed enum with no name and no path
-                    enums: [{ name: "", path: "", isScoped: false, underlyingType: undefined, values: [], docstring: undefined }]
+                    enums: [
+                        {
+                            name: "",
+                            path: "",
+                            isScoped: false,
+                            underlyingType: undefined,
+                            values: [],
+                            docstring: undefined
+                        }
+                    ]
                 }),
-                makeGroup({ id: "group__anon__only", name: "anon_only", title: "Anonymous only", enums: [
-                    { name: "", path: "", isScoped: false, underlyingType: undefined, values: [], docstring: undefined }
-                ] })
+                makeGroup({
+                    id: "group__anon__only",
+                    name: "anon_only",
+                    title: "Anonymous only",
+                    enums: [
+                        {
+                            name: "",
+                            path: "",
+                            isScoped: false,
+                            underlyingType: undefined,
+                            values: [],
+                            docstring: undefined
+                        }
+                    ]
+                })
             ]
         );
 

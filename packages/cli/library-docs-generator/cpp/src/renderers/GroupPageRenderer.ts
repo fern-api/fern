@@ -174,7 +174,8 @@ export function renderGroupsIndexPage(entries: GroupListEntry[], libraryTitle: s
 
     const library = libraryTitle.trim();
     const title = library.length > 0 ? `${library} — Groups` : "Groups";
-    const description = library.length > 0 ? `Documentation groups in ${library}.` : "Documentation groups in this library.";
+    const description =
+        library.length > 0 ? `Documentation groups in ${library}.` : "Documentation groups in this library.";
     lines.push(...renderFrontmatter(title, description));
     lines.push("");
 
