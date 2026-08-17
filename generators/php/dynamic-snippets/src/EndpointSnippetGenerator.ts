@@ -1,4 +1,11 @@
-import { AbstractAstNode, NamedArgument, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import {
+    AbstractAstNode,
+    InvocationSnippetResponse,
+    NamedArgument,
+    Options,
+    Scope,
+    Severity
+} from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { php } from "@fern-api/php-codegen";
@@ -68,6 +75,67 @@ export class EndpointSnippetGenerator {
         return this.buildCodeBlock({ endpoint, snippet: request });
     }
 
+    /**
+     * Generates the structured pieces of an endpoint invocation for callers that render the
+     * invocation within code of their own (e.g. a documentation code template): the bare call
+     * (e.g. `$client->plants->update(...)`), the `use ...;` block the call requires, and the
+     * generated client class name.
+     */
+    public generateInvocationSnippetSync({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): InvocationSnippetResponse {
+        const invocation = this.callMethod({
+            endpoint,
+            snippet: request,
+            clientVariableName: options?.clientVariableName
+        });
+        // The caller supplies the client and terminates the statement themselves, so the
+        // invocation is emitted as a bare expression: no `$client = new ...Client(...)`
+        // construction, no `<?php` prefix or `namespace ...;` header, and no trailing `;`. When
+        // the call references types from another namespace (e.g. an inlined request class or a
+        // typed body value) the `use ...;` block it needs is surfaced separately so the caller
+        // can render it rather than falling back to the complete snippet.
+        const { code, imports } = invocation.toStringWithoutImports({
+            namespace: SNIPPET_NAMESPACE,
+            rootNamespace: SNIPPET_NAMESPACE,
+            customConfig: this.context.customConfig ?? {}
+        });
+        // Render a bare reference to the generated root client class and capture the `use ...;`
+        // statement it requires, so docs can render the client import (e.g. `use Acme\AcmeClient;`)
+        // without hand-authoring it. Distinct from `imports`, which only carries the imports the
+        // bare call itself references. Empty string when the client needs no import.
+        const clientReference = php.codeblock((writer) => {
+            writer.writeNode(
+                php.classReference({
+                    name: this.context.getRootClientClassName(),
+                    namespace: this.context.rootNamespace
+                })
+            );
+        });
+        const { imports: clientImport } = clientReference.toStringWithoutImports({
+            namespace: SNIPPET_NAMESPACE,
+            rootNamespace: SNIPPET_NAMESPACE,
+            customConfig: this.context.customConfig ?? {}
+        });
+        return {
+            snippet: this.stripTrailingSemicolon(code.trim()),
+            imports,
+            clientName: this.context.getRootClientClassName(),
+            clientImport,
+            errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
+        };
+    }
+
+    private stripTrailingSemicolon(code: string): string {
+        return code.endsWith(";") ? code.slice(0, -1).trimEnd() : code;
+    }
+
     public buildCodeBlock({
         endpoint,
         snippet
@@ -109,13 +177,15 @@ export class EndpointSnippetGenerator {
 
     private callMethod({
         endpoint,
-        snippet
+        snippet,
+        clientVariableName
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        clientVariableName?: string;
     }): php.MethodInvocation {
         return php.invokeMethod({
-            on: php.codeblock(CLIENT_VAR_NAME),
+            on: php.codeblock(clientVariableName ?? CLIENT_VAR_NAME),
             method: this.getMethod({ endpoint }),
             arguments_: this.getMethodArgs({ endpoint, snippet }),
             multiline: true
