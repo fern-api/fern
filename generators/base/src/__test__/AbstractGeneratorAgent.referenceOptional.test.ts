@@ -65,14 +65,14 @@ describe("AbstractGeneratorAgent with --reference-optional", () => {
     it("warns and skips the README instead of failing", () => {
         const { agent, warnings } = createAgent({ referenceOptional: true });
         expect(agent.skipReadme()).toBeUndefined();
-        expect(warnings).toEqual([expect.stringContaining("Skipping README generation")]);
+        expect(warnings).toEqual([expect.stringContaining("Skipping README.md generation")]);
         expect(warnings[0]).toContain(FAILURE.message);
     });
 
     it("warns and skips the reference instead of failing", async () => {
         const { agent, warnings } = createAgent({ referenceOptional: true });
         await expect(agent.generateReference(new ReferenceConfigBuilder())).resolves.toBeUndefined();
-        expect(warnings).toEqual([expect.stringContaining("Skipping API reference generation")]);
+        expect(warnings).toEqual([expect.stringContaining("Skipping API reference (reference.md) generation")]);
         expect(warnings[0]).toContain(FAILURE.message);
     });
 });

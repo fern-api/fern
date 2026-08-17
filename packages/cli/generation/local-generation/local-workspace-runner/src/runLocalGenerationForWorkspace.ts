@@ -281,8 +281,7 @@ export async function runLocalGenerationForWorkspace({
                     packageName,
                     context: interactiveTaskContext,
                     generateTests,
-                    generateFullProject,
-                    isPreview
+                    generateFullProject
                 });
                 if (publishConfig != null) {
                     intermediateRepresentation.publishConfig = publishConfig;
@@ -633,8 +632,7 @@ export function getPublishConfig({
     packageName,
     context,
     generateTests,
-    generateFullProject,
-    isPreview
+    generateFullProject
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     org?: FernVenusApi.Organization;
@@ -644,7 +642,6 @@ export function getPublishConfig({
     context: TaskContext;
     generateTests?: boolean;
     generateFullProject?: boolean;
-    isPreview?: boolean;
 }): FernIr.PublishingConfig | undefined {
     // When version is AUTO, substitute the language-mapped magic placeholder
     // ("0.0.0-fern-placeholder") so the version stamped into the generated SDK's
@@ -664,22 +661,11 @@ export function getPublishConfig({
 
         const irMode = generatorInvocation.raw.github.mode === "pull-request" ? "pull-request" : undefined;
 
-        // A preview run substitutes environment variables as empty strings, so a token configured as
-        // ${GITHUB_TOKEN} cannot authenticate anything. Omitting it keeps the generator from cloning the
-        // repository for README generation, which otherwise fails the whole generation inside the
-        // container. A preview run with a real token still forwards it.
-        const dropTokenForPreview = isPreview === true && !generatorInvocation.raw.github.token;
-        if (dropTokenForPreview) {
-            context.logger.warn(
-                "No usable GitHub token in preview mode, so README and reference content will not be merged from the existing repository."
-            );
-        }
-
         return FernIr.PublishingConfig.github({
             owner: parsed.owner,
             repo: parsed.repo,
             uri: generatorInvocation.raw.github.uri,
-            token: dropTokenForPreview ? undefined : generatorInvocation.raw.github.token,
+            token: generatorInvocation.raw.github.token,
             mode: irMode,
             branch: generatorInvocation.raw.github.branch,
             target: getPublishTarget({

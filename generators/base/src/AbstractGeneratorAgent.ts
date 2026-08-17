@@ -102,12 +102,9 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
                 `AbstractGeneratorAgent.generateReadme: Remote config: ${remote ? JSON.stringify(remote) : "(none)"}`
             );
         } catch (error) {
+            const errorMessage = extractErrorMessage(error);
+            this.logger.debug(`AbstractGeneratorAgent.generateReadme: FAILED to get remote config: ${errorMessage}`);
             return this.skipReadmeOrThrow(error);
-        }
-        if (remote == null && this.config.output.mode.type === "github") {
-            this.logger.warn(
-                "No usable GitHub remote is available, so the existing README will not be merged; it is generated from scratch and manual edits to it are not preserved."
-            );
         }
 
         // Load feature config
@@ -119,6 +116,8 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
                 `AbstractGeneratorAgent.generateReadme: Feature config loaded with ${featureConfig.features?.length ?? 0} features`
             );
         } catch (error) {
+            const errorMessage = extractErrorMessage(error);
+            this.logger.debug(`AbstractGeneratorAgent.generateReadme: FAILED to load feature config: ${errorMessage}`);
             return this.skipReadmeOrThrow(error);
         }
 
@@ -141,7 +140,9 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
                     `apiReferenceLink: ${readmeConfig.apiReferenceLink ?? "(none)"}`
             );
         } catch (error) {
+            const errorMessage = extractErrorMessage(error);
             const errorStack = error instanceof Error ? error.stack : undefined;
+            this.logger.debug(`AbstractGeneratorAgent.generateReadme: FAILED to build README config: ${errorMessage}`);
             if (errorStack) {
                 this.logger.debug(`AbstractGeneratorAgent.generateReadme: Stack trace: ${errorStack}`);
             }
@@ -150,32 +151,13 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
 
         // Call CLI
         this.logger.debug("AbstractGeneratorAgent.generateReadme: Calling CLI to generate README...");
-        let cliErrorMessage: string;
         try {
             const result = await this.cli.generateReadme({ readmeConfig });
             this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI returned ${result.length} bytes`);
             return result;
         } catch (error) {
-            cliErrorMessage = extractErrorMessage(error);
-            this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI FAILED with error: ${cliErrorMessage}`);
-            if (remote == null || !isReferenceOptional(this.config)) {
-                return this.skipReadmeOrThrow(error);
-            }
-        }
-
-        // Reading the existing README requires cloning the remote, which fails in environments that the
-        // generator container cannot authenticate against (e.g. a TLS-intercepting corporate proxy). Retry
-        // without the remote so the README is still written, just without the repository's manual edits.
-        this.logger.warn(
-            `Failed to read the existing README from the configured repository; generating the README from scratch, so manual edits to it will not be preserved. Reason: ${cliErrorMessage}`
-        );
-        try {
-            const result = await this.cli.generateReadme({
-                readmeConfig: this.getReadmeConfig({ context, remote: undefined, featureConfig, endpointSnippets })
-            });
-            this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI returned ${result.length} bytes`);
-            return result;
-        } catch (error) {
+            const errorMessage = extractErrorMessage(error);
+            this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI FAILED with error: ${errorMessage}`);
             return this.skipReadmeOrThrow(error);
         }
     }
@@ -209,6 +191,8 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             language = this.getLanguage();
             this.logger.debug(`AbstractGeneratorAgent.generateReference: Language: ${language}`);
         } catch (error) {
+            const errorMessage = extractErrorMessage(error);
+            this.logger.debug(`AbstractGeneratorAgent.generateReference: FAILED to get language: ${errorMessage}`);
             return this.skipReferenceOrThrow(error);
         }
 
@@ -262,7 +246,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             throw error;
         }
         this.logger.warn(
-            `Skipping README generation; the rest of the SDK was generated normally. Reason: ${extractErrorMessage(error)}`
+            `Skipping README.md generation; the rest of the SDK was generated normally. Reason: ${extractErrorMessage(error)}`
         );
         return undefined;
     }
@@ -276,7 +260,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             throw error;
         }
         this.logger.warn(
-            `Skipping API reference generation; the rest of the SDK was generated normally. Reason: ${extractErrorMessage(error)}`
+            `Skipping API reference (reference.md) generation; the rest of the SDK was generated normally. Reason: ${extractErrorMessage(error)}`
         );
         return undefined;
     }
