@@ -24,5 +24,12 @@ export interface InvocationSnippetResponse {
      * `new {{clientName}}(...)` and track renames of the SDK client.
      */
     clientName: string;
+    /**
+     * The import statement for the generated client itself (e.g.
+     * `import { AcmeClient } from "acme"`). Distinct from {@link imports}, which only
+     * carries imports the bare call references. Lets docs render the client import
+     * without hand-authoring it. Empty string when the client has no import.
+     */
+    clientImport: string;
     errors: FernIr.dynamic.Error_[] | undefined;
 }

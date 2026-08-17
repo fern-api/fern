@@ -74,10 +74,25 @@ export class EndpointSnippetGenerator {
         const { code, imports } = invocation.toStringWithoutImports({
             customConfig: this.context.customConfig
         });
+        // Surface the client's own import separately so docs can render the client
+        // instantiation without hand-authoring `import { AcmeClient } from "acme"`.
+        // Rendering a bare reference to the root client yields exactly that import.
+        const clientReference = ts.codeblock((writer) => {
+            writer.writeNode(
+                ts.reference({
+                    name: this.context.getRootClientName(),
+                    importFrom: this.context.getModuleImport()
+                })
+            );
+        });
+        const { imports: clientImport } = clientReference.toStringWithoutImports({
+            customConfig: this.context.customConfig
+        });
         return {
             snippet: code.trim().replace(/;$/, ""),
             imports,
             clientName: this.context.getRootClientName(),
+            clientImport,
             errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
         };
     }

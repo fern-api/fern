@@ -48,6 +48,13 @@ describe("invocation-only snippets", () => {
         expect(response?.clientName).toBe("AcmeClient");
     });
 
+    it("exposes the client import so docs can render it without hand-authoring", () => {
+        const response = generator.generateInvocationSync(request);
+
+        expect(response?.clientImport).toContain("import");
+        expect(response?.clientImport).toContain("AcmeClient");
+    });
+
     it("invokes the endpoint on the requested client variable", () => {
         const response = generator.generateInvocationSync(request, { clientVariableName: "mailchimp" });
 
