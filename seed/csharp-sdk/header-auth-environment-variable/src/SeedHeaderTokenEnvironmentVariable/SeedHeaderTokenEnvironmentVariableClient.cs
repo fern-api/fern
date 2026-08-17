@@ -22,7 +22,10 @@ public partial class SeedHeaderTokenEnvironmentVariableClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedHeaderTokenEnvironmentVariable" },
-                { "X-Fern-SDK-Version", Version.Current },
+                {
+                    "X-Fern-SDK-Version",
+                    global::SeedHeaderTokenEnvironmentVariable.Version.Current
+                },
                 { "User-Agent", "Fernheader-auth-environment-variable/0.0.1" },
             }
         );

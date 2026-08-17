@@ -14,7 +14,7 @@ public partial class SeedPaginationUriPathClient : ISeedPaginationUriPathClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedPaginationUriPath" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedPaginationUriPath.Version.Current },
                 { "User-Agent", "Fernpagination-uri-path/0.0.1" },
             }
         );

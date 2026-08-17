@@ -16,7 +16,10 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedUndiscriminatedUnionWithResponseProperty" },
-                { "X-Fern-SDK-Version", Version.Current },
+                {
+                    "X-Fern-SDK-Version",
+                    global::SeedUndiscriminatedUnionWithResponseProperty.Version.Current
+                },
                 { "User-Agent", "Fernundiscriminated-union-with-response-property/0.0.1" },
             }
         );

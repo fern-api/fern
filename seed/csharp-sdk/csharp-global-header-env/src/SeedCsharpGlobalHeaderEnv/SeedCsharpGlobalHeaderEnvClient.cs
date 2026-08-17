@@ -24,7 +24,7 @@ public partial class SeedCsharpGlobalHeaderEnvClient : ISeedCsharpGlobalHeaderEn
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedCsharpGlobalHeaderEnv" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedCsharpGlobalHeaderEnv.Version.Current },
                 { "User-Agent", "Ferncsharp-global-header-env/0.0.1" },
             }
         );

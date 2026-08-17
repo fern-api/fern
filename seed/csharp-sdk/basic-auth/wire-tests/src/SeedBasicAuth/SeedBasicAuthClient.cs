@@ -18,7 +18,7 @@ public partial class SeedBasicAuthClient : ISeedBasicAuthClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedBasicAuth" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedBasicAuth.Version.Current },
                 { "User-Agent", "Fernbasic-auth/0.0.1" },
             }
         );

@@ -14,7 +14,7 @@ public partial class SeedAliasExtendsClient : ISeedAliasExtendsClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedAliasExtends" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedAliasExtends.Version.Current },
                 { "User-Agent", "Fernalias-extends/0.0.1" },
             }
         );

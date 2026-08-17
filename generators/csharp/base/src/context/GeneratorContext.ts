@@ -524,7 +524,9 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
 
     public getCurrentVersionValueAccess(): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
-            writer.writeNode(this.Types.Version);
+            // qualify globally so the reference cannot be shadowed by a constructor
+            // parameter or local named `Version`
+            writer.writeNode(this.Types.Version.asGloballyQualified());
             writer.write(".");
             writer.write(this.model.getPropertyNameFor(this.Types.Version.explicit("Current")));
         });

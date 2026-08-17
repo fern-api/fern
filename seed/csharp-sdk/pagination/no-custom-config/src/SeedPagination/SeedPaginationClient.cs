@@ -15,7 +15,7 @@ public partial class SeedPaginationClient : ISeedPaginationClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedPagination" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedPagination.Version.Current },
                 { "User-Agent", "Fernpagination/0.0.1" },
             }
         );

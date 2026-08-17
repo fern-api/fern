@@ -14,7 +14,7 @@ public partial class SeedExtendsClient : ISeedExtendsClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedExtends" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedExtends.Version.Current },
                 { "User-Agent", "Fernextends/0.0.1" },
             }
         );

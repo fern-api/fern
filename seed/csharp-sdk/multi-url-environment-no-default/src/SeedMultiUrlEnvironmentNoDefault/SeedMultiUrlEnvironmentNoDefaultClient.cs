@@ -18,7 +18,7 @@ public partial class SeedMultiUrlEnvironmentNoDefaultClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedMultiUrlEnvironmentNoDefault" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedMultiUrlEnvironmentNoDefault.Version.Current },
                 { "User-Agent", "Fernmulti-url-environment-no-default/0.0.1" },
             }
         );

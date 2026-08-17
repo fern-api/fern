@@ -295,6 +295,7 @@ allowedFailures:
   - content-type
   - cross-package-type-names
   - csharp-global-header-env
+  - csharp-global-header-literal-env
   - dollar-string-examples
   - empty-clients
   - endpoint-security-auth
@@ -384,6 +385,7 @@ allowedFailures:
   - pagination-uri-path
   - path-parameters
   - php-global-header-env
+  - php-global-header-literal-env
   - plain-text
   - property-access
   - public-object

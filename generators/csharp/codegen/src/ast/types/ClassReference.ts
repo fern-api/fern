@@ -480,6 +480,18 @@ export class ClassReference extends Node implements Type {
         });
     }
 
+    /**
+     * returns this class reference as a fully qualified class reference with the `global::`
+     * alias, making it immune to shadowing by locals, parameters or members in scope
+     */
+    public asGloballyQualified() {
+        return this.csharp.classReferenceInternal({
+            ...this,
+            fullyQualified: true,
+            global: true
+        });
+    }
+
     /** returns a class instantiation node for this class reference */
     public new(args?: Omit<ClassInstantiation.Args, "classReference">) {
         args = args ?? { arguments_: [] };
