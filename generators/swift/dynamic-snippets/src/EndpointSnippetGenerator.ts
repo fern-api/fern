@@ -102,8 +102,19 @@ export class EndpointSnippetGenerator {
             // mechanism and types resolve through the scaffold's module-level imports.
             imports: "",
             clientName: this.getClientName(),
+            // The import a docs template needs to construct the root client. In Swift, both the
+            // client type and every SDK type it references resolve through a single whole-module
+            // import (`import <Module>`) — the same statement the full scaffold emits via
+            // `generateImportModuleStatement`. Unlike TypeScript/PHP/C#/Java (which import the
+            // client by symbol), Swift imports the whole module, so this is the module import
+            // rather than a per-symbol one. Rendered without a trailing newline for embedding.
+            clientImport: this.getClientImport(),
             errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
         };
+    }
+
+    private getClientImport(): string {
+        return this.generateImportModuleStatement().toString().trim();
     }
 
     private getClientName(): string {

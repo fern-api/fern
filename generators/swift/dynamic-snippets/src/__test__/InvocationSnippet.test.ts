@@ -74,6 +74,16 @@ describe("invocation-only snippets", () => {
         expect(response?.clientName).toBe("AcmeClient");
     });
 
+    it("exposes the whole-module import needed to construct the client", () => {
+        const response = generator.generateInvocationSync(request);
+
+        // Swift imports the whole module (not the client by symbol), so `clientImport` is the
+        // `import <Module>` statement the scaffold emits — the import a docs template needs to
+        // construct the client. Rendered without a trailing newline for embedding.
+        expect(response?.clientImport).toBe("import Acme");
+        expect(response?.clientImport?.endsWith("\n")).toBe(false);
+    });
+
     it("invokes the endpoint on the requested client variable", () => {
         const response = generator.generateInvocationSync(request, { clientVariableName: "mailchimp" });
 
