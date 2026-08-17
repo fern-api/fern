@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { isEndpointSecurityAuthSchemes, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ContainerType,
     FernIr,
@@ -643,13 +643,20 @@ export class OperationConverter extends AbstractOperationConverter {
             return [];
         }
 
-        // When auth overrides are specified, use them instead of OpenAPI security
-        if (this.context.authOverrides?.auth != null) {
+        // When auth overrides are specified, use them instead of OpenAPI security.
+        // endpoint-security is the exception: it delegates auth requirements to each
+        // operation's own `security`, so the OpenAPI security must be preserved.
+        if (this.context.authOverrides?.auth != null && !this.usesEndpointSecurity()) {
             return this.getDefaultSecurityFromAuthOverrides();
         }
 
         // Fall back to OpenAPI security
         return sanitizeSecurityScopes(this.operation.security ?? this.context.spec.security);
+    }
+
+    private usesEndpointSecurity(): boolean {
+        const auth = this.context.authOverrides?.auth;
+        return auth != null && isEndpointSecurityAuthSchemes(auth);
     }
 
     /**
@@ -659,6 +666,12 @@ export class OperationConverter extends AbstractOperationConverter {
      */
     private shouldApplyDefaultAuthOverrides(): boolean {
         if (!this.context.authOverrides?.auth) {
+            return false;
+        }
+
+        // endpoint-security has no API-wide default to fall back on: an operation with no
+        // `security` of its own requires no auth.
+        if (this.usesEndpointSecurity()) {
             return false;
         }
 
