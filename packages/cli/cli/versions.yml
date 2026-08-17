@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.98.2
+  changelogEntry:
+    - summary: |
+        Preserve explicit `null` values when generating examples from OpenAPI. A `null` routed through
+        an unknown schema (for instance a declared property on an object with
+        `additionalProperties: true`) was replaced with the `{"key": "value"}` placeholder, which made
+        generated SDK wire tests mock an object where the model expects a nullable scalar.
+      type: fix
+  createdAt: "2026-08-17"
+  irVersion: 67
 - version: 5.98.1
   changelogEntry:
     - summary: |
