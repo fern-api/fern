@@ -15,30 +15,25 @@ class RetriesDisabledTest {
 
     @Test
     void noConfiguration_retriesStayEnabled() {
-        assertThat(AbstractHttpResponseParserGenerator.retriesDisabled(Optional.empty()))
-                .isFalse();
+        assertThat(AbstractHttpResponseParserGenerator.retriesDisabled(Optional.empty())).isFalse();
     }
 
     @Test
     void disabledTrue_retriesAreDisabled() {
-        assertThat(AbstractHttpResponseParserGenerator.retriesDisabled(retries(Optional.of(true))))
-                .isTrue();
+        assertThat(AbstractHttpResponseParserGenerator.retriesDisabled(retries(Optional.of(true)))).isTrue();
     }
 
     @Test
     void disabledFalse_retriesStayEnabled() {
-        assertThat(AbstractHttpResponseParserGenerator.retriesDisabled(retries(Optional.of(false))))
-                .isFalse();
+        assertThat(AbstractHttpResponseParserGenerator.retriesDisabled(retries(Optional.of(false)))).isFalse();
     }
 
     @Test
     void disabledAbsent_retriesStayEnabled() {
-        assertThat(AbstractHttpResponseParserGenerator.retriesDisabled(retries(Optional.empty())))
-                .isFalse();
+        assertThat(AbstractHttpResponseParserGenerator.retriesDisabled(retries(Optional.empty()))).isFalse();
     }
 
     private static Optional<RetriesConfiguration> retries(Optional<Boolean> disabled) {
-        return Optional.of(RetriesConfiguration.of(
-                RetriesDisabledSchema.builder().disabled(disabled).build()));
+        return Optional.of(RetriesConfiguration.of(RetriesDisabledSchema.builder().disabled(disabled).build()));
     }
 }

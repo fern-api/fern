@@ -154,25 +154,18 @@ public abstract class AbstractHttpResponseParserGenerator {
 
     public abstract CodeBlock getNextPageGetter(String endpointName, String methodParameters);
 
-    /**
-     * Whether the endpoint opts out of automatic retries via the IR's {@code retries} configuration, which the
-     * {@code x-fern-retries} OpenAPI extension and the Fern definition's {@code retries} key both map to.
-     */
     static boolean retriesDisabled(Optional<RetriesConfiguration> retries) {
-        return retries.map(retriesConfiguration ->
-                        retriesConfiguration.visit(new RetriesConfiguration.Visitor<Boolean>() {
-                            @Override
-                            public Boolean visit(RetriesDisabledSchema value) {
-                                return value.getDisabled().orElse(false);
-                            }
-                        }))
-                .orElse(false);
+        if (!retries.isPresent()) {
+            return false;
+        }
+        return retries.get().visit(new RetriesConfiguration.Visitor<Boolean>() {
+            @Override
+            public Boolean visit(RetriesDisabledSchema value) {
+                return value.getDisabled().orElse(false);
+            }
+        });
     }
 
-    /**
-     * Pins the request's max retries to zero, which wins over both the client-wide and the per-request setting because
-     * the interceptor reads the tag before falling back to either.
-     */
     private void addDisabledRetriesTag(CodeBlock.Builder httpResponseBuilder, ClassName maxRetriesOverrideClassName) {
         httpResponseBuilder.addStatement(
                 "$L = $L.newBuilder().tag($T.class, new $T(0)).build()",
@@ -251,12 +244,9 @@ public abstract class AbstractHttpResponseParserGenerator {
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder();
         // Note: OkHttpClient is already initialized by the caller, so we skip that here
         if (retriesDisabled(httpEndpoint.getRetries())) {
-            addDisabledRetriesTag(
-                    httpResponseBuilder,
-                    clientGeneratorContext
-                            .getPoetClassNameFactory()
-                            .getRetryInterceptorClassName()
-                            .nestedClass("MaxRetriesOverride"));
+            ClassName retryInterceptorClassName =
+                    clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName();
+            addDisabledRetriesTag(httpResponseBuilder, retryInterceptorClassName.nestedClass("MaxRetriesOverride"));
         }
         if (isStreamingEndpoint()) {
             httpResponseBuilder.addStatement(
