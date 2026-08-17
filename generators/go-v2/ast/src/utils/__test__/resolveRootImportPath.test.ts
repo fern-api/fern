@@ -56,23 +56,34 @@ describe("resolveRootModulePath", () => {
         ).toBe("github.com/acme/acme-go/v46");
     });
 
-    it("leaves a configured v1 suffix alone rather than doubling it", () => {
+    // Mirrors module.SplitPathVersion, which the Go generator calls directly. Every case
+    // below is one row of that function's behavior for the paths under discussion.
+    it.each([
+        { importPath: "github.com/plaid/plaid-go/v46", expected: "github.com/plaid/plaid-go/v46" },
+        { importPath: "github.com/plaid/plaid-go", expected: "github.com/plaid/plaid-go/v2" },
+        { importPath: "github.com/acme/acme-go/v2", expected: "github.com/acme/acme-go/v2" }
+    ])("resolves $importPath to $expected", ({ importPath, expected }) => {
         expect(
             resolveRootModulePath({
                 config: buildConfig({ version: "2.0.0" }),
-                customConfig: { importPath: "github.com/acme/acme-go/v1" }
+                customConfig: { importPath }
             })
-        ).toBe("github.com/acme/acme-go/v1");
+        ).toBe(expected);
     });
 
-    it.each(["v0", "v01"])("appends the suffix when the configured path ends in %s", (segment) => {
-        expect(
-            resolveRootModulePath({
-                config: buildConfig({ version: "2.0.0" }),
-                customConfig: { importPath: `github.com/acme/acme-go/${segment}` }
-            })
-        ).toBe(`github.com/acme/acme-go/${segment}/v2`);
-    });
+    // These paths are not legal Go module paths: only v2 and above may carry a suffix, and
+    // it may not be zero-padded. Appending would silently emit an unbuildable ".../v0/v2".
+    it.each(["v0", "v01", "v1", "v1.2"])(
+        "surfaces a configuration error when the configured path ends in %s",
+        (segment) => {
+            expect(() =>
+                resolveRootModulePath({
+                    config: buildConfig({ version: "2.0.0" }),
+                    customConfig: { importPath: `github.com/acme/acme-go/${segment}` }
+                })
+            ).toThrow(/isn't a valid Go major version suffix/);
+        }
+    );
 });
 
 describe("resolveRootImportPath", () => {

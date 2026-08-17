@@ -5,12 +5,12 @@ import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSch
 
 const DEFAULT_MODULE_PATH = "sdk";
 
-// Matches a Go major version suffix, e.g. "v2".
-//
-// "v1" is deliberately matched even though the go command only permits a suffix for
-// v2 and above: if a user has configured a "/v1" suffix, leaving it alone is safer
-// than appending and producing "/v1/v2". Do not tighten this to v2 and above.
-const MAJOR_VERSION_SUFFIX_PATTERN = /^v[1-9]\d*$/;
+// Matches the ".vN" suffix used by gopkg.in paths, which carry the major version for all
+// N rather than only N >= 2.
+const GOPKG_IN_MAJOR_VERSION_SUFFIX_PATTERN = /\.v[1-9]\d*$/;
+
+// Matches a path element that looks like a major version, e.g. "v2", "v0", "v1.2".
+const MAJOR_VERSION_LIKE_SUFFIX_PATTERN = /\/v[0-9.]+$/;
 
 export function resolveRootImportPath({
     config,
@@ -86,6 +86,9 @@ function parseMajorVersion({ config }: { config: FernGeneratorExec.config.Genera
 // Appends the major version suffix to the importPath, unless the importPath already ends
 // in a major version suffix. The configured suffix wins, even if it doesn't match the
 // version being released.
+//
+// Throws when the importPath ends in something that looks like a major version but isn't a
+// legal one, since appending would silently produce an unbuildable path like ".../v0/v2".
 function maybeAppendMajorVersionSuffix({
     importPath,
     majorVersion
@@ -93,10 +96,44 @@ function maybeAppendMajorVersionSuffix({
     importPath: string;
     majorVersion: string;
 }): string {
-    if (MAJOR_VERSION_SUFFIX_PATTERN.test(basename(importPath))) {
+    const suffix = splitMajorVersionSuffix(importPath);
+    if (suffix.type === "invalid") {
+        throw new Error(
+            `The configured import path "${importPath}" ends in "${basename(importPath)}", which isn't a valid Go major version suffix. ` +
+                'Remove the suffix and let Fern append the version being released, or replace it with a valid suffix (e.g. "/v2").'
+        );
+    }
+    if (suffix.type === "present") {
         return importPath;
     }
     return `${importPath}/${majorVersion}`;
+}
+
+type MajorVersionSuffix = { type: "present" } | { type: "absent" } | { type: "invalid" };
+
+// Classifies the major version suffix an import path carries, mirroring the behavior of
+// golang.org/x/mod's module.SplitPathVersion (which the Go generator itself calls, and
+// which this TypeScript implementation cannot):
+//
+//   github.com/acme/acme-go       -> absent
+//   github.com/acme/acme-go/v2    -> present
+//   github.com/acme/acme-go/v0    -> invalid (only v2 and above may carry a suffix)
+//   github.com/acme/acme-go/v01   -> invalid (zero-padded)
+//   github.com/acme/acme-go/v1    -> invalid (v1 modules carry no suffix)
+//   github.com/acme/acme-go/v1.2  -> invalid (not a major version)
+function splitMajorVersionSuffix(importPath: string): MajorVersionSuffix {
+    if (importPath.startsWith("gopkg.in/")) {
+        return GOPKG_IN_MAJOR_VERSION_SUFFIX_PATTERN.test(importPath) ? { type: "present" } : { type: "absent" };
+    }
+    const match = MAJOR_VERSION_LIKE_SUFFIX_PATTERN.exec(importPath);
+    if (match == null) {
+        return { type: "absent" };
+    }
+    const version = match[0].slice(2);
+    if (version.includes(".") || version.startsWith("0") || version === "1") {
+        return { type: "invalid" };
+    }
+    return { type: "present" };
 }
 
 function trimPrefix(str: string, prefix: string): string {

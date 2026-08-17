@@ -4,5 +4,9 @@
     Stop doubling the Go major version suffix in `go.mod` and import paths. A configured
     `importPath` (or `module.path`) that already ends in `/vN` is now left alone, so releasing
     `v34.0.0` with `importPath: github.com/acme/acme-go/v46` produces
-    `module github.com/acme/acme-go/v46` instead of `github.com/acme/acme-go/v46/v34`.
+    `module github.com/acme/acme-go/v46` instead of `github.com/acme/acme-go/v46/v34`. The
+    generator warns when the configured suffix disagrees with the version being released, and
+    fails with a configuration error when the configured path ends in a segment that looks like
+    a major version but isn't a legal one (`/v0`, `/v01`, `/v1`), rather than emitting an
+    unbuildable path like `/v0/v2`.
   type: fix

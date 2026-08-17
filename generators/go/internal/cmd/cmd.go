@@ -7,7 +7,6 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"regexp"
 	"strings"
 
 	"github.com/fern-api/fern-go"
@@ -19,6 +18,7 @@ import (
 	"github.com/fern-api/fern-go/internal/writer"
 	generatorexec "github.com/fern-api/generator-exec-go"
 	"go.uber.org/multierr"
+	"golang.org/x/mod/module"
 	"golang.org/x/mod/semver"
 )
 
@@ -159,7 +159,11 @@ func run(fn GeneratorFunc) (retErr error) {
 		config.ImportPath = config.Module.Path
 	}
 	if suffix, ok := parseMajorVersion(config.Version); ok {
-		if configured, ok := majorVersionSuffix(config.ImportPath); ok && configured != suffix {
+		configured, err := majorVersionSuffix(config.ImportPath)
+		if err != nil {
+			return err
+		}
+		if configured != "" && configured != suffix {
 			if err := coordinator.Log(
 				generatorexec.LogLevelWarn,
 				fmt.Sprintf(
@@ -173,10 +177,16 @@ func run(fn GeneratorFunc) (retErr error) {
 			}
 		}
 		// Append the major version suffix for any version greater than 1.X.X.
-		//
-		// For details, see https://github.com/golang/go/issues/35732
-		config.ImportPath = maybeAppendVersionSuffix(config.ImportPath, suffix)
-		config.Module.Path = maybeAppendVersionSuffix(config.Module.Path, suffix)
+		importPath, err := appendMajorVersionSuffix(config.ImportPath, suffix)
+		if err != nil {
+			return err
+		}
+		modulePath, err := appendMajorVersionSuffix(config.Module.Path, suffix)
+		if err != nil {
+			return err
+		}
+		config.ImportPath = importPath
+		config.Module.Path = modulePath
 	}
 	defer func() {
 		exitStatusUpdate := generatorexec.NewExitStatusUpdateFromSuccessful(new(generatorexec.SuccessfulStatusUpdate))
@@ -601,28 +611,40 @@ func parseMajorVersion(version string) (string, bool) {
 	return major, major != "" && major != "v0" && major != "v1"
 }
 
-// majorVersionSuffixPattern matches a Go major version suffix, e.g. "v2".
+// majorVersionSuffix returns the major version suffix the importPath already carries
+// (e.g. "v2"), or the empty string if it carries none.
 //
-// "v1" is deliberately matched even though the go command only permits a suffix for
-// v2 and above: if a user has configured a "/v1" suffix, leaving it alone is safer
-// than appending and producing "/v1/v2". Do not tighten this to v2 and above.
-var majorVersionSuffixPattern = regexp.MustCompile(`^v[1-9][0-9]*$`)
-
-// majorVersionSuffix returns the major version suffix the importPath already ends in,
-// if any.
-func majorVersionSuffix(importPath string) (string, bool) {
-	base := path.Base(importPath)
-	return base, majorVersionSuffixPattern.MatchString(base)
+// Classification is delegated to golang.org/x/mod so that it matches the go command
+// exactly. A trailing element that looks like a major version but isn't a legal one
+// ("/v0", "/v01", "/v1") is a configuration error rather than a suffix to preserve:
+// appending to it would silently produce an unbuildable path like ".../v0/v2".
+func majorVersionSuffix(importPath string) (string, error) {
+	_, pathMajor, ok := module.SplitPathVersion(importPath)
+	if !ok {
+		return "", fmt.Errorf(
+			"the configured import path %q ends in %q, which isn't a valid Go major version suffix; remove the suffix and let Fern append the version being released, or replace it with a valid suffix (e.g. %q)",
+			importPath,
+			path.Base(importPath),
+			"v2",
+		)
+	}
+	return strings.TrimPrefix(pathMajor, "/"), nil
 }
 
-// maybeAppendVersionSuffix appends the given version suffix to the importPath,
-// unless the importPath already ends in a major version suffix. The configured
-// suffix wins, even if it doesn't match the version being released.
-func maybeAppendVersionSuffix(importPath string, version string) string {
-	if _, ok := majorVersionSuffix(importPath); ok {
-		return importPath
+// appendMajorVersionSuffix appends the given major version suffix to the importPath,
+// unless the importPath already carries one. The configured suffix wins, even if it
+// doesn't match the version being released.
+//
+// For details, see https://github.com/golang/go/issues/35732
+func appendMajorVersionSuffix(importPath string, suffix string) (string, error) {
+	configured, err := majorVersionSuffix(importPath)
+	if err != nil {
+		return "", err
 	}
-	return path.Join(importPath, version)
+	if configured != "" {
+		return importPath, nil
+	}
+	return path.Join(importPath, suffix), nil
 }
 
 // runGoV2Generator runs the go-v2 SDK generator after files have been written to disk.
