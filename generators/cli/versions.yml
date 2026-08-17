@@ -1,4 +1,33 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.34.0
+  changelogEntry:
+    - summary: |
+        `auth login` now honors the `success-redirect-url` / `error-redirect-url` fields on an
+        `authorization-code` OAuth scheme: the loopback listener answers the browser with a `302` to the
+        configured page instead of rendering its own. The success redirect forwards no `code` or `state`;
+        the error redirect carries `error` and, when the server sent one, `error_description`, merged
+        into any query string already on the URL and inserted before a fragment.
+      type: feat
+    - summary: |
+        The built-in callback pages served when no redirect URL is configured are now styled,
+        Fern-branded HTML (light and dark) for both the success and failure states, replacing the bare
+        success markup and the `text/plain` failure response. Everything is inlined, so the last screen
+        of the login flow never depends on a network request.
+      type: feat
+    - summary: |
+        The OAuth callback listener now answers the browser only once the login has actually finished.
+        Previously the success page was served as soon as `code` and `state` were parsed — before the
+        `state` was checked, the code was redeemed, or the credential was stored — so a failed token
+        exchange, a rejected `state`, or a keyring the CLI couldn't write to would leave the browser
+        reading "you're all set" while the terminal reported the failure. The connection is now held
+        open across the exchange and answered from the outcome: the success page (or
+        `success-redirect-url`) only on a login that completed, and the failure page (or
+        `error-redirect-url`) otherwise. A rejected `state` reports `error=invalid_request` and a
+        failure after the callback reports `error=server_error`; no `state` value and no token-endpoint
+        detail is forwarded to a hosted page.
+      type: fix
+  createdAt: "2026-08-17"
+  irVersion: 67
 - version: 0.33.0
   changelogEntry:
     - summary: |
