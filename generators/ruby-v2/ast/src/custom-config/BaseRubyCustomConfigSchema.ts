@@ -36,6 +36,10 @@ export const BaseRubyCustomConfigSchema = z.object({
     // Opt-in: emit the X-Fern-Runtime, X-Fern-Runtime-Version, and X-Fern-Platform
     // observability headers. Disabled by default so existing output is unchanged.
     includePlatformHeaders: z.boolean().optional(),
+    // Opt-in: expose an optional `app_info` client keyword whose product token is
+    // appended to the User-Agent header (RFC 9110). Disabled by default so existing
+    // output is byte-identical.
+    allowUserAgentAppInfo: z.boolean().optional(),
     // RuboCop Naming/VariableNumber style for field names with numbers
     // - "snake_case": requires underscores before numbers (e.g., recaptcha_v_2) - default
     // - "normalcase": allows numbers without underscores (e.g., recaptcha_v2, office365)
@@ -47,7 +51,17 @@ export const BaseRubyCustomConfigSchema = z.object({
     // - "error": reports violations as errors (used in seed to enforce rubocop)
     rubocopSeverity: z.enum(["info", "warning", "error"]).optional(),
     maxRetries: z.number().int().min(0).optional(),
-    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
+    // Opt-in: when the API composes OAuth client-credentials with basic auth
+    // (`auth: any`), auth credentials passed explicitly to the client constructor
+    // take precedence over environment-variable defaults when selecting the auth
+    // scheme. Disabled by default so existing output is unchanged (OAuth env vars
+    // win over explicitly provided basic auth).
+    preferExplicitAuth: z.boolean().optional(),
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),
+    // Opt-in: when the IR marks a referenced request body as optional, a caller that
+    // passes no body properties sends neither a body nor a Content-Type header.
+    // Disabled by default so existing output is byte-identical.
+    respectOptionalRequestBody: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

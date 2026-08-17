@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# An apiKey-in-header CLI — the shape most customer specs use. Exists for the
+# wire tests: `mock-utils` emits stub-level auth header matchers only for
+# `basic`, `bearer` and `header` schemes (its switch has no `oauth` case), so
+# before this fixture every wire-test fixture was unauthenticated or OAuth and
+# the harness's header-matcher path was never executed against a real binary.
+# Here the mock requires `x-api-key: .+`, so a CLI that drops or mangles its
+# credential header fails to match and the case fails.
+#
+# No `auth-schemes:` block on purpose: the spec's own `securitySchemes` is
+# enough for this shape, and the env var falls back to `<BIN>_API_KEY`, which
+# also exercises `toEnvVarPrefix`.
+api:
+  specs:
+    - openapi: ./openapi.yml
+
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: latest
+        ir-version: latest

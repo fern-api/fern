@@ -1,0 +1,21 @@
+- summary: |
+    Refuse pagination links that cross a host boundary. `x-fern-pagination`'s
+    `Uri` variant took the next-page URL from the response body verbatim, and its
+    `Path` variant resolved a value that may be an absolute URL — which replaces
+    the base's origin. In both cases the *response* chose where the next request
+    went, so a server (or anything able to influence its output) could redirect
+    the CLI to another host and the credential would follow. As with the redirect
+    guard, reqwest only strips the headers it hardcodes as sensitive, so a
+    spec-declared custom header (`xi-api-key`, `X-API-Key`, anything an
+    `apiKey`-in-header scheme produces) was sent to the new host verbatim.
+
+    Same host-only comparison the redirect guard uses: an `http` -> `https`
+    upgrade or a port change is unaffected, and a relative `next_path` cannot
+    cross an origin so it is allowed without inspection. Crossing to a different
+    host now halts pagination with a warning naming both origins — the origins
+    only, since a pagination link's query string can itself carry a credential.
+
+    Opt out with `<PREFIX>_ALLOW_CROSS_HOST_PAGINATION`, deliberately separate
+    from `<PREFIX>_ALLOW_CROSS_HOST_REDIRECTS`: allowing a redirect is not
+    consent to let a response body steer the next request.
+  type: fix

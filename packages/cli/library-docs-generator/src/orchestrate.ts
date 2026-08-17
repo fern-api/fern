@@ -354,7 +354,7 @@ async function generateIrRemotely({
     const gitInput = config.input;
 
     const jobId = await wrapStep({
-        message: `Library '${name}': starting generation from ${gitInput.git}`,
+        message: `Library '${name}': starting generation from ${gitInput.git}${gitInput.ref != null ? ` (ref: ${gitInput.ref})` : ""}`,
         operation: () =>
             startGeneration(client, {
                 name,
@@ -362,6 +362,7 @@ async function generateIrRemotely({
                 githubUrl: gitInput.git,
                 language,
                 packagePath: gitInput.subpath,
+                ref: gitInput.ref,
                 doxyfileContent
             })
     });
@@ -431,6 +432,7 @@ async function startGeneration(
         githubUrl: string;
         language: LibraryLanguage;
         packagePath?: string;
+        ref?: string;
         doxyfileContent?: string;
     }
 ): Promise<string> {
@@ -440,7 +442,8 @@ async function startGeneration(
             githubUrl: opts.githubUrl,
             language: opts.language,
             config: {
-                branch: undefined,
+                // FDR's library-docs API accepts any git ref (branch, tag, or SHA) via `branch`.
+                branch: opts.ref,
                 packagePath: opts.packagePath,
                 title: opts.name,
                 slug: opts.name,

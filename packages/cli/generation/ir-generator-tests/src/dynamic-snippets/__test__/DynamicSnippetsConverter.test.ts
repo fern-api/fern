@@ -28,6 +28,8 @@ describe("test definitions", () => {
     }, 200_000);
 
     apiNames.forEach((name) => {
+        // the proto-backed fixtures shell out to buf/protoc and are the slowest in this
+        // concurrent loop; on loaded CI runners they land just under a 60s budget
         it.concurrent(name, async () => {
             const workspace = workspaceMap.get(name);
             if (!workspace) {
@@ -39,6 +41,8 @@ describe("test definitions", () => {
                 audiences: { type: "all" },
                 workspaceName: name
             });
-        }, 60_000);
+            // the proto-backed fixtures shell out to buf/protoc and are the slowest in this
+            // concurrent loop; on loaded CI runners they sit just under a 60s budget
+        }, 120_000);
     });
 });

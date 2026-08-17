@@ -56,6 +56,7 @@ export const CsharpConfigSchema = z.object({
     "generate-literals": z.boolean().optional(),
     "experimental-explicit-nullable-optional": z.boolean().optional(),
     "use-default-request-parameter-values": z.boolean().optional(),
+    "respect-optional-request-body": z.boolean().optional(),
     "redact-response-body-on-error": z.boolean().optional(),
     "enable-inline-types": z.boolean().optional(),
 
@@ -103,11 +104,24 @@ export const CsharpConfigSchema = z.object({
     "exception-interceptor-class-name": z.string().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "omit-fern-headers": z.boolean().optional(),
+    // When true (and the API composes OAuth client-credentials with basic auth via
+    // `auth: any`), auth credentials passed explicitly to the client constructor take
+    // precedence over environment-variable defaults when selecting the auth scheme
+    // (e.g. explicit basic auth wins over OAuth env vars). Off by default so existing
+    // behavior is unchanged.
+    "prefer-explicit-auth": z.boolean().optional(),
     // When true, emits the platform observability headers `X-Fern-Runtime`,
     // `X-Fern-Runtime-Version`, and `X-Fern-Platform` on generated SDK requests.
     // Off by default so existing generated output is unchanged. Still subject to
     // `omit-fern-headers`.
     "include-platform-headers": z.boolean().optional(),
+    // When true, generated clients accept an `AppInfo` client option (`Name`,
+    // `Version?`, `Comment?`) whose sanitized product token is appended to whatever
+    // `User-Agent` the SDK would otherwise send (`{sdk}/{version} ... {product}/{ver}
+    // ({comment})`), following RFC 9110. Off by default so existing generated output
+    // is unchanged. Independent of `include-platform-headers`; still overridable by an
+    // explicit `User-Agent` header and suppressed by `omit-fern-headers`.
+    "allow-user-agent-app-info": z.boolean().optional(),
     "unified-client-options": z.boolean().optional(),
     // When true (default), server URL variables declared on the API's environments (e.g. region)
     // are exposed as ClientOptions properties and interpolated into the environment URL template(s)

@@ -55,6 +55,7 @@ module Seed
           "X-Fern-Language" => "Ruby",
           "X-API-Version" => api_version.to_s
         },
+        overridable_headers: %w[X-API-Version],
         max_retries: max_retries
       )
     end

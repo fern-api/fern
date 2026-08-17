@@ -66,6 +66,6 @@ public partial class SeedApiClient : ISeedApiClient
             : "";
         var runtimeVersion = global::System.Environment.Version.ToString();
         var runtime = runtimeVersion.Length > 0 ? $" dotnet/{runtimeVersion}" : " dotnet";
-        return $"SeedApi/{Version.Current}{platform}{runtime}";
+        return $"Fernimdb/{Version.Current}{platform}{runtime}";
     }
 }

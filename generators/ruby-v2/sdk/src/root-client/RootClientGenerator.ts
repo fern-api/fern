@@ -14,6 +14,9 @@ import { Comments } from "../utils/comments.js";
 
 const TOKEN_PARAMETER_NAME = "token";
 
+/** Client keyword exposed when `allowUserAgentAppInfo` is enabled. */
+const APP_INFO_PARAMETER_NAME = "app_info";
+
 /** Instance member the single flat auth provider is assigned to (ALL/ANY auth). */
 const AUTH_PROVIDER_MEMBER = "@auth_provider";
 /** Instance members the OAuth / inferred providers are assigned to under endpoint-security. */
@@ -31,7 +34,8 @@ const RESERVED_OPTION_NAMES = new Set<string>([
     "max_retries",
     "token",
     "client",
-    "request_options"
+    "request_options",
+    APP_INFO_PARAMETER_NAME
 ]);
 
 interface InferredAuthParameter {
@@ -156,6 +160,20 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         });
         parameters.push(maxRetriesParameter);
 
+        // When the opt-in `allowUserAgentAppInfo` config is enabled, expose an optional
+        // `app_info` keyword whose product token is appended to the User-Agent header.
+        // Gated so flag-off client.rb keeps byte-identical output.
+        if (this.emitAppInfoOption()) {
+            parameters.push(
+                ruby.parameters.keyword({
+                    name: APP_INFO_PARAMETER_NAME,
+                    type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.class_({ name: "Symbol" }), ruby.Type.string())),
+                    initializer: ruby.nilValue(),
+                    docs: "Optional application info ({ name:, version:, comment: }) appended to the User-Agent header."
+                })
+            );
+        }
+
         // Sort parameters: required (no initializer) before optional (with initializer)
         const sortedParameters = [...parameters].sort((a, b) => {
             const aOptional = a.initializer != null ? 1 : 0;
@@ -221,6 +239,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 );
             }
         } else if (oauthAuth != null && useOAuthProvider) {
+            if (this.preferExplicitAuthEnabled()) {
+                method.addStatement(this.getExplicitAuthTrackingStatement(oauthAuth));
+            }
             method.addStatement(this.getOAuthInitializationStatement(oauthAuth, anyAuthMultiScheme));
         } else if (inferredAuth != null) {
             method.addStatement(this.getInferredAuthInitializationStatement(inferredAuth, anyAuthMultiScheme));
@@ -353,6 +374,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     writer.write(`headers: `);
                     writer.writeNode(this.getRawClientHeaders({ includeAuth: emitFlatAuth }));
                     writer.writeLine(`,`);
+                }
+                // Global headers are the only client-level headers a request may replace via
+                // `additional_headers`; SDK metadata and auth headers stay protected.
+                const overridableHeaderNames = this.getOverridableHeaderNames();
+                if (overridableHeaderNames.length > 0) {
+                    writer.writeLine(`overridable_headers: %w[${overridableHeaderNames.join(" ")}],`);
                 }
                 if (isEndpointSecurity) {
                     // Under endpoint-security, the RawClient is given a routing auth
@@ -676,7 +703,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 // string the same as absent); otherwise the caller is
                 // authenticating with another scheme (e.g. an API key) and we must
                 // not touch the token endpoint.
-                writer.writeLine(`if !client_id.to_s.empty? && !client_secret.to_s.empty?`);
+                if (this.preferExplicitAuthEnabled()) {
+                    // Explicitly provided basic auth wins over env-var-derived OAuth
+                    // credentials; explicitly provided OAuth credentials still win.
+                    writer.writeLine(
+                        `if !client_id.to_s.empty? && !client_secret.to_s.empty? && (explicit_oauth_auth || !explicit_basic_auth)`
+                    );
+                } else {
+                    writer.writeLine(`if !client_id.to_s.empty? && !client_secret.to_s.empty?`);
+                }
                 writer.indent();
             }
             // Create an unauthenticated raw client for the auth endpoint.
@@ -748,8 +783,121 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         });
     }
 
+    /**
+     * Whether explicitly provided constructor auth credentials should take precedence
+     * over environment-variable defaults when selecting the auth scheme. Opt-in via the
+     * `preferExplicitAuth` config; only applies when OAuth client-credentials is composed
+     * with a basic auth scheme (outside endpoint-security routing).
+     */
+    private preferExplicitAuthEnabled(): boolean {
+        if (this.context.customConfig.preferExplicitAuth !== true) {
+            return false;
+        }
+        if (this.context.isEndpointSecurity()) {
+            return false;
+        }
+        // The explicit-tracking locals and env-var fallbacks are only emitted in the
+        // credential-gated OAuth-provider branch of the constructor, so the flag must
+        // only activate when that exact branch is generated: `any`-composed multi-scheme
+        // auth where the OAuth provider (not an inferred-auth provider) is selected.
+        if (!this.isAnyAuthWithMultipleSchemes()) {
+            return false;
+        }
+        const oauthAuth = this.context.getOAuthAuth();
+        if (oauthAuth == null || oauthAuth.configuration.type !== "clientCredentials") {
+            return false;
+        }
+        if (!this.shouldUseOAuthProvider(this.context.getInferredAuth(), oauthAuth)) {
+            return false;
+        }
+        return this.getBasicAuthCredentialParameterNames().length > 0;
+    }
+
+    private getBasicAuthScheme(): (FernIr.AuthScheme & { type: "basic" }) | undefined {
+        return this.context.ir.auth.schemes.find((s): s is typeof s & { type: "basic" } => s.type === "basic");
+    }
+
+    private getBasicAuthCredentialParameterNames(): string[] {
+        const scheme = this.getBasicAuthScheme();
+        if (scheme == null) {
+            return [];
+        }
+        const names: string[] = [];
+        if (!scheme.usernameOmit) {
+            names.push(this.case.snakeSafe(scheme.username));
+        }
+        if (!scheme.passwordOmit) {
+            names.push(this.case.snakeSafe(scheme.password));
+        }
+        return names;
+    }
+
+    /**
+     * Emits locals recording which auth credentials were passed explicitly (before
+     * applying env-var defaults), then applies the env-var fallbacks. Used with
+     * `preferExplicitAuth` so explicitly provided basic auth wins over OAuth env vars.
+     */
+    private getExplicitAuthTrackingStatement(oauthScheme: FernIr.OAuthScheme): ruby.AstNode {
+        const basicScheme = this.getBasicAuthScheme();
+        const basicParamNames = this.getBasicAuthCredentialParameterNames();
+        const envFallbacks: Array<{ paramName: string; envVar: string }> = [];
+        if (oauthScheme.configuration.type === "clientCredentials") {
+            if (oauthScheme.configuration.clientIdEnvVar != null) {
+                envFallbacks.push({ paramName: "client_id", envVar: oauthScheme.configuration.clientIdEnvVar });
+            }
+            if (oauthScheme.configuration.clientSecretEnvVar != null) {
+                envFallbacks.push({ paramName: "client_secret", envVar: oauthScheme.configuration.clientSecretEnvVar });
+            }
+        }
+        if (basicScheme != null) {
+            if (!basicScheme.usernameOmit && basicScheme.usernameEnvVar != null) {
+                envFallbacks.push({
+                    paramName: this.case.snakeSafe(basicScheme.username),
+                    envVar: basicScheme.usernameEnvVar
+                });
+            }
+            if (!basicScheme.passwordOmit && basicScheme.passwordEnvVar != null) {
+                envFallbacks.push({
+                    paramName: this.case.snakeSafe(basicScheme.password),
+                    envVar: basicScheme.passwordEnvVar
+                });
+            }
+        }
+        return ruby.codeblock((writer) => {
+            writer.writeLine(`explicit_oauth_auth = !client_id.nil? || !client_secret.nil?`);
+            writer.writeLine(`explicit_basic_auth = ${basicParamNames.map((name) => `!${name}.nil?`).join(" || ")}`);
+            for (const { paramName, envVar } of envFallbacks) {
+                writer.writeLine(`${paramName} = ENV.fetch("${envVar}", nil) if ${paramName}.nil?`);
+            }
+        });
+    }
+
     private getAuthenticationParameters(): ruby.KeywordParameter[] {
         const parameters: ruby.KeywordParameter[] = [];
+
+        // Under endpoint-security, auth is resolved per-endpoint, so a caller may use only one
+        // scheme (e.g. pure OAuth) and must be able to omit the others. A credential without an
+        // env-var default therefore defaults to nil instead of being a required keyword argument;
+        // otherwise a pure-OAuth user cannot construct the client without also passing an API key.
+        const isEndpointSecurity = this.context.isEndpointSecurity();
+        const credentialInitializer = (envVar: string | undefined) => {
+            if (envVar != null) {
+                return ruby.codeblock((writer) => {
+                    writer.write(`ENV.fetch("${envVar}", nil)`);
+                });
+            }
+            return isEndpointSecurity ? ruby.nilValue() : undefined;
+        };
+        // Under preferExplicitAuth, basic and OAuth credentials default to nil so the
+        // constructor can distinguish explicitly passed values from env-var defaults;
+        // the env-var fallback is applied inside the constructor body instead.
+        const preferExplicitAuth = this.preferExplicitAuthEnabled();
+        const selectableCredentialInitializer = (envVar: string | undefined) => {
+            if (preferExplicitAuth && envVar != null) {
+                return ruby.nilValue();
+            }
+            return credentialInitializer(envVar);
+        };
 
         for (const scheme of this.context.ir.auth.schemes) {
             switch (scheme.type) {
@@ -757,12 +905,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     const param = ruby.parameters.keyword({
                         name: TOKEN_PARAMETER_NAME,
                         type: ruby.Type.string(),
-                        initializer:
-                            scheme.tokenEnvVar != null
-                                ? ruby.codeblock((writer) => {
-                                      writer.write(`ENV.fetch("${scheme.tokenEnvVar}", nil)`);
-                                  })
-                                : undefined,
+                        initializer: credentialInitializer(scheme.tokenEnvVar),
                         docs: undefined
                     });
                     parameters.push(param);
@@ -772,12 +915,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     const param = ruby.parameters.keyword({
                         name: this.case.snakeSafe(scheme.name),
                         type: ruby.Type.string(),
-                        initializer:
-                            scheme.headerEnvVar != null
-                                ? ruby.codeblock((writer) => {
-                                      writer.write(`ENV.fetch("${scheme.headerEnvVar}", nil)`);
-                                  })
-                                : undefined,
+                        initializer: credentialInitializer(scheme.headerEnvVar),
                         docs: undefined
                     });
                     parameters.push(param);
@@ -791,12 +929,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         const usernameParam = ruby.parameters.keyword({
                             name: this.case.snakeSafe(scheme.username),
                             type: ruby.Type.string(),
-                            initializer:
-                                scheme.usernameEnvVar != null
-                                    ? ruby.codeblock((writer) => {
-                                          writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
-                                      })
-                                    : undefined,
+                            initializer: selectableCredentialInitializer(scheme.usernameEnvVar),
                             docs: undefined
                         });
                         parameters.push(usernameParam);
@@ -805,12 +938,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         const passwordParam = ruby.parameters.keyword({
                             name: this.case.snakeSafe(scheme.password),
                             type: ruby.Type.string(),
-                            initializer:
-                                scheme.passwordEnvVar != null
-                                    ? ruby.codeblock((writer) => {
-                                          writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
-                                      })
-                                    : undefined,
+                            initializer: selectableCredentialInitializer(scheme.passwordEnvVar),
                             docs: undefined
                         });
                         parameters.push(passwordParam);
@@ -840,11 +968,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     parameters.push(
                         ruby.parameters.keyword({
                             name: "client_id",
-                            type: clientIdEnvVar != null ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
-                            initializer:
-                                clientIdEnvVar != null
-                                    ? ruby.codeblock(`ENV.fetch("${clientIdEnvVar}", nil)`)
-                                    : undefined,
+                            type:
+                                clientIdEnvVar != null || isEndpointSecurity
+                                    ? ruby.Type.nilable(ruby.Type.string())
+                                    : ruby.Type.string(),
+                            initializer: selectableCredentialInitializer(clientIdEnvVar),
                             docs: undefined
                         })
                     );
@@ -852,11 +980,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         ruby.parameters.keyword({
                             name: "client_secret",
                             type:
-                                clientSecretEnvVar != null ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
-                            initializer:
-                                clientSecretEnvVar != null
-                                    ? ruby.codeblock(`ENV.fetch("${clientSecretEnvVar}", nil)`)
-                                    : undefined,
+                                clientSecretEnvVar != null || isEndpointSecurity
+                                    ? ruby.Type.nilable(ruby.Type.string())
+                                    : ruby.Type.string(),
+                            initializer: selectableCredentialInitializer(clientSecretEnvVar),
                             docs: undefined
                         })
                     );
@@ -865,8 +992,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         parameters.push(
                             ruby.parameters.keyword({
                                 name: additionalName,
-                                type: ruby.Type.string(),
-                                initializer: undefined,
+                                type: isEndpointSecurity ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
+                                initializer: isEndpointSecurity ? ruby.nilValue() : undefined,
                                 docs: undefined
                             })
                         );
@@ -974,6 +1101,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     }
 
     /**
+     * The wire names of the global headers a request may replace via `additional_headers`.
+     * Literal global headers are excluded: their value is fixed by the API definition.
+     */
+    private getOverridableHeaderNames(): string[] {
+        return this.getNonLiteralGlobalHeaders().map((header) => getWireValue(header.name));
+    }
+
+    /**
      * Statements that conditionally add global headers whose value may be nil at
      * construction time (no clientDefault), e.g.
      * `headers["X-Api-Version"] = api_version.to_s unless api_version.nil?`.
@@ -1075,14 +1210,29 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 headers.push({
                     key: ruby.TypeLiteral.string("User-Agent"),
                     value: ruby.codeblock(
-                        `${rootModuleName}::Internal::Http::RawClient.user_agent(${JSON.stringify(userAgent.value)})`
+                        this.wrapUserAgentWithAppInfo(
+                            `${rootModuleName}::Internal::Http::RawClient.user_agent(${JSON.stringify(userAgent.value).replace(/#(?=[{$@])/g, "\\#")})`
+                        )
                     )
                 });
             } else if (userAgent != null) {
-                headers.push({
-                    key: ruby.TypeLiteral.string("User-Agent"),
-                    value: ruby.TypeLiteral.string(userAgent.value)
-                });
+                // Covers both the configured `user-agent` template value and the default
+                // `{package}/{version}` (both surface via userAgent.value). When
+                // appInfo is enabled the base value is wrapped so the app product token
+                // is appended; otherwise it stays a plain string literal (byte-identical).
+                if (this.emitAppInfoOption()) {
+                    headers.push({
+                        key: ruby.TypeLiteral.string("User-Agent"),
+                        value: ruby.codeblock(
+                            this.wrapUserAgentWithAppInfo(JSON.stringify(userAgent.value).replace(/#(?=[{$@])/g, "\\#"))
+                        )
+                    });
+                } else {
+                    headers.push({
+                        key: ruby.TypeLiteral.string("User-Agent"),
+                        value: ruby.TypeLiteral.string(userAgent.value)
+                    });
+                }
             }
 
             headers.push({
@@ -1171,6 +1321,34 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         }
 
         return ruby.TypeLiteral.hash(headers);
+    }
+
+    /**
+     * Whether to expose the opt-in `app_info` client keyword and emit the User-Agent
+     * appendix. Gated on the `allowUserAgentAppInfo` config, and suppressed entirely
+     * when `omitFernHeaders` is set (no User-Agent is sent in that case), so flag-off
+     * output stays byte-identical.
+     */
+    private emitAppInfoOption(): boolean {
+        return (
+            this.context.customConfig.allowUserAgentAppInfo === true &&
+            !this.context.customConfig.omitFernHeaders &&
+            this.context.ir.sdkConfig.platformHeaders.userAgent != null
+        );
+    }
+
+    /**
+     * Wraps a base User-Agent expression so the caller-supplied `app_info` product
+     * token is appended (via RawClient.append_app_info). Returns the base expression
+     * unchanged when appInfo is not enabled, so non-opted-in output is byte-identical.
+     * @param baseExpression The Ruby expression producing the base User-Agent value.
+     */
+    private wrapUserAgentWithAppInfo(baseExpression: string): string {
+        if (!this.emitAppInfoOption()) {
+            return baseExpression;
+        }
+        const rootModuleName = this.context.getRootModule().name;
+        return `${rootModuleName}::Internal::Http::RawClient.append_app_info(${baseExpression}, ${APP_INFO_PARAMETER_NAME})`;
     }
 
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {

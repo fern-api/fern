@@ -31,7 +31,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/array-map",
-              "request": "ArrayMap",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "ArrayMap",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -62,7 +67,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/extended-with-any",
-              "request": "ExtendedWithAdditionalPropertiesAny",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "ExtendedWithAdditionalPropertiesAny",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -95,7 +105,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/extended-with-ref",
-              "request": "ExtendedWithAdditionalPropertiesRef",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "ExtendedWithAdditionalPropertiesRef",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -125,7 +140,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/extended-with-typed",
-              "request": "ExtendedWithAdditionalPropertiesTyped",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "ExtendedWithAdditionalPropertiesTyped",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -152,7 +172,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/flexible",
-              "request": "FlexibleObject",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "FlexibleObject",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -183,7 +208,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/object-map",
-              "request": "ObjectMap",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "ObjectMap",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -210,7 +240,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/strict",
-              "request": "StrictObject",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "StrictObject",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -236,7 +271,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/string-map",
-              "request": "StringMap",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "StringMap",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -267,7 +307,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/user-map",
-              "request": "UserMap",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "UserMap",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -415,7 +460,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: FlexibleObject
+      request:
+        body:
+          type: FlexibleObject
+          optional: true
       response:
         docs: Success
         type: FlexibleObject
@@ -431,7 +479,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: StrictObject
+      request:
+        body:
+          type: StrictObject
+          optional: true
       response:
         docs: Success
         type: StrictObject
@@ -447,7 +498,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: StringMap
+      request:
+        body:
+          type: StringMap
+          optional: true
       response:
         docs: Success
         type: StringMap
@@ -462,7 +516,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: ObjectMap
+      request:
+        body:
+          type: ObjectMap
+          optional: true
       response:
         docs: Success
         type: ObjectMap
@@ -480,7 +537,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: UserMap
+      request:
+        body:
+          type: UserMap
+          optional: true
       response:
         docs: Success
         type: UserMap
@@ -498,7 +558,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: ArrayMap
+      request:
+        body:
+          type: ArrayMap
+          optional: true
       response:
         docs: Success
         type: ArrayMap
@@ -516,7 +579,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: ExtendedWithAdditionalPropertiesAny
+      request:
+        body:
+          type: ExtendedWithAdditionalPropertiesAny
+          optional: true
       response:
         docs: Success
         type: ExtendedWithAdditionalPropertiesAny
@@ -535,7 +601,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: ExtendedWithAdditionalPropertiesTyped
+      request:
+        body:
+          type: ExtendedWithAdditionalPropertiesTyped
+          optional: true
       response:
         docs: Success
         type: ExtendedWithAdditionalPropertiesTyped
@@ -553,7 +622,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: ExtendedWithAdditionalPropertiesRef
+      request:
+        body:
+          type: ExtendedWithAdditionalPropertiesRef
+          optional: true
       response:
         docs: Success
         type: ExtendedWithAdditionalPropertiesRef

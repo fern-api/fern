@@ -202,6 +202,7 @@
                         "requestBodyType": {
                             "_type": "unknown"
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -215,6 +216,7 @@
                                 "requestBodyType": {
                                     "_type": "unknown"
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -378,6 +380,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -403,6 +406,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -854,7 +858,8 @@
                         "value": {
                             "type": "unknown"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -940,7 +945,8 @@
                             "type": "named",
                             "value": "type_unknown:MyObject"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

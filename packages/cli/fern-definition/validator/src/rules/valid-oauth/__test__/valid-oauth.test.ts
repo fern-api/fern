@@ -203,6 +203,182 @@ describe("valid-oauth", () => {
             })
         ).not.toThrow();
     });
+
+    it("valid-authorization-code", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("valid"),
+                RelativeFilePath.of("authorization-code")
+            )
+        });
+        expect(violations).toEqual([]);
+    });
+
+    it("invalid-redirect-uri-host", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("redirect-uri-host")
+            )
+        });
+        expect(violations.length).toBeGreaterThan(0);
+        expect(violations.some((violation) => violation.message.includes("must use a loopback host"))).toBe(true);
+    });
+
+    it("valid-redirect-uri-localhost", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("valid"),
+                RelativeFilePath.of("redirect-uri-localhost")
+            )
+        });
+        expect(violations).toEqual([]);
+    });
+
+    it("valid-device-code", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("valid"),
+                RelativeFilePath.of("device-code")
+            )
+        });
+        expect(violations).toEqual([]);
+    });
+
+    it("invalid-device-code-redirect-uri", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("device-code-redirect-uri")
+            )
+        });
+        expect(violations.length).toBeGreaterThan(0);
+        expect(violations.some((violation) => violation.message.includes("no browser callback"))).toBe(true);
+    });
+
+    it("invalid-device-code-pkce", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("device-code-pkce")
+            )
+        });
+        expect(violations.length).toBeGreaterThan(0);
+        expect(violations.some((violation) => violation.message.includes("does not use PKCE"))).toBe(true);
+    });
+
+    it("valid-callback-redirect-urls", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("valid"),
+                RelativeFilePath.of("callback-redirect-urls")
+            )
+        });
+        expect(violations).toEqual([]);
+    });
+
+    it("invalid-callback-redirect-url-scheme", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("callback-redirect-url-scheme")
+            )
+        });
+        expect(violations.some((violation) => violation.message.includes("success-redirect-url"))).toBe(true);
+        expect(
+            violations.some((violation) => violation.message.includes("error-redirect-url 'ftp://acme.com/cli/error'"))
+        ).toBe(true);
+    });
+
+    it("invalid-callback-redirect-url-control-character", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("callback-redirect-url-control-character")
+            )
+        });
+        expect(violations.some((violation) => violation.message.includes("must not contain control characters"))).toBe(
+            true
+        );
+    });
+
+    it("invalid-device-code-callback-redirect-urls", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("device-code-callback-redirect-urls")
+            )
+        });
+        expect(
+            violations.filter(
+                (violation) =>
+                    violation.message.includes("device-code flow has no browser callback") &&
+                    (violation.message.includes("success-redirect-url") ||
+                        violation.message.includes("error-redirect-url"))
+            )
+        ).toHaveLength(2);
+    });
+
+    it("invalid-client-credentials-callback-redirect-urls", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("client-credentials-callback-redirect-urls")
+            )
+        });
+        expect(
+            violations.filter((violation) =>
+                violation.message.includes("client-credentials flow has no browser callback")
+            )
+        ).toHaveLength(2);
+    });
+
+    it("invalid-client-id-env", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("client-id-env")
+            )
+        });
+        expect(violations.length).toBeGreaterThan(0);
+        expect(violations.some((violation) => violation.message.includes("environment-variable client ID"))).toBe(true);
+    });
 });
 
 // validateOAuthRuleViolations ensures all of the expected rule violations match,

@@ -1,0 +1,83 @@
+- summary: |
+    Wire tests now exercise the request side, not just the response. The
+    harness asserts JSON request bodies with a partial-JSON matcher, drives
+    multipart and binary endpoints with real temporary fixture files through
+    the generated field flags (instead of skipping them), and every positive
+    case gets a negative (non-2xx) twin that asserts the CLI exits non-zero and
+    surfaces an error. Multipart file/text classification is derived from the
+    Fern IR so a runtime regression fails the mock match rather than passing
+    silently. Endpoints whose JSON body is also flattened into per-field flags
+    are now driven via `--json` (previously skipped without asserting the body),
+    with the harness reconciling a path parameter the CLI renamed to avoid
+    colliding with a body field of the same name. Multipart assertions pin the
+    request's `multipart/form-data` content type and each part's
+    `Content-Disposition` name, bind `filename=` to the field that must carry it
+    (so a sibling file part cannot satisfy it), and a dedicated variant omits
+    optional file fields and requires the omitted field to be absent from the
+    wire body, so a runtime that turns an absent optional file into an empty or
+    path-valued part fails. Also fixes the OpenAPI multipart classifier to unwrap
+    `anyOf`/`oneOf`/`allOf` so an optional nullable binary field
+    (`anyOf: [{string, binary}, {null}]`) is recognized as a file upload.
+  type: fix
+- summary: |
+    Bound the multipart classifier's `anyOf`/`oneOf`/`allOf` unwrapping to a
+    fixed nesting depth. A cyclic composition chain (`A: {anyOf: [B]}`,
+    `B: {anyOf: [A]}`) on a multipart property recursed until the stack
+    overflowed; because the CLI loads its baked OpenAPI spec at startup, that
+    aborted the binary on every invocation rather than failing at generate time.
+    Such a field now fails closed as a text part.
+  type: fix
+- summary: |
+    Multipart file parts are no longer mislabelled `application/octet-stream`.
+    The OpenAPI parser synthesized that content type for every `format: binary`
+    property, which downstream was indistinguishable from a type the spec had
+    actually declared via `encoding` — so it outranked any inference and every
+    upload went out as octet-stream. Servers that validate a part's media type
+    reject that: ElevenLabs' knowledge-base upload answers `Invalid file type.
+    Allowed types are ['application/pdf', 'text/plain', …]` for a `.txt` file,
+    making those endpoints unusable from the CLI regardless of the file. The
+    parser now reports a content type only when the schema or `encoding` pins
+    one, and the request builder resolves a file part as declared `encoding` →
+    inferred from the file's extension → `application/octet-stream`. This is the
+    precedence binary request bodies already used (`resolve_upload_mime`); the
+    multipart path simply never called the existing helper. Content-character
+    sanitization is now shared by both paths, so a spec-supplied media type
+    cannot smuggle a header break into the multipart preamble. The extension
+    table also gained the audio formats speech-to-text and dubbing endpoints
+    take (`m4a`, `aac`, `flac`, `ogg`, `opus`, `aiff`) plus `epub` and `mov`.
+    Wire tests now pin each file part's `Content-Type` in the same substring as
+    its `Content-Disposition`, binding it to that field so a sibling part cannot
+    satisfy it, and their fixture files carry a real extension so the inference
+    path is exercised rather than only the octet-stream fallback.
+  type: fix
+- summary: |
+    Wire tests no longer demand a credential from endpoints that declare none.
+    For public-client login flows the harness required
+    `Authorization: Bearer <seeded>` on *every* case, so an unauthenticated
+    operation — an OAuth token endpoint exposed as a normal command being the
+    common shape — could never match its own mock: the CLI correctly sends no
+    bearer, nothing matches, and the case failed for a reason unrelated to what
+    it tests. The manifest now carries the endpoint's `auth` flag from the IR
+    (the same signal `mock-utils` already gates its auth-header matchers on) and
+    the harness asserts the bearer only where it applies. Under
+    `ENDPOINT_SECURITY` auth, where each endpoint selects its own scheme and no
+    single credential holds across the board, the assertion is dropped
+    wholesale. The inverse is deliberately not asserted: a `requiresAuth: false`
+    endpoint may still carry a credential, since specs under-declare security
+    often enough that forbidding it would manufacture failures.
+  type: fix
+- summary: |
+    A wire test that fails because the request never matched now says so, with
+    the command, exit code, stdout, stderr, and the requests the mock server
+    actually received alongside what was expected. Previously the harness leaned
+    on `MockServer`'s drop-time verification, which reports a bare "expected 1,
+    got 0" with no context — and on the negative-twin path it was the *only*
+    check that could fail, because a CLI that dies before ever making the call
+    still satisfies a non-zero-exit assertion. Diagnosing one meant re-running
+    its positive twin by hand. The case mock is now registered scoped so the
+    harness can read the per-mock matched count directly, and the request-match
+    assertion runs before the exit-code check on the success path: when a matcher
+    rejects a request the mock server answers 404 and the CLI faithfully reports
+    it, so checking the exit code first blamed the CLI for a mock that never
+    matched.
+  type: fix

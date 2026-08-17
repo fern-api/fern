@@ -236,7 +236,8 @@
                         "type": "named",
                         "value": "type_imdb:CreateMovieRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

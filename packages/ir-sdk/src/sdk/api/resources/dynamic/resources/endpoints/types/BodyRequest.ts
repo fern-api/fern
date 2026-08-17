@@ -5,4 +5,15 @@ import type * as FernIr from "../../../../../index.js";
 export interface BodyRequest {
     pathParameters: FernIr.dynamic.NamedParameter[] | undefined;
     body: FernIr.dynamic.ReferencedRequestBodyType | undefined;
+    /**
+     * Whether the caller must supply a body. Absent means required, so a generator that
+     * does not read this field produces the same snippet it always has.
+     *
+     * Mirrors `required` on the SDK IR's `HttpRequestBodyReference`. A snippet generator
+     * needs its own copy because it only ever sees the dynamic IR, and it cannot infer
+     * omittability from `body`: `body` being absent means the endpoint has no body at all,
+     * not that the caller may skip one. When false, a snippet whose request omits the body
+     * should drop the argument rather than render a null.
+     */
+    bodyRequired: boolean | undefined;
 }

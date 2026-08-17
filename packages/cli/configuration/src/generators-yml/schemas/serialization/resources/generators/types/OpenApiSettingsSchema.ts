@@ -22,6 +22,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "respect-readonly-schemas": core.serialization.boolean().optional(),
         "use-read-variant-for-responses": core.serialization.boolean().optional(),
         "respect-forward-compatible-enums": core.serialization.boolean().optional(),
+        "respect-optional-request-body": core.serialization.boolean().optional(),
         "use-bytes-for-binary-response": core.serialization.boolean().optional(),
         "default-form-parameter-encoding": FormParameterEncoding.optional(),
         filter: OpenApiFilterSchema.optional(),
@@ -29,6 +30,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "additional-properties-defaults-to": core.serialization.boolean().optional(),
         "type-dates-as-strings": core.serialization.boolean().optional(),
         "preserve-single-schema-oneof": core.serialization.boolean().optional(),
+        "preserve-one-of-in-all-of": core.serialization.boolean().optional(),
         "inline-all-of-schemas": core.serialization.boolean().optional(),
         "resolve-aliases": ResolveAliases.optional(),
         "group-multi-api-environments": core.serialization.boolean().optional(),
@@ -48,6 +50,7 @@ export declare namespace OpenApiSettingsSchema {
         "respect-readonly-schemas"?: boolean | null;
         "use-read-variant-for-responses"?: boolean | null;
         "respect-forward-compatible-enums"?: boolean | null;
+        "respect-optional-request-body"?: boolean | null;
         "use-bytes-for-binary-response"?: boolean | null;
         "default-form-parameter-encoding"?: FormParameterEncoding.Raw | null;
         filter?: OpenApiFilterSchema.Raw | null;
@@ -55,6 +58,7 @@ export declare namespace OpenApiSettingsSchema {
         "additional-properties-defaults-to"?: boolean | null;
         "type-dates-as-strings"?: boolean | null;
         "preserve-single-schema-oneof"?: boolean | null;
+        "preserve-one-of-in-all-of"?: boolean | null;
         "inline-all-of-schemas"?: boolean | null;
         "resolve-aliases"?: ResolveAliases.Raw | null;
         "group-multi-api-environments"?: boolean | null;

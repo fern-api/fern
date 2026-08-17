@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an `encode-path-params` config option (default `false`). When enabled, generated clients
+    pass path parameter values through `RawClient::encodePathParam()` at the point they are
+    substituted into the path template, so a value containing `/` or `..` can no longer change which
+    endpoint the request resolves to. The default `false` preserves the existing (unencoded)
+    behavior; TypeScript, Go, Java, and C# already encode path params.
+  type: feat

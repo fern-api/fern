@@ -1,4 +1,30 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.9.54
+  changelogEntry:
+    - summary: |
+        Never treat the magic placeholder version as a previous version when autoversioning.
+        SDK repos that derive their published version from git tags at release time keep
+        `0.0.0-fern-placeholder` committed in `package.json`/`.fern/metadata.json`, and because
+        the placeholder parses as a valid semver pre-release it was advanced like one, stamping
+        `0.0.0-fern-placeholder.0` into the generated manifests instead of a real version.
+        Placeholder candidates are now skipped in every resolution source (pipeline
+        `baseVersion`, diff extraction, `.fern/metadata.json`, git tags) so autoversion falls
+        through to the next source, and `incrementVersion` rejects the placeholder outright.
+      type: fix
+  createdAt: "2026-08-04"
+- version: 0.9.53
+  changelogEntry:
+    - summary: |
+        Fix `--version AUTO` reporting an additive Go change as a breaking MAJOR bump. The Go SDK
+        assigns each struct property a single-bit `explicitFields` constant at its positional index,
+        so inserting a new field shifts every following constant's bit index by one. That reindexing
+        churn is a mechanical artifact (the bit is set and read within the same generated version; the
+        wire format is name-based JSON), but the AI diff analyzer read the shifted bit positions as a
+        serialization-compatibility break. The diff-cleaning pass now strips `explicitFields`
+        bit-constant reindexing pairs before analysis, while preserving genuinely new fields and
+        removed-field deletions so real additions stay MINOR and real removals stay MAJOR.
+      type: fix
+  createdAt: "2026-07-24"
 - version: 0.9.52
   changelogEntry:
     - summary: |

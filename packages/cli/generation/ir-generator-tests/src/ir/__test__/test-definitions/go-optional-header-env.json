@@ -44,7 +44,10 @@
                 }
             },
             "env": "MY_API_VERSION",
-            "clientDefault": null,
+            "clientDefault": {
+                "type": "string",
+                "string": "2024-01-01"
+            },
             "defaultValue": null,
             "v2Examples": {
                 "userSpecifiedExamples": {},
@@ -346,7 +349,8 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

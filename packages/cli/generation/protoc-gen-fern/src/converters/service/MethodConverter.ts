@@ -138,6 +138,8 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                     contentType: "application/proto",
                     docs: undefined,
                     requestBodyType: requestBodyType.reference,
+                    // a gRPC method always carries a request message, and absent means required
+                    required: undefined,
                     v2Examples: undefined
                 }),
                 requestExample: undefined

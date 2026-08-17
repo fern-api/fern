@@ -1,0 +1,37 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/refunds",
+                "method": "POST",
+                "identifier_override": "endpoint_.bulkRefund"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/respect-optional-request-body/fern\"\n\tfernclient \"github.com/respect-optional-request-body/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.BulkRefund(\n\tcontext.TODO(),\n\t\u0026fern.RefundRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/refunds/{id}",
+                "method": "POST",
+                "identifier_override": "endpoint_.refund"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/respect-optional-request-body/fern\"\n\tfernclient \"github.com/respect-optional-request-body/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Refund(\n\tcontext.TODO(),\n\t\u0026fern.RefundBody{\n\t\tID: \"refund-id\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/refunds/{id}/required",
+                "method": "POST",
+                "identifier_override": "endpoint_.requiredRefund"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/respect-optional-request-body/fern\"\n\tfernclient \"github.com/respect-optional-request-body/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.RequiredRefund(\n\tcontext.TODO(),\n\t\u0026fern.RequiredRefundRequest{\n\t\tID: \"refund-id\",\n\t\tBody: \u0026fern.RefundRequest{\n\t\t\tAmount: fern.Float64(\n\t\t\t\t60,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}

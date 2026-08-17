@@ -148,6 +148,12 @@ fixtures:
     - outputFolder: flatten-request-parameters
       customConfig:
         flattenRequestParameters: true
+  ts-optional-request-body:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: respect-optional-request-body
+      customConfig:
+        respectOptionalRequestBody: true
   idempotency-headers:
     - outputFolder: no-custom-config
       customConfig: null
@@ -396,6 +402,35 @@ fixtures:
     - outputFolder: always-send-auth
       customConfig:
         alwaysSendAuth: true
+    - outputFolder: always-send-auth-optional-auth
+      customConfig:
+        alwaysSendAuth: true
+        optional-auth: true
+  single-url-environment-default:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: optional-auth
+      customConfig:
+        optional-auth: true
+  single-url-environment-no-default:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: require-base-url
+      customConfig:
+        requireBaseUrl: true
+  no-environment:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: require-base-url
+      customConfig:
+        requireBaseUrl: true
+  multi-url-environment-no-default:
+    - outputFolder: no-custom-config
+      customConfig: null
+    # `requireBaseUrl` is ignored for multi-base-URL APIs, so this output matches no-custom-config.
+    - outputFolder: require-base-url
+      customConfig:
+        requireBaseUrl: true
   simple-api:
     - outputFolder: use-yarn
       customConfig:
@@ -424,9 +459,16 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
+    - outputFolder: optional-auth
+      customConfig:
+        optional-auth: true
     - outputFolder: include-platform-headers
       customConfig:
         includePlatformHeaders: true
+    - outputFolder: allow-user-agent-app-info
+      customConfig:
+        includePlatformHeaders: true
+        allowUserAgentAppInfo: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: bundle

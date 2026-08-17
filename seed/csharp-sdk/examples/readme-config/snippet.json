@@ -142,7 +142,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExamples;\n\nvar client = new SeedExamplesClient(\"TOKEN\");\nawait client.Service.RefreshTokenAsync(null);\n"
+                "client": "using SeedExamples;\n\nvar client = new SeedExamplesClient(\"TOKEN\");\nawait client.Service.RefreshTokenAsync();\n"
             }
         },
         {

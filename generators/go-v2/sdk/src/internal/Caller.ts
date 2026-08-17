@@ -2,6 +2,7 @@ import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { mayOmitRequestBody } from "../utils/mayOmitRequestBody.js";
 
 export declare namespace Caller {
     export interface CallArgs {
@@ -188,6 +189,12 @@ export class Caller {
             arguments_.push({
                 name: "Request",
                 value: go.TypeInstantiation.reference(args.request)
+            });
+        }
+        if (mayOmitRequestBody({ context: this.context, endpoint: args.endpoint })) {
+            arguments_.push({
+                name: "BodyIsOptional",
+                value: go.TypeInstantiation.bool(true)
             });
         }
         if (args.response != null) {

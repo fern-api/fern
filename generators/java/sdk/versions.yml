@@ -1,4 +1,164 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.19.0
+  changelogEntry:
+    - summary: |
+        With `respect-optional-request-body` enabled, a call that leaves out an optional request body now
+        passes a null body to OkHttp instead of an empty one, so the request carries no body at all. The
+        methods OkHttp requires a body for (POST, PUT, PATCH) still send an empty body, which is what
+        endpoints with no request body at all already send.
+      type: fix
+    - summary: |
+        Add a `respect-optional-request-body` option. When enabled, an endpoint whose request body the API
+        does not require also gets an overload without the body parameter, and calling that overload sends
+        no body. The body parameter keeps its own type, so `alpha(String id, Body body)` gains a sibling
+        `alpha(String id)` rather than becoming `alpha(String id, Optional<Body> body)`. Examples that
+        supply no body render as `client.alpha(id)`. That call also leaves out the `Content-Type` header,
+        which now only goes out when a body does. The option defaults to false, so existing signatures
+        and snippets are unchanged.
+      type: feat
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 4.18.2
+  changelogEntry:
+    - summary: |
+        Build an empty request body in snippets for an endpoint example that omits a body the wrapped
+        request requires, instead of leaving the builder's required `body` stage unset.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 4.18.1
+  changelogEntry:
+    - summary: |
+        Fix the generated OAuth token supplier when the get-token request has required properties
+        other than the client credentials. The builder calls are now ordered by the request's
+        required properties, so the staged builder's stages are satisfied in order, and hardcoded
+        values (such as `grant_type`) are written using the property's type, which means an
+        enumerated `grant_type` gets the generated enum constant instead of a string literal.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 4.18.0
+  changelogEntry:
+    - summary: |
+        Add support for the `FERN_JAVA_SKIP_FORMATTING` environment variable. When set to a truthy
+        value (`1`, `true`, `yes`, or `on`), the generator skips the `./gradlew :spotlessApply` pass
+        that normally runs after code generation, so generation makes no Gradle invocation at all.
+        This unblocks restricted networks that cannot reach the Gradle distribution or plugin
+        repositories, and shortens generation time.
+
+        Generated code is emitted unformatted; the Spotless plugin is still wired into the generated
+        `build.gradle`, so `./gradlew spotlessApply` can be run separately. The variable is unset by
+        default, leaving existing output byte-for-byte unchanged. The Fern CLI forwards it from the
+        host into the generator container automatically.
+      type: feat
+  createdAt: "2026-08-11"
+  irVersion: 67
+- version: 4.17.1
+  changelogEntry:
+    - summary: |
+        Fixed wire tests generated for APIs with `auth: any` combining Basic and OAuth schemes.
+        Tests no longer assert both a Bearer and a Basic `Authorization` header on the same
+        request; only the OAuth Bearer assertion is emitted since the client sends the OAuth
+        token when OAuth credentials are configured.
+      type: fix
+  createdAt: "2026-08-08"
+  irVersion: 67
+- version: 4.17.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `allowUserAgentAppInfo` config. When enabled, the generated client's builder exposes
+        an `appInfo(name, version, comment)` option whose product token is appended to the `User-Agent`
+        header the SDK would otherwise send (`{sdk}/{version} ... {name}/{version} ({comment})`),
+        following RFC 9110. Disabled by default, so existing generated output is unchanged, and it
+        composes with `includePlatformHeaders`, the `runtime-version` jar-manifest path, the configured
+        `user-agent` template value, and the default `{coordinate}/{version}`. Caller-supplied values are
+        trimmed and sanitized (name/version percent-encoded to RFC 7230 tchars; comment delimiters,
+        control characters and any non-ASCII characters percent-encoded as UTF-8 bytes so OkHttp's header
+        validation never rejects them), so untrusted values cannot inject header content. Still overridable
+        by an explicit `User-Agent` and suppressed by `omit-fern-headers`.
+      type: feat
+  createdAt: "2026-08-03"
+  irVersion: 67
+- version: 4.16.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `runtime-version` config flag. When enabled, the SDK version reported
+        in the telemetry headers (`X-Fern-SDK-Version` and the version segment of
+        `User-Agent`) is resolved at runtime from the jar manifest's `Implementation-Version`
+        attribute instead of being baked in as a literal at generation time. The generated
+        build.gradle records the project version in the jar manifest, so an external tool such
+        as release-please only has to rewrite a single `version` line for the reported version
+        to track the actually-published artifact — rather than a version the SDK may never
+        publish. Falls back to the generation-time version when the manifest attribute is
+        absent (e.g. running from unpackaged classes). Disabled by default, so existing
+        generated output is unchanged, and subject to `omitFernHeaders`.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 4.15.5
+  changelogEntry:
+    - summary: |
+        Resolve the `X-Fern-SDK-Name` header from the configured Maven coordinate in
+        GitHub output mode. Previously the header was read from the (Fiddle-synthesized)
+        publish config, so it emitted `com.<org>.fern:<workspace>-sdk` instead of the
+        coordinate the user configured under `output.coordinate`, leaving it inconsistent
+        with the `User-Agent` product token. The header now reads
+        `output.mode.github.publishInfo.maven.coordinate`, which is populated for both
+        remote and `--local` generation. Also emits `X-Fern-SDK-Version` in cases where a
+        coordinate resolves without a version previously being set.
+      type: fix
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 4.15.4
+  changelogEntry:
+    - summary: |
+        Global headers now honor their `env` and `client-default` values. The
+        builder initializes the header from the environment variable when set,
+        otherwise the client default, and an explicitly provided value still takes
+        precedence. Previously a global header was only sent when the caller set it
+        explicitly.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 4.15.3
+  changelogEntry:
+    - summary: |
+        Fix a `NullPointerException` thrown at runtime on every OAuth (or inferred-auth) authenticated
+        request under `auth: endpoint-security`. To fetch a token, the OAuth auth provider builds an
+        internal client for the (unauthenticated) token endpoint whose `ClientOptions` has no auth
+        provider; `ClientOptions.getAuthHeaders(...)` then dereferenced the null provider and threw. It
+        now returns no auth headers when no auth provider is configured, so token fetching (and therefore
+        all OAuth-authenticated calls) works.
+      type: fix
+    - summary: |
+        Fix generated code failing to compile under `auth: endpoint-security` when the OAuth token
+        endpoint declares custom request properties (scopes, custom body properties, or headers). The
+        generated `OAuthTokenSupplier` constructor takes an extra parameter for each such property, but
+        the `OAuthAuthProvider` always called it with a fixed three arguments
+        (`clientId, clientSecret, authClient`), producing a "constructor cannot be applied to given
+        types" error. `OAuthAuthProvider` now passes a matching argument for every extra property
+        (`Optional.empty()` for optional properties), sharing the property computation with the token
+        supplier generator so the two cannot drift.
+      type: fix
+    - summary: |
+        Fix generated OAuth code snippets and README failing to compile under `auth: endpoint-security`.
+        The snippet/README examples instantiate the client with `Client.withCredentials(clientId,
+        clientSecret)`, but under endpoint-security the client builder is not staged, so that factory was
+        never generated — producing "cannot find symbol: method withCredentials" errors across the
+        generated example files. The client now generates a `withCredentials(clientId, clientSecret)`
+        convenience factory under endpoint-security that returns the standard builder pre-configured with
+        the OAuth credentials.
+      type: fix
+    - summary: |
+        Fix generated wire tests asserting OAuth authentication on endpoints that do not require it under
+        `auth: endpoint-security`. The wire-test generator applied the OAuth token flow (enqueue a token
+        response and assert `Authorization: Bearer ...`) to every test method based on an API-level check,
+        so a test for an `auth: []` (no-auth) endpoint enqueued a token and asserted a bearer header the
+        SDK correctly never sends — failing at runtime. Under endpoint-security the OAuth flow is now
+        applied per endpoint (only to endpoints that require auth); global-auth behavior is unchanged.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
 - version: 4.15.2
   changelogEntry:
     - summary: |

@@ -242,7 +242,8 @@
                         "type": "named",
                         "value": "type_:SearchRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

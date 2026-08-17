@@ -10,6 +10,7 @@ export const baseGoCustomConfigSchema = z.strictObject({
     importPath: relativePathSchema.optional(),
 
     alwaysSendRequiredProperties: z.boolean().optional(),
+    applyQueryDefaultsOnNilRequest: z.boolean().optional(),
     clientConstructorName: z.string().optional(),
     clientName: z.string().optional(),
     enableExplicitNull: z.boolean().optional(),
@@ -19,6 +20,7 @@ export const baseGoCustomConfigSchema = z.strictObject({
     inlinePathParameters: z.boolean().optional(),
     inlineFileProperties: z.boolean().optional(),
     omitEmptyRequestWrappers: z.boolean().optional(),
+    respectOptionalRequestBody: z.boolean().optional(),
     union: z.enum(["v0", "v1"]).optional(),
     useReaderForBytesRequest: z.boolean().optional(),
     useDefaultRequestParameterValues: z.boolean().optional(),
@@ -29,9 +31,11 @@ export const baseGoCustomConfigSchema = z.strictObject({
     exportAllRequestsAtRoot: z.boolean().optional(),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
     customPagerName: z.string().optional(),
+    enableRequestBodyPagination: z.boolean().optional(),
     offsetSemantics: z.enum(["item-index", "page-index"]).optional(),
     omitFernHeaders: z.boolean().optional(),
     includePlatformHeaders: z.boolean().optional(),
+    allowUserAgentAppInfo: z.boolean().optional(),
     maxRetries: z.number().int().min(0).optional(),
     retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
 });

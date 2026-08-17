@@ -190,6 +190,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .customPlugins(customConfig.customPlugins())
                 .enableForwardCompatibleEnum(customConfig.enableForwardCompatibleEnums())
                 .includePlatformHeaders(customConfig.includePlatformHeaders())
+                .allowUserAgentAppInfo(customConfig.allowUserAgentAppInfo())
                 .build();
 
         Boolean generateFullProject = ir.getPublishConfig()
@@ -834,6 +835,11 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             return ObjectMappers.JSON_MAPPER.convertValue(node, JavaSdkCustomConfig.class);
         }
         return JavaSdkCustomConfig.builder().build();
+    }
+
+    @Override
+    protected boolean shouldEmitImplementationVersionInManifest(GeneratorConfig generatorConfig) {
+        return getCustomConfig(generatorConfig).runtimeVersion();
     }
 
     private void runInProjectModeHook(

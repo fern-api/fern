@@ -771,7 +771,8 @@
                         "type": "named",
                         "value": "type_:Shape"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

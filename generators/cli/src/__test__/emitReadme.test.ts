@@ -114,11 +114,14 @@ describe("emitReadme", () => {
             apiDisplayName: "Acme",
             authBindings: [bearerBinding],
             npmPublishInfo: undefined,
-            repoUrl: "https://github.com/acme/acme-cli"
+            repoUrl: "https://github.com/acme/acme-cli",
+            packageName: "acme-cli"
         });
 
+        // The installer is named after the cargo package, not the binary —
+        // cargo-dist publishes `<package>-installer.sh`.
         expect(readme).toContain(
-            "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/acme/acme-cli/releases/latest/download/acme-installer.sh | sh"
+            "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/acme/acme-cli/releases/latest/download/acme-cli-installer.sh | sh"
         );
         expect(readme).toContain("### Build from source");
         expect(readme).toContain("cargo build --release");
@@ -430,5 +433,122 @@ describe("emitReadme", () => {
 
         const authSection = readme.split("## Authentication")[1]?.split("##")[0] ?? "";
         expect(authSection).toContain(".env");
+    });
+});
+
+describe("emitReadme — distribution channels", () => {
+    let outputDir: string;
+
+    beforeEach(async () => {
+        outputDir = await mkdtemp(path.join(os.tmpdir(), "readmeDistribution-"));
+    });
+
+    afterEach(async () => {
+        await rm(outputDir, { recursive: true, force: true });
+    });
+
+    async function readReadme(): Promise<string> {
+        return readFile(path.join(outputDir, "README.md"), "utf-8");
+    }
+
+    const base = {
+        binaryName: "acme-cli",
+        apiDisplayName: "Acme",
+        authBindings: [],
+        npmPublishInfo: undefined,
+        repoUrl: "https://github.com/acme/acme-cli"
+    };
+
+    it("shows no brew/scoop stanzas when distribution is unconfigured", async () => {
+        await emitReadme({ outputDir, ...base });
+        const readme = await readReadme();
+        expect(readme).not.toContain("Homebrew");
+        expect(readme).not.toContain("Scoop");
+    });
+
+    // The three-segment form auto-taps, so first install is one copy-pasteable
+    // line — `acme/homebrew-tap` is addressed by brew as `acme/tap`.
+    it("renders the auto-tapping brew one-liner", async () => {
+        await emitReadme({ outputDir, ...base, distribution: { homebrew: { tap: "acme/homebrew-tap" } } });
+        expect(await readReadme()).toContain("brew install acme/tap/acme-cli");
+    });
+
+    it("uses an explicit formula name over the binary name", async () => {
+        await emitReadme({
+            outputDir,
+            ...base,
+            distribution: { homebrew: { tap: "acme/homebrew-tap", formula: "acme" } }
+        });
+        expect(await readReadme()).toContain("brew install acme/tap/acme");
+    });
+
+    it("leaves a tap repo that is not homebrew-prefixed alone", async () => {
+        await emitReadme({ outputDir, ...base, distribution: { homebrew: { tap: "acme/taps" } } });
+        expect(await readReadme()).toContain("brew install acme/taps/acme-cli");
+    });
+
+    it("renders the two-step scoop install and flags the ARM64 Windows gap", async () => {
+        await emitReadme({ outputDir, ...base, distribution: { scoop: { bucket: "acme/scoop-bucket" } } });
+        const readme = await readReadme();
+        expect(readme).toContain("scoop bucket add acme https://github.com/acme/scoop-bucket");
+        expect(readme).toContain("scoop install acme-cli");
+        expect(readme).toContain("ARM64 Windows under emulation");
+    });
+
+    it("lists every configured channel in the table of contents", async () => {
+        await emitReadme({
+            outputDir,
+            ...base,
+            npmPublishInfo: {
+                packageName: "@acme/cli",
+                registryUrl: "https://registry.npmjs.org",
+                tokenEnvironmentVariable: "NPM_TOKEN",
+                useOidc: false
+            },
+            distribution: { homebrew: { tap: "acme/homebrew-tap" }, scoop: { bucket: "acme/scoop-bucket" } }
+        });
+        const readme = await readReadme();
+        expect(readme).toContain("### npm");
+        expect(readme).toContain("### Homebrew (macOS / Linux)");
+        expect(readme).toContain("### Scoop (Windows)");
+        // curl|bash still leads, build-from-source still trails.
+        expect(readme.indexOf("### Shell (macOS / Linux)")).toBeLessThan(readme.indexOf("### Homebrew"));
+        expect(readme.indexOf("### Scoop (Windows)")).toBeLessThan(readme.indexOf("### Build from source"));
+    });
+});
+
+describe("emitReadme — installer URLs", () => {
+    let outputDir: string;
+    beforeEach(async () => {
+        outputDir = await mkdtemp(path.join(os.tmpdir(), "readmeInstaller-"));
+    });
+    afterEach(async () => {
+        await rm(outputDir, { recursive: true, force: true });
+    });
+
+    const base = {
+        binaryName: "elevenlabs",
+        apiDisplayName: "ElevenLabs",
+        authBindings: [],
+        npmPublishInfo: undefined,
+        repoUrl: "https://github.com/acme/elevenlabs-cli"
+    };
+
+    // cargo-dist names installer scripts after the cargo *package*, not the
+    // binary. Using binaryName produced a curl|bash command that 404s
+    // whenever the two differ — which is always, since the package defaults
+    // to the template's `fern-cli-sdk`.
+    it("names the installer after the cargo package, not the binary", async () => {
+        await emitReadme({ outputDir, ...base, packageName: "elevenlabs-cli" });
+        const readme = await readFile(path.join(outputDir, "README.md"), "utf-8");
+        expect(readme).toContain("elevenlabs-cli-installer.sh");
+        expect(readme).toContain("elevenlabs-cli-installer.ps1");
+        expect(readme).not.toContain("/elevenlabs-installer.sh");
+    });
+
+    it("falls back to the template package name when none is configured", async () => {
+        await emitReadme({ outputDir, ...base });
+        const readme = await readFile(path.join(outputDir, "README.md"), "utf-8");
+        expect(readme).toContain("fern-cli-sdk-installer.sh");
     });
 });

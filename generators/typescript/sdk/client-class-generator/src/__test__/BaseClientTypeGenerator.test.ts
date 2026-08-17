@@ -235,12 +235,14 @@ function createGenerator(opts?: {
     ir?: FernIr.IntermediateRepresentation;
     omitFernHeaders?: boolean;
     includePlatformHeaders?: boolean;
+    allowUserAgentAppInfo?: boolean;
 }): BaseClientTypeGenerator {
     return new BaseClientTypeGenerator({
         generateIdempotentRequestOptions: opts?.generateIdempotentRequestOptions ?? false,
         ir: opts?.ir ?? createIR(),
         omitFernHeaders: opts?.omitFernHeaders ?? false,
         includePlatformHeaders: opts?.includePlatformHeaders ?? false,
+        allowUserAgentAppInfo: opts?.allowUserAgentAppInfo ?? false,
         retainOriginalCasing: false,
         parameterNaming: "default",
         caseConverter
@@ -781,6 +783,59 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunc).not.toContain("X-Fern-Runtime");
         });
 
+        it("uses the configured user-agent template over the package name when includePlatformHeaders is true", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "acme-sdk-internal/1.0.0"
+            };
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true, ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).toContain("core.getUserAgent");
+            expect(normalizeFunc).toContain('"acme-sdk-internal"');
+            expect(normalizeFunc).toContain('"1.0.0"');
+            expect(normalizeFunc).not.toContain('core.getUserAgent("@test/sdk"');
+        });
+
+        it("falls back to the plain user-agent value when it has no version segment", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "acme-sdk-internal"
+            };
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true, ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("core.getUserAgent");
+            expect(normalizeFunc).toContain('"acme-sdk-internal"');
+        });
+
+        it("does not treat a trailing name segment as a version", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "acme/sdk-python"
+            };
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true, ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("core.getUserAgent");
+            expect(normalizeFunc).toContain('"acme/sdk-python"');
+        });
+
         it("omits all fern headers when omitFernHeaders is true even if includePlatformHeaders is true", () => {
             const gen = createGenerator({ omitFernHeaders: true, includePlatformHeaders: true });
             const context = createMockContext();
@@ -1307,6 +1362,114 @@ describe("BaseClientTypeGenerator", () => {
             );
             expect(normalizeFunc).toContain("User-Agent");
             expect(normalizeFunc).toContain("@acme/sdk/2.0.0");
+        });
+    });
+
+    describe("allowUserAgentAppInfo", () => {
+        const HELPER_NAME = "appendAppInfoToUserAgent";
+
+        function getNormalizeFunc(context: ReturnType<typeof createMockContext>): string {
+            return context._captured.statements.find((s: string) => s.includes("normalizeClientOptions"));
+        }
+
+        function getHelper(context: ReturnType<typeof createMockContext>): string | undefined {
+            return context._captured.statements.find((s: string) => s.includes(`function ${HELPER_NAME}(`));
+        }
+
+        it("emits no appInfo references and no helper when the flag is off (byte-identical default)", () => {
+            const gen = createGenerator({ omitFernHeaders: false, allowUserAgentAppInfo: false });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = getNormalizeFunc(context);
+            expect(normalizeFunc).toBeDefined();
+            expect(normalizeFunc).not.toContain("appInfo");
+            expect(normalizeFunc).not.toContain(HELPER_NAME);
+            expect(getHelper(context)).toBeUndefined();
+        });
+
+        it("wraps the getUserAgent branch with the append helper when includePlatformHeaders is true", () => {
+            const gen = createGenerator({
+                omitFernHeaders: false,
+                includePlatformHeaders: true,
+                allowUserAgentAppInfo: true
+            });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = getNormalizeFunc(context);
+            expect(normalizeFunc).toContain(`${HELPER_NAME}(core.getUserAgent(`);
+            expect(normalizeFunc).toContain("options?.appInfo");
+            // Helper is emitted exactly once, into this file.
+            expect(getHelper(context)).toBeDefined();
+        });
+
+        it("wraps the default `{package}/{version}` branch when includePlatformHeaders is false", () => {
+            const gen = createGenerator({
+                omitFernHeaders: false,
+                includePlatformHeaders: false,
+                allowUserAgentAppInfo: true
+            });
+            const context = createMockContext({ npmPackage: { packageName: "@acme/sdk", version: "2.0.0" } });
+            gen.writeToFile(context);
+
+            const normalizeFunc = getNormalizeFunc(context);
+            expect(normalizeFunc).toContain(`${HELPER_NAME}("@acme/sdk/2.0.0", options?.appInfo)`);
+            expect(getHelper(context)).toBeDefined();
+        });
+
+        it("wraps the IR `user-agent` template branch", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "my-sdk/1.0"
+            };
+            const gen = createGenerator({
+                omitFernHeaders: false,
+                includePlatformHeaders: false,
+                allowUserAgentAppInfo: true,
+                ir
+            });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = getNormalizeFunc(context);
+            expect(normalizeFunc).toContain(`${HELPER_NAME}("my-sdk/1.0", options?.appInfo)`);
+            expect(getHelper(context)).toBeDefined();
+        });
+
+        it("does not emit the helper when omitFernHeaders suppresses the User-Agent even with the flag on", () => {
+            const gen = createGenerator({
+                omitFernHeaders: true,
+                includePlatformHeaders: true,
+                allowUserAgentAppInfo: true
+            });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = getNormalizeFunc(context);
+            expect(normalizeFunc).not.toContain(HELPER_NAME);
+            expect(getHelper(context)).toBeUndefined();
+        });
+
+        it("emits a self-contained, sanitizing helper (token/comment encoders, blank handling)", () => {
+            const gen = createGenerator({
+                omitFernHeaders: false,
+                includePlatformHeaders: false,
+                allowUserAgentAppInfo: true
+            });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const helper = getHelper(context);
+            expect(helper).toBeDefined();
+            // Sanitizes name/version to RFC 7230 tchar, and comment delimiters/control chars.
+            expect(helper).toContain("percentEncodeChar");
+            expect(helper).toContain("encodeToken");
+            expect(helper).toContain("encodeComment");
+            // Blank/absent handling (no literal `undefined` or empty parens).
+            expect(helper).toContain("if (name.length === 0)");
+            expect(helper).toContain("if (appInfo == null)");
         });
     });
 

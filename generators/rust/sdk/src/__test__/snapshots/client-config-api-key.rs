@@ -16,6 +16,11 @@ pub struct ClientConfig {
     pub max_retries: u32,
     pub custom_headers: HashMap<String, String>,
     pub user_agent: String,
+    /// Optional custom `reqwest` client, used as-is for every request.
+    /// When set, it owns all transport-level configuration (TLS, proxies, timeout,
+    /// user agent); when `None` the SDK builds its own client from `timeout` and
+    /// `user_agent`.
+    pub reqwest_client: Option<reqwest::Client>,
 }
 impl Default for ClientConfig {
     fn default() -> Self {
@@ -36,7 +41,8 @@ impl Default for ClientConfig {
             ("X-Fern-SDK-Name".to_string(), "test_api".to_string()),
             ("X-Fern-SDK-Version".to_string(), "0.1.0".to_string()),
         ]),
-        user_agent: "TestAPI Rust SDK".to_string()
+        user_agent: "TestAPI Rust SDK".to_string(),
+        reqwest_client: None
     }
 }
 }

@@ -1,0 +1,5 @@
+- summary: |
+    Thread the PHP SDK's Composer package identity (name + `--version`) into the IR's
+    filesystem publish target for `local-file-system` output, so the PHP generator can
+    stamp the real version into `composer.json` instead of defaulting to `0.0.0`.
+  type: fix

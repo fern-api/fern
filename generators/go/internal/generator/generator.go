@@ -201,8 +201,11 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
-			g.config.OmitFernHeaders,
-			g.config.IncludePlatformHeaders,
+			userAgentConfig{
+				omitFernHeaders:        g.config.OmitFernHeaders,
+				includePlatformHeaders: g.config.IncludePlatformHeaders,
+				allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+			},
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -337,8 +340,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
-			g.config.OmitFernHeaders,
-			g.config.IncludePlatformHeaders,
+			userAgentConfig{
+				omitFernHeaders:        g.config.OmitFernHeaders,
+				includePlatformHeaders: g.config.IncludePlatformHeaders,
+				allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+			},
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			nil,
@@ -368,8 +374,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
-			g.config.OmitFernHeaders,
-			g.config.IncludePlatformHeaders,
+			userAgentConfig{
+				omitFernHeaders:        g.config.OmitFernHeaders,
+				includePlatformHeaders: g.config.IncludePlatformHeaders,
+				allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+			},
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			nil,
@@ -423,8 +432,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
-			g.config.OmitFernHeaders,
-			g.config.IncludePlatformHeaders,
+			userAgentConfig{
+				omitFernHeaders:        g.config.OmitFernHeaders,
+				includePlatformHeaders: g.config.IncludePlatformHeaders,
+				allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+			},
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -466,8 +478,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
-				g.config.OmitFernHeaders,
-				g.config.IncludePlatformHeaders,
+				userAgentConfig{
+					omitFernHeaders:        g.config.OmitFernHeaders,
+					includePlatformHeaders: g.config.IncludePlatformHeaders,
+					allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+				},
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
 				ir.Types,
@@ -500,8 +515,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
-			g.config.OmitFernHeaders,
-			g.config.IncludePlatformHeaders,
+			userAgentConfig{
+				omitFernHeaders:        g.config.OmitFernHeaders,
+				includePlatformHeaders: g.config.IncludePlatformHeaders,
+				allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+			},
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -540,8 +558,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
-				g.config.OmitFernHeaders,
-				g.config.IncludePlatformHeaders,
+				userAgentConfig{
+					omitFernHeaders:        g.config.OmitFernHeaders,
+					includePlatformHeaders: g.config.IncludePlatformHeaders,
+					allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+				},
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
 				ir.Types,
@@ -571,8 +592,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
-				g.config.OmitFernHeaders,
-				g.config.IncludePlatformHeaders,
+				userAgentConfig{
+					omitFernHeaders:        g.config.OmitFernHeaders,
+					includePlatformHeaders: g.config.IncludePlatformHeaders,
+					allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+				},
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
 				ir.Types,
@@ -605,8 +629,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
-				g.config.OmitFernHeaders,
-				g.config.IncludePlatformHeaders,
+				userAgentConfig{
+					omitFernHeaders:        g.config.OmitFernHeaders,
+					includePlatformHeaders: g.config.IncludePlatformHeaders,
+					allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+				},
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
 				ir.Types,
@@ -638,8 +665,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
-			g.config.OmitFernHeaders,
-			g.config.IncludePlatformHeaders,
+			userAgentConfig{
+				omitFernHeaders:        g.config.OmitFernHeaders,
+				includePlatformHeaders: g.config.IncludePlatformHeaders,
+				allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+			},
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -669,6 +699,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, newPointerTestFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newQueryFile(g.coordinator))
 		files = append(files, newQueryTestFile(g.coordinator))
+		if g.config.ApplyQueryDefaultsOnNilRequest {
+			files = append(files, newQueryDefaultsOnNilFile(g.coordinator))
+		}
 		if needsFileUploadHelpers(ir) {
 			files = append(files, newMultipartFile(g.coordinator))
 			files = append(files, newMultipartTestFile(g.coordinator))
@@ -696,8 +729,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
-				g.config.OmitFernHeaders,
-				g.config.IncludePlatformHeaders,
+				userAgentConfig{
+					omitFernHeaders:        g.config.OmitFernHeaders,
+					includePlatformHeaders: g.config.IncludePlatformHeaders,
+					allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+				},
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
 				ir.Types,
@@ -859,8 +895,11 @@ func (g *Generator) generateRootService(
 		g.config.ServerURLVariables,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
-		g.config.OmitFernHeaders,
-		g.config.IncludePlatformHeaders,
+		userAgentConfig{
+			omitFernHeaders:        g.config.OmitFernHeaders,
+			includePlatformHeaders: g.config.IncludePlatformHeaders,
+			allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+		},
 		g.config.UnionVersion,
 		g.config.CustomPagerName,
 		ir.Types,
@@ -915,8 +954,11 @@ func (g *Generator) generateService(
 		g.config.ServerURLVariables,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
-		g.config.OmitFernHeaders,
-		g.config.IncludePlatformHeaders,
+		userAgentConfig{
+			omitFernHeaders:        g.config.OmitFernHeaders,
+			includePlatformHeaders: g.config.IncludePlatformHeaders,
+			allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+		},
 		g.config.UnionVersion,
 		g.config.CustomPagerName,
 		ir.Types,
@@ -974,8 +1016,11 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.ServerURLVariables,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
-		g.config.OmitFernHeaders,
-		g.config.IncludePlatformHeaders,
+		userAgentConfig{
+			omitFernHeaders:        g.config.OmitFernHeaders,
+			includePlatformHeaders: g.config.IncludePlatformHeaders,
+			allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+		},
 		g.config.UnionVersion,
 		g.config.CustomPagerName,
 		ir.Types,
@@ -1028,8 +1073,11 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.ServerURLVariables,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
-		g.config.OmitFernHeaders,
-		g.config.IncludePlatformHeaders,
+		userAgentConfig{
+			omitFernHeaders:        g.config.OmitFernHeaders,
+			includePlatformHeaders: g.config.IncludePlatformHeaders,
+			allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+		},
 		g.config.UnionVersion,
 		g.config.CustomPagerName,
 		ir.Types,
@@ -1405,8 +1453,7 @@ func newClientTestFile(
 		true,
 		false,
 		false,
-		false,
-		false,
+		userAgentConfig{},
 		UnionVersionUnspecified,
 		"",
 		nil,
@@ -1505,6 +1552,14 @@ func newQueryFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"internal/query.go",
 		[]byte(queryFile),
+	)
+}
+
+func newQueryDefaultsOnNilFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"internal/query_defaults_on_nil.go",
+		[]byte(queryDefaultsOnNilFile),
 	)
 }
 

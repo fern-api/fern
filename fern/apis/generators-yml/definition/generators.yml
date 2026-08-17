@@ -520,6 +520,9 @@ types:
       respect-forward-compatible-enums:
         type: optional<boolean>
         docs: Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false.
+      respect-optional-request-body:
+        type: optional<boolean>
+        docs: Deprecated and no longer has any effect. A request body that OpenAPI does not mark as required is always described as omittable in the IR, and each SDK generator opts into that behaviour through its own configuration.
       use-bytes-for-binary-response:
         type: optional<boolean>
         docs: Enables using the `bytes` type for binary responsesin OpenAPI specifications. Defaults to a file stream.
@@ -548,6 +551,14 @@ types:
         docs: |
           If true, preserve oneOf structures with a single schema.
           If false, unwrap oneOf structures with a single schema.
+          Defaults to false.
+        default: false
+      preserve-one-of-in-all-of:
+        type: optional<boolean>
+        docs: |
+          If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each
+          variant is the union member merged with the remaining allOf members.
+          If false, the variants' properties are flattened into a single object and marked optional.
           Defaults to false.
         default: false
       inline-all-of-schemas:

@@ -5,13 +5,91 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v67.16.0] - 2026-07-24
+## [v67.23.0] - 2026-08-17
 
 - Add `WebSocketChannel.apiPlayground` (optional `boolean`) controlling whether a WebSocket
   channel is shown in the API playground. This mirrors `HttpEndpoint.apiPlayground` and is
   populated from the `x-fern-explorer` extension in AsyncAPI specs (global default, overridable
   per channel).
 
+## [v67.22.0] - 2026-08-14
+
+- Add `successRedirectUrl` and `errorRedirectUrl` to `OAuthAuthorizationCode`. Both are absolute
+  http(s) URLs a generated CLI redirects the browser to from its loopback callback listener — on
+  success once the authorization code is captured, and on failure with the `error` /
+  `error_description` query parameters appended. Neither is the OAuth `redirect_uri`, so neither
+  needs registering with the authorization server; they let a hosted page own the branding of the
+  last screen of `auth login` instead of the CLI's built-in pages.
+
+## [v67.21.0] - 2026-08-08
+
+- Add optional `required` to `HttpRequestBodyReference`. Absent means required, so generators that
+  do not read it are unaffected. When false, the caller may omit the body entirely and the request
+  carries neither content nor a `Content-Type` header. This models omittability as a property of the
+  call rather than by wrapping `requestBodyType` in `optional<T>`, so generators no longer have to
+  unwrap a container before deciding how to shape the request parameter.
+- Add optional `bodyRequired` to `dynamic.BodyRequest`, mirroring the field above. Snippet
+  generators only ever see the dynamic IR and cannot infer omittability from `body`, since an absent
+  `body` means the endpoint has no body at all rather than that the caller may skip one. Absent
+  means required, so snippet output is unchanged until a generator reads it.
+
+## [v67.20.0] - 2026-07-28
+
+- Add `packagist` variant to `PublishTarget` (`PackagistPublishTarget` with optional `version` and
+  `packageName`). This lets the CLI thread the PHP SDK's Composer package identity into
+  `PublishingConfig.filesystem` for `local-file-system` output, the same way the other registry
+  targets already do, so the PHP generator can stamp the package name/version into the generated
+  `composer.json` instead of defaulting to `0.0.0`.
+
+## [v67.19.0] - 2026-07-29
+
+- Add `rubygems` variant to `PublishTarget` (`RubyGemsPublishTarget` with optional `version` and
+  `packageName`). This lets the CLI thread the Ruby SDK's gem identity into
+  `PublishingConfig.filesystem` for `local-file-system` output, the same way
+  npm/pypi/maven/crates/go/nuget targets already do, so the Ruby generator can stamp the gem
+  name/version into the generated `version.rb` and gemspec instead of defaulting to `0.0.0`.
+
+## [v67.18.0] - 2026-07-29
+
+- Add `OAuthAuthorizationCode.redirectUriBackupPorts` (`optional<list<integer>>`): additional
+  loopback callback ports for the authorization-code (PKCE) flow, tried in order when the
+  `redirectUri` port is unavailable. Each reuses `redirectUri`'s host and path (only the port
+  differs) and must be pre-registered with the authorization server. Lets a generated CLI bind a
+  fixed-port fallback set (e.g. 8484 → 8483 → 8482) for identity providers that bind each client to
+  specific callback ports. Ignored when `redirectUri` is unset.
+
+## [v67.17.0] - 2026-07-28
+
+- Add `OAuthConfiguration.authorizationCode` (`OAuthAuthorizationCode`), an additive union variant
+  modeling the OAuth 2.0 Authorization Code grant with required PKCE (RFC 7636) for public clients
+  such as generated CLIs and native apps. No client secret is used.
+  - `OAuthAuthorizationCode` carries the public `clientId` (`OAuthPublicClientId`: either a `literal`
+    value or an `environmentVariable` source), `authorizationUrl`, `tokenUrl`, optional `refreshUrl`
+    (defaults to `tokenUrl`), an optional loopback `redirectUri`, optional `scopes`, a required
+    `pkce` configuration, optional public `authorizationParameters`/`tokenParameters`/`refreshParameters`
+    maps, and optional `tokenHeader`/`tokenPrefix` for bearer application.
+  - `redirectUri` is optional: when set, the CLI binds and sends that exact loopback host/port/path;
+    when omitted, the CLI uses a loopback redirect on an ephemeral (OS-assigned) port with the
+    `/callback` path (RFC 8252 §7.3).
+  - `OAuthPkceConfiguration.method` is an `OAuthPkceMethod` enum that currently only permits `S256`.
+- Add `OAuthConfiguration.deviceCode` (`OAuthDeviceCode`), an additive union variant modeling the
+  OAuth 2.0 Device Authorization Grant (RFC 8628) for public clients such as generated CLIs and
+  native apps on input-constrained or browserless devices. No client secret is used.
+  - `OAuthDeviceCode` carries the public `clientId` (`OAuthPublicClientId`), the
+    `deviceAuthorizationUrl` (device authorization endpoint), `tokenUrl` (polled for tokens),
+    optional `refreshUrl` (defaults to `tokenUrl`), optional `scopes`, optional public
+    `deviceAuthorizationParameters`/`tokenParameters`/`refreshParameters` maps, and optional
+    `tokenHeader`/`tokenPrefix` for bearer application. PKCE does not apply to this grant.
+
+## [v67.16.0] - 2026-07-27
+
+- Add `nuget` variant to `PublishTarget` (`NugetPublishTarget` with optional `version` and
+  `packageName`). This lets the CLI thread the C# SDK's package identity into
+  `PublishingConfig.filesystem` for `local-file-system` output, the same way npm/pypi/maven/
+  crates/go targets already do, so the C# generator can stamp the SDK name/version into the
+  generated `Version.cs` and the structured `User-Agent` header.
+
+>>>>>>> origin/main
 ## [v67.15.0] - 2026-07-21
 
 - Add `HmacSignatureVerification.notificationUrlNormalization` (optional

@@ -39637,6 +39637,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "inline": false,
               "displayName": "PublishEntityRequest"
             },
+            "required": null,
             "docs": null,
             "contentType": "application/proto",
             "v2Examples": null
@@ -40775,6 +40776,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "inline": false,
               "displayName": "PublishEntitiesRequest"
             },
+            "required": null,
             "docs": null,
             "contentType": "application/proto",
             "v2Examples": null
@@ -41913,6 +41915,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "inline": false,
               "displayName": "GetEntityRequest"
             },
+            "required": null,
             "docs": null,
             "contentType": "application/proto",
             "v2Examples": null
@@ -43053,6 +43056,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "inline": false,
               "displayName": "OverrideEntityRequest"
             },
+            "required": null,
             "docs": null,
             "contentType": "application/proto",
             "v2Examples": null
@@ -44206,6 +44210,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "inline": false,
               "displayName": "RemoveEntityOverrideRequest"
             },
+            "required": null,
             "docs": null,
             "contentType": "application/proto",
             "v2Examples": null
@@ -44332,6 +44337,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "inline": false,
               "displayName": "StreamEntityComponentsRequest"
             },
+            "required": null,
             "docs": null,
             "contentType": "application/proto",
             "v2Examples": null
@@ -45535,6 +45541,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "inline": false,
               "displayName": "CreateTaskRequest"
             },
+            "required": null,
             "docs": null,
             "contentType": "application/proto",
             "v2Examples": null
@@ -47767,6 +47774,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "inline": false,
               "displayName": "GetTaskRequest"
             },
+            "required": null,
             "docs": null,
             "contentType": "application/proto",
             "v2Examples": null
@@ -48958,6 +48966,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "inline": false,
               "displayName": "QueryTasksRequest"
             },
+            "required": null,
             "docs": null,
             "contentType": "application/proto",
             "v2Examples": null
@@ -50152,6 +50161,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "inline": false,
               "displayName": "UpdateStatusRequest"
             },
+            "required": null,
             "docs": null,
             "contentType": "application/proto",
             "v2Examples": null
@@ -51395,6 +51405,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "inline": false,
               "displayName": "ListenAsAgentRequest"
             },
+            "required": null,
             "docs": null,
             "contentType": "application/proto",
             "v2Examples": null

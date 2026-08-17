@@ -461,7 +461,8 @@ export const PlaygroundSettings = z.object({
     environments: z.array(z.string()).optional(),
     button: PlaygroundButtonSettings.optional(),
     oauth: z.boolean().optional(),
-    "limit-websocket-messages-per-connection": z.number().int().optional()
+    "limit-websocket-messages-per-connection": z.number().int().optional(),
+    "send-optional-defaults": z.boolean().optional()
 });
 
 // ===== Announcement =====
@@ -634,7 +635,8 @@ export const ExperimentalConfig = z.object({
 
 export const GitLibraryInputSchema = z.object({
     git: z.string(),
-    subpath: z.string().optional()
+    subpath: z.string().optional(),
+    ref: z.string().optional()
 });
 
 export const PathLibraryInputSchema = z.object({
@@ -891,7 +893,8 @@ export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
 export const VersionConfig = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         "display-name": z.string(),
-        path: z.string(),
+        path: z.string().optional(),
+        ref: z.string().optional(),
         slug: z.string().optional(),
         availability: VersionAvailability.optional(),
         audiences: Audience.optional(),

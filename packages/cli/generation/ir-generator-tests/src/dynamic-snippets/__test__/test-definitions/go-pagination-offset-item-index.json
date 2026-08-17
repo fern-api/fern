@@ -1,0 +1,928 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_plants:Plant": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Plant",
+                    "camelCase": {
+                        "unsafeName": "plant",
+                        "safeName": "plant"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "plant",
+                        "safeName": "plant"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PLANT",
+                        "safeName": "PLANT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Plant",
+                        "safeName": "Plant"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "plants",
+                            "camelCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANTS",
+                                "safeName": "PLANTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Plants",
+                                "safeName": "Plants"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "plants",
+                        "camelCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PLANTS",
+                            "safeName": "PLANTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Plants",
+                            "safeName": "Plants"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "id",
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "name",
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_plants:ListPlantsResponse": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ListPlantsResponse",
+                    "camelCase": {
+                        "unsafeName": "listPlantsResponse",
+                        "safeName": "listPlantsResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_plants_response",
+                        "safeName": "list_plants_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_PLANTS_RESPONSE",
+                        "safeName": "LIST_PLANTS_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListPlantsResponse",
+                        "safeName": "ListPlantsResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "plants",
+                            "camelCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANTS",
+                                "safeName": "PLANTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Plants",
+                                "safeName": "Plants"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "plants",
+                        "camelCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PLANTS",
+                            "safeName": "PLANTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Plants",
+                            "safeName": "Plants"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "total_count",
+                        "name": {
+                            "originalName": "total_count",
+                            "camelCase": {
+                                "unsafeName": "totalCount",
+                                "safeName": "totalCount"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "total_count",
+                                "safeName": "total_count"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TOTAL_COUNT",
+                                "safeName": "TOTAL_COUNT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "TotalCount",
+                                "safeName": "TotalCount"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "plants",
+                        "name": {
+                            "originalName": "plants",
+                            "camelCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANTS",
+                                "safeName": "PLANTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Plants",
+                                "safeName": "Plants"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "list",
+                        "value": {
+                            "type": "named",
+                            "value": "type_plants:Plant"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_plants.list": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "list",
+                    "camelCase": {
+                        "unsafeName": "list",
+                        "safeName": "list"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list",
+                        "safeName": "list"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST",
+                        "safeName": "LIST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "List",
+                        "safeName": "List"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "plants",
+                            "camelCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANTS",
+                                "safeName": "PLANTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Plants",
+                                "safeName": "Plants"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "plants",
+                        "camelCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PLANTS",
+                            "safeName": "PLANTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Plants",
+                            "safeName": "Plants"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/plants"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ListPlantsRequest",
+                        "camelCase": {
+                            "unsafeName": "listPlantsRequest",
+                            "safeName": "listPlantsRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_plants_request",
+                            "safeName": "list_plants_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_PLANTS_REQUEST",
+                            "safeName": "LIST_PLANTS_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListPlantsRequest",
+                            "safeName": "ListPlantsRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "plants",
+                                "camelCase": {
+                                    "unsafeName": "plants",
+                                    "safeName": "plants"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "plants",
+                                    "safeName": "plants"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PLANTS",
+                                    "safeName": "PLANTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Plants",
+                                    "safeName": "Plants"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "plants",
+                            "camelCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANTS",
+                                "safeName": "PLANTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Plants",
+                                "safeName": "Plants"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "wireValue": "offset",
+                            "name": {
+                                "originalName": "offset",
+                                "camelCase": {
+                                    "unsafeName": "offset",
+                                    "safeName": "offset"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "offset",
+                                    "safeName": "offset"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OFFSET",
+                                    "safeName": "OFFSET"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Offset",
+                                    "safeName": "Offset"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "count",
+                            "name": {
+                                "originalName": "count",
+                                "camelCase": {
+                                    "unsafeName": "count",
+                                    "safeName": "count"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "count",
+                                    "safeName": "count"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "COUNT",
+                                    "safeName": "COUNT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Count",
+                                    "safeName": "Count"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_plants.listWithRequiredOffset": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "listWithRequiredOffset",
+                    "camelCase": {
+                        "unsafeName": "listWithRequiredOffset",
+                        "safeName": "listWithRequiredOffset"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_with_required_offset",
+                        "safeName": "list_with_required_offset"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_WITH_REQUIRED_OFFSET",
+                        "safeName": "LIST_WITH_REQUIRED_OFFSET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListWithRequiredOffset",
+                        "safeName": "ListWithRequiredOffset"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "plants",
+                            "camelCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANTS",
+                                "safeName": "PLANTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Plants",
+                                "safeName": "Plants"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "plants",
+                        "camelCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PLANTS",
+                            "safeName": "PLANTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Plants",
+                            "safeName": "Plants"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/plants/required-offset"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ListPlantsWithRequiredOffsetRequest",
+                        "camelCase": {
+                            "unsafeName": "listPlantsWithRequiredOffsetRequest",
+                            "safeName": "listPlantsWithRequiredOffsetRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_plants_with_required_offset_request",
+                            "safeName": "list_plants_with_required_offset_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_PLANTS_WITH_REQUIRED_OFFSET_REQUEST",
+                            "safeName": "LIST_PLANTS_WITH_REQUIRED_OFFSET_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListPlantsWithRequiredOffsetRequest",
+                            "safeName": "ListPlantsWithRequiredOffsetRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "plants",
+                                "camelCase": {
+                                    "unsafeName": "plants",
+                                    "safeName": "plants"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "plants",
+                                    "safeName": "plants"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PLANTS",
+                                    "safeName": "PLANTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Plants",
+                                    "safeName": "Plants"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "plants",
+                            "camelCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANTS",
+                                "safeName": "PLANTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Plants",
+                                "safeName": "Plants"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "wireValue": "offset",
+                            "name": {
+                                "originalName": "offset",
+                                "camelCase": {
+                                    "unsafeName": "offset",
+                                    "safeName": "offset"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "offset",
+                                    "safeName": "offset"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OFFSET",
+                                    "safeName": "OFFSET"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Offset",
+                                    "safeName": "Offset"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "count",
+                            "name": {
+                                "originalName": "count",
+                                "camelCase": {
+                                    "unsafeName": "count",
+                                    "safeName": "count"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "count",
+                                    "safeName": "count"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "COUNT",
+                                    "safeName": "COUNT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Count",
+                                    "safeName": "Count"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_plants.listWithBodyOffset": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "listWithBodyOffset",
+                    "camelCase": {
+                        "unsafeName": "listWithBodyOffset",
+                        "safeName": "listWithBodyOffset"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_with_body_offset",
+                        "safeName": "list_with_body_offset"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_WITH_BODY_OFFSET",
+                        "safeName": "LIST_WITH_BODY_OFFSET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListWithBodyOffset",
+                        "safeName": "ListWithBodyOffset"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "plants",
+                            "camelCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANTS",
+                                "safeName": "PLANTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Plants",
+                                "safeName": "Plants"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "plants",
+                        "camelCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PLANTS",
+                            "safeName": "PLANTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Plants",
+                            "safeName": "Plants"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/plants/body-offset"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ListPlantsWithBodyOffsetRequest",
+                        "camelCase": {
+                            "unsafeName": "listPlantsWithBodyOffsetRequest",
+                            "safeName": "listPlantsWithBodyOffsetRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_plants_with_body_offset_request",
+                            "safeName": "list_plants_with_body_offset_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_PLANTS_WITH_BODY_OFFSET_REQUEST",
+                            "safeName": "LIST_PLANTS_WITH_BODY_OFFSET_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListPlantsWithBodyOffsetRequest",
+                            "safeName": "ListPlantsWithBodyOffsetRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "plants",
+                                "camelCase": {
+                                    "unsafeName": "plants",
+                                    "safeName": "plants"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "plants",
+                                    "safeName": "plants"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PLANTS",
+                                    "safeName": "PLANTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Plants",
+                                    "safeName": "Plants"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "plants",
+                            "camelCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANTS",
+                                "safeName": "PLANTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Plants",
+                                "safeName": "Plants"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "offset",
+                                "name": {
+                                    "originalName": "offset",
+                                    "camelCase": {
+                                        "unsafeName": "offset",
+                                        "safeName": "offset"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "offset",
+                                        "safeName": "offset"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "OFFSET",
+                                        "safeName": "OFFSET"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Offset",
+                                        "safeName": "Offset"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "INTEGER"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "count",
+                                "name": {
+                                    "originalName": "count",
+                                    "camelCase": {
+                                        "unsafeName": "count",
+                                        "safeName": "count"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "count",
+                                        "safeName": "count"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "COUNT",
+                                        "safeName": "COUNT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Count",
+                                        "safeName": "Count"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "INTEGER"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}

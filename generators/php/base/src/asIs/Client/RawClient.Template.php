@@ -125,7 +125,22 @@ class RawClient
             $body = $this->encodeRequestBody($request, $options);
             if ($body !== null) {
                 $httpRequest = $httpRequest->withBody($body);
-            }
+            }<% if (it.respectOptionalRequestBody) { %> elseif ($request->omitContentTypeWithoutBody) {
+                // A request that sends nothing must not advertise a media type, so that a server
+                // branching on Content-Type sees a bodyless call for what it is. Only the default
+                // media type is dropped; a Content-Type the caller asked for still goes out.
+                $defaultContentType = match (get_class($request)) {
+                    JsonApiRequest::class => "application/json",
+                    UrlEncodedApiRequest::class => "application/x-www-form-urlencoded",
+                    default => null,
+                };
+                $headers = array_filter(
+                    $headers,
+                    fn (string $value, string $name) => strtolower($name) !== 'content-type'
+                        || $value !== $defaultContentType,
+                    ARRAY_FILTER_USE_BOTH,
+                );
+            }<% } %>
         }
 
         foreach ($headers as $name => $value) {
@@ -257,6 +272,28 @@ class RawClient
         }
 
         return $result;
+    }
+
+    /**
+     * Percent-encodes a value for use inside a single URL path segment. Encoding happens here,
+     * where the value is still separate from the path template, so that a value containing "/"
+     * or ".." cannot change which endpoint the request resolves to.
+     */
+    public static function encodePathParam(mixed $value): string
+    {
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+        if (is_null($value)) {
+            return '';
+        }
+        if (is_scalar($value)) {
+            return rawurlencode((string)$value);
+        }
+        if (is_object($value) && method_exists($value, '__toString')) {
+            return rawurlencode((string)$value);
+        }
+        return rawurlencode(JsonEncoder::encode($value));
     }
 
     /**

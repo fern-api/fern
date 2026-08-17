@@ -29,6 +29,7 @@
               "path": "/Identifiers/{idTypePathParam}",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "idType": "string",
                     "newValue": "string",
@@ -71,6 +72,7 @@
             idType: string
             oldValue: string
             newValue: string
+          optional: true
         content-type: application/json
       examples:
         - path-parameters:

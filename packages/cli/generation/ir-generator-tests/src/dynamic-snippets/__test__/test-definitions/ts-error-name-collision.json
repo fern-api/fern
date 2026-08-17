@@ -419,7 +419,8 @@
                         "type": "named",
                         "value": "type_simple:FooRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -505,7 +506,8 @@
                         "type": "named",
                         "value": "type_simple:FooRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -591,7 +593,8 @@
                         "type": "named",
                         "value": "type_simple:FooRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

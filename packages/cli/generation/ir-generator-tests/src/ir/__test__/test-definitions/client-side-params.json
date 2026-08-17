@@ -11977,6 +11977,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -12002,6 +12003,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -14175,6 +14177,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -14200,6 +14203,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -32130,7 +32134,8 @@
                             "type": "named",
                             "value": "type_types:CreateUserRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -32268,7 +32273,8 @@
                             "type": "named",
                             "value": "type_types:UpdateUserRequest"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -32400,7 +32406,8 @@
                             "variable": null
                         }
                     ],
-                    "body": null
+                    "body": null,
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

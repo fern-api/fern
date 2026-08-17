@@ -1,0 +1,41 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.list"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsPaginationOffsetStepClient } from \"@fern/ts-pagination-offset-step\";\n\nconst client = new SeedTsPaginationOffsetStepClient({ baseUrl: \"YOUR_BASE_URL\" });\nconst pageableResponse = await client.users.list({\n    offset: 0,\n    limit: 2\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.list({\n    offset: 0,\n    limit: 2\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+            },
+            "example_identifier": "FullPage"
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.list"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsPaginationOffsetStepClient } from \"@fern/ts-pagination-offset-step\";\n\nconst client = new SeedTsPaginationOffsetStepClient({ baseUrl: \"YOUR_BASE_URL\" });\nconst pageableResponse = await client.users.list({\n    offset: 0,\n    limit: 10\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.list({\n    offset: 0,\n    limit: 10\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+            },
+            "example_identifier": "ShortPage"
+        },
+        {
+            "id": {
+                "path": "/users/with-has-next-page",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithHasNextPage"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsPaginationOffsetStepClient } from \"@fern/ts-pagination-offset-step\";\n\nconst client = new SeedTsPaginationOffsetStepClient({ baseUrl: \"YOUR_BASE_URL\" });\nconst pageableResponse = await client.users.listWithHasNextPage({\n    offset: 0,\n    limit: 10\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithHasNextPage({\n    offset: 0,\n    limit: 10\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+            },
+            "example_identifier": "ShortPageWithHasNextPage"
+        }
+    ],
+    "types": {}
+}

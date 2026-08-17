@@ -56,6 +56,15 @@ fixtures:
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
+  any-auth:
+    - outputFolder: wire-tests
+      customConfig:
+        enable_wire_tests: true
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        prefer_explicit_auth: true
+      outputFolder: prefer-explicit-auth
   basic-auth-pw-omitted:
     - customConfig:
         enable_wire_tests: true
@@ -100,6 +109,13 @@ fixtures:
     - customConfig:
         include_platform_headers: true
       outputFolder: include-platform-headers
+    - customConfig:
+        allow_user_agent_app_info: true
+      outputFolder: allow-user-agent-app-info
+    - customConfig:
+        include_platform_headers: true
+        allow_user_agent_app_info: true
+      outputFolder: include-platform-headers-app-info
     - customConfig:
         additional_init_exports:
           - from: types.types
@@ -173,6 +189,9 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: no-custom-config
+    - customConfig:
+        runtime_version: true
+      outputFolder: runtime-version
     - customConfig:
         enable_wire_tests: true
         client:
@@ -396,6 +415,12 @@ fixtures:
     - customConfig:
         offsetSemantics: "page-index"
       outputFolder: page-index-semantics
+  path-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        encode_path_params: true
+      outputFolder: encode-path-params
   query-parameters:
     - customConfig: null
       outputFolder: no-custom-config
@@ -405,6 +430,10 @@ fixtures:
   query-parameters-openapi-as-objects:
     - customConfig: null
       outputFolder: no-custom-config
+  simple-api:
+    - customConfig:
+        optional-auth: true
+      outputFolder: optional-auth
   simple-fhir:
     - customConfig:
         use_inheritance_for_extended_models: false
@@ -496,6 +525,12 @@ fixtures:
         pydantic_config:
           positional_single_property_constructors: true
       outputFolder: with-positional-constructors
+  python-optional-request-body:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        respect_optional_request_body: true
+      outputFolder: respect-optional-request-body
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2

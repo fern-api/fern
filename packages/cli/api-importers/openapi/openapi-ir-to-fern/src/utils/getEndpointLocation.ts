@@ -27,6 +27,12 @@ function resolveEndpointLocationWithNamespaceOverride({
     return location;
 }
 
+// A dot in an endpoint id is parsed as a reference to another file (`import.endpoint`),
+// so dotted operation ids must be collapsed into a single name.
+function sanitizeEndpointId(operationId: string): string {
+    return operationId.includes(".") ? camelCase(operationId) : operationId;
+}
+
 function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
     const namespace = endpoint.namespace;
 
@@ -64,7 +70,7 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
     if (tag == null) {
         return {
             file: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-            endpointId: operationId
+            endpointId: sanitizeEndpointId(operationId)
         };
     }
 
@@ -101,7 +107,7 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
             const camelCasedTag = camelCase(tag);
             return {
                 file: RelativeFilePath.of(`${camelCasedTag}.yml`),
-                endpointId: operationId,
+                endpointId: sanitizeEndpointId(operationId),
                 tag
             };
         }

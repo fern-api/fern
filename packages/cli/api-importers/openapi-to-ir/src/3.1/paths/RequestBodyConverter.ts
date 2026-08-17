@@ -69,6 +69,14 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         this.queryParameters = queryParameters ?? [];
     }
 
+    /**
+     * Absent means required, so only an explicit `requestBody.required: false` is carried through.
+     * Generators ignore it unless they opt in, which keeps the field additive for existing users.
+     */
+    private get bodyRequired(): boolean | undefined {
+        return this.required === false ? false : undefined;
+    }
+
     public convert(): RequestBodyConverter.Output | undefined {
         if (this.streamingExtension?.type == "streamCondition") {
             return this.convertStreamConditionRequestBody();
@@ -159,6 +167,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                         contentType,
                         docs: this.description,
                         requestBodyType: convertedSchema.type,
+                        required: this.bodyRequired,
                         v2Examples: this.convertMediaTypeObjectExamples({
                             mediaTypeObject,
                             exampleGenerationStrategy: "request"
@@ -196,6 +205,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     contentType,
                     docs: this.description,
                     requestBodyType: convertedSchema.type,
+                    required: this.bodyRequired,
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
                         exampleGenerationStrategy: "request"
@@ -258,6 +268,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 contentType,
                 docs: this.description,
                 requestBodyType: TypeReference.unknown(),
+                required: this.bodyRequired,
                 v2Examples
             }),
             streamRequestBody: undefined,
@@ -525,6 +536,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 contentType,
                 docs: this.description,
                 requestBodyType: convertedSchema.type,
+                required: this.bodyRequired,
                 v2Examples: this.convertMediaTypeObjectExamples({
                     mediaTypeObject: modifiedMediaTypeObject,
                     exampleGenerationStrategy: "request"

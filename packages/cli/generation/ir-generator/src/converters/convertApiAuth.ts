@@ -5,7 +5,9 @@ import {
     AuthSchemesRequirement,
     FernIr,
     InferredAuthSchemeTokenEndpoint,
-    OAuthConfiguration
+    OAuthConfiguration,
+    OAuthPkceMethod,
+    OAuthPublicClientId
 } from "@fern-api/ir-sdk";
 import { CliError } from "@fern-api/task-context";
 
@@ -269,12 +271,99 @@ function generateOAuth({
                     })
                 )
             });
+        case "authorization-code":
+            return AuthScheme.oauth({
+                key,
+                docs,
+                configuration: OAuthConfiguration.authorizationCode({
+                    clientId: getPublicClientId(rawScheme),
+                    authorizationUrl: requireOAuthField(rawScheme, "authorization-url"),
+                    tokenUrl: requireOAuthField(rawScheme, "token-url"),
+                    refreshUrl: rawScheme["refresh-url"],
+                    redirectUri: getRedirectUri(rawScheme["redirect-uri"]),
+                    redirectUriBackupPorts: getRedirectUriBackupPorts(rawScheme["redirect-uri"]),
+                    successRedirectUrl: rawScheme["success-redirect-url"],
+                    errorRedirectUrl: rawScheme["error-redirect-url"],
+                    scopes: rawScheme.scopes,
+                    pkce: { method: OAuthPkceMethod.S256 },
+                    authorizationParameters: rawScheme["authorization-parameters"],
+                    tokenParameters: rawScheme["token-parameters"],
+                    refreshParameters: rawScheme["refresh-parameters"],
+                    tokenHeader: rawScheme["token-header"],
+                    tokenPrefix: rawScheme["token-prefix"]
+                })
+            });
+        case "device-code":
+            return AuthScheme.oauth({
+                key,
+                docs,
+                configuration: OAuthConfiguration.deviceCode({
+                    clientId: getPublicClientId(rawScheme),
+                    deviceAuthorizationUrl: requireOAuthField(rawScheme, "device-authorization-url"),
+                    tokenUrl: requireOAuthField(rawScheme, "token-url"),
+                    refreshUrl: rawScheme["refresh-url"],
+                    scopes: rawScheme.scopes,
+                    deviceAuthorizationParameters: rawScheme["device-authorization-parameters"],
+                    tokenParameters: rawScheme["token-parameters"],
+                    refreshParameters: rawScheme["refresh-parameters"],
+                    tokenHeader: rawScheme["token-header"],
+                    tokenPrefix: rawScheme["token-prefix"]
+                })
+            });
         default:
             throw new CliError({
                 message: `Unknown OAuth type: '${rawScheme?.type}'`,
                 code: CliError.Code.ValidationError
             });
     }
+}
+
+/**
+ * Resolves the public client ID for the authorization-code and device-code flows. Prefers the
+ * literal `client-id`; falls back to the `client-id-env-var` environment-variable source. These
+ * flows are public clients, so no client secret is involved. The validator guarantees one of the
+ * two is present; the empty-string literal fallback keeps the type total.
+ */
+function getPublicClientId(rawScheme: RawSchemas.OAuthSchemeSchema): FernIr.OAuthPublicClientId {
+    const clientIdEnvVar = rawScheme["client-id-env"];
+    if (rawScheme["client-id"] == null && clientIdEnvVar != null) {
+        return OAuthPublicClientId.environmentVariable(clientIdEnvVar);
+    }
+    return OAuthPublicClientId.literal(rawScheme["client-id"] ?? "");
+}
+
+/**
+ * The raw `redirect-uri` is either a bare URI string or an object `{ url, ports }`. Flatten it into
+ * the IR's single `redirectUri` (the primary callback URI) — the port fallbacks go to
+ * {@link getRedirectUriBackupPorts}.
+ */
+function getRedirectUri(redirectUri: RawSchemas.OAuthSchemeSchema["redirect-uri"]): string | undefined {
+    if (redirectUri == null) {
+        return undefined;
+    }
+    return typeof redirectUri === "string" ? redirectUri : redirectUri.url;
+}
+
+/**
+ * The `ports` list from the object form of `redirect-uri` (backup loopback ports tried when the
+ * primary is busy). Undefined for the bare-string form or when omitted.
+ */
+function getRedirectUriBackupPorts(redirectUri: RawSchemas.OAuthSchemeSchema["redirect-uri"]): number[] | undefined {
+    if (redirectUri == null || typeof redirectUri === "string") {
+        return undefined;
+    }
+    return redirectUri.ports;
+}
+
+function requireOAuthField(rawScheme: RawSchemas.OAuthSchemeSchema, field: keyof RawSchemas.OAuthSchemeSchema): string {
+    const value = rawScheme[field];
+    if (typeof value !== "string") {
+        throw new CliError({
+            message: `OAuth ${rawScheme.type} flow is missing required field '${field}'`,
+            code: CliError.Code.ValidationError
+        });
+    }
+    return value;
 }
 
 function generateInferredAuth({

@@ -32,6 +32,9 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
     /** Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false. */
     respectForwardCompatibleEnums: z.boolean().optional(),
 
+    /** Deprecated and no longer has any effect. A request body that OpenAPI does not mark as required is always described as omittable in the IR, and each SDK generator opts into that behaviour through its own configuration. */
+    respectOptionalRequestBody: z.boolean().optional(),
+
     /** Enables using the `bytes` type for binary responses in OpenAPI specifications. Defaults to a file stream. */
     useBytesForBinaryResponse: z.boolean().optional(),
 
@@ -60,6 +63,14 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
      * Defaults to false.
      */
     preserveSingleSchemaOneof: z.boolean().optional(),
+
+    /**
+     * If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each
+     * variant is the union member merged with the remaining allOf members.
+     * If false, the variants' properties are flattened into a single object and marked optional.
+     * Defaults to false.
+     */
+    preserveOneOfInAllOf: z.boolean().optional(),
 
     /**
      * Whether to inline allOf schemas. If false, allOf schemas will be

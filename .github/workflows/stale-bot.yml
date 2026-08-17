@@ -3,6 +3,12 @@ on:
   schedule:
     - cron: "30 1 * * *"
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run mode (only report, don't modify anything across all jobs)"
+        required: false
+        default: "false"
+        type: boolean
 
 permissions:
   pull-requests: write
@@ -27,6 +33,7 @@ jobs:
           days-before-pr-stale: 25
           days-before-pr-close: 5
           operations-per-run: 500
+          debug-only: ${{ inputs.dry_run || false }}
 
   stale-branch:
     runs-on: ubuntu-latest
@@ -44,9 +51,113 @@ jobs:
           branches-filter-regex: "^((?!prototype))"
           rate-limit: true
           pr-check: true
-          dry-run: false
+          dry-run: ${{ inputs.dry_run || false }}
           ignore-issue-interaction: true
           include-protected-branches: false
           include-ruleset-branches: false
           ignore-commit-messages: ""
           ignore-committers: ""
+
+  cleanup-closed-pr-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete branches whose PR was closed without merging
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
+          # Grace period after a PR is closed before its branch is deleted
+          GRACE_DAYS: "7"
+        run: |
+          echo "=== Cleaning up branches from closed (unmerged) PRs ==="
+          echo "Dry run mode: $DRY_RUN"
+
+          OWNER="${GITHUB_REPOSITORY%%/*}"
+          PROTECTED="main master app"
+          CUTOFF=$(date -u -d "$GRACE_DAYS days ago" +%s)
+
+          DELETED=0
+          SKIPPED_OPEN_PR=0
+          SKIPPED_GRACE=0
+          SKIPPED_NEW_COMMITS=0
+          MISSING=0
+          FAILED=0
+
+          # Head branches of closed-but-unmerged PRs that live in this repo (not forks),
+          # keeping only the most recently closed PR per branch
+          gh pr list --repo "$GITHUB_REPOSITORY" --state closed --limit 1000 \
+            --json number,headRefName,closedAt,mergedAt,headRepositoryOwner \
+            --jq '[.[] | select(.mergedAt == null)] | group_by(.headRefName) | map(max_by(.closedAt)) | .[] | [.number, .headRefName, .closedAt, (.headRepositoryOwner.login // "")] | @tsv' \
+            > closed-pr-branches.tsv
+
+          while IFS=$'\t' read -r PR BRANCH CLOSED_AT HEAD_OWNER; do
+            [[ -z "$BRANCH" ]] && continue
+            [[ "$HEAD_OWNER" != "$OWNER" ]] && continue
+
+            SKIP=false
+            for P in $PROTECTED; do
+              if [[ "$BRANCH" == "$P" ]]; then
+                SKIP=true
+                break
+              fi
+            done
+            [[ "$SKIP" == "true" ]] && continue
+
+            # Respect the grace period after the PR was closed
+            CLOSED_EPOCH=$(date -d "$CLOSED_AT" +%s 2>/dev/null || echo "")
+            if [[ -z "$CLOSED_EPOCH" ]] || [[ "$CLOSED_EPOCH" -gt "$CUTOFF" ]]; then
+              SKIPPED_GRACE=$((SKIPPED_GRACE + 1))
+              continue
+            fi
+
+            # The branch may have been reused by a newer open PR, or be the base of a
+            # stacked open PR (deleting it would close that PR)
+            OPEN_PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH" --state open --json number --jq 'length')
+            OPEN_BASE_PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --base "$BRANCH" --state open --json number --jq 'length')
+            if [[ "$OPEN_PR" -gt 0 ]] || [[ "$OPEN_BASE_PR" -gt 0 ]]; then
+              echo "Skipped (open PR): ${BRANCH}"
+              SKIPPED_OPEN_PR=$((SKIPPED_OPEN_PR + 1))
+              continue
+            fi
+
+            SHA=$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/${BRANCH}" --jq '.object.sha' 2>/dev/null || true)
+            if [[ -z "$SHA" ]]; then
+              MISSING=$((MISSING + 1))
+              continue
+            fi
+
+            # Leave branches that received commits after the PR was closed
+            TIP_DATE=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${SHA}" --jq '.commit.committer.date' 2>/dev/null || true)
+            if [[ -n "$TIP_DATE" ]]; then
+              TIP_EPOCH=$(date -d "$TIP_DATE" +%s 2>/dev/null || echo "")
+              if [[ -n "$TIP_EPOCH" ]] && [[ "$TIP_EPOCH" -gt "$CLOSED_EPOCH" ]]; then
+                echo "Skipped (commits after PR #${PR} was closed): ${BRANCH}"
+                SKIPPED_NEW_COMMITS=$((SKIPPED_NEW_COMMITS + 1))
+                continue
+              fi
+            fi
+
+            if [[ "$DRY_RUN" == "true" ]]; then
+              echo "[DRY RUN] Would delete: ${BRANCH} (closed PR #${PR})"
+              DELETED=$((DELETED + 1))
+            elif gh api -X DELETE "repos/${GITHUB_REPOSITORY}/git/refs/heads/${BRANCH}" --silent 2>/dev/null; then
+              echo "Deleted: ${BRANCH} (closed PR #${PR})"
+              DELETED=$((DELETED + 1))
+            else
+              echo "Failed to delete: ${BRANCH} (closed PR #${PR})"
+              FAILED=$((FAILED + 1))
+            fi
+
+            if [[ $((DELETED % 50)) -eq 0 ]] && [[ "$DELETED" -gt 0 ]]; then
+              echo "Pausing briefly to avoid rate limits..."
+              sleep 5
+            fi
+          done < closed-pr-branches.tsv
+
+          echo ""
+          echo "=== Summary ==="
+          echo "Branches deleted: $DELETED"
+          echo "Branches skipped (within ${GRACE_DAYS}-day grace period): $SKIPPED_GRACE"
+          echo "Branches skipped (open PR): $SKIPPED_OPEN_PR"
+          echo "Branches skipped (commits after close): $SKIPPED_NEW_COMMITS"
+          echo "Branches already gone: $MISSING"
+          echo "Branches failed: $FAILED"

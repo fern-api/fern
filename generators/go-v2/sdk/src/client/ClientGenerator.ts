@@ -12,6 +12,7 @@ import {
     getRequestPropertyFieldName,
     getRequestPropertyValueType,
     isGrantTypeRequestProperty,
+    isPlainBooleanType,
     isPlainStringType,
     isRequestPropertyPointer,
     isTypeReferenceLiteral,
@@ -601,13 +602,22 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     });
                 }
             }
-            // After env fallback, apply clientDefault if present and type is plain string
-            if (header.clientDefault != null && isPlainStringType(header.valueType)) {
-                this.writeClientDefaultConditional({
-                    writer,
-                    propertyReference: this.getOptionsPropertyReference(header.name),
-                    clientDefault: header.clientDefault
-                });
+            // After env fallback, apply clientDefault if present
+            if (header.clientDefault != null) {
+                if (isTypeReferencePointer(header.valueType, this.context.ir.types)) {
+                    this.writeOptionalClientDefaultConditional({
+                        writer,
+                        propertyReference: this.getOptionsPropertyReference(header.name),
+                        clientDefault: header.clientDefault,
+                        localVariableName: `${this.context.getParameterName(header.name)}Default`
+                    });
+                } else if (isPlainStringType(header.valueType) || isPlainBooleanType(header.valueType)) {
+                    this.writeClientDefaultConditional({
+                        writer,
+                        propertyReference: this.getOptionsPropertyReference(header.name),
+                        clientDefault: header.clientDefault
+                    });
+                }
             }
         }
     }
@@ -726,6 +736,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         if (oauthScheme == null || oauthScheme.configuration?.type !== "clientCredentials") {
             return;
         }
+        const oauthConfiguration = oauthScheme.configuration;
 
         const authServiceFernFilepath = this.getAuthServiceFernFilepath();
         if (authServiceFernFilepath == null) {
@@ -773,7 +784,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         const methodName = this.context.getMethodName(tokenEndpoint.name);
 
         // Get the request field names from the IR
-        const requestProperties = oauthScheme.configuration.tokenEndpoint.requestProperties;
+        const requestProperties = oauthConfiguration.tokenEndpoint.requestProperties;
         const clientIdFieldName = getRequestPropertyFieldName(this.context, requestProperties.clientId);
         const clientSecretFieldName = getRequestPropertyFieldName(this.context, requestProperties.clientSecret);
 
@@ -821,7 +832,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
                 // Fetch a new token from the auth endpoint
                 // Get the request type reference from the endpoint
-                const serviceId = oauthScheme.configuration.tokenEndpoint.endpointReference.serviceId;
+                const serviceId = oauthConfiguration.tokenEndpoint.endpointReference.serviceId;
                 const requestTypeRef = this.getTokenEndpointRequestTypeReference(serviceId, tokenEndpoint);
                 w.write(`response, err := authClient.${methodName}(`);
                 w.writeNode(
@@ -909,7 +920,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.writeLine('return "", 0, err');
                 w.dedent();
                 w.writeLine("}");
-                const responseProperties = oauthScheme.configuration.tokenEndpoint.responseProperties;
+                const responseProperties = oauthConfiguration.tokenEndpoint.responseProperties;
                 const accessTokenField = this.context.getFieldName(responseProperties.accessToken.property.name);
                 this.writeTokenResponse({
                     writer: w,
@@ -1326,14 +1337,39 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         propertyReference: go.Selector;
         clientDefault: FernIr.Literal;
     }): void {
+        const zeroValue = clientDefault.type === "boolean" ? "false" : '""';
         writer.write("if ");
         writer.writeNode(propertyReference);
-        writer.writeLine(' == "" {');
+        writer.writeLine(` == ${zeroValue} {`);
         writer.indent();
         writer.writeNode(propertyReference);
         writer.write(" = ");
         writer.writeNode(this.context.getLiteralValue(clientDefault));
         writer.newLine();
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    private writeOptionalClientDefaultConditional({
+        writer,
+        propertyReference,
+        clientDefault,
+        localVariableName
+    }: {
+        writer: go.Writer;
+        propertyReference: go.Selector;
+        clientDefault: FernIr.Literal;
+        localVariableName: string;
+    }): void {
+        writer.write("if ");
+        writer.writeNode(propertyReference);
+        writer.writeLine(" == nil {");
+        writer.indent();
+        writer.write(`${localVariableName} := `);
+        writer.writeNode(this.context.getLiteralValue(clientDefault));
+        writer.newLine();
+        writer.writeNode(propertyReference);
+        writer.writeLine(` = &${localVariableName}`);
         writer.dedent();
         writer.writeLine("}");
     }

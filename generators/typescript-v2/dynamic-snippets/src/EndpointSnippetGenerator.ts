@@ -430,12 +430,38 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
-        if (request.body != null) {
-            args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
+        if (request.body != null && !this.callOmitsRequestBody({ request, snippet })) {
+            const bodyArg = this.getBodyRequestArg({ body: request.body, value: snippet.requestBody });
+            // a nop literal writes nothing (e.g. an example that omits an optional request body),
+            // so including it would emit a dangling argument delimiter.
+            if (!ts.TypeLiteral.isNop(bodyArg)) {
+                args.push(bodyArg);
+            }
         }
         this.context.errors.unscope();
 
         return args;
+    }
+
+    /**
+     * Whether the call leaves the body out entirely, which the optional parameter allows. Applies
+     * only to a body the caller may omit, and only once the generator opts in to that.
+     */
+    private callOmitsRequestBody({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): boolean {
+        if (this.context.customConfig?.respectOptionalRequestBody !== true) {
+            return false;
+        }
+        if (request.bodyRequired !== false) {
+            return false;
+        }
+        const value = snippet.requestBody;
+        return value == null || (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
     }
 
     private getBodyRequestArg({
@@ -617,8 +643,12 @@ export class EndpointSnippetGenerator {
         switch (body.type) {
             case "properties":
                 return this.getInlinedRequestBodyPropertyObjectFields({ parameters: body.value, value });
-            case "referenced":
-                return [this.getReferencedRequestBodyPropertyObjectField({ body, value })];
+            case "referenced": {
+                const field = this.getReferencedRequestBodyPropertyObjectField({ body, value });
+                // an example that omits an optional request body has no value to write, so the
+                // property is dropped rather than passed explicitly as undefined
+                return ts.TypeLiteral.isNop(field.value) ? [] : [field];
+            }
             case "fileUpload":
                 return this.getFileUploadRequestBodyObjectFields({ filePropertyInfo });
             default:

@@ -16,6 +16,7 @@ type TypeReference = FernIr.TypeReference;
 
 import { DefaultValueExtractor, ExtractedDefault } from "../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { mayOmitRequestBody } from "../utils/requestBodyUtils.js";
 
 export declare namespace WrappedRequestGenerator {
     export interface Args {
@@ -183,9 +184,12 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
-                const type = this.context.csharpTypeMapper.convert({
+                const convertedType = this.context.csharpTypeMapper.convert({
                     reference: reference.requestBodyType
                 });
+                const type = mayOmitRequestBody(this.context, this.endpoint.requestBody)
+                    ? convertedType.asOptional()
+                    : convertedType;
                 const useRequired = !type.isOptional;
                 class_.addField({
                     origin: this.case.resolveNameOrString(this.wrapper.bodyKey),

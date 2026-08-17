@@ -47,6 +47,13 @@ export interface ConvertOpenAPIOptions {
     inlinePathParameters: boolean;
 
     /**
+     * @deprecated No longer read. `requestBody.required: false` is always carried into the IR now,
+     * and each SDK generator decides whether to act on it via its own configuration. Kept so that
+     * existing `respect-optional-request-body` settings keep validating; setting it only warns.
+     */
+    respectOptionalRequestBody: boolean;
+
+    /**
      * If true, the converter will use the `bytes` type for binary responses.
      */
     useBytesForBinaryResponse: boolean;
@@ -137,6 +144,7 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     respectNullableSchemas: true,
     onlyIncludeReferencedSchemas: false,
     inlinePathParameters: true,
+    respectOptionalRequestBody: false,
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false,
     wrapReferencesToNullableInOptional: false,

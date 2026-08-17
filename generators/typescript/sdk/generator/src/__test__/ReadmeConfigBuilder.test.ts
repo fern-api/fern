@@ -206,7 +206,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "native",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const featureConfig = createFeatureConfig([
@@ -243,7 +244,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "native",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             // REQUEST_AND_RESPONSE_TYPES won't have snippets since no wrapper endpoint
@@ -284,7 +286,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "native",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const featureConfig = createFeatureConfig([
@@ -316,7 +319,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "native",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const featureConfig = createFeatureConfig([createFeature("AUTHENTICATION")]);
@@ -342,7 +346,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "native",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const remote = {
@@ -376,7 +381,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "native",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const result = builder.build({
@@ -402,7 +408,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "native",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const result = builder.build({
@@ -440,7 +447,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "native",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const result = builder.build({
@@ -472,7 +480,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "native",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const featureConfig = createFeatureConfig([
@@ -504,7 +513,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "node-fetch",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const featureConfig = createFeatureConfig([
@@ -536,7 +546,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "native",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const featureConfig = createFeatureConfig([
@@ -587,7 +598,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "native",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const result = builder.build({
@@ -617,7 +629,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "native",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const result = builder.build({
@@ -652,7 +665,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "native",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const result = builder.build({
@@ -696,7 +710,8 @@ describe("ReadmeConfigBuilder", () => {
                 fileResponseType: "stream",
                 fetchSupport: "native",
                 allowCustomFetcher: false,
-                generateSubpackageExports: false
+                generateSubpackageExports: false,
+                requireBaseUrl: false
             });
 
             const featureConfig = createFeatureConfig([

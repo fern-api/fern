@@ -1,4 +1,118 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.82.0
+  changelogEntry:
+    - summary: |
+        With `respect-optional-request-body` enabled, examples that omit an optional request body are no
+        longer dropped from the generated snippets and reference.
+      type: fix
+    - summary: |
+        Add a `respect-optional-request-body` option. When enabled, an endpoint whose request body the API
+        does not require takes that body as `Body? request = null`, so the caller can leave the argument out
+        and the request is sent with no body and no body content type. Examples that supply no body render
+        as `client.BulkRefundAsync()`. The option defaults to false, so existing signatures and snippets are
+        unchanged.
+      type: feat
+    - summary: |
+        Skip endpoint examples that omit a request body the endpoint declares. The generated request
+        type requires the body, so rendering such an example produced a call missing a required
+        argument in the reference, the snippets and the mock server tests.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 2.81.1
+  changelogEntry:
+    - summary: |
+        Percent-encode `;` in query parameter names and values. RFC 3986 permits it, but it
+        remains a legacy parameter separator for many servers, which truncated values such as
+        `?mail2=a@example.com;%20b@example.com` at the first `;`.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 2.81.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `prefer-explicit-auth` configuration option. When enabled (and the API composes
+        OAuth client-credentials with basic auth via `auth: any`), auth credentials passed
+        explicitly to the client constructor take precedence over environment-variable
+        defaults when selecting the auth scheme — e.g. explicitly provided basic auth
+        credentials win over OAuth client ID/secret environment variables. Disabled by
+        default, so existing generated output and runtime behavior are unchanged.
+      type: feat
+  createdAt: "2026-08-09"
+  irVersion: 67
+- version: 2.80.1
+  changelogEntry:
+    - summary: |
+        Fix generated mock server tests for examples that omit an optional request body. The
+        stub no longer matches on a `Content-Type` header that the bodyless request does not send.
+      type: fix
+  createdAt: "2026-08-07"
+  irVersion: 67
+- version: 2.80.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `allow-user-agent-app-info` config. When enabled, generated clients expose an
+        optional `AppInfo` client option (`Name`, `Version?`, `Comment?`) whose sanitized product
+        token is appended to whatever `User-Agent` the SDK would otherwise send
+        (`{sdk}/{version} ... {product}/{product-version} ({comment})`), following RFC 9110.
+        Disabled by default, so existing generated output is byte-identical, and it composes with
+        `include-platform-headers`, the configured `user-agent` template value, and the
+        `user-agent-name-from-package` fallback. Caller-supplied values are trimmed and encoded
+        (name/version percent-encoded to RFC 7230 `tchar`; comment delimiters `(`, `)`, `\` and
+        control characters incl. CR/LF escaped), so untrusted values cannot inject header content.
+        Still overridable by an explicit `User-Agent` header and suppressed by `omit-fern-headers`.
+        Works in both unified and non-unified client-options modes; generated code compiles for
+        `net462`, `net8.0`, and `netstandard2.0`.
+      type: feat
+  createdAt: "2026-08-03"
+  irVersion: 67
+- version: 2.79.4
+  changelogEntry:
+    - summary: |
+        Respect the `user-agent` config template when `include-platform-headers` is enabled. The
+        structured User-Agent previously always used the NuGet package id, ignoring the
+        configured template.
+      type: fix
+  createdAt: "2026-07-30"
+  irVersion: 67
+- version: 2.79.3
+  changelogEntry:
+    - summary: |
+        Only reference `README.md` in the generated `.csproj` when the file actually exists. The
+        `<PackageReadmeFile>` property and the packed `<None Include>` item are now guarded with an
+        MSBuild `Exists` condition, so `dotnet pack` no longer fails with NU5019 for outputs that do
+        not include a README (e.g. local-file-system output).
+      type: fix
+  createdAt: "2026-07-29"
+  irVersion: 67
+- version: 2.79.2
+  changelogEntry:
+    - summary: |
+        SDKs generated to `local-file-system` output now stamp the package name and version
+        from the IR's `nuget` filesystem publish target (populated by the Fern CLI when
+        `--version` is passed) into `Version.cs`, the `.csproj` `<Version>` property, and the
+        structured `User-Agent` header. Previously local-file-system output always produced
+        `Version.Current = "0.0.0"` and used the root namespace as the User-Agent identity.
+      type: fix
+    - summary: |
+        The `X-Fern-SDK-Name` platform header now uses the package identity (the configured
+        `package-id`, or the nuget filesystem publish target's package name) instead of the root
+        namespace, matching the SDK name reported in the `User-Agent` header. SDKs without a
+        configured package id keep sending the root namespace.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
+- version: 2.79.1
+  changelogEntry:
+    - summary: |
+        Global headers now honor their `client-default` value. The constructor
+        initializes the header from the explicit argument, then the environment
+        variable, then the client default. Previously the client default was only
+        applied on the header-dictionary path and was dropped entirely under
+        `any`-composed multi-scheme auth and endpoint-level security.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
 - version: 2.79.0
   changelogEntry:
     - summary: |

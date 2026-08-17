@@ -221,7 +221,8 @@ function visitEndpoint({
                                     }
                                 }
                             },
-                            ["extra-properties"]: noop
+                            ["extra-properties"]: noop,
+                            optional: noop
                         });
                     } else {
                         createDocsVisitor(visitor, nodePathForRequestBody)(body.docs);

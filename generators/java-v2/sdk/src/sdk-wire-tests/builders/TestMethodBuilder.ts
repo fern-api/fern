@@ -69,8 +69,14 @@ export class TestMethodBuilder {
             writer.indent();
 
             // For OAuth APIs, we need to enqueue an OAuth token response FIRST
-            // because the client will fetch a token before making the actual API call
-            const isOAuth = this.testClassBuilder.isOAuthApi();
+            // because the client will fetch a token before making the actual API call.
+            //
+            // Under endpoint-security, auth is applied per-endpoint, so only endpoints that actually
+            // require auth trigger the OAuth token flow — an `auth: []` endpoint sends no auth and
+            // fetches no token. Under global auth the token is attached to every request (including
+            // endpoints declared without auth), so the API-level check is kept there.
+            const isEndpointSecurity = this.context.ir.auth?.requirement === "ENDPOINT_SECURITY";
+            const isOAuth = this.testClassBuilder.isOAuthApi() && (!isEndpointSecurity || endpoint.auth);
             if (isOAuth) {
                 writer.writeLine("// OAuth: enqueue token response (client fetches token before API call)");
                 writer.writeLine("server.enqueue(new MockResponse()");
@@ -157,8 +163,11 @@ export class TestMethodBuilder {
                 );
             }
 
-            // For Basic Auth APIs, validate the Authorization header contains the correct encoded credentials
-            const basicAuthHeader = this.getExpectedBasicAuthHeader();
+            // For Basic Auth APIs, validate the Authorization header contains the correct encoded credentials.
+            // Skipped when an OAuth scheme is also configured (e.g. `auth: any`): the client is
+            // constructed with every scheme's credentials and sends the OAuth Bearer token, so a
+            // request can never carry the Basic Authorization header.
+            const basicAuthHeader = isOAuth ? undefined : this.getExpectedBasicAuthHeader();
             if (basicAuthHeader) {
                 writer.writeLine("");
                 writer.writeLine("// Validate Basic Auth Authorization header");

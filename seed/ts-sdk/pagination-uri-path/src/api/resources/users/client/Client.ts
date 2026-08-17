@@ -67,13 +67,44 @@ export class UsersClient {
                 return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/uri");
             },
         );
-        const dataWithRawResponse = await list(
-            core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/users/uri",
-            ),
-        ).withRawResponse();
+        const initialRequest = core.HttpResponsePromise.interceptFunction(
+            async (): Promise<core.WithRawResponse<SeedPaginationUriPath.ListUsersUriPaginationResponse>> => {
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    this._options?.headers,
+                    requestOptions?.headers,
+                );
+                const _response = await core.fetcher({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users/uri",
+                    ),
+                    method: "GET",
+                    headers: _headers,
+                    queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return {
+                        data: _response.body as SeedPaginationUriPath.ListUsersUriPaginationResponse,
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedPaginationUriPathError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/uri");
+            },
+        );
+        const dataWithRawResponse = await initialRequest().withRawResponse();
         return new core.Page<SeedPaginationUriPath.User, SeedPaginationUriPath.ListUsersUriPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
@@ -133,7 +164,40 @@ export class UsersClient {
         );
         const _baseUrl =
             (await core.Supplier.get(this._options.baseUrl)) ?? (await core.Supplier.get(this._options.environment));
-        const dataWithRawResponse = await list(core.url.join(_baseUrl, "/users/path")).withRawResponse();
+        const initialRequest = core.HttpResponsePromise.interceptFunction(
+            async (): Promise<core.WithRawResponse<SeedPaginationUriPath.ListUsersPathPaginationResponse>> => {
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    this._options?.headers,
+                    requestOptions?.headers,
+                );
+                const _response = await core.fetcher({
+                    url: core.url.join(_baseUrl, "/users/path"),
+                    method: "GET",
+                    headers: _headers,
+                    queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return {
+                        data: _response.body as SeedPaginationUriPath.ListUsersPathPaginationResponse,
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedPaginationUriPathError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/path");
+            },
+        );
+        const dataWithRawResponse = await initialRequest().withRawResponse();
         return new core.Page<SeedPaginationUriPath.User, SeedPaginationUriPath.ListUsersPathPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,

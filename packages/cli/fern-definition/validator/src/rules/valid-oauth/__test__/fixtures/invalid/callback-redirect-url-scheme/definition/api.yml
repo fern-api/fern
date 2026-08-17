@@ -1,0 +1,11 @@
+name: callback-redirect-url-scheme
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: authorization-code
+    client-id: "public-client-id"
+    authorization-url: https://auth.example.com/authorize
+    token-url: https://auth.example.com/token
+    success-redirect-url: acme.com/cli/welcome
+    error-redirect-url: ftp://acme.com/cli/error

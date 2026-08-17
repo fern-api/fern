@@ -12,9 +12,14 @@
     }
   ],
   "authEnvVars": [
-    "ACME_VERSIONED_TOKEN"
+    {
+      "name": "ACME_VERSIONED_TOKEN",
+      "value": "test"
+    }
   ],
   "authMock": null,
+  "loginTokenSetup": null,
+  "endpointSecurityAuth": false,
   "cases": [
     {
       "id": "listusers",
@@ -24,6 +29,7 @@
       "body": null,
       "queryMatchers": [],
       "headerMatchers": [],
+      "requiresAuth": false,
       "response": {
         "status": 200,
         "body": "[\n  {\n    \"id\": \"id\",\n    \"email\": \"email\"\n  }\n]"
@@ -37,10 +43,41 @@
       "body": null,
       "queryMatchers": [],
       "headerMatchers": [],
+      "requiresAuth": false,
       "response": {
         "status": 200,
         "body": "[\n  {\n    \"id\": \"id\",\n    \"profile\": {\n      \"email\": \"email\",\n      \"displayName\": \"displayName\"\n    }\n  }\n]"
       }
+    },
+    {
+      "id": "listusers_error",
+      "method": "GET",
+      "path": "/users",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
+    },
+    {
+      "id": "listaccounts_error",
+      "method": "GET",
+      "path": "/accounts",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
     }
   ]
 }

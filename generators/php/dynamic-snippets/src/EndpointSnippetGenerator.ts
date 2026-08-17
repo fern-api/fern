@@ -833,7 +833,9 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
-        if (request.body != null) {
+        // A body left out of the call can only be dropped when nothing positional follows it.
+        const omitBody = optionalIrPathParameters.length === 0 && this.callOmitsRequestBody({ request, snippet });
+        if (request.body != null && !omitBody) {
             const bodyArg = this.getBodyRequestArg({ body: request.body, value: snippet.requestBody });
             if (!php.TypeLiteral.isNop(bodyArg)) {
                 args.push(bodyArg);
@@ -853,6 +855,28 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         return args;
+    }
+
+    /**
+     * Whether the snippet's call leaves the request body out. `bodyRequired` absent means required,
+     * so a snippet only drops the argument when the API says the body is optional, the generator is
+     * configured to respect that, and the snippet supplies no body of its own.
+     */
+    private callOmitsRequestBody({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): boolean {
+        if (this.context.customConfig?.respectOptionalRequestBody !== true) {
+            return false;
+        }
+        if (request.bodyRequired !== false) {
+            return false;
+        }
+        const value = snippet.requestBody;
+        return value == null || (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
     }
 
     private getBodyRequestArg({
@@ -1062,7 +1086,12 @@ export class EndpointSnippetGenerator {
     }): php.ConstructorField {
         return {
             name: this.context.getPropertyName(body.bodyKey),
-            value: this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
+            value: this.getReferencedRequestBodyPropertyTypeLiteral({
+                body: body.bodyType,
+                // The generated wrapper requires the body, so an example that omits it still has to
+                // construct one. Only an object body has an empty form to fall back on.
+                value: body.bodyType.type === "typeReference" ? (value ?? {}) : value
+            })
         };
     }
 

@@ -704,6 +704,616 @@
         "file": "../openapi.yml",
         "type": "openapi"
       }
+    },
+    {
+      "summary": "Summarize",
+      "audiences": [],
+      "operationId": "createSummary_stream",
+      "tags": [
+        "Summaries"
+      ],
+      "sdkName": {
+        "groupName": [],
+        "methodName": "summarize_stream"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "SummarizeStreamRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "summarizeStreamRequestQuery",
+              "key": "query",
+              "schema": {
+                "description": "The chat message or question.",
+                "schema": {
+                  "example": "How can I use the Vectara platform?",
+                  "type": "string"
+                },
+                "generatedName": "SummarizeStreamRequestQuery",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "summarizeStreamRequestStreamResponse",
+              "key": "stream_response",
+              "schema": {
+                "description": "Indicates whether the response should be streamed or not.",
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "SummarizeStreamRequestStreamResponse",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "SummarizeStreamRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "required": false,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "SummarizeStreamResponse",
+          "schema": "ChatStreamedResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingJson"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/summaries",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "query": {
+                "value": {
+                  "value": "How can I use the Vectara platform?",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "stream_response": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": false,
+            "events": [
+              {
+                "properties": {
+                  "chunk": {
+                    "value": {
+                      "value": "Hello, how can I help you today?",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Summarize",
+      "audiences": [],
+      "operationId": "createSummary",
+      "tags": [
+        "Summaries"
+      ],
+      "sdkName": {
+        "groupName": [],
+        "methodName": "summarize"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "SummarizeRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "summarizeRequestQuery",
+              "key": "query",
+              "schema": {
+                "description": "The chat message or question.",
+                "schema": {
+                  "example": "How can I use the Vectara platform?",
+                  "type": "string"
+                },
+                "generatedName": "SummarizeRequestQuery",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "summarizeRequestStreamResponse",
+              "key": "stream_response",
+              "schema": {
+                "description": "Indicates whether the response should be streamed or not.",
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "SummarizeRequestStreamResponse",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "SummarizeRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "required": false,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "SummarizeResponse",
+          "schema": "ChatFullResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/summaries",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "query": {
+                "value": {
+                  "value": "How can I use the Vectara platform?",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "stream_response": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "chat_id": {
+                  "value": {
+                    "value": "chat_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "turn_id": {
+                  "value": {
+                    "value": "turn_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "answer": {
+                  "value": {
+                    "value": "answer",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Summarize with a required body",
+      "audiences": [],
+      "operationId": "createRequiredSummary_stream",
+      "tags": [
+        "Summaries"
+      ],
+      "sdkName": {
+        "groupName": [],
+        "methodName": "summarizeRequired_stream"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "SummarizeRequiredStreamRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "summarizeRequiredStreamRequestQuery",
+              "key": "query",
+              "schema": {
+                "description": "The chat message or question.",
+                "schema": {
+                  "example": "How can I use the Vectara platform?",
+                  "type": "string"
+                },
+                "generatedName": "SummarizeRequiredStreamRequestQuery",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "summarizeRequiredStreamRequestStreamResponse",
+              "key": "stream_response",
+              "schema": {
+                "description": "Indicates whether the response should be streamed or not.",
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "SummarizeRequiredStreamRequestStreamResponse",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "SummarizeRequiredStreamRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "required": true,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "SummarizeRequiredStreamResponse",
+          "schema": "ChatStreamedResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingJson"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/summaries/required",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "query": {
+                "value": {
+                  "value": "How can I use the Vectara platform?",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "stream_response": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": false,
+            "events": [
+              {
+                "properties": {
+                  "chunk": {
+                    "value": {
+                      "value": "Hello, how can I help you today?",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Summarize with a required body",
+      "audiences": [],
+      "operationId": "createRequiredSummary",
+      "tags": [
+        "Summaries"
+      ],
+      "sdkName": {
+        "groupName": [],
+        "methodName": "summarizeRequired"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "SummarizeRequiredRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "summarizeRequiredRequestQuery",
+              "key": "query",
+              "schema": {
+                "description": "The chat message or question.",
+                "schema": {
+                  "example": "How can I use the Vectara platform?",
+                  "type": "string"
+                },
+                "generatedName": "SummarizeRequiredRequestQuery",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "summarizeRequiredRequestStreamResponse",
+              "key": "stream_response",
+              "schema": {
+                "description": "Indicates whether the response should be streamed or not.",
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "SummarizeRequiredRequestStreamResponse",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "SummarizeRequiredRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "required": true,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "SummarizeRequiredResponse",
+          "schema": "ChatFullResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/summaries/required",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "query": {
+                "value": {
+                  "value": "How can I use the Vectara platform?",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "stream_response": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "chat_id": {
+                  "value": {
+                    "value": "chat_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "turn_id": {
+                  "value": {
+                    "value": "turn_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "answer": {
+                  "value": {
+                    "value": "answer",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
     }
   ],
   "webhooks": [],

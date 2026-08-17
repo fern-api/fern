@@ -1179,7 +1179,8 @@
                             }
                         }
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

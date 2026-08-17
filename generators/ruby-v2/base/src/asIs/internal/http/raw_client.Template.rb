@@ -23,10 +23,13 @@ module <%= gem_namespace %>
         # @param max_retries [Integer] The number of times to retry a failed request, defaults to <%= defaultMaxRetries %>.
         # @param timeout [Float] The timeout for the request, defaults to 60.0 seconds.
         # @param headers [Hash] The headers for the request.
+        # @param overridable_headers [Array<String>] The names of the client-level headers a request
+        #   may replace via `additional_headers`. Holds the API's global headers; SDK metadata and
+        #   auth headers are absent from it and so stay protected.
         # @param auth_provider [Object, nil] An optional auth provider responding to
         #   `auth_headers`. When present its headers are resolved on every request so
         #   token-based schemes (e.g. OAuth) can refresh an expired token mid-session.
-        def initialize(base_url:, max_retries: <%= defaultMaxRetries %>, timeout: 60.0, headers: {}, auth_provider: nil)
+        def initialize(base_url:, max_retries: <%= defaultMaxRetries %>, timeout: 60.0, headers: {}, overridable_headers: [], auth_provider: nil)
           @base_url = base_url
           @max_retries = max_retries
           @timeout = timeout
@@ -36,6 +39,7 @@ module <%= gem_namespace %>
             "X-Fern-SDK-Name": "<%= sdkName %>",
             "X-Fern-SDK-Version": "0.0.1"
           }.merge(headers)<% } else { %>headers<% } %>
+          @overridable_headers = overridable_headers.to_set { |name| name.to_s.downcase }
         end
 <% if (includePlatformHeaders) { %>
         # Builds a structured User-Agent header value of the form
@@ -93,6 +97,62 @@ module <%= gem_namespace %>
           else value
           end
         end
+<% } %><% if (allowUserAgentAppInfo) { %>
+        # RFC 7230 token characters (tchar). Any character outside this set in a
+        # product token (name/version) is percent-encoded so caller-supplied values
+        # cannot break out of the token or inject additional header content.
+        USER_AGENT_TCHAR = /[^!#$%&'*+\-.^_`|~0-9A-Za-z]/
+        # Characters that must be escaped inside an RFC 9110 comment: the delimiters
+        # `(`, `)`, `\`, and control characters (incl. CR/LF).
+        USER_AGENT_COMMENT_UNSAFE = /[()\\\x00-\x1f\x7f]/
+
+        # Appends the caller-supplied application product token to a base User-Agent
+        # value, producing "{base} {name}/{version} ({comment})" per RFC 9110. The
+        # `version` and `comment` segments are omitted when blank. Caller-supplied
+        # values are trimmed (blank is treated as absent) and sanitized before being
+        # appended so they cannot inject additional header content. Returns the base
+        # value unchanged when `app_info` or its `name` is absent.
+        # @param user_agent [String] The base User-Agent value.
+        # @param app_info [Hash, nil] Optional { name:, version:, comment: } app info.
+        # @return [String] The User-Agent value with the app product token appended.
+        def self.append_app_info(user_agent, app_info)
+          return user_agent if app_info.nil?
+
+          name = encode_user_agent_token((app_info[:name] || app_info["name"]).to_s.strip)
+          return user_agent if name.empty?
+
+          product_token = name
+          version = encode_user_agent_token((app_info[:version] || app_info["version"]).to_s.strip)
+          product_token += "/#{version}" unless version.empty?
+
+          comment = encode_user_agent_comment((app_info[:comment] || app_info["comment"]).to_s.strip)
+          product_token += " (#{comment})" unless comment.empty?
+
+          "#{user_agent} #{product_token}"
+        end
+
+        # Percent-encodes every non-tchar character so the value is a valid RFC 7230
+        # token.
+        # @param value [String] The raw product-token value.
+        # @return [String] The token-encoded value.
+        def self.encode_user_agent_token(value)
+          value.gsub(USER_AGENT_TCHAR) { |char| percent_encode_user_agent(char) }
+        end
+
+        # Escapes the comment delimiters and control characters so a caller-supplied
+        # comment cannot terminate the comment group early or inject header content.
+        # @param value [String] The raw comment value.
+        # @return [String] The escaped comment value.
+        def self.encode_user_agent_comment(value)
+          value.gsub(USER_AGENT_COMMENT_UNSAFE) { |char| percent_encode_user_agent(char) }
+        end
+
+        # Percent-encodes each byte of the given character as uppercase hex.
+        # @param char [String] A single (possibly multibyte) character.
+        # @return [String] The percent-encoded representation.
+        def self.percent_encode_user_agent(char)
+          char.bytes.map { |byte| format("%%%02X", byte) }.join
+        end
 <% } %>
         # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
         # @return [HTTP::Response] The HTTP response.
@@ -108,7 +168,7 @@ module <%= gem_namespace %>
             http_request = build_http_request(
               url:,
               method: request.method,
-              headers: request.encode_headers(protected_keys: @default_headers.keys + auth_headers.keys),
+              headers: request.encode_headers(protected_keys: protected_header_keys + auth_headers.keys),
               body: request.encode_body,
               auth_headers: auth_headers
             )
@@ -129,6 +189,15 @@ module <%= gem_namespace %>
           end
 
           response
+        end
+
+        # The client-level header names that `additional_headers` must not replace: every default
+        # header except the API's global headers, which are overridable per request.
+        # @return [Array<Symbol, String>] The protected header names.
+        def protected_header_keys
+          return @default_headers.keys if @overridable_headers.empty?
+
+          @default_headers.keys.reject { |name| @overridable_headers.include?(name.to_s.downcase) }
         end
 
         # Determines if a request should be retried based on the response status code.

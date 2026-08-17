@@ -22,6 +22,7 @@ import { GeneratedDefaultEndpointImplementation } from "../endpoints/default/Gen
 function createMockRequest(opts?: {
     endpointParameters?: { name: string; type: string; docs?: string }[];
     buildStatements?: ts.Statement[];
+    buildHeaderStatements?: ts.Statement[];
     fetcherArgs?: Record<string, ts.Expression>;
     requestParameter?: ts.TypeNode;
     exampleParameters?: ts.Expression[];
@@ -36,6 +37,7 @@ function createMockRequest(opts?: {
                 docs: p.docs
             })),
         getBuildRequestStatements: () => opts?.buildStatements ?? [],
+        getBuildHeaderStatements: () => opts?.buildHeaderStatements ?? [],
         getFetcherRequestArgs: () => ({
             headers: opts?.fetcherArgs?.headers,
             queryParameters: opts?.fetcherArgs?.queryParameters,
@@ -500,6 +502,46 @@ describe("GeneratedDefaultEndpointImplementation", () => {
             const context = createMockFileContext();
             const stmts = impl.getStatements(context);
             const output = serializeStatements(stmts);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates uri pagination body that sends the request on the first page", () => {
+            const impl = createImpl({
+                request: createMockRequest({
+                    requestParameter: ts.factory.createTypeReferenceNode("ListUsersRequest"),
+                    buildStatements: [
+                        ts.factory.createExpressionStatement(ts.factory.createIdentifier("// build request"))
+                    ]
+                }),
+                response: createMockResponse({
+                    paginationInfo: {
+                        type: "uri",
+                        responseType: ts.factory.createTypeReferenceNode("ListResponse"),
+                        itemType: ts.factory.createTypeReferenceNode("User"),
+                        getItems: ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("response"),
+                            ts.factory.createIdentifier("items")
+                        ),
+                        hasNextPage: ts.factory.createBinaryExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier("response"),
+                                ts.factory.createIdentifier("next")
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
+                            ts.factory.createNull()
+                        ),
+                        loadPage: [
+                            ts.factory.createExpressionStatement(ts.factory.createIdentifier("// load next page"))
+                        ]
+                    }
+                })
+            });
+            const context = createMockFileContext();
+            const stmts = impl.getStatements(context);
+            const output = serializeStatements(stmts);
+            // The first page is a regular request, so the request the caller built must be sent.
+            expect(output).toContain("// build request");
+            expect(output).toContain("await initialRequest().withRawResponse()");
             expect(output).toMatchSnapshot();
         });
 

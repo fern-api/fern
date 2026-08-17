@@ -1,4 +1,143 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.28.0
+  changelogEntry:
+    - summary: |
+        Add `respect_optional_request_body`. With it enabled, an endpoint whose request body the API does
+        not require defaults that body to the `OMIT` sentinel — `batch_refund(request: Sequence[RefundRequest] = OMIT)`
+        rather than `request: Optional[Sequence[RefundRequest]]` — so "not passed" stays distinct from an
+        explicit `None`, and a body left out means the request carries no content and no `Content-Type`.
+        Examples that supply no body render as `client.batch_refund()`. When the body inlines into keyword
+        arguments instead, leaving all of them out sends no body rather than an empty `{}`. Defaults to
+        `false`, so signatures and snippets are unchanged until you opt in.
+      type: feat
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 5.27.1
+  changelogEntry:
+    - summary: |
+        Accept a plain string for the root client's `token` parameter when OAuth client credentials
+        are configured with a token override. The constructor overload, implementation signature, and
+        docstring previously typed `token` as `typing.Callable[[], str]` only, even though the client
+        wrapper accepts `typing.Union[str, typing.Callable[[], str]]` at runtime and the generated
+        example passes a string literal, so type checkers rejected the documented usage.
+      type: fix
+  createdAt: "2026-08-10"
+  irVersion: 67
+- version: 5.27.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `prefer_explicit_auth` configuration option. When enabled (and the API composes
+        OAuth client-credentials with basic auth via `auth: any`), auth credentials passed
+        explicitly to the client constructor take precedence over environment-variable
+        defaults when selecting the auth scheme — e.g. explicitly provided basic auth
+        credentials win over OAuth client ID/secret environment variables. Disabled by
+        default, so existing generated output and runtime behavior are unchanged.
+      type: feat
+  createdAt: "2026-08-09"
+  irVersion: 67
+- version: 5.26.1
+  changelogEntry:
+    - summary: |
+        Fixed WireMock stubs for wire tests of APIs with `auth: any` combining Basic and
+        OAuth/Bearer schemes: stubs now accept either Authorization form instead of
+        requiring the exact Basic header the client may not send.
+      type: fix
+  createdAt: "2026-08-08"
+  irVersion: 67
+- version: 5.26.0
+  changelogEntry:
+    - summary: |
+        Add an `encode_path_params` config option (default `false`). When enabled, path parameter
+        values are percent-encoded when substituted into the request path, so a value containing `/`
+        or `..` can no longer change which endpoint the request resolves to. The default `false`
+        preserves the existing (unencoded) behavior; TypeScript, Go, Java, and C# already encode path
+        params.
+      type: feat
+  createdAt: "2026-07-31"
+  irVersion: 67
+- version: 5.25.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `allow_user_agent_app_info` config (camelCase alias `allowUserAgentAppInfo`).
+        When enabled, the generated client accepts an optional `app_info`
+        (`{"name": ..., "version"?: ..., "comment"?: ...}`) constructor argument whose product
+        token is appended to the `User-Agent` header
+        (`{sdk}/{version} ... {product}/{product-version} ({comment})`), following RFC 9110.
+        Disabled by default, so existing generated output is unchanged. It composes with
+        `include_platform_headers`, the `user-agent` template config, and the default
+        `{package}/{version}` value, and survives the `runtime_version` path. Caller-supplied
+        values are sanitized (name/version token-encoded, comment delimiters and control
+        characters escaped), and it is still overridable by an explicit `User-Agent` header and
+        suppressed by `omit_fern_headers`.
+      type: feat
+  createdAt: "2026-07-31"
+  irVersion: 67
+- version: 5.24.2
+  changelogEntry:
+    - summary: |
+        Fix two issues with the opt-in `allow_user_agent_app_info` client option:
+        - The `app_info` constructor parameter no longer leaks a bare positional `None`
+          into generated usage snippets and docstrings, which produced invalid Python
+          (a positional argument after keyword arguments). It remains an optional keyword
+          argument defaulting to `None`.
+        - Non-ASCII characters in the `app_info` comment are now percent-encoded (UTF-8).
+          Previously they were passed through into the `User-Agent` header, causing httpx
+          to raise `UnicodeEncodeError` on every request.
+      type: fix
+  createdAt: "2026-07-31"
+  irVersion: 67
+- version: 5.24.1
+  changelogEntry:
+    - summary: |
+        Respect the `user-agent` config template when `include_platform_headers` or
+        `runtime_version` is enabled. The structured User-Agent previously always used the
+        package name and version, ignoring the configured template.
+      type: fix
+  createdAt: "2026-07-30"
+  irVersion: 67
+- version: 5.24.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `optional-auth` config flag. When enabled, client auth
+        parameters (bearer token, basic auth username/password, header auth) are
+        made optional even when the API spec mandates auth on all endpoints
+        (`isAuthMandatory=true`). Auth headers are only sent when credentials are
+        provided. Useful for hand-maintained wrapper clients that authenticate via
+        external means (e.g. cloud provider credentials). Defaults to `false`, so
+        existing behavior is unchanged.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 5.23.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `runtime_version` config flag. When enabled, the SDK version
+        reported in the telemetry headers (`X-Fern-SDK-Version` and the version segment
+        of `User-Agent`) is resolved at runtime via `importlib.metadata.version(<dist>)`
+        instead of being baked in as a literal at generation time. This lets the reported
+        version track the actually-installed package version — for example when an
+        external tool such as release-please sets the published version after generation —
+        rather than a version the SDK may never publish. Falls back to the generation-time
+        version when the distribution is not installed (e.g. running from source). Disabled
+        by default, so existing generated output is unchanged, and subject to
+        `omit_fern_headers`.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 5.22.2
+  changelogEntry:
+    - summary: |
+        Fix multipart form list-of-primitive body properties being sent as a single
+        JSON-encoded field instead of repeated form fields. A property such as
+        `Optional[List[str]]` was serialized as `json.dumps(jsonable_encoder(value))`,
+        producing one field whose value was the whole JSON array (e.g.
+        `keyterms=["a","b"]`); servers that validate each item then rejected it. Such
+        properties are now passed through `jsonable_encoder` and handed directly to
+        httpx's `data=`, emitting repeated fields (`keyterms=a`, `keyterms=b`). Lists of
+        objects, maps, and other complex types remain JSON-encoded as before.
+      type: fix
+  createdAt: "2026-07-28"
+  irVersion: 67
 - version: 5.22.1
   changelogEntry:
     - summary: |

@@ -705,8 +705,16 @@ types:
     properties:
       display-name: string
       path:
-        type: string
-        docs: The relative path to the version's docs.yml file.
+        type: optional<string>
+        docs: |
+          The relative path to the version's docs.yml file. Required unless `ref` is set,
+          in which case the version's content is built from that git ref.
+      ref:
+        type: optional<string>
+        docs: |
+          A git ref—branch, tag, or commit SHA—whose committed content is built for this
+          version. Branches are mutable and resolve to their latest commit on the remote;
+          tags and commit SHAs are immutable.
       slug:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
@@ -1572,6 +1580,12 @@ types:
         docs: |
           Optional path within the repository to the library source.
           Example: django/core
+      ref:
+        type: optional<string>
+        docs: |
+          Git ref (branch, tag, or commit SHA) to check out.
+          Defaults to the repository's default branch when omitted.
+          Example: feature/my-fix
 
   PathLibraryInputSchema:
     docs: Configuration for using a local filesystem path as library source. (Not yet implemented)
@@ -2337,6 +2351,11 @@ types:
         type: optional<integer>
         docs: |
           The maximum number of websocket messages per connection in the playground.
+      "send-optional-defaults":
+        type: optional<boolean>
+        docs: |
+          When true, optional parameters that declare a default (or x-fern-default) are
+          pre-filled and sent from the API Explorer playground. Defaults to false.
 
   PlaygroundButtonSettings:
     properties:

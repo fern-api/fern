@@ -701,7 +701,7 @@ await client.Service.CreateBigEntityAsync(
 <dd>
 
 ```csharp
-await client.Service.RefreshTokenAsync(null);
+await client.Service.RefreshTokenAsync();
 ```
 </dd>
 </dl>
