@@ -991,4 +991,42 @@ public class CasingConfigurationTest {
             assertThat(config.computeName("user_id").camelSafe).isEqualTo("userId");
         }
     }
+
+    // ===== keyword sanitization: inputs with no letters/digits (wordless names) =====
+
+    @Nested
+    class WordlessNameTests {
+
+        @Test
+        void computeName_dash_fallsBackToUnderscore() {
+            CasingConfiguration.NameParts parts =
+                    buildConfig(true, "java", null).computeName("-");
+            assertThat(parts.camelSafe).isEqualTo("__");
+            assertThat(parts.pascalSafe).isEqualTo("__");
+            assertThat(parts.snakeSafe).isEqualTo("__");
+            assertThat(parts.screamingSnakeSafe).isEqualTo("__");
+        }
+
+        @Test
+        void computeName_at_fallsBackToUnderscore() {
+            assertThat(buildConfig(true, "java", null).computeName("@").camelSafe)
+                    .isEqualTo("__");
+        }
+
+        @Test
+        void computeName_dashUnderscoreDash_keepsLegalUnderscore() {
+            // "-_-" has its illegal '-' characters stripped, leaving "_", which is itself reserved.
+            assertThat(buildConfig(true, "java", null).computeName("-_-").camelSafe)
+                    .isEqualTo("__");
+        }
+
+        @Test
+        void computeName_dollarSign_isAlreadyValid() {
+            // '$' is a legal Java identifier character, so it's kept as-is (not a reserved word).
+            CasingConfiguration.NameParts parts =
+                    buildConfig(true, "java", null).computeName("$$");
+            assertThat(parts.camelUnsafe).isEqualTo("$$");
+            assertThat(parts.camelSafe).isEqualTo("$$");
+        }
+    }
 }

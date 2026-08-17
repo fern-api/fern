@@ -36,10 +36,8 @@ public final class CasingConfiguration {
 
     private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("^[0-9]");
 
-    // splitWords() (and therefore toCamelCase/toBasicSnakeCase/toSmartSnakeCase) never matches
-    // underscores, so an all-underscore input collapses to "" before sanitizeName ever runs.
-    // Short-circuit that case and keep the literal underscores instead of losing them.
-    private static final Pattern ALL_UNDERSCORES = Pattern.compile("^_+$");
+    // Characters legal in a Java identifier (the ASCII subset the rest of this class deals in).
+    private static final Pattern ILLEGAL_IDENTIFIER_CHARS = Pattern.compile("[^A-Za-z0-9_$]");
 
     // Match lodash words() regex: [A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+
     private static final Pattern SPLIT_WORDS_PATTERN =
@@ -172,11 +170,6 @@ public final class CasingConfiguration {
     private NameParts computeNameInternal(String inputName) {
         String name = preprocessName(inputName);
 
-        if (ALL_UNDERSCORES.matcher(name).matches()) {
-            String safeName = sanitizeName(name);
-            return new NameParts(inputName, name, safeName, name, safeName, name, safeName, name, safeName);
-        }
-
         String camelCaseName = toCamelCase(name);
         String pascalCaseName = upperFirst(camelCaseName);
         String snakeCaseName;
@@ -197,6 +190,21 @@ public final class CasingConfiguration {
                 camelCaseName = applyInitialismsCamel(camelWords);
                 pascalCaseName = applyInitialismsPascal(camelWords);
             }
+        }
+
+        // splitWords() only recognizes letter/digit runs, so an input made entirely of
+        // separators/symbols (e.g. "_", "-", "@", "-_-") produces zero words and every casing
+        // variant above collapses to "". Recover a usable identifier instead of losing the name
+        // entirely: strip characters that aren't legal in a Java identifier and keep whatever's
+        // left (e.g. "$$" stays "$$", "-_-" becomes "_"); if nothing legal remains, fall back to
+        // "_" (which sanitizeName further escapes to "__", since "_" alone is reserved).
+        if (camelCaseName.isEmpty() && !name.isEmpty()) {
+            String legal = ILLEGAL_IDENTIFIER_CHARS.matcher(name).replaceAll("");
+            String fallback = legal.isEmpty() ? "_" : legal;
+            camelCaseName = fallback;
+            pascalCaseName = fallback;
+            snakeCaseName = fallback;
+            screamingSnakeCaseName = fallback.toUpperCase();
         }
 
         return new NameParts(
