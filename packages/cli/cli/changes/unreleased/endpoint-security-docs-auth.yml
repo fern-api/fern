@@ -1,0 +1,9 @@
+- summary: |
+    Render per-endpoint auth in docs when `api.auth` is `endpoint-security`. The declared
+    `auth-schemes` were dropped and each operation's `security` was discarded, so published API
+    reference pages referenced a scheme id absent from the definition and showed no auth section,
+    no auth headers in copied snippets, and no credential inputs in the API Explorer. Endpoints now
+    document exactly the schemes they declare — either-scheme endpoints render each option
+    separately, single-scheme endpoints render only that scheme, and `security: []` endpoints render
+    none.
+  type: fix
