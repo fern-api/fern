@@ -63,6 +63,17 @@ describe("invocation-only snippets", () => {
         expect(response?.clientName).toBe("AcmeAcmeClient");
     });
 
+    it("exposes the client import so docs can render the client construction without authoring it", () => {
+        const response = generator.generateInvocationSync(request);
+
+        // The client import is distinct from `imports` (which only carries imports the bare call
+        // references). It imports the generated client class itself so docs can render `new
+        // AcmeAcmeClient(...)` alongside the invocation.
+        expect(response?.clientImport).toContain("import ");
+        expect(response?.clientImport).toContain(`${response?.clientName};`);
+        expect(response?.clientImport?.trim().endsWith(";")).toBe(true);
+    });
+
     it("invokes the endpoint on the requested client variable", () => {
         const response = generator.generateInvocationSync(request, { clientVariableName: "mailchimp" });
 

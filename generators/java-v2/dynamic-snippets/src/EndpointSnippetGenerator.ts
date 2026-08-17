@@ -147,10 +147,21 @@ export class EndpointSnippetGenerator {
             customConfig: this.context.customConfig,
             formatter: this.formatter
         });
+        // Render a bare reference to the generated root client class so its `import ...;` can be
+        // surfaced on its own. This lets docs render the client import (e.g. to construct the
+        // client themselves) without hand-authoring it. Rendered at the snippet package so the
+        // client's own package is not elided; empty string when the client needs no import.
+        const { imports: clientImport } = java.renderNodeWithoutImports({
+            node: this.context.getRootClientClassReference(),
+            packageName: config.fullStylePackageName ?? SNIPPET_PACKAGE_NAME,
+            customConfig: this.context.customConfig,
+            formatter: this.formatter
+        });
         return {
             snippet: code.trim(),
             imports,
             clientName: this.context.getRootClientClassNameForSnippets(),
+            clientImport,
             errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
         };
     }
