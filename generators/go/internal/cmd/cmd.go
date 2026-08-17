@@ -181,12 +181,14 @@ func run(fn GeneratorFunc) (retErr error) {
 		if err != nil {
 			return err
 		}
-		modulePath, err := appendMajorVersionSuffix(config.Module.Path, suffix)
-		if err != nil {
-			return err
-		}
 		config.ImportPath = importPath
-		config.Module.Path = modulePath
+		if config.Module != nil {
+			modulePath, err := appendMajorVersionSuffix(config.Module.Path, suffix)
+			if err != nil {
+				return err
+			}
+			config.Module.Path = modulePath
+		}
 	}
 	defer func() {
 		exitStatusUpdate := generatorexec.NewExitStatusUpdateFromSuccessful(new(generatorexec.SuccessfulStatusUpdate))
@@ -622,7 +624,7 @@ func majorVersionSuffix(importPath string) (string, error) {
 	_, pathMajor, ok := module.SplitPathVersion(importPath)
 	if !ok {
 		return "", fmt.Errorf(
-			"the configured import path %q ends in %q, which isn't a valid Go major version suffix; remove the suffix and let Fern append the version being released, or replace it with a valid suffix (e.g. %q)",
+			"the configured import path %q isn't a valid Go module path; remove the %q suffix and let Fern append the version being released, or replace it with a valid suffix (e.g. %q)",
 			importPath,
 			path.Base(importPath),
 			"v2",

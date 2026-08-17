@@ -1,16 +1,15 @@
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
-import { basename } from "@fern-api/path-utils";
 import path from "path";
 import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema.js";
 
 const DEFAULT_MODULE_PATH = "sdk";
 
-// Matches the ".vN" suffix used by gopkg.in paths, which carry the major version for all
-// N rather than only N >= 2.
-const GOPKG_IN_MAJOR_VERSION_SUFFIX_PATTERN = /\.v[1-9]\d*$/;
+// Matches the ".vN" suffix every gopkg.in path must carry, optionally followed by
+// "-unstable". Unlike a module path suffix, ".v0" and ".v1" are both legal.
+const GOPKG_IN_MAJOR_VERSION_SUFFIX_PATTERN = /\.v(\d+)(?:-unstable)?$/;
 
 // Matches a path element that looks like a major version, e.g. "v2", "v0", "v1.2".
-const MAJOR_VERSION_LIKE_SUFFIX_PATTERN = /\/v[0-9.]+$/;
+const MAJOR_VERSION_LIKE_SUFFIX_PATTERN = /\/v([0-9.]+)$/;
 
 export function resolveRootImportPath({
     config,
@@ -99,7 +98,7 @@ function maybeAppendMajorVersionSuffix({
     const suffix = splitMajorVersionSuffix(importPath);
     if (suffix.type === "invalid") {
         throw new Error(
-            `The configured import path "${importPath}" ends in "${basename(importPath)}", which isn't a valid Go major version suffix. ` +
+            `The configured import path "${importPath}" isn't a valid Go module path: ${suffix.reason}. ` +
                 'Remove the suffix and let Fern append the version being released, or replace it with a valid suffix (e.g. "/v2").'
         );
     }
@@ -109,31 +108,51 @@ function maybeAppendMajorVersionSuffix({
     return `${importPath}/${majorVersion}`;
 }
 
-type MajorVersionSuffix = { type: "present" } | { type: "absent" } | { type: "invalid" };
+type MajorVersionSuffix = { type: "present" } | { type: "absent" } | { type: "invalid"; reason: string };
 
 // Classifies the major version suffix an import path carries, mirroring the behavior of
 // golang.org/x/mod's module.SplitPathVersion (which the Go generator itself calls, and
 // which this TypeScript implementation cannot):
 //
-//   github.com/acme/acme-go       -> absent
-//   github.com/acme/acme-go/v2    -> present
-//   github.com/acme/acme-go/v0    -> invalid (only v2 and above may carry a suffix)
-//   github.com/acme/acme-go/v01   -> invalid (zero-padded)
-//   github.com/acme/acme-go/v1    -> invalid (v1 modules carry no suffix)
-//   github.com/acme/acme-go/v1.2  -> invalid (not a major version)
+//   github.com/acme/acme-go            -> absent
+//   github.com/acme/acme-go/v2         -> present
+//   github.com/acme/acme-go/v0         -> invalid (only v2 and above may carry a suffix)
+//   github.com/acme/acme-go/v01        -> invalid (zero-padded)
+//   github.com/acme/acme-go/v1         -> invalid (v1 modules carry no suffix)
+//   github.com/acme/acme-go/v1.2       -> invalid (not a major version)
+//   gopkg.in/acme/acme-go.v0           -> present (gopkg.in carries the major for every N)
+//   gopkg.in/acme/acme-go.v2-unstable  -> present
+//   gopkg.in/acme/acme-go              -> invalid (every gopkg.in path must end in ".vN")
+//   gopkg.in/acme/acme-go.v01          -> invalid (zero-padded)
 function splitMajorVersionSuffix(importPath: string): MajorVersionSuffix {
     if (importPath.startsWith("gopkg.in/")) {
-        return GOPKG_IN_MAJOR_VERSION_SUFFIX_PATTERN.test(importPath) ? { type: "present" } : { type: "absent" };
+        const version = GOPKG_IN_MAJOR_VERSION_SUFFIX_PATTERN.exec(importPath)?.[1];
+        if (version == null) {
+            return { type: "invalid", reason: 'every gopkg.in path must end in a major version, e.g. ".v2"' };
+        }
+        if (isZeroPadded(version)) {
+            return { type: "invalid", reason: `".v${version}" is zero-padded` };
+        }
+        return { type: "present" };
     }
-    const match = MAJOR_VERSION_LIKE_SUFFIX_PATTERN.exec(importPath);
-    if (match == null) {
+    const version = MAJOR_VERSION_LIKE_SUFFIX_PATTERN.exec(importPath)?.[1];
+    if (version == null) {
         return { type: "absent" };
     }
-    const version = match[0].slice(2);
-    if (version.includes(".") || version.startsWith("0") || version === "1") {
-        return { type: "invalid" };
+    if (version.includes(".")) {
+        return { type: "invalid", reason: `"v${version}" isn't a major version` };
+    }
+    if (isZeroPadded(version)) {
+        return { type: "invalid", reason: `"v${version}" is zero-padded` };
+    }
+    if (version === "0" || version === "1") {
+        return { type: "invalid", reason: `only v2 and above may carry a version suffix, not "v${version}"` };
     }
     return { type: "present" };
+}
+
+function isZeroPadded(version: string): boolean {
+    return version.length > 1 && version.startsWith("0");
 }
 
 function trimPrefix(str: string, prefix: string): string {

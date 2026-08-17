@@ -89,6 +89,13 @@ func TestMajorVersionSuffix(t *testing.T) {
 		{importPath: "github.com/acme/acme-go/v0", expectedErr: true},
 		{importPath: "github.com/acme/acme-go/v01", expectedErr: true},
 		{importPath: "github.com/acme/acme-go/v1", expectedErr: true},
+		// gopkg.in paths carry the major version as a ".vN" suffix for every N, and must
+		// always carry one. The go-v2 TypeScript port is tested against the same rows.
+		{importPath: "gopkg.in/acme/acme-go.v0", expected: ".v0"},
+		{importPath: "gopkg.in/acme/acme-go.v1", expected: ".v1"},
+		{importPath: "gopkg.in/acme/acme-go.v2-unstable", expected: ".v2-unstable"},
+		{importPath: "gopkg.in/acme/acme-go", expectedErr: true},
+		{importPath: "gopkg.in/acme/acme-go.v01", expectedErr: true},
 	}
 	for _, test := range tests {
 		t.Run(test.importPath, func(t *testing.T) {

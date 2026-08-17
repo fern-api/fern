@@ -61,7 +61,13 @@ describe("resolveRootModulePath", () => {
     it.each([
         { importPath: "github.com/plaid/plaid-go/v46", expected: "github.com/plaid/plaid-go/v46" },
         { importPath: "github.com/plaid/plaid-go", expected: "github.com/plaid/plaid-go/v2" },
-        { importPath: "github.com/acme/acme-go/v2", expected: "github.com/acme/acme-go/v2" }
+        { importPath: "github.com/acme/acme-go/v2", expected: "github.com/acme/acme-go/v2" },
+        // gopkg.in paths carry the major version as a ".vN" suffix for every N, optionally
+        // followed by "-unstable", so none of these gain a "/v2".
+        { importPath: "gopkg.in/acme/acme-go.v0", expected: "gopkg.in/acme/acme-go.v0" },
+        { importPath: "gopkg.in/acme/acme-go.v1", expected: "gopkg.in/acme/acme-go.v1" },
+        { importPath: "gopkg.in/acme/acme-go.v2", expected: "gopkg.in/acme/acme-go.v2" },
+        { importPath: "gopkg.in/acme/acme-go.v2-unstable", expected: "gopkg.in/acme/acme-go.v2-unstable" }
     ])("resolves $importPath to $expected", ({ importPath, expected }) => {
         expect(
             resolveRootModulePath({
@@ -71,19 +77,24 @@ describe("resolveRootModulePath", () => {
         ).toBe(expected);
     });
 
-    // These paths are not legal Go module paths: only v2 and above may carry a suffix, and
-    // it may not be zero-padded. Appending would silently emit an unbuildable ".../v0/v2".
-    it.each(["v0", "v01", "v1", "v1.2"])(
-        "surfaces a configuration error when the configured path ends in %s",
-        (segment) => {
-            expect(() =>
-                resolveRootModulePath({
-                    config: buildConfig({ version: "2.0.0" }),
-                    customConfig: { importPath: `github.com/acme/acme-go/${segment}` }
-                })
-            ).toThrow(/isn't a valid Go major version suffix/);
-        }
-    );
+    // These paths are not legal Go module paths: only v2 and above may carry a suffix, it
+    // may not be zero-padded, and every gopkg.in path must carry one. Appending would
+    // silently emit something unbuildable like ".../v0/v2".
+    it.each([
+        "github.com/acme/acme-go/v0",
+        "github.com/acme/acme-go/v01",
+        "github.com/acme/acme-go/v1",
+        "github.com/acme/acme-go/v1.2",
+        "gopkg.in/acme/acme-go",
+        "gopkg.in/acme/acme-go.v01"
+    ])("surfaces a configuration error for %s", (importPath) => {
+        expect(() =>
+            resolveRootModulePath({
+                config: buildConfig({ version: "2.0.0" }),
+                customConfig: { importPath }
+            })
+        ).toThrow(/isn't a valid Go module path/);
+    });
 });
 
 describe("resolveRootImportPath", () => {
