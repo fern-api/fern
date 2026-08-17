@@ -34,7 +34,6 @@
       type: fix
   createdAt: "2026-08-14"
   irVersion: 66
->>>>>>> origin/main
 - version: 0.44.4
   changelogEntry:
     - summary: |
