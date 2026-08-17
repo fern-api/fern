@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.98.0
+  changelogEntry:
+    - summary: |
+        Add support for the `x-fern-explorer` extension in AsyncAPI specs. It controls whether the
+        API Explorer is available for a generated WebSocket channel. It can be set globally at the
+        document root and overridden per channel, with the per-channel value taking precedence.
+      type: feat
+  createdAt: "2026-08-17"
+  irVersion: 67
 - version: 5.97.0
   changelogEntry:
     - summary: |
