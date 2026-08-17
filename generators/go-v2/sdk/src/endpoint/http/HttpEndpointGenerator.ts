@@ -5,7 +5,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { getOAuthClientCredentialsScheme, isEndpointSecurity, isPlainStringType } from "../../authUtils.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
-import { areRetriesDisabled } from "../../utils/areRetriesDisabled.js";
+import { getDisableRetriesValue } from "../../utils/getDisableRetriesValue.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
 import { getPaginationInfo } from "../utils/getPaginationInfo.js";
@@ -309,9 +309,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             { name: "MaxAttempts", value: go.TypeInstantiation.reference(go.codeblock("options.MaxAttempts")) },
             {
                 name: "DisableRetries",
-                value: areRetriesDisabled(endpoint)
-                    ? go.TypeInstantiation.bool(true)
-                    : go.TypeInstantiation.reference(go.codeblock("options.DisableRetries"))
+                value: getDisableRetriesValue({
+                    endpoint,
+                    whenEnabled: go.TypeInstantiation.reference(go.codeblock("options.DisableRetries"))
+                })
             },
             { name: "BodyProperties", value: go.TypeInstantiation.reference(go.codeblock("options.BodyProperties")) },
             { name: "QueryParameters", value: go.TypeInstantiation.reference(go.codeblock("options.QueryParameters")) },
