@@ -425,6 +425,90 @@ describe("generateCpp()", () => {
         expect(existsSync(join(tmpDir, "groups"))).toBe(false);
     });
 
+    it("skips anonymous group members, which have no page to link to", () => {
+        const ir = makeIr(
+            makeNamespace({
+                name: "cub",
+                path: "cub",
+                functions: [makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" })]
+            }),
+            undefined,
+            [
+                makeGroup({
+                    id: "group__scan",
+                    name: "scan",
+                    title: "Scan",
+                    functions: [makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" })],
+                    // Doxygen emits an unnamed enum with no name and no path
+                    enums: [{ name: "", path: "", isScoped: false, underlyingType: undefined, values: [], docstring: undefined }]
+                }),
+                makeGroup({ id: "group__anon__only", name: "anon_only", title: "Anonymous only", enums: [
+                    { name: "", path: "", isScoped: false, underlyingType: undefined, values: [], docstring: undefined }
+                ] })
+            ]
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/cub" });
+
+        const scanPage = readFileSync(join(tmpDir, "groups/scan/index.mdx"), "utf-8");
+        expect(scanPage).not.toContain("## Enumerations");
+        expect(scanPage).not.toContain("[``]");
+
+        // A group whose only members are anonymous has nothing to render
+        expect(existsSync(join(tmpDir, "groups/anon_only"))).toBe(false);
+        expect(readFileSync(join(tmpDir, "groups/index.mdx"), "utf-8")).not.toContain("Anonymous only");
+    });
+
+    it("titles the groups index from the library name, falling back when the IR has none", () => {
+        const makeGroupedIr = (packageName: string) =>
+            makeIr(
+                makeNamespace({
+                    name: "cub",
+                    path: "cub",
+                    functions: [makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" })]
+                }),
+                { packageName },
+                [
+                    makeGroup({
+                        id: "group__scan",
+                        name: "scan",
+                        title: "Scan",
+                        functions: [makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" })]
+                    })
+                ]
+            );
+
+        generateCpp({ ir: makeGroupedIr("CUB"), outputDir: tmpDir, slug: "reference/cub" });
+        expect(readFileSync(join(tmpDir, "groups/index.mdx"), "utf-8")).toContain("title: CUB — Groups");
+
+        const fallbackDir = mkdtempSync(join(tmpdir(), "cpp-gen-test-"));
+        try {
+            generateCpp({ ir: makeGroupedIr(""), outputDir: fallbackDir, slug: "reference/cub" });
+            const index = readFileSync(join(fallbackDir, "groups/index.mdx"), "utf-8");
+            expect(index).toContain("title: cub — Groups");
+            expect(index).not.toContain("Documentation groups in .");
+        } finally {
+            rmSync(fallbackDir, { recursive: true, force: true });
+        }
+    });
+
+    it("links the groups folder from the library index page", () => {
+        const deviceScan = makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" });
+        const ir = makeIr(
+            makeNamespace({
+                namespaces: [makeNamespace({ name: "cub", path: "cub", functions: [deviceScan] })]
+            }),
+            undefined,
+            [makeGroup({ id: "group__scan", name: "scan", title: "Scan", functions: [deviceScan] })]
+        );
+
+        generateCpp({ ir, outputDir: join(tmpDir, "cub"), slug: "cub" });
+
+        const libraryIndex = readFileSync(join(tmpDir, "cub/index.mdx"), "utf-8");
+        expect(libraryIndex).toContain("- [Functions](cub/functions)");
+        expect(libraryIndex).toContain("- [Groups](cub/groups)");
+    });
+
     it("terminates on a group tree whose subgroup references an ancestor", () => {
         const scan = makeGroup({
             id: "group__scan",

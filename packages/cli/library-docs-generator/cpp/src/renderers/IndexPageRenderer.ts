@@ -151,12 +151,14 @@ export function namespaceHasEntities(ns: CppNamespaceIr): boolean {
  * @param categories - Pre-computed non-empty categories with their entries
  * @param hasChildNamespaces - Whether child namespaces with entities exist
  * @param nsLastSegment - Last segment of the namespace directory path (used as link prefix)
+ * @param hasGroups - Whether the library has Doxygen group pages to link to
  */
 export function renderNamespaceIndexPage(
     title: string,
     categories: CategoryWithEntries[],
     hasChildNamespaces: boolean,
-    nsLastSegment: string
+    nsLastSegment: string,
+    hasGroups = false
 ): string {
     const lines: string[] = [];
 
@@ -173,6 +175,10 @@ export function renderNamespaceIndexPage(
     // Link to namespaces index if there are child namespaces with entities
     if (hasChildNamespaces) {
         lines.push(`- [Namespaces](${nsLastSegment}/namespaces)`);
+    }
+
+    if (hasGroups) {
+        lines.push(`- [Groups](${nsLastSegment}/groups)`);
     }
 
     trimTrailingBlankLines(lines);

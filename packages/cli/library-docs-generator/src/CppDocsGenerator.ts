@@ -120,17 +120,19 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
             writer.writePage(entry.pageKey, content);
         }
 
+        const groups = (ir.groups ?? []).filter((group) => groupHasContent(group));
+
         // Stage 4: Generate index pages for namespaces
         const slugBaseName = slug.includes("/") ? (slug.split("/").pop() ?? slug) : slug;
         const libraryNs = ir.rootNamespace.namespaces.find((child) => child.name === slugBaseName);
         if (libraryNs) {
             const title = LIBRARY_TITLES[libraryNs.name] ?? `${libraryNs.name} API Reference`;
             const outputFolderSlug = slugifySegment(outputDir.split("/").pop() || slug);
-            generateIndexPages(libraryNs, title, writer, rootNsName, outputFolderSlug);
+            generateIndexPages(libraryNs, title, writer, rootNsName, outputFolderSlug, groups.length > 0);
         }
 
         // Stage 5: Generate pages for the library's Doxygen groups
-        generateGroupPages(ir.groups ?? [], writer, repo);
+        generateGroupPages(groups, writer, repo.trim() || (rootNsName ?? slug));
 
         return writer.result();
     } finally {
@@ -511,7 +513,8 @@ function generateIndexPages(
     title: string,
     writer: MdxFileWriter,
     rootNsName: string | undefined,
-    outputFolderSlug: string
+    outputFolderSlug: string,
+    hasGroups: boolean
 ): void {
     if (!namespaceHasEntities(ns)) {
         return;
@@ -548,7 +551,8 @@ function generateIndexPages(
         title,
         categoriesForNsIndex,
         childrenWithEntities.length > 0,
-        nsLastSegment
+        nsLastSegment,
+        hasGroups
     );
     writer.writePage(nsIndexPageKey, indexContent);
 
@@ -587,7 +591,8 @@ function generateIndexPages(
 
     // 4. Recurse into child namespaces
     for (const child of ns.namespaces) {
-        generateIndexPages(child, `Namespace ${child.path}`, writer, rootNsName, outputFolderSlug);
+        // Groups are listed on the library's index page only, not on every namespace
+        generateIndexPages(child, `Namespace ${child.path}`, writer, rootNsName, outputFolderSlug, false);
     }
 }
 
@@ -613,8 +618,7 @@ function groupDisplayName(group: CppGroupIr): string {
  * Members that have no page (for example symbols the parser skipped) are
  * listed without a link.
  */
-function generateGroupPages(groups: CppGroupIr[], writer: MdxFileWriter, libraryTitle: string): void {
-    const renderable = groups.filter((group) => groupHasContent(group));
+function generateGroupPages(renderable: CppGroupIr[], writer: MdxFileWriter, libraryTitle: string): void {
     if (renderable.length === 0) {
         return;
     }

@@ -35,8 +35,19 @@ export interface GroupListEntry {
     linkPath: string;
 }
 
+/**
+ * Whether a member can be listed on a group page.
+ *
+ * Doxygen emits anonymous members (an unnamed `enum`, for example) with an
+ * empty path; they have no page and nothing to display.
+ */
+function isNamedMember(member: { path: string }): boolean {
+    return member.path.trim().length > 0;
+}
+
 function collectEntries<T extends { path: string }>(items: T[]): GroupMemberEntry[] {
     return items
+        .filter(isNamedMember)
         .map((item) => ({ displayName: item.path, linkPath: buildLinkPath(item.path) }))
         .sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
@@ -46,6 +57,9 @@ function collectFunctionEntries(functions: CppFunctionIr[]): GroupMemberEntry[] 
     const seen = new Set<string>();
     const entries: GroupMemberEntry[] = [];
     for (const func of functions) {
+        if (!isNamedMember(func)) {
+            continue;
+        }
         const stripped = stripTemplateArgs(func.path);
         if (seen.has(stripped)) {
             continue;
@@ -87,7 +101,7 @@ export function groupHasContent(group: CppGroupIr, visited: Set<string> = new Se
     }
     visited.add(group.id);
     const hasMembers = [group.classes, group.functions, group.enums, group.typedefs, group.variables].some(
-        (members) => members != null && members.length > 0
+        (members) => members != null && members.some(isNamedMember)
     );
     return hasMembers || group.subgroups.some((subgroup) => groupHasContent(subgroup, visited));
 }
@@ -158,7 +172,10 @@ export function renderGroupPage(
 export function renderGroupsIndexPage(entries: GroupListEntry[], libraryTitle: string): string {
     const lines: string[] = [];
 
-    lines.push(...renderFrontmatter(`${libraryTitle} — Groups`, `Documentation groups in ${libraryTitle}.`));
+    const library = libraryTitle.trim();
+    const title = library.length > 0 ? `${library} — Groups` : "Groups";
+    const description = library.length > 0 ? `Documentation groups in ${library}.` : "Documentation groups in this library.";
+    lines.push(...renderFrontmatter(title, description));
     lines.push("");
 
     for (const entry of entries) {
