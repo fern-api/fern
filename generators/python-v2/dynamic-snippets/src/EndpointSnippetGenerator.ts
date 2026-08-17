@@ -103,10 +103,19 @@ export class EndpointSnippetGenerator {
             node: invocation,
             modulePath: SNIPPET_MODULE_PATH
         });
+        // Surface the import statement the caller needs to construct the root client
+        // (e.g. `from <sdk> import <RootClient>`) so it can be rendered independently of
+        // the invocation body. Rendering a bare reference to the client class yields just
+        // that import; when the client requires no import this is the empty string.
+        const { imports: clientImport } = python.renderNodeWithoutImports({
+            node: this.context.getRootClientClassReference(),
+            modulePath: SNIPPET_MODULE_PATH
+        });
         return {
             snippet: code.trim(),
             imports,
             clientName: this.context.getRootClientClassName(),
+            clientImport,
             errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
         };
     }
