@@ -78,6 +78,13 @@ export class EndpointSnippetGenerator {
      * than inventing an imports mechanism the language and its AST do not have. This mirrors the
      * Ruby port (types referenced via the gem namespace), not the C#/Java/PHP `{ code, imports }`
      * helper pattern.
+     *
+     * `clientImport`, by contrast, is well-defined for Rust: the generated root client resolves
+     * through that same blanket glob, `use <crate>::prelude::*;`. Unlike the per-symbol `imports`
+     * the call references — which the AST cannot surface — the client's import is a single,
+     * deterministic `use` statement (the very one {@link getUseStatements} emits into the
+     * scaffold). We render it here so docs can construct the client themselves without
+     * hand-authoring the import.
      */
     public generateInvocationSnippetSync({
         endpoint,
@@ -101,12 +108,21 @@ export class EndpointSnippetGenerator {
         // Strip a trailing statement terminator defensively; the bare Expression does not emit one,
         // but formatting/whitespace should never leak a `;` into the invocation-only snippet.
         const snippet = rawCode.trim().replace(/;$/, "").trim();
+        // The generated root client is imported via the scaffold's blanket prelude glob
+        // `use <crate>::prelude::*;` — the same statement `getUseStatements` emits. Build that
+        // bare reference and render it with the same `UseStatement.toString()` helper the scaffold
+        // uses, so `clientImport` stays consistent with how the client is actually imported.
+        const clientImport = new rust.UseStatement({
+            path: `${this.context.getCrateName()}::prelude`,
+            items: ["*"]
+        }).toString();
         return {
             snippet,
             // Always empty for Rust — see the method doc comment: the AST has no per-symbol import
             // mechanism and types resolve through the scaffold's `use <crate>::prelude::*;` glob.
             imports: "",
             clientName: this.getClientName(),
+            clientImport,
             errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
         };
     }

@@ -74,6 +74,15 @@ describe("invocation-only snippets", () => {
         expect(response?.clientName).toBe("AcmeClient");
     });
 
+    it("exposes the client import (the crate prelude glob) so docs can import the client", () => {
+        const response = generator.generateInvocationSync(request);
+
+        // The generated root client resolves through the scaffold's blanket prelude glob, the same
+        // `use <crate>::prelude::*;` statement `getUseStatements` emits. Unlike `imports` (per-symbol,
+        // which the Rust AST cannot surface), the client's own import is a single deterministic `use`.
+        expect(response?.clientImport).toBe("use acme_api::prelude::{*};");
+    });
+
     it("invokes the endpoint on the requested client variable", () => {
         const response = generator.generateInvocationSync(request, { clientVariableName: "mailchimp" });
 
