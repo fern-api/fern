@@ -28,8 +28,12 @@ export interface InvocationSnippetResponse {
      * The import statement for the generated client itself (e.g.
      * `import { AcmeClient } from "acme"`). Distinct from {@link imports}, which only
      * carries imports the bare call references. Lets docs render the client import
-     * without hand-authoring it. Empty string when the client has no import.
+     * without hand-authoring it.
+     *
+     * Optional so language generators can adopt it incrementally: absent (or empty)
+     * → the `{{snippet.clientImport}}` token resolves to the empty string, exactly
+     * like an older generator that predates the field.
      */
-    clientImport: string;
+    clientImport?: string;
     errors: FernIr.dynamic.Error_[] | undefined;
 }
