@@ -106,10 +106,28 @@ export class EndpointSnippetGenerator {
             rootNamespace: SNIPPET_NAMESPACE,
             customConfig: this.context.customConfig ?? {}
         });
+        // Render a bare reference to the generated root client class and capture the `use ...;`
+        // statement it requires, so docs can render the client import (e.g. `use Acme\AcmeClient;`)
+        // without hand-authoring it. Distinct from `imports`, which only carries the imports the
+        // bare call itself references. Empty string when the client needs no import.
+        const clientReference = php.codeblock((writer) => {
+            writer.writeNode(
+                php.classReference({
+                    name: this.context.getRootClientClassName(),
+                    namespace: this.context.rootNamespace
+                })
+            );
+        });
+        const { imports: clientImport } = clientReference.toStringWithoutImports({
+            namespace: SNIPPET_NAMESPACE,
+            rootNamespace: SNIPPET_NAMESPACE,
+            customConfig: this.context.customConfig ?? {}
+        });
         return {
             snippet: this.stripTrailingSemicolon(code.trim()),
             imports,
             clientName: this.context.getRootClientClassName(),
+            clientImport,
             errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
         };
     }
