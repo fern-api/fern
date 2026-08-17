@@ -504,8 +504,10 @@ describe("ExampleTypeFactory", () => {
 
             expect(result?.type).toBe("object");
             if (result?.type === "object") {
-                expect(result.properties.logo?.type).not.toBe("map");
-                expect(result.properties.logo?.type).not.toBe("object");
+                // The property must be preserved as an explicit null, not replaced with a
+                // placeholder map and not dropped from the example altogether.
+                expect(result.properties.logo).toMatchObject({ type: "null" });
+                expect(result.properties.id).toMatchObject({ type: "primitive" });
             }
         });
     });
