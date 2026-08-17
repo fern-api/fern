@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate invocation-only dynamic snippets. In addition to the full snippet
+    (client construction plus the call), the generator now exposes the structured
+    pieces a caller can render inside code it already owns (e.g. a documentation
+    code template): the bare invocation (`client.endpoints().update(...)`, honoring
+    a custom client variable name), the Java `import ...;` block that invocation
+    references (empty string when none), and the generated client class name so
+    docs can render `<ClientName> client = <ClientName>.builder()...` and track
+    renames.
+
+    Imports are captured separately from the call via a new
+    `java.renderNodeWithoutImports` helper and `JavaFile.getRenderedImports()`, the
+    Java analogue of the TypeScript AST's `toStringWithoutImports`. Invocations that
+    construct imported types inline (e.g. a body value built with
+    `UUID.fromString(...)`, `OffsetDateTime.parse(...)`, or `Optional.of(...)`)
+    surface those imports rather than falling back to the complete snippet. Unlike
+    the Go SDK (whose methods take a leading `context.Context`), a plain Java
+    invocation references no imports, so a bare call returns an empty import block.
+  type: feat

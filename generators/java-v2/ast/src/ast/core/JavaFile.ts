@@ -33,6 +33,18 @@ export class JavaFile extends Writer {
         return content;
     }
 
+    /**
+     * The rendered `import ...;` block for the references written to this file, or an empty
+     * string when nothing references an import. This is the Java equivalent of separating a
+     * node's imports from its body: callers that render an invocation inside code they already
+     * own (e.g. a documentation code template) can surface the imports the call needs without the
+     * surrounding package/file scaffold. (Distinct from {@link Writer.getImports}, which returns
+     * the raw set of imported package names.)
+     */
+    public getRenderedImports(): string {
+        return this.stringifyImports();
+    }
+
     private getContent(): string {
         const packageStatement = `package ${this.packageName};\n\n`;
         const imports = this.stringifyImports();
