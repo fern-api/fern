@@ -154,10 +154,39 @@ public abstract class AbstractHttpResponseParserGenerator {
 
     public abstract CodeBlock getNextPageGetter(String endpointName, String methodParameters);
 
+    /**
+     * Whether the endpoint opts out of automatic retries via the IR's {@code retries} configuration, which the
+     * {@code x-fern-retries} OpenAPI extension and the Fern definition's {@code retries} key both map to.
+     */
+    static boolean retriesDisabled(Optional<RetriesConfiguration> retries) {
+        return retries.map(retriesConfiguration ->
+                        retriesConfiguration.visit(new RetriesConfiguration.Visitor<Boolean>() {
+                            @Override
+                            public Boolean visit(RetriesDisabledSchema value) {
+                                return value.getDisabled().orElse(false);
+                            }
+                        }))
+                .orElse(false);
+    }
+
+    /**
+     * Pins the request's max retries to zero, which wins over both the client-wide and the per-request setting because
+     * the interceptor reads the tag before falling back to either.
+     */
+    private void addDisabledRetriesTag(CodeBlock.Builder httpResponseBuilder, ClassName maxRetriesOverrideClassName) {
+        httpResponseBuilder.addStatement(
+                "$L = $L.newBuilder().tag($T.class, new $T(0)).build()",
+                variables.getOkhttpRequestName(),
+                variables.getOkhttpRequestName(),
+                maxRetriesOverrideClassName,
+                maxRetriesOverrideClassName);
+    }
+
     public CodeBlock getResponseParserCodeBlock(MethodSpec.Builder endpointMethodBuilder) {
         ClassName retryInterceptorClassName =
                 clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName();
         ClassName maxRetriesOverrideClassName = retryInterceptorClassName.nestedClass("MaxRetriesOverride");
+        boolean retriesDisabled = retriesDisabled(httpEndpoint.getRetries());
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
                 // Default the request client
                 .addStatement(
@@ -177,19 +206,24 @@ public abstract class AbstractHttpResponseParserGenerator {
                         clientOptionsField,
                         generatedClientOptions.httpClientWithTimeout(),
                         AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
-                .endControlFlow()
-                .beginControlFlow(
-                        "if ($L != null && $L.getMaxRetries().isPresent())",
-                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME,
-                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
-                .addStatement(
-                        "$L = $L.newBuilder().tag($T.class, new $T($L.getMaxRetries().get())).build()",
-                        variables.getOkhttpRequestName(),
-                        variables.getOkhttpRequestName(),
-                        maxRetriesOverrideClassName,
-                        maxRetriesOverrideClassName,
-                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
                 .endControlFlow();
+        if (retriesDisabled) {
+            addDisabledRetriesTag(httpResponseBuilder, maxRetriesOverrideClassName);
+        } else {
+            httpResponseBuilder
+                    .beginControlFlow(
+                            "if ($L != null && $L.getMaxRetries().isPresent())",
+                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME,
+                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                    .addStatement(
+                            "$L = $L.newBuilder().tag($T.class, new $T($L.getMaxRetries().get())).build()",
+                            variables.getOkhttpRequestName(),
+                            variables.getOkhttpRequestName(),
+                            maxRetriesOverrideClassName,
+                            maxRetriesOverrideClassName,
+                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                    .endControlFlow();
+        }
         if (isStreamingEndpoint()) {
             httpResponseBuilder.addStatement(
                     "$L = $L.newBuilder().callTimeout(0, $T.SECONDS).build()",
@@ -216,6 +250,14 @@ public abstract class AbstractHttpResponseParserGenerator {
     public CodeBlock getResponseParserCodeBlockWithoutRequestOptions(MethodSpec.Builder endpointMethodBuilder) {
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder();
         // Note: OkHttpClient is already initialized by the caller, so we skip that here
+        if (retriesDisabled(httpEndpoint.getRetries())) {
+            addDisabledRetriesTag(
+                    httpResponseBuilder,
+                    clientGeneratorContext
+                            .getPoetClassNameFactory()
+                            .getRetryInterceptorClassName()
+                            .nestedClass("MaxRetriesOverride"));
+        }
         if (isStreamingEndpoint()) {
             httpResponseBuilder.addStatement(
                     "$L = $L.newBuilder().callTimeout(0, $T.SECONDS).build()",
