@@ -1,6 +1,7 @@
 - summary: |
-    Add support for the CLI's new `--reference-optional` flag: when it is passed, a README or API
-    reference generation failure (for example when the configured GitHub repository cannot be cloned
-    from inside the generator container) is reported as a warning and the rest of the SDK is
-    generated normally. Without the flag, such failures still fail generation as before.
+    Add support for the CLI's new `--reference-optional` flag (`fern generate --local
+    --reference-optional`): when it is passed, a README or API reference generation failure (for
+    example when the configured GitHub repository cannot be cloned from inside the generator
+    container) is reported as a warning and the rest of the SDK is generated normally. Without the
+    flag, such failures still fail generation as before.
   type: feat

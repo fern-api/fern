@@ -50,7 +50,6 @@ export async function runRemoteGenerationForAPIWorkspace({
     autoMerge,
     skipIfNoDiff,
     verify,
-    referenceOptional,
     noReplay,
     disableTelemetry,
     automation,
@@ -98,11 +97,6 @@ export async function runRemoteGenerationForAPIWorkspace({
      * Default: false.
      */
     verify?: boolean;
-    /**
-     * `--reference-optional` CLI flag. Sent on the create-job payload so the generator tolerates
-     * README.md / reference.md failures; requires Fiddle to forward it into the generator config.
-     */
-    referenceOptional?: boolean;
     /** `--no-replay` CLI flag. Cloud doesn't honor it yet (FER-10343), plumbed for telemetry parity. */
     noReplay?: boolean;
     /** Suppresses replay PostHog event when true. Honors FERN_DISABLE_TELEMETRY. */
@@ -182,7 +176,6 @@ export async function runRemoteGenerationForAPIWorkspace({
                     autoMerge,
                     skipIfNoDiff,
                     verify,
-                    referenceOptional,
                     noReplay,
                     disableTelemetry,
                     automation,
@@ -242,7 +235,6 @@ async function generateOne({
     autoMerge,
     skipIfNoDiff,
     verify,
-    referenceOptional,
     noReplay,
     disableTelemetry,
     automation,
@@ -280,7 +272,6 @@ async function generateOne({
     autoMerge: boolean | undefined;
     skipIfNoDiff: boolean | undefined;
     verify: boolean | undefined;
-    referenceOptional: boolean | undefined;
     noReplay: boolean | undefined;
     disableTelemetry: boolean | undefined;
     automation: AutomationRunOptions | undefined;
@@ -370,7 +361,6 @@ async function generateOne({
             autoMerge,
             skipIfNoDiff,
             verify,
-            referenceOptional,
             noReplay,
             disableTelemetry,
             loginCommand,

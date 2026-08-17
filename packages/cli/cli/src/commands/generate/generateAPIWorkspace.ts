@@ -123,6 +123,12 @@ export async function generateWorkspace({
 
     const { ai, replay } = workspace.generatorsConfiguration;
 
+    if (referenceOptional && !useLocalDocker) {
+        context.logger.warn(
+            "--reference-optional only applies to local generation (--local) and is ignored for remote generation."
+        );
+    }
+
     // Pre-check token for remote generation before starting any work
     if (!useLocalDocker && !token) {
         return context.failAndThrow("Please run fern login", undefined, { code: CliError.Code.AuthError });
@@ -243,7 +249,6 @@ export async function generateWorkspace({
                         skipIfNoDiff,
                         noReplay,
                         verify,
-                        referenceOptional,
                         disableTelemetry: isTelemetryDisabled(),
                         getSpecsTarGzBuffer: getSpecsTarGz,
                         generateFullProject: pack

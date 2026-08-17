@@ -858,7 +858,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: false,
                     description:
-                        "Continue generating the SDK when README.md or reference.md generation fails, warning instead of failing generation"
+                        "Continue generating the SDK when README.md or reference.md generation fails, warning instead of failing generation. Only applies to --local"
                 })
                 .option("require-env-vars", {
                     boolean: true,

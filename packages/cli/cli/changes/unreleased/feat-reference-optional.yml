@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Add `fern generate --reference-optional`, which tells the generator to keep generating the SDK
-    when README.md or reference.md generation fails instead of failing the whole generation. Without
-    the flag, behavior is unchanged. This currently applies to local generation; remote generation
-    requires a corresponding server-side change.
+    Add `fern generate --local --reference-optional`, which tells the generator to keep generating
+    the SDK when README.md or reference.md generation fails instead of failing the whole generation.
+    Without the flag, behavior is unchanged. The flag only applies to local generation; passing it on
+    a remote run logs a warning and is otherwise ignored.
   type: feat

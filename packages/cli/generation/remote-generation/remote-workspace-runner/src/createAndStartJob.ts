@@ -45,7 +45,6 @@ export async function createAndStartJob({
     autoMerge,
     skipIfNoDiff,
     verify,
-    referenceOptional,
     loginCommand = "fern login",
     specsTarGzBuffer
 }: {
@@ -79,12 +78,6 @@ export async function createAndStartJob({
      * CLI-level `--verify` flag. Default: false (verify off).
      */
     verify?: boolean;
-    /**
-     * Plumbed through from the CLI-level `--reference-optional` flag and forwarded on the create-job
-     * payload. Fiddle does not map it into the generator config yet, so remote generation keeps
-     * failing loudly on README/reference errors until it does. Default: false.
-     */
-    referenceOptional?: boolean;
     /**
      * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
@@ -130,7 +123,6 @@ export async function createAndStartJob({
                 autoMerge,
                 skipIfNoDiff,
                 verify,
-                referenceOptional,
                 loginCommand
             }),
         retryRateLimited,
@@ -170,7 +162,6 @@ async function createJob({
     fernignoreContents,
     skipIfNoDiff,
     verify,
-    referenceOptional,
     loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -193,7 +184,6 @@ async function createJob({
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
     verify?: boolean;
-    referenceOptional?: boolean;
     loginCommand: string;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
@@ -206,8 +196,8 @@ async function createJob({
         publishMetadata: generatorInvocation.publishMetadata
     };
 
-    // Const-typed payload ducks the TS excess-property check; neither `replay` (FER-10343) nor
-    // `referenceOptional` is on fiddle-sdk's CreateJobRequestV2 yet.
+    // Const-typed payload ducks the TS excess-property check; `replay` isn't on
+    // fiddle-sdk's CreateJobRequestV2 yet (FER-10343).
     const createJobRequest = {
         apiName: workspace.definition.rootApiFile.contents.name,
         version,
@@ -232,10 +222,7 @@ async function createJob({
         pushPreviewBranch,
         fernignoreContents,
         skipIfNoDiff,
-        verify,
-        // Fiddle builds the generator's config.json server-side, so this only takes effect once
-        // Fiddle maps it into that config; until then remote runs stay fail-loud.
-        referenceOptional
+        verify
         // TODO(FER-9671): Pass remaining automation flags to Fiddle once its API is updated:
         //   automationMode,
         //   autoMerge,
