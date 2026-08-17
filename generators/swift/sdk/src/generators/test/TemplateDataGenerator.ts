@@ -5,8 +5,8 @@ import { DynamicSnippetsGenerator, EndpointSnippetGenerator } from "@fern-api/sw
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import {
-    EndpointSnippetRequest,
-    convertDynamicEndpointSnippetRequest
+    convertDynamicEndpointSnippetRequest,
+    EndpointSnippetRequest
 } from "../../utils/convertEndpointSnippetRequest.js";
 import { areRetriesDisabled } from "../client/util/are-retries-disabled.js";
 
