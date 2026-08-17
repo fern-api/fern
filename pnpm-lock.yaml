@@ -826,8 +826,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/cli/task-context
       '@fern-fern/ir-sdk':
-        specifier: 67.18.0
-        version: 67.18.0
+        specifier: 67.22.0
+        version: 67.22.0
       '@types/js-yaml':
         specifier: 'catalog:'
         version: 4.0.9
@@ -9550,10 +9550,6 @@ packages:
     resolution: {integrity: sha512-ILT96PcT+HV1pVGVNg3cs6xnb/JRdKCJ1Tk1AO+sTxQFRRHoIwqr1KUfEQVW9iuvBsbgiApRZHfw42e5r/uMlA==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-api/dynamic-ir-sdk@67.12.0':
-    resolution: {integrity: sha512-/PXKJPbuU/vP+lv4Ju3kc4shZo0BsWcDp/hCHArJlx8le/iRr4kOEuE00vaVBvw8vfOmKsBc0HLPahbs6uOneQ==}
-    engines: {node: '>=18.0.0'}
-
   '@fern-api/dynamic-ir-sdk@67.21.0':
     resolution: {integrity: sha512-GLjIZlB4dVov24hQBYEcMR21aVMUqi6hC6j463rkUR12fi93/7i0JBAs0AzIwlqpria+Xy5KtyNQT/LzitH+qQ==}
     engines: {node: '>=18.0.0'}
@@ -9615,16 +9611,12 @@ packages:
     resolution: {integrity: sha512-BKtpmuyK98GagBSZ5CMe3oAkkwG5l3MId+/VyyyGbUV+HRrqIS+htIBlGmsNBW6fzuKK6hgOGn+Kyb2N4+Mejg==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-fern/ir-sdk@67.15.0':
-    resolution: {integrity: sha512-Y/qMjaW+5ayybyGe6kUTPOo1rLhD7o3gbGnm7wi55dhzW808jLyj1rkFx9DJlIXghgMVSA/cKYyuAb0engG0Cw==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-sdk@67.18.0':
-    resolution: {integrity: sha512-j/6HVuCkHgYZoXnqCT24EZfgdirdY/JgrMYh8ub1qF6gUdf68b8QVH8X6D8HTfcXceoMb7BF01uKTK8xf6n1uQ==}
-    engines: {node: '>=18.0.0'}
-
   '@fern-fern/ir-sdk@67.21.0':
     resolution: {integrity: sha512-m2sV81AwBrlt8JcBODrRK3Tznv7U+BKj/PEzdPT8bJDRm0whspNY01xZB2P6BKhgKjpuyox8YRCHKufkgXibSQ==}
+    engines: {node: '>=18.0.0'}
+
+  '@fern-fern/ir-sdk@67.22.0':
+    resolution: {integrity: sha512-WSKMwlqNubDJ/pKMFX1/qZ4CwSQvDtYFDviugtWqcmnid/xSY13i7N7TpPC2j6CAeUJSA/Pcdq8/nALWeythsw==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/ir-v53-sdk@1.0.1':
@@ -16531,8 +16523,6 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@66.1.0': {}
 
-  '@fern-api/dynamic-ir-sdk@67.12.0': {}
-
   '@fern-api/dynamic-ir-sdk@67.21.0': {}
 
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28': {}
@@ -16655,11 +16645,9 @@ snapshots:
 
   '@fern-fern/ir-sdk@66.3.0': {}
 
-  '@fern-fern/ir-sdk@67.15.0': {}
-
-  '@fern-fern/ir-sdk@67.18.0': {}
-
   '@fern-fern/ir-sdk@67.21.0': {}
+
+  '@fern-fern/ir-sdk@67.22.0': {}
 
   '@fern-fern/ir-v53-sdk@1.0.1': {}
 
