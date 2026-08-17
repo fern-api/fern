@@ -620,14 +620,12 @@ export class EndpointSnippetGenerator {
     }
 
     /**
-     * Whether the call leaves the body out entirely, which `None` expresses. An example that supplies
-     * nothing for the body reaches the snippet generator as an absent or empty value, since that is
-     * how the importer spells it, and every other generator that respects an omittable body reads
-     * both the same way.
+     * Whether the call leaves the body out entirely, which `None` expresses. Only an absent body
+     * counts: an example that documents an empty object still sends that object, so it keeps
+     * rendering a body expression.
      */
     private callOmitsRequestBody({ snippet }: { snippet: FernIr.dynamic.EndpointSnippetRequest }): boolean {
-        const value = snippet.requestBody;
-        return value == null || (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
+        return snippet.requestBody == null;
     }
 
     private getMethodArgsForInlinedRequest({

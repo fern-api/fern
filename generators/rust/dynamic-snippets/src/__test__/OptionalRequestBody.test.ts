@@ -13,8 +13,7 @@ const IR_FILEPATH = AbsoluteFilePath.of(
     )
 );
 
-// `bulkRefund` takes a body the API does not require. An example that supplies nothing for it
-// reaches the snippet generator as an absent or empty body, since that is how the importer spells it.
+// `bulkRefund` takes a body the API does not require, so an example may leave the body out entirely.
 const bulkRefund: FernIr.dynamic.EndpointSnippetRequest = {
     endpoint: {
         method: "POST",
@@ -30,18 +29,29 @@ const bulkRefund: FernIr.dynamic.EndpointSnippetRequest = {
 };
 
 describe("optional request body", () => {
-    it("passes None once the generator opts in", async () => {
+    it("passes None for an absent body once the generator opts in", async () => {
         const generator = buildDynamicSnippetsGenerator({
             irFilepath: IR_FILEPATH,
             config: buildGeneratorConfig({ customConfig: { respectOptionalRequestBody: true } })
         });
 
-        for (const requestBody of [undefined, {}]) {
-            const response = await generator.generate({ ...bulkRefund, requestBody });
+        const response = await generator.generate({ ...bulkRefund, requestBody: undefined });
 
-            expect(response.errors).toBeUndefined();
-            expect(response.snippet).toContain("bulk_refund(None, None)");
-        }
+        expect(response.errors).toBeUndefined();
+        expect(response.snippet).toContain("bulk_refund(None, None)");
+    });
+
+    it("still sends an explicitly empty body once the generator opts in", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: IR_FILEPATH,
+            config: buildGeneratorConfig({ customConfig: { respectOptionalRequestBody: true } })
+        });
+
+        const response = await generator.generate({ ...bulkRefund, requestBody: {} });
+
+        expect(response.errors).toBeUndefined();
+        expect(response.snippet).toContain("Some(&RefundRequest {");
+        expect(response.snippet).not.toContain("bulk_refund(None");
     });
 
     it("wraps a supplied body in Some once the generator opts in", async () => {
