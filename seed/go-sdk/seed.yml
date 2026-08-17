@@ -357,6 +357,10 @@ fixtures:
       customConfig:
         enableWireTests: true
         exportAllRequestsAtRoot: true
+  go-date-containers:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   go-nullable-wire-tests:
     - outputFolder: .
       customConfig:
