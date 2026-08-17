@@ -760,25 +760,57 @@ async fn run_pkce(mut flow: PkceLoginFlow, ctx: LoginContext) -> Result<(), CliE
         let _ = webbrowser::open(&url);
     }
 
-    // Wait for the browser to hit /callback with code+state.
-    let (code, received_state) = match accept_callback(&listener, &redirect_path, flow.callback_pages()).await {
+    // Wait for the browser to hit /callback with code+state. The listener checks the `state` it
+    // received against the one we sent, but answers the browser only for a callback it rejects —
+    // a usable one comes back still connected, via the responder.
+    let (code, responder) = match accept_callback(&listener, &redirect_path, &state, flow.callback_pages()).await {
         Ok(v) => v,
         Err(e) => return Err(e),
     };
 
-    if received_state != state {
-        return Err(CliError::Auth(format!(
-            "OAuth state mismatch (expected `{state}`, got `{received_state}`) — possible CSRF; aborting"
-        )));
+    // Everything the browser is still waiting on. Funneled through one result so the page it lands
+    // on is chosen from what actually happened, rather than from having received a code.
+    let outcome = exchange_code_and_store(&flow, &ctx, &code, &verifier).await;
+    match outcome {
+        Ok(()) => responder.success().await,
+        Err(e) => {
+            responder
+                .failure("server_error", Some(POST_CALLBACK_FAILURE_DESCRIPTION))
+                .await;
+            return Err(e);
+        }
     }
 
-    // Exchange the code.
+    {
+        let mut err = std::io::stderr().lock();
+        let _ = writeln!(
+            err,
+            "{}",
+            crate::auth::login::green(&format!(
+                "✓ Authenticated. Stored credential in {}.",
+                active_store().backend_label()
+            ))
+        );
+    }
+    Ok(())
+}
+
+/// Redeem the authorization code and persist the credential — the part of the login that happens
+/// after the browser callback and decides whether it actually succeeded. Split out of `run_pkce`
+/// so its failures are a single `Result` the caller can answer the waiting browser from, instead
+/// of a handful of `?`s that would return past it.
+async fn exchange_code_and_store(
+    flow: &PkceLoginFlow,
+    ctx: &LoginContext,
+    code: &str,
+    verifier: &str,
+) -> Result<(), CliError> {
     let http = token_http_client()?;
     let redirect_uri = flow.redirect_uri();
     let mut form: Vec<(String, String)> = vec![
         ("grant_type".to_string(), "authorization_code".to_string()),
-        ("code".to_string(), code.clone()),
-        ("code_verifier".to_string(), verifier.clone()),
+        ("code".to_string(), code.to_string()),
+        ("code_verifier".to_string(), verifier.to_string()),
         ("client_id".to_string(), flow.client_id.clone()),
         ("redirect_uri".to_string(), redirect_uri),
     ];
@@ -814,18 +846,6 @@ async fn run_pkce(mut flow: PkceLoginFlow, ctx: LoginContext) -> Result<(), CliE
         ok.expires_in,
     );
     active_store().set(&ctx.cli_name, &flow.scheme, &bundle.to_keyring_value()?)?;
-
-    {
-        let mut err = std::io::stderr().lock();
-        let _ = writeln!(
-            err,
-            "{}",
-            crate::auth::login::green(&format!(
-                "✓ Authenticated. Stored credential in {}.",
-                active_store().backend_label()
-            ))
-        );
-    }
     Ok(())
 }
 
@@ -850,29 +870,77 @@ impl<'a> CallbackPages<'a> {
     }
 }
 
-/// Accept one HTTP request on the loopback listener, parse `?code=…&state=…`
-/// from the request line, send a small HTML response, return `(code, state)`.
+/// The still-open loopback connection, handed back to the caller so the browser is answered only
+/// once the login has actually finished. Responding from inside the listener would mean deciding
+/// the outcome before the token exchange and the keyring write have happened — every page that
+/// says "you're logged in", ours or a customer's, would be a guess.
+///
+/// The browser waits in the meantime. That is bounded: the token exchange carries a 10s connect /
+/// 30s total timeout, and the keyring write is local.
+struct CallbackResponder<'a> {
+    socket: tokio::net::TcpStream,
+    pages: CallbackPages<'a>,
+}
+
+impl<'a> CallbackResponder<'a> {
+    /// The login completed and the credential is stored. Consumes `self`: one response per
+    /// connection, and it closes.
+    async fn success(mut self) {
+        match self.pages.success() {
+            Some(url) => {
+                let _ = write_redirect(&mut self.socket, url).await;
+            }
+            None => {
+                let _ =
+                    write_response_html(&mut self.socket, 200, &render_callback_page(CallbackOutcome::Success)).await;
+            }
+        }
+    }
+
+    /// The callback was fine but the login failed after it — a rejected token exchange, or a
+    /// credential we couldn't persist.
+    async fn failure(mut self, error: &str, description: Option<&str>) {
+        write_failure(&mut self.socket, &self.pages, error, description).await;
+    }
+}
+
+/// What a hosted error page is told when the callback was accepted but the login failed afterwards.
+/// The reason itself stays in the terminal: a token-endpoint body is not something to forward into
+/// a URL, and the user is being sent back to the terminal to read it anyway.
+const POST_CALLBACK_FAILURE_DESCRIPTION: &str = "The CLI could not complete the login. Check your terminal for details.";
+
 /// Cap on how long the PKCE listener waits for the browser callback
 /// before bailing. Five minutes matches typical OAuth authorization-code
 /// lifetimes — if the user abandoned the browser tab or got distracted,
 /// surfacing a clear timeout beats hanging silently.
 const PKCE_CALLBACK_TIMEOUT: Duration = Duration::from_secs(300);
 
-async fn accept_callback(
+/// Accept one HTTP request on the loopback listener, parse `?code=…&state=…` from the request
+/// line, and check `state` against `expected_state`. A callback we can't use is answered here and
+/// returns an error; a usable one returns the code plus the still-open connection, so the caller
+/// answers the browser once it knows whether the login actually worked.
+async fn accept_callback<'a>(
     listener: &TcpListener,
     expected_path: &str,
-    pages: CallbackPages<'_>,
-) -> Result<(String, String), CliError> {
-    accept_callback_with_timeout(listener, expected_path, pages, PKCE_CALLBACK_TIMEOUT).await
+    expected_state: &str,
+    pages: CallbackPages<'a>,
+) -> Result<(String, CallbackResponder<'a>), CliError> {
+    accept_callback_with_timeout(listener, expected_path, expected_state, pages, PKCE_CALLBACK_TIMEOUT).await
 }
 
-async fn accept_callback_with_timeout(
+async fn accept_callback_with_timeout<'a>(
     listener: &TcpListener,
     expected_path: &str,
-    pages: CallbackPages<'_>,
+    expected_state: &str,
+    pages: CallbackPages<'a>,
     timeout: Duration,
-) -> Result<(String, String), CliError> {
-    match tokio::time::timeout(timeout, accept_callback_inner(listener, expected_path, pages)).await {
+) -> Result<(String, CallbackResponder<'a>), CliError> {
+    match tokio::time::timeout(
+        timeout,
+        accept_callback_inner(listener, expected_path, expected_state, pages),
+    )
+    .await
+    {
         Ok(r) => r,
         Err(_) => Err(CliError::Auth(format!(
             "Timed out waiting for the OAuth callback after {}s. \
@@ -883,11 +951,12 @@ async fn accept_callback_with_timeout(
     }
 }
 
-async fn accept_callback_inner(
+async fn accept_callback_inner<'a>(
     listener: &TcpListener,
     expected_path: &str,
-    pages: CallbackPages<'_>,
-) -> Result<(String, String), CliError> {
+    expected_state: &str,
+    pages: CallbackPages<'a>,
+) -> Result<(String, CallbackResponder<'a>), CliError> {
     // Single-shot accept. If the browser hits us with a noisy preflight
     // (favicon, etc.) we skip and accept the next; cap at 8 attempts.
     for _ in 0..8 {
@@ -962,15 +1031,26 @@ async fn accept_callback_inner(
             }
         };
 
-        match pages.success() {
-            Some(url) => {
-                let _ = write_redirect(&mut socket, url).await;
-            }
-            None => {
-                let _ = write_response_html(&mut socket, 200, &render_callback_page(CallbackOutcome::Success)).await;
-            }
+        if state != expected_state {
+            // Possible CSRF. The browser gets the failure page like any other unusable callback —
+            // telling it "you're all set" for a callback we're about to reject would be a lie, and
+            // on a configured page a branded one. Neither state value is forwarded: the one we sent
+            // is a per-login nonce and has no business leaving the loopback.
+            write_failure(
+                &mut socket,
+                &pages,
+                "invalid_request",
+                Some("The callback `state` parameter did not match the one the CLI sent."),
+            )
+            .await;
+            return Err(CliError::Auth(format!(
+                "OAuth state mismatch (expected `{expected_state}`, got `{state}`) — possible CSRF; aborting"
+            )));
         }
-        return Ok((code, state));
+
+        // A usable callback. The browser stays connected and unanswered until the caller has
+        // exchanged the code and stored the credential.
+        return Ok((code, CallbackResponder { socket, pages }));
     }
     Err(CliError::Auth(
         "Too many invalid requests on the loopback listener; giving up".to_string(),
@@ -1956,6 +2036,34 @@ mod tests {
         p
     }
 
+    /// Mirror `run_pkce`'s happy path: accept the callback, then — standing in for a token exchange
+    /// and keyring write that succeeded — answer the browser. Tests that assert on the success
+    /// response have to go through this, because nothing is written until the caller says so.
+    async fn accept_and_confirm(
+        listener: &TcpListener,
+        expected_path: &str,
+        expected_state: &str,
+        pages: CallbackPages<'_>,
+    ) -> Result<String, CliError> {
+        let (code, responder) = accept_callback(listener, expected_path, expected_state, pages).await?;
+        responder.success().await;
+        Ok(code)
+    }
+
+    /// Mirror `run_pkce`'s post-callback failure path: the callback was fine, the login wasn't.
+    async fn accept_and_fail(
+        listener: &TcpListener,
+        expected_path: &str,
+        expected_state: &str,
+        pages: CallbackPages<'_>,
+    ) -> Result<String, CliError> {
+        let (code, responder) = accept_callback(listener, expected_path, expected_state, pages).await?;
+        responder
+            .failure("server_error", Some(POST_CALLBACK_FAILURE_DESCRIPTION))
+            .await;
+        Ok(code)
+    }
+
     #[tokio::test(flavor = "multi_thread")]
     async fn pkce_loopback_times_out_when_no_callback_arrives() {
         // When the browser never hits /callback (user closed tab, etc.),
@@ -1968,11 +2076,13 @@ mod tests {
         let err = accept_callback_with_timeout(
             &listener,
             "/callback",
+            "state-xyz",
             CallbackPages::default(),
             Duration::from_millis(100),
         )
-            .await
-            .expect_err("expected timeout when no browser callback arrives");
+        .await
+        .map(|(code, _responder)| code)
+        .expect_err("expected timeout when no browser callback arrives");
         let msg = format!("{err}");
         assert!(
             msg.contains("Timed out") && msg.contains("auth login"),
@@ -1981,12 +2091,14 @@ mod tests {
     }
 
     #[tokio::test(flavor = "multi_thread")]
-    async fn pkce_loopback_handshake_returns_code_and_state() {
+    async fn pkce_loopback_handshake_returns_code() {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
 
         // Spawn the accept task.
-        let acceptor = tokio::spawn(async move { accept_callback(&listener, "/callback", CallbackPages::default()).await });
+        let acceptor = tokio::spawn(async move {
+            accept_and_confirm(&listener, "/callback", "state-xyz", CallbackPages::default()).await
+        });
 
         // Act as the browser.
         tokio::time::sleep(Duration::from_millis(50)).await;
@@ -1998,9 +2110,7 @@ mod tests {
             .await
             .unwrap();
 
-        let (code, state) = acceptor.await.unwrap().unwrap();
-        assert_eq!(code, "auth-code-abc");
-        assert_eq!(state, "state-xyz");
+        assert_eq!(acceptor.await.unwrap().unwrap(), "auth-code-abc");
     }
 
     #[tokio::test(flavor = "multi_thread")]
@@ -2008,9 +2118,10 @@ mod tests {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
         let acceptor = tokio::spawn(async move {
-            accept_callback(
+            accept_and_confirm(
                 &listener,
                 "/callback",
+                "state-xyz",
                 CallbackPages {
                     success_redirect_url: Some("https://acme.com/cli/welcome"),
                     error_redirect_url: None,
@@ -2037,9 +2148,100 @@ mod tests {
             resp.headers().get("location").unwrap().to_str().unwrap(),
             "https://acme.com/cli/welcome"
         );
-        let (code, state) = acceptor.await.unwrap().unwrap();
-        assert_eq!(code, "auth-code-abc");
-        assert_eq!(state, "state-xyz");
+        assert_eq!(acceptor.await.unwrap().unwrap(), "auth-code-abc");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn pkce_loopback_writes_nothing_until_the_caller_answers() {
+        // The invariant the responder buys: a valid callback gets *no* response while the caller is
+        // still exchanging the code. Drive the browser from a task so we can observe it waiting.
+        let port = pick_free_port();
+        let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
+        let mut browser = tokio::spawn(async move {
+            reqwest::Client::new()
+                .get(format!("http://127.0.0.1:{port}/callback?code=c&state=s"))
+                .send()
+                .await
+        });
+
+        let (code, responder) = accept_callback(&listener, "/callback", "s", CallbackPages::default())
+            .await
+            .expect("valid callback");
+        assert_eq!(code, "c");
+
+        // Still connected, still unanswered — this is where the token exchange would be running.
+        assert!(
+            tokio::time::timeout(Duration::from_millis(200), &mut browser)
+                .await
+                .is_err(),
+            "browser was answered before the caller confirmed the login"
+        );
+
+        responder.success().await;
+        let resp = browser.await.unwrap().unwrap();
+        assert_eq!(resp.status().as_u16(), 200);
+        assert!(resp.text().await.unwrap().contains("You're all set"));
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn pkce_loopback_withholds_the_success_page_until_the_caller_confirms() {
+        // The reason the responder exists. `code` and `state` are both valid, so the old listener
+        // would have answered `200` here and then let the terminal report a failed token exchange.
+        // Now nothing is written until the caller decides, and a caller that failed gets the
+        // failure page — on a configured error URL, not the configured success one.
+        let port = pick_free_port();
+        let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
+        let pages = CallbackPages {
+            success_redirect_url: Some("https://acme.com/cli/success"),
+            error_redirect_url: Some("https://acme.com/cli/error"),
+        };
+        let acceptor = tokio::spawn(async move { accept_and_fail(&listener, "/callback", "state-xyz", pages).await });
+
+        tokio::time::sleep(Duration::from_millis(50)).await;
+        let resp = reqwest::Client::builder()
+            .redirect(reqwest::redirect::Policy::none())
+            .build()
+            .unwrap()
+            .get(format!(
+                "http://127.0.0.1:{port}/callback?code=auth-code-abc&state=state-xyz"
+            ))
+            .send()
+            .await
+            .unwrap();
+
+        assert_eq!(resp.status().as_u16(), 302);
+        assert_eq!(
+            resp.headers().get("location").unwrap().to_str().unwrap(),
+            "https://acme.com/cli/error?error=server_error\
+             &error_description=The+CLI+could+not+complete+the+login.+Check+your+terminal+for+details."
+        );
+        // The callback itself was fine — the code came back for the caller to try to redeem.
+        assert_eq!(acceptor.await.unwrap().unwrap(), "auth-code-abc");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn pkce_loopback_builtin_failure_page_when_login_fails_after_a_valid_callback() {
+        // Same, with no hosted pages configured: the built-in failure page, not the success one.
+        let port = pick_free_port();
+        let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
+        let acceptor = tokio::spawn(async move {
+            accept_and_fail(&listener, "/callback", "state-xyz", CallbackPages::default()).await
+        });
+
+        tokio::time::sleep(Duration::from_millis(50)).await;
+        let resp = reqwest::Client::new()
+            .get(format!(
+                "http://127.0.0.1:{port}/callback?code=auth-code-abc&state=state-xyz"
+            ))
+            .send()
+            .await
+            .unwrap();
+
+        assert_eq!(resp.status().as_u16(), 400);
+        let body = resp.text().await.unwrap();
+        assert!(body.contains("Authorization didn't complete"), "{body}");
+        assert!(!body.contains("You're all set"), "{body}");
+        assert_eq!(acceptor.await.unwrap().unwrap(), "auth-code-abc");
     }
 
     #[tokio::test(flavor = "multi_thread")]
@@ -2047,9 +2249,10 @@ mod tests {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
         let acceptor = tokio::spawn(async move {
-            accept_callback(
+            accept_and_confirm(
                 &listener,
                 "/callback",
+                "state-xyz",
                 CallbackPages {
                     success_redirect_url: Some("https://acme.com/\r\nX-Injected: 1"),
                     error_redirect_url: None,
@@ -2081,9 +2284,10 @@ mod tests {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
         let acceptor = tokio::spawn(async move {
-            accept_callback(
+            accept_and_confirm(
                 &listener,
                 "/callback",
+                "state-xyz",
                 CallbackPages {
                     success_redirect_url: None,
                     error_redirect_url: Some("https://acme.com/cli/error"),
@@ -2118,8 +2322,9 @@ mod tests {
     async fn pkce_loopback_error_page_renders_server_error_escaped() {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
-        let acceptor =
-            tokio::spawn(async move { accept_callback(&listener, "/callback", CallbackPages::default()).await });
+        let acceptor = tokio::spawn(async move {
+            accept_and_confirm(&listener, "/callback", "state-xyz", CallbackPages::default()).await
+        });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         let resp = reqwest::Client::new()
@@ -2147,7 +2352,8 @@ mod tests {
             success_redirect_url: Some("https://acme.com/cli/success"),
             error_redirect_url: Some("https://acme.com/cli/error"),
         };
-        let acceptor = tokio::spawn(async move { accept_callback(&listener, "/callback", pages).await });
+        let acceptor =
+            tokio::spawn(async move { accept_and_confirm(&listener, "/callback", "state-xyz", pages).await });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         let resp = reqwest::Client::builder()
@@ -2190,7 +2396,9 @@ mod tests {
     async fn pkce_loopback_handshake_rejects_missing_code() {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
-        let acceptor = tokio::spawn(async move { accept_callback(&listener, "/callback", CallbackPages::default()).await });
+        let acceptor = tokio::spawn(async move {
+            accept_and_confirm(&listener, "/callback", "only-state", CallbackPages::default()).await
+        });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         let _ = reqwest::Client::new()
@@ -2208,7 +2416,9 @@ mod tests {
     async fn pkce_loopback_handshake_surfaces_authorization_error_param() {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
-        let acceptor = tokio::spawn(async move { accept_callback(&listener, "/callback", CallbackPages::default()).await });
+        let acceptor = tokio::spawn(async move {
+            accept_and_confirm(&listener, "/callback", "state-xyz", CallbackPages::default()).await
+        });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         let _ = reqwest::Client::new()
@@ -2228,7 +2438,8 @@ mod tests {
     async fn pkce_loopback_ignores_favicon_and_accepts_callback() {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
-        let acceptor = tokio::spawn(async move { accept_callback(&listener, "/callback", CallbackPages::default()).await });
+        let acceptor =
+            tokio::spawn(async move { accept_and_confirm(&listener, "/callback", "s1", CallbackPages::default()).await });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         let client = reqwest::Client::new();
@@ -2246,9 +2457,7 @@ mod tests {
             .await
             .unwrap();
 
-        let (code, state) = acceptor.await.unwrap().unwrap();
-        assert_eq!(code, "c1");
-        assert_eq!(state, "s1");
+        assert_eq!(acceptor.await.unwrap().unwrap(), "c1");
     }
 
     #[tokio::test(flavor = "multi_thread")]
@@ -2258,8 +2467,9 @@ mod tests {
         // login hangs. The listener accepts the configured path and ignores the default one.
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
-        let acceptor =
-            tokio::spawn(async move { accept_callback(&listener, "/oauth/callback", CallbackPages::default()).await });
+        let acceptor = tokio::spawn(async move {
+            accept_and_confirm(&listener, "/oauth/callback", "s2", CallbackPages::default()).await
+        });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         let client = reqwest::Client::new();
@@ -2277,27 +2487,23 @@ mod tests {
             .await
             .unwrap();
 
-        let (code, state) = acceptor.await.unwrap().unwrap();
-        assert_eq!(code, "c2");
-        assert_eq!(state, "s2");
+        assert_eq!(acceptor.await.unwrap().unwrap(), "c2");
     }
 
     #[tokio::test(flavor = "multi_thread")]
     #[serial]
-    async fn pkce_state_mismatch_aborts() {
-        // Bind a port; spawn the full flow with a mocked browser that
-        // returns a state DIFFERENT from what the flow generated.
-        // Since the flow generates state internally and we can't inject
-        // it, we replicate the behavior of run_pkce up to the state check
-        // by calling accept_callback directly with a mismatched state.
-        // This isn't a true e2e test, but it does check the assertion
-        // path inside run_pkce.
+    async fn pkce_state_mismatch_aborts_and_serves_the_failure_page() {
+        // A callback carrying a state we never issued is a possible CSRF. The listener must fail
+        // the login *and* answer the browser with the failure page — the success page is written
+        // only after this check passes.
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
-        let acceptor = tokio::spawn(async move { accept_callback(&listener, "/callback", CallbackPages::default()).await });
+        let acceptor = tokio::spawn(async move {
+            accept_and_confirm(&listener, "/callback", "expected-state", CallbackPages::default()).await
+        });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
-        let _ = reqwest::Client::new()
+        let resp = reqwest::Client::new()
             .get(format!(
                 "http://127.0.0.1:{port}/callback?code=c&state=attacker-state"
             ))
@@ -2305,13 +2511,49 @@ mod tests {
             .await
             .unwrap();
 
-        let (code, state) = acceptor.await.unwrap().unwrap();
-        assert_eq!(state, "attacker-state");
-        assert_eq!(code, "c");
-        // run_pkce would now compare state against its own generated
-        // value and bail; we assert the comparator logic inline:
-        let expected_state = "expected-state";
-        assert_ne!(state, expected_state);
+        assert_eq!(resp.status().as_u16(), 400);
+        let body = resp.text().await.unwrap();
+        assert!(body.contains("Authorization didn't complete"), "{body}");
+        assert!(!body.contains("You're all set"), "{body}");
+        let err = format!("{}", acceptor.await.unwrap().expect_err("state mismatch must fail"));
+        assert!(err.contains("possible CSRF"), "{err}");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn pkce_state_mismatch_redirects_to_the_error_page_without_leaking_the_nonce() {
+        // Same check against a configured hosted page: the browser is handed to the *error* page,
+        // and neither state value rides along — the one we issued is a per-login nonce.
+        let port = pick_free_port();
+        let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
+        let pages = CallbackPages {
+            success_redirect_url: Some("https://acme.com/cli/success"),
+            error_redirect_url: Some("https://acme.com/cli/error"),
+        };
+        let acceptor =
+            tokio::spawn(async move { accept_and_confirm(&listener, "/callback", "expected-state", pages).await });
+
+        tokio::time::sleep(Duration::from_millis(50)).await;
+        let resp = reqwest::Client::builder()
+            .redirect(reqwest::redirect::Policy::none())
+            .build()
+            .unwrap()
+            .get(format!(
+                "http://127.0.0.1:{port}/callback?code=c&state=attacker-state"
+            ))
+            .send()
+            .await
+            .unwrap();
+
+        assert_eq!(resp.status().as_u16(), 302);
+        let location = resp.headers().get("location").unwrap().to_str().unwrap().to_string();
+        assert_eq!(
+            location,
+            "https://acme.com/cli/error?error=invalid_request\
+             &error_description=The+callback+%60state%60+parameter+did+not+match+the+one+the+CLI+sent."
+        );
+        assert!(!location.contains("expected-state"), "{location}");
+        assert!(!location.contains("attacker-state"), "{location}");
+        assert!(acceptor.await.unwrap().is_err());
     }
 
     #[tokio::test(flavor = "multi_thread")]

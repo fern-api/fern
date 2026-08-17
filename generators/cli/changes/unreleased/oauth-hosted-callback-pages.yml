@@ -14,3 +14,16 @@
     success markup and the `text/plain` failure response. Everything is inlined, so the last screen
     of the login flow never depends on a network request.
   type: feat
+
+- summary: |
+    The OAuth callback listener now answers the browser only once the login has actually finished.
+    Previously the success page was served as soon as `code` and `state` were parsed — before the
+    `state` was checked, the code was redeemed, or the credential was stored — so a failed token
+    exchange, a rejected `state`, or a keyring the CLI couldn't write to would leave the browser
+    reading "you're all set" while the terminal reported the failure. The connection is now held
+    open across the exchange and answered from the outcome: the success page (or
+    `success-redirect-url`) only on a login that completed, and the failure page (or
+    `error-redirect-url`) otherwise. A rejected `state` reports `error=invalid_request` and a
+    failure after the callback reports `error=server_error`; no `state` value and no token-endpoint
+    detail is forwarded to a hosted page.
+  type: fix
