@@ -39,7 +39,7 @@ export const V67_TO_V66_MIGRATION: IrMigration<
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PHP_SDK]: "2.11.2-rc.0",
         [GeneratorName.RUST_MODEL]: "0.6.0-rc.0",
-        [GeneratorName.RUST_SDK]: "0.45.0-rc.0",
+        [GeneratorName.RUST_SDK]: "0.45.0",
         [GeneratorName.CLI]: "0.0.1"
     },
     jsonifyEarlierVersion: (ir) =>

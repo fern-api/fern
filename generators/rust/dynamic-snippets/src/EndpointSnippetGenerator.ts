@@ -576,19 +576,23 @@ export class EndpointSnippetGenerator {
     }): rust.Expression[] {
         const args: rust.Expression[] = [];
 
-        // Organize request components like Swift does
+        const bodyMayBeOmitted = this.bodyMayBeOmitted({ request });
+        const omitsBody = bodyMayBeOmitted && this.callOmitsRequestBody({ snippet });
+
+        // Organize request components like Swift does. A call that leaves the body out has no body
+        // value to read, so the body is not evaluated at all: doing so would report a missing-value
+        // error for a body the caller is allowed to omit.
         const requestComponents = this.buildRequestComponents({
             pathParameters: [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])],
             snippet,
-            body: request.body
+            body: omitsBody ? undefined : request.body
         });
 
         // Add path parameters
         args.push(...requestComponents.pathArgs);
 
         // Add request body
-        const bodyMayBeOmitted = this.bodyMayBeOmitted({ request });
-        if (bodyMayBeOmitted && this.callOmitsRequestBody({ snippet })) {
+        if (omitsBody) {
             // The generated parameter is an Option, so an omitted body is spelled None
             args.push(rust.Expression.raw("None"));
         } else if (requestComponents.bodyArg != null) {
@@ -618,7 +622,8 @@ export class EndpointSnippetGenerator {
     /**
      * Whether the call leaves the body out entirely, which `None` expresses. An example that supplies
      * nothing for the body reaches the snippet generator as an absent or empty value, since that is
-     * how the importer spells it.
+     * how the importer spells it, and every other generator that respects an omittable body reads
+     * both the same way.
      */
     private callOmitsRequestBody({ snippet }: { snippet: FernIr.dynamic.EndpointSnippetRequest }): boolean {
         const value = snippet.requestBody;
