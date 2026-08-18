@@ -13,16 +13,19 @@ export {
     DEFAULT_SCOOP_TOKEN_ENV_VAR,
     type FernCliCustomConfig,
     type FernCliDistributionConfig,
+    type FernCliGitHubAppConfig,
     type FernCliHomebrewConfig,
     type FernCliScoopConfig,
-    getCustomConfig
+    getCustomConfig,
+    type ResolvedChannelAuth,
+    resolveChannelAuth
 } from "./customConfig.js";
 export { type DetectedAuthBinding, detectAuthBindings } from "./detectAuth.js";
 export { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 export { emitReadme } from "./emitReadme.js";
 export { emitReference } from "./emitReference.js";
 export { constructReleaseWorkflowYaml, emitReleaseWorkflow } from "./emitReleaseWorkflow.js";
-export { constructScoopJobYaml, type ScoopJobArgs } from "./emitScoopWorkflow.js";
+export { constructScoopJobYaml, type ScoopJobArgs, type ScoopJobYamlArgs } from "./emitScoopWorkflow.js";
 export { type EmbeddedSdkResult, generateEmbeddedSdk } from "./generateEmbeddedSdk.js";
 export { generateSdk, type RootClientInfo, resolveClientTreeFromContext, type SubClientField } from "./generateSdk.js";
 export { deriveBinaryName, TEMPLATE_BINARY_NAME, toEnvVarPrefix, toKebabCase } from "./identity.js";
