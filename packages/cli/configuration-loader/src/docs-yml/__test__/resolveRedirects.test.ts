@@ -32,6 +32,10 @@ describe("resolveRedirects", () => {
             join(dir, RelativeFilePath.of("bare-list.yml")),
             "- source: /old-plants\n  destination: /plants"
         );
+        await writeFile(
+            join(dir, RelativeFilePath.of("more-redirects.yml")),
+            "redirects:\n  - source: /old-seeds\n    destination: /seeds"
+        );
     });
 
     it("passes through an inline list", async () => {
@@ -53,6 +57,25 @@ describe("resolveRedirects", () => {
     it("loads redirects from an absolute filepath", async () => {
         const absolute = join(dirname(absoluteFilepathToDocsConfig), RelativeFilePath.of("redirects.yml"));
         expect(await resolveRedirects({ redirects: absolute, absoluteFilepathToDocsConfig })).toHaveLength(2);
+    });
+
+    it("loads and concatenates redirects from a list of filepaths", async () => {
+        expect(
+            await resolveRedirects({
+                redirects: ["./redirects.yml", "./more-redirects.yml"],
+                absoluteFilepathToDocsConfig
+            })
+        ).toEqual([
+            { source: "/old-plants", destination: "/plants" },
+            { source: "/plants/:plantId/legacy", destination: "/plants/:plantId", permanent: false },
+            { source: "/old-seeds", destination: "/seeds" }
+        ]);
+    });
+
+    it("fails when one of several filepaths does not exist", async () => {
+        await expect(
+            resolveRedirects({ redirects: ["./redirects.yml", "./missing.yml"], absoluteFilepathToDocsConfig })
+        ).rejects.toThrowError(/is not a file/);
     });
 
     it("fails when the file does not exist", async () => {

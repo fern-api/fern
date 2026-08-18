@@ -5243,9 +5243,15 @@
         },
         {
           "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       ],
-      "description": "Either an inline list of redirects, or a relative filepath to a YAML file containing\nonly the list of redirects.\n\n```yaml\nredirects: ./redirects.yml\n```"
+      "description": "Either an inline list of redirects, or one or more filepaths to YAML files containing\nonly a list of redirects.\n\n```yaml\nredirects: ./redirects.yml\n```\n\n```yaml\nredirects:\n  - ./redirects/a.yml\n  - ./redirects/b.yml\n```"
     },
     "docs.CheckRuleSeverity": {
       "type": "string",

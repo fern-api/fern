@@ -591,9 +591,9 @@ export const RedirectConfig = z.object({
 });
 
 /**
- * Either an inline list of redirects, or a relative filepath to a YAML file containing only that list.
+ * Either an inline list of redirects, or one or more filepaths to YAML files containing only that list.
  */
-export const RedirectsConfiguration = z.union([z.array(RedirectConfig), z.string()]);
+export const RedirectsConfiguration = z.union([z.array(RedirectConfig), z.string(), z.array(z.string())]);
 
 /**
  * The contents of a standalone redirects file referenced by `redirects` in docs.yml.

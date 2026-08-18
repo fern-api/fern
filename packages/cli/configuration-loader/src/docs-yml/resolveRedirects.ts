@@ -14,9 +14,14 @@ export type DocsConfigurationWithResolvedRedirects = Omit<docsYml.RawSchemas.Doc
     redirects?: docsYml.RawSchemas.RedirectConfig[];
 };
 
+function isFilepathList(redirects: docsYml.RawSchemas.RedirectsConfiguration): redirects is string[] {
+    return Array.isArray(redirects) && redirects.every((redirect) => typeof redirect === "string");
+}
+
 /**
- * `redirects` accepts either an inline list or a relative filepath to a YAML file containing only
- * that list. Resolving the file here lets every downstream consumer work with a plain list.
+ * `redirects` accepts either an inline list of redirects, or one or more filepaths to YAML files
+ * containing only that list. Resolving the files here lets every downstream consumer work with a
+ * plain list.
  */
 export async function resolveRedirects({
     redirects,
@@ -25,12 +30,33 @@ export async function resolveRedirects({
     redirects: docsYml.RawSchemas.RedirectsConfiguration | undefined;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
 }): Promise<docsYml.RawSchemas.RedirectConfig[] | undefined> {
-    if (redirects == null || typeof redirects !== "string") {
+    if (redirects == null) {
+        return undefined;
+    }
+
+    if (typeof redirects === "string") {
+        return await loadRedirectsFile({ filepath: redirects, absoluteFilepathToDocsConfig });
+    }
+
+    if (!isFilepathList(redirects)) {
         return redirects;
     }
 
-    const absoluteFilepathToRedirects = resolve(dirname(absoluteFilepathToDocsConfig), redirects);
-    if (redirects.trim().length === 0 || !(await doesPathExist(absoluteFilepathToRedirects, "file"))) {
+    const loaded = await Promise.all(
+        redirects.map((filepath) => loadRedirectsFile({ filepath, absoluteFilepathToDocsConfig }))
+    );
+    return loaded.flat();
+}
+
+async function loadRedirectsFile({
+    filepath,
+    absoluteFilepathToDocsConfig
+}: {
+    filepath: string;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+}): Promise<docsYml.RawSchemas.RedirectConfig[]> {
+    const absoluteFilepathToRedirects = resolve(dirname(absoluteFilepathToDocsConfig), filepath);
+    if (filepath.trim().length === 0 || !(await doesPathExist(absoluteFilepathToRedirects, "file"))) {
         throw new CliError({
             message: `Failed to load redirects: ${absoluteFilepathToRedirects} is not a file`,
             code: CliError.Code.ParseError

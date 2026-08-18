@@ -8,8 +8,12 @@ import { RedirectConfig } from "./RedirectConfig.js";
 export const RedirectsConfiguration: core.serialization.Schema<
     serializers.RedirectsConfiguration.Raw,
     FernDocsConfig.RedirectsConfiguration
-> = core.serialization.undiscriminatedUnion([core.serialization.list(RedirectConfig), core.serialization.string()]);
+> = core.serialization.undiscriminatedUnion([
+    core.serialization.list(RedirectConfig),
+    core.serialization.string(),
+    core.serialization.list(core.serialization.string()),
+]);
 
 export declare namespace RedirectsConfiguration {
-    export type Raw = RedirectConfig.Raw[] | string;
+    export type Raw = RedirectConfig.Raw[] | string | string[];
 }

@@ -3,11 +3,17 @@
 import type * as FernDocsConfig from "../../../index.js";
 
 /**
- * Either an inline list of redirects, or a relative filepath to a YAML file containing
- * only the list of redirects.
+ * Either an inline list of redirects, or one or more filepaths to YAML files containing
+ * only a list of redirects.
  *
  * ```yaml
  * redirects: ./redirects.yml
  * ```
+ *
+ * ```yaml
+ * redirects:
+ *   - ./redirects/a.yml
+ *   - ./redirects/b.yml
+ * ```
  */
-export type RedirectsConfiguration = FernDocsConfig.RedirectConfig[] | string;
+export type RedirectsConfiguration = FernDocsConfig.RedirectConfig[] | string | string[];

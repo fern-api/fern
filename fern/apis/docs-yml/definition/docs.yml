@@ -2231,15 +2231,22 @@ types:
   RedirectsConfiguration:
     discriminated: false
     docs: |
-      Either an inline list of redirects, or a relative filepath to a YAML file containing
-      only the list of redirects.
+      Either an inline list of redirects, or one or more filepaths to YAML files containing
+      only a list of redirects.
 
       ```yaml
       redirects: ./redirects.yml
       ```
+
+      ```yaml
+      redirects:
+        - ./redirects/a.yml
+        - ./redirects/b.yml
+      ```
     union:
       - list<RedirectConfig>
       - string
+      - list<string>
 
   RedirectConfig:
     availability: in-development
