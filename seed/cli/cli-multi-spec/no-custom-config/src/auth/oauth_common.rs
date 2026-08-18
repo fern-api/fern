@@ -245,23 +245,56 @@ pub(crate) fn config_dir() -> Option<PathBuf> {
 /// read-modify-write of the whole map with no lock, so simultaneous writers
 /// can still clobber one another's *entries*; making that safe needs file
 /// locking, which is a larger change.
+/// Unlinks a temp file on drop unless [`TempFileGuard::disarm`]ed. Covers
+/// every early return *and* a panic between creating the temp file and
+/// renaming it into place.
+///
+/// This exists because the temp name is unique per writer. The old shared
+/// `auth-keyring.tmp` was self-limiting — a failed write left one stale file
+/// that the next write reused — whereas unique names would leak a distinct
+/// credential-bearing file on every failure, in a directory nothing prunes. A
+/// `SIGKILL` still leaks, since no in-process guard can cover that.
+struct TempFileGuard {
+    path: PathBuf,
+    armed: bool,
+}
+
+impl TempFileGuard {
+    fn new(path: PathBuf) -> Self {
+        Self { path, armed: true }
+    }
+
+    /// Relinquish the file — call once `rename` has moved it into place.
+    fn disarm(&mut self) {
+        self.armed = false;
+    }
+}
+
+impl Drop for TempFileGuard {
+    fn drop(&mut self) {
+        if self.armed {
+            let _ = std::fs::remove_file(&self.path);
+        }
+    }
+}
+
 pub(crate) fn atomic_write(path: &Path, data: &[u8]) -> Result<(), CliError> {
-    static TMP_SEQ: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+    static TMP_SEQ: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let seq = TMP_SEQ.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
     let tmp = path.with_extension(format!("tmp.{}.{}", std::process::id(), seq));
-    std::fs::write(&tmp, data).map_err(|e| {
-        CliError::Auth(format!("Failed to write {}: {e}", tmp.display()))
-    })?;
+    let mut guard = TempFileGuard::new(tmp.clone());
+    std::fs::write(&tmp, data)
+        .map_err(|e| CliError::Auth(format!("Failed to write {}: {e}", tmp.display())))?;
     #[cfg(unix)]
     {
         use std::os::unix::fs::PermissionsExt;
         let perms = std::fs::Permissions::from_mode(0o600);
         let _ = std::fs::set_permissions(&tmp, perms);
     }
-    std::fs::rename(&tmp, path).map_err(|e| {
-        let _ = std::fs::remove_file(&tmp);
-        CliError::Auth(format!("Failed to rename {}: {e}", tmp.display()))
-    })
+    std::fs::rename(&tmp, path)
+        .map_err(|e| CliError::Auth(format!("Failed to rename {}: {e}", tmp.display())))?;
+    guard.disarm();
+    Ok(())
 }
 
 // ---------------------------------------------------------------------------
@@ -315,6 +348,56 @@ mod tests {
             .filter(|n| n.contains(".tmp"))
             .collect();
         assert!(leftovers.is_empty(), "temp files left behind: {leftovers:?}");
+    }
+
+    /// A failed write must not leave its temp file behind. Renaming a file onto
+    /// an existing directory fails on every platform, which drives the error
+    /// path without mocking the filesystem.
+    ///
+    /// The pre-`TempFileGuard` code already cleaned up on a `rename` error, so
+    /// this pins an invariant rather than catching a regression — see
+    /// `temp_file_guard_unlinks_unless_disarmed` for the guard's own coverage.
+    #[test]
+    fn atomic_write_cleans_up_temp_file_on_failure() {
+        let dir = tempfile::tempdir().unwrap();
+
+        // The target is a *directory*, so `rename` cannot replace it.
+        let target = dir.path().join("auth-keyring.json");
+        std::fs::create_dir(&target).unwrap();
+        std::fs::write(target.join("occupant"), b"x").unwrap();
+
+        let result = atomic_write(&target, br#"{"writer":0}"#);
+        assert!(result.is_err(), "expected rename onto a directory to fail");
+
+        let leftovers: Vec<String> = std::fs::read_dir(dir.path())
+            .unwrap()
+            .filter_map(|e| e.ok())
+            .map(|e| e.file_name().to_string_lossy().into_owned())
+            .filter(|n| n.contains(".tmp"))
+            .collect();
+        assert!(leftovers.is_empty(), "temp file leaked after a failed write: {leftovers:?}");
+    }
+
+    /// Pins [`TempFileGuard`]: armed drops unlink, disarmed drops don't. Drop
+    /// running on an armed guard is what covers early returns and unwinding
+    /// panics between `write` and `rename` — paths the old `rename`-only
+    /// cleanup missed. Deleting the guard or the `disarm()` call fails this.
+    #[test]
+    fn temp_file_guard_unlinks_unless_disarmed() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("auth-keyring.tmp.0.0");
+
+        std::fs::write(&path, b"x").unwrap();
+        drop(TempFileGuard::new(path.clone()));
+        assert!(!path.exists(), "armed guard must unlink on drop");
+
+        // The post-`rename` case: the file has been moved away, so the guard
+        // must not touch whatever now sits at that path.
+        std::fs::write(&path, b"x").unwrap();
+        let mut guard = TempFileGuard::new(path.clone());
+        guard.disarm();
+        drop(guard);
+        assert!(path.exists(), "disarmed guard must not unlink");
     }
 
     #[test]
