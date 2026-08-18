@@ -161,6 +161,12 @@ describe("integration: ancestors + changelog", () => {
         expect(hasAllowedChangelogSegment([...ancestors, ...own])).toBe(true);
     });
 
+    it("slug 'product-updates' becomes allowlisted under a 'blog' tab ancestor", () => {
+        const ancestors = ["blog"];
+        const own = getEffectiveChangelogSlugSegments({ slug: "product-updates" });
+        expect(hasAllowedChangelogSegment([...ancestors, ...own])).toBe(true);
+    });
+
     it("a deeply nested changelog under an allowlisted tab is allowed", () => {
         const ancestors = ["whats-new", "permissions-changelogs", "aws"];
         const own = getEffectiveChangelogSlugSegments({ slug: "aws-source-permissions" });
