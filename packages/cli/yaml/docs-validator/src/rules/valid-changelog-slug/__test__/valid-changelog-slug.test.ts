@@ -2,14 +2,13 @@ import type { docsYml } from "@fern-api/configuration-loader";
 import { describe, expect, it } from "vitest";
 
 import type { RuleContext } from "../../../Rule.js";
-import { ValidChangelogSlugRule } from "../valid-changelog-slug.js";
-
 import {
     CHANGELOG_FEED_ALLOWED_SLUGS,
     getEffectiveChangelogSlugLastSegment,
     getEffectiveChangelogSlugSegments,
     hasAllowedChangelogSegment,
-    isAllowedChangelogSlug
+    isAllowedChangelogSlug,
+    ValidChangelogSlugRule
 } from "../valid-changelog-slug.js";
 
 async function violationsFor(config: docsYml.RawSchemas.DocsConfiguration): Promise<string[]> {
