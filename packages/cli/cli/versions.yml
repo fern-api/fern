@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.98.3
+  changelogEntry:
+    - summary: |
+        Fix `@/`-prefixed imports inside fenced code blocks and inline code being rewritten to relative
+        paths. Code samples are now rendered verbatim; only real MDX imports are resolved.
+      type: fix
+  createdAt: "2026-08-18"
+  irVersion: 67
 - version: 5.98.2
   changelogEntry:
     - summary: |
