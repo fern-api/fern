@@ -126,6 +126,12 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private basePath: string | undefined = undefined;
     private rootPathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined = undefined;
+    /**
+     * Errors whose body was downgraded to unknown because two declarations named conflicting
+     * types. The downgrade is sticky, so a later typed declaration cannot claim one endpoint's
+     * body shape for every endpoint that shares the error.
+     */
+    private errorsWithConflictingBodies = new Set<string>();
 
     public constructor(public readonly enableUniqueErrorsPerEndpoint: boolean) {
         this.root = new FernDefinitionDirectory();
@@ -400,6 +406,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (existingError.type === schema.type) {
             return;
         }
+        const conflictKey = `${file}:${name}`;
+        if (this.errorsWithConflictingBodies.has(conflictKey)) {
+            return;
+        }
         // Responses without a body carry no type information, so the most specific
         // declaration wins rather than downgrading the error body to unknown.
         const existingSpecificity = getErrorBodySpecificity(existingError.type);
@@ -411,6 +421,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (specificity < existingSpecificity) {
             return;
         }
+        this.errorsWithConflictingBodies.add(conflictKey);
         fernFile.errors[name] = {
             "status-code": schema["status-code"],
             type: "unknown"

@@ -45,6 +45,19 @@ describe("FernDefinitionBuilder.addError", () => {
         });
     });
 
+    it("stays unknown once a conflict was detected, regardless of declaration order", () => {
+        expect(
+            addErrors([
+                { "status-code": 400, type: "Error" },
+                { "status-code": 400, type: "OtherError" },
+                { "status-code": 400, type: "Error" }
+            ])
+        ).toEqual({
+            "status-code": 400,
+            type: "unknown"
+        });
+    });
+
     it("keeps unknown when no endpoint declares an error body type", () => {
         expect(addErrors([{ "status-code": 400, type: "unknown" }, { "status-code": 400 }])).toEqual({
             "status-code": 400,
