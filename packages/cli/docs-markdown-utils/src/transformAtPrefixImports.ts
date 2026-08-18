@@ -2,7 +2,7 @@ import { AbsoluteFilePath, dirname, RelativeFilePath, relative } from "@fern-api
 import { TaskContext } from "@fern-api/task-context";
 import grayMatter from "gray-matter";
 import { CONTINUE, visit } from "unist-util-visit";
-import { parseMarkdownToTree } from "./parseMarkdownToTree.js";
+import { parseMarkdownBodyToTree } from "./parseMarkdownToTree.js";
 
 /**
  * Match import statements with '@/' prefix
@@ -25,15 +25,16 @@ interface Range {
  */
 function getCodeRanges(markdown: string, context: TaskContext | undefined): Range[] | undefined {
     try {
-        // node offsets are relative to the body, so frontmatter is stripped here rather than by
-        // `parseMarkdownToTree`, to keep the offset base explicit.
+        // Node offsets are relative to the body, so frontmatter is stripped exactly once here and
+        // the tree is built with `parseMarkdownBodyToTree`. Using `parseMarkdownToTree` would strip
+        // it a second time and shift every offset out of sync with `bodyOffset`.
         const { content } = grayMatter(markdown);
         if (!markdown.endsWith(content)) {
             return undefined;
         }
         const bodyOffset = markdown.length - content.length;
 
-        const tree = parseMarkdownToTree(content);
+        const tree = parseMarkdownBodyToTree(content);
         const ranges: Range[] = [];
         visit(tree, ["code", "inlineCode"], (node) => {
             const start = node.position?.start.offset;

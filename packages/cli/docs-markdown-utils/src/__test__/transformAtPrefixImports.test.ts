@@ -246,6 +246,40 @@ import { Flex, ProgressCircle } from "@/components/ui/big-design";
         expect(result).toBe(markdown);
     });
 
+    it("should resolve real imports when the body opens with a thematic break", () => {
+        // `---` immediately after the frontmatter makes gray-matter non-idempotent, so stripping
+        // frontmatter twice shifts every code-block offset. The shift only misaligns at certain
+        // body lengths, so sweep padding widths rather than hard-coding one that happens to break.
+        const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
+
+        for (let pad = 0; pad < 60; pad++) {
+            const markdown = [
+                "---",
+                "title: X",
+                "---",
+                "---",
+                "a".repeat(pad),
+                "---",
+                "",
+                "import { Banner } from '@/components/Banner'",
+                "",
+                "```jsx",
+                'import { Flex } from "@/components/ui/big-design";',
+                "```"
+            ].join("\n");
+
+            const result = transformAtPrefixImports({
+                markdown,
+                absolutePathToFernFolder,
+                absolutePathToMarkdownFile
+            });
+
+            // the page-level import resolves, the code sample is left verbatim
+            expect(result, `pad=${pad}`).toContain("import { Banner } from '../components/Banner'");
+            expect(result, `pad=${pad}`).toContain('import { Flex } from "@/components/ui/big-design";');
+        }
+    });
+
     it("should not throw on malformed frontmatter", () => {
         const markdown = `---
 title: "unterminated
