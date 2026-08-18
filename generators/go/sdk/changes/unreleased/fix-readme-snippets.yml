@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix several issues in the generated README:
+    - The Request Options example now renders the auth options the SDK actually
+      generates (e.g., `option.WithSecret` for header auth, `option.WithBasicAuth`
+      for basic auth) instead of always assuming `option.WithToken`.
+    - The Errors example now passes a pointer to `errors.As` so the snippet
+      compiles and doesn't panic.
+    - The Pagination section is now emitted whenever the API has paginated
+      endpoints by selecting a paginated endpoint for the example, rather than
+      relying on the default endpoint being paginated.
+    - The Request Options section now documents the environment variables the
+      generated client reads credentials from when they aren't explicitly provided.
+  type: fix

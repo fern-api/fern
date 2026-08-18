@@ -78,7 +78,7 @@ with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 response, err := client.Create(...)
 if err != nil {
     var apiError *core.APIError
-    if errors.As(err, apiError) {
+    if errors.As(err, &apiError) {
         // Do something with the API error ...
     }
     return err
@@ -100,7 +100,6 @@ specified on the client so that they're applied on every request, or for an indi
 ```go
 // Specify default options applied on every request.
 client := client.NewClient(
-    option.WithToken("<YOUR_API_KEY>"),
     option.WithHTTPClient(
         &http.Client{
             Timeout: 5 * time.Second,
@@ -111,7 +110,7 @@ client := client.NewClient(
 // Specify options for an individual request.
 response, err := client.Create(
     ...,
-    option.WithToken("<YOUR_API_KEY>"),
+    option.WithMaxAttempts(1),
 )
 ```
 

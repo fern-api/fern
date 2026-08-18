@@ -1,4 +1,5 @@
 import { AbstractReadmeSnippetBuilder, GeneratorError } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -109,6 +110,73 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return snippetsByFeatureId;
     }
 
+    public buildReadmeAddendumsByFeatureId(): Record<FernGeneratorCli.FeatureId, string> {
+        const addendums: Record<FernGeneratorCli.FeatureId, string> = {};
+        const environmentVariablesAddendum = this.buildEnvironmentVariablesAddendum();
+        if (environmentVariablesAddendum != null) {
+            addendums[FernGeneratorCli.StructuredFeatureId.RequestOptions] = environmentVariablesAddendum;
+        }
+        return addendums;
+    }
+
+    private buildEnvironmentVariablesAddendum(): string | undefined {
+        const environmentVariables = this.getAuthEnvironmentVariables();
+        if (environmentVariables.length === 0) {
+            return undefined;
+        }
+        const bulletedList = environmentVariables
+            .map((environmentVariable) => `- \`${environmentVariable}\``)
+            .join("\n");
+        return [
+            "",
+            "When credentials are not explicitly provided, the client reads them from the",
+            "following environment variables:",
+            "",
+            bulletedList
+        ].join("\n");
+    }
+
+    private getAuthEnvironmentVariables(): FernIr.EnvironmentVariable[] {
+        const environmentVariables: FernIr.EnvironmentVariable[] = [];
+        for (const scheme of this.context.ir.auth?.schemes ?? []) {
+            switch (scheme.type) {
+                case "bearer":
+                    if (scheme.tokenEnvVar != null) {
+                        environmentVariables.push(scheme.tokenEnvVar);
+                    }
+                    break;
+                case "header":
+                    if (scheme.headerEnvVar != null) {
+                        environmentVariables.push(scheme.headerEnvVar);
+                    }
+                    break;
+                case "basic":
+                    if (scheme.usernameEnvVar != null) {
+                        environmentVariables.push(scheme.usernameEnvVar);
+                    }
+                    if (scheme.passwordEnvVar != null) {
+                        environmentVariables.push(scheme.passwordEnvVar);
+                    }
+                    break;
+                case "oauth":
+                    if (scheme.configuration.type === "clientCredentials") {
+                        if (scheme.configuration.clientIdEnvVar != null) {
+                            environmentVariables.push(scheme.configuration.clientIdEnvVar);
+                        }
+                        if (scheme.configuration.clientSecretEnvVar != null) {
+                            environmentVariables.push(scheme.configuration.clientSecretEnvVar);
+                        }
+                    }
+                    break;
+                case "inferred":
+                    break;
+                default:
+                    assertNever(scheme);
+            }
+        }
+        return environmentVariables;
+    }
+
     private getPrerenderedSnippetsForFeature(
         featureId: FernGeneratorCli.FeatureId,
         predicate: (endpoint: EndpointWithFilepath) => boolean = () => true
@@ -176,23 +244,76 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderRequestOptionsSnippet(endpoint: EndpointWithFilepath): string {
-        return this.writeCode(dedent`
-            // Specify default options applied on every request.
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
-                option.${this.getBearerTokenOptionName()}("${this.getTokenPlaceholder()}"),
+        const authOptions = this.getAuthOptions();
+        const clientOptions = [
+            ...authOptions,
+            dedent`
                 option.WithHTTPClient(
                     &http.Client{
                         Timeout: 5 * time.Second,
                     },
-                ),
-            )
+                )`
+        ];
+        const requestOption = authOptions[0] ?? "option.WithMaxAttempts(1)";
+        const lines: string[] = [
+            "// Specify default options applied on every request.",
+            `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(`,
+            ...clientOptions.map((option) => `${this.indent(option)},`),
+            ")",
+            "",
+            "// Specify options for an individual request.",
+            `response, err := ${this.getMethodCall(endpoint)}(`,
+            "    ...,",
+            `    ${requestOption},`,
+            ")"
+        ];
+        return this.writeCode(lines.join("\n"));
+    }
 
-            // Specify options for an individual request.
-            response, err := ${this.getMethodCall(endpoint)}(
-                ...,
-                option.${this.getBearerTokenOptionName()}("${this.getTokenPlaceholder()}"),
-            )
-        `);
+    private getAuthOptions(): string[] {
+        const options: string[] = [];
+        for (const scheme of this.context.ir.auth?.schemes ?? []) {
+            switch (scheme.type) {
+                case "bearer":
+                    options.push(
+                        `option.With${this.context.caseConverter.pascalUnsafe(scheme.token)}("${
+                            scheme.tokenPlaceholder ?? "<YOUR_API_KEY>"
+                        }")`
+                    );
+                    break;
+                case "header":
+                    options.push(
+                        `option.With${this.context.caseConverter.pascalUnsafe(scheme.name)}("${
+                            scheme.headerPlaceholder ?? "<YOUR_API_KEY>"
+                        }")`
+                    );
+                    break;
+                case "basic":
+                    options.push(
+                        `option.WithBasicAuth("${scheme.usernamePlaceholder ?? "<YOUR_USERNAME>"}", "${
+                            scheme.passwordPlaceholder ?? "<YOUR_PASSWORD>"
+                        }")`
+                    );
+                    break;
+                case "oauth":
+                    options.push(
+                        `option.WithClientCredentials("${this.getOAuthClientIdPlaceholder()}", "${this.getOAuthClientSecretPlaceholder()}")`
+                    );
+                    break;
+                case "inferred":
+                    break;
+                default:
+                    assertNever(scheme);
+            }
+        }
+        return options;
+    }
+
+    private indent(s: string): string {
+        return s
+            .split("\n")
+            .map((line) => (line.length > 0 ? `    ${line}` : line))
+            .join("\n");
     }
 
     private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
@@ -200,7 +321,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             response, err := ${this.getMethodCall(endpoint)}(...)
             if err != nil {
                 var apiError *core.APIError
-                if errors.As(err, apiError) {
+                if errors.As(err, &apiError) {
                     // Do something with the API error ...
                 }
                 return err
@@ -407,8 +528,25 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {
-        const endpointIds = this.getConfiguredEndpointIdsForFeature(featureId) ?? [this.defaultEndpointId];
-        return endpointIds.map(this.lookupEndpointById.bind(this));
+        const configuredEndpointIds = this.getConfiguredEndpointIdsForFeature(featureId);
+        if (configuredEndpointIds != null) {
+            return configuredEndpointIds.map(this.lookupEndpointById.bind(this));
+        }
+        if (featureId === FernGeneratorCli.StructuredFeatureId.Pagination) {
+            const paginatedEndpoint = this.getEndpointWithPagination();
+            if (paginatedEndpoint != null) {
+                return [paginatedEndpoint];
+            }
+        }
+        return [this.lookupEndpointById(this.defaultEndpointId)];
+    }
+
+    private getEndpointWithPagination(): EndpointWithFilepath | undefined {
+        const defaultEndpoint = this.endpointsById[this.defaultEndpointId];
+        if (defaultEndpoint?.endpoint.pagination != null) {
+            return defaultEndpoint;
+        }
+        return Object.values(this.endpointsById).find((endpoint) => endpoint.endpoint.pagination != null);
     }
 
     private getConfiguredEndpointIdsForFeature(featureId: FernIr.FeatureId): FernIr.EndpointId[] | undefined {
