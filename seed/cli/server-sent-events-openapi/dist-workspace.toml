@@ -32,3 +32,5 @@ unix-archive = ".tar.gz"
 install-path = "CARGO_HOME"
 # Whether to install an updater program
 install-updater = false
+default-features = false
+features = ["rustls"]

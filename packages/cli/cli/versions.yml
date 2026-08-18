@@ -1,4 +1,271 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.98.3
+  changelogEntry:
+    - summary: |
+        Fix `@/`-prefixed imports inside fenced code blocks and inline code being rewritten to relative
+        paths. Code samples are now rendered verbatim; only real MDX imports are resolved.
+      type: fix
+  createdAt: "2026-08-18"
+  irVersion: 67
+- version: 5.98.2
+  changelogEntry:
+    - summary: |
+        Preserve explicit `null` values when generating examples from OpenAPI. A `null` routed through
+        an unknown schema (for instance a declared property on an object with
+        `additionalProperties: true`) was replaced with the `{"key": "value"}` placeholder, which made
+        generated SDK wire tests mock an object where the model expects a nullable scalar.
+      type: fix
+  createdAt: "2026-08-17"
+  irVersion: 67
+- version: 5.98.1
+  changelogEntry:
+    - summary: |
+        Render per-endpoint auth in docs when `api.auth` is `endpoint-security`. The declared
+        `auth-schemes` and each operation's `security` were both dropped while importing OpenAPI, so
+        every endpoint published with no auth section, no auth headers in copied snippets, and no
+        credential inputs in the API Explorer. Endpoints now document exactly the schemes they declare:
+        either-scheme endpoints render each option separately, single-scheme endpoints render only that
+        scheme, and `security: []` endpoints render none.
+      type: fix
+  createdAt: "2026-08-17"
+  irVersion: 67
+- version: 5.98.0
+  changelogEntry:
+    - summary: |
+        Add support for the `x-fern-explorer` extension in AsyncAPI specs. It controls whether the
+        API Explorer is available for a generated WebSocket channel. It can be set globally at the
+        document root and overridden per channel, with the per-channel value taking precedence.
+      type: feat
+  createdAt: "2026-08-17"
+  irVersion: 67
+- version: 5.97.0
+  changelogEntry:
+    - summary: |
+        Send IR v67 to the Rust SDK generator from 0.46.0 and the Rust model generator from 0.6.0-rc.0,
+        which is where they start reading whether an endpoint's request body is required. Earlier Rust
+        generator versions keep receiving v66.
+      type: internal
+  createdAt: "2026-08-17"
+  irVersion: 67
+- version: 5.96.0
+  changelogEntry:
+    - summary: |
+        Add `success-redirect-url` and `error-redirect-url` to the OAuth `authorization-code` auth
+        scheme. Both are absolute http(s) URLs a generated CLI redirects the browser to from its
+        loopback callback listener — on success once the authorization code is captured, and on failure
+        with the `error` / `error_description` query parameters appended — so a hosted page can own the
+        branding of the last screen of `auth login`. Neither is the OAuth `redirect_uri`, so neither
+        needs registering with the authorization server.
+      type: feat
+  createdAt: "2026-08-14"
+  irVersion: 67
+- version: 5.95.1
+  changelogEntry:
+    - summary: |
+        Keep endpoint examples that omit a request body the API does not require. They were dropped
+        while converting OpenAPI, so an `x-fern-examples` entry with no `request` produced no example
+        and no snippet. The example now reaches the IR, and each generator decides how to render it
+        based on whether it respects the optional request body.
+      type: fix
+    - summary: |
+        Show `fern docs theme delete` in the `fern docs theme --help` output.
+      type: chore
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 5.95.0
+  changelogEntry:
+    - summary: |
+        Add a way to model an omittable request body separately from its type. `HttpRequestBodyReference`
+        gains an optional `required`, and `HttpReferencedRequestBodySchema` gains an `optional` flag that
+        maps to `required: false`. This is distinct from `body: optional<Foo>`, which says the body's
+        *value* may be null; `optional: true` says the *call* may omit the body entirely, so the request
+        carries neither content nor a `Content-Type` header.
+
+        A request body that OpenAPI does not mark as required now always carries `required: false` into
+        the IR, with its own type left alone. Generated output is unchanged: reading the field is opt-in
+        per SDK generator, through that generator's own configuration, so a language adopts it whenever
+        it is ready instead of every language having to flip at once.
+      type: feat
+    - summary: |
+        Deprecate the `respect-optional-request-body` OpenAPI setting. It is still accepted, but no longer
+        has any effect and warns when set; omittability now reaches generators through the IR regardless.
+        Endpoints whose body the spec does not mark as required no longer have that body typed as
+        `optional<Foo>`, so SDKs generated with the setting enabled describe the body as its own type
+        until the generator opts into omitting it.
+      type: chore
+    - summary: |
+        Skip an OpenAPI example that calls an endpoint without a body the spec does not mark as required.
+        The body keeps its own type until a generator opts into omitting it, so such an example generated
+        a call missing a required argument, which does not compile.
+      type: fix
+  createdAt: "2026-08-12"
+  irVersion: 67
+- version: 5.94.0
+  changelogEntry:
+    - summary: |
+        Skip test files (`*.test.*`, `*.spec.*`, `__tests__/`) and node builtin imports when
+        bundling `experimental.mdx-components`, so a component folder containing tests no longer
+        fails docs generation.
+      type: fix
+    - summary: |
+        Cache custom MDX component bundles in `FERN_MDX_BUNDLE_CACHE_DIR` when it is set, and
+        populate that cache from `fern install-dependencies`. This lets air-gapped deployments
+        bundle components ahead of time, during a phase that has network access, instead of at
+        generation time.
+      type: feat
+  createdAt: "2026-08-11"
+  irVersion: 67
+- version: 5.93.0
+  changelogEntry:
+    - summary: |
+        Add the `FERN_JAVA_SKIP_FORMATTING` environment variable, which skips the Gradle
+        `spotlessApply` pass that runs after Java SDK generation. The CLI forwards the
+        variable from the host into generator containers, so `FERN_JAVA_SKIP_FORMATTING=true
+        fern generate --local` produces unformatted (but otherwise identical) Java output.
+        Useful on networks that cannot reach the Gradle distribution or plugin repositories,
+        and to cut generation time.
+      type: feat
+  createdAt: "2026-08-11"
+  irVersion: 67
+- version: 5.92.4
+  changelogEntry:
+    - summary: |
+        Resolve image and link destinations delimited by angle brackets, e.g. `![alt](<path/to/image.png>)`.
+      type: fix
+  createdAt: "2026-08-10"
+  irVersion: 67
+- version: 5.92.3
+  changelogEntry:
+    - summary: |
+        Fix local images being published as build-machine filesystem paths when the alt text contains
+        brackets, e.g. `![Filter [Top N] menu](./assets/image.png)`. The markdown scanner ended the
+        label at the first `]`, so the destination was never resolved. Link text with brackets is
+        handled the same way, including an escaped pair in prose (`\[Sum of Quantity\]`), which
+        previously consumed the next image on the page.
+      type: fix
+  createdAt: "2026-08-10"
+  irVersion: 67
+- version: 5.92.2
+  changelogEntry:
+    - summary: |
+        Fix a `oneOf` with a `discriminator` and inline (non-`$ref`) variants converting to a union with
+        no variants, which made the field render with no variants in the API reference. An inline
+        variant's discriminant value is now inferred from its own literal discriminant property, and a
+        `oneOf` whose variants cannot be resolved falls back to an undiscriminated union.
+      type: fix
+  createdAt: "2026-08-10"
+  irVersion: 67
+- version: 5.92.1
+  changelogEntry:
+    - summary: |
+        Resolve the Java generator's kebab-case `package-name` config key when computing the package
+        name for local-file-system output. Previously configs using `package-name` (without
+        `group`/`artifact`) logged a misleading "package-prefix configured but packageName is missing"
+        warning even though the name was set.
+      type: fix
+  createdAt: "2026-08-09"
+  irVersion: 67
+- version: 5.92.0
+  changelogEntry:
+    - summary: |
+        Allow endpoint examples to omit the request body when the body is a reference to a
+        shared schema. Previously only inlined request bodies supported omitting `request`,
+        so endpoints whose request schema was reused elsewhere still failed with
+        `Expected example to be an object. Example is: undefined`.
+      type: fix
+    - summary: |
+        Add the OpenAPI setting `respect-optional-request-body`. When enabled, a JSON request body that
+        OpenAPI does not mark as required (`requestBody.required` absent or `false`) becomes an optional
+        request body in the generated Fern Definition, so generated SDKs accept a call without a body and
+        snippets for examples that omit `request` match the generated method signature. Defaults to `false`,
+        which preserves the current behavior where the optionality is only used to validate examples.
+      type: feat
+  createdAt: "2026-08-07"
+  irVersion: 67
+- version: 5.91.0
+  changelogEntry:
+    - summary: |
+        Add `fern mcp install`, which connects Claude Code, Cursor, and Codex to the Fern MCP server
+        using your existing `fern login` token instead of a separate OAuth flow. By default it configures
+        every one of those agents found on the machine; pass `--client` to pick, and `--org` to override
+        the organization from `fern.config.json`.
+      type: feat
+    - summary: |
+        Fix `fern check` failing with "Expected example to be an object. Example is: undefined" when an
+        endpoint example omits `request` for an endpoint whose inlined request body has no required
+        properties. Omitting `request` now produces an example with no request body instead of a
+        validation error, and such examples are no longer dropped from the generated IR. Examples that
+        omit a body with required properties are still rejected.
+      type: fix
+    - summary: |
+        Add git-ref-based docs versioning. A version entry in `docs.yml` can now name a
+        git `ref:` (a branch, tag, or commit SHA) instead of pointing only at the working
+        tree. On publish, the CLI resolves the ref to a commit, materializes the repository
+        at that commit, and builds that version's pages, navigation, assets, API definitions,
+        and committed library output from the ref, composed with the current branch's theme,
+        shell, and `versions:` metadata. Branch refs are resolved to their latest commit on
+        the remote; tags and commit SHAs are immutable. `fern docs dev` builds only the
+        working-tree version (git-ref-backed versions are built on publish).
+      type: feat
+    - summary: |
+        Preserve `requestBody.required` when importing from OpenAPI. Endpoints whose request body is not
+        required are now marked `optional` in the generated Fern definition, so an example may omit
+        `request` only when the endpoint actually permits a call with no body. Examples that omit
+        `request` for a required body are rejected again, with an error that names the cause instead of
+        reporting an undefined example.
+      type: fix
+  createdAt: "2026-08-07"
+  irVersion: 67
+- version: 5.90.1
+  changelogEntry:
+    - summary: |
+        Thread the PHP SDK's Composer package identity (name + `--version`) into the IR's
+        filesystem publish target for `local-file-system` output, so the PHP generator can
+        stamp the real version into `composer.json` instead of defaulting to `0.0.0`.
+      type: fix
+  createdAt: "2026-08-05"
+  irVersion: 67
+- version: 5.90.0
+  changelogEntry:
+    - summary: |
+        Add `ref` field to the `git` library input in `docs.yml`, allowing users to
+        generate SDK reference documentation from a specific branch, tag, or commit SHA
+        instead of only the default branch.
+      type: feat
+    - summary: |
+        Merge an operation's `parameters` from `overrides.yml` by parameter name instead of by array
+        position, so an override no longer renames or drops whichever parameter happens to sit at that
+        index. When several parameters share a name, `in` disambiguates them, and an override matching
+        no parameter is appended.
+      type: fix
+    - summary: |
+        Read a parameter's `description` from its inline schema when the parameter object itself does
+        not declare one, so descriptions declared inside the schema (as generated by validation
+        libraries) reach the SDKs and API reference.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 67
+- version: 5.89.6
+  changelogEntry:
+    - summary: |
+        `fern generate --local` no longer bumps the magic placeholder version as if it were a
+        real previous version, which produced versions such as `0.0.0-fern-placeholder.0`.
+        Placeholder candidates from the diff, `.fern/metadata.json` and git tags are skipped so
+        the next resolution source is used instead.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 67
+- version: 5.89.5
+  changelogEntry:
+    - summary: |
+        Improve `fern generate --package` artifacts: TypeScript tarballs are compiled before
+        packing so they ship runnable JavaScript (falling back to `tsc` when the package has no
+        build script), Java packaging emits a POM with dependency metadata next to the JAR, and
+        Python host-mode packaging retries in an isolated venv (`python -m build`) when `pip wheel`
+        fails on the host toolchain.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 67
 - version: 5.89.4
   changelogEntry:
     - summary: |

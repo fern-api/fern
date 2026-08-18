@@ -1,0 +1,12 @@
+[package]
+name = "query_parameters_api_types"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+doctest = false
+
+[dependencies]
+
+[dependencies.query_parameters_api_types_core]
+path = "crates/query-parameters-api-types-core"

@@ -135,6 +135,13 @@ describe("detectAuthBindings", () => {
         );
         expect(bindings[0]?.placement).toBe("root");
         expect(bindings[0]?.authTypeImport).toBe("BasicAuth");
+        // `envVars` order is load-bearing: the wire-test manifest pairs
+        // `envVars[0]` with mock-utils' `test-username` and `envVars[1]` with
+        // `test-password` to satisfy its exact `Authorization: Basic <base64>`
+        // matcher. Reordering these silently makes every basic-auth wire case
+        // unmatchable.
+        expect(bindings[0]?.basicHalf).toBe("both");
+        expect(bindings[0]?.envVars).toEqual(["CLOSE_USER", "CLOSE_PASS"]);
     });
 
     it("basic auth with passwordOmit (Close pattern): emits auth_provider with BasicAuthProvider::username_only", () => {
@@ -147,6 +154,10 @@ describe("detectAuthBindings", () => {
         );
         expect(bindings[0]?.placement).toBe("binding");
         expect(bindings[0]?.authTypeImport).toBe("AuthCredentialSource, BasicAuthProvider");
+        // Only the username half is bound, so the manifest must seed
+        // `test-username` here — seeding the password value would build
+        // `Basic base64("test-password:")` and never match.
+        expect(bindings[0]?.basicHalf).toBe("username");
     });
 
     it("basic auth with usernameOmit: emits auth_provider with BasicAuthProvider::password_only", () => {
@@ -157,6 +168,7 @@ describe("detectAuthBindings", () => {
         expect(bindings[0]?.rustCall).toBe(
             '.auth_provider("BasicAuth", BasicAuthProvider::password_only("BasicAuth", AuthCredentialSource::from_env("ACME_PASS")))'
         );
+        expect(bindings[0]?.basicHalf).toBe("password");
     });
 
     it("basic auth with both halves omitted: skipped — nothing left to bind", () => {
@@ -385,6 +397,8 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
         redirectUri?: string;
         redirectUriBackupPorts?: number[];
         scopes?: string[];
+        successRedirectUrl?: string;
+        errorRedirectUrl?: string;
         authorizationParameters?: Record<string, string>;
         tokenParameters?: Record<string, string>;
     }): FernIr.AuthScheme =>
@@ -399,6 +413,8 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
                 redirectUri: overrides.redirectUri,
                 redirectUriBackupPorts: overrides.redirectUriBackupPorts,
                 scopes: overrides.scopes,
+                successRedirectUrl: overrides.successRedirectUrl,
+                errorRedirectUrl: overrides.errorRedirectUrl,
                 pkce: { method: FernIr.OAuthPkceMethod.S256 },
                 authorizationParameters: overrides.authorizationParameters,
                 tokenParameters: overrides.tokenParameters,
@@ -494,6 +510,26 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
         });
         expect(binding?.rustCall).not.toContain(".redirect_host(");
         expect(binding?.rustCall).not.toContain(".redirect_path(");
+    });
+
+    it("emits the hosted callback page setters when redirect URLs are configured", () => {
+        const [binding] = detectAuthBindings({
+            auth: auth(
+                authorizationCode({
+                    successRedirectUrl: "https://acme.com/cli/success",
+                    errorRedirectUrl: "https://acme.com/cli/error"
+                })
+            ),
+            binaryName: "acme"
+        });
+        expect(binding?.rustCall).toContain('.success_redirect_url("https://acme.com/cli/success")');
+        expect(binding?.rustCall).toContain('.error_redirect_url("https://acme.com/cli/error")');
+    });
+
+    it("omits the hosted callback page setters when no redirect URLs are configured", () => {
+        const [binding] = detectAuthBindings({ auth: auth(authorizationCode({})), binaryName: "acme" });
+        expect(binding?.rustCall).not.toContain("success_redirect_url");
+        expect(binding?.rustCall).not.toContain("error_redirect_url");
     });
 
     it("emits no param setters when no extra params are configured (byte-identical output)", () => {

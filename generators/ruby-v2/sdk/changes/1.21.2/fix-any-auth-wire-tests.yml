@@ -1,0 +1,5 @@
+- summary: |
+    Fixed WireMock stubs for wire tests of APIs with `auth: any` combining Basic and
+    OAuth/Bearer schemes: stubs now accept either Authorization form instead of
+    requiring one exact value the client may not send.
+  type: fix

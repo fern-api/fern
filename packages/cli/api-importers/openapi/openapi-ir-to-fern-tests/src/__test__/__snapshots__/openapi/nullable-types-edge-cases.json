@@ -22,6 +22,7 @@
               "path": "/test",
               "request": {
                 "body": {
+                  "optional": true,
                   "properties": {
                     "nullableArray": "optional<nullable<NullableArray>>",
                     "nullableString": "optional<nullable<NullableString>>",
@@ -136,6 +137,7 @@
             nullableUser: optional<nullable<NullableUser>>
             nullableArray: optional<nullable<NullableArray>>
             profile: optional<Profile>
+          optional: true
         content-type: application/json
       examples:
         - request: {}

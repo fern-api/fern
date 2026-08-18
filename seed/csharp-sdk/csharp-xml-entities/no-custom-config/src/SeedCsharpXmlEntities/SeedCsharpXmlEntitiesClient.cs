@@ -15,7 +15,7 @@ public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedCsharpXmlEntities" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedCsharpXmlEntities.Version.Current },
                 { "User-Agent", "Ferncsharp-xml-entities/0.0.1" },
             }
         );

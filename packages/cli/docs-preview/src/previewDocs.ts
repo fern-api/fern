@@ -256,7 +256,8 @@ export async function getPreviewDocsDefinition({
             const markdownReplacedMdAndCode = transformAtPrefixImports({
                 markdown: markdownReplacedCode,
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-                absolutePathToMarkdownFile: absoluteFilePath
+                absolutePathToMarkdownFile: absoluteFilePath,
+                context
             });
 
             let markdownWithAbsPaths: string;
@@ -370,7 +371,10 @@ export async function getPreviewDocsDefinition({
             }),
         registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
         targetAudiences: undefined,
-        buildTranslatedApiDefinitions: true
+        buildTranslatedApiDefinitions: true,
+        // `fern docs dev` previews the working-tree version only; git-ref-backed
+        // versions are materialized on the publish path.
+        buildRefVersions: false
     });
 
     const writeDocsDefinition = await resolver.resolve();

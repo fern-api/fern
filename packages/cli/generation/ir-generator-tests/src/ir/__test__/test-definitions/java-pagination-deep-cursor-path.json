@@ -863,6 +863,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": "application/json",
                         "v2Examples": null
@@ -888,6 +889,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -1373,6 +1375,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": "application/json",
                         "v2Examples": null
@@ -1398,6 +1401,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -1948,6 +1952,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": "application/json",
                         "v2Examples": null
@@ -1973,6 +1978,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -3752,7 +3758,8 @@
                             "type": "named",
                             "value": "type_deep-cursor-path:A"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -3838,7 +3845,8 @@
                             "type": "named",
                             "value": "type_deep-cursor-path:MainRequired"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -3924,7 +3932,8 @@
                             "type": "named",
                             "value": "type_deep-cursor-path:InlineA"
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

@@ -285,15 +285,75 @@ pub fn write_error_json(err: &CliError, out: &mut dyn std::io::Write, ctx: Optio
         }
         if matches!(err, CliError::Validation(_)) {
             if let Some(hint) = &ctx.help_hint {
-                eprintln!("  Try `{}`", sanitize_for_terminal(hint));
+                // `--help` is the right next step for a malformed flag, but not
+                // when the message already tells the user exactly what to set —
+                // a refused cross-host redirect, for instance, is remedied by an
+                // environment variable, and `Try <cmd> --help` sends them to a
+                // flag list that says nothing about it.
+                if !message_names_its_own_remedy(&err.to_string()) {
+                    eprintln!("  Try `{}`", sanitize_for_terminal(hint));
+                }
             }
         }
     }
 }
 
+/// Marker shared with the security guards in [`crate::http`], whose refusal
+/// messages end by naming the environment variable that permits the action.
+///
+/// Kept as one constant so the guards and this check cannot drift apart; the
+/// test below builds a real refusal and asserts it still matches.
+pub(crate) const SELF_REMEDY_MARKER: &str = "=1 to allow it";
+
+/// Whether a validation message already states its own remedy, making a generic
+/// `Try <cmd> --help` redundant or actively misleading.
+///
+/// Deliberately narrow — the default stays "show the hint", because for the
+/// overwhelming majority of validation errors (a bad flag value, a missing
+/// required parameter) `--help` is exactly where the user should look. It is
+/// only suppressed when the fix lives in the environment rather than in the
+/// command's flags, where pointing at a flag list would send the user somewhere
+/// that says nothing about it.
+fn message_names_its_own_remedy(message: &str) -> bool {
+    message.contains(SELF_REMEDY_MARKER)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn self_remedy_marker_matches_a_real_guard_refusal() {
+        // Built from the pagination guard rather than a hand-copied string, so
+        // rewording the guard breaks this test instead of silently restoring the
+        // misleading `Try ... --help` hint.
+        let refusal = crate::http::check_pagination_target(
+            "hintcheck",
+            "https://api.example.com/v1/things",
+            "https://evil.example.net/v1/things",
+        )
+        .expect_err("a cross-host pagination target must be refused");
+        assert!(
+            message_names_its_own_remedy(&refusal),
+            "the guard's message should suppress the --help hint, got: {refusal}"
+        );
+    }
+
+    #[test]
+    fn ordinary_validation_messages_still_get_the_help_hint() {
+        // The common case must be unaffected: a bad flag or missing parameter
+        // has no env-var remedy, so `--help` is the right pointer.
+        for message in [
+            "Required parameter 'query' is missing. Provide it via --query-param or --params",
+            "Cannot combine --json with per-field body flags (--type). Use one or the other.",
+            "Invalid --params JSON: expected value at line 1 column 1",
+        ] {
+            assert!(
+                !message_names_its_own_remedy(message),
+                "{message} should keep the --help hint"
+            );
+        }
+    }
 
     #[test]
     fn test_exit_codes_are_distinct() {

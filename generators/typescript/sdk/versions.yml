@@ -1,4 +1,58 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.88.0
+  changelogEntry:
+    - summary: |
+        With `respectOptionalRequestBody` enabled, examples that omit an optional request body are no
+        longer dropped from the generated reference, snippets, and docs comments.
+      type: fix
+    - summary: |
+        Add `respectOptionalRequestBody`. With it enabled, an endpoint whose request body the API does
+        not require takes an optional body parameter — `refund(id: string, request?: RefundRequest)` —
+        keeping the body's own type rather than widening it to `RefundRequest | undefined`, and sending
+        no body when the caller omits it. Examples that supply no body render as `client.refund(id)`,
+        and the generated wire test for such an example no longer asserts a request body. Defaults to
+        `false`, so signatures and snippets are unchanged until you opt in.
+      type: feat
+  createdAt: "2026-08-14"
+  irVersion: 67
+- version: 3.87.4
+  changelogEntry:
+    - summary: |
+        Skip endpoint examples that omit a request body the endpoint declares. The generated request
+        type requires the body, so rendering such an example produced a call missing a required
+        argument in the reference, the docstrings, the snippets and the generated tests.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 3.87.3
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets emitting a dangling argument delimiter (e.g. `client.refunds.refund("id", )`)
+        when an example omits the request body.
+      type: fix
+  createdAt: "2026-08-07"
+  irVersion: 67
+- version: 3.87.2
+  changelogEntry:
+    - summary: |
+        Send the caller's request when fetching the first page of a `next_uri`/`next_path` paginated
+        endpoint. Previously the first page was requested through the same headers-only helper used for
+        subsequent pages, so query parameters, request bodies and `requestOptions.queryParams` were
+        silently dropped (and the unused `request` parameter was emitted as `_request`). Subsequent pages
+        keep using the next URL as-is.
+      type: fix
+  createdAt: "2026-08-05"
+  irVersion: 67
+- version: 3.87.1
+  changelogEntry:
+    - summary: |
+        The `appInfo` User-Agent helper emitted when `allowUserAgentAppInfo` is enabled no longer
+        uses a control-character regex range, so generated SDKs lint cleanly under rules such as
+        Biome's `noControlCharactersInRegex` without a suppression comment. Escaping behavior is
+        unchanged.
+      type: fix
+  createdAt: "2026-08-04"
+  irVersion: 67
 - version: 3.87.0
   changelogEntry:
     - summary: |

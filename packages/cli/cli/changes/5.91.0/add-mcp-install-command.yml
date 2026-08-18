@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `fern mcp install`, which connects Claude Code, Cursor, and Codex to the Fern MCP server
+    using your existing `fern login` token instead of a separate OAuth flow. By default it configures
+    every one of those agents found on the machine; pass `--client` to pick, and `--org` to override
+    the organization from `fern.config.json`.
+  type: feat

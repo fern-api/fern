@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `success-redirect-url` and `error-redirect-url` to the OAuth `authorization-code` auth
+    scheme. Both are absolute http(s) URLs a generated CLI redirects the browser to from its
+    loopback callback listener — on success once the authorization code is captured, and on failure
+    with the `error` / `error_description` query parameters appended — so a hosted page can own the
+    branding of the last screen of `auth login`. Neither is the OAuth `redirect_uri`, so neither
+    needs registering with the authorization server.
+  type: feat

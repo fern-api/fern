@@ -456,7 +456,8 @@ function convertWebSocketChannel(
                 availability: convertIrAvailability(message.availability)
             })
         ),
-        examples
+        examples,
+        includeInApiExplorer: channel.apiPlayground
     };
 }
 

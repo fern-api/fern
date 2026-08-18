@@ -3400,10 +3400,11 @@ fn extract_response(
 /// `type: string, format: binary` (or legacy `type: file`).
 ///
 /// `encoding` is the media type's OpenAPI `encoding` object; a per-property
-/// `contentType` there overrides the content type inferred from the schema
-/// (the default being `application/octet-stream` for file parts and
-/// `text/plain` for text parts). This is the OAS 3.x mechanism for, e.g.,
-/// declaring that a string field carries `application/json`.
+/// `contentType` there is the declared media type for that part and wins over
+/// anything inferred from the schema. This is the OAS 3.x mechanism for, e.g.,
+/// declaring that a string field carries `application/json`. When it is absent
+/// the field's `content_type` is left `None` and the request builder resolves
+/// it — for a file part, from the file's extension.
 fn extract_multipart_fields(
     schema: Option<&OpenApiSchemaObject>,
     encoding: &HashMap<String, OpenApiEncoding>,
@@ -3471,10 +3472,38 @@ fn extract_multipart_fields(
     fields
 }
 
-/// Determine whether a multipart property is a file upload and its content type.
+/// How deep the multipart classifier will unwrap nested `anyOf`/`oneOf`/`allOf`
+/// composition. A cyclic composition chain (`A: {anyOf: [$ref B]}`,
+/// `B: {anyOf: [$ref A]}`) would otherwise recurse until the stack overflows —
+/// and this loader runs at CLI startup against the baked spec, so an overflow
+/// aborts the customer's binary on every invocation rather than failing at
+/// generate time. Same fail-closed posture as [`MAX_BODY_DEPTH`].
+const MAX_MULTIPART_COMPOSITION_DEPTH: u8 = 4;
+
+/// Determine whether a multipart property is a file upload, and its content type
+/// **if the schema pins one**.
+///
+/// A file field returns `None`: the schema says `format: binary`, which conveys
+/// "these are opaque bytes", not "label them `application/octet-stream`".
+/// Returning a concrete type here would be indistinguishable downstream from a
+/// type the spec actually declared via `encoding`, and it would win over the
+/// media type inferred from the file's extension — labelling every upload
+/// `application/octet-stream` and getting it rejected by servers that validate a
+/// part's media type. Resolution is left to the request builder
+/// (`file_part_mime`): declared `encoding` → extension → octet-stream.
 fn classify_multipart_property(
     prop: &OpenApiSchemaObject,
     component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> (bool, Option<String>) {
+    classify_multipart_property_at_depth(prop, component_schemas, 0)
+}
+
+/// [`classify_multipart_property`] with the composition-nesting counter that
+/// bounds the `anyOf`/`oneOf`/`allOf` walk.
+fn classify_multipart_property_at_depth(
+    prop: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+    depth: u8,
 ) -> (bool, Option<String>) {
     // Resolve $ref if present.
     let resolved = if let Some(ref_path) = &prop.schema_ref {
@@ -3489,8 +3518,7 @@ fn classify_multipart_property(
 
     // `type: string, format: binary` or legacy `type: file`
     if (ty == Some("string") && fmt == Some("binary")) || ty == Some("file") {
-        let ct = Some("application/octet-stream".to_string());
-        return (true, ct);
+        return (true, None);
     }
 
     // Array of binary files (e.g. `type: array, items: { type: string, format: binary }`)
@@ -3500,7 +3528,33 @@ fn classify_multipart_property(
                 && items.format.as_deref() == Some("binary"))
                 || items.schema_type() == Some("file")
             {
-                return (true, Some("application/octet-stream".to_string()));
+                return (true, None);
+            }
+        }
+    }
+
+    // Composition wrapping a binary schema — the canonical shape for an
+    // *optional* file, `anyOf: [{type: string, format: binary}, {type: null}]`.
+    // Without unwrapping, an optional upload has no top-level `type`/`format`
+    // and would be mistaken for a text part (the filename sent as a string).
+    // Classify as a file when any non-null branch is itself a file; the content
+    // type comes from the first file branch. Bounded by
+    // `MAX_MULTIPART_COMPOSITION_DEPTH` so a cyclic `$ref` composition chain
+    // fails closed (text part) instead of overflowing the stack.
+    if depth < MAX_MULTIPART_COMPOSITION_DEPTH {
+        for branch in resolved
+            .any_of
+            .iter()
+            .chain(resolved.one_of.iter())
+            .chain(resolved.all_of.iter())
+        {
+            if is_null_sentinel(branch) {
+                continue;
+            }
+            let (branch_is_file, branch_ct) =
+                classify_multipart_property_at_depth(branch, component_schemas, depth + 1);
+            if branch_is_file {
+                return (true, branch_ct);
             }
         }
     }
@@ -4269,6 +4323,105 @@ paths:
     }
 
     #[test]
+    fn test_multipart_optional_file_via_anyof_null_is_classified_as_file() {
+        // Regression: an *optional* file (`anyOf: [{string, binary}, {null}]`)
+        // must be recognized as a file part, not sent as a text part (the
+        // filename as a string), which the server rejects with a 422.
+        let yaml = r#"
+openapi: "3.1.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /upload-file:
+    post:
+      x-fern-sdk-group-name: files
+      x-fern-sdk-method-name: upload
+      operationId: uploadFile
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name: { type: string }
+                file:
+                  anyOf:
+                    - { type: string, format: binary }
+                    - { type: "null" }
+      responses: { "200": { description: ok } }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let upload = &doc.resources["files"].methods["upload"];
+        let file_field = upload
+            .multipart_fields
+            .iter()
+            .find(|f| f.wire_name == "file")
+            .expect("file field present");
+        assert!(
+            file_field.is_file,
+            "optional anyOf-null binary field must classify as a file"
+        );
+        let name_field = upload
+            .multipart_fields
+            .iter()
+            .find(|f| f.wire_name == "name")
+            .expect("name field present");
+        assert!(!name_field.is_file, "plain string field stays a text part");
+    }
+
+    #[test]
+    fn test_multipart_cyclic_composition_does_not_overflow_the_stack() {
+        // Regression: unwrapping `anyOf`/`oneOf`/`allOf` to classify optional
+        // files must be depth-bounded. A cyclic composition chain used to
+        // recurse forever and abort the process — and since the CLI loads its
+        // baked spec at startup, that took the customer's binary down on every
+        // invocation. The cyclic field must fail closed as a text part.
+        let yaml = r#"
+openapi: "3.1.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+components:
+  schemas:
+    A: { anyOf: [ { $ref: '#/components/schemas/B' } ] }
+    B: { anyOf: [ { $ref: '#/components/schemas/A' } ] }
+paths:
+  /upload-file:
+    post:
+      x-fern-sdk-group-name: files
+      x-fern-sdk-method-name: upload
+      operationId: uploadFile
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                cyclic: { $ref: '#/components/schemas/A' }
+                file: { type: string, format: binary }
+      responses: { "200": { description: ok } }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let upload = &doc.resources["files"].methods["upload"];
+        let cyclic = upload
+            .multipart_fields
+            .iter()
+            .find(|f| f.wire_name == "cyclic")
+            .expect("cyclic field present");
+        assert!(
+            !cyclic.is_file,
+            "an unresolvable cyclic schema must fail closed as a text part"
+        );
+        // The depth cap must not disturb classification of sibling fields.
+        let file_field = upload
+            .multipart_fields
+            .iter()
+            .find(|f| f.wire_name == "file")
+            .expect("file field present");
+        assert!(file_field.is_file);
+    }
+
+    #[test]
     fn test_has_binary_response_true_for_audio_2xx() {
         let yaml = r#"
 openapi: "3.0.0"
@@ -4652,10 +4805,12 @@ paths:
             .iter()
             .find(|f| f.wire_name == "file")
             .unwrap();
-        assert_eq!(
-            file_field.content_type.as_deref(),
-            Some("application/octet-stream"),
-        );
+        // `format: binary` with no `encoding` entry pins no media type. Left
+        // `None` so the request builder can infer it from the file's extension;
+        // synthesizing `application/octet-stream` here would outrank that
+        // inference and make uploads fail against servers that validate a part's
+        // media type.
+        assert_eq!(file_field.content_type, None);
 
         let note_field = create
             .multipart_fields

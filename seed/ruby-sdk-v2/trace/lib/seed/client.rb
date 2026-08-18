@@ -18,6 +18,7 @@ module Seed
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url || Seed::Environment::PROD,
         headers: headers,
+        overridable_headers: %w[X-Random-Header],
         max_retries: max_retries
       )
     end

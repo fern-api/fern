@@ -705,6 +705,9 @@ class EndpointFunctionGenerator:
                         f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}"
                     ),
                     is_default_body_parameter_used=self.is_default_body_parameter_used,
+                    is_body_optional=(
+                        request_body_parameters is not None and request_body_parameters.is_body_optional()
+                    ),
                     force_multipart=(
                         True
                         if endpoint.request_body is not None

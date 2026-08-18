@@ -1615,8 +1615,114 @@ describe("literal angle brackets in prose", () => {
         expect(roundTrip(page)).toContain("file:leaf-id");
     });
 
+    it.each([
+        ["balanced brackets in image alt text", "![Filter [Top N] menu](path/to/image.png)"],
+        ["nested brackets in image alt text", "![a [b [c] d] e](path/to/image.png)"],
+        ["escaped brackets in image alt text", "![Filter \\[Top N\\] menu](path/to/image.png)"],
+        ["empty brackets in image alt text", "![Filter [] menu](path/to/image.png)"],
+        ["unbalanced brackets in image alt text", "![Filter \\[Top N] menu](path/to/image.png)"]
+    ])("resolves an image with %s", (_name, page) => {
+        const result = roundTrip(page);
+        expect(result).toContain("file:leaf-id");
+        expect(result).not.toContain("/Volume/git/fern");
+    });
+
+    it.each([
+        ["bracketed prose on the previous line", "See [1] for details.\n![leaf](path/to/image.png)"],
+        ["a table row with bracketed text", "| [Docs] | ![leaf](path/to/image.png) |"],
+        ["a keyboard key in prose", "Press [Enter].\n![leaf](path/to/image.png)"],
+        ["an image label with no destination", "![leaf]\n![leaf](path/to/image.png)"],
+        [
+            "a fully escaped bracket pair",
+            "Apply Top N to the \\[Sum of Quantity\\], like this:\n\n![leaf](path/to/image.png)"
+        ]
+    ])("resolves an image preceded by %s", (_name, page) => {
+        const result = roundTrip(page);
+        expect(result).toContain("file:leaf-id");
+        expect(result).not.toContain("/Volume/git/fern");
+    });
+
+    it("resolves an image that follows one with brackets in its alt text", () => {
+        const page = "![Filter [Top N] menu](path/to/image.png)\n\n![plain](path/to/image.png)\n";
+        expect(roundTrip(page).match(/file:leaf-id/g)).toHaveLength(2);
+    });
+
+    it("rewrites a relative link whose text contains brackets", () => {
+        const page = "[see [Top N] docs](./other.mdx)\n";
+        const result = replaceImagePathsAndUrls(
+            page,
+            new Map(),
+            { [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/other.mdx")]: "docs/other" },
+            PATHS,
+            CONTEXT
+        );
+        expect(result).toContain("(/docs/other)");
+    });
+
     it("does not rewrite an image inside a fenced code block", () => {
         const page = "```\n![leaf](path/to/image.png)\n```\n";
         expect(roundTrip(page)).toContain("![leaf](path/to/image.png)");
+    });
+});
+
+describe("angle bracket delimited destinations", () => {
+    const IMAGE_PATH = AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png");
+    const fileIds = new Map([[IMAGE_PATH, "bracketed-id"]]);
+
+    function roundTrip(page: string, ids: Map<AbsoluteFilePath, string> = fileIds): string {
+        const parsed = parseImagePaths(page, PATHS, CONTEXT);
+        return replaceImagePathsAndUrls(parsed.markdown, ids, {}, PATHS, CONTEXT).trim();
+    }
+
+    it("replaces the image path with a fileId", () => {
+        expect(roundTrip("![image](<path/to/image.png>)")).toBe("![image](<file:bracketed-id>)");
+    });
+
+    it("does not leave a local filesystem path in the published markdown", () => {
+        expect(roundTrip("![image](<path/to/image.png>)")).not.toContain("/Volume/git/fern");
+    });
+
+    it("replaces the image path on the streaming path", () => {
+        vi.stubEnv("FERN_DOCS_LARGE_FILE_BYTES", "10");
+        const parsed = parseImagePaths("![image](<path/to/image.png>)", PATHS, CONTEXT);
+        expect(parsed.filepaths).toEqual([IMAGE_PATH]);
+        expect(replaceImagePathsAndUrls(parsed.markdown, fileIds, {}, PATHS, CONTEXT).trim()).toBe(
+            "![image](<file:bracketed-id>)"
+        );
+        vi.unstubAllEnvs();
+    });
+
+    it("resolves a destination containing spaces", () => {
+        const spacedPath = AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/my image.png");
+        const parsed = parseImagePaths("![image](<path/my image.png>)", PATHS, CONTEXT);
+        expect(parsed.filepaths).toEqual([spacedPath]);
+        expect(
+            replaceImagePathsAndUrls(parsed.markdown, new Map([[spacedPath, "spaced-id"]]), {}, PATHS, CONTEXT).trim()
+        ).toBe("![image](<file:spaced-id>)");
+    });
+
+    it("preserves an anchor", () => {
+        expect(roundTrip("![image](<path/to/image.png#anchor>)")).toBe("![image](<file:bracketed-id#anchor>)");
+    });
+
+    it("preserves a title", () => {
+        expect(roundTrip('![image](<path/to/image.png> "My title")')).toBe('![image](<file:bracketed-id> "My title")');
+    });
+
+    it("resolves a destination inside a JSX element", () => {
+        const page = '<Frame caption="Installer">![image](<path/to/image.png>)</Frame>';
+        expect(roundTrip(page)).toBe('<Frame caption="Installer">![image](<file:bracketed-id>)</Frame>');
+    });
+
+    it("rewrites a bracketed markdown link", () => {
+        const page = "[other page](<./other.mdx>)";
+        const result = replaceImagePathsAndUrls(
+            page,
+            new Map(),
+            { [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/other.mdx")]: "docs/other" },
+            PATHS,
+            CONTEXT
+        );
+        expect(result.trim()).toBe("[other page](</docs/other>)");
     });
 });

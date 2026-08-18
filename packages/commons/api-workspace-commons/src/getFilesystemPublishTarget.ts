@@ -120,7 +120,10 @@ export function getFilesystemPublishTarget({
                     artifactId: packageName
                 };
             } else if (typeof configObj["package-prefix"] === "string" && !packageName) {
-                context.logger.warn("Java generator has package-prefix configured but packageName is missing");
+                context.logger.warn(
+                    "Java generator has package-prefix configured but no package name could be resolved. " +
+                        "Set 'package-name' (or 'group' and 'artifact') in the generator config to stamp Maven coordinates."
+                );
             }
 
             return undefined;
@@ -152,6 +155,23 @@ export function getFilesystemPublishTarget({
             packageName
         });
         context.logger.debug(`Created RubyGemsPublishTarget: version ${version} package name: ${packageName}`);
+        return publishTarget;
+    } else if (generatorInvocation.language === "php") {
+        const phpPackageName =
+            packageName ??
+            (() => {
+                const config = generatorInvocation.raw?.config;
+                if (typeof config !== "object" || config === null) {
+                    return undefined;
+                }
+                const configPackageName = (config as { packageName?: unknown }).packageName;
+                return typeof configPackageName === "string" ? configPackageName : undefined;
+            })();
+        const publishTarget = PublishTarget.packagist({
+            version,
+            packageName: phpPackageName
+        });
+        context.logger.debug(`Created PackagistPublishTarget: version ${version} package name: ${phpPackageName}`);
         return publishTarget;
     } else if (generatorInvocation.language === "csharp") {
         // Only populate the nuget publish target when the user explicitly

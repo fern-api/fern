@@ -9,6 +9,7 @@ import { WriteablePythonFile } from "@fern-api/python-base";
 import { DynamicSnippetsGenerator } from "@fern-api/python-dynamic-snippets";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertIr } from "../utils/convertIr.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 /**
@@ -45,7 +46,7 @@ export class WireTestGenerator {
 
         // TODO(tjdbdc): Really need a migration framework for FernIr.dynamic IR
         this.snippetGenerator = new DynamicSnippetsGenerator({
-            ir: this.dynamicIr,
+            ir: convertIr(this.dynamicIr),
             config: {
                 organization: context.config.organization,
                 workspaceName: context.config.workspaceName,
@@ -425,9 +426,19 @@ export class WireTestGenerator {
             // that route OAuth/inferred — filtered out here because it targets a different
             // path/test-id. The token endpoint is unauthenticated and, when tested directly,
             // makes exactly one request, so the doubling heuristic must not apply.
+            //
+            // When OAuth is configured (including alongside bearer via `auth: any`), the
+            // test client is constructed with client credentials — never a token — so the
+            // OAuth token provider is installed and prefetches from the token endpoint.
+            //
+            // The inferred-auth prefetch does not happen when a bearer scheme is configured
+            // alongside it: the test client is constructed with a token, so the generated
+            // client takes the token branch and never installs the inferred token provider.
+            const hasBearerScheme = this.context.ir.auth.schemes.some((scheme) => scheme.type === "bearer");
             const expectedRequestCount =
                 !this.isEndpointSecurity() &&
-                (this.isInferredAuthTokenEndpoint(endpoint) || this.isOAuthTokenEndpoint(endpoint))
+                ((!hasBearerScheme && this.isInferredAuthTokenEndpoint(endpoint)) ||
+                    this.isOAuthTokenEndpoint(endpoint))
                     ? 2
                     : 1;
             statements.push(

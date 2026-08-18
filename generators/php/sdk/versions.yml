@@ -1,4 +1,69 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.20.2
+  changelogEntry:
+    - summary: |
+        Global headers typed as a `literal<"...">` with an `env` fallback no longer throw when
+        neither the constructor parameter nor the environment variable is set. The literal is
+        known at compile time, so it is now used as the header's default value.
+      type: fix
+  createdAt: "2026-08-18"
+  irVersion: 67
+- version: 2.20.1
+  changelogEntry:
+    - summary: |
+        Render an empty body in snippets for an example that omits a request body the API does not
+        require. The generated request wrapper still requires the body, so the snippet left the
+        required key out and did not typecheck.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 2.20.0
+  changelogEntry:
+    - summary: |
+        Add a `respectOptionalRequestBody` option. When enabled, an endpoint whose request body the API
+        does not require lets the caller leave that body out of the call, and such a call sends neither a
+        body nor a `Content-Type` header. `refund(string $id, RefundRequest $request)` becomes
+        `refund(string $id, ?RefundRequest $request = null)`, and a body carried in a request wrapper
+        becomes an omittable property, so `new RefundWithHeaderRequest([])` no longer throws. Snippets
+        that supply no body render as `$client->bulkRefund();`. The option defaults to false, so existing
+        signatures, output, and snippets are unchanged.
+      type: feat
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 2.19.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `preferExplicitAuth` configuration option. When enabled (and the API composes
+        OAuth client-credentials with basic auth via `auth: any`), auth credentials passed
+        explicitly to the client constructor take precedence over environment-variable
+        defaults when selecting the auth scheme — e.g. explicitly provided basic auth
+        credentials win over OAuth client ID/secret environment variables. Disabled by
+        default, so existing generated output and runtime behavior are unchanged.
+      type: feat
+  createdAt: "2026-08-09"
+  irVersion: 67
+- version: 2.18.2
+  changelogEntry:
+    - summary: |
+        Fixed wire tests for APIs with basic auth schemes that use custom parameter names
+        (e.g. `accountSid`/`authToken`): the generated test client constructor now uses the
+        scheme's actual parameter names instead of hardcoded `username`/`password`.
+        Also fixed WireMock stubs for `auth: any` APIs combining Basic and OAuth/Bearer:
+        stubs now expect the Bearer `Authorization` header the client actually sends instead
+        of the Basic header.
+      type: fix
+  createdAt: "2026-08-08"
+  irVersion: 67
+- version: 2.18.1
+  changelogEntry:
+    - summary: |
+        The generated `composer.json` version (and the fallback User-Agent header) now honors
+        the version passed via `fern generate --version` for `local-file-system` output,
+        instead of always defaulting to `0.0.0`. The Composer package name also falls back to
+        the CLI-provided package name when `packageName` is not set in `generators.yml`.
+      type: fix
+  createdAt: "2026-08-05"
+  irVersion: 67
 - version: 2.18.0
   changelogEntry:
     - summary: |

@@ -1,0 +1,6 @@
+- summary: |
+    Fix a `oneOf` with a `discriminator` and inline (non-`$ref`) variants converting to a union with
+    no variants, which made the field render with no variants in the API reference. An inline
+    variant's discriminant value is now inferred from its own literal discriminant property, and a
+    `oneOf` whose variants cannot be resolved falls back to an undiscriminated union.
+  type: fix

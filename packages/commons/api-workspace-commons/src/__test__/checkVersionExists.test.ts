@@ -877,6 +877,14 @@ describe("getPackageNameFromGeneratorConfig", () => {
         expect(getPackageNameFromGeneratorConfig(invocation)).toBe("my_package");
     });
 
+    it("returns package-name from config for Java (kebab-case key)", () => {
+        const invocation = {
+            raw: { config: { "package-name": "twilio-core", "package-prefix": "com.twilio.api" } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getPackageNameFromGeneratorConfig(invocation)).toBe("twilio-core");
+    });
+
     it("returns module.path from config for Go", () => {
         const invocation = {
             raw: { config: { module: { path: "github.com/acme/go-sdk" } } }

@@ -3215,8 +3215,42 @@ func getEndpointParameters(
 			parameters,
 			f.snippetWriter.GetSnippetForExampleTypeReference(example.Request.Reference),
 		)
+		return parameters
+	}
+	if requestBodyIsNilable(endpoint, f.types) {
+		// The example omits the request body, but the parameter is still positional.
+		parameters = append(
+			parameters,
+			&ast.LocalReference{
+				Name: "nil",
+			},
+		)
 	}
 	return parameters
+}
+
+// requestBodyIsNilable returns true if the endpoint's request body is passed as a
+// nilable Go type, so that a call omitting the body can pass nil for it.
+func requestBodyIsNilable(endpoint *ir.HttpEndpoint, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	if endpoint.SdkRequest == nil || endpoint.SdkRequest.Shape == nil {
+		return false
+	}
+	requestBody := endpoint.SdkRequest.Shape.JustRequestBody
+	if requestBody == nil || requestBody.TypeReference == nil {
+		return false
+	}
+	typeReference := requestBody.TypeReference.RequestBodyType
+	if typeReference.Named != nil {
+		typeDeclaration, ok := types[typeReference.Named.TypeId]
+		return ok && isPointer(typeDeclaration)
+	}
+	if typeReference.Container != nil {
+		return typeReference.Container.List != nil ||
+			typeReference.Container.Set != nil ||
+			typeReference.Container.Map != nil ||
+			isOptionalType(typeReference, types)
+	}
+	return false
 }
 
 func getAllExamplePathParameters(example *ir.ExampleEndpointCall) []*ir.ExamplePathParameter {

@@ -30,6 +30,15 @@ language: php
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
+  any-auth:
+    - outputFolder: wire-tests
+      customConfig:
+        enable-wire-tests: true
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: prefer-explicit-auth
+      customConfig:
+        preferExplicitAuth: true
   basic-auth:
     - outputFolder: wire-tests
       customConfig:
@@ -134,6 +143,12 @@ fixtures:
     - outputFolder: with-interfaces
       customConfig:
         generateClientInterfaces: true
+  php-optional-request-body:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: respect-optional-request-body
+      customConfig:
+        respectOptionalRequestBody: true
   path-parameters:
     - outputFolder: no-custom-config
       customConfig: null

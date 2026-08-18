@@ -983,6 +983,7 @@
               "typeId": "type_:InteractStreamRequest",
               "type": "named"
             },
+            "required": false,
             "contentType": "application/json",
             "type": "reference"
           },
@@ -999,6 +1000,7 @@
                   "typeId": "type_:InteractStreamRequest",
                   "type": "named"
                 },
+                "required": false,
                 "type": "typeReference"
               },
               "type": "justRequestBody"
@@ -1058,6 +1060,7 @@
               "typeId": "type_:InteractRequest",
               "type": "named"
             },
+            "required": false,
             "contentType": "application/json",
             "type": "reference"
           },
@@ -1074,6 +1077,7 @@
                   "typeId": "type_:InteractRequest",
                   "type": "named"
                 },
+                "required": false,
                 "type": "typeReference"
               },
               "type": "justRequestBody"
@@ -2310,6 +2314,7 @@
             },
             "type": "typeReference"
           },
+          "bodyRequired": false,
           "type": "body"
         },
         "response": {
@@ -2356,6 +2361,7 @@
             },
             "type": "typeReference"
           },
+          "bodyRequired": false,
           "type": "body"
         },
         "response": {

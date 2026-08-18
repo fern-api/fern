@@ -53,6 +53,8 @@ jobs:
         if: matrix.zig
         run: cargo install --locked cargo-zigbuild
 
+      # The TLS backend is selected per target by Cargo.toml (rustls on musl,
+      # the platform's native stack elsewhere), so no feature flags here.
       - name: Build
         shell: bash
         run: |
@@ -60,15 +62,11 @@ jobs:
             cargo zigbuild \
               --release \
               --bin ${{ inputs.cli }} \
-              --no-default-features \
-              --features rustls \
               --target ${{ matrix.target }}
           else
             cargo build \
               --release \
               --bin ${{ inputs.cli }} \
-              --no-default-features \
-              --features rustls \
               --target ${{ matrix.target }}
           fi
 

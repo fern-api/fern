@@ -13,22 +13,28 @@ module <%= gem_namespace %>
         # @param headers [Hash] Additional headers for the request (optional)
         # @param query [Hash] Query parameters for the request (optional)
         # @param body [Object, nil] The JSON request body (optional)
-        # @param request_options [<%= gem_namespace %>::RequestOptions, Hash{Symbol=>Object}, nil]
-        def initialize(base_url:, path:, method:, headers: {}, query: {}, body: nil, request_options: {})
+<% if (respectOptionalRequestBody) { %>        # @param omit_content_type_without_body [Boolean] When true and no body is present, the
+        #   Content-Type header is omitted (used for endpoints whose request body is optional)
+<% } %>        # @param request_options [<%= gem_namespace %>::RequestOptions, Hash{Symbol=>Object}, nil]
+        def initialize(base_url:, path:, method:, headers: {}, query: {}, body: nil, <% if (respectOptionalRequestBody) { %>omit_content_type_without_body: false, <% } %>request_options: {})
           super(base_url:, path:, method:, headers:, query:, request_options:)
 
           @body = body
-        end
+<% if (respectOptionalRequestBody) { %>          @omit_content_type_without_body = omit_content_type_without_body
+<% } %>        end
 
         # @return [Hash] The encoded HTTP request headers.
         # @param protected_keys [Array<String>] Header keys set by the SDK client (e.g. auth, metadata)
         #   that must not be overridden by additional_headers from request_options.
         def encode_headers(protected_keys: [])
-          sdk_headers = {
+<% if (respectOptionalRequestBody) { %>          sdk_headers = { "Accept" => "application/json" }
+          sdk_headers["Content-Type"] = "application/json" unless @omit_content_type_without_body && @body.nil?
+          sdk_headers = sdk_headers.merge(@headers)
+<% } else { %>          sdk_headers = {
             "Content-Type" => "application/json",
             "Accept" => "application/json"
           }.merge(@headers)
-          merge_additional_headers(sdk_headers, protected_keys:)
+<% } %>          merge_additional_headers(sdk_headers, protected_keys:)
         end
 
         # @return [String, nil] The encoded HTTP request body.

@@ -46,6 +46,7 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     inlinePathParameters: "inlinePathParameters",
     useBytesForBinaryResponse: "useBytesForBinaryResponse",
     respectForwardCompatibleEnums: "respectForwardCompatibleEnums",
+    respectOptionalRequestBody: "respectOptionalRequestBody",
     filter: "filter",
     defaultFormParameterEncoding: "defaultFormParameterEncoding",
     exampleGeneration: "exampleGeneration",

@@ -14,7 +14,7 @@ public partial class SeedVariablesClient : ISeedVariablesClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedVariables" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedVariables.Version.Current },
                 { "User-Agent", "Fernvariables/0.0.1" },
             }
         );

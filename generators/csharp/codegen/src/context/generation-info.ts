@@ -183,6 +183,8 @@ export class Generation {
         enableExplicitNullableOptional: () => this.customConfig["experimental-explicit-nullable-optional"] ?? false,
         /** When true, generates Defaults nested class and WithDefaults() method for request records with default values. Default: false. */
         useDefaultRequestParameterValues: () => this.customConfig["use-default-request-parameter-values"] ?? false,
+        /** When true, an endpoint whose request body the API does not require takes that body as `Body? request = null`, and sends no body when the caller leaves it out. Default: false. */
+        respectOptionalRequestBody: () => this.customConfig["respect-optional-request-body"] ?? false,
         /** When true, redacts the response body in deserialization error exceptions and adds a custom ToString override to the base API exception. Default: false. */
         redactResponseBodyOnError: () => this.customConfig["redact-response-body-on-error"] ?? false,
         /** When true, generates inline types as nested classes inside a static Types class on the parent type, instead of as separate top-level files. Default: false. */
@@ -238,6 +240,8 @@ export class Generation {
         extraDependencies: () => this.customConfig["extra-dependencies"] ?? {},
         /** When true, omits Fern platform headers (X-Fern-Language, SDK name/version, User-Agent) from generated SDK requests. Default: false. */
         omitFernHeaders: () => this.customConfig["omit-fern-headers"] ?? false,
+        /** When true, explicitly provided constructor auth credentials take precedence over env-var defaults when selecting the auth scheme (explicit basic auth wins over OAuth env vars). Default: false. */
+        preferExplicitAuth: () => this.customConfig["prefer-explicit-auth"] ?? false,
         /** When true, emits the platform observability headers (X-Fern-Runtime, X-Fern-Runtime-Version, X-Fern-Platform). Default: false. Still subject to omitFernHeaders. */
         includePlatformHeaders: () => this.customConfig["include-platform-headers"] ?? false,
         /** When true, exposes an `AppInfo` client option whose sanitized product token is appended to the `User-Agent` header (RFC 9110). Default: false. Independent of includePlatformHeaders; still subject to omitFernHeaders. */

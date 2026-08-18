@@ -1,0 +1,5 @@
+- summary: |
+    Endpoints whose request body is a referenced type no longer serialize path parameters into
+    the JSON body. With `respectOptionalRequestBody`, an omitted optional body on such an endpoint
+    now sends no body and no `Content-Type` instead of a body containing the path parameters.
+  type: fix

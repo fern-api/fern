@@ -542,6 +542,7 @@ export async function publishDocs({
             ossWorkspaces,
             apiWorkspaces,
             taskContext: context,
+            cliVersion,
             editThisPage,
             uploadFiles: async (files) => {
                 // Pre-compute sanitized paths and attach to file objects
@@ -1062,7 +1063,8 @@ export async function publishDocs({
                                     const importsResolved = transformAtPrefixImports({
                                         markdown: codeResolved,
                                         absolutePathToFernFolder: docsWorkspacePath,
-                                        absolutePathToMarkdownFile
+                                        absolutePathToMarkdownFile,
+                                        context
                                     });
 
                                     // Strip MDX comments

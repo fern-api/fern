@@ -271,6 +271,7 @@ service:
       path: /v1/chat
       request:
         body:
+          optional: true
           properties:
             chat_history:
               audiences:

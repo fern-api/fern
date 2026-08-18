@@ -1,0 +1,16 @@
+//! Request and response types for the Basic Auth CLI
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 1 types for API operations
+//! - **Model Types**: 1 types for data representation
+
+pub mod system_health_system_response;
+pub mod widget;
+
+pub use system_health_system_response::HealthSystemResponse;
+pub use widget::Widget;
+

@@ -14,7 +14,7 @@ public partial class SeedServerSentEventsResumableClient : ISeedServerSentEvents
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedServerSentEventsResumable" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedServerSentEventsResumable.Version.Current },
                 { "User-Agent", "Fernserver-sent-events-resumable/0.0.1" },
             }
         );

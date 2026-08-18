@@ -1,0 +1,5 @@
+- summary: |
+    Fixed generated OAuth wire tests failing to compile when the OAuth token
+    endpoint lives in a subpackage: the pointer helper (`String`) is now
+    referenced from the root package instead of the request type's package.
+  type: fix

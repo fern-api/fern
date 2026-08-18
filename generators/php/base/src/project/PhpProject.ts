@@ -158,7 +158,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }: {
         filename: string;
         namespace: string;
-        extraTemplateVars?: Record<string, string>;
+        extraTemplateVars?: Record<string, string | boolean>;
     }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
 
@@ -225,7 +225,8 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
             this.coreTestFiles.push(
                 await this.createAsIsFile({
                     filename,
-                    namespace: this.context.getCoreTestsNamespace()
+                    namespace: this.context.getCoreTestsNamespace(),
+                    extraTemplateVars: this.context.getExtraTemplateVarsForFile(filename)
                 })
             );
         }
@@ -288,7 +289,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }: {
         contents: string;
         namespace: string;
-        extraTemplateVars?: Record<string, string>;
+        extraTemplateVars?: Record<string, string | boolean>;
     }): string {
         return eta.renderString(contents, {
             namespace,
@@ -354,7 +355,7 @@ class ComposerJson {
     private build(): Record<string, unknown> {
         let composerJson: Record<string, unknown> = {
             name: this.context.getPackageName(),
-            version: this.context.version ?? "0.0.0",
+            version: this.context.getSdkVersion() ?? "0.0.0",
             description: `${this.projectName} PHP Library`,
             keywords: [this.context.config.organization, "api", "sdk"],
             license: this.license ?? [],

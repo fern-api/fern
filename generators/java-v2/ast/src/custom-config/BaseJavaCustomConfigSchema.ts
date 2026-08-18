@@ -11,6 +11,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "inline-path-parameters": z.boolean().optional(),
     "package-layout": z.enum(["flat", "nested"]).optional(),
     "package-prefix": z.string().optional(),
+    "respect-optional-request-body": z.boolean().optional(),
     "use-local-date-for-dates": z.boolean().optional(),
 
     // General options.

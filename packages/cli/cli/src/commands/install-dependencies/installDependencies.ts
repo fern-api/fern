@@ -1,5 +1,8 @@
+import { getFernDirectory } from "@fern-api/configuration-loader";
+import { bundleMdxComponents } from "@fern-api/docs-resolver";
 import { resolveBuf, resolveProtocGenOpenAPI } from "@fern-api/lazy-fern-workspace";
-import { CliError } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+import { loadDocsWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
 
 export async function installDependencies({ cliContext }: { cliContext: CliContext }): Promise<void> {
@@ -30,6 +33,9 @@ export async function installDependencies({ cliContext }: { cliContext: CliConte
             context.logger.error("Failed to install protoc-gen-openapi");
         }
 
+        // Pre-bundle custom MDX components so `fern generate` doesn't need network for them
+        results.push({ name: "mdx-components", success: await bundleDocsMdxComponents(context) });
+
         // Summary
         const failed = results.filter((r) => !r.success);
         if (failed.length > 0) {
@@ -42,4 +48,48 @@ export async function installDependencies({ cliContext }: { cliContext: CliConte
 
         context.logger.info("All dependencies installed successfully.");
     });
+}
+
+/**
+ * Bundles the docs project's custom MDX components, if any. This is a no-op
+ * unless the project has `experimental.mdx-components` whose files import
+ * third-party libraries.
+ */
+async function bundleDocsMdxComponents(context: TaskContext): Promise<boolean> {
+    const fernDirectory = await getFernDirectory();
+    if (fernDirectory == null) {
+        return true;
+    }
+
+    let mdxComponents: string[] | undefined;
+    try {
+        const docsWorkspace = await loadDocsWorkspace({ fernDirectory, context });
+        mdxComponents = docsWorkspace?.config.experimental?.mdxComponents;
+    } catch (error) {
+        // An unparseable docs config is not this command's concern; `fern generate` reports it.
+        context.logger.debug(
+            `Skipping custom MDX component bundling, failed to load the docs config: ${error instanceof Error ? error.message : error}`
+        );
+        return true;
+    }
+
+    if (mdxComponents == null || mdxComponents.length === 0) {
+        return true;
+    }
+
+    context.logger.info("Bundling custom MDX components...");
+    try {
+        const count = await bundleMdxComponents({
+            absolutePathToDocsWorkspace: fernDirectory,
+            mdxComponents,
+            context
+        });
+        context.logger.info(`Bundled ${count} custom MDX component(s)`);
+        return true;
+    } catch (error) {
+        context.logger.error(
+            `Failed to bundle custom MDX components: ${error instanceof Error ? error.message : error}`
+        );
+        return false;
+    }
 }

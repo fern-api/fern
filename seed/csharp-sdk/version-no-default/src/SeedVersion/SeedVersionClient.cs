@@ -14,7 +14,7 @@ public partial class SeedVersionClient : ISeedVersionClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedVersion" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedVersion.Version.Current },
                 { "User-Agent", "Fernversion-no-default/0.0.1" },
             }
         );

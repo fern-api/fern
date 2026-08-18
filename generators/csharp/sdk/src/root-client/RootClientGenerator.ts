@@ -21,6 +21,7 @@ type TypeReference = FernIr.TypeReference;
 
 import { RawClient } from "../endpoint/http/RawClient.js";
 import { isEndpointSecurity } from "../endpoint/request/endpointAuthHeaders.js";
+import { getClientCredentialsOrThrow } from "../oauth/getClientCredentials.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
@@ -80,6 +81,17 @@ interface LiteralParameter {
 interface HeaderInfo {
     name: string;
     prefix?: string;
+}
+
+/** The compile-time value of a `literal<"...">`-typed global header, if this parameter is one. */
+function getLiteralHeaderValue(param: ConstructorParameter): Literal | undefined {
+    if (!param.isGlobalHeader) {
+        return undefined;
+    }
+    const { typeReference } = param;
+    return typeReference.type === "container" && typeReference.container.type === "literal"
+        ? typeReference.container.literal
+        : undefined;
 }
 
 export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
@@ -276,6 +288,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         // provider / auth header unless that scheme's creds were actually provided.
         const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
         const endpointSecurity = this.isEndpointSecurity();
+        const preferExplicitAuth = this.preferExplicitAuthEnabled();
         const parameters: ast.Parameter[] = [];
 
         // In unified mode, check if any ClientOptions fields are truly required.
@@ -472,7 +485,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     userAgent: platformHeaders.userAgent,
                     packageName: this.generation.names.project.packageId,
                     csharp: this.csharp,
-                    versionValueAccess: this.context.getCurrentVersionValueAccess(),
+                    versionValueAccess: this.context.getCurrentVersionValueAccess({ inInterpolatedString: true }),
                     userAgentNameFromPackage: this.settings.userAgentNameFromPackage
                 });
                 if (userAgentEntry != null) {
@@ -520,11 +533,24 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         );
                     }
 
+                    if (preferExplicitAuth) {
+                        // Record which credentials were passed explicitly, before the env-var
+                        // fallbacks below overwrite null parameters, so explicitly provided
+                        // basic auth wins over env-var-derived OAuth credentials.
+                        const clientIdAccess = unified ? "clientOptions.ClientId" : "clientId";
+                        const clientSecretAccess = unified ? "clientOptions.ClientSecret" : "clientSecret";
+                        innerWriter.writeTextStatement(
+                            `var explicitOAuthAuth = ${clientIdAccess} != null || ${clientSecretAccess} != null`
+                        );
+                        innerWriter.writeTextStatement(
+                            `var explicitBasicAuth = ${this.getBasicAuthCredentialAccesses(unified)
+                                .map((access) => `${access} != null`)
+                                .join(" || ")}`
+                        );
+                    }
+
                     for (const param of optionalParameters) {
-                        const clientDefaultLiteral =
-                            param.isGlobalHeader && param.clientDefault != null
-                                ? this.getHeaderFallback(param)
-                                : undefined;
+                        const clientDefaultLiteral = this.getGlobalHeaderDefaultLiteral(param);
                         if (param.environmentVariable != null) {
                             const target = paramAccess(param);
                             if (anyAuthMultiScheme || endpointSecurity || (param.isGlobalHeader && param.isOptional)) {
@@ -724,7 +750,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
                     if (this.oauth != null && this.shouldUseOAuthProvider() && !endpointSecurity) {
                         const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
-                            this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
+                            getClientCredentialsOrThrow(this.oauth).tokenEndpoint.endpointReference.serviceId
                         );
 
                         // Use clientOptions (platform headers only) for OAuth token requests
@@ -741,7 +767,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         if (anyAuthMultiScheme) {
                             innerWriter.controlFlow(
                                 "if",
-                                this.csharp.codeblock(`${clientIdAccess} != null && ${clientSecretAccess} != null`)
+                                this.csharp.codeblock(
+                                    preferExplicitAuth
+                                        ? `${clientIdAccess} != null && ${clientSecretAccess} != null && (explicitOAuthAuth || !explicitBasicAuth)`
+                                        : `${clientIdAccess} != null && ${clientSecretAccess} != null`
+                                )
                             );
                         }
                         innerWriter.write(
@@ -948,7 +978,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         break;
                     }
                     const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
-                        this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
+                        getClientCredentialsOrThrow(this.oauth).tokenEndpoint.endpointReference.serviceId
                     );
                     const arguments_ = [
                         this.generation.Types.RawClient.new({
@@ -1394,6 +1424,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             }
         } else if (scheme.type === "oauth") {
             if (this.oauth !== null) {
+                const configuration = getClientCredentialsOrThrow(scheme);
                 return [
                     {
                         name: "clientId",
@@ -1407,7 +1438,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             })
                         }),
                         type: this.Primitive.string,
-                        environmentVariable: scheme.configuration.clientIdEnvVar,
+                        environmentVariable: configuration.clientIdEnvVar,
                         exampleValue: "client_id"
                     },
                     {
@@ -1422,7 +1453,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             })
                         }),
                         type: this.Primitive.string,
-                        environmentVariable: scheme.configuration.clientSecretEnvVar,
+                        environmentVariable: configuration.clientSecretEnvVar,
                         exampleValue: "client_secret"
                     },
                     ...this.getOAuthAdditionalConstructorParams(scheme, isOptional)
@@ -1480,23 +1511,31 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
     private getParameterForHeader(header: HttpHeader): ConstructorParameter {
         const hasClientDefault = header.clientDefault != null;
+        const literal =
+            header.valueType.type === "container" && header.valueType.container.type === "literal"
+                ? header.valueType.container.literal
+                : undefined;
+        // env vars are strings, so only a string-typed literal can be resolved from one; other
+        // literals stay out of the constructor and are surfaced through ClientOptions instead.
+        const environmentVariable = literal == null || literal.type === "string" ? header.env : undefined;
         return {
-            name:
-                header.valueType.type === "container" && header.valueType.container.type === "literal"
-                    ? this.case.pascalSafe(header.name)
-                    : this.case.camelSafe(header.name),
+            name: literal != null ? this.case.pascalSafe(header.name) : this.case.camelSafe(header.name),
             header: {
                 name: getWireValue(header.name)
             },
             docs: header.docs,
+            // a literal-typed header's value is known at compile time, so once an env var promotes it
+            // to a constructor parameter it is always optional: it falls back to the literal rather
+            // than requiring the caller or the environment to supply a value.
             isOptional:
                 hasClientDefault ||
-                (header.valueType.type === "container" && header.valueType.container.type === "optional"),
+                (header.valueType.type === "container" && header.valueType.container.type === "optional") ||
+                (literal != null && environmentVariable != null),
             typeReference: header.valueType,
             type: this.context.csharpTypeMapper.convert({
                 reference: header.valueType
             }),
-            environmentVariable: header.env,
+            environmentVariable,
             isGlobalHeader: true,
             exampleValue: this.case.screamingSnakeSafe(header.name),
             clientDefault: header.clientDefault
@@ -1504,17 +1543,29 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     private getHeaderFallback(param: ConstructorParameter): string {
-        if (param.clientDefault != null) {
-            switch (param.clientDefault.type) {
+        const default_ = param.clientDefault ?? getLiteralHeaderValue(param);
+        if (default_ != null) {
+            switch (default_.type) {
                 case "string":
-                    return `"${escapeForCSharpString(param.clientDefault.string)}"`;
+                    return `"${escapeForCSharpString(default_.string)}"`;
                 case "boolean":
-                    return param.clientDefault.boolean ? `"${true.toString()}"` : `"${false.toString()}"`;
+                    return default_.boolean ? `"${true.toString()}"` : `"${false.toString()}"`;
                 default:
-                    assertNever(param.clientDefault);
+                    assertNever(default_);
             }
         }
         return `""`;
+    }
+
+    /**
+     * The compile-time default to fall back to for a global header parameter: its `client-default`,
+     * or the literal value when the header is literal-typed.
+     */
+    private getGlobalHeaderDefaultLiteral(param: ConstructorParameter): string | undefined {
+        if (!param.isGlobalHeader || (param.clientDefault == null && getLiteralHeaderValue(param) == null)) {
+            return undefined;
+        }
+        return this.getHeaderFallback(param);
     }
 
     private getFromEnvironmentOrThrowMethod(cls: ast.Class) {
@@ -1572,7 +1623,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 writer.write(buildUserAgentReturnPrefix(productName));
                 // Written via `writeNode` so the generated `Version` reference
                 // registers its using directive.
-                writer.writeNode(this.context.getCurrentVersionValueAccess());
+                writer.writeNode(this.context.getCurrentVersionValueAccess({ inInterpolatedString: true }));
                 writer.writeLine(BUILD_USER_AGENT_RETURN_SUFFIX);
             }),
             type: ast.MethodType.STATIC
@@ -1613,11 +1664,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     private getOAuthAdditionalConstructorParams(scheme: OAuthScheme, isOptional: boolean): ConstructorParameter[] {
+        const configuration = getClientCredentialsOrThrow(scheme);
         const params: ConstructorParameter[] = [];
         // Include required, non-literal custom properties, matching Java's approach of
         // skipping only literals. Keep the optional guard to avoid adding optional-typed
         // properties as required constructor parameters.
-        for (const customProperty of scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
+        for (const customProperty of configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
             if (isLiteralTypeReference(customProperty.property.valueType)) {
                 continue;
             }
@@ -1637,7 +1689,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 exampleValue: name
             });
         }
-        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        const scopes = configuration.tokenEndpoint.requestProperties.scopes;
         if (scopes && !isLiteralTypeReference(scopes.property.valueType)) {
             const typeRef = this.context.csharpTypeMapper.convert({
                 reference: scopes.property.valueType
@@ -1695,6 +1747,51 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      * exactly one scheme's creds), so we must not throw for missing creds and must
      * only wire up a scheme's token provider / header when its creds are present.
      */
+    /**
+     * Whether explicitly provided constructor auth credentials should take precedence
+     * over environment-variable defaults when selecting the auth scheme. Opt-in via the
+     * `prefer-explicit-auth` config; only applies when OAuth client-credentials is
+     * composed with a basic auth scheme via `auth: any` (outside endpoint-security).
+     */
+    private preferExplicitAuthEnabled(): boolean {
+        if (!this.settings.preferExplicitAuth) {
+            return false;
+        }
+        if (this.isEndpointSecurity()) {
+            return false;
+        }
+        if (!this.isAnyAuthWithMultipleSchemes()) {
+            return false;
+        }
+        if (this.oauth == null || this.oauth.configuration.type !== "clientCredentials") {
+            return false;
+        }
+        return this.getBasicAuthCredentialAccesses(false).length > 0;
+    }
+
+    /**
+     * Returns the constructor accesses for the basic auth credential parameters
+     * (excluding omitted fields), e.g. `["username", "password"]` or, in unified
+     * mode, `["clientOptions.Username", "clientOptions.Password"]`.
+     */
+    private getBasicAuthCredentialAccesses(unified: boolean): string[] {
+        const accesses: string[] = [];
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type !== "basic") {
+                continue;
+            }
+            if (!scheme.usernameOmit) {
+                const name = this.case.camelSafe(scheme.username);
+                accesses.push(unified ? `clientOptions.${this.toPascalCase(name)}` : name);
+            }
+            if (!scheme.passwordOmit) {
+                const name = this.case.camelSafe(scheme.password);
+                accesses.push(unified ? `clientOptions.${this.toPascalCase(name)}` : name);
+            }
+        }
+        return accesses;
+    }
+
     private isAnyAuthWithMultipleSchemes(): boolean {
         return this.context.ir.auth.requirement === "ANY" && this.context.ir.auth.schemes.length > 1;
     }

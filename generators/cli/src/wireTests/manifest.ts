@@ -1,6 +1,8 @@
+import { assertNever } from "@fern-api/core-utils";
 import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import { isEqualToMatcher, WireMock, WireMockMapping, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { type RequiredBodyContracts, reconcileRequiredBodyProperties } from "./specRequiredBody.js";
 
 /**
  * A single wire-test case: enough to drive the generated CLI binary once
@@ -52,6 +54,70 @@ export interface WireTestCase {
      * `equalTo` for the exact Basic value.
      */
     headerMatchers: Array<{ name: string; equalTo?: string; matches?: string }>;
+    /**
+     * Whether this endpoint declares auth, straight from the IR's
+     * `endpoint.auth`. The harness only asserts credential injection on cases
+     * where it's `true`.
+     *
+     * The IR is the oracle here for the same reason it is for
+     * {@link WireTestCase.multipartFields}: it already resolves the full
+     * OpenAPI security picture (root `security`, per-operation overrides, and
+     * `security: []` opt-outs), so the harness inherits that instead of
+     * re-deriving it. An endpoint that declares no auth cannot be required to
+     * carry a credential — a mock that demands one never matches, the CLI gets
+     * no response, and the case fails for a reason that has nothing to do with
+     * the endpoint under test. The token endpoint of an OAuth flow is the
+     * common instance: it authenticates with client credentials in the body and
+     * correctly sends no bearer.
+     *
+     * Deliberately *not* the inverse assertion: `requiresAuth: false` does not
+     * forbid a credential header. Specs under-declare security often enough
+     * that forbidding it would manufacture failures on correct CLIs.
+     */
+    requiresAuth: boolean;
+    /**
+     * multipart/form-data fields, present only when the endpoint's request body
+     * is a file upload. Derived from the IR — *not* the runtime's own multipart
+     * classifier — so the harness drives each field the way the spec intends: a
+     * real temp file for file fields, the example value for text fields. This is
+     * what lets a wire test catch a runtime that mis-classifies an (optional)
+     * file field and sends its filename as a text part: the harness passes a
+     * file and asserts the multipart body actually carries the file's bytes.
+     * Absent/empty for non-multipart endpoints. `isOptional` (from the IR) marks
+     * fields the request may omit — used to synthesize an "optional file omitted"
+     * variant (see {@link WireTestCase.omitOptionalFiles}).
+     */
+    multipartFields?: MultipartFieldSpec[];
+    /**
+     * When true, this is a negative twin of a happy-path case: the mock serves a
+     * non-2xx response (with a non-empty JSON error body) and the harness asserts
+     * the CLI exits non-zero and reports an error — so an SDK path that
+     * deserializes an error body and returns it as success (exit 0) fails here.
+     * The request matchers (and `expect(1)`) are unchanged, so the CLI must still
+     * send exactly the same, correct request.
+     */
+    expectError?: boolean;
+    /**
+     * When true, this is a happy-path variant of a multipart case in which the
+     * harness omits every optional file field (sending only what's required).
+     * It asserts the CLI still succeeds and that the request carries no bogus
+     * part for the omitted field — so a runtime that turns an optional file into
+     * a required one, or emits an empty/path text part when it's absent, fails.
+     */
+    omitOptionalFiles?: boolean;
+    /**
+     * Body properties this manifest supplied from the OpenAPI spec because the
+     * IR example omitted them while the spec marks them `required`. Present only
+     * when that repair happened, so its mere presence flags an IR/spec
+     * disagreement on this endpoint.
+     *
+     * Recorded rather than silently applied for two reasons: the values are
+     * spec-derived, not author-written, which is the first thing worth knowing if
+     * such a case ever fails; and it keeps the underlying data-quality problem
+     * visible in a diff instead of burying it. See
+     * {@link reconcileRequiredBodyProperties}.
+     */
+    specFilledBodyProperties?: string[];
     /** Expected response the mock serves and the CLI is expected to render. */
     response: {
         status: number;
@@ -84,7 +150,7 @@ export interface WireTestManifest {
      * invoking the binary, so auth-gated endpoints don't bail out on a
      * missing credential.
      */
-    authEnvVars: string[];
+    authEnvVars: Array<{ name: string; value: string }>;
     /**
      * When the CLI declares OAuth client-credentials auth, the token endpoint
      * the harness must stub on every mock server. The generated CLI performs
@@ -103,7 +169,32 @@ export interface WireTestManifest {
      * Null for client-credentials / non-login-flow CLIs.
      */
     loginTokenSetup: LoginTokenSetup | null;
+    /**
+     * True when the IR's auth requirement is `ENDPOINT_SECURITY` — each endpoint
+     * declares which scheme it uses, and the CLI sends only that one. The
+     * harness then can't assume the login-flow bearer applies to every
+     * auth-declaring endpoint, so it skips the bearer assertion wholesale
+     * (`mock-utils` skips its aggregate auth-header matchers in this mode for
+     * exactly the same reason — see its `isEndpointSecurity` branch).
+     */
+    endpointSecurityAuth: boolean;
     cases: WireTestCase[];
+}
+
+/** One `multipart/form-data` field, derived from the IR's file-upload request body. */
+export interface MultipartFieldSpec {
+    wireName: string;
+    isFile: boolean;
+    /** Whether the request may omit it — drives the "optional file omitted" variant. */
+    isOptional: boolean;
+    /**
+     * The spec's `encoding.<field>.contentType`, when declared. The harness
+     * requires the part to carry it, so a runtime that ignores a declared media
+     * type fails the match. Absent for the common case of a spec that declares
+     * no `encoding` object at all — the harness then expects the type the CLI
+     * infers from the file's extension.
+     */
+    contentType?: string;
 }
 
 /** Instructs the harness to seed a keyring token before driving business requests. */
@@ -166,7 +257,7 @@ export function buildWireTestManifest(
         binaryName: string;
         rootGroup: string | null;
         specs: Array<{ file: string; namespace: string | null }>;
-        authEnvVars: string[];
+        authEnvVars: Array<{ name: string; value: string }>;
         /**
          * The OAuth client-credentials token endpoint, when the CLI declares
          * one. Turned into the shared `authMock` the harness mounts on every
@@ -178,6 +269,14 @@ export function buildWireTestManifest(
          * the harness seeds a token via `auth login --with-token` and asserts bearer injection.
          */
         loginFlowSchemes?: string[];
+        /**
+         * Per-route required-request-body contracts read from the mounted
+         * OpenAPI specs. Used to repair example bodies that omit a property the
+         * spec marks required — see {@link reconcileRequiredBodyProperties} for
+         * why the two disagree. Omitted (or empty) means no repair, which is how
+         * every case behaved before this existed.
+         */
+        requiredBodyContracts?: RequiredBodyContracts;
     }
 ): WireTestManifest {
     const stub = convertToWireMock(ir);
@@ -210,11 +309,41 @@ export function buildWireTestManifest(
         if (example == null) {
             continue;
         }
-        const testCase = buildCase({ mapping, endpoint, example, authHeaderNames, usedIds });
+        const testCase = buildCase({
+            mapping,
+            endpoint,
+            example,
+            authHeaderNames,
+            usedIds,
+            requiredBodyContracts: options.requiredBodyContracts
+        });
         if (testCase != null) {
             cases.push(testCase);
         }
     }
+
+    // For every happy-path case, emit a negative twin whose mock serves a
+    // non-2xx response with a non-empty JSON error body. The harness keeps the
+    // exact same request matchers but asserts the CLI exits non-zero and reports
+    // an error — so a code path that deserializes an error body and reports it
+    // as success (exit 0) is caught. Twins are appended after the positive cases
+    // so the happy path is exercised first.
+    const negativeCases: WireTestCase[] = [];
+    for (const positive of cases) {
+        negativeCases.push(buildNegativeTwin(positive, usedIds));
+    }
+
+    // For every multipart case that has an optional file field, emit a
+    // happy-path variant that omits those optional files, so the harness also
+    // exercises the valid "file not provided" shape (not just the fully-
+    // populated request). Appended last.
+    const optionalFileOmittedCases: WireTestCase[] = [];
+    for (const positive of cases) {
+        if (hasOptionalFileField(positive)) {
+            optionalFileOmittedCases.push(buildOptionalFileOmittedVariant(positive, usedIds));
+        }
+    }
+    cases.push(...negativeCases, ...optionalFileOmittedCases);
 
     return {
         binaryName: options.binaryName,
@@ -223,6 +352,7 @@ export function buildWireTestManifest(
         authEnvVars: options.authEnvVars,
         authMock: buildAuthMock(options.oauthTokenEndpoint ?? null),
         loginTokenSetup: buildLoginTokenSetup(options.loginFlowSchemes ?? []),
+        endpointSecurityAuth: ir.auth.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity,
         cases
     };
 }
@@ -292,12 +422,19 @@ function buildCase(args: {
     example: FernIr.ExampleEndpointCall;
     authHeaderNames: Set<string>;
     usedIds: Set<string>;
+    requiredBodyContracts?: RequiredBodyContracts;
 }): WireTestCase | null {
-    const { mapping, endpoint, example, authHeaderNames, usedIds } = args;
+    const { mapping, endpoint, example, authHeaderNames, usedIds, requiredBodyContracts } = args;
 
     const params: Record<string, unknown> = {};
 
-    // Path parameters (root + service + endpoint), keyed by original name.
+    // Path parameters (root + service + endpoint), keyed by original name — the
+    // same name `mock-utils` uses in the path template, so `substitute_path` in
+    // the harness fills them. Fern can rename a path param's IR identity to
+    // disambiguate it from a body field of the same name (`idType` →
+    // `idTypePathParam`); the generated CLI still reads path params off the
+    // baked OpenAPI spec by their wire name, so the harness reconciles the two
+    // names (via the resolved spec route) when it builds `--params`.
     for (const param of [
         ...example.rootPathParameters,
         ...example.servicePathParameters,
@@ -326,7 +463,19 @@ function buildCase(args: {
         }
     }
 
-    const body = example.request != null ? (example.request.jsonExample ?? null) : null;
+    const exampleBody = example.request != null ? (example.request.jsonExample ?? null) : null;
+    const multipartFields = extractMultipartFields(endpoint);
+    // Multipart/binary bodies never travel through `--json`, so there is no JSON
+    // body to reconcile against the spec.
+    const { body, filled: specFilledBodyProperties } =
+        multipartFields != null || requiredBodyContracts == null
+            ? { body: exampleBody, filled: [] }
+            : reconcileRequiredBodyProperties({
+                  body: exampleBody,
+                  method: mapping.request.method,
+                  path: mapping.request.urlPathTemplate,
+                  contracts: requiredBodyContracts
+              });
 
     return {
         id: uniqueId(caseIdBase(endpoint), usedIds),
@@ -336,11 +485,103 @@ function buildCase(args: {
         body,
         queryMatchers: extractQueryMatchers(mapping),
         headerMatchers: extractHeaderMatchers(mapping),
+        requiresAuth: endpoint.auth,
+        ...(multipartFields != null ? { multipartFields } : {}),
+        ...(specFilledBodyProperties.length > 0 ? { specFilledBodyProperties } : {}),
         response: {
             status: mapping.response.status,
             body: mapping.response.body
         }
     };
+}
+
+/** Status + non-empty JSON body the negative twin's mock serves. A non-empty
+ * body is the crux: the error-as-success bug only surfaces when there is a body
+ * to (mis)deserialize, so an empty 4xx would not exercise it. */
+const NEGATIVE_CASE_STATUS = 422;
+const NEGATIVE_CASE_BODY = JSON.stringify({
+    error: { code: NEGATIVE_CASE_STATUS, message: "wire-test forced error response" }
+});
+
+/**
+ * Build the negative twin of a happy-path case: identical request matchers, but
+ * the mock serves a non-2xx response with a non-empty JSON error body and the
+ * harness asserts the CLI fails (non-zero exit). See {@link WireTestCase.expectError}.
+ */
+function buildNegativeTwin(positive: WireTestCase, usedIds: Set<string>): WireTestCase {
+    return {
+        ...positive,
+        id: uniqueId(`${positive.id}_error`, usedIds),
+        expectError: true,
+        response: {
+            status: NEGATIVE_CASE_STATUS,
+            body: NEGATIVE_CASE_BODY
+        }
+    };
+}
+
+/** True when the case is a multipart request carrying at least one optional file field. */
+function hasOptionalFileField(testCase: WireTestCase): boolean {
+    return testCase.multipartFields?.some((field) => field.isFile && field.isOptional) ?? false;
+}
+
+/**
+ * Build the "optional file omitted" variant of a multipart case: identical
+ * request otherwise, but the harness drops optional file flags. See
+ * {@link WireTestCase.omitOptionalFiles}.
+ */
+function buildOptionalFileOmittedVariant(positive: WireTestCase, usedIds: Set<string>): WireTestCase {
+    return {
+        ...positive,
+        id: uniqueId(`${positive.id}_optfileomitted`, usedIds),
+        omitOptionalFiles: true
+    };
+}
+
+/**
+ * Multipart/form-data fields for a file-upload endpoint, derived straight from
+ * the IR. Whether a field is a *file* comes from the IR discriminant
+ * (`FileUploadRequestProperty.type === "file"`), independent of the CLI
+ * runtime's own multipart classifier — the runtime is exactly the thing under
+ * test, and a bug there (e.g. failing to unwrap `anyOf: [{binary}, {null}]` for
+ * an optional file) is what we want the wire test to expose, so it must not be
+ * the oracle. Returns `undefined` for non-file-upload endpoints.
+ */
+function extractMultipartFields(endpoint: FernIr.HttpEndpoint): MultipartFieldSpec[] | undefined {
+    const requestBody = endpoint.requestBody;
+    if (requestBody == null || requestBody.type !== "fileUpload") {
+        return undefined;
+    }
+    const fields: MultipartFieldSpec[] = [];
+    for (const property of requestBody.properties) {
+        switch (property.type) {
+            case "file": {
+                // Both single-file and file-array variants carry `key` + `isOptional`
+                // + `contentType` (the spec's `encoding.<field>.contentType`).
+                const wireName = getWireValue(property.value.key);
+                if (wireName != null && wireName !== "") {
+                    fields.push({
+                        wireName,
+                        isFile: true,
+                        isOptional: property.value.isOptional,
+                        ...(property.value.contentType != null ? { contentType: property.value.contentType } : {})
+                    });
+                }
+                break;
+            }
+            case "bodyProperty": {
+                const wireName = getWireValue(property.name);
+                if (wireName != null && wireName !== "") {
+                    // Text parts are always sent by the harness, so optionality is moot.
+                    fields.push({ wireName, isFile: false, isOptional: false });
+                }
+                break;
+            }
+            default:
+                assertNever(property);
+        }
+    }
+    return fields.length > 0 ? fields : undefined;
 }
 
 const DATETIME_WITH_ZERO_MILLIS_IN_VALUE = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})\.000(Z|[+-]\d{2}:\d{2})$/;

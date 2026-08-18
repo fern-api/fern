@@ -31,9 +31,11 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
-        // ir-sdk versions may differ between python-sdk and mock-utils;
-        // 66.3.0 is a strict superset (adds optional fields only), so this is safe.
-        return new WireMock().convertToWireMock(ir as Parameters<WireMock["convertToWireMock"]>[0]);
+        // ir-sdk versions may differ between python-sdk and mock-utils. The newer IR only adds
+        // optional fields and OAuth configuration variants that WireMock ignores, but the added
+        // union variants stop the two IntermediateRepresentations from overlapping structurally,
+        // so the assertion has to go through `unknown`.
+        return new WireMock().convertToWireMock(ir as unknown as Parameters<WireMock["convertToWireMock"]>[0]);
     }
 
     /**
@@ -756,12 +758,15 @@ def pytest_unconfigure(config: pytest.Config) -> None:
 
         switch (scheme.type) {
             case "bearer":
+                // With OAuth present the shared token slot is populated by the OAuth
+                // provider (via client_id/client_secret) and the generated constructor
+                // overloads make token mutually exclusive with client credentials, so
+                // bearer adds nothing.
+                if (hasOAuthScheme) {
+                    break;
+                }
                 if (isEndpointSecurity) {
-                    // With OAuth present the shared token slot is populated by the OAuth
-                    // provider (via client_id/client_secret), so bearer adds nothing.
-                    if (!hasOAuthScheme) {
-                        params.push(`        token=lambda: "test_token",`);
-                    }
+                    params.push(`        token=lambda: "test_token",`);
                 } else {
                     // Bearer auth uses a token parameter
                     params.push(`        ${this.context.caseConverter.snakeSafe(scheme.token)}="test_token",`);

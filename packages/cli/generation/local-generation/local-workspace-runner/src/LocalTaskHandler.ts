@@ -13,6 +13,7 @@ import {
     countFilesInDiff,
     formatSizeKB,
     isAutoVersion,
+    isPlaceholderVersion,
     MAGIC_VERSION,
     MAX_AI_DIFF_BYTES,
     MAX_CHUNKS,
@@ -246,7 +247,10 @@ export class LocalTaskHandler {
 
             let previousVersion: string | undefined;
             try {
-                previousVersion = autoVersioningService.extractPreviousVersion(diffContent, mappedMagicVersion);
+                previousVersion = this.usableVersion(
+                    autoVersioningService.extractPreviousVersion(diffContent, mappedMagicVersion) ?? undefined,
+                    "diff"
+                );
             } catch (e) {
                 if (!(e instanceof AutoVersioningException) || !e.magicVersionAbsent) {
                     throw e;
@@ -255,12 +259,12 @@ export class LocalTaskHandler {
                 // This happens for generators that don't embed versions in files (e.g., Swift
                 // uses git tags for versioning via SPM, not a version field in Package.swift).
                 this.context.logger.info(`Magic version not found in diff, trying fallbacks: ${e}`);
-                previousVersion = await this.getVersionFromLocalMetadata();
+                previousVersion = this.usableVersion(await this.getVersionFromLocalMetadata(), "metadata.json");
                 if (previousVersion == null) {
                     const tagVersion = await autoVersioningService.getLatestVersionFromGitTags(
                         this.absolutePathToLocalOutput
                     );
-                    previousVersion = this.normalizeVersionPrefix(tagVersion);
+                    previousVersion = this.usableVersion(this.normalizeVersionPrefix(tagVersion), "git tags");
                 }
                 if (previousVersion == null) {
                     this.context.logger.info("No git tags found — treating as new SDK repository");
@@ -290,12 +294,12 @@ export class LocalTaskHandler {
             // If no previous version from diff (e.g., Version.swift is a new file in an existing SDK),
             // try .fern/metadata.json first, then git tags before falling back to initial version
             if (previousVersion == null) {
-                previousVersion = await this.getVersionFromLocalMetadata();
+                previousVersion = this.usableVersion(await this.getVersionFromLocalMetadata(), "metadata.json");
                 if (previousVersion == null) {
                     const rawTagVersion = await autoVersioningService.getLatestVersionFromGitTags(
                         this.absolutePathToLocalOutput
                     );
-                    const normalizedTag = this.normalizeVersionPrefix(rawTagVersion);
+                    const normalizedTag = this.usableVersion(this.normalizeVersionPrefix(rawTagVersion), "git tags");
                     if (normalizedTag != null) {
                         this.context.logger.info(`No previous version from diff; using git tag: ${normalizedTag}`);
                         previousVersion = normalizedTag;
@@ -710,6 +714,27 @@ export class LocalTaskHandler {
             this.context.logger.debug(`Failed to read .fern/metadata.json from HEAD: ${error}`);
             return undefined;
         }
+    }
+
+    /**
+     * Drops candidate previous versions that are the magic placeholder. SDK repos
+     * that derive their published version at release time keep the placeholder
+     * committed, so any resolution source can hand back the sentinel; bumping it
+     * would publish a mutated placeholder rather than a real version. Returning
+     * undefined lets the caller fall through to the next source, and ultimately to
+     * the initial-version path.
+     */
+    private usableVersion(version: string | undefined, source: string): string | undefined {
+        if (version == null) {
+            return undefined;
+        }
+        if (isPlaceholderVersion(version)) {
+            this.context.logger.info(
+                `Ignoring placeholder version ${version} from ${source}; trying the next previous-version source.`
+            );
+            return undefined;
+        }
+        return version;
     }
 
     /**

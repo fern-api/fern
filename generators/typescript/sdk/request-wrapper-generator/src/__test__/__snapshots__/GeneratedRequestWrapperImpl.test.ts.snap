@@ -130,6 +130,14 @@ exports[`GeneratedRequestWrapperImpl > writeToFile > filters out literal headers
 "
 `;
 
+exports[`GeneratedRequestWrapperImpl > writeToFile > generates an optional body property when the referenced body is not required 1`] = `
+"export interface TestRequest {
+    xRequestId: string;
+    body?: string;
+}
+"
+`;
+
 exports[`GeneratedRequestWrapperImpl > writeToFile > generates empty interface with no properties 1`] = `
 "export interface TestRequest {
 }

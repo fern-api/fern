@@ -126,6 +126,12 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Wire test configuration
     wire_tests: Optional[WireTestsConfig] = None
 
+    # When True, an endpoint whose request body the API does not require takes a body
+    # parameter defaulting to the OMIT sentinel, so the caller may leave it out entirely
+    # and no body is sent. Off by default — existing signatures are unchanged unless
+    # this is opted in.
+    respect_optional_request_body: bool = False
+
     # If true, treats path parameters as named parameters in endpoint functions
     inline_path_params: bool = False
 
@@ -276,6 +282,14 @@ class SDKCustomConfig(pydantic.BaseModel):
     # hand-maintained wrapper clients that authenticate via external means.
     optional_auth: bool = False
 
+    # When true (and the API uses `auth: any` with OAuth client credentials),
+    # auth credentials passed explicitly to the client constructor take
+    # precedence over environment-variable defaults when selecting the auth
+    # scheme. For example, explicitly provided basic-auth credentials are used
+    # even if OAuth client id/secret environment variables are set. Defaults to
+    # false, where OAuth env vars win over explicitly provided basic auth.
+    prefer_explicit_auth: bool = False
+
     class Config:
         extra = pydantic.Extra.forbid
 
@@ -303,6 +317,10 @@ class SDKCustomConfig(pydantic.BaseModel):
                 obj["optional_auth"] = obj.pop("optional-auth")
             if "optionalAuth" in obj and "optional_auth" not in obj:
                 obj["optional_auth"] = obj.pop("optionalAuth")
+            if "prefer-explicit-auth" in obj and "prefer_explicit_auth" not in obj:
+                obj["prefer_explicit_auth"] = obj.pop("prefer-explicit-auth")
+            if "preferExplicitAuth" in obj and "prefer_explicit_auth" not in obj:
+                obj["prefer_explicit_auth"] = obj.pop("preferExplicitAuth")
 
         obj = super().parse_obj(obj)
 

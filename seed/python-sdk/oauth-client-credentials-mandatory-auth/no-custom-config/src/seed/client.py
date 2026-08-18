@@ -49,8 +49,8 @@ class SeedOauthClientCredentialsMandatoryAuth:
     base_url : str
         The base url to use for requests from the client.
 
-    token : typing.Callable[[], str]
-        Authenticate by providing a callable that returns a pre-generated bearer token. In this mode, OAuth client credentials are not required.
+    token : typing.Union[str, typing.Callable[[], str]]
+        Authenticate by providing a pre-generated bearer token, or a callable that returns one. In this mode, OAuth client credentials are not required.
 
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
@@ -113,7 +113,7 @@ class SeedOauthClientCredentialsMandatoryAuth:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        token: typing.Callable[[], str],
+        token: typing.Union[str, typing.Callable[[], str]],
     ): ...
     def __init__(
         self,
@@ -122,7 +122,7 @@ class SeedOauthClientCredentialsMandatoryAuth:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
-        token: typing.Optional[typing.Callable[[], str]] = None,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -268,8 +268,8 @@ class AsyncSeedOauthClientCredentialsMandatoryAuth:
     base_url : str
         The base url to use for requests from the client.
 
-    token : typing.Callable[[], str]
-        Authenticate by providing a callable that returns a pre-generated bearer token. In this mode, OAuth client credentials are not required.
+    token : typing.Union[str, typing.Callable[[], str]]
+        Authenticate by providing a pre-generated bearer token, or a callable that returns one. In this mode, OAuth client credentials are not required.
 
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
@@ -332,7 +332,7 @@ class AsyncSeedOauthClientCredentialsMandatoryAuth:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        token: typing.Callable[[], str],
+        token: typing.Union[str, typing.Callable[[], str]],
     ): ...
     def __init__(
         self,
@@ -341,7 +341,7 @@ class AsyncSeedOauthClientCredentialsMandatoryAuth:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
-        token: typing.Optional[typing.Callable[[], str]] = None,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,

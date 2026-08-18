@@ -147,7 +147,8 @@
                         "type": "named",
                         "value": "type_:Widget"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

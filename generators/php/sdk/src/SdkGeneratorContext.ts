@@ -523,10 +523,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
             return this.ir.sdkConfig.platformHeaders.userAgent;
         }
-        if (this.version != null) {
+        const version = this.getSdkVersion();
+        if (version != null) {
             return {
                 header: "User-Agent",
-                value: `${this.getPackageName()}/${this.version}`
+                value: `${this.getPackageName()}/${version}`
             };
         }
         return undefined;
@@ -737,9 +738,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return [AsIsFiles.File];
     }
 
-    public override getExtraTemplateVarsForFile(filename: string): Record<string, string> | undefined {
-        const vars: Record<string, string> = {
-            defaultMaxRetries: String(this.customConfig.maxRetries ?? 2)
+    public override getExtraTemplateVarsForFile(filename: string): Record<string, string | boolean> | undefined {
+        const vars: Record<string, string | boolean> = {
+            defaultMaxRetries: String(this.customConfig.maxRetries ?? 2),
+            respectOptionalRequestBody: this.customConfig.respectOptionalRequestBody ?? false
         };
         if (filename === AsIsFiles.CustomPager) {
             vars.customPagerClassName = this.getCustomPagerClassName();

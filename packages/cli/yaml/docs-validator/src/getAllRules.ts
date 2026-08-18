@@ -19,6 +19,7 @@ import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
 import { ValidSkillsPageActionRule } from "./rules/valid-skills-page-action/index.js";
 import { ValidTranslationsConfigRule } from "./rules/valid-translations-config/index.js";
+import { ValidVersionRefRule } from "./rules/valid-version-ref/index.js";
 import { ValidWellKnownSkillsRule } from "./rules/valid-well-known-skills/index.js";
 import { ValidateProductFileRule } from "./rules/validate-product-file/index.js";
 import { ValidateVersionFileRule } from "./rules/validate-version-file/index.js";
@@ -32,6 +33,7 @@ const allRules = [
     ValidMarkdownRule, // Compile each page's MDX and surface syntax errors (e.g. unclosed components)
     NavigationConflicts,
     ValidateVersionFileRule,
+    ValidVersionRefRule, // Reject a version entry that declares both 'ref' and 'path'
     ValidateProductFileRule,
     ValidInstanceUrlRule, // Validate instance URLs have valid subdomains
     NoCircularRedirectsRule, // Detect circular redirect chains

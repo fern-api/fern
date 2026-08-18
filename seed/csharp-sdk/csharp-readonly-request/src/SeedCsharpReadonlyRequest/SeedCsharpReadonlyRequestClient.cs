@@ -15,7 +15,7 @@ public partial class SeedCsharpReadonlyRequestClient : ISeedCsharpReadonlyReques
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedCsharpReadonlyRequest" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedCsharpReadonlyRequest.Version.Current },
                 { "User-Agent", "Ferncsharp-readonly-request/0.0.1" },
             }
         );

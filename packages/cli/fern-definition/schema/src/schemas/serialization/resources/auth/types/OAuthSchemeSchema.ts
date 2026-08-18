@@ -31,6 +31,8 @@ export const OAuthSchemeSchema: core.serialization.ObjectSchema<
         "token-url": core.serialization.string().optional(),
         "refresh-url": core.serialization.string().optional(),
         "redirect-uri": RedirectUriSchema.optional(),
+        "success-redirect-url": core.serialization.string().optional(),
+        "error-redirect-url": core.serialization.string().optional(),
         pkce: OAuthPkceSchema.optional(),
         "authorization-parameters": core.serialization
             .record(core.serialization.string(), core.serialization.string())
@@ -64,6 +66,8 @@ export declare namespace OAuthSchemeSchema {
         "token-url"?: string | null;
         "refresh-url"?: string | null;
         "redirect-uri"?: RedirectUriSchema.Raw | null;
+        "success-redirect-url"?: string | null;
+        "error-redirect-url"?: string | null;
         pkce?: OAuthPkceSchema.Raw | null;
         "authorization-parameters"?: Record<string, string> | null;
         "device-authorization-parameters"?: Record<string, string> | null;

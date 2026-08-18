@@ -6,6 +6,7 @@ import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { getRoutingSchemes } from "../auth/RoutingAuthProviderGenerator.js";
+import { getClientCredentialsOrThrow } from "../oauth/getClientCredentials.js";
 import { getOAuthTokenRequestProperties } from "../oauth/oauthTokenRequestProperties.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -361,6 +362,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         // getAuthHeaders callback is installed. Each auth param stays optional and env-var
         // fallbacks never throw (a caller may only use a subset of the schemes).
         const endpointSecurity = this.context.isEndpointSecurity();
+        const preferExplicitAuth = this.preferExplicitAuthEnabled();
         const serverVariableOptions = getServerVariableOptions(
             this.context.ir.environments,
             this.case,
@@ -474,10 +476,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 key: php.codeblock(`'${platformHeaders.sdkName}'`),
                 value: php.codeblock(`'${this.context.getRootNamespace()}'`)
             });
-            if (this.context.version != null) {
+            const sdkVersion = this.context.getSdkVersion();
+            if (sdkVersion != null) {
                 headerEntries.push({
                     key: php.codeblock(`'${platformHeaders.sdkVersion}'`),
-                    value: php.codeblock(`'${this.context.version}'`)
+                    value: php.codeblock(`'${sdkVersion}'`)
                 });
             }
             const userAgent = this.context.getUserAgent();
@@ -539,6 +542,17 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             access: "public",
             parameters,
             body: php.codeblock((writer) => {
+                if (preferExplicitAuth) {
+                    // Record which credentials were passed explicitly, before the env-var
+                    // fallbacks below overwrite null parameters, so explicitly provided
+                    // basic auth wins over env-var-derived OAuth credentials.
+                    writer.writeTextStatement("$explicitOAuthAuth = $clientId !== null || $clientSecret !== null");
+                    writer.writeTextStatement(
+                        `$explicitBasicAuth = ${this.getBasicAuthCredentialParameterNames()
+                            .map((name) => `$${name} !== null`)
+                            .join(" || ")}`
+                    );
+                }
                 for (const param of constructorParameters.optional) {
                     if (param.environmentVariable != null) {
                         if (param.clientDefault != null) {
@@ -694,15 +708,37 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 const hasOAuth =
                     oauth != null && oauth.configuration.type === "clientCredentials" && this.shouldUseOAuthProvider();
                 const hasInferredAuth = inferredAuth != null && !this.shouldUseOAuthProvider();
-                const oauthCredGuard = "$clientId !== null && $clientSecret !== null";
+                const oauthCredGuard = preferExplicitAuth
+                    ? "$clientId !== null && $clientSecret !== null && ($explicitOAuthAuth || !$explicitBasicAuth)"
+                    : "$clientId !== null && $clientSecret !== null";
                 const inferredCredGuard =
                     inferredAuth != null ? this.getInferredAuthCredentialGuard(inferredAuth) : null;
+
+                // The internal (unauthenticated) auth client used to fetch OAuth / inferred tokens
+                // must target the same base URL as the main client when one is configured,
+                // otherwise the token request never reaches the configured server (e.g. a
+                // WireMock instance in wire tests). When no base URL is supplied the key is
+                // omitted so the default-environment fallback still applies. Multi-URL
+                // environments are threaded through the `$environment` constructor argument
+                // instead, so only inject the base URL here for single-URL clients.
+                const clientOptionsName = this.context.getClientOptionsName();
+                const clientBaseUrlOption = this.context.getBaseUrlOptionName();
+                const authRawClientOptions = isMultiUrl
+                    ? "['headers' => []]"
+                    : `isset($this->${clientOptionsName}['${clientBaseUrlOption}']) ? ['${clientBaseUrlOption}' => $this->${clientOptionsName}['${clientBaseUrlOption}'], 'headers' => []] : ['headers' => []]`;
 
                 if (!endpointSecurity && hasOAuth && oauth != null) {
                     if (anyAuthMultiScheme) {
                         writer.controlFlow("if", php.codeblock(oauthCredGuard));
                     }
-                    this.writeOAuthProviderSetup(writer, oauth, isMultiUrl, anyAuthMultiScheme);
+                    this.writeOAuthProviderSetup(
+                        writer,
+                        oauth,
+                        isMultiUrl,
+                        anyAuthMultiScheme,
+                        undefined,
+                        authRawClientOptions
+                    );
                     if (anyAuthMultiScheme) {
                         writer.endControlFlow();
                     }
@@ -718,7 +754,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         inferredAuth,
                         isMultiUrl,
                         constructorParameters,
-                        guardInferred
+                        guardInferred,
+                        undefined,
+                        authRawClientOptions
                     );
                     if (guardInferred) {
                         writer.endControlFlow();
@@ -852,7 +890,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         const baseUrlOption = this.context.getBaseUrlOptionName();
         const authRawClientOptions = isMultiUrl
             ? "['headers' => []]"
-            : `['${baseUrlOption}' => $this->${optionsName}['${baseUrlOption}'] ?? '', 'headers' => []]`;
+            : `isset($this->${optionsName}['${baseUrlOption}']) ? ['${baseUrlOption}' => $this->${optionsName}['${baseUrlOption}'], 'headers' => []] : ['headers' => []]`;
 
         if (hasOAuthScheme && oauth != null) {
             writer.writeTextStatement("$oauthTokenProvider = null");
@@ -1426,6 +1464,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
     }
 
     private getParameterForHeader(header: FernIr.HttpHeader): ConstructorParameter {
+        const literal = this.context.maybeLiteral(header.valueType);
+        // Env vars are strings, so only a string-typed literal can be resolved from one. Other
+        // literals stay out of the constructor's env-resolution path and remain literal parameters.
+        const environmentVariable = literal == null || literal.type === "string" ? header.env : undefined;
         return {
             name: this.context.getParameterName(header.name),
             header: {
@@ -1434,9 +1476,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             docs: header.docs,
             isOptional: this.context.isOptional(header.valueType),
             typeReference: header.valueType,
-            environmentVariable: header.env,
+            environmentVariable,
             isGlobalHeader: true,
-            clientDefault: header.clientDefault
+            // A literal-typed header's value is known at compile time, so when an env var promotes
+            // it to a constructor parameter the literal acts as its client default: the parameter
+            // stays optional and falls back to the literal instead of throwing.
+            clientDefault: header.clientDefault ?? (environmentVariable != null ? literal : undefined)
         };
     }
 
@@ -1490,6 +1535,49 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             default:
                 assertNever(literal);
         }
+    }
+
+    /**
+     * Whether explicitly provided constructor auth credentials should take precedence
+     * over environment-variable defaults when selecting the auth scheme. Opt-in via the
+     * `preferExplicitAuth` config; only applies when OAuth client-credentials is
+     * composed with a basic auth scheme via `auth: any` (outside endpoint-security).
+     */
+    private preferExplicitAuthEnabled(): boolean {
+        if (this.context.customConfig.preferExplicitAuth !== true) {
+            return false;
+        }
+        if (this.context.isEndpointSecurity()) {
+            return false;
+        }
+        if (!this.isAnyAuthWithMultipleSchemes()) {
+            return false;
+        }
+        const oauth = this.context.getOauth();
+        if (oauth == null || oauth.configuration.type !== "clientCredentials" || !this.shouldUseOAuthProvider()) {
+            return false;
+        }
+        return this.getBasicAuthCredentialParameterNames().length > 0;
+    }
+
+    /**
+     * Returns the constructor parameter names for the basic auth credentials
+     * (excluding omitted fields), e.g. `["username", "password"]`.
+     */
+    private getBasicAuthCredentialParameterNames(): string[] {
+        const names: string[] = [];
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type !== "basic") {
+                continue;
+            }
+            if (!scheme.usernameOmit) {
+                names.push(this.context.getParameterName(scheme.username));
+            }
+            if (!scheme.passwordOmit) {
+                names.push(this.context.getParameterName(scheme.password));
+            }
+        }
+        return names;
     }
 
     /**
@@ -1553,7 +1641,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         targetVar = "$this->oauthTokenProvider",
         authRawClientOptions = "['headers' => []]"
     ): void {
-        const tokenEndpointReference = oauth.configuration.tokenEndpoint.endpointReference;
+        const configuration = getClientCredentialsOrThrow(oauth);
+        const tokenEndpointReference = configuration.tokenEndpoint.endpointReference;
         const subpackageId = tokenEndpointReference.subpackageId;
 
         let authClientClassReference: php.ClassReference;
@@ -1593,17 +1682,15 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         // exists) — the env-or-throw assignment is tied to those parameters.
         const oauthParamsSkipped = this.context.ir.auth.schemes.some((s) => s.type === "bearer");
         const clientIdFallback =
-            guarded || (oauth.configuration.clientIdEnvVar != null && !oauthParamsSkipped)
-                ? "$clientId"
-                : "$clientId ?? ''";
+            guarded || (configuration.clientIdEnvVar != null && !oauthParamsSkipped) ? "$clientId" : "$clientId ?? ''";
         const clientSecretFallback =
-            guarded || (oauth.configuration.clientSecretEnvVar != null && !oauthParamsSkipped)
+            guarded || (configuration.clientSecretEnvVar != null && !oauthParamsSkipped)
                 ? "$clientSecret"
                 : "$clientSecret ?? ''";
         const isAuthMandatory = this.context.ir.sdkConfig.isAuthMandatory;
         const extraArgs = getOAuthTokenRequestProperties(
             this.context,
-            oauth.configuration.tokenEndpoint.requestProperties
+            configuration.tokenEndpoint.requestProperties
         ).map((property) => (isAuthMandatory ? `$${property.parameterName}` : `$${property.parameterName} ?? ''`));
         const args = [clientIdFallback, clientSecretFallback, ...extraArgs, "$authClient"].join(", ");
         writer.writeLine(`(${args});`);

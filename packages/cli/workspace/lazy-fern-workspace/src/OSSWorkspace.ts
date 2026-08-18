@@ -143,6 +143,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 openapiSpecs,
                 (s) => s?.respectForwardCompatibleEnums
             ),
+            respectOptionalRequestBody: collapseSpecBooleanSetting(openapiSpecs, (s) => s?.respectOptionalRequestBody),
             inlineAllOfSchemas: collapseSpecBooleanSetting(specs, (s) => s?.inlineAllOfSchemas),
             resolveAliases: (() => {
                 // Only collapse if at least one spec explicitly defines resolveAliases

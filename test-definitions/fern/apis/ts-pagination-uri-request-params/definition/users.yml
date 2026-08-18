@@ -1,0 +1,95 @@
+types:
+  User:
+    properties:
+      name: string
+      id: integer
+
+  ListUsersResponse:
+    properties:
+      data: list<User>
+      next: optional<string>
+
+service:
+  auth: false
+  base-path: /accounts/{account_id}
+  path-parameters:
+    account_id: string
+  display-name: Users
+  endpoints:
+    # The first page must be a regular request, so the query parameters the caller passed
+    # have to be sent. Only the subsequent pages are fetched from the next URL.
+    listWithUriPagination:
+      pagination:
+        next_uri: $response.next
+        results: $response.data
+      method: GET
+      path: /uri
+      request:
+        name: ListUsersUriPaginationRequest
+        query-parameters:
+          filter: optional<string>
+          page_size: optional<integer>
+      response: ListUsersResponse
+      examples:
+        - path-parameters:
+            account_id: acct_1
+          query-parameters:
+            filter: "name"
+            page_size: 2
+          response:
+            body:
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
+
+    listWithPathPagination:
+      pagination:
+        next_path: $response.next
+        results: $response.data
+      method: GET
+      path: /path
+      request:
+        name: ListUsersPathPaginationRequest
+        query-parameters:
+          filter: optional<string>
+          page_size: optional<integer>
+      response: ListUsersResponse
+      examples:
+        - path-parameters:
+            account_id: acct_1
+          query-parameters:
+            filter: "name"
+            page_size: 2
+          response:
+            body:
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
+
+    # A paginated POST keeps its request body on the first page.
+    searchWithUriPagination:
+      pagination:
+        next_uri: $response.next
+        results: $response.data
+      method: POST
+      path: /search
+      request:
+        name: SearchUsersRequest
+        body:
+          properties:
+            query: string
+      response: ListUsersResponse
+      examples:
+        - path-parameters:
+            account_id: acct_1
+          request:
+            query: "alice"
+          response:
+            body:
+              data:
+                - name: "Alice"
+                  id: 1

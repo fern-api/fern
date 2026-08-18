@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.23.0] - 2026-08-17
+
+- Add `WebSocketChannel.apiPlayground` (optional `boolean`) controlling whether a WebSocket
+  channel is shown in the API playground. This mirrors `HttpEndpoint.apiPlayground` and is
+  populated from the `x-fern-explorer` extension in AsyncAPI specs (global default, overridable
+  per channel).
+
+## [v67.22.0] - 2026-08-14
+
+- Add `successRedirectUrl` and `errorRedirectUrl` to `OAuthAuthorizationCode`. Both are absolute
+  http(s) URLs a generated CLI redirects the browser to from its loopback callback listener — on
+  success once the authorization code is captured, and on failure with the `error` /
+  `error_description` query parameters appended. Neither is the OAuth `redirect_uri`, so neither
+  needs registering with the authorization server; they let a hosted page own the branding of the
+  last screen of `auth login` instead of the CLI's built-in pages.
+
+## [v67.21.0] - 2026-08-08
+
+- Add optional `required` to `HttpRequestBodyReference`. Absent means required, so generators that
+  do not read it are unaffected. When false, the caller may omit the body entirely and the request
+  carries neither content nor a `Content-Type` header. This models omittability as a property of the
+  call rather than by wrapping `requestBodyType` in `optional<T>`, so generators no longer have to
+  unwrap a container before deciding how to shape the request parameter.
+- Add optional `bodyRequired` to `dynamic.BodyRequest`, mirroring the field above. Snippet
+  generators only ever see the dynamic IR and cannot infer omittability from `body`, since an absent
+  `body` means the endpoint has no body at all rather than that the caller may skip one. Absent
+  means required, so snippet output is unchanged until a generator reads it.
+
+## [v67.20.0] - 2026-07-28
+
+- Add `packagist` variant to `PublishTarget` (`PackagistPublishTarget` with optional `version` and
+  `packageName`). This lets the CLI thread the PHP SDK's Composer package identity into
+  `PublishingConfig.filesystem` for `local-file-system` output, the same way the other registry
+  targets already do, so the PHP generator can stamp the package name/version into the generated
+  `composer.json` instead of defaulting to `0.0.0`.
+
 ## [v67.19.0] - 2026-07-29
 
 - Add `rubygems` variant to `PublishTarget` (`RubyGemsPublishTarget` with optional `version` and
@@ -53,6 +89,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   crates/go targets already do, so the C# generator can stamp the SDK name/version into the
   generated `Version.cs` and the structured `User-Agent` header.
 
+>>>>>>> origin/main
 ## [v67.15.0] - 2026-07-21
 
 - Add `HmacSignatureVerification.notificationUrlNormalization` (optional

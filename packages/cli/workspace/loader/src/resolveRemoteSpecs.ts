@@ -1,9 +1,8 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
-import { extractErrorMessage } from "@fern-api/core-utils";
+import { extractErrorMessage, isCommitSha, isGitAvailable } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
-import { execSync } from "child_process";
 import path from "path";
 import { simpleGit } from "simple-git";
 import tmp from "tmp-promise";
@@ -13,24 +12,8 @@ interface CloneTarget {
     ref: string | undefined;
 }
 
-/**
- * Returns true if the given ref looks like a commit SHA (7-40 hex characters).
- */
-function isCommitSha(ref: string): boolean {
-    return /^[0-9a-f]{7,40}$/i.test(ref);
-}
-
 function cloneTargetKey(target: CloneTarget): string {
     return `${target.repo}#${target.ref ?? "HEAD"}`;
-}
-
-function isGitAvailable(): boolean {
-    try {
-        execSync("git --version", { encoding: "utf-8", stdio: "pipe" });
-        return true;
-    } catch {
-        return false;
-    }
 }
 
 /**

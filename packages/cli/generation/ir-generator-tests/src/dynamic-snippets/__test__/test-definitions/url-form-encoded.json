@@ -477,7 +477,8 @@
                         "type": "named",
                         "value": "type_:TokenRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

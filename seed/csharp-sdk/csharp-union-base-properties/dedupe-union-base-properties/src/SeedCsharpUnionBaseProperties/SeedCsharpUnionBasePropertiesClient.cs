@@ -15,7 +15,7 @@ public partial class SeedCsharpUnionBasePropertiesClient : ISeedCsharpUnionBaseP
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedCsharpUnionBaseProperties" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedCsharpUnionBaseProperties.Version.Current },
                 { "User-Agent", "Ferncsharp-union-base-properties/0.0.1" },
             }
         );

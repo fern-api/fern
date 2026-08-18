@@ -188,6 +188,8 @@ describe("test definitions", () => {
     }, 200_000);
 
     apiNames.forEach((name) => {
+        // the proto-backed fixtures shell out to buf/protoc and are the slowest in this
+        // concurrent loop; on loaded CI runners they land just under a 60s budget
         it.concurrent(name, async () => {
             const workspace = workspaceMap.get(name);
             if (!workspace) {
@@ -199,7 +201,7 @@ describe("test definitions", () => {
                 audiences: { type: "all" },
                 workspaceName: name
             });
-        }, 60_000);
+        }, 120_000);
     });
 });
 
@@ -268,6 +270,68 @@ it("availability", async () => {
         workspaceName: "availability"
     });
 }, 200_000);
+
+describe("examples that omit the request body", () => {
+    const OPTIONAL_REQUEST_BODY_DIR = path.join(__dirname, "fixtures/optional-request-body-example/fern");
+
+    it("keeps the example and generates no request body", async () => {
+        const ir = await generateIRFromPath({
+            absolutePathToWorkspace: AbsoluteFilePath.of(OPTIONAL_REQUEST_BODY_DIR),
+            workspaceName: "optionalRequestBodyExample",
+            audiences: { type: "all" }
+        });
+
+        const service = Object.values(ir.services)[0];
+        expect(service).toBeDefined();
+
+        for (const endpointName of ["referencedBody", "inlinedBody", "optionalReferencedBody"]) {
+            const endpoint = service?.endpoints.find((e) => getOriginalName(e.name) === endpointName);
+            const examples = (endpoint?.userSpecifiedExamples ?? []).map((e) => e.example);
+            expect(examples.map((e) => e?.name)).toEqual(["withoutBody", "withBody"]);
+            expect(examples[1]?.request).toBeDefined();
+        }
+
+        // an example that omits `request` is a call with no body, rather than a body whose
+        // value is absent, for both inlined and `optional<T>` referenced bodies
+        const inlined = service?.endpoints.find((e) => getOriginalName(e.name) === "inlinedBody");
+        expect(inlined?.userSpecifiedExamples[0]?.example?.request).toBeUndefined();
+
+        const referenced = service?.endpoints.find((e) => getOriginalName(e.name) === "referencedBody");
+        expect(referenced?.requestBody?.type).toEqual("reference");
+        expect(referenced?.userSpecifiedExamples[0]?.example?.request).toBeUndefined();
+
+        // a required referenced body still produces a reference example
+        const requiredReferenced = service?.endpoints.find((e) => getOriginalName(e.name) === "requiredReferencedBody");
+        expect(requiredReferenced?.userSpecifiedExamples[0]?.example?.request?.type).toEqual("reference");
+
+        // `optional: true` carries omittability on the request body itself rather than by wrapping
+        // the type, so the type a generator sees is the same one it sees for a required body
+        const optionalReferenced = service?.endpoints.find((e) => getOriginalName(e.name) === "optionalReferencedBody");
+        const optionalReferencedBody = optionalReferenced?.requestBody;
+        if (optionalReferencedBody?.type !== "reference") {
+            throw new Error("expected optionalReferencedBody to have a reference request body");
+        }
+        expect(optionalReferencedBody.required).toBe(false);
+        expect(optionalReferencedBody.requestBodyType.type).toEqual("named");
+        expect(optionalReferenced?.userSpecifiedExamples[0]?.example?.request).toBeUndefined();
+
+        // the two spellings stay distinct: `optional<T>` wraps the type and leaves `required` unset
+        const referencedBody = referenced?.requestBody;
+        if (referencedBody?.type !== "reference") {
+            throw new Error("expected referencedBody to have a reference request body");
+        }
+        expect(referencedBody.required).toBeUndefined();
+        expect(referencedBody.requestBodyType.type).toEqual("container");
+
+        // and a plain required body sets neither
+        const requiredReferencedBody = requiredReferenced?.requestBody;
+        if (requiredReferencedBody?.type !== "reference") {
+            throw new Error("expected requiredReferencedBody to have a reference request body");
+        }
+        expect(requiredReferencedBody.required).toBeUndefined();
+        expect(requiredReferencedBody.requestBodyType.type).toEqual("named");
+    }, 200_000);
+});
 
 it("docs", async () => {
     const DOCS_DIR = path.join(__dirname, "fixtures/docs/fern");

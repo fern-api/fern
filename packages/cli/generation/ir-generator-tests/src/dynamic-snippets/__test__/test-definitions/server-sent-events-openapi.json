@@ -3739,7 +3739,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -3787,7 +3788,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -3835,7 +3837,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -3883,7 +3886,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -3931,7 +3935,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -3979,7 +3984,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -4027,7 +4033,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -4870,7 +4877,8 @@
                         "type": "named",
                         "value": "type_:StreamXFernStreamingUnionStreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
@@ -4918,7 +4926,8 @@
                         "type": "named",
                         "value": "type_:StreamXFernStreamingUnionRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -4966,7 +4975,8 @@
                         "type": "named",
                         "value": "type_:UnionStreamRequestBase"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -5296,7 +5306,8 @@
                         "type": "named",
                         "value": "type_:StreamRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "streaming"
