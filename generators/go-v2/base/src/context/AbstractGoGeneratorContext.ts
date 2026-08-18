@@ -2,7 +2,8 @@ import { CaseConverter, NameInput } from "@fern-api/base-generator";
 import {
     AbstractGeneratorContext,
     FernGeneratorExec,
-    GeneratorNotificationService
+    GeneratorNotificationService,
+    getAdditionalAcronyms
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
@@ -41,7 +42,8 @@ export abstract class AbstractGoGeneratorContext<
         this.caseConverter = new CaseConverter({
             generationLanguage: "go",
             keywords: ir.casingsConfig?.keywords,
-            smartCasing: ir.casingsConfig?.smartCasing ?? true
+            smartCasing: ir.casingsConfig?.smartCasing ?? true,
+            additionalAcronyms: getAdditionalAcronyms(ir.casingsConfig)
         });
         this.project = new GoProject({ context: this });
         this.goFieldMapper = new GoFieldMapper(this);

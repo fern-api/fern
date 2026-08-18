@@ -18,6 +18,11 @@ export interface FixtureConfigurations {
     disableDynamicSnippetTests?: boolean | undefined;
     /** Overrides the default output mode */
     outputMode?: FernSeedConfig.OutputMode | undefined;
+    /**
+     * Domain-specific acronyms that smart casing preserves verbatim, mirroring the
+     * `additional-acronyms` option in generators.yml.
+     */
+    additionalAcronyms?: string[] | undefined;
     license?: unknown | undefined;
     /**
      * Either a boolean to skip all scripts, or a list of script names to skip.

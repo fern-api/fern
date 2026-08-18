@@ -233,7 +233,7 @@ export abstract class TestRunner {
             const readme = configuration?.readmeConfig ?? undefined;
             const license = extractLicenseInfo(configuration?.license, absolutePathToApiDefinition);
             const smartCasing = generatorInvocation?.smartCasing;
-            const additionalAcronyms = generatorInvocation?.additionalAcronyms;
+            const additionalAcronyms = configuration?.additionalAcronyms ?? generatorInvocation?.additionalAcronyms;
 
             let fernWorkspace: FernWorkspace | undefined;
             let rawApiSpecs: Spec[] | undefined;

@@ -1,0 +1,593 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:FdxAccount": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "FdxAccount",
+                    "camelCase": {
+                        "unsafeName": "fdxAccount",
+                        "safeName": "fdxAccount"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "fdx_account",
+                        "safeName": "fdx_account"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FDX_ACCOUNT",
+                        "safeName": "FDX_ACCOUNT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "FdxAccount",
+                        "safeName": "FdxAccount"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "account_id",
+                        "name": {
+                            "originalName": "account_id",
+                            "camelCase": {
+                                "unsafeName": "accountID",
+                                "safeName": "accountID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "account_id",
+                                "safeName": "account_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ACCOUNT_ID",
+                                "safeName": "ACCOUNT_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AccountID",
+                                "safeName": "AccountID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:CraReport": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "CraReport",
+                    "camelCase": {
+                        "unsafeName": "craReport",
+                        "safeName": "craReport"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "cra_report",
+                        "safeName": "cra_report"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CRA_REPORT",
+                        "safeName": "CRA_REPORT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CraReport",
+                        "safeName": "CraReport"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "report_id",
+                        "name": {
+                            "originalName": "report_id",
+                            "camelCase": {
+                                "unsafeName": "reportID",
+                                "safeName": "reportID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "report_id",
+                                "safeName": "report_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REPORT_ID",
+                                "safeName": "REPORT_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ReportID",
+                                "safeName": "ReportID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "oauth_token",
+                        "name": {
+                            "originalName": "oauth_token",
+                            "camelCase": {
+                                "unsafeName": "oauthToken",
+                                "safeName": "oauthToken"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "oauth_token",
+                                "safeName": "oauth_token"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OAUTH_TOKEN",
+                                "safeName": "OAUTH_TOKEN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "OauthToken",
+                                "safeName": "OauthToken"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:EwaReport": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "EwaReport",
+                    "camelCase": {
+                        "unsafeName": "ewaReport",
+                        "safeName": "ewaReport"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "ewa_report",
+                        "safeName": "ewa_report"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EWA_REPORT",
+                        "safeName": "EWA_REPORT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "EwaReport",
+                        "safeName": "EwaReport"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "report_id",
+                        "name": {
+                            "originalName": "report_id",
+                            "camelCase": {
+                                "unsafeName": "reportID",
+                                "safeName": "reportID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "report_id",
+                                "safeName": "report_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REPORT_ID",
+                                "safeName": "REPORT_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ReportID",
+                                "safeName": "ReportID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_fdx.listAccounts": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "listAccounts",
+                    "camelCase": {
+                        "unsafeName": "listAccounts",
+                        "safeName": "listAccounts"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_accounts",
+                        "safeName": "list_accounts"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_ACCOUNTS",
+                        "safeName": "LIST_ACCOUNTS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListAccounts",
+                        "safeName": "ListAccounts"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "fdx",
+                            "camelCase": {
+                                "unsafeName": "fdx",
+                                "safeName": "fdx"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "fdx",
+                                "safeName": "fdx"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FDX",
+                                "safeName": "FDX"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Fdx",
+                                "safeName": "Fdx"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "fdx",
+                        "camelCase": {
+                            "unsafeName": "fdx",
+                            "safeName": "fdx"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "fdx",
+                            "safeName": "fdx"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FDX",
+                            "safeName": "FDX"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Fdx",
+                            "safeName": "Fdx"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/fdx/accounts"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null,
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_craReport.get": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "get",
+                    "camelCase": {
+                        "unsafeName": "get",
+                        "safeName": "get"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get",
+                        "safeName": "get"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET",
+                        "safeName": "GET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Get",
+                        "safeName": "Get"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "craReport",
+                            "camelCase": {
+                                "unsafeName": "craReport",
+                                "safeName": "craReport"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "cra_report",
+                                "safeName": "cra_report"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CRA_REPORT",
+                                "safeName": "CRA_REPORT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CraReport",
+                                "safeName": "CraReport"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "craReport",
+                        "camelCase": {
+                            "unsafeName": "craReport",
+                            "safeName": "craReport"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "cra_report",
+                            "safeName": "cra_report"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CRA_REPORT",
+                            "safeName": "CRA_REPORT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CraReport",
+                            "safeName": "CraReport"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/cra/report/get"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "CraReportGetRequest",
+                        "camelCase": {
+                            "unsafeName": "craReportGetRequest",
+                            "safeName": "craReportGetRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "cra_report_get_request",
+                            "safeName": "cra_report_get_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CRA_REPORT_GET_REQUEST",
+                            "safeName": "CRA_REPORT_GET_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CraReportGetRequest",
+                            "safeName": "CraReportGetRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "craReport",
+                                "camelCase": {
+                                    "unsafeName": "craReport",
+                                    "safeName": "craReport"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "cra_report",
+                                    "safeName": "cra_report"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CRA_REPORT",
+                                    "safeName": "CRA_REPORT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "CraReport",
+                                    "safeName": "CraReport"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "craReport",
+                            "camelCase": {
+                                "unsafeName": "craReport",
+                                "safeName": "craReport"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "cra_report",
+                                "safeName": "cra_report"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CRA_REPORT",
+                                "safeName": "CRA_REPORT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CraReport",
+                                "safeName": "CraReport"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "user_token",
+                                "name": {
+                                    "originalName": "user_token",
+                                    "camelCase": {
+                                        "unsafeName": "userToken",
+                                        "safeName": "userToken"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "user_token",
+                                        "safeName": "user_token"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "USER_TOKEN",
+                                        "safeName": "USER_TOKEN"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "UserToken",
+                                        "safeName": "UserToken"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_ewaReport.get": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "get",
+                    "camelCase": {
+                        "unsafeName": "get",
+                        "safeName": "get"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get",
+                        "safeName": "get"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET",
+                        "safeName": "GET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Get",
+                        "safeName": "Get"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ewaReport",
+                            "camelCase": {
+                                "unsafeName": "ewaReport",
+                                "safeName": "ewaReport"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ewa_report",
+                                "safeName": "ewa_report"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EWA_REPORT",
+                                "safeName": "EWA_REPORT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EwaReport",
+                                "safeName": "EwaReport"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ewaReport",
+                        "camelCase": {
+                            "unsafeName": "ewaReport",
+                            "safeName": "ewaReport"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ewa_report",
+                            "safeName": "ewa_report"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EWA_REPORT",
+                            "safeName": "EWA_REPORT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "EwaReport",
+                            "safeName": "EwaReport"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/ewa/report/get"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null,
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}

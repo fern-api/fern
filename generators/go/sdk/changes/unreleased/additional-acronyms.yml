@@ -2,5 +2,7 @@
     Honor the new `additional-acronyms` option from `generators.yml` when generating names.
     Domain-specific acronyms are now preserved verbatim alongside the built-in Go
     initialisms, so `additional-acronyms: [FDX, CRA]` produces `FDX` and `CRAReport`
-    instead of `Fdx` and `CraReport` in type, method and package names.
+    instead of `Fdx` and `CraReport` in type, method and package names. This applies to the
+    sub-client fields on the root client as well as the generated models, so both halves of
+    the SDK agree on the acronym spelling and the generated code compiles.
   type: feat

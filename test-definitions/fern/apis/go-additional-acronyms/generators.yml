@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# Fixture for the `additional-acronyms` casing option (see `additionalAcronyms` in
+# seed/go-sdk/seed.yml). Scoped to the Go generator, which generates types with go-v1 and
+# clients with go-v2 — both halves must agree on the acronym casing or the SDK won't compile.
+api:
+  specs:
+    - openapi: ./openapi.yml
+groups:
+  go-sdk:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: latest
+        ir-version: latest

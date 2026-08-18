@@ -339,6 +339,12 @@ fixtures:
   go-optional-literal-alias:
     - outputFolder: .
       customConfig: null
+  go-additional-acronyms:
+    - outputFolder: .
+      additionalAcronyms:
+        - FDX
+        - CRA
+        - EWA
   go-optional-request-body:
     - outputFolder: no-custom-config
       customConfig: null

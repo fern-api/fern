@@ -256,6 +256,11 @@ types:
       outputMode:
         type: optional<OutputMode>
         docs: Overrides the default output mode
+      additionalAcronyms:
+        type: optional<list<string>>
+        docs: |
+          Domain-specific acronyms that smart casing preserves verbatim, mirroring the
+          `additional-acronyms` option in generators.yml.
       license: optional<unknown>
       skipScripts:
         docs: |

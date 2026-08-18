@@ -1,0 +1,37 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/cra/report/get",
+                "method": "POST",
+                "identifier_override": "endpoint_craReport.get"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-additional-acronyms/fern\"\n\tfernclient \"github.com/go-additional-acronyms/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CRAReport.Get(\n\tcontext.TODO(),\n\t\u0026fern.CRAReportGetRequest{\n\t\tUserToken: \"user_token\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/ewa/report/get",
+                "method": "POST",
+                "identifier_override": "endpoint_ewaReport.get"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-additional-acronyms/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.EWAReport.Get(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/fdx/accounts",
+                "method": "GET",
+                "identifier_override": "endpoint_fdx.listAccounts"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-additional-acronyms/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.FDX.ListAccounts(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}
