@@ -1,5 +1,21 @@
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
+import {
+    DEFAULT_HOMEBREW_TOKEN_ENV_VAR,
+    DEFAULT_SCOOP_TOKEN_ENV_VAR,
+    type FernCliGitHubAppConfig,
+    type FernCliHomebrewConfig,
+    type ResolvedChannelAuth,
+    resolveChannelAuth
+} from "./customConfig.js";
+import { constructScoopJobYaml, type ScoopJobArgs } from "./emitScoopWorkflow.js";
+import {
+    appTokenExpression,
+    CREDENTIAL_PREFLIGHT_JOB,
+    constructAppTokenStep,
+    constructCredentialPreflightJob,
+    type PreflightCheck
+} from "./githubAppToken.js";
 
 /**
  * Emit `.github/workflows/release.yml` into the generated CLI output.
@@ -17,12 +33,263 @@ import path from "path";
  * `release.yml` (cargo-dist 0.31.0). It reads targets/installers from
  * `dist-workspace.toml` at plan time, so it stays in sync with whatever
  * the patcher writes.
+ *
+ * When `homebrew` is configured, cargo-dist's `publish-homebrew-formula`
+ * job is appended and `announce` is made to wait on it — the same shape
+ * `dist init` produces for `publish-jobs = ["homebrew"]`. Composing the
+ * job in rather than carrying a second full copy of the template keeps
+ * a cargo-dist upgrade a one-place edit.
  */
-export async function emitReleaseWorkflow(args: { outputDir: string }): Promise<void> {
-    const { outputDir } = args;
+export async function emitReleaseWorkflow(args: {
+    outputDir: string;
+    homebrew?: FernCliHomebrewConfig;
+    scoop?: ScoopJobArgs;
+    githubApp?: FernCliGitHubAppConfig;
+}): Promise<void> {
+    const { outputDir, homebrew, scoop, githubApp } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
-    await writeFile(path.join(workflowsDir, "release.yml"), RELEASE_WORKFLOW_YAML);
+    await writeFile(
+        path.join(workflowsDir, "release.yml"),
+        constructReleaseWorkflowYaml({ homebrew, scoop, githubApp })
+    );
+}
+
+/**
+ * Pure template assembly, exported for unit-test access.
+ */
+export function constructReleaseWorkflowYaml(args: {
+    homebrew?: FernCliHomebrewConfig;
+    scoop?: ScoopJobArgs;
+    githubApp?: FernCliGitHubAppConfig;
+}): string {
+    const { homebrew, scoop, githubApp } = args;
+
+    const homebrewAuth =
+        homebrew != null
+            ? resolveChannelAuth({
+                  tokenEnvironmentVariable: homebrew.tokenEnvironmentVariable,
+                  githubApp,
+                  defaultTokenSecret: DEFAULT_HOMEBREW_TOKEN_ENV_VAR
+              })
+            : undefined;
+    const scoopAuth =
+        scoop != null
+            ? resolveChannelAuth({
+                  tokenEnvironmentVariable: scoop.scoop.tokenEnvironmentVariable,
+                  githubApp,
+                  defaultTokenSecret: DEFAULT_SCOOP_TOKEN_ENV_VAR
+              })
+            : undefined;
+
+    // Both channels gate on `host`, so `announce` must wait on whichever
+    // are enabled — otherwise the announcement can precede a published
+    // formula or manifest.
+    const publishJobs: string[] = [];
+    let jobs = "";
+
+    // One check per *distinct* credential pair, so the normal case (one
+    // shared App serving both channels) emits one step rather than two
+    // identical ones.
+    const preflightChecks = mergePreflightChecks([
+        ...(homebrewAuth?.type === "githubApp" ? [{ label: "Homebrew tap", app: homebrewAuth.app }] : []),
+        ...(scoopAuth?.type === "githubApp" ? [{ label: "Scoop bucket", app: scoopAuth.app }] : [])
+    ]);
+    // Emitted only when a channel actually uses an App, so a PAT-only
+    // generation keeps the workflow it has today. PAT secrets are not
+    // preflighted for the same reason: it would add a job to every
+    // existing distribution consumer's release pipeline.
+    const preflightJob = preflightChecks.length > 0;
+    if (preflightJob) {
+        jobs += constructCredentialPreflightJob({ checks: preflightChecks });
+    }
+
+    if (homebrew != null && homebrewAuth != null) {
+        jobs += constructHomebrewPublishJob({ homebrew, auth: homebrewAuth, preflightJob });
+        publishJobs.push("publish-homebrew-formula");
+    }
+    if (scoop != null && scoopAuth != null) {
+        jobs += constructScoopJobYaml({ ...scoop, auth: scoopAuth, preflightJob });
+        publishJobs.push("publish-scoop");
+    }
+    return RELEASE_WORKFLOW_YAML + jobs + constructAnnounceJob(publishJobs);
+}
+
+/**
+ * Collapse checks naming the same two secrets into one, joining their
+ * labels so the emitted step still says which channels it covers.
+ *
+ * Keyed on the secret names rather than object identity: that is what
+ * actually expresses "these are the same credential", and it stays
+ * correct if the two channels ever arrive at the same pair by different
+ * routes.
+ */
+function mergePreflightChecks(checks: readonly PreflightCheck[]): PreflightCheck[] {
+    const byCredential = new Map<string, PreflightCheck>();
+    for (const check of checks) {
+        const key = `${check.app.appIdSecret} ${check.app.privateKeySecret}`;
+        const existing = byCredential.get(key);
+        byCredential.set(key, existing == null ? check : { ...existing, label: `${existing.label} / ${check.label}` });
+    }
+    return [...byCredential.values()];
+}
+
+/**
+ * cargo-dist's `publish-homebrew-formula` job.
+ *
+ * The `.rb` file itself is rendered by `build-global-artifacts` (that's
+ * what adding `"homebrew"` to `installers` buys) with per-arch `url` /
+ * `sha256` read out of cargo-dist's own `dist-manifest.json`. This job
+ * only moves the rendered formula into the tap repo, which is why it
+ * needs a cross-repo token: the workflow's built-in `GITHUB_TOKEN`
+ * cannot push to a different repository.
+ *
+ * `download-artifact` deliberately pulls *every* `artifacts-*` entry
+ * into `Formula/` — the archives land there too, but only `*.rb` is
+ * staged for commit.
+ *
+ * The App and PAT variants are assembled from **one** template rather
+ * than two copies, differing only in three interpolated slots (the extra
+ * `needs` entry, the leading token step, the checkout token) plus where
+ * `GITHUB_TOKEN` sits. Authoring a second copy of the job is how the
+ * `announcement_is_prerelease` guard below gets dropped from one branch —
+ * and a tap has no prerelease channel, so a lost guard means an RC
+ * formula becomes what every `brew upgrade` installs, with a green
+ * workflow and no error anywhere.
+ */
+function constructHomebrewPublishJob(args: {
+    homebrew: FernCliHomebrewConfig;
+    auth: ResolvedChannelAuth;
+    preflightJob: boolean;
+}): string {
+    const { homebrew, auth, preflightJob } = args;
+
+    // Job-level `env` can read `github`, `needs`, `vars`, `secrets`,
+    // `inputs`, `strategy` and `matrix` — but not `steps`. So in the App
+    // branch `GITHUB_TOKEN` cannot live here and moves down to the commit
+    // step; left up here it would silently render as the empty string.
+    //
+    // Nothing in this job actually reads `GITHUB_TOKEN`: `dist` is
+    // downloaded and chmod'd but never invoked, there is no `gh` call, and
+    // the `git push` authenticates off the `http.extraheader` that
+    // `actions/checkout` writes because of `persist-credentials: true`. It
+    // is inherited cargo-dist decoration, kept so the PAT branch stays
+    // byte-identical. Remove `persist-credentials` and the push breaks
+    // regardless of what this env var says.
+    const jobEnvToken = auth.type === "pat" ? `      GITHUB_TOKEN: \${{ secrets.${auth.tokenSecret} }}\n` : "";
+    const tokenStep =
+        auth.type === "githubApp"
+            ? constructAppTokenStep({ name: "Mint a tap token", app: auth.app, repo: homebrew.tap })
+            : "";
+    const checkoutToken = auth.type === "githubApp" ? appTokenExpression() : `\${{ secrets.${auth.tokenSecret} }}`;
+    const commitStepEnv =
+        auth.type === "githubApp" ? `        env:\n          GITHUB_TOKEN: ${appTokenExpression()}\n` : "";
+    // Gated on *this* channel's auth, not merely on the job existing. With
+    // a shared App and `homebrew.tokenEnvironmentVariable` still pinned,
+    // only Scoop is preflighted — making the PAT-authenticated Homebrew job
+    // wait on that check would let a bad Scoop App secret skip a publish
+    // that never touches the App.
+    const preflightNeed = preflightJob && auth.type === "githubApp" ? `      - ${CREDENTIAL_PREFLIGHT_JOB}\n` : "";
+
+    return `
+  publish-homebrew-formula:
+    needs:
+      - plan
+      - host
+${preflightNeed}    runs-on: "ubuntu-22.04"
+    env:
+${jobEnvToken}      PLAN: \${{ needs.plan.outputs.val }}
+      GITHUB_USER: "github-actions[bot]"
+      GITHUB_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
+    if: \${{ !fromJson(needs.plan.outputs.val).announcement_is_prerelease || fromJson(needs.plan.outputs.val).publish_prereleases }}
+    steps:
+${tokenStep}      - uses: actions/checkout@v6
+        with:
+          repository: "${homebrew.tap}"
+          token: ${checkoutToken}
+          # Credentials must persist — the final step pushes the formula back.
+          persist-credentials: true
+          # So we have access to the formula
+          fetch-depth: 1
+      # So we have access to "dist"
+      - name: Install cached dist
+        uses: actions/download-artifact@v7
+        with:
+          name: cargo-dist-cache
+          path: ~/.cargo/bin/
+      - run: chmod +x ~/.cargo/bin/dist
+      - name: Fetch homebrew formulae
+        uses: actions/download-artifact@v7
+        with:
+          pattern: artifacts-*
+          path: Formula/
+          merge-multiple: true
+      # This is extra complex because you can make your Formula name not match your app name
+      # so we need to find the formula file based on the app name
+      - name: Commit formula files
+${commitStepEnv}        run: |
+          git config --global user.name "\${GITHUB_USER}"
+          git config --global user.email "\${GITHUB_EMAIL}"
+
+          for release in $(echo "$PLAN" | jq --compact-output '.releases[] | select([.artifacts[] | endswith(".rb")] | any)'); do
+            name=$(echo "$release" | jq .app_name --raw-output)
+            version=$(echo "$release" | jq .app_version --raw-output)
+
+            # GitHub's ubuntu runner images no longer ship Homebrew, so
+            # cargo-dist's unconditional \`brew --prefix\` aborts this step
+            # under \`bash -e\` with exit 127 — before the formula is ever
+            # committed. \`brew style\` is only cosmetic reformatting of a
+            # file cargo-dist already renders validly, so skip it when brew
+            # is absent instead of failing the publish.
+            if command -v brew > /dev/null 2>&1; then
+              export PATH="$(brew --prefix)/bin:$PATH"
+              brew update
+              # We avoid reformatting user-provided data such as the app description and homepage.
+              for filename in $(echo "$release" | jq --compact-output --raw-output '.artifacts[] | select(endswith(".rb"))'); do
+                brew style --except-cops FormulaAudit/Homepage,FormulaAudit/Desc,FormulaAuditStrict --fix "Formula/\${filename}" || true
+              done
+            else
+              echo "::notice::brew is not available on this runner; skipping the formula style pass."
+            fi
+
+            git add Formula/*.rb
+            # Re-running a release must be a no-op rather than an
+            # empty-commit failure, matching the Scoop job.
+            if git diff --cached --quiet; then
+              echo "Formula for \${name} \${version} is already up to date; nothing to commit."
+            else
+              git commit -m "\${name} \${version}"
+            fi
+          done
+
+          git push
+`;
+}
+
+/**
+ * The terminal `announce` job. Its `needs` grows one entry per enabled
+ * cargo-dist publish job, mirroring what `dist init` generates: the
+ * announcement must not fire before every channel has been written.
+ */
+function constructAnnounceJob(publishJobs: readonly string[]): string {
+    const needs = ["plan", "host", ...publishJobs].map((job) => `      - ${job}`).join("\n");
+    return `
+  announce:
+    needs:
+${needs}
+    # use "always() && ..." to allow us to wait for all publish jobs while
+    # still allowing individual publish jobs to skip themselves (for prereleases).
+    # "host" however must run to completion, no skipping allowed!
+    if: \${{ always() && needs.host.result == 'success' }}
+    runs-on: "ubuntu-22.04"
+    env:
+      GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          submodules: recursive
+`;
 }
 
 /**
@@ -37,6 +304,10 @@ export async function emitReleaseWorkflow(args: { outputDir: string }): Promise<
  * The workflow triggers on version-like tags and also runs `dist plan`
  * on pull requests (controlled by `pr-run-mode = "plan"` in
  * dist-workspace.toml).
+ *
+ * Ends after the `host` job: the publish jobs (if any) and the terminal
+ * `announce` job are appended by `constructReleaseWorkflowYaml`, since
+ * `announce`'s `needs` list depends on which publish jobs are enabled.
  */
 const RELEASE_WORKFLOW_YAML = `# This file was autogenerated by dist: https://axodotdev.github.io/cargo-dist
 #
@@ -173,6 +444,36 @@ jobs:
           fi
       - name: Install dist
         run: \${{ matrix.install_dist.run }}
+      # cargo-dist guards the installer download with pipefail in the \`plan\`
+      # job but not here, where the same \`curl ... | sh\` runs once per matrix
+      # leg. A dead curl pipes nothing into \`sh\`, which exits 0, so the step
+      # above reports success and \`dist build\` fails two steps later with an
+      # opaque exit 127. Observed on 2 of 3 real releases.
+      #
+      # Deliberately does not branch on \`matrix.install_dist.shell\`: steps 1
+      # and 3 reuse the matrix's own command and shell exactly as upstream
+      # does, so this can only ever add a retry — it cannot mis-route a leg
+      # and skip the install entirely.
+      - id: dist-check
+        name: Check dist installed
+        shell: bash
+        run: |
+          if dist --version > /dev/null 2>&1; then
+            echo "ok=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=no" >> "$GITHUB_OUTPUT"
+            echo "::warning::The dist installer did not put 'dist' on PATH — most likely a transient download failure. Retrying."
+          fi
+      - name: Install dist (retry)
+        if: \${{ steps.dist-check.outputs.ok == 'no' }}
+        run: \${{ matrix.install_dist.run }}
+      - name: Verify dist
+        shell: bash
+        run: |
+          dist --version || {
+            echo "::error::The cargo-dist installer failed twice on this runner, so 'dist' is not available. This is usually a transient network failure downloading https://github.com/axodotdev/cargo-dist/releases — re-run this job."
+            exit 1
+          }
       # Get the dist-manifest
       - name: Fetch local artifacts
         uses: actions/download-artifact@v7
@@ -326,21 +627,4 @@ jobs:
           echo "$ANNOUNCEMENT_BODY" > $RUNNER_TEMP/notes.txt
 
           gh release create "\${{ needs.plan.outputs.tag }}" --target "$RELEASE_COMMIT" $PRERELEASE_FLAG --title "$ANNOUNCEMENT_TITLE" --notes-file "$RUNNER_TEMP/notes.txt" artifacts/*
-
-  announce:
-    needs:
-      - plan
-      - host
-    # use "always() && ..." to allow us to wait for all publish jobs while
-    # still allowing individual publish jobs to skip themselves (for prereleases).
-    # "host" however must run to completion, no skipping allowed!
-    if: \${{ always() && needs.host.result == 'success' }}
-    runs-on: "ubuntu-22.04"
-    env:
-      GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-          submodules: recursive
 `;

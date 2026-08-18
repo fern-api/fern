@@ -1,12 +1,19 @@
 import { AbstractProject } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
-import { mkdir } from "fs/promises";
+import { copyFile, mkdir } from "fs/promises";
 import { AbstractRustGeneratorContext } from "../context/AbstractRustGeneratorContext.js";
 import { RustFile } from "./RustFile.js";
 import { RustFilenameRegistry } from "./RustFilenameRegistry.js";
 
 const SRC_DIRECTORY_NAME = "src";
+
+// In the Docker execution environment (local generation), the license file is mounted here.
+// For remote generation, Fiddle handles writing the LICENSE file after generation.
+const DOCKER_LICENSE_PATH = "/tmp/LICENSE";
+
+const DEFAULT_LICENSE_FILENAME = "LICENSE";
 
 export interface RustProjectConfig {
     context: AbstractRustGeneratorContext<BaseRustCustomConfigSchema>;
@@ -20,6 +27,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
     private crateVersion: string;
     private clientClassName: string;
     private sourceFiles: RustFile[] = [];
+    private writtenLicenseFilename: string | undefined;
     public readonly filenameRegistry: RustFilenameRegistry;
 
     public constructor({ context, crateName, crateVersion, clientClassName }: RustProjectConfig) {
@@ -44,6 +52,10 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         this.context.logger.debug(`mkdir ${absolutePathToSrcDirectory}`);
         await mkdir(absolutePathToSrcDirectory, { recursive: true });
 
+        // Write the LICENSE file before rendering templates: Cargo.toml only points at
+        // `license-file` if the file actually made it into the output.
+        await this.writeLicenseFile();
+
         // Write all template files (both source and project-level)
         await this.persistStaticSourceFiles();
 
@@ -52,6 +64,33 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
 
         // Write raw files
         await this.writeRawFiles();
+    }
+
+    private async writeLicenseFile(): Promise<void> {
+        const licenseConfig = this.context.config.license;
+        if (licenseConfig?.type !== "custom") {
+            return;
+        }
+
+        const filename = licenseConfig.filename ?? DEFAULT_LICENSE_FILENAME;
+        const destinationPath = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(filename));
+
+        try {
+            await copyFile(DOCKER_LICENSE_PATH, destinationPath);
+            this.writtenLicenseFilename = filename;
+            this.context.logger.debug(`Successfully copied LICENSE file to ${destinationPath}`);
+        } catch (error) {
+            if (error instanceof Error && "code" in error && error.code === "ENOENT") {
+                // File not found is expected for remote generation, where Fiddle writes the LICENSE.
+                this.context.logger.debug(
+                    `Custom license file not found at ${DOCKER_LICENSE_PATH}. This is expected for remote generation.`
+                );
+            } else {
+                this.context.logger.warn(
+                    `Failed to copy custom license file from ${DOCKER_LICENSE_PATH} to ${destinationPath}: ${extractErrorMessage(error)}`
+                );
+            }
+        }
     }
 
     private async persistStaticSourceFiles(): Promise<void> {
@@ -1003,13 +1042,21 @@ ${availableSections}
     /**
      * Generates the license field for Cargo.toml.
      * If packageLicenseFile is set, uses `license-file` to point to a custom license file.
-     * Otherwise, uses `license` with the packageLicense value or defaults to "MIT".
+     * Otherwise falls back to packageLicense, then to a custom license file this project
+     * actually wrote, and finally defaults to "MIT".
      */
     private generateLicenseField(): string {
-        if (this.context.customConfig.packageLicenseFile) {
-            return `license-file = "${this.context.customConfig.packageLicenseFile}"`;
+        const { packageLicense, packageLicenseFile } = this.context.customConfig;
+        if (packageLicenseFile) {
+            return `license-file = "${packageLicenseFile}"`;
         }
-        return `license = "${this.context.customConfig.packageLicense || "MIT"}"`;
+        if (packageLicense) {
+            return `license = "${packageLicense}"`;
+        }
+        if (this.writtenLicenseFilename != null) {
+            return `license-file = "${this.writtenLicenseFilename}"`;
+        }
+        return `license = "MIT"`;
     }
 
     private objectToToml(obj: unknown): string {

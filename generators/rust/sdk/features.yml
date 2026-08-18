@@ -50,6 +50,14 @@ features:
     description: |
       You can add custom query parameters to requests using `RequestOptions`.
 
+  - id: CUSTOM_CLIENT
+    advanced: true
+    description: |
+      The SDK builds its own `reqwest` client by default, but you can supply your own through
+      `ClientConfig.reqwest_client` (or `ApiClientBuilder::reqwest_client`) when you need control over the
+      transport — custom root certificates, client certificates, proxies or connection tuning. The supplied
+      client is used as-is; authentication, custom headers and retries are still applied by the SDK.
+
   - id: WEBSOCKETS
     description: |
       The SDK supports WebSocket connections for real-time communication. Use the generated channel clients to connect, send, and receive messages.

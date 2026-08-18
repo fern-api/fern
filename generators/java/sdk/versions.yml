@@ -1,4 +1,42 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.19.0
+  changelogEntry:
+    - summary: |
+        With `respect-optional-request-body` enabled, a call that leaves out an optional request body now
+        passes a null body to OkHttp instead of an empty one, so the request carries no body at all. The
+        methods OkHttp requires a body for (POST, PUT, PATCH) still send an empty body, which is what
+        endpoints with no request body at all already send.
+      type: fix
+    - summary: |
+        Add a `respect-optional-request-body` option. When enabled, an endpoint whose request body the API
+        does not require also gets an overload without the body parameter, and calling that overload sends
+        no body. The body parameter keeps its own type, so `alpha(String id, Body body)` gains a sibling
+        `alpha(String id)` rather than becoming `alpha(String id, Optional<Body> body)`. Examples that
+        supply no body render as `client.alpha(id)`. That call also leaves out the `Content-Type` header,
+        which now only goes out when a body does. The option defaults to false, so existing signatures
+        and snippets are unchanged.
+      type: feat
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 4.18.2
+  changelogEntry:
+    - summary: |
+        Build an empty request body in snippets for an endpoint example that omits a body the wrapped
+        request requires, instead of leaving the builder's required `body` stage unset.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
+- version: 4.18.1
+  changelogEntry:
+    - summary: |
+        Fix the generated OAuth token supplier when the get-token request has required properties
+        other than the client credentials. The builder calls are now ordered by the request's
+        required properties, so the staged builder's stages are satisfied in order, and hardcoded
+        values (such as `grant_type`) are written using the property's type, which means an
+        enumerated `grant_type` gets the generated enum constant instead of a string literal.
+      type: fix
+  createdAt: "2026-08-13"
+  irVersion: 67
 - version: 4.18.0
   changelogEntry:
     - summary: |

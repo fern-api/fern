@@ -36,11 +36,11 @@ func (r *RefundBody) SetID(id string) {
 }
 
 func (r *RefundBody) UnmarshalJSON(data []byte) error {
-	var body RefundRequest
+	body := new(RefundRequest)
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	r.Body = &body
+	r.Body = body
 	return nil
 }
 

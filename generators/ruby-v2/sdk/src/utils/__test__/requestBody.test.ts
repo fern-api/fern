@@ -19,6 +19,7 @@ function inlinedRequestBody(contentType: string | undefined): FernIr.HttpRequest
 function referenceRequestBody(contentType: string | undefined): FernIr.HttpRequestBody {
     return FernIr.HttpRequestBody.reference({
         requestBodyType: FernIr.TypeReference.unknown(),
+        required: undefined,
         docs: undefined,
         contentType,
         v2Examples: undefined

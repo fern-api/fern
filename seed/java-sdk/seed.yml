@@ -334,6 +334,9 @@ fixtures:
   java-oauth-token-optional:
     - customConfig: null
       outputFolder: no-custom-config
+  java-oauth-token-required-enum-grant-type:
+    - customConfig: null
+      outputFolder: no-custom-config
   header-auth:
     - customConfig:
         enable-wire-tests: true
@@ -369,6 +372,12 @@ fixtures:
   openapi-request-body-ref:
     - customConfig: null
       outputFolder: no-custom-config
+  java-optional-request-body:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        respect-optional-request-body: true
+      outputFolder: respect-optional-request-body
   java-optional-nullable-query-params:
     - customConfig:
         use-default-request-parameter-values: true

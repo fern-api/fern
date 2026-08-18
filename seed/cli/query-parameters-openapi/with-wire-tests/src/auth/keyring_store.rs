@@ -2,7 +2,9 @@
 //!
 //! Two backends behind a single [`KeyringStore`] trait:
 //! - [`OsKeyringStore`] — wraps [`keyring`] (macOS Keychain, Windows
-//!   Credential Manager, Linux secret-service).
+//!   Credential Manager, Linux secret-service). Compiled out on musl
+//!   targets, whose static binaries cannot link libdbus; those builds always
+//!   use the file backend.
 //! - [`FileKeyringStore`] — writes to `~/.config/<cli>/auth-keyring.json`
 //!   (0600) when the platform's keyring isn't available. Sibling-file
 //!   coexists with the pre-existing `TokenCache` from
@@ -48,9 +50,11 @@ pub trait KeyringStore: Send + Sync + std::fmt::Debug {
 // ---------------------------------------------------------------------------
 
 /// OS-native credential store backed by [`keyring`].
+#[cfg(not(target_env = "musl"))]
 #[derive(Debug)]
 pub struct OsKeyringStore;
 
+#[cfg(not(target_env = "musl"))]
 impl OsKeyringStore {
     /// Probe whether the platform's keyring is reachable by attempting a
     /// no-op read on a sentinel entry. Returns `Ok(())` if the keyring
@@ -71,6 +75,7 @@ impl OsKeyringStore {
     }
 }
 
+#[cfg(not(target_env = "musl"))]
 impl KeyringStore for OsKeyringStore {
     fn get(&self, service: &str, account: &str) -> Result<Option<String>, CliError> {
         let entry = keyring::Entry::new(service, account)
@@ -213,9 +218,23 @@ impl KeyringStore for FileKeyringStore {
 /// which won't persist but won't crash. The user will see this in
 /// `auth status` and can take action.
 pub fn auto_store() -> Arc<dyn KeyringStore> {
-    if OsKeyringStore::probe().is_ok() {
-        tracing::debug!("Using OS keyring backend for credential storage");
-        return Arc::new(OsKeyringStore);
+    // Explicit override: `FERN_CLI_CREDENTIAL_STORE=file` forces the file backend, bypassing the
+    // OS keyring entirely. Useful for CI, containers, and hermetic tests (e.g. the generated wire
+    // tests) where the OS keyring is unavailable or would pop an interactive unlock prompt. The
+    // file location still honors `HOME` / `XDG_CONFIG_HOME`, so a test can redirect it to a temp dir.
+    if std::env::var_os("FERN_CLI_CREDENTIAL_STORE").is_some_and(|value| value == "file") {
+        tracing::debug!("FERN_CLI_CREDENTIAL_STORE=file; using file backend for credential storage");
+        return match FileKeyringStore::user_default() {
+            Some(store) => Arc::new(store),
+            None => Arc::new(FileKeyringStore::at_root(PathBuf::from("/tmp/fern-cli-credentials"))),
+        };
+    }
+    #[cfg(not(target_env = "musl"))]
+    {
+        if OsKeyringStore::probe().is_ok() {
+            tracing::debug!("Using OS keyring backend for credential storage");
+            return Arc::new(OsKeyringStore);
+        }
     }
     tracing::debug!("OS keyring unavailable; falling back to file backend");
     match FileKeyringStore::user_default() {

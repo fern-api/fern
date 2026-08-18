@@ -16,7 +16,7 @@ export function getEndpointReturnZeroValue({
         return undefined;
     }
     const pagination = context.getPagination(endpoint);
-    if (pagination != null && !context.isPaginationWithRequestBodyEndpoint(endpoint)) {
+    if (pagination != null && !context.isUnsupportedRequestBodyPaginationEndpoint(endpoint)) {
         return go.TypeInstantiation.nil();
     }
     return getEndpointReturnZeroValueResponseBody({ context, body: response.body });

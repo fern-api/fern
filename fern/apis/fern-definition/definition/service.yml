@@ -138,6 +138,16 @@ types:
       - commons.WithDocsSchema
     properties:
       type: string
+      optional:
+        type: optional<boolean>
+        docs: |
+          Whether the endpoint may be called without a request body. When true, an example may
+          omit `request`, and the generated SDK lets the caller omit the body. Populated from
+          `requestBody.required` when importing from OpenAPI.
+
+          This is distinct from writing `body: optional<Foo>`, which says the body's *value* may
+          be null. Here the body itself may be absent, so the request carries neither content nor
+          a `Content-Type` header. It maps to `required: false` on the IR's request body reference.
 
   HttpInlineRequestBodySchema:
     properties:
@@ -153,6 +163,11 @@ types:
 
           This is read by example validation only: it is not carried into the IR, so it
           does not make the request parameter optional in a generated SDK.
+
+          Note the asymmetry with the identically named field on
+          `HttpReferencedRequestBodySchema`, which does reach the IR as `required: false`. An
+          inline body has no single type to mark omittable, so its `optional` stays
+          validation-only.
 
   HttpInlineRequestBodyPropertySchema:
     discriminated: false

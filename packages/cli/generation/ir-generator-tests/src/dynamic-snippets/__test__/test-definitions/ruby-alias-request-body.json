@@ -388,7 +388,8 @@
                         "type": "named",
                         "value": "type_service:ServiceRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

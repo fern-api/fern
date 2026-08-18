@@ -588,8 +588,12 @@ impl CliApp {
         T: Into<std::ffi::OsString>,
     {
         crate::reset_sigpipe();
-        let _ = dotenvy::dotenv();
+        // Collect now, report after `init_logging` — a warning emitted before the
+        // subscriber exists is dropped, which would leave a user whose `.env`
+        // setting was ignored with no explanation at all.
+        let ignored_dotenv_keys = crate::load_dotenv_filtered(&self.name);
         crate::init_logging(&self.name);
+        crate::warn_ignored_dotenv_keys(&ignored_dotenv_keys);
 
         self.propagate_root_auth();
         self.propagate_root_global_parameters();

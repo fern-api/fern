@@ -2,6 +2,7 @@ import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ts } from "ts-morph";
 import { FileContext } from "../file-context/FileContext.js";
+import { getClientCredentialsOrThrow } from "./getClientCredentials.js";
 
 export class AuthProviderContext {
     private readonly context: FileContext;
@@ -44,7 +45,7 @@ export class AuthProviderContext {
     }
 
     public getOAuthTokenEndpoint(scheme: FernIr.OAuthScheme): FernIr.HttpEndpoint {
-        const tokenEndpointReference = scheme.configuration.tokenEndpoint.endpointReference;
+        const tokenEndpointReference = getClientCredentialsOrThrow(scheme).tokenEndpoint.endpointReference;
         const endpoint = this.getOAuthTokenService(scheme).endpoints.find(
             (endpoint: FernIr.HttpEndpoint) => endpoint.id === tokenEndpointReference.endpointId
         );
@@ -55,17 +56,16 @@ export class AuthProviderContext {
     }
 
     public getOAuthTokenService(scheme: FernIr.OAuthScheme): FernIr.HttpService {
-        const service = this.context.ir.services[scheme.configuration.tokenEndpoint.endpointReference.serviceId];
+        const tokenEndpointReference = getClientCredentialsOrThrow(scheme).tokenEndpoint.endpointReference;
+        const service = this.context.ir.services[tokenEndpointReference.serviceId];
         if (!service) {
-            throw new Error(
-                `failed to find service with id ${scheme.configuration.tokenEndpoint.endpointReference.serviceId}`
-            );
+            throw new Error(`failed to find service with id ${tokenEndpointReference.serviceId}`);
         }
         return service;
     }
 
     public getOAuthRefreshEndpoint(scheme: FernIr.OAuthScheme): FernIr.HttpEndpoint | undefined {
-        const refreshEndpointReference = scheme.configuration.refreshEndpoint?.endpointReference;
+        const refreshEndpointReference = getClientCredentialsOrThrow(scheme).refreshEndpoint?.endpointReference;
         if (!refreshEndpointReference) {
             return undefined;
         }
@@ -79,14 +79,13 @@ export class AuthProviderContext {
     }
 
     public getOAuthRefreshService(scheme: FernIr.OAuthScheme): FernIr.HttpService | undefined {
-        if (!scheme.configuration.refreshEndpoint?.endpointReference) {
+        const refreshEndpointReference = getClientCredentialsOrThrow(scheme).refreshEndpoint?.endpointReference;
+        if (!refreshEndpointReference) {
             return undefined;
         }
-        const service = this.context.ir.services[scheme.configuration.refreshEndpoint.endpointReference.serviceId];
+        const service = this.context.ir.services[refreshEndpointReference.serviceId];
         if (!service) {
-            throw new Error(
-                `failed to find service with id ${scheme.configuration.refreshEndpoint.endpointReference.serviceId}`
-            );
+            throw new Error(`failed to find service with id ${refreshEndpointReference.serviceId}`);
         }
         return service;
     }

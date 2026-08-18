@@ -718,19 +718,25 @@ function getRequest({
                 requestValue.docs == null &&
                 (requestValue["content-type"] == null || requestValue["content-type"] === "application/json");
 
-            if (context.options.respectOptionalRequestBody && isOptionalJsonBody(request)) {
+            // A body the spec marks as not required may be omitted by the caller. That is spelled
+            // as `optional` on the referenced body, which the IR carries as `required: false`; the
+            // body's own type is left alone. Generators only act on it when they opt in.
+            const mayOmitBody = isOptionalJsonBody(request);
+            if (mayOmitBody) {
+                if (canCollapse) {
+                    // `optional` has no scalar shorthand, so keep the object form — minus the
+                    // content-type that collapsing would have dropped as the default anyway.
+                    delete requestValue["content-type"];
+                }
                 requestValue.body =
                     typeof requestTypeReference === "string"
-                        ? wrapTypeReferenceInOptional(requestTypeReference)
-                        : {
-                              ...requestTypeReference,
-                              type: wrapTypeReferenceInOptional(requestTypeReference.type)
-                          };
+                        ? { type: requestTypeReference, optional: true }
+                        : { ...requestTypeReference, optional: true };
             }
 
             return {
                 schemaIdsToExclude: [],
-                value: canCollapse ? (requestValue.body as string) : requestValue
+                value: canCollapse && !mayOmitBody ? (requestValue.body as string) : requestValue
             };
         }
 
@@ -1036,10 +1042,6 @@ function getRequest({
  */
 function isOptionalJsonBody(request: Request): boolean {
     return request.type === "json" && request.required !== true;
-}
-
-function wrapTypeReferenceInOptional(typeReference: string): string {
-    return typeReference.startsWith("optional<") ? typeReference : `optional<${typeReference}>`;
 }
 
 function endpointRequestSupportsInlinedPathParameters({

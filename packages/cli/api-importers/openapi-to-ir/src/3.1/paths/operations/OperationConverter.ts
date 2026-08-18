@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { isEndpointSecurityAuthSchemes, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ContainerType,
     FernIr,
@@ -643,13 +643,21 @@ export class OperationConverter extends AbstractOperationConverter {
             return [];
         }
 
-        // When auth overrides are specified, use them instead of OpenAPI security
-        if (this.context.authOverrides?.auth != null) {
+        // When auth overrides are specified, use them instead of OpenAPI security.
+        // endpoint-security is the exception: it delegates auth requirements to the spec,
+        // so the OpenAPI security must be preserved — the operation's own `security` when
+        // present, otherwise the spec-level block via the fallback below.
+        if (this.context.authOverrides?.auth != null && !this.usesEndpointSecurity()) {
             return this.getDefaultSecurityFromAuthOverrides();
         }
 
         // Fall back to OpenAPI security
         return sanitizeSecurityScopes(this.operation.security ?? this.context.spec.security);
+    }
+
+    private usesEndpointSecurity(): boolean {
+        const auth = this.context.authOverrides?.auth;
+        return auth != null && isEndpointSecurityAuthSchemes(auth);
     }
 
     /**
@@ -659,6 +667,17 @@ export class OperationConverter extends AbstractOperationConverter {
      */
     private shouldApplyDefaultAuthOverrides(): boolean {
         if (!this.context.authOverrides?.auth) {
+            return false;
+        }
+
+        // endpoint-security has no generators.yml-derived default to fall back on. A
+        // spec-level `security` block still applies: the caller checks `spec.security`
+        // before consulting this method, so returning false here leaves that inheritance
+        // intact and only declines to synthesize a default from the auth override.
+        //
+        // The single caller reaches this only when `operation.security == null`, so the
+        // checks below would be constant in this mode.
+        if (this.usesEndpointSecurity()) {
             return false;
         }
 

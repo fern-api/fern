@@ -18,6 +18,10 @@ export const BasePhpCustomConfigSchema = z.object({
     // scheme. Disabled by default so existing output is unchanged (OAuth env vars
     // win over explicitly provided basic auth).
     preferExplicitAuth: z.boolean().optional(),
+    // Opt-in: when the API does not require an endpoint's request body, the caller may leave
+    // that body out of the call, and such a call sends neither a body nor a Content-Type
+    // header. Disabled by default so existing signatures and output are unchanged.
+    respectOptionalRequestBody: z.boolean().optional(),
     includePlatformHeaders: z.boolean().optional(),
     allowUserAgentAppInfo: z.boolean().optional(),
     retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),

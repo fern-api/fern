@@ -76,6 +76,7 @@ export interface SdkCustomConfig {
     packageManager: "pnpm" | "yarn";
     generateReadWriteOnlyTypes: boolean;
     flattenRequestParameters: boolean | undefined;
+    respectOptionalRequestBody: boolean | undefined;
     exportAllRequestsAtRoot: boolean | undefined;
     testFramework: "jest" | "vitest";
     consolidateTypeFiles: boolean | undefined;

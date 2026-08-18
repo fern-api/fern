@@ -270,6 +270,7 @@
                                 }
                             }
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -306,6 +307,7 @@
                                         }
                                     }
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -464,6 +466,7 @@
                                 }
                             }
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -495,6 +498,7 @@
                                         }
                                     }
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -766,6 +770,7 @@
                                 }
                             }
                         },
+                        "required": null,
                         "docs": null,
                         "contentType": null,
                         "v2Examples": null
@@ -803,6 +808,7 @@
                                         }
                                     }
                                 },
+                                "required": null,
                                 "docs": null,
                                 "contentType": null,
                                 "v2Examples": null
@@ -1423,7 +1429,8 @@
                                 }
                             }
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -1512,7 +1519,8 @@
                                 "value": "type_optional:SendOptionalBodyRequest"
                             }
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"
@@ -1665,7 +1673,8 @@
                                 }
                             }
                         }
-                    }
+                    },
+                    "bodyRequired": null
                 },
                 "response": {
                     "type": "json"

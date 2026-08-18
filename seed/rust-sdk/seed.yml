@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: Rust SDK
 image: fernapi/fern-rust-sdk
 changelogLocation: ../../generators/rust/sdk/versions.yml
@@ -143,6 +143,12 @@ fixtures:
         packageName: sse_events
         packageVersion: "0.1.0"
       outputFolder: with-wire-tests
+  respect-optional-request-body:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        respectOptionalRequestBody: true
+      outputFolder: respect-optional-request-body
   websocket:
     - customConfig:
         enableWebsockets: true
@@ -168,3 +174,6 @@ fixtures:
         packageLicense: "Apache-2.0"
         packageLicenseFile: "LICENSE.md"
       outputFolder: both-license-options
+    - license:
+        custom: LICENSE
+      outputFolder: custom-license-from-config

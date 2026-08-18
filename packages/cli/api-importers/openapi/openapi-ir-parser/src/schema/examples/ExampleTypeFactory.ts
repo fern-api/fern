@@ -300,6 +300,11 @@ export class ExampleTypeFactory {
                 }
                 return undefined;
             case "unknown":
+                // An explicit null in the example is a valid value for an unknown schema,
+                // and must not be replaced with a generated placeholder.
+                if (example === null) {
+                    return FullExample.null({});
+                }
                 if (example != null) {
                     const fullExample = convertToFullExample(example);
                     if (fullExample != null) {

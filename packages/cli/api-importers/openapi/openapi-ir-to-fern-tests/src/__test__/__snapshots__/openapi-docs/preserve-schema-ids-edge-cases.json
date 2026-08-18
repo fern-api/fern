@@ -35,7 +35,12 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/user",
-              "request": "UserProfile",
+              "request": {
+                "body": {
+                  "optional": true,
+                  "type": "UserProfile",
+                },
+              },
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -95,7 +100,10 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request: UserProfile
+      request:
+        body:
+          type: UserProfile
+          optional: true
       response:
         docs: Success
         type: UserProfile

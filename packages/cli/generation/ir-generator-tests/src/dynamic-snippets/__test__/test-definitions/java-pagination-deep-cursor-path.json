@@ -1295,7 +1295,8 @@
                         "type": "named",
                         "value": "type_deep-cursor-path:A"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1381,7 +1382,8 @@
                         "type": "named",
                         "value": "type_deep-cursor-path:MainRequired"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"
@@ -1467,7 +1469,8 @@
                         "type": "named",
                         "value": "type_deep-cursor-path:InlineA"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

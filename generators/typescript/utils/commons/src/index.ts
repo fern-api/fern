@@ -7,7 +7,12 @@ export {
 } from "./codegen-utils/createNumericLiteralSafe.js";
 export { deduplicateExamples } from "./codegen-utils/deduplicateExamples.js";
 export { generateInlineAliasModule, generateInlinePropertiesModule } from "./codegen-utils/generateInlineModule.js";
-export { getExampleEndpointCalls, getExampleEndpointCallsForTests } from "./codegen-utils/getExampleEndpointCalls.js";
+export {
+    exampleOmitsRequestBody,
+    getExampleEndpointCalls,
+    getExampleEndpointCallsForTests,
+    mayOmitRequestBody
+} from "./codegen-utils/getExampleEndpointCalls.js";
 export {
     getParameterNameForPositionalPathParameter,
     getParameterNameForPropertyPathParameter,

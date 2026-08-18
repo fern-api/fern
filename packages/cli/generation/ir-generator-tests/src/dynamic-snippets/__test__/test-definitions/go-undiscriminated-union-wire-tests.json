@@ -523,7 +523,8 @@
                         "type": "named",
                         "value": "type_service:RerankRequest"
                     }
-                }
+                },
+                "bodyRequired": null
             },
             "response": {
                 "type": "json"

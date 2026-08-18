@@ -123,6 +123,39 @@ describe("copySpecs", () => {
         expect(main).toContain("use fern_cli_sdk::openapi::OpenApiBinding;");
     });
 
+    it("custom.rs example uses OpenApiBinding::handler, since a bare closure does not compile", async () => {
+        // `CliApp::command` takes a `CliCommandHandler` —
+        // `Box<dyn Fn(&ArgMatches, &dyn Any) -> Result<(), CliError>>` — so the
+        // example must wrap its closure. Emitting a bare closure gives every
+        // customer an E0308 on their first custom command, which is exactly what
+        // the "uncomment to get started" comment invites them to write.
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            customCommands: true
+        });
+
+        const custom = await readFile(path.join(outputDir, BIN_DIR, "custom.rs"), "utf-8");
+        expect(custom).toContain("fern_cli_sdk::openapi::OpenApiBinding::handler(|matches, ctx| {");
+        // The closure must be the wrapper's argument, not `command`'s.
+        expect(custom).not.toMatch(/\/\/\s+\|matches, ctx\| \{/);
+    });
+
     it("multi-spec without namespace → emits .spec(...) per entry so they merge flat at the root", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });

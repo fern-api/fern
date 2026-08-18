@@ -1,0 +1,98 @@
+- summary: |
+    A `.env` file can no longer override transport or process-execution
+    settings. `dotenvy::dotenv()` searches the working directory and its
+    ancestors, and a generated CLI is routinely run inside repositories the
+    operator did not write — so an attacker-authored `.env` could point the CLI
+    at another host (`<PREFIX>_BASE_URL`), disable certificate verification
+    (`<PREFIX>_INSECURE`, `<PREFIX>_INSECURE_SKIP_VERIFY`), replace the trust
+    store (`<PREFIX>_CA_BUNDLE`, `SSL_CERT_FILE`, …), route traffic through a
+    proxy (`<PREFIX>_PROXY`, `HTTPS_PROXY`, …), or switch off the cross-host
+    redirect and pagination guards. Sharpest of all: `<PREFIX>_PAGER` / `PAGER`
+    names a program the CLI *executes* when paging output, making a stray `.env`
+    arbitrary command execution.
+
+    Those keys are now ignored when they come from `.env` (with a warning naming
+    the key), while everything else — credentials, `<PREFIX>_OUTPUT`, timeouts —
+    loads exactly as before. Real process environment still wins over `.env`, so
+    anything genuinely exported from the operator's shell is unaffected.
+  type: fix
+- summary: |
+    `--dry-run` no longer prints credential headers. It renders the request the
+    CLI *would* send, and a credential reaches that output whenever the spec
+    models it as a header parameter or an `x-fern-global-headers` entry — an
+    `apiKey`-in-header scheme being the common case. Since dry-run output is
+    routinely pasted into issues, values for credential headers are now
+    `[REDACTED]`, using the same predicate and the same spec-derived header
+    names as `--debug` so the two cannot drift apart. Non-credential headers are
+    still shown in full, and the redaction no longer depends on `--debug` being
+    passed.
+
+    Redaction also now recognises vendor-specific credential header names.
+    Neither the exact-match list nor spec-declared `apiKey`-in-header schemes
+    covered a spec that models its credential as a plain header *parameter* with
+    no `securitySchemes` block — ElevenLabs' `xi-api-key` is that shape (an
+    explicit header parameter on 333 operations), and both `--debug` and
+    `--dry-run` printed it in full. Header names containing `api-key`, `apikey`,
+    `api_key`, `token`, `secret`, `password` or `credential` are now treated as
+    credentials. `idempotency-key` is deliberately not matched — it is not a
+    secret and is useful when debugging retries.
+  type: fix
+- summary: |
+    `--debug` now works for custom commands. Every HTTP dump lived in the
+    OpenAPI executor, so a handler calling the co-generated SDK through
+    `sdk::client(ctx)` produced no debug output at all — silent at exactly the
+    moment it is wanted, while diagnosing a live API failure. The SDK executor
+    now dumps the fully-built request (after auth and global headers are
+    applied, so what is printed is what goes on the wire) plus the response
+    status and headers, with spec-declared credential headers redacted. The
+    response body is not buffered on this path — the generated SDK client
+    consumes it — so it is reported as such rather than being cloned.
+  type: fix
+- summary: |
+    Fixed the `custom.rs` scaffold so the example it tells you to uncomment
+    compiles. `CliApp::command` takes a `CliCommandHandler` — a boxed
+    `Fn(&ArgMatches, &dyn Any)` — but the commented example passed a bare
+    closure, so following the "uncomment to get started" comment produced an
+    `E0308` on a customer's first custom command. It now wraps the closure in
+    `OpenApiBinding::handler(...)`, matching `CliApp::command`'s own
+    documentation, with a comment explaining why the wrapper is required.
+  type: fix
+- summary: |
+    Three follow-ups found while testing the above against a real CLI.
+
+    The `.env` filter's explanation never reached anyone: it warned before
+    `init_logging` ran, so with no subscriber installed yet every message was
+    dropped. A user who legitimately put `<PREFIX>_BASE_URL` in `.env` saw it
+    silently not work. The ignored keys are now collected and reported after
+    logging is initialized.
+
+    `--debug` and `--dry-run` redacted `access-control-allow-credentials`, a
+    routine CORS response header whose value is `true`, because its name contains
+    "credential". Header names beginning `access-control-` are now never treated
+    as credentials, so the header is legible again while `xi-api-key`,
+    `authorization` and other genuine credentials stay redacted.
+
+    A refused cross-host redirect was reported as `internalError` with a 500 and
+    exit code 5 — indistinguishable from the CLI genuinely breaking — and the
+    explanation reached only the structured output, leaving stderr with a bare
+    "HTTP request failed". It was also retried, re-issuing a request whose
+    outcome cannot change. It is now a client-side error: `error[validation]`
+    on stderr carrying the full reason (both origins and the opt-out variable),
+    exit code 3, and no retry. Applied in both the OpenAPI and GraphQL
+    executors. The generic `Try <cmd> --help` hint is suppressed when a
+    validation message already names an environment variable to set, since a
+    flag list says nothing about it; ordinary validation errors keep the hint.
+  type: fix
+- summary: |
+    De-flaked the cross-host guard tests, which ship into every generated CLI
+    and so failed `cargo test` in customers' own repositories, not just ours.
+    They all read the guard's opt-out from the *process* environment under one
+    shared `<PREFIX>`, so `#[serial]` was load-bearing for correctness rather
+    than just for tidiness: one test setting the shared variable while another
+    cleared it flipped the other's expected outcome, in whichever direction the
+    thread interleaving happened to land. That is invisible on an idle machine
+    and shows up under the contention of a loaded CI runner. Each test now uses
+    a CLI name unique to itself, so its variables cannot collide with any other
+    test's, and a future test that forgets `#[serial]` cannot reintroduce the
+    race.
+  type: fix

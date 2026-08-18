@@ -1,0 +1,18 @@
+[package]
+name = "shared_types_cli_types"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+doctest = false
+
+[dependencies]
+
+[dependencies.shared_types_cli_types_core]
+path = "crates/shared-types-cli-types-core"
+
+[dependencies.shared_types_cli_types_billing]
+path = "crates/shared-types-cli-types-billing"
+
+[dependencies.shared_types_cli_types_catalog]
+path = "crates/shared-types-cli-types-catalog"

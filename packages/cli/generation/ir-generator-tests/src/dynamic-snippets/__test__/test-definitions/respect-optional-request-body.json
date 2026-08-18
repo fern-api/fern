@@ -189,11 +189,8 @@
                     "bodyType": {
                         "type": "typeReference",
                         "value": {
-                            "type": "optional",
-                            "value": {
-                                "type": "named",
-                                "value": "type_:RefundRequest"
-                            }
+                            "type": "named",
+                            "value": "type_:RefundRequest"
                         }
                     }
                 },
@@ -378,13 +375,11 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "type": "optional",
-                        "value": {
-                            "type": "named",
-                            "value": "type_:RefundRequest"
-                        }
+                        "type": "named",
+                        "value": "type_:RefundRequest"
                     }
-                }
+                },
+                "bodyRequired": false
             },
             "response": {
                 "type": "json"

@@ -282,6 +282,8 @@ function generateOAuth({
                     refreshUrl: rawScheme["refresh-url"],
                     redirectUri: getRedirectUri(rawScheme["redirect-uri"]),
                     redirectUriBackupPorts: getRedirectUriBackupPorts(rawScheme["redirect-uri"]),
+                    successRedirectUrl: rawScheme["success-redirect-url"],
+                    errorRedirectUrl: rawScheme["error-redirect-url"],
                     scopes: rawScheme.scopes,
                     pkce: { method: OAuthPkceMethod.S256 },
                     authorizationParameters: rawScheme["authorization-parameters"],

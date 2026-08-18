@@ -1220,7 +1220,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         AST.Expression("client_secret"),
                     ),
                 ]
-                if is_oauth_client_credentials and oauth_union is not None:
+                if oauth_union is not None and oauth_union.type == "clientCredentials":
                     for extra_param_name in self._get_additional_oauth_param_names(oauth_union):
                         oauth_tp_kwargs.append(
                             (extra_param_name, AST.Expression(extra_param_name)),

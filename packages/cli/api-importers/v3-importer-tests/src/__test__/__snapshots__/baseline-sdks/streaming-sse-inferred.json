@@ -196,6 +196,7 @@
               "typeId": "type_:CompletionRequest",
               "type": "named"
             },
+            "required": false,
             "type": "reference"
           },
           "sdkRequest": {
@@ -210,6 +211,7 @@
                   "typeId": "type_:CompletionRequest",
                   "type": "named"
                 },
+                "required": false,
                 "type": "typeReference"
               },
               "type": "justRequestBody"
@@ -268,6 +270,7 @@
               "typeId": "type_:CompletionRequest",
               "type": "named"
             },
+            "required": false,
             "type": "reference"
           },
           "sdkRequest": {
@@ -282,6 +285,7 @@
                   "typeId": "type_:CompletionRequest",
                   "type": "named"
                 },
+                "required": false,
                 "type": "typeReference"
               },
               "type": "justRequestBody"
@@ -341,6 +345,7 @@
               "typeId": "type_:CompletionRequest",
               "type": "named"
             },
+            "required": false,
             "type": "reference"
           },
           "sdkRequest": {
@@ -355,6 +360,7 @@
                   "typeId": "type_:CompletionRequest",
                   "type": "named"
                 },
+                "required": false,
                 "type": "typeReference"
               },
               "type": "justRequestBody"
@@ -676,6 +682,7 @@
             },
             "type": "typeReference"
           },
+          "bodyRequired": false,
           "type": "body"
         },
         "response": {
@@ -761,6 +768,7 @@
             },
             "type": "typeReference"
           },
+          "bodyRequired": false,
           "type": "body"
         },
         "response": {
@@ -846,6 +854,7 @@
             },
             "type": "typeReference"
           },
+          "bodyRequired": false,
           "type": "body"
         },
         "response": {

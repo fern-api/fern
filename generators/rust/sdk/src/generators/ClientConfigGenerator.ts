@@ -1,6 +1,15 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { OAuthTokenExchange, RustFile } from "@fern-api/rust-base";
-import { Attribute, CodeBlock, Expression, PrimitiveType, PUBLIC, rust, UseStatement } from "@fern-api/rust-codegen";
+import {
+    Attribute,
+    CodeBlock,
+    DocComment,
+    Expression,
+    PrimitiveType,
+    PUBLIC,
+    rust,
+    UseStatement
+} from "@fern-api/rust-codegen";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class ClientConfigGenerator {
@@ -108,6 +117,19 @@ export class ClientConfigGenerator {
                 name: "user_agent",
                 type: rust.Type.string(),
                 visibility: PUBLIC
+            }),
+            rust.field({
+                name: "reqwest_client",
+                type: rust.Type.option(rust.Type.reference(rust.reference({ name: "reqwest::Client" }))),
+                visibility: PUBLIC,
+                docs: new DocComment({
+                    summary: [
+                        "Optional custom `reqwest` client, used as-is for every request.",
+                        "When set, it owns all transport-level configuration (TLS, proxies, timeout,",
+                        "user agent); when `None` the SDK builds its own client from `timeout` and",
+                        "`user_agent`."
+                    ].join("\n")
+                })
             })
         ];
 
@@ -223,6 +245,10 @@ export class ClientConfigGenerator {
                     {
                         name: "user_agent",
                         value: Expression.toString(Expression.stringLiteral(userAgent))
+                    },
+                    {
+                        name: "reqwest_client",
+                        value: Expression.none()
                     },
                     ...(this.context.hasMultipleBaseUrls()
                         ? [

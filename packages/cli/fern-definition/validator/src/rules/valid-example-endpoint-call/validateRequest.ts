@@ -68,6 +68,11 @@ export function validateRequest({
             })
         );
     } else {
+        // `optional: true` says the call may omit the body, so an example without a `request` is a
+        // valid call with no body — the same way it is for an inline body marked optional.
+        if (example === undefined && typeof body !== "string" && body.optional === true) {
+            return violations;
+        }
         const bodyViolations = ExampleValidators.validateTypeReferenceExample({
             rawTypeReference: typeof body === "string" ? body : body.type,
             example,

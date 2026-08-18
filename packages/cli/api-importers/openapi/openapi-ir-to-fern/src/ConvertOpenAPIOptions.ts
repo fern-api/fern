@@ -47,10 +47,9 @@ export interface ConvertOpenAPIOptions {
     inlinePathParameters: boolean;
 
     /**
-     * If true, a JSON request body that OpenAPI does not mark as required becomes optional in the
-     * generated Fern Definition, so the body is optional in generated SDKs and examples may omit it.
-     * If false, the body stays required in the IR and its optionality is only used to validate examples.
-     * Only applies to request bodies that are emitted as type references.
+     * @deprecated No longer read. `requestBody.required: false` is always carried into the IR now,
+     * and each SDK generator decides whether to act on it via its own configuration. Kept so that
+     * existing `respect-optional-request-body` settings keep validating; setting it only warns.
      */
     respectOptionalRequestBody: boolean;
 

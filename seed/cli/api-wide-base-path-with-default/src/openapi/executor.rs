@@ -1402,8 +1402,32 @@ async fn handle_json_response(
                 Some(EndpointPagination::Uri { next_uri, .. }) => {
                     match get_nested_str(&json_val, next_uri) {
                         Some(url) if !url.is_empty() => {
-                            *page_state = PageState::NextUrl(Some(url.to_string()));
-                            true
+                            // The response chooses the next request's URL, so it
+                            // must not be able to steer it off-host and take the
+                            // credential with it.
+                            let base = page_state
+                                .url_override()
+                                .unwrap_or(request_url)
+                                .to_string();
+                            match crate::http::check_pagination_target(
+                                &pagination.cli_name,
+                                &base,
+                                url,
+                            ) {
+                                Ok(()) => {
+                                    *page_state = PageState::NextUrl(Some(url.to_string()));
+                                    true
+                                }
+                                Err(e) => {
+                                    tracing::warn!(
+                                        next_uri = %url,
+                                        base_url = %base,
+                                        error = %e,
+                                        "refusing x-fern-pagination next_uri; halting pagination"
+                                    );
+                                    false
+                                }
+                            }
                         }
                         _ => false,
                     }
@@ -1418,7 +1442,19 @@ async fn handle_json_response(
                                 .url_override()
                                 .unwrap_or(request_url)
                                 .to_string();
-                            match resolve_next_path(&base, path) {
+                            match resolve_next_path(&base, path).and_then(|resolved| {
+                                // `next_path` may be an absolute URL, which
+                                // replaces the base's origin — so the resolved
+                                // target needs the same host check as the `Uri`
+                                // variant. Checked after resolution so a relative
+                                // path is judged on what it actually resolves to.
+                                crate::http::check_pagination_target(
+                                    &pagination.cli_name,
+                                    &base,
+                                    &resolved,
+                                )
+                                .map(|()| resolved)
+                            }) {
                                 Ok(resolved) => {
                                     *page_state = PageState::NextUrl(Some(resolved));
                                     true
@@ -2012,12 +2048,31 @@ pub async fn execute_method(
         } else {
             ""
         };
+        // `--dry-run` prints the request it *would* send, so it must redact
+        // credentials for the same reason `--debug` does. A credential reaches
+        // `header_params` whenever the spec models it as a header parameter or
+        // an `x-fern-global-headers` entry (an `apiKey`-in-header scheme is the
+        // common case), and dry-run output is routinely pasted into issues.
+        // Same predicate and spec-derived names as the debug dump, so the two
+        // can't drift apart.
+        let sensitive_header_names = spec_sensitive_header_names(doc);
+        let redacted_headers: Vec<(String, String)> = input
+            .header_params
+            .iter()
+            .map(|(name, value)| {
+                if crate::debug::is_sensitive_header(name, &sensitive_header_names) {
+                    (name.clone(), "[REDACTED]".to_string())
+                } else {
+                    (name.clone(), value.clone())
+                }
+            })
+            .collect();
         let mut dry_run_info = json!({
             "dry_run": true,
             "url": input.full_url,
             "method": method.http_method,
             "query_params": input.query_params,
-            "headers": input.header_params,
+            "headers": redacted_headers,
             "body": input.body,
             "is_multipart_upload": input.is_upload,
         });
@@ -2110,16 +2165,7 @@ pub async fn execute_method(
 
     // Derive spec-declared sensitive names for the debug dump.
     let additional_sensitive_headers: Vec<&str> = if debug {
-        doc.security_schemes
-            .values()
-            .filter_map(|s| {
-                if let crate::openapi::discovery::SecurityScheme::ApiKeyHeader { name } = s {
-                    Some(name.as_str())
-                } else {
-                    None
-                }
-            })
-            .collect()
+        spec_sensitive_header_names(doc)
     } else {
         Vec::new()
     };
@@ -2288,6 +2334,12 @@ pub async fn execute_method(
                     break resp;
                 }
                 Err(e) => {
+                    // A refused redirect is a policy decision, not a transport
+                    // blip: retrying re-issues a request that will be refused
+                    // identically. Classify and return before `decide_retry`.
+                    if let Some(err) = crate::http::redirect_refusal_error(&e) {
+                        return Err(err);
+                    }
                     if let Some(cfg) = retries_cfg {
                         let outcome = RetryOutcome {
                             status: None,
@@ -3308,12 +3360,7 @@ fn resolve_upload_mime(
         .unwrap_or_else(|| "application/octet-stream".to_string());
 
     // Strip CR/LF and other control characters to prevent MIME header injection.
-    let sanitized: String = raw.chars().filter(|c| !c.is_control()).collect();
-    if sanitized.is_empty() {
-        "application/octet-stream".to_string()
-    } else {
-        sanitized
-    }
+    sanitize_mime(raw)
 }
 
 /// Simple MIME type inference from file extension.
@@ -3340,8 +3387,20 @@ fn mime_from_extension(path: &str) -> Option<String> {
         "ico" => "image/x-icon",
         "mp3" => "audio/mpeg",
         "wav" => "audio/wav",
+        // Speech-to-text and dubbing endpoints take these routinely, and a
+        // server that validates the part's media type rejects an upload
+        // labelled `application/octet-stream`.
+        "m4a" => "audio/mp4",
+        "aac" => "audio/aac",
+        "flac" => "audio/flac",
+        "ogg" | "oga" => "audio/ogg",
+        "opus" => "audio/opus",
+        "aif" | "aiff" => "audio/aiff",
         "mp4" => "video/mp4",
         "webm" => "video/webm",
+        "mov" => "video/quicktime",
+        // Accepted by document-ingestion endpoints (e.g. knowledge bases).
+        "epub" => "application/epub+zip",
         "md" | "markdown" => "text/markdown",
         "yaml" | "yml" => "application/yaml",
         "toml" => "application/toml",
@@ -3462,11 +3521,62 @@ fn build_multipart_stream(
     ))
 }
 
-/// Resolve a file part's `Content-Type`. A per-part value from the OpenAPI
-/// `encoding` object wins; otherwise the OAS default for a binary part,
-/// `application/octet-stream`, applies.
-fn file_part_mime(content_type: Option<&str>) -> &str {
-    content_type.unwrap_or("application/octet-stream")
+/// Header names the spec itself declares as credentials — the `name` of every
+/// `apiKey`-in-header security scheme (`xi-api-key`, `X-API-Key`, …).
+///
+/// Shared by `--debug` and `--dry-run` so a header redacted in one is redacted
+/// in the other. `debug::REDACTED_HEADERS` covers the well-known names; this
+/// covers the ones only the spec knows about.
+pub(crate) fn spec_sensitive_header_names(doc: &RestDescription) -> Vec<&str> {
+    doc.security_schemes
+        .values()
+        .filter_map(|s| {
+            if let crate::openapi::discovery::SecurityScheme::ApiKeyHeader { name } = s {
+                Some(name.as_str())
+            } else {
+                None
+            }
+        })
+        .collect()
+}
+
+/// Resolve a file part's `Content-Type`:
+///
+/// 1. A per-part value from the OpenAPI `encoding` object (explicit wins)
+/// 2. Inference from the file's extension
+/// 3. `application/octet-stream`
+///
+/// Same precedence [`resolve_upload_mime`] already applies to binary request
+/// bodies — this path previously skipped step 2 and labelled *every* upload
+/// `application/octet-stream`. That is the OAS default for a binary part and so
+/// technically conformant, but servers that validate a part's media type reject
+/// it outright: ElevenLabs' knowledge-base upload, for one, answers
+/// `Invalid file type. Allowed types are ['application/pdf', 'text/plain', …]`
+/// for a `.txt` file the CLI mislabelled. Since most specs omit `encoding`
+/// entirely, that made uploads impossible against any strict server.
+///
+/// `file_name` is `None` when the payload is not the file's native bytes —
+/// stdin, or an `@text`/`@data` transform that rewrites the content (a base64
+/// re-encoding of a PNG is not `image/png`). Those keep the octet-stream
+/// default rather than claiming a type the bytes no longer have.
+fn file_part_mime(content_type: Option<&str>, file_name: Option<&str>) -> String {
+    let raw = content_type
+        .map(|s| s.to_string())
+        .or_else(|| file_name.and_then(mime_from_extension))
+        .unwrap_or_else(|| "application/octet-stream".to_string());
+    sanitize_mime(raw)
+}
+
+/// Strip control characters from a resolved MIME type to prevent header
+/// injection via user-controlled paths or spec metadata, falling back to
+/// `application/octet-stream` if nothing survives.
+fn sanitize_mime(raw: String) -> String {
+    let sanitized: String = raw.chars().filter(|c| !c.is_control()).collect();
+    if sanitized.is_empty() {
+        "application/octet-stream".to_string()
+    } else {
+        sanitized
+    }
 }
 
 /// Build a `reqwest::multipart::Form` from the collected CLI flag values.
@@ -3522,7 +3632,6 @@ async fn build_multipart_form(
                     form = form.part(name.clone(), literal_part);
                     continue;
                 }
-                let mime = file_part_mime(content_type.as_deref());
                 // Parse the raw stored path so we know which encoding the
                 // user asked for (`Auto` → raw bytes, `Text` → UTF-8 only,
                 // `Data` → always base64 — FER-10532). Stdin (`@-` / `-`)
@@ -3573,9 +3682,20 @@ async fn build_multipart_form(
                     )?
                     .into_bytes(),
                 };
+                // Resolved here, not before the read: inferring the media type
+                // from the extension needs the resolved file name, and only the
+                // untransformed `Auto` path still carries the file's own bytes.
+                let mime = file_part_mime(
+                    content_type.as_deref(),
+                    if mode == AtMode::Auto && !is_stdin {
+                        Some(file_name.as_str())
+                    } else {
+                        None
+                    },
+                );
                 let file_part = reqwest::multipart::Part::bytes(part_bytes)
                     .file_name(file_name)
-                    .mime_str(mime)
+                    .mime_str(&mime)
                     .map_err(|e| {
                         CliError::Validation(format!(
                             "Invalid Content-Type '{mime}' for multipart field '{name}': {e}"
@@ -4771,11 +4891,51 @@ mod tests {
 
     #[test]
     fn test_file_part_mime_defaults_and_override() {
-        // No per-part content type → OAS binary default.
-        assert_eq!(file_part_mime(None), "application/octet-stream");
-        // An encoding-supplied content type wins.
-        assert_eq!(file_part_mime(Some("image/png")), "image/png");
-        assert_eq!(file_part_mime(Some("text/plain")), "text/plain");
+        // Neither an encoding entry nor a usable file name → OAS binary default.
+        assert_eq!(file_part_mime(None, None), "application/octet-stream");
+        // An encoding-supplied content type wins, even over the extension.
+        assert_eq!(file_part_mime(Some("image/png"), None), "image/png");
+        assert_eq!(file_part_mime(Some("text/plain"), None), "text/plain");
+        assert_eq!(
+            file_part_mime(Some("application/pdf"), Some("notes.txt")),
+            "application/pdf"
+        );
+    }
+
+    #[test]
+    fn test_file_part_mime_infers_from_extension_when_spec_is_silent() {
+        // Most specs omit `encoding` entirely. Labelling these parts
+        // `application/octet-stream` makes servers that validate a part's media
+        // type reject the upload — every type below is one such server's
+        // allow-list entry that the CLI previously could not satisfy.
+        assert_eq!(file_part_mime(None, Some("doc.txt")), "text/plain");
+        assert_eq!(file_part_mime(None, Some("paper.pdf")), "application/pdf");
+        assert_eq!(file_part_mime(None, Some("notes.md")), "text/markdown");
+        assert_eq!(file_part_mime(None, Some("page.html")), "text/html");
+        assert_eq!(file_part_mime(None, Some("book.epub")), "application/epub+zip");
+        assert_eq!(
+            file_part_mime(None, Some("report.docx")),
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        );
+        // Audio, for the speech-to-text and dubbing endpoints.
+        assert_eq!(file_part_mime(None, Some("clip.mp3")), "audio/mpeg");
+        assert_eq!(file_part_mime(None, Some("clip.m4a")), "audio/mp4");
+        assert_eq!(file_part_mime(None, Some("clip.flac")), "audio/flac");
+        // Unrecognized or absent extension falls back to the OAS default.
+        assert_eq!(file_part_mime(None, Some("archive.xyz")), "application/octet-stream");
+        assert_eq!(file_part_mime(None, Some("README")), "application/octet-stream");
+    }
+
+    #[test]
+    fn test_file_part_mime_is_case_insensitive_and_injection_safe() {
+        assert_eq!(file_part_mime(None, Some("CLIP.MP3")), "audio/mpeg");
+        // A control character in a spec-supplied value cannot smuggle a header
+        // break into the multipart preamble.
+        assert_eq!(
+            file_part_mime(Some("text/plain\r\nX-Injected: 1"), None),
+            "text/plainX-Injected: 1"
+        );
+        assert_eq!(file_part_mime(Some("\r\n"), None), "application/octet-stream");
     }
 
     /// Send a built multipart form to a local mock server and return the raw
@@ -4844,9 +5004,34 @@ mod tests {
         );
         assert!(
             body.contains("Content-Type: application/octet-stream"),
-            "file part should default to octet-stream; got: {body}"
+            "file part with an unrecognized extension should default to octet-stream; got: {body}"
         );
         assert!(body.contains("payload-bytes"), "file bytes should stream; got: {body}");
+    }
+
+    #[tokio::test]
+    async fn test_build_multipart_form_file_part_infers_content_type_from_extension() {
+        // The regression that made uploads unusable: with no `encoding` entry —
+        // which is what most specs have — every part went out as
+        // `application/octet-stream`, and servers that validate a part's media
+        // type rejected the request outright.
+        let tmp = std::env::temp_dir().join("fern_multipart_inferred.txt");
+        std::fs::write(&tmp, b"plain-text-payload").unwrap();
+        let body = multipart_body_string(vec![MultipartPart::File {
+            name: "file".into(),
+            path: tmp.to_string_lossy().into_owned(),
+            content_type: None,
+        }])
+        .await;
+        let _ = std::fs::remove_file(&tmp);
+        assert!(
+            body.contains("Content-Type: text/plain"),
+            "a .txt part should be labelled text/plain; got: {body}"
+        );
+        assert!(
+            !body.contains("Content-Type: application/octet-stream"),
+            "the octet-stream default must not survive a recognized extension; got: {body}"
+        );
     }
 
     #[tokio::test]
@@ -9280,6 +9465,140 @@ mod tests {
         }
     }
 
+    /// Drive `handle_json_response` for a pagination variant and report whether
+    /// it chose to continue, plus the resulting page state.
+    async fn paginate_once(
+        endpoint_pag: &EndpointPagination,
+        body: &str,
+        request_url: &str,
+    ) -> (bool, PageState) {
+        let pagination = PaginationConfig {
+            page_all: true,
+            page_limit: 10,
+            page_delay_ms: 0,
+            cli_name: "pageguard".to_string(),
+            ..PaginationConfig::default()
+        };
+        let pipeline = crate::formatter::OutputPipeline::default();
+        let mut pages_fetched = 0u32;
+        let mut page_state = PageState::initial(Some(endpoint_pag));
+        let mut captured = Vec::new();
+        let mut pager = None;
+        let cont = handle_json_response(
+            body,
+            &pagination,
+            Some(endpoint_pag),
+            &pipeline,
+            &mut pages_fetched,
+            &mut page_state,
+            false,
+            &mut captured,
+            request_url,
+            &[],
+            None,
+            false,
+            "test-op",
+            &mut pager,
+        )
+        .await
+        .unwrap();
+        (cont, page_state)
+    }
+
+    #[tokio::test]
+    #[serial_test::serial]
+    async fn test_pagination_uri_refuses_a_cross_host_next_url() {
+        // `next_uri` is taken from the response body, so without a guard the
+        // server picks the next request's host — and the credential goes with
+        // it. Pagination must halt instead of following.
+        // The guard must be active; `#[serial]` keeps this from racing other
+        // env-touching tests.
+        std::env::remove_var("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+        let pag = EndpointPagination::Uri {
+            next_uri: "next".into(),
+            results: "items".into(),
+        };
+        let (cont, state) = paginate_once(
+            &pag,
+            r#"{"items":[1],"next":"https://evil.example.net/v1/things?cursor=2"}"#,
+            "https://api.example.com/v1/things",
+        )
+        .await;
+        assert!(!cont, "pagination must not continue to another host");
+        assert!(
+            !matches!(state, PageState::NextUrl(Some(_))),
+            "the off-host URL must not be stored as the next page, got {state:?}"
+        );
+    }
+
+    #[tokio::test]
+    #[serial_test::serial]
+    async fn test_pagination_uri_follows_a_same_host_next_url() {
+        // The guard must be active; `#[serial]` keeps this from racing other
+        // env-touching tests.
+        std::env::remove_var("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+        let pag = EndpointPagination::Uri {
+            next_uri: "next".into(),
+            results: "items".into(),
+        };
+        let (cont, state) = paginate_once(
+            &pag,
+            r#"{"items":[1],"next":"https://api.example.com/v1/things?cursor=2"}"#,
+            "https://api.example.com/v1/things",
+        )
+        .await;
+        assert!(cont, "same-host pagination must still work");
+        assert_eq!(
+            state.url_override(),
+            Some("https://api.example.com/v1/things?cursor=2")
+        );
+    }
+
+    #[tokio::test]
+    #[serial_test::serial]
+    async fn test_pagination_path_refuses_an_absolute_cross_host_next_path() {
+        // `next_path` is usually relative, but an absolute URL replaces the
+        // base's origin — the same hole by a different route.
+        // The guard must be active; `#[serial]` keeps this from racing other
+        // env-touching tests.
+        std::env::remove_var("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+        let pag = EndpointPagination::Path {
+            next_path: "next".into(),
+            results: "items".into(),
+        };
+        let (cont, state) = paginate_once(
+            &pag,
+            r#"{"items":[1],"next":"https://evil.example.net/v1/things?cursor=2"}"#,
+            "https://api.example.com/v1/things",
+        )
+        .await;
+        assert!(!cont, "an absolute off-host next_path must not be followed");
+        assert!(!matches!(state, PageState::NextUrl(Some(_))), "got {state:?}");
+    }
+
+    #[tokio::test]
+    #[serial_test::serial]
+    async fn test_pagination_path_still_resolves_a_relative_next_path() {
+        // The guard must be active; `#[serial]` keeps this from racing other
+        // env-touching tests.
+        std::env::remove_var("PAGEGUARD_ALLOW_CROSS_HOST_PAGINATION");
+        let pag = EndpointPagination::Path {
+            next_path: "next".into(),
+            results: "items".into(),
+        };
+        let (cont, state) = paginate_once(
+            &pag,
+            r#"{"items":[1],"next":"/v1/things?cursor=2"}"#,
+            "https://api.example.com/v1/things",
+        )
+        .await;
+        assert!(cont, "relative pagination must be unaffected by the guard");
+        assert_eq!(
+            state.url_override(),
+            Some("https://api.example.com/v1/things?cursor=2")
+        );
+    }
+
     #[tokio::test]
     async fn test_handle_json_response_pagination_at_limit() {
         let pagination = PaginationConfig {
@@ -10729,6 +11048,93 @@ async fn test_execute_method_dry_run() {
     .await;
 
     assert!(result.is_ok());
+}
+
+#[tokio::test]
+async fn test_dry_run_redacts_credential_headers() {
+    // `--dry-run` output is routinely pasted into bug reports, so it must not
+    // print the credential. The value reaches `header_params` whenever the spec
+    // models it as a header parameter — an `apiKey`-in-header scheme, which is
+    // the shape the spec below declares.
+    let mut security_schemes = HashMap::new();
+    security_schemes.insert(
+        "ApiKeyAuth".to_string(),
+        crate::openapi::discovery::SecurityScheme::ApiKeyHeader {
+            name: "xi-api-key".to_string(),
+        },
+    );
+    let doc = RestDescription {
+        root_url: "https://api.example.com/".to_string(),
+        service_path: "v1/".to_string(),
+        security_schemes,
+        ..Default::default()
+    };
+
+    let mut parameters = HashMap::new();
+    for name in ["xi-api-key", "Authorization", "X-Request-Id"] {
+        parameters.insert(
+            name.to_string(),
+            crate::openapi::discovery::MethodParameter {
+                location: Some("header".to_string()),
+                ..Default::default()
+            },
+        );
+    }
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        id: Some("things.list".to_string()),
+        path: "things".to_string(),
+        parameters,
+        ..Default::default()
+    };
+
+    let params_json = r#"{"xi-api-key":"sk-secret-value","Authorization":"Bearer tok-secret","X-Request-Id":"req-42"}"#;
+    let http_config = crate::http::HttpConfig::new("test").unwrap();
+    let out = execute_method(
+        &doc,
+        &method,
+        Some(params_json),
+        None,
+        &crate::auth::no_auth_provider(),
+        None,
+        None,
+        None,
+        None,
+        true, // dry_run
+        &PaginationConfig::default(),
+        &crate::formatter::OutputPipeline::default(),
+        true, // capture_output — returns the dry-run JSON instead of printing
+        None,
+        &http_config,
+        false,
+        false,
+        false,
+        false, // debug off: redaction must not depend on --debug
+        &[],
+        &[],
+    )
+    .await
+    .expect("dry run should succeed")
+    .expect("capture_output should return the dry-run info");
+
+    let rendered = serde_json::to_string(&out).unwrap();
+    assert!(
+        !rendered.contains("sk-secret-value"),
+        "the spec-declared api key must be redacted, got: {rendered}"
+    );
+    assert!(
+        !rendered.contains("tok-secret"),
+        "a well-known credential header must be redacted, got: {rendered}"
+    );
+    assert!(
+        rendered.contains("[REDACTED]"),
+        "redaction should be visible in the output, got: {rendered}"
+    );
+    // Non-credential headers stay legible — redaction must not blind the flag.
+    assert!(
+        rendered.contains("req-42"),
+        "non-sensitive headers should still be shown, got: {rendered}"
+    );
 }
 
 #[tokio::test]

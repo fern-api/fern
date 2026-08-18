@@ -1,4 +1,60 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.46.0
+  changelogEntry:
+    - summary: |
+        Add `respectOptionalRequestBody`. When enabled, an endpoint whose request body the API does not
+        require takes the body as an `Option`, so a caller who passes `None` sends no body and no
+        `Content-Type`. Examples that omit the body render as `None` in snippets, reference docs, and
+        wire tests. The flag defaults to false, so existing SDKs keep their current method signatures.
+      type: feat
+  createdAt: "2026-08-17"
+  irVersion: 67
+- version: 0.45.0
+  changelogEntry:
+    - summary: |
+        Generated clients accept a custom `reqwest::Client`. `ClientConfig` gained a
+        `reqwest_client: Option<reqwest::Client>` field, set through the new
+        `ApiClientBuilder::reqwest_client(...)`, and `HttpClient` uses it as-is when present
+        instead of building its own. This is the transport escape hatch other Fern SDKs already
+        expose (`httpx_client` in Python, `OkHttpClient` in Java, `urlSession` in Swift), and it
+        lets callers configure root certificates, client certificates, proxies and connection
+        pooling themselves. Authentication, custom headers and retries are still applied by the
+        SDK on top of the supplied client; when the field is `None` the client is built exactly
+        as before from `timeout` and `user_agent`.
+      type: feat
+  createdAt: "2026-08-14"
+  irVersion: 66
+- version: 0.44.5
+  changelogEntry:
+    - summary: |
+        Write the LICENSE file into the generated crate when a custom license is configured
+        (`github.license.custom` or `metadata.license.custom`), matching the other SDK generators.
+        When that file is written and neither `packageLicense` nor `packageLicenseFile` is set,
+        `Cargo.toml` now points `license-file` at it instead of defaulting to MIT.
+      type: fix
+  createdAt: "2026-08-14"
+  irVersion: 66
+- version: 0.44.4
+  changelogEntry:
+    - summary: |
+        Non-2xx responses with a body are now returned as errors instead of successes.
+        `parse_response` and `parse_response_raw` only consulted the status code inside
+        their empty-body branch, so any error response that carried a payload was
+        deserialized into the success type and returned `Ok`. When the success type can
+        absorb an arbitrary object — all-optional fields, a bare `Value`, a defaulted
+        collection — the call looked like an empty-but-successful result: a 401 surfaced
+        as "no results found" and the process exited 0, which a calling script reads as
+        "nothing to do". The status is now checked before deserialization in both
+        methods, and the response body is carried through as the `ApiError::Http`
+        message so the server's own error detail reaches the caller.
+
+        This also closes the gap left by the executor path: `send_request`
+        short-circuits to `executor.execute(...)` when a custom `RequestExecutor` is
+        installed, bypassing `execute_with_retries` — previously the only place the
+        status was inspected. Checking in the parsers covers both paths.
+      type: fix
+  createdAt: "2026-08-12"
+  irVersion: 66
 - version: 0.44.3
   changelogEntry:
     - summary: |

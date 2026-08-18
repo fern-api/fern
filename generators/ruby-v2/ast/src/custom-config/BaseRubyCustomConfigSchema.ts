@@ -57,7 +57,11 @@ export const BaseRubyCustomConfigSchema = z.object({
     // scheme. Disabled by default so existing output is unchanged (OAuth env vars
     // win over explicitly provided basic auth).
     preferExplicitAuth: z.boolean().optional(),
-    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),
+    // Opt-in: when the IR marks a referenced request body as optional, a caller that
+    // passes no body properties sends neither a body nor a Content-Type header.
+    // Disabled by default so existing output is byte-identical.
+    respectOptionalRequestBody: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

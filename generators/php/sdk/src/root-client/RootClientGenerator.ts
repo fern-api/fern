@@ -6,6 +6,7 @@ import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { getRoutingSchemes } from "../auth/RoutingAuthProviderGenerator.js";
+import { getClientCredentialsOrThrow } from "../oauth/getClientCredentials.js";
 import { getOAuthTokenRequestProperties } from "../oauth/oauthTokenRequestProperties.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -1633,7 +1634,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         targetVar = "$this->oauthTokenProvider",
         authRawClientOptions = "['headers' => []]"
     ): void {
-        const tokenEndpointReference = oauth.configuration.tokenEndpoint.endpointReference;
+        const configuration = getClientCredentialsOrThrow(oauth);
+        const tokenEndpointReference = configuration.tokenEndpoint.endpointReference;
         const subpackageId = tokenEndpointReference.subpackageId;
 
         let authClientClassReference: php.ClassReference;
@@ -1673,17 +1675,15 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         // exists) — the env-or-throw assignment is tied to those parameters.
         const oauthParamsSkipped = this.context.ir.auth.schemes.some((s) => s.type === "bearer");
         const clientIdFallback =
-            guarded || (oauth.configuration.clientIdEnvVar != null && !oauthParamsSkipped)
-                ? "$clientId"
-                : "$clientId ?? ''";
+            guarded || (configuration.clientIdEnvVar != null && !oauthParamsSkipped) ? "$clientId" : "$clientId ?? ''";
         const clientSecretFallback =
-            guarded || (oauth.configuration.clientSecretEnvVar != null && !oauthParamsSkipped)
+            guarded || (configuration.clientSecretEnvVar != null && !oauthParamsSkipped)
                 ? "$clientSecret"
                 : "$clientSecret ?? ''";
         const isAuthMandatory = this.context.ir.sdkConfig.isAuthMandatory;
         const extraArgs = getOAuthTokenRequestProperties(
             this.context,
-            oauth.configuration.tokenEndpoint.requestProperties
+            configuration.tokenEndpoint.requestProperties
         ).map((property) => (isAuthMandatory ? `$${property.parameterName}` : `$${property.parameterName} ?? ''`));
         const args = [clientIdFallback, clientSecretFallback, ...extraArgs, "$authClient"].join(", ");
         writer.writeLine(`(${args});`);

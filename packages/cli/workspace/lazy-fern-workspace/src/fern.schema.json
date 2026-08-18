@@ -1991,6 +1991,17 @@
         },
         "type": {
           "type": "string"
+        },
+        "optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether the endpoint may be called without a request body. When true, an example may\nomit `request`, and the generated SDK lets the caller omit the body. Populated from\n`requestBody.required` when importing from OpenAPI.\n\nThis is distinct from writing `body: optional<Foo>`, which says the body's *value* may\nbe null. Here the body itself may be absent, so the request carries neither content nor\na `Content-Type` header. It maps to `required: false` on the IR's request body reference."
         }
       },
       "required": [
@@ -2191,7 +2202,7 @@
               "type": "null"
             }
           ],
-          "description": "Whether the endpoint may be called without a request body. When true, an\nexample may omit `request`. Populated from `requestBody.required` when\nimporting from OpenAPI.\n\nThis is read by example validation only: it is not carried into the IR, so it\ndoes not make the request parameter optional in a generated SDK."
+          "description": "Whether the endpoint may be called without a request body. When true, an\nexample may omit `request`. Populated from `requestBody.required` when\nimporting from OpenAPI.\n\nThis is read by example validation only: it is not carried into the IR, so it\ndoes not make the request parameter optional in a generated SDK.\n\nNote the asymmetry with the identically named field on\n`HttpReferencedRequestBodySchema`, which does reach the IR as `required: false`. An\ninline body has no single type to mark omittable, so its `optional` stays\nvalidation-only."
         }
       },
       "additionalProperties": false
