@@ -626,6 +626,7 @@ types:
           Tabs with `href` must not have children in the navigation config.
       target: optional<Target>
       changelog: optional<ChangelogFolderRelativePath>
+      blog: optional<ChangelogFolderRelativePath>
 
   ChangelogFolderRelativePath:
     type: string
@@ -816,6 +817,7 @@ types:
       - LibraryReferenceConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
+      - BlogConfiguration
       - FolderConfiguration
 
   LogoConfiguration:
@@ -1410,6 +1412,16 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       # skip-slug: optional<boolean> # skip-slug is not needed for changelog
+
+  BlogConfiguration:
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      blog: ChangelogFolderRelativePath
+      title: optional<string> # defaults to "Blog"
+      slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      # skip-slug: optional<boolean> # skip-slug is not needed for blog
 
   SectionConfiguration:
     extends: [WithPermissions, WithFeatureFlags]

@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { assertNever, isPlainObject, sanitizeNullValues } from "@fern-api/core-utils";
+import { assertNever, isPlainObject, sanitizeNullValues, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -1263,7 +1263,8 @@ async function convertNavigationTabConfiguration({
         };
     }
 
-    if (tab.changelog != null) {
+    const changelogPath = tab.changelog ?? tab.blog;
+    if (changelogPath != null) {
         return {
             title: tab.displayName,
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
@@ -1272,7 +1273,7 @@ async function convertNavigationTabConfiguration({
             hidden: tab.hidden,
             child: {
                 type: "changelog",
-                changelog: await listFiles(resolveFilepath(tab.changelog, absolutePathToConfig), "{md,mdx}")
+                changelog: await listFiles(resolveFilepath(changelogPath, absolutePathToConfig), "{md,mdx}")
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
@@ -1421,6 +1422,8 @@ async function convertNavigationItem({
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.DocsNavigationItem> {
+    rawConfig = normalizeNavigationItem(rawConfig);
+
     if (isRawPageConfig(rawConfig)) {
         return parsePageConfig(rawConfig, absolutePathToConfig);
     }
@@ -1739,6 +1742,44 @@ function isRawLinkConfig(item: unknown): item is docsYml.RawSchemas.LinkConfigur
 
 function isRawChangelogConfig(item: unknown): item is docsYml.RawSchemas.ChangelogConfiguration {
     return isPlainObject(item) && typeof item.changelog === "string";
+}
+
+function isRawBlogConfig(item: unknown): item is docsYml.RawSchemas.BlogConfiguration {
+    return isPlainObject(item) && typeof item.blog === "string";
+}
+
+type TaggedNavigationItem =
+    | { type: "blog"; item: docsYml.RawSchemas.BlogConfiguration }
+    | { type: "changelog"; item: docsYml.RawSchemas.ChangelogConfiguration }
+    | {
+          type: "other";
+          item: Exclude<docsYml.RawSchemas.NavigationItem, docsYml.RawSchemas.BlogConfiguration>;
+      };
+
+function normalizeNavigationItem(
+    rawConfig: docsYml.RawSchemas.NavigationItem
+): Exclude<docsYml.RawSchemas.NavigationItem, docsYml.RawSchemas.BlogConfiguration> {
+    let taggedItem: TaggedNavigationItem;
+    if (isRawBlogConfig(rawConfig)) {
+        taggedItem = { type: "blog", item: rawConfig };
+    } else if (isRawChangelogConfig(rawConfig)) {
+        taggedItem = { type: "changelog", item: rawConfig };
+    } else {
+        taggedItem = { type: "other", item: rawConfig };
+    }
+
+    return visitDiscriminatedUnion(taggedItem)._visit({
+        blog: ({ item }) => {
+            const { blog, ...rest } = item;
+            return {
+                ...rest,
+                changelog: blog,
+                title: item.title ?? "Blog"
+            };
+        },
+        changelog: ({ item }) => item,
+        other: ({ item }) => item
+    });
 }
 
 function isRawFolderConfig(item: unknown): item is docsYml.RawSchemas.FolderConfiguration {
