@@ -18,7 +18,7 @@ public partial class SeedWebsocketBearerAuthClient : ISeedWebsocketBearerAuthCli
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedWebsocketBearerAuth" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedWebsocketBearerAuth.Version.Current },
                 { "User-Agent", "Fernwebsocket-bearer-auth/0.0.1" },
             }
         );

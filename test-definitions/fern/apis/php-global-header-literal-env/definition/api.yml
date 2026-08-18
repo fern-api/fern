@@ -1,0 +1,13 @@
+name: php-global-header-literal-env
+headers:
+  Square-Version:
+    name: version
+    type: literal<"2026-07-15">
+    env: VERSION
+auth: Bearer
+auth-schemes:
+  Bearer:
+    scheme: bearer
+    token:
+      name: token
+      env: SQUARE_TOKEN

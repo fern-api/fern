@@ -14,7 +14,7 @@ public partial class SeedResponsePropertyClient : ISeedResponsePropertyClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedResponseProperty" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedResponseProperty.Version.Current },
                 { "User-Agent", "Fernresponse-property/0.0.1" },
             }
         );

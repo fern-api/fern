@@ -17,7 +17,7 @@ public partial class SeedHeaderTokenClient : ISeedHeaderTokenClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedHeaderToken" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedHeaderToken.Version.Current },
                 { "User-Agent", "Fernheader-auth/0.0.1" },
             }
         );

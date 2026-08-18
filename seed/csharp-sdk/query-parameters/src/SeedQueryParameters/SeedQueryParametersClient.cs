@@ -14,7 +14,7 @@ public partial class SeedQueryParametersClient : ISeedQueryParametersClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedQueryParameters" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedQueryParameters.Version.Current },
                 { "User-Agent", "Fernquery-parameters/0.0.1" },
             }
         );

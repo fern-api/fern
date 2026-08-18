@@ -17,7 +17,7 @@ public partial class Contoso : IContoso
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Contoso.Net" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::Contoso.Net.Version.Current },
                 { "User-Agent", "Ferncsharp-namespace-collision/0.0.1" },
             }
         );

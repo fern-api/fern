@@ -28,7 +28,7 @@ public partial class SeedEndpointSecurityAuthClient : ISeedEndpointSecurityAuthC
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedEndpointSecurityAuth" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedEndpointSecurityAuth.Version.Current },
                 { "User-Agent", "Fernendpoint-security-auth/0.0.1" },
             }
         );

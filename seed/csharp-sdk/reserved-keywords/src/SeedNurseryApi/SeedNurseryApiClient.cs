@@ -14,7 +14,7 @@ public partial class SeedNurseryApiClient : ISeedNurseryApiClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedNurseryApi" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedNurseryApi.Version.Current },
                 { "User-Agent", "Fernreserved-keywords/0.0.1" },
             }
         );

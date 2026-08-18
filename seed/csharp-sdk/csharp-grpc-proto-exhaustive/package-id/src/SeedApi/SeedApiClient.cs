@@ -15,7 +15,7 @@ public partial class SeedApiClient : ISeedApiClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Seed.Client" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedApi.Version.Current },
                 { "User-Agent", "Ferncsharp-grpc-proto-exhaustive/0.0.1" },
             }
         );

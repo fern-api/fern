@@ -14,7 +14,7 @@ public partial class SeedAcceptClient : ISeedAcceptClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedAccept" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedAccept.Version.Current },
                 { "User-Agent", "Fernaccept-header/0.0.1" },
             }
         );

@@ -15,7 +15,7 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedPropertyAccess" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedPropertyAccess.Version.Current },
                 { "User-Agent", "Fernproperty-access/0.0.1" },
             }
         );
