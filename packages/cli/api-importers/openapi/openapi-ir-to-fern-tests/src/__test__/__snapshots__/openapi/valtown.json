@@ -36,7 +36,7 @@
             "type": "InternalServerErrorBody",
           },
           "NotFoundError": {
-            "docs": "The val was not found",
+            "docs": "Default Response",
             "examples": [
               {
                 "docs": undefined,
@@ -45,7 +45,7 @@
               },
             ],
             "status-code": 404,
-            "type": "unknown",
+            "type": "string",
           },
         },
         "navigation": [
@@ -954,8 +954,8 @@ errors:
           error: error
   NotFoundError:
     status-code: 404
-    type: unknown
-    docs: The val was not found
+    type: string
+    docs: Default Response
     examples:
       - value: string
 navigation:

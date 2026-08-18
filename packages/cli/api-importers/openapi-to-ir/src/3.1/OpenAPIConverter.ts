@@ -415,6 +415,16 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         // TODO: For SDK-IR, errorIds are not guaranteed to be unique.
                         // We'll want to override the type to unknown if errorId is already present.
                         for (const [errorId, error] of Object.entries(endpoint.errors)) {
+                            const existingError = errors[errorId];
+                            // A response without a body carries no type information, so it must not
+                            // overwrite a sibling response that does point at a schema.
+                            if (
+                                existingError != null &&
+                                existingError.type?.type !== "unknown" &&
+                                error.type?.type === "unknown"
+                            ) {
+                                continue;
+                            }
                             errors[errorId] = error;
                         }
                     }

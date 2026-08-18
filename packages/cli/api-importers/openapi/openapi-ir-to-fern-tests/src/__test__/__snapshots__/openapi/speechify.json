@@ -7,7 +7,7 @@
       "contents": {
         "errors": {
           "BadRequestError": {
-            "docs": "Invalid request params",
+            "docs": "Contains the details of the error",
             "examples": [
               {
                 "docs": undefined,
@@ -16,7 +16,7 @@
               },
             ],
             "status-code": 400,
-            "type": "unknown",
+            "type": "OAuthError",
           },
           "ForbiddenError": {
             "docs": "Request access rejected",
@@ -452,8 +452,8 @@ Enabling loudness normalization can increase latency due to additional processin
       "rawContents": "errors:
   BadRequestError:
     status-code: 400
-    type: unknown
-    docs: Invalid request params
+    type: OAuthError
+    docs: Contains the details of the error
     examples:
       - value: {}
   PaymentRequiredError:

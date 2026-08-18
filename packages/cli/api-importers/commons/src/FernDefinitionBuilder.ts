@@ -392,14 +392,29 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (fernFile.errors == null) {
             fernFile.errors = {};
         }
-        if (fernFile.errors[name] == null) {
+        const existingError = fernFile.errors[name];
+        if (existingError == null) {
             fernFile.errors[name] = schema;
-        } else if (fernFile.errors[name]?.type !== schema.type) {
-            fernFile.errors[name] = {
-                "status-code": schema["status-code"],
-                type: "unknown"
-            };
+            return;
         }
+        if (existingError.type === schema.type) {
+            return;
+        }
+        // Responses without a body carry no type information, so the most specific
+        // declaration wins rather than downgrading the error body to unknown.
+        const existingSpecificity = getErrorBodySpecificity(existingError.type);
+        const specificity = getErrorBodySpecificity(schema.type);
+        if (specificity > existingSpecificity) {
+            fernFile.errors[name] = schema;
+            return;
+        }
+        if (specificity < existingSpecificity) {
+            return;
+        }
+        fernFile.errors[name] = {
+            "status-code": schema["status-code"],
+            type: "unknown"
+        };
     }
 
     public addErrorExample(
@@ -665,4 +680,16 @@ function isHeaderAuthScheme(
     scheme: RawSchemas.AuthSchemeDeclarationSchema
 ): scheme is RawSchemas.HeaderAuthSchemeSchema {
     return (scheme as RawSchemas.HeaderAuthSchemeSchema)?.header != null;
+}
+
+/**
+ * Ranks how much type information an error body declaration carries: a response without a
+ * body carries none, an unknown body only tells us that there is one, and anything else
+ * names an actual type.
+ */
+function getErrorBodySpecificity(errorBodyType: string | undefined): number {
+    if (errorBodyType == null) {
+        return 0;
+    }
+    return errorBodyType === "unknown" ? 1 : 2;
 }
