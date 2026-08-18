@@ -410,4 +410,16 @@ describe("CasingsGenerator additionalAcronyms", () => {
     it("uppercases a configured acronym that follows another word in camelCase", () => {
         expect(generator.generateName("report_for_cra").camelCase.unsafeName).toBe("reportForCRA");
     });
+
+    it("capitalizes a lowercase acronym entry that leads the name", () => {
+        const lowercaseAcronyms = constructFullCasingsGenerator({
+            generationLanguage: "go",
+            keywords: undefined,
+            smartCasing: true,
+            additionalAcronyms: ["fdx", ""]
+        });
+        expect(lowercaseAcronyms.generateName("fdx").pascalCase.unsafeName).toBe("Fdx");
+        expect(lowercaseAcronyms.generateName("fdx_report").pascalCase.unsafeName).toBe("FdxReport");
+        expect(lowercaseAcronyms.generateName("_").pascalCase.unsafeName).toBe("");
+    });
 });

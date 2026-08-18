@@ -72,7 +72,11 @@ type ResolvedCasingsGeneratorConfig = CasingsGeneratorConfig & {
 function resolveConfig(config: CasingsGeneratorConfig): ResolvedCasingsGeneratorConfig {
     return {
         ...config,
-        acronymOverrides: new Map((config.additionalAcronyms ?? []).map((acronym) => [acronym.toUpperCase(), acronym]))
+        acronymOverrides: new Map(
+            (config.additionalAcronyms ?? [])
+                .filter((acronym) => acronym.trim().length > 0)
+                .map((acronym) => [acronym.toUpperCase(), acronym])
+        )
     };
 }
 
@@ -131,36 +135,37 @@ function computeName(
                     })
                     .join("") +
                 nameTrailing;
-            // The acronym is substituted verbatim, so the mapped words are already correctly
-            // capitalized and must not be upperFirst'ed again (e.g. a supplied "iOS").
-            pascalCaseName =
+            pascalCaseName = upperFirst(
                 nameLeading +
-                camelCaseWords
-                    .map((word, index) => {
-                        const acronym = acronymOverrides.get(word.toUpperCase());
-                        if (acronym != null) {
-                            return acronym;
-                        }
-                        const pluralInitialism = maybeGetPluralInitialism(word);
-                        if (pluralInitialism != null) {
-                            return pluralInitialism;
-                        }
-                        if (isCommonInitialism(word)) {
-                            return word.toUpperCase();
-                        }
-                        if (index === 0) {
-                            return upperFirst(word);
-                        }
-                        return word;
-                    })
-                    .join("") +
-                nameTrailing;
+                    camelCaseWords
+                        .map((word, index) => {
+                            const acronym = acronymOverrides.get(word.toUpperCase());
+                            if (acronym != null) {
+                                // Acronyms are substituted verbatim, so a lowercase entry still has to
+                                // be capitalized when it leads the name.
+                                return index === 0 ? upperFirst(acronym) : acronym;
+                            }
+                            const pluralInitialism = maybeGetPluralInitialism(word);
+                            if (pluralInitialism != null) {
+                                return pluralInitialism;
+                            }
+                            if (isCommonInitialism(word)) {
+                                return word.toUpperCase();
+                            }
+                            if (index === 0) {
+                                return upperFirst(word);
+                            }
+                            return word;
+                        })
+                        .join("") +
+                    nameTrailing
+            );
 
             // A name that is nothing but a configured acronym is substituted as a whole, so that
             // separator-heavy spellings resolve too ("fdx", "FDX" and "f_d_x" all yield "FDX").
             const wholeNameAcronym = acronymOverrides.get(stripNonAlphanumeric(name).toUpperCase());
             if (wholeNameAcronym != null) {
-                pascalCaseName = nameLeading + wholeNameAcronym + nameTrailing;
+                pascalCaseName = nameLeading + upperFirst(wholeNameAcronym) + nameTrailing;
             }
         }
 

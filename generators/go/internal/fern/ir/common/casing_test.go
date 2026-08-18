@@ -281,3 +281,27 @@ func TestNameFromStringAdditionalAcronyms(t *testing.T) {
 		})
 	}
 }
+
+// Acronyms configured in lowercase must still produce exported (capitalized) Go names.
+func TestNameFromStringLowercaseAdditionalAcronyms(t *testing.T) {
+	resetCasingConfig()
+	ConfigureCasing(true, false, "go", nil, []string{"fdx", ""})
+
+	tests := []struct {
+		input      string
+		wantPascal string
+	}{
+		{"fdx", "Fdx"},
+		{"fdx_report", "FdxReport"},
+		{"report_for_fdx", "ReportForfdx"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.input, func(t *testing.T) {
+			n := nameFromString(tt.input)
+			if n.PascalCase.UnsafeName != tt.wantPascal {
+				t.Errorf("PascalCase.UnsafeName: got %q, want %q", n.PascalCase.UnsafeName, tt.wantPascal)
+			}
+		})
+	}
+}

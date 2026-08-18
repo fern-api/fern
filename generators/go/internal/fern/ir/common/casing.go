@@ -54,6 +54,9 @@ func ConfigureCasing(smartCasing bool, smartCasingDigitWordBoundary bool, genera
 		}
 		acronyms := make(map[string]string, len(additionalAcronyms))
 		for _, acronym := range additionalAcronyms {
+			if strings.TrimSpace(acronym) == "" {
+				continue
+			}
 			acronyms[strings.ToUpper(acronym)] = acronym
 		}
 		casingCfg = casingConfig{
@@ -184,7 +187,7 @@ func nameFromString(input string) *Name {
 			// that separator-heavy spellings resolve too ("fdx", "FDX" and "f_d_x" all
 			// yield "FDX").
 			if acronym, ok := casingCfg.acronymOverrides[strings.ToUpper(stripNonAlphanumeric(preprocessed))]; ok {
-				pascal = acronym
+				pascal = upperFirst(acronym)
 			}
 		}
 	}
@@ -495,6 +498,11 @@ func applyInitialismsPascal(camelWords []string) string {
 	var result strings.Builder
 	for i, word := range camelWords {
 		if acronym := maybeGetAdditionalAcronym(word); acronym != "" {
+			// Acronyms are substituted verbatim, so a lowercase entry still has to be
+			// capitalized when it leads the name.
+			if i == 0 {
+				acronym = upperFirst(acronym)
+			}
 			result.WriteString(acronym)
 			continue
 		}
