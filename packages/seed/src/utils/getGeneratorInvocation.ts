@@ -20,7 +20,8 @@ export async function getGeneratorInvocation({
     publishMetadata,
     readme,
     license,
-    smartCasing
+    smartCasing,
+    additionalAcronyms
 }: {
     absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
@@ -34,6 +35,7 @@ export async function getGeneratorInvocation({
     readme: generatorsYml.ReadmeSchema | undefined;
     license?: unknown;
     smartCasing?: boolean;
+    additionalAcronyms?: string[];
 }): Promise<generatorsYml.GeneratorInvocation> {
     const raw =
         license != null
@@ -68,6 +70,7 @@ export async function getGeneratorInvocation({
         keywords: undefined,
         smartCasing: smartCasing ?? true,
         smartCasingDigitWordBoundary: false,
+        additionalAcronyms,
         disableExamples: false,
         irVersionOverride: irVersion,
         publishMetadata:

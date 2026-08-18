@@ -515,7 +515,8 @@
         "generationLanguage": null,
         "keywords": null,
         "smartCasing": true,
-        "smartCasingDigitWordBoundary": null
+        "smartCasingDigitWordBoundary": null,
+        "additionalAcronyms": null
     },
     "subpackages": {
         "subpackage_single-property": {

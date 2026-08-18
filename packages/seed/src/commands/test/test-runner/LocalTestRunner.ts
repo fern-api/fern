@@ -57,6 +57,7 @@ export class LocalTestRunner extends TestRunner {
             inspect = false,
             license,
             smartCasing,
+            additionalAcronyms,
             organization,
             absolutePathToFernConfig,
             skipAutogenerationIfManualExamplesExist,
@@ -81,7 +82,8 @@ export class LocalTestRunner extends TestRunner {
                     publishMetadata,
                     readme,
                     license,
-                    smartCasing
+                    smartCasing,
+                    additionalAcronyms
                 })
             ]
         };

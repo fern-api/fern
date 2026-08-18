@@ -38,6 +38,7 @@ export class LegacyGeneratorInvocationAdapter {
             absolutePathToLocalOutput: this.context.resolveOutputFilePath(target.output.path),
             smartCasing: target.smartCasing ?? true,
             smartCasingDigitWordBoundary: false,
+            additionalAcronyms: undefined,
             readme: this.buildReadme(target),
 
             // Legacy options which are no longer supported.

@@ -11,6 +11,7 @@ export const CasingsConfig: core.serialization.ObjectSchema<serializers.CasingsC
         keywords: core.serialization.list(core.serialization.string()).optional(),
         smartCasing: core.serialization.boolean(),
         smartCasingDigitWordBoundary: core.serialization.boolean().optional(),
+        additionalAcronyms: core.serialization.list(core.serialization.string()).optional(),
     });
 
 export declare namespace CasingsConfig {
@@ -19,5 +20,6 @@ export declare namespace CasingsConfig {
         keywords?: string[] | null;
         smartCasing: boolean;
         smartCasingDigitWordBoundary?: boolean | null;
+        additionalAcronyms?: string[] | null;
     }
 }

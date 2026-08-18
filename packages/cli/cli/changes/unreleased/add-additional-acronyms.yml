@@ -1,0 +1,8 @@
+- summary: |
+    Add a new `additional-acronyms` option to `generators.yml`. When set alongside
+    `smart-casing`, the listed domain-specific acronyms are preserved verbatim in generated
+    names, in addition to the built-in initialisms (API, URL, ...). For example
+    `additional-acronyms: [FDX, CRA]` turns `fdx` into `FDX` and `cra_report` into
+    `CRAReport` instead of `Fdx` and `CraReport`. Matching is case-insensitive, so
+    `fdx`, `FDX` and `f_d_x` all produce `FDX`.
+  type: feat

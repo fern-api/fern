@@ -151,6 +151,7 @@ export class ContainerTestRunner extends TestRunner {
         inspect = false,
         license,
         smartCasing,
+        additionalAcronyms,
         organization,
         absolutePathToFernConfig,
         skipAutogenerationIfManualExamplesExist,
@@ -173,7 +174,8 @@ export class ContainerTestRunner extends TestRunner {
                     publishMetadata,
                     readme,
                     license,
-                    smartCasing
+                    smartCasing,
+                    additionalAcronyms
                 })
             ]
         };

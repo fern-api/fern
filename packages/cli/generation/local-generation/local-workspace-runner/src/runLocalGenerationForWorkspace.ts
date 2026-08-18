@@ -197,6 +197,7 @@ export async function runLocalGenerationForWorkspace({
                     keywords: generatorInvocation.keywords,
                     smartCasing: generatorInvocation.smartCasing,
                     smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
+                    additionalAcronyms: generatorInvocation.additionalAcronyms,
                     exampleGeneration: {
                         includeOptionalRequestPropertyExamples: false,
                         disabled: generatorInvocation.disableExamples

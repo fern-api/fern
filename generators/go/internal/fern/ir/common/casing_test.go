@@ -8,7 +8,7 @@ import (
 func TestNameFromStringNoSmartCasing(t *testing.T) {
 	// Explicitly set smartCasing=false
 	resetCasingConfig()
-	ConfigureCasing(false, false, "", nil)
+	ConfigureCasing(false, false, "", nil, nil)
 
 	tests := []struct {
 		input         string
@@ -57,7 +57,7 @@ func TestNameFromStringNoSmartCasing(t *testing.T) {
 func TestNameFromStringSmartCasing(t *testing.T) {
 	// smartCasing=true with generationLanguage="go" (Go is in CAPITALIZE_INITIALISM)
 	resetCasingConfig()
-	ConfigureCasing(true, false, "go", nil)
+	ConfigureCasing(true, false, "go", nil, nil)
 
 	tests := []struct {
 		input         string
@@ -116,7 +116,7 @@ func TestNameFromStringSmartCasingDigitWordBoundary(t *testing.T) {
 	// smartCasingDigitWordBoundary=true: a capitalized word after a digit run
 	// keeps its snake_case word boundary
 	resetCasingConfig()
-	ConfigureCasing(true, true, "go", nil)
+	ConfigureCasing(true, true, "go", nil, nil)
 
 	tests := []struct {
 		input     string
@@ -207,7 +207,7 @@ func TestNameAndWireValueUnmarshalJSONObjectWithStringName(t *testing.T) {
 func TestKeywordSanitization(t *testing.T) {
 	// No language set, no keywords => no keyword sanitization (matches TS getKeywords returning undefined)
 	resetCasingConfig()
-	ConfigureCasing(false, false, "", nil)
+	ConfigureCasing(false, false, "", nil, nil)
 	n := nameFromString("type")
 	if n.CamelCase.SafeName != "type" {
 		t.Errorf("CamelCase.SafeName: got %q, want %q", n.CamelCase.SafeName, "type")
@@ -215,7 +215,7 @@ func TestKeywordSanitization(t *testing.T) {
 
 	// With generationLanguage="go" but no explicit keywords => uses Go reserved keywords
 	resetCasingConfig()
-	ConfigureCasing(false, false, "go", nil)
+	ConfigureCasing(false, false, "go", nil, nil)
 	n = nameFromString("type")
 	if n.CamelCase.SafeName != "type_" {
 		t.Errorf("CamelCase.SafeName with go lang: got %q, want %q", n.CamelCase.SafeName, "type_")
@@ -226,7 +226,7 @@ func TestKeywordSanitization(t *testing.T) {
 
 	// With explicit keywords from IR => uses those instead of defaults
 	resetCasingConfig()
-	ConfigureCasing(false, false, "go", []string{"custom", "reserved"})
+	ConfigureCasing(false, false, "go", []string{"custom", "reserved"}, nil)
 	n = nameFromString("type")
 	// "type" is NOT in the custom keywords, so should NOT be sanitized
 	if n.CamelCase.SafeName != "type" {
@@ -245,5 +245,39 @@ func TestNumberPrefix(t *testing.T) {
 	// camelCase("2factor") = "2Factor", then sanitizeName prepends "_" since it starts with a digit
 	if n.CamelCase.SafeName != "_2Factor" {
 		t.Errorf("CamelCase.SafeName: got %q, want %q", n.CamelCase.SafeName, "_2Factor")
+	}
+}
+
+func TestNameFromStringAdditionalAcronyms(t *testing.T) {
+	resetCasingConfig()
+	ConfigureCasing(true, false, "go", nil, []string{"FDX", "CRA", "EWA", "OAuth"})
+
+	tests := []struct {
+		input      string
+		wantPascal string
+		wantCamel  string
+	}{
+		{"fdx", "FDX", "fdx"},
+		{"FDX", "FDX", "fdx"},
+		{"f_d_x", "FDX", "fDX"},
+		{"cra_report", "CRAReport", "craReport"},
+		{"CRAReport", "CRAReport", "craReport"},
+		{"EWAReport", "EWAReport", "ewaReport"},
+		{"report_for_cra", "ReportForCRA", "reportForCRA"},
+		{"oauth", "OAuth", "oauth"},
+		{"oauth_token", "OAuthToken", "oauthToken"},
+		{"api_key", "APIKey", "apiKey"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.input, func(t *testing.T) {
+			n := nameFromString(tt.input)
+			if n.PascalCase.UnsafeName != tt.wantPascal {
+				t.Errorf("PascalCase.UnsafeName: got %q, want %q", n.PascalCase.UnsafeName, tt.wantPascal)
+			}
+			if n.CamelCase.UnsafeName != tt.wantCamel {
+				t.Errorf("CamelCase.UnsafeName: got %q, want %q", n.CamelCase.UnsafeName, tt.wantCamel)
+			}
+		})
 	}
 }

@@ -227,6 +227,7 @@ export class GenerationRunner {
             keywords: generatorInvocation.keywords,
             smartCasing: generatorInvocation.smartCasing,
             smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
+            additionalAcronyms: generatorInvocation.additionalAcronyms,
             exampleGeneration: {
                 includeOptionalRequestPropertyExamples: true,
                 disabled: generatorInvocation.disableExamples,

@@ -22,6 +22,13 @@ export interface BaseGeneratorInvocationSchema {
      * Defaults to false, which keeps the digit run fused to the following word.
      */
     "smart-casing-digit-word-boundary"?: boolean;
+    /**
+     * Domain-specific acronyms that smart casing should preserve in generated names, in
+     * addition to the built-in initialisms (API, URL, ...). Entries are matched
+     * case-insensitively and substituted verbatim, so `[FDX, CRA]` turns `cra_report` into
+     * `CRAReport` and `fdx` into `FDX`. Only applies when `smart-casing` is enabled.
+     */
+    "additional-acronyms"?: string[];
     /** Override API import settings (this is applied across all specs) */
     api?: GeneratorsYml.GeneratorApiSettingsSchema;
     /** Temporary way to unblock example serialization. */

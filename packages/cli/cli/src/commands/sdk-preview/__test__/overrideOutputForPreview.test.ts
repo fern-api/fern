@@ -32,6 +32,7 @@ function makeGenerator(
         keywords: undefined,
         smartCasing: false,
         smartCasingDigitWordBoundary: false,
+        additionalAcronyms: undefined,
         disableExamples: false,
         language: undefined,
         publishMetadata: undefined,

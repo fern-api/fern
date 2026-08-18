@@ -56,14 +56,32 @@ type CasingsGeneratorConfig = {
      * which keeps the digit run fused to the following word ("conversations_v2configuration").
      */
     smartCasingDigitWordBoundary?: boolean;
+    /**
+     * Domain-specific acronyms that smart casing should preserve, in addition to the built-in
+     * initialisms. Each entry is matched case-insensitively against a word and substituted
+     * verbatim, so "FDX" yields "FDXReport" and "OAuth" yields "OAuthToken".
+     */
+    additionalAcronyms?: string[];
 };
+
+type ResolvedCasingsGeneratorConfig = CasingsGeneratorConfig & {
+    /** Maps the uppercased acronym to the casing the user supplied. */
+    acronymOverrides: Map<string, string>;
+};
+
+function resolveConfig(config: CasingsGeneratorConfig): ResolvedCasingsGeneratorConfig {
+    return {
+        ...config,
+        acronymOverrides: new Map((config.additionalAcronyms ?? []).map((acronym) => [acronym.toUpperCase(), acronym]))
+    };
+}
 
 function computeName(
     inputName: string,
     opts: { preserveUnderscores?: boolean; casingOverrides?: RawSchemas.CasingOverridesSchema },
-    config: CasingsGeneratorConfig
+    config: ResolvedCasingsGeneratorConfig
 ): Name {
-    const { generationLanguage, keywords, smartCasing, smartCasingDigitWordBoundary } = config;
+    const { generationLanguage, keywords, smartCasing, smartCasingDigitWordBoundary, acronymOverrides } = config;
     const name = preprocessName(inputName);
     const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
         unsafeName: unsafeString,
@@ -89,7 +107,7 @@ function computeName(
     const camelCaseWords = words(camelCaseName);
     if (smartCasing) {
         if (
-            !hasAdjacentCommonInitialisms(camelCaseWords) &&
+            !hasAdjacentCommonInitialisms(camelCaseWords, acronymOverrides) &&
             (generationLanguage == null || CAPITALIZE_INITIALISM.includes(generationLanguage))
         ) {
             camelCaseName =
@@ -97,6 +115,10 @@ function computeName(
                 camelCaseWords
                     .map((word, index) => {
                         if (index > 0) {
+                            const acronym = acronymOverrides.get(word.toUpperCase());
+                            if (acronym != null) {
+                                return acronym;
+                            }
                             const pluralInitialism = maybeGetPluralInitialism(word);
                             if (pluralInitialism != null) {
                                 return pluralInitialism;
@@ -109,25 +131,37 @@ function computeName(
                     })
                     .join("") +
                 nameTrailing;
-            pascalCaseName = upperFirst(
+            // The acronym is substituted verbatim, so the mapped words are already correctly
+            // capitalized and must not be upperFirst'ed again (e.g. a supplied "iOS").
+            pascalCaseName =
                 nameLeading +
-                    camelCaseWords
-                        .map((word, index) => {
-                            const pluralInitialism = maybeGetPluralInitialism(word);
-                            if (pluralInitialism != null) {
-                                return pluralInitialism;
-                            }
-                            if (isCommonInitialism(word)) {
-                                return word.toUpperCase();
-                            }
-                            if (index === 0) {
-                                return upperFirst(word);
-                            }
-                            return word;
-                        })
-                        .join("") +
-                    nameTrailing
-            );
+                camelCaseWords
+                    .map((word, index) => {
+                        const acronym = acronymOverrides.get(word.toUpperCase());
+                        if (acronym != null) {
+                            return acronym;
+                        }
+                        const pluralInitialism = maybeGetPluralInitialism(word);
+                        if (pluralInitialism != null) {
+                            return pluralInitialism;
+                        }
+                        if (isCommonInitialism(word)) {
+                            return word.toUpperCase();
+                        }
+                        if (index === 0) {
+                            return upperFirst(word);
+                        }
+                        return word;
+                    })
+                    .join("") +
+                nameTrailing;
+
+            // A name that is nothing but a configured acronym is substituted as a whole, so that
+            // separator-heavy spellings resolve too ("fdx", "FDX" and "f_d_x" all yield "FDX").
+            const wholeNameAcronym = acronymOverrides.get(stripNonAlphanumeric(name).toUpperCase());
+            if (wholeNameAcronym != null) {
+                pascalCaseName = nameLeading + wholeNameAcronym + nameTrailing;
+            }
         }
 
         // In smartCasing, manage numbers next to letters differently:
@@ -173,9 +207,16 @@ export function constructCasingsGenerator({
     generationLanguage,
     keywords,
     smartCasing,
-    smartCasingDigitWordBoundary
+    smartCasingDigitWordBoundary,
+    additionalAcronyms
 }: CasingsGeneratorConfig): CasingsGenerator {
-    const config: CasingsGeneratorConfig = { generationLanguage, keywords, smartCasing, smartCasingDigitWordBoundary };
+    const config = resolveConfig({
+        generationLanguage,
+        keywords,
+        smartCasing,
+        smartCasingDigitWordBoundary,
+        additionalAcronyms
+    });
     return {
         generateName: (inputName, opts): NameOrString => {
             // Only compute full Name when casing overrides require it; otherwise compress to string.
@@ -203,9 +244,16 @@ export function constructFullCasingsGenerator({
     generationLanguage,
     keywords,
     smartCasing,
-    smartCasingDigitWordBoundary
+    smartCasingDigitWordBoundary,
+    additionalAcronyms
 }: CasingsGeneratorConfig): FullCasingsGenerator {
-    const config: CasingsGeneratorConfig = { generationLanguage, keywords, smartCasing, smartCasingDigitWordBoundary };
+    const config = resolveConfig({
+        generationLanguage,
+        keywords,
+        smartCasing,
+        smartCasingDigitWordBoundary,
+        additionalAcronyms
+    });
     return {
         generateName: (inputName: string | Name | NameAndWireValue, opts?: { preserveUnderscores?: boolean }): Name => {
             if (typeof inputName === "string") {
@@ -263,7 +311,9 @@ function startsWithNumber(str: string): boolean {
     return STARTS_WITH_NUMBER.test(str);
 }
 
-function hasAdjacentCommonInitialisms(wordList: string[]): boolean {
+function hasAdjacentCommonInitialisms(wordList: string[], acronymOverrides: Map<string, string>): boolean {
+    const isInitialism = (word: string): boolean =>
+        acronymOverrides.has(word.toUpperCase()) || maybeGetPluralInitialism(word) != null || isCommonInitialism(word);
     return wordList.some((word, index) => {
         if (index === 0) {
             return false;
@@ -272,10 +322,7 @@ function hasAdjacentCommonInitialisms(wordList: string[]): boolean {
         if (previousWord == null) {
             return false;
         }
-        const previousWordIsInitialism =
-            maybeGetPluralInitialism(previousWord) != null || isCommonInitialism(previousWord);
-        const currentWordIsInitialism = maybeGetPluralInitialism(word) != null || isCommonInitialism(word);
-        return previousWordIsInitialism && currentWordIsInitialism;
+        return isInitialism(previousWord) && isInitialism(word);
     });
 }
 
@@ -354,6 +401,10 @@ const PLURAL_COMMON_INITIALISMS = new Map<string, string>([
 const NAME_PREPROCESSOR_REPLACEMENTS: ReadonlyArray<readonly [RegExp, string]> = [
     [/\[\]/g, "Array"] // e.g., Integer[] -> IntegerArray
 ];
+
+function stripNonAlphanumeric(name: string): string {
+    return name.replace(/[^a-zA-Z0-9]/g, "");
+}
 
 function preprocessName(name: string): string {
     return NAME_PREPROCESSOR_REPLACEMENTS.reduce(

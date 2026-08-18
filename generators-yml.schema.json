@@ -4934,6 +4934,20 @@
           ],
           "description": "When smart casing is enabled, preserves the word boundary after a digit run in\nsnake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).\nDefaults to false, which keeps the digit run fused to the following word."
         },
+        "additional-acronyms": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Domain-specific acronyms that smart casing should preserve in generated names, in\naddition to the built-in initialisms (API, URL, ...). Entries are matched\ncase-insensitively and substituted verbatim, so `[FDX, CRA]` turns `cra_report` into\n`CRAReport` and `fdx` into `FDX`. Only applies when `smart-casing` is enabled."
+        },
         "api": {
           "oneOf": [
             {
@@ -5130,6 +5144,20 @@
             }
           ],
           "description": "When smart casing is enabled, preserves the word boundary after a digit run in\nsnake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).\nDefaults to false, which keeps the digit run fused to the following word."
+        },
+        "additional-acronyms": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Domain-specific acronyms that smart casing should preserve in generated names, in\naddition to the built-in initialisms (API, URL, ...). Entries are matched\ncase-insensitively and substituted verbatim, so `[FDX, CRA]` turns `cra_report` into\n`CRAReport` and `fdx` into `FDX`. Only applies when `smart-casing` is enabled."
         },
         "api": {
           "oneOf": [

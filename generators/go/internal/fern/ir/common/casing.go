@@ -15,6 +15,9 @@ type casingConfig struct {
 	// keywords from the IR's casingsConfig. When non-nil, these override the
 	// default reserved keywords for the generation language.
 	keywords map[string]bool
+	// acronymOverrides maps the uppercased form of each configured additional
+	// acronym to the casing the user supplied.
+	acronymOverrides map[string]string
 }
 
 var (
@@ -40,7 +43,7 @@ var capitalizeInitialismLanguages = map[string]bool{
 //   - If keywords is non-nil, those exact keywords are used for sanitization.
 //   - If keywords is nil, the default reserved keywords for the generation
 //     language are used (matching getKeywords() in CasingsGenerator.ts).
-func ConfigureCasing(smartCasing bool, smartCasingDigitWordBoundary bool, generationLanguage string, keywords []string) {
+func ConfigureCasing(smartCasing bool, smartCasingDigitWordBoundary bool, generationLanguage string, keywords []string, additionalAcronyms []string) {
 	casingCfgOnce.Do(func() {
 		var kwSet map[string]bool
 		if keywords != nil {
@@ -49,11 +52,16 @@ func ConfigureCasing(smartCasing bool, smartCasingDigitWordBoundary bool, genera
 				kwSet[kw] = true
 			}
 		}
+		acronyms := make(map[string]string, len(additionalAcronyms))
+		for _, acronym := range additionalAcronyms {
+			acronyms[strings.ToUpper(acronym)] = acronym
+		}
 		casingCfg = casingConfig{
 			smartCasing:                  smartCasing,
 			smartCasingDigitWordBoundary: smartCasingDigitWordBoundary,
 			generationLanguage:           generationLanguage,
 			keywords:                     kwSet,
+			acronymOverrides:             acronyms,
 		}
 		casingCfgSet = true
 	})
@@ -172,6 +180,12 @@ func nameFromString(input string) *Name {
 		if !hasAdjacentCommonInitialisms(camelWords) {
 			camel = applyInitialismsCamel(camelWords)
 			pascal = applyInitialismsPascal(camelWords)
+			// A name that is nothing but a configured acronym is substituted as a whole, so
+			// that separator-heavy spellings resolve too ("fdx", "FDX" and "f_d_x" all
+			// yield "FDX").
+			if acronym, ok := casingCfg.acronymOverrides[strings.ToUpper(stripNonAlphanumeric(preprocessed))]; ok {
+				pascal = acronym
+			}
 		}
 	}
 
@@ -412,6 +426,25 @@ func isCommonInitialism(word string) bool {
 	return commonInitialisms[strings.ToUpper(word)]
 }
 
+// maybeGetAdditionalAcronym returns the user-supplied casing for a configured
+// additional acronym, or "" when the word is not one.
+func maybeGetAdditionalAcronym(word string) string {
+	if v, ok := casingCfg.acronymOverrides[strings.ToUpper(word)]; ok {
+		return v
+	}
+	return ""
+}
+
+func stripNonAlphanumeric(s string) string {
+	var result strings.Builder
+	for _, r := range s {
+		if unicode.IsLetter(r) || unicode.IsDigit(r) {
+			result.WriteRune(r)
+		}
+	}
+	return result.String()
+}
+
 func maybeGetPluralInitialism(word string) string {
 	if v, ok := pluralCommonInitialisms[strings.ToUpper(word)]; ok {
 		return v
@@ -423,8 +456,8 @@ func hasAdjacentCommonInitialisms(wordList []string) bool {
 	for i := 1; i < len(wordList); i++ {
 		prev := wordList[i-1]
 		curr := wordList[i]
-		prevIsInit := isCommonInitialism(prev) || maybeGetPluralInitialism(prev) != ""
-		currIsInit := isCommonInitialism(curr) || maybeGetPluralInitialism(curr) != ""
+		prevIsInit := isCommonInitialism(prev) || maybeGetPluralInitialism(prev) != "" || maybeGetAdditionalAcronym(prev) != ""
+		currIsInit := isCommonInitialism(curr) || maybeGetPluralInitialism(curr) != "" || maybeGetAdditionalAcronym(curr) != ""
 		if prevIsInit && currIsInit {
 			return true
 		}
@@ -438,6 +471,10 @@ func applyInitialismsCamel(camelWords []string) string {
 	var result strings.Builder
 	for i, word := range camelWords {
 		if i > 0 {
+			if acronym := maybeGetAdditionalAcronym(word); acronym != "" {
+				result.WriteString(acronym)
+				continue
+			}
 			if plural := maybeGetPluralInitialism(word); plural != "" {
 				result.WriteString(plural)
 				continue
@@ -457,6 +494,10 @@ func applyInitialismsCamel(camelWords []string) string {
 func applyInitialismsPascal(camelWords []string) string {
 	var result strings.Builder
 	for i, word := range camelWords {
+		if acronym := maybeGetAdditionalAcronym(word); acronym != "" {
+			result.WriteString(acronym)
+			continue
+		}
 		if plural := maybeGetPluralInitialism(word); plural != "" {
 			result.WriteString(plural)
 			continue

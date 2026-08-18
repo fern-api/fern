@@ -37,6 +37,7 @@ export class CaseConverter {
         keywords: string[] | undefined;
         smartCasing: boolean;
         smartCasingDigitWordBoundary?: boolean;
+        additionalAcronyms?: string[];
     }) {
         this.casingsGenerator = constructFullCasingsGenerator(opts);
     }

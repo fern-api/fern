@@ -58,6 +58,13 @@ types:
           When smart casing is enabled, preserves the word boundary after a digit run in
           snake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).
           Defaults to false, which keeps the digit run fused to the following word.
+      additional-acronyms:
+        type: optional<list<string>>
+        docs: |
+          Domain-specific acronyms that smart casing should preserve in generated names, in
+          addition to the built-in initialisms (API, URL, ...). Entries are matched
+          case-insensitively and substituted verbatim, so `[FDX, CRA]` turns `cra_report` into
+          `CRAReport` and `fdx` into `FDX`. Only applies when `smart-casing` is enabled.
       api:
         type: optional<GeneratorAPISettingsSchema>
         docs: Override API import settings (this is applied across all specs)

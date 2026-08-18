@@ -12,6 +12,7 @@
   },
   "basePath": undefined,
   "casingsConfig": {
+    "additionalAcronyms": undefined,
     "generationLanguage": undefined,
     "keywords": undefined,
     "smartCasing": true,

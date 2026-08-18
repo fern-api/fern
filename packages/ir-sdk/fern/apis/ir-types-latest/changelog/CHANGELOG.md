@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.24.0] - 2026-08-18
+
+- Add `CasingsConfig.additionalAcronyms` (optional `list<string>`), populated from the
+  `additional-acronyms` generator setting in `generators.yml`. When smart casing is enabled,
+  these domain-specific acronyms are preserved verbatim in generated names, so
+  `additional-acronyms: [FDX, CRA]` turns `cra_report` into `CRAReport` and `fdx` into `FDX`.
+
 ## [v67.23.0] - 2026-08-17
 
 - Add `WebSocketChannel.apiPlayground` (optional `boolean`) controlling whether a WebSocket

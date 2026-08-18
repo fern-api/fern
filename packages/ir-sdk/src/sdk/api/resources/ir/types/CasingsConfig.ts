@@ -20,4 +20,10 @@ export interface CasingsConfig {
      * which keeps the digit run fused to the following word (conversations_v2configuration).
      */
     smartCasingDigitWordBoundary: boolean | undefined;
+    /**
+     * Domain-specific acronyms that smart casing preserves in generated names, in addition to
+     * the built-in initialisms. Entries are matched case-insensitively against each word and
+     * substituted verbatim (e.g. ["FDX"] turns fdx into FDX and cra_report into CRAReport).
+     */
+    additionalAcronyms: string[] | undefined;
 }

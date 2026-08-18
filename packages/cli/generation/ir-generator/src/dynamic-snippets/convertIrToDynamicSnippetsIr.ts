@@ -8,6 +8,7 @@ export function convertIrToDynamicSnippetsIr({
     generationLanguage,
     smartCasing,
     smartCasingDigitWordBoundary,
+    additionalAcronyms,
     disableExamples,
     generatorConfig
 }: {
@@ -15,6 +16,7 @@ export function convertIrToDynamicSnippetsIr({
     generationLanguage?: generatorsYml.GenerationLanguage;
     smartCasing?: boolean;
     smartCasingDigitWordBoundary?: boolean;
+    additionalAcronyms?: string[];
     disableExamples?: boolean;
     generatorConfig?: dynamic.GeneratorConfig;
 }): dynamic.DynamicIntermediateRepresentation {
@@ -23,6 +25,7 @@ export function convertIrToDynamicSnippetsIr({
         generationLanguage,
         smartCasing,
         smartCasingDigitWordBoundary,
+        additionalAcronyms,
         generatorConfig
     });
     return converter.convert({ disableExamples });

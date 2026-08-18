@@ -75,6 +75,7 @@ export declare namespace TestRunner {
         inspect: boolean | undefined;
         license?: unknown;
         smartCasing?: boolean;
+        additionalAcronyms?: string[];
         /** Organization name override (e.g. from customer's fern.config.json) **/
         organization?: string;
         /** Absolute path to fern.config.json (used for license path resolution) **/
@@ -232,6 +233,7 @@ export abstract class TestRunner {
             const readme = configuration?.readmeConfig ?? undefined;
             const license = extractLicenseInfo(configuration?.license, absolutePathToApiDefinition);
             const smartCasing = generatorInvocation?.smartCasing;
+            const additionalAcronyms = generatorInvocation?.additionalAcronyms;
 
             let fernWorkspace: FernWorkspace | undefined;
             let rawApiSpecs: Spec[] | undefined;
@@ -322,6 +324,7 @@ export abstract class TestRunner {
                     inspect,
                     license,
                     smartCasing,
+                    additionalAcronyms,
                     organization,
                     absolutePathToFernConfig,
                     skipAutogenerationIfManualExamplesExist,

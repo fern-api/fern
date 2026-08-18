@@ -207,6 +207,7 @@ export interface GeneratorInvocation {
     keywords: string[] | undefined;
     smartCasing: boolean;
     smartCasingDigitWordBoundary: boolean;
+    additionalAcronyms: string[] | undefined;
     disableExamples: boolean;
     language: GenerationLanguage | undefined;
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;

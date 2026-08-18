@@ -1,0 +1,6 @@
+- summary: |
+    Honor the new `additional-acronyms` option from `generators.yml` when generating names.
+    Domain-specific acronyms are now preserved verbatim alongside the built-in Go
+    initialisms, so `additional-acronyms: [FDX, CRA]` produces `FDX` and `CRAReport`
+    instead of `Fdx` and `CraReport` in type, method and package names.
+  type: feat

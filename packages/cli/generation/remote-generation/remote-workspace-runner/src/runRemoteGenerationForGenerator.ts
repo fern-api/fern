@@ -202,6 +202,7 @@ export async function runRemoteGenerationForGenerator({
         keywords: generatorInvocation.keywords,
         smartCasing: generatorInvocation.smartCasing,
         smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
+        additionalAcronyms: generatorInvocation.additionalAcronyms,
         exampleGeneration: {
             disabled: generatorInvocation.disableExamples,
             skipAutogenerationIfManualExamplesExist: true,
@@ -332,6 +333,7 @@ export async function runRemoteGenerationForGenerator({
                 ir,
                 smartCasing: generatorInvocation.smartCasing,
                 smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
+                additionalAcronyms: generatorInvocation.additionalAcronyms,
                 dynamicGeneratorConfig,
                 context: interactiveTaskContext
             });
@@ -461,6 +463,7 @@ export async function runRemoteGenerationForGenerator({
                 ir,
                 smartCasing: generatorInvocation.smartCasing,
                 smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
+                additionalAcronyms: generatorInvocation.additionalAcronyms,
                 dynamicGeneratorConfig,
                 context: interactiveTaskContext
             });
@@ -578,6 +581,7 @@ async function uploadDynamicIRForSdkGeneration({
     ir,
     smartCasing,
     smartCasingDigitWordBoundary,
+    additionalAcronyms,
     dynamicGeneratorConfig,
     context
 }: {
@@ -589,6 +593,7 @@ async function uploadDynamicIRForSdkGeneration({
     ir: IntermediateRepresentation;
     smartCasing: boolean | undefined;
     smartCasingDigitWordBoundary: boolean | undefined;
+    additionalAcronyms: string[] | undefined;
     dynamicGeneratorConfig: dynamic.GeneratorConfig | undefined;
     context: InteractiveTaskContext;
 }): Promise<void> {
@@ -621,6 +626,7 @@ async function uploadDynamicIRForSdkGeneration({
         disableExamples: true,
         smartCasing,
         smartCasingDigitWordBoundary,
+        additionalAcronyms,
         generationLanguage: language,
         generatorConfig: dynamicGeneratorConfig
     });

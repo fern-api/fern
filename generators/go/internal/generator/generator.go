@@ -1259,6 +1259,7 @@ func readIR(irFilename string) (*fernir.IntermediateRepresentation, error) {
 			SmartCasingDigitWordBoundary bool     `json:"smartCasingDigitWordBoundary"`
 			GenerationLanguage           string   `json:"generationLanguage"`
 			Keywords                     []string `json:"keywords"`
+			AdditionalAcronyms           []string `json:"additionalAcronyms"`
 		} `json:"casingsConfig"`
 	}
 	if err := json.Unmarshal(bytes, &irHeader); err == nil && irHeader.CasingsConfig != nil {
@@ -1267,6 +1268,7 @@ func readIR(irFilename string) (*fernir.IntermediateRepresentation, error) {
 			irHeader.CasingsConfig.SmartCasingDigitWordBoundary,
 			irHeader.CasingsConfig.GenerationLanguage,
 			irHeader.CasingsConfig.Keywords,
+			irHeader.CasingsConfig.AdditionalAcronyms,
 		)
 	}
 

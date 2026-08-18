@@ -76,6 +76,7 @@ export declare namespace generateIntermediateRepresentation {
         keywords: string[] | undefined;
         smartCasing: boolean;
         smartCasingDigitWordBoundary?: boolean;
+        additionalAcronyms?: string[];
         exampleGeneration: ExampleGenerationArgs;
         audiences: Audiences;
         readme: generatorsYml.ReadmeSchema | undefined;
@@ -106,6 +107,7 @@ export function generateIntermediateRepresentation({
     keywords,
     smartCasing,
     smartCasingDigitWordBoundary,
+    additionalAcronyms,
     exampleGeneration,
     audiences,
     readme,
@@ -127,7 +129,8 @@ export function generateIntermediateRepresentation({
         generationLanguage,
         keywords,
         smartCasing,
-        smartCasingDigitWordBoundary
+        smartCasingDigitWordBoundary,
+        additionalAcronyms
     });
 
     const irGraph = new IrGraph(audiences);
@@ -236,7 +239,7 @@ export function generateIntermediateRepresentation({
         audiences: workspace.definition.rootApiFile.contents.audiences,
         generationMetadata: generationMetadata,
         apiPlayground: true,
-        casingsConfig: { generationLanguage, keywords, smartCasing, smartCasingDigitWordBoundary }
+        casingsConfig: { generationLanguage, keywords, smartCasing, smartCasingDigitWordBoundary, additionalAcronyms }
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();
@@ -637,7 +640,8 @@ export function generateIntermediateRepresentation({
             disableExamples: disableDynamicExamples,
             generationLanguage,
             smartCasing,
-            smartCasingDigitWordBoundary
+            smartCasingDigitWordBoundary,
+            additionalAcronyms
         })
     };
 }

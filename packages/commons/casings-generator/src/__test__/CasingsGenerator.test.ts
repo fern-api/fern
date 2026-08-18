@@ -354,3 +354,60 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
         });
     });
 });
+
+describe("CasingsGenerator additionalAcronyms", () => {
+    const generator = constructFullCasingsGenerator({
+        generationLanguage: "go",
+        keywords: undefined,
+        smartCasing: true,
+        additionalAcronyms: ["FDX", "CRA", "EWA", "OAuth"]
+    });
+
+    const withoutAcronyms = constructFullCasingsGenerator({
+        generationLanguage: "go",
+        keywords: undefined,
+        smartCasing: true
+    });
+
+    it.each([
+        ["fdx", "FDX"],
+        ["FDX", "FDX"],
+        ["f_d_x", "FDX"],
+        ["cra_report", "CRAReport"],
+        ["CRAReport", "CRAReport"],
+        ["EWAReport", "EWAReport"],
+        ["report_for_cra", "ReportForCRA"]
+    ])("uppercases the configured acronym in %s => %s", (input, expected) => {
+        expect(generator.generateName(input).pascalCase.unsafeName).toBe(expected);
+    });
+
+    it.each([
+        ["oauth", "OAuth"],
+        ["o_auth", "OAuth"],
+        ["OAuth", "OAuth"],
+        ["oauth_token", "OAuthToken"]
+    ])("preserves the supplied casing of a mixed-case acronym in %s => %s", (input, expected) => {
+        expect(generator.generateName(input).pascalCase.unsafeName).toBe(expected);
+    });
+
+    it("still applies the built-in initialisms", () => {
+        expect(generator.generateName("api_key").pascalCase.unsafeName).toBe("APIKey");
+        expect(generator.generateName("url_thing").pascalCase.unsafeName).toBe("URLThing");
+    });
+
+    it("leaves names alone when no acronyms are configured", () => {
+        expect(withoutAcronyms.generateName("cra_report").pascalCase.unsafeName).toBe("CraReport");
+        expect(withoutAcronyms.generateName("fdx").pascalCase.unsafeName).toBe("Fdx");
+    });
+
+    it("does not change snake_case or camelCase leading words", () => {
+        const result = generator.generateName("cra_report");
+        expect(result.snakeCase.unsafeName).toBe("cra_report");
+        expect(result.screamingSnakeCase.unsafeName).toBe("CRA_REPORT");
+        expect(result.camelCase.unsafeName).toBe("craReport");
+    });
+
+    it("uppercases a configured acronym that follows another word in camelCase", () => {
+        expect(generator.generateName("report_for_cra").camelCase.unsafeName).toBe("reportForCRA");
+    });
+});
