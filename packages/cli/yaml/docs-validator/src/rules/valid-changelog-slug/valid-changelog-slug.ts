@@ -25,8 +25,6 @@ export const CHANGELOG_FEED_ALLOWED_SLUGS: readonly string[] = [
     "whatsnew"
 ];
 
-const DEFAULT_CHANGELOG_TITLE = "Changelog";
-
 /**
  * Computes the URL segments contributed by a changelog node itself. Mirrors
  * the slug computation in `packages/cli/docs-resolver/src/ChangelogNodeConverter.ts`:
@@ -34,7 +32,7 @@ const DEFAULT_CHANGELOG_TITLE = "Changelog";
  * which may be a nested path like `v2/release-notes`.
  */
 export function getEffectiveChangelogSlugSegments(config: { slug?: string; title?: string }): string[] {
-    const raw = config.slug ?? kebabCase(config.title ?? DEFAULT_CHANGELOG_TITLE);
+    const raw = config.slug ?? kebabCase(config.title ?? docsYml.DEFAULT_CHANGELOG_TITLE);
     return splitSegments(raw);
 }
 
@@ -108,7 +106,7 @@ function collectChangelogLocations(
             out.push({
                 where: `${breadcrumb} > changelog (${changelogFolder})`,
                 slug: item.slug,
-                title: item.title,
+                title: item.title ?? ("blog" in item ? docsYml.DEFAULT_BLOG_TITLE : docsYml.DEFAULT_CHANGELOG_TITLE),
                 ancestorSegments
             });
             continue;
@@ -154,7 +152,11 @@ function collectFromTabs(
             out.push({
                 where: `${breadcrumb} > tab "${tabId}" (changelog: ${changelogFolder})`,
                 slug: tab.slug,
-                title: tab.displayName,
+                title:
+                    tab.displayName ??
+                    (tab.blog != null && tab.changelog == null
+                        ? docsYml.DEFAULT_BLOG_TITLE
+                        : docsYml.DEFAULT_CHANGELOG_TITLE),
                 ancestorSegments
             });
         }
@@ -221,7 +223,7 @@ function violationsForLocations(locations: ChangelogLocation[]): RuleViolation[]
         }
         const allowed = CHANGELOG_FEED_ALLOWED_SLUGS.join(", ");
         const sourceField =
-            loc.slug != null ? `slug: "${loc.slug}"` : `title: "${loc.title ?? DEFAULT_CHANGELOG_TITLE}"`;
+            loc.slug != null ? `slug: "${loc.slug}"` : `title: "${loc.title ?? docsYml.DEFAULT_CHANGELOG_TITLE}"`;
         const fullPath = "/" + allSegments.join("/");
         violations.push({
             severity: "error",

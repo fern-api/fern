@@ -1759,7 +1759,7 @@ function normalizeNavigationItem(
     return {
         ...rest,
         changelog: blog,
-        title: rawConfig.title ?? "Blog"
+        title: rawConfig.title ?? docsYml.DEFAULT_BLOG_TITLE
     };
 }
 
