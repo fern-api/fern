@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "report_id": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {}
+}
