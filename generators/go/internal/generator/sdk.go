@@ -4989,7 +4989,10 @@ func isClientDefaultResolvedAtConstruction(valueType *ir.TypeReference, valueTyp
 // header is generated). Only types whose zero value is never a meaningful wire
 // value are supported: booleans and numbers are excluded because false and 0
 // are legitimate values that cannot be distinguished from an unset field, and
-// so are iterables and composite types (objects, lists, maps, unions).
+// so are iterables and composite types (objects, lists, maps, unions). Named
+// types are only supported when they resolve to an enum; an alias of a
+// primitive stays unguarded because the alias' zero value is not necessarily
+// the underlying primitive's.
 func isComparableHeaderValueType(valueType *ir.TypeReference, valueTypeFormat *valueTypeFormat, types map[common.TypeId]*ir.TypeDeclaration) bool {
 	if valueTypeFormat.IsIterable || valueTypeFormat.IsOptional {
 		return false
@@ -5023,19 +5026,27 @@ func headerIsSetCondition(field string, valueType *ir.TypeReference, valueTypeFo
 	return field + " != " + valueTypeFormat.ZeroValue
 }
 
-// isEnumType returns true if the given type reference resolves to an enum.
+// isEnumType returns true if the given type reference resolves to an enum,
+// following alias chains.
 func isEnumType(valueType *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) bool {
-	if valueType.Named == nil {
-		return false
+	visited := make(map[common.TypeId]struct{})
+	for valueType.Named != nil {
+		typeId := valueType.Named.TypeId
+		if _, ok := visited[typeId]; ok {
+			// Guard against a self-referential alias chain.
+			return false
+		}
+		visited[typeId] = struct{}{}
+		typeDeclaration, ok := types[typeId]
+		if !ok {
+			return false
+		}
+		if typeDeclaration.Shape.Alias == nil {
+			return typeDeclaration.Shape.Enum != nil
+		}
+		valueType = typeDeclaration.Shape.Alias.AliasOf
 	}
-	typeDeclaration, ok := types[valueType.Named.TypeId]
-	if !ok {
-		return false
-	}
-	if typeDeclaration.Shape.Alias != nil {
-		return isEnumType(typeDeclaration.Shape.Alias.AliasOf, types)
-	}
-	return typeDeclaration.Shape.Enum != nil
+	return false
 }
 
 // isPrimitiveInteger returns true if the given primitive type is an integer.
