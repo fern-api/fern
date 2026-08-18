@@ -1,4 +1,8 @@
+import type { docsYml } from "@fern-api/configuration-loader";
 import { describe, expect, it } from "vitest";
+
+import type { RuleContext } from "../../../Rule.js";
+import { ValidChangelogSlugRule } from "../valid-changelog-slug.js";
 
 import {
     CHANGELOG_FEED_ALLOWED_SLUGS,
@@ -7,6 +11,16 @@ import {
     hasAllowedChangelogSegment,
     isAllowedChangelogSlug
 } from "../valid-changelog-slug.js";
+
+async function violationsFor(config: docsYml.RawSchemas.DocsConfiguration): Promise<string[]> {
+    const visitor = await ValidChangelogSlugRule.create({} as RuleContext);
+    const fileVisitor = visitor.file;
+    if (fileVisitor == null) {
+        throw new Error("Expected the rule to define a `file` visitor");
+    }
+    const violations = await fileVisitor({ config });
+    return violations.map((violation) => violation.message);
+}
 
 describe("CHANGELOG_FEED_ALLOWED_SLUGS", () => {
     it("contains the canonical names", () => {
@@ -164,5 +178,57 @@ describe("integration: ancestors + changelog", () => {
         const ancestors = ["api"];
         const own = getEffectiveChangelogSlugSegments({ slug: "feed" });
         expect(hasAllowedChangelogSegment([...ancestors, ...own])).toBe(false);
+    });
+});
+
+describe("blog navigation aliases", () => {
+    it("allows a top-level blog navigation item with an allowlisted slug", async () => {
+        expect(
+            await violationsFor({
+                instances: [],
+                navigation: [{ blog: "blog", slug: "changelog" }]
+            })
+        ).toEqual([]);
+    });
+
+    it("rejects a top-level blog navigation item with a non-allowlisted slug", async () => {
+        const messages = await violationsFor({
+            instances: [],
+            navigation: [{ blog: "blog", slug: "product-updates" }]
+        });
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toContain('resolves to URL path "/product-updates"');
+    });
+
+    it("allows a tab-level blog navigation item with an allowlisted slug", async () => {
+        expect(
+            await violationsFor({
+                instances: [],
+                tabs: {
+                    posts: {
+                        displayName: "Posts",
+                        blog: "blog",
+                        slug: "changelog"
+                    }
+                },
+                navigation: [{ tab: "posts" }]
+            })
+        ).toEqual([]);
+    });
+
+    it("rejects a tab-level blog navigation item with a non-allowlisted slug", async () => {
+        const messages = await violationsFor({
+            instances: [],
+            tabs: {
+                posts: {
+                    displayName: "Posts",
+                    blog: "blog",
+                    slug: "product-updates"
+                }
+            },
+            navigation: [{ tab: "posts" }]
+        });
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toContain('resolves to URL path "/product-updates"');
     });
 });

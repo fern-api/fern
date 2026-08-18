@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration-loader";
+import { docsYml } from "@fern-api/configuration";
 import { kebabCase } from "lodash-es";
 
 import { validateProductConfigFileSchema } from "../../docsAst/validateProductConfig.js";
@@ -101,8 +101,12 @@ function collectChangelogLocations(
     const out: ChangelogLocation[] = [];
     for (const item of items) {
         if (isChangelog(item)) {
+            const changelogFolder = docsYml.getChangelogFolderFromNavigationItem(item);
+            if (changelogFolder == null) {
+                continue;
+            }
             out.push({
-                where: `${breadcrumb} > changelog (${item.changelog})`,
+                where: `${breadcrumb} > changelog (${changelogFolder})`,
                 slug: item.slug,
                 title: item.title,
                 ancestorSegments
@@ -124,6 +128,12 @@ function collectChangelogLocations(
     return out;
 }
 
+function isChangelog(
+    item: docsYml.RawSchemas.NavigationItem
+): item is docsYml.RawSchemas.ChangelogConfiguration | docsYml.RawSchemas.BlogConfiguration {
+    return docsYml.getChangelogFolderFromNavigationItem(item) != null;
+}
+
 function collectFromTabs(
     tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined,
     breadcrumb: string,
@@ -134,14 +144,15 @@ function collectFromTabs(
     }
     const out: ChangelogLocation[] = [];
     for (const [tabId, tab] of Object.entries(tabs)) {
-        if (tab.changelog != null) {
+        const changelogFolder = docsYml.getChangelogFolderFromTabConfig(tab);
+        if (changelogFolder != null) {
             // For a tab-level `changelog` field, the tab IS the changelog
             // node — its slug/displayName define the leaf URL segment, so
             // we don't add tabSegments to `ancestorSegments` (that would
             // double-count). `getEffectiveChangelogSlugSegments` derives
             // them from `slug`/`title` on the location itself.
             out.push({
-                where: `${breadcrumb} > tab "${tabId}" (changelog: ${tab.changelog})`,
+                where: `${breadcrumb} > tab "${tabId}" (changelog: ${changelogFolder})`,
                 slug: tab.slug,
                 title: tab.displayName,
                 ancestorSegments
@@ -268,10 +279,6 @@ export const ValidChangelogSlugRule: Rule = {
         };
     }
 };
-
-function isChangelog(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.ChangelogConfiguration {
-    return (item as docsYml.RawSchemas.ChangelogConfiguration)?.changelog != null;
-}
 
 function isSection(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.SectionConfiguration {
     return (item as docsYml.RawSchemas.SectionConfiguration)?.section != null;

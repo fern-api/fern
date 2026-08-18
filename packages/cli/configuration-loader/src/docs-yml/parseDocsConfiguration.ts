@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { assertNever, isPlainObject, sanitizeNullValues, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { assertNever, isPlainObject, sanitizeNullValues } from "@fern-api/core-utils";
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -1263,7 +1263,7 @@ async function convertNavigationTabConfiguration({
         };
     }
 
-    const changelogPath = tab.changelog ?? tab.blog;
+    const changelogPath = docsYml.getChangelogFolderFromTabConfig(tab);
     if (changelogPath != null) {
         return {
             title: tab.displayName,
@@ -1410,7 +1410,7 @@ async function expandFolderConfiguration({
 }
 
 async function convertNavigationItem({
-    rawConfig,
+    rawConfig: rawConfigInput,
     absolutePathToFernFolder,
     absolutePathToConfig,
     context,
@@ -1422,7 +1422,7 @@ async function convertNavigationItem({
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.DocsNavigationItem> {
-    rawConfig = normalizeNavigationItem(rawConfig);
+    const rawConfig = normalizeNavigationItem(rawConfigInput);
 
     if (isRawPageConfig(rawConfig)) {
         return parsePageConfig(rawConfig, absolutePathToConfig);
@@ -1748,38 +1748,20 @@ function isRawBlogConfig(item: unknown): item is docsYml.RawSchemas.BlogConfigur
     return isPlainObject(item) && typeof item.blog === "string";
 }
 
-type TaggedNavigationItem =
-    | { type: "blog"; item: docsYml.RawSchemas.BlogConfiguration }
-    | { type: "changelog"; item: docsYml.RawSchemas.ChangelogConfiguration }
-    | {
-          type: "other";
-          item: Exclude<docsYml.RawSchemas.NavigationItem, docsYml.RawSchemas.BlogConfiguration>;
-      };
-
 function normalizeNavigationItem(
     rawConfig: docsYml.RawSchemas.NavigationItem
 ): Exclude<docsYml.RawSchemas.NavigationItem, docsYml.RawSchemas.BlogConfiguration> {
-    let taggedItem: TaggedNavigationItem;
-    if (isRawBlogConfig(rawConfig)) {
-        taggedItem = { type: "blog", item: rawConfig };
-    } else if (isRawChangelogConfig(rawConfig)) {
-        taggedItem = { type: "changelog", item: rawConfig };
-    } else {
-        taggedItem = { type: "other", item: rawConfig };
+    if (!isRawBlogConfig(rawConfig)) {
+        return rawConfig;
     }
 
-    return visitDiscriminatedUnion(taggedItem)._visit({
-        blog: ({ item }) => {
-            const { blog, ...rest } = item;
-            return {
-                ...rest,
-                changelog: blog,
-                title: item.title ?? "Blog"
-            };
-        },
-        changelog: ({ item }) => item,
-        other: ({ item }) => item
-    });
+    const changelogFolder = docsYml.getChangelogFolderFromNavigationItem(rawConfig);
+    const { blog, ...rest } = rawConfig;
+    return {
+        ...rest,
+        changelog: changelogFolder ?? blog,
+        title: rawConfig.title ?? "Blog"
+    };
 }
 
 function isRawFolderConfig(item: unknown): item is docsYml.RawSchemas.FolderConfiguration {
