@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.82.1
+  changelogEntry:
+    - summary: |
+        Global headers typed as a `literal<"...">` with an `env` fallback no longer throw when
+        neither the constructor parameter nor the environment variable is set. The literal is
+        known at compile time, so it is now used as the header's default value.
+      type: fix
+    - summary: |
+        The generated `X-Fern-SDK-Version` header value is now emitted as a globally qualified
+        reference, so it can no longer be shadowed by a constructor parameter or local that
+        PascalCases to `Version` (previously `error CS1061: 'string' does not contain a
+        definition for 'Current'`).
+      type: fix
+  createdAt: "2026-08-18"
+  irVersion: 67
 - version: 2.82.0
   changelogEntry:
     - summary: |
