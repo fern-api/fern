@@ -310,6 +310,34 @@ async function visitNavigationItem({
             context.logger.trace(`Changelog directory does not exist: ${changelogDir}`);
         }
     }
+
+    if (navigationItemIsBlog(navigationItem)) {
+        const blogDir = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.blog);
+        context.logger.trace(`Starting blog processing for directory: ${blogDir}`);
+
+        if (await doesPathExist(blogDir)) {
+            const files = await readdir(blogDir);
+            const markdownFiles = files.filter((file) => file.endsWith(".md") || file.endsWith(".mdx"));
+            context.logger.debug(`Processing ${markdownFiles.length} blog files in ${blogDir}`);
+
+            await asyncPool(VALIDATION_CONCURRENCY, markdownFiles, async (file) => {
+                const absoluteFilepath = resolve(blogDir, file);
+                const content = (await readFile(absoluteFilepath, "utf8")).toString();
+                context.logger.trace(`Validating blog file: ${file}`);
+
+                await visitor.markdownPage?.(
+                    {
+                        title: file,
+                        content,
+                        absoluteFilepath
+                    },
+                    [...nodePath, "blog", file]
+                );
+            });
+        } else {
+            context.logger.trace(`Blog directory does not exist: ${blogDir}`);
+        }
+    }
 }
 
 function navigationItemIsFolder(
@@ -404,6 +432,11 @@ function navigationItemIsChangelog(
 ): item is docsYml.RawSchemas.ChangelogConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (item as docsYml.RawSchemas.ChangelogConfiguration)?.changelog != null;
+}
+
+function navigationItemIsBlog(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.BlogConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (item as docsYml.RawSchemas.BlogConfiguration)?.blog != null;
 }
 
 function navigationItemIsPage(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.PageConfiguration {

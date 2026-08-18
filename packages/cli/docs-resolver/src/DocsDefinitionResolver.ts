@@ -75,6 +75,7 @@ type AIChatConfigWithMaskPii = NonNullable<DocsV1Write.DocsConfig["aiChatConfig"
 };
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
+import { BlogNodeConverter } from "./BlogNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
 import { maybeBundleMdxComponent } from "./utils/bundleMdxComponent.js";
@@ -1786,6 +1787,7 @@ export class DocsDefinitionResolver {
             section: async (value) => this.toSectionNode({ prefix, item: value, parentSlug, contentSource }),
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug),
+            blog: async (value) => this.toBlogNode(value, parentSlug),
             librarySection: async (value) => this.handleLibrarySection(value, parentSlug, contentSource)
         });
     }
@@ -1820,6 +1822,7 @@ export class DocsDefinitionResolver {
                 }),
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren),
+            blog: async (value) => this.toBlogNode(value, parentSlug, hideChildren),
             librarySection: async (value) => this.handleLibrarySection(value, parentSlug, contentSource)
         });
     }
@@ -2081,6 +2084,30 @@ export class DocsDefinitionResolver {
         );
 
         return changelogResolver.toChangelogNode({
+            parentSlug,
+            title: item.title,
+            icon: this.resolveIconFileId(item.icon),
+            viewers: item.viewers,
+            hidden: hideChildren || item.hidden,
+            slug: item.slug
+        });
+    }
+
+    private async toBlogNode(
+        item: docsYml.DocsNavigationItem.Blog,
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
+    ): Promise<FernNavigation.V1.BlogNode> {
+        const blogResolver = new BlogNodeConverter(
+            this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
+            item.blog,
+            this.docsWorkspace,
+            this.#idgen
+        );
+
+        return blogResolver.toBlogNode({
             parentSlug,
             title: item.title,
             icon: this.resolveIconFileId(item.icon),
@@ -2616,6 +2643,7 @@ export class DocsDefinitionResolver {
             link: ({ href, target }) => this.toTabLinkNode(item, href, target),
             layout: ({ layout }) => this.toTabNode(prefix, item, layout, parentSlug, contentSource),
             changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug),
+            blog: ({ blog }) => this.toTabBlogNode(item, blog, parentSlug),
             variants: ({ variants }) => this.toTabNodeWithVariants(prefix, item, variants, parentSlug, contentSource)
         });
     }
@@ -2634,6 +2662,29 @@ export class DocsDefinitionResolver {
             this.#idgen
         );
         return changelogResolver.toChangelogNode({
+            parentSlug,
+            title: item.title,
+            icon: this.resolveIconFileId(item.icon),
+            viewers: item.viewers,
+            hidden: item.hidden,
+            slug: item.slug
+        });
+    }
+
+    private async toTabBlogNode(
+        item: docsYml.TabbedNavigation,
+        blog: AbsoluteFilePath[],
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.BlogNode> {
+        const blogResolver = new BlogNodeConverter(
+            this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
+            blog,
+            this.docsWorkspace,
+            this.#idgen
+        );
+        return blogResolver.toBlogNode({
             parentSlug,
             title: item.title,
             icon: this.resolveIconFileId(item.icon),

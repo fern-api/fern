@@ -100,6 +100,7 @@ export function visitDocsNavigationItem({
         case "page":
         case "link":
         case "changelog":
+        case "blog":
         case "librarySection":
             return;
         default:
