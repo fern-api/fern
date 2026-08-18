@@ -1,0 +1,6 @@
+- summary: |
+    Send `dynamicIRLanguages` on `registerApiDefinition` instead of a map of empty dynamic IR objects.
+    The registry only needs the SDK language names to issue upload URLs; the IRs themselves are still
+    uploaded to S3 separately. The legacy `dynamicIRs` field is still sent for registries that predate
+    `dynamicIRLanguages`.
+  type: fix

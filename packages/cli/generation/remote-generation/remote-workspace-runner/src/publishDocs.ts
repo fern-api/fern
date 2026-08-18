@@ -480,16 +480,19 @@ export async function publishDocs({
 
             const effectiveApiName = apiName ?? getOriginalName(ir.apiName);
 
+            const dynamicIRLanguages = dynamicIRsByLanguage != null ? Object.keys(dynamicIRsByLanguage) : undefined;
             const registerApiDefinitionRequest = {
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(effectiveApiName),
                 definition: apiDefinition,
+                dynamicIRLanguages,
+                // for registries that predate `dynamicIRLanguages`; the IR bodies are stripped either way
                 dynamicIRs: toRegisterDynamicIRsInput(dynamicIRsByLanguage)
             };
             context.logger.debug(
                 `registerApiDefinition request body for ${effectiveApiName}: ${Buffer.byteLength(
                     JSON.stringify(registerApiDefinitionRequest)
-                )} bytes, ${Object.keys(dynamicIRsByLanguage ?? {}).length} dynamic IR language(s) (IR bodies are uploaded separately)`
+                )} bytes, ${dynamicIRLanguages?.length ?? 0} dynamic IR language(s) (IR bodies are uploaded separately)`
             );
 
             let response;
