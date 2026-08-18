@@ -1755,11 +1755,10 @@ function normalizeNavigationItem(
         return rawConfig;
     }
 
-    const changelogFolder = docsYml.getChangelogFolderFromNavigationItem(rawConfig);
     const { blog, ...rest } = rawConfig;
     return {
         ...rest,
-        changelog: changelogFolder ?? blog,
+        changelog: blog,
         title: rawConfig.title ?? "Blog"
     };
 }
