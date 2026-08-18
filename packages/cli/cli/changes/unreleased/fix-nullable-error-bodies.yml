@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix OpenAPI error bodies being generated as `unknown` when the referenced schema is
+    declared `nullable: true`. Two responses referring to the same nullable schema are no
+    longer treated as conflicting shapes, so SDKs expose the typed error body (e.g.
+    `Body *MyError` in Go) instead of `any`.
+  type: fix
