@@ -94,7 +94,7 @@ specified on the client so that they're applied on every request, or for an indi
 ```go
 // Specify default options applied on every request.
 client := client.NewClient(
-    option.WithBasicAuth("<YOUR_USERNAME>", "<YOUR_PASSWORD>"),
+    option.WithBasicAuth("<YOUR_USERNAME>"),
     option.WithHTTPClient(
         &http.Client{
             Timeout: 5 * time.Second,
@@ -105,7 +105,7 @@ client := client.NewClient(
 // Specify options for an individual request.
 response, err := client.BasicAuth.PostWithBasicAuth(
     ...,
-    option.WithBasicAuth("<YOUR_USERNAME>", "<YOUR_PASSWORD>"),
+    option.WithBasicAuth("<YOUR_USERNAME>"),
 )
 ```
 

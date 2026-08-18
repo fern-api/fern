@@ -288,13 +288,19 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                         }")`
                     );
                     break;
-                case "basic":
-                    options.push(
-                        `option.WithBasicAuth("${scheme.usernamePlaceholder ?? "<YOUR_USERNAME>"}", "${
-                            scheme.passwordPlaceholder ?? "<YOUR_PASSWORD>"
-                        }")`
-                    );
+                case "basic": {
+                    const basicAuthArguments: string[] = [];
+                    if (scheme.usernameOmit !== true) {
+                        basicAuthArguments.push(`"${scheme.usernamePlaceholder ?? "<YOUR_USERNAME>"}"`);
+                    }
+                    if (scheme.passwordOmit !== true) {
+                        basicAuthArguments.push(`"${scheme.passwordPlaceholder ?? "<YOUR_PASSWORD>"}"`);
+                    }
+                    if (basicAuthArguments.length > 0) {
+                        options.push(`option.WithBasicAuth(${basicAuthArguments.join(", ")})`);
+                    }
                     break;
+                }
                 case "oauth":
                     options.push(
                         `option.WithClientCredentials("${this.getOAuthClientIdPlaceholder()}", "${this.getOAuthClientSecretPlaceholder()}")`
@@ -403,8 +409,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             }
 
             // Paginated endpoints return a Page with directly accessible headers, status code, and full response
-            ctx := context.TODO()
-            page, err := ${this.getMethodCall(endpoint)}(
+            page, err = ${this.getMethodCall(endpoint)}(
                 ctx,
                 ...
             )

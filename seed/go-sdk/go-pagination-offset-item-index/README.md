@@ -111,8 +111,7 @@ for page != nil {
 }
 
 // Paginated endpoints return a Page with directly accessible headers, status code, and full response
-ctx := context.TODO()
-page, err := client.Plants.ListWithBodyOffset(
+page, err = client.Plants.ListWithBodyOffset(
     ctx,
     ...
 )
