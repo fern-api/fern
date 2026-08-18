@@ -17,8 +17,11 @@ import { Rule, RuleViolation } from "../../Rule.js";
  * `fern-api/fern-platform` (`packages/commons/docs-server/src/patterns.ts`).
  */
 export const CHANGELOG_FEED_ALLOWED_SLUGS: readonly string[] = [
+    "blog",
+    "blogs",
     "changelog",
     "changelogs",
+    "posts",
     "release-notes",
     "releasenotes",
     "whats-new",
