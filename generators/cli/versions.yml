@@ -1,4 +1,57 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.35.0
+  changelogEntry:
+    - summary: |
+        Add `distribution.githubApp`, letting the Homebrew and Scoop publish jobs mint a
+        GitHub App installation token at release time instead of reading a long-lived
+        personal access token out of a secret:
+
+        ```yaml
+        distribution:
+          githubApp:
+            appIdSecret: PUBLISH_APP_ID
+            privateKeySecret: PUBLISH_APP_PRIVATE_KEY
+          homebrew:
+            tap: acme/homebrew-tap
+          scoop:
+            bucket: acme/scoop-bucket
+        ```
+
+        The token is scoped to one repository and expires in an hour, and revoking it is
+        uninstalling an App rather than rotating a credential attached to a person who
+        may have left the org. Declared once for the whole `distribution` block because
+        one App normally serves both channels — an App can be installed on several
+        accounts, and each job passes its own tap/bucket `owner` so it mints from the
+        right installation.
+
+        Precedence is most-specific-first: a channel's `tokenEnvironmentVariable`, then
+        `distribution.githubApp`, then the channel's default PAT secret name. That makes
+        migrating one channel at a time expressible — a shared App plus
+        `scoop.tokenEnvironmentVariable` means "App everywhere except Scoop, which is not
+        migrated yet".
+
+        Additive: omitting `githubApp` leaves the emitted `release.yml` byte-identical, so
+        existing `tokenEnvironmentVariable` consumers are unaffected.
+      type: feat
+    - summary: |
+        Emit a `preflight-distribution` job when a channel uses `distribution.githubApp`.
+        It declares no `needs`, so it reports in roughly twenty seconds rather than after
+        the build matrix and after `gh release create` has already published the release,
+        and it names both the secret and the fix.
+
+        The two failure modes it catches do not describe themselves. An Actions
+        *variable* is not readable as `secrets.<NAME>`, and an undefined secret resolves
+        to the empty string rather than erroring — so a variable named correctly fails
+        forty minutes later with `appId is required`. A PEM pasted as a single line still
+        carries its BEGIN header, so the only signal is the missing line breaks, and it
+        fails with `secretOrPrivateKey must be an asymmetric key`.
+
+        Only the publish jobs depend on it. A bad secret therefore costs the formula and
+        the manifest but still ships archives and installers, and recovery is re-running
+        two jobs. It is skipped on pull requests, where fork secrets are unavailable.
+      type: feat
+  createdAt: "2026-08-18"
+  irVersion: 67
 - version: 0.34.0
   changelogEntry:
     - summary: |
