@@ -226,8 +226,29 @@ pub(crate) fn config_dir() -> Option<PathBuf> {
 
 /// Write `data` to `path` atomically: sibling temp file → owner-only
 /// permissions (0600 on Unix) → rename into place.
+///
+/// The temp file name is unique per writer — pid plus a process-local
+/// counter. Deriving it from the target alone meant every concurrent writer
+/// used the *same* sibling (`auth-keyring.tmp`): whichever one renamed first
+/// moved it away, and the rest failed with `ENOENT` from `rename`. That
+/// surfaced as intermittent `auth login --with-token` failures across a
+/// wire-test suite large enough to run many CLI processes at once, killing a
+/// different subset of cases on each run.
+///
+/// The pid covers the case that actually bit us (separate CLI processes); the
+/// counter covers two writers inside one process, and is what makes the
+/// behavior unit-testable without spawning subprocesses.
+///
+/// `rename` is still atomic for readers, which is what keeps a partially
+/// written credential file unobservable. This only fixes writer-vs-writer
+/// collisions on the temp path. `FileKeyringStore::set` remains a
+/// read-modify-write of the whole map with no lock, so simultaneous writers
+/// can still clobber one another's *entries*; making that safe needs file
+/// locking, which is a larger change.
 pub(crate) fn atomic_write(path: &Path, data: &[u8]) -> Result<(), CliError> {
-    let tmp = path.with_extension("tmp");
+    static TMP_SEQ: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+    let seq = TMP_SEQ.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+    let tmp = path.with_extension(format!("tmp.{}.{}", std::process::id(), seq));
     std::fs::write(&tmp, data).map_err(|e| {
         CliError::Auth(format!("Failed to write {}: {e}", tmp.display()))
     })?;
@@ -250,6 +271,51 @@ pub(crate) fn atomic_write(path: &Path, data: &[u8]) -> Result<(), CliError> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// Regression test for the temp-file collision that made
+    /// `auth login --with-token` fail intermittently: every writer derived the
+    /// same sibling path from the target, so the first `rename` moved it away
+    /// and the rest got `ENOENT`.
+    ///
+    /// Reverting `atomic_write` to a target-derived temp name fails this with
+    /// "Failed to rename ...: No such file or directory".
+    #[test]
+    fn atomic_write_tolerates_concurrent_writers() {
+        let dir = tempfile::tempdir().unwrap();
+        let target = dir.path().join("auth-keyring.json");
+
+        let results: Vec<Result<(), CliError>> = std::thread::scope(|scope| {
+            let handles: Vec<_> = (0..16)
+                .map(|i| {
+                    let target = target.clone();
+                    scope.spawn(move || atomic_write(&target, format!(r#"{{"writer":{i}}}"#).as_bytes()))
+                })
+                .collect();
+            handles.into_iter().map(|h| h.join().unwrap()).collect()
+        });
+
+        let failed: Vec<String> = results
+            .iter()
+            .filter_map(|r| r.as_ref().err().map(|e| e.to_string()))
+            .collect();
+        assert!(failed.is_empty(), "concurrent writers failed: {failed:?}");
+
+        // Last writer wins, but the file must always be one writer's complete
+        // payload — never a mix, and never absent.
+        let contents = std::fs::read_to_string(&target).unwrap();
+        let parsed: serde_json::Value = serde_json::from_str(&contents)
+            .unwrap_or_else(|e| panic!("target is not valid JSON after concurrent writes: {e} in {contents:?}"));
+        assert!(parsed.get("writer").is_some(), "unexpected payload: {contents}");
+
+        // No temp files orphaned in the directory.
+        let leftovers: Vec<String> = std::fs::read_dir(dir.path())
+            .unwrap()
+            .filter_map(|e| e.ok())
+            .map(|e| e.file_name().to_string_lossy().into_owned())
+            .filter(|n| n.contains(".tmp"))
+            .collect();
+        assert!(leftovers.is_empty(), "temp files left behind: {leftovers:?}");
+    }
 
     #[test]
     fn token_bundle_roundtrip() {

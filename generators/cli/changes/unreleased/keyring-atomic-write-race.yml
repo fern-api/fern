@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix a race in credential storage that made `auth login --with-token` fail
+    intermittently when several CLI processes ran at once.
+
+    `atomic_write` derived its temp file name from the target alone, so every
+    concurrent writer used the same sibling path (`auth-keyring.tmp`). Whichever
+    process renamed first moved it away and the rest failed with
+    `error[auth]: Failed to rename .../auth-keyring.tmp: No such file or
+    directory (os error 2)`. The temp name now carries the writer's pid plus a
+    process-local counter.
+
+    This surfaced as flaky generated wire-test suites: on a workspace with ~680
+    cases, the harness seeds a token per authenticated case, cargo runs those in
+    parallel, and a different subset of tests died on each run. Small fixtures
+    have too little concurrency to hit it, which is why it reached a real
+    workspace before ours.
+
+    `rename` was already atomic for readers, so no partially written credential
+    file was ever observable — only writer-vs-writer collisions were affected.
+    `FileKeyringStore::set` is still an unlocked read-modify-write of the whole
+    map, so simultaneous writers can clobber one another's entries; that needs
+    file locking and is left alone here.
+  type: fix
