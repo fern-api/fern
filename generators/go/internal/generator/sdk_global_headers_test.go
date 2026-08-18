@@ -133,8 +133,6 @@ func TestGlobalHeadersAreOmittedWhenUnset(t *testing.T) {
 
 	for _, want := range []string{
 		`if r.ClientId != "" {`,
-		"if r.Count != 0 {",
-		"if r.Enabled {",
 		"if !r.Datetime.IsZero() {",
 		"if r.Uuid != uuid.Nil {",
 		`if r.Version != "" {`,
@@ -142,6 +140,22 @@ func TestGlobalHeadersAreOmittedWhenUnset(t *testing.T) {
 	} {
 		if !strings.Contains(src, want) {
 			t.Errorf("emitted request options missing %q\n---\n%s", want, src)
+		}
+	}
+
+	// false and 0 are meaningful wire values that cannot be distinguished from an
+	// unset field, so boolean and numeric headers are still always sent.
+	for _, want := range []string{
+		`header.Set("X-API-Count", fmt.Sprintf("%v", r.Count))`,
+		`header.Set("X-API-Enabled", fmt.Sprintf("%v", r.Enabled))`,
+	} {
+		if !strings.Contains(src, want) {
+			t.Errorf("emitted request options missing unguarded %q\n---\n%s", want, src)
+		}
+	}
+	for _, unwanted := range []string{"if r.Count", "if r.Enabled"} {
+		if strings.Contains(src, unwanted) {
+			t.Errorf("header with a meaningful zero value must not be guarded: %q\n---\n%s", unwanted, src)
 		}
 	}
 }

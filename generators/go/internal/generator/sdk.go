@@ -4986,14 +4986,25 @@ func isClientDefaultResolvedAtConstruction(valueType *ir.TypeReference, valueTyp
 // isComparableHeaderValueType returns true if a header's field can be checked
 // against its zero value in the generated code, so that a header left unset is
 // omitted rather than sent with an empty value (matching how the auth scheme
-// header is generated). Only scalar types are supported, so iterables and
-// composite types (objects, lists, maps, unions) are excluded.
+// header is generated). Only types whose zero value is never a meaningful wire
+// value are supported: booleans and numbers are excluded because false and 0
+// are legitimate values that cannot be distinguished from an unset field, and
+// so are iterables and composite types (objects, lists, maps, unions).
 func isComparableHeaderValueType(valueType *ir.TypeReference, valueTypeFormat *valueTypeFormat, types map[common.TypeId]*ir.TypeDeclaration) bool {
 	if valueTypeFormat.IsIterable || valueTypeFormat.IsOptional {
 		return false
 	}
-	if maybePrimitive(valueType) != nil {
-		return true
+	if primitive := maybePrimitive(valueType); primitive != nil {
+		switch primitive.V1 {
+		case common.PrimitiveTypeV1String,
+			common.PrimitiveTypeV1BigInteger,
+			common.PrimitiveTypeV1Uuid,
+			common.PrimitiveTypeV1Base64,
+			common.PrimitiveTypeV1Date,
+			common.PrimitiveTypeV1DateTime:
+			return true
+		}
+		return false
 	}
 	return isEnumType(valueType, types)
 }
@@ -5007,8 +5018,6 @@ func headerIsSetCondition(field string, valueType *ir.TypeReference, valueTypeFo
 		case common.PrimitiveTypeV1DateTime, common.PrimitiveTypeV1Date:
 			// time.Time is not comparable with the != operator against a composite literal.
 			return "!" + field + ".IsZero()"
-		case common.PrimitiveTypeV1Boolean:
-			return field
 		}
 	}
 	return field + " != " + valueTypeFormat.ZeroValue
