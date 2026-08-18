@@ -41,6 +41,10 @@ export function exampleOmitsRequestBody({
     );
 }
 
+/**
+ * Twin of `exampleCanCarryRequestBody` in `generators/csharp/sdk/src/utils/exampleUtils.ts`; keep both
+ * in sync when `ExampleRequestBody` grows a variant.
+ */
 function exampleCanCarryRequestBody(
     requestBody: FernIr.HttpRequestBody | undefined
 ): requestBody is FernIr.HttpRequestBody.InlinedRequestBody | FernIr.HttpRequestBody.Reference {

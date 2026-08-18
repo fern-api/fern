@@ -27,6 +27,11 @@ export function exampleOmitsRequestBody({
     );
 }
 
+/**
+ * Twin of `exampleCanCarryRequestBody` in
+ * `generators/typescript/utils/commons/src/codegen-utils/getExampleEndpointCalls.ts`; keep both in sync
+ * when `ExampleRequestBody` grows a variant.
+ */
 function exampleCanCarryRequestBody(
     requestBody: FernIr.HttpRequestBody | undefined
 ): requestBody is FernIr.HttpRequestBody.InlinedRequestBody | FernIr.HttpRequestBody.Reference {

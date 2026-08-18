@@ -1,19 +1,12 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { exampleOmitsRequestBody } from "@fern-typescript/commons";
-import { createHttpEndpoint } from "@fern-typescript/test-utils";
+import { createHttpEndpoint, createNamedTypeReference } from "@fern-typescript/test-utils";
 import { describe, expect, it } from "vitest";
 
 function endpointWithReferencedBody(required: boolean | undefined): FernIr.HttpEndpoint {
     return createHttpEndpoint({
         requestBody: FernIr.HttpRequestBody.reference({
-            requestBodyType: FernIr.TypeReference.named({
-                name: { originalName: "Body", camelCase: { unsafeName: "body", safeName: "body" } } as FernIr.Name,
-                typeId: "type_:Body",
-                fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                default: undefined,
-                inline: undefined,
-                displayName: undefined
-            }),
+            requestBodyType: createNamedTypeReference("Body"),
             required,
             contentType: undefined,
             docs: undefined,
@@ -81,5 +74,15 @@ describe("exampleOmitsRequestBody", () => {
                 respectOptionalRequestBody: true
             })
         ).toBe(false);
+    });
+
+    it("drops an example whose optional body the caller must still pass", () => {
+        expect(
+            exampleOmitsRequestBody({
+                endpoint: endpointWithReferencedBody(false),
+                example: exampleWithoutBody,
+                respectOptionalRequestBody: false
+            })
+        ).toBe(true);
     });
 });
