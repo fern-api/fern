@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Omit global headers (declared under `api.headers`) from requests when they are
+    left unset, instead of sending them with an empty value. This matches the
+    behavior of auth scheme headers, which were already guarded. Headers whose
+    generated Go type cannot be compared against a zero value (lists, maps,
+    objects, unions) are unchanged.
+  type: fix
