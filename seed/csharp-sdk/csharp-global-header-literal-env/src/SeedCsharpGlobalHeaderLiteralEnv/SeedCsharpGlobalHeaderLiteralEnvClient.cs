@@ -17,6 +17,7 @@ public partial class SeedCsharpGlobalHeaderLiteralEnvClient
             "SQUARE_TOKEN",
             "Please pass in token or set the environment variable SQUARE_TOKEN."
         );
+        Version ??= clientOptions?.Version;
         Version ??= Environment.GetEnvironmentVariable("VERSION") ?? "2026-07-15";
         clientOptions ??= new ClientOptions();
         var platformHeaders = new Headers(
