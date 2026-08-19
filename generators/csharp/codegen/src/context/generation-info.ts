@@ -209,6 +209,10 @@ export class Generation {
         rootNamespaceForCoreClasses: () => this.customConfig["root-namespace-for-core-classes"] ?? true,
         /** Custom NuGet package identifier. Default: "" (uses root namespace). */
         packageId: () => this.customConfig["package-id"] ?? "",
+        /** When true, the generated csproj emits XML documentation so the nupkg ships `<Namespace>.xml`. Default: true. */
+        generateDocumentationFile: () => this.customConfig["generate-documentation-file"] ?? true,
+        /** NuGet package metadata (description, authors, tags, icon, urls, SourceLink, symbols) for the generated csproj. Default: {}. */
+        packageMetadata: () => this.customConfig["package-metadata"] ?? {},
         /** When true, generates enums that can handle unknown/future values gracefully. Default: true. */
         isForwardCompatibleEnumsEnabled: () =>
             this.customConfig["enable-forward-compatible-enums"] ??
