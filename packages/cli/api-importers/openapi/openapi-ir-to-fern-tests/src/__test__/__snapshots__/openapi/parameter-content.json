@@ -1,0 +1,173 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getAccountPhoto": {
+              "auth": undefined,
+              "docs": undefined,
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/account/photo",
+              "request": {
+                "headers": {
+                  "Api-Arg": {
+                    "docs": "JSON-encoded arguments.",
+                    "name": "apiArg",
+                    "type": "AccountPhotoGetArg",
+                  },
+                },
+                "name": "GetAccountPhotoRequest",
+              },
+              "response": {
+                "docs": "ok",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getAccountSettings": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/account/settings",
+              "request": {
+                "name": "GetAccountSettingsRequest",
+                "query-parameters": {
+                  "Api-Filter": "optional<string>",
+                },
+              },
+              "response": {
+                "docs": "ok",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "AccountPhotoGetArg": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "circle_crop": "optional<boolean>",
+              "dbx_account_id": "string",
+              "expect_account_photo": "optional<boolean>",
+              "size": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AccountSettingsFilter": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "include_deleted": "optional<boolean>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getAccountPhoto:
+      path: /account/photo
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: GetAccountPhotoRequest
+        headers:
+          Api-Arg:
+            type: AccountPhotoGetArg
+            name: apiArg
+            docs: JSON-encoded arguments.
+      response:
+        docs: ok
+        type: string
+        status-code: 200
+    getAccountSettings:
+      path: /account/settings
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: GetAccountSettingsRequest
+        query-parameters:
+          Api-Filter: optional<string>
+      response:
+        docs: ok
+        type: string
+        status-code: 200
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+types:
+  AccountPhotoGetArg:
+    properties:
+      circle_crop: optional<boolean>
+      dbx_account_id: string
+      expect_account_photo: optional<boolean>
+      size: optional<string>
+    source:
+      openapi: ../openapi.yml
+  AccountSettingsFilter:
+    properties:
+      include_deleted: optional<boolean>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "content-parameters",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: content-parameters
+imports:
+  root: __package__.yml
+",
+  },
+  "specVersion": "1.0.0",
+}
