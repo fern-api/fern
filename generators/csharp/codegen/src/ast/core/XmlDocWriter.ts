@@ -383,7 +383,7 @@ export class XmlDocWriter {
             case "a": {
                 const href = el.attribs.href;
                 if (href) {
-                    return `<see href="${href}">${children}</see>`;
+                    return `<see href="${XmlDocWriter.escapeXmlAttributeValue(href)}">${children}</see>`;
                 }
                 return children;
             }
@@ -416,7 +416,7 @@ export class XmlDocWriter {
                 // Known XMLDoc tags: pass through with attributes
                 if (XmlDocWriter.SAFE_XML_DOC_TAGS.has(tag)) {
                     const attrs = Object.entries(el.attribs)
-                        .map(([k, v]) => ` ${k}="${v}"`)
+                        .map(([k, v]) => ` ${k}="${XmlDocWriter.escapeXmlAttributeValue(v)}"`)
                         .join("");
                     if (el.children.length === 0) {
                         return `<${el.name}${attrs}/>`;
@@ -427,6 +427,19 @@ export class XmlDocWriter {
                 return children;
             }
         }
+    }
+
+    /**
+     * Escapes the markup characters that are not allowed raw inside an XML attribute value.
+     * Ampersands that already begin a character or entity reference are left alone so that
+     * values such as `?a=1&amp;b=2` are not double escaped.
+     */
+    private static escapeXmlAttributeValue(value: string): string {
+        return value
+            .replace(XmlDocWriter.BARE_AMPERSAND_PATTERN, "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;");
     }
 
     private decodeHtmlEntities(text: string): string {

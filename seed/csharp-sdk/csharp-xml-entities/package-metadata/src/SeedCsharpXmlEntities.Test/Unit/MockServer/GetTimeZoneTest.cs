@@ -15,7 +15,9 @@ public class GetTimeZoneTest : BaseMockServerTest
               "timeZoneOffset": "timeZoneOffset",
               "mathExpression": "mathExpression",
               "validEntity": "validEntity",
-              "specialChars": "specialChars"
+              "specialChars": "specialChars",
+              "documentationLink": "documentationLink",
+              "escapedDocumentationLink": "escapedDocumentationLink"
             }
             """;
 

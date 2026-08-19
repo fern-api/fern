@@ -39,6 +39,18 @@ public record TimeZoneModel : IJsonOnDeserialized
     [JsonPropertyName("specialChars")]
     public string? SpecialChars { get; set; }
 
+    /// <summary>
+    /// See <see href="https://example.com/docs?a=1&amp;b=2">see here</see> for details
+    /// </summary>
+    [JsonPropertyName("documentationLink")]
+    public string? DocumentationLink { get; set; }
+
+    /// <summary>
+    /// See <see href="https://example.com/docs?a=1&amp;b=2">see here</see> for details
+    /// </summary>
+    [JsonPropertyName("escapedDocumentationLink")]
+    public string? EscapedDocumentationLink { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 

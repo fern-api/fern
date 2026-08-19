@@ -278,6 +278,28 @@ describe("XmlDocWriter.escapeXmlDocContent", () => {
         });
     });
 
+    describe("escapes attribute values", () => {
+        it("should escape ampersands in a converted link href", () => {
+            const result = escapeXmlDocContent('See <a href="https://example.com/docs?a=1&b=2">here</a>');
+            expect(result).toBe('See <see href="https://example.com/docs?a=1&amp;b=2">here</see>');
+        });
+
+        it("should not double-escape entities already in a href", () => {
+            const result = escapeXmlDocContent('See <a href="https://example.com/docs?a=1&amp;b=2">here</a>');
+            expect(result).toBe('See <see href="https://example.com/docs?a=1&amp;b=2">here</see>');
+        });
+
+        it("should escape ampersands in preserved tag attributes", () => {
+            const result = escapeXmlDocContent('See <see href="https://example.com?a=1&b=2">here</see>');
+            expect(result).toBe('See <see href="https://example.com?a=1&amp;b=2">here</see>');
+        });
+
+        it("should escape angle brackets and quotes in attribute values", () => {
+            const result = escapeXmlDocContent('<paramref name="a<b"/>');
+            expect(result).toBe('<paramref name="a&lt;b"/>');
+        });
+    });
+
     describe("handles mixed content", () => {
         it("should handle comparison within sentence with converted link", () => {
             const result = escapeXmlDocContent('When x < y, see <a href="https://example.com">docs</a>');
