@@ -1,0 +1,168 @@
+{
+  "servers": [],
+  "websocketServers": [
+    {
+      "name": "production",
+      "url": "wss://api.example.com"
+    }
+  ],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {
+    "/v1/realtime": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "/v1/realtime"
+      ],
+      "messages": [
+        {
+          "origin": "client",
+          "name": "publish",
+          "body": {
+            "allOf": [],
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "v1RealtimePublishContent",
+                "key": "content",
+                "schema": {
+                  "generatedName": "V1RealtimePublishContent",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "V1RealtimePublishContent",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              }
+            ],
+            "allOfPropertyConflicts": [],
+            "generatedName": "V1RealtimePublish",
+            "groupName": [],
+            "additionalProperties": false,
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "object"
+          },
+          "methodName": "send"
+        },
+        {
+          "origin": "server",
+          "name": "subscribe",
+          "body": {
+            "allOf": [],
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "v1RealtimeSubscribeContent",
+                "key": "content",
+                "schema": {
+                  "generatedName": "V1RealtimeSubscribeContent",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "V1RealtimeSubscribeContent",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              },
+              {
+                "conflict": {},
+                "generatedName": "v1RealtimeSubscribeTimestamp",
+                "key": "timestamp",
+                "schema": {
+                  "generatedName": "V1RealtimeSubscribeTimestamp",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "V1RealtimeSubscribeTimestamp",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              }
+            ],
+            "allOfPropertyConflicts": [],
+            "generatedName": "V1RealtimeSubscribe",
+            "groupName": [],
+            "additionalProperties": false,
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "object"
+          },
+          "methodName": "receive"
+        }
+      ],
+      "servers": [
+        {
+          "name": "production",
+          "url": "wss://api.example.com"
+        }
+      ],
+      "path": "/v1/realtime",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "publish",
+              "payload": {
+                "properties": {},
+                "type": "object"
+              }
+            },
+            {
+              "messageType": "subscribe",
+              "payload": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

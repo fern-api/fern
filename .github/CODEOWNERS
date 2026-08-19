@@ -1,0 +1,22 @@
+# Default catch-all — keep at top so specific rules below override it.
+# * @???
+
+# Catch all for generators
+
+# generators/** @???
+
+# Specific rules for generators
+# generators/commons/** @???
+# generators/csharp/** @???
+# generators/go/** @???
+# generators/go-v2/** @???
+# generators/java/** @???
+# generators/openapi/** @???
+# generators/php/** @???
+# generators/python/** @???
+# generators/python-v2/** @???
+generators/ruby-v2/** @iamnamananand996
+generators/rust/** @iamnamananand996
+generators/swift/** @kafkas
+# generators/typescript/** @???
+# generators/typescript-v2/** @???

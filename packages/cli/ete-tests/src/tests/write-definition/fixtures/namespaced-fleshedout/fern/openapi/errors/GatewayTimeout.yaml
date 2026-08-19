@@ -1,0 +1,10 @@
+description: |
+  This error is returned when a request to the server times out. This could be due to:
+    - An internal services taking too long to respond
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        data:
+          type: string

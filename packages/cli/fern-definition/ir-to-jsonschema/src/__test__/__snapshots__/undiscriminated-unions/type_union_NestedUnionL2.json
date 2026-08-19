@@ -1,0 +1,22 @@
+{
+  "anyOf": [
+    {
+      "type": "boolean"
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  ],
+  "description": "Nested layer 2.",
+  "definitions": {}
+}

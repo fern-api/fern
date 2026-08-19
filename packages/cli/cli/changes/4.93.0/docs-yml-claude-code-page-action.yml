@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Expose `claude-code` under `page-actions` in `docs.yml` so docs sites can toggle the
+    "Connect to Claude Code" button (e.g. `page-actions.options.claude-code: false` or
+    `page-actions.default: claude-code`).
+  type: feat

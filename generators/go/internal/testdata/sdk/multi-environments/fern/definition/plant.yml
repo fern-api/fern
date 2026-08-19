@@ -1,0 +1,10 @@
+service:
+  auth: false
+  url: Plants
+  base-path: /plants
+  endpoints:
+    getPlant:
+      path: ""
+      method: GET
+      auth: false
+      response: string

@@ -1,0 +1,89 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/rule-types",
+                "method": "GET",
+                "identifier_override": "endpoint_.searchRuleTypes"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.SearchRuleTypesAsync(new SearchRuleTypesRequest());\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/rules",
+                "method": "POST",
+                "identifier_override": "endpoint_.createRule"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreateRuleAsync(\n    new RuleCreateRequest\n    {\n        Name = \"name\",\n        ExecutionContext = RuleCreateRequestExecutionContext.Prod,\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_.listUsers"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.ListUsersAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/entities",
+                "method": "GET",
+                "identifier_override": "endpoint_.getEntity"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.GetEntityAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/organizations",
+                "method": "GET",
+                "identifier_override": "endpoint_.getOrganization"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.GetOrganizationAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/plants",
+                "method": "POST",
+                "identifier_override": "endpoint_.createPlant"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreatePlantAsync(\n    new PlantPost\n    {\n        Species = \"species\",\n        Family = \"family\",\n        Genus = \"genus\",\n        CommonName = \"commonName\",\n        WateringFrequency = PlantPostWateringFrequency.Daily,\n        SunExposure = PlantPostSunExposure.Full,\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/trees",
+                "method": "POST",
+                "identifier_override": "endpoint_.createTree"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreateTreeAsync(\n    new TreeRecord\n    {\n        Id = \"id\",\n        TreeName = \"treeName\",\n        TreeSpecies = \"treeSpecies\",\n    }\n);\n"
+            }
+        }
+    ]
+}

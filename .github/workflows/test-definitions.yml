@@ -1,0 +1,66 @@
+name: Validate Test Definitions
+
+on:
+  push:
+    paths:
+      - "packages/**"
+      - "test-definitions/**"
+      - "test-definitions-openapi/**"
+    branches:
+      - main
+  pull_request:
+    paths:
+      - "packages/**"
+      - "test-definitions/**"
+      - "test-definitions-openapi/**"
+    branches:
+      - main
+
+# Cancel previous workflows on previous push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  DO_NOT_TRACK: "1"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Cache Fern bin dependencies
+        uses: actions/cache@v5
+        with:
+          path: ~/.fern/bin
+          key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-fern-bin-
+
+      - name: Build CLI for install-dependencies
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
+
+      - name: Install protobuf dependencies (buf + protoc-gen-openapi)
+        run: |
+          FERN_NO_VERSION_REDIRECTION=true node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+          echo "$HOME/.fern/bin" >> $GITHUB_PATH
+
+      - name: Fern check
+        env:
+          FORCE_COLOR: "2"
+        run: |
+          pnpm turbo run dist:cli:dev --filter @fern-api/cli
+          cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs" 
+          cd test-definitions
+          FERN_NO_VERSION_REDIRECTION=true node $cli_path check
+          cd ../test-definitions-openapi
+          FERN_NO_VERSION_REDIRECTION=true node $cli_path check

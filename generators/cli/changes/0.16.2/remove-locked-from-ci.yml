@@ -1,0 +1,6 @@
+- summary: |
+    Remove `--locked` from `cargo check`, `cargo build`, and `cargo test`
+    commands in generated CI workflows. The lockfile produced at generation
+    time can become stale when the cli-sdk runtime is updated or users add
+    custom code, causing `--locked` builds to reject the lockfile.
+  type: fix

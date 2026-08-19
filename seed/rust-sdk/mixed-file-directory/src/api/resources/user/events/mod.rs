@@ -1,0 +1,72 @@
+use crate::api::*;
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use reqwest::Method;
+
+pub mod metadata;
+pub use metadata::MetadataClient;
+pub struct EventsClient {
+    pub http_client: HttpClient,
+    pub metadata: MetadataClient,
+}
+
+impl EventsClient {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
+        Ok(Self {
+            http_client: HttpClient::new(config.clone())?,
+            metadata: MetadataClient::new(config.clone())?,
+        })
+    }
+
+    /// List all user events.
+    ///
+    /// # Arguments
+    ///
+    /// * `limit` - The maximum number of results to return.
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_mixed_file_directory::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = MixedFileDirectoryClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .events
+    ///         .list_events(
+    ///             &ListEventsQueryRequest {
+    ///                 limit: Some(1),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
+    pub async fn list_events(
+        &self,
+        request: &ListEventsQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<Vec<Event>, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                "/users/events/",
+                None,
+                QueryBuilder::new()
+                    .int("limit", request.limit.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+}

@@ -1,0 +1,35 @@
+instances: []
+products:
+  - display-name: API Platform
+    icon: fa-solid fa-server
+    subtitle: Core platform with versioned APIs
+    path: ./products/api-platform/latest.yml
+    audiences:
+      - external
+      - internal
+    slug: api-platform
+    versions:
+      - display-name: V2.0
+        path: ./products/api-platform/v2.yml
+        audiences:
+          - external
+          - internal
+        availability: ga
+      - display-name: V1.0
+        path: ./products/api-platform/v1.yml
+        audiences:
+          - external
+        availability: stable
+  - display-name: Internal Tools
+    icon: fa-solid fa-tools
+    subtitle: Internal monitoring and administration
+    path: ./products/internal-tools/latest.yml
+    audiences:
+      - internal
+    slug: internal-tools
+    versions:
+      - display-name: V3.0
+        path: ./products/internal-tools/v3.yml
+        audiences:
+          - internal
+        availability: beta

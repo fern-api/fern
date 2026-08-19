@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "amountCents": {
+      "type": "integer"
+    },
+    "currency": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "amountCents"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

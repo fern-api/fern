@@ -1,0 +1,3 @@
+rootProject.name = 'java-pagination-deep-cursor-path'
+
+include 'sample-app'

@@ -1,0 +1,3 @@
+name: api
+auth: bearer
+default-environment: Production

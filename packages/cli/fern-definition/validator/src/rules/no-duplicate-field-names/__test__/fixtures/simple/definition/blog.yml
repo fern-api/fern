@@ -1,0 +1,7 @@
+types:
+  BlogPostAlias: BlogPost
+  BlogPost:
+    # intentional infinite loop
+    extends: BlogPost
+    properties:
+      blogPostName: string

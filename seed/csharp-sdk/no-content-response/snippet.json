@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/contacts",
+                "method": "POST",
+                "identifier_override": "endpoint_contacts.create"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Contacts.CreateAsync(new CreateContactRequest { Name = \"name\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/contacts/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_contacts.get"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Contacts.GetAsync(new GetContactsRequest { Id = \"id\" });\n"
+            }
+        }
+    ]
+}

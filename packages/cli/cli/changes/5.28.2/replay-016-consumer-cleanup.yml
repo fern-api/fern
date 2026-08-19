@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generator-cli now delegates divergent-merge recovery (squash-merge of a regen
+    PR, force-push past a generation, lost-then-found generations) entirely to
+    `@fern-api/replay`'s derived scan boundary. Customers no longer hit the
+    pre-replay precondition gauntlet that occasionally got stuck on stale
+    `fern-generation-base` tag pointers. Replay still writes the tag for
+    backward compatibility with older bundled generator-cli versions.
+  type: chore

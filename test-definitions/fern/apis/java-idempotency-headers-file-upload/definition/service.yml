@@ -1,0 +1,15 @@
+service:
+  auth: true
+  base-path: /
+  endpoints:
+    upload:
+      path: /documents
+      method: POST
+      idempotent: true
+      request:
+        name: UploadRequest
+        body:
+          properties:
+            file: file
+            description: optional<string>
+      response: string

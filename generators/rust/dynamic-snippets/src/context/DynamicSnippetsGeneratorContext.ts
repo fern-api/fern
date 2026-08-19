@@ -1,0 +1,594 @@
+import {
+    AbstractDynamicSnippetsGeneratorContext,
+    FernGeneratorExec,
+    Options,
+    Severity,
+    TypeInstance
+} from "@fern-api/browser-compatible-base-generator";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import {
+    convertToPascalCase,
+    escapeRustKeyword,
+    escapeRustReservedType,
+    generateDefaultCrateName,
+    getName,
+    RustFilenameRegistry,
+    validateAndSanitizeCrateName
+} from "@fern-api/rust-base";
+import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
+import { DynamicTypeMapper } from "./DynamicTypeMapper.js";
+import { FilePropertyMapper } from "./FilePropertyMapper.js";
+
+export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
+    public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
+    public customConfig: BaseRustCustomConfigSchema | undefined;
+    public dynamicTypeMapper: DynamicTypeMapper;
+    public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
+    public filePropertyMapper: FilePropertyMapper;
+    private errorStack: string[] = [];
+    private registry: RustFilenameRegistry;
+    private declarationToTypeId: Map<string, string> = new Map();
+    private endpointDeclarationToQueryRequestName: Map<string, string> = new Map();
+
+    constructor({
+        ir,
+        config,
+        options
+    }: {
+        ir: FernIr.dynamic.DynamicIntermediateRepresentation;
+        config: FernGeneratorExec.GeneratorConfig;
+        options?: Options;
+    }) {
+        super({ ir, config, options });
+        this.ir = ir;
+        this.customConfig = config.customConfig as BaseRustCustomConfigSchema | undefined;
+        this.registry = RustFilenameRegistry.create();
+
+        // Pre-register all type names from IR to match model generator naming
+        this.preregisterTypeNames();
+
+        // Pre-register query request names to match SDK generator naming
+        this.preregisterQueryRequestNames();
+
+        this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
+        this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
+        this.filePropertyMapper = new FilePropertyMapper({ context: this });
+    }
+
+    private preregisterTypeNames(): void {
+        // Register all IR types to ensure consistent naming with model generator
+        for (const [typeId, type] of Object.entries(this.ir.types)) {
+            const baseName = type.declaration.name.pascalCase.safeName;
+            this.registry.registerSchemaTypeTypeName(typeId, baseName);
+
+            // Create a lookup key for this declaration
+            const key = this.getDeclarationKey(type.declaration);
+            this.declarationToTypeId.set(key, typeId);
+        }
+    }
+
+    /**
+     * Pre-register query request type names to ensure consistent naming with SDK generator.
+     * Query requests are synthetic types generated for endpoints with query parameters but no body.
+     */
+    private preregisterQueryRequestNames(): void {
+        // First pass: collect all query-only endpoints to detect name collisions
+        const queryEndpoints: Array<{
+            endpointId: string;
+            endpoint: FernIr.dynamic.Endpoint;
+            methodName: string;
+        }> = [];
+
+        for (const [endpointId, endpoint] of Object.entries(this.ir.endpoints)) {
+            const request = endpoint.request;
+            if (request.type !== "inlined") {
+                continue;
+            }
+
+            const hasQueryParams = (request.queryParameters ?? []).length > 0;
+            const hasBody = request.body != null;
+
+            if (hasQueryParams && !hasBody) {
+                const methodName = endpoint.declaration.name.pascalCase.safeName;
+                queryEndpoints.push({ endpointId, endpoint, methodName });
+            }
+        }
+
+        // Build a set of method names that have collisions (same method name across different services)
+        const methodNameCounts = new Map<string, number>();
+        for (const { methodName } of queryEndpoints) {
+            methodNameCounts.set(methodName, (methodNameCounts.get(methodName) ?? 0) + 1);
+        }
+
+        // Second pass: register with full subpackage prefix when collisions exist
+        for (const { endpointId, endpoint, methodName } of queryEndpoints) {
+            const hasCollision = (methodNameCounts.get(methodName) ?? 0) > 1;
+
+            let baseQueryRequestName: string;
+            if (hasCollision) {
+                // Include full subpackage path to make it unique, matching SDK generator behavior
+                const pathParts = endpoint.declaration.fernFilepath.allParts.map(
+                    (part) => part.pascalCase.safeName
+                );
+                const subpackagePrefix = pathParts.join("");
+                baseQueryRequestName = `${subpackagePrefix}${methodName}QueryRequest`;
+            } else {
+                baseQueryRequestName = `${methodName}QueryRequest`;
+            }
+
+            // Register the name in the type registry to handle deduplication
+            const syntheticTypeId = `query_request:${endpointId}`;
+            const deduplicatedName = this.registry.registerSchemaTypeTypeName(
+                syntheticTypeId,
+                baseQueryRequestName
+            );
+
+            // Store the mapping from endpoint declaration to deduplicated name
+            const key = this.getEndpointDeclarationKey(endpoint.declaration);
+            this.endpointDeclarationToQueryRequestName.set(key, deduplicatedName);
+        }
+    }
+
+    /**
+     * Create a unique key for a type declaration based on its file path and name.
+     * This helps us look up the typeId when we only have the declaration.
+     */
+    private getDeclarationKey(declaration: FernIr.dynamic.Declaration): string {
+        const fernFilepath = declaration.fernFilepath.packagePath
+            .map((part) => part.pascalCase.safeName)
+            .join("/");
+        const name = declaration.name.pascalCase.safeName;
+        return `${fernFilepath}::${name}`;
+    }
+
+    /**
+     * Create a unique key for an endpoint declaration based on its file path and name.
+     * Uses allParts to include the leaf segment, ensuring unique keys per subpackage.
+     */
+    private getEndpointDeclarationKey(declaration: FernIr.dynamic.Declaration): string {
+        const fernFilepath = declaration.fernFilepath.allParts
+            .map((part) => part.pascalCase.safeName)
+            .join("/");
+        const name = declaration.name.pascalCase.safeName;
+        return `${fernFilepath}::${name}`;
+    }
+
+    public clone(): DynamicSnippetsGeneratorContext {
+        return new DynamicSnippetsGeneratorContext({
+            ir: this.ir,
+            config: this.config,
+            options: this.options
+        });
+    }
+
+    public getStructName(name: FernIr.Name): string {
+        return this.getTypeName(name);
+    }
+
+    /**
+     * Get the generated struct name for a type by its declaration.
+     * This returns the deduplicated name (e.g., "Metadata2" instead of "Metadata")
+     * when there are naming collisions.
+     */
+    public getStructNameByDeclaration(declaration: FernIr.dynamic.Declaration): string {
+        const key = this.getDeclarationKey(declaration);
+        const typeId = this.declarationToTypeId.get(key);
+        if (typeId) {
+            return this.registry.getSchemaTypeTypeNameOrThrow(typeId);
+        }
+        // Fallback to basic name if not found in registry
+        return getName(declaration.name.pascalCase.safeName);
+    }
+
+    /**
+     * Get the deduplicated query request type name for an endpoint.
+     * This returns the name that was pre-registered during initialization,
+     * accounting for any naming collisions (e.g., "ListUsersQueryRequest2" instead of "ListUsersQueryRequest").
+     */
+    public getQueryRequestNameByEndpoint(endpointDeclaration: FernIr.dynamic.Declaration): string | undefined {
+        const key = this.getEndpointDeclarationKey(endpointDeclaration);
+        return this.endpointDeclarationToQueryRequestName.get(key);
+    }
+
+    public getEnumName(name: FernIr.Name): string {
+        return this.getTypeName(name);
+    }
+
+    /**
+     * Get the generated type name for a type by its ID.
+     * This ensures we get the deduplicated name (e.g., "Metadata2" instead of "Metadata")
+     */
+    public getTypeNameById(typeId: string): string {
+        return this.registry.getSchemaTypeTypeNameOrThrow(typeId);
+    }
+
+    private getTypeName(name: FernIr.Name): string {
+        return getName(name.pascalCase.safeName);
+    }
+
+    public getPropertyName(name: FernIr.Name): string {
+        // For struct fields, use raw identifier syntax for reserved keywords
+        const input = name.snakeCase.safeName;
+        // If the field name ends with "_", check if it's a Rust keyword that was escaped
+        // Convert it back to raw identifier syntax (e.g., "type_" -> "r#type")
+        if (input.endsWith("_")) {
+            const baseKeyword = input.slice(0, -1); // Remove the trailing "_"
+            return escapeRustKeyword(baseKeyword);
+        }
+
+        return escapeRustKeyword(input);
+    }
+
+    public getMethodName(name: FernIr.Name): string {
+        return getName(name.snakeCase.safeName);
+    }
+
+    /**
+     * Escapes Rust reserved types by prefixing them with 'r#'
+     */
+    public escapeRustReservedType(name: string): string {
+        return escapeRustReservedType(name);
+    }
+
+    /**
+     * Get the crate name with fallback to generated default
+     */
+    public getCrateName(): string {
+        const orgName = this.config.organization;
+        const workspaceName = this.config.workspaceName;
+
+        let createName = this.customConfig?.crateName ?? generateDefaultCrateName(orgName, workspaceName);
+        return validateAndSanitizeCrateName(createName);
+    }
+
+    /**
+     * Get the datetime type to use for datetime primitives.
+     * Returns "offset" for DateTime<FixedOffset> (default) - preserves original timezone,
+     * or "utc" for DateTime<Utc> - converts everything to UTC.
+     * Both options use flexible parsing that accepts any format and assumes UTC when no timezone.
+     */
+    public getDateTimeType(): "offset" | "utc" {
+        return this.customConfig?.dateTimeType ?? "offset";
+    }
+
+    // Client methods
+    public getClientStructName(): string {
+        return this.customConfig?.clientClassName ?? `${convertToPascalCase(this.config.workspaceName)}Client`;
+    }
+
+    // Environment resolution stub
+    public resolveEnvironmentName(_environmentID: string): FernIr.Name | undefined {
+        return undefined; // TODO: Implement proper environment resolution
+    }
+
+    // Enhanced error handling methods
+    public scopeError(scope: string): void {
+        this.errorStack.push(scope);
+    }
+
+    public unscopeError(): void {
+        this.errorStack.pop();
+    }
+
+    public addScopedError(message: string, severity: (typeof Severity)[keyof typeof Severity]): void {
+        const fullScope = this.errorStack.length > 0 ? this.errorStack.join(".") : "root";
+        this.errors.add({
+            severity,
+            message: `[${fullScope}] ${message}`
+        });
+    }
+
+    public getCurrentScope(): string {
+        return this.errorStack.join(".");
+    }
+
+    // Value validation helpers matching Swift's pattern
+    public getValueAsNumber({ value }: { value: unknown }): number | undefined {
+        if (typeof value === "number" && !isNaN(value)) {
+            return value;
+        }
+        if (typeof value === "string") {
+            const num = Number(value);
+            if (!isNaN(num)) {
+                return num;
+            }
+        }
+        this.addScopedError(`Expected number but got: ${typeof value}`, Severity.Critical);
+        return undefined;
+    }
+
+    public getValueAsBoolean({ value }: { value: unknown }): boolean | undefined {
+        if (typeof value === "boolean") {
+            return value;
+        }
+        if (typeof value === "string") {
+            if (value === "true") {
+                return true;
+            }
+            if (value === "false") {
+                return false;
+            }
+        }
+        this.addScopedError(`Expected boolean but got: ${typeof value}`, Severity.Critical);
+        return undefined;
+    }
+
+    public getValueAsString({ value }: { value: unknown }): string | undefined {
+        if (typeof value === "string") {
+            return value;
+        }
+        this.addScopedError(`Expected string but got: ${typeof value}`, Severity.Critical);
+        return undefined;
+    }
+
+    // Comprehensive type validation methods
+    public validateTypeReference(typeRef: FernIr.dynamic.TypeReference, value: unknown): boolean {
+        switch (typeRef.type) {
+            case "primitive":
+                return this.validatePrimitive(typeRef.value, value);
+            case "list":
+                return Array.isArray(value);
+            case "named":
+                return this.validateNamedType(typeRef.value, value);
+            case "optional":
+            case "nullable":
+                return value == null || this.validateTypeReference(typeRef.value, value);
+            case "map":
+                return typeof value === "object" && value != null && !Array.isArray(value);
+            case "set":
+                return Array.isArray(value);
+            case "literal":
+                return this.validateLiteral(typeRef.value, value);
+            case "unknown":
+                return true; // Unknown types accept any value
+            default:
+                return false;
+        }
+    }
+
+    private validatePrimitive(primitive: FernIr.dynamic.PrimitiveTypeV1, value: unknown): boolean {
+        switch (primitive) {
+            case "STRING":
+            case "UUID":
+            case "DATE":
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
+            case "BASE_64":
+            case "BIG_INTEGER":
+                return typeof value === "string";
+            case "INTEGER":
+            case "LONG":
+            case "UINT":
+            case "UINT_64":
+                return typeof value === "number" && Number.isInteger(value);
+            case "FLOAT":
+            case "DOUBLE":
+                return typeof value === "number";
+            case "BOOLEAN":
+                return typeof value === "boolean";
+            default:
+                return false;
+        }
+    }
+
+    private validateNamedType(typeId: FernIr.dynamic.TypeId, value: unknown): boolean {
+        const namedType = this.ir.types[typeId];
+        if (!namedType) {
+            return false;
+        }
+
+        switch (namedType.type) {
+            case "object":
+                return typeof value === "object" && value != null && !Array.isArray(value);
+            case "enum":
+                return typeof value === "string" && namedType.values.some((v) => v.wireValue === value);
+            case "alias":
+                return this.validateTypeReference(namedType.typeReference, value);
+            case "discriminatedUnion":
+                return this.validateDiscriminatedUnion(namedType, value);
+            case "undiscriminatedUnion":
+                return this.validateUndiscriminatedUnion(namedType, value);
+            default:
+                return false;
+        }
+    }
+
+    private validateLiteral(literal: FernIr.dynamic.LiteralType, value: unknown): boolean {
+        switch (literal.type) {
+            case "string":
+                return typeof value === "string" && value === literal.value;
+            case "boolean":
+                return typeof value === "boolean" && value === literal.value;
+            default:
+                return false;
+        }
+    }
+
+    private validateDiscriminatedUnion(union: FernIr.dynamic.DiscriminatedUnionType, value: unknown): boolean {
+        if (typeof value !== "object" || value == null) {
+            return false;
+        }
+
+        const record = value as Record<string, unknown>;
+        const discriminantValue = record[union.discriminant.wireValue];
+
+        return typeof discriminantValue === "string" && Object.keys(union.types).includes(discriminantValue);
+    }
+
+    private validateUndiscriminatedUnion(union: FernIr.dynamic.UndiscriminatedUnionType, value: unknown): boolean {
+        // At least one of the union types should validate
+        return union.types.some((typeRef) => this.validateTypeReference(typeRef, value));
+    }
+
+    // Enhanced nullable checking
+    public isNullable(typeRef: FernIr.dynamic.TypeReference): boolean {
+        return typeRef.type === "nullable" || typeRef.type === "optional";
+    }
+
+    /**
+     * Override to preserve parameter order by iterating over schema parameters
+     * instead of Object.entries(values). This ensures generated Rust code
+     * has struct fields in the same order as defined in the API schema.
+     */
+    public override associateByWireValue({
+        parameters,
+        values,
+        ignoreMissingParameters: _ignoreMissingParameters
+    }: {
+        parameters: FernIr.dynamic.NamedParameter[];
+        values: FernIr.dynamic.Values;
+        ignoreMissingParameters?: boolean;
+    }): TypeInstance[] {
+        const instances: TypeInstance[] = [];
+        // Iterate over parameters (schema order) to preserve argument order
+        for (const parameter of parameters) {
+            const key = parameter.name.wireValue;
+            const value = values[key];
+            // Skip parameters not provided in values
+            if (value == null) {
+                continue;
+            }
+            this.errors.scope(key);
+            try {
+                instances.push({
+                    name: parameter.name,
+                    typeReference: parameter.typeReference,
+                    value
+                });
+            } finally {
+                this.errors.unscope();
+            }
+        }
+        return instances;
+    }
+
+    /**
+     * Check if a type reference is optional or nullable.
+     * This is the dynamic IR equivalent of the model generator's isOptionalType.
+     */
+    public isOptionalType(typeRef: FernIr.dynamic.TypeReference): boolean {
+        return typeRef.type === "optional" || typeRef.type === "nullable";
+    }
+
+    /**
+     * Check if all parameters in a list are optional.
+     * This determines whether a request type can have Default derived.
+     *
+     * In the Rust model generator, Default is only derived when ALL properties are optional
+     * and there are no extended properties (inheritance).
+     */
+    public allParametersAreOptional(parameters: FernIr.dynamic.NamedParameter[]): boolean {
+        return parameters.every((param) => this.isOptionalType(param.typeReference));
+    }
+
+    /**
+     * Check if an inlined request can use ..Default::default() pattern.
+     * This checks if the generated request struct will have Default derived.
+     *
+     * According to the model generator logic:
+     * - Default is derived only when all properties are optional
+     * - Extended properties (inheritance) prevent Default derivation
+     */
+    public canRequestUseDefault(request: FernIr.dynamic.InlinedRequest): boolean {
+        const queryParams = request.queryParameters ?? [];
+
+        // Collect all properties that will be in the request struct
+        const allProperties: FernIr.dynamic.NamedParameter[] = [...queryParams];
+
+        // Add body properties if present
+        if (request.body != null) {
+            if (request.body.type === "properties") {
+                allProperties.push(...request.body.value);
+            } else if (request.body.type === "referenced") {
+                // For referenced body, check if the body type itself is optional
+                const bodyTypeRef =
+                    request.body.bodyType.type === "typeReference"
+                        ? request.body.bodyType.value
+                        : ({ type: "primitive", value: "STRING" } as FernIr.dynamic.TypeReference);
+
+                // If the referenced body type is not optional, the request doesn't have all optional fields
+                if (!this.isOptionalType(bodyTypeRef)) {
+                    return false;
+                }
+            }
+            // Note: file upload requests have complex structure, be conservative
+            else if (request.body.type === "fileUpload") {
+                // File upload requests may have required file fields
+                // Be conservative and don't use Default for these
+                return false;
+            }
+        }
+
+        // Headers are handled separately via RequestOptions, not in the request struct
+        // So we don't need to check them
+
+        // Check if all collected properties are optional
+        return this.allParametersAreOptional(allProperties);
+    }
+
+    /**
+     * Check if a dynamic IR object type will have Default derived by the model generator.
+     * Mirrors the logic in StructGenerator.canDeriveDefault():
+     * - All property types must support Default
+     * - Extended types must support Default
+     */
+    public canObjectTypeUseDefault(objectType: FernIr.dynamic.ObjectType): boolean {
+        // Check if extends exist (types with inheritance are harder to verify)
+        const extendsProperty = (objectType as { extends?: string[] }).extends;
+        if (extendsProperty != null && extendsProperty.length > 0) {
+            // Check if all base types support Default
+            for (const baseTypeId of extendsProperty) {
+                const baseType = this.ir.types[baseTypeId];
+                if (!baseType || baseType.type !== "object" || !this.canObjectTypeUseDefault(baseType)) {
+                    return false;
+                }
+            }
+        }
+        // Check if all property types support Default
+        return objectType.properties.every((prop) => this.typeSupportsDefault(prop.typeReference));
+    }
+
+    /**
+     * Check if a type reference maps to a Rust type that implements Default.
+     * Mirrors the model generator's typeSupportsDefault logic.
+     */
+    public typeSupportsDefault(typeRef: FernIr.dynamic.TypeReference, visited: Set<string> = new Set()): boolean {
+        switch (typeRef.type) {
+            case "primitive":
+                return true; // All Rust primitives implement Default
+            case "optional":
+            case "nullable":
+                return true; // Option<T> defaults to None
+            case "list":
+            case "map":
+            case "set":
+                return true; // Vec, HashMap, HashSet all implement Default
+            case "unknown":
+                return true; // serde_json::Value implements Default
+            case "literal":
+                return false;
+            case "named": {
+                const typeId = typeRef.value;
+                if (visited.has(typeId)) {
+                    return false; // Prevent infinite recursion
+                }
+                visited.add(typeId);
+                const namedType = this.ir.types[typeId];
+                if (!namedType) {
+                    return false;
+                }
+                if (namedType.type === "object") {
+                    return this.canObjectTypeUseDefault(namedType);
+                }
+                if (namedType.type === "alias") {
+                    return this.typeSupportsDefault(namedType.typeReference, visited);
+                }
+                // Enums, unions don't derive Default
+                return false;
+            }
+            default:
+                return false;
+        }
+    }
+}

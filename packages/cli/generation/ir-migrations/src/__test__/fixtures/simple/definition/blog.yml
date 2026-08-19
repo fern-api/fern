@@ -1,0 +1,3 @@
+errors:
+  BlogNotFoundError:
+    status-code: 404

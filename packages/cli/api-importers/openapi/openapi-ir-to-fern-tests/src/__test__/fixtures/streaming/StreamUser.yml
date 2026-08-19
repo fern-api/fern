@@ -1,0 +1,10 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+  streamed:
+    x-fern-boolean-literal: true
+    type: boolean

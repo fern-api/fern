@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "passed": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "passed"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

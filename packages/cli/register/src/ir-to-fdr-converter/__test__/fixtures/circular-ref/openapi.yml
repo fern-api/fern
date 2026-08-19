@@ -1,0 +1,63 @@
+openapi: 3.0.3
+info:
+  title: Circular Ref Test API
+  version: 1.0.0
+  description: An OpenAPI spec with self-referencing circular $ref pointers
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /plants:
+    get:
+      operationId: listPlants
+      summary: List all plants
+      responses:
+        "200":
+          description: A list of plants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plant"
+
+  /plants/{plantId}:
+    get:
+      operationId: getPlant
+      summary: Get a plant by ID
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A plant
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+
+components:
+  schemas:
+    Plant:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        category:
+          $ref: "#/components/schemas/PlantCategory"
+
+    # Direct $ref-to-$ref cycle: PlantCategory -> PlantCategoryAlias -> PlantCategory
+    PlantCategory:
+      $ref: "#/components/schemas/PlantCategoryAlias"
+
+    PlantCategoryAlias:
+      $ref: "#/components/schemas/PlantCategory"

@@ -1,0 +1,9 @@
+{
+  "title": "Generic empty Error in development",
+  "disposition": "ignored",
+  "rationale": "Only visible event is development environment with empty Error value grouped at telemetry reporter; no product signature to fix or suppress safely.",
+  "fixSummary": "—",
+  "prOrIssue": "Ignored after event-level review",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "Development-only empty Error grouped at reportError/capture path with no actionable product signature."
+}

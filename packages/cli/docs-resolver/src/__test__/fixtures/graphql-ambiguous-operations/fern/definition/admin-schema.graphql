@@ -1,0 +1,39 @@
+type Query {
+  # This will create admin.getInfo
+  getInfo(type: String!): AdminInfo
+
+  # Unique admin operation
+  getSystemStatus: SystemStatus
+}
+
+type Mutation {
+  # This will create admin.createRecord
+  createRecord(input: AdminRecordInput!): AdminRecord
+
+  # Unique admin mutation
+  resetSystem: Boolean
+}
+
+type AdminInfo {
+  version: String!
+  status: String!
+  permissions: [String!]!
+}
+
+type SystemStatus {
+  uptime: String!
+  version: String!
+  health: String!
+}
+
+type AdminRecord {
+  id: ID!
+  type: String!
+  createdAt: String!
+  createdBy: String!
+}
+
+input AdminRecordInput {
+  type: String!
+  data: String!
+}

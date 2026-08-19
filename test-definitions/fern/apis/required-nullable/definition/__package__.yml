@@ -1,0 +1,69 @@
+types:
+  Foo:
+    properties:
+      bar: optional<string>
+      nullable_bar: optional<nullable<string>>
+      nullable_required_bar: nullable<string>
+      required_bar: string
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    getFoo:
+      display-name: Get foo
+      examples:
+        - query-parameters:
+            required_baz: required_baz
+            required_nullable_baz: required_nullable_baz
+          response:
+            body:
+              bar: bar
+              nullable_bar: nullable_bar
+              nullable_required_bar: nullable_required_bar
+              required_bar: required_bar
+      method: GET
+      path: /foo
+      request:
+        name: GetFooRequest
+        query-parameters:
+          optional_baz:
+            docs: An optional baz
+            type: optional<string>
+          optional_nullable_baz:
+            docs: An optional baz
+            type: optional<nullable<string>>
+          required_baz:
+            docs: A required baz
+            type: string
+          required_nullable_baz:
+            docs: A required baz
+            type: nullable<string>
+      response:
+        docs: successful operation
+        status-code: 200
+        type: Foo
+    updateFoo:
+      display-name: Update foo
+      method: PATCH
+      path: /foo/{id}
+      path-parameters:
+        id: string
+      request:
+        name: UpdateFooRequest
+        body:
+          properties:
+            nullable_text:
+              docs: Can be explicitly set to null to clear the value
+              type: optional<nullable<string>>
+            nullable_number:
+              docs: Can be explicitly set to null to clear the value
+              type: optional<nullable<double>>
+            non_nullable_text:
+              docs: Regular non-nullable field
+              type: optional<string>
+        headers:
+          X-Idempotency-Key: string
+      response:
+        docs: successful operation
+        status-code: 200
+        type: Foo

@@ -1,0 +1,7 @@
+- summary: |
+    Fix endpoints with a stream-parameter response generating a `JSONValue` return
+    type, which broke generated wire tests that compared the result against the
+    concrete response model. The Swift SDK does not yet implement response
+    streaming, so these endpoints are now generated against their non-streaming
+    response shape (e.g. the declared JSON response model).
+  type: fix

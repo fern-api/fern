@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "enum": [
+    "HEALTH",
+    "AUTO",
+    "HOME",
+    "LIFE"
+  ],
+  "description": "Type of insurance policy",
+  "definitions": {}
+}

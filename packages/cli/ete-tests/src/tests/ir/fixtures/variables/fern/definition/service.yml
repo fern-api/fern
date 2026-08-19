@@ -1,0 +1,9 @@
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    test:
+      path: /{foo}
+      path-parameters:
+        foo: $my-variable
+      method: POST

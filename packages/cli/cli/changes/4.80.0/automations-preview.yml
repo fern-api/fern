@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `fern automations preview` command that discovers previewable generator
+    groups and runs SDK preview for each one, aggregating results. Replaces the
+    previous `fern automations list preview` listing-only command with a single
+    command that handles both discovery and execution. Designed for consumption
+    by the `fern-preview` GitHub Action.
+  type: feat

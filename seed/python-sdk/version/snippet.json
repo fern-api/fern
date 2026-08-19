@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedVersion\n\nclient = SeedVersion(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.get_user(\n    user_id=\"userId\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedVersion\n\nclient = AsyncSeedVersion(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_user(\n        user_id=\"userId\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

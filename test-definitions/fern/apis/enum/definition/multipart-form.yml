@@ -1,0 +1,19 @@
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    multipartForm:
+      path: /multipart
+      method: POST
+      request:
+        name: MultipartFormRequest
+        body:
+          properties:
+            color: root.Color
+            maybeColor: optional<root.Color>
+            colorList: list<root.Color>
+            maybeColorList: optional<list<root.Color>>
+        content-type: multipart/form-data

@@ -1,0 +1,421 @@
+# Reference
+## Union
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get</a>(request: MyUnion) -> Result&lt;MyUnion, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client
+        .union_
+        .get(&MyUnion::String("string".to_string()), None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get_metadata</a>() -> Result&lt;Metadata, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client.union_.get_metadata(None).await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">update_metadata</a>(request: MetadataUnion) -> Result&lt;bool, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client
+        .union_
+        .update_metadata(
+            &MetadataUnion::OptionalMetadata(OptionalMetadata(Some(HashMap::from([(
+                "string".to_string(),
+                serde_json::json!({"key":"value"}),
+            )])))),
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">call</a>(request: Request) -> Result&lt;bool, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client
+        .union_
+        .call(
+            &Request {
+                union: Some(MetadataUnion::OptionalMetadata(OptionalMetadata(Some(
+                    HashMap::from([("string".to_string(), serde_json::json!({"key":"value"}))]),
+                )))),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">duplicate_types_union</a>(request: UnionWithDuplicateTypes) -> Result&lt;UnionWithDuplicateTypes, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client
+        .union_
+        .duplicate_types_union(&UnionWithDuplicateTypes::String("string".to_string()), None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">nested_unions</a>(request: NestedUnionRoot) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client
+        .union_
+        .nested_unions(&NestedUnionRoot::String("string".to_string()), None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">nested_object_unions</a>(request: OuterNestedUnion) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client
+        .union_
+        .nested_object_unions(&OuterNestedUnion::String("string".to_string()), None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">aliased_object_union</a>(request: AliasedObjectUnion) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client
+        .union_
+        .aliased_object_union(
+            &AliasedObjectUnion::AliasedLeafA(AliasedLeafA(LeafObjectA {
+                only_in_a: "onlyInA".to_string(),
+                shared_number: 1,
+                ..Default::default()
+            })),
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get_with_base_properties</a>(request: UnionWithBaseProperties) -> Result&lt;UnionWithBaseProperties, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client
+        .union_
+        .get_with_base_properties(
+            &UnionWithBaseProperties::NamedMetadata(NamedMetadata {
+                name: "name".to_string(),
+                value: HashMap::from([("value".to_string(), serde_json::json!({"key":"value"}))]),
+                ..Default::default()
+            }),
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">test_camel_case_properties</a>(request: PaymentRequest) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client
+        .union_
+        .test_camel_case_properties(
+            &PaymentRequest {
+                payment_method: PaymentMethodUnion::TokenizeCard(TokenizeCard {
+                    method: "card".to_string(),
+                    card_number: "1234567890123456".to_string(),
+                    ..Default::default()
+                }),
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**payment_method:** `PaymentMethodUnion` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

@@ -1,0 +1,64 @@
+{
+  "anyOf": [
+    {
+      "type": "string"
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    {
+      "$ref": "#/definitions/union.NestedUnionL1"
+    }
+  ],
+  "description": "Nested union root.",
+  "definitions": {
+    "union.NestedUnionL2": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Nested layer 2."
+    },
+    "union.NestedUnionL1": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "$ref": "#/definitions/union.NestedUnionL2"
+        }
+      ],
+      "description": "Nested layer 1."
+    }
+  }
+}

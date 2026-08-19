@@ -1,0 +1,44 @@
+---
+title: Delete Inbound Phone Number
+subtitle: >-
+  Remove an inbound number that was uploaded through your own Twilio account.
+  See [Enterprise Twilio Integration](/enterprise-features/custom-twilio) for
+  more information.
+slug: api-v1/post/inbound-number-delete
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+<ParamField header="encrypted_key" type="string" required>
+  The `encrypted_key` for the Twilio account that owns the phone number you want to delete.
+</ParamField>
+
+### Path
+
+<ParamField path="phone_number" type="string" required>
+  The phone number you want to remove from Bland's system.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Can be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  A message saying whether the deletion succeeded, or a helpful message describing why it failed.
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+  "status": "success",
+  "message": "Successfully deleted number from database: +15555555555"
+}
+```
+</ResponseExample>

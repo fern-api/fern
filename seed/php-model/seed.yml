@@ -1,0 +1,57 @@
+irVersion: v66
+displayName: PHP Model
+image: fernapi/fern-php-model
+# This generator is no longer actively supported. The workspace is retained for
+# historical reference but seed tests, publishing, and builds are skipped.
+disabled: true
+changelogLocation: ../../generators/php/model/versions.yml
+publish:
+  preBuildCommands:
+    - pnpm turbo run dist:cli --filter @fern-api/php-model
+  docker:
+    file: ./generators/php/model/Dockerfile
+    image: fernapi/fern-php-model
+    context: .
+  sentry:
+    name: fern-php-model
+    project: php-sdk
+    sourceMaps:
+      - dir: generators/php/model/dist
+test:
+  docker:
+    image: fernapi/fern-php-model:latest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/php-model
+  podman:
+    image: fernapi/fern-php-model:latest
+    command: pnpm turbo run podmanTagLatest --filter @fern-api/php-model
+  local:
+    workingDirectory: generators/php
+    buildCommand:
+      - pnpm turbo run dist:cli --filter @fern-api/php-model
+    runCommand: node --enable-source-maps model/dist/cli.cjs {CONFIG_PATH}
+
+language: php
+generatorType: Model
+defaultOutputMode: github
+fixtures: {}
+scripts:
+  - image: composer:2.7.9
+    commands:
+      build:
+        # Retry composer install up to 3 times to handle intermittent network failures
+        - for i in 1 2 3; do composer install --no-interaction && break || { echo "Attempt $i failed, retrying..."; sleep 5; }; done
+        - composer build
+        - composer analyze
+      test:
+        - composer test
+
+allowedFailures:
+  # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
+  - examples
+  # Enums don't support the fromJson method yet.
+  - trace
+  - circular-references
+  - circular-references-advanced
+  # Java-specific fixture for staged builder ordering
+  - java-staged-builder-ordering
+  - server-sent-events-openapi

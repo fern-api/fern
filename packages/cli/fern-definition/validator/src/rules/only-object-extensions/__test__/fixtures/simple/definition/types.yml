@@ -1,0 +1,32 @@
+imports:
+  commons: commons.yml
+
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    get:
+      method: GET
+      path: ""
+      request:
+        name: MyRequest
+        body:
+          extends:
+            - LocalObject
+            - LocalString
+
+types:
+  MyObject:
+    extends:
+      - commons.CommonObject
+      - commons.CommonString
+      - commons.NonExistentObject
+      - LocalObject
+      - LocalString
+      - NonExistentObject
+
+  LocalObject:
+    properties:
+      foo: string
+
+  LocalString: string

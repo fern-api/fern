@@ -1,0 +1,94 @@
+imports:
+  objects: ../types/object.yml
+
+service:
+  auth: true
+  base-path: /object
+  endpoints:
+    getAndReturnWithOptionalField:
+      path: /get-and-return-with-optional-field
+      method: POST
+      request: objects.ObjectWithOptionalField
+      response: objects.ObjectWithOptionalField
+      # Temporarily commented out - nested long
+      # examples:
+      #   - name: WithLargeInteger
+      #     request:
+      #       string: "test"
+      #       integer: 21991583578  # Large value that exceeds Integer.MAX_VALUE (2147483647)
+      #       long: 9223372036854775807
+      #       double: 3.14
+      #       bool: true
+      #     response:
+      #       body:
+      #         string: "test"
+      #         integer: 21991583578  # This tests our integer overflow fix
+      #         long: 9223372036854775807
+      #         double: 3.14
+      #         bool: true
+
+    getAndReturnWithRequiredField:
+      path: /get-and-return-with-required-field
+      method: POST
+      request: objects.ObjectWithRequiredField
+      response: objects.ObjectWithRequiredField
+
+    getAndReturnWithMapOfMap:
+      path: /get-and-return-with-map-of-map
+      method: POST
+      request: objects.ObjectWithMapOfMap
+      response: objects.ObjectWithMapOfMap
+
+    getAndReturnNestedWithOptionalField:
+      path: /get-and-return-nested-with-optional-field
+      method: POST
+      request: objects.NestedObjectWithOptionalField
+      response: objects.NestedObjectWithOptionalField
+
+    getAndReturnNestedWithRequiredField:
+      path: /get-and-return-nested-with-required-field/{string}
+      method: POST
+      path-parameters:
+        string: string
+      request: objects.NestedObjectWithRequiredField
+      response: objects.NestedObjectWithRequiredField
+
+    getAndReturnNestedWithRequiredFieldAsList:
+      path: /get-and-return-nested-with-required-field-list
+      method: POST
+      request: list<objects.NestedObjectWithRequiredField>
+      response: objects.NestedObjectWithRequiredField
+
+    getAndReturnWithUnknownField:
+      path: /get-and-return-with-unknown-field
+      method: POST
+      request: objects.ObjectWithUnknownField
+      response: objects.ObjectWithUnknownField
+      examples:
+        - name: BackslashExample
+          request:
+            unknown:
+              "\\$ref": "https://example.com/schema"
+          response:
+            body:
+              unknown:
+                "\\$ref": "https://example.com/schema"
+
+    getAndReturnWithDatetimeLikeString:
+      docs: |
+        Tests that string fields containing datetime-like values are NOT reformatted.
+        The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+        without being converted to "2023-08-31T14:15:22.000Z".
+      path: /get-and-return-with-datetime-like-string
+      method: POST
+      request: objects.ObjectWithDatetimeLikeString
+      response: objects.ObjectWithDatetimeLikeString
+      examples:
+        - name: DatetimeLikeStringExample
+          request:
+            datetimeLikeString: "2023-08-31T14:15:22Z"
+            actualDatetime: "2023-08-31T14:15:22Z"
+          response:
+            body:
+              datetimeLikeString: "2023-08-31T14:15:22Z"
+              actualDatetime: "2023-08-31T14:15:22Z"

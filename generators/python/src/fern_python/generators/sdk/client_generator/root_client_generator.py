@@ -1,0 +1,2410 @@
+import typing
+from dataclasses import dataclass
+from typing import List, Optional, Sequence, Tuple
+
+import fern_python.generators.sdk.names as names
+from ..environment_generators import (
+    GeneratedEnvironment,
+    MultipleBaseUrlsEnvironmentGenerator,
+    SingleBaseUrlEnvironmentGenerator,
+)
+from .base_wrapped_client_generator import BaseWrappedClientGenerator
+from .endpoint_function_generator import EndpointFunctionGenerator
+from .generated_root_client import GeneratedRootClient, RootClient
+from .inferred_auth_token_provider_generator import (
+    CredentialProperty,
+    InferredAuthTokenProviderGenerator,
+)
+from .oauth_token_provider_generator import GRANT_TYPE_WIRE_VALUE
+from fern_python.codegen import AST, SourceFile
+from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
+from fern_python.external_dependencies import HttpX
+from fern_python.generators.sdk.client_generator.base_client_generator import (
+    BaseClientGeneratorKwargs,
+)
+from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
+    ClientWrapperGenerator,
+    ConstructorParameter,
+)
+from fern_python.utils.name_resolver import (
+    get_name_from_wire_value,
+    get_original_name,
+    resolve_name,
+)
+from typing_extensions import Unpack
+
+import fern.ir.resources as ir_types
+
+
+@dataclass
+class RootClientConstructorParameter(ConstructorParameter):
+    validation_check: typing.Optional[AST.Expression] = None
+    exclude_from_wrapper_construction: Optional[bool] = False
+    docs: Optional[str] = None
+
+
+class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParameter]):
+    ROOT_CLASS_DOCSTRING = (
+        "Use this class to access the different functions within the SDK. "
+        "You can instantiate any number of clients with different configuration that will propagate to these functions."
+    )
+    FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME = "follow_redirects"
+
+    HEADERS_CONSTRUCTOR_PARAMETER_NAME = "headers"
+    HEADERS_CONSTRUCTOR_PARAMETER_DOCS = "Additional headers to send with every request."
+    HEADERS_MEMBER_NAME = "_headers"
+
+    ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME = "environment"
+    ENVIRONMENT_MEMBER_NAME = "_environment"
+    ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS = "The environment to use for requests from the client."
+
+    BASE_URL_CONSTRUCTOR_PARAMETER_NAME = "base_url"
+    BASE_URL_CONSTRUCTOR_PARAMETER_DOCS = "The base url to use for requests from the client."
+    BASE_URL_MEMBER_NAME = "_base_url"
+
+    CLIENT_ID_CONSTRUCTOR_PARAMETER_DOCS = "The client identifier used for authentication."
+    CLIENT_SECRET_CONSTRUCTOR_PARAMETER_DOCS = "The client secret used for authentication."
+
+    HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME = "httpx_client"
+    HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_DOCS = (
+        "The httpx client to use for making requests, a preconfigured client is used by default, "
+        "however this is useful should you want to pass in any custom httpx configuration."
+    )
+
+    FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_DOCS = (
+        "Whether the default httpx client follows redirects or not, this is irrelevant "
+        "if a custom httpx client is passed in."
+    )
+
+    GET_BASEURL_FUNCTION_NAME = "_get_base_url"
+    TOKEN_GETTER_PARAM_NAME = "_token_getter_override"
+    TOKEN_PARAMETER_NAME = "token"
+
+    _INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME = "inferred_auth_token_provider"
+
+    LOGGING_CONSTRUCTOR_PARAMETER_NAME = "logging"
+    LOGGING_CONSTRUCTOR_PARAMETER_DOCS = (
+        "Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), "
+        "'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. "
+        "You can also pass a pre-configured Logger instance."
+    )
+
+    MAX_RETRIES_CONSTRUCTOR_PARAMETER_NAME = "max_retries"
+
+    STREAM_RECONNECTION_ENABLED_CONSTRUCTOR_PARAMETER_NAME = "stream_reconnection_enabled"
+    STREAM_RECONNECTION_ENABLED_CONSTRUCTOR_PARAMETER_DOCS = (
+        "Whether to automatically reconnect on stream disconnection for resumable streaming endpoints. "
+        "Defaults to True. Per-request `stream_reconnection_enabled` in `request_options` takes precedence over this value."
+    )
+
+    MAX_STREAM_RECONNECTION_ATTEMPTS_CONSTRUCTOR_PARAMETER_NAME = "max_stream_reconnection_attempts"
+    MAX_STREAM_RECONNECTION_ATTEMPTS_CONSTRUCTOR_PARAMETER_DOCS = (
+        "The maximum number of reconnection attempts for resumable streaming endpoints. "
+        "Defaults to no limit. Per-request `max_stream_reconnection_attempts` in `request_options` takes precedence over this value."
+    )
+
+    _RESERVED_CONSTRUCTOR_PARAM_NAMES = {
+        "base_url",
+        "environment",
+        "headers",
+        "timeout",
+        "_timeout",
+        "follow_redirects",
+        "httpx_client",
+        "client_id",
+        "client_secret",
+        "token",
+        "_token_getter_override",
+        "async_token",
+        "logging",
+        "max_retries",
+        "_max_retries",
+    }
+
+    def _get_wrapper_bearer_token_kwarg_name(self, *, client_wrapper_generator: ClientWrapperGenerator) -> str:
+        """
+        Returns the kwarg name for the bearer token parameter on the generated ClientWrapper.
+        """
+        bearer_auth_scheme = client_wrapper_generator._get_bearer_auth_scheme()
+        if bearer_auth_scheme is None:
+            return "token"
+        return names.get_token_constructor_parameter_name(bearer_auth_scheme)
+
+    @staticmethod
+    def _is_literal_type_reference(type_reference: ir_types.TypeReference) -> bool:
+        type_union = type_reference.get_as_union()
+        if type_union.type == "container":
+            container_union = type_union.container.get_as_union()
+            return container_union.type == "literal"
+        return False
+
+    @staticmethod
+    def _is_optional_type_reference(type_reference: ir_types.TypeReference) -> bool:
+        type_union = type_reference.get_as_union()
+        if type_union.type == "container":
+            container_union = type_union.container.get_as_union()
+            return container_union.type == "optional" or container_union.type == "nullable"
+        return False
+
+    @staticmethod
+    def _get_request_property_param_name(
+        request_property: ir_types.RequestProperty,
+    ) -> str:
+        return request_property.property.visit(
+            query=lambda q: resolve_name(get_name_from_wire_value(q.name)).snake_case.safe_name,
+            body=lambda b: resolve_name(get_name_from_wire_value(b.name)).snake_case.safe_name,
+        )
+
+    @staticmethod
+    def _get_request_property_wire_value(
+        request_property: ir_types.RequestProperty,
+    ) -> str:
+        return request_property.property.visit(
+            query=lambda q: get_original_name(get_name_from_wire_value(q.name)),
+            body=lambda b: get_original_name(get_name_from_wire_value(b.name)),
+        )
+
+    def _get_additional_oauth_param_names(self, client_credentials: ir_types.OAuthClientCredentials) -> List[str]:
+        """
+        Returns parameter names for additional token endpoint parameters beyond
+        client_id/client_secret: the scopes property and any required non-literal
+        custom properties.
+        """
+        result: List[str] = []
+        token_request_properties = client_credentials.token_endpoint.request_properties
+
+        if token_request_properties.scopes is not None:
+            result.append(self._get_request_property_param_name(token_request_properties.scopes))
+
+        if token_request_properties.custom_properties is not None:
+            for custom_prop in token_request_properties.custom_properties:
+                prop_type = custom_prop.property.visit(
+                    query=lambda q: q.value_type,
+                    body=lambda b: b.value_type,
+                )
+                if self._is_literal_type_reference(prop_type) or self._is_optional_type_reference(prop_type):
+                    continue
+                # grant_type is synthesized as "client_credentials" in the token
+                # request, so it is never surfaced as a user-supplied option.
+                if self._get_request_property_wire_value(custom_prop) == GRANT_TYPE_WIRE_VALUE:
+                    continue
+                result.append(self._get_request_property_param_name(custom_prop))
+
+        return result
+
+    def __init__(
+        self,
+        *,
+        generated_environment: Optional[GeneratedEnvironment],
+        oauth_scheme: Optional[ir_types.OAuthScheme],
+        **kwargs: Unpack[BaseClientGeneratorKwargs],
+    ):
+        super().__init__(**kwargs)
+
+        self._generated_environment = generated_environment
+        self._oauth_scheme = oauth_scheme
+        self._environments_config = self._context.ir.environments
+
+        client_wrapper_generator = ClientWrapperGenerator(
+            context=self._context,
+            generated_environment=generated_environment,
+        )
+        exclude_auth = self._oauth_scheme is not None
+
+        self._constructor_info = client_wrapper_generator._get_constructor_info(exclude_auth=exclude_auth)
+        self._root_client_constructor_params = self._constructor_info.constructor_parameters
+        if self._context.ir.environments is not None and self._context.ir.environments.default_environment is None:
+            environment_constructor_parameter = client_wrapper_generator._get_environment_constructor_parameter()
+            self._root_client_constructor_params.append(environment_constructor_parameter)
+        elif self._context.ir.environments is None:
+            base_url_constructor_parameter = client_wrapper_generator._get_base_url_constructor_parameter()
+            self._root_client_constructor_params.append(base_url_constructor_parameter)
+
+        self._timeout_constructor_parameter_name = self._get_timeout_constructor_parameter_name(
+            [param.constructor_parameter_name for param in self._root_client_constructor_params]
+        )
+        self._max_retries_constructor_parameter_name = self._get_max_retries_constructor_parameter_name(
+            [param.constructor_parameter_name for param in self._root_client_constructor_params]
+        )
+
+        if self._oauth_scheme is not None:
+            oauth = self._oauth_scheme.configuration.get_as_union()
+            if oauth.type == "clientCredentials":
+                # OAuth client-credentials parameters (client_id/client_secret/token/_token_getter_override)
+                # are handled via `_get_constructor_parameters` so that:
+                # - `token`-only auth works without requiring client_id/client_secret
+                # - env var defaults (if configured) are reflected in the runtime signature
+                # - overload signatures stay consistent with the runtime implementation
+                pass
+
+        exported_client_class_name = self._context.get_class_name_for_exported_root_client()
+        oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+        is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
+        has_inferred_auth = self._get_inferred_auth_scheme() is not None
+
+        # Resolve the actual bearer token parameter name (e.g. "api_key" instead of default "token")
+        bearer_token_param_name = self._get_wrapper_bearer_token_kwarg_name(
+            client_wrapper_generator=client_wrapper_generator
+        )
+
+        base_url_example_value: Optional[AST.Expression] = None
+        if has_inferred_auth:
+            base_url_param = client_wrapper_generator._get_base_url_constructor_parameter()
+            if base_url_param.initializer is not None and isinstance(
+                base_url_param.initializer.expression, AST.CodeWriter
+            ):
+                code_writer = base_url_param.initializer.expression
+                if isinstance(code_writer._code_writer, str):
+                    initializer_str = code_writer._code_writer
+                    prefix = f"{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}="
+                    if initializer_str.startswith(prefix):
+                        base_url_example_value = AST.Expression(initializer_str[len(prefix) :])
+
+        root_client_builder = RootClientGenerator.GeneratedRootClientBuilder(
+            # HACK: This is a hack to get the module path for the root client to be from the root of the project
+            module_path=self._context.get_module_path_in_project(()),
+            class_name=self._context.get_class_name_for_exported_root_client(),
+            async_class_name="Async" + exported_client_class_name,
+            constructor_parameters=(
+                self._get_constructor_parameters(is_async=False)
+                if (has_inferred_auth or is_oauth_client_credentials)
+                else self._root_client_constructor_params
+            ),
+            oauth_token_override=is_oauth_client_credentials,
+            bearer_token_param_name=bearer_token_param_name,
+            # OAuth token-override and inferred-auth SDKs should always use kwargs-style snippets;
+            # positional snippets are unstable and can degrade badly when defaults are expressions
+            # like os.getenv("...").
+            use_kwargs_snippets=(has_inferred_auth or is_oauth_client_credentials),
+            base_url_example_value=base_url_example_value,
+            sync_init_parameters=self._get_constructor_parameters(is_async=False),
+            async_init_parameters=self._get_constructor_parameters(is_async=True),
+            sync_constructor_overloads=self._get_constructor_overloads(is_async=False),
+            async_constructor_overloads=self._get_constructor_overloads(is_async=True),
+        )
+        self._generated_root_client = root_client_builder.build()
+
+    def get_generated_root_client(self) -> GeneratedRootClient:
+        return self._generated_root_client
+
+    def generate(self, source_file: SourceFile) -> None:
+        class_declaration = self._create_class_declaration(
+            is_async=False,
+        )
+        async_class_declaration = self._create_class_declaration(
+            is_async=True,
+        )
+
+        if self._is_default_body_parameter_used:
+            source_file.add_arbitrary_code(AST.CodeWriter(self._write_default_param))
+
+        source_file.add_class_declaration(
+            declaration=class_declaration,
+            should_export=False,
+        )
+        source_file.add_arbitrary_code(AST.CodeWriter(self._write_make_default_async_client))
+        source_file.add_class_declaration(
+            declaration=async_class_declaration,
+            should_export=False,
+        )
+        if self._environments_config is not None:
+            environments_union = self._environments_config.environments.get_as_union()
+            if environments_union.type == "singleBaseUrl":
+                source_file.add_declaration(self._get_base_url_function_declaration(), should_export=False)
+
+    def _write_root_class_docstring(self, writer: AST.NodeWriter, *, is_async: bool) -> None:
+        writer.write_line(self.ROOT_CLASS_DOCSTRING)
+
+        oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+        is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
+
+        # For non client-credentials OAuth, rely on the auto-generated parameter docstring.
+        if not is_oauth_client_credentials:
+            return
+
+        # Custom Parameters section for client-credentials OAuth with token override
+        writer.write_line("")
+        writer.write_line("Parameters")
+        writer.write_line("----------")
+
+        # Use the same constructor parameter definitions that drive the function
+        # signature so types/docs stay in sync with the actual AST.
+        constructor_parameters = self._get_constructor_parameters(is_async=is_async)
+        params_by_name: dict[str, RootClientConstructorParameter] = {
+            param.constructor_parameter_name: param for param in constructor_parameters
+        }
+
+        # Additional oauth params (scopes, custom properties)
+        extra_oauth_param_names: list[str] = (
+            self._get_additional_oauth_param_names(oauth_union)
+            if oauth_union is not None and oauth_union.type == "clientCredentials"
+            else []
+        )
+        str_type_params = {"client_id", "client_secret", *extra_oauth_param_names}
+
+        def write_param_block(param_names: list[str]) -> None:
+            is_first = True
+            for name in param_names:
+                param = params_by_name.get(name)
+                if param is None:
+                    continue
+                if not is_first:
+                    writer.write_line("")
+                is_first = False
+
+                writer.write(f"{param.constructor_parameter_name} : ")
+                if param.type_hint is not None:
+                    if param.constructor_parameter_name in str_type_params:
+                        writer.write_node(AST.TypeHint.str_())
+                    elif param.constructor_parameter_name == RootClientGenerator.TOKEN_PARAMETER_NAME:
+                        writer.write_node(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                    else:
+                        writer.write_node(param.type_hint)
+                if param.docs is not None:
+                    with writer.indent():
+                        writer.write_line(param.docs)
+
+        overload_1_param_names: list[str] = [
+            RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+            "client_id",
+            "client_secret",
+            *extra_oauth_param_names,
+            self._timeout_constructor_parameter_name,
+            self._max_retries_constructor_parameter_name,
+            RootClientGenerator.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME,
+            RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
+        ]
+        writer.write_line("")
+        write_param_block(overload_1_param_names)
+
+        # Separator between overloads, mirroring Examples section style
+        writer.write_line("")
+        writer.write_line("# or ...")
+        writer.write_line("")
+
+        # Overload 2: token
+        overload_2_param_names: list[str] = [
+            RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+            RootClientGenerator.TOKEN_PARAMETER_NAME,
+            self._timeout_constructor_parameter_name,
+            self._max_retries_constructor_parameter_name,
+            RootClientGenerator.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME,
+            RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
+        ]
+        write_param_block(overload_2_param_names)
+        writer.write_line("")
+
+    def _create_class_declaration(
+        self,
+        *,
+        is_async: bool,
+    ) -> AST.ClassDeclaration:
+        constructor_parameters = self._get_constructor_parameters(is_async=is_async)
+
+        named_parameters = [
+            AST.NamedFunctionParameter(
+                name=param.constructor_parameter_name,
+                type_hint=param.type_hint,
+                initializer=param.initializer,
+                docs=param.docs,
+            )
+            for param in constructor_parameters
+        ]
+
+        # Build snippet(s) for the docstring examples
+        instantiations = (
+            self._generated_root_client.async_instantiations
+            if is_async
+            else self._generated_root_client.sync_instantiations
+        )
+        snippet_parts: List[str] = []
+        for instantiation in instantiations:
+            snippet = self._context.source_file_factory.create_snippet()
+            snippet.add_expression(instantiation)
+            snippet_parts.append(snippet.to_str())
+        combined_snippet = "\n# or ...\n\n".join(snippet_parts)
+
+        # Generate constructor overloads for OAuth token override
+        constructor_overloads = self._get_constructor_overloads(is_async=is_async)
+
+        oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+        is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
+        write_parameter_docstring = not is_oauth_client_credentials
+
+        class_declaration = AST.ClassDeclaration(
+            name=self._async_class_name if is_async else self._class_name,
+            constructor=AST.ClassConstructor(
+                signature=AST.FunctionSignature(
+                    named_parameters=named_parameters,
+                ),
+                body=AST.CodeWriter(
+                    self._get_write_constructor_body(is_async=is_async),
+                ),
+                overloads=constructor_overloads,
+            ),
+            docstring=AST.Docstring(
+                lambda writer, is_async=is_async: self._write_root_class_docstring(writer, is_async=is_async)
+            ),
+            snippet=combined_snippet,
+            write_parameter_docstring=write_parameter_docstring,
+        )
+
+        if self._package.service is not None:
+            class_declaration.add_method(self._create_with_raw_response_method(is_async=is_async))
+            service = self._context.ir.services[self._package.service]
+            for endpoint in service.endpoints:
+                # Handle stream parameter endpoints specially to ensure all overloads are included
+                if self._is_stream_parameter_endpoint(endpoint):
+                    endpoint_generator = EndpointFunctionGenerator(
+                        context=self._context,
+                        package=self._package,
+                        service=service,
+                        endpoint=endpoint,
+                        idempotency_headers=self._context.ir.idempotency_headers,
+                        is_async=is_async,
+                        client_wrapper_member_name=f"{self._get_raw_client_member_name()}.{self._get_client_wrapper_member_name()}",
+                        generated_root_client=self._generated_root_client,
+                        snippet_writer=self._snippet_writer,
+                        endpoint_metadata_collector=self._endpoint_metadata_collector,
+                        is_raw_client=False,
+                    )
+
+                    # Generate all functions (overloads + implementation)
+                    generated_endpoint_functions = endpoint_generator.generate()
+
+                    # Check if any generated function needs DEFAULT_BODY_PARAMETER
+                    for generated_function in generated_endpoint_functions:
+                        if generated_function.is_default_body_parameter_used:
+                            self._is_default_body_parameter_used = True
+                            break
+
+                    # Add all overloads first
+                    for overload_function in generated_endpoint_functions[:-1]:
+                        class_declaration.add_method(overload_function.function)
+
+                    # Then add the implementation
+                    class_declaration.add_method(generated_endpoint_functions[-1].function)
+                else:
+                    # For non-stream parameter endpoints, use the regular approach
+                    wrapper_method = self._create_wrapper_method(
+                        endpoint=endpoint,
+                        is_async=is_async,
+                        generated_root_client=self._generated_root_client,
+                    )
+                    class_declaration.add_method(wrapper_method)
+
+        self._generate_lazy_import_properties(class_declaration=class_declaration, is_async=is_async)
+
+        return class_declaration
+
+    def _get_base_url_function_declaration(self) -> AST.FunctionDeclaration:
+        return AST.FunctionDeclaration(
+            name=RootClientGenerator.GET_BASEURL_FUNCTION_NAME,
+            signature=AST.FunctionSignature(
+                named_parameters=[
+                    AST.NamedFunctionParameter(
+                        name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS,
+                    ),
+                    AST.NamedFunctionParameter(
+                        name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
+                        type_hint=(
+                            AST.TypeHint(self._context.get_reference_to_environments_class())
+                            if self._environments_config is not None
+                            and self._environments_config.default_environment is not None
+                            else AST.TypeHint.optional(
+                                AST.TypeHint(self._context.get_reference_to_environments_class())
+                            )
+                        ),
+                        docs="The environment to be used as the base url, can be used in lieu of 'base_url'.",
+                    ),
+                ],
+                return_type=AST.TypeHint.str_(),
+            ),
+            body=AST.CodeWriter(self._write_get_base_url_function),
+        )
+
+    def get_raw_client_class_name(self, *, is_async: bool) -> str:
+        return (
+            self._context.get_class_name_for_generated_async_raw_root_client()
+            if is_async
+            else self._context.get_class_name_for_generated_raw_root_client()
+        )
+
+    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.ClassReference:
+        return (
+            self._context.get_async_raw_client_class_reference_for_root_client()
+            if is_async
+            else self._context.get_raw_client_class_reference_for_root_client()
+        )
+
+    def _get_constructor_parameters(self, *, is_async: bool) -> List[RootClientConstructorParameter]:
+        parameters: List[RootClientConstructorParameter] = []
+
+        environments_config = self._context.ir.environments
+        # If no environments, client should only provide base_url argument
+        if environments_config is None:
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+                    type_hint=AST.TypeHint.str_(),
+                    private_member_name=None,
+                    initializer=None,
+                    docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS,
+                )
+            )
+        # If single url environment present, client should provide both base_url and environment arguments
+        elif environments_config.environments.get_as_union().type == "singleBaseUrl":
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                    private_member_name=None,
+                    initializer=AST.Expression("None"),
+                    exclude_from_wrapper_construction=True,
+                    docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS,
+                )
+            )
+            default_environment = (
+                AST.Expression(
+                    environments_config.environments.visit(
+                        single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
+                            context=self._context,
+                            environments=single_base_url_environments,
+                        ).get_reference_to_default_environment(),
+                        multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
+                            context=self._context,
+                            environments=multiple_base_urls_environments,
+                        ).get_reference_to_default_environment(),
+                    )
+                )
+                if environments_config.default_environment is not None
+                else None
+            )
+            environment_docs = f"{RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS}"
+            if default_environment is not None:
+                snippet = self._context.source_file_factory.create_snippet()
+
+                def write_default_environment(writer: AST.NodeWriter) -> None:
+                    writer.write("Defaults to ")
+                    writer.write_node(default_environment)  # type: ignore
+
+                snippet.add_arbitrary_code(AST.CodeWriter(code_writer=write_default_environment))
+                environment_docs += f" {snippet.to_str()}"
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
+                    type_hint=(
+                        AST.TypeHint(self._context.get_reference_to_environments_class())
+                        if environments_config.default_environment is not None
+                        else AST.TypeHint.optional(AST.TypeHint(self._context.get_reference_to_environments_class()))
+                    ),
+                    private_member_name=None,
+                    initializer=(default_environment if default_environment is not None else None),
+                    exclude_from_wrapper_construction=True,
+                    docs=environment_docs,
+                ),
+            )
+        # If multi url environment present, client should provide only environment argument
+        elif environments_config.environments.get_as_union().type == "multipleBaseUrls":
+            default_environment = (
+                AST.Expression(
+                    environments_config.environments.visit(
+                        single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
+                            context=self._context,
+                            environments=single_base_url_environments,
+                        ).get_reference_to_default_environment(),
+                        multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
+                            context=self._context,
+                            environments=multiple_base_urls_environments,
+                        ).get_reference_to_default_environment(),
+                    )
+                )
+                if environments_config.default_environment is not None
+                else None
+            )
+            environment_docs = f"{RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS}"
+            if default_environment is not None:
+                snippet = self._context.source_file_factory.create_snippet()
+
+                def write_default_environment(writer: AST.NodeWriter) -> None:
+                    writer.write("Defaults to ")
+                    writer.write_node(default_environment)  # type: ignore
+
+                snippet.add_arbitrary_code(AST.CodeWriter(code_writer=write_default_environment))
+                environment_docs += f" {snippet.to_str()}"
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
+                    type_hint=AST.TypeHint(self._context.get_reference_to_environments_class()),
+                    private_member_name=None,
+                    initializer=(default_environment if default_environment is not None else None),
+                    docs=environment_docs,
+                ),
+            )
+
+        server_variables = self._get_server_variables()
+        for var in server_variables:
+            param_name = self._get_server_variable_param_name(var)
+            default_value = var.default or ""
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=param_name,
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                    private_member_name=None,
+                    initializer=AST.Expression("None"),
+                    exclude_from_wrapper_construction=True,
+                    docs=f"Server URL variable for '{var.id}'. Defaults to '{default_value}'.",
+                )
+            )
+
+        client_wrapper_generator = ClientWrapperGenerator(
+            context=self._context,
+            generated_environment=self._generated_environment,
+        )
+        exclude_auth = self._oauth_scheme is not None
+        for param in client_wrapper_generator._get_constructor_info(exclude_auth=exclude_auth).constructor_parameters:
+            # auth_headers is an internal knob used for inferred auth; users should not need to provide it.
+            if param.constructor_parameter_name == ClientWrapperGenerator.AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME:
+                continue
+            parm_type_hint = param.type_hint
+            add_validation = False
+            if param.environment_variable is not None and not param.type_hint.is_optional:
+                add_validation = True
+                parm_type_hint = AST.TypeHint.optional(parm_type_hint)
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=param.constructor_parameter_name,
+                    type_hint=parm_type_hint,
+                    initializer=(
+                        AST.Expression("None")
+                        if (
+                            self._prefer_explicit_auth_enabled()
+                            and param.is_basic
+                            and param.environment_variable is not None
+                            and parm_type_hint.is_optional
+                        )
+                        else self._get_root_client_param_initializer(param)
+                    ),
+                    docs=param.docs,
+                    validation_check=(
+                        AST.Expression(
+                            AST.CodeWriter(
+                                self._get_parameter_validation_writer(
+                                    param_name=param.constructor_parameter_name,
+                                    environment_variable=param.environment_variable,
+                                )
+                            )
+                        )
+                        if add_validation and param.environment_variable is not None
+                        else None
+                    ),
+                )
+            )
+
+        # For async clients with bearer auth (non-OAuth), expose an async_token parameter
+        # so users can supply an async token provider that won't block the event loop.
+        if is_async and self._oauth_scheme is None and client_wrapper_generator._get_bearer_auth_scheme() is not None:
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME,
+                    type_hint=AST.TypeHint.optional(
+                        AST.TypeHint.callable(
+                            parameters=[],
+                            return_type=AST.TypeHint.awaitable(AST.TypeHint.str_()),
+                        )
+                    ),
+                    initializer=AST.Expression(AST.TypeHint.none()),
+                    exclude_from_wrapper_construction=True,
+                    docs=(
+                        "An async callable that returns a bearer token. Use this when token acquisition "
+                        "involves async I/O (e.g., refreshing tokens via an async HTTP client). "
+                        "When provided, this is used instead of the synchronous token for async requests."
+                    ),
+                )
+            )
+
+        inferred_auth_scheme = self._get_inferred_auth_scheme()
+        if inferred_auth_scheme is not None:
+            for cred_prop in self._get_inferred_auth_credential_properties(inferred_auth_scheme):
+                if cred_prop.is_literal:
+                    continue
+                type_hint = AST.TypeHint.str_()
+                if cred_prop.is_optional:
+                    type_hint = AST.TypeHint.optional(type_hint)
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=cred_prop.constructor_param_name,
+                        type_hint=type_hint,
+                        initializer=(AST.Expression("None") if cred_prop.is_optional else None),
+                        docs="Credential used for inferred authentication.",
+                        exclude_from_wrapper_construction=True,
+                    )
+                )
+
+        if self._oauth_scheme is not None:
+            oauth = self._oauth_scheme.configuration.get_as_union()
+            if oauth.type == "clientCredentials":
+                # In some IR configurations (e.g. `auth: any`), other auth schemes or global
+                # variables may introduce parameters named `client_id`/`client_secret`. For
+                # OAuth token-override mode, we must ensure these are treated as optional
+                # (so `token`-only instantiation works), and that any env-var defaults are
+                # reflected in the runtime signature.
+                parameters = [
+                    param
+                    for param in parameters
+                    if param.constructor_parameter_name not in {"client_id", "client_secret"}
+                ]
+                # For OAuth client credentials, make client_id/client_secret optional
+                # so users can provide a token directly instead
+                # client_id is optional with env var fallback
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name="client_id",
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        initializer=(
+                            self._get_os_getenv_expression(oauth.client_id_env_var)
+                            if oauth.client_id_env_var is not None and not self._prefer_explicit_auth_enabled()
+                            else AST.Expression("None")
+                        ),
+                        docs=RootClientGenerator.CLIENT_ID_CONSTRUCTOR_PARAMETER_DOCS,
+                    ),
+                )
+                # client_secret is optional with env var fallback
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name="client_secret",
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        initializer=(
+                            self._get_os_getenv_expression(oauth.client_secret_env_var)
+                            if oauth.client_secret_env_var is not None and not self._prefer_explicit_auth_enabled()
+                            else AST.Expression("None")
+                        ),
+                        docs=RootClientGenerator.CLIENT_SECRET_CONSTRUCTOR_PARAMETER_DOCS,
+                    ),
+                )
+                # Add additional OAuth token endpoint params (scopes, custom properties)
+                for extra_param_name in self._get_additional_oauth_param_names(oauth):
+                    parameters.append(
+                        RootClientConstructorParameter(
+                            constructor_parameter_name=extra_param_name,
+                            type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                            initializer=AST.Expression("None"),
+                        ),
+                    )
+                # Add the token parameter for direct token authentication
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=self.TOKEN_PARAMETER_NAME,
+                        type_hint=AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
+                        initializer=AST.Expression("None"),
+                        docs=(
+                            "Authenticate by providing a pre-generated bearer token, or a callable that returns one. "
+                            "In this mode, OAuth client credentials are not required."
+                        ),
+                    ),
+                )
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=self.TOKEN_GETTER_PARAM_NAME,
+                    type_hint=AST.TypeHint.optional(
+                        AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
+                    ),
+                    initializer=AST.Expression("None"),
+                ),
+            )
+
+        resolved_timeout = self._context.custom_config.resolved_timeout
+        timeout_phrase = (
+            f"the timeout is {resolved_timeout} seconds"
+            if isinstance(resolved_timeout, int)
+            else "there is no timeout set"
+        )
+        parameters.append(
+            RootClientConstructorParameter(
+                constructor_parameter_name=self._timeout_constructor_parameter_name,
+                type_hint=AST.TypeHint.optional(AST.TypeHint.float_()),
+                docs=f"The timeout to be used, in seconds, for requests. By default {timeout_phrase}, unless a custom httpx client is used, in which case this default is not enforced.",
+            )
+        )
+
+        parameters.append(
+            RootClientConstructorParameter(
+                constructor_parameter_name=self._max_retries_constructor_parameter_name,
+                type_hint=AST.TypeHint.optional(AST.TypeHint.int_()),
+                docs=(
+                    f"The default maximum number of retries for failed requests. "
+                    f"Defaults to {self._context.custom_config.default_max_retries}. "
+                    f"Per-request `max_retries` in `request_options` takes precedence over this value."
+                ),
+            )
+        )
+
+        parameters.append(
+            RootClientConstructorParameter(
+                constructor_parameter_name=self.STREAM_RECONNECTION_ENABLED_CONSTRUCTOR_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(AST.TypeHint.bool_()),
+                docs=self.STREAM_RECONNECTION_ENABLED_CONSTRUCTOR_PARAMETER_DOCS,
+            )
+        )
+
+        parameters.append(
+            RootClientConstructorParameter(
+                constructor_parameter_name=self.MAX_STREAM_RECONNECTION_ATTEMPTS_CONSTRUCTOR_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(AST.TypeHint.int_()),
+                docs=self.MAX_STREAM_RECONNECTION_ATTEMPTS_CONSTRUCTOR_PARAMETER_DOCS,
+            )
+        )
+
+        parameters.append(
+            RootClientConstructorParameter(
+                constructor_parameter_name=self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(AST.TypeHint.bool_()),
+                docs="Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.",
+                # This config is optional in the event httpx ever changes it's default behavior, we stay up to date with
+                # that as opposed to forming an opinion on what the default should be.
+                initializer=AST.Expression(
+                    "True"
+                    if self._context.custom_config.follow_redirects_by_default == True
+                    else ("False" if self._context.custom_config.follow_redirects_by_default == False else "None")
+                ),
+            )
+        )
+
+        parameters.append(
+            RootClientConstructorParameter(
+                constructor_parameter_name=RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
+                type_hint=(
+                    AST.TypeHint.optional(AST.TypeHint(HttpX.CLIENT))
+                    if not is_async
+                    else AST.TypeHint.optional(AST.TypeHint(HttpX.ASYNC_CLIENT))
+                ),
+                private_member_name=None,
+                initializer=AST.Expression(AST.TypeHint.none()),
+                docs=RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_DOCS,
+            )
+        )
+
+        # Expose an http_client transport override when custom_transport is enabled
+        if self._context.custom_config.custom_transport:
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name="http_client",
+                    type_hint=(
+                        AST.TypeHint.optional(AST.TypeHint(HttpX.BASE_TRANSPORT))
+                        if not is_async
+                        else AST.TypeHint.optional(AST.TypeHint(HttpX.ASYNC_BASE_TRANSPORT))
+                    ),
+                    private_member_name=None,
+                    initializer=AST.Expression(AST.TypeHint.none()),
+                    docs=(
+                        "Override the httpx transport used by the client. "
+                        "This is intended for SDK developers via custom code (e.g., factory methods)."
+                    ),
+                )
+            )
+
+        log_config_ref = self._context.core_utilities.get_reference_to_log_config()
+        logger_ref = self._context.core_utilities.get_reference_to_logger()
+        parameters.append(
+            RootClientConstructorParameter(
+                constructor_parameter_name=RootClientGenerator.LOGGING_CONSTRUCTOR_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(
+                    AST.TypeHint.union(
+                        AST.TypeHint(log_config_ref),
+                        AST.TypeHint(logger_ref),
+                    )
+                ),
+                private_member_name=None,
+                initializer=AST.Expression(AST.TypeHint.none()),
+                docs=RootClientGenerator.LOGGING_CONSTRUCTOR_PARAMETER_DOCS,
+            )
+        )
+
+        parameters.extend(self._get_literal_header_parameters())
+
+        return parameters
+
+    def _prefer_explicit_auth_enabled(self) -> bool:
+        """
+        Whether explicitly provided constructor auth credentials should take precedence
+        over environment-variable defaults when selecting the auth scheme. Only applies
+        to OAuth client-credentials token-override mode alongside a basic auth scheme.
+        """
+        if not self._context.custom_config.prefer_explicit_auth:
+            return False
+        if self._context.ir.auth.requirement != ir_types.AuthSchemesRequirement.ANY:
+            return False
+        if len(self._context.ir.auth.schemes) <= 1:
+            return False
+        if self._oauth_scheme is None:
+            return False
+        oauth = self._oauth_scheme.configuration.get_as_union()
+        if oauth.type != "clientCredentials":
+            return False
+        client_wrapper_generator = ClientWrapperGenerator(
+            context=self._context,
+            generated_environment=self._generated_environment,
+        )
+        basic_auth_scheme = client_wrapper_generator._get_basic_auth_scheme()
+        if basic_auth_scheme is None:
+            return False
+        # At least one basic credential must surface as a constructor parameter for
+        # "explicitly provided basic auth" to be expressible.
+        return basic_auth_scheme.username_omit is not True or basic_auth_scheme.password_omit is not True
+
+    def _get_os_getenv_expression(self, environment_variable: str) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                    qualified_name_excluding_import=("getenv",),
+                ),
+                args=[AST.Expression(f'"{environment_variable}"')],
+            )
+        )
+
+    def _get_root_client_param_initializer(self, param: ConstructorParameter) -> Optional[AST.Expression]:
+        if param.environment_variable is not None:
+            getenv_args = [AST.Expression(f'"{param.environment_variable}"')]
+            # Only use client_default as os.getenv fallback, NOT the generic initializer
+            # (which may be a snippet placeholder like token="YOUR_TOKEN")
+            if param.client_default is not None:
+                getenv_args.append(param.client_default)
+            return AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=AST.Reference(
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                        qualified_name_excluding_import=("getenv",),
+                    ),
+                    args=getenv_args,
+                )
+            )
+        if param.client_default is not None:
+            return param.client_default
+        return None
+
+    def _get_parameter_validation_writer(self, *, param_name: str, environment_variable: str) -> CodeWriterFunction:
+        def _write_parameter_validation(writer: AST.NodeWriter) -> None:
+            writer.write_line(f"if {param_name} is None:")
+            writer.indent()
+            writer.write("raise ")
+            writer.write_node(
+                self._context.core_utilities.instantiate_api_error(
+                    headers=None,
+                    status_code=None,
+                    body=AST.Expression(
+                        f'"The client must be instantiated be either passing in {param_name} or setting {environment_variable}"'
+                    ),
+                )
+            )
+            writer.outdent()
+            writer.write_newline_if_last_line_not()
+
+        return _write_parameter_validation
+
+    def _get_literal_header_parameters(self) -> List[RootClientConstructorParameter]:
+        parameters: List[RootClientConstructorParameter] = []
+        for header in self._context.ir.headers:
+            type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(header.value_type)
+            if not type_hint.is_literal:
+                continue
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=resolve_name(get_name_from_wire_value(header.name)).snake_case.safe_name,
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                    initializer=AST.Expression(AST.TypeHint.none()),
+                )
+            )
+        return parameters
+
+    def _get_constructor_overloads(self, *, is_async: bool) -> Optional[List[AST.FunctionSignature]]:
+        """
+        Generate constructor overloads for OAuth client credentials.
+        Returns two overload signatures:
+        1. OAuth client credentials: client_id + client_secret (required, or optional if env vars configured)
+        2. Direct token: token (required)
+        """
+        if self._oauth_scheme is None:
+            return None
+
+        oauth = self._oauth_scheme.configuration.get_as_union()
+        if oauth.type != "clientCredentials":
+            return None
+
+        # Get base parameters (everything except OAuth-specific params)
+        base_params = self._get_non_oauth_constructor_parameters(is_async=is_async)
+
+        # Overload 1: OAuth client credentials
+        # If env vars are configured, make parameters optional with os.getenv() defaults
+        # Otherwise, keep them required
+        client_id_param: AST.NamedFunctionParameter
+        client_secret_param: AST.NamedFunctionParameter
+
+        if oauth.client_id_env_var is not None:
+            # When there is an environment variable default, model client_id
+            # as optional to match os.getenv() return type for mypy compatibility.
+            client_id_param = AST.NamedFunctionParameter(
+                name="client_id",
+                type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                initializer=(
+                    AST.Expression("None")
+                    if self._prefer_explicit_auth_enabled()
+                    else self._get_os_getenv_expression(oauth.client_id_env_var)
+                ),
+            )
+        else:
+            client_id_param = AST.NamedFunctionParameter(
+                name="client_id",
+                type_hint=AST.TypeHint.str_(),
+            )
+
+        if oauth.client_secret_env_var is not None:
+            # Same idea as client_id: use optional type to match os.getenv()
+            # return type for mypy compatibility.
+            client_secret_param = AST.NamedFunctionParameter(
+                name="client_secret",
+                type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                initializer=(
+                    AST.Expression("None")
+                    if self._prefer_explicit_auth_enabled()
+                    else self._get_os_getenv_expression(oauth.client_secret_env_var)
+                ),
+            )
+        else:
+            client_secret_param = AST.NamedFunctionParameter(
+                name="client_secret",
+                type_hint=AST.TypeHint.str_(),
+            )
+
+        extra_oauth_params = [
+            AST.NamedFunctionParameter(
+                name=extra_name,
+                type_hint=AST.TypeHint.str_(),
+            )
+            for extra_name in self._get_additional_oauth_param_names(oauth)
+        ]
+        oauth_params = base_params + [client_id_param, client_secret_param] + extra_oauth_params
+        oauth_signature = AST.FunctionSignature(named_parameters=oauth_params)
+
+        # Overload 2: Direct token (token required)
+        token_params = base_params + [
+            AST.NamedFunctionParameter(
+                name=self.TOKEN_PARAMETER_NAME,
+                type_hint=ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT,
+            ),
+        ]
+        token_signature = AST.FunctionSignature(named_parameters=token_params)
+
+        return [oauth_signature, token_signature]
+
+    def _get_non_oauth_constructor_parameters(self, *, is_async: bool) -> List[AST.NamedFunctionParameter]:
+        """Get constructor parameters excluding OAuth-specific ones (client_id, client_secret, token, extra oauth params)."""
+        oauth_param_names = {
+            "client_id",
+            "client_secret",
+            self.TOKEN_PARAMETER_NAME,
+            self.TOKEN_GETTER_PARAM_NAME,
+        }
+        if self._oauth_scheme is not None:
+            oauth_config = self._oauth_scheme.configuration.get_as_union()
+            if oauth_config.type == "clientCredentials":
+                for extra_name in self._get_additional_oauth_param_names(oauth_config):
+                    oauth_param_names.add(extra_name)
+        all_params = self._get_constructor_parameters(is_async=is_async)
+        return [
+            AST.NamedFunctionParameter(
+                name=param.constructor_parameter_name,
+                type_hint=param.type_hint,
+                initializer=param.initializer,
+                docs=param.docs,
+            )
+            for param in all_params
+            if param.constructor_parameter_name not in oauth_param_names
+        ]
+
+    def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
+        def _write_constructor_body(writer: AST.NodeWriter) -> None:
+            timeout_local_variable = "_defaulted_timeout"
+            resolved_timeout = self._context.custom_config.resolved_timeout
+            writer.write(f"{timeout_local_variable} = ")
+            writer.write_node(
+                AST.Expression(
+                    AST.ConditionalExpression(
+                        left=AST.Expression(f"{self._timeout_constructor_parameter_name}"),
+                        right=AST.ConditionalExpression(
+                            left=(
+                                AST.Expression(f"{resolved_timeout}")
+                                if isinstance(resolved_timeout, int)
+                                else AST.Expression(AST.TypeHint.none())
+                            ),
+                            right=AST.Expression(AST.TypeHint.none()),
+                            test=AST.Expression(
+                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is None"
+                            ),
+                        ),
+                        test=AST.Expression(f"{self._timeout_constructor_parameter_name} is not None"),
+                    ),
+                ),
+            )
+
+            max_retries_local_variable = "_defaulted_max_retries"
+            writer.write(f"{max_retries_local_variable} = ")
+            writer.write_node(
+                AST.Expression(
+                    AST.ConditionalExpression(
+                        left=AST.Expression(f"{self._max_retries_constructor_parameter_name}"),
+                        right=AST.Expression(str(self._context.custom_config.default_max_retries)),
+                        test=AST.Expression(f"{self._max_retries_constructor_parameter_name} is not None"),
+                    ),
+                ),
+            )
+
+            constructor_parameters = self._get_constructor_parameters(is_async=is_async)
+            for param in constructor_parameters:
+                if param.validation_check is not None:
+                    writer.write_node(param.validation_check)
+
+            self._write_url_template_interpolation(writer)
+
+            transport_var_name: typing.Optional[str] = None
+            if self._context.custom_config.custom_transport:
+                transport_var_name = "http_client"
+
+            client_wrapper_generator = ClientWrapperGenerator(
+                context=self._context,
+                generated_environment=self._generated_environment,
+            )
+            use_oauth_token_provider = self._oauth_scheme is not None
+            oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+            is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
+            inferred_auth_scheme = self._get_inferred_auth_scheme()
+
+            if use_oauth_token_provider and is_oauth_client_credentials:
+                # OAuth client credentials mode: users can provide either token OR client_id/client_secret
+                self._write_oauth_token_override_constructor_body(
+                    writer=writer,
+                    client_wrapper_generator=client_wrapper_generator,
+                    timeout_local_variable=timeout_local_variable,
+                    max_retries_local_variable=max_retries_local_variable,
+                    is_async=is_async,
+                    constructor_parameters=constructor_parameters,
+                    transport_variable_name=transport_var_name,
+                )
+            elif use_oauth_token_provider:
+                # Standard OAuth mode
+                client_wrapper_constructor_kwargs = self._get_client_wrapper_kwargs(
+                    client_wrapper_generator=client_wrapper_generator,
+                    environments_config=self._environments_config,
+                    timeout_local_variable=timeout_local_variable,
+                    max_retries_local_variable=max_retries_local_variable,
+                    is_async=is_async,
+                    ignore_httpx_constructor_parameter=True,
+                    exclude_auth=True,
+                    transport_variable_name=transport_var_name,
+                )
+                writer.write("oauth_token_provider = ")
+                oauth_token_provider_class = (
+                    self._context.core_utilities.get_async_oauth_token_provider()
+                    if is_async
+                    else self._context.core_utilities.get_oauth_token_provider()
+                )
+                oauth_tp_kwargs = [
+                    (
+                        "client_id",
+                        AST.Expression("client_id"),
+                    ),
+                    (
+                        "client_secret",
+                        AST.Expression("client_secret"),
+                    ),
+                ]
+                if oauth_union is not None and oauth_union.type == "clientCredentials":
+                    for extra_param_name in self._get_additional_oauth_param_names(oauth_union):
+                        oauth_tp_kwargs.append(
+                            (extra_param_name, AST.Expression(extra_param_name)),
+                        )
+                oauth_tp_kwargs.append(
+                    (
+                        "client_wrapper",
+                        AST.Expression(
+                            AST.ClassInstantiation(
+                                class_=self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                                kwargs=client_wrapper_constructor_kwargs,
+                            ),
+                        ),
+                    ),
+                )
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        class_=oauth_token_provider_class,
+                        kwargs=oauth_tp_kwargs,
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+                client_wrapper_constructor_kwargs = self._get_client_wrapper_kwargs(
+                    client_wrapper_generator=client_wrapper_generator,
+                    environments_config=self._environments_config,
+                    timeout_local_variable=timeout_local_variable,
+                    max_retries_local_variable=max_retries_local_variable,
+                    is_async=is_async,
+                    use_oauth_token_provider=use_oauth_token_provider,
+                    transport_variable_name=transport_var_name,
+                )
+                for param in constructor_parameters:
+                    if param.private_member_name is not None:
+                        writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+                writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                        kwargs=client_wrapper_constructor_kwargs,
+                    )
+                )
+            else:
+                # No OAuth
+                client_wrapper_constructor_kwargs = self._get_client_wrapper_kwargs(
+                    client_wrapper_generator=client_wrapper_generator,
+                    environments_config=self._environments_config,
+                    timeout_local_variable=timeout_local_variable,
+                    max_retries_local_variable=max_retries_local_variable,
+                    is_async=is_async,
+                    use_oauth_token_provider=use_oauth_token_provider,
+                    transport_variable_name=transport_var_name,
+                )
+                if inferred_auth_scheme is not None:
+                    inferred_auth_client_wrapper_kwargs = self._get_client_wrapper_kwargs(
+                        client_wrapper_generator=client_wrapper_generator,
+                        environments_config=self._environments_config,
+                        timeout_local_variable=timeout_local_variable,
+                        max_retries_local_variable=max_retries_local_variable,
+                        is_async=is_async,
+                        exclude_auth=True,
+                        transport_variable_name=transport_var_name,
+                    )
+                    inferred_auth_provider_class = (
+                        self._context.core_utilities.get_async_inferred_auth_token_provider()
+                        if is_async
+                        else self._context.core_utilities.get_inferred_auth_token_provider()
+                    )
+                    inferred_auth_credentials = self._get_inferred_auth_credential_properties(inferred_auth_scheme)
+                    inferred_auth_provider_kwargs: List[typing.Tuple[str, AST.Expression]] = []
+                    for cred in inferred_auth_credentials:
+                        if cred.is_literal:
+                            continue
+                        inferred_auth_provider_kwargs.append(
+                            (
+                                cred.field_name,
+                                AST.Expression(cred.constructor_param_name),
+                            )
+                        )
+                    inferred_auth_provider_kwargs.append(
+                        (
+                            "client_wrapper",
+                            AST.Expression(
+                                AST.ClassInstantiation(
+                                    class_=self._context.core_utilities.get_reference_to_client_wrapper(
+                                        is_async=is_async
+                                    ),
+                                    kwargs=inferred_auth_client_wrapper_kwargs,
+                                )
+                            ),
+                        )
+                    )
+                    writer.write(f"{self._INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME} = ")
+                    writer.write_node(
+                        AST.ClassInstantiation(
+                            class_=inferred_auth_provider_class,
+                            kwargs=inferred_auth_provider_kwargs,
+                        )
+                    )
+                    writer.write_newline_if_last_line_not()
+                    if is_async:
+                        client_wrapper_constructor_kwargs.append(
+                            (
+                                ClientWrapperGenerator.ASYNC_AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME,
+                                AST.Expression(f"{self._INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME}.get_headers"),
+                            )
+                        )
+                    else:
+                        client_wrapper_constructor_kwargs.append(
+                            (
+                                ClientWrapperGenerator.AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME,
+                                AST.Expression(f"{self._INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME}.get_headers"),
+                            )
+                        )
+                for param in constructor_parameters:
+                    if param.private_member_name is not None:
+                        writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+                writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                        kwargs=client_wrapper_constructor_kwargs,
+                    )
+                )
+
+            if self._package.service is not None:
+                writer.write_newline_if_last_line_not()
+                writer.write_node(
+                    AST.VariableDeclaration(
+                        name=f"self.{self._get_raw_client_member_name()}",
+                        initializer=AST.Expression(
+                            AST.ClassInstantiation(
+                                class_=(
+                                    self._context.get_async_raw_client_class_reference_for_root_client()
+                                    if is_async
+                                    else self._context.get_raw_client_class_reference_for_root_client()
+                                ),
+                                kwargs=[
+                                    (
+                                        "client_wrapper",
+                                        AST.Expression(f"self.{self._get_client_wrapper_member_name()}"),
+                                    ),
+                                ],
+                            )
+                        ),
+                    )
+                )
+            writer.write_newline_if_last_line_not()
+
+            self._initialize_nested_clients(writer=writer, is_async=is_async, declare_client_wrapper=False)
+
+        return _write_constructor_body
+
+    def _get_inferred_auth_scheme(self) -> Optional[ir_types.InferredAuthScheme]:
+        # We currently only support wiring inferred auth at the root-client level when it is the
+        # *sole* auth scheme for the SDK. If multiple auth schemes are present (e.g. `auth: any`),
+        # we cannot safely infer which credentials should be required in the constructor.
+        if len(self._context.ir.auth.schemes) != 1:
+            return None
+        maybe_inferred_auth_scheme = next(
+            (scheme for scheme in self._context.ir.auth.schemes if scheme.get_as_union().type == "inferred"),
+            None,
+        )
+        return (
+            maybe_inferred_auth_scheme.visit(
+                bearer=lambda _: None,
+                basic=lambda _: None,
+                header=lambda _: None,
+                oauth=lambda _: None,
+                inferred=lambda inferred: inferred,
+            )
+            if maybe_inferred_auth_scheme is not None
+            else None
+        )
+
+    def _get_inferred_auth_credential_properties(
+        self, inferred_auth_scheme: ir_types.InferredAuthScheme
+    ) -> List[CredentialProperty]:
+        return InferredAuthTokenProviderGenerator(
+            context=self._context,
+            inferred_auth_scheme=inferred_auth_scheme,
+        ).get_credential_properties()
+
+    def _get_endpoint_security_inferred_auth_scheme(
+        self,
+    ) -> Optional[ir_types.InferredAuthScheme]:
+        # In endpoint-security mode the client must carry credentials for every scheme so that
+        # per-endpoint routing can satisfy any endpoint's declared requirement. The inferred-auth
+        # provider therefore has to be wired even when it is NOT the sole scheme (which the
+        # `_get_inferred_auth_scheme` helper deliberately excludes). This variant returns the
+        # inferred scheme regardless of how many other schemes exist, but only under
+        # ENDPOINT_SECURITY — constructor-parameter derivation still uses the guarded helper, so
+        # the inferred credentials are supplied by the other schemes' params (e.g. OAuth's
+        # client_id/client_secret) rather than being added twice.
+        if self._context.ir.auth.requirement != ir_types.AuthSchemesRequirement.ENDPOINT_SECURITY:
+            return None
+        maybe_inferred_auth_scheme = next(
+            (scheme for scheme in self._context.ir.auth.schemes if scheme.get_as_union().type == "inferred"),
+            None,
+        )
+        return (
+            maybe_inferred_auth_scheme.visit(
+                bearer=lambda _: None,
+                basic=lambda _: None,
+                header=lambda _: None,
+                oauth=lambda _: None,
+                inferred=lambda inferred: inferred,
+            )
+            if maybe_inferred_auth_scheme is not None
+            else None
+        )
+
+    def _write_inferred_auth_provider_and_get_auth_headers_kwarg(
+        self,
+        *,
+        writer: AST.NodeWriter,
+        client_wrapper_generator: ClientWrapperGenerator,
+        inferred_auth_scheme: ir_types.InferredAuthScheme,
+        is_async: bool,
+        timeout_local_variable: str,
+        max_retries_local_variable: str,
+        transport_variable_name: Optional[str],
+    ) -> typing.Tuple[str, AST.Expression]:
+        """Writes the ``inferred_auth_token_provider = ...`` assignment and returns the
+        ``(auth_headers|async_auth_headers, provider.get_headers)`` kwarg to attach to the
+        client wrapper so that endpoint-security routing can resolve the inferred scheme.
+        """
+        inferred_auth_client_wrapper_kwargs = self._get_client_wrapper_kwargs(
+            client_wrapper_generator=client_wrapper_generator,
+            environments_config=self._environments_config,
+            timeout_local_variable=timeout_local_variable,
+            max_retries_local_variable=max_retries_local_variable,
+            is_async=is_async,
+            exclude_auth=True,
+            transport_variable_name=transport_variable_name,
+        )
+        inferred_auth_provider_class = (
+            self._context.core_utilities.get_async_inferred_auth_token_provider()
+            if is_async
+            else self._context.core_utilities.get_inferred_auth_token_provider()
+        )
+        inferred_auth_provider_kwargs: List[typing.Tuple[str, AST.Expression]] = []
+        for cred in self._get_inferred_auth_credential_properties(inferred_auth_scheme):
+            if cred.is_literal:
+                continue
+            inferred_auth_provider_kwargs.append((cred.field_name, AST.Expression(cred.constructor_param_name)))
+        inferred_auth_provider_kwargs.append(
+            (
+                "client_wrapper",
+                AST.Expression(
+                    AST.ClassInstantiation(
+                        class_=self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                        kwargs=inferred_auth_client_wrapper_kwargs,
+                    )
+                ),
+            )
+        )
+        writer.write(f"{self._INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME} = ")
+        writer.write_node(
+            AST.ClassInstantiation(
+                class_=inferred_auth_provider_class,
+                kwargs=inferred_auth_provider_kwargs,
+            )
+        )
+        writer.write_newline_if_last_line_not()
+        param_name = (
+            ClientWrapperGenerator.ASYNC_AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME
+            if is_async
+            else ClientWrapperGenerator.AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME
+        )
+        return (
+            param_name,
+            AST.Expression(f"{self._INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME}.get_headers"),
+        )
+
+    def _write_oauth_token_override_constructor_body(
+        self,
+        *,
+        writer: AST.NodeWriter,
+        client_wrapper_generator: ClientWrapperGenerator,
+        timeout_local_variable: str,
+        max_retries_local_variable: str,
+        is_async: bool,
+        constructor_parameters: List[RootClientConstructorParameter],
+        transport_variable_name: Optional[str] = None,
+    ) -> None:
+        """
+        Writes the constructor body for OAuth token override mode.
+        This allows users to provide either a direct token OR client_id/client_secret.
+        """
+        # Write private member assignments first
+        for param in constructor_parameters:
+            if param.private_member_name is not None:
+                writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+
+        oauth_selection_condition = "client_id is not None and client_secret is not None"
+        if self._prefer_explicit_auth_enabled():
+            # Track which credentials were passed explicitly (before applying env-var
+            # defaults) so explicitly provided basic auth wins over OAuth env vars.
+            basic_auth_scheme = client_wrapper_generator._get_basic_auth_scheme()
+            oauth_config = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+            if basic_auth_scheme is not None and oauth_config is not None and oauth_config.type == "clientCredentials":
+                basic_param_names: List[str] = []
+                env_fallbacks: List[Tuple[str, str]] = []
+                if basic_auth_scheme.username_omit is not True:
+                    username_param_name = names.get_username_constructor_parameter_name(basic_auth_scheme)
+                    basic_param_names.append(username_param_name)
+                    if basic_auth_scheme.username_env_var is not None:
+                        env_fallbacks.append((username_param_name, basic_auth_scheme.username_env_var))
+                if basic_auth_scheme.password_omit is not True:
+                    password_param_name = names.get_password_constructor_parameter_name(basic_auth_scheme)
+                    basic_param_names.append(password_param_name)
+                    if basic_auth_scheme.password_env_var is not None:
+                        env_fallbacks.append((password_param_name, basic_auth_scheme.password_env_var))
+                if len(basic_param_names) > 0:
+                    if oauth_config.client_id_env_var is not None:
+                        env_fallbacks.append(("client_id", oauth_config.client_id_env_var))
+                    if oauth_config.client_secret_env_var is not None:
+                        env_fallbacks.append(("client_secret", oauth_config.client_secret_env_var))
+                    writer.write_line("_explicit_oauth_auth = client_id is not None or client_secret is not None")
+                    writer.write_line(
+                        "_explicit_basic_auth = " + " or ".join(f"{name} is not None" for name in basic_param_names)
+                    )
+                    for param_name, env_var in env_fallbacks:
+                        writer.write(f"{param_name} = {param_name} if {param_name} is not None else ")
+                        writer.write_node(self._get_os_getenv_expression(env_var))
+                        writer.write_newline_if_last_line_not()
+                    oauth_selection_condition = (
+                        "client_id is not None and client_secret is not None"
+                        " and (_explicit_oauth_auth or not _explicit_basic_auth)"
+                    )
+
+        # if token is not None:
+        writer.write_line(f"if {self.TOKEN_PARAMETER_NAME} is not None:")
+        with writer.indent():
+            # Direct token mode - use the provided callable for the client wrapper
+            client_wrapper_constructor_kwargs = self._get_client_wrapper_kwargs(
+                client_wrapper_generator=client_wrapper_generator,
+                environments_config=self._environments_config,
+                timeout_local_variable=timeout_local_variable,
+                max_retries_local_variable=max_retries_local_variable,
+                is_async=is_async,
+                exclude_auth=True,
+                transport_variable_name=transport_variable_name,
+            )
+            # Add token to kwargs - prefer the explicit override, otherwise use the provided callable
+            wrapper_bearer_token_kwarg_name = self._get_wrapper_bearer_token_kwarg_name(
+                client_wrapper_generator=client_wrapper_generator
+            )
+            client_wrapper_constructor_kwargs.append(
+                (
+                    wrapper_bearer_token_kwarg_name,
+                    AST.Expression(
+                        f"{self.TOKEN_GETTER_PARAM_NAME} if {self.TOKEN_GETTER_PARAM_NAME} is not None else {self.TOKEN_PARAMETER_NAME}"
+                    ),
+                )
+            )
+            # Note: inferred auth is intentionally NOT wired in the token-only branch. The
+            # inferred-auth token endpoint is driven by the OAuth client_id/client_secret
+            # credentials, which are not available (and not narrowed to non-None) here, so an
+            # endpoint requiring inferred auth cannot be satisfied in token-only mode anyway.
+            writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
+            writer.write_node(
+                AST.ClassInstantiation(
+                    self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                    kwargs=client_wrapper_constructor_kwargs,
+                )
+            )
+            writer.write_newline_if_last_line_not()
+
+        # elif client_id is not None and client_secret is not None:
+        writer.write_line(f"elif {oauth_selection_condition}:")
+        with writer.indent():
+            # Require additional OAuth params (narrows Optional[str] to str)
+            if self._oauth_scheme is not None:
+                override_oauth_config = self._oauth_scheme.configuration.get_as_union()
+                if override_oauth_config.type == "clientCredentials":
+                    for extra_name in self._get_additional_oauth_param_names(override_oauth_config):
+                        writer.write_line(f"if {extra_name} is None:")
+                        with writer.indent():
+                            writer.write("raise ")
+                            writer.write_node(
+                                self._context.core_utilities.instantiate_api_error(
+                                    headers=None,
+                                    status_code=None,
+                                    body=AST.Expression(
+                                        f"\"The '{extra_name}' parameter is required when using 'client_id' and 'client_secret'\""
+                                    ),
+                                )
+                            )
+                            writer.write_newline_if_last_line_not()
+            # OAuth client credentials mode
+            oauth_client_wrapper_kwargs = self._get_client_wrapper_kwargs(
+                client_wrapper_generator=client_wrapper_generator,
+                environments_config=self._environments_config,
+                timeout_local_variable=timeout_local_variable,
+                max_retries_local_variable=max_retries_local_variable,
+                is_async=is_async,
+                ignore_httpx_constructor_parameter=True,
+                exclude_auth=True,
+                transport_variable_name=transport_variable_name,
+            )
+            writer.write("oauth_token_provider = ")
+            oauth_token_provider_class = (
+                self._context.core_utilities.get_async_oauth_token_provider()
+                if is_async
+                else self._context.core_utilities.get_oauth_token_provider()
+            )
+            override_oauth_tp_kwargs = [
+                (
+                    "client_id",
+                    AST.Expression("client_id"),
+                ),
+                (
+                    "client_secret",
+                    AST.Expression("client_secret"),
+                ),
+            ]
+            if self._oauth_scheme is not None:
+                override_oauth = self._oauth_scheme.configuration.get_as_union()
+                if override_oauth.type == "clientCredentials":
+                    for extra_param_name in self._get_additional_oauth_param_names(override_oauth):
+                        override_oauth_tp_kwargs.append(
+                            (extra_param_name, AST.Expression(extra_param_name)),
+                        )
+            override_oauth_tp_kwargs.append(
+                (
+                    "client_wrapper",
+                    AST.Expression(
+                        AST.ClassInstantiation(
+                            class_=self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                            kwargs=oauth_client_wrapper_kwargs,
+                        ),
+                    ),
+                ),
+            )
+            writer.write_node(
+                AST.ClassInstantiation(
+                    class_=oauth_token_provider_class,
+                    kwargs=override_oauth_tp_kwargs,
+                )
+            )
+            writer.write_newline_if_last_line_not()
+            # Now create the actual client wrapper with oauth token provider
+            final_client_wrapper_kwargs = self._get_client_wrapper_kwargs(
+                client_wrapper_generator=client_wrapper_generator,
+                environments_config=self._environments_config,
+                timeout_local_variable=timeout_local_variable,
+                max_retries_local_variable=max_retries_local_variable,
+                is_async=is_async,
+                use_oauth_token_provider=True,
+                transport_variable_name=transport_variable_name,
+            )
+            endpoint_security_inferred_scheme = self._get_endpoint_security_inferred_auth_scheme()
+            if endpoint_security_inferred_scheme is not None:
+                final_client_wrapper_kwargs.append(
+                    self._write_inferred_auth_provider_and_get_auth_headers_kwarg(
+                        writer=writer,
+                        client_wrapper_generator=client_wrapper_generator,
+                        inferred_auth_scheme=endpoint_security_inferred_scheme,
+                        is_async=is_async,
+                        timeout_local_variable=timeout_local_variable,
+                        max_retries_local_variable=max_retries_local_variable,
+                        transport_variable_name=transport_variable_name,
+                    )
+                )
+            writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
+            writer.write_node(
+                AST.ClassInstantiation(
+                    self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                    kwargs=final_client_wrapper_kwargs,
+                )
+            )
+            writer.write_newline_if_last_line_not()
+
+        # else: fall back to non-OAuth auth schemes or raise error
+        has_non_oauth_auth_schemes = (
+            len(client_wrapper_generator._get_header_auth_schemes()) > 0
+            or client_wrapper_generator._get_basic_auth_scheme() is not None
+        )
+        writer.write_line("else:")
+        with writer.indent():
+            if has_non_oauth_auth_schemes:
+                # When other auth schemes exist (e.g. api_key or basic auth via auth: any), allow
+                # constructing the client without a bearer token — that auth alone is sufficient.
+                header_only_kwargs = self._get_client_wrapper_kwargs(
+                    client_wrapper_generator=client_wrapper_generator,
+                    environments_config=self._environments_config,
+                    timeout_local_variable=timeout_local_variable,
+                    max_retries_local_variable=max_retries_local_variable,
+                    is_async=is_async,
+                    exclude_auth=True,
+                    transport_variable_name=transport_variable_name,
+                )
+                writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                        kwargs=header_only_kwargs,
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+            else:
+                writer.write("raise ")
+                writer.write_node(
+                    self._context.core_utilities.instantiate_api_error(
+                        headers=None,
+                        status_code=None,
+                        body=AST.Expression(
+                            "\"The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'\""
+                        ),
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+
+    def _get_keepalive_transport_expression(self, *, is_async: bool) -> AST.Expression:
+        """Build a default httpx transport carrying platform-guarded TCP keepalive
+        socket options, e.g. ``httpx.HTTPTransport(socket_options=get_keepalive_socket_options(...))``.
+        """
+        keepalive = self._context.custom_config.tcp_keepalive
+        socket_options = AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=self._context.core_utilities.get_reference_to_keepalive_socket_options(),
+                kwargs=[
+                    ("idle", AST.Expression(str(keepalive.idle_seconds))),
+                    ("intvl", AST.Expression(str(keepalive.interval_seconds))),
+                    ("cnt", AST.Expression(str(keepalive.count))),
+                ],
+            )
+        )
+        return AST.Expression(
+            AST.ClassInstantiation(
+                HttpX.ASYNC_HTTP_TRANSPORT if is_async else HttpX.HTTP_TRANSPORT,
+                kwargs=[("socket_options", socket_options)],
+            )
+        )
+
+    def _get_client_wrapper_kwargs(
+        self,
+        client_wrapper_generator: ClientWrapperGenerator,
+        environments_config: Optional[ir_types.EnvironmentsConfig],
+        timeout_local_variable: str,
+        max_retries_local_variable: str,
+        is_async: bool,
+        exclude_auth: Optional[bool] = False,
+        ignore_httpx_constructor_parameter: bool = False,
+        use_oauth_token_provider: bool = False,
+        transport_variable_name: Optional[str] = None,
+    ) -> List[typing.Tuple[str, AST.Expression]]:
+        client_wrapper_constructor_kwargs = []
+
+        environments_config = self._context.ir.environments
+        # If no environments, client should only provide base_url argument
+        if environments_config is None:
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.BASE_URL_PARAMETER_NAME,
+                    AST.Expression(RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME),
+                )
+            )
+        elif environments_config.environments.get_as_union().type == "singleBaseUrl":
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.BASE_URL_PARAMETER_NAME,
+                    AST.Expression(
+                        f"{RootClientGenerator.GET_BASEURL_FUNCTION_NAME}({RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}, {RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME})"
+                    ),
+                )
+            )
+        elif environments_config.environments.get_as_union().type == "multipleBaseUrls":
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME,
+                    AST.Expression(RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME),
+                )
+            )
+
+        constructor_info = client_wrapper_generator._get_constructor_info(
+            exclude_auth=exclude_auth if exclude_auth else use_oauth_token_provider
+        )
+        for wrapper_param in constructor_info.constructor_parameters:
+            if (
+                wrapper_param.constructor_parameter_name
+                == ClientWrapperGenerator.AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME
+            ):
+                continue
+            client_wrapper_constructor_kwargs.append(
+                (
+                    wrapper_param.constructor_parameter_name,
+                    AST.Expression(wrapper_param.constructor_parameter_name),
+                )
+            )
+
+        if use_oauth_token_provider:
+            wrapper_bearer_token_kwarg_name = self._get_wrapper_bearer_token_kwarg_name(
+                client_wrapper_generator=client_wrapper_generator
+            )
+            if is_async:
+                # For async clients, pass the sync token_getter_override to token (if provided)
+                # and the async oauth_token_provider.get_token to async_token
+                client_wrapper_constructor_kwargs.append(
+                    (
+                        wrapper_bearer_token_kwarg_name,
+                        AST.Expression(f"{self.TOKEN_GETTER_PARAM_NAME}"),
+                    )
+                )
+                client_wrapper_constructor_kwargs.append(
+                    (
+                        "async_token",
+                        AST.Expression("oauth_token_provider.get_token"),
+                    )
+                )
+            else:
+                client_wrapper_constructor_kwargs.append(
+                    (
+                        wrapper_bearer_token_kwarg_name,
+                        AST.Expression(
+                            f"{self.TOKEN_GETTER_PARAM_NAME} if {self.TOKEN_GETTER_PARAM_NAME} is not None else oauth_token_provider.get_token"
+                        ),
+                    )
+                )
+        elif is_async and self._oauth_scheme is None and client_wrapper_generator._get_bearer_auth_scheme() is not None:
+            # For non-OAuth async clients with bearer auth, forward the user-supplied async_token
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME,
+                    AST.Expression(ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME),
+                )
+            )
+
+        httpx_client_kwargs_with_redirects: List[typing.Tuple[str, AST.Expression]] = [
+            ("timeout", AST.Expression(f"{timeout_local_variable}")),
+            (
+                "follow_redirects",
+                AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}"),
+            ),
+        ]
+        httpx_client_kwargs_without_redirects: List[typing.Tuple[str, AST.Expression]] = [
+            ("timeout", AST.Expression(f"{timeout_local_variable}")),
+        ]
+        # Transport precedence for the generated default client: a custom_transport
+        # http_client (when configured) always wins; otherwise, if TCP keepalive is
+        # enabled, inject a keepalive transport. A user-supplied httpx_client wins
+        # over both (the whole default construction is skipped when it is provided).
+        if transport_variable_name is not None:
+            httpx_client_kwargs_with_redirects.append(("transport", AST.Expression(f"{transport_variable_name}")))
+            httpx_client_kwargs_without_redirects.append(("transport", AST.Expression(f"{transport_variable_name}")))
+        elif self._context.custom_config.tcp_keepalive.enabled:
+            httpx_client_kwargs_with_redirects.append(
+                (
+                    "transport",
+                    self._get_keepalive_transport_expression(is_async=is_async),
+                )
+            )
+            httpx_client_kwargs_without_redirects.append(
+                (
+                    "transport",
+                    self._get_keepalive_transport_expression(is_async=is_async),
+                )
+            )
+
+        if ignore_httpx_constructor_parameter:
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
+                    AST.Expression(
+                        AST.ConditionalExpression(
+                            left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
+                            right=AST.ConditionalExpression(
+                                left=AST.ClassInstantiation(
+                                    HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                    kwargs=httpx_client_kwargs_with_redirects,
+                                ),
+                                right=AST.ClassInstantiation(
+                                    HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                    kwargs=httpx_client_kwargs_without_redirects,
+                                ),
+                                test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
+                            ),
+                            test=AST.Expression(
+                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is not None"
+                            ),
+                        ),
+                    ),
+                ),
+            )
+        elif is_async:
+            # The async default is built by _make_default_async_client. Thread the
+            # custom_transport http_client through it (previously dropped on the
+            # async path); the keepalive default is applied inside that helper.
+            async_default_client_call = (
+                f"_make_default_async_client(timeout={timeout_local_variable}, "
+                f"follow_redirects={self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}"
+            )
+            if transport_variable_name is not None:
+                async_default_client_call += f", transport={transport_variable_name}"
+            async_default_client_call += ")"
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
+                    AST.Expression(
+                        AST.ConditionalExpression(
+                            left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
+                            right=AST.Expression(async_default_client_call),
+                            test=AST.Expression(
+                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is not None"
+                            ),
+                        ),
+                    ),
+                )
+            )
+        else:
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
+                    AST.Expression(
+                        AST.ConditionalExpression(
+                            left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
+                            right=AST.ConditionalExpression(
+                                left=AST.ClassInstantiation(
+                                    HttpX.CLIENT,
+                                    kwargs=httpx_client_kwargs_with_redirects,
+                                ),
+                                right=AST.ClassInstantiation(
+                                    HttpX.CLIENT,
+                                    kwargs=httpx_client_kwargs_without_redirects,
+                                ),
+                                test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
+                            ),
+                            test=AST.Expression(
+                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is not None"
+                            ),
+                        ),
+                    ),
+                )
+            )
+        client_wrapper_constructor_kwargs.append(
+            (
+                ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME,
+                AST.Expression(timeout_local_variable),
+            )
+        )
+
+        client_wrapper_constructor_kwargs.append(
+            (
+                ClientWrapperGenerator.MAX_RETRIES_PARAMETER_NAME,
+                AST.Expression(max_retries_local_variable),
+            )
+        )
+
+        client_wrapper_constructor_kwargs.append(
+            (
+                ClientWrapperGenerator.STREAM_RECONNECTION_ENABLED_PARAMETER_NAME,
+                AST.Expression(RootClientGenerator.STREAM_RECONNECTION_ENABLED_CONSTRUCTOR_PARAMETER_NAME),
+            )
+        )
+
+        client_wrapper_constructor_kwargs.append(
+            (
+                ClientWrapperGenerator.MAX_STREAM_RECONNECTION_ATTEMPTS_PARAMETER_NAME,
+                AST.Expression(RootClientGenerator.MAX_STREAM_RECONNECTION_ATTEMPTS_CONSTRUCTOR_PARAMETER_NAME),
+            )
+        )
+
+        client_wrapper_constructor_kwargs.append(
+            (
+                ClientWrapperGenerator.LOGGING_PARAMETER_NAME,
+                AST.Expression(RootClientGenerator.LOGGING_CONSTRUCTOR_PARAMETER_NAME),
+            )
+        )
+
+        for literal_header in constructor_info.literal_headers:
+            client_wrapper_constructor_kwargs.append(
+                (
+                    resolve_name(get_name_from_wire_value(literal_header.header.name)).snake_case.safe_name,
+                    AST.Expression(
+                        resolve_name(get_name_from_wire_value(literal_header.header.name)).snake_case.safe_name
+                    ),
+                )
+            )
+
+        return client_wrapper_constructor_kwargs
+
+    def _write_make_default_async_client(self, writer: AST.NodeWriter) -> None:
+        keepalive_enabled = self._context.custom_config.tcp_keepalive.enabled
+        # The transport parameter exists when either a custom_transport http_client
+        # must be threaded through the async default (previously dropped) or when a
+        # keepalive default transport is applied. Otherwise the signature/body are
+        # left exactly as-is to keep generated output unchanged.
+        accepts_transport = keepalive_enabled or self._context.custom_config.custom_transport
+
+        writer.write_line("")
+        writer.write_line("def _make_default_async_client(")
+        with writer.indent():
+            writer.write_line("timeout: typing.Optional[float],")
+            writer.write_line("follow_redirects: typing.Optional[bool],")
+            if accepts_transport:
+                writer.write_line("transport: typing.Optional[httpx.AsyncBaseTransport] = None,")
+        writer.write_line(") -> httpx.AsyncClient:")
+        with writer.indent():
+            if keepalive_enabled:
+                writer.write_line("if transport is None:")
+                with writer.indent():
+                    writer.write("transport = ")
+                    writer.write_node(self._get_keepalive_transport_expression(is_async=True))
+                    writer.write_newline_if_last_line_not()
+            writer.write_line("try:")
+            with writer.indent():
+                writer.write_line("import httpx_aiohttp  # type: ignore[import-not-found]")
+            writer.write_line("except ImportError:")
+            with writer.indent():
+                writer.write_line("pass")
+            writer.write_line("else:")
+            with writer.indent():
+                # aiohttp uses its own TCPConnector, not httpx socket_options, so the
+                # keepalive/custom transport is a documented no-op on this path.
+                writer.write_line("if follow_redirects is not None:")
+                with writer.indent():
+                    writer.write_line(
+                        "return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout, follow_redirects=follow_redirects)"
+                    )
+                writer.write_line("return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)")
+            writer.write_line("")
+            if accepts_transport:
+                writer.write_line("if follow_redirects is not None:")
+                with writer.indent():
+                    writer.write_line(
+                        "return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects, transport=transport)"
+                    )
+                writer.write_line("return httpx.AsyncClient(timeout=timeout, transport=transport)")
+            else:
+                writer.write_line("if follow_redirects is not None:")
+                with writer.indent():
+                    writer.write_line("return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects)")
+                writer.write_line("return httpx.AsyncClient(timeout=timeout)")
+        writer.write_line("")
+
+    def _write_get_base_url_function(self, writer: AST.NodeWriter) -> None:
+        writer.write_line(f"if {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} is not None:")
+        with writer.indent():
+            writer.write_line(f"return {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}")
+        writer.write_line(f"elif {RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME} is not None:")
+        with writer.indent():
+            writer.write_line(f"return {RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME}.value")
+        writer.write("else:")
+        with writer.indent():
+            writer.write_line(
+                'raise Exception("Please pass in either base_url or environment to construct the client")'
+            )
+        writer.write_newline_if_last_line_not()
+
+    def _get_timeout_constructor_parameter_name(self, params: typing.List[str]) -> str:
+        for param in params:
+            if param == "timeout":
+                return "_timeout"
+        return "timeout"
+
+    def _get_max_retries_constructor_parameter_name(self, params: typing.List[str]) -> str:
+        for param in params:
+            if param == "max_retries":
+                return "_max_retries"
+        return "max_retries"
+
+    def _get_server_variables(self) -> typing.List[ir_types.ServerVariable]:
+        environments_config = self._environments_config
+        if environments_config is None:
+            return []
+
+        env_union = environments_config.environments.get_as_union()
+        seen_ids: typing.Set[str] = set()
+        variables: typing.List[ir_types.ServerVariable] = []
+
+        if env_union.type == "singleBaseUrl":
+            for env in env_union.environments:
+                if env.url_variables is not None:
+                    for var in env.url_variables:
+                        if var.id not in seen_ids:
+                            seen_ids.add(var.id)
+                            variables.append(var)
+                break
+        elif env_union.type == "multipleBaseUrls":
+            for multi_env in env_union.environments:
+                if multi_env.url_variables is not None:
+                    for _url_id, vars_list in multi_env.url_variables.items():
+                        for var in vars_list:
+                            if var.id not in seen_ids:
+                                seen_ids.add(var.id)
+                                variables.append(var)
+                break
+
+        return variables
+
+    def _get_server_variable_param_name(self, var: ir_types.ServerVariable) -> str:
+        name = resolve_name(var.name).snake_case.safe_name
+        if name in self._RESERVED_CONSTRUCTOR_PARAM_NAMES:
+            return f"server_url_{name}"
+        return name
+
+    def _write_url_template_interpolation(self, writer: AST.NodeWriter) -> None:
+        server_variables = self._get_server_variables()
+        if not server_variables:
+            return
+
+        environments_config = self._environments_config
+        if environments_config is None:
+            return
+
+        env_union = environments_config.environments.get_as_union()
+        var_params = [(var, self._get_server_variable_param_name(var)) for var in server_variables]
+
+        env_class_name = self._context.get_class_name_of_environments()
+        env_param = RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME
+        condition = " or ".join(f"{param_name} is not None" for _, param_name in var_params)
+        writer.write_line(f"if {condition}:")
+        with writer.indent():
+            for var, param_name in var_params:
+                local_name = f"_{param_name}"
+                default = var.default or ""
+                writer.write_line(f'{local_name} = {param_name} if {param_name} is not None else "{default}"')
+
+            format_kwargs = ", ".join(f"{var.id}=_{param_name}" for var, param_name in var_params)
+
+            if env_union.type == "singleBaseUrl":
+                templated_environments = [
+                    single_env for single_env in env_union.environments if single_env.url_template is not None
+                ]
+                if len(templated_environments) > 0:
+                    writer.write_line("_environment_url_templates = {")
+                    with writer.indent():
+                        for single_env in templated_environments:
+                            class_var_name = resolve_name(single_env.name).screaming_snake_case.safe_name
+                            writer.write_line(f'{env_class_name}.{class_var_name}: "{single_env.url_template}",')
+                    writer.write_line("}")
+                    first_template = templated_environments[0].url_template
+                    writer.write_line("_url_template = _environment_url_templates.get(")
+                    with writer.indent():
+                        writer.write_line(f'{env_param}, "{first_template}"')
+                    writer.write_line(")")
+                    writer.write_line("if base_url is None:")
+                    with writer.indent():
+                        writer.write_line(f"base_url = _url_template.format({format_kwargs})")
+            elif env_union.type == "multipleBaseUrls":
+                templated_multi_environments = [
+                    multi_env for multi_env in env_union.environments if multi_env.url_templates is not None
+                ]
+                if len(templated_multi_environments) > 0:
+                    writer.write_line("_environment_url_templates = {")
+                    with writer.indent():
+                        for multi_env in templated_multi_environments:
+                            class_var_name = resolve_name(multi_env.name).screaming_snake_case.safe_name
+                            writer.write_line(f"{env_class_name}.{class_var_name}: {{")
+                            with writer.indent():
+                                for base_url in env_union.base_urls:
+                                    prop_name = resolve_name(base_url.name).snake_case.safe_name
+                                    template = (
+                                        multi_env.url_templates.get(base_url.id)
+                                        if multi_env.url_templates is not None
+                                        else None
+                                    )
+                                    value = template if template is not None else multi_env.urls.get(base_url.id, "")
+                                    writer.write_line(f'"{prop_name}": "{value}",')
+                            writer.write_line("},")
+                    writer.write_line("}")
+                    writer.write_line(f"_url_templates = _environment_url_templates.get({env_param})")
+                    writer.write_line("if _url_templates is not None:")
+                    with writer.indent():
+                        writer.write_line(f"{env_param} = {env_class_name}(")
+                        with writer.indent():
+                            for base_url in env_union.base_urls:
+                                prop_name = resolve_name(base_url.name).snake_case.safe_name
+                                writer.write_line(f'{prop_name}=_url_templates["{prop_name}"].format({format_kwargs}),')
+                        writer.write_line(")")
+
+    class GeneratedRootClientBuilder:
+        def __init__(
+            self,
+            module_path: AST.ModulePath,
+            class_name: str,
+            async_class_name: str,
+            constructor_parameters: Sequence[ConstructorParameter],
+            oauth_token_override: bool = False,
+            bearer_token_param_name: str = "token",
+            use_kwargs_snippets: bool = False,
+            base_url_example_value: Optional[AST.Expression] = None,
+            sync_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
+            async_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
+            sync_constructor_overloads: Optional[List[AST.FunctionSignature]] = None,
+            async_constructor_overloads: Optional[List[AST.FunctionSignature]] = None,
+        ):
+            self._module_path = module_path
+            self._class_name = class_name
+            self._async_class_name = async_class_name
+            self._constructor_parameters: List[ConstructorParameter] = list(constructor_parameters)
+            self._sync_init_parameters: Optional[List[ConstructorParameter]] = (
+                list(sync_init_parameters) if sync_init_parameters is not None else None
+            )
+            self._async_init_parameters: Optional[List[ConstructorParameter]] = (
+                list(async_init_parameters) if async_init_parameters is not None else None
+            )
+            self._sync_constructor_overloads = sync_constructor_overloads
+            self._async_constructor_overloads = async_constructor_overloads
+            self._oauth_token_override = oauth_token_override
+            self._bearer_token_param_name = bearer_token_param_name
+            self._use_kwargs_snippets = use_kwargs_snippets
+            self._base_url_example_value = base_url_example_value
+
+        def build(self) -> GeneratedRootClient:
+            def create_class_reference(class_name: str) -> AST.ClassReference:
+                return AST.ClassReference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.snippet(
+                            module_path=self._module_path,
+                        ),
+                        named_import=class_name,
+                    ),
+                )
+
+            def create_snippet_writer(
+                class_reference: AST.ClassReference,
+                *,
+                args: List[AST.Expression],
+                kwargs: List[typing.Tuple[str, AST.Expression]],
+            ) -> CodeWriterFunction:
+                def write_client_snippet(writer: AST.NodeWriter) -> None:
+                    client_instantiation = AST.ClassInstantiation(
+                        class_=class_reference,
+                        args=args,
+                        kwargs=kwargs,
+                    )
+                    writer.write("client = ")
+                    writer.write_node(AST.Expression(client_instantiation))
+                    writer.write_newline_if_last_line_not()
+
+                return write_client_snippet
+
+            async_class_reference = create_class_reference(self._async_class_name)
+            sync_class_reference = create_class_reference(self._class_name)
+
+            def build_default_snippet_kwargs() -> List[typing.Tuple[str, AST.Expression]]:
+                """
+                Build a "good default" snippet for root clients:
+                - Use kwargs (many root client params are keyword-only).
+                - Include required parameters (those without defaults) with reasonable placeholders.
+                - Prefer inferred-auth credentials (e.g. api_key) when present.
+                - Include client_id/client_secret for OAuth client credentials flows.
+                """
+
+                required_params = [
+                    p
+                    for p in self._constructor_parameters
+                    if p.initializer is None and (p.type_hint is None or not p.type_hint.is_optional)
+                ]
+
+                # If there is inferred auth, use a nicer placeholder for those credentials,
+                # but still include other required parameters (e.g. base_url).
+                inferred_auth_param_names = {self._bearer_token_param_name}
+                kwargs: List[typing.Tuple[str, AST.Expression]] = []
+                for p in required_params:
+                    # Skip internal/private params in examples.
+                    if p.constructor_parameter_name.startswith("_"):
+                        continue
+                    if p.constructor_parameter_name == RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME:
+                        continue
+
+                    name = p.constructor_parameter_name
+                    if name in inferred_auth_param_names:
+                        kwargs.append((name, AST.Expression('"YOUR_API_KEY"')))
+                        continue
+                    if name == RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME:
+                        # Do not hardcode the URL; reuse the existing ClientWrapperGenerator initializer-derived value.
+                        if self._base_url_example_value is not None:
+                            kwargs.append((name, self._base_url_example_value))
+                        else:
+                            kwargs.append((name, AST.Expression(f'"YOUR_{name.upper()}"')))
+                        continue
+
+                    kwargs.append((name, AST.Expression(f'"YOUR_{name.upper()}"')))
+
+                # For OAuth client credentials, explicitly include client_id and client_secret
+                # even though they have os.getenv() defaults.
+                if self._oauth_token_override:
+                    oauth_param_names_in_kwargs = {name for name, _ in kwargs}
+                    if "client_id" not in oauth_param_names_in_kwargs:
+                        kwargs.append(("client_id", AST.Expression('"YOUR_CLIENT_ID"')))
+                    if "client_secret" not in oauth_param_names_in_kwargs:
+                        kwargs.append(("client_secret", AST.Expression('"YOUR_CLIENT_SECRET"')))
+
+                return kwargs
+
+            if self._use_kwargs_snippets:
+                default_kwargs = build_default_snippet_kwargs()
+
+                async_instantiations: List[AST.Expression] = [
+                    AST.Expression(
+                        AST.CodeWriter(create_snippet_writer(async_class_reference, args=[], kwargs=default_kwargs))
+                    )
+                ]
+                sync_instantiations: List[AST.Expression] = [
+                    AST.Expression(
+                        AST.CodeWriter(create_snippet_writer(sync_class_reference, args=[], kwargs=default_kwargs))
+                    )
+                ]
+            else:
+                # Historical behavior: snippets only show parameters that have initializers
+                # (keeps examples stable for non-inferred-auth SDKs).
+                oauth_param_names = {
+                    "client_id",
+                    "client_secret",
+                    self._bearer_token_param_name,
+                    RootClientGenerator.TOKEN_GETTER_PARAM_NAME,
+                }
+                default_args = []
+                for param in self._constructor_parameters:
+                    if param.initializer is None:
+                        continue
+                    # When OAuth token override is enabled, do not include OAuth-related parameters
+                    # in the first/default snippet. This avoids unreadable `os.getenv(...)` snippets
+                    # while keeping the "default snippet" stable.
+                    if self._oauth_token_override and param.constructor_parameter_name in oauth_param_names:
+                        continue
+                    default_args.append(param.initializer)
+                async_instantiations = [
+                    AST.Expression(
+                        AST.CodeWriter(create_snippet_writer(async_class_reference, args=default_args, kwargs=[]))
+                    )
+                ]
+                sync_instantiations = [
+                    AST.Expression(
+                        AST.CodeWriter(create_snippet_writer(sync_class_reference, args=default_args, kwargs=[]))
+                    )
+                ]
+
+            # Add token-based instantiation example if oauth_token_override is enabled
+            if self._oauth_token_override:
+                if self._use_kwargs_snippets:
+                    token_kwargs: List[typing.Tuple[str, AST.Expression]] = [
+                        (
+                            "base_url",
+                            AST.Expression('"https://yourhost.com/path/to/api"'),
+                        ),
+                        (
+                            self._bearer_token_param_name,
+                            AST.Expression('"YOUR_BEARER_TOKEN"'),
+                        ),
+                    ]
+                    async_instantiations.append(
+                        AST.Expression(
+                            AST.CodeWriter(create_snippet_writer(async_class_reference, args=[], kwargs=token_kwargs))
+                        )
+                    )
+                    sync_instantiations.append(
+                        AST.Expression(
+                            AST.CodeWriter(create_snippet_writer(sync_class_reference, args=[], kwargs=token_kwargs))
+                        )
+                    )
+                else:
+                    token_args = [
+                        AST.Expression('base_url="https://yourhost.com/path/to/api"'),
+                        AST.Expression(f'{self._bearer_token_param_name}="YOUR_BEARER_TOKEN"'),
+                    ]
+                    async_instantiations.append(
+                        AST.Expression(
+                            AST.CodeWriter(create_snippet_writer(async_class_reference, args=token_args, kwargs=[]))
+                        )
+                    )
+                    sync_instantiations.append(
+                        AST.Expression(
+                            AST.CodeWriter(create_snippet_writer(sync_class_reference, args=token_args, kwargs=[]))
+                        )
+                    )
+
+            return GeneratedRootClient(
+                async_instantiations=async_instantiations,
+                async_client=RootClient(
+                    class_reference=async_class_reference,
+                    parameters=self._constructor_parameters,
+                    init_parameters=self._async_init_parameters,
+                    constructor_overloads=self._async_constructor_overloads,
+                ),
+                sync_instantiations=sync_instantiations,
+                sync_client=RootClient(
+                    class_reference=sync_class_reference,
+                    parameters=self._constructor_parameters,
+                    init_parameters=self._sync_init_parameters,
+                    constructor_overloads=self._sync_constructor_overloads,
+                ),
+            )

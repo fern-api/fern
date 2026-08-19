@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "secret": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "secret"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

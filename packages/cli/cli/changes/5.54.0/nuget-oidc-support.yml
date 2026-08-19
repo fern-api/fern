@@ -1,0 +1,4 @@
+- summary: |
+    Detect `api-key: OIDC` in NuGet output config and pass OIDC marker to
+    the C# generator for Trusted Publishing workflow generation.
+  type: feat

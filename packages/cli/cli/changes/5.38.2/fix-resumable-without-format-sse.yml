@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Honor operation-level `x-fern-streaming.resumable` on SSE endpoints whose
+    streaming is auto-detected from a `text/event-stream` response. Previously,
+    setting `resumable: true` without an explicit `format` was silently dropped
+    and the endpoint generated as non-resumable.
+  type: fix

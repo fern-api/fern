@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Prevent login from reporting missing browser opener tools as internal errors.
+    Upgrade `open` to v11 so spawn failures reject the returned promise, and handle
+    them inline in redirect, device-code, and logout flows.
+  type: fix

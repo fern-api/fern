@@ -1,0 +1,7 @@
+- summary: |
+    Fix `broken-links` false positives for absolute links on sites that configure a
+    `basePath` (e.g. `https://docs.example.com/product`). Page slugs are stored with
+    the basePath prepended (`product/about`), but authors commonly write site-relative
+    absolute links without it (`/about`, `/v2/guide`). The link validator now also
+    checks the basePath-prefixed form so both conventions resolve.
+  type: fix

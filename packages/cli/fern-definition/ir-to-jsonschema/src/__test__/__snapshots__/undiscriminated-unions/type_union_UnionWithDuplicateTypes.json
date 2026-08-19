@@ -1,0 +1,25 @@
+{
+  "anyOf": [
+    {
+      "type": "string"
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    {
+      "type": "integer"
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    }
+  ],
+  "description": "Duplicate types.",
+  "definitions": {}
+}

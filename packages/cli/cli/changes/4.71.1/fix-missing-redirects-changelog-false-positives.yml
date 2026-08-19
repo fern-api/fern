@@ -1,0 +1,5 @@
+- summary: |
+    Fix false positive warnings in the `missing-redirects` check. Pages are no
+    longer flagged as removed or moved when their old URL is still actively
+    served by another page in the local docs config.
+  type: fix

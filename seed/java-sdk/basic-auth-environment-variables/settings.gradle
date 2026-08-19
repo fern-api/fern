@@ -1,0 +1,3 @@
+rootProject.name = 'basic-auth-environment-variables'
+
+include 'sample-app'

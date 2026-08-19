@@ -1,0 +1,29 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 3.8.10
+        output:
+          location: local-file-system
+          path: ../../..
+  php-sdk:
+    generators:
+      - name: fernapi/fern-php-sdk
+        version: latest
+        ir-version: v61
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/php-sdk-tests
+          branch: undiscriminated-union-with-response-property
+  go-sdk:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: latest
+        ir-version: v61
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/go-sdk-tests
+          branch: undiscriminated-union-with-response-property

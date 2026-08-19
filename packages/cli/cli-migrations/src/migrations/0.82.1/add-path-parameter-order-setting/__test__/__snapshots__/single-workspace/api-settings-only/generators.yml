@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  path: ./definition
+  settings:
+    use-title: false
+    respect-nullable-schemas: true
+    path-parameter-order: spec-order
+groups: {}

@@ -1,0 +1,120 @@
+import { assertNever } from "@fern-api/core-utils";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { KeywordArgument } from "./KeywordArgument.js";
+
+export declare namespace MethodInvocation {
+    interface Args {
+        /** The instance to invoke the method on */
+        on: AstNode;
+        /** The method to invoke */
+        method: string;
+        /** Positional arguments passed to the method */
+        arguments_: AstNode[];
+        /** Keyword arguments passed to the method */
+        keywordArguments?: KeywordArgument[];
+        /** If the method is being passed a block, the list of args and the code contained in the block */
+        block?: [string[], AstNode[]];
+    }
+}
+
+type PositionalOrKeywordArgument = { kind: "positional"; node: AstNode } | { kind: "keyword"; arg: KeywordArgument };
+
+export class MethodInvocation extends AstNode {
+    private on: AstNode;
+    private method: string;
+    private arguments_: AstNode[];
+    private keywordArguments?: KeywordArgument[];
+    private block?: [string[], AstNode[]];
+
+    constructor({ on, method, arguments_, keywordArguments, block }: MethodInvocation.Args) {
+        super();
+        this.on = on;
+        this.method = method;
+        this.arguments_ = arguments_;
+        this.keywordArguments = keywordArguments;
+        this.block = block;
+    }
+
+    public write(writer: Writer): void {
+        this.on.write(writer);
+        writer.write(".");
+        writer.write(this.method);
+
+        const allArguments: PositionalOrKeywordArgument[] = [];
+        for (const node of this.arguments_) {
+            allArguments.push({ kind: "positional", node });
+        }
+        for (const arg of this.keywordArguments || []) {
+            allArguments.push({ kind: "keyword", arg });
+        }
+
+        // In Ruby, omit parentheses on method calls with no arguments and no block.
+        if (allArguments.length === 0 && this.block == null) {
+            return;
+        }
+
+        // If there is more than one argument, write each argument on its own line,
+        // separated by commas, for better readability in the generated Ruby code.
+        // Otherwise, write the arguments inline (on the same line).
+        writer.write("(");
+        if (allArguments.length > 1) {
+            writer.indent();
+            writer.newLine();
+            allArguments.forEach((argument, index) => {
+                if (index > 0) {
+                    writer.write(",");
+                    writer.newLine();
+                }
+                writeArgument(writer, argument);
+            });
+            writer.newLine();
+            writer.dedent();
+        } else {
+            allArguments.forEach((argument, index) => {
+                if (index > 0) {
+                    writer.write(", ");
+                }
+                writeArgument(writer, argument);
+            });
+        }
+        writer.write(")");
+        if (this.block) {
+            const [args, codelines] = this.block;
+            writer.write(" do");
+
+            if (args.length > 0) {
+                writer.write(" |");
+                args.forEach((argument, index) => {
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
+                    writer.write(argument);
+                });
+                writer.write("|");
+            }
+
+            writer.newLine();
+            writer.indent();
+            for (const line of codelines) {
+                line.write(writer);
+                writer.writeNewLineIfLastLineNot();
+            }
+            writer.dedent();
+            writer.write("end");
+        }
+    }
+}
+
+function writeArgument(writer: Writer, arg: PositionalOrKeywordArgument): void {
+    switch (arg.kind) {
+        case "positional":
+            arg.node.write(writer);
+            break;
+        case "keyword":
+            arg.arg.write(writer);
+            break;
+        default:
+            assertNever(arg);
+    }
+}

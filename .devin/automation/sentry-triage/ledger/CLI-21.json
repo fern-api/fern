@@ -1,0 +1,9 @@
+{
+  "title": "User post-generation sed command failed",
+  "disposition": "shipped",
+  "rationale": "Placeholder replacement failed in generated files because the local sed command could not process user output bytes.",
+  "fixSummary": "Wrap auto-version placeholder replacement subprocess failures as CliError(UserError).",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-05",
+  "problemSignature": "Auto-version placeholder replacement subprocess failed on generated/user files; should be user semantics."
+}

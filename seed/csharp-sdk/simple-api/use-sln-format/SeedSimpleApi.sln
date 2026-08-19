@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedSimpleApi", "src\SeedSimpleApi\SeedSimpleApi.csproj", "{B03A7A2B-3B0F-2ED7-2B2C-5154CF821312}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedSimpleApi.Test", "src\SeedSimpleApi.Test\SeedSimpleApi.Test.csproj", "{4EDD4DAE-E1F5-2F72-AB2D-D180CF4C7600}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B03A7A2B-3B0F-2ED7-2B2C-5154CF821312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B03A7A2B-3B0F-2ED7-2B2C-5154CF821312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B03A7A2B-3B0F-2ED7-2B2C-5154CF821312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B03A7A2B-3B0F-2ED7-2B2C-5154CF821312}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EDD4DAE-E1F5-2F72-AB2D-D180CF4C7600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EDD4DAE-E1F5-2F72-AB2D-D180CF4C7600}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EDD4DAE-E1F5-2F72-AB2D-D180CF4C7600}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EDD4DAE-E1F5-2F72-AB2D-D180CF4C7600}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

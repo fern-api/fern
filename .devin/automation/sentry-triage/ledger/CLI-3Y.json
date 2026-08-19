@@ -1,0 +1,9 @@
+{
+  "title": "spawn xdg-open ENOENT uncaught exception",
+  "disposition": "shipped",
+  "rationale": "Browser opener failures during Auth0 login are local environment/tool failures and are now caught at the login browser-launch boundary instead of escaping as uncaught exceptions.",
+  "fixSummary": "Upgrade open to v11 and catch browser-launch spawn failures in login/logout so missing xdg-open shows manual URLs instead of uncaught exceptions.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15942",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "Uncaught exception with ENOENT errno from spawn xdg-open bypassed resolveErrorCode and reached Sentry as raw exception."
+}

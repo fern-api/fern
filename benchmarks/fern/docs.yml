@@ -1,0 +1,16 @@
+# This file is overwritten at CI time by generate-fixture-versions.sh.
+# The committed version is a placeholder — the benchmark action generates
+# the real versioned docs.yml with ~30 API versions at runtime.
+#
+# See generate-fixture-versions.sh for the generation logic.
+instances:
+  - url: fern.docs.buildwithfern.com
+
+# Placeholder navigation — replaced with versions: block at CI time.
+navigation:
+  - page: Placeholder
+    path: pages/template.md
+
+colors:
+  accentPrimary: "#818CF8"
+  background: "#0F172A"

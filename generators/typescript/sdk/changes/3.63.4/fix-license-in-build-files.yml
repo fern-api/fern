@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Propagate license config to the `license` field in generated
+    package.json when publishing to npm registries.
+  type: fix

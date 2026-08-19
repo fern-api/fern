@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Show a clear, actionable error when the Fern GitHub App is not installed on
+    the target repository instead of the generic "Failed to create job" message.
+  type: fix

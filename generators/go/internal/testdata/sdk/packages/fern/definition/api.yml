@@ -1,0 +1,9 @@
+imports:
+  root: __package__.yml
+name: api
+error-discrimination:
+  strategy: status-code
+auth: bearer
+default-environment: default
+environments:
+  default: https://api.foo.io/v1

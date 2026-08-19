@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/task",
+                "method": "PUT",
+                "identifier_override": "endpoint_.bulkUpdateTasks"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/query-param-name-conflict/fern\"\n\tfernclient \"github.com/query-param-name-conflict/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.BulkUpdateTasks(\n\tcontext.TODO(),\n\t\u0026fern.BulkUpdateTasksRequest{},\n)\n"
+            }
+        }
+    ]
+}

@@ -1,0 +1,13 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-php-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "inlinePathParameters": true,
+    "propertyAccess": "private"
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "manual",
+  "requestedVersion": "0.0.1",
+  "sdkVersion": "0.0.1"
+}

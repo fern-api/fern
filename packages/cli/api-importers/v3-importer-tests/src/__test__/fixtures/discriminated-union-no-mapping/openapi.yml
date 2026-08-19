@@ -1,0 +1,101 @@
+openapi: 3.1.0
+info:
+  title: Test discriminated union without explicit mapping
+  description: |
+    Validates that a discriminator with propertyName but no mapping correctly
+    infers variants from oneOf $ref schemas. Covers both enum and const
+    discriminant values, and array-of-union (Cohere messages pattern).
+  version: 1.0.0
+
+paths:
+  /chat:
+    post:
+      operationId: chat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                messages:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Message"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+
+components:
+  schemas:
+    Message:
+      oneOf:
+        - $ref: "#/components/schemas/UserMessage"
+        - $ref: "#/components/schemas/AssistantMessage"
+        - $ref: "#/components/schemas/SystemMessage"
+        - $ref: "#/components/schemas/ToolMessage"
+      discriminator:
+        propertyName: role
+
+    UserMessage:
+      type: object
+      properties:
+        role:
+          type: string
+          const: user
+        content:
+          type: string
+      required:
+        - role
+        - content
+
+    AssistantMessage:
+      type: object
+      properties:
+        role:
+          type: string
+          const: assistant
+        content:
+          type: string
+        tool_calls:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+      required:
+        - role
+
+    SystemMessage:
+      type: object
+      properties:
+        role:
+          type: string
+          const: system
+        content:
+          type: string
+      required:
+        - role
+        - content
+
+    ToolMessage:
+      type: object
+      properties:
+        role:
+          type: string
+          const: tool
+        tool_call_id:
+          type: string
+        content:
+          type: string
+      required:
+        - role
+        - tool_call_id
+        - content

@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`union-single-property-key > simple 1`] = `
+"types:
+  a: string
+  b: boolean
+  c:
+    properties:
+      a: integer
+  d:
+    # here's a comment
+    union:
+      a:
+        type: string
+        key: a
+      b:
+        type: boolean
+        key: b
+      d:
+        type: d # there's a comment
+        key: d
+  e:
+    union:
+      a:
+        type: string
+        key: a
+      b:
+        type: boolean
+        key: b
+      d:
+        type: d
+        docs: hello
+        key: d
+"
+`;

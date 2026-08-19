@@ -1,0 +1,14 @@
+{
+    "cliVersion": "DUMMY",
+    "generatorName": "fernapi/fern-typescript-sdk",
+    "generatorVersion": "local",
+    "generatorConfig": {
+        "noSerdeLayer": false,
+        "generateWebSocketClients": true
+    },
+    "originGitCommit": "DUMMY",
+    "invokedBy": "ci",
+    "requestedVersion": "0.0.1",
+    "ciProvider": "github",
+    "sdkVersion": "0.0.1"
+}

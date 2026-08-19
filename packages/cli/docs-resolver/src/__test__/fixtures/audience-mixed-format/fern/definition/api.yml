@@ -1,0 +1,120 @@
+name: mixed-format-audience-api
+display-name: Mixed Format Audience Test API
+
+auth: false
+
+types:
+  Status:
+    properties:
+      healthy: boolean
+      timestamp: datetime
+
+  Event:
+    properties:
+      id: string
+      name: string
+      data: map<string, unknown>
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    # Core Platform endpoints
+    getCoreStatus:
+      display-name: Get Core Status
+      method: GET
+      path: /core/status
+      response: Status
+
+    initializeCore:
+      display-name: Initialize Core
+      method: POST
+      path: /core/initialize
+      response: Status
+
+    getCoreMetrics:
+      display-name: Get Core Metrics (Internal/Admin)
+      method: GET
+      path: /core/metrics
+      response: map<string, integer>
+
+    resetCore:
+      display-name: Reset Core (Internal/Admin)
+      method: POST
+      path: /core/admin/reset
+      response: Status
+
+    # Analytics endpoints
+    submitEvent:
+      display-name: Submit Event (Internal)
+      method: POST
+      path: /analytics/events
+      request: Event
+      response: boolean
+
+    getReport:
+      display-name: Get Report (Internal)
+      method: GET
+      path: /analytics/reports/{id}
+      path-parameters:
+        id: string
+      response:
+        properties:
+          id: string
+          data: map<string, unknown>
+
+    # Mobile endpoints
+    mobileLogin:
+      display-name: Mobile Login
+      method: POST
+      path: /mobile/auth/login
+      request:
+        properties:
+          username: string
+          password: string
+      response:
+        properties:
+          token: string
+
+    refreshMobileToken:
+      display-name: Refresh Mobile Token
+      method: POST
+      path: /mobile/auth/refresh
+      request:
+        properties:
+          refreshToken: string
+      response:
+        properties:
+          token: string
+
+    syncMobileData:
+      display-name: Sync Mobile Data
+      method: GET
+      path: /mobile/sync/data
+      response: list<map<string, unknown>>
+
+    uploadMobileData:
+      display-name: Upload Mobile Data
+      method: POST
+      path: /mobile/sync/upload
+      request:
+        properties:
+          data: list<map<string, unknown>>
+      response: boolean
+
+    # Enterprise endpoints
+    getOrganizations:
+      display-name: Get Organizations (Enterprise/Admin)
+      method: GET
+      path: /enterprise/organizations
+      response: list<map<string, unknown>>
+
+    provisionEnterprise:
+      display-name: Provision Enterprise (Enterprise/Admin)
+      method: POST
+      path: /enterprise/provisioning
+      request:
+        properties:
+          organizationId: string
+          features: list<string>
+      response: boolean

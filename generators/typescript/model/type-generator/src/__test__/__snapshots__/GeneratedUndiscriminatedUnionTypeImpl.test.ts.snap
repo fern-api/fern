@@ -1,0 +1,122 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > buildExample > builds example for undiscriminated union 1`] = `""example-value""`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateForInlineUnion > returns request/response type nodes with named variants 1`] = `"User | Admin"`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateForInlineUnion > returns request/response type nodes with named variants 2`] = `"User.Request | Admin.Request"`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateForInlineUnion > returns request/response type nodes with named variants 3`] = `"User.Response | Admin.Response"`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateForInlineUnion > returns union type node 1`] = `"string | string"`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateStatements / writeToFile > does not generate module when generateReadWriteOnlyTypes but no variants needed 1`] = `
+"export type MyUnion = 
+    | string
+    | string;
+"
+`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateStatements / writeToFile > generates basic union with primitive members 1`] = `
+"export type MyUnion = 
+    | string
+    | string;
+"
+`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateStatements / writeToFile > generates union with examples in docs 1`] = `
+"/**
+ * A union type.
+ *
+ * @example
+ *     "example-value"
+ */
+export type MyUnion = 
+    | string
+    | string;
+"
+`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateStatements / writeToFile > generates union with generateReadWriteOnlyTypes and request/response variants 1`] = `
+"/**
+ * Example of an undiscriminated union
+ */
+export type UserOrAdmin = 
+    | User
+    | Admin;
+
+export namespace UserOrAdmin {
+    /**
+     * Example of an undiscriminated union
+     */
+    export type Request = 
+        | User.Request
+        | Admin.Request;
+    /**
+     * Example of an undiscriminated union
+     */
+    export type Response = 
+        | User.Response
+        | Admin.Response;
+}
+"
+`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateStatements / writeToFile > generates union with member docs 1`] = `
+"export type MyUnion = 
+    /**
+     * A string variant. */
+    | string
+    /**
+     * An integer variant. */
+    | string;
+"
+`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateStatements / writeToFile > generates union with named type members 1`] = `
+"export type UserOrAdmin = 
+    | User
+    | Admin;
+"
+`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateStatements / writeToFile > generates union with non-recursive map member (no index signature) 1`] = `
+"export type MyUnion = 
+    | string
+    | string;
+"
+`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateStatements / writeToFile > generates union with self-recursive map member (index signature) 1`] = `
+"export type NestedValue = 
+    | string
+    | {
+        [key: string]: NestedValue;
+    };
+"
+`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateStatements / writeToFile > generates union with self-recursive map wrapped in optional 1`] = `
+"export type NestedValue = 
+    | string
+    | {
+        [key: string]: NestedValue;
+    };
+"
+`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateStatements / writeToFile > generates union with single member 1`] = `
+"export type SingleMember = 
+    | string;
+"
+`;
+
+exports[`GeneratedUndiscriminatedUnionTypeImpl > generateStatements / writeToFile > generates union with top-level docs 1`] = `
+"/**
+ * A simple undiscriminated union.
+ */
+export type MyUnion = 
+    | string
+    | string;
+"
+`;

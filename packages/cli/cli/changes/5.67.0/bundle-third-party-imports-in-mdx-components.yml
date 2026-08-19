@@ -1,0 +1,5 @@
+- summary: |
+    Custom MDX components (`experimental.mdx-components`) can now import third-party
+    libraries. The CLI bundles component files with rolldown (via npx) at docs build
+    time, inlining dependencies resolved from the docs project's node_modules.
+  type: feat

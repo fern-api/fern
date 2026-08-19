@@ -1,0 +1,26 @@
+openapi: 3.1.0
+info:
+  title: no-environment
+  version: 0.0.0
+paths:
+  /dummy:
+    get:
+      operationId: dummy_getDummy
+      tags:
+        - Dummy
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+      security:
+        - Bearer: []
+components:
+  schemas: {}
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

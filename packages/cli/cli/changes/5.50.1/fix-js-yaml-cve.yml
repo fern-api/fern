@@ -1,0 +1,4 @@
+- summary: |
+    Bump js-yaml to 4.2.0 across all transitive dependencies to fix
+    CVE-2026-53550 (quadratic-complexity DoS in merge key handling).
+  type: chore

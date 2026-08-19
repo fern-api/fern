@@ -1,0 +1,6 @@
+- summary: |
+    Fix dynamic snippets to default `inlinePathParameters` and `inlineFileProperties`
+    to `true`, matching the TypeScript SDK generator's defaults. This fixes a mismatch
+    where docs snippets showed positional string arguments for path parameters instead
+    of the correct object-wrapped syntax.
+  type: fix

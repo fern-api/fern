@@ -1,0 +1,5 @@
+- summary: |
+    Fix GitHub Enterprise support for self-hosted SDK generation. Octokit API calls
+    (signed commits, PR creation, ref updates) now use the correct GHE API base URL
+    derived from the repository URI instead of always hitting api.github.com.
+  type: fix

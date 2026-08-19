@@ -1,0 +1,14 @@
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    # add one non-bytes endpoint to force snippet generation
+    simple:
+      path: "/snippet"
+      method: POST
+    download:
+      path: /download-content/{id}
+      method: GET
+      path-parameters:
+        id: string
+      response: bytes

@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Apply per-locale `navbar-links` overlays in the default `fern docs dev` app
+    preview server (the legacy preview and production publish already did this,
+    so dev was the odd one out and showed English CTAs on `/<lang>/` URLs).
+    Also matches translation overrides for skip-slug sibling tabs positionally
+    when slug-based matching can't disambiguate them — without this, only the
+    one tab whose slug retained its own segment got translated.
+  type: fix

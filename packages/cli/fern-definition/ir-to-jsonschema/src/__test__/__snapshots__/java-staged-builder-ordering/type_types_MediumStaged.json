@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "alpha": {
+      "type": "string"
+    },
+    "beta": {
+      "type": "integer"
+    },
+    "gamma": {
+      "type": "string"
+    },
+    "delta": {
+      "type": "boolean"
+    },
+    "optional": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "alpha",
+    "beta",
+    "gamma",
+    "delta"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -1,0 +1,14 @@
+export { FernIr as V67 } from "@fern-api/ir-sdk";
+export { FernIrV53 as V53 } from "@fern-fern/ir-v53-sdk";
+export { FernIrV54 as V54 } from "@fern-fern/ir-v54-sdk";
+export { FernIrV55 as V55 } from "@fern-fern/ir-v55-sdk";
+export { FernIrV56 as V56 } from "@fern-fern/ir-v56-sdk";
+export { FernIrV57 as V57 } from "@fern-fern/ir-v57-sdk";
+export { FernIrV58 as V58 } from "@fern-fern/ir-v58-sdk";
+export { FernIrV59 as V59 } from "@fern-fern/ir-v59-sdk";
+export { FernIrV60 as V60 } from "@fern-fern/ir-v60-sdk";
+export { FernIrV61 as V61 } from "@fern-fern/ir-v61-sdk";
+export { FernIrV62 as V62 } from "@fern-fern/ir-v62-sdk";
+export { FernIrV63 as V63 } from "@fern-fern/ir-v63-sdk";
+export { FernIrV65 as V65 } from "@fern-fern/ir-v65-sdk";
+export { FernIrV66 as V66 } from "@fern-fern/ir-v66-sdk";

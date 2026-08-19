@@ -1,0 +1,107 @@
+import { CaseConverter } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { Zurg } from "@fern-typescript/commons";
+import { GeneratedUnionType, GeneratedUnionTypeSchema, ModelContext } from "@fern-typescript/contexts";
+import {
+    GeneratedUnionSchema,
+    RawNoPropertiesSingleUnionType,
+    RawSingleUnionType
+} from "@fern-typescript/union-schema-generator";
+import { ModuleDeclaration, ts } from "ts-morph";
+
+import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema.js";
+import { RawSamePropertiesAsObjectSingleUnionType } from "./RawSamePropertiesAsObjectSingleUnionType.js";
+import { RawSinglePropertySingleUnionType } from "./RawSinglePropertySingleUnionType.js";
+
+export declare namespace GeneratedUnionTypeSchemaImpl {
+    export interface Init<Context extends ModelContext>
+        extends AbstractGeneratedTypeSchema.Init<FernIr.UnionTypeDeclaration, Context> {
+        includeUtilsOnUnionMembers: boolean;
+        caseConverter: CaseConverter;
+    }
+}
+
+export class GeneratedUnionTypeSchemaImpl<Context extends ModelContext>
+    extends AbstractGeneratedTypeSchema<FernIr.UnionTypeDeclaration, Context>
+    implements GeneratedUnionTypeSchema<Context>
+{
+    public readonly type = "union";
+
+    private generatedUnionSchema: GeneratedUnionSchema<Context>;
+
+    constructor({
+        includeUtilsOnUnionMembers,
+        caseConverter,
+        ...superInit
+    }: GeneratedUnionTypeSchemaImpl.Init<Context>) {
+        super({ ...superInit, caseConverter });
+        const discriminant = this.shape.discriminant;
+
+        this.generatedUnionSchema = new GeneratedUnionSchema({
+            shape: this.shape,
+            typeName: superInit.typeName,
+            discriminant,
+            shouldIncludeDefaultCaseInTransform: true,
+            includeUtilsOnUnionMembers,
+            getReferenceToSchema: this.getReferenceToSchema,
+            getGeneratedUnion: () => this.getGeneratedUnionType().getGeneratedUnion(),
+            baseProperties: this.shape.baseProperties,
+            caseConverter,
+            singleUnionTypes: this.shape.types.map((singleUnionType) => {
+                const discriminantValue = singleUnionType.discriminantValue;
+                return FernIr.SingleUnionTypeProperties._visit<RawSingleUnionType<Context>>(singleUnionType.shape, {
+                    noProperties: () =>
+                        new RawNoPropertiesSingleUnionType({
+                            discriminant,
+                            discriminantValue,
+                            caseConverter
+                        }),
+                    samePropertiesAsObject: (extended) =>
+                        new RawSamePropertiesAsObjectSingleUnionType({
+                            extended,
+                            discriminant,
+                            discriminantValue,
+                            caseConverter
+                        }),
+                    singleProperty: (singleProperty) =>
+                        new RawSinglePropertySingleUnionType({
+                            singleProperty,
+                            discriminant,
+                            discriminantValue,
+                            getGeneratedType: this.getGeneratedType.bind(this),
+                            caseConverter
+                        }),
+                    _other: () => {
+                        throw new Error(
+                            "Unknown FernIr.SingleUnionTypeProperties type: " + singleUnionType.shape.propertiesType
+                        );
+                    }
+                });
+            })
+        });
+    }
+
+    public override generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void {
+        this.generatedUnionSchema.generateRawTypeDeclaration(context, module);
+    }
+
+    public override buildSchema(context: Context): Zurg.Schema {
+        return this.generatedUnionSchema.buildSchema(context);
+    }
+
+    public override writeSchemaToFile(context: Context): void {
+        this.generatedUnionSchema.writeSchemaToFile(context);
+    }
+
+    private getGeneratedUnionType(): GeneratedUnionType<Context> {
+        const generatedType = this.getGeneratedType();
+        if (generatedType.type !== "union") {
+            throw new Error("Type is not an union: " + this.typeName);
+        }
+        return generatedType;
+    }
+
+    protected override getReferenceToParsedShape(context: Context): ts.TypeNode {
+        return this.generatedUnionSchema.getReferenceToParsedShape(context);
+    }
+}

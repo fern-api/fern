@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{typeId}",
+                "method": "GET",
+                "identifier_override": "endpoint_.get"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedAlias;\n\nvar client = new SeedAliasClient();\nawait client.GetAsync(\"typeId\");\n"
+            }
+        }
+    ]
+}

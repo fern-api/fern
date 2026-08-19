@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 3.49.0
+        output:
+          location: local-file-system
+          path: ../../../src/sdk
+        config:
+          outputSourceFiles: true
+          includeUtilsOnUnionMembers: true
+          noOptionalProperties: true
+          noSerdeLayer: false
+        smart-casing: false
+  sdks:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 3.49.0
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/ir-v34-sdk"
+        config:
+          includeUtilsOnUnionMembers: true
+          noOptionalProperties: true
+          noSerdeLayer: false
+        smart-casing: false

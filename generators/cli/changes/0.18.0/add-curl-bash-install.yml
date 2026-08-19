@@ -1,0 +1,7 @@
+- summary: |
+    Add curl|bash installation support for generated CLIs via cargo-dist
+    release assets. Emits `.github/workflows/release.yml` unconditionally
+    for GitHub output, removes npm from dist-workspace.toml installers,
+    and updates the README Installation section to lead with shell/powershell
+    installer one-liners.
+  type: feat

@@ -1,0 +1,9 @@
+{
+  "title": "MDX expected closing Tip tag",
+  "disposition": "shipped",
+  "rationale": "MDX parse error from user-authored docs content. replaceImagePathsAndUrls in DocsDefinitionResolver and previewDocs now wrapped with try/catch that converts to CliError(ParseError).",
+  "fixSummary": "Wrap replaceImagePathsAndUrls calls in DocsDefinitionResolver.resolve and getPreviewDocsDefinition with try/catch → CliError(ParseError).",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "MDX parse error surfaced as InternalError from unwrapped replaceImagePathsAndUrls call sites."
+}

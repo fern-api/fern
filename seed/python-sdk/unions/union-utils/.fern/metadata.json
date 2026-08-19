@@ -1,0 +1,16 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "pydantic_config": {
+      "include_union_utils": true
+    },
+    "use_inheritance_for_extended_models": false
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github",
+  "sdkVersion": "0.0.1"
+}

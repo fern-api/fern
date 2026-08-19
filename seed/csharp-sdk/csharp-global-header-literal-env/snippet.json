@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/version",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getWithLiteralVersionHeader"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpGlobalHeaderLiteralEnv;\n\nvar client = new SeedCsharpGlobalHeaderLiteralEnvClient(\"TOKEN\", \"VERSION\");\nawait client.Service.GetWithLiteralVersionHeaderAsync();\n"
+            }
+        }
+    ]
+}

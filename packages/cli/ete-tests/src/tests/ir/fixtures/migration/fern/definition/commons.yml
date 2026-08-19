@@ -1,0 +1,3 @@
+errors:
+  BadRequestError:
+    status-code: 400

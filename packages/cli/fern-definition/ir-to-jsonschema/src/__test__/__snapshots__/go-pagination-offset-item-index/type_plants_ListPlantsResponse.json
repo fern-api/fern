@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "total_count": {
+      "type": "integer"
+    },
+    "plants": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/plants.Plant"
+      }
+    }
+  },
+  "required": [
+    "total_count",
+    "plants"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "plants.Plant": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

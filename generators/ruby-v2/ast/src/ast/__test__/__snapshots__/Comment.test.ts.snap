@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Comment > does not write a comment with no content 1`] = `""`;
+
+exports[`Comment > emits bare \`#\` for blank lines in multi-line docs 1`] = `
+"# First paragraph.
+#
+# Second paragraph.
+"
+`;
+
+exports[`Comment > handles lines that are exactly at the limit 1`] = `
+"# AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+"
+`;
+
+exports[`Comment > handles very long words like URLs without breaking them 1`] = `
+"# See the documentation at
+# https://example.com/very/long/path/to/documentation/that/exceeds/the/line/length/limit/significantly for more
+# information.
+"
+`;
+
+exports[`Comment > preserves existing line breaks while wrapping long lines 1`] = `
+"# First paragraph that is short.
+# Second paragraph that is very long and exceeds the RuboCop default line length limit of 120 characters and should be
+# wrapped to multiple lines automatically.
+"
+`;
+
+exports[`Comment > strips trailing whitespace from short lines 1`] = `
+"# If the request resulted in errors,
+# additional context here.
+"
+`;
+
+exports[`Comment > wraps long lines to fit within RuboCop line length limit 1`] = `
+"# This is a very long comment that exceeds the RuboCop default line length limit of 120 characters and should be wrapped
+# to multiple lines automatically.
+"
+`;
+
+exports[`Comment > wraps very long lines from OpenAPI descriptions 1`] = `
+"# The API endpoint allows you to retrieve detailed information about a specific resource including all of its
+# properties, relationships, and metadata. This endpoint supports pagination, filtering, and sorting options to help you
+# efficiently query large datasets.
+"
+`;
+
+exports[`Comment > writes multi-line comments 1`] = `
+"# Hello
+# there
+"
+`;
+
+exports[`Comment > writes single-line comments 1`] = `
+"# Hello there
+"
+`;

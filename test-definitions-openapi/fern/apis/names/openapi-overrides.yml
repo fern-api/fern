@@ -1,0 +1,14 @@
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    TelemetryData:
+      x-fern-sdk-group-name: ["infra", "telemetry"]
+
+paths:
+  /telemetry:
+    get:
+      x-fern-sdk-group-name: telemetry
+      x-fern-sdk-method-name: getTelemetryData

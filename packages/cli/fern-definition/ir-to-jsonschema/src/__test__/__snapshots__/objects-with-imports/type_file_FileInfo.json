@@ -1,0 +1,14 @@
+{
+  "type": "string",
+  "oneOf": [
+    {
+      "const": "REGULAR",
+      "description": "A regular file (e.g. foo.txt)."
+    },
+    {
+      "const": "DIRECTORY",
+      "description": "A directory (e.g. foo/)."
+    }
+  ],
+  "definitions": {}
+}

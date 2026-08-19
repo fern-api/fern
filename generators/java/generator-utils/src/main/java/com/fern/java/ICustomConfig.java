@@ -1,0 +1,204 @@
+/*
+ * (c) Copyright 2023 Birch Solutions Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.fern.java;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.List;
+import java.util.Optional;
+import org.immutables.value.Value;
+
+public interface ICustomConfig {
+
+    @Value.Default
+    @JsonProperty("wrapped-aliases")
+    default Boolean wrappedAliases() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("enable-forward-compatible-enums")
+    default Boolean enableForwardCompatibleEnum() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("generate-unknown-as-json-node")
+    default Boolean generateUnknownAsJsonNode() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("json-include")
+    default JsonInclude jsonInclude() {
+        return JsonInclude.NON_ABSENT;
+    }
+
+    @Value.Default
+    @JsonProperty("enable-public-constructors")
+    default Boolean enablePublicConstructors() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("disable-required-property-builder-checks")
+    default Boolean disableRequiredPropertyBuilderChecks() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("inline-path-parameters")
+    default Boolean inlinePathParameters() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("enable-inline-types")
+    default Boolean enableInlineTypes() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("enable-extensible-builders")
+    default Boolean enableExtensibleBuilders() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("use-default-request-parameter-values")
+    default Boolean useDefaultRequestParameterValues() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("enable-wire-tests")
+    default Boolean enableWireTests() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("use-nullable-annotation")
+    default Boolean useNullableAnnotation() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("collapse-optional-nullable")
+    default Boolean collapseOptionalNullable() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("use-local-date-for-dates")
+    default Boolean useLocalDateForDates() {
+        return false;
+    }
+
+    @JsonProperty("package-prefix")
+    Optional<String> packagePrefix();
+
+    @JsonProperty("custom-pager-name")
+    Optional<String> customPagerName();
+
+    @Value.Default
+    @JsonProperty("package-layout")
+    default PackageLayout packageLayout() {
+        return PackageLayout.NESTED;
+    }
+
+    @JsonProperty("gradle-distribution-url")
+    Optional<String> gradleDistributionUrl();
+
+    @JsonProperty("gradle-plugin-management")
+    Optional<String> gradlePluginManagement();
+
+    @Value.Default
+    @JsonProperty("gradle-central-dependency-management")
+    default Boolean gradleCentralDependencyManagement() {
+        return false;
+    }
+
+    @JsonProperty("custom-plugins")
+    Optional<List<String>> customPlugins();
+
+    enum PackageLayout {
+        NESTED("nested"),
+        FLAT("flat");
+
+        private final String value;
+
+        PackageLayout(String value) {
+            this.value = value;
+        }
+
+        @JsonValue
+        public String getValue() {
+            return value;
+        }
+    }
+
+    enum JsonInclude {
+        NON_EMPTY("non-empty"),
+        NON_ABSENT("non-absent");
+
+        private final String value;
+
+        JsonInclude(String value) {
+            this.value = value;
+        }
+
+        @JsonValue
+        public String getValue() {
+            return value;
+        }
+    }
+
+    /**
+     * Controls how the output directory is interpreted during local generation.
+     *
+     * <ul>
+     *   <li>{@code SOURCE_ROOT} - Output path points directly to where .java files should go. Files are written without
+     *       adding src/main/java prefix.
+     *   <li>{@code PROJECT_ROOT} - Output path points to project root. Generator adds src/main/java prefix for
+     *       production files and src/test/java for test files.
+     * </ul>
+     */
+    enum OutputDirectory {
+        SOURCE_ROOT("source-root"),
+        PROJECT_ROOT("project-root");
+
+        private final String value;
+
+        OutputDirectory(String value) {
+            this.value = value;
+        }
+
+        @JsonValue
+        public String getValue() {
+            return value;
+        }
+    }
+
+    @Value.Default
+    @JsonProperty("output-directory")
+    default OutputDirectory outputDirectory() {
+        return OutputDirectory.PROJECT_ROOT;
+    }
+
+    @JsonProperty("maxRetries")
+    Optional<Integer> maxRetries();
+}

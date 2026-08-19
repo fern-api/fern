@@ -1,0 +1,3 @@
+rootProject.name = 'multi-url-environment-no-default'
+
+include 'sample-app'

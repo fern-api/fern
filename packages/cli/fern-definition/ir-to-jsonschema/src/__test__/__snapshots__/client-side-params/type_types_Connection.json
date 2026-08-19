@@ -1,0 +1,117 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Connection identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Connection name"
+    },
+    "display_name": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Display name for the connection"
+    },
+    "strategy": {
+      "type": "string",
+      "description": "The identity provider identifier (auth0, google-oauth2, facebook, etc.)"
+    },
+    "options": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Connection-specific configuration options"
+    },
+    "enabled_clients": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "List of client IDs that can use this connection"
+    },
+    "realms": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Applicable realms for enterprise connections"
+    },
+    "is_domain_connection": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Whether this is a domain connection"
+    },
+    "metadata": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Additional metadata"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "strategy"
+  ],
+  "additionalProperties": false,
+  "description": "Represents an identity provider connection",
+  "definitions": {}
+}

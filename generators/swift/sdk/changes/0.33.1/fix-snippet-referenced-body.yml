@@ -1,0 +1,5 @@
+- summary: |
+    Fix dynamic snippet generation for endpoints whose body `$ref`s a top-level
+    schema. The snippet now passes the referenced type directly instead of
+    wrapping it in a non-existent `.init(body:)` on the request wrapper struct.
+  type: fix

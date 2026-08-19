@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "prompt": {
+      "type": "string",
+      "description": "The user's message"
+    },
+    "stream": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "prompt"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

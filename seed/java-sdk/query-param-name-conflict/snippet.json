@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "c0fc0edd",
+            "id": {
+                "method": "PUT",
+                "path": "/task/",
+                "identifier_override": "endpoint_.bulkUpdateTasks"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.BulkUpdateTasksRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.bulkUpdateTasks(\n            BulkUpdateTasksRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.BulkUpdateTasksRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.bulkUpdateTasks(\n            BulkUpdateTasksRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -1,0 +1,3 @@
+rootProject.name = 'union-query-parameters'
+
+include 'sample-app'

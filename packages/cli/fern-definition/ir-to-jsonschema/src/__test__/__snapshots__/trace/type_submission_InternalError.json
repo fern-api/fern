@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "exceptionInfo": {
+      "$ref": "#/definitions/submission.ExceptionInfo"
+    }
+  },
+  "required": [
+    "exceptionInfo"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "submission.ExceptionInfo": {
+      "type": "object",
+      "properties": {
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

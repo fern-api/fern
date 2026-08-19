@@ -1,0 +1,6 @@
+types:
+  CommonObject:
+    properties:
+      foo: string
+
+  CommonString: string

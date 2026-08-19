@@ -1,0 +1,185 @@
+syntax = "proto3";
+
+package anduril.entitymanager.v1;
+
+import "anduril/entitymanager/v1/entity.pub.proto";
+import "anduril/entitymanager/v1/filter.pub.proto";
+import "anduril/entitymanager/v1/rate_limit.pub.proto";
+import "anduril/entitymanager/v1/types.pub.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Anduril.Entitymanager.V1";
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/entitymanager/v1;entitymanager";
+option java_multiple_files = true;
+option java_outer_classname = "EntityManagerApiProto";
+option java_package = "com.anduril.entitymanager.v1";
+option objc_class_prefix = "AEX";
+
+// Entity Manager manages the lifecycle of the entities that comprise the common operational picture (COP).
+//
+// Every object in the COP is represented as an "Entity." Each Entity is essentially an ID, with a lifecycle
+// and a collection of data components. Each data component is a separate protobuf message definition.
+//
+// Entity Manager provides a way to query the currently live set of entities within a set of filter constraints,
+// as well as a limited set of management APIs to change the grouping or relationships between entities.
+service EntityManagerAPI {
+  // Create or update an entity and get a response confirming whether the Entity Manager API succesfully processes
+  // the entity. Ideal for testing environments.
+  // When publishing an entity, only your integration can modify or delete that entity; other sources, such as the
+  // UI or other integrations, can't. If you're pushing entity updates so fast that your publish task can't keep
+  // up with your update rate (a rough estimate of >= 1 Hz), use the PublishEntities request instead.
+  rpc PublishEntity(PublishEntityRequest) returns (PublishEntityResponse);
+  // Create or update one or more entities rapidly using PublishEntities, which doesn't return error messages
+  // for invalid entities or provide server feedback. When publishing entities, only your integration can
+  // modify or delete those entities; other sources, such as the UI or other integrations, can't.
+  // When you use PublishEntities, you gain higher throughput at the expense of receiving no server responses or
+  // validation. In addition, due to gRPC stream mechanics, you risk losing messages queued on the outgoing gRPC
+  // buffer if the stream connection is lost prior to the messages being sent. If you need validation responses,
+  // are developing in testing environments, or have lower entity update rates, use PublishEntity.
+  rpc PublishEntities(stream PublishEntitiesRequest) returns (PublishEntitiesResponse);
+  // Get an entity using its entityId.
+  rpc GetEntity(GetEntityRequest) returns (GetEntityResponse);
+  // Override an Entity Component. An override is a definitive change to entity data. Any authorized user of service
+  // can override overridable components on any entity. Only fields marked with overridable can be overridden.
+  // When setting an override, the user or service setting the override is asserting that they are certain of the change
+  // and the truth behind it.
+  rpc OverrideEntity(OverrideEntityRequest) returns (OverrideEntityResponse);
+  // Remove an override for an Entity component.
+  rpc RemoveEntityOverride(RemoveEntityOverrideRequest) returns (RemoveEntityOverrideResponse);
+  // Returns a stream of entities with specified components populated.
+  rpc StreamEntityComponents(StreamEntityComponentsRequest) returns (stream StreamEntityComponentsResponse);
+}
+
+//--------------------//
+// Request / Response //
+//--------------------//
+
+message PublishEntityRequest {
+  // Create or update an entity.
+  // Required fields:
+  //   * entity_id: Unique string identifier. Can be a Globally Unique Identifier (GUID).
+  //   * expiry_time: Expiration time that must be greater than the current time and less than 30 days in the future. The Entities API will reject any entity update with an expiry_time in the past. When the expiry_time has passed, the Entities API will delete the entity from the COP and send a DELETE event.
+  //   * is_live: Boolean that when true, creates or updates the entity. If false and the entity is still live, triggers a DELETE event.
+  //   * provenance.integration_name: String that uniquely identifies the integration responsible for publishing the entity.
+  //   * provenance.data_type.
+  //   * provenance.source_update_time. This can be earlier than the RPC call if the data entered is older.
+  //   * aliases.name: Human-readable string that represents the name of an entity.
+  //   * ontology.template
+  // For additional required fields that are determined by template, see com.anduril.entitymanager.v1.Template.
+  // if an entity_id is provided, Entity Manager updates the entity. If no entity_id is provided, it creates an entity.
+  Entity entity = 1;
+}
+
+message PublishEntityResponse {}
+
+message PublishEntitiesRequest {
+  // Sends a stream of entity objects to create or update.
+  // Each entity requires the following fields:
+  //   * entity_id: Unique string identifier. Can be a Globally Unique Identifier (GUID).
+  //   * expiry_time: Expiration time that must be greater than the current time and less than 30 days in the future. The Entities API will reject any entity update with an expiry_time in the past. When the expiry_time has passed, the Entities API will delete the entity from the COP and send a DELETE event.
+  //   * is_live: Boolean that when true, creates or updates the entity. If false and the entity is still live, triggers a DELETE event.
+  //   * provenance.integration_name: String that uniquely identifies the integration responsible for publishing the entity.
+  //   * provenance.data_type.
+  //   * provenance.source_update_time. This can be earlier than the RPC call if the data entered is older.
+  //   * aliases.name: Human-readable string that represents the name of an entity.
+  //   * ontology.template
+  // For additional required fields that are determined by template, see com.anduril.entitymanager.v1.Template.
+  // If an entity_id is provided, the entity updates. If no entity_id is provided, the entity is created.
+  Entity entity = 1;
+}
+
+// After the stream closes, the server returns an empty message indicating success. The server will silently
+// drop invalid entities from the client stream. The client must reopen the stream if it's canceled due to
+// an End of File (EOF) or timeout.
+message PublishEntitiesResponse {}
+
+message GetEntityRequest {
+  // The GUID of this entity to query.
+  string entity_id = 1;
+}
+
+message GetEntityResponse {
+  // An Entity object that corresponds with the requested entityId.
+  Entity entity = 1;
+}
+
+message OverrideEntityRequest {
+  // The entity containing the overridden fields. The service will extract the overridable fields from the entity
+  // object and ignore any other fields.
+  Entity entity = 1;
+  // The field paths that will be extracted from the Entity and saved as an override. Only fields marked overridable can
+  // be overridden.
+  repeated string field_path = 2;
+  // Additional information about the source of the override.
+  Provenance provenance = 3;
+}
+
+message OverrideEntityResponse {
+  // The status of the override request.
+  OverrideStatus status = 1;
+}
+
+message RemoveEntityOverrideRequest {
+  // The entity ID that the override will be removed from.
+  string entity_id = 1;
+  // The field paths to remove from the override store for the provided entityId.
+  repeated string field_path = 2;
+}
+
+// void response but with placeholder for future optional fields.
+message RemoveEntityOverrideResponse {}
+
+message StreamEntityComponentsRequest {
+  // lower_snake_case component names to include in response events, e.g. location. Only included components will
+  // populate.
+  repeated string components_to_include = 1;
+  // Subscribe to all components. This should only be used in cases where you want all components.
+  // Setting both components_to_include and include_all_components is invalid and will be rejected.
+  bool include_all_components = 2;
+  // The root node of a statement filter "tree".
+  // If provided, only entities matching the filter criteria will be streamed. The filter is applied dynamically so if a
+  // new entity matches, it will be included, and if an entity updates to no longer match, it will be excluded.
+  Statement filter = 3;
+  // Optional rate-limiting / down-sampling parameters, see RateLimit message for details.
+  RateLimit rate_limit = 4;
+  // The period (in milliseconds) at which a Heartbeat message will be sent on the
+  // message stream. If this field is set to 0 then no Heartbeat messages are sent.
+  uint32 heartbeat_period_millis = 5;
+  // Subscribe to a finite stream of preexisting events which closes when there are no additional pre-existing events to
+  // process. Respects the filter specified on the StreamEntityComponentsRequest.
+  bool preexisting_only = 6;
+}
+
+// response stream will be fed all matching pre-existing live entities as CREATED, plus any new events ongoing.
+message StreamEntityComponentsResponse {
+  EntityEvent entity_event = 1;
+  Heartbeat heartbeat = 2;
+}
+
+// Event representing some type of entity change.
+message EntityEvent {
+  EventType event_type = 1;
+  google.protobuf.Timestamp time = 2;
+  Entity entity = 3;
+}
+
+// The type of entity event.
+enum EventType {
+  EVENT_TYPE_INVALID = 0;
+  // entity was created.
+  EVENT_TYPE_CREATED = 1;
+  // entity was updated.
+  EVENT_TYPE_UPDATE = 2;
+  // entity was deleted.
+  EVENT_TYPE_DELETED = 3;
+  // entity already existed, but sent on a new stream connection.
+  EVENT_TYPE_PREEXISTING = 4;
+  // entity override was set after the entity expiration.
+  EVENT_TYPE_POST_EXPIRY_OVERRIDE = 5;
+}
+
+// A message that is periodically sent on the stream for keep-alive behaviour.
+message Heartbeat {
+  // The timestamp at which the heartbeat message was sent.
+  google.protobuf.Timestamp timestamp = 1;
+}

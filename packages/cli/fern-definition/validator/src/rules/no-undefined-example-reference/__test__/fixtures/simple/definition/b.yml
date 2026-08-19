@@ -1,0 +1,14 @@
+imports:
+  a: a.yml
+  nested: folder/nested.yml
+types:
+  MyType:
+    properties:
+      alpha: string
+      bravo: string
+      nested: nested.NestedType
+    examples:
+      - value:
+          alpha: $malformed-example
+          brave: $a.MissingType.Example
+          nested: $nested.NestedType.NestedExample1

@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "Name": {
+      "type": "string"
+    },
+    "NestedUser": {
+      "$ref": "#/definitions/service.User"
+    }
+  },
+  "required": [
+    "Name",
+    "NestedUser"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "service.User": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "metadata_tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "EXTRA_PROPERTIES": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "userName",
+        "metadata_tags",
+        "EXTRA_PROPERTIES"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

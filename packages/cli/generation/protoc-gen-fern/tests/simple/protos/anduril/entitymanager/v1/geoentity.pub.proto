@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package anduril.entitymanager.v1;
+
+import "anduril/entitymanager/v1/location.pub.proto";
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "Anduril.Entitymanager.V1";
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/entitymanager/v1;entitymanager";
+option java_multiple_files = true;
+option java_outer_classname = "GeoentityProto";
+option java_package = "com.anduril.entitymanager.v1";
+option objc_class_prefix = "AEX";
+
+// A component that describes a geo-entity.
+message GeoDetails {
+  GeoType type = 1;
+
+  reserved 2, 3, 4, 5, 6, 7;
+  reserved "emergency", "visual_details", "fscm", "control_area", "acm", "mcm";
+}
+
+// The type of geo entity.
+enum GeoType {
+  GEO_TYPE_INVALID = 0;
+  GEO_TYPE_GENERAL = 1;
+  GEO_TYPE_HAZARD = 2;
+  GEO_TYPE_EMERGENCY = 3;
+  // Engagement zones allow for engaging an entity if it comes within the zone of another entity.
+  GEO_TYPE_ENGAGEMENT_ZONE = 5;
+  GEO_TYPE_CONTROL_AREA = 6;
+  GEO_TYPE_BULLSEYE = 7;
+
+  reserved 4, 8, 9;
+}
+
+// A component that describes the shape of a geo-entity.
+message GeoShape {
+  // point, line_string, and polygon are convertible as a subset of GeoJSON
+  oneof shape {
+    GeoPoint point = 1;
+    GeoLine line = 2;
+    GeoPolygon polygon = 3;
+    GeoEllipse ellipse = 4;
+    GeoEllipsoid ellipsoid = 5;
+  }
+}
+
+// A point shaped geo-entity.
+// See https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.2
+message GeoPoint {
+  Position position = 1;
+}
+
+// A line shaped geo-entity.
+// See https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.4
+message GeoLine {
+  repeated Position positions = 1;
+}
+
+// A polygon shaped geo-entity.
+// See https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.6, only canonical representations accepted
+message GeoPolygon {
+  // An array of LinearRings where the first item is the exterior ring and subsequent items are interior rings.
+  repeated LinearRing rings = 1;
+  // An extension hint that this polygon is a rectangle. When true this implies several things:
+  // * exactly 1 linear ring with 5 points (starting corner, 3 other corners and start again)
+  // * each point has the same altitude corresponding with the plane of the rectangle
+  // * each point has the same height (either all present and equal, or all not present)
+  bool is_rectangle = 2;
+}
+
+// An ellipse shaped geo-entity.
+// For a circle, the major and minor axis would be the same values.
+// This shape is NOT Geo-JSON compatible.
+message GeoEllipse {
+  // Defines the distance from the center point of the ellipse to the furthest distance on the perimeter in meters.
+  google.protobuf.DoubleValue semi_major_axis_m = 2;
+  // Defines the distance from the center point of the ellipse to the shortest distance on the perimeter in meters.
+  google.protobuf.DoubleValue semi_minor_axis_m = 3;
+  // The orientation of the semi-major relative to true north in degrees from clockwise: 0-180 due to symmetry across the semi-minor axis.
+  google.protobuf.DoubleValue orientation_d = 4;
+  // Optional height above entity position to extrude in meters. A non-zero value creates an elliptic cylinder
+  google.protobuf.DoubleValue height_m = 5;
+}
+
+// An ellipsoid shaped geo-entity.
+// Principal axis lengths are defined in entity body space
+// This shape is NOT Geo-JSON compatible.
+message GeoEllipsoid {
+  // Defines the distance from the center point to the surface along the forward axis
+  google.protobuf.DoubleValue forward_axis_m = 1;
+  // Defines the distance from the center point to the surface along the side axis
+  google.protobuf.DoubleValue side_axis_m = 2;
+  // Defines the distance from the center point to the surface along the up axis
+  google.protobuf.DoubleValue up_axis_m = 3;
+}
+
+// A closed ring of points. The first and last point must be the same.
+message LinearRing {
+  repeated GeoPolygonPosition positions = 2;
+
+  reserved 1;
+}
+
+// A position in a GeoPolygon with an optional extruded height.
+message GeoPolygonPosition {
+  // base position. if no altitude set, its on the ground.
+  Position position = 1;
+  // optional height above base position to extrude in meters.
+  // for a given polygon, all points should have a height or none of them.
+  // strictly GeoJSON compatible polygons will not have this set.
+  google.protobuf.FloatValue height_m = 2;
+}

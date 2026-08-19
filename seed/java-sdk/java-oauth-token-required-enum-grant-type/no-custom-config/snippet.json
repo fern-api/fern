@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "4032f28f",
+            "id": {
+                "method": "POST",
+                "path": "/auth/token",
+                "identifier_override": "endpoint_authorization.createToken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.authorization.requests.TokenRequest;\nimport com.seed.api.resources.authorization.types.TokenRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.authorization().createToken(\n            TokenRequest\n                .builder()\n                .grantType(TokenRequestGrantType.CLIENT_CREDENTIALS)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.authorization.requests.TokenRequest;\nimport com.seed.api.resources.authorization.types.TokenRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.authorization().createToken(\n            TokenRequest\n                .builder()\n                .grantType(TokenRequestGrantType.CLIENT_CREDENTIALS)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e2f6cfca",
+            "id": {
+                "method": "GET",
+                "path": "/plants/{plantId}",
+                "identifier_override": "endpoint_plants.get"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.plants.requests.GetPlantsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.plants().get(\n            \"plantId\",\n            GetPlantsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.plants.requests.GetPlantsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.plants().get(\n            \"plantId\",\n            GetPlantsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

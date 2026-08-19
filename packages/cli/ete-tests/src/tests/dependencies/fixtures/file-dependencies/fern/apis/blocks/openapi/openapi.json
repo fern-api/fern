@@ -1,0 +1,1256 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Dopt Blocks API",
+    "description": "The Dopt Blocks API",
+    "version": "0.0.0"
+  },
+  "components": {
+    "schemas": {
+      "BadRequestErrorResponseBody": {
+        "title": "BadRequestErrorResponseBody",
+        "type": "object",
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": ["invalid_request_error"]
+              },
+              {
+                "type": "string",
+                "enum": ["intent_request_error"]
+              }
+            ]
+          },
+          "details": {
+            "type": "string"
+          }
+        },
+        "required": ["code", "details"]
+      },
+      "BlockTransitionQueryString": {
+        "type": "object",
+        "properties": {
+          "transitions": {
+            "minItems": 1,
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "version": {
+            "type": "number"
+          },
+          "userIdentifier": {
+            "type": "string"
+          },
+          "groupIdentifier": {
+            "type": "string"
+          }
+        },
+        "required": ["transitions", "version", "userIdentifier"]
+      },
+      "BlockTransitionRequestParams": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "type": "string"
+          }
+        },
+        "required": ["uid"]
+      },
+      "FlowIntentQueryString": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "number"
+          },
+          "userIdentifier": {
+            "type": "string"
+          },
+          "groupIdentifier": {
+            "type": "string"
+          }
+        },
+        "required": ["version", "userIdentifier"]
+      },
+      "FlowIntentRequestParams": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "type": "string"
+          },
+          "intent": {
+            "title": "Flow_Intent",
+            "anyOf": [
+              {
+                "title": "Finish_Intent",
+                "type": "string",
+                "enum": ["finish"]
+              },
+              {
+                "title": "Stop_Intent",
+                "type": "string",
+                "enum": ["stop"]
+              },
+              {
+                "title": "Reset_Intent",
+                "type": "string",
+                "enum": ["reset"]
+              },
+              {
+                "title": "Start_Intent",
+                "type": "string",
+                "enum": ["start"]
+              }
+            ]
+          }
+        },
+        "required": ["uid", "intent"]
+      },
+      "GetBlockQueryString": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "number"
+          },
+          "userIdentifier": {
+            "type": "string"
+          }
+        },
+        "required": ["version", "userIdentifier"]
+      },
+      "GetBlockRequestParams": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "type": "string"
+          }
+        },
+        "required": ["uid"]
+      },
+      "GetFlowQueryString": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "number"
+          },
+          "include": {
+            "type": "string",
+            "enum": ["block"]
+          },
+          "userIdentifier": {
+            "type": "string"
+          },
+          "groupIdentifier": {
+            "type": "string"
+          }
+        },
+        "required": ["version", "userIdentifier"]
+      },
+      "GetFlowRequestParams": {
+        "type": "object",
+        "properties": {
+          "sid": {
+            "type": "string"
+          }
+        },
+        "required": ["sid"]
+      },
+      "HealthCheckResponseBody": {
+        "type": "object",
+        "properties": {
+          "application": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          }
+        },
+        "required": ["application", "status"]
+      },
+      "InternalServerErrorResponseBody": {
+        "title": "InternalServerErrorResponseBody",
+        "type": "object",
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": ["internal_server_error"]
+              }
+            ]
+          },
+          "details": {
+            "type": "string"
+          }
+        },
+        "required": ["code", "details"]
+      },
+      "NotFoundErrorResponseBody": {
+        "title": "NotFoundErrorResponseBody",
+        "type": "object",
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": ["not_found_error"]
+              }
+            ]
+          },
+          "details": {
+            "type": "string"
+          }
+        },
+        "required": ["code", "details"]
+      },
+      "TimeoutErrorResponseBody": {
+        "title": "TimeoutErrorResponseBody",
+        "type": "object",
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": ["internal_server_error"]
+              }
+            ]
+          },
+          "details": {
+            "type": "string"
+          }
+        },
+        "required": ["code", "details"]
+      },
+      "UnauthorizedErrorResponseBody": {
+        "title": "UnauthorizedErrorResponseBody",
+        "type": "object",
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": ["unauthorized_error"]
+              }
+            ]
+          },
+          "details": {
+            "type": "string"
+          }
+        },
+        "required": ["code", "details"]
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Api-Key"
+      }
+    }
+  },
+  "paths": {
+    "/v2/block/{uid}": {
+      "get": {
+        "operationId": "findBlocks",
+
+        "parameters": [
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "version",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "userIdentifier",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "uid",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": ["block"]
+                    },
+                    "uid": {
+                      "type": "string"
+                    },
+                    "sid": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "number"
+                    },
+                    "state": {
+                      "type": "object",
+                      "properties": {
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "entered": {
+                          "type": "boolean"
+                        },
+                        "exited": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": ["active", "entered", "exited"]
+                    },
+                    "containerUid": {
+                      "type": "string"
+                    },
+                    "transitioned": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "boolean"
+                      }
+                    },
+                    "type": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["custom"]
+                        },
+                        {
+                          "type": "string",
+                          "enum": ["modal"]
+                        },
+                        {
+                          "type": "string",
+                          "enum": ["checklist"]
+                        },
+                        {
+                          "type": "string",
+                          "enum": ["checklistItem"]
+                        },
+                        {
+                          "type": "string",
+                          "enum": ["tour"]
+                        },
+                        {
+                          "type": "string",
+                          "enum": ["tourItem"]
+                        }
+                      ]
+                    },
+                    "fields": {
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "sid": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string",
+                                "enum": ["string"]
+                              },
+                              "value": {
+                                "anyOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              }
+                            },
+                            "required": ["sid", "type", "value"]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "sid": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string",
+                                "enum": ["number"]
+                              },
+                              "value": {
+                                "anyOf": [
+                                  {
+                                    "type": "number"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              }
+                            },
+                            "required": ["sid", "type", "value"]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "sid": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string",
+                                "enum": ["boolean"]
+                              },
+                              "value": {
+                                "anyOf": [
+                                  {
+                                    "type": "boolean"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              }
+                            },
+                            "required": ["sid", "type", "value"]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "required": ["kind", "uid", "sid", "version", "state", "transitioned", "type", "fields"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "BadRequestErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["invalid_request_error"]
+                        },
+                        {
+                          "type": "string",
+                          "enum": ["intent_request_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "UnauthorizedErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["unauthorized_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "NotFoundErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["not_found_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "InternalServerErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["internal_server_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/block/{uid}/transition": {
+      "post": {
+        "operationId": "blockTransitions",
+
+        "parameters": [
+          {
+            "schema": {
+              "minItems": 1,
+              "uniqueItems": true,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "transitions",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "version",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "userIdentifier",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "groupIdentifier",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "uid",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Block Transitions"
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "BadRequestErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["invalid_request_error"]
+                        },
+                        {
+                          "type": "string",
+                          "enum": ["intent_request_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "UnauthorizedErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["unauthorized_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "NotFoundErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["not_found_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "InternalServerErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["internal_server_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/flow/{sid}": {
+      "get": {
+        "operationId": "getFlow",
+
+        "parameters": [
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "version",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": ["block"]
+            },
+            "in": "query",
+            "name": "include",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "userIdentifier",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "groupIdentifier",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "sid",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": ["flow"]
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": ["flow"]
+                    },
+                    "uid": {
+                      "type": "string"
+                    },
+                    "sid": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "number"
+                    },
+                    "state": {
+                      "type": "object",
+                      "properties": {
+                        "stopped": {
+                          "type": "boolean"
+                        },
+                        "started": {
+                          "type": "boolean"
+                        },
+                        "finished": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": ["stopped", "started", "finished"]
+                    },
+                    "blocks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": ["block"]
+                          },
+                          "uid": {
+                            "type": "string"
+                          },
+                          "sid": {
+                            "type": "string"
+                          },
+                          "version": {
+                            "type": "number"
+                          },
+                          "state": {
+                            "type": "object",
+                            "properties": {
+                              "active": {
+                                "type": "boolean"
+                              },
+                              "entered": {
+                                "type": "boolean"
+                              },
+                              "exited": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": ["active", "entered", "exited"]
+                          },
+                          "containerUid": {
+                            "type": "string"
+                          },
+                          "transitioned": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "boolean"
+                            }
+                          },
+                          "type": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": ["custom"]
+                              },
+                              {
+                                "type": "string",
+                                "enum": ["modal"]
+                              },
+                              {
+                                "type": "string",
+                                "enum": ["checklist"]
+                              },
+                              {
+                                "type": "string",
+                                "enum": ["checklistItem"]
+                              },
+                              {
+                                "type": "string",
+                                "enum": ["tour"]
+                              },
+                              {
+                                "type": "string",
+                                "enum": ["tourItem"]
+                              }
+                            ]
+                          },
+                          "fields": {
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "sid": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "enum": ["string"]
+                                    },
+                                    "value": {
+                                      "anyOf": [
+                                        {
+                                          "type": "string"
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": ["sid", "type", "value"]
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "sid": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "enum": ["number"]
+                                    },
+                                    "value": {
+                                      "anyOf": [
+                                        {
+                                          "type": "number"
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": ["sid", "type", "value"]
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "sid": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "enum": ["boolean"]
+                                    },
+                                    "value": {
+                                      "anyOf": [
+                                        {
+                                          "type": "boolean"
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": ["sid", "type", "value"]
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "required": ["kind", "uid", "sid", "version", "state", "transitioned", "type", "fields"]
+                      }
+                    }
+                  },
+                  "required": ["kind", "type", "uid", "sid", "version", "state"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "BadRequestErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["invalid_request_error"]
+                        },
+                        {
+                          "type": "string",
+                          "enum": ["intent_request_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "UnauthorizedErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["unauthorized_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "NotFoundErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["not_found_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "InternalServerErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["internal_server_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/flow/{uid}/{intent}": {
+      "post": {
+        "operationId": "flowIntent",
+
+        "parameters": [
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "version",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "userIdentifier",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "groupIdentifier",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "uid",
+            "required": true
+          },
+          {
+            "schema": {
+              "title": "Flow_Intent",
+              "anyOf": [
+                {
+                  "title": "Finish_Intent",
+                  "type": "string",
+                  "enum": ["finish"]
+                },
+                {
+                  "title": "Stop_Intent",
+                  "type": "string",
+                  "enum": ["stop"]
+                },
+                {
+                  "title": "Reset_Intent",
+                  "type": "string",
+                  "enum": ["reset"]
+                },
+                {
+                  "title": "Start_Intent",
+                  "type": "string",
+                  "enum": ["start"]
+                }
+              ]
+            },
+            "in": "path",
+            "name": "intent",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Flow Intent"
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "BadRequestErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["invalid_request_error"]
+                        },
+                        {
+                          "type": "string",
+                          "enum": ["intent_request_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "UnauthorizedErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["unauthorized_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "NotFoundErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["not_found_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "InternalServerErrorResponseBody",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": ["internal_server_error"]
+                        }
+                      ]
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "details"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://blocks.dopt.com"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Blocks",
+      "description": "Blocks API end-points"
+    }
+  ]
+}

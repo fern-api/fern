@@ -1,0 +1,8 @@
+imports:
+  common: common.yml
+
+types:
+  DerivedType:
+    extends: common.BaseType
+    properties:
+      derived_name: string

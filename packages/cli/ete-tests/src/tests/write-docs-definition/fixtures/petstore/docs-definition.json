@@ -1,0 +1,97 @@
+{
+  "config": {
+    "title": "fern | Documentation",
+    "root": {
+      "type": "root",
+      "version": "v1",
+      "id": "d0b6b951d313294318002dfa2c33f529a0d58113d36dc35e0a83bb1e0f8638ec",
+      "child": {
+        "type": "unversioned",
+        "id": "c2c16f227d081a4aebef6d1ac541e8dd264d911a6e7de72d7e8c3276a8bcea24",
+        "child": {
+          "type": "sidebarRoot",
+          "id": "552eeeaab28dfd4140385a5c4c28f044254a6f37475dfb26447f2c787110bc0a",
+          "children": [
+            {
+              "id": "cf3bae39dd692048a8bf961182e6a34dfd323eeb0748e162eaf055107f1cb873",
+              "type": "apiReference",
+              "title": "API Reference",
+              "apiDefinitionId": "-2",
+              "paginated": false,
+              "slug": "api-reference",
+              "hideTitle": false,
+              "showErrors": true,
+              "children": [
+                {
+                  "id": "-2:subpackage_pets",
+                  "type": "apiPackage",
+                  "children": [
+                    {
+                      "id": "-2:endpoint_pets.listPets",
+                      "type": "endpoint",
+                      "method": "GET",
+                      "endpointId": "endpoint_pets.listPets",
+                      "apiDefinitionId": "-2",
+                      "isResponseStream": false,
+                      "title": "List all pets",
+                      "slug": "api-reference/pets/list-pets"
+                    },
+                    {
+                      "id": "-2:endpoint_pets.createPets",
+                      "type": "endpoint",
+                      "method": "POST",
+                      "endpointId": "endpoint_pets.createPets",
+                      "apiDefinitionId": "-2",
+                      "isResponseStream": false,
+                      "title": "Create a pet",
+                      "slug": "api-reference/pets/create-pets"
+                    },
+                    {
+                      "id": "-2:endpoint_pets.showPetById",
+                      "type": "endpoint",
+                      "method": "GET",
+                      "endpointId": "endpoint_pets.showPetById",
+                      "apiDefinitionId": "-2",
+                      "isResponseStream": false,
+                      "title": "Info for a specific pet",
+                      "slug": "api-reference/pets/show-pet-by-id"
+                    }
+                  ],
+                  "title": "pets",
+                  "slug": "api-reference/pets",
+                  "apiDefinitionId": "-2"
+                }
+              ],
+              "pointsTo": "api-reference/pets/list-pets"
+            }
+          ]
+        }
+      },
+      "slug": "",
+      "title": "fern | Documentation",
+      "hidden": false
+    },
+    "colorsV3": {
+      "type": "dark",
+      "accentPrimary": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "a": 1
+      },
+      "background": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 1
+      }
+    },
+    "js": {
+      "files": []
+    },
+    "integrations": {},
+    "analyticsConfig": {}
+  },
+  "pages": {},
+  "jsFiles": {}
+}

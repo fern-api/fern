@@ -1,0 +1,119 @@
+using global::System.Text.Json;
+using SeedOauthClientCredentialsDefault.Core;
+
+namespace SeedOauthClientCredentialsDefault;
+
+public partial class AuthClient : IAuthClient
+{
+    private readonly RawClient _client;
+
+    internal AuthClient(RawClient client)
+    {
+        _client = client;
+    }
+
+    private async Task<WithRawResponse<TokenResponse>> GetTokenAsyncCore(
+        GetTokenRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _queryString = new SeedOauthClientCredentialsDefault.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedOauthClientCredentialsDefault.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/token",
+                    Body = request,
+                    QueryString = _queryString,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                return new WithRawResponse<TokenResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new SeedOauthClientCredentialsDefault.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedOauthClientCredentialsDefaultApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e,
+                    rawResponse: new SeedOauthClientCredentialsDefault.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedOauthClientCredentialsDefaultApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody,
+                rawResponse: new SeedOauthClientCredentialsDefault.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
+            );
+        }
+    }
+
+    /// <example><code>
+    /// await client.Auth.GetTokenAsync(
+    ///     new GetTokenRequest
+    ///     {
+    ///         ClientId = "client_id",
+    ///         ClientSecret = "client_secret",
+    ///         GrantType = "client_credentials",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<TokenResponse> GetTokenAsync(
+        GetTokenRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<TokenResponse>(
+            GetTokenAsyncCore(request, options, cancellationToken)
+        );
+    }
+}

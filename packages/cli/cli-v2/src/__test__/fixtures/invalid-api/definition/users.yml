@@ -1,0 +1,10 @@
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    getUser:
+      method: GET
+      path: /{userId}
+      path-parameters:
+        userId: string
+      response: NonExistentType

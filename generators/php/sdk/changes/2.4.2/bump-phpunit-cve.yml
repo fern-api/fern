@@ -1,0 +1,9 @@
+- summary: |
+    Bump phpunit/phpunit dev dependency from 9.0 to 12.5.22 to address
+    GHSA-qrr6-mg7r-m243 (argument injection via newline in PHP INI values
+    forwarded to child processes). Also bumps the PHP version used by the
+    generated `ci.yml` workflow from 8.1 to 8.3, which is the minimum
+    supported by PHPUnit 12. The `php` constraint in generated
+    `composer.json` files is unchanged at 8.1, so production installs
+    (`composer install --no-dev`) are unaffected.
+  type: chore

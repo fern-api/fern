@@ -1,0 +1,10 @@
+{
+  "title": "MDX unexpected character before name",
+  "disposition": "shipped",
+  "rationale": "Same MDX parse boundary family as CLI-44.",
+  "fixSummary": "Wrap replaceImagePathsAndUrls calls in DocsDefinitionResolver.resolve and getPreviewDocsDefinition with try/catch → CliError(ParseError).",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-16",
+  "duplicateOf": "CLI-44",
+  "problemSignature": "MDX parse error surfaced as InternalError from unwrapped replaceImagePathsAndUrls call sites."
+}

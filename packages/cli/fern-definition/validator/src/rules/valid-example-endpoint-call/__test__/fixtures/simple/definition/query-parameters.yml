@@ -1,0 +1,22 @@
+service:
+  base-path: /
+  auth: true
+  endpoints:
+    get:
+      method: GET
+      path: ""
+      request:
+        name: GetThingRequest
+        query-parameters:
+          queryParam: string
+          optionalQueryParam: optional<string>
+      examples:
+        - {}
+        - query-parameters:
+            queryParam: hello
+        - query-parameters:
+            queryParam: hello
+            optionalQueryParam: hello
+        - query-parameters:
+            optionalQueryParam: hello
+            extraParam: hello

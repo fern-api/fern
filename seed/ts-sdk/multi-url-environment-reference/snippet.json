@@ -1,0 +1,38 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/items",
+                "method": "GET",
+                "identifier_override": "endpoint_items.listItems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/multi-url-environment-reference\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait client.items.listItems();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/oauth/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.gettoken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/multi-url-environment-reference\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait client.auth.gettoken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/files/content",
+                "method": "POST",
+                "identifier_override": "endpoint_files.upload"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/multi-url-environment-reference\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait client.files.upload({\n    name: \"name\",\n    parent_id: \"parent_id\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

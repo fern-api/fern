@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package anduril.entitymanager.v1;
+
+option csharp_namespace = "Anduril.Entitymanager.V1";
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/entitymanager/v1;entitymanager";
+option java_multiple_files = true;
+option java_outer_classname = "ClassificationLevelsProto";
+option java_package = "com.anduril.entitymanager.v1";
+option objc_class_prefix = "AEX";
+
+// A component that describes an entity's security classification levels.
+message Classification {
+  // The default classification information which should be assumed to apply to everything in
+  // the entity unless a specific field level classification is present.
+  ClassificationInformation default = 2;
+  // The set of individual field classification information which should always precedence
+  // over the default classification information.
+  repeated FieldClassificationInformation fields = 3;
+
+  reserved 1;
+}
+
+// A field specific classification information definition.
+message FieldClassificationInformation {
+  // Proto field path which is the string representation of a field.
+  // > example: signal.bandwidth_hz would be bandwidth_hz in the signal component
+  string field_path = 1;
+  // The information which makes up the field level classification marking.
+  ClassificationInformation classification_information = 2;
+}
+
+// Represents all of the necessary information required to generate a summarized
+// classification marking.
+//
+// > example: A summarized classification marking of "TOPSECRET//NOFORN//FISA"
+//            would be defined as: { "level": 5, "caveats": [ "NOFORN, "FISA" ] }
+message ClassificationInformation {
+  // Classification level to be applied to the information in question.
+  ClassificationLevels level = 1;
+  // Caveats that may further restrict how the information can be disseminated.
+  repeated string caveats = 2;
+}
+
+// An enumeration of security classification levels.
+enum ClassificationLevels {
+  CLASSIFICATION_LEVELS_INVALID = 0;
+  CLASSIFICATION_LEVELS_UNCLASSIFIED = 1;
+  CLASSIFICATION_LEVELS_CONTROLLED_UNCLASSIFIED = 2;
+  CLASSIFICATION_LEVELS_CONFIDENTIAL = 3;
+  CLASSIFICATION_LEVELS_SECRET = 4;
+  CLASSIFICATION_LEVELS_TOP_SECRET = 5;
+}

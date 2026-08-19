@@ -1,0 +1,6 @@
+- summary: |
+    Fix docs rendering dropping parent properties when an allOf parent schema
+    itself uses allOf with $ref elements. The v3 OpenAPI parser now recursively
+    resolves nested $ref objects during allOf flattening instead of silently
+    filtering them out.
+  type: fix

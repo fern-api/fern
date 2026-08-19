@@ -1,0 +1,38 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedMultipleUrlsEnvironmentsImpl > writeToFile generates interface, environment const, and type alias 1`] = `
+"export interface MyEnvironmentUrls {
+    api: string;
+    auth: string;
+}
+
+export const MyEnvironment = {
+        Production: {
+            api: "https://api.example.com",
+            auth: "https://auth.example.com"
+        },
+        /**
+         * Staging environment
+         */
+        Staging: {
+            api: "https://api-staging.example.com",
+            auth: "https://auth-staging.example.com"
+        },
+    } as const;
+
+export type MyEnvironment = typeof MyEnvironment.Production | typeof MyEnvironment.Staging;
+"
+`;
+
+exports[`GeneratedSingleUrlEnvironmentsImpl > writeToFile generates environment const and type alias 1`] = `
+"export const MyEnvironment = {
+        Production: "https://api.example.com",
+        /**
+         * Staging environment
+         */
+        Staging: "https://staging.example.com",
+    } as const;
+
+export type MyEnvironment = typeof MyEnvironment.Production | typeof MyEnvironment.Staging;
+"
+`;

@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "updateDraft": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {}
+}

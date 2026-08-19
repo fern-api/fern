@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_.createUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPropertyAccess;\n\nvar client = new SeedPropertyAccessClient();\nawait client.CreateUserAsync(\n    new User\n    {\n        Id = \"id\",\n        Email = \"email\",\n        Password = \"password\",\n        Profile = new UserProfile\n        {\n            Name = \"name\",\n            Verification = new UserProfileVerification { Verified = \"verified\" },\n            Ssn = \"ssn\",\n        },\n    }\n);\n"
+            }
+        }
+    ]
+}

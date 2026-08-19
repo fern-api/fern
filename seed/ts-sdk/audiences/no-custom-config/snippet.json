@@ -1,0 +1,38 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifier_override": "endpoint_folder-a/service.getDirectThread"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAudiencesClient, SeedAudiencesEnvironment } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });\nawait client.folderA.service.getDirectThread({\n    ids: \"ids\",\n    tags: \"tags\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/partner-path",
+                "method": "GET",
+                "identifier_override": "endpoint_folder-d/service.getDirectThread"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAudiencesClient, SeedAudiencesEnvironment } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });\nawait client.folderD.service.getDirectThread();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_foo.find"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAudiencesClient, SeedAudiencesEnvironment } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });\nawait client.foo.find({\n    optionalString: \"optionalString\",\n    publicProperty: \"publicProperty\",\n    privateProperty: 1\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

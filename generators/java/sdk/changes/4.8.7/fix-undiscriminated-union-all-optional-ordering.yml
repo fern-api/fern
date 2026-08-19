@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix undiscriminated union deserialization when one member has all-optional fields.
+    Previously, an all-optional object variant (e.g. `PayMethodCloud`) could greedily
+    consume a payload intended for a more specific variant with required fields (e.g.
+    `Check` requiring `achHolder`), because Jackson's `@JsonIgnoreProperties(ignoreUnknown=true)`
+    silently accepts any JSON object when all fields are optional. The deserializer now
+    emits guarded members (those with at least one required field) before unguarded
+    (all-optional) members, ensuring the more specific match wins.
+  type: fix

@@ -1,0 +1,37 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/files/content",
+                "method": "POST",
+                "identifier_override": "endpoint_files.upload"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/multi-url-environment-reference/fern\"\n\tfernclient \"github.com/multi-url-environment-reference/fern/client\"\n\toption \"github.com/multi-url-environment-reference/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Files.Upload(\n\tcontext.TODO(),\n\t\u0026fern.FilesUploadRequest{\n\t\tName:     \"name\",\n\t\tParentID: \"parent_id\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/items",
+                "method": "GET",
+                "identifier_override": "endpoint_items.listItems"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/multi-url-environment-reference/fern/client\"\n\toption \"github.com/multi-url-environment-reference/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Items.ListItems(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/oauth/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.gettoken"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/multi-url-environment-reference/fern\"\n\tfernclient \"github.com/multi-url-environment-reference/fern/client\"\n\toption \"github.com/multi-url-environment-reference/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Auth.Gettoken(\n\tcontext.TODO(),\n\t\u0026fern.AuthGetTokenRequest{\n\t\tClientID:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

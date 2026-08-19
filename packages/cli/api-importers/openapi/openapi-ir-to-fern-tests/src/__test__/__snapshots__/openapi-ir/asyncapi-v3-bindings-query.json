@@ -1,0 +1,329 @@
+{
+  "servers": [],
+  "websocketServers": [
+    {
+      "name": "production",
+      "url": "wss://api.example.com"
+    }
+  ],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {
+    "listen": {
+      "audiences": [],
+      "handshake": {
+        "headers": [
+          {
+            "name": "Authorization",
+            "schema": {
+              "generatedName": "ListenAuthorization",
+              "description": "Bearer token for authentication",
+              "value": {
+                "description": "Bearer token for authentication",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ListenAuthorization",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "description": "Bearer token for authentication",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          }
+        ],
+        "queryParameters": [
+          {
+            "name": "model",
+            "schema": {
+              "generatedName": "ListenModel",
+              "schema": "Model",
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "description": "The AI model to use for transcription",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "encoding",
+            "schema": {
+              "generatedName": "ListenEncoding",
+              "value": {
+                "generatedName": "ListenEncoding",
+                "schema": "Encoding",
+                "source": {
+                  "file": "../asyncapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "description": "Encoding of the audio",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "sample_rate",
+            "schema": {
+              "generatedName": "ListenSampleRate",
+              "description": "Sample rate of the audio in Hz",
+              "value": {
+                "description": "Sample rate of the audio in Hz",
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "ListenSampleRate",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "description": "Sample rate of the audio in Hz",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          }
+        ],
+        "pathParameters": []
+      },
+      "groupName": [
+        "listen"
+      ],
+      "messages": [
+        {
+          "origin": "server",
+          "name": "Transcript",
+          "body": {
+            "generatedName": "Transcript",
+            "schema": "TranscriptPayload",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        },
+        {
+          "origin": "client",
+          "name": "AudioData",
+          "body": {
+            "generatedName": "AudioData",
+            "schema": "AudioPayload",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "production",
+          "url": "wss://api.example.com"
+        }
+      ],
+      "path": "/v1/listen",
+      "description": "Channel with query parameters defined via bindings.ws.query",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "AudioData",
+              "payload": {
+                "properties": {},
+                "type": "object"
+              }
+            },
+            {
+              "messageType": "Transcript",
+              "payload": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Model": {
+        "generatedName": "Model",
+        "values": [
+          {
+            "generatedName": "Nova2",
+            "value": "nova-2",
+            "casing": {}
+          },
+          {
+            "generatedName": "Nova3",
+            "value": "nova-3",
+            "casing": {}
+          },
+          {
+            "generatedName": "whisper",
+            "value": "whisper",
+            "casing": {}
+          }
+        ],
+        "description": "The AI model to use for transcription",
+        "groupName": [],
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "Encoding": {
+        "generatedName": "Encoding",
+        "values": [
+          {
+            "generatedName": "linear16",
+            "value": "linear16",
+            "casing": {}
+          },
+          {
+            "generatedName": "flac",
+            "value": "flac",
+            "casing": {}
+          },
+          {
+            "generatedName": "opus",
+            "value": "opus",
+            "casing": {}
+          }
+        ],
+        "description": "Encoding of the audio",
+        "groupName": [],
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "AudioPayload": {
+        "properties": [
+          {
+            "key": "data",
+            "schema": {
+              "generatedName": "AudioPayloadData",
+              "value": {
+                "generatedName": "AudioPayloadData",
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                },
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "audioPayloadData"
+          }
+        ],
+        "generatedName": "AudioPayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "TranscriptPayload": {
+        "properties": [
+          {
+            "key": "transcript",
+            "schema": {
+              "generatedName": "TranscriptPayloadTranscript",
+              "value": {
+                "generatedName": "TranscriptPayloadTranscript",
+                "schema": {
+                  "type": "string"
+                },
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "transcriptPayloadTranscript"
+          },
+          {
+            "key": "confidence",
+            "schema": {
+              "generatedName": "TranscriptPayloadConfidence",
+              "value": {
+                "generatedName": "TranscriptPayloadConfidence",
+                "schema": {
+                  "type": "double"
+                },
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "transcriptPayloadConfidence"
+          }
+        ],
+        "generatedName": "TranscriptPayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `[object Object]` being logged (and recorded in the automation summary) when a
+    generator fails during `fern automations generate`. The automation-mode catch in the
+    remote workspace runner now propagates `TaskAbortSignal` instead of stringifying it,
+    and pulls the real failure message off the task context for the run summary. Also
+    makes `InteractiveTaskContextImpl.finish()` idempotent so the duplicate `Failed.`
+    line is gone.
+  type: fix

@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern check` now accepts changelog navigation entries whose URL has any
+    allowlisted segment (e.g. `whats-new`, `release-notes`, `changelog`),
+    not just the trailing one. This means a changelog page like
+    `/whats-new/product-updates` no longer raises a false-positive error
+    about RSS / Atom / JSON feeds 404ing — the docs server matches the
+    same loosened rule when serving feeds.
+  type: fix

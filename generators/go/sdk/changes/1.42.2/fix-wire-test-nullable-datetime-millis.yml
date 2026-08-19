@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated `wiremock-mappings.json` now matches nullable date-time query and header parameters with millisecond precision so the stub matches what the Go SDK actually sends. Previously, when a date-time field was wrapped in a nullable container (e.g. with `respect-nullable-schemas: true` and `coerce-optional-schemas-to-nullable: true`), the stub matcher used `"2024-01-15T09:30:00Z"` while the SDK serialized `"2024-01-15T09:30:00.000Z"`, causing WireMock to return 404.
+  type: fix

@@ -1,0 +1,247 @@
+---
+title: "MessageHistory Example"
+---
+
+The Zep Python SDK includes the `ZepChatMessageHistory` class, compatible with [LangChain Expression Language (LCEL)](https://python.langchain.com/docs/expression_language/get_started).
+
+This guide will walk you through creating a [MessageHistory](/chat-history-memory) chain using Zep's conversation history.
+
+<Note>**You can generate a project api key in [Zep Dashboard](https://app.getzep.com/projects).**</Note>
+
+<Info>
+    Make sure you have the following environment variables specified when running these examples:
+
+    `ZEP_API_KEY` - API key to your zep project
+
+    `OPENAI_API_KEY` - Open AI api key which the chain will require to generate the answer
+
+</Info>
+
+<Info>
+    **You will need to have a collection in place to initialize vector store in this example**
+
+    If you want to create a collection from a web article,
+    you can run the [python ingest script](https://github.com/getzep/zep-python/blob/main/examples/langchain-langserve/app/ingest.py)
+    Try modifying the script to ingest the article of your choice.
+
+    Alternatively, you can create a collection by running either [Document example](https://github.com/getzep/zep-python/blob/main/examples/documents/documents_async.py)
+    in python sdk repository or [Document example](https://github.com/getzep/zep-js/blob/main/examples/documents/index.ts) in typescript sdk repository.
+
+</Info>
+
+<Info>
+    **You will need to have a `session_id` in place to invoke the final chain in this example**
+
+    You can create a session by running either [Memory example](https://github.com/getzep/zep-python/blob/main/examples/chat_history/memory_async.py)
+
+    in python sdk repository or [Memory example](https://github.com/getzep/zep-js/blob/main/examples/memory/memory_example.ts) in typescript sdk repository.
+
+</Info>
+
+**Initialize ZepClient with necessary imports**
+
+<Tabs group="langchain">
+
+<Tab title="Python" group-key="python">
+
+```python
+import os
+from typing import List, Tuple
+
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.pydantic_v1 import BaseModel, Field
+from langchain_core.runnables import (
+    RunnableParallel,
+)
+from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_openai import ChatOpenAI
+
+from zep_python import ZepClient
+from zep_python.langchain import ZepChatMessageHistory
+
+zep = ZepClient(
+    api_key=ZEP_API_KEY,
+)
+```
+
+</Tab>
+
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+import { ZepClient } from "@getzep/zep-js";
+import { ZepChatMessageHistory } from "@getzep/zep-js/langchain";
+import { ChatOpenAI } from "@langchain/openai";
+import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
+import { RunnableWithMessageHistory } from "@langchain/core/runnables";
+
+const zepClient = await ZepClient.init(process.env.ZEP_API_KEY);
+```
+
+</Tab>
+</Tabs>
+
+<Tabs group="langchain">
+
+<Tab title="Python" group-key="python">
+
+```python
+template = """Answer the question below as if you were a 19th centry poet:
+    """
+answer_prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", template),
+        MessagesPlaceholder(variable_name="chat_history"),
+        ("user", "{question}"),
+    ]
+)
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const prompt = ChatPromptTemplate.fromMessages([
+  ["system", "Answer the user's question below. Be polite and helpful:"],
+  new MessagesPlaceholder("history"),
+  ["human", "{question}"],
+]);
+```
+
+</Tab>
+</Tabs>
+
+**Set up an answer synthesis template and prompt.**
+
+<Info>
+    **`MessagesPlaceholder`** - We're using the variable name `chat_history` here.
+
+    This will incorporate the chat history into the prompt.
+
+    It's **important** that this variable name aligns with the `history_messages_key` in the `RunnableWithMessageHistory` chain for seamless integration.
+
+</Info>
+
+<Info> **`question` must match `input_messages_key` in `RunnableWithMessageHistory`` chain.** </Info>
+
+**Compose the final chain**
+
+<Tabs group="langchain">
+
+<Tab title="Python" group-key="python">
+
+```python
+inputs = RunnableParallel(
+    {
+        "question": lambda x: x["question"],
+        "chat_history": lambda x: x["chat_history"],
+    },
+)
+
+chain = RunnableWithMessageHistory(
+    inputs | answer_prompt | ChatOpenAI() | StrOutputParser(),
+    lambda session_id: ZepChatMessageHistory(
+        session_id=session_id,  # This uniquely identifies the conversation
+        zep_client=zep,
+        memory_type="perpetual",
+    ),
+    input_messages_key="question",
+    history_messages_key="chat_history",
+)
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const chain = prompt.pipe(
+  new ChatOpenAI({
+    temperature: 0.8,
+    modelName: "gpt-3.5-turbo-1106",
+  }),
+);
+
+const chainWithHistory = new RunnableWithMessageHistory({
+  runnable: chain,
+  getMessageHistory: (sessionId) =>
+    new ZepChatMessageHistory({
+      client: zepClient,
+      sessionId: sessionId,
+      memoryType: "perpetual",
+    }),
+  inputMessagesKey: "question",
+  historyMessagesKey: "history",
+});
+```
+
+</Tab>
+</Tabs>
+
+Here's a quick overview of what's happening:
+
+1. We use `RunnableWithMessageHistory` to incorporate [Zep's Chat History](/chat-history-memory) into our chain.
+2. This class requires a `session_id` as a parameter when you activate the chain.
+3. To manually invoke this chain, provide the `session_id` as a parameter and the `question` as an input to the chain.
+
+<Tabs group="langchain">
+
+<Tab title="Python" group-key="python">
+
+```python
+chain_with_history.invoke(
+    {"question": "-"},
+    config={"configurable": {"session_id": "-"}},
+)
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+await chainWithHistory.invoke(
+  {
+    question: "-",
+  },
+  {
+    configurable: {
+      sessionId: "-",
+    },
+  },
+);
+```
+
+</Tab>
+</Tabs>
+
+First, we initialize `ZepChatMessageHistory` with the following parameters:
+
+1. `session_id` - This uniquely identifies the conversation within Zep.
+2. `zep_client` - The instance of the Zep client.
+3. `memory_type` set to `perpetual`. If not specified, Message Window Buffer Memory will be used by default. We recommend configuring your application to use Perpetual Memory.
+
+Interested in learning more? [Explore How Zep Memory Works](/chat-history-memory).
+
+Next, we construct a chain that operates after retrieving the chat history:
+
+1. `inputs` will extract the user's question and chat history from the context.
+2. `answer_prompt` will incorporate chat history into the prompt.
+3. `ChatOpenAI` will generate a response.
+4. `StrOutputParser` will parse the response.
+
+## Running the Chain with LangServe
+
+This chain can also be executed as part of our LangServe sample project. To do this, you'll need to:
+
+For this you will need to:
+
+Clone our [Python SDK](https://github.com/getzep/zep-python)
+
+```bash
+git clone https://github.com/getzep/zep-python
+cd examples/langchain-langserve
+```
+
+There is a [README](https://github.com/getzep/zep-python/blob/main/examples/README.md) file in the `langchain-langserve` directory will guide you through the setup process.
+
+Go to `http://localhost:8000/message_history/playground` to use LangServe playground for this chain.

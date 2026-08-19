@@ -1,0 +1,9 @@
+{
+  "title": "ExitPromptError after SIGINT",
+  "disposition": "shipped",
+  "rationale": "Prompt SIGINT is a user abort; current CliContext prompt wrappers convert ExitPromptError to TaskAbortSignal before reporting.",
+  "fixSummary": "Handle ExitPromptError at prompt boundaries and abort without Sentry reporting.",
+  "prOrIssue": "Already handled in current code; ledger corrected in this PR",
+  "lastAnalyzed": "2026-05-05",
+  "problemSignature": "Interactive prompt cancellation via SIGINT surfaced as Sentry InternalError instead of a non-reportable user abort."
+}

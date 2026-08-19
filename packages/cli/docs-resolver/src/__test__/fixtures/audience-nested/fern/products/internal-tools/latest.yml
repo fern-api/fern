@@ -1,0 +1,23 @@
+navigation:
+  - page: Internal Tools Overview
+    path: ../../tools/v3/overview.mdx
+    audiences:
+      - internal
+  - api: Internal Tools API
+    audiences:
+      - internal
+    layout:
+      - section:
+          title: Monitoring
+          audiences:
+            - internal
+          contents:
+            - GET /tools/v3/monitoring/status
+            - GET /tools/v3/monitoring/metrics
+      - section:
+          title: Administration
+          audiences:
+            - internal
+          contents:
+            - POST /tools/v3/admin/backup
+            - POST /tools/v3/admin/restore

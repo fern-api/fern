@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "Stream completions (resumable)",
+            "id": {
+                "path": "/stream",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.stream"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedServerSentEventsResumable;\n\nvar client = new SeedServerSentEventsResumableClient();\nvar items = client.Completions.StreamAsync(new StreamCompletionRequest { Query = \"foo\" });\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": "Stream completions (non-resumable)",
+            "id": {
+                "path": "/stream-non-resumable",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.streamNonResumable"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedServerSentEventsResumable;\n\nvar client = new SeedServerSentEventsResumableClient();\nvar items = client.Completions.StreamNonResumableAsync(\n    new StreamCompletionRequestNonResumable { Query = \"bar\" }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        }
+    ]
+}

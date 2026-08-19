@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "enum": [
+    "auto",
+    "appointment",
+    "condition",
+    "medication",
+    "patient",
+    "procedure"
+  ],
+  "definitions": {}
+}

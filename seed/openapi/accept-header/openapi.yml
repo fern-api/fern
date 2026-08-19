@@ -1,0 +1,27 @@
+openapi: 3.1.0
+info:
+  title: accept
+  version: 0.0.0
+paths:
+  /container/:
+    delete:
+      operationId: service_endpoint
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: NotFoundError
+          content:
+            application/json:
+              schema: {}
+      security:
+        - Bearer: []
+components:
+  schemas: {}
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

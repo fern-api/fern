@@ -1,0 +1,5 @@
+- summary: |
+    Preserve OpenAPI `default` values for array schemas across query parameters,
+    headers, request bodies, and response body properties so docs can render
+    "Defaults to ..." metadata for arrays.
+  type: fix

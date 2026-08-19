@@ -1,0 +1,137 @@
+import { HttpMethod } from "@fern-api/openapi-ir";
+import { OpenAPIV3 } from "openapi-types";
+
+import { getExtension } from "../../../getExtension.js";
+import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext.js";
+import { FernOpenAPIExtension } from "../extensions/fernExtensions.js";
+import { PathItemContext } from "./contexts.js";
+import { ConvertedOperation, ConvertedWebhookOperation, convertOperation } from "./operation/convertOperation.js";
+
+export function convertPathItem(
+    path: string,
+    pathItemObject: OpenAPIV3.PathItemObject,
+    document: OpenAPIV3.Document,
+    context: AbstractOpenAPIV3ParserContext
+): ConvertedOperation[] {
+    const result: ConvertedOperation[] = [];
+    const operations = getOperationObjectsFromPathItem(pathItemObject);
+
+    const basePathItemContext: Omit<PathItemContext, "method"> = {
+        document,
+        pathItem: pathItemObject,
+        path,
+        pathItemParameters: pathItemObject.parameters ?? []
+    };
+
+    for (const operation of operations) {
+        if (context.filter.skipEndpoint({ method: operation.method, path })) {
+            context.logger.debug(`Skipping endpoint "${operation.method} ${path}"`);
+            continue;
+        }
+        const convertToWebhook = isWebhook({ operation: operation.operation });
+        const convertedOperations = convertOperation({
+            context,
+            pathItemContext: {
+                ...basePathItemContext,
+                method: operation.method
+            },
+            operation: operation.operation,
+            convertToWebhook
+        });
+        if (convertedOperations) {
+            result.push(convertedOperations);
+        }
+    }
+    return result;
+}
+
+export function convertPathItemToWebhooks(
+    path: string,
+    pathItemObject: OpenAPIV3.PathItemObject,
+    document: OpenAPIV3.Document,
+    context: AbstractOpenAPIV3ParserContext
+): ConvertedWebhookOperation[] {
+    const result: ConvertedWebhookOperation[] = [];
+    const operations = getOperationObjectsFromPathItem(pathItemObject);
+
+    const basePathItemContext: Omit<PathItemContext, "method"> = {
+        document,
+        pathItem: pathItemObject,
+        path,
+        pathItemParameters: pathItemObject.parameters ?? []
+    };
+
+    for (const operation of operations) {
+        if (context.filter.skipEndpoint({ method: operation.method, path })) {
+            context.logger.debug(`Skipping endpoint "${operation.method} ${path}"`);
+            continue;
+        }
+        const convertedOperations = convertOperation({
+            context,
+            pathItemContext: {
+                ...basePathItemContext,
+                method: operation.method
+            },
+            operation: operation.operation,
+            convertToWebhook: true
+        });
+        if (convertedOperations) {
+            result.push(convertedOperations as ConvertedWebhookOperation);
+        }
+    }
+    return result;
+}
+
+function getOperationObjectsFromPathItem(
+    pathItemObject: OpenAPIV3.PathItemObject
+): { method: HttpMethod; operation: OpenAPIV3.OperationObject }[] {
+    const operations = [];
+
+    if (pathItemObject.get != null) {
+        operations.push({
+            method: HttpMethod.Get,
+            operation: pathItemObject.get
+        });
+    }
+
+    if (pathItemObject.post != null) {
+        operations.push({
+            method: HttpMethod.Post,
+            operation: pathItemObject.post
+        });
+    }
+
+    if (pathItemObject.put != null) {
+        operations.push({
+            method: HttpMethod.Put,
+            operation: pathItemObject.put
+        });
+    }
+
+    if (pathItemObject.delete != null) {
+        operations.push({
+            method: HttpMethod.Delete,
+            operation: pathItemObject.delete
+        });
+    }
+
+    if (pathItemObject.patch != null) {
+        operations.push({
+            method: HttpMethod.Patch,
+            operation: pathItemObject.patch
+        });
+    }
+
+    if (pathItemObject.head != null) {
+        operations.push({
+            method: HttpMethod.Head,
+            operation: pathItemObject.head
+        });
+    }
+
+    return operations;
+}
+
+function isWebhook({ operation }: { operation: OpenAPIV3.OperationObject }): boolean {
+    return getExtension<boolean>(operation, [FernOpenAPIExtension.WEBHOOK]) ?? false;
+}

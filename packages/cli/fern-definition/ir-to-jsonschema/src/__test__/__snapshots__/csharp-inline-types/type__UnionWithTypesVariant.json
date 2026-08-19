@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "types",
+        "otherVariant"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "types"
+        },
+        "foo": {
+          "type": "string",
+          "description": "lorem ipsum"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType",
+          "description": "lorem ipsum"
+        }
+      },
+      "required": [
+        "type",
+        "foo",
+        "ref"
+      ],
+      "description": "This variant name collides with the default nested class name \"Types\""
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "otherVariant"
+        },
+        "bar": {
+          "type": "string",
+          "description": "lorem ipsum"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType",
+          "description": "lorem ipsum"
+        }
+      },
+      "required": [
+        "type",
+        "bar",
+        "ref"
+      ],
+      "description": "This is a non-colliding variant"
+    }
+  ],
+  "description": "A union with a variant named \"types\" that could collide with the inline Types class",
+  "definitions": {
+    "ReferenceType": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string",
+          "description": "lorem ipsum"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false,
+      "description": "lorem ipsum"
+    }
+  }
+}

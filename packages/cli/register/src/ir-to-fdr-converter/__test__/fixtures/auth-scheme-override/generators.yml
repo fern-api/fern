@@ -1,0 +1,11 @@
+auth-schemes:
+  bearerAuth: # Must match the name used in your OpenAPI security section
+    scheme: bearer
+    token:
+      name: apiKey # Custom parameter name in the SDK
+      env: YOUR_TOKEN_NAME # Environment variable to auto-scan
+
+api:
+  auth: bearerAuth # Reference the same name from your OpenAPI spec
+  specs:
+    - openapi: openapi.yml

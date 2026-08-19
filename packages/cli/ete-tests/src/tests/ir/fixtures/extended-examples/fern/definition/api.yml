@@ -1,0 +1,5 @@
+name: api
+display-name: API
+auth: bearer
+error-discrimination:
+  strategy: status-code

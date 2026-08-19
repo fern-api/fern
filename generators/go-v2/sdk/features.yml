@@ -1,0 +1,94 @@
+features:
+  - id: USAGE
+    description: |
+      Instantiate and use the client with the following:
+
+  - id: ENVIRONMENTS
+    description: |
+      You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base
+      URL, which is particularly useful in test environments.
+
+  - id: OAUTH
+    description: |
+      This SDK supports OAuth 2.0 authentication. You have two options for providing credentials:
+
+      **Option 1: Client Credentials** - Provide your client ID and secret, and the SDK will automatically handle
+      token fetching and refresh:
+
+      **Option 2: Direct Token** - If you already have an access token (e.g., obtained through your own OAuth flow),
+      you can provide it directly:
+
+  - id: PAGINATION
+    description: |
+      List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items.
+      You can also iterate page-by-page using the `GetNextPage` helper method.
+
+      The `Page.Results` attribute, which contains the relevant list of items returned by the call to the server,
+      is the only attribute you will need for most use cases. But if need be, several other attributes are available:
+
+      - `Page.Response` contains the full spec-defined response as returned by the server.
+      - `Page.StatusCode` and `Page.Header` returns HTTP metadata associated with the call to the server.
+      - `Page.RawResponse` returns the pagination object if you need to access its fields (like `Next`).
+
+  - id: ERRORS
+    description: |
+      Structured error types are returned from API calls that return non-success status codes. These errors are compatible
+      with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
+
+  - id: REQUEST_OPTIONS
+    description: |
+      A variety of request options are included to adapt the behavior of the library, which includes configuring
+      authorization tokens, or providing your own instrumented `*http.Client`.
+
+      These request options can either be
+      specified on the client so that they're applied on every request, or for an individual request, like so:
+
+      > Providing your own `*http.Client` is recommended. Otherwise, the `http.DefaultClient` will be used,
+      > and your client will wait indefinitely for a response (unless the per-request, context-based timeout
+      > is used).
+
+  - id: RESPONSE_HEADERS
+    advanced: true
+    description: |
+      You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
+      when you need to examine the response headers received from the API call. (When the endpoint is paginated,
+      the raw HTTP response data will be included automatically in the Page response object.)
+
+  - id: RETRIES
+    advanced: true
+    description: |
+      The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+      as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+      retry limit (default: 2).
+
+      Which status codes are retried depends on the `retryStatusCodes` generator configuration:
+
+      **`legacy`** (current default): retries on
+      - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+      - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+      - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors, including 500)
+
+      **`recommended`**: retries on
+      - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+      - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+      - [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
+      - [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
+      - [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
+
+      If the `Retry-After` header is present in the response, the SDK will prioritize respecting its value exactly
+      over the default exponential backoff.
+
+      Use the `option.WithMaxAttempts` option to configure this behavior for the entire client or an individual request:
+
+  - id: TIMEOUTS
+    advanced: true
+    description: |
+      Setting a timeout for each individual request is as simple as using the standard context library. Setting a one second timeout for an individual API call looks like the following:
+
+  - id: EXPLICIT_NULL
+    advanced: true
+    description: |
+      If you want to send the explicit `null` JSON value through an optional parameter, you can use the setters\
+      that come with every object. Calling a setter method for a property will flip a bit in the `explicitFields`
+      bitfield for that setter's object; during serialization, any property with a flipped bit will have its
+      omittable status stripped, so zero or `nil` values will be sent explicitly rather than omitted altogether:

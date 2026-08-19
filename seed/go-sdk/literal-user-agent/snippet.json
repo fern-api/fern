@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/ping",
+                "method": "GET",
+                "identifier_override": "endpoint_.ping"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/literal-user-agent/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Ping(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

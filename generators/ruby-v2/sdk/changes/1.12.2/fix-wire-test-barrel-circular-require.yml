@@ -1,0 +1,3 @@
+- summary: |
+    Fix circular require in generated barrel file by excluding test/wire files from the main lib require list.
+  type: fix

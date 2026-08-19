@@ -1,0 +1,23 @@
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    listWithCustomPager:
+      pagination:
+        type: custom
+        results: $response.data
+      method: GET
+      path: ""
+      request:
+        name: ListWithCustomPagerRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: The maximum number of results to return.
+          starting_after:
+            type: optional<string>
+            docs: The cursor used for pagination.
+      response: root.UsersListResponse

@@ -1,0 +1,37 @@
+*.class
+.project
+**/.gradle/**
+.classpath
+.checkstyle
+.settings
+.node
+build
+*.jar
+
+# Windows git artifact
+fileeditor
+
+# Mac specific files
+.DS_Store
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
+
+# Eclipse/IntelliJ APT
+generated_src/
+generated_testSrc/
+generated/
+
+bin
+build
+
+**/jenkins-junit.xsd.episode
+
+**/node_modules/**
+**/yarn.lock
+
+**/generated-java/**

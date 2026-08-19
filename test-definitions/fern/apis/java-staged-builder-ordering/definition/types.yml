@@ -1,0 +1,44 @@
+types:
+  SimpleStaged:
+    properties:
+      first: string
+      second: string
+      third: string
+
+  MediumStaged:
+    properties:
+      alpha: string
+      beta: integer
+      gamma: string
+      delta: boolean
+      optional: optional<string>
+
+  ComplexStaged:
+    properties:
+      fieldA: string
+      fieldB: integer
+      fieldC: boolean
+      fieldD: string
+      fieldE: double
+      optionalX: optional<string>
+      optionalY: optional<integer>
+      optionalZ: optional<boolean>
+
+  MixedStaged:
+    properties:
+      id: uuid
+      name: string
+      timestamp: datetime
+      nested: SimpleStaged
+      count: integer
+
+  Child:
+    properties:
+      childId: string
+      childValue: integer
+
+  Parent:
+    properties:
+      parentId: string
+      child: Child
+      parentName: string

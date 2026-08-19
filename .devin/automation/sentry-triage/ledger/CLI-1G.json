@@ -1,0 +1,9 @@
+{
+  "title": "Expected list received object",
+  "disposition": "shipped",
+  "rationale": "IR SDK schema errors lacked stable names, so schema validation failures could still look like InternalError after minification/bundling.",
+  "fixSummary": "Set stable ParseError/JsonError names in IR SDK schema errors.",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "Schema or configuration validation path for user-authored docs/config looked like InternalError instead of validation/config error."
+}

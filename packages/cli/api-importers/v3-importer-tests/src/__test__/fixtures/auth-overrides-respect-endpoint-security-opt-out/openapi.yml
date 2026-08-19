@@ -1,0 +1,106 @@
+openapi: 3.1.0
+info:
+  title: Auth Overrides Respect security:[] Opt-Out
+  version: 1.0.0
+  description: >
+    Regression fixture for a bug where `auth` declared in `generators.yml`
+    silently overrode endpoint-level `security: []` opt-outs. The 3.1
+    OpenAPI converter would delete every endpoint-level `security` field
+    when applying the generators.yml auth override — including explicit
+    empty arrays — so endpoints that opted out of auth ended up rendering
+    as if they required the global auth scheme.
+
+    Endpoints with `security: []` must keep `auth=false` and `security=[]`
+    in the IR even when generators.yml declares an `auth-schemes`/`auth`
+    override. Endpoints without a `security` field must inherit the
+    override.
+
+paths:
+  # OAuth token endpoint — explicitly opts out of auth via `security: []`.
+  # Without the fix, the endpoint inherits the generators.yml OAuth scheme,
+  # which is nonsensical (the token endpoint can't itself require the token).
+  /oauth/token:
+    post:
+      summary: Get an access token
+      operationId: getToken
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - client_id
+                - client_secret
+              properties:
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+      responses:
+        "200":
+          description: Token response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - access_token
+                  - expires_in
+                properties:
+                  access_token:
+                    type: string
+                  expires_in:
+                    type: integer
+
+  # Public endpoint — explicitly opts out of auth via `security: []`.
+  # Must render with auth=false and security=[] so docs / SDKs do not send
+  # an Authorization header.
+  /plants/public:
+    get:
+      summary: List public plant catalog
+      operationId: listPublicPlants
+      security: []
+      responses:
+        "200":
+          description: A list of public plants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plant"
+
+  # Control endpoint — no `security` field. Must inherit the generators.yml
+  # PlantOAuth scheme.
+  /plants/{plantId}:
+    get:
+      summary: Get plant by ID
+      operationId: getPlant
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Plant details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+
+components:
+  schemas:
+    Plant:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string

@@ -1,0 +1,3 @@
+- summary: |
+    Fix auto-detected global headers generating type-incorrect example values. When headers like `Request-Timeout` (integer type) were auto-promoted to global headers, the example generator used the header name as a string value instead of skipping the example.
+  type: fix

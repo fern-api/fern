@@ -1,0 +1,5268 @@
+package generator
+
+import (
+	_ "embed"
+	"fmt"
+	"path"
+	"sort"
+	"strings"
+
+	"github.com/fern-api/fern-go/internal/ast"
+	"github.com/fern-api/fern-go/internal/fern/ir"
+	"github.com/fern-api/fern-go/internal/fern/ir/common"
+	"github.com/fern-api/fern-go/internal/gospec"
+	generatorexec "github.com/fern-api/generator-exec-go"
+)
+
+// goLanguageHeader is the identifier used for the X-Fern-Language platform header.
+const goLanguageHeader = "Go"
+
+// platformUserAgentFunc is the name of the generated helper that builds the
+// structured User-Agent header value when includePlatformHeaders is enabled.
+const platformUserAgentFunc = "platformUserAgent"
+
+// appInfoTypeName is the name of the generated public struct carrying the opt-in
+// User-Agent appInfo (name/version/comment), emitted only when
+// allowUserAgentAppInfo is enabled.
+const appInfoTypeName = "AppInfo"
+
+// appendAppInfoFunc is the name of the generated helper that appends a sanitized
+// appInfo product token to a base User-Agent value. Emitted into core only when
+// allowUserAgentAppInfo is enabled (and a User-Agent is actually written).
+const appendAppInfoFunc = "appendAppInfoToUserAgent"
+
+var (
+	//go:embed sdk/core/api_error.go
+	apiErrorFile string
+
+	//go:embed sdk/client/client_test.go.tmpl
+	clientTestFile string
+
+	//go:embed sdk/internal/explicit_fields.go
+	explicitFieldsFile string
+
+	//go:embed sdk/internal/explicit_fields_test.go
+	explicitFieldsTestFile string
+
+	//go:embed sdk/internal/extra_properties.go
+	extraPropertiesFile string
+
+	//go:embed sdk/internal/extra_properties_test.go
+	extraPropertiesTestFile string
+
+	//go:embed sdk/utils/file_param.go
+	fileParamFile string
+
+	//go:embed sdk/core/http.go
+	httpCoreFile string
+
+	//go:embed sdk/internal/http.go
+	httpInternalFile string
+
+	//go:embed sdk/internal/environment.go
+	environmentInternalFile string
+
+	//go:embed sdk/internal/multipart.go
+	multipartFile string
+
+	//go:embed sdk/internal/multipart_test.go
+	multipartTestFile string
+
+	//go:embed sdk/core/optional.go
+	optionalFile string
+
+	//go:embed sdk/core/optional_test.go
+	optionalTestFile string
+
+	//go:embed sdk/utils/pointer.go
+	pointerFile string
+
+	//go:embed sdk/utils/pointer_test.go
+	pointerTestFile string
+
+	//go:embed sdk/internal/query.go
+	queryFile string
+
+	//go:embed sdk/internal/query_test.go
+	queryTestFile string
+
+	//go:embed sdk/internal/query_defaults_on_nil.go_
+	queryDefaultsOnNilFile string
+)
+
+// WriteOptionalHelpers writes the Optional[T] helper functions.
+// The name of the helpers will change if the functions are
+// generated in the core package (to avoid naming collisions).
+func (f *fileWriter) WriteOptionalHelpers(useCore bool) error {
+	var (
+		typeName        = "core.Optional"
+		constructorName = "Optional"
+	)
+	if useCore {
+		typeName = "Optional"
+		constructorName = "NewOptional"
+	}
+	f.P("// ", constructorName, " initializes an optional field.")
+	f.P("func ", constructorName, "[T any](value T) *", typeName, "[T] {")
+	f.P("return &", typeName, "[T]{")
+	f.P("Value: value,")
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	f.P("// Null initializes an optional field that will be sent as")
+	f.P("// an explicit null value.")
+	f.P("func Null[T any]() *", typeName, "[T] {")
+	f.P("return &", typeName, "[T]{")
+	f.P("Null: true,")
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	return nil
+}
+
+// WriteLegacyClientOptions writes option functions in the client package, which
+// is where they were previously deposited in earlier versions of the generator.
+func (f *fileWriter) WriteLegacyClientOptions(
+	auth *ir.ApiAuth,
+	headers []*ir.HttpHeader,
+	idempotencyHeaders []*ir.HttpHeader,
+) error {
+	f.P("// WithBaseURL sets the base URL, overriding the default")
+	f.P("// environment, if any.")
+	f.P("func WithBaseURL(baseURL string) *core.BaseURLOption {")
+	f.P("return option.WithBaseURL(baseURL)")
+	f.P("}")
+	f.P()
+	f.P("// WithHTTPClient uses the given HTTPClient to issue the request.")
+	f.P("func WithHTTPClient(httpClient core.HTTPClient) *core.HTTPClientOption {")
+	f.P("return option.WithHTTPClient(httpClient)")
+	f.P("}")
+	f.P()
+	f.P("// WithHTTPHeader adds the given http.Header to the request.")
+	f.P("func WithHTTPHeader(httpHeader http.Header) *core.HTTPHeaderOption {")
+	f.P("return option.WithHTTPHeader(httpHeader)")
+	f.P("}")
+	f.P()
+	f.P("// WithMaxAttempts configures the maximum number of retry attempts.")
+	f.P("func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {")
+	f.P("return option.WithMaxAttempts(attempts)")
+	f.P("}")
+	f.P()
+
+	includeCustomAuthDocs := auth.Docs != nil && len(*auth.Docs) > 0
+
+	for _, authScheme := range auth.Schemes {
+		if authScheme.Bearer != nil {
+			var (
+				pascalCase = authScheme.Bearer.Token.PascalCase.UnsafeName
+				camelCase  = authScheme.Bearer.Token.CamelCase.SafeName
+				optionName = fmt.Sprintf("With%s", pascalCase)
+				typeName   = "*core." + pascalCase + "Option"
+			)
+			f.P("// ", optionName, " sets the 'Authorization: Bearer <", camelCase, ">' request header.")
+			f.P("func ", optionName, "(", camelCase, " string ) ", typeName, " {")
+			f.P("return option.", optionName, "(", camelCase, ")")
+			f.P("}")
+		}
+		if authScheme.Basic != nil {
+			usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
+			passwordOmitted := isBasicAuthPasswordOmitted(authScheme.Basic)
+			if !(usernameOmitted && passwordOmitted) {
+				f.P("// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.")
+				if includeCustomAuthDocs {
+					f.P("//")
+					f.WriteDocs(auth.Docs)
+				}
+				var params []string
+				var args []string
+				if !usernameOmitted {
+					params = append(params, "username string")
+					args = append(args, "username")
+				}
+				if !passwordOmitted {
+					params = append(params, "password string")
+					args = append(args, "password")
+				}
+				f.P("func WithBasicAuth(", strings.Join(params, ", "), ") *core.BasicAuthOption {")
+				f.P("return option.WithBasicAuth(", strings.Join(args, ", "), ")")
+				f.P("}")
+			}
+		}
+		if authScheme.Header != nil {
+			if !shouldGenerateHeaderAuthScheme(authScheme.Header, f.types) {
+				continue
+			}
+			var (
+				pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
+				camelCase  = authScheme.Header.Name.Name.CamelCase.SafeName
+				optionName = fmt.Sprintf("With%s", pascalCase)
+				goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "", false)
+				typeName   = "*core." + pascalCase + "Option"
+			)
+			f.P("// ", optionName, " sets the ", camelCase, " auth request header.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func ", optionName, "(", camelCase, " ", goType, ") ", typeName, " {")
+			f.P("return option.", optionName, "(", camelCase, ")")
+			f.P("}")
+			f.P()
+		}
+	}
+
+	for _, header := range append(headers, idempotencyHeaders...) {
+		if !shouldGenerateHeader(header, f.types) {
+			continue
+		}
+		var (
+			pascalCase = header.Name.Name.PascalCase.UnsafeName
+			camelCase  = header.Name.Name.CamelCase.SafeName
+			optionName = fmt.Sprintf("With%s", pascalCase)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "", false)
+			typeName   = "*core." + pascalCase + "Option"
+		)
+		f.P("// ", optionName, " sets the ", camelCase, " request header.")
+		if header.Docs != nil && len(*header.Docs) > 0 {
+			// If the header has any custom documentation, include it immediately below the standard
+			// option signature comment.
+			f.P("//")
+			f.WriteDocs(header.Docs)
+		}
+		f.P("func ", optionName, "(", camelCase, " ", goType, ") ", typeName, " {")
+		f.P("return option.", optionName, "(", camelCase, ")")
+		f.P("}")
+		f.P()
+	}
+
+	return nil
+}
+
+// WriteIdempotentRequestOptionsDefinition writes the IdempotentRequestOption
+// interface and *IdempotentRequestOptions type. These types are always deposited
+// in the core package to prevent import cycles in the generated SDK.
+func (f *fileWriter) WriteIdempotentRequestOptionsDefinition(idempotencyHeaders []*ir.HttpHeader) error {
+	importPath := path.Join(f.baseImportPath, "core")
+	f.P("// IdempotentRequestOption adapts the behavior of an individual request.")
+	f.P("type IdempotentRequestOption interface {")
+	f.P("applyIdempotentRequestOptions(*IdempotentRequestOptions)")
+	f.P("}")
+	f.P()
+
+	f.P("// IdempotentRequestOptions defines all of the possible idempotent request options.")
+	f.P("//")
+	f.P("// This type is primarily used by the generated code and is not meant")
+	f.P("// to be used directly; use the option package instead.")
+	f.P("type IdempotentRequestOptions struct {")
+	f.P("*RequestOptions")
+	f.P()
+
+	for _, header := range idempotencyHeaders {
+		f.P(
+			header.Name.Name.PascalCase.UnsafeName,
+			" ",
+			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+		)
+	}
+
+	f.P("}")
+	f.P()
+
+	// Generate the constructor.
+	f.P("// NewIdempotentRequestOptions returns a new *IdempotentRequestOptions value.")
+	f.P("//")
+	f.P("// This function is primarily used by the generated code and is not meant")
+	f.P("// to be used directly; use IdempotentRequestOption instead.")
+	f.P("func NewIdempotentRequestOptions(opts ...IdempotentRequestOption) *IdempotentRequestOptions {")
+	f.P("options := &IdempotentRequestOptions{")
+	f.P("RequestOptions: NewRequestOptions(),")
+	f.P("}")
+	f.P("for _, opt := range opts {")
+	f.P("if requestOption, ok := opt.(RequestOption); ok {")
+	f.P("requestOption.applyRequestOptions(options.RequestOptions)")
+	f.P("}")
+	f.P("opt.applyIdempotentRequestOptions(options)")
+	f.P("}")
+	f.P("return options")
+	f.P("}")
+	f.P()
+
+	for _, header := range idempotencyHeaders {
+		var (
+			pascalCase = header.Name.Name.PascalCase.UnsafeName
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		)
+		if err := f.writeOptionStruct(pascalCase, goType, false, true); err != nil {
+			return err
+		}
+	}
+
+	// Generate the ToHeader method.
+	f.P("// ToHeader maps the configured request options into a http.Header used")
+	f.P("// for the request.")
+	f.P("func (i *IdempotentRequestOptions) ToHeader() http.Header {")
+	f.P("header := i.RequestOptions.ToHeader()")
+	for _, header := range idempotencyHeaders {
+		valueTypeFormat := formatForValueType(header.ValueType, f.types)
+		value := valueTypeFormat.Prefix + "i." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+		f.P("if i.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+		f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, valueTypeFormat.Prefix, `%v",`, value, "))")
+		f.P("}")
+	}
+	f.P("return header")
+	f.P("}")
+
+	return nil
+}
+
+// serverURLVariable pairs an IR server URL variable with the idiomatic Go
+// client-option name it is exposed under (e.g. the variable "region" is exposed
+// as the "Region" option, and a variable named "environment" is exposed as
+// "ServerURLEnvironment" to avoid colliding with the reserved Environment option).
+type serverURLVariable struct {
+	variable *common.ServerVariable
+	// optionName is the exported Go identifier used for the RequestOptions field,
+	// the option struct, and the With<Name> helper (e.g. "Region").
+	optionName string
+	// paramName is the unexported parameter name used by the With<Name> helper
+	// (e.g. "region").
+	paramName string
+}
+
+// reservedRequestOptionNames are the RequestOptions field names that a server
+// URL variable must not shadow. A variable whose idiomatic name collides with
+// one of these is exposed under a "ServerURL"-prefixed name instead.
+var reservedRequestOptionNames = map[string]struct{}{
+	"BaseURL":                    {},
+	"Environment":                {},
+	"HTTPClient":                 {},
+	"HTTPHeader":                 {},
+	"BodyProperties":             {},
+	"QueryParameters":            {},
+	"MaxAttempts":                {},
+	"MaxBufSize":                 {},
+	"MaxStreamReconnectAttempts": {},
+	"DisableStreamReconnection":  {},
+	"DisableRetries":             {},
+}
+
+// serverURLVariablesFromConfig returns the server URL variables declared on the
+// API's environments, paired with the client-option name each is exposed under.
+// Variables are de-duplicated by id (taken from the first environment that
+// declares them) and de-collided against reserved RequestOptions field names.
+//
+// When enabled is false (i.e. the serverUrlVariables generator config option is
+// disabled), this returns an empty slice so that no server-URL-variable client
+// options nor the construction-time base-URL template interpolation are emitted,
+// falling back to the pre-feature base-URL behavior.
+func serverURLVariablesFromConfig(enabled bool, environmentsConfig *common.EnvironmentsConfig) []*serverURLVariable {
+	if !enabled {
+		return nil
+	}
+	variables := collectServerURLVariables(environmentsConfig)
+	result := make([]*serverURLVariable, 0, len(variables))
+	for _, variable := range variables {
+		if variable == nil || variable.Name == nil {
+			continue
+		}
+		optionName := variable.Name.PascalCase.UnsafeName
+		paramName := variable.Name.CamelCase.SafeName
+		if _, ok := reservedRequestOptionNames[optionName]; ok {
+			optionName = "ServerURL" + variable.Name.PascalCase.UnsafeName
+			paramName = "serverURL" + variable.Name.PascalCase.UnsafeName
+		}
+		result = append(result, &serverURLVariable{
+			variable:   variable,
+			optionName: optionName,
+			paramName:  paramName,
+		})
+	}
+	return result
+}
+
+// collectServerURLVariables extracts the server URL variables from the first
+// environment that declares them, handling both single- and multiple-base-URL
+// environments and de-duplicating by id.
+func collectServerURLVariables(environmentsConfig *common.EnvironmentsConfig) []*common.ServerVariable {
+	if environmentsConfig == nil || environmentsConfig.Environments == nil {
+		return nil
+	}
+	seen := make(map[string]struct{})
+	var result []*common.ServerVariable
+	add := func(variables []*common.ServerVariable) {
+		for _, variable := range variables {
+			if variable == nil {
+				continue
+			}
+			if _, ok := seen[variable.Id]; ok {
+				continue
+			}
+			seen[variable.Id] = struct{}{}
+			result = append(result, variable)
+		}
+	}
+	if single := environmentsConfig.Environments.SingleBaseUrl; single != nil {
+		for _, environment := range single.Environments {
+			if len(environment.UrlVariables) > 0 {
+				add(environment.UrlVariables)
+				break
+			}
+		}
+	}
+	if multiple := environmentsConfig.Environments.MultipleBaseUrls; multiple != nil {
+		for _, environment := range multiple.Environments {
+			if len(environment.UrlVariables) > 0 {
+				// Preserve a deterministic order across base URLs.
+				baseURLIds := make([]string, 0, len(environment.UrlVariables))
+				for baseURLId := range environment.UrlVariables {
+					baseURLIds = append(baseURLIds, baseURLId)
+				}
+				sort.Strings(baseURLIds)
+				for _, baseURLId := range baseURLIds {
+					add(environment.UrlVariables[baseURLId])
+				}
+				break
+			}
+		}
+	}
+	return result
+}
+
+// WriteRequestOptionsDefinition writes the RequestOption interface and
+// *RequestOptions type. These types are always deposited in the core
+// package to prevent import cycles in the generated SDK.
+func (f *fileWriter) WriteRequestOptionsDefinition(
+	auth *ir.ApiAuth,
+	headers []*ir.HttpHeader,
+	idempotencyHeaders []*ir.HttpHeader,
+	sdkConfig *ir.SdkConfig,
+	moduleConfig *ModuleConfig,
+	sdkVersion string,
+	environmentsConfig *common.EnvironmentsConfig,
+	inferredParams []inferredAuthParam,
+) error {
+	importPath := path.Join(f.baseImportPath, "core")
+	f.P("// RequestOption adapts the behavior of the client or an individual request.")
+	f.P("type RequestOption interface {")
+	f.P("applyRequestOptions(*RequestOptions)")
+	f.P("}")
+	f.P()
+
+	// Check if OAuth or inferred auth is configured
+	hasOAuth := getOAuthClientCredentials(auth) != nil
+	hasInferred := getInferredAuthScheme(auth) != nil
+
+	// In endpoint-security mode, auth is applied per-endpoint (each endpoint
+	// declares its own schemes) rather than flatly on every request. The flat
+	// ToHeader() therefore emits no auth headers; routing happens in
+	// AuthHeadersForEndpoint, which the endpoint code calls with the endpoint's
+	// static security requirements.
+	endpointSecurity := isEndpointSecurity(auth)
+
+	// Generate TokenGetter type if OAuth or inferred auth is configured
+	if hasOAuth || hasInferred {
+		f.P("// TokenGetter is a function that returns an access token.")
+		f.P("type TokenGetter func() (string, error)")
+		f.P()
+	}
+
+	isMultiURL := isMultipleBaseUrlsEnvironment(environmentsConfig)
+
+	f.P("// RequestOptions defines all of the possible request options.")
+	f.P("//")
+	f.P("// This type is primarily used by the generated code and is not meant")
+	f.P("// to be used directly; use the option package instead.")
+	f.P("type RequestOptions struct {")
+	f.P("BaseURL string")
+	if isMultiURL {
+		f.P("Environment interface{}")
+	}
+	f.P("HTTPClient HTTPClient")
+	f.P("HTTPHeader http.Header")
+	f.P("BodyProperties map[string]interface{}")
+	f.P("QueryParameters url.Values")
+	f.P("MaxAttempts uint")
+	f.P("MaxBufSize int")
+	f.P("MaxStreamReconnectAttempts uint")
+	f.P("DisableStreamReconnection bool")
+	f.P("DisableRetries bool")
+	if f.userAgent.emitsAppInfo() {
+		// Optional application info appended to the User-Agent header. Set via
+		// option.WithUserAgentAppInfo.
+		f.P(appInfoTypeName, " *", appInfoTypeName)
+	}
+	if hasOAuth || hasInferred {
+		f.P("tokenGetter TokenGetter")
+	}
+
+	// Generate the exported RequestOptions type that all clients can act upon.
+	// Track declared field names to avoid duplicates when multiple auth schemes
+	// share the same credential parameters (e.g., OAuth and inferred auth both
+	// using ClientSecret).
+	declaredFields := make(map[string]bool)
+	for _, authScheme := range auth.Schemes {
+		if authScheme.Bearer != nil {
+			name := authScheme.Bearer.Token.PascalCase.UnsafeName
+			f.P(name, " string")
+			f.P(name, "Func func() (string, error)")
+			declaredFields[name] = true
+		}
+		if authScheme.Basic != nil {
+			usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
+			passwordOmitted := isBasicAuthPasswordOmitted(authScheme.Basic)
+			uname := authScheme.Basic.Username.PascalCase.UnsafeName
+			pname := authScheme.Basic.Password.PascalCase.UnsafeName
+			if !usernameOmitted {
+				f.P(uname, " string")
+				declaredFields[uname] = true
+			}
+			if !passwordOmitted {
+				f.P(pname, " string")
+				declaredFields[pname] = true
+			}
+		}
+		if authScheme.Header != nil {
+			if !shouldGenerateHeaderAuthScheme(authScheme.Header, f.types) {
+				continue
+			}
+			name := authScheme.Header.Name.Name.PascalCase.UnsafeName
+			f.P(
+				name,
+				" ",
+				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+			)
+			declaredFields[name] = true
+		}
+		if authScheme.Oauth != nil {
+			f.P("ClientID string")
+			f.P("ClientSecret string")
+			declaredFields["ClientID"] = true
+			declaredFields["ClientSecret"] = true
+			// Only add Token field if there's no Bearer auth (which already provides Token)
+			if !hasBearerAuth(auth) {
+				f.P("Token string")
+				declaredFields["Token"] = true
+			}
+		}
+		if authScheme.Inferred != nil {
+			for _, param := range inferredParams {
+				if declaredFields[param.PascalCase] {
+					continue
+				}
+				f.P(param.PascalCase, " string")
+				declaredFields[param.PascalCase] = true
+			}
+		}
+	}
+	for _, header := range headers {
+		if !shouldGenerateHeader(header, f.types) {
+			continue
+		}
+		f.P(
+			header.Name.Name.PascalCase.UnsafeName,
+			" ",
+			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+		)
+	}
+	// Generate a field for each server URL variable (e.g. region), used to
+	// interpolate the environment's URL template(s) at client construction.
+	for _, serverURLVariable := range serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig) {
+		f.P(serverURLVariable.optionName, " string")
+	}
+	f.P("}")
+	f.P()
+
+	// Generate the constructor.
+	f.P("// NewRequestOptions returns a new *RequestOptions value.")
+	f.P("//")
+	f.P("// This function is primarily used by the generated code and is not meant")
+	f.P("// to be used directly; use RequestOption instead.")
+	f.P("func NewRequestOptions(opts ...RequestOption) *RequestOptions {")
+	f.P("options := &RequestOptions{")
+	f.P("HTTPHeader: make(http.Header),")
+	f.P("BodyProperties: make(map[string]interface{}),")
+	f.P("QueryParameters: make(url.Values),")
+	f.P("}")
+	f.P("for _, opt := range opts {")
+	f.P("opt.applyRequestOptions(options)")
+	f.P("}")
+	f.P("return options")
+	f.P("}")
+	f.P()
+
+	if (auth == nil || len(auth.Schemes) == 0) && (headers == nil || len(headers) == 0) {
+		f.P("// ToHeader maps the configured request options into a http.Header used")
+		f.P("// for the request(s).")
+		f.P("func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }")
+		f.P()
+		if err := f.writePlatformHeaders(sdkConfig, moduleConfig, sdkVersion); err != nil {
+			return err
+		}
+		f.P()
+		if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig)); err != nil {
+			return err
+		}
+		// Emit the AppInfo type alongside its consumers (the AppInfo field,
+		// AppInfoOption, and option.WithUserAgentAppInfo) whenever the feature is
+		// enabled, independent of sdkVersion/PlatformHeaders. Otherwise the core
+		// package references an undefined core.AppInfo for versionless (local /
+		// downloadFiles) generation or IRs without platform headers.
+		if f.userAgent.emitsAppInfo() {
+			f.writeAppInfoType()
+		}
+		return nil
+	}
+
+	// Generate the ToHeader method.
+	f.P("// ToHeader maps the configured request options into a http.Header used")
+	f.P("// for the request(s).")
+	f.P("func (r *RequestOptions) ToHeader() http.Header {")
+	f.P("header := r.cloneHeader()")
+	for _, authScheme := range auth.Schemes {
+		if endpointSecurity {
+			// Auth headers are routed per-endpoint via AuthHeadersForEndpoint.
+			break
+		}
+		if authScheme.Bearer != nil {
+			name := authScheme.Bearer.Token.PascalCase.UnsafeName
+			f.P("if r.", name, ` != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + r.`, name, ")")
+			f.P("} else if r.", name, "Func != nil {")
+			f.P("if token, err := r.", name, `Func(); err == nil && token != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + token)`)
+			f.P("}")
+			f.P("}")
+		}
+		if authScheme.Basic != nil {
+			usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
+			passwordOmitted := isBasicAuthPasswordOmitted(authScheme.Basic)
+			if usernameOmitted && passwordOmitted {
+				// Both omitted — skip the Authorization header entirely.
+			} else if usernameOmitted {
+				password := authScheme.Basic.Password.PascalCase.UnsafeName
+				f.P(`if r.`, password, ` != "" {`)
+				f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(":" + r.`, password, `)))`)
+				f.P("}")
+			} else if passwordOmitted {
+				username := authScheme.Basic.Username.PascalCase.UnsafeName
+				f.P(`if r.`, username, ` != "" {`)
+				f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.`, username, ` + ":")))`)
+				f.P("}")
+			} else {
+				var (
+					username = authScheme.Basic.Username.PascalCase.UnsafeName
+					password = authScheme.Basic.Password.PascalCase.UnsafeName
+				)
+				f.P(`if r.`, username, ` != "" || r.`, password, ` != "" {`)
+				f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.`, username, ` + ":" + r.`, password, `)))`)
+				f.P("}")
+			}
+		}
+		if header := authScheme.Header; header != nil {
+			var prefix string
+			if header.Prefix != nil {
+				prefix = *header.Prefix + " "
+			}
+			if isLiteral := (header.ValueType.Container != nil && header.ValueType.Container.Literal != nil); isLiteral {
+				formatValue := `fmt.Sprintf("` + prefix + `%v",` + literalToValue(header.ValueType.Container.Literal) + ")"
+				if header.HeaderEnvVar != nil {
+					f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
+					f.P(`if envValue := os.Getenv("`, *header.HeaderEnvVar, `"); envValue != "" {`)
+					f.P(header.Name.Name.CamelCase.SafeName, " = envValue")
+					f.P("}")
+					f.P(`header.Set("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
+				} else {
+					f.P(`header.Set("`, header.Name.WireValue, `", `, formatValue, ")")
+				}
+				continue
+			}
+			valueTypeFormat := formatForValueType(header.ValueType, f.types)
+			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
+			f.P("}")
+		}
+		if authScheme.Oauth != nil && !hasBearerAuth(auth) {
+			// When Token is provided directly, use it for Authorization header
+			// Skip if Bearer auth exists, as it already handles the Token field
+			f.P(`if r.Token != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + r.Token)`)
+			f.P("}")
+			// If no token is set but tokenGetter is configured, use it to get the token
+			f.P(`if header.Get("Authorization") == "" && r.tokenGetter != nil {`)
+			f.P(`if token, err := r.tokenGetter(); err == nil && token != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + token)`)
+			f.P("}")
+			f.P("}")
+		}
+		if authScheme.Inferred != nil {
+			// Use tokenGetter to fetch token and set authenticated request headers
+			f.P(`if r.tokenGetter != nil {`)
+			f.P(`if token, err := r.tokenGetter(); err == nil && token != "" {`)
+			if authScheme.Inferred.TokenEndpoint != nil {
+				for _, authHeader := range authScheme.Inferred.TokenEndpoint.AuthenticatedRequestHeaders {
+					headerName := authHeader.HeaderName
+					if authHeader.ValuePrefix != nil {
+						f.P(fmt.Sprintf(`header.Set(%q, %q + token)`, headerName, *authHeader.ValuePrefix))
+					} else {
+						f.P(fmt.Sprintf(`header.Set(%q, token)`, headerName))
+					}
+				}
+			}
+			f.P("}")
+			f.P("}")
+		}
+	}
+	for _, header := range headers {
+		valueTypeFormat := formatForValueType(header.ValueType, f.types)
+		if isLiteral := (header.ValueType.Container != nil && header.ValueType.Container.Literal != nil); isLiteral {
+			formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ValueType.Container.Literal) + ")"
+			if header.Env != nil {
+				f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
+				f.P(`if envValue := os.Getenv("`, *header.Env, `"); envValue != "" {`)
+				f.P(header.Name.Name.CamelCase.SafeName, " = envValue")
+				f.P("}")
+				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+				f.P(header.Name.Name.CamelCase.SafeName, " = r.", header.Name.Name.PascalCase.UnsafeName)
+				f.P("}")
+				f.P(`header.Set("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
+			} else {
+				f.P(`header.Set("`, header.Name.WireValue, `", `, formatValue, ")")
+			}
+			continue
+		}
+		// Headers with an env var and/or client default are resolved into the
+		// client-level options at construction time, so ToHeader only emits
+		// values that are explicitly set on the options. Setting the resolved
+		// fallback here would clobber the client-level value on every request,
+		// since empty per-request options win the header merge. Construction-time
+		// resolution only covers optional, string, and boolean header types, so
+		// other types keep the request-time client default fallback.
+		if header.ClientDefault != nil && !isClientDefaultResolvedAtConstruction(header.ValueType, valueTypeFormat) {
+			formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ClientDefault) + ")"
+			f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
+			if header.Env != nil {
+				f.P(`if envValue := os.Getenv("`, *header.Env, `"); envValue != "" {`)
+				f.P(header.Name.Name.CamelCase.SafeName, " = envValue")
+				f.P("}")
+			}
+			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+			f.P(header.Name.Name.CamelCase.SafeName, ` = fmt.Sprintf("%v", `, value, ")")
+			f.P("}")
+			f.P(`header.Set("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
+			continue
+		}
+		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+		if valueTypeFormat.IsOptional {
+			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
+			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
+			f.P("}")
+		} else {
+			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
+		}
+	}
+	f.P("return header")
+	f.P("}")
+	f.P()
+
+	if endpointSecurity {
+		f.writeAuthHeadersForEndpoint(auth)
+		f.P()
+	}
+
+	if err := f.writePlatformHeaders(sdkConfig, moduleConfig, sdkVersion); err != nil {
+		return err
+	}
+
+	f.P()
+
+	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig)); err != nil {
+		return err
+	}
+
+	// Emit the AppInfo type alongside its consumers (the AppInfo field,
+	// AppInfoOption, and option.WithUserAgentAppInfo) whenever the feature is
+	// enabled, independent of sdkVersion/PlatformHeaders. Otherwise the core
+	// package references an undefined core.AppInfo for versionless (local /
+	// downloadFiles) generation or IRs without platform headers.
+	if f.userAgent.emitsAppInfo() {
+		f.writeAppInfoType()
+	}
+
+	return nil
+}
+
+// writeAuthHeadersForEndpoint generates the AuthHeadersForEndpoint method on
+// *RequestOptions, used in endpoint-security mode. Given an endpoint's static
+// security requirements ([][]string, where the outer slice is OR'd and each
+// inner slice of scheme keys is AND'd), it returns only the auth headers for
+// the first requirement whose schemes all have credentials available. If none
+// is satisfiable, it returns an error naming the missing schemes. This mirrors
+// the TypeScript RoutingAuthProvider and the Python get_auth_headers_for_endpoint.
+func (f *fileWriter) writeAuthHeadersForEndpoint(auth *ir.ApiAuth) {
+	// Bearer and OAuth schemes share the single token slot: a resolved token
+	// is applied as "Authorization: Bearer <token>" for whichever of those keys
+	// the endpoint declares.
+	var (
+		bearerScheme    *ir.BearerAuthScheme
+		basicScheme     *ir.BasicAuthScheme
+		inferredScheme  *ir.InferredAuthScheme
+		headerSchemes   []*ir.HeaderAuthScheme
+		tokenSchemeKeys []string
+	)
+	for _, authScheme := range auth.Schemes {
+		switch {
+		case authScheme.Bearer != nil:
+			bearerScheme = authScheme.Bearer
+			tokenSchemeKeys = append(tokenSchemeKeys, authScheme.Bearer.Key)
+		case authScheme.Oauth != nil:
+			tokenSchemeKeys = append(tokenSchemeKeys, authScheme.Oauth.Key)
+		case authScheme.Basic != nil:
+			basicScheme = authScheme.Basic
+		case authScheme.Header != nil:
+			if shouldGenerateHeaderAuthScheme(authScheme.Header, f.types) {
+				headerSchemes = append(headerSchemes, authScheme.Header)
+			}
+		case authScheme.Inferred != nil:
+			inferredScheme = authScheme.Inferred
+		}
+	}
+
+	f.P("// AuthHeadersForEndpoint returns the auth headers to apply for an endpoint,")
+	f.P("// given the endpoint's static security requirements. It routes to the first")
+	f.P("// requirement whose schemes all have credentials available (OR across the")
+	f.P("// list, AND within a requirement).")
+	f.P("func (r *RequestOptions) AuthHeadersForEndpoint(security [][]string) (http.Header, error) {")
+	f.P("if len(security) == 0 {")
+	f.P("return make(http.Header), nil")
+	f.P("}")
+	f.P("availableAuthHeaders := make(map[string]http.Header)")
+
+	// Bearer / OAuth token schemes.
+	if len(tokenSchemeKeys) > 0 {
+		if bearerScheme != nil {
+			name := bearerScheme.Token.PascalCase.UnsafeName
+			f.P("token := r.", name)
+			f.P("if token == \"\" && r.", name, "Func != nil {")
+			f.P("if value, err := r.", name, "Func(); err == nil {")
+			f.P("token = value")
+			f.P("}")
+			f.P("}")
+		} else {
+			// OAuth without an explicit bearer scheme: the token is either provided
+			// directly or fetched via the configured token getter.
+			f.P("token := r.Token")
+			f.P("if token == \"\" && r.tokenGetter != nil {")
+			f.P("if value, err := r.tokenGetter(); err == nil {")
+			f.P("token = value")
+			f.P("}")
+			f.P("}")
+		}
+		f.P("if token != \"\" {")
+		f.P("tokenHeaders := make(http.Header)")
+		f.P(`tokenHeaders.Set("Authorization", "Bearer " + token)`)
+		for _, key := range tokenSchemeKeys {
+			f.P(`availableAuthHeaders["`, key, `"] = tokenHeaders`)
+		}
+		f.P("}")
+	}
+
+	// Header auth schemes (e.g. X-API-Key).
+	for _, header := range headerSchemes {
+		var prefix string
+		if header.Prefix != nil {
+			prefix = *header.Prefix + " "
+		}
+		valueTypeFormat := formatForValueType(header.ValueType, f.types)
+		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+		f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+		f.P("headerValues := make(http.Header)")
+		f.P(`headerValues.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
+		f.P(`availableAuthHeaders["`, header.Key, `"] = headerValues`)
+		f.P("}")
+	}
+
+	// Basic auth.
+	if basicScheme != nil {
+		usernameOmitted := isBasicAuthUsernameOmitted(basicScheme)
+		passwordOmitted := isBasicAuthPasswordOmitted(basicScheme)
+		username := basicScheme.Username.PascalCase.UnsafeName
+		password := basicScheme.Password.PascalCase.UnsafeName
+		var (
+			condition   string
+			usernameArg string
+			passwordArg string
+		)
+		switch {
+		case usernameOmitted && passwordOmitted:
+			// Both omitted — no basic credentials to apply.
+		case usernameOmitted:
+			condition = "r." + password + ` != ""`
+			usernameArg = `""`
+			passwordArg = "r." + password
+		case passwordOmitted:
+			condition = "r." + username + ` != ""`
+			usernameArg = "r." + username
+			passwordArg = `""`
+		default:
+			condition = "r." + username + ` != "" || r.` + password + ` != ""`
+			usernameArg = "r." + username
+			passwordArg = "r." + password
+		}
+		if condition != "" {
+			f.P("if ", condition, " {")
+			f.P("basicHeaders := make(http.Header)")
+			f.P(`basicHeaders.Set("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(`, usernameArg, ` + ":" + `, passwordArg, `)))`)
+			f.P(`availableAuthHeaders["`, basicScheme.Key, `"] = basicHeaders`)
+			f.P("}")
+		}
+	}
+
+	// Inferred auth: fetch the token and apply the configured authenticated
+	// request headers.
+	if inferredScheme != nil && inferredScheme.TokenEndpoint != nil {
+		f.P("if r.tokenGetter != nil {")
+		f.P("if inferredToken, err := r.tokenGetter(); err == nil && inferredToken != \"\" {")
+		f.P("inferredHeaders := make(http.Header)")
+		for _, authHeader := range inferredScheme.TokenEndpoint.AuthenticatedRequestHeaders {
+			if authHeader.ValuePrefix != nil {
+				f.P(fmt.Sprintf(`inferredHeaders.Set(%q, %q + inferredToken)`, authHeader.HeaderName, *authHeader.ValuePrefix))
+			} else {
+				f.P(fmt.Sprintf(`inferredHeaders.Set(%q, inferredToken)`, authHeader.HeaderName))
+			}
+		}
+		f.P(`availableAuthHeaders["`, inferredScheme.Key, `"] = inferredHeaders`)
+		f.P("}")
+		f.P("}")
+	}
+
+	// OR across requirements: pick the first fully-satisfiable requirement and
+	// combine the headers of its schemes.
+	f.P("for _, requirement := range security {")
+	f.P("satisfied := true")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("if _, ok := availableAuthHeaders[schemeKey]; !ok {")
+	f.P("satisfied = false")
+	f.P("break")
+	f.P("}")
+	f.P("}")
+	f.P("if !satisfied {")
+	f.P("continue")
+	f.P("}")
+	f.P("combined := make(http.Header)")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("for name, values := range availableAuthHeaders[schemeKey] {")
+	f.P("for _, value := range values {")
+	f.P("combined.Set(name, value)")
+	f.P("}")
+	f.P("}")
+	f.P("}")
+	f.P("return combined, nil")
+	f.P("}")
+
+	// No requirement satisfiable: report the missing schemes.
+	f.P("missing := make([]string, 0, len(security))")
+	f.P("for _, requirement := range security {")
+	f.P("var missingSchemes []string")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("if _, ok := availableAuthHeaders[schemeKey]; !ok {")
+	f.P("missingSchemes = append(missingSchemes, schemeKey)")
+	f.P("}")
+	f.P("}")
+	f.P(`missing = append(missing, strings.Join(missingSchemes, " AND "))`)
+	f.P("}")
+	f.P("return nil, fmt.Errorf(")
+	f.P(`"no authentication credentials provided that satisfy the endpoint's security requirements; please provide credentials for: %s",`)
+	f.P(`strings.Join(missing, " OR "),`)
+	f.P(")")
+	f.P("}")
+}
+
+// writePlatformHeaders generates the platform headers.
+func (f *fileWriter) writePlatformHeaders(
+	sdkConfig *ir.SdkConfig,
+	moduleConfig *ModuleConfig,
+	sdkVersion string,
+) error {
+	if sdkVersion == "" || f.userAgent.omitFernHeaders {
+		f.P("func (r *RequestOptions) cloneHeader() http.Header {")
+		f.P("return r.HTTPHeader.Clone()")
+		f.P("}")
+		return nil
+	}
+	if sdkConfig.PlatformHeaders != nil {
+		f.P("func (r *RequestOptions) cloneHeader() http.Header {")
+		f.P("headers := r.HTTPHeader.Clone()")
+		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.Language, goLanguageHeader))
+		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkName, moduleConfig.Path))
+		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkVersion, sdkVersion))
+		if sdkConfig.PlatformHeaders.UserAgent != nil {
+			// Base is the User-Agent value the SDK would otherwise send: either the
+			// structured, runtime-computed value (includePlatformHeaders) or the raw
+			// configured/default value.
+			var userAgentExpr string
+			if f.userAgent.includePlatformHeaders {
+				// Consolidate runtime/platform observability into a single structured
+				// User-Agent header, computed at runtime.
+				userAgentExpr = fmt.Sprintf("%s(%q)", platformUserAgentFunc, sdkConfig.PlatformHeaders.UserAgent.Value)
+			} else {
+				userAgentExpr = fmt.Sprintf("%q", sdkConfig.PlatformHeaders.UserAgent.Value)
+			}
+			if f.userAgent.emitsAppInfo() {
+				// When enabled, the caller's appInfo product token is appended to
+				// whatever User-Agent the SDK would otherwise send (all branches).
+				userAgentExpr = fmt.Sprintf("%s(%s, r.%s)", appendAppInfoFunc, userAgentExpr, appInfoTypeName)
+			}
+			f.P(fmt.Sprintf("headers.Set(%q, %s)", sdkConfig.PlatformHeaders.UserAgent.Header(), userAgentExpr))
+		}
+		f.P("return headers")
+		f.P("}")
+		if f.userAgent.includePlatformHeaders && sdkConfig.PlatformHeaders.UserAgent != nil {
+			f.writePlatformUserAgentFunc()
+		}
+		if f.userAgent.emitsAppInfo() && sdkConfig.PlatformHeaders.UserAgent != nil {
+			// The AppInfo type itself is emitted unconditionally by
+			// WriteRequestOptionsDefinition (gated only on emitsAppInfo) so it is
+			// always defined alongside its consumers. The appender helper is emitted
+			// here only when a User-Agent header is actually written.
+			f.writeAppendAppInfoFunc()
+		}
+	}
+	return nil
+}
+
+// writePlatformUserAgentFunc generates a helper that augments the base
+// User-Agent value with the operating system, architecture, and Go runtime
+// version, all resolved at runtime. Unknown components are omitted rather than
+// reported as empty, and it never panics.
+func (f *fileWriter) writePlatformUserAgentFunc() {
+	fmtPackage := f.scope.AddImport("fmt")
+	runtimePackage := f.scope.AddImport("runtime")
+	stringsPackage := f.scope.AddImport("strings")
+	f.P()
+	f.P("// ", platformUserAgentFunc, " builds a structured User-Agent header value of the form")
+	f.P("// \"{base} ({os}; {arch}) Go/{version}\". The operating system, architecture, and")
+	f.P("// Go runtime version are resolved at runtime; unknown components are omitted.")
+	f.P("func ", platformUserAgentFunc, "(base string) string {")
+	f.P("var b ", stringsPackage, ".Builder")
+	f.P("b.WriteString(base)")
+	f.P("goos, goarch := ", runtimePackage, ".GOOS, ", runtimePackage, ".GOARCH")
+	f.P("if goarch == \"x64\" || goarch == \"amd64\" || goarch == \"x86_64\" {")
+	f.P("goarch = \"x86_64\"")
+	f.P("}")
+	f.P("switch {")
+	f.P("case goos != \"\" && goarch != \"\":")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\" (%s; %s)\", goos, goarch))")
+	f.P("case goos != \"\":")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\" (%s)\", goos))")
+	f.P("case goarch != \"\":")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\" (%s)\", goarch))")
+	f.P("}")
+	f.P("b.WriteString(\" Go\")")
+	f.P("if version := ", stringsPackage, ".TrimPrefix(", runtimePackage, ".Version(), \"go\"); version != \"\" {")
+	f.P("b.WriteString(\"/\" + version)")
+	f.P("}")
+	f.P("return b.String()")
+	f.P("}")
+}
+
+// writeAppInfoType emits the public AppInfo struct into core/request_option.go.
+// It is emitted whenever the feature is enabled (emitsAppInfo) so the AppInfo
+// field, AppInfoOption, and option.WithUserAgentAppInfo always resolve, even for
+// APIs that do not declare a User-Agent platform header.
+func (f *fileWriter) writeAppInfoType() {
+	f.P()
+	f.P("// ", appInfoTypeName, " is optional application information whose product token is")
+	f.P("// appended to the User-Agent header (see WithUserAgentAppInfo). The Name is")
+	f.P("// required; when it is blank the User-Agent is left unchanged. Version and")
+	f.P("// Comment are optional and omitted from the token when blank.")
+	f.P("type ", appInfoTypeName, " struct {")
+	f.P("Name string")
+	f.P("Version string")
+	f.P("Comment string")
+	f.P("}")
+}
+
+// writeAppendAppInfoFunc emits the appendAppInfoToUserAgent helper (and its
+// token/comment encoders) into core/request_option.go. Emitted only when the
+// feature is enabled and a User-Agent is actually written, so flag-off output
+// stays byte-identical and the shared core-utilities are never modified.
+//
+// The helper appends a sanitized RFC 9110 product token
+// ("{name}/{version} ({comment})") to whatever User-Agent the SDK would
+// otherwise send. Each field is trimmed before the blank check and before
+// encoding, so blank values are dropped rather than encoded into whitespace
+// tokens. name/version are percent-encoded down to RFC 7230 tchar and the
+// comment's delimiters ("(", ")", "\") and control characters (incl. CR/LF) are
+// escaped, so caller-supplied values cannot inject additional header content.
+func (f *fileWriter) writeAppendAppInfoFunc() {
+	fmtPackage := f.scope.AddImport("fmt")
+	stringsPackage := f.scope.AddImport("strings")
+	utf8Package := f.scope.AddImport("unicode/utf8")
+
+	f.P()
+	// Percent-encoder helper (shared by token and comment encoders).
+	f.P("// ", appendAppInfoFunc, "PercentEncode percent-encodes a single rune from its")
+	f.P("// UTF-8 bytes (e.g. '\\n' -> \"%0A\"), so untrusted values cannot inject header content.")
+	f.P("func ", appendAppInfoFunc, "PercentEncode(b *", stringsPackage, ".Builder, r rune) {")
+	f.P("var buf [", utf8Package, ".UTFMax]byte")
+	f.P("n := ", utf8Package, ".EncodeRune(buf[:], r)")
+	f.P("for _, c := range buf[:n] {")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\"%%%02X\", c))")
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	// Token encoder: keep RFC 7230 tchar, percent-encode everything else.
+	f.P("// ", appendAppInfoFunc, "EncodeToken keeps RFC 7230 token characters (tchar) and")
+	f.P("// percent-encodes everything else (spaces, control characters, CR/LF included).")
+	f.P("func ", appendAppInfoFunc, "EncodeToken(value string) string {")
+	f.P("var b ", stringsPackage, ".Builder")
+	f.P("for _, r := range value {")
+	f.P("switch {")
+	f.P("case r >= 'a' && r <= 'z', r >= 'A' && r <= 'Z', r >= '0' && r <= '9':")
+	f.P("b.WriteRune(r)")
+	f.P("case ", stringsPackage, ".ContainsRune(\"!#$%&'*+-.^_`|~\", r):")
+	f.P("b.WriteRune(r)")
+	f.P("default:")
+	f.P(appendAppInfoFunc, "PercentEncode(&b, r)")
+	f.P("}")
+	f.P("}")
+	f.P("return b.String()")
+	f.P("}")
+	f.P()
+
+	// Comment encoder: escape delimiters and control characters only.
+	f.P("// ", appendAppInfoFunc, "EncodeComment escapes the comment delimiters '(', ')', '\\\\'")
+	f.P("// and control characters (0x00-0x1F, 0x7F, incl. CR/LF) so a caller-supplied")
+	f.P("// comment cannot terminate the comment group early or inject header content.")
+	f.P("func ", appendAppInfoFunc, "EncodeComment(value string) string {")
+	f.P("var b ", stringsPackage, ".Builder")
+	f.P("for _, r := range value {")
+	f.P("if r == '(' || r == ')' || r == '\\\\' || r < 0x20 || r == 0x7F {")
+	f.P(appendAppInfoFunc, "PercentEncode(&b, r)")
+	f.P("} else {")
+	f.P("b.WriteRune(r)")
+	f.P("}")
+	f.P("}")
+	f.P("return b.String()")
+	f.P("}")
+	f.P()
+
+	// The appender itself.
+	f.P("// ", appendAppInfoFunc, " appends the sanitized appInfo product token")
+	f.P("// (\"{name}/{version} ({comment})\", RFC 9110) to the given User-Agent value.")
+	f.P("// Each field is trimmed before the blank check and before encoding; a blank")
+	f.P("// name leaves the User-Agent unchanged.")
+	f.P("func ", appendAppInfoFunc, "(userAgent string, appInfo *", appInfoTypeName, ") string {")
+	f.P("if appInfo == nil {")
+	f.P("return userAgent")
+	f.P("}")
+	f.P("name := ", appendAppInfoFunc, "EncodeToken(", stringsPackage, ".TrimSpace(appInfo.Name))")
+	f.P("if name == \"\" {")
+	f.P("return userAgent")
+	f.P("}")
+	f.P("productToken := name")
+	f.P("if version := ", appendAppInfoFunc, "EncodeToken(", stringsPackage, ".TrimSpace(appInfo.Version)); version != \"\" {")
+	f.P("productToken += \"/\" + version")
+	f.P("}")
+	f.P("if comment := ", appendAppInfoFunc, "EncodeComment(", stringsPackage, ".TrimSpace(appInfo.Comment)); comment != \"\" {")
+	f.P("productToken += \" (\" + comment + \")\"")
+	f.P("}")
+	f.P("return userAgent + \" \" + productToken")
+	f.P("}")
+}
+
+func (f *fileWriter) writeRequestOptionStructs(
+	auth *ir.ApiAuth,
+	headers []*ir.HttpHeader,
+	asIdempotentRequestOption bool,
+	isMultiURL bool,
+	inferredParams []inferredAuthParam,
+	serverURLVariables []*serverURLVariable,
+) error {
+	if err := f.writeOptionStruct("BaseURL", "string", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
+	if err := f.writeOptionStruct("HTTPClient", "HTTPClient", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
+	if err := f.writeOptionStruct("HTTPHeader", "http.Header", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
+	if err := f.writeOptionStruct("BodyProperties", "map[string]interface{}", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
+	if err := f.writeOptionStruct("QueryParameters", "url.Values", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
+	if err := f.writeOptionStruct("MaxAttempts", "uint", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
+	if err := f.writeOptionStruct("MaxBufSize", "int", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
+	if err := f.writeOptionStruct("MaxStreamReconnectAttempts", "uint", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
+	f.writeMarkerOptionStruct("WithoutStreamReconnectionOption", "DisableStreamReconnection", asIdempotentRequestOption)
+	f.writeMarkerOptionStruct("WithoutRetriesOption", "DisableRetries", asIdempotentRequestOption)
+
+	if f.userAgent.emitsAppInfo() {
+		if err := f.writeOptionStruct(appInfoTypeName, "*"+appInfoTypeName, true, asIdempotentRequestOption); err != nil {
+			return err
+		}
+	}
+
+	if isMultiURL {
+		if err := f.writeOptionStruct("Environment", "interface{}", true, asIdempotentRequestOption); err != nil {
+			return err
+		}
+	}
+
+	for _, serverURLVariable := range serverURLVariables {
+		if err := f.writeOptionStruct(serverURLVariable.optionName, "string", true, asIdempotentRequestOption); err != nil {
+			return err
+		}
+	}
+
+	if auth != nil {
+		// Track declared option struct names to avoid duplicates when multiple auth
+		// schemes share the same credential parameters (e.g., OAuth and inferred auth
+		// both using ClientSecret).
+		declaredOptionStructs := make(map[string]bool)
+		for _, authScheme := range auth.Schemes {
+			if authScheme.Bearer != nil {
+				var (
+					pascalCase = authScheme.Bearer.Token.PascalCase.UnsafeName
+					goType     = "string"
+				)
+				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
+					return err
+				}
+				declaredOptionStructs[pascalCase] = true
+
+				if err := f.writeOptionStruct(pascalCase+"Func", "func() (string, error)", true, asIdempotentRequestOption); err != nil {
+					return err
+				}
+			}
+			if authScheme.Basic != nil {
+				usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
+				passwordOmitted := isBasicAuthPasswordOmitted(authScheme.Basic)
+				if usernameOmitted && passwordOmitted {
+					// Both omitted — no BasicAuthOption needed.
+				} else {
+					username := authScheme.Basic.Username.PascalCase.UnsafeName
+					password := authScheme.Basic.Password.PascalCase.UnsafeName
+					f.P("// BasicAuthOption implements the RequestOption interface.")
+					f.P("type BasicAuthOption struct {")
+					if !usernameOmitted {
+						f.P(username, " string")
+					}
+					if !passwordOmitted {
+						f.P(password, " string")
+					}
+					f.P("}")
+					f.P()
+
+					f.P("func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {")
+					if !usernameOmitted {
+						f.P("opts.", username, " = b.", username)
+					}
+					if !passwordOmitted {
+						f.P("opts.", password, " = b.", password)
+					}
+					f.P("}")
+					f.P()
+				}
+			}
+			if authScheme.Header != nil {
+				if authScheme.Header.ValueType.Container != nil && authScheme.Header.ValueType.Container.Literal != nil {
+					// We don't want to generate a request option for literal values.
+					continue
+				}
+				var (
+					pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
+					goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+				)
+				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
+					return err
+				}
+				declaredOptionStructs[pascalCase] = true
+			}
+			if authScheme.Oauth != nil {
+				if err := f.writeOptionStruct("ClientID", "string", true, asIdempotentRequestOption); err != nil {
+					return err
+				}
+				if err := f.writeOptionStruct("ClientSecret", "string", true, asIdempotentRequestOption); err != nil {
+					return err
+				}
+				declaredOptionStructs["ClientID"] = true
+				declaredOptionStructs["ClientSecret"] = true
+				// The client credentials option requires special care because it sets
+				// two parameters.
+				f.P("// ClientCredentialsOption implements the RequestOption interface.")
+				f.P("type ClientCredentialsOption struct {")
+				f.P("ClientID string")
+				f.P("ClientSecret string")
+				f.P("}")
+				f.P()
+
+				f.P("func (c *ClientCredentialsOption) applyRequestOptions(opts *RequestOptions) {")
+				f.P("opts.ClientID = c.ClientID")
+				f.P("opts.ClientSecret = c.ClientSecret")
+				f.P("}")
+				f.P()
+
+				// Add TokenOption struct for direct token usage.
+				// Skip if Bearer auth exists, as it already provides TokenOption.
+				if !hasBearerAuth(auth) {
+					if err := f.writeOptionStruct("Token", "string", true, asIdempotentRequestOption); err != nil {
+						return err
+					}
+					declaredOptionStructs["Token"] = true
+				}
+
+				// Add SetTokenGetter method for internal use
+				f.P("// SetTokenGetter sets the token getter function for OAuth.")
+				f.P("// This is an internal method and should not be called directly.")
+				f.P("func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {")
+				f.P("r.tokenGetter = getter")
+				f.P("}")
+				f.P()
+			}
+			if authScheme.Inferred != nil {
+				for _, param := range inferredParams {
+					if declaredOptionStructs[param.PascalCase] {
+						continue
+					}
+					if err := f.writeOptionStruct(param.PascalCase, "string", true, asIdempotentRequestOption); err != nil {
+						return err
+					}
+					declaredOptionStructs[param.PascalCase] = true
+				}
+				// Add SetTokenGetter method for internal use (if not already added by OAuth)
+				if getOAuthClientCredentials(auth) == nil {
+					f.P("// SetTokenGetter sets the token getter function for inferred auth.")
+					f.P("// This is an internal method and should not be called directly.")
+					f.P("func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {")
+					f.P("r.tokenGetter = getter")
+					f.P("}")
+					f.P()
+				}
+			}
+		}
+	}
+
+	for _, header := range headers {
+		if !shouldGenerateHeader(header, f.types) {
+			continue
+		}
+		var (
+			pascalCase = header.Name.Name.PascalCase.UnsafeName
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+		)
+		if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// writeOptionStruct writes an individual option struct, like the following:
+//
+//	type BaseURLOption struct {
+//	  BaseURL string
+//	}
+func (f *fileWriter) writeOptionStruct(
+	pascalCase string,
+	goType string,
+	asRequestOption bool,
+	asIdempotentRequestOption bool,
+) error {
+	var (
+		typeName = pascalCase + "Option"
+		receiver = typeNameToReceiver(typeName)
+	)
+	f.P("// ", typeName, " implements the RequestOption interface.")
+	f.P("type ", typeName, " struct {")
+	f.P(pascalCase, " ", goType)
+	f.P("}")
+	f.P()
+
+	if asRequestOption {
+		f.P("func (", receiver, " *", typeName, ") applyRequestOptions(opts *RequestOptions) {")
+		f.P("opts.", pascalCase, " = ", receiver, ".", pascalCase)
+		f.P("}")
+		f.P()
+	}
+
+	if asIdempotentRequestOption {
+		f.P("func (", receiver, " *", typeName, ") applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {")
+		f.P("opts.", pascalCase, " = ", receiver, ".", pascalCase)
+		f.P("}")
+		f.P()
+	}
+
+	return nil
+}
+
+// writeMarkerOptionStruct emits an empty-struct option whose apply method
+// toggles boolField on RequestOptions to true. Used for opt-out options like
+// WithoutRetries / WithoutStreamReconnection where there is no user value to
+// carry, just a sentinel to flip a default.
+func (f *fileWriter) writeMarkerOptionStruct(typeName string, boolField string, asIdempotentRequestOption bool) {
+	receiver := typeNameToReceiver(typeName)
+	f.P("// ", typeName, " implements the RequestOption interface.")
+	f.P("type ", typeName, " struct{}")
+	f.P()
+	f.P("func (", receiver, " *", typeName, ") applyRequestOptions(opts *RequestOptions) {")
+	f.P("opts.", boolField, " = true")
+	f.P("}")
+	f.P()
+	if asIdempotentRequestOption {
+		f.P("func (", receiver, " *", typeName, ") applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {")
+		f.P("opts.", boolField, " = true")
+		f.P("}")
+		f.P()
+	}
+}
+
+type GeneratedAuth struct {
+	Option          ast.Expr // e.g. acmeclient.WithAuthToken("<YOUR_AUTH_TOKEN>")
+	EnvironmentVars []string // e.g. ACME_API_KEY
+}
+
+// WriteIdempotentRequestOptions writes the idempotent request options available to the
+// user.
+func (f *fileWriter) WriteIdempotentRequestOptions(
+	idempotencyHeaders []*ir.HttpHeader,
+) error {
+	importPath := path.Join(f.baseImportPath, "option")
+
+	// Generate the option.RequestOption type alias.
+	f.P("// IdempotentRequestOption adapts the behavior of an individual request.")
+	f.P("type IdempotentRequestOption = core.IdempotentRequestOption")
+
+	for _, header := range idempotencyHeaders {
+		var (
+			pascalCase = header.Name.Name.PascalCase.UnsafeName
+			camelCase  = header.Name.Name.CamelCase.SafeName
+			optionName = fmt.Sprintf("With%s", pascalCase)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		)
+		f.P("// ", optionName, " sets the ", camelCase, " request header.")
+		if header.Docs != nil && len(*header.Docs) > 0 {
+			// If the header has any custom documentation, include it immediately below the standard
+			// option signature comment.
+			f.P("//")
+			f.WriteDocs(header.Docs)
+		}
+		typeName := "core." + pascalCase + "Option"
+		f.P("func ", optionName, "(", camelCase, " ", goType, ") *", typeName, " {")
+		f.P("return &", typeName, "{")
+		f.P(pascalCase, ": ", camelCase, ",")
+		f.P("}")
+		f.P("}")
+	}
+
+	return nil
+}
+
+// WriteRequestOptions writes the request options available to the user.
+func (f *fileWriter) WriteRequestOptions(
+	auth *ir.ApiAuth,
+	headers []*ir.HttpHeader,
+	environmentsConfig *common.EnvironmentsConfig,
+	inferredParams []inferredAuthParam,
+) (*GeneratedAuth, error) {
+	// Now that we know where the types will be generated, format the generated type names as needed.
+	var (
+		importPath     = path.Join(f.baseImportPath, "option")
+		httpClientType = "core.HTTPClient"
+	)
+
+	// Generate the option.RequestOption type alias.
+	f.P("// RequestOption adapts the behavior of an individual request.")
+	f.P("type RequestOption = core.RequestOption")
+
+	// Generate the options for setting the base URL and HTTP client.
+	f.P("// WithBaseURL sets the base URL, overriding the default")
+	f.P("// environment, if any.")
+	f.P("func WithBaseURL(baseURL string) *core.BaseURLOption {")
+	f.P("return &core.BaseURLOption{")
+	f.P("BaseURL: baseURL,")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithHTTPClient uses the given HTTPClient to issue the request.")
+	f.P("func WithHTTPClient(httpClient ", httpClientType, ") *core.HTTPClientOption {")
+	f.P("return &core.HTTPClientOption{")
+	f.P("HTTPClient: httpClient,")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithHTTPHeader adds the given http.Header to the request.")
+	f.P("func WithHTTPHeader(httpHeader http.Header) *core.HTTPHeaderOption {")
+	f.P("return &core.HTTPHeaderOption{")
+	f.P("// Clone the headers so they can't be modified after the option call.")
+	f.P("HTTPHeader: httpHeader.Clone(),")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithBodyProperties adds the given body properties to the request.")
+	f.P("func WithBodyProperties(bodyProperties map[string]interface{}) *core.BodyPropertiesOption {")
+	f.P("copiedBodyProperties := make(map[string]interface{}, len(bodyProperties))")
+	f.P("for key, value := range bodyProperties {")
+	f.P("copiedBodyProperties[key] = value")
+	f.P("}")
+	f.P("return &core.BodyPropertiesOption{")
+	f.P("BodyProperties: copiedBodyProperties,")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithQueryParameters adds the given query parameters to the request.")
+	f.P("func WithQueryParameters(queryParameters url.Values) *core.QueryParametersOption {")
+	f.P("copiedQueryParameters := make(url.Values, len(queryParameters))")
+	f.P("for key, values := range queryParameters {")
+	f.P("copiedQueryParameters[key] = values")
+	f.P("}")
+	f.P("return &core.QueryParametersOption{")
+	f.P("QueryParameters: copiedQueryParameters,")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithMaxAttempts configures the maximum number of retry attempts.")
+	f.P("func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {")
+	f.P("return &core.MaxAttemptsOption{")
+	f.P("MaxAttempts: attempts,")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithMaxStreamBufSize configures the maximum buffer size for streaming responses.")
+	f.P("// This controls the maximum size of a single message (in bytes) that the stream")
+	f.P("// can process. By default, this is set to 1MB.")
+	f.P("func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {")
+	f.P("return &core.MaxBufSizeOption{")
+	f.P("MaxBufSize: size,")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithMaxStreamReconnectAttempts caps the number of transparent mid-stream")
+	f.P("// reconnect attempts on streaming endpoints that support resumption. The")
+	f.P("// reconnect loop honors Last-Event-ID and any server-sent `retry:` directives.")
+	f.P("// Has no effect on endpoints that don't support resumption.")
+	f.P("func WithMaxStreamReconnectAttempts(attempts uint) *core.MaxStreamReconnectAttemptsOption {")
+	f.P("return &core.MaxStreamReconnectAttemptsOption{")
+	f.P("MaxStreamReconnectAttempts: attempts,")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithoutStreamReconnection disables transparent mid-stream reconnection on")
+	f.P("// resumable SSE endpoints. Has no effect on non-resumable endpoints.")
+	f.P("func WithoutStreamReconnection() *core.WithoutStreamReconnectionOption {")
+	f.P("return &core.WithoutStreamReconnectionOption{}")
+	f.P("}")
+	f.P()
+	f.P("// WithoutRetries disables HTTP-level retry attempts for the request. Use this")
+	f.P("// instead of WithMaxAttempts(0), which falls through to the default of 2")
+	f.P("// attempts.")
+	f.P("func WithoutRetries() *core.WithoutRetriesOption {")
+	f.P("return &core.WithoutRetriesOption{}")
+	f.P("}")
+	f.P()
+
+	// Generate the opt-in WithUserAgentAppInfo option.
+	if f.userAgent.emitsAppInfo() {
+		f.P("// WithUserAgentAppInfo appends an application product token to the User-Agent")
+		f.P("// header sent by the client (\"{name}/{version} ({comment})\", RFC 9110). The")
+		f.P("// version and comment are optional; pass \"\" to omit them. Caller-supplied")
+		f.P("// values are sanitized before being written to the header.")
+		f.P("func WithUserAgentAppInfo(name, version, comment string) *core.", appInfoTypeName, "Option {")
+		f.P("return &core.", appInfoTypeName, "Option{")
+		f.P(appInfoTypeName, ": &core.", appInfoTypeName, "{")
+		f.P("Name: name,")
+		f.P("Version: version,")
+		f.P("Comment: comment,")
+		f.P("},")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
+
+	// Generate the WithEnvironment option for multi-URL environments.
+	if isMultipleBaseUrlsEnvironment(environmentsConfig) {
+		// Import the root package to get the Environment type
+		rootImportPath := f.baseImportPath
+		f.P("// WithEnvironment sets the environment for the client, which determines")
+		f.P("// the base URL for each endpoint.")
+		f.P("func WithEnvironment(environment ", f.scope.AddImport(rootImportPath), ".Environment) *core.EnvironmentOption {")
+		f.P("return &core.EnvironmentOption{")
+		f.P("Environment: environment,")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
+
+	// Generate a functional option for each server URL variable (e.g. region).
+	// Setting one rebuilds the base URL(s) from the environment's URL template(s)
+	// at client construction time.
+	for _, serverURLVariable := range serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig) {
+		originalName := serverURLVariable.variable.Id
+		if serverURLVariable.variable.Name != nil {
+			originalName = serverURLVariable.variable.Name.OriginalName
+		}
+		f.P("// With", serverURLVariable.optionName, " sets the \"", originalName, "\" server URL variable, which is")
+		f.P("// substituted into the base URL template(s) at construction time.")
+		f.P("func With", serverURLVariable.optionName, "(", serverURLVariable.paramName, " string) *core.", serverURLVariable.optionName, "Option {")
+		f.P("return &core.", serverURLVariable.optionName, "Option{")
+		f.P(serverURLVariable.optionName, ": ", serverURLVariable.paramName, ",")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
+
+	// Generate the auth functional options.
+	includeCustomAuthDocs := auth.Docs != nil && len(*auth.Docs) > 0
+
+	var (
+		option          ast.Expr
+		environmentVars []string
+	)
+	declaredPublicOptions := make(map[string]bool)
+	for i, authScheme := range auth.Schemes {
+		if authScheme.Bearer != nil {
+			var (
+				pascalCase = authScheme.Bearer.Token.PascalCase.UnsafeName
+				camelCase  = authScheme.Bearer.Token.CamelCase.SafeName
+				optionName = fmt.Sprintf("With%s", pascalCase)
+			)
+			if i == 0 {
+				option = ast.NewCallExpr(
+					ast.NewImportedReference(
+						optionName,
+						importPath,
+					),
+					[]ast.Expr{
+						ast.NewBasicLit(`"<YOUR_AUTH_TOKEN>"`),
+					},
+				)
+				if authScheme.Bearer.TokenEnvVar != nil {
+					environmentVars = append(environmentVars, *authScheme.Bearer.TokenEnvVar)
+				}
+			}
+			f.P("// ", optionName, " sets the 'Authorization: Bearer <", camelCase, ">' request header.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			typeName := "core." + pascalCase + "Option"
+			f.P("func ", optionName, "(", camelCase, " string) *", typeName, " {")
+			f.P("return &", typeName, "{")
+			f.P(pascalCase, ": ", camelCase, ",")
+			f.P("}")
+			f.P("}")
+			f.P()
+			declaredPublicOptions[optionName] = true
+
+			funcOptionName := fmt.Sprintf("With%sFunc", pascalCase)
+			funcTypeName := "core." + pascalCase + "FuncOption"
+			f.P("// ", funcOptionName, " sets a function that returns the 'Authorization: Bearer' token at request time.")
+			f.P("func ", funcOptionName, "(fn func() (string, error)) *", funcTypeName, " {")
+			f.P("return &", funcTypeName, "{")
+			f.P(pascalCase, "Func: fn,")
+			f.P("}")
+			f.P("}")
+			f.P()
+		}
+		if authScheme.Basic != nil {
+			usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
+			passwordOmitted := isBasicAuthPasswordOmitted(authScheme.Basic)
+			if usernameOmitted && passwordOmitted {
+				// Both omitted — no WithBasicAuth option needed.
+			} else {
+				if i == 0 {
+					var snippetArgs []ast.Expr
+					if !usernameOmitted {
+						snippetArgs = append(snippetArgs, ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, authScheme.Basic.Username.ScreamingSnakeCase.UnsafeName)))
+					}
+					if !passwordOmitted {
+						snippetArgs = append(snippetArgs, ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, authScheme.Basic.Password.ScreamingSnakeCase.UnsafeName)))
+					}
+					option = ast.NewCallExpr(
+						ast.NewImportedReference(
+							"WithBasicAuth",
+							importPath,
+						),
+						snippetArgs,
+					)
+					if !usernameOmitted && authScheme.Basic.UsernameEnvVar != nil {
+						environmentVars = append(environmentVars, *authScheme.Basic.UsernameEnvVar)
+					}
+					if !passwordOmitted && authScheme.Basic.PasswordEnvVar != nil {
+						environmentVars = append(environmentVars, *authScheme.Basic.PasswordEnvVar)
+					}
+				}
+				f.P("// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.")
+				if includeCustomAuthDocs {
+					f.P("//")
+					f.WriteDocs(auth.Docs)
+				}
+				typeName := "core.BasicAuthOption"
+				var funcParams []string
+				var structFields []string
+				if !usernameOmitted {
+					funcParams = append(funcParams, authScheme.Basic.Username.CamelCase.SafeName)
+					structFields = append(structFields, fmt.Sprintf("%s: %s,", authScheme.Basic.Username.PascalCase.UnsafeName, authScheme.Basic.Username.CamelCase.SafeName))
+				}
+				if !passwordOmitted {
+					funcParams = append(funcParams, authScheme.Basic.Password.CamelCase.SafeName)
+					structFields = append(structFields, fmt.Sprintf("%s: %s,", authScheme.Basic.Password.PascalCase.UnsafeName, authScheme.Basic.Password.CamelCase.SafeName))
+				}
+				f.P("func WithBasicAuth(", strings.Join(funcParams, ", "), " string) *", typeName, " {")
+				f.P("return &", typeName, "{")
+				for _, field := range structFields {
+					f.P(field)
+				}
+				f.P("}")
+				f.P("}")
+				f.P()
+				declaredPublicOptions["WithBasicAuth"] = true
+			}
+		}
+		if authScheme.Header != nil {
+			if authScheme.Header.ValueType.Container != nil && authScheme.Header.ValueType.Container.Literal != nil {
+				// We don't want to generate a request option for literal values.
+				continue
+			}
+			var (
+				pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
+				optionName = fmt.Sprintf("With%s", pascalCase)
+				field      = authScheme.Header.Name.Name.PascalCase.UnsafeName
+				param      = authScheme.Header.Name.Name.CamelCase.SafeName
+				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			)
+			if i == 0 {
+				option = ast.NewCallExpr(
+					ast.NewImportedReference(
+						optionName,
+						importPath,
+					),
+					[]ast.Expr{
+						ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, pascalCase)),
+					},
+				)
+				if authScheme.Header.HeaderEnvVar != nil {
+					environmentVars = append(environmentVars, *authScheme.Header.HeaderEnvVar)
+				}
+			}
+			f.P("// ", optionName, " sets the ", param, " auth request header.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			typeName := "core." + pascalCase + "Option"
+			f.P("func ", optionName, "(", param, " ", value, ") *", typeName, " {")
+			f.P("return &", typeName, "{")
+			f.P(field, ": ", param, ",")
+			f.P("}")
+			f.P("}")
+			f.P()
+			declaredPublicOptions[optionName] = true
+		}
+		if authScheme.Oauth != nil {
+			if i == 0 {
+				option = ast.NewCallExpr(
+					ast.NewImportedReference(
+						"WithClientCredentials",
+						importPath,
+					),
+					[]ast.Expr{
+						ast.NewBasicLit(`"<YOUR_CLIENT_ID>"`),
+						ast.NewBasicLit(`"<YOUR_CLIENT_SECRET>"`),
+					},
+				)
+				oauthConfig := authScheme.Oauth.Configuration.ClientCredentials
+				if oauthConfig != nil {
+					if oauthConfig.ClientIdEnvVar != nil {
+						environmentVars = append(environmentVars, *oauthConfig.ClientIdEnvVar)
+					}
+					if oauthConfig.ClientSecretEnvVar != nil {
+						environmentVars = append(environmentVars, *oauthConfig.ClientSecretEnvVar)
+					}
+				}
+			}
+			f.P("// WithClientID sets the clientID auth request parameter.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithClientID(clientID string) *core.ClientIDOption {")
+			f.P("return &core.ClientIDOption{")
+			f.P("ClientID: clientID,")
+			f.P("}")
+			f.P("}")
+			f.P()
+
+			f.P("// WithClientSecret sets the clientSecret auth request parameter.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithClientSecret(clientSecret string) *core.ClientSecretOption {")
+			f.P("return &core.ClientSecretOption{")
+			f.P("ClientSecret: clientSecret,")
+			f.P("}")
+			f.P("}")
+			f.P()
+
+			f.P("// WithClientCredentials sets both the clientID and clientSecret auth request parameters.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithClientCredentials(clientID string, clientSecret string) *core.ClientCredentialsOption {")
+			f.P("return &core.ClientCredentialsOption{")
+			f.P("ClientID: clientID,")
+			f.P("ClientSecret: clientSecret,")
+			f.P("}")
+			f.P("}")
+			f.P()
+
+			// Only add WithToken if there's no Bearer auth (which already provides WithToken)
+			if !hasBearerAuth(auth) {
+				f.P("// WithToken sets the OAuth token directly, bypassing the client credentials flow.")
+				f.P("// Use this when you already have an access token.")
+				if includeCustomAuthDocs {
+					f.P("//")
+					f.WriteDocs(auth.Docs)
+				}
+				f.P("func WithToken(token string) *core.TokenOption {")
+				f.P("return &core.TokenOption{")
+				f.P("Token: token,")
+				f.P("}")
+				f.P("}")
+				f.P()
+				declaredPublicOptions["WithToken"] = true
+			}
+			declaredPublicOptions["WithClientID"] = true
+			declaredPublicOptions["WithClientSecret"] = true
+			declaredPublicOptions["WithClientCredentials"] = true
+		}
+		if authScheme.Inferred != nil {
+			for j, param := range inferredParams {
+				optionName := fmt.Sprintf("With%s", param.PascalCase)
+				if declaredPublicOptions[optionName] {
+					continue
+				}
+				if i == 0 && j == 0 {
+					option = ast.NewCallExpr(
+						ast.NewImportedReference(
+							optionName,
+							importPath,
+						),
+						[]ast.Expr{
+							ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, param.ScreamingSnakeCase)),
+						},
+					)
+				}
+				f.P("// ", optionName, " sets the ", param.CamelCase, " auth request parameter.")
+				if includeCustomAuthDocs {
+					f.P("//")
+					f.WriteDocs(auth.Docs)
+				}
+				typeName := "core." + param.PascalCase + "Option"
+				f.P("func ", optionName, "(", param.CamelCase, " string) *", typeName, " {")
+				f.P("return &", typeName, "{")
+				f.P(param.PascalCase, ": ", param.CamelCase, ",")
+				f.P("}")
+				f.P("}")
+				f.P()
+				declaredPublicOptions[optionName] = true
+			}
+		}
+	}
+
+	for _, header := range headers {
+		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
+			// We don't want to generate a request option for literal values.
+			continue
+		}
+		var (
+			pascalCase = header.Name.Name.PascalCase.UnsafeName
+			optionName = fmt.Sprintf("With%s", pascalCase)
+			field      = header.Name.Name.PascalCase.UnsafeName
+			param      = header.Name.Name.CamelCase.SafeName
+			value      = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		)
+		f.P("// ", optionName, " sets the ", param, " request header.")
+		if header.Docs != nil && len(*header.Docs) > 0 {
+			// If the header has any custom documentation, include it immediately below the standard
+			// option signature comment.
+			f.P("//")
+			f.WriteDocs(header.Docs)
+		}
+		typeName := "core." + pascalCase + "Option"
+		f.P("func ", optionName, "(", param, " ", value, ") *", typeName, " {")
+		f.P("return &", typeName, "{")
+		f.P(field, ": ", param, ",")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
+	if option == nil {
+		return nil, nil
+	}
+	return &GeneratedAuth{
+		Option:          option,
+		EnvironmentVars: environmentVars,
+	}, nil
+}
+
+type GeneratedClient struct {
+	Instantiation *ast.AssignStmt
+	Endpoints     []*GeneratedEndpoint
+}
+
+type GeneratedEndpoint struct {
+	Identifier *generatorexec.EndpointIdentifier
+	Snippet    ast.Expr
+}
+
+// WriteClient writes a client for interacting with the given service.
+func (f *fileWriter) WriteClient(
+	irAuth *ir.ApiAuth,
+	irEndpoints []*ir.HttpEndpoint,
+	headers []*ir.HttpHeader,
+	serviceHeaders []*ir.HttpHeader,
+	idempotencyHeaders []*ir.HttpHeader,
+	subpackages []*ir.Subpackage,
+	environmentsConfig *common.EnvironmentsConfig,
+	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
+	fernFilepath *common.FernFilepath,
+	rootClientInstantiation *ast.AssignStmt,
+	inlinePathParameters bool,
+	inlineFileProperties bool,
+	clientNameOverride string,
+	clientConstructorNameOverride string,
+) (*GeneratedClient, error) {
+	var errorDiscriminationByPropertyStrategy *ir.ErrorDiscriminationByPropertyStrategy
+	if errorDiscriminationStrategy != nil && errorDiscriminationStrategy.Property != nil {
+		errorDiscriminationByPropertyStrategy = errorDiscriminationStrategy.Property
+	}
+
+	// Reformat the endpoint data into a structure that's suitable for code generation.
+	var endpoints []*endpoint
+	for _, irEndpoint := range irEndpoints {
+		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, errorDiscriminationStrategy, serviceHeaders, idempotencyHeaders, inlinePathParameters, inlineFileProperties)
+		if err != nil {
+			return nil, err
+		}
+		endpoints = append(endpoints, endpoint)
+	}
+
+	var (
+		clientName               = "Client"
+		rawClientName            = "RawClient"
+		clientConstructorName    = "NewClient"
+		rawClientConstructorName = "NewRawClient"
+	)
+	if clientNameOverride != "" {
+		clientName = clientNameOverride
+		rawClientName = "Raw" + clientNameOverride
+		clientConstructorName = "New" + clientName
+		rawClientConstructorName = "New" + rawClientName
+	}
+	if clientConstructorNameOverride != "" {
+		clientConstructorName = clientConstructorNameOverride
+		rawClientConstructorName = "New" + rawClientName
+	}
+
+	receiver := typeNameToReceiver(clientName)
+
+	// Check if OAuth is configured
+	oauthClientCredentials := getOAuthClientCredentials(irAuth)
+
+	// Generate the client implementation.
+	f.P("type ", clientName, " struct {")
+	f.P("baseURL string")
+	f.P("caller *internal.Caller")
+	f.P("header http.Header")
+	if oauthClientCredentials != nil {
+		f.P("oauthTokenProvider *core.TokenProvider")
+	}
+	f.P()
+	if len(endpoints) > 0 {
+		f.P("WithRawResponse *", rawClientName)
+	}
+	for _, subpackage := range subpackages {
+		var (
+			importPath     = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
+			clientTypeName = f.scope.AddImport(importPath) + "." + "Client"
+		)
+		f.P(subpackage.Name.PascalCase.UnsafeName, " *", clientTypeName)
+	}
+	f.P("}")
+	f.P()
+
+	// Generate the client constructor.
+	f.P("func ", clientConstructorName, "(opts ...option.RequestOption) *", clientName, " {")
+	f.P("options := core.NewRequestOptions(opts...)")
+	for _, authScheme := range irAuth.Schemes {
+		if authScheme.Bearer != nil && authScheme.Bearer.TokenEnvVar != nil {
+			f.P("if options.", authScheme.Bearer.Token.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", authScheme.Bearer.Token.PascalCase.UnsafeName, ` = os.Getenv("`, *authScheme.Bearer.TokenEnvVar, `")`)
+			f.P("}")
+			continue
+		}
+		if authScheme.Basic != nil && authScheme.Basic.UsernameEnvVar != nil && authScheme.Basic.PasswordEnvVar != nil {
+			f.P("if options.", authScheme.Basic.Username.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", authScheme.Basic.Username.PascalCase.UnsafeName, ` = os.Getenv("`, *authScheme.Basic.UsernameEnvVar, `")`)
+			f.P("}")
+			f.P("if options.", authScheme.Basic.Password.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", authScheme.Basic.Password.PascalCase.UnsafeName, ` = os.Getenv("`, *authScheme.Basic.PasswordEnvVar, `")`)
+			f.P("}")
+			continue
+		}
+		if header := authScheme.Header; header != nil && header.HeaderEnvVar != nil {
+			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = os.Getenv("`, *header.HeaderEnvVar, `")`)
+			f.P("}")
+			continue
+		}
+		if authScheme.Oauth != nil && authScheme.Oauth.Configuration != nil && authScheme.Oauth.Configuration.ClientCredentials != nil {
+			oauthConfig := authScheme.Oauth.Configuration.ClientCredentials
+			if oauthConfig.ClientIdEnvVar != nil {
+				f.P(`if options.ClientID == "" {`)
+				f.P(`options.ClientID = os.Getenv("`, *oauthConfig.ClientIdEnvVar, `")`)
+				f.P("}")
+			}
+			if oauthConfig.ClientSecretEnvVar != nil {
+				f.P(`if options.ClientSecret == "" {`)
+				f.P(`options.ClientSecret = os.Getenv("`, *oauthConfig.ClientSecretEnvVar, `")`)
+				f.P("}")
+			}
+			continue
+		}
+	}
+	for _, header := range headers {
+		if header.Env != nil {
+			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = os.Getenv("`, *header.Env, `")`)
+			f.P("}")
+		}
+		if header.ClientDefault != nil && isStringType(header.ValueType) {
+			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = fmt.Sprintf("%v", `, literalToValue(header.ClientDefault), `)`)
+			f.P("}")
+		}
+	}
+	if oauthClientCredentials != nil {
+		f.P("oauthTokenProvider := core.NewTokenProvider(0)")
+		// Create an auth client to fetch tokens
+		// We need to create a separate RequestOptions without the token getter to avoid infinite recursion
+		f.P("authOptions := core.NewRequestOptions()")
+		f.P("authOptions.BaseURL = options.BaseURL")
+		f.P("authOptions.HTTPClient = options.HTTPClient")
+		// Import the auth package
+		authImportPath := packagePathToImportPath(f.baseImportPath, []string{"auth"})
+		authPackage := f.scope.AddImport(authImportPath)
+		f.P("authClient := ", authPackage, ".NewClient(authOptions)")
+		// Set up the token getter function that will be called by ToHeader()
+		f.P("options.SetTokenGetter(func() (string, error) {")
+		f.P("return oauthTokenProvider.GetOrFetch(func() (string, int, error) {")
+		// Fetch a new token from the auth endpoint
+		fernImportPath := f.baseImportPath
+		fernPackage := f.scope.AddImport(fernImportPath)
+		f.P("response, err := authClient.GetTokenWithClientCredentials(context.Background(), &", fernPackage, ".GetTokenRequest{")
+		f.P("ClientId: options.ClientID,")
+		f.P("ClientSecret: options.ClientSecret,")
+		f.P("})")
+		f.P("if err != nil {")
+		f.P("return \"\", 0, err")
+		f.P("}")
+		errorsPackage := f.scope.AddImport("errors")
+		f.P("if response.AccessToken == nil {")
+		f.P("return \"\", 0, ", errorsPackage, ".New(\"oauth response missing access token\")")
+		f.P("}")
+		f.P("expiresIn := core.DefaultExpirySeconds")
+		f.P("if response.ExpiresIn != nil {")
+		f.P("expiresIn = *response.ExpiresIn")
+		f.P("}")
+		f.P("return *response.AccessToken, expiresIn, nil")
+		f.P("})")
+		f.P("})")
+	}
+	f.P("return &", clientName, "{")
+	f.P(`baseURL: options.BaseURL,`)
+	f.P("caller: internal.NewCaller(")
+	f.P("&internal.CallerParams{")
+	f.P("Client: options.HTTPClient,")
+	f.P("MaxAttempts: options.MaxAttempts,")
+	f.P("DisableRetries: options.DisableRetries,")
+	f.P("},")
+	f.P("),")
+	f.P("header: options.ToHeader(),")
+	if oauthClientCredentials != nil {
+		f.P("oauthTokenProvider: oauthTokenProvider,")
+	}
+	if len(endpoints) > 0 {
+		f.P(" WithRawResponse: ", rawClientConstructorName, "(options),")
+	}
+	for _, subpackage := range subpackages {
+		var (
+			importPath        = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
+			clientConstructor = f.scope.AddImport(importPath) + ".NewClient(opts...),"
+		)
+		f.P(subpackage.Name.PascalCase.UnsafeName, ": ", clientConstructor)
+	}
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	// Implement this service's methods.
+	for _, endpoint := range endpoints {
+		f.WriteDocs(endpoint.Docs)
+		f.P("func (", receiver, " *", clientName, ") ", endpoint.Name.PascalCase.UnsafeName, "(")
+		for _, signatureParameter := range endpoint.SignatureParameters {
+			f.WriteDocs(signatureParameter.docs)
+			f.P(signatureParameter.parameter, ",")
+		}
+		f.P(") ", endpoint.ReturnValues, " {")
+		f.P("options := ", endpoint.OptionConstructor)
+		if endpoint.BaseURLName != "" {
+			f.P("baseURL := internal.ResolveBaseURL(")
+			f.P("options.BaseURL,")
+			f.P(fmt.Sprintf("internal.ResolveEnvironmentBaseURL(options.Environment, %q),", endpoint.BaseURLName))
+			f.P(receiver, ".baseURL,")
+			f.P(fmt.Sprintf("internal.ResolveEnvironmentBaseURL(%s.options.Environment, %q),", receiver, endpoint.BaseURLName))
+			f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
+			f.P(")")
+		} else {
+			f.P("baseURL := internal.ResolveBaseURL(")
+			f.P("options.BaseURL,")
+			f.P(receiver, ".baseURL,")
+			f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
+			f.P(")")
+		}
+		baseURLVariable := "baseURL"
+		if len(endpoint.PathSuffix) > 0 {
+			baseURLVariable = `baseURL + ` + fmt.Sprintf(`"/%s"`, endpoint.PathSuffix)
+		}
+		for _, ppd := range endpoint.PathParameterDefaults {
+			if ppd.InitExpr != "" {
+				f.P(ppd.VarExpr, " := ", ppd.InitExpr)
+			}
+			f.P("if ", ppd.VarExpr, ` == "" {`)
+			f.P(ppd.VarExpr, " = fmt.Sprintf(\"%v\", ", ppd.DefaultVal, ")")
+			f.P("}")
+		}
+		if len(endpoint.PathParameterNames) > 0 {
+			f.P("endpointURL := internal.EncodeURL(")
+			f.P(baseURLVariable, ", ")
+			for _, pathParameterName := range endpoint.PathParameterNames {
+				f.P(pathParameterName, ",")
+			}
+			f.P(")")
+		} else {
+			f.P(fmt.Sprintf("endpointURL := %s", baseURLVariable))
+		}
+		if len(endpoint.QueryParameters) > 0 {
+			f.P("queryParams, err := internal.QueryValues(", endpoint.RequestParameterName, ")")
+			f.P("if err != nil {")
+			f.P("return ", endpoint.ErrorReturnValues)
+			f.P("}")
+			for _, queryParameter := range endpoint.QueryParameters {
+				if isLiteral := (queryParameter.ValueType.Container != nil && queryParameter.ValueType.Container.Literal != nil); isLiteral {
+					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(queryParameter.ValueType.Container.Literal), "))")
+				} else if queryParameter.ClientDefault != nil {
+					// Add clientDefault for query params not already set by user.
+					// Use map indexing instead of Has() for Go <1.17 compatibility.
+					f.P(`if _, ok := queryParams["`, queryParameter.Name.WireValue, `"]; !ok {`)
+					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(queryParameter.ClientDefault), "))")
+					f.P("}")
+				}
+			}
+			if endpoint.PaginationInfo == nil {
+				f.P("if len(queryParams) > 0 {")
+				f.P(`endpointURL += "?" + queryParams.Encode()`)
+				f.P("}")
+			}
+		}
+
+		headersParameter := "headers"
+		f.P(headersParameter, " := internal.MergeHeaders(")
+		f.P(receiver, ".header.Clone(),")
+		f.P("options.ToHeader(),")
+		f.P(")")
+		if len(endpoint.Headers) > 0 {
+			// Add endpoint-specific headers from the request, if any.
+			for _, header := range endpoint.Headers {
+				valueTypeFormat := formatForValueType(header.ValueType, f.types)
+				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+				if header.ClientDefault != nil && !isLiteralType(header.ValueType, f.types) {
+					// Use clientDefault as fallback for endpoint headers.
+					formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ClientDefault) + ")"
+					f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
+					if valueTypeFormat.IsOptional {
+						f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, " != nil {")
+					} else {
+						f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+					}
+					f.P(header.Name.Name.CamelCase.SafeName, ` = fmt.Sprintf("%v", `, requestField, ")")
+					f.P("}")
+					f.P(`headers.Add("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
+				} else if valueTypeFormat.IsOptional {
+					f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= nil {")
+					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
+					f.P("}")
+				} else if isLiteral := (header.ValueType.Container != nil && header.ValueType.Container.Literal != nil); isLiteral {
+					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(header.ValueType.Container.Literal), "))")
+				} else {
+					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
+				}
+			}
+		}
+		if endpoint.Accept != "" {
+			f.P(fmt.Sprintf(`%s.Set("Accept", %q)`, headersParameter, endpoint.Accept))
+		}
+		if endpoint.ContentType != "" {
+			f.P(fmt.Sprintf(`%s.Set("Content-Type", %q)`, headersParameter, endpoint.ContentType))
+		}
+
+		// Include the error decoder, if any.
+		if len(endpoint.Errors) > 0 {
+			if errorDiscriminationByPropertyStrategy == nil {
+				f.P("errorCodes := ErrorCodes{")
+				for _, responseError := range endpoint.Errors {
+					var errorType string
+					errorDeclaration := f.errors[responseError.Error.ErrorId]
+					errorImportPath := fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+					errorType = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
+					f.P(fmt.Sprintf("%d: func(apiError *core.APIError) error {", errorDeclaration.StatusCode))
+					f.P("return &", errorType, "{")
+					f.P("APIError: apiError,")
+					f.P("}")
+					f.P("},")
+				}
+				f.P("}")
+			} else {
+				var (
+					switchValue              = "statusCode"
+					discriminantContentField = ""
+					discriminant             = errorDiscriminationByPropertyStrategy.Discriminant
+					content                  = errorDiscriminationByPropertyStrategy.ContentProperty
+				)
+				switchValue = fmt.Sprintf("discriminant.%s", discriminant.Name.PascalCase.UnsafeName)
+				discriminantContentField = fmt.Sprintf("discriminant.%s", content.Name.PascalCase.UnsafeName)
+				f.P("errorDecoder := func(statusCode int, header http.Header,body io.Reader) error {")
+				f.P("raw, err := io.ReadAll(body)")
+				f.P("if err != nil {")
+				f.P("return err")
+				f.P("}")
+				f.P("apiError := core.NewAPIError(statusCode, header, errors.New(string(raw)))")
+				f.P("decoder := json.NewDecoder(bytes.NewReader(raw))")
+				f.P("var discriminant struct {")
+				f.P(discriminant.Name.PascalCase.UnsafeName, " string `json:\"", discriminant.WireValue, "\"`")
+				f.P(content.Name.PascalCase.UnsafeName, " json.RawMessage `json:\"", content.WireValue, "\"`")
+				f.P("}")
+				f.P("if err := decoder.Decode(&discriminant); err != nil {")
+				f.P("return apiError")
+				f.P("}")
+				f.P("switch ", switchValue, " {")
+				for _, responseError := range endpoint.Errors {
+					var errorType string
+					errorDeclaration := f.errors[responseError.Error.ErrorId]
+					errorImportPath := fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+					errorType = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
+					if errorDiscriminationByPropertyStrategy != nil {
+						f.P(`case "`, errorDeclaration.DiscriminantValue.WireValue, `":`)
+					} else {
+						f.P("case ", errorDeclaration.StatusCode, ":")
+					}
+					f.P("value := new(", errorType, ")")
+					f.P("value.APIError = apiError")
+					if discriminantContentField != "" {
+						f.P("if err := json.Unmarshal(", discriminantContentField, ", value); err != nil {")
+					} else {
+						f.P("if err := decoder.Decode(value); err != nil {")
+					}
+					f.P("return apiError")
+					f.P("}")
+					f.P("return value")
+				}
+				// Close the switch statement.
+				f.P("}")
+				f.P("return apiError")
+				f.P("}")
+			}
+		}
+
+		if endpoint.RequestIsBytes {
+			if f.useReaderForBytesRequest {
+				// The io.Reader is already specified by the caller, so we don't need to
+				// do anything.
+			} else if endpoint.RequestIsOptional {
+				f.P("var requestBuffer io.Reader")
+				f.P("if ", endpoint.RequestBytesParameterName, " != nil {")
+				f.P("requestBuffer = bytes.NewBuffer(", endpoint.RequestBytesParameterName, ")")
+				f.P("}")
+			} else {
+				f.P("requestBuffer := bytes.NewBuffer(", endpoint.RequestBytesParameterName, ")")
+			}
+		}
+
+		if len(endpoint.FileProperties) > 0 || len(endpoint.FileBodyProperties) > 0 {
+			f.P("writer := internal.NewMultipartWriter()")
+			for _, fileProperty := range endpoint.FileProperties {
+				filePropertyInfo, err := filePropertyToInfo(fileProperty)
+				if err != nil {
+					return nil, err
+				}
+				fileVariable := getFileVariableName(endpoint, filePropertyInfo, inlineFileProperties)
+				if filePropertyInfo.IsArray {
+					// We don't care whether the file array is optional or not; the range
+					// handles that for us.
+					f.P("for _, f := range ", fileVariable, "{")
+					if filePropertyInfo.ContentType != "" {
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", f, internal.WithDefaultContentType(\"", filePropertyInfo.ContentType, "\")); err != nil {")
+						f.P("return ", endpoint.ErrorReturnValues)
+						f.P("}")
+					} else {
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", f); err != nil {")
+						f.P("return ", endpoint.ErrorReturnValues)
+						f.P("}")
+					}
+					f.P("}")
+				} else {
+					if filePropertyInfo.IsOptional {
+						f.P("if ", fileVariable, " != nil {")
+					}
+					if filePropertyInfo.ContentType != "" {
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", ", fileVariable, ", internal.WithDefaultContentType(\"", filePropertyInfo.ContentType, "\")); err != nil {")
+						f.P("return ", endpoint.ErrorReturnValues)
+						f.P("}")
+					} else {
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", ", fileVariable, "); err != nil {")
+						f.P("return ", endpoint.ErrorReturnValues)
+						f.P("}")
+					}
+					if filePropertyInfo.IsOptional {
+						f.P("}")
+					}
+				}
+			}
+
+			for _, fileBodyProperty := range endpoint.FileBodyProperties {
+				if isLiteral := (fileBodyProperty.ValueType.Container != nil && fileBodyProperty.ValueType.Container.Literal != nil); isLiteral {
+					f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(fileBodyProperty.ValueType.Container.Literal), ")); err != nil {")
+					f.P("return ", endpoint.ErrorReturnValues)
+					f.P("}")
+					continue
+				}
+				valueTypeFormat := formatForValueType(fileBodyProperty.ValueType, f.types)
+				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + fileBodyProperty.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+
+				// Encapsulate the multipart form WriteField in a closure so that we can easily
+				// wrap it with an optional nil check below.
+				writeField := func() {
+					field := requestField
+					if valueTypeFormat.IsIterable {
+						field = "part"
+					}
+					if valueTypeFormat.IsPrimitive {
+						f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, field, ")); err != nil {")
+					} else if fileBodyProperty.ContentType != nil {
+						f.P(`if err := writer.WriteJSON("`, fileBodyProperty.Name.WireValue, `", `, field, `, internal.WithDefaultContentType("`, *fileBodyProperty.ContentType, `")); err != nil {`)
+					} else {
+						f.P(`if err := writer.WriteJSON("`, fileBodyProperty.Name.WireValue, `", `, field, "); err != nil {")
+					}
+					f.P("return ", endpoint.ErrorReturnValues)
+					f.P("}")
+				}
+
+				if valueTypeFormat.IsOptional {
+					f.P("if ", endpoint.RequestParameterName, ".", fileBodyProperty.Name.Name.PascalCase.UnsafeName, "!= nil {")
+				}
+				if valueTypeFormat.IsIterable {
+					f.P("for _, part := range ", endpoint.RequestParameterName, ".", fileBodyProperty.Name.Name.PascalCase.UnsafeName, " {")
+				}
+				writeField()
+				if valueTypeFormat.IsIterable {
+					f.P("}")
+				}
+				if valueTypeFormat.IsOptional {
+					f.P("}")
+				}
+			}
+			f.P("if err := writer.Close(); err != nil {")
+			f.P("return ", endpoint.ErrorReturnValues)
+			f.P("}")
+			f.P(headersParameter, `.Set("Content-Type", writer.ContentType())`)
+		}
+
+		if endpoint.Method == "http.MethodHead" {
+			// HEAD requests don't have a response body, so we can simply return the raw
+			// response headers.
+			f.P("response, err := ", receiver, ".caller.Call(")
+			f.P("ctx,")
+			f.P("&internal.CallParams{")
+			f.P("URL: endpointURL, ")
+			f.P("Method:", endpoint.Method, ",")
+			f.P("Headers:", headersParameter, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
+			f.P("BodyProperties: options.BodyProperties,")
+			f.P("QueryParameters: options.QueryParameters,")
+			f.P("Client: options.HTTPClient,")
+			if endpoint.RequestValueName != "" {
+				f.P("Request: ", endpoint.RequestValueName, ",")
+			}
+			if endpoint.ErrorDecoderParameterName != "" {
+				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+			}
+			f.P("},")
+			f.P(")")
+			f.P("if err != nil {")
+			f.P("return ", endpoint.ErrorReturnValues)
+			f.P("}")
+			f.P("return response.Header, nil")
+			f.P("}")
+			f.P()
+
+			continue
+		}
+
+		f.P()
+
+		// Prepare a response variable.
+		if endpoint.ResponseType != "" && endpoint.PaginationInfo == nil && !endpoint.HasCustomPagination {
+			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, endpoint.ResponseType))
+		}
+
+		// Issue the request.
+		if endpoint.StreamingInfo != nil {
+			streamingInfo := endpoint.StreamingInfo
+			f.P("streamer := internal.NewStreamer[", endpoint.ResponseType, "](", receiver, ".caller)")
+			f.P("return streamer.Stream(")
+			f.P("ctx,")
+			f.P("&internal.StreamParams{")
+			f.P("URL: endpointURL, ")
+			f.P("Method:", endpoint.Method, ",")
+			f.P("Headers:", headersParameter, ",")
+			if streamingInfo.Delimiter != "" {
+				f.P("Delimiter: ", streamingInfo.Delimiter, ",")
+			}
+			if streamingInfo.Prefix != "" {
+				f.P("Prefix:", streamingInfo.Prefix, ",")
+			}
+			if streamingInfo.Terminator != "" {
+				f.P("Terminator:", streamingInfo.Terminator, ",")
+			}
+			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
+			f.P("BodyProperties: options.BodyProperties,")
+			f.P("QueryParameters: options.QueryParameters,")
+			f.P("Client: options.HTTPClient,")
+			f.P("MaxBufSize: options.MaxBufSize,")
+			f.P("MaxStreamReconnectAttempts: options.MaxStreamReconnectAttempts,")
+			f.P("DisableStreamReconnection: options.DisableStreamReconnection,")
+			if endpoint.RequestValueName != "" {
+				f.P("Request: ", endpoint.RequestValueName, ",")
+			}
+			if endpoint.ErrorDecoderParameterName != "" {
+				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+			}
+			f.P("},")
+			f.P(")")
+			f.P("}")
+			f.P()
+		} else if endpoint.PaginationInfo != nil {
+			f.P("prepareCall := func(pageRequest *internal.PageRequest[", endpoint.PaginationInfo.PageGoType, "]) *internal.CallParams {")
+			f.P("if pageRequest.Cursor != ", endpoint.PaginationInfo.PageZeroValue, " {")
+			f.P(endpoint.PaginationInfo.SetPageRequestParameter)
+			f.P("}")
+			f.P("nextURL := endpointURL")
+			f.P("if len(queryParams) > 0 {")
+			f.P(`nextURL += "?" + queryParams.Encode()`)
+			f.P("}")
+			f.P("return &internal.CallParams{")
+			f.P("URL: nextURL, ")
+			f.P("Method:", endpoint.Method, ",")
+			f.P("Headers:", headersParameter, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
+			f.P("BodyProperties: options.BodyProperties,")
+			f.P("QueryParameters: options.QueryParameters,")
+			f.P("Client: options.HTTPClient,")
+			if endpoint.RequestValueName != "" {
+				f.P("Request: ", endpoint.RequestValueName, ",")
+			}
+			if endpoint.ResponseParameterName != "" {
+				f.P("Response: ", endpoint.ResponseParameterName, ",")
+			}
+			if endpoint.ResponseIsOptionalParameter {
+				f.P("ResponseIsOptional: true,")
+			}
+			if endpoint.ErrorDecoderParameterName != "" {
+				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+			}
+			f.P("}")
+			f.P("}")
+
+			var pagerConstructor string
+			switch endpoint.PaginationInfo.Type {
+			case "cursor":
+				pagerConstructor = "internal.NewCursorPager"
+
+				f.P("readPageResponse := func(response ", endpoint.ResponseType, ") *internal.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "] {")
+				f.P("var zeroValue ", endpoint.PaginationInfo.NextCursorGoType)
+				if len(endpoint.PaginationInfo.NextCursor.PropertyPath) > 0 {
+					f.P("var next ", endpoint.PaginationInfo.NextCursorGoType)
+					f.P(endpoint.PaginationInfo.NextCursorNilCheck)
+					f.P("next = ", endpoint.PaginationInfo.NextCursorPropertyPath, endpoint.PaginationInfo.NextCursor.Property.Name.Name.PascalCase.UnsafeName)
+					f.P("}")
+				} else {
+					f.P("next := ", endpoint.PaginationInfo.NextCursorPropertyPath, endpoint.PaginationInfo.NextCursor.Property.Name.Name.PascalCase.UnsafeName)
+				}
+				if len(endpoint.PaginationInfo.Results.PropertyPath) > 0 {
+					f.P("var results ", endpoint.PaginationInfo.ResultsGoType)
+					f.P(endpoint.PaginationInfo.ResultsNilCheck)
+					f.P("results = ", endpoint.PaginationInfo.ResultsPropertyPath, endpoint.PaginationInfo.Results.Property.Name.Name.PascalCase.UnsafeName)
+					f.P("}")
+				} else {
+					f.P("results := ", endpoint.PaginationInfo.ResultsPropertyPath, endpoint.PaginationInfo.Results.Property.Name.Name.PascalCase.UnsafeName)
+				}
+
+				if endpoint.PaginationInfo.NextCursorIsOptional && !endpoint.PaginationInfo.PageIsOptional {
+					f.P("if next == nil {")
+					f.P("return &internal.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "]{")
+					f.P("Results: results,")
+					f.P("Done: next == zeroValue,")
+					f.P("}")
+					f.P("}")
+				}
+
+				f.P("return &internal.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "]{")
+				if endpoint.PaginationInfo.PageIsOptional != endpoint.PaginationInfo.NextCursorIsOptional {
+					if endpoint.PaginationInfo.NextCursorIsOptional {
+						f.P("Next: *next,")
+					} else {
+						f.P("Next: &next,")
+					}
+				} else {
+					f.P("Next: next,")
+				}
+				f.P("Results: results,")
+				f.P("Done: next == zeroValue,")
+				f.P("}")
+				f.P("}")
+			case "offset":
+				pagerConstructor = "internal.NewOffsetPager"
+
+				if endpoint.PaginationInfo.PageIsInteger {
+					f.P("next := 1")
+				} else {
+					f.P("var next ", strings.TrimPrefix(endpoint.PaginationInfo.PageGoType, "*"), " = 1")
+				}
+				if len(endpoint.PaginationInfo.PageNilCheck) > 0 {
+					f.P(endpoint.PaginationInfo.PageNilCheck)
+					if endpoint.PaginationInfo.PageIsOptional {
+						f.P("next = *", endpoint.RequestParameterName, ".", endpoint.PaginationInfo.PageName.PascalCase.UnsafeName)
+					} else {
+						f.P("next = ", endpoint.RequestParameterName, ".", endpoint.PaginationInfo.PageName.PascalCase.UnsafeName)
+					}
+					f.P("}")
+				}
+
+				f.P("readPageResponse := func(response ", endpoint.ResponseType, ") *internal.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "] {")
+				f.P("next += 1")
+				if len(endpoint.PaginationInfo.Results.PropertyPath) > 0 {
+					f.P("var results ", endpoint.PaginationInfo.ResultsGoType)
+					f.P(endpoint.PaginationInfo.ResultsNilCheck)
+					f.P("results = ", endpoint.PaginationInfo.ResultsPropertyPath, endpoint.PaginationInfo.Results.Property.Name.Name.PascalCase.UnsafeName)
+					f.P("}")
+				} else {
+					f.P("results := ", endpoint.PaginationInfo.ResultsPropertyPath, endpoint.PaginationInfo.Results.Property.Name.Name.PascalCase.UnsafeName)
+				}
+
+				f.P("return &internal.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "]{")
+				f.P("Next: ", endpoint.PaginationInfo.PageFirstRequestParameter, ",")
+				f.P("Results: results,")
+				f.P("}")
+				f.P("}")
+			}
+
+			f.P("pager := ", pagerConstructor, "(")
+			f.P(receiver, ".caller,")
+			f.P("prepareCall,")
+			f.P("readPageResponse,")
+			f.P(")")
+
+			f.P("return pager.GetPage(ctx, ", endpoint.PaginationInfo.PageFirstRequestParameter, ")")
+			f.P("}")
+			f.P()
+		} else if endpoint.HasCustomPagination {
+			f.P("if _, err := ", receiver, ".caller.Call(")
+			f.P("ctx,")
+			f.P("&internal.CallParams{")
+			f.P("URL: endpointURL, ")
+			f.P("Method:", endpoint.Method, ",")
+			f.P("Headers:", headersParameter, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
+			f.P("BodyProperties: options.BodyProperties,")
+			f.P("QueryParameters: options.QueryParameters,")
+			f.P("Client: options.HTTPClient,")
+			if endpoint.RequestValueName != "" {
+				f.P("Request: ", endpoint.RequestValueName, ",")
+			}
+			if endpoint.ResponseParameterName != "" {
+				f.P("Response: ", endpoint.ResponseParameterName, ",")
+			}
+			if endpoint.ResponseIsOptionalParameter {
+				f.P("ResponseIsOptional: true,")
+			}
+			if endpoint.ErrorDecoderParameterName != "" {
+				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+			}
+			f.P("},")
+			f.P("); err != nil {")
+			f.P("return ", endpoint.ErrorReturnValues)
+			f.P("}")
+			f.P("base := core.NewCustomPager(")
+			f.P("response,")
+			f.P("nil,")
+			f.P("nil,")
+			f.P("nil,")
+			f.P("nil,")
+			f.P(")")
+			f.P("pager := &core.", endpoint.CustomPagerName, "[", endpoint.ResponseType, "]{CustomPager: base}")
+			f.P("return pager, nil")
+			f.P("}")
+			f.P()
+		} else {
+			f.P("if _, err := ", receiver, ".caller.Call(")
+			f.P("ctx,")
+			f.P("&internal.CallParams{")
+			f.P("URL: endpointURL, ")
+			f.P("Method:", endpoint.Method, ",")
+			f.P("Headers:", headersParameter, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
+			f.P("BodyProperties: options.BodyProperties,")
+			f.P("QueryParameters: options.QueryParameters,")
+			f.P("Client: options.HTTPClient,")
+			if endpoint.RequestValueName != "" {
+				f.P("Request: ", endpoint.RequestValueName, ",")
+			}
+			if endpoint.ResponseParameterName != "" {
+				f.P("Response: ", endpoint.ResponseParameterName, ",")
+			}
+			if endpoint.ResponseIsOptionalParameter {
+				f.P("ResponseIsOptional: true,")
+			}
+			if endpoint.ErrorDecoderParameterName != "" {
+				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+			}
+			f.P("},")
+			f.P("); err != nil {")
+			f.P("return ", endpoint.ErrorReturnValues)
+			f.P("}")
+			f.P("return ", endpoint.SuccessfulReturnValues)
+			f.P("}")
+			f.P()
+		}
+	}
+	return NewGeneratedClient(
+		f,
+		fernFilepath,
+		irEndpoints,
+		serviceHeaders,
+		rootClientInstantiation,
+	)
+}
+
+func getFileVariableName(
+	endpoint *endpoint,
+	filePropertyInfo *filePropertyInfo,
+	inlineFileProperties bool,
+) string {
+	if inlineFileProperties {
+		// The file property is part of the in-lined request type.
+		return endpoint.RequestParameterName + "." + filePropertyInfo.Key.Name.PascalCase.UnsafeName
+	}
+	return filePropertyInfo.Key.Name.CamelCase.SafeName
+}
+
+type streamingInfo struct {
+	Delimiter    string
+	Prefix       string
+	Terminator   string
+	AcceptHeader string
+}
+
+func getStreamingInfo(
+	irEndpoint *ir.HttpEndpoint,
+) (*streamingInfo, error) {
+	if irEndpoint == nil || irEndpoint.Response == nil || irEndpoint.Response.Body == nil || irEndpoint.Response.Body.Streaming == nil {
+		return nil, nil
+	}
+	streamingResponse := irEndpoint.Response.Body.Streaming
+	switch streamingResponse.Type {
+	case "text":
+		return &streamingInfo{}, nil
+	case "json":
+		var terminator string
+		if value := valueOf(streamingResponse.Json.Terminator); value != "" {
+			terminator = fmt.Sprintf("%q", value)
+		}
+		return &streamingInfo{
+			Terminator: terminator,
+		}, nil
+	case "sse":
+		terminator := valueOf(streamingResponse.Sse.Terminator)
+		if terminator != "" {
+			terminator = fmt.Sprintf("%q", terminator)
+		} else {
+			terminator = "internal.DefaultSSETerminator"
+		}
+		return &streamingInfo{
+			Prefix:       "internal.DefaultSSEDataPrefix",
+			Terminator:   terminator,
+			AcceptHeader: "text/event-stream",
+		}, nil
+	default:
+		return nil, fmt.Errorf("stream response type %q is not supported", streamingResponse.Type)
+	}
+}
+
+type paginationInfo struct {
+	Type                      string
+	PageName                  *common.Name
+	PageNilCheck              string
+	PageGoType                string
+	PageZeroValue             string
+	PageFirstRequestParameter string
+	PageIsOptional            bool
+	PageIsInteger             bool
+	SetPageRequestParameter   string
+	Results                   *ir.ResponseProperty
+	ResultsPropertyPath       string
+	ResultsNilCheck           string
+	ResultsGoType             string
+	ResultsSingleGoType       string
+
+	// NextCursor is only relevant for cursor pagination.
+	NextCursor             *ir.ResponseProperty
+	NextCursorPropertyPath string
+	NextCursorNilCheck     string
+	NextCursorGoType       string
+	NextCursorIsOptional   bool
+}
+
+func (f *fileWriter) getPaginationInfo(
+	irEndpoint *ir.HttpEndpoint,
+	scope *gospec.Scope,
+	requestParameterName string,
+) (*paginationInfo, error) {
+	if irEndpoint.Pagination == nil {
+		return nil, nil
+	}
+	pagination := irEndpoint.Pagination
+	switch t := pagination.Type; t {
+	case "cursor":
+		if pagination.Cursor.Page.Property.Type == "body" {
+			// TODO: Add support for body property pagination.
+			return nil, nil
+		}
+		resultsSingleType, err := singleTypeReferenceFromResponseProperty(pagination.Cursor.Results, f.types)
+		if err != nil {
+			return nil, err
+		}
+		var (
+			valueType            = valueTypeFromRequestPropertyValue(pagination.Cursor.Page.Property)
+			nameAndWireValue     = nameAndWireValueFromRequestPropertyValue(pagination.Cursor.Page.Property)
+			pageIsOptional       = getOptionalOrNullableContainer(valueType) != nil
+			nextCursorIsOptional = getOptionalOrNullableContainer(pagination.Cursor.Next.Property.ValueType) != nil
+			valueTypeFormat      = formatForValueType(valueType, f.types)
+			value                = valueTypeFormat.Prefix + "pageRequest.Cursor" + valueTypeFormat.Suffix
+			wireValue            = nameAndWireValue.WireValue
+		)
+		return &paginationInfo{
+			Type:                      t,
+			PageName:                  nameAndWireValue.Name,
+			PageNilCheck:              fmt.Sprintf("if %s.%s != %s {", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName, valueTypeFormat.ZeroValue),
+			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false),
+			PageZeroValue:             valueTypeFormat.ZeroValue,
+			PageFirstRequestParameter: fmt.Sprintf("%s.%s", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName),
+			PageIsOptional:            pageIsOptional,
+			SetPageRequestParameter:   `queryParams.Set("` + wireValue + `", fmt.Sprintf("%v", ` + value + `))`,
+			Results:                   pagination.Cursor.Results,
+			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", extractNamesFromPropertyPath(pagination.Cursor.Results.PropertyPath)),
+			ResultsNilCheck:           responsePropertyPathToNilCheck("response", extractNamesFromPropertyPath(pagination.Cursor.Results.PropertyPath)),
+			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
+			ResultsGoType:             typeReferenceToGoType(pagination.Cursor.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
+			NextCursor:                pagination.Cursor.Next,
+			NextCursorPropertyPath:    responsePropertyPathToFullPathString("response", extractNamesFromPropertyPath(pagination.Cursor.Next.PropertyPath)),
+			NextCursorNilCheck:        responsePropertyPathToNilCheck("response", extractNamesFromPropertyPath(pagination.Cursor.Next.PropertyPath)),
+			NextCursorGoType:          typeReferenceToGoType(pagination.Cursor.Next.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
+			NextCursorIsOptional:      nextCursorIsOptional,
+		}, nil
+	case "offset":
+		if pagination.Offset.Page.Property.Type == "body" {
+			// TODO: Add support for body property pagination.
+			return nil, nil
+		}
+		resultsSingleType, err := singleTypeReferenceFromResponseProperty(pagination.Offset.Results, f.types)
+		if err != nil {
+			return nil, err
+		}
+		var (
+			valueType        = valueTypeFromRequestPropertyValue(pagination.Offset.Page.Property)
+			nameAndWireValue = nameAndWireValueFromRequestPropertyValue(pagination.Offset.Page.Property)
+			pageIsOptional   = getOptionalOrNullableContainer(valueType) != nil
+			valueTypeFormat  = formatForValueType(valueType, f.types)
+			value            = valueTypeFormat.Prefix + "pageRequest.Cursor" + valueTypeFormat.Suffix
+			wireValue        = nameAndWireValue.WireValue
+		)
+		pageFirstRequestParameter := "next"
+		if pageIsOptional {
+			pageFirstRequestParameter = "&next"
+		}
+		var pageIsInteger bool
+		primitive := maybePrimitive(valueType)
+		if primitive != nil {
+			pageIsInteger = isPrimitiveInteger(primitive)
+		}
+		return &paginationInfo{
+			Type:                      t,
+			PageName:                  nameAndWireValue.Name,
+			PageNilCheck:              fmt.Sprintf("if %s.%s != %s {", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName, valueTypeFormat.ZeroValue),
+			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false),
+			PageZeroValue:             valueTypeFormat.ZeroValue,
+			PageFirstRequestParameter: pageFirstRequestParameter,
+			PageIsOptional:            pageIsOptional,
+			PageIsInteger:             pageIsInteger,
+			SetPageRequestParameter:   `queryParams.Set("` + wireValue + `", fmt.Sprintf("%v", ` + value + `))`,
+			Results:                   pagination.Offset.Results,
+			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", extractNamesFromPropertyPath(pagination.Offset.Results.PropertyPath)),
+			ResultsNilCheck:           responsePropertyPathToNilCheck("response", extractNamesFromPropertyPath(pagination.Offset.Results.PropertyPath)),
+			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
+			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
+		}, nil
+	case "custom", "uri", "path":
+		// The v1 client is overwritten by v2, which generates these endpoints as
+		// regular (non-auto-paginated) methods, so there is nothing to do here.
+		return nil, nil
+	default:
+		return nil, fmt.Errorf("%s pagination is not supported yet", t)
+	}
+}
+
+func valueTypeFromRequestPropertyValue(requestPropertyValue *ir.RequestPropertyValue) *ir.TypeReference {
+	switch requestPropertyValue.Type {
+	case "query":
+		return requestPropertyValue.Query.ValueType
+	case "body":
+		return requestPropertyValue.Body.ValueType
+	}
+	return nil
+}
+
+func nameAndWireValueFromRequestPropertyValue(requestPropertyValue *ir.RequestPropertyValue) *common.NameAndWireValue {
+	switch requestPropertyValue.Type {
+	case "query":
+		return requestPropertyValue.Query.Name
+	case "body":
+		return requestPropertyValue.Body.Name
+	}
+	return nil
+}
+
+func singleTypeReferenceFromResponseProperty(responseProperty *ir.ResponseProperty, types map[common.TypeId]*ir.TypeDeclaration) (*ir.TypeReference, error) {
+	if responseProperty == nil {
+		return nil, nil
+	}
+	property := responseProperty.Property
+	if property != nil && property.ValueType != nil {
+		// The results property may be a list/set directly, an optional/nullable
+		// wrapper around one, or a named alias that resolves to one.
+		// maybeIterableType follows alias indirection and unwraps
+		// optional/nullable containers before extracting the element type.
+		if singleType := maybeIterableType(property.ValueType, types); singleType != nil {
+			return singleType, nil
+		}
+		return nil, fmt.Errorf("unsupported pagination results type %q", property.ValueType.Type)
+	}
+	return nil, nil
+}
+
+// extractNamesFromPropertyPath extracts the Name field from each PropertyPathItem.
+func extractNamesFromPropertyPath(propertyPath []*ir.PropertyPathItem) []*common.Name {
+	names := make([]*common.Name, len(propertyPath))
+	for i, item := range propertyPath {
+		names[i] = item.Name
+	}
+	return names
+}
+
+// responsePropertyPathToString returns if condition that ensures we don't accidentally
+// cause a nil-dereference when accessing a response property path.
+//
+// Note that when we support method getters, we can simplify this.
+func responsePropertyPathToNilCheck(variable string, propertyPath []*common.Name) string {
+	if len(propertyPath) == 0 {
+		return ""
+	}
+	result := "if "
+	var parts []string
+	for i, part := range propertyPath {
+		parts = append(parts, part.PascalCase.UnsafeName)
+		result += fmt.Sprintf("%s.%s != nil", variable, strings.Join(parts, "."))
+		if i < len(propertyPath)-1 {
+			result += " && "
+		}
+	}
+	result += " {"
+	return result
+}
+
+// responsePropertyPathToFullPathString returns the string used to access the response property.
+//
+// Note that when we support method getters, we can simplify this.
+func responsePropertyPathToFullPathString(variable string, propertyPath []*common.Name) string {
+	if len(propertyPath) == 0 {
+		return variable + "."
+	}
+	var parts []string
+	for _, part := range propertyPath {
+		parts = append(parts, part.PascalCase.UnsafeName)
+	}
+	return variable + "." + strings.Join(parts, ".") + "."
+}
+
+// NewGeneratedClient constructs the snippets associated with the client's
+// endpoints.
+func NewGeneratedClient(
+	f *fileWriter,
+	fernFilepath *common.FernFilepath,
+	endpoints []*ir.HttpEndpoint,
+	serviceHeaders []*ir.HttpHeader,
+	rootClientInstantiation *ast.AssignStmt,
+) (*GeneratedClient, error) {
+	var generatedEndpoints []*GeneratedEndpoint
+	for _, endpoint := range endpoints {
+		var examples []*ir.ExampleEndpointCall
+		for _, example := range endpoint.UserSpecifiedExamples {
+			examples = append(examples, example.Example)
+		}
+		for _, example := range endpoint.AutogeneratedExamples {
+			examples = append(examples, example.Example)
+		}
+		if len(examples) == 0 {
+			continue
+		}
+		example := examples[0]
+		generatedEndpoints = append(
+			generatedEndpoints,
+			newGeneratedEndpoint(
+				f,
+				fernFilepath,
+				rootClientInstantiation,
+				endpoint,
+				serviceHeaders,
+				example,
+			),
+		)
+	}
+	return &GeneratedClient{
+		Instantiation: rootClientInstantiation,
+		Endpoints:     generatedEndpoints,
+	}, nil
+}
+
+func newGeneratedEndpoint(
+	f *fileWriter,
+	fernFilepath *common.FernFilepath,
+	rootClientInstantiation *ast.AssignStmt,
+	endpoint *ir.HttpEndpoint,
+	serviceHeaders []*ir.HttpHeader,
+	example *ir.ExampleEndpointCall,
+) *GeneratedEndpoint {
+	return &GeneratedEndpoint{
+		Identifier: endpointToIdentifier(endpoint),
+		Snippet: newEndpointSnippet(
+			f,
+			fernFilepath,
+			rootClientInstantiation,
+			endpoint,
+			serviceHeaders,
+			example,
+		),
+	}
+}
+
+func endpointToIdentifier(endpoint *ir.HttpEndpoint) *generatorexec.EndpointIdentifier {
+	return &generatorexec.EndpointIdentifier{
+		Path:               fullPathForEndpoint(endpoint),
+		Method:             irMethodToGeneratorExecMethod(endpoint.Method),
+		IdentifierOverride: &endpoint.Id,
+	}
+}
+
+func fullPathForEndpoint(endpoint *ir.HttpEndpoint) string {
+	var components []string
+	if head := strings.Trim(endpoint.FullPath.Head, "/"); len(head) > 0 {
+		components = append(components, head)
+	}
+	for _, part := range endpoint.FullPath.Parts {
+		components = append(components, fmt.Sprintf("{%s}", part.PathParameter))
+		if tail := strings.Trim(part.Tail, "/"); len(tail) > 0 {
+			components = append(components, tail)
+		}
+	}
+	return fmt.Sprintf("/%s", strings.Join(components, "/"))
+}
+
+func irMethodToGeneratorExecMethod(method common.HttpMethod) generatorexec.EndpointMethod {
+	switch method {
+	case common.HttpMethodGet:
+		return generatorexec.EndpointMethodGet
+	case common.HttpMethodPost:
+		return generatorexec.EndpointMethodPost
+	case common.HttpMethodPut:
+		return generatorexec.EndpointMethodPut
+	case common.HttpMethodPatch:
+		return generatorexec.EndpointMethodPatch
+	case common.HttpMethodDelete:
+		return generatorexec.EndpointMethodDelete
+	}
+	return 0
+}
+
+func newEndpointSnippet(
+	f *fileWriter,
+	fernFilepath *common.FernFilepath,
+	rootClientInstantiation *ast.AssignStmt,
+	endpoint *ir.HttpEndpoint,
+	serviceHeaders []*ir.HttpHeader,
+	example *ir.ExampleEndpointCall,
+) *ast.Block {
+	methodName := getEndpointMethodName(fernFilepath, endpoint)
+	parameters := getEndpointParameters(
+		f,
+		fernFilepath,
+		endpoint,
+		serviceHeaders,
+		example,
+	)
+	call := &ast.CallExpr{
+		FunctionName: &ast.LocalReference{
+			Name: fmt.Sprintf("client.%s", methodName),
+		},
+		Parameters: parameters,
+	}
+	returnValues := []ast.Expr{
+		&ast.LocalReference{
+			Name: "err",
+		},
+	}
+	if endpoint.Response != nil && endpoint.Response.Body != nil {
+		returnValues = append(
+			[]ast.Expr{
+				&ast.LocalReference{
+					Name: "response",
+				},
+			},
+			returnValues...,
+		)
+	}
+	endpointCall := &ast.AssignStmt{
+		Left: returnValues,
+		Right: []ast.Expr{
+			call,
+		},
+	}
+	return &ast.Block{
+		Exprs: []ast.Expr{
+			rootClientInstantiation,
+			endpointCall,
+		},
+	}
+}
+
+func getEndpointMethodName(
+	fernFilepath *common.FernFilepath,
+	endpoint *ir.HttpEndpoint,
+) string {
+	var packageElements []string
+	for _, packageElem := range fernFilepath.PackagePath {
+		packageElements = append(packageElements, packageElem.PascalCase.UnsafeName)
+	}
+	if fernFilepath.File != nil {
+		packageElements = append(packageElements, fernFilepath.File.PascalCase.UnsafeName)
+	}
+	methodName := endpoint.Name.PascalCase.UnsafeName
+	if len(packageElements) == 0 {
+		return methodName
+	}
+	return fmt.Sprintf("%s.%s", strings.Join(packageElements, "."), methodName)
+}
+
+func getEndpointParameters(
+	f *fileWriter,
+	fernFilepath *common.FernFilepath,
+	endpoint *ir.HttpEndpoint,
+	serviceHeaders []*ir.HttpHeader,
+	example *ir.ExampleEndpointCall,
+) []ast.Expr {
+	var fields []*ast.Field
+	parameters := []ast.Expr{
+		&ast.CallExpr{
+			FunctionName: &ast.ImportedReference{
+				Name:       "TODO",
+				ImportPath: "context",
+			},
+		},
+	}
+	allPathParameters := getAllExamplePathParameters(example)
+	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
+		for _, pathParameter := range allPathParameters {
+			fields = append(
+				fields,
+				&ast.Field{
+					Key:   goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName),
+					Value: f.snippetWriter.GetSnippetForExampleTypeReference(pathParameter.Value),
+				},
+			)
+		}
+	} else {
+		for _, pathParameter := range allPathParameters {
+			parameters = append(
+				parameters,
+				f.snippetWriter.GetSnippetForExampleTypeReference(pathParameter.Value),
+			)
+		}
+	}
+
+	for _, header := range append(example.ServiceHeaders, example.EndpointHeaders...) {
+		if isHeaderLiteral(endpoint, header.Name.WireValue) {
+			continue
+		}
+		fields = append(
+			fields,
+			&ast.Field{
+				Key:   goExportedFieldName(header.Name.Name.PascalCase.UnsafeName),
+				Value: f.snippetWriter.GetSnippetForExampleTypeReference(header.Value),
+			},
+		)
+	}
+
+	for _, queryParameter := range example.QueryParameters {
+		exampleValue := f.snippetWriter.GetSnippetForExampleTypeReference(queryParameter.Value)
+		if isQueryParameterAllowMultiple(endpoint, queryParameter.Name.WireValue) {
+			// This query parameter allows multiple elements, so we need to surround the example
+			// value in an array.
+			expr := exampleTypeReferenceShapeToGoType(
+				queryParameter.Value.Shape,
+				f.types,
+				f.baseImportPath,
+			)
+			exampleValue = &ast.ArrayLit{
+				Type: &ast.ArrayType{
+					Expr: expr,
+				},
+				Values: []ast.Expr{
+					exampleValue,
+				},
+			}
+		}
+		fields = append(
+			fields,
+			&ast.Field{
+				Key:   goExportedFieldName(queryParameter.Name.Name.PascalCase.UnsafeName),
+				Value: exampleValue,
+			},
+		)
+	}
+
+	if !shouldSkipRequestType(endpoint, serviceHeaders, f.inlinePathParameters, f.inlineFileProperties, f.omitEmptyRequestWrappers) {
+		fields = append(
+			fields,
+			exampleRequestBodyToFields(f, endpoint, example.Request)...,
+		)
+		parameters = append(
+			parameters,
+			&ast.StructType{
+				Name: &ast.ImportedReference{
+					Name:       endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName,
+					ImportPath: getImportPathForRequestType(f, fernFilepath),
+				},
+				Fields: fields,
+			},
+		)
+		return parameters
+	}
+
+	if example.Request != nil && example.Request.Reference != nil {
+		// Include the body as an ordinary parameter alongside the rest.
+		parameters = append(
+			parameters,
+			f.snippetWriter.GetSnippetForExampleTypeReference(example.Request.Reference),
+		)
+		return parameters
+	}
+	if requestBodyIsNilable(endpoint, f.types) {
+		// The example omits the request body, but the parameter is still positional.
+		parameters = append(
+			parameters,
+			&ast.LocalReference{
+				Name: "nil",
+			},
+		)
+	}
+	return parameters
+}
+
+// requestBodyIsNilable returns true if the endpoint's request body is passed as a
+// nilable Go type, so that a call omitting the body can pass nil for it.
+func requestBodyIsNilable(endpoint *ir.HttpEndpoint, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	if endpoint.SdkRequest == nil || endpoint.SdkRequest.Shape == nil {
+		return false
+	}
+	requestBody := endpoint.SdkRequest.Shape.JustRequestBody
+	if requestBody == nil || requestBody.TypeReference == nil {
+		return false
+	}
+	typeReference := requestBody.TypeReference.RequestBodyType
+	if typeReference.Named != nil {
+		typeDeclaration, ok := types[typeReference.Named.TypeId]
+		return ok && isPointer(typeDeclaration)
+	}
+	if typeReference.Container != nil {
+		return typeReference.Container.List != nil ||
+			typeReference.Container.Set != nil ||
+			typeReference.Container.Map != nil ||
+			isOptionalType(typeReference, types)
+	}
+	return false
+}
+
+func getAllExamplePathParameters(example *ir.ExampleEndpointCall) []*ir.ExamplePathParameter {
+	allPathParameters := example.RootPathParameters
+	allPathParameters = append(allPathParameters, example.ServicePathParameters...)
+	allPathParameters = append(allPathParameters, example.EndpointPathParameters...)
+	return allPathParameters
+}
+
+func exampleRequestBodyToFields(
+	f *fileWriter,
+	endpoint *ir.HttpEndpoint,
+	exampleRequestBody *ir.ExampleRequestBody,
+) []*ast.Field {
+	if exampleRequestBody == nil {
+		return nil
+	}
+	var fields []*ast.Field
+	switch exampleRequestBody.Type {
+	case "inlinedRequestBody":
+		for _, property := range exampleRequestBody.InlinedRequestBody.Properties {
+			if isExampleInlinedRequestBodyPropertyLiteral(endpoint, property) {
+				return fields
+			}
+			fields = append(
+				fields,
+				&ast.Field{
+					Key:   goExportedFieldName(property.Name.Name.PascalCase.UnsafeName),
+					Value: f.snippetWriter.GetSnippetForExampleTypeReference(property.Value),
+				},
+			)
+		}
+		return fields
+	case "reference":
+		if isExampleReferenceRequestBodyLiteral(endpoint) {
+			return fields
+		}
+		fields = append(
+			fields,
+			&ast.Field{
+				Key:   goExportedFieldName(endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName),
+				Value: f.snippetWriter.GetSnippetForExampleTypeReference(exampleRequestBody.Reference),
+			},
+		)
+	}
+	return fields
+}
+
+func isHeaderLiteral(endpoint *ir.HttpEndpoint, wireValue string) bool {
+	for _, header := range endpoint.Headers {
+		if header.Name.WireValue == wireValue {
+			return isTypeReferenceLiteral(header.ValueType)
+		}
+	}
+	return false
+}
+
+func isQueryParameterLiteral(endpoint *ir.HttpEndpoint, wireValue string) bool {
+	for _, queryParameter := range endpoint.QueryParameters {
+		if queryParameter.Name.WireValue == wireValue {
+			return isTypeReferenceLiteral(queryParameter.ValueType)
+		}
+	}
+	return false
+}
+
+func isQueryParameterAllowMultiple(endpoint *ir.HttpEndpoint, wireValue string) bool {
+	for _, queryParameter := range endpoint.QueryParameters {
+		if queryParameter.Name.WireValue == wireValue {
+			return queryParameter.AllowMultiple
+		}
+	}
+	return false
+}
+
+func isExampleInlinedRequestBodyPropertyLiteral(
+	endpoint *ir.HttpEndpoint,
+	exampleInlinedRequestBodyProperty *ir.ExampleInlinedRequestBodyProperty,
+) bool {
+	if endpoint.RequestBody == nil || endpoint.RequestBody.InlinedRequestBody == nil {
+		return false
+	}
+	wireValue := exampleInlinedRequestBodyProperty.Name.WireValue
+	for _, property := range endpoint.RequestBody.InlinedRequestBody.Properties {
+		if property.Name.WireValue == wireValue {
+			return isTypeReferenceLiteral(property.ValueType)
+		}
+	}
+	return false
+}
+
+func isExampleReferenceRequestBodyLiteral(
+	endpoint *ir.HttpEndpoint,
+) bool {
+	if endpoint.RequestBody == nil || endpoint.RequestBody.Reference == nil {
+		return false
+	}
+	return isTypeReferenceLiteral(endpoint.RequestBody.Reference.RequestBodyType)
+}
+
+// generatedClientInstantiation returns the AST expression associated with
+// the client construction (including import statements and client options).
+func generatedClientInstantiation(
+	baseImportPath string,
+	generatedAuth *GeneratedAuth,
+	generatedEnvironment *GeneratedEnvironment,
+	exportedClientName string,
+	clientConstructorNameOverride string,
+) *ast.AssignStmt {
+	var parameters []ast.Expr
+	if generatedAuth != nil {
+		parameters = append(parameters, generatedAuth.Option)
+	}
+	if generatedEnvironment != nil {
+		parameters = append(parameters, generatedEnvironment.Option)
+	}
+	rootImportPath := baseImportPath
+	rootImportPath = packagePathToImportPath(baseImportPath, packagePathForClient(new(common.FernFilepath)))
+	constructorName := fmt.Sprintf("New%s", exportedClientName)
+	if clientConstructorNameOverride != "" {
+		constructorName = clientConstructorNameOverride
+	}
+	return &ast.AssignStmt{
+		Left: []ast.Expr{
+			ast.NewLocalReference("client"),
+		},
+		Right: []ast.Expr{
+			ast.NewCallExpr(
+				ast.NewImportedReference(
+					constructorName,
+					rootImportPath,
+				),
+				parameters,
+			),
+		},
+	}
+}
+
+type filePropertyInfo struct {
+	Key         *common.NameAndWireValue
+	IsOptional  bool
+	IsArray     bool
+	ContentType string
+}
+
+func filePropertyToInfo(fileProperty *ir.FileProperty) (*filePropertyInfo, error) {
+	switch fileProperty.Type {
+	case "file":
+		var contentType string
+		if fileProperty.File.ContentType != nil {
+			contentType = *fileProperty.File.ContentType
+		}
+		return &filePropertyInfo{
+			Key:         fileProperty.File.Key,
+			IsOptional:  fileProperty.File.IsOptional,
+			ContentType: contentType,
+		}, nil
+	case "fileArray":
+		var contentType string
+		if fileProperty.FileArray.ContentType != nil {
+			contentType = *fileProperty.FileArray.ContentType
+		}
+		return &filePropertyInfo{
+			Key:         fileProperty.FileArray.Key,
+			IsOptional:  fileProperty.FileArray.IsOptional,
+			IsArray:     true,
+			ContentType: contentType,
+		}, nil
+	}
+	return nil, fmt.Errorf("file property %s is not yet supported", fileProperty.Type)
+}
+
+// endpoint holds the fields required to generate a client endpoint.
+//
+// All of the fields are pre-formatted so that they can all be simple
+// strings.
+type pathParameterDefault struct {
+	VarExpr    string // Go local variable to check and assign (e.g., "_region")
+	InitExpr   string // Go expression to initialize VarExpr from (e.g., "request.Region"), empty if VarExpr is already the source
+	DefaultVal string // Go expression for the default value
+}
+
+type endpoint struct {
+	Name                        *common.Name
+	Docs                        *string
+	ImportPath                  string
+	OptionsParameterName        string
+	RequestParameterName        string
+	RequestBytesParameterName   string
+	RequestValueName            string
+	RequestIsBytes              bool
+	RequestIsOptional           bool
+	ResponseType                string
+	ResponseParameterName       string
+	ResponseInitializerFormat   string
+	ResponseIsOptionalParameter bool
+	PathParameterNames          []string
+	PathParameterDefaults       []pathParameterDefault
+	SignatureParameters         []*signatureParameter
+	ReturnValues                string
+	SuccessfulReturnValues      string
+	ErrorReturnValues           string
+	BaseURL                     string
+	BaseURLName                 string // For multi-URL environments, the name of the base URL field (e.g., "Ec2", "S3")
+	OptionConstructor           string
+	PathSuffix                  string
+	Method                      string
+	ErrorDecoderParameterName   string
+	Idempotent                  bool
+	Accept                      string
+	ContentType                 string
+	Errors                      ir.ResponseErrors
+	QueryParameters             []*ir.QueryParameter
+	Headers                     []*ir.HttpHeader
+	IdempotencyHeaders          []*ir.HttpHeader
+	FilePropertyInfo            *filePropertyInfo
+	FileProperties              []*ir.FileProperty
+	FileBodyProperties          []*ir.FileUploadBodyProperty
+	StreamingInfo               *streamingInfo
+	PaginationInfo              *paginationInfo
+	HasCustomPagination         bool
+	CustomPagerName             string
+}
+
+type signatureParameter struct {
+	docs      *string // e.g. "Identifies a single user."
+	parameter string  // e.g. 'userId string'
+}
+
+// signatureForEndpoint returns a signature template for the given endpoint.
+func (f *fileWriter) endpointFromIR(
+	fernFilepath *common.FernFilepath,
+	irEndpoint *ir.HttpEndpoint,
+	irEnvironmentsConfig *common.EnvironmentsConfig,
+	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
+	serviceHeaders []*ir.HttpHeader,
+	idempotencyHeaders []*ir.HttpHeader,
+	inlinePathParameters bool,
+	inlineFileProperties bool,
+) (*endpoint, error) {
+	importPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
+
+	// Create a new child scope for this endpoint.
+	scope := f.scope.Child()
+
+	// Add path parameters and request body, if any.
+	pathParameterToScopedName := make(map[string]string, len(irEndpoint.AllPathParameters))
+	pathParameters := make(map[string]*ir.PathParameter, len(irEndpoint.AllPathParameters))
+	for _, pathParameter := range irEndpoint.AllPathParameters {
+		pathParameters[pathParameter.Name.OriginalName] = pathParameter
+	}
+
+	var (
+		pathParameterNames  []string
+		signatureParameters = []*signatureParameter{{parameter: "ctx context.Context"}}
+	)
+	var pathParameterDefaults []pathParameterDefault
+	if includePathParametersInWrappedRequest(irEndpoint, inlinePathParameters) {
+		requestParameterName := irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
+		for _, pathParameter := range irEndpoint.AllPathParameters {
+			requestFieldExpr := fmt.Sprintf("%s.%s", requestParameterName, pathParameter.Name.PascalCase.UnsafeName)
+			if pathParameter.ClientDefault != nil && isStringType(pathParameter.ValueType) {
+				// Use a local variable to avoid mutating the caller's request struct.
+				localVar := "_" + pathParameter.Name.CamelCase.SafeName
+				pathParameterNames = append(pathParameterNames, localVar)
+				pathParameterDefaults = append(pathParameterDefaults, pathParameterDefault{
+					VarExpr:    localVar,
+					InitExpr:   requestFieldExpr,
+					DefaultVal: literalToValue(pathParameter.ClientDefault),
+				})
+			} else {
+				pathParameterNames = append(pathParameterNames, requestFieldExpr)
+			}
+		}
+	} else {
+		for _, part := range irEndpoint.FullPath.Parts {
+			if part.PathParameter == "" {
+				continue
+			}
+			pathParameter, ok := pathParameters[part.PathParameter]
+			if !ok {
+				return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", part.PathParameter, irEndpoint.Name.OriginalName)
+			}
+			if literal := maybeLiteral(pathParameter.ValueType, f.types); literal != nil {
+				value := literalToValue(literal)
+				pathParameterNames = append(pathParameterNames, value)
+				pathParameterToScopedName[part.PathParameter] = value
+				continue
+			}
+			pathParameterName := scope.Add(pathParameter.Name.CamelCase.SafeName)
+			pathParameterNames = append(pathParameterNames, pathParameterName)
+			pathParameterToScopedName[part.PathParameter] = pathParameterName
+			if pathParameter.ClientDefault != nil && isStringType(pathParameter.ValueType) {
+				pathParameterDefaults = append(pathParameterDefaults, pathParameterDefault{
+					VarExpr:    pathParameterName,
+					DefaultVal: literalToValue(pathParameter.ClientDefault),
+				})
+			}
+		}
+
+		// Preserve the order of path parameters specified in the API in the function signature.
+		for _, pathParameter := range irEndpoint.AllPathParameters {
+			pathParameterName, ok := pathParameterToScopedName[pathParameter.Name.OriginalName]
+			if !ok {
+				return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", pathParameter.Name.OriginalName, irEndpoint.Name.OriginalName)
+			}
+			parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+			if isLiteralType(pathParameter.ValueType, f.types) {
+				continue
+			}
+			signatureParameters = append(
+				signatureParameters,
+				&signatureParameter{
+					docs:      pathParameter.Docs,
+					parameter: fmt.Sprintf("%s %s", pathParameterName, parameterType),
+				},
+			)
+		}
+	}
+
+	// Add the file parameter(s) after the path parameters, if any.
+	var (
+		fileProperties     []*ir.FileProperty
+		fileBodyProperties []*ir.FileUploadBodyProperty
+		filePropertyInfo   *filePropertyInfo
+	)
+	if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
+		for _, fileUploadProperty := range irEndpoint.RequestBody.FileUpload.Properties {
+			if fileUploadProperty.File != nil {
+				filePropertyInfo, err := filePropertyToInfo(fileUploadProperty.File)
+				if err != nil {
+					return nil, err
+				}
+				fileProperties = append(fileProperties, fileUploadProperty.File)
+
+				if !inlineFileProperties {
+					parameterName := filePropertyInfo.Key.Name.CamelCase.SafeName
+					parameterType := "io.Reader"
+					if filePropertyInfo.IsArray {
+						parameterType = "[]io.Reader"
+					}
+					signatureParameters = append(
+						signatureParameters,
+						&signatureParameter{
+							parameter: fmt.Sprintf("%s %s", parameterName, parameterType),
+						},
+					)
+				}
+			}
+			if fileUploadProperty.BodyProperty != nil {
+				fileBodyProperties = append(fileBodyProperties, fileUploadProperty.BodyProperty)
+			}
+		}
+	}
+
+	// Format the rest of the request parameters.
+	var (
+		contentType               = ""
+		requestParameterName      = ""
+		requestBytesParameterName = ""
+		requestValueName          = ""
+		requestIsBytes            = false
+		requestIsOptional         = false
+		headers                   = []*ir.HttpHeader{}
+	)
+
+	if irEndpoint.SdkRequest != nil {
+		if needsRequestParameter(irEndpoint, serviceHeaders, inlinePathParameters, inlineFileProperties, f.omitEmptyRequestWrappers) {
+			var requestType string
+			requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
+			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
+				switch requestBody.Type {
+				case "typeReference":
+					requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+				case "bytes":
+					requestType = "[]byte"
+					requestValueName = "requestBuffer"
+					if f.useReaderForBytesRequest {
+						requestType = "io.Reader"
+						requestValueName = requestParameterName
+					}
+					contentType = "application/octet-stream"
+					requestIsBytes = true
+					requestIsOptional = requestBody.Bytes.IsOptional
+					requestBytesParameterName = requestParameterName
+				default:
+					return nil, fmt.Errorf("%s requests are not supported yet", requestBody.Type)
+				}
+			}
+			if irEndpoint.SdkRequest.Shape.Wrapper != nil {
+				// All inlined request types are now generated in the root package
+				rootImportPath := f.baseImportPath
+				if rootImportPath == "" {
+					// If no base import path, reference without package qualifier
+					requestType = fmt.Sprintf("*%s", irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+				} else {
+					requestType = fmt.Sprintf("*%s.%s", scope.AddImport(rootImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+				}
+				if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.Bytes != nil {
+					requestValueName = "requestBuffer"
+					if f.useReaderForBytesRequest {
+						requestValueName = requestParameterName
+					}
+					contentType = "application/octet-stream"
+					requestIsBytes = true
+					requestIsOptional = irEndpoint.RequestBody.Bytes.IsOptional
+					requestBytesParameterName = fmt.Sprintf(
+						"%s.%s",
+						requestParameterName,
+						irEndpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName,
+					)
+				}
+				headers = append(serviceHeaders, irEndpoint.Headers...)
+			}
+			signatureParameters = append(
+				signatureParameters,
+				&signatureParameter{
+					parameter: fmt.Sprintf("%s %s", requestParameterName, requestType),
+				},
+			)
+			if irEndpoint.RequestBody != nil && requestValueName == "" {
+				// Only send a request body if one is defined.
+				requestValueName = requestParameterName
+			}
+		}
+		if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
+			// This is a file upload request, so we prepare a buffer for the request body
+			// instead of just using the request specified by the function signature.
+			requestValueName = "writer.Buffer()"
+		}
+	}
+
+	// The request options must always be the last parameter.
+	optionType := "option.RequestOption"
+	if irEndpoint.Idempotent {
+		optionType = "option.IdempotentRequestOption"
+	}
+	signatureParameters = append(
+		signatureParameters,
+		&signatureParameter{
+			parameter: fmt.Sprintf("opts ...%s", optionType),
+		},
+	)
+
+	streamingInfo, err := getStreamingInfo(irEndpoint)
+	if err != nil {
+		return nil, err
+	}
+
+	paginationInfo, err := f.getPaginationInfo(irEndpoint, scope, requestParameterName)
+	if err != nil {
+		return nil, err
+	}
+
+	// Format all of the response values.
+	var (
+		responseType              string
+		responseParameterName     string
+		responseInitializerFormat string
+		signatureReturnValues     string
+		successfulReturnValues    string
+		errorReturnValues         string
+	)
+	var responseIsOptionalParameter bool
+	if irEndpoint.Response != nil && irEndpoint.Response.Body != nil {
+		switch irEndpoint.Response.Body.Type {
+		case "json":
+			typeReference := typeReferenceFromJsonResponse(irEndpoint.Response.Body.Json)
+			if typeReference == nil {
+				return nil, fmt.Errorf("unsupported json response type: %s", irEndpoint.Response.Body.Json.Type)
+			}
+			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+			responseInitializerFormat = "var response %s"
+			responseIsOptionalParameter = getOptionalOrNullableContainer(typeReference) != nil
+			responseParameterName = "&response"
+			signatureReturnValues = fmt.Sprintf("(%s, error)", responseType)
+			successfulReturnValues = "response, nil"
+			errorReturnValues = fmt.Sprintf("%s, err", defaultValueForTypeReference(typeReference, f.types))
+
+			if irEndpoint.Response.Body.Json.NestedPropertyAsResponse != nil && irEndpoint.Response.Body.Json.NestedPropertyAsResponse.ResponseProperty != nil {
+				responseProperty := irEndpoint.Response.Body.Json.NestedPropertyAsResponse.ResponseProperty
+				responsePropertyTypeReference := responseProperty.ValueType
+				responsePropertyType := typeReferenceToGoType(responsePropertyTypeReference, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+				signatureReturnValues = fmt.Sprintf("(%s, error)", responsePropertyType)
+				successfulReturnValues = fmt.Sprintf("response.%s, nil", responseProperty.Name.Name.PascalCase.UnsafeName)
+				errorReturnValues = fmt.Sprintf("%s, err", defaultValueForTypeReference(responsePropertyTypeReference, f.types))
+			}
+
+			if paginationInfo != nil {
+				responseInitializerFormat = ""
+				responseParameterName = "pageRequest.Response"
+				signatureReturnValues = fmt.Sprintf("(*core.Page[%s], error)", paginationInfo.ResultsSingleGoType)
+				errorReturnValues = "nil, err"
+			}
+		case "fileDownload":
+			responseType = "bytes.NewBuffer(nil)"
+			responseInitializerFormat = "response := %s"
+			responseParameterName = "response"
+			signatureReturnValues = "(io.Reader, error)"
+			successfulReturnValues = "response, nil"
+			errorReturnValues = "nil, err"
+		case "bytes":
+			responseType = "bytes.NewBuffer(nil)"
+			responseInitializerFormat = "response := %s"
+			responseParameterName = "response"
+			signatureReturnValues = "([]byte, error)"
+			successfulReturnValues = "response.Bytes(), nil"
+			errorReturnValues = "nil, err"
+		case "text":
+			responseType = "bytes.NewBuffer(nil)"
+			responseInitializerFormat = "response := %s"
+			responseParameterName = "response"
+			signatureReturnValues = "(string, error)"
+			successfulReturnValues = "response.String(), nil"
+			errorReturnValues = `"", err`
+		case "streaming":
+			typeReference, err := typeReferenceFromStreamingResponse(irEndpoint.Response.Body.Streaming)
+			if err != nil {
+				return nil, err
+			}
+			responseType = strings.TrimPrefix(typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false), "*")
+			responseParameterName = "response"
+			signatureReturnValues = fmt.Sprintf("(*core.Stream[%s], error)", responseType)
+			errorReturnValues = "nil, err"
+		case "streamParameter":
+			// A stream-condition endpoint exposes both a streaming and a
+			// non-streaming response; v1's client is overwritten by v2, so we
+			// generate the non-streaming (regular) variant to keep generation
+			// from aborting.
+			nonStreamResponse := irEndpoint.Response.Body.StreamParameter.GetNonStreamResponse()
+			if nonStreamResponse == nil || nonStreamResponse.Json == nil {
+				return nil, fmt.Errorf("%s requests are not supported yet", irEndpoint.Response.Body.Type)
+			}
+			typeReference := typeReferenceFromJsonResponse(nonStreamResponse.Json)
+			if typeReference == nil {
+				return nil, fmt.Errorf("unsupported json response type: %s", nonStreamResponse.Json.Type)
+			}
+			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+			responseInitializerFormat = "var response %s"
+			responseIsOptionalParameter = getOptionalOrNullableContainer(typeReference) != nil
+			responseParameterName = "&response"
+			signatureReturnValues = fmt.Sprintf("(%s, error)", responseType)
+			successfulReturnValues = "response, nil"
+			errorReturnValues = fmt.Sprintf("%s, err", defaultValueForTypeReference(typeReference, f.types))
+		default:
+			return nil, fmt.Errorf("%s requests are not supported yet", irEndpoint.Response.Body.Type)
+		}
+	} else if irEndpoint.Method == "HEAD" {
+		responseParameterName = "response"
+		signatureReturnValues = "(http.Header, error)"
+		successfulReturnValues = "response, nil"
+		errorReturnValues = "nil, err"
+	} else {
+		responseParameterName = ""
+		signatureReturnValues = "error"
+		successfulReturnValues = "nil"
+		errorReturnValues = "err"
+	}
+
+	// Determine this endpoint's base URL based on the environment, if any.
+	var environmentID string
+	if irEnvironmentsConfig != nil && irEnvironmentsConfig.DefaultEnvironment != nil {
+		environmentID = *irEnvironmentsConfig.DefaultEnvironment
+	}
+	if irEndpoint.BaseUrl != nil {
+		environmentID = *irEndpoint.BaseUrl
+	}
+	baseURL, err := environmentURLFromID(irEnvironmentsConfig, environmentID)
+	if err != nil {
+		return nil, err
+	}
+	// For multi-URL environments, get the base URL name (e.g., "Ec2", "S3")
+	// Use irEndpoint.BaseUrl directly since it contains the base URL ID (e.g., "ec2"),
+	// not the environment ID (e.g., "production")
+	var baseURLName string
+	if irEndpoint.BaseUrl != nil {
+		baseURLName = baseURLNameFromID(irEnvironmentsConfig, *irEndpoint.BaseUrl)
+	}
+
+	// Consolidate the irEndpoint's full path into a path suffix that
+	// can be applied to the irEndpoint at construction time.
+	var pathSuffix string
+	if irEndpoint.FullPath != nil {
+		if irEndpoint.FullPath.Head != "/" {
+			pathSuffix = irEndpoint.FullPath.Head
+		}
+		for _, part := range irEndpoint.FullPath.Parts {
+			if part.PathParameter != "" {
+				pathSuffix += "%v"
+			}
+			if part.Tail != "" {
+				pathSuffix += part.Tail
+			}
+		}
+		pathSuffix = strings.TrimLeft(pathSuffix, "/")
+	}
+
+	// An error decoder is required when there are endpoint-specific errors.
+	var errorDecoderParameterName string
+	if len(irEndpoint.Errors) > 0 {
+		errorDecoderParameterName = "errorDecoder"
+		if errorDiscriminationStrategy != nil && errorDiscriminationStrategy.Property == nil {
+			errorDecoderParameterName = "internal.NewErrorDecoder(errorCodes)"
+		}
+	}
+
+	var pathParameterDocs []*string
+	for _, pathParam := range irEndpoint.AllPathParameters {
+		if pathParam.Docs != nil && len(*pathParam.Docs) > 0 {
+			pathParameterDocs = append(pathParameterDocs, pathParam.Docs)
+		}
+	}
+
+	optionConstructor := "core.NewRequestOptions(opts...)"
+	if irEndpoint.Idempotent {
+		optionConstructor = "core.NewIdempotentRequestOptions(opts...)"
+	}
+
+	var accept string
+	if streamingInfo != nil && streamingInfo.AcceptHeader != "" {
+		accept = streamingInfo.AcceptHeader
+	}
+
+	contentTypeOverride := contentTypeFromRequestBody(irEndpoint.RequestBody)
+	if contentTypeOverride != "" {
+		contentType = contentTypeOverride
+	}
+
+	var hasCustomPagination bool
+	var customPagerName string
+	if irEndpoint.Pagination != nil && irEndpoint.Pagination.Type == "custom" {
+		hasCustomPagination = true
+		customPagerName = f.customPagerName
+		if customPagerName == "" {
+			customPagerName = "CustomPager"
+		}
+		signatureReturnValues = fmt.Sprintf("(*core.%s[%s], error)", customPagerName, responseType)
+		errorReturnValues = "nil, err"
+		responseInitializerFormat = ""
+	}
+
+	return &endpoint{
+		Name:                        irEndpoint.Name,
+		Docs:                        irEndpoint.Docs,
+		ImportPath:                  importPath,
+		OptionsParameterName:        "options",
+		RequestParameterName:        requestParameterName,
+		RequestBytesParameterName:   requestBytesParameterName,
+		RequestValueName:            requestValueName,
+		RequestIsBytes:              requestIsBytes,
+		RequestIsOptional:           requestIsOptional,
+		ResponseType:                responseType,
+		ResponseParameterName:       responseParameterName,
+		ResponseInitializerFormat:   responseInitializerFormat,
+		ResponseIsOptionalParameter: responseIsOptionalParameter,
+		PathParameterNames:          pathParameterNames,
+		PathParameterDefaults:       pathParameterDefaults,
+		SignatureParameters:         signatureParameters,
+		ReturnValues:                signatureReturnValues,
+		SuccessfulReturnValues:      successfulReturnValues,
+		ErrorReturnValues:           errorReturnValues,
+		OptionConstructor:           optionConstructor,
+		BaseURL:                     baseURL,
+		BaseURLName:                 baseURLName,
+		PathSuffix:                  pathSuffix,
+		Method:                      irMethodToMethodEnum(irEndpoint.Method),
+		ErrorDecoderParameterName:   errorDecoderParameterName,
+		Accept:                      accept,
+		ContentType:                 contentType,
+		Idempotent:                  irEndpoint.Idempotent,
+		Errors:                      irEndpoint.Errors,
+		QueryParameters:             irEndpoint.QueryParameters,
+		Headers:                     headers,
+		IdempotencyHeaders:          idempotencyHeaders,
+		FilePropertyInfo:            filePropertyInfo,
+		FileProperties:              fileProperties,
+		FileBodyProperties:          fileBodyProperties,
+		StreamingInfo:               streamingInfo,
+		PaginationInfo:              paginationInfo,
+		HasCustomPagination:         hasCustomPagination,
+		CustomPagerName:             customPagerName,
+	}, nil
+}
+
+// GeneratedEnvironment contains information about the environments that were generated.
+type GeneratedEnvironment struct {
+	Example ast.Expr // e.g. acme.Environments.Production
+	Option  ast.Expr // e.g. option.WithBaseURL(acme.Environments.Production)
+}
+
+// WriteEnvironments writes the environment constants.
+func (f *fileWriter) WriteEnvironments(environmentsConfig *common.EnvironmentsConfig, useCore bool) (*GeneratedEnvironment, error) {
+	return environmentsToEnvironmentsVariable(environmentsConfig, f, useCore)
+}
+
+// WriteError writes the structured error types.
+func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
+	// Generate the error type declaration.
+	var (
+		typeName = errorDeclaration.Name.Name.PascalCase.UnsafeName
+		receiver = typeNameToReceiver(typeName)
+	)
+	f.WriteDocs(errorDeclaration.Docs)
+	f.P("type ", typeName, " struct {")
+	f.P("*core.APIError")
+	if errorDeclaration.Type == nil {
+		// This error doesn't have a body, so we only need to include the status code.
+		// We still need to implement the json.Unmarshaler and json.Marshaler though.
+		f.P("}")
+		f.P()
+		f.P("func (", receiver, "*", typeName, ") UnmarshalJSON(data []byte) error {")
+		f.P(receiver, ".StatusCode = ", errorDeclaration.StatusCode)
+		f.P("return nil")
+		f.P("}")
+		f.P()
+		f.P("func (", receiver, "*", typeName, ") MarshalJSON() ([]byte, error) {")
+		f.P("return nil, nil")
+		f.P("}")
+		f.P()
+		return nil
+	}
+	var (
+		importPath = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+		value      = typeReferenceToGoType(errorDeclaration.Type, f.types, f.scope, f.baseImportPath, importPath, false)
+	)
+	var literal string
+	if errorDeclaration.Type.Container != nil && errorDeclaration.Type.Container.Literal != nil {
+		literal = literalToValue(errorDeclaration.Type.Container.Literal)
+	}
+	f.P("Body ", value)
+	f.P("}")
+	f.P()
+
+	// Implement the json.Unmarshaler.
+	isOptional := getOptionalOrNullableContainer(errorDeclaration.Type) != nil
+	f.P("func (", receiver, "*", typeName, ") UnmarshalJSON(data []byte) error {")
+	if isOptional {
+		f.P("if len(data) == 0 {")
+		f.P(receiver, ".StatusCode = ", errorDeclaration.StatusCode)
+		f.P("return nil")
+		f.P("}")
+	}
+	f.P(fmt.Sprintf("var body %s", value))
+	f.P("if err := json.Unmarshal(data, &body); err != nil {")
+	f.P("return err")
+	f.P("}")
+	if literal != "" {
+		// If the error specifies a literal, it will only succeed if the literal matches exactly.
+		f.P("if body != ", literal, " {")
+		f.P(`return fmt.Errorf("expected literal %q, but found %q", `, literal, ", body)")
+		f.P("}")
+	}
+	f.P(receiver, ".StatusCode = ", errorDeclaration.StatusCode)
+	f.P(receiver, ".Body = body")
+	f.P("return nil")
+	f.P("}")
+	f.P()
+
+	// Implement the json.Marshaler.
+	f.P("func (", receiver, "*", typeName, ") MarshalJSON() ([]byte, error) {")
+	if literal != "" {
+		f.P("return json.Marshal(", literal, ")")
+	} else if isOptional {
+		f.P("if ", receiver, ".Body == nil {")
+		f.P("return nil, nil")
+		f.P("}")
+		f.P("return json.Marshal(", receiver, ".Body)")
+	} else {
+		f.P("return json.Marshal(", receiver, ".Body)")
+	}
+	f.P("}")
+	f.P()
+
+	// Implement the error unwrapper interface.
+	f.P("func (", receiver, "*", typeName, ") Unwrap() error {")
+	f.P("return ", receiver, ".APIError")
+	f.P("}")
+	f.P()
+
+	return nil
+}
+
+// getImportPathForRequestType returns the appropriate import path for request types
+// based on the exportAllRequestsAtRoot configuration.
+func getImportPathForRequestType(f *fileWriter, fernFilepath *common.FernFilepath) string {
+	// Use the root package import path when exportAllRequestsAtRoot is enabled,
+	// otherwise use the service's filepath
+	if f.exportAllRequestsAtRoot && f.filename == inlinedRequestsFilename {
+		return f.baseImportPath
+	} else {
+		return fernFilepathToImportPath(f.baseImportPath, fernFilepath)
+	}
+}
+
+// WriteRequestType writes a type dedicated to the in-lined request (if any).
+func (f *fileWriter) WriteRequestType(
+	fernFilepath *common.FernFilepath,
+	endpoint *ir.HttpEndpoint,
+	serviceHeaders []*ir.HttpHeader,
+	idempotencyHeaders []*ir.HttpHeader,
+	includeGenericOptionals bool,
+	inlineFileProperties bool,
+) error {
+	var (
+		// At this point, we've already verified that the given endpoint's request
+		// is a wrapper, so we can safely access it without any nil-checks.
+		bodyField = endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName
+		typeName  = endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
+		receiver  = typeNameToReceiver(typeName)
+	)
+	importPath := getImportPathForRequestType(f, fernFilepath)
+
+	// Collect all property names and types for bigint constants and setters
+	var propertyNames []string
+	var propertyTypes []string
+	var propertySafeNames []string
+
+	// Collect from headers (exclude literals as they don't need setters)
+	for _, header := range append(serviceHeaders, endpoint.Headers...) {
+		if header.ValueType.Container == nil || header.ValueType.Container.Literal == nil {
+			propertyNames = append(propertyNames, goExportedFieldName(header.Name.Name.PascalCase.UnsafeName))
+			propertySafeNames = append(propertySafeNames, header.Name.Name.CamelCase.SafeName)
+			goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			propertyTypes = append(propertyTypes, goType)
+			// Headers have json:"-" tags, so skip for test generation
+		}
+	}
+
+	// Collect from path parameters (always include these)
+	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
+		for _, pathParameter := range endpoint.AllPathParameters {
+			propertyNames = append(propertyNames, goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName))
+			propertySafeNames = append(propertySafeNames, pathParameter.Name.CamelCase.SafeName)
+			goType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			propertyTypes = append(propertyTypes, goType)
+			// Path parameters have json:"-" tags, so skip for test generation
+		}
+	}
+
+	// Collect from query parameters (always include these, exclude literals)
+	for _, queryParam := range endpoint.QueryParameters {
+		if queryParam.ValueType.Container == nil || queryParam.ValueType.Container.Literal == nil {
+			propertyNames = append(propertyNames, goExportedFieldName(queryParam.Name.Name.PascalCase.UnsafeName))
+			propertySafeNames = append(propertySafeNames, queryParam.Name.Name.CamelCase.SafeName)
+			goType := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			if queryParam.AllowMultiple {
+				goType = fmt.Sprintf("[]%s", goType)
+			}
+			propertyTypes = append(propertyTypes, goType)
+		}
+	}
+
+	// Collect from request body properties if it's an inlined request body
+	if endpoint.RequestBody != nil && endpoint.RequestBody.InlinedRequestBody != nil {
+		for _, property := range endpoint.RequestBody.InlinedRequestBody.Properties {
+			if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
+				propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
+				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
+				goType := typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+				propertyTypes = append(propertyTypes, goType)
+			}
+		}
+	}
+
+	// Write bigint constants for request type properties
+	f.WriteStructPropertyBitConstants(typeName, propertyNames)
+
+	var literals []*literal
+	f.P("type ", typeName, " struct {")
+	for _, header := range append(serviceHeaders, endpoint.Headers...) {
+		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
+			literals = append(
+				literals,
+				&literal{
+					Name:  header.Name,
+					Value: header.ValueType.Container.Literal,
+				},
+			)
+			continue
+		}
+		f.WriteDocs(header.Docs)
+		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		f.P(goExportedFieldName(header.Name.Name.PascalCase.UnsafeName), " ", goType, " `json:\"-\" url:\"-\"`")
+	}
+	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
+		for _, pathParameter := range endpoint.AllPathParameters {
+			value := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			f.WriteDocs(pathParameter.Docs)
+			f.P(goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName), " ", value, " `json:\"-\" url:\"-\"`")
+		}
+	}
+	for _, queryParam := range endpoint.QueryParameters {
+		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		if queryParam.AllowMultiple {
+			value = fmt.Sprintf("[]%s", value)
+		}
+		if queryParam.ValueType.Container != nil && queryParam.ValueType.Container.Literal != nil {
+			literals = append(
+				literals,
+				&literal{
+					Name:  queryParam.Name,
+					Value: queryParam.ValueType.Container.Literal,
+				},
+			)
+			continue
+		}
+		f.WriteDocs(queryParam.Docs)
+		f.P(goExportedFieldName(queryParam.Name.Name.PascalCase.UnsafeName), " ", value, urlTagForType(queryParam.Name.WireValue, queryParam.ValueType, f.types, f.alwaysSendRequiredProperties))
+	}
+	if endpoint.RequestBody == nil {
+		// If the request doesn't have a body, we don't need any custom [de]serialization logic.
+		for _, literal := range literals {
+			f.P(literal.Name.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
+		}
+		f.WriteExplicitFields()
+		f.P("}")
+		f.P()
+		for _, literal := range literals {
+			f.P("func (", receiver, " *", typeName, ") ", literal.Name.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
+			f.P("return ", receiver, ".", literal.Name.Name.CamelCase.SafeName)
+			f.P("}")
+			f.P()
+		}
+
+		// Write the require helper method
+		f.WriteRequireMethod(typeName)
+
+		// Write setter methods for all properties
+		f.WriteSetterMethods(typeName, propertyNames, propertyTypes, propertySafeNames)
+
+		// Collect test data for request type (requests have setters only, no getters)
+		needsDereference := make([]bool, len(propertyNames)) // all false for requests
+		f.AddGetterSetterTestData(GetterSetterTestConfig{
+			TypeName:         typeName,
+			PropertyNames:    propertyNames,
+			PropertyTypes:    propertyTypes,
+			SafeNames:        propertySafeNames,
+			HasGetters:       false,
+			HasSetters:       true,
+			NeedsDereference: needsDereference,
+		})
+
+		return nil
+	}
+	requestBody, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField, includeGenericOptionals, inlineFileProperties)
+	if err != nil {
+		return err
+	}
+	literals = append(literals, requestBody.literals...)
+	for _, literal := range literals {
+		f.P(literal.Name.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
+	}
+	if requestBody.extraProperties {
+		f.P()
+		f.P("ExtraProperties map[string]interface{} `json:\"-\" url:\"-\"`")
+	}
+	f.WriteExplicitFields()
+	f.P("}")
+	f.P()
+	// Implement the getter methods.
+	for _, literal := range literals {
+		f.P("func (", receiver, " *", typeName, ") ", literal.Name.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
+		f.P("return ", receiver, ".", literal.Name.Name.CamelCase.SafeName)
+		f.P("}")
+		f.P()
+	}
+
+	// Write the require helper method
+	f.WriteRequireMethod(typeName)
+
+	// Write setter methods for all properties
+	f.WriteSetterMethods(typeName, propertyNames, propertyTypes, propertySafeNames)
+
+	// Collect test data for request type (requests have setters only, no getters)
+	needsDereference := make([]bool, len(propertyNames)) // all false for requests
+	f.AddGetterSetterTestData(GetterSetterTestConfig{
+		TypeName:         typeName,
+		PropertyNames:    propertyNames,
+		PropertyTypes:    propertyTypes,
+		SafeNames:        propertySafeNames,
+		HasGetters:       false,
+		HasSetters:       true,
+		NeedsDereference: needsDereference,
+	})
+
+	var (
+		referenceType           string
+		referenceIsPointer      bool
+		referenceFieldIsPointer bool
+		referenceLiteral        string
+	)
+	if reference := endpoint.RequestBody.Reference; reference != nil {
+		fullType := typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false)
+		referenceFieldIsPointer = strings.HasPrefix(fullType, "*")
+		referenceType = strings.TrimPrefix(fullType, "*")
+		referenceIsPointer = reference.RequestBodyType.Named != nil && isPointer(f.types[reference.RequestBodyType.Named.TypeId])
+		if reference.RequestBodyType.Container != nil && reference.RequestBodyType.Container.Literal != nil {
+			referenceLiteral = literalToValue(reference.RequestBodyType.Container.Literal)
+		}
+	}
+
+	if len(literals) == 0 && len(requestBody.dates) == 0 && len(referenceType) == 0 && !requestBody.extraProperties && len(propertyNames) == 0 {
+		// If the request doesn't specify any literals, a reference type, or properties
+		// that could use explicit field handling, we don't need to customize the
+		// [de]serialization logic at all.
+		return nil
+	}
+
+	// Implement the json.Unmarshaler interface.
+	f.P("func (", receiver, " *", typeName, ") UnmarshalJSON(data []byte) error {")
+	if len(referenceType) > 0 {
+		if referenceIsPointer {
+			f.P("body := new(", referenceType, ")")
+		} else {
+			f.P("var body ", referenceType)
+		}
+	} else {
+		f.P("type unmarshaler ", typeName)
+		f.P("var body unmarshaler")
+	}
+	f.P("if err := json.Unmarshal(data, &body); err != nil {")
+	f.P("return err")
+	f.P("}")
+	if len(referenceType) > 0 {
+		if len(referenceLiteral) > 0 {
+			f.P("if body != ", referenceLiteral, "{")
+			f.P(`return fmt.Errorf("expected literal %q, but found %q", `, referenceLiteral, ", body)")
+			f.P("}")
+		}
+		bodyValue := "body"
+		if referenceFieldIsPointer && !referenceIsPointer {
+			bodyValue = "&body"
+		}
+		f.P(receiver, ".", bodyField, " = ", bodyValue)
+	} else {
+		f.P("*", receiver, " = ", typeName, "(body)")
+	}
+	for _, literal := range literals {
+		f.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
+	}
+	if requestBody.extraProperties {
+		f.P()
+		writeExtractExtraProperties(f, literals, receiver, getExtraPropertiesFieldName(requestBody.extraProperties))
+	}
+	f.P("return nil")
+	f.P("}")
+	f.P()
+
+	// Implement the json.Marshaler interface.
+	f.P("func (", receiver, " *", typeName, ") MarshalJSON() ([]byte, error) {")
+	if len(referenceType) > 0 {
+		// If the request body is a reference type, we only need to marshal the body.
+		value := fmt.Sprintf("%s.%s", receiver, bodyField)
+		if len(referenceLiteral) > 0 {
+			value = referenceLiteral
+		}
+		f.P("return json.Marshal(", value, ")")
+	} else {
+		f.P("type embed ", typeName)
+		f.P("var marshaler = struct{")
+		f.P("embed")
+		for _, date := range requestBody.dates {
+			f.P(date.Name.Name.PascalCase.UnsafeName, " ", date.TypeDeclaration, " ", date.StructTag)
+		}
+		for _, literal := range literals {
+			f.P(literal.Name.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.WireValue, "\"`")
+		}
+		f.P("}{")
+		f.P("embed: embed(*", receiver, "),")
+		for _, date := range requestBody.dates {
+			f.P(date.Name.Name.PascalCase.UnsafeName, ": ", date.Constructor, "(", receiver, ".", date.Name.Name.PascalCase.UnsafeName, "),")
+		}
+		for _, literal := range literals {
+			f.P(literal.Name.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
+		}
+		f.P("}")
+		f.P("explicitMarshaler := internal.HandleExplicitFields(marshaler, ", receiver, ".explicitFields)")
+		if requestBody.extraProperties {
+			f.P("return internal.MarshalJSONWithExtraProperties(explicitMarshaler, ", receiver, ".ExtraProperties)")
+		} else {
+			f.P("return json.Marshal(explicitMarshaler)")
+		}
+	}
+	f.P("}")
+	f.P()
+
+	return nil
+}
+
+func environmentsToEnvironmentsVariable(
+	environmentsConfig *common.EnvironmentsConfig,
+	writer *fileWriter,
+	useCore bool,
+) (*GeneratedEnvironment, error) {
+	importPath := writer.baseImportPath
+	if useCore {
+		importPath = path.Join(importPath, "core")
+	}
+
+	isMultiURL := environmentsConfig.Environments.MultipleBaseUrls != nil
+
+	if isMultiURL {
+		multiURLEnvs := environmentsConfig.Environments.MultipleBaseUrls
+		baseURLs := make(map[common.EnvironmentBaseUrlId]string)
+		for _, baseURL := range multiURLEnvs.BaseUrls {
+			baseURLs[baseURL.Id] = baseURL.Name.PascalCase.UnsafeName
+		}
+
+		writer.P("// Environment defines the environment with multiple base URLs.")
+		writer.P("type Environment struct {")
+		for _, baseURL := range multiURLEnvs.BaseUrls {
+			writer.P(baseURL.Name.PascalCase.UnsafeName, " string")
+		}
+		writer.P("}")
+		writer.P()
+	}
+
+	writer.P("// Environments defines all of the API environments.")
+	writer.P("// These values can be used with the WithBaseURL")
+	writer.P("// RequestOption to override the client's default environment,")
+	writer.P("// if any.")
+	writer.P("var Environments = struct {")
+	declarationVisitor := &environmentsDeclarationVisitor{
+		types:      writer.types,
+		writer:     writer,
+		importPath: importPath,
+	}
+	if err := environmentsConfig.Environments.Accept(declarationVisitor); err != nil {
+		return nil, err
+	}
+	writer.P("}{")
+	valueVisitor := &environmentsValueVisitor{
+		types:  writer.types,
+		writer: writer,
+	}
+	if err := environmentsConfig.Environments.Accept(valueVisitor); err != nil {
+		return nil, err
+	}
+	writer.P("}")
+	if environmentsConfig.DefaultEnvironment != nil || declarationVisitor.value == nil {
+		return nil, nil
+	}
+	return &GeneratedEnvironment{
+		Example: declarationVisitor.value,
+		Option: &ast.CallExpr{
+			FunctionName: &ast.ImportedReference{
+				Name:       "WithBaseURL",
+				ImportPath: path.Join(writer.baseImportPath, "option"),
+			},
+			Parameters: []ast.Expr{
+				declarationVisitor.value,
+			},
+		},
+	}, nil
+}
+
+// environmentURL is used to generate deterministic results (i.e. by iterating
+// over a sorted list rather than a map).
+type environmentURL struct {
+	ID  common.EnvironmentBaseUrlId
+	URL common.EnvironmentUrl
+}
+
+func environmentURLMapToSortedSlice(urls map[common.EnvironmentBaseUrlId]common.EnvironmentUrl) []*environmentURL {
+	result := make([]*environmentURL, 0, len(urls))
+	for id, url := range urls {
+		result = append(
+			result,
+			&environmentURL{
+				ID:  id,
+				URL: url,
+			},
+		)
+	}
+	sort.Slice(result, func(i, j int) bool { return result[i].ID < result[j].ID })
+	return result
+}
+
+type environmentsDeclarationVisitor struct {
+	value      ast.Expr
+	types      map[common.TypeId]*ir.TypeDeclaration
+	writer     *fileWriter
+	importPath string
+}
+
+func (e *environmentsDeclarationVisitor) VisitSingleBaseUrl(url *common.SingleBaseUrlEnvironments) error {
+	for i, environment := range url.Environments {
+		if i == 0 {
+			e.value = ast.NewImportedReference(
+				fmt.Sprintf("Environments.%s", environment.Name.PascalCase.UnsafeName),
+				e.importPath,
+			)
+		}
+		e.writer.WriteDocs(environment.Docs)
+		e.writer.P(environment.Name.PascalCase.UnsafeName, " string")
+	}
+	return nil
+}
+
+func (e *environmentsDeclarationVisitor) VisitMultipleBaseUrls(url *common.MultipleBaseUrlsEnvironments) error {
+	for i, environment := range url.Environments {
+		if i == 0 {
+			e.value = ast.NewImportedReference(
+				fmt.Sprintf("Environments.%s", environment.Name.PascalCase.UnsafeName),
+				e.importPath,
+			)
+		}
+		e.writer.WriteDocs(environment.Docs)
+		e.writer.P(environment.Name.PascalCase.UnsafeName, " Environment")
+	}
+	return nil
+}
+
+type environmentsValueVisitor struct {
+	types  map[common.TypeId]*ir.TypeDeclaration
+	writer *fileWriter
+}
+
+func (e *environmentsValueVisitor) VisitSingleBaseUrl(url *common.SingleBaseUrlEnvironments) error {
+	for _, environment := range url.Environments {
+		e.writer.P(environment.Name.PascalCase.UnsafeName, fmt.Sprintf(": %q,", environment.Url))
+	}
+	return nil
+}
+
+func (e *environmentsValueVisitor) VisitMultipleBaseUrls(url *common.MultipleBaseUrlsEnvironments) error {
+	baseURLs := make(map[common.EnvironmentBaseUrlId]string)
+	for _, baseURL := range url.BaseUrls {
+		baseURLs[baseURL.Id] = baseURL.Name.PascalCase.UnsafeName
+	}
+	for _, environment := range url.Environments {
+		environmentURLs := environmentURLMapToSortedSlice(environment.Urls)
+		e.writer.P(environment.Name.PascalCase.UnsafeName, ": Environment{")
+		for _, environmentURL := range environmentURLs {
+			e.writer.P(baseURLs[environmentURL.ID], fmt.Sprintf(": %q,", environmentURL.URL))
+		}
+		e.writer.P("},")
+	}
+	return nil
+}
+
+func environmentURLFromID(environmentsConfig *common.EnvironmentsConfig, id common.EnvironmentBaseUrlId) (common.EnvironmentUrl, error) {
+	if environmentsConfig == nil {
+		return "", nil
+	}
+	urlVisitor := &environmentsURLVisitor{
+		id: id,
+	}
+	if err := environmentsConfig.Environments.Accept(urlVisitor); err != nil {
+		return "", err
+	}
+	return urlVisitor.value, nil
+}
+
+func baseURLNameFromID(environmentsConfig *common.EnvironmentsConfig, id common.EnvironmentBaseUrlId) string {
+	if environmentsConfig == nil || environmentsConfig.Environments.MultipleBaseUrls == nil {
+		return ""
+	}
+	for _, baseURL := range environmentsConfig.Environments.MultipleBaseUrls.BaseUrls {
+		if baseURL.Id == id {
+			return baseURL.Name.PascalCase.UnsafeName
+		}
+	}
+	return ""
+}
+
+func isMultipleBaseUrlsEnvironment(environmentsConfig *common.EnvironmentsConfig) bool {
+	return environmentsConfig != nil && environmentsConfig.Environments.MultipleBaseUrls != nil
+}
+
+type environmentsURLVisitor struct {
+	value common.EnvironmentUrl
+	id    common.EnvironmentBaseUrlId
+}
+
+func (e *environmentsURLVisitor) VisitSingleBaseUrl(url *common.SingleBaseUrlEnvironments) error {
+	for _, environment := range url.Environments {
+		if environment.Id == e.id {
+			e.value = environment.Url
+			return nil
+		}
+	}
+	return nil
+}
+
+func (e *environmentsURLVisitor) VisitMultipleBaseUrls(url *common.MultipleBaseUrlsEnvironments) error {
+	for _, environment := range url.Environments {
+		for id, environmentURL := range environment.Urls {
+			if id == e.id {
+				e.value = environmentURL
+				return nil
+			}
+		}
+	}
+	return nil
+}
+
+type requestBody struct {
+	dates           []*date
+	literals        []*literal
+	extraProperties bool
+}
+
+func requestBodyToFieldDeclaration(
+	body *ir.HttpRequestBody,
+	writer *fileWriter,
+	importPath string,
+	bodyField string,
+	includeGenericOptionals bool,
+	inlineFileProperties bool,
+) (*requestBody, error) {
+	visitor := &requestBodyVisitor{
+		bodyField:               bodyField,
+		baseImportPath:          writer.baseImportPath,
+		importPath:              importPath,
+		scope:                   writer.scope,
+		types:                   writer.types,
+		writer:                  writer,
+		includeGenericOptionals: includeGenericOptionals,
+		inlineFileProperties:    inlineFileProperties,
+	}
+	if err := body.Accept(visitor); err != nil {
+		return nil, err
+	}
+	return &requestBody{
+		dates:           visitor.dates,
+		literals:        visitor.literals,
+		extraProperties: visitor.extraProperties,
+	}, nil
+}
+
+type requestBodyVisitor struct {
+	dates           []*date
+	literals        []*literal
+	extraProperties bool
+
+	bodyField      string
+	baseImportPath string
+	importPath     string
+	scope          *gospec.Scope
+	types          map[common.TypeId]*ir.TypeDeclaration
+	writer         *fileWriter
+
+	// Configurable
+	includeGenericOptionals bool
+	inlineFileProperties    bool
+}
+
+func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.InlinedRequestBody) error {
+	typeVisitor := &typeVisitor{
+		typeName:                     inlinedRequestBody.Name.PascalCase.UnsafeName,
+		baseImportPath:               r.baseImportPath,
+		importPath:                   r.importPath,
+		writer:                       r.writer,
+		gettersPassByValue:           r.writer.gettersPassByValue,
+		alwaysSendRequiredProperties: r.writer.alwaysSendRequiredProperties,
+	}
+	objectTypeDeclaration := inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody)
+	objectProperties := typeVisitor.visitObjectProperties(
+		objectTypeDeclaration,
+		true,  // includeJSONTags
+		false, // includeURLTags
+		r.includeGenericOptionals,
+		false, // includeLiterals
+	)
+	r.dates = objectProperties.dates
+	r.literals = objectProperties.literals
+	r.extraProperties = objectTypeDeclaration.ExtraProperties
+	return nil
+}
+
+func (r *requestBodyVisitor) VisitReference(reference *ir.HttpRequestBodyReference) error {
+	// For references, we include the type in a field that matches the configured body key.
+	r.writer.P(
+		r.bodyField,
+		" ",
+		typeReferenceToGoType(reference.RequestBodyType, r.types, r.scope, r.baseImportPath, r.importPath, false),
+		" `json:\"-\" url:\"-\"`",
+	)
+	return nil
+}
+
+func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) error {
+	var (
+		bodyProperties []*ir.FileUploadBodyProperty
+		fileProperties []*ir.FileProperty
+	)
+	for _, property := range fileUpload.Properties {
+		if bodyProperty := property.BodyProperty; bodyProperty != nil {
+			bodyProperties = append(bodyProperties, bodyProperty)
+		}
+		if r.inlineFileProperties {
+			// File properties are only part of the in-lined request if explicitly
+			// configured.
+			if fileProperty := property.File; fileProperty != nil {
+				fileProperties = append(fileProperties, fileProperty)
+			}
+		}
+	}
+	if len(bodyProperties) == 0 && len(fileProperties) == 0 {
+		// We only want to create a separate request type if the file upload request
+		// has any properties. By default, the file parameter is not part of the
+		// in-lined request type.
+		return nil
+	}
+	for _, fileProperty := range fileProperties {
+		filePropertyInfo, err := filePropertyToInfo(fileProperty)
+		if err != nil {
+			return err
+		}
+		parameterName := filePropertyInfo.Key.Name.PascalCase.UnsafeName
+		parameterType := "io.Reader"
+		if filePropertyInfo.IsArray {
+			parameterType = "[]io.Reader"
+		}
+		r.writer.P(parameterName, " ", parameterType, " `json:\"-\" url:\"-\"`")
+	}
+	typeVisitor := &typeVisitor{
+		typeName:                     fileUpload.Name.PascalCase.UnsafeName,
+		baseImportPath:               r.baseImportPath,
+		importPath:                   r.importPath,
+		writer:                       r.writer,
+		gettersPassByValue:           r.writer.gettersPassByValue,
+		alwaysSendRequiredProperties: r.writer.alwaysSendRequiredProperties,
+	}
+	objectTypeDeclaration := inlinedRequestBodyPropertiesToObjectTypeDeclaration(bodyProperties)
+	objectProperties := typeVisitor.visitObjectProperties(
+		objectTypeDeclaration,
+		true,  // includeJSONTags
+		false, // includeURLTags
+		r.includeGenericOptionals,
+		false, // includeLiterals
+	)
+	r.dates = objectProperties.dates
+	r.literals = objectProperties.literals
+	return nil
+}
+
+func (r *requestBodyVisitor) VisitBytes(bytes *ir.BytesRequest) error {
+	r.writer.P(
+		r.bodyField,
+		" ",
+		"[]byte",
+		" `json:\"-\" url:\"-\"`",
+	)
+	return nil
+}
+
+// inlinedRequestBodyToObjectTypeDeclaration maps the given inlined request body
+// into an object type declaration so that we can reuse the functionality required
+// to write object properties for a generated object.
+func inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody *ir.InlinedRequestBody) *ir.ObjectTypeDeclaration {
+	properties := make([]*ir.ObjectProperty, len(inlinedRequestBody.Properties))
+	for i, property := range inlinedRequestBody.Properties {
+		properties[i] = &ir.ObjectProperty{
+			Docs:      property.Docs,
+			Name:      property.Name,
+			ValueType: property.ValueType,
+		}
+	}
+	return &ir.ObjectTypeDeclaration{
+		Extends:         inlinedRequestBody.Extends,
+		Properties:      properties,
+		ExtraProperties: inlinedRequestBody.ExtraProperties,
+	}
+}
+
+// inlinedRequestBodyPropertiesToObjectTypeDeclaration maps the given inlined request body
+// properties into an object type declaration so that we can reuse the functionality required
+// to write object properties for a generated object.
+func inlinedRequestBodyPropertiesToObjectTypeDeclaration(bodyProperties []*ir.FileUploadBodyProperty) *ir.ObjectTypeDeclaration {
+	properties := make([]*ir.ObjectProperty, len(bodyProperties))
+	for i, property := range bodyProperties {
+		properties[i] = &ir.ObjectProperty{
+			Docs:      property.Docs,
+			Name:      property.Name,
+			ValueType: property.ValueType,
+		}
+	}
+	return &ir.ObjectTypeDeclaration{
+		Properties: properties,
+	}
+}
+
+// irMethodToMethodEnum maps the given common.HttpMethod to the net/http equivalent.
+// Note this returns the string representation of the net/http constant (e.g.
+// "http.MethodGet"), not the value the constant points to (e.g. "GET").
+func irMethodToMethodEnum(method common.HttpMethod) string {
+	switch method {
+	case common.HttpMethodGet:
+		return "http.MethodGet"
+	case common.HttpMethodPost:
+		return "http.MethodPost"
+	case common.HttpMethodPut:
+		return "http.MethodPut"
+	case common.HttpMethodPatch:
+		return "http.MethodPatch"
+	case common.HttpMethodDelete:
+		return "http.MethodDelete"
+	case common.HttpMethodHead:
+		return "http.MethodHead"
+	}
+	return ""
+}
+
+type valueTypeFormat struct {
+	Prefix      string
+	Suffix      string
+	ZeroValue   string
+	IsOptional  bool
+	IsPrimitive bool
+	IsIterable  bool
+}
+
+func formatForValueType(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) *valueTypeFormat {
+	var (
+		prefix      string
+		suffix      string
+		isOptional  bool
+		isPrimitive bool
+	)
+	iterableType := maybeIterableType(typeReference, types)
+	if iterableType != nil {
+		value := formatForValueType(iterableType, types)
+		return &valueTypeFormat{
+			Prefix:      value.Prefix,
+			Suffix:      value.Suffix,
+			ZeroValue:   value.ZeroValue,
+			IsOptional:  value.IsOptional,
+			IsPrimitive: value.IsPrimitive,
+			IsIterable:  true,
+		}
+	}
+	optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+	if optionalOrNullableContainer != nil {
+		isOptional = true
+		if needsOptionalDereference(optionalOrNullableContainer, types) {
+			prefix = "*"
+		}
+	}
+	if primitive := maybePrimitive(typeReference); primitive != nil {
+		// Several of the primitive types require special handling for query parameter serialization.
+		if isOptional {
+			prefix = "*"
+		}
+		switch primitive.V1 {
+		case common.PrimitiveTypeV1DateTime:
+			prefix = ""
+			suffix = ".Format(time.RFC3339)"
+		case common.PrimitiveTypeV1Date:
+			prefix = ""
+			suffix = `.Format("2006-01-02")`
+		case common.PrimitiveTypeV1Base64:
+			prefix = "base64.StdEncoding.EncodeToString(" + prefix
+			suffix = ")"
+		}
+		isPrimitive = true
+	}
+	return &valueTypeFormat{
+		Prefix:      prefix,
+		Suffix:      suffix,
+		ZeroValue:   zeroValueForTypeReference(typeReference, types),
+		IsOptional:  isOptional,
+		IsPrimitive: isPrimitive,
+	}
+}
+
+func contentTypeFromRequestBody(
+	requestBody *ir.HttpRequestBody,
+) string {
+	if requestBody == nil {
+		return ""
+	}
+	visitor := new(contentTypeVisitor)
+	if err := requestBody.Accept(visitor); err != nil {
+		return ""
+	}
+	if visitor.contentType == nil {
+		return ""
+	}
+	return *visitor.contentType
+}
+
+type contentTypeVisitor struct {
+	contentType *string
+}
+
+func (c *contentTypeVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.InlinedRequestBody) error {
+	c.contentType = inlinedRequestBody.ContentType
+	return nil
+}
+
+func (c *contentTypeVisitor) VisitReference(reference *ir.HttpRequestBodyReference) error {
+	c.contentType = reference.ContentType
+	return nil
+}
+
+func (c *contentTypeVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) error {
+	return nil
+}
+
+func (c *contentTypeVisitor) VisitBytes(bytes *ir.BytesRequest) error {
+	c.contentType = bytes.ContentType
+	return nil
+}
+
+func typeReferenceFromJsonResponse(
+	jsonResponse *ir.JsonResponse,
+) *ir.TypeReference {
+	if jsonResponse == nil {
+		return nil
+	}
+	switch jsonResponse.Type {
+	case "response":
+		return jsonResponse.Response.ResponseBodyType
+	case "nestedPropertyAsResponse":
+		return jsonResponse.NestedPropertyAsResponse.ResponseBodyType
+	}
+	return nil
+}
+
+func typeReferenceFromStreamingResponse(
+	streamingResponse *ir.StreamingResponse,
+) (*ir.TypeReference, error) {
+	if streamingResponse == nil {
+		return nil, nil
+	}
+	switch streamingResponse.Type {
+	case "json":
+		return streamingResponse.Json.Payload, nil
+	case "sse":
+		return streamingResponse.Sse.Payload, nil
+	case "text":
+		return ir.NewTypeReferenceFromPrimitive(&ir.PrimitiveType{V1: common.PrimitiveTypeV1String}), nil
+	}
+	return nil, fmt.Errorf("unsupported streaming response type: %s", streamingResponse.Type)
+}
+
+// needsRequestParameter returns true if the endpoint needs a request parameter in its
+// function signature.
+func needsRequestParameter(
+	endpoint *ir.HttpEndpoint,
+	serviceHeaders []*ir.HttpHeader,
+	inlinePathParameters bool,
+	inlineFileProperties bool,
+	omitEmptyRequestWrappers bool,
+) bool {
+	if endpoint.SdkRequest == nil {
+		return false
+	}
+	if includePathParametersInWrappedRequest(endpoint, inlinePathParameters) {
+		return true
+	}
+	if len(endpoint.QueryParameters) > 0 {
+		return true
+	}
+	if len(endpoint.Headers) > 0 {
+		return true
+	}
+	if len(serviceHeaders) > 0 {
+		return true
+	}
+	if endpoint.RequestBody != nil {
+		return endpoint.RequestBody.FileUpload == nil ||
+			fileUploadHasBodyProperties(endpoint.RequestBody.FileUpload) ||
+			(inlineFileProperties && fileUploadHasFileProperties(endpoint.RequestBody.FileUpload))
+	}
+	onlyPathParameters := endpoint.GetSdkRequest().GetShape().GetWrapper().GetOnlyPathParameters()
+	if onlyPathParameters != nil && *onlyPathParameters {
+		return false
+	}
+	return !omitEmptyRequestWrappers
+}
+
+// includePathParametersInWrappedRequest returns true if the endpoint's request should
+// include path parameters in its wrapped request type.
+func includePathParametersInWrappedRequest(
+	endpoint *ir.HttpEndpoint,
+	inlinePathParameters bool,
+) bool {
+	if endpoint.SdkRequest == nil {
+		return false
+	}
+	includePathParameters := endpoint.GetSdkRequest().GetShape().GetWrapper().GetIncludePathParameters()
+	return len(endpoint.PathParameters) > 0 && inlinePathParameters && includePathParameters != nil && *includePathParameters
+}
+
+// maybePrimitive recurses into the given value type, returning its underlying primitive
+// value, if any. Note that this only recurses through nested optional containers; all
+// other container types are ignored.
+func maybePrimitive(typeReference *ir.TypeReference) *ir.PrimitiveType {
+	if typeReference.Primitive != nil {
+		return typeReference.Primitive
+	}
+	optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+	if optionalOrNullableContainer != nil {
+		return maybePrimitive(optionalOrNullableContainer)
+	}
+	return nil
+}
+
+// isStringType returns true if the given type reference is a non-optional string primitive.
+// This is used to guard clientDefault generation, since the `== ""` zero-value check
+// and `fmt.Sprintf` assignment only compile for Go `string` types (not `*string`).
+func isStringType(valueType *ir.TypeReference) bool {
+	if getOptionalOrNullableContainer(valueType) != nil {
+		return false
+	}
+	primitive := maybePrimitive(valueType)
+	return primitive != nil && primitive.V1 == common.PrimitiveTypeV1String
+}
+
+// isClientDefaultResolvedAtConstruction returns true if a header's client
+// default is applied to the client-level options at construction time (by the
+// v2 client generator), which covers optional (pointer) types plus plain
+// string and boolean primitives. For those types, ToHeader must not re-apply
+// the fallback, or it would clobber the client-level value on every request.
+func isClientDefaultResolvedAtConstruction(valueType *ir.TypeReference, valueTypeFormat *valueTypeFormat) bool {
+	if valueTypeFormat.IsOptional {
+		return true
+	}
+	if valueType.Primitive == nil {
+		return false
+	}
+	return valueType.Primitive.V1 == common.PrimitiveTypeV1String || valueType.Primitive.V1 == common.PrimitiveTypeV1Boolean
+}
+
+// isPrimitiveInteger returns true if the given primitive type is an integer.
+func isPrimitiveInteger(primitive *ir.PrimitiveType) bool {
+	return primitive.V1 == common.PrimitiveTypeV1Integer || primitive.V1 == common.PrimitiveTypeV1Uint || primitive.V1 == common.PrimitiveTypeV1Uint64 || primitive.V1 == common.PrimitiveTypeV1Long
+}
+
+// maybeLiteral recurses into the given value type, returning its underlying literal
+// value, if any.
+func maybeLiteral(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) *ir.Literal {
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		if typeDeclaration.Shape.Alias != nil {
+			return maybeLiteral(typeDeclaration.Shape.Alias.AliasOf, types)
+		}
+		return nil
+	}
+	optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+	if optionalOrNullableContainer != nil {
+		return maybeLiteral(optionalOrNullableContainer, types)
+	}
+	if typeReference.Container != nil && typeReference.Container.Literal != nil {
+		return typeReference.Container.Literal
+	}
+	return nil
+}
+
+// isLiteralType returns true if the given type reference is a literal.
+func isLiteralType(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		return typeDeclaration.Shape.Alias != nil && isLiteralType(typeDeclaration.Shape.Alias.AliasOf, types)
+	}
+	optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+	if optionalOrNullableContainer != nil {
+		return isLiteralType(optionalOrNullableContainer, types)
+	}
+	return typeReference.Container != nil && typeReference.Container.Literal != nil
+}
+
+func getOptionalOrNullableContainer(valueType *ir.TypeReference) *ir.TypeReference {
+	if valueType != nil && valueType.Container != nil {
+		if valueType.Container.Optional != nil {
+			return valueType.Container.Optional
+		}
+		if valueType.Container.Nullable != nil {
+			return valueType.Container.Nullable
+		}
+	}
+	return nil
+}
+
+// isOptionalType returns true if the given type reference is an optional.
+func isOptionalType(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		return typeDeclaration.Shape.Alias != nil && isOptionalType(typeDeclaration.Shape.Alias.AliasOf, types)
+	}
+	return getOptionalOrNullableContainer(typeReference) != nil
+}
+
+// maybeIterableType returns the given type reference's iterable type, if any.
+func maybeIterableType(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) *ir.TypeReference {
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		if typeDeclaration.Shape.Alias != nil {
+			return maybeIterableType(typeDeclaration.Shape.Alias.AliasOf, types)
+		}
+		return nil
+	}
+	if typeReference.Container != nil {
+		optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+		if optionalOrNullableContainer != nil {
+			return maybeIterableType(optionalOrNullableContainer, types)
+		}
+		if typeReference.Container.List != nil {
+			return typeReference.Container.List
+		}
+		if typeReference.Container.Set != nil {
+			return typeReference.Container.Set
+		}
+	}
+	return nil
+}
+
+// needsOptionalDereference returns true if the optional type needs to be referenced.
+//
+// Container types like lists, maps, and sets are already nil-able, so they don't
+// require a dereference prefix.
+func needsOptionalDereference(optionalTypeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	if optionalTypeReference.Named != nil {
+		typeDeclaration := types[optionalTypeReference.Named.TypeId]
+		if typeDeclaration.Shape.Alias != nil {
+			return needsOptionalDereference(typeDeclaration.Shape.Alias.AliasOf, types)
+		}
+		if typeDeclaration.Shape.Enum != nil {
+			return true
+		}
+		return false
+	}
+	return optionalTypeReference.Type == "primitive"
+}
+
+// shouldGenerateHeader returns true if the given header should be generated.
+func shouldGenerateHeader(header *ir.HttpHeader, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	return header.Env != nil || !isLiteralType((header.ValueType), types)
+}
+
+// shouldGenerateHeaderAuthScheme returns true if the given header auth scheme should be generated.
+func shouldGenerateHeaderAuthScheme(auth *ir.HeaderAuthScheme, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	return auth.HeaderEnvVar != nil || !isLiteralType(auth.ValueType, types)
+}
+
+// getOAuthScheme returns the OAuth scheme from the auth configuration, or nil if not present.
+func getOAuthScheme(auth *ir.ApiAuth) *ir.OAuthScheme {
+	if auth == nil {
+		return nil
+	}
+	for _, scheme := range auth.Schemes {
+		if scheme.Oauth != nil {
+			return scheme.Oauth
+		}
+	}
+	return nil
+}
+
+// isEndpointSecurity returns true when the API applies auth per-endpoint (each
+// endpoint declares its own schemes) rather than flatly on every request.
+func isEndpointSecurity(auth *ir.ApiAuth) bool {
+	return auth != nil && string(auth.Requirement) == "ENDPOINT_SECURITY"
+}
+
+// hasBearerAuth returns true if the auth configuration has a bearer auth scheme.
+func hasBearerAuth(auth *ir.ApiAuth) bool {
+	if auth == nil {
+		return false
+	}
+	for _, scheme := range auth.Schemes {
+		if scheme.Bearer != nil {
+			return true
+		}
+	}
+	return false
+}
+
+// isBasicAuthUsernameOmitted checks the BasicAuthScheme's extra properties for
+// usernameOmit == true, indicating the username should be removed from the public API.
+func isBasicAuthUsernameOmitted(basic *ir.BasicAuthScheme) bool {
+	if basic == nil {
+		return false
+	}
+	extras := basic.GetExtraProperties()
+	if extras == nil {
+		return false
+	}
+	val, ok := extras["usernameOmit"]
+	return ok && val == true
+}
+
+// isBasicAuthPasswordOmitted checks the BasicAuthScheme's extra properties for
+// passwordOmit == true, indicating the password should be removed from the public API.
+func isBasicAuthPasswordOmitted(basic *ir.BasicAuthScheme) bool {
+	if basic == nil {
+		return false
+	}
+	extras := basic.GetExtraProperties()
+	if extras == nil {
+		return false
+	}
+	val, ok := extras["passwordOmit"]
+	return ok && val == true
+}
+
+// getOAuthClientCredentials returns the OAuth client credentials configuration, or nil if not present.
+func getOAuthClientCredentials(auth *ir.ApiAuth) *ir.OAuthClientCredentials {
+	oauth := getOAuthScheme(auth)
+	if oauth == nil || oauth.Configuration == nil {
+		return nil
+	}
+	return oauth.Configuration.ClientCredentials
+}
+
+// inferredAuthParam represents a credential parameter for inferred auth,
+// resolved from the token endpoint's request parameters.
+type inferredAuthParam struct {
+	PascalCase         string
+	CamelCase          string
+	ScreamingSnakeCase string
+}
+
+// getInferredAuthScheme returns the inferred auth scheme from the auth configuration, or nil if not present.
+func getInferredAuthScheme(auth *ir.ApiAuth) *ir.InferredAuthScheme {
+	if auth == nil {
+		return nil
+	}
+	for _, scheme := range auth.Schemes {
+		if scheme.Inferred != nil {
+			return scheme.Inferred
+		}
+	}
+	return nil
+}
+
+// resolveInferredAuthParams resolves the credential parameters for inferred auth
+// from the token endpoint's request parameters (non-literal headers and body properties).
+func resolveInferredAuthParams(auth *ir.ApiAuth, services map[ir.ServiceId]*ir.HttpService, types map[common.TypeId]*ir.TypeDeclaration) []inferredAuthParam {
+	scheme := getInferredAuthScheme(auth)
+	if scheme == nil || scheme.TokenEndpoint == nil || scheme.TokenEndpoint.Endpoint == nil {
+		return nil
+	}
+
+	endpointRef := scheme.TokenEndpoint.Endpoint
+	service, ok := services[endpointRef.ServiceId]
+	if !ok {
+		return nil
+	}
+
+	var endpoint *ir.HttpEndpoint
+	for _, ep := range service.Endpoints {
+		if ep.Id == endpointRef.EndpointId {
+			endpoint = ep
+			break
+		}
+	}
+	if endpoint == nil {
+		return nil
+	}
+
+	var params []inferredAuthParam
+
+	// Add non-literal endpoint headers as credential parameters
+	for _, header := range endpoint.Headers {
+		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
+			continue
+		}
+		params = append(params, inferredAuthParam{
+			PascalCase:         header.Name.Name.PascalCase.UnsafeName,
+			CamelCase:          header.Name.Name.CamelCase.SafeName,
+			ScreamingSnakeCase: header.Name.Name.ScreamingSnakeCase.UnsafeName,
+		})
+	}
+
+	// Add non-literal body properties as credential parameters.
+	// These can come from inlined request bodies or referenced type declarations.
+	// Both property types share NameAndWireValue and TypeReference fields.
+	type namedProperty struct {
+		Name      *common.NameAndWireValue
+		ValueType *ir.TypeReference
+	}
+	var bodyProps []namedProperty
+	if endpoint.RequestBody != nil {
+		if endpoint.RequestBody.InlinedRequestBody != nil {
+			for _, prop := range endpoint.RequestBody.InlinedRequestBody.Properties {
+				bodyProps = append(bodyProps, namedProperty{Name: prop.Name, ValueType: prop.ValueType})
+			}
+		} else if endpoint.RequestBody.Reference != nil {
+			for _, prop := range resolveObjectProperties(endpoint.RequestBody.Reference.RequestBodyType, types) {
+				bodyProps = append(bodyProps, namedProperty{Name: prop.Name, ValueType: prop.ValueType})
+			}
+		}
+	}
+	for _, prop := range bodyProps {
+		if prop.ValueType.Container != nil && prop.ValueType.Container.Literal != nil {
+			continue
+		}
+		if prop.ValueType.Container != nil && prop.ValueType.Container.Optional != nil {
+			continue
+		}
+		params = append(params, inferredAuthParam{
+			PascalCase:         prop.Name.Name.PascalCase.UnsafeName,
+			CamelCase:          prop.Name.Name.CamelCase.SafeName,
+			ScreamingSnakeCase: prop.Name.Name.ScreamingSnakeCase.UnsafeName,
+		})
+	}
+
+	return params
+}
+
+// resolveObjectProperties resolves the properties of a type reference,
+// returning the object properties if the type is a named object type.
+func resolveObjectProperties(typeRef *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) []*ir.ObjectProperty {
+	if typeRef == nil || typeRef.Named == nil {
+		return nil
+	}
+	typeDecl, ok := types[typeRef.Named.TypeId]
+	if !ok || typeDecl.Shape == nil || typeDecl.Shape.Object == nil {
+		return nil
+	}
+	return typeDecl.Shape.Object.Properties
+}

@@ -1,0 +1,248 @@
+{
+  "mappings": [
+    {
+      "id": "ceac88e3-5e93-4a24-879e-476e9e296525",
+      "name": "getToken - default",
+      "request": {
+        "urlPathTemplate": "/token",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"access_token\": \"access_token\",\n  \"expires_in\": 1,\n  \"refresh_token\": \"refresh_token\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "ceac88e3-5e93-4a24-879e-476e9e296525",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "cae9ea94-d25c-41f8-bc89-e5d815d20b0e",
+      "name": "getWithBearer - default",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "cae9ea94-d25c-41f8-bc89-e5d815d20b0e",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "1a0ee2b1-eee0-4c6d-8e0b-daedb3ae5d59",
+      "name": "getWithApiKey - default",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1a0ee2b1-eee0-4c6d-8e0b-daedb3ae5d59",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "58609790-426b-4d6b-8ded-5993cca43bfb",
+      "name": "getWithOAuth - default",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "58609790-426b-4d6b-8ded-5993cca43bfb",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "0c48a822-cca9-4721-9b33-856b88988bbf",
+      "name": "getWithBasic - default",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "0c48a822-cca9-4721-9b33-856b88988bbf",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "da159ee5-6e07-42a7-b0ad-140684036c3f",
+      "name": "getWithInferredAuth - default",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "da159ee5-6e07-42a7-b0ad-140684036c3f",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "b5d02696-07ef-4fc7-b4ba-f60d95cfa4b5",
+      "name": "getWithAnyAuth - default",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "b5d02696-07ef-4fc7-b4ba-f60d95cfa4b5",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "409fdf8b-a556-48b2-9c45-c726cfb20d61",
+      "name": "getWithAllAuth - default",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "409fdf8b-a556-48b2-9c45-c726cfb20d61",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "0c485345-a95c-4093-82b5-aa9e0a79fe69",
+      "name": "OAuth Token Endpoint - get token",
+      "request": {
+        "urlPathTemplate": "/token",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\"access_token\":\"test_access_token\",\"token_type\":\"Bearer\",\"expires_in\":3600,\"scope\":\"api\"}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "0c485345-a95c-4093-82b5-aa9e0a79fe69",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 9
+  }
+}

@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/ping",
+                "method": "GET",
+                "identifier_override": "endpoint_.ping"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedLiteralUserAgent;\n\nvar client = new SeedLiteralUserAgentClient();\nawait client.PingAsync();\n"
+            }
+        }
+    ]
+}

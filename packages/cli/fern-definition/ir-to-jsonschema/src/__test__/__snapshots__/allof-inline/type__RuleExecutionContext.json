@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "prod",
+    "staging",
+    "dev"
+  ],
+  "description": "Execution environment for a rule.",
+  "definitions": {}
+}

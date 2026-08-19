@@ -1,0 +1,20 @@
+openapi: 3.1.0
+info:
+  title: Test API
+  version: 1.0.0
+tags:
+  - name: Authentication
+    description: Auth endpoints
+  - name: Orders
+    description: Order endpoints
+paths:
+  /login:
+    post:
+      tags:
+        - Authentication
+      summary: Login
+      operationId: login
+      description: This is a normal description without any frontmatter.
+      responses:
+        "200":
+          description: Success

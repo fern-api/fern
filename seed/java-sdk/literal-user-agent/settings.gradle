@@ -1,0 +1,3 @@
+rootProject.name = 'literal-user-agent'
+
+include 'sample-app'

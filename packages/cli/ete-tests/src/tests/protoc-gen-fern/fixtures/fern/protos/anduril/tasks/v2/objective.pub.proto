@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package anduril.tasks.v2;
+
+import "anduril/type/coords.pub.proto";
+
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/tasks/v2;tasks";
+option java_multiple_files = true;
+option java_package = "com.anduril.tasks.v2";
+
+// Describes the objective of a task.
+message Objective {
+  oneof objective {
+    // Prefer Entity Objectives whenever the objective is in fact an entity. In other words, don't take position/point
+    // out of an entity and pass it as a simple point.
+    string entity_id = 1;
+    // Point objectives for simple reference points that are not geo entities.
+    Point point = 5;
+  }
+
+  reserved 2;
+}
+
+// Describes a single point location.
+message Point {
+  // A human readable name for the point.
+  string reference_name = 1;
+  // Indicates the objective is the provided location.
+  anduril.type.LLA lla = 2;
+  // An optional entity id that is provided for reverse lookup purposes. This may be used any time the UI might
+  // have to convert a geoentity to statically defined LLA.
+  string backing_entity_id = 3;
+}

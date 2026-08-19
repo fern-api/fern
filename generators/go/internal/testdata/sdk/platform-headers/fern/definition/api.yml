@@ -1,0 +1,12 @@
+name: api
+auth: bearer
+environments:
+  Production:
+    urls:
+      Auth: https://auth.yoursite.com
+      Core: https://core.yoursite.com
+  Staging:
+    urls:
+      Auth: https://auth.staging.yoursite.com
+      Core: https://core.staging.yoursite.com
+default-environment: null

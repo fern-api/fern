@@ -1,0 +1,5 @@
+- summary: |
+    Expose HTTP response metadata (status code, headers, and raw HTTP response) on paginated iterators.
+    `CursorPageIterator`, `OffsetPageIterator`, `CustomPager`, and `ItemIterator` now expose `status_code`,
+    `headers`, and `http_response` methods that return metadata from the most recent page load.
+  type: feat

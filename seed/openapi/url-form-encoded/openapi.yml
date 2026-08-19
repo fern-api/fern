@@ -1,0 +1,124 @@
+openapi: 3.1.0
+info:
+  title: URL Form Encoded API
+  version: 0.0.0
+paths:
+  /submit:
+    post:
+      operationId: submitFormData
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostSubmitResponse'
+              examples:
+                Example1:
+                  value:
+                    status: success
+                    message: Data received successfully.
+      summary: Submit form data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: The user's username
+                  examples:
+                    - johndoe
+                email:
+                  type: string
+                  format: email
+                  description: The user's email address
+                  examples:
+                    - john@example.com
+              required:
+                - username
+                - email
+            examples:
+              Example1:
+                value:
+                  username: johndoe
+                  email: john@example.com
+  /token:
+    post:
+      operationId: get_token
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Token issued successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Example1:
+                  value:
+                    access_token: access_token
+                    expires_in: 1
+      summary: Get OAuth token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+            examples:
+              Example1:
+                value:
+                  client_id: client_id
+                  client_secret: client_secret
+components:
+  schemas:
+    PostSubmitResponse:
+      title: PostSubmitResponse
+      type: object
+      properties:
+        status:
+          type:
+            - string
+            - 'null'
+        message:
+          type:
+            - string
+            - 'null'
+    TokenRequest:
+      title: TokenRequest
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: Client identifier
+          examples:
+            - client_id
+        client_secret:
+          type: string
+          description: Client secret
+          examples:
+            - client_secret
+      required:
+        - client_id
+        - client_secret
+    TokenResponse:
+      title: TokenResponse
+      type: object
+      properties:
+        access_token:
+          type:
+            - string
+            - 'null'
+        expires_in:
+          type:
+            - integer
+            - 'null'
+  securitySchemes: {}

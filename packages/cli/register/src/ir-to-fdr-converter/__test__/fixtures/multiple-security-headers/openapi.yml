@@ -1,0 +1,190 @@
+openapi: 3.0.3
+info:
+  title: Multiple Security Headers Test API
+  version: 1.0.0
+  description: OpenAPI spec to test endpoints with multiple security headers
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /transaction:
+    post:
+      operationId: createTransaction
+      summary: Create a transaction requiring multiple auth headers
+      security:
+        - wallet: []
+          blockchain: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionRequest"
+      responses:
+        "200":
+          description: Transaction created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /user-transaction:
+    post:
+      operationId: createUserTransaction
+      summary: Create a user transaction with multiple auth options
+      security:
+        - wallet: []
+          blockchain: []
+        - userId: []
+          blockchain: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionRequest"
+      responses:
+        "200":
+          description: Transaction created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionResponse"
+
+  /merchant/settings:
+    get:
+      operationId: getMerchantSettings
+      summary: Get merchant settings
+      security:
+        - merchant: []
+      responses:
+        "200":
+          description: Merchant settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MerchantSettings"
+
+  /admin/users:
+    get:
+      operationId: listUsers
+      summary: List all users (admin only)
+      security:
+        - admin: []
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+
+components:
+  securitySchemes:
+    wallet:
+      type: apiKey
+      name: x-coinflow-auth-wallet
+      in: header
+      description: The web3 wallet of the end user
+    blockchain:
+      type: apiKey
+      name: x-coinflow-auth-blockchain
+      in: header
+      description: The blockchain associated with the end user
+    userId:
+      type: apiKey
+      name: x-coinflow-auth-user-id
+      in: header
+      description: The external identifier of the end user
+    merchant:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: The API key of the merchant
+    admin:
+      type: apiKey
+      name: Authorization
+      in: header
+
+  schemas:
+    TransactionRequest:
+      type: object
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: number
+          description: Transaction amount
+          example: 100.50
+        currency:
+          type: string
+          description: Currency code
+          example: "USD"
+
+    TransactionResponse:
+      type: object
+      required:
+        - id
+        - status
+      properties:
+        id:
+          type: string
+          description: Transaction identifier
+          example: "txn_123456"
+        status:
+          type: string
+          description: Transaction status
+          example: "completed"
+
+    MerchantSettings:
+      type: object
+      required:
+        - merchantId
+        - name
+      properties:
+        merchantId:
+          type: string
+          description: Merchant identifier
+          example: "merchant_123"
+        name:
+          type: string
+          description: Merchant name
+          example: "Example Merchant"
+
+    User:
+      type: object
+      required:
+        - id
+        - email
+      properties:
+        id:
+          type: string
+          description: User identifier
+          example: "user_123"
+        email:
+          type: string
+          description: User email
+          example: "user@example.com"
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          example: "UNAUTHORIZED"
+        message:
+          type: string
+          example: "Authentication required"

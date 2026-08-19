@@ -1,0 +1,28 @@
+# frozen_string_literal: true
+
+module Seed
+  class Client
+    # @param username [String]
+    # @param base_url [String, nil]
+    # @param max_retries [Integer]
+    #
+    # @return [void]
+    def initialize(username:, base_url: nil, max_retries: 2)
+      headers = {
+        "User-Agent" => "fern_basic-auth-pw-omitted/0.0.1",
+        "X-Fern-Language" => "Ruby"
+      }
+      headers["Authorization"] = "Basic #{Base64.strict_encode64("#{username}:")}"
+      @raw_client = Seed::Internal::Http::RawClient.new(
+        base_url: base_url,
+        headers: headers,
+        max_retries: max_retries
+      )
+    end
+
+    # @return [Seed::BasicAuth::Client]
+    def basic_auth
+      @basic_auth ||= Seed::BasicAuth::Client.new(client: @raw_client)
+    end
+  end
+end

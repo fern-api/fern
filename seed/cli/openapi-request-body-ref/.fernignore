@@ -1,0 +1,2 @@
+# Files owned by the user — fern generate will not overwrite these.
+cli/openapi-request-body-ref/custom.rs

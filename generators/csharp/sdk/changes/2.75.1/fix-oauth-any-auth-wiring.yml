@@ -1,0 +1,9 @@
+- summary: |
+    Wire OAuth client-credentials authentication into the root client when the OAuth
+    scheme is not the first scheme in the API's auth configuration (e.g.
+    `auth: any` with basic auth listed before OAuth). Previously the OAuth token
+    provider was only generated when OAuth was the first auth scheme, so the root
+    client silently fell back to the other schemes and never used the OAuth
+    credentials. When both an OAuth and an inferred auth scheme are present, the
+    provider-based scheme that appears first in the auth configuration is used.
+  type: fix

@@ -1,0 +1,5 @@
+**/ruby/playground/** linguist-generated=true
+seed/** linguist-generated=true
+seed/**/seed.yml linguist-generated=false
+seed/**/.mock linguist-generated=true
+packages/ir-sdk/src/sdk/** linguist-generated=true

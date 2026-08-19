@@ -1,0 +1,200 @@
+import { diffSemverOrThrow } from "@fern-api/core-utils";
+import { AbsoluteFilePath, cwd, doesPathExist, resolve, streamObjectFromFile } from "@fern-api/fs-utils";
+import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
+import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
+import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+import semver from "semver";
+
+import { CliContext } from "../../cli-context/CliContext.js";
+
+export type Bump = "major" | "minor" | "patch" | "no_change";
+export interface Result {
+    bump: Bump;
+    nextVersion?: string;
+    errors: string[];
+}
+
+interface InternalResult {
+    bump?: Bump;
+    errors: string[];
+}
+
+export async function diff({
+    context,
+    from,
+    to,
+    fromVersion,
+    generatorVersions
+}: {
+    context: CliContext;
+    from: string;
+    to: string;
+    fromVersion: string | undefined;
+    generatorVersions: { from: string; to: string } | undefined;
+}): Promise<Result> {
+    const detector = new IntermediateRepresentationChangeDetector();
+    const irChange = resultFromIRChangeResults(
+        await detector.check({
+            from: await readIr({ context, filepath: from, flagName: "from" }),
+            to: await readIr({ context, filepath: to, flagName: "to" })
+        })
+    );
+    const generatorChange = diffGeneratorVersions(context, generatorVersions);
+    const { bump: bumpOrUndefined, errors } = mergeDiffResults(irChange, generatorChange);
+
+    if (fromVersion == null) {
+        const finalBump = bumpOrUndefined ?? "patch";
+        return { bump: finalBump, errors };
+    }
+
+    // If there are no changes (bump is no_change), return the same version
+    if (bumpOrUndefined === "no_change") {
+        return { bump: "no_change", nextVersion: fromVersion, errors };
+    }
+
+    const bump = bumpOrUndefined ?? "patch";
+
+    const nextVersion = semver.inc(fromVersion, bump);
+    if (!nextVersion) {
+        context.failWithoutThrowing(`Invalid current version: ${fromVersion}`, undefined, {
+            code: CliError.Code.VersionError
+        });
+        throw new TaskAbortSignal();
+    }
+    return { bump, nextVersion, errors };
+}
+
+async function readIr({
+    context,
+    filepath,
+    flagName
+}: {
+    context: CliContext;
+    filepath: string;
+    flagName: string;
+}): Promise<IntermediateRepresentation> {
+    const absoluteFilepath = AbsoluteFilePath.of(resolve(cwd(), filepath));
+    if (!(await doesPathExist(absoluteFilepath, "file"))) {
+        context.failWithoutThrowing(`File not found: ${absoluteFilepath}`, undefined, {
+            code: CliError.Code.ConfigError
+        });
+        throw new TaskAbortSignal();
+    }
+    let ir: unknown;
+    try {
+        ir = await streamObjectFromFile(absoluteFilepath);
+    } catch (error) {
+        context.failWithoutThrowing(
+            `Failed to parse IR file ${absoluteFilepath}: ${error instanceof Error ? error.message : String(error)}`,
+            error,
+            { code: CliError.Code.ParseError }
+        );
+        throw new TaskAbortSignal();
+    }
+    const parsed = serialization.IntermediateRepresentation.parse(ir);
+    if (!parsed.ok) {
+        context.failWithoutThrowing(`Invalid --${flagName}; expected a filepath containing a valid IR`, undefined, {
+            code: CliError.Code.ParseError
+        });
+        throw new TaskAbortSignal();
+    }
+    return parsed.value;
+}
+
+function resultFromIRChangeResults(results: IntermediateRepresentationChangeDetector.Result): InternalResult {
+    return {
+        bump: results.bump,
+        errors: results.errors.map((error) => error.message)
+    };
+}
+
+// export for testing
+export function mergeDiffResults(diffA: InternalResult, diffB: InternalResult): InternalResult {
+    return {
+        bump: maxBump(diffA.bump, diffB.bump),
+        errors: [...diffA.errors, ...diffB.errors]
+    };
+}
+
+function maxBump(bumpA: Bump | undefined, bumpB: Bump | undefined): Bump | undefined {
+    // If both are undefined, return undefined
+    if (bumpA === undefined && bumpB === undefined) {
+        return undefined;
+    }
+    // If one is no_change (meaning identical IRs), return no_change if the other is undefined or no_change
+    if (bumpA === "no_change" && (bumpB === undefined || bumpB === "no_change")) {
+        return "no_change";
+    }
+    if (bumpB === "no_change" && (bumpA === undefined || bumpA === "no_change")) {
+        return "no_change";
+    }
+    // If one is undefined, return the other
+    if (bumpA === undefined) {
+        return bumpB;
+    }
+    if (bumpB === undefined) {
+        return bumpA;
+    }
+    // If one is no_change and the other is a real bump, return the real bump
+    if (bumpA === "no_change") {
+        return bumpB;
+    }
+    if (bumpB === "no_change") {
+        return bumpA;
+    }
+    // Handle normal bump priority
+    if (bumpA === "major" || bumpB === "major") {
+        return "major";
+    }
+    if (bumpA === "minor" || bumpB === "minor") {
+        return "minor";
+    }
+    return "patch";
+}
+
+// export for testing
+export function diffGeneratorVersions(
+    context: CliContext,
+    generatorVersions: { from: string; to: string } | undefined
+): InternalResult {
+    if (generatorVersions === undefined) {
+        return {
+            bump: undefined,
+            errors: []
+        };
+    }
+    const { from, to } = generatorVersions;
+    try {
+        const bump = bumpFromDiff(diffSemverOrThrow(from, to));
+
+        let errors: string[] = [];
+        if (bump === "major") {
+            errors.push("Generator version changed by major version.");
+        }
+
+        return {
+            bump,
+            errors
+        };
+    } catch (error) {
+        context.failWithoutThrowing(`Error diffing generator versions ${from} and ${to}: ${error}`, undefined, {
+            code: CliError.Code.InternalError
+        });
+        throw new TaskAbortSignal();
+    }
+}
+
+function bumpFromDiff(diff: semver.ReleaseType | null): Bump | undefined {
+    if (diff === null) {
+        return undefined;
+    }
+
+    switch (diff) {
+        case "major":
+        case "minor":
+        case "patch":
+            return diff;
+        default:
+            return undefined;
+    }
+}

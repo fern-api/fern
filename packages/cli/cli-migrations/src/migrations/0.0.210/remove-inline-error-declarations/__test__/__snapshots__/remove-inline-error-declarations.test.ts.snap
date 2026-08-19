@@ -1,0 +1,50 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`remove-inline-error-declarations > simple 1`] = `
+"types:
+  A: string
+  B:
+    properties:
+      foo: integer
+  Error5Body:
+    docs: I'm a type!
+    properties:
+      foo: string # Comment 5
+
+errors:
+  # Comment 1
+  Error1: {}
+  Error2:
+    status-code: 404
+  Error3:
+    type: string
+  Error4:
+    type: string
+    status-code: 404 # Comment 3
+  Error5:
+    # Comment 4
+    type: Error5Body
+    status-code: 404
+"
+`;
+
+exports[`remove-inline-error-declarations > simple 2`] = `
+"errors:
+  Error1: {}
+  Error2:
+    status-code: 404
+  Error3:
+    type: string
+  Error4:
+    type: string
+    status-code: 404
+  Error5:
+    type: Error5Body
+    status-code: 404
+types:
+  Error5Body:
+    docs: I'm a type!
+    properties:
+      foo: string
+"
+`;

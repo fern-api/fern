@@ -1,0 +1,5 @@
+- summary: |
+    Fix datetime, base64, bigint, and number types failing to compile
+    in the generated -types crate by copying serde helper modules and
+    adding missing dependencies.
+  type: fix

@@ -1,0 +1,21 @@
+navigation:
+  - page: Platform Overview
+    path: ../pages/overview.mdx
+  - api: Core API
+    # Test string format at navigation level
+    audiences: internal
+    layout:
+      - section:
+          title: Public Core APIs
+          contents:
+            - GET /core/status
+            - POST /core/initialize
+      - section:
+          title: Internal Core APIs
+          # Test array format at section level
+          audiences:
+            - internal
+            - admin
+          contents:
+            - GET /core/metrics
+            - POST /core/admin/reset

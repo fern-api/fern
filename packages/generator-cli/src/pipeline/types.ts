@@ -1,0 +1,283 @@
+export interface PipelineConfig {
+    outputDir: string;
+
+    // Step configs (optional, modular)
+    replay?: ReplayStepConfig;
+    autoVersion?: AutoVersionStepConfig;
+    fernignore?: FernignoreStepConfig; // PHASE 2: not implemented yet
+    verify?: VerifyStepConfig;
+    github?: GithubStepConfig;
+
+    // Global metadata
+    cliVersion?: string;
+    generatorVersions?: Record<string, string>;
+    generatorName?: string;
+}
+
+export interface PipelineContext {
+    previousStepResults: {
+        generationCommit?: GenerationCommitStepResult;
+        replay?: ReplayStepResult;
+        autoVersion?: AutoVersionStepResult;
+        fernignore?: FernignoreStepResult;
+        verify?: VerificationStepResult;
+    };
+}
+
+export interface GenerationCommitStepConfig {
+    enabled: boolean;
+    /** Passed to replayPrepare — commits generation, skips detect/apply in phase 2. */
+    skipApplication?: boolean;
+}
+
+/**
+ * Result of running replayPrepare(). Holds the opaque PreparedReplay handle that
+ * downstream steps (AutoVersionStep, ReplayStep) consume.
+ *
+ * `preparedReplay` is null when replay isn't initialized for this repo (no
+ * lockfile) or when prepare failed — the pipeline proceeds without replay in
+ * both cases.
+ */
+export interface GenerationCommitStepResult extends StepResult {
+    /** Opaque handle consumed by ReplayStep's apply phase. Imported at the import site to avoid circular deps. */
+    preparedReplay?: import("../replay/replay-run").PreparedReplay | null;
+    previousGenerationSha?: string;
+    currentGenerationSha?: string;
+    /** Flow selected by the replay service during prepare. */
+    flow?: "first-generation" | "no-patches" | "normal-regeneration" | "skip-application";
+    /**
+     * True when replayPrepare entered the lockfile-missing branch and tried to
+     * bootstrap (regardless of outcome). Plumbed so ReplayStep can preserve the
+     * signal even when `preparedReplay` is null.
+     */
+    bootstrapAttempted?: boolean;
+}
+
+export interface ReplayStepConfig {
+    enabled: boolean;
+    stageOnly?: boolean;
+    skipApplication?: boolean;
+}
+
+export interface AutoVersionStepConfig {
+    enabled: boolean;
+    /** Generator language: typescript | python | java | go | ruby | csharp | php | swift | rust | kotlin */
+    language: string;
+    /** Existing changelog content passed to the AI for context. */
+    priorChangelog?: string;
+    /** Fallback version when no prior generation exists (first run). Defaults to "0.0.1" (or "v0.0.1" for Go). */
+    baseVersion?: string;
+    /**
+     * BAML AI service configuration (provider + model). When absent, the step calls the
+     * hosted FAI service using `fernToken` instead. If neither is supplied, AI analysis
+     * fails and the step falls back to a PATCH bump with a neutral message.
+     * Shape matches `generatorsYml.AiServicesSchema` from @fern-api/configuration; typed structurally
+     * to avoid pulling the configuration package into generator-cli's dep graph.
+     */
+    ai?: AutoVersionAiConfig;
+    /**
+     * Fern API token used to call the hosted FAI service (`/sdks/analyze-commit-diff`)
+     * when no `ai` config is supplied — the remote-generation (fiddle) path.
+     */
+    fernToken?: string;
+    /** Override for the FAI service base URL. Defaults to https://fai.buildwithfern.com. */
+    faiBaseUrl?: string;
+    /** Spec repository commit message included as additional AI context. */
+    specCommitMessage?: string;
+    /** When true, strips "🌿 Generated with Fern" trailers from commit messages (whitelabel customers). */
+    isWhitelabel?: boolean;
+}
+
+/**
+ * Minimal shape for the BAML AI service configuration. Structural equivalent of
+ * `generatorsYml.AiServicesSchema` from @fern-api/configuration.
+ */
+export interface AutoVersionAiConfig {
+    provider: string;
+    model: string;
+}
+
+export interface FernignoreStepConfig {
+    enabled: boolean;
+    customContents?: string;
+}
+
+export interface VerifyStepConfig {
+    enabled: boolean;
+    /** Container runtime to use. Defaults to "docker". */
+    runner?: "docker" | "podman";
+}
+
+export interface GithubStepConfig {
+    enabled: boolean;
+    /** GitHub repository URI (e.g. "owner/repo") */
+    uri: string;
+    /** GitHub auth token */
+    token: string;
+    /** Output mode */
+    mode: "push" | "pull-request" | "commit-and-release";
+    /** Target branch (base branch for PRs, push target for push mode) */
+    branch?: string;
+    /** Commit message for the generation */
+    commitMessage?: string;
+    /** User-facing changelog entry for PR body. When present, used instead of commit message body. */
+    changelogEntry?: string;
+    /** Structured PR description with Before/After code fences for breaking changes. Takes priority over changelogEntry for PR body. */
+    prDescription?: string;
+    /** One-sentence justification for WHY the version bump was chosen. Shown only for breaking changes. */
+    versionBumpReason?: string;
+    /** The previous SDK version before this change (e.g. "1.2.3"). Used for version header in PR body. */
+    previousVersion?: string;
+    /** The new SDK version after this change (e.g. "1.3.0"). Used for version header in PR body. */
+    newVersion?: string;
+    /** The version bump level: MAJOR, MINOR, or PATCH. Used for version header formatting. */
+    versionBump?: string;
+    /** Skip push/PR creation, just prepare branches locally */
+    previewMode?: boolean;
+    /** Generator name for namespaced fern-generation-base tag */
+    generatorName?: string;
+    /** Explicit override: whether replay already created commits (derived from replay context if omitted) */
+    skipCommit?: boolean;
+    /** Explicit override: replay conflict info (derived from replay context if omitted) */
+    replayConflictInfo?: {
+        previousGenerationSha: string;
+        currentGenerationSha: string;
+    };
+    /** When true: separate PRs per generation, automerge support, run_id in body */
+    automationMode?: boolean;
+    /** When true: skip opening a PR / pushing when the generated output has no diff from the base branch. */
+    skipIfNoDiff?: boolean;
+    /** Enable GitHub automerge on the PR (only effective when automationMode && !hasBreakingChanges) */
+    autoMerge?: boolean;
+    /** Pre-computed: version bump is MAJOR (from --version AUTO AI analysis) */
+    hasBreakingChanges?: boolean;
+    /** Human-readable breaking changes summary for PR body (from autoVersioningPrDescription on MAJOR) */
+    breakingChangesSummary?: string;
+    /** FERN_RUN_ID for cross-repo correlation (set by GitHub Action) */
+    runId?: string;
+    /** GitHub API base URL for GitHub Enterprise (e.g. "https://github.intuit.com/api/v3"). Omit for github.com. */
+    apiBaseUrl?: string;
+    /** Override the commit author/committer identity for API-created commits. Defaults to the Fern bot identity. */
+    author?: {
+        name: string;
+        email: string;
+    };
+}
+
+export interface PipelineResult {
+    success: boolean;
+    steps: {
+        generationCommit?: GenerationCommitStepResult;
+        replay?: ReplayStepResult;
+        autoVersion?: AutoVersionStepResult;
+        fernignore?: FernignoreStepResult;
+        verify?: VerificationStepResult;
+        github?: GithubStepResult;
+    };
+    errors?: string[];
+    warnings?: string[];
+}
+
+export interface ReplayStepResult extends StepResult {
+    /**
+     * True when replay prepare or apply crashed (corrupted lockfile, git failure,
+     * library bug). Distinct from `success`: the step itself always succeeds
+     * (generation must continue on replay errors), but telemetry and logs read
+     * this field to report the underlying replay failure honestly.
+     */
+    replayCrashed?: boolean;
+    /**
+     * True when replay was auto-initialized inline by `fern generate` (no
+     * separate `fern replay init` step). Used by telemetry to track adoption
+     * of the bake-into-generate path vs. the legacy explicit-init path.
+     */
+    autoBootstrapped?: boolean;
+    /**
+     * True when the lockfile-missing branch was entered, regardless of bootstrap
+     * outcome. Distinct from `autoBootstrapped` (true only on success): together
+     * they let dashboards distinguish "tried but failed/no-anchor" from
+     * "lockfile already existed".
+     */
+    bootstrapAttempted?: boolean;
+    flow?: "first-generation" | "no-patches" | "normal-regeneration" | "skip-application";
+    patchesDetected?: number;
+    patchesApplied?: number;
+    patchesWithConflicts?: number;
+    patchesAbsorbed?: number;
+    patchesRepointed?: number;
+    patchesContentRebased?: number;
+    patchesKeptAsUserOwned?: number;
+    /** Patches we detected but explicitly skipped applying (binary file, base mismatch, file rename, etc.). */
+    patchesSkipped?: number;
+    /** Patches that applied to some files but conflicted on others. */
+    patchesPartiallyApplied?: number;
+    /** Patches that were conflicting in a prior generation and have now been resolved by the customer. */
+    patchesConflictResolved?: number;
+    /** Patches reverted via `fern replay forget` (or equivalent). */
+    patchesReverted?: number;
+    /** Patches whose stored content was refreshed to match the current generation (no semantic change). */
+    patchesRefreshed?: number;
+    previousGenerationSha?: string;
+    currentGenerationSha?: string;
+    unresolvedPatches?: Array<{
+        patchId: string;
+        patchMessage: string;
+        files: string[];
+        conflictDetails: Array<{
+            file: string;
+            conflictReason?: string;
+        }>;
+    }>;
+    warnings?: string[];
+}
+
+export interface FernignoreStepResult extends StepResult {
+    pathsPreserved?: string[];
+}
+
+export interface VerificationStepResult extends StepResult {
+    /** True when no `.fern/verify.sh` was emitted by the generator — the step short-circuits silently. */
+    skipped: boolean;
+    /** Captured stderr from the verification script when it fails. */
+    stderr?: string;
+}
+
+export interface AutoVersionStepResult extends StepResult {
+    /** The new version to use (e.g. "1.2.3"). Field name matches fiddle's Java AutoVersionResult DTO. */
+    version?: string;
+    /** Commit subject for the `[fern-autoversion]` commit. */
+    commitMessage?: string;
+    /** User-facing changelog entry appended to changelog.md. */
+    changelogEntry?: string;
+    /** Prior SDK version before this change (e.g. "1.2.2"). */
+    previousVersion?: string;
+    /** The version bump level determined by FAI. */
+    versionBump?: "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE";
+    /** Structured PR description with Before/After code fences for breaking changes. */
+    prDescription?: string;
+    /** One-sentence justification for WHY the version bump was chosen. */
+    versionBumpReason?: string;
+    /** SHA of the `[fern-autoversion]` commit once it's been made. TS-only; no fiddle counterpart. */
+    commitSha?: string;
+}
+
+export interface GithubStepResult extends StepResult {
+    commitSha?: string;
+    branchUrl?: string;
+    prUrl?: string;
+    prNumber?: number;
+    updatedExistingPr?: boolean;
+    generationBaseTagSha?: string;
+    /** True when generation produced no changes vs base branch — PR skipped */
+    skippedNoDiff?: boolean;
+    /** True when automerge was enabled on the PR */
+    autoMergeEnabled?: boolean;
+    /** URL of the GitHub release created in commit-and-release mode */
+    releaseUrl?: string;
+}
+
+export interface StepResult {
+    executed: boolean;
+    success: boolean;
+    errorMessage?: string;
+}

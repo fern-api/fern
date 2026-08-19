@@ -1,0 +1,6 @@
+imports:
+  exists: ../subfolder-a/a.yml
+  doesNotExist: ../subfolder-a/a
+
+types:
+  MyType: string

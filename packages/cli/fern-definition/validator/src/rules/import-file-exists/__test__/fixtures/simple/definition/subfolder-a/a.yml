@@ -1,0 +1,5 @@
+imports:
+  missing: ./missing.yml
+
+types:
+  MyType: string

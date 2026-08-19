@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "stream_response": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Whether to stream the response."
+    },
+    "prompt": {
+      "type": "string",
+      "description": "The input prompt."
+    },
+    "data": {
+      "type": "string",
+      "description": "Compact data payload."
+    }
+  },
+  "required": [
+    "prompt",
+    "data"
+  ],
+  "additionalProperties": false,
+  "description": "Requests compaction of history. Inherits stream_response from base and adds compact-specific fields.",
+  "definitions": {}
+}

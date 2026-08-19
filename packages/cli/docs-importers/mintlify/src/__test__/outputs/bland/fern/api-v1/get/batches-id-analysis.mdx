@@ -1,0 +1,65 @@
+---
+title: Retrieve Batch Analysis
+subtitle: >-
+  Retrieves the analyses for a specific batch of calls, including details of
+  each call's analysis.
+slug: api-v1/get/batches-id-analysis
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="batch_id" type="string" required>
+  The unique identifier for the call batch. Returned in the response when creating a batch, or when listing all batches.
+</ParamField>
+
+### Response
+
+<ResponseField type="string" name="status">
+  Whether the request was successful or not. Possible values are `success` and `error`.
+</ResponseField>
+
+<ResponseField type="string" name="message">
+  An error message or confirmation that the request was successful.
+</ResponseField>
+
+<ResponseField type="array" name="analysis">
+  An array of analysis objects, each corresponding to a call within the batch. Each analysis object includes: -
+  `call_id`, - `batch_id` - `goal` - `answers` - the results of the AI analysis - `questions` - the original questions
+  asked by the AI
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+    "status": "success",
+    "message": "Successfully fetched analyses",
+    "analysis": [
+        {
+            "call_id": "b12956d1-624d-4c65-a1a4-30eb86553c85",
+            "batch_id": "dnytTRqwiqnR3qmq-gen-batch",
+            "goal": "Congratulate some employees",
+            "answers": [
+                "human",
+                "Customer found the product sturdy and reliable",
+                "A bit heavy",
+                true
+            ],
+            "questions": [
+                ["Who answered the call?", "human or voicemail"],
+                ["Positive feedback about the product: ", "string"],
+                ["Negative feedback about the product: ", "string"],
+                ["Customer confirmed they were satisfied", "boolean"]
+            ]
+        },
+        // Additional analysis objects...
+    ]
+}
+```
+</ResponseExample>

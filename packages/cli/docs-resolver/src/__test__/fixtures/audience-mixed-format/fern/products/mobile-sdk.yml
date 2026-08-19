@@ -1,0 +1,19 @@
+navigation:
+  - page: Mobile SDK Guide
+    path: ../pages/mobile-guide.mdx
+  - page: Quick Start
+    path: ../pages/mobile-quickstart.mdx
+    # Test string format
+    audiences: external
+  - api: Mobile API
+    layout:
+      - section:
+          title: Authentication
+          contents:
+            - POST /mobile/auth/login
+            - POST /mobile/auth/refresh
+      - section:
+          title: Data Sync
+          contents:
+            - GET /mobile/sync/data
+            - POST /mobile/sync/upload

@@ -1,0 +1,5 @@
+- summary: |
+    Fix OpenAPI `respect-readonly-schemas` so that endpoint response types correctly
+    reference the `Read` variant (e.g. `WebhookRead` instead of `Webhook`) when the
+    same schema is used in both request and response contexts.
+  type: fix

@@ -1,0 +1,6 @@
+navigation:
+  - a.yml
+  - ./b.yml
+  - d.yml
+  - __package__.yml
+  - a.yml

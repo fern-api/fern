@@ -1,0 +1,9 @@
+types:
+  RootString: string
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    rootEndpoint:
+      path: ""
+      method: GET

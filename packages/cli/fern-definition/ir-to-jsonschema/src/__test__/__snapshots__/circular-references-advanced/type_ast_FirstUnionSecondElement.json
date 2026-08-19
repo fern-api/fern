@@ -1,0 +1,82 @@
+{
+  "type": "object",
+  "properties": {
+    "child": {
+      "$ref": "#/definitions/ast.SecondUnion"
+    }
+  },
+  "required": [
+    "child"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ast.FirstUnionFirstElement": {
+      "type": "object",
+      "properties": {
+        "child": {
+          "$ref": "#/definitions/ast.SecondUnion"
+        }
+      },
+      "required": [
+        "child"
+      ],
+      "additionalProperties": false
+    },
+    "ast.FirstUnionSecondElement": {
+      "type": "object",
+      "properties": {
+        "child": {
+          "$ref": "#/definitions/ast.SecondUnion"
+        }
+      },
+      "required": [
+        "child"
+      ],
+      "additionalProperties": false
+    },
+    "ast.FirstUnion": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ast.FirstUnionFirstElement"
+        },
+        {
+          "$ref": "#/definitions/ast.FirstUnionSecondElement"
+        }
+      ]
+    },
+    "ast.SecondUnionFirstElement": {
+      "type": "object",
+      "properties": {
+        "child": {
+          "$ref": "#/definitions/ast.FirstUnion"
+        }
+      },
+      "required": [
+        "child"
+      ],
+      "additionalProperties": false
+    },
+    "ast.SecondUnionSecondElement": {
+      "type": "object",
+      "properties": {
+        "child": {
+          "$ref": "#/definitions/ast.FirstUnion"
+        }
+      },
+      "required": [
+        "child"
+      ],
+      "additionalProperties": false
+    },
+    "ast.SecondUnion": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ast.SecondUnionFirstElement"
+        },
+        {
+          "$ref": "#/definitions/ast.SecondUnionSecondElement"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+using SeedInferredAuthImplicitNoExpiry.Core;
+
+namespace SeedInferredAuthImplicitNoExpiry.Nested;
+
+public partial class NestedClient : INestedClient
+{
+    private readonly RawClient _client;
+
+    internal NestedClient(RawClient client)
+    {
+        _client = client;
+        Api = new ApiClient(_client);
+    }
+
+    public IApiClient Api { get; }
+}

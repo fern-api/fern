@@ -1,0 +1,13 @@
+imports:
+  commons: commons.yml
+
+name: my-api
+
+base-path: /{root}
+path-parameters:
+  root: $my-variable
+
+variables:
+  my-variable:
+    docs: I am a variable
+    type: commons.StringAlias

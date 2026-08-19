@@ -1,0 +1,114 @@
+---
+title: "Send 1000 phone calls"
+---
+
+<img style={{ borderRadius: "0.5rem" }} src="/tutorials/batchcalls.jpg" />
+
+## Step 1: Setup Your Authorization
+
+To initiate a batch call, you must first authenticate your request. Ensure you have your API key from signing up on the [developer portal](https://app.bland.ai).
+
+## Step 2: Create the Base Prompt
+
+Craft a base prompt that will be common across all calls in the batch. Use placeholders `{{curly braces}}` for dynamic content.
+
+Example:
+
+```javascript
+"You are calling {{business}} to renew their subscription to {{service}} before it expires on {{date}}.";
+```
+
+## Step 3: Define the Call Data
+
+Specify the list of calls in the `call_data` array. Each call must have a `phone_number` and can include other properties corresponding to placeholders in your base prompt.
+
+Example:
+
+```javascript
+[
+  {
+    phone_number: "1234567890",
+    business: "ABC co.",
+    service: "Netflix",
+    date: "September 4th",
+  },
+  {
+    phone_number: "32176540987",
+    business: "XYZ inc.",
+    service: "Window Cleaning",
+    date: "December 20th",
+  },
+];
+```
+
+## Step 4: Additional Configuration
+
+- `label`: Assign a label to your batch for easy tracking.
+- `campaign_id`: Organize related batches under a campaign.
+- `test_mode`: Set to true for testing with the first call only.
+- `batch_id`: Manually set or auto-generated for tracking.
+- Voice and Language Settings: Select `voice_id`, `reduce_latency`, and `language`.
+- `request_data`: Include specific facts for the AI to know during the call.
+- `webook`: For real-time notifications and transcripts post-call.
+- `max_duration`: Define the maximum length of each call.
+- `amd`: Enable for navigating phone trees or leaving voicemails.
+- `wait_for_greeting`: Control if the AI speaks immediately or waits.
+
+## Step 5: Send the API Request
+
+Use the provided JavaScript or Python code snippet to make the API request.
+
+## Step 6: Handle the Response
+
+After sending the batch request, you'll receive a response with a `message` and the `batch_id`. Monitor the progress of your calls and any responses via your specified webhook.
+
+Here's what an example response might look like:
+
+```javascript
+{
+  "message": "success",
+  "batch_id": "3p$7rQ3p9sT5bzmF-gen-batch"
+}
+```
+
+## Step 7: Monitoring and Analytics
+
+Track the performance and outcomes of your batch calls through the provided `batch_id` and campaign analytics. Adjust future batches based on the insights gained.
+
+<RequestExample>
+
+```javascript SendCalls.js
+// Headers
+const headers = {
+  authorization: "YOUR-API-KEY-HERE",
+};
+
+// Data
+const data = {
+  base_prompt: "You are calling {{business}} to renew their subscription to {{service}} before it expires on {{date}}.",
+  call_data: [
+    {
+      phone_number: "1234567890",
+      business: "ABC co.",
+      service: "Netflix",
+      date: "September 4th",
+    },
+    {
+      phone_number: "32176540987",
+      business: "XYZ inc.",
+      service: "Window Cleaning",
+      date: "December 20th",
+    },
+  ],
+  label: "Renewal Reminder - Wednesday Afternoon with female voice",
+  voice_id: 0,
+  max_duration: 10,
+  reduce_latency: true,
+  wait_for_greeting: true,
+};
+
+// API request
+await axios.post("https://api.bland.ai/v1/batches", data, { headers });
+```
+
+</RequestExample>

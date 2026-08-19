@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `infer-discriminated-union-base-properties` OpenAPI parser setting.
+    When enabled, the parser intersects the resolved (allOf-flattened) property
+    maps of every variant of a discriminated `oneOf` and lifts properties that
+    appear in all variants with structurally-equal schemas into the union's
+    common properties. SDKs (e.g. C#, Java, Go) that already support union base
+    properties can then expose those shared fields directly on the union type
+    without forcing callers to cast to a concrete variant. Defaults to false.
+  type: feat

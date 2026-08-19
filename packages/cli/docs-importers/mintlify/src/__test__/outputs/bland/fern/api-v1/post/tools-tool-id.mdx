@@ -1,0 +1,354 @@
+---
+title: Update Custom Tool
+subtitle: Change your Custom Tool's parameters and characteristics.
+slug: api-v1/post/tools-tool-id
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="tool_id" type="string" required>
+  The ID of the Custom Tool you want to update.
+</ParamField>
+
+### Body
+
+<ParamField body="name" type="string" required>
+    This is the name that the AI using the tool will see.
+
+    Some other internal tools are named `Speak`, `Wait`, `Transfer` and `Finish` - Custom Tools cannot share these names.
+
+    We've made a list of reserved words that can confuse the AI that cannot be included:
+    - `input`
+    - `speak`
+    - `transfer`
+    - `switch`
+    - `wait`
+    - `finish`
+    - `press`
+    - `button`
+    - `say`
+    - `pause`
+    - `record`
+    - `play`
+    - `dial`
+    - `hang`
+
+    Choosing too similar of names to the default tools could cause the AI to select the wrong one, so decriptive two to three-word names are preferred.
+
+</ParamField>
+
+<ParamField body="description" type="string" required>
+    This is the description that the AI using the tool will see.
+
+    Describe the effect of what the tool does or any special instructions.
+
+    For reference, here are the default tools' descriptions:
+    - `Speak`: Talk to the person on the other end of the line
+    - `Press Buttons`: Presses buttons on phone. Each character is a different button.
+    - `Wait`: Wait and go silent for an extended period of time (only use if absolutely necessary).
+    - `Finish`: Say a goodbye message and end the call once completed.
+
+</ParamField>
+
+<ParamField body="speech" type="string">
+    This is the text that the AI will say while it uses the tool.
+
+    For example, if the tool is a "GenerateQuote" tool, the speech might be "Please wait while I get you your quote."
+
+    Since tools can be verbally interrupted, shorter messages that tell the user what the tool/AI are doing are best.
+
+    Special Note: You can have the AI dynamically generate speech by defining `input.speech` in the `input_schema`.
+
+    <Accordion title="Dynamic Speech Example">
+
+```json
+{
+  "input_schema": {
+    "example": {
+      "speech": "Checking your account details right now John!",
+      "name": "John Doe",
+      "email": "johndoe@gmail.com"
+    },
+    "type": "object",
+    "properties": {
+      "speech": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string",
+        "format": "email"
+      }
+    },
+    "required": ["speech", "name", "email"]
+  }
+}
+```
+
+    </Accordion>
+
+</ParamField>
+
+<ParamField body="url" type="string" required>
+    This is the endpoint of the external API that the tool will call.
+
+    It must begin with `https://` and be a valid URL.
+
+</ParamField>
+
+<ParamField body="method" type="string" default="GET">
+    This is the HTTP method that the tool will use to call the external API.
+
+    Valid options are `GET` and `POST`.
+
+</ParamField>
+
+<ParamField body="headers" type="object">
+    `SUPPORTS PROMPT VARIABLES`
+
+    These are the headers that the tool will send to the external API.
+
+    The headers must be in JSON format.
+
+    Since prompt variables are supported, you can use them in the headers to send dynamic information to the external API.
+
+    <Accordion title="Prompt Variables Example (Headers)">
+
+```json
+// At the top level of your send call request you can define variables that you can access later using the double curly braces/dot syntax.
+{
+  "request_data": {
+    "api_key": "sk-1234567890"
+  },
+  "tools": [
+    {
+      "headers": {
+        "Authorization": "Bearer {{api_key}}"
+      }
+    }
+  ]
+}
+```
+
+    </Accordion>
+
+</ParamField>
+
+<ParamField body="body" type="object">
+    `SUPPORTS PROMPT VARIABLES`
+
+    This is the body that the tool will send to the external API.
+
+    The body must be in JSON format.
+
+    This is the most common place to use Prompt Variables with AI input.
+
+    Note: `GET` requests do not have a body.
+
+    <Accordion title="Prompt Variables Example (Body)">
+
+```json
+    // AI-generated input is created as the `input` Prompt Variable - and the structure is defined by the input schema.
+    // `input` will match the structure of `input_schema.example` if it is defined.
+    {
+        "input_schema": {
+            "example": {
+                "name": "John Doe",
+                "email": "johndoe@gmail.com"
+            }
+        }
+        "body": {
+            "name": "{{input.name}}",
+            "email": "{{input.email}}"
+        }
+    }
+```
+
+    </Accordion>
+
+</ParamField>
+
+<ParamField body="query" type="object">
+    `SUPPORTS PROMPT VARIABLES`
+
+    Append query parameters to the URL.
+
+    The query must be in JSON format.
+
+    This is generally used with GET requests and built-in Prompt Variables like `"{{phone_number}}"` or `"{{call_id}}"`.
+
+    <Accordion title="Prompt Variables Example (Query)">
+
+```json
+// appends ?pn={{phone_number}}&callId={{call_id}} to the URL
+{
+  "query": {
+    "pn": "{{phone_number}}",
+    "callId": "{{call_id}}"
+  }
+}
+```
+
+    </Accordion>
+
+</ParamField>
+
+<ParamField body="input_schema" type="object">
+    This is the schema that the AI input must match for the tool to be used.
+
+    The schema must be in JSON format.
+
+    The schema is used to validate the AI input before the tool is used.
+
+    If the AI input does not match the schema, the tool will not be used and the AI will move on to the next tool.
+
+    `input_schema.example` can be used to enhance the AI's understanding of the input structure and helps significantly with structured or nested data.
+
+    Special Note: `input_schema` does not require strict JSON schema structure, and creativity is encouraged.
+
+    [Look here for a general guide on JSON schema structures.](https://json-schema.org/learn/getting-started-step-by-step)
+
+    Non-traditional JSON schema structures are supported as well, like these examples:
+    - "options": "monday, wednesday, friday"
+    - "date": "YYYY-MM-DD"
+    - "time": "HH:MM:SS (AM|PM)"
+    - "phone_number": "+1XXX-XXX-XXXX"
+
+    Agent input can be nested, and the will be transformed into JSON even if it's initially a string.
+
+    <Accordion title="Schema Example">
+
+```json
+{
+  "input_schema": {
+    "example": {
+      "name": "John Doe",
+      "email": "johndoe@gmail.com"
+    },
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string",
+        "format": "email"
+      }
+    },
+    "required": ["name", "email"]
+  },
+  // both of these methods are identical, since {{input}} will be transformed into JSON
+  "body": "{{input}}",
+  "body": {
+    "name": "{{input.name}}",
+    "email": "{{input.email}}"
+  }
+}
+```
+
+    </Accordion>
+
+</ParamField>
+
+<ParamField body="response" type="object">
+    Define how you would like to extract data from the response.
+
+    By default, the entire response body is stored in the `{{data}}` Prompt Variable.
+
+    The path to the data you want must be in JSON Path format. Generally this means using dot notation to traverse the JSON object and is only required if you need to use that information on other tools or the response is too large.
+
+    Example:
+
+```json
+    // If the external API response is:
+    {
+        "available_times": [
+            {
+                "time": "10:00 AM",
+                "date": "2022-01-01"
+            },
+            {
+                "time": "11:00 AM",
+                "date": "2022-01-01"
+            }
+        ],
+        "store_hours": {
+            "open": "9:00 AM",
+            "close": "5:00 PM"
+        },
+        "address_info": {
+            "street": "123 Main St",
+            "city": "Anytown",
+            "state": "CA",
+            "zip": "12345"
+        }
+    }
+
+    // You can extract new Prompt Variables like this:
+    {
+        "response": {
+            "available_times": "$.available_times",
+            "store_hours": "$.store_hours",
+            "address_info": "$.address_info",
+            "zip_code": "$.address_info.zip"
+        }
+    }
+
+    // And then it'll automatically replace them elsewhere (like in the `task`/`prompt`)
+    {
+        "task": "The store is open from {{store_hours.open}} to {{store_hours.close}}.",
+        "prompt": "The store is located at {{address_info.street}}, {{address_info.city}}, {{address_info.state}} {{zip_code}}."
+    }
+```
+
+</ParamField>
+
+<ParamField body="timeout" default="10000" type="number">
+    This is the maximum time in milliseconds that the tool will wait for a response from the external API.
+
+    If the external API does not respond within this time, the tool will fail and the AI will move on to the next tool.
+
+    The default timeout is 10 seconds (10000 milliseconds).
+
+    To always wait for a response, set the timeout to an extremely high value like 99999999.
+
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Whether the tool creation succeeded.
+</ResponseField>
+
+<ResponseField name="tool_id" type="string">
+    A tool id that you can use to reference the tool in the future.
+
+    In a Send Call request, you could pass this tool id in instead of the full Custom Tool object like so:
+
+    ```json
+    {
+        "tools": [
+            "TL-1234567890" // tool_id (instead of the full Custom Tool object)
+        ]
+    }
+    ```
+
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+    "status": "success",
+    "tool_id": "TL-1234567890"
+}
+```
+</ResponseExample>

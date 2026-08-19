@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    test:
+      method: GET
+      path: /{foo}/{bar}/{baz}/{biz}
+      path-parameters:
+        foo: $var1
+        bar:
+          variable: $var2
+        baz: $var-missing
+        biz:
+          variable: missing-variable

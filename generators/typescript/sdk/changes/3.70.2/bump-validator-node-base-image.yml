@@ -1,0 +1,6 @@
+- summary: |
+    Bump the typescript-sdk-validator container's `node:20-slim` base image
+    to `node:22.22-bookworm-slim`. Node 20 went EOL March 24, 2026, and the
+    container was carrying the Node 20 EOL alert plus CVE-2025-55130
+    (Node 20 permission-model symlink bypass).
+  type: chore

@@ -1,0 +1,764 @@
+openapi: 3.1.0
+info:
+  title: allOf Composition
+  version: 0.0.0
+paths:
+  /rule-types:
+    get:
+      operationId: searchRuleTypes
+      tags:
+        - ''
+      parameters:
+        - name: query
+          in: query
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+      responses:
+        '200':
+          description: Paginated list of rule types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuleTypeSearchResponse'
+              examples:
+                Example1:
+                  value:
+                    paging:
+                      next: next
+                      previous: previous
+                    results:
+                      - id: id
+                        name: name
+                        description: description
+      summary: Search rule types with paginated results
+  /rules:
+    post:
+      operationId: createRule
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Created rule
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuleResponse'
+              examples:
+                Example1:
+                  value:
+                    createdBy: createdBy
+                    createdDateTime: '2024-01-15T09:30:00Z'
+                    modifiedBy: modifiedBy
+                    modifiedDateTime: '2024-01-15T09:30:00Z'
+                    id: id
+                    name: name
+                    status: active
+                    executionContext: prod
+      summary: Create a rule with constrained execution context
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  examples:
+                    - name
+                executionContext:
+                  $ref: '#/components/schemas/RuleCreateRequestExecutionContext'
+                  description: >-
+                    Execution context for the rule, excluding the prod
+                    environment.
+              required:
+                - name
+                - executionContext
+            examples:
+              Example1:
+                value:
+                  name: name
+                  executionContext: prod
+  /users:
+    get:
+      operationId: listUsers
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Paginated list of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSearchResponse'
+              examples:
+                Example1:
+                  value:
+                    paging:
+                      next: next
+                      previous: previous
+                    results:
+                      - id: id
+                        email: email
+      summary: List users with paginated results
+  /entities:
+    get:
+      operationId: getEntity
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: An entity with properties from multiple parents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CombinedEntity'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    summary: summary
+                    status: active
+      summary: Get an entity that combines multiple parents
+  /organizations:
+    get:
+      operationId: getOrganization
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: An organization whose metadata is merged from two parents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    metadata:
+                      region: region
+                      domain: domain
+                    name: name
+      summary: Get an organization with merged object-typed properties
+  /plants:
+    post:
+      description: >-
+        Tests three-level allOf chain where a parent schema itself uses allOf
+        with $ref elements. The grandparent's properties must be resolved
+        through the nested $ref.
+      operationId: createPlant
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Created plant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlantStrict'
+              examples:
+                Example1:
+                  value:
+                    species: species
+                    family: family
+                    genus: genus
+      summary: Create a plant (nested allOf with $ref chain)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                species:
+                  type: string
+                  description: The botanical species name.
+                  examples:
+                    - species
+                family:
+                  type: string
+                  description: The botanical family.
+                  examples:
+                    - family
+                genus:
+                  type: string
+                  description: The botanical genus.
+                  examples:
+                    - genus
+                commonName:
+                  type: string
+                  description: The common name of the plant.
+                  examples:
+                    - commonName
+                wateringFrequency:
+                  $ref: '#/components/schemas/PlantPostWateringFrequency'
+                sunExposure:
+                  $ref: '#/components/schemas/PlantPostSunExposure'
+                  description: Required sun exposure level.
+                plantedAt:
+                  type:
+                    - string
+                    - 'null'
+                  format: date
+                  description: Date the plant was planted.
+                soilType:
+                  type:
+                    - string
+                    - 'null'
+                  description: Preferred soil type.
+              required:
+                - species
+                - family
+                - genus
+                - commonName
+                - wateringFrequency
+                - sunExposure
+            examples:
+              Example1:
+                value:
+                  species: species
+                  family: family
+                  genus: genus
+                  commonName: commonName
+                  wateringFrequency: daily
+                  sunExposure: full
+  /trees:
+    post:
+      description: >-
+        Tests that when a parent's allOf contains multiple $ref entries, all of
+        them are resolved and their properties merged.
+      operationId: createTree
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Created tree
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TreeRecord'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    treeName: treeName
+                    treeDescription: treeDescription
+                    treeSpecies: treeSpecies
+                    heightInFeet: 1.1
+                    plantedDate: '2023-01-15'
+      summary: Create a tree (multiple nested $ref in parent allOf)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TreeRecord'
+            examples:
+              Example1:
+                value:
+                  id: id
+                  treeName: treeName
+                  treeSpecies: treeSpecies
+components:
+  schemas:
+    RuleCreateRequestExecutionContext:
+      title: RuleCreateRequestExecutionContext
+      type: string
+      enum:
+        - prod
+        - staging
+        - dev
+      description: Execution context for the rule, excluding the prod environment.
+    PlantPostWateringFrequency:
+      title: PlantPostWateringFrequency
+      type: string
+      enum:
+        - daily
+        - weekly
+        - biweekly
+        - monthly
+    PlantPostSunExposure:
+      title: PlantPostSunExposure
+      type: string
+      enum:
+        - full
+        - partial
+        - shade
+      description: Required sun exposure level.
+    PaginatedResult:
+      title: PaginatedResult
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/PagingCursors'
+        results:
+          type: array
+          items: {}
+          description: Current page of results from the requested resource.
+      required:
+        - paging
+        - results
+    PagingCursors:
+      title: PagingCursors
+      type: object
+      properties:
+        next:
+          type: string
+          description: Cursor for the next page of results.
+        previous:
+          type:
+            - string
+            - 'null'
+          description: Cursor for the previous page of results.
+      required:
+        - next
+    RuleExecutionContext:
+      title: RuleExecutionContext
+      type: string
+      enum:
+        - prod
+        - staging
+        - dev
+      description: Execution environment for a rule.
+    AuditInfo:
+      title: AuditInfo
+      type: object
+      description: Common audit metadata.
+      properties:
+        createdBy:
+          type:
+            - string
+            - 'null'
+          description: The user who created this resource.
+        createdDateTime:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: When this resource was created.
+        modifiedBy:
+          type:
+            - string
+            - 'null'
+          description: The user who last modified this resource.
+        modifiedDateTime:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: When this resource was last modified.
+    RuleType:
+      title: RuleType
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type:
+            - string
+            - 'null'
+      required:
+        - id
+        - name
+    RuleTypeSearchResponse:
+      title: RuleTypeSearchResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/PagingCursors'
+        results:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/RuleType'
+          description: Current page of results from the requested resource.
+      required:
+        - paging
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+        - id
+        - email
+    UserSearchResponse:
+      title: UserSearchResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/PagingCursors'
+        results:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/User'
+          description: Current page of results from the requested resource.
+      required:
+        - paging
+    RuleResponseStatus:
+      title: RuleResponseStatus
+      type: string
+      enum:
+        - active
+        - inactive
+        - draft
+    RuleResponse:
+      title: RuleResponse
+      type: object
+      properties:
+        createdBy:
+          type:
+            - string
+            - 'null'
+          description: The user who created this resource.
+        createdDateTime:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: When this resource was created.
+        modifiedBy:
+          type:
+            - string
+            - 'null'
+          description: The user who last modified this resource.
+        modifiedDateTime:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: When this resource was last modified.
+        id:
+          type: string
+          examples:
+            - id
+        name:
+          type: string
+          examples:
+            - name
+        status:
+          $ref: '#/components/schemas/RuleResponseStatus'
+        executionContext:
+          anyOf:
+            - $ref: '#/components/schemas/RuleExecutionContext'
+            - type: 'null'
+      required:
+        - id
+        - name
+        - status
+    Identifiable:
+      title: Identifiable
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+        name:
+          type:
+            - string
+            - 'null'
+          description: Display name from Identifiable.
+      required:
+        - id
+    Describable:
+      title: Describable
+      type: object
+      properties:
+        name:
+          type:
+            - string
+            - 'null'
+          description: Display name from Describable.
+        summary:
+          type:
+            - string
+            - 'null'
+          description: A short summary.
+    CombinedEntityStatus:
+      title: CombinedEntityStatus
+      type: string
+      enum:
+        - active
+        - archived
+    CombinedEntity:
+      title: CombinedEntity
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          examples:
+            - id
+        name:
+          type:
+            - string
+            - 'null'
+          description: Display name from Describable.
+        summary:
+          type:
+            - string
+            - 'null'
+          description: A short summary.
+        status:
+          $ref: '#/components/schemas/CombinedEntityStatus'
+      required:
+        - id
+        - status
+    BaseOrgMetadata:
+      title: BaseOrgMetadata
+      type: object
+      properties:
+        region:
+          type: string
+          description: Deployment region from BaseOrg.
+        tier:
+          type:
+            - string
+            - 'null'
+          description: Subscription tier.
+      required:
+        - region
+    BaseOrg:
+      title: BaseOrg
+      type: object
+      properties:
+        id:
+          type: string
+        metadata:
+          anyOf:
+            - $ref: '#/components/schemas/BaseOrgMetadata'
+            - type: 'null'
+      required:
+        - id
+    DetailedOrgMetadata:
+      title: DetailedOrgMetadata
+      type: object
+      properties:
+        region:
+          type: string
+          description: Deployment region from DetailedOrg.
+        domain:
+          type:
+            - string
+            - 'null'
+          description: Custom domain name.
+      required:
+        - region
+    DetailedOrg:
+      title: DetailedOrg
+      type: object
+      properties:
+        metadata:
+          anyOf:
+            - $ref: '#/components/schemas/DetailedOrgMetadata'
+            - type: 'null'
+    OrganizationMetadata:
+      title: OrganizationMetadata
+      type: object
+      properties:
+        region:
+          type: string
+          description: Deployment region from DetailedOrg.
+        domain:
+          type:
+            - string
+            - 'null'
+          description: Custom domain name.
+      required:
+        - region
+    Organization:
+      title: Organization
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - id
+        metadata:
+          anyOf:
+            - $ref: '#/components/schemas/OrganizationMetadata'
+            - type: 'null'
+        name:
+          type: string
+          examples:
+            - name
+      required:
+        - id
+        - name
+    PlantStrict:
+      title: PlantStrict
+      type: object
+      properties:
+        species:
+          type: string
+          description: The botanical species name.
+          examples:
+            - species
+        family:
+          type: string
+          description: The botanical family.
+          examples:
+            - family
+        genus:
+          type: string
+          description: The botanical genus.
+          examples:
+            - genus
+      required:
+        - species
+        - family
+        - genus
+    PlantBaseWateringFrequency:
+      title: PlantBaseWateringFrequency
+      type: string
+      enum:
+        - daily
+        - weekly
+        - biweekly
+        - monthly
+    PlantBase:
+      title: PlantBase
+      type: object
+      properties:
+        species:
+          type: string
+          description: The botanical species name.
+        family:
+          type: string
+          description: The botanical family.
+        genus:
+          type: string
+          description: The botanical genus.
+        commonName:
+          type:
+            - string
+            - 'null'
+          description: The common name of the plant.
+        wateringFrequency:
+          anyOf:
+            - $ref: '#/components/schemas/PlantBaseWateringFrequency'
+            - type: 'null'
+      required:
+        - species
+        - family
+        - genus
+    TreeIdentifiable:
+      title: TreeIdentifiable
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique tree identifier.
+      required:
+        - id
+    TreeDescribable:
+      title: TreeDescribable
+      type: object
+      properties:
+        treeName:
+          type:
+            - string
+            - 'null'
+          description: Display name of the tree.
+        treeDescription:
+          type:
+            - string
+            - 'null'
+          description: A description of the tree.
+    TreeBase:
+      title: TreeBase
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique tree identifier.
+        treeName:
+          type:
+            - string
+            - 'null'
+          description: Display name of the tree.
+        treeDescription:
+          type:
+            - string
+            - 'null'
+          description: A description of the tree.
+        treeSpecies:
+          type:
+            - string
+            - 'null'
+          description: The species of tree.
+        heightInFeet:
+          type:
+            - number
+            - 'null'
+          format: double
+          description: Height of the tree in feet.
+      required:
+        - id
+    TreeRecord:
+      title: TreeRecord
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique tree identifier.
+          examples:
+            - id
+        treeName:
+          type: string
+          description: Display name of the tree.
+          examples:
+            - treeName
+        treeDescription:
+          type:
+            - string
+            - 'null'
+          description: A description of the tree.
+        treeSpecies:
+          type: string
+          description: The species of tree.
+          examples:
+            - treeSpecies
+        heightInFeet:
+          type:
+            - number
+            - 'null'
+          format: double
+          description: Height of the tree in feet.
+        plantedDate:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: Date the tree was planted.
+      required:
+        - id
+        - treeName
+        - treeSpecies
+  securitySchemes: {}
+servers:
+  - url: https://api.example.com
+    description: Default

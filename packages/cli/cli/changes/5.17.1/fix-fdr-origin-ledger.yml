@@ -1,0 +1,3 @@
+- summary: |
+    Fix publish to respect FERN_FDR_ORIGIN environment variable override.
+  type: fix

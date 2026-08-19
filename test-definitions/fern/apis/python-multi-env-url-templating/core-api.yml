@@ -1,0 +1,37 @@
+openapi: 3.0.3
+info:
+  title: Core API
+  version: 1.0.0
+servers:
+  - url: https://api.{region}.acme.com
+    x-fern-server-name: Production
+    x-fern-default-url: https://api.acme.com
+    variables:
+      region:
+        default: us1
+  - url: https://api.stage.{region}.acme.com
+    x-fern-server-name: Staging
+    x-fern-default-url: https://api.stage.acme.com
+    variables:
+      region:
+        default: us1
+  - url: https://api.dev.{region}.acme.com
+    x-fern-server-name: Development
+    x-fern-default-url: https://api.dev.acme.com
+    variables:
+      region:
+        default: us1
+paths:
+  /things:
+    get:
+      operationId: listThings
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string

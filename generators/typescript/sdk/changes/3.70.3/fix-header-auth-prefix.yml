@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Honor the auth scheme `prefix` for `HeaderAuthScheme` when generating `HeaderAuthProvider`.
+    Previously, the generator emitted the raw header value into the configured header (e.g.
+    `Authorization`) and dropped any prefix declared in the API definition (e.g. `Bearer`).
+    The provider now emits a `HEADER_PREFIX` constant and prepends it to the header value,
+    matching the behavior of the Java, Python, Go, C#, PHP, Rust, and Ruby v2 generators.
+  type: fix

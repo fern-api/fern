@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "paymentId": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "paymentId",
+    "amount",
+    "status"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

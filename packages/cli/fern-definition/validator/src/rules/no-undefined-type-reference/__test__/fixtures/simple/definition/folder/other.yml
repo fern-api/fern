@@ -1,0 +1,4 @@
+imports:
+  api: api.yml
+types:
+  Other: api.TypeInNestedApiYml

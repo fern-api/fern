@@ -1,0 +1,9 @@
+{
+  "title": "Local + GitHub project config resolution",
+  "disposition": "shipped",
+  "rationale": "User config / workspace path edge case misclassified as InternalError.",
+  "fixSummary": "Workspace / project config resolution and path handling (see PR #15283 changelog and follow-up #15484 if refined).",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-04-21",
+  "problemSignature": "Project load with local vs remote (e.g. GitHub) workspace or config paths: user path/config edge misclassified as InternalError."
+}

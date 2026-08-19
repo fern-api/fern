@@ -1,0 +1,200 @@
+openapi: 3.0.3
+info:
+  title: Webhook OpenAPI Responses Test
+  version: 1.0.0
+  description: Test OpenAPI spec for webhook endpoints with responses
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+
+paths: {}
+
+webhooks:
+  paymentsessioncompleted:
+    post:
+      operationId: paymentSessionCompletedWebhook
+      summary: Payment session completed webhook
+      description: Webhook triggered when a payment session is completed
+      x-fern-availability: deprecated
+      tags:
+        - Payment Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentSessionCompletedEvent"
+            examples:
+              smallPayment:
+                summary: Small payment completed
+                value:
+                  eventId: "evt_small_001"
+                  eventType: "payment_session.completed"
+                  paymentSession:
+                    id: "ps_small_123"
+                    status: "completed"
+                    amount: 25.99
+                    currency: "USD"
+                    customerId: "cust_abc"
+                    createdAt: "2024-01-15T09:30:00Z"
+                  timestamp: "2024-01-15T09:35:00Z"
+              largePayment:
+                summary: Large payment completed
+                value:
+                  eventId: "evt_large_002"
+                  eventType: "payment_session.completed"
+                  paymentSession:
+                    id: "ps_large_456"
+                    status: "completed"
+                    amount: 1500.00
+                    currency: "USD"
+                    customerId: "cust_xyz"
+                    createdAt: "2024-01-15T10:00:00Z"
+                  timestamp: "2024-01-15T10:05:00Z"
+              internationalPayment:
+                summary: International payment in EUR
+                value:
+                  eventId: "evt_intl_003"
+                  eventType: "payment_session.completed"
+                  paymentSession:
+                    id: "ps_intl_789"
+                    status: "completed"
+                    amount: 99.50
+                    currency: "EUR"
+                    customerId: "cust_eu_001"
+                    createdAt: "2024-01-15T11:00:00Z"
+                  timestamp: "2024-01-15T11:10:00Z"
+      responses:
+        "204":
+          description: Webhook received successfully (HTTP 204 No Content)
+        "400":
+          description: Invalid payload or authentication failure
+        "500":
+          description: Server error processing webhook
+
+  documentuploaded:
+    post:
+      operationId: documentUploadedWebhook
+      x-fern-webhook: true
+      x-fern-availability: beta
+      summary: Document uploaded webhook (multipart)
+      description: Webhook triggered when a document is uploaded via multipart form
+      tags:
+        - Documents
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/DocumentUploadedEvent"
+            examples:
+              pdfDocument:
+                summary: PDF document uploaded
+                value:
+                  eventId: "evt_doc_001"
+                  eventType: "document.uploaded"
+                  documentId: "doc_pdf_123"
+                  fileName: "contract.pdf"
+                  mimeType: "application/pdf"
+                  uploadedAt: "2024-01-15T14:00:00Z"
+              imageDocument:
+                summary: Image document uploaded
+                value:
+                  eventId: "evt_doc_002"
+                  eventType: "document.uploaded"
+                  documentId: "doc_img_456"
+                  fileName: "signature.png"
+                  mimeType: "image/png"
+                  uploadedAt: "2024-01-15T14:30:00Z"
+      responses:
+        "200":
+          description: Webhook processed successfully
+
+components:
+  schemas:
+    PaymentSession:
+      type: object
+      required:
+        - id
+        - status
+        - amount
+        - currency
+        - createdAt
+      properties:
+        id:
+          type: string
+          description: Unique payment session identifier
+          example: "ps_abc123"
+        status:
+          type: string
+          enum: [pending, processing, completed, failed]
+          description: Current status of the payment session
+        amount:
+          type: number
+          format: double
+          description: Payment amount
+        currency:
+          type: string
+          description: Currency code
+        customerId:
+          type: string
+          description: Customer identifier
+        createdAt:
+          type: string
+          format: date-time
+          description: When the session was created
+
+    PaymentSessionCompletedEvent:
+      type: object
+      required:
+        - eventId
+        - eventType
+        - paymentSession
+        - timestamp
+      properties:
+        eventId:
+          type: string
+          description: Unique event identifier
+          example: "evt_xyz789"
+        eventType:
+          type: string
+          enum: [payment_session.completed]
+          description: Type of the event
+        paymentSession:
+          $ref: "#/components/schemas/PaymentSession"
+        timestamp:
+          type: string
+          format: date-time
+          description: When the event occurred
+
+    DocumentUploadedEvent:
+      type: object
+      required:
+        - eventId
+        - eventType
+        - documentId
+        - fileName
+        - mimeType
+        - uploadedAt
+      properties:
+        eventId:
+          type: string
+          description: Unique event identifier
+        eventType:
+          type: string
+          enum: [document.uploaded]
+          description: Type of the event
+        documentId:
+          type: string
+          description: Unique document identifier
+        fileName:
+          type: string
+          description: Name of the uploaded file
+        mimeType:
+          type: string
+          description: MIME type of the uploaded file
+        uploadedAt:
+          type: string
+          format: date-time
+          description: When the document was uploaded

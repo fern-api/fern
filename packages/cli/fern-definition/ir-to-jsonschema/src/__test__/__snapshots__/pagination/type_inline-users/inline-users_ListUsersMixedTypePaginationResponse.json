@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "next": {
+      "type": "string"
+    },
+    "data": {
+      "$ref": "#/definitions/inline-users.inline-users.Users"
+    }
+  },
+  "required": [
+    "next",
+    "data"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "inline-users.inline-users.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "inline-users.inline-users.Users": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/inline-users.inline-users.User"
+          }
+        }
+      },
+      "required": [
+        "users"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

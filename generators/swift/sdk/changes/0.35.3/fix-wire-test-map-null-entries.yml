@@ -1,0 +1,15 @@
+- summary: |
+    Fix Swift wire-test runtime equality failures when a response body contains
+    a map (`Dictionary<String, T>`) whose value is an explicit-null nullable, or
+    an `Optional<Nullable<T>>` field whose example is explicit-null. Previously
+    the generator embedded the IR's `jsonExample` for the response body, which
+    silently dropped keys whose value resolved to JS `undefined` (e.g. an
+    unresolved `nullable<T>`), and the expected-struct generator filtered
+    optional properties using the same `jsonExample === undefined` check, which
+    matched both "truly absent" and "explicit-null nullable" examples. The wire-
+    test JSON body is now built by walking the typed example shape directly,
+    and the expected-struct generator skips a property only when the typed
+    `optional` container is genuinely empty — so an explicit-null nullable
+    inside an optional now renders as `Optional(.null)` in both the embedded
+    JSON body and the expected struct.
+  type: fix

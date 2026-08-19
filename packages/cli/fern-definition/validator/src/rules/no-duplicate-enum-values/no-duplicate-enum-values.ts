@@ -1,0 +1,31 @@
+import { isRawEnumDefinition } from "@fern-api/fern-definition-schema";
+import chalk from "chalk";
+
+import { Rule } from "../../Rule.js";
+import { getDuplicates } from "../../utils/getDuplicates.js";
+
+export const NoDuplicateEnumValuesRule: Rule = {
+    name: "no-duplicate-enum-values",
+    create: () => {
+        return {
+            definitionFile: {
+                typeDeclaration: ({ declaration }) => {
+                    if (!isRawEnumDefinition(declaration)) {
+                        return [];
+                    }
+
+                    const duplicatedValues = getDuplicates(
+                        declaration.enum.map((enumValue) =>
+                            typeof enumValue === "string" ? enumValue : enumValue.value
+                        )
+                    );
+
+                    return duplicatedValues.map((duplicatedValue) => ({
+                        severity: "fatal",
+                        message: `Duplicated enum value: ${chalk.bold(duplicatedValue)}.`
+                    }));
+                }
+            }
+        };
+    }
+};

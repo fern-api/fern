@@ -1,0 +1,7 @@
+- summary: |
+    Populate `apiNameToId` in `fern docs dev` so MDX widgets that resolve APIs by
+    user-facing name (e.g. `<MergeSupportedFieldsByIntegrationWidget apiName="hris_v2" ... />`)
+    work in local preview. Previously the preview server hardcoded this mapping to
+    `{}`, causing such widgets to throw `MergeWidgetResolutionError` and render the
+    affected pages as 500 Internal Server Error.
+  type: fix

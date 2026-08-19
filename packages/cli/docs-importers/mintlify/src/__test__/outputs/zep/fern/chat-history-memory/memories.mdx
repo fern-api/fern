@@ -1,0 +1,197 @@
+---
+title: Memories
+subtitle: >-
+  Memories are the central data structure in Zep's Memory Store. They contain a
+  list of Messages and a Summary.
+slug: chat-history-memory/memories
+---
+
+
+<Card
+    title="Chat History Memory"
+    icon="memory"
+>
+    A Memory is the central data structure in Zep's Memory Store. It contains a list of Messages and a Summary (if
+    created).
+
+    The Memory and Summary are returned with UUIDs, token counts, timestamps, and other metadata.
+    Memories are associated with [Sessions](sessions) in a many-to-one relationship.
+
+</Card>
+## Persisting a Memory to a Session
+
+A Memory may include a single message or a series of messages. Each Message has a `role`, `role_type` and `content` field, with
+role being the identifiers for your human and AI/agent users, and content being the text of the message.
+
+Additionally, you can store custom metadata with each Message.
+
+<Note>
+**Sessions don't need to be explicitly created**
+
+Sessions are created automatically when adding Memories. If the `SessionID` is already exists, then the Memory is
+upserted into the Session.
+
+[Manually creating a session](sessions) can be useful if you want to associate it with a user or add metadata.
+
+</Note>
+
+<Tabs group="memory">
+<Tab title="Python" group-key="python">
+
+```python
+from zep_python import (
+    NotFoundError,
+    ZepClient,
+)
+from zep_python.memory import Memory
+from zep_python.message import Message
+import uuid
+
+API_KEY = "<your_api_key>"
+client = ZepClient(api_key=API_KEY)
+
+session_id = uuid.uuid4().hex  # A new session identifier
+
+history = [
+    {"role": "Jane", "role_type": "user", "content": "Who was Octavia Butler?"},
+    {"role": "HistoryBot", "role_type": "assistant", "content": "Octavia Estelle Butler (June 22, 1947 – February 24, 2006) was an American science fiction author."},
+    {"role": "Jane", "role_type": "user", "content": "Which books of hers were made into movies?", "metadata": {"foo": "bar"}},
+]
+
+messages = [Message(role=m["role"], content=m["content"], metadata=m.get("metadata")) for m in history]
+memory = Memory(messages=messages)
+result = client.memory.add_memory(session_id, memory)
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+import { ZepClient, Message, Memory } from "@getzep/zep-js";
+import * as uuid from "uuid";
+
+const API_KEY = "<your_api_key>";
+const zepClient = await ZepClient.init(process.env.ZEP_API_KEY);
+
+const session_id: string = uuid.v4(); // A new session identifier
+
+const history: { role: string; content: string; metadata?: { [key: string]: any } }[] = [
+  { role: "Jane", role_type: "user", content: "Who was Octavia Butler?" },
+  {
+    role: "HistoryBot",
+    role_type: "assistant",
+    content: "Octavia Estelle Butler (June 22, 1947 – February 24, 2006) was an American science fiction author.",
+  },
+  { role: "Jane", role_type: "user", content: "Which books of hers were made into movies?", metadata: { foo: "bar" } },
+];
+
+const messages: Message[] = history.map((m) => new Message({ role: m.role, content: m.content, metadata: m.metadata }));
+const memory: Memory = new Memory({ messages });
+const result = client.memory.addMemory(session_id, memory);
+```
+
+</Tab>
+</Tabs>
+
+## Getting a Session's Memory
+
+<Note>Read more about the difference between [Perpetual and Message Window Buffer Memory](/chat-history-memory).</Note>
+
+### Perpetual Memory
+
+The example below uses Zep's async API and a context manager. You may also use the sync API's `client.memory.get_memory`
+method and use the `client` outside of a context manager.
+
+<Tabs group="memory">
+<Tab title="Python" group-key="python">
+
+```python
+async with ZepClient(api_key=api_key) as client:
+    try:
+        memory = await client.memory.aget_memory(session_id, memory_type="perpetual")
+        for message in memory.messages:
+            print(message.to_dict())
+    except NotFoundError:
+        print("Memory not found")
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const client = await ZepClient.init(api_key);
+try {
+  const memory = await client.memory.getMemory(session_id, "perpetual");
+  for (const message of memory.messages) {
+    console.log(message.toDict());
+  }
+} catch (error) {
+  if (error instanceof NotFoundError) {
+    console.log("Memory not found");
+  } else {
+    throw error;
+  }
+}
+```
+
+</Tab>
+</Tabs>
+
+```json title="Output:"
+[
+  {
+    "uuid": "7291333f-2e01-4b06-9fe0-3efc59b3399c",
+    "created_at": "2023-05-16T21:59:11.057919Z",
+    "role": "HistoryBot",
+    "role_type": "assistant",
+    "content": "Parable of the Sower is a science fiction novel by Octavia Butler, published in 1993. It follows the story of Lauren Olamina, a young woman living in a dystopian future where society has collapsed due to environmental disasters, poverty, and violence.",
+    "token_count": 56
+  },
+  {
+    "uuid": "61f862c5-945b-49b1-b87c-f9338518b7cb",
+    "created_at": "2023-05-16T21:59:11.057919Z",
+    "role": "Jane",
+    "role_type": "user",
+    "content": "Write a short synopsis of Butler's book, Parable of the Sower. What is it about?",
+    "token_count": 23
+  }
+]
+```
+
+### Message Window Buffer Memory
+
+<Tabs group="memory">
+
+<Tab title="Python" group-key="python">
+
+```python
+async with ZepClient(api_key) as client:
+    try:
+        memory = await client.memory.aget_memory(session_id)
+        for message in memory.messages:
+            print(message.to_dict())
+    except NotFoundError:
+        print("Memory not found")
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const client = await ZepClient.init(api_key);
+try {
+  const memory = await client.memory.getMemory(session_id, "message_window");
+  for (const message of memory.messages) {
+    console.log(message.toDict());
+  }
+} catch (error) {
+  if (error instanceof NotFoundError) {
+    console.log("Memory not found");
+  } else {
+    throw error;
+  }
+}
+```
+
+</Tab>
+</Tabs>

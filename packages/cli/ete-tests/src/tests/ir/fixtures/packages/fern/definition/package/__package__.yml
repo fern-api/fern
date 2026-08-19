@@ -1,0 +1,10 @@
+types:
+  PackageString: string
+service:
+  base-path: /
+  auth: false
+  endpoints: {}
+
+navigation:
+  - b.yml
+  - a.yml

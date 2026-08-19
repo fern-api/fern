@@ -1,0 +1,40 @@
+openapi: 3.1.0
+info:
+  title: Primitive Array Complex API
+  version: 1.0.0
+paths:
+  /search-with-array-union:
+    get:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: string
+              type: ["array", "null"]
+      responses:
+        200:
+          description: Successful search response
+          content:
+            application/json:
+              schema:
+                type: string
+  /search-with-object-union:
+    get:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                foo:
+                  type: string
+                bar:
+                  type: number
+              type: ["object", "null"]
+      responses:
+        200:
+          description: Successful search response
+          content:
+            application/json:
+              schema:
+                type: string

@@ -1,0 +1,35 @@
+types:
+  User:
+    properties:
+      name: string
+      id: integer
+
+  ListUsersUriPaginationResponse:
+    properties:
+      data: list<User>
+      next: optional<string>
+
+  ListUsersPathPaginationResponse:
+    properties:
+      data: list<User>
+      next: optional<string>
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    listWithUriPagination:
+      pagination:
+        next_uri: $response.next
+        results: $response.data
+      method: GET
+      path: /uri
+      response: ListUsersUriPaginationResponse
+
+    listWithPathPagination:
+      pagination:
+        next_path: $response.next
+        results: $response.data
+      method: GET
+      path: /path
+      response: ListUsersPathPaginationResponse

@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`validate > docs 1`] = `
+"Detected empty API definition: fern. Remove to resolve error.
+No API definition found. Expected one of the following:
+  - An api section in generators.yml pointing to your API spec(s)
+  - A definition/ directory with Fern Definition files
+For more information, see https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder
+All checks passed"
+`;
+
+exports[`validate > no-api 1`] = `"Missing file: api.yml"`;
+
+exports[`validate > no-generator 1`] = `
+"Detected empty API definition: api1. Remove to resolve error.
+No API definition found. Expected one of the following:
+  - An api section in generators.yml pointing to your API spec(s)
+  - A definition/ directory with Fern Definition files
+For more information, see https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder"
+`;
+
+exports[`validate > simple 1`] = `
+"[sdk] 2 errors
+    [error]
+        path: api.yml -> error-discrimination
+        issue: error-discrimination is required because this API has declared errors.
+
+    [error]
+        path: other.yml -> types -> MyType
+        issue: Type MissingType is not defined.
+
+Found 2 errors and 0 warnings in __ELAPSED__ seconds."
+`;

@@ -1,0 +1,6 @@
+- summary: |
+    Emit npm publishing workflow (.github/workflows/ci.yml) in github output mode.
+    Cross-platform binary matrix builds per-OS/arch npm packages with an embedded
+    binary and a thin Node.js launcher, gated on tag push with NPM_TOKEN auth.
+    Stamp resolved version into Cargo.toml and npm manifests.
+  type: feat

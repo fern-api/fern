@@ -1,0 +1,16 @@
+openapi: 3.1.0
+info:
+  title: Test API
+  version: 1.0.0
+paths:
+  /login:
+    post:
+      summary: Login
+      operationId: login
+      description: |
+        ---
+        > Start here - this is the entry point
+        ---
+      responses:
+        "200":
+          description: Success

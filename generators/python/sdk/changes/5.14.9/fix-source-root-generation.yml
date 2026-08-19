@@ -1,0 +1,9 @@
+- summary: |
+    Fix generation failure in `output_directory: source-root` mode by skipping
+    `poetry lock` and `ruff` commands that require a pyproject.toml which is not
+    emitted in source-root mode.
+  type: fix
+- summary: |
+    Fix duplicate `__root__` field declaration in Pydantic v1 discriminated unions
+    with `include_union_utils: true`.
+  type: fix

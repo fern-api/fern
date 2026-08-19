@@ -1,0 +1,44 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "12b82067",
+            "id": {
+                "method": "GET",
+                "path": "/api/resources",
+                "identifier_override": "endpoint_service.listResources"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.service.requests.ListResourcesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().listResources(\n            ListResourcesRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .sort(\"created_at\")\n                .order(\"desc\")\n                .includeTotals(true)\n                .fields(\"fields\")\n                .search(\"search\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.service.requests.ListResourcesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().listResources(\n            ListResourcesRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .sort(\"created_at\")\n                .order(\"desc\")\n                .includeTotals(true)\n                .fields(\"fields\")\n                .search(\"search\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "373130d3",
+            "id": {
+                "method": "GET",
+                "path": "/api/resources/{resourceId}",
+                "identifier_override": "endpoint_service.getResource"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.service.requests.GetResourceRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().getResource(\n            \"resourceId\",\n            GetResourceRequest\n                .builder()\n                .includeMetadata(true)\n                .format(\"json\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.service.requests.GetResourceRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().getResource(\n            \"resourceId\",\n            GetResourceRequest\n                .builder()\n                .includeMetadata(true)\n                .format(\"json\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "aff8920f",
+            "id": {
+                "method": "POST",
+                "path": "/api/resources/search",
+                "identifier_override": "endpoint_service.searchResources"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.service.requests.SearchResourcesRequest;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().searchResources(\n            SearchResourcesRequest\n                .builder()\n                .limit(1)\n                .offset(1)\n                .query(\"query\")\n                .filters(\n                    new HashMap<String, Object>() {{\n                        put(\"filters\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.clientSideParams.SeedClientSideParamsClient;\nimport com.seed.clientSideParams.resources.service.requests.SearchResourcesRequest;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedClientSideParamsClient client = SeedClientSideParamsClient\n            .builder()\n            .build();\n\n        client.service().searchResources(\n            SearchResourcesRequest\n                .builder()\n                .limit(1)\n                .offset(1)\n                .query(\"query\")\n                .filters(\n                    new HashMap<String, Object>() {{\n                        put(\"filters\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

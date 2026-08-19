@@ -1,0 +1,5 @@
+service:
+  url: A
+  base-path: /
+  auth: false
+  endpoints: {}

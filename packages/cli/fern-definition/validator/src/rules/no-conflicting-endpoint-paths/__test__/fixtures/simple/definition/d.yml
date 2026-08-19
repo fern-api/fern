@@ -1,0 +1,10 @@
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    foo:
+      path: ""
+      method: GET
+    bar:
+      path: ""
+      method: GET

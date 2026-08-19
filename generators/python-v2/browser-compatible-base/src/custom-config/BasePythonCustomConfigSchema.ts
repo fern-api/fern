@@ -1,0 +1,58 @@
+import { z } from "zod";
+
+import { BaseDependencyConfig } from "./BaseDependencyConfig.js";
+import { ClientConfig } from "./ClientConfig.js";
+import { DependencyConfig } from "./DependencyConfig.js";
+import { ModuleExport } from "./ModuleExport.js";
+import { PydanticConfig } from "./PydanticConfig.js";
+
+export const BasePythonCustomConfigSchema = z.object({
+    // Influence dynamic snippets.
+    client: ClientConfig.optional(),
+    improved_imports: z.boolean().optional().default(true),
+    package_name: z.string().optional(),
+    package_path: z.string().optional(),
+    pydantic_config: PydanticConfig.optional(),
+    respect_optional_request_body: z.boolean().optional(),
+    use_typeddict_requests: z.boolean().optional(),
+
+    // General options.
+    additional_init_exports: z.array(ModuleExport).optional(),
+    default_bytes_stream_chunk_size: z.number().optional(),
+    extra_dependencies: z.record(z.string(), z.union([z.string(), DependencyConfig])).optional(),
+    extra_dev_dependencies: z.record(z.string(), z.union([z.string(), BaseDependencyConfig])).optional(),
+    extras: z.record(z.string(), z.array(z.string())).optional(),
+    follow_redirects_by_default: z.boolean().optional(),
+    output_directory: z.enum(["project-root", "source-root"]).optional(),
+    pyproject_python_version: z.string().optional(),
+    pyproject_toml: z.string().optional(),
+    should_generate_websocket_clients: z.boolean().optional(),
+    skip_formatting: z.boolean().optional(),
+    timeout: z.union([z.literal("infinity"), z.number()]).optional(),
+    use_request_defaults: z.enum(["none", "parameters", "all"]).optional(),
+
+    // Deprecated.
+    client_class_name: z.string().optional(),
+    /** @deprecated Prefer `timeout`. Both are in seconds; this is only an alias with no unit change. */
+    timeout_in_seconds: z.union([z.literal("infinity"), z.number()]).optional(),
+    client_filename: z.string().optional(),
+    /** @deprecated Prefer `output_directory`. `flat_layout` only toggles the `src/` prefix and never skips project scaffolding. */
+    flat_layout: z.boolean().optional(),
+    include_legacy_wire_tests: z.boolean().optional(),
+    inline_request_params: z.boolean().optional(),
+    flatten_union_request_bodies: z.boolean().optional(),
+    use_api_name_in_package: z.boolean().optional()
+});
+
+export type BasePythonCustomConfigSchema = z.infer<typeof BasePythonCustomConfigSchema>;
+
+/**
+ * Resolves the request timeout from the custom config, preferring the `timeout` key
+ * and falling back to the deprecated `timeout_in_seconds` alias. Both keys are in
+ * seconds, so no unit conversion is applied.
+ */
+export function resolveTimeout(
+    config: Pick<BasePythonCustomConfigSchema, "timeout" | "timeout_in_seconds">
+): number | "infinity" | undefined {
+    return config.timeout ?? config.timeout_in_seconds;
+}

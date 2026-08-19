@@ -1,0 +1,52 @@
+# Seed image for the Fern CLI generator (Rust output).
+#
+# Bakes a pinned Rust toolchain plus a fully populated cargo registry and
+# target/ cache built against the SDK template's exact Cargo.lock. When the
+# seed runner mounts a freshly generated CLI and runs `cargo build` /
+# `cargo test` with --locked, every dep resolves to the same version that
+# was pre-compiled here, so $CARGO_HOME/registry and $CARGO_TARGET_DIR hit
+# perfectly. Only the SDK's own crate sources recompile (small, ~5s).
+#
+# Build context: repo root.
+#   docker build -f docker/seed/Dockerfile.cli -t fernapi/cli-seed:latest .
+
+# Pinned to a specific Rust release so the image is reproducible — never
+# use `rust:bookworm` or `rust:latest`, which silently move between builds.
+# Bump deliberately when you want a newer toolchain.
+FROM rust:1.95.0-bookworm
+
+# Pull every available Debian security update on top of the base image so
+# grype doesn't flag the bookworm-base CVEs as ours to fix. python3 +
+# openssl are runtime deps of tests/tls_env_vars.rs — without them that
+# test self-skips with a warning.
+RUN apt-get update && \
+    apt-get -y --no-install-recommends dist-upgrade && \
+    apt-get -y --no-install-recommends install python3 openssl ca-certificates && \
+    apt-get -y autoremove && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Shared cargo locations. CARGO_TARGET_DIR is set globally so any cargo
+# invocation against a mounted SDK at /workspace reuses the pre-built dep
+# artifacts compiled here.
+ENV CARGO_HOME=/usr/local/cargo \
+    CARGO_TARGET_DIR=/opt/cargo-target \
+    RUSTUP_HOME=/usr/local/rustup \
+    PATH=/usr/local/cargo/bin:$PATH
+
+# Warm up the registry and target/ cache by building the SDK template
+# itself with the committed Cargo.lock. This guarantees dep version
+# alignment between warmup and seed-run-time — no resolver drift, no
+# wasted recompiles. The SDK source is then deleted; only the dep
+# artifacts in $CARGO_TARGET_DIR (and downloaded sources in $CARGO_HOME)
+# remain as the cache.
+COPY generators/cli/sdk /opt/cargo-warmup
+WORKDIR /opt/cargo-warmup
+RUN cargo fetch --locked && \
+    cargo build --locked --all-features --tests && \
+    cargo build --locked --all-features --tests --release && \
+    cd / && rm -rf /opt/cargo-warmup
+
+WORKDIR /
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]

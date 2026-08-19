@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "group.created",
+        "group.deleted"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "group.created"
+        },
+        "offset": {
+          "type": "string"
+        },
+        "group_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "offset",
+        "group_id"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "group.deleted"
+        },
+        "offset": {
+          "type": "string"
+        },
+        "group_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "offset",
+        "group_id"
+      ]
+    }
+  ],
+  "definitions": {}
+}

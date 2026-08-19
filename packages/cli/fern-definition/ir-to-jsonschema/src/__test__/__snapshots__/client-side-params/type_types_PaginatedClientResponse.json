@@ -1,0 +1,447 @@
+{
+  "type": "object",
+  "properties": {
+    "start": {
+      "type": "integer",
+      "description": "Starting index (zero-based)"
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Number of items requested"
+    },
+    "length": {
+      "type": "integer",
+      "description": "Number of items returned"
+    },
+    "total": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Total number of items (when include_totals=true)"
+    },
+    "clients": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/types.Client"
+      },
+      "description": "List of clients"
+    }
+  },
+  "required": [
+    "start",
+    "limit",
+    "length",
+    "clients"
+  ],
+  "additionalProperties": false,
+  "description": "Paginated response for clients listing",
+  "definitions": {
+    "types.Client": {
+      "type": "object",
+      "properties": {
+        "client_id": {
+          "type": "string",
+          "description": "The unique client identifier"
+        },
+        "tenant": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The tenant name"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the client"
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Free text description of the client"
+        },
+        "global": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether this is a global client"
+        },
+        "client_secret": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The client secret (only for non-public clients)"
+        },
+        "app_type": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The type of application (spa, native, regular_web, non_interactive)"
+        },
+        "logo_uri": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "URL of the client logo"
+        },
+        "is_first_party": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether this client is a first party client"
+        },
+        "oidc_conformant": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether this client conforms to OIDC specifications"
+        },
+        "callbacks": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Allowed callback URLs"
+        },
+        "allowed_origins": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Allowed origins for CORS"
+        },
+        "web_origins": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Allowed web origins for CORS"
+        },
+        "grant_types": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Allowed grant types"
+        },
+        "jwt_configuration": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "JWT configuration for the client"
+        },
+        "signing_keys": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": [
+                    "string",
+                    "number",
+                    "boolean",
+                    "object",
+                    "array",
+                    "null"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Client signing keys"
+        },
+        "encryption_key": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Encryption key"
+        },
+        "sso": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether SSO is enabled"
+        },
+        "sso_disabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether SSO is disabled"
+        },
+        "cross_origin_auth": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether to use cross-origin authentication"
+        },
+        "cross_origin_loc": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "URL for cross-origin authentication"
+        },
+        "custom_login_page_on": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether a custom login page is enabled"
+        },
+        "custom_login_page": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Custom login page URL"
+        },
+        "custom_login_page_preview": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Custom login page preview URL"
+        },
+        "form_template": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Form template for WS-Federation"
+        },
+        "is_heroku_app": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether this is a Heroku application"
+        },
+        "addons": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Addons enabled for this client"
+        },
+        "token_endpoint_auth_method": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Requested authentication method for the token endpoint"
+        },
+        "client_metadata": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Metadata associated with the client"
+        },
+        "mobile": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Mobile app settings"
+        }
+      },
+      "required": [
+        "client_id",
+        "name"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a client application"
+    }
+  }
+}

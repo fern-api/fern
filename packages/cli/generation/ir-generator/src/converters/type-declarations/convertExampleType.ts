@@ -1,0 +1,969 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { assertNever, Examples, isPlainObject } from "@fern-api/core-utils";
+import {
+    EXAMPLE_REFERENCE_PREFIX,
+    isRawAliasDefinition,
+    isRawObjectDefinition,
+    RawSchemas,
+    visitRawTypeDeclaration,
+    visitRawTypeReference
+} from "@fern-api/fern-definition-schema";
+import {
+    DeclaredTypeName,
+    ExampleContainer,
+    ExampleExtraObjectProperty,
+    ExampleObjectProperty,
+    ExamplePrimitive,
+    ExampleSingleUnionType,
+    ExampleTypeReference,
+    ExampleTypeReferenceShape,
+    ExampleTypeShape,
+    ExampleUnionBaseProperty,
+    FernIr,
+    PrimitiveTypeV1
+} from "@fern-api/ir-sdk";
+import { getWireValue, IdGenerator } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
+import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample.js";
+import { FernFileContext } from "../../FernFileContext.js";
+import { ExampleResolver } from "../../resolvers/ExampleResolver.js";
+import { TypeResolver } from "../../resolvers/TypeResolver.js";
+import {
+    getSingleUnionTypeName,
+    getSingleUnionTypeProperties,
+    getUnionDiscriminant,
+    getUnionDiscriminantName
+} from "./convertDiscriminatedUnionTypeDeclaration.js";
+import { getEnumNameFromEnumValue } from "./convertEnumTypeDeclaration.js";
+import { getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration.js";
+
+const MAX_EXAMPLE_RECURSION_DEPTH = 128;
+
+interface RecursionContext {
+    depth: number;
+    seenTypeIds: Set<string>;
+}
+
+export function convertTypeExample({
+    typeName,
+    typeDeclaration,
+    example,
+    typeResolver,
+    exampleResolver,
+    fileContainingType,
+    fileContainingExample,
+    workspace,
+    recursionContext
+}: {
+    typeName: DeclaredTypeName;
+    typeDeclaration: RawSchemas.TypeDeclarationSchema;
+    example: RawSchemas.ExampleTypeValueSchema;
+    typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
+    fileContainingType: FernFileContext;
+    fileContainingExample: FernFileContext;
+    workspace: FernWorkspace;
+    recursionContext?: RecursionContext;
+}): ExampleTypeShape {
+    return visitRawTypeDeclaration<ExampleTypeShape>(typeDeclaration, {
+        alias: (rawAlias) => {
+            return ExampleTypeShape.alias({
+                value: convertTypeReferenceExample({
+                    example,
+                    rawTypeBeingExemplified: typeof rawAlias === "string" ? rawAlias : rawAlias.type,
+                    fileContainingRawTypeReference: fileContainingType,
+                    fileContainingExample,
+                    typeResolver,
+                    exampleResolver,
+                    workspace,
+                    recursionContext
+                })
+            });
+        },
+        object: (rawObject) => {
+            return convertObject({
+                typeName,
+                rawObject,
+                example,
+                fileContainingType,
+                fileContainingExample,
+                typeResolver,
+                exampleResolver,
+                workspace,
+                recursionContext
+            });
+        },
+        discriminatedUnion: (rawUnion) => {
+            const discriminant = getUnionDiscriminant(rawUnion);
+            if (!isPlainObject(example)) {
+                throw new CliError({ message: "Example is not an object", code: CliError.Code.ValidationError });
+            }
+            const discriminantValueForExample = example[discriminant];
+            if (discriminantValueForExample == null) {
+                throw new CliError({
+                    message: "Example is missing discriminant: " + discriminant,
+                    code: CliError.Code.ValidationError
+                });
+            }
+            if (typeof discriminantValueForExample !== "string") {
+                throw new CliError({
+                    message: "Discriminant value is not a string",
+                    code: CliError.Code.ValidationError
+                });
+            }
+
+            const rawSingleUnionType = rawUnion.union[discriminantValueForExample];
+            if (rawSingleUnionType == null) {
+                throw new CliError({
+                    message: `${discriminantValueForExample} is not one of the specified discriminant values.`,
+                    code: CliError.Code.ValidationError
+                });
+            }
+
+            const rawValueType =
+                typeof rawSingleUnionType === "string"
+                    ? rawSingleUnionType
+                    : typeof rawSingleUnionType.type === "string"
+                      ? rawSingleUnionType.type
+                      : undefined;
+
+            const baseProperties: ExampleUnionBaseProperty[] = Object.entries(rawUnion["base-properties"] ?? {})
+                .map<ExampleUnionBaseProperty | undefined>(([propertyName, property]) => {
+                    const propertyExample = example[propertyName];
+                    if (propertyExample == null) {
+                        return undefined;
+                    }
+                    return {
+                        name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                            name: propertyName,
+                            wireValue: propertyName
+                        }),
+                        value: convertTypeReferenceExample({
+                            example: propertyExample,
+                            rawTypeBeingExemplified: typeof property === "string" ? property : property.type,
+                            fileContainingRawTypeReference: fileContainingType,
+                            fileContainingExample,
+                            typeResolver,
+                            exampleResolver,
+                            workspace,
+                            recursionContext
+                        })
+                    };
+                })
+                .filter((property): property is ExampleUnionBaseProperty => property != null);
+
+            const extendProperties: ExampleObjectProperty[] = (
+                typeof rawUnion.extends === "undefined"
+                    ? []
+                    : typeof rawUnion.extends === "string"
+                      ? [rawUnion.extends]
+                      : rawUnion.extends
+            ).flatMap((extendedTypeName) => {
+                const resolvedExtendedType = typeResolver.resolveNamedTypeOrThrow({
+                    file: fileContainingType,
+                    referenceToNamedType: extendedTypeName
+                });
+                if (
+                    resolvedExtendedType._type !== "named" ||
+                    !isRawObjectDefinition(resolvedExtendedType.declaration)
+                ) {
+                    throw new CliError({
+                        message: "Extended type is not a named object",
+                        code: CliError.Code.InternalError
+                    });
+                }
+                const extendedObject = resolvedExtendedType.declaration;
+                const propertiesFromExtension: ExampleObjectProperty[] = Object.entries(extendedObject.properties ?? {})
+                    .map<ExampleObjectProperty | undefined>(([propertyName, property]) => {
+                        const propertyExample = example[propertyName];
+                        if (propertyExample == null) {
+                            return undefined;
+                        }
+                        return {
+                            name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                                name: typeof property === "string" ? propertyName : (property.name ?? propertyName),
+                                wireValue: propertyName
+                            }),
+                            value: convertTypeReferenceExample({
+                                example: propertyExample,
+                                rawTypeBeingExemplified: typeof property === "string" ? property : property.type,
+                                fileContainingRawTypeReference: fileContainingType,
+                                fileContainingExample,
+                                typeResolver,
+                                exampleResolver,
+                                workspace,
+                                recursionContext
+                            }),
+                            propertyAccess: getPropertyAccess({ property }),
+                            originalTypeDeclaration: typeName
+                        };
+                    })
+                    .filter((property): property is ExampleObjectProperty => property != null);
+                return propertiesFromExtension;
+            });
+
+            return ExampleTypeShape.union({
+                discriminant: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                    name: getUnionDiscriminantName(rawUnion).name,
+                    wireValue: discriminant
+                }),
+                singleUnionType: convertSingleUnionType({
+                    rawValueType,
+                    rawSingleUnionType,
+                    fileContainingType,
+                    fileContainingExample,
+                    typeResolver,
+                    exampleResolver,
+                    example,
+                    discriminantValueForExample,
+                    workspace,
+                    recursionContext
+                }),
+                baseProperties,
+                extendProperties
+            });
+        },
+        enum: (rawEnum) => {
+            if (typeof example !== "string") {
+                const validValues = rawEnum.enum
+                    .map((enumEntry) => (typeof enumEntry === "string" ? enumEntry : enumEntry.value))
+                    .join(", ");
+
+                throw new CliError({
+                    message: `Expected one of ${validValues}. Received ${example}`,
+                    code: CliError.Code.ValidationError
+                });
+            }
+            return ExampleTypeShape.enum({
+                value: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                    name: getEnumNameFromEnumValue(example, rawEnum).name,
+                    wireValue: example
+                })
+            });
+        },
+        undiscriminatedUnion: (undiscriminatedUnion) => {
+            for (const [index, variant] of undiscriminatedUnion.union.entries()) {
+                const violationsForMember = validateTypeReferenceExample({
+                    rawTypeReference: typeof variant === "string" ? variant : variant.type,
+                    example,
+                    typeResolver,
+                    exampleResolver,
+                    file: fileContainingType,
+                    workspace,
+                    breadcrumbs: [],
+                    depth: 0
+                });
+                if (violationsForMember.length === 0) {
+                    return ExampleTypeShape.undiscriminatedUnion({
+                        index,
+                        singleUnionType: convertTypeReferenceExample({
+                            example,
+                            rawTypeBeingExemplified: typeof variant === "string" ? variant : variant.type,
+                            fileContainingRawTypeReference: fileContainingType,
+                            fileContainingExample,
+                            typeResolver,
+                            exampleResolver,
+                            workspace,
+                            recursionContext
+                        })
+                    });
+                }
+            }
+            const variantOptions = undiscriminatedUnion.union.map((variant) => {
+                return typeof variant === "string" ? variant : variant.type;
+            });
+            const validValues = variantOptions.join(", ");
+            throw new CliError({
+                message: `Expected one of ${validValues}. Received ${example}`,
+                code: CliError.Code.ValidationError
+            });
+        }
+    });
+}
+
+export function convertTypeReferenceExample({
+    example,
+    fileContainingExample,
+    rawTypeBeingExemplified,
+    fileContainingRawTypeReference,
+    typeResolver,
+    exampleResolver,
+    workspace,
+    recursionContext
+}: {
+    example: RawSchemas.ExampleTypeReferenceSchema;
+    fileContainingExample: FernFileContext;
+    rawTypeBeingExemplified: string;
+    fileContainingRawTypeReference: FernFileContext;
+    typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
+    workspace: FernWorkspace;
+    recursionContext?: RecursionContext;
+}): ExampleTypeReference {
+    const ctx = recursionContext ?? { depth: 0, seenTypeIds: new Set() };
+
+    const { resolvedExample, file: fileContainingResolvedExample } = exampleResolver.resolveExampleOrThrow({
+        example,
+        file: fileContainingExample
+    });
+    const jsonExample = exampleResolver.resolveAllReferencesInExampleOrThrow({
+        example,
+        file: fileContainingExample
+    }).resolvedExample;
+
+    const shape = visitRawTypeReference<ExampleTypeReferenceShape>({
+        type: rawTypeBeingExemplified,
+        _default: undefined,
+        validation: undefined,
+        visitor: {
+            primitive: (primitive) => {
+                return convertPrimitiveExample({
+                    example: resolvedExample,
+                    typeBeingExemplified: primitive.v1
+                });
+            },
+            map: ({ keyType, valueType }) => {
+                if (!isPlainObject(resolvedExample)) {
+                    throw new CliError({ message: "Example is not an object", code: CliError.Code.ValidationError });
+                }
+                const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
+                return ExampleTypeReferenceShape.container(
+                    ExampleContainer.map({
+                        map: Object.entries(resolvedExample).map(([key, value]) => ({
+                            key: convertTypeReferenceExample({
+                                example: key,
+                                fileContainingExample: fileContainingResolvedExample,
+                                rawTypeBeingExemplified: keyType,
+                                fileContainingRawTypeReference,
+                                typeResolver,
+                                exampleResolver,
+                                workspace,
+                                recursionContext: nextContext
+                            }),
+                            value: convertTypeReferenceExample({
+                                example: value,
+                                fileContainingExample: fileContainingResolvedExample,
+                                rawTypeBeingExemplified: valueType,
+                                fileContainingRawTypeReference,
+                                typeResolver,
+                                exampleResolver,
+                                workspace,
+                                recursionContext: nextContext
+                            })
+                        })),
+                        keyType: fileContainingRawTypeReference.parseTypeReference(keyType),
+                        valueType: fileContainingRawTypeReference.parseTypeReference(valueType)
+                    })
+                );
+            },
+            list: (itemType) => {
+                if (!Array.isArray(resolvedExample)) {
+                    throw new CliError({ message: "Example is not a list", code: CliError.Code.ValidationError });
+                }
+                const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
+                return ExampleTypeReferenceShape.container(
+                    ExampleContainer.list({
+                        list: resolvedExample.map((exampleItem) =>
+                            convertTypeReferenceExample({
+                                example: exampleItem,
+                                fileContainingExample: fileContainingResolvedExample,
+                                rawTypeBeingExemplified: itemType,
+                                fileContainingRawTypeReference,
+                                typeResolver,
+                                exampleResolver,
+                                workspace,
+                                recursionContext: nextContext
+                            })
+                        ),
+                        itemType: fileContainingRawTypeReference.parseTypeReference(itemType)
+                    })
+                );
+            },
+            set: (itemType) => {
+                if (!Array.isArray(resolvedExample)) {
+                    throw new CliError({ message: "Example is not a list", code: CliError.Code.ValidationError });
+                }
+                const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
+                return ExampleTypeReferenceShape.container(
+                    ExampleContainer.set({
+                        set: resolvedExample.map((exampleItem) =>
+                            convertTypeReferenceExample({
+                                example: exampleItem,
+                                fileContainingExample: fileContainingResolvedExample,
+                                rawTypeBeingExemplified: itemType,
+                                fileContainingRawTypeReference,
+                                typeResolver,
+                                exampleResolver,
+                                workspace,
+                                recursionContext: nextContext
+                            })
+                        ),
+                        itemType: fileContainingRawTypeReference.parseTypeReference(itemType)
+                    })
+                );
+            },
+            optional: (itemType) => {
+                const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
+                return ExampleTypeReferenceShape.container(
+                    ExampleContainer.optional({
+                        optional:
+                            resolvedExample != null
+                                ? convertTypeReferenceExample({
+                                      example: resolvedExample,
+                                      fileContainingExample: fileContainingResolvedExample,
+                                      rawTypeBeingExemplified: itemType,
+                                      fileContainingRawTypeReference,
+                                      typeResolver,
+                                      exampleResolver,
+                                      workspace,
+                                      recursionContext: nextContext
+                                  })
+                                : undefined,
+                        valueType: fileContainingRawTypeReference.parseTypeReference(itemType)
+                    })
+                );
+            },
+            nullable: (itemType) => {
+                const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
+                return ExampleTypeReferenceShape.container(
+                    ExampleContainer.nullable({
+                        nullable:
+                            resolvedExample != null
+                                ? convertTypeReferenceExample({
+                                      example: resolvedExample,
+                                      fileContainingExample: fileContainingResolvedExample,
+                                      rawTypeBeingExemplified: itemType,
+                                      fileContainingRawTypeReference,
+                                      typeResolver,
+                                      exampleResolver,
+                                      workspace,
+                                      recursionContext: nextContext
+                                  })
+                                : undefined,
+                        valueType: fileContainingRawTypeReference.parseTypeReference(itemType)
+                    })
+                );
+            },
+            literal: (literal) => {
+                switch (literal.type) {
+                    case "boolean":
+                        return ExampleTypeReferenceShape.container(
+                            ExampleContainer.literal({ literal: ExamplePrimitive.boolean(literal.boolean) })
+                        );
+                    case "string":
+                        return ExampleTypeReferenceShape.container(
+                            ExampleContainer.literal({
+                                literal: ExamplePrimitive.string({
+                                    original: literal.string
+                                })
+                            })
+                        );
+                    default:
+                        assertNever(literal);
+                }
+            },
+            named: (named) => {
+                const typeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
+                    referenceToNamedType: rawTypeBeingExemplified,
+                    file: fileContainingRawTypeReference
+                });
+                const parsedReferenceToNamedType = fileContainingRawTypeReference.parseTypeReference(named);
+                if (parsedReferenceToNamedType.type !== "named") {
+                    throw new CliError({
+                        message: "Type reference is not to a named type.",
+                        code: CliError.Code.InternalError
+                    });
+                }
+                const typeName: DeclaredTypeName = {
+                    typeId: parsedReferenceToNamedType.typeId,
+                    fernFilepath: parsedReferenceToNamedType.fernFilepath,
+                    name: parsedReferenceToNamedType.name,
+                    displayName: parsedReferenceToNamedType.displayName
+                };
+
+                if (ctx.depth > MAX_EXAMPLE_RECURSION_DEPTH || ctx.seenTypeIds.has(parsedReferenceToNamedType.typeId)) {
+                    return ExampleTypeReferenceShape.unknown(jsonExample);
+                }
+
+                const nextContext: RecursionContext = {
+                    depth: ctx.depth + 1,
+                    seenTypeIds: new Set(ctx.seenTypeIds).add(parsedReferenceToNamedType.typeId)
+                };
+
+                return ExampleTypeReferenceShape.named({
+                    typeName,
+                    shape: convertTypeExample({
+                        typeName,
+                        typeDeclaration: typeDeclaration.declaration,
+                        fileContainingType: typeDeclaration.file,
+                        fileContainingExample: fileContainingResolvedExample,
+                        example: resolvedExample,
+                        typeResolver,
+                        exampleResolver,
+                        workspace,
+                        recursionContext: nextContext
+                    })
+                });
+            },
+            unknown: () => {
+                return ExampleTypeReferenceShape.unknown(jsonExample);
+            }
+        }
+    });
+
+    return {
+        shape,
+        jsonExample
+    };
+}
+
+export function convertUnknownExample({
+    example
+}: {
+    example: RawSchemas.ExampleTypeReferenceSchema;
+}): ExampleTypeReferenceShape {
+    return ExampleTypeReferenceShape.unknown(example);
+}
+
+function convertPrimitiveExample({
+    example,
+    typeBeingExemplified
+}: {
+    example: RawSchemas.ExampleTypeReferenceSchema;
+    typeBeingExemplified: PrimitiveTypeV1;
+}): ExampleTypeReferenceShape {
+    return PrimitiveTypeV1._visit(typeBeingExemplified, {
+        string: () => {
+            if (typeof example !== "string") {
+                return ExampleTypeReferenceShape.primitive(
+                    ExamplePrimitive.string({
+                        original: Examples.STRING
+                    })
+                );
+            }
+
+            // remove initial \
+            const unescaped = example.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`) ? example.slice(1) : example;
+            return ExampleTypeReferenceShape.primitive(
+                ExamplePrimitive.string({
+                    original: unescaped
+                })
+            );
+        },
+        dateTime: () => {
+            if (typeof example !== "string") {
+                return ExampleTypeReferenceShape.primitive(
+                    ExamplePrimitive.string({
+                        original: Examples.DATE_TIME
+                    })
+                );
+            }
+            return ExampleTypeReferenceShape.primitive(
+                ExamplePrimitive.datetime({
+                    datetime: new Date(example),
+                    raw: example
+                })
+            );
+        },
+        date: () => {
+            if (typeof example !== "string") {
+                return ExampleTypeReferenceShape.primitive(
+                    ExamplePrimitive.string({
+                        original: Examples.DATE
+                    })
+                );
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.date(example));
+        },
+        base64: () => {
+            if (typeof example !== "string") {
+                return ExampleTypeReferenceShape.primitive(
+                    ExamplePrimitive.string({
+                        original: Examples.BASE64
+                    })
+                );
+            }
+            return ExampleTypeReferenceShape.primitive(
+                ExamplePrimitive.string({
+                    original: example
+                })
+            );
+        },
+        uint: () => {
+            if (typeof example !== "number") {
+                return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(Examples.UINT));
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(example));
+        },
+        uint64: () => {
+            if (typeof example !== "number") {
+                return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(Examples.UINT64));
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(example));
+        },
+        integer: () => {
+            if (typeof example !== "number") {
+                return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(Examples.INT));
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(example));
+        },
+        float: () => {
+            if (typeof example !== "number") {
+                return ExampleTypeReferenceShape.primitive(ExamplePrimitive.float(Examples.FLOAT));
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.float(example));
+        },
+        double: () => {
+            if (typeof example !== "number") {
+                return ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(Examples.DOUBLE));
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(example));
+        },
+        long: () => {
+            if (typeof example !== "number") {
+                return ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(Examples.UINT));
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(example));
+        },
+        boolean: () => {
+            if (typeof example !== "boolean") {
+                return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(Examples.BOOLEAN));
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(example));
+        },
+        uuid: () => {
+            if (typeof example !== "string") {
+                return ExampleTypeReferenceShape.primitive(
+                    ExamplePrimitive.string({
+                        original: Examples.UUID
+                    })
+                );
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(example));
+        },
+        bigInteger: () => {
+            if (typeof example !== "string") {
+                return ExampleTypeReferenceShape.primitive(
+                    ExamplePrimitive.string({
+                        original: Examples.BIG_INTEGER
+                    })
+                );
+            }
+            return ExampleTypeReferenceShape.primitive(
+                ExamplePrimitive.string({
+                    original: example
+                })
+            );
+        },
+        dateTimeRfc2822: () => {
+            if (typeof example !== "string") {
+                return ExampleTypeReferenceShape.primitive(
+                    ExamplePrimitive.datetime({
+                        datetime: new Date(Examples.DATE_TIME),
+                        raw: Examples.DATE_TIME
+                    })
+                );
+            }
+            return ExampleTypeReferenceShape.primitive(
+                ExamplePrimitive.datetime({
+                    datetime: new Date(example),
+                    raw: example
+                })
+            );
+        },
+        _other: () => {
+            throw new CliError({
+                message: "Unknown primitive type: " + typeBeingExemplified,
+                code: CliError.Code.InternalError
+            });
+        }
+    });
+}
+
+type WireKey = string;
+type PropertyExample = unknown;
+type OriginalTypeDeclaration = {
+    typeName: DeclaredTypeName;
+    rawPropertyType: string | RawSchemas.ObjectPropertySchema;
+    file: FernFileContext;
+};
+
+function convertObject({
+    typeName,
+    rawObject,
+    example,
+    fileContainingType,
+    fileContainingExample,
+    typeResolver,
+    exampleResolver,
+    workspace,
+    recursionContext
+}: {
+    typeName: DeclaredTypeName;
+    rawObject: RawSchemas.ObjectSchema;
+    example: RawSchemas.ExampleTypeValueSchema;
+    fileContainingType: FernFileContext;
+    fileContainingExample: FernFileContext;
+    typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
+    workspace: FernWorkspace;
+    recursionContext?: RecursionContext;
+}): ExampleTypeShape.Object {
+    if (!isPlainObject(example)) {
+        throw new CliError({
+            message: `Example is not an object. Got: ${JSON.stringify(example)}`,
+            code: CliError.Code.ValidationError
+        });
+    }
+
+    const properties: [WireKey, PropertyExample, OriginalTypeDeclaration | undefined][] = Object.entries(example).map(
+        ([wireKey, propertyExample]) => {
+            const originalTypeDeclaration = getOriginalTypeDeclarationForProperty({
+                typeName,
+                wirePropertyKey: wireKey,
+                rawObject,
+                typeResolver,
+                file: fileContainingType
+            });
+            return [wireKey, propertyExample, originalTypeDeclaration];
+        }
+    );
+    const propertiesWithTypeDeclaration = properties.filter(
+        ([, , originalTypeDeclaration]) => originalTypeDeclaration != null
+    ) as [WireKey, PropertyExample, OriginalTypeDeclaration][];
+    const propertiesWithoutTypeDeclaration = properties.filter(
+        ([, , originalTypeDeclaration]) => originalTypeDeclaration == null
+    );
+    return ExampleTypeShape.object({
+        properties:
+            rawObject.properties != null || rawObject.extends != null
+                ? propertiesWithTypeDeclaration.map(([wireKey, propertyExample, originalTypeDeclaration]) => {
+                      const valueExample = convertTypeReferenceExample({
+                          example: propertyExample,
+                          fileContainingExample,
+                          rawTypeBeingExemplified:
+                              typeof originalTypeDeclaration.rawPropertyType === "string"
+                                  ? originalTypeDeclaration.rawPropertyType
+                                  : originalTypeDeclaration.rawPropertyType.type,
+                          fileContainingRawTypeReference: originalTypeDeclaration.file,
+                          typeResolver,
+                          exampleResolver,
+                          workspace,
+                          recursionContext
+                      });
+                      return {
+                          name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                              name: getPropertyName({
+                                  propertyKey: wireKey,
+                                  property: originalTypeDeclaration.rawPropertyType
+                              }).name,
+                              wireValue: wireKey
+                          }),
+                          value: valueExample,
+                          originalTypeDeclaration: originalTypeDeclaration.typeName,
+                          propertyAccess: getPropertyAccess({ property: originalTypeDeclaration.rawPropertyType })
+                      };
+                  })
+                : [],
+        extraProperties:
+            rawObject["extra-properties"] !== true || propertiesWithoutTypeDeclaration.length === 0
+                ? undefined
+                : propertiesWithoutTypeDeclaration.map<ExampleExtraObjectProperty>(([wireKey, propertyExample]) => {
+                      return {
+                          name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                              name: wireKey,
+                              wireValue: wireKey
+                          }),
+                          value: {
+                              shape: convertUnknownExample({ example: propertyExample }),
+                              jsonExample: propertyExample
+                          }
+                      };
+                  })
+    });
+}
+
+function getOriginalTypeDeclarationForProperty({
+    typeName,
+    wirePropertyKey,
+    rawObject,
+    typeResolver,
+    file
+}: {
+    typeName: DeclaredTypeName;
+    wirePropertyKey: string;
+    rawObject: RawSchemas.ObjectSchema;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+}):
+    | { typeName: DeclaredTypeName; rawPropertyType: string | RawSchemas.ObjectPropertySchema; file: FernFileContext }
+    | undefined {
+    const rawPropertyType = rawObject.properties?.[wirePropertyKey];
+    if (rawPropertyType != null) {
+        return { typeName, rawPropertyType, file };
+    } else {
+        return getOriginalTypeDeclarationForPropertyFromExtensions({
+            wirePropertyKey,
+            extends_: rawObject.extends,
+            typeResolver,
+            file
+        });
+    }
+}
+
+export function getOriginalTypeDeclarationForPropertyFromExtensions({
+    wirePropertyKey,
+    extends_,
+    typeResolver,
+    file
+}: {
+    wirePropertyKey: string;
+    extends_: string | string[] | undefined;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+}):
+    | { typeName: DeclaredTypeName; rawPropertyType: string | RawSchemas.ObjectPropertySchema; file: FernFileContext }
+    | undefined {
+    if (extends_ != null) {
+        const extendsList = typeof extends_ === "string" ? [extends_] : extends_;
+        for (const typeName of extendsList) {
+            const resolvedType = typeResolver.resolveNamedTypeOrThrow({
+                referenceToNamedType: typeName,
+                file
+            });
+            if (resolvedType._type !== "named" || !isRawObjectDefinition(resolvedType.declaration)) {
+                throw new CliError({
+                    message: "Extension is not of a named object",
+                    code: CliError.Code.InternalError
+                });
+            }
+            const originalTypeDeclaration = getOriginalTypeDeclarationForProperty({
+                wirePropertyKey,
+                rawObject: resolvedType.declaration,
+                typeResolver,
+                typeName: resolvedType.name,
+                file: resolvedType.file
+            });
+            if (originalTypeDeclaration != null) {
+                return originalTypeDeclaration;
+            }
+        }
+    }
+
+    return undefined;
+}
+
+function convertSingleUnionType({
+    rawValueType,
+    rawSingleUnionType,
+    fileContainingType,
+    fileContainingExample,
+    typeResolver,
+    exampleResolver,
+    example,
+    discriminantValueForExample,
+    workspace,
+    recursionContext
+}: {
+    rawValueType: string | undefined;
+    rawSingleUnionType: RawSchemas.SingleUnionTypeSchema;
+    fileContainingType: FernFileContext;
+    fileContainingExample: FernFileContext;
+    typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
+    example: RawSchemas.ExampleTypeValueSchema;
+    discriminantValueForExample: string;
+    workspace: FernWorkspace;
+    recursionContext?: RecursionContext;
+}): ExampleSingleUnionType {
+    const wireDiscriminantValue = fileContainingExample.casingsGenerator.generateNameAndWireValue({
+        name: getSingleUnionTypeName({ unionKey: discriminantValueForExample, rawSingleUnionType }).name,
+        wireValue: discriminantValueForExample
+    });
+    if (rawValueType == null) {
+        return {
+            wireDiscriminantValue,
+            shape: FernIr.ExampleSingleUnionTypeProperties.noProperties()
+        };
+    }
+
+    const parsedSingleUnionTypeProperties = getSingleUnionTypeProperties({
+        rawSingleUnionType,
+        rawValueType,
+        parsedValueType: fileContainingType.parseTypeReference(rawValueType),
+        file: fileContainingType,
+        typeResolver
+    });
+
+    switch (parsedSingleUnionTypeProperties.propertiesType) {
+        case "singleProperty": {
+            if (!isPlainObject(example)) {
+                throw new CliError({ message: "Example is not an object", code: CliError.Code.ValidationError });
+            }
+            return {
+                wireDiscriminantValue,
+                shape: FernIr.ExampleSingleUnionTypeProperties.singleProperty(
+                    convertTypeReferenceExample({
+                        example: example[getWireValue(parsedSingleUnionTypeProperties.name)],
+                        rawTypeBeingExemplified: rawValueType,
+                        typeResolver,
+                        exampleResolver,
+                        fileContainingRawTypeReference: fileContainingType,
+                        fileContainingExample,
+                        workspace,
+                        recursionContext
+                    })
+                )
+            };
+        }
+        case "samePropertiesAsObject": {
+            if (!isPlainObject(example)) {
+                throw new CliError({ message: "Example is not an object", code: CliError.Code.ValidationError });
+            }
+            let rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
+                referenceToNamedType: rawValueType,
+                file: fileContainingType
+            });
+            while (isRawAliasDefinition(rawDeclaration.declaration)) {
+                rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
+                    referenceToNamedType:
+                        typeof rawDeclaration.declaration === "string"
+                            ? rawDeclaration.declaration
+                            : rawDeclaration.declaration.type,
+                    file: fileContainingType
+                });
+            }
+            if (!isRawObjectDefinition(rawDeclaration.declaration)) {
+                throw new CliError({
+                    message: `${rawValueType} is not an object`,
+                    code: CliError.Code.ValidationError
+                });
+            }
+            const typeName: DeclaredTypeName = {
+                typeId: parsedSingleUnionTypeProperties.typeId,
+                fernFilepath: parsedSingleUnionTypeProperties.fernFilepath,
+                name: parsedSingleUnionTypeProperties.name,
+                displayName: parsedSingleUnionTypeProperties.displayName
+            };
+            return {
+                wireDiscriminantValue,
+                shape: FernIr.ExampleSingleUnionTypeProperties.samePropertiesAsObject({
+                    typeId: IdGenerator.generateTypeId(typeName),
+                    object: convertObject({
+                        rawObject: rawDeclaration.declaration,
+                        example,
+                        fileContainingType: rawDeclaration.file,
+                        fileContainingExample,
+                        typeResolver,
+                        exampleResolver,
+                        typeName,
+                        workspace,
+                        recursionContext
+                    })
+                })
+            };
+        }
+        default:
+            assertNever(parsedSingleUnionTypeProperties);
+    }
+}

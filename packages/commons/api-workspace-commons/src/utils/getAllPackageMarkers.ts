@@ -1,0 +1,34 @@
+import { entries } from "@fern-api/core-utils";
+import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema";
+import { join, RelativeFilePath } from "@fern-api/path-utils";
+import { mapKeys } from "lodash-es";
+
+import { FernDefinition } from "../AbstractAPIWorkspace.js";
+import { ParsedFernFile } from "../FernFile.js";
+
+export declare namespace getAllPackageMarkers {
+    interface Opts {
+        defaultURL?: string;
+    }
+}
+
+export function getAllPackageMarkers(
+    definition: FernDefinition,
+    opts: getAllPackageMarkers.Opts = {}
+): Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>> {
+    return {
+        ...Object.fromEntries(
+            entries(definition.packageMarkers).map(([path, file]) => {
+                return [path, { ...file, defaultUrl: opts.defaultURL }];
+            })
+        ),
+        ...entries(definition.importedDefinitions).reduce((acc, [pathToImportedDefinition, definition]) => {
+            return {
+                ...acc,
+                ...mapKeys(getAllPackageMarkers(definition.definition, { defaultURL: definition.url }), (_file, path) =>
+                    join(pathToImportedDefinition, RelativeFilePath.of(path))
+                )
+            };
+        }, {})
+    };
+}

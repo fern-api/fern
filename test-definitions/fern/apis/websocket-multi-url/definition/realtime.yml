@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=./../../../../../fern.schema.json
+
+channel:
+  url: wss
+  path: /realtime/{session_id}
+  auth: true
+  path-parameters:
+    session_id: string
+  query-parameters:
+    model: optional<string>
+  messages:
+    send:
+      display-name: Send
+      origin: client
+      body: SendEvent
+    receive:
+      display-name: Receive
+      origin: server
+      body: ReceiveEvent
+  examples:
+    - name: Default example
+      path-parameters:
+        session_id: session_123
+      messages:
+        - type: send
+          body:
+            text: "hello world"
+            priority: 1
+        - type: receive
+          body:
+            data: "response text"
+            timestamp: 1234567890
+
+types:
+  SendEvent:
+    properties:
+      text: string
+      priority: integer
+  ReceiveEvent:
+    properties:
+      data: string
+      timestamp: integer

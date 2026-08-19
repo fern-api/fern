@@ -1,0 +1,97 @@
+imports:
+  auth: ./auth.yml
+  commons: ../commons.yml
+  declaration: ./declaration.yml
+  http: ../http.yml
+  types: ./types.yml
+types:
+  EndpointLocation:
+    docs: |
+      Represents the endpoint location (e.g. "POST /users").
+    properties:
+      method: http.HttpMethod
+      path: string
+
+  Endpoint:
+    properties:
+      auth: optional<auth.Auth>
+      declaration: declaration.Declaration
+      location: EndpointLocation
+      request: Request
+      response: Response
+
+  Request:
+    docs: |
+      Represents the request parameters required to call a specific endpoint.
+    union:
+      body: BodyRequest
+      inlined: InlinedRequest
+
+  Response:
+    docs: |
+      Represents the response returned by a specific endpoint.
+
+      For now, we only support json responses, but this is set up to support a
+      variety of other endpoint response types (e.g. file download, pagination,
+      streaming, etc).
+    union:
+      json: {}
+
+  BodyRequest:
+    properties:
+      pathParameters: optional<list<types.NamedParameter>>
+      body: optional<ReferencedRequestBodyType>
+
+  InlinedRequest:
+    properties:
+      declaration: declaration.Declaration
+      pathParameters: optional<list<types.NamedParameter>>
+      queryParameters: optional<list<types.NamedParameter>>
+      headers: optional<list<types.NamedParameter>>
+      body: optional<InlinedRequestBody>
+      metadata: optional<InlinedRequestMetadata>
+
+  InlinedRequestMetadata:
+    properties:
+      includePathParameters:
+        docs: |
+          If true, the path parameters should be included as properties in the
+          inlined request type, but only if the generator is explicitly configured
+          to do so.
+
+          By default, the path parameters are generated as positional parameters.
+        type: boolean
+      onlyPathParameters:
+        docs: |
+          If true, the path parameters are the only parameters specified in the
+          inlined request.
+
+          In combination with includePathParameters, this influences whether or not the
+          inlined request type should be generated at all.
+        type: boolean
+
+  InlinedRequestBody:
+    union:
+      properties: list<types.NamedParameter>
+      referenced: ReferencedRequestBody
+      fileUpload: FileUploadRequestBody
+
+  ReferencedRequestBody:
+    properties:
+      bodyKey: commons.Name
+      bodyType: ReferencedRequestBodyType
+
+  ReferencedRequestBodyType:
+    union:
+      bytes: {}
+      typeReference: types.TypeReference
+
+  FileUploadRequestBody:
+    properties:
+      properties: list<FileUploadRequestBodyProperty>
+
+  FileUploadRequestBodyProperty:
+    union:
+      file: commons.NameAndWireValue
+      fileArray: commons.NameAndWireValue
+      bodyProperty: types.NamedParameter

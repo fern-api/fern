@@ -1,0 +1,552 @@
+import { access, mkdir, mkdtemp, readFile, rm, writeFile } from "fs/promises";
+import os from "os";
+import path from "path";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { copySpecs, hasOpenApiSpecs, type RawSpecsManifest } from "../copySpecs.js";
+import type { DetectedAuthBinding } from "../detectAuth.js";
+import type { DetectedGlobalParam } from "../detectGlobalParams.js";
+
+const BIN = "acme";
+const BIN_DIR = path.join("cli", BIN);
+
+describe("hasOpenApiSpecs", () => {
+    let tmpDir: string;
+
+    beforeEach(async () => {
+        tmpDir = await mkdtemp(path.join(os.tmpdir(), "hasOpenApi-"));
+    });
+
+    afterEach(async () => {
+        await rm(tmpDir, { recursive: true, force: true });
+    });
+
+    it("returns false when no manifest is mounted", async () => {
+        expect(await hasOpenApiSpecs(path.join(tmpDir, "missing"))).toBe(false);
+    });
+
+    it("returns false for non-openapi-only manifests", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "protobuf", specPath: "/dev/null" }]
+            } satisfies RawSpecsManifest)
+        );
+        expect(await hasOpenApiSpecs(specsDir)).toBe(false);
+    });
+
+    it("returns true when at least one openapi spec is mounted", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [
+                    { type: "protobuf", specPath: "/dev/null" },
+                    { type: "openapi", specPath: "/dev/null" }
+                ]
+            } satisfies RawSpecsManifest)
+        );
+        expect(await hasOpenApiSpecs(specsDir)).toBe(true);
+    });
+});
+
+describe("copySpecs", () => {
+    let tmpDir: string;
+
+    beforeEach(async () => {
+        tmpDir = await mkdtemp(path.join(os.tmpdir(), "copySpecs-"));
+    });
+
+    afterEach(async () => {
+        await rm(tmpDir, { recursive: true, force: true });
+    });
+
+    it("no manifest → no-op (binDir not created)", async () => {
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir: path.join(tmpDir, "missing-specs")
+        });
+
+        await expect(access(path.join(outputDir, BIN_DIR))).rejects.toThrow();
+    });
+
+    it("non-openapi specs only → no-op", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "schema.proto"), 'syntax = "proto3";\n');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "protobuf", specPath: path.join(specsDir, "schema.proto") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], globalParamBindings: [], specsDir });
+
+        await expect(access(path.join(outputDir, BIN_DIR))).rejects.toThrow();
+    });
+
+    it("single openapi spec, no auth bindings → writes spec + emits OpenApiBinding main.rs", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], globalParamBindings: [], specsDir });
+
+        expect(await readFile(path.join(outputDir, BIN_DIR, "openapi0.json"), "utf-8")).toBe(
+            '{"openapi":"3.0.0","info":{"title":"users"}}'
+        );
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain(`CliApp::new("${BIN}")`);
+        expect(main).toContain("OpenApiBinding::new()");
+        expect(main).toContain('.spec(include_str!("openapi0.json"))');
+        expect(main).not.toContain(".spec_under");
+        expect(main).toContain("use fern_cli_sdk::app::CliApp;");
+        expect(main).toContain("use fern_cli_sdk::openapi::OpenApiBinding;");
+    });
+
+    it("custom.rs example uses OpenApiBinding::handler, since a bare closure does not compile", async () => {
+        // `CliApp::command` takes a `CliCommandHandler` —
+        // `Box<dyn Fn(&ArgMatches, &dyn Any) -> Result<(), CliError>>` — so the
+        // example must wrap its closure. Emitting a bare closure gives every
+        // customer an E0308 on their first custom command, which is exactly what
+        // the "uncomment to get started" comment invites them to write.
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            customCommands: true
+        });
+
+        const custom = await readFile(path.join(outputDir, BIN_DIR, "custom.rs"), "utf-8");
+        expect(custom).toContain("fern_cli_sdk::openapi::OpenApiBinding::handler(|matches, ctx| {");
+        // The closure must be the wrapper's argument, not `command`'s.
+        expect(custom).not.toMatch(/\/\/\s+\|matches, ctx\| \{/);
+    });
+
+    it("multi-spec without namespace → emits .spec(...) per entry so they merge flat at the root", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
+        await writeFile(path.join(specsDir, "openapi1.json"), '{"openapi":"3.0.0","info":{"title":"billing"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [
+                    { type: "openapi", specPath: path.join(specsDir, "openapi0.json") },
+                    { type: "openapi", specPath: path.join(specsDir, "openapi1.json") }
+                ]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], globalParamBindings: [], specsDir });
+
+        expect(await readFile(path.join(outputDir, BIN_DIR, "openapi0.json"), "utf-8")).toBe(
+            '{"openapi":"3.0.0","info":{"title":"users"}}'
+        );
+        expect(await readFile(path.join(outputDir, BIN_DIR, "openapi1.json"), "utf-8")).toBe(
+            '{"openapi":"3.0.0","info":{"title":"billing"}}'
+        );
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.spec(include_str!("openapi0.json"))');
+        expect(main).toContain('.spec(include_str!("openapi1.json"))');
+        expect(main).not.toContain(".spec_under");
+    });
+
+    it("multi-spec with namespaces → emits .spec_under('<ns>', ...) per entry", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"v1"}}');
+        await writeFile(path.join(specsDir, "openapi1.json"), '{"openapi":"3.0.0","info":{"title":"v2"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [
+                    { type: "openapi", specPath: path.join(specsDir, "openapi0.json"), namespace: "v1" },
+                    { type: "openapi", specPath: path.join(specsDir, "openapi1.json"), namespace: "v2" }
+                ]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], globalParamBindings: [], specsDir });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.spec_under("v1", include_str!("openapi0.json"))');
+        expect(main).toContain('.spec_under("v2", include_str!("openapi1.json"))');
+        expect(main).not.toMatch(/\.spec\(include_str!/);
+    });
+
+    it("mixed: spec without namespace uses .spec(), spec with namespace uses .spec_under()", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"root"}}');
+        await writeFile(path.join(specsDir, "openapi1.json"), '{"openapi":"3.0.0","info":{"title":"admin"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [
+                    { type: "openapi", specPath: path.join(specsDir, "openapi0.json") },
+                    { type: "openapi", specPath: path.join(specsDir, "openapi1.json"), namespace: "admin" }
+                ]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], globalParamBindings: [], specsDir });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.spec(include_str!("openapi0.json"))');
+        expect(main).toContain('.spec_under("admin", include_str!("openapi1.json"))');
+    });
+
+    it("threads root auth bindings above binding and binding-level auth into OpenApiBinding", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        const bindings: DetectedAuthBinding[] = [
+            {
+                schemeName: "ApiKeyAuth",
+                rustCall:
+                    '.auth_basic_scheme_username_only("ApiKeyAuth", ' +
+                    'AuthCredentialSource::from_env("CLOSE_API_KEY"))',
+                placement: "binding",
+                authTypeImport: "AuthCredentialSource",
+                envVars: ["CLOSE_API_KEY"],
+                kind: "basic"
+            },
+            {
+                schemeName: "OAuth2",
+                rustCall: '.auth(BearerAuth::new("OAuth2").env("CLOSE_TOKEN"))',
+                placement: "root",
+                authTypeImport: "BearerAuth",
+                envVars: ["CLOSE_TOKEN"],
+                kind: "bearer"
+            }
+        ];
+        await copySpecs({ outputDir, binaryName: "close", authBindings: bindings, globalParamBindings: [], specsDir });
+
+        const main = await readFile(path.join(outputDir, "cli", "close", "main.rs"), "utf-8");
+        // Auth type imports are emitted
+        expect(main).toContain("use fern_cli_sdk::auth::{AuthCredentialSource, BearerAuth};");
+
+        // Root auth (BearerAuth) appears before the .binding() call
+        const rootAuthIdx = main.indexOf('.auth(BearerAuth::new("OAuth2")');
+        const bindingIdx = main.indexOf(".binding(");
+        expect(rootAuthIdx).toBeGreaterThan(0);
+        expect(bindingIdx).toBeGreaterThan(rootAuthIdx);
+
+        // Binding-level auth appears inside the OpenApiBinding chain
+        const basicIdx = main.indexOf('.auth_basic_scheme_username_only("ApiKeyAuth"');
+        expect(basicIdx).toBeGreaterThan(bindingIdx);
+    });
+
+    it("emits global parameters on the root CliApp (not the OpenApiBinding chain)", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        const globalParamBindings: DetectedGlobalParam[] = [
+            {
+                paramName: "api-version",
+                rustCall:
+                    ".global_parameter(GlobalParameter {\n" +
+                    '            name: "api-version".into(),\n' +
+                    "            location: GlobalParameterLocation::Query,\n" +
+                    '            target: "api-version".into(),\n' +
+                    "            env: None,\n" +
+                    "            default: None,\n" +
+                    "            optional: false,\n" +
+                    "            apply: GlobalParameterApplyMode::Explicit,\n" +
+                    "            parameter_name: None,\n" +
+                    "            docs: None,\n" +
+                    "        })",
+                imports: ["GlobalParameter", "GlobalParameterLocation", "GlobalParameterApplyMode"],
+                envVar: undefined
+            }
+        ];
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], globalParamBindings, specsDir });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        // discovery imports are emitted
+        expect(main).toContain(
+            "use fern_cli_sdk::openapi::discovery::{GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation};"
+        );
+        // The global_parameter call appears on the root CliApp — after
+        // CliApp::new(...) but before the .binding( ... ) chain — mirroring
+        // how root-level auth is registered. It is NOT inside the binding.
+        const newIdx = main.indexOf('CliApp::new("');
+        const globalIdx = main.indexOf(".global_parameter(GlobalParameter {");
+        const bindingIdx = main.indexOf(".binding(");
+        const specIdx = main.indexOf('.spec(include_str!("openapi0.json"))');
+        expect(newIdx).toBeGreaterThan(0);
+        expect(globalIdx).toBeGreaterThan(newIdx);
+        expect(bindingIdx).toBeGreaterThan(globalIdx);
+        expect(specIdx).toBeGreaterThan(bindingIdx);
+    });
+
+    it("emits .command_namespace() on the OpenApiBinding when rootGroup is set", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            rootGroup: "api"
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.command_namespace("api")');
+        expect(main).toContain("OpenApiBinding::new()");
+    });
+
+    it("emits both .spec_under() and .command_namespace() when namespace and rootGroup are combined", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
+        await writeFile(path.join(specsDir, "openapi1.json"), '{"openapi":"3.0.0","info":{"title":"billing"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [
+                    { type: "openapi", specPath: path.join(specsDir, "openapi0.json"), namespace: "users" },
+                    { type: "openapi", specPath: path.join(specsDir, "openapi1.json"), namespace: "billing" }
+                ]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            rootGroup: "api"
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.spec_under("users", include_str!("openapi0.json"))');
+        expect(main).toContain('.spec_under("billing", include_str!("openapi1.json"))');
+        expect(main).toContain('.command_namespace("api")');
+        // command_namespace appears after spec_under entries
+        const lastSpecUnder = main.lastIndexOf(".spec_under(");
+        const nsIdx = main.indexOf(".command_namespace(");
+        expect(nsIdx).toBeGreaterThan(lastSpecUnder);
+    });
+
+    it("does not emit .command_namespace() when rootGroup is unset", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], globalParamBindings: [], specsDir });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).not.toContain(".command_namespace");
+    });
+
+    it("throws on namespace containing unsafe characters for Rust string interpolation", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [
+                    {
+                        type: "openapi",
+                        specPath: path.join(specsDir, "openapi0.json"),
+                        namespace: 'admin"); panic!("'
+                    }
+                ]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await expect(
+            copySpecs({ outputDir, binaryName: BIN, authBindings: [], globalParamBindings: [], specsDir })
+        ).rejects.toThrow(/Unsafe namespace/);
+    });
+
+    it("only emits auth type imports when at least one binding uses them", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [
+                {
+                    schemeName: "Bearer",
+                    rustCall: '.auth(BearerAuth::new("Bearer").env("ACME_TOKEN"))',
+                    placement: "root",
+                    authTypeImport: "BearerAuth",
+                    envVars: ["ACME_TOKEN"],
+                    kind: "bearer"
+                }
+            ],
+            globalParamBindings: [],
+            specsDir
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.auth(BearerAuth::new("Bearer").env("ACME_TOKEN"))');
+        expect(main).toContain("use fern_cli_sdk::auth::{BearerAuth};");
+        expect(main).not.toContain("AuthCredentialSource");
+    });
+
+    it("emits .user_agent_suffix_flag(...) when configured", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            userAgentSuffixFlag: "via"
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.user_agent_suffix_flag("via")');
+    });
+
+    it("omits .user_agent_suffix_flag(...) by default (SDK applies the default name)", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], globalParamBindings: [], specsDir });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).not.toContain(".user_agent_suffix_flag");
+    });
+
+    it("rejects an unsafe userAgentSuffixFlag (injection attempt)", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await expect(
+            copySpecs({
+                outputDir,
+                binaryName: BIN,
+                authBindings: [],
+                globalParamBindings: [],
+                specsDir,
+                userAgentSuffixFlag: 'via"); panic!("'
+            })
+        ).rejects.toThrow(/Unsafe userAgentSuffixFlag/);
+    });
+});

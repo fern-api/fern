@@ -1,0 +1,78 @@
+{
+  "type": "object",
+  "properties": {
+    "paging": {
+      "$ref": "#/definitions/PagingCursors"
+    },
+    "results": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RuleType"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Current page of results from the requested resource."
+    }
+  },
+  "required": [
+    "paging"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "PagingCursors": {
+      "type": "object",
+      "properties": {
+        "next": {
+          "type": "string",
+          "description": "Cursor for the next page of results."
+        },
+        "previous": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Cursor for the previous page of results."
+        }
+      },
+      "required": [
+        "next"
+      ],
+      "additionalProperties": false
+    },
+    "RuleType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,20 @@
+types:
+  TokenResponse:
+    docs: |
+      An OAuth token response.
+    properties:
+      access_token: string
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getToken:
+      path: /token
+      method: GET
+      request:
+        name: GetTokenRequest
+        query-parameters:
+          client_id: string
+          client_secret: string
+      response: TokenResponse

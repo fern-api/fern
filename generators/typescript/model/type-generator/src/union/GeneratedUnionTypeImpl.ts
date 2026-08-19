@@ -1,0 +1,211 @@
+import { getWireValue } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { GetReferenceOpts, getPropertyKey } from "@fern-typescript/commons";
+import { BaseContext, GeneratedUnion, GeneratedUnionType } from "@fern-typescript/contexts";
+import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
+import { ModuleDeclarationStructure, StatementStructures, ts, WriterFunction } from "ts-morph";
+import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
+import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion.js";
+import { UnknownSingleUnionType } from "./UnknownSingleUnionType.js";
+import { UnknownSingleUnionTypeGenerator } from "./UnknownSingleUnionTypeGenerator.js";
+
+export declare namespace GeneratedUnionTypeImpl {
+    export interface Init<Context extends BaseContext>
+        extends AbstractGeneratedType.Init<FernIr.UnionTypeDeclaration, Context> {
+        includeUtilsOnUnionMembers: boolean;
+        includeOtherInUnionTypes: boolean;
+        inline: boolean;
+    }
+}
+
+export class GeneratedUnionTypeImpl<Context extends BaseContext>
+    extends AbstractGeneratedType<FernIr.UnionTypeDeclaration, Context>
+    implements GeneratedUnionType<Context>
+{
+    public readonly type = "union";
+
+    private generatedUnion: GeneratedUnionImpl<Context>;
+    private readonly inline: boolean;
+
+    constructor({
+        includeUtilsOnUnionMembers,
+        includeOtherInUnionTypes,
+        inline,
+        ...superInit
+    }: GeneratedUnionTypeImpl.Init<Context>) {
+        super(superInit);
+        this.inline = inline;
+
+        const parsedSingleUnionTypes = this.shape.types.map(
+            (singleUnionType) =>
+                new ParsedSingleUnionTypeForUnion({
+                    singleUnionType,
+                    union: this.shape,
+                    includeUtilsOnUnionMembers,
+                    includeSerdeLayer: this.includeSerdeLayer,
+                    retainOriginalCasing: this.retainOriginalCasing,
+                    noOptionalProperties: this.noOptionalProperties,
+                    enableInlineTypes: this.enableInlineTypes,
+                    generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
+                    caseConverter: this.case
+                })
+        );
+
+        const unknownSingleUnionTypeGenerator = new UnknownSingleUnionTypeGenerator();
+
+        this.generatedUnion = new GeneratedUnionImpl({
+            typeName: this.typeName,
+            shape: this.shape,
+            includeUtilsOnUnionMembers,
+            includeOtherInUnionTypes,
+            getReferenceToUnion: this.getReferenceToSelf.bind(this),
+            getDocs: (context: Context) => this.getDocs({ context }),
+            discriminant: this.includeSerdeLayer
+                ? this.case.camelUnsafe(this.shape.discriminant)
+                : getWireValue(this.shape.discriminant),
+            parsedSingleUnionTypes,
+            unknownSingleUnionType: new UnknownSingleUnionType({
+                singleUnionType: unknownSingleUnionTypeGenerator,
+                includeUtilsOnUnionMembers
+            }),
+            baseProperties: this.shape.baseProperties,
+            includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing,
+            noOptionalProperties: this.noOptionalProperties,
+            inline: this.inline,
+            enableInlineTypes: this.enableInlineTypes,
+            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
+            caseConverter: this.case
+        });
+    }
+
+    public generateStatements(
+        context: Context
+    ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
+        return this.generatedUnion.generateStatements(context);
+    }
+
+    public generateForInlineUnion(context: Context): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    } {
+        return this.generatedUnion.generateForInlineUnion(context);
+    }
+
+    public generateModule(): ModuleDeclarationStructure | undefined {
+        return undefined;
+    }
+
+    public getGeneratedUnion(): GeneratedUnion<Context> {
+        return this.generatedUnion;
+    }
+
+    public getSinglePropertyKey(singleProperty: FernIr.SingleUnionTypeProperty): string {
+        return ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
+            includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing,
+            caseConverter: this.case
+        });
+    }
+
+    private getPropertyKeyFromPropertyName(propertyName: FernIr.NameAndWireValueOrString): string {
+        if (this.includeSerdeLayer && !this.retainOriginalCasing) {
+            return this.case.camelUnsafe(propertyName);
+        } else {
+            return getWireValue(propertyName);
+        }
+    }
+
+    public buildExample(example: FernIr.ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
+        if (example.type !== "union") {
+            throw new Error("Example is not for an union");
+        }
+
+        const nonDiscriminantProperties: ts.ObjectLiteralElementLike[] = [];
+        nonDiscriminantProperties.push(
+            ...(example.baseProperties ?? []).map((property) => {
+                return ts.factory.createPropertyAssignment(
+                    getPropertyKey(this.getPropertyKeyFromPropertyName(property.name)),
+                    context.type.getGeneratedExample(property.value).build(context, opts)
+                );
+            })
+        );
+        nonDiscriminantProperties.push(
+            ...(example.extendProperties ?? []).map((property) => {
+                return ts.factory.createPropertyAssignment(
+                    getPropertyKey(this.getPropertyKeyFromPropertyName(property.name)),
+                    context.type.getGeneratedExample(property.value).build(context, opts)
+                );
+            })
+        );
+        nonDiscriminantProperties.push(
+            ...FernIr.ExampleSingleUnionTypeProperties._visit<ts.ObjectLiteralElementLike[]>(
+                example.singleUnionType.shape,
+                {
+                    singleProperty: (property) => {
+                        const unionMember = this.shape.types.find(
+                            (member) =>
+                                getWireValue(member.discriminantValue) ===
+                                getWireValue(example.singleUnionType.wireDiscriminantValue)
+                        );
+                        if (unionMember == null || unionMember.shape.propertiesType !== "singleProperty") {
+                            throw new Error(
+                                "Cannot generate union example because union member is not singleProperty."
+                            );
+                        }
+                        return [
+                            ts.factory.createPropertyAssignment(
+                                getPropertyKey(
+                                    ParsedSingleUnionTypeForUnion.getSinglePropertyKey(unionMember.shape, {
+                                        includeSerdeLayer: this.includeSerdeLayer,
+                                        retainOriginalCasing: this.retainOriginalCasing,
+                                        caseConverter: this.case
+                                    })
+                                ),
+                                context.type.getGeneratedExample(property).build(context, opts)
+                            )
+                        ];
+                    },
+                    samePropertiesAsObject: (exampleNamedType) => {
+                        const generatedType = context.type.getGeneratedTypeById(exampleNamedType.typeId);
+                        if (generatedType.type !== "object") {
+                            throw new Error(
+                                `Cannot generate union example because ${exampleNamedType.typeId} is not an object`
+                            );
+                        }
+                        return generatedType.buildExampleProperties(
+                            FernIr.ExampleTypeShape.object(exampleNamedType.object),
+                            context,
+                            opts
+                        );
+                    },
+                    noProperties: () => [],
+                    _other: () => {
+                        throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.type);
+                    }
+                }
+            )
+        );
+
+        return this.generatedUnion.build({
+            discriminantValueToBuild: getWireValue(example.singleUnionType.wireDiscriminantValue),
+            builderArgument: FernIr.ExampleSingleUnionTypeProperties._visit<ts.Expression | undefined>(
+                example.singleUnionType.shape,
+                {
+                    singleProperty: (property) => context.type.getGeneratedExample(property).build(context, opts),
+                    samePropertiesAsObject: (exampleNamedType) =>
+                        context.type
+                            .getGeneratedTypeById(exampleNamedType.typeId)
+                            .buildExample(FernIr.ExampleTypeShape.object(exampleNamedType.object), context, opts),
+                    noProperties: () => undefined,
+                    _other: () => {
+                        throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.type);
+                    }
+                }
+            ),
+            nonDiscriminantProperties,
+            context
+        });
+    }
+}

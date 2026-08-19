@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package anduril.entitymanager.v1;
+
+import "anduril/entitymanager/v1/sensors.pub.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Anduril.Entitymanager.V1";
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/entitymanager/v1;entitymanager";
+option java_multiple_files = true;
+option java_outer_classname = "RelationshipProto";
+option java_package = "com.anduril.entitymanager.v1";
+option objc_class_prefix = "AEX";
+
+// The relationships between this entity and other entities in the common operational picture.
+message Relationships {
+  repeated Relationship relationships = 1;
+}
+
+// The relationship component indicates a relationship to another entity.
+message Relationship {
+  // The entity ID to which this entity is related.
+  string related_entity_id = 1;
+  // A unique identifier for this relationship. Allows removing or updating relationships.
+  string relationship_id = 2;
+  // The relationship type
+  RelationshipType relationship_type = 3;
+}
+
+// Determines the type of relationship between this entity and another.
+message RelationshipType {
+  oneof type {
+    TrackedBy tracked_by = 2;
+    GroupChild group_child = 4;
+    GroupParent group_parent = 5;
+    MergedFrom merged_from = 6;
+    ActiveTarget active_target = 7;
+  }
+}
+
+// Describes the relationship between the entity being tracked ("tracked entity") and the entity that is
+// performing the tracking ("tracking entity").
+message TrackedBy {
+  // Sensor details of the tracking entity's sensors that were active and tracking the tracked entity. This may be
+  // a subset of the total sensors available on the tracking entity.
+  Sensors actively_tracking_sensors = 1;
+  // Latest time that any sensor in actively_tracking_sensors detected the tracked entity.
+  google.protobuf.Timestamp last_measurement_timestamp = 2;
+}
+
+// A GroupChild relationship is a uni-directional relationship indicating that (1) this entity
+// represents an Entity Group and (2) the related entity is a child member of this group. The presence of this
+// relationship alone determines that the type of group is an Entity Group.
+message GroupChild {}
+
+// A GroupParent relationship is a uni-directional relationship indicating that this entity is a member of
+// the Entity Group represented by the related entity. The presence of this relationship alone determines that
+// the type of group that this entity is a member of is an Entity Group.
+message GroupParent {}
+
+// A MergedFrom relationship is a uni-directional relationship indicating that this entity is a merged entity whose
+// data has at least partially been merged from the related entity.
+message MergedFrom {}
+
+// A target relationship is the inverse of TrackedBy; a one-way relation
+// from sensor to target, indicating track(s) currently prioritized by a robot.
+message ActiveTarget {}

@@ -1,0 +1,23 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/events.EventTypeEnum"
+    },
+    {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/events.EventTypeEnum"
+      }
+    }
+  ],
+  "description": "Either a single event type or a list of event types.",
+  "definitions": {
+    "events.EventTypeEnum": {
+      "type": "string",
+      "enum": [
+        "group.created",
+        "user.updated"
+      ]
+    }
+  }
+}

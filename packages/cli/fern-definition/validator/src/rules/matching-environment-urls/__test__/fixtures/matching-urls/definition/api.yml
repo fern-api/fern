@@ -1,0 +1,11 @@
+name: simple-api
+
+environments:
+  Staging:
+    urls:
+      A: a.staging.com
+      B: b.staging.com
+  Production:
+    urls:
+      A: a.prod.com
+      B: b.prod.com

@@ -1,0 +1,66 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+plugins {
+    id "com.palantir.consistent-versions" version "2.19.0"
+    id "org.inferred.processors" version "3.7.0"
+    id "com.jfrog.artifactory" version "5.1.14"
+    id 'maven-publish'
+    id("com.diffplug.spotless") version "6.25.0"
+}
+
+group 'io.github.fern-api'
+
+apply plugin: 'com.palantir.consistent-versions'
+
+spotless {
+    java {
+        target '*/src/main/java/**/*.java', '*/src/test/java/**/*.java'
+        palantirJavaFormat('2.46.0').formatJavadoc(true)
+    }
+}
+
+allprojects {
+    apply plugin: "org.inferred.processors"
+    apply plugin: "maven-publish"
+    apply plugin: "com.jfrog.artifactory"
+    apply plugin: "java-library"
+
+    version rootProject.version
+    group rootProject.group
+
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://maven.buildwithfern.com"
+        }
+        maven {
+            url "https://maven-dev.buildwithfern.com"
+        }
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(11)
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+}
+
+project(":spring") {
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+}

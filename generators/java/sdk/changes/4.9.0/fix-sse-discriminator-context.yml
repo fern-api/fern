@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    SSE streaming endpoints now decide protocol-level vs data-level union discrimination from the API spec's x-fern-discriminator-context (IR discriminatorContext) instead of inferring from the discriminator's field name. Unions whose discriminator happens to be named event/id/retry/data but lives in the data payload are now correctly parsed from the data JSON; envelope dispatch only happens when x-fern-discriminator-context: protocol is explicit.
+  type: fix

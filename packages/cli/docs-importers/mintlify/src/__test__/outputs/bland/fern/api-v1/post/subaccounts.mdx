@@ -1,0 +1,71 @@
+---
+title: Create Subaccount
+subtitle: Provision a new subaccount with separate billing, access and usage.
+slug: api-v1/post/subaccounts
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Body
+
+<ParamField body="balance" type="integer" required>
+    Moves a portion of your API credit balance to the newly created subaccount.
+
+    The balance must be a positive integer that is at least 10, and less than your current account balance.
+
+    Special per-minute pricing plans carry over automatically to the subaccount, while increased rate limits do not.
+
+    Unused credits can be reclaimed later with the subaccount's balance if needed.
+
+</ParamField>
+
+<ParamField body="first_name" type="string" required>
+  The first name of the user who will be using the subaccount.
+</ParamField>
+
+<ParamField body="last_name" type="string" required>
+  The last name of the user who will be using the subaccount.
+</ParamField>
+
+<ParamField body="login_enabled" type="boolean" default="true">
+    Whether you will be able to log in to the subaccount through the Dev Portal at `app.bland.ai`.
+
+    This enables you to set up credit card information, view and monitor usage, and further manage the subaccount as needed.
+
+    The subaccount user will not be able to log into the Dev Portal unless you explicitly enable it by adding them as an Authorized User.
+
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Whether the subaccount creation succeeded.
+</ResponseField>
+
+<ResponseField name="subaccount_id" type="string">
+  The unique identifier for the newly created subaccount.
+</ResponseField>
+
+<ResponseField name="subaccount_key" type="integer">
+    The API key that the new subaccount can use to authenticate requests.
+
+    This is the only information that the subaccount user will need to start using the API.
+
+    Do not use this as an identifier for the subaccount, since it can be rotated.
+
+</ResponseField>
+    
+<ResponseExample>
+```json
+{
+    "status": "success",
+    "subaccount_id": "1234567890",
+    "subaccount_key": "sub-sk-1234567890"
+}
+```
+</ResponseExample>

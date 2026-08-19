@@ -1,0 +1,4 @@
+name: ir-v25
+docs: |
+  Changes in this version of IR include: 
+  - Support text responses that are not streaming

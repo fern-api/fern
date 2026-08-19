@@ -1,0 +1,7 @@
+- summary: |
+    Fix example generation for nested allOf $ref chains. When a schema uses
+    multi-level allOf (e.g. UserPost → UserBase → UserStrict), properties from
+    grandparent schemas were missing from generated code snippets because
+    mergeAllOfProperties only resolved one level of allOf. Now recursively
+    resolves the full chain so all required fields appear in examples.
+  type: fix

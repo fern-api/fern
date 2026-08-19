@@ -1,0 +1,70 @@
+name: audience-test-api
+display-name: Audience Test API
+
+auth: false
+
+types:
+  User:
+    properties:
+      id: string
+      name: string
+      email: string
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    getUser:
+      display-name: Get User
+      method: GET
+      path: /users/{id}
+      path-parameters:
+        id: string
+      response: User
+
+    createUser:
+      display-name: Create User
+      method: POST
+      path: /users
+      request: User
+      response: User
+
+    deleteUser:
+      display-name: Delete User (Admin Only)
+      method: DELETE
+      path: /admin/users/{id}
+      path-parameters:
+        id: string
+      response: boolean
+
+    getAnalytics:
+      display-name: Get Analytics (Admin Only)
+      method: GET
+      path: /admin/analytics
+      response: map<string, integer>
+
+    runExperiment:
+      display-name: Run Experiment (Beta)
+      method: POST
+      path: /experiments/run
+      request:
+        properties:
+          name: string
+          config: map<string, unknown>
+      response:
+        properties:
+          id: string
+          status: string
+
+    getExperiment:
+      display-name: Get Experiment (Beta)
+      method: GET
+      path: /experiments/{id}
+      path-parameters:
+        id: string
+      response:
+        properties:
+          id: string
+          name: string
+          status: string
+          results: map<string, unknown>

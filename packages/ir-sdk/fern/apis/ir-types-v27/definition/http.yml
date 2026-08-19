@@ -1,0 +1,255 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  types: types.yml
+  errors: errors.yml
+  environment: environment.yml
+  variables: variables.yml
+types:
+  HttpService:
+    properties:
+      availability: optional<commons.Availability>
+      name: DeclaredServiceName
+      displayName: optional<string>
+      basePath: HttpPath
+      endpoints: list<HttpEndpoint>
+      headers: list<HttpHeader>
+      pathParameters: list<PathParameter>
+  DeclaredServiceName:
+    properties:
+      fernFilepath: commons.FernFilepath
+
+  HttpEndpoint:
+    extends: commons.Declaration
+    properties:
+      id: commons.EndpointId
+      name: EndpointName
+      displayName: optional<string>
+      method: HttpMethod
+      headers: list<HttpHeader>
+      baseUrl: optional<environment.EnvironmentBaseUrlId>
+      path: HttpPath
+      fullPath: HttpPath
+      pathParameters: list<PathParameter>
+      allPathParameters: list<PathParameter>
+      queryParameters: list<QueryParameter>
+      requestBody: optional<HttpRequestBody>
+      sdkRequest: optional<SdkRequest>
+      response: optional<HttpResponse>
+      errors: ResponseErrors
+      auth: boolean
+      examples: list<ExampleEndpointCall>
+  EndpointName: commons.Name
+  HttpPath:
+    properties:
+      head: string
+      parts: list<HttpPathPart>
+  HttpPathPart:
+    properties:
+      pathParameter: string
+      tail: string
+  HttpMethod:
+    enum:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+  HttpHeader:
+    extends: commons.Declaration
+    properties:
+      name: commons.NameAndWireValue
+      valueType: types.TypeReference
+  PathParameter:
+    extends: commons.WithDocs
+    properties:
+      name: commons.Name
+      valueType: types.TypeReference
+      location: PathParameterLocation
+      variable: optional<variables.VariableId>
+  PathParameterLocation:
+    enum:
+      - ROOT
+      - SERVICE
+      - ENDPOINT
+  QueryParameter:
+    extends: commons.Declaration
+    properties:
+      name: commons.NameAndWireValue
+      valueType: types.TypeReference
+      allowMultiple: boolean
+  HttpRequestBody:
+    union:
+      inlinedRequestBody: InlinedRequestBody
+      reference: HttpRequestBodyReference
+      fileUpload: FileUploadRequest
+      bytes: BytesRequest
+  InlinedRequestBody:
+    properties:
+      name: commons.Name
+      extends: list<types.DeclaredTypeName>
+      properties: list<InlinedRequestBodyProperty>
+      contentType: optional<string>
+  InlinedRequestBodyProperty:
+    extends: commons.WithDocs
+    properties:
+      name: commons.NameAndWireValue
+      valueType: types.TypeReference
+  FileUploadRequest:
+    properties:
+      name: commons.Name
+      properties: list<FileUploadRequestProperty>
+  BytesRequest:
+    properties:
+      isOptional: boolean
+      contentType: optional<string>
+  FileUploadRequestProperty:
+    union:
+      file: FileProperty
+      bodyProperty: InlinedRequestBodyProperty
+  FileProperty:
+    properties:
+      key: commons.NameAndWireValue
+      isOptional: boolean
+  HttpRequestBodyReference:
+    extends: commons.WithDocs
+    properties:
+      requestBodyType: types.TypeReference
+      contentType: optional<string>
+  SdkRequestBodyType:
+    union:
+      typeReference: HttpRequestBodyReference
+      bytes: BytesRequest
+  SdkRequest:
+    properties:
+      requestParameterName: commons.Name
+      shape: SdkRequestShape
+  SdkRequestShape:
+    union:
+      justRequestBody: SdkRequestBodyType
+      wrapper: SdkRequestWrapper
+  SdkRequestWrapper:
+    properties:
+      wrapperName: commons.Name
+      bodyKey: commons.Name
+
+  HttpResponse:
+    union:
+      json: JsonResponse
+      fileDownload: FileDownloadResponse
+      text: TextResponse
+      streaming: StreamingResponse
+
+  JsonResponse:
+    union:
+      response: JsonResponseBody
+      nestedPropertyAsResponse: JsonResponseBodyWithProperty
+
+  JsonResponseBody:
+    extends: commons.WithDocs
+    properties:
+      responseBodyType: types.TypeReference
+
+  JsonResponseBodyWithProperty:
+    extends: commons.WithDocs
+    properties:
+      responseBodyType: types.TypeReference
+      responseProperty:
+        docs: |
+          If set, the SDK will return this property from
+          the response, rather than the response itself.
+
+          This is particularly useful for JSON API structures
+          (e.g. configure 'data' to return 'response.data').
+        type: optional<types.ObjectProperty>
+
+  FileDownloadResponse:
+    extends: commons.WithDocs
+
+  TextResponse:
+    extends: commons.WithDocs
+
+  StreamingResponse:
+    extends: commons.WithDocs
+    properties:
+      dataEventType: StreamingResponseChunkType
+      terminator: optional<string>
+
+  StreamingResponseChunkType:
+    union:
+      json:
+        type: types.TypeReference
+        key: json
+      text: {}
+
+  ResponseErrors: list<ResponseError>
+  ResponseError:
+    extends: commons.WithDocs
+    properties:
+      error: errors.DeclaredErrorName
+
+  # examples
+
+  ExampleEndpointCall:
+    extends: commons.WithDocs
+    properties:
+      name: optional<commons.Name>
+      url: string
+      rootPathParameters: list<ExamplePathParameter>
+      servicePathParameters: list<ExamplePathParameter>
+      endpointPathParameters: list<ExamplePathParameter>
+      serviceHeaders: list<ExampleHeader>
+      endpointHeaders: list<ExampleHeader>
+      queryParameters: list<ExampleQueryParameter>
+      request: optional<ExampleRequestBody>
+      response: ExampleResponse
+
+  ExamplePathParameter:
+    properties:
+      key: string
+      value: types.ExampleTypeReference
+
+  ExampleQueryParameter:
+    properties:
+      wireKey: string
+      value: types.ExampleTypeReference
+
+  ExampleHeader:
+    properties:
+      wireKey: string
+      value: types.ExampleTypeReference
+
+  ExampleRequestBody:
+    union:
+      inlinedRequestBody: ExampleInlinedRequestBody
+      reference: types.ExampleTypeReference
+
+  ExampleInlinedRequestBody:
+    extends: commons.WithJsonExample
+    properties:
+      properties: list<ExampleInlinedRequestBodyProperty>
+
+  ExampleInlinedRequestBodyProperty:
+    properties:
+      wireKey: string
+      value: types.ExampleTypeReference
+      originalTypeDeclaration:
+        docs: |
+          this property may have been brought in via extension. originalTypeDeclaration
+          is the name of the type that contains this property
+        type: optional<types.DeclaredTypeName>
+
+  ExampleResponse:
+    union:
+      ok: ExampleEndpointSuccessResponse
+      error: ExampleEndpointErrorResponse
+
+  ExampleEndpointSuccessResponse:
+    properties:
+      body: optional<types.ExampleTypeReference>
+
+  ExampleEndpointErrorResponse:
+    properties:
+      error: errors.DeclaredErrorName
+      body: optional<types.ExampleTypeReference>

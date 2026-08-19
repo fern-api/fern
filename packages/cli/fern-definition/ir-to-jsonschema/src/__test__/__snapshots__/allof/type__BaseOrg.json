@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "metadata": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BaseOrgMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "BaseOrgMetadata": {
+      "type": "object",
+      "properties": {
+        "region": {
+          "type": "string",
+          "description": "Deployment region from BaseOrg."
+        },
+        "tier": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Subscription tier."
+        }
+      },
+      "required": [
+        "region"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

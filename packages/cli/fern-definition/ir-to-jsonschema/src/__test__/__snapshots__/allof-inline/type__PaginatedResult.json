@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "paging": {
+      "$ref": "#/definitions/PagingCursors"
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      },
+      "description": "Current page of results from the requested resource."
+    }
+  },
+  "required": [
+    "paging",
+    "results"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "PagingCursors": {
+      "type": "object",
+      "properties": {
+        "next": {
+          "type": "string",
+          "description": "Cursor for the next page of results."
+        },
+        "previous": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Cursor for the previous page of results."
+        }
+      },
+      "required": [
+        "next"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix the root client failing to compile when root-level endpoints return
+    Server-Sent Event streams, return binary bodies, or use query parameters.
+    The root client now imports `SseStream`, `ByteStream`, and `QueryBuilder`
+    when those endpoints are present, matching sub-client behavior.
+  type: fix

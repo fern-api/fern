@@ -1,0 +1,5 @@
+- summary: |
+    Add `websocket-oneof-display` setting to `docs.yml`. When set to `grouped`,
+    WebSocket messages with oneOf bodies are rendered as a single parent entry
+    with nested variants instead of flattened separate entries (default: `flat`).
+  type: feat

@@ -1,0 +1,240 @@
+import Foundation
+
+/// Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
+public final class ApiClient: Sendable {
+    private let httpClient: HTTPClient
+
+    /// Initialize the client with the specified configuration.
+    ///
+    /// - Parameter baseURL: The base URL to use for requests from the client. If not provided, the default base URL will be used.
+    /// - Parameter headers: Additional headers to send with each request.
+    /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
+    /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
+    /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
+    public convenience init(
+        baseURL: String = ApiEnvironment.default.rawValue,
+        headers: [String: String]? = nil,
+        timeout: Int? = nil,
+        maxRetries: Int? = nil,
+        urlSession: Networking.URLSession? = nil
+    ) {
+        self.init(
+            baseURL: baseURL,
+            headerAuth: nil,
+            bearerAuth: nil,
+            basicAuth: nil,
+            headers: headers,
+            timeout: timeout,
+            maxRetries: maxRetries,
+            urlSession: urlSession
+        )
+    }
+
+    init(
+        baseURL: String,
+        headerAuth: ClientConfig.HeaderAuth? = nil,
+        bearerAuth: ClientConfig.BearerAuth? = nil,
+        basicAuth: ClientConfig.BasicAuth? = nil,
+        headers: [String: String]? = nil,
+        timeout: Int? = nil,
+        maxRetries: Int? = nil,
+        urlSession: Networking.URLSession? = nil
+    ) {
+        let config = ClientConfig(
+            baseURL: baseURL,
+            headerAuth: headerAuth,
+            bearerAuth: bearerAuth,
+            basicAuth: basicAuth,
+            headers: headers,
+            timeout: timeout,
+            maxRetries: maxRetries,
+            urlSession: urlSession
+        )
+        self.httpClient = HTTPClient(config: config)
+    }
+
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.searchRuleTypes()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func searchRuleTypes(query: String? = nil, requestOptions: RequestOptions? = nil) async throws -> RuleTypeSearchResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/rule-types",
+            queryParams: [
+                "query": query.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: RuleTypeSearchResponse.self
+        )
+    }
+
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.createRule(request: .init(
+    ///         name: "name",
+    ///         executionContext: .prod
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func createRule(request: Requests.RuleCreateRequest, requestOptions: RequestOptions? = nil) async throws -> RuleResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/rules",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: RuleResponse.self
+        )
+    }
+
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.listUsers()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func listUsers(requestOptions: RequestOptions? = nil) async throws -> UserSearchResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            requestOptions: requestOptions,
+            responseType: UserSearchResponse.self
+        )
+    }
+
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.getEntity()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func getEntity(requestOptions: RequestOptions? = nil) async throws -> CombinedEntity {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/entities",
+            requestOptions: requestOptions,
+            responseType: CombinedEntity.self
+        )
+    }
+
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.getOrganization()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func getOrganization(requestOptions: RequestOptions? = nil) async throws -> Organization {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/organizations",
+            requestOptions: requestOptions,
+            responseType: Organization.self
+        )
+    }
+
+    /// Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.createPlant(request: .init(
+    ///         species: "species",
+    ///         family: "family",
+    ///         genus: "genus",
+    ///         commonName: "commonName",
+    ///         wateringFrequency: .daily,
+    ///         sunExposure: .full
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func createPlant(request: Requests.PlantPost, requestOptions: RequestOptions? = nil) async throws -> PlantStrict {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/plants",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: PlantStrict.self
+        )
+    }
+
+    /// Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.createTree(request: TreeRecord(
+    ///         id: "id",
+    ///         treeName: "treeName",
+    ///         treeSpecies: "treeSpecies"
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func createTree(request: TreeRecord, requestOptions: RequestOptions? = nil) async throws -> TreeRecord {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/trees",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: TreeRecord.self
+        )
+    }
+}

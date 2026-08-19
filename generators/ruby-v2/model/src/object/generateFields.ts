@@ -1,0 +1,40 @@
+import { getWireValue } from "@fern-api/base-generator";
+import { ruby } from "@fern-api/ruby-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+
+export function generateFields({
+    typeDeclaration,
+    properties,
+    context
+}: {
+    typeDeclaration?: FernIr.TypeDeclaration;
+    properties: FernIr.ObjectProperty[];
+    context: ModelGeneratorContext;
+}): ruby.AstNode[] {
+    return properties.map((prop, index) => {
+        const fieldName = context.caseConverter.snakeSafe(prop.name);
+        const wireValue = getWireValue(prop.name);
+        const rubyType = context.typeMapper.convert({ reference: prop.valueType });
+
+        let isCircular: boolean = false;
+        if (typeDeclaration != null && prop.valueType.type === "named") {
+            const propertyTypeDeclaration = context.getTypeDeclaration(prop.valueType.typeId);
+            isCircular = propertyTypeDeclaration?.referencedTypes.has(typeDeclaration.name.typeId) ?? false;
+        }
+
+        const isOptional = prop.valueType.type === "container" && prop.valueType.container.type === "optional";
+        const isNullable = prop.valueType.type === "container" && prop.valueType.container.type === "nullable";
+
+        return ruby.codeblock((writer) => {
+            writer.write(`field :${fieldName}, `);
+            writer.write("-> { ");
+            rubyType.write(writer);
+            writer.write(" }");
+            writer.write(`, optional: ${isOptional}, nullable: ${isNullable}`);
+            if (wireValue !== fieldName) {
+                writer.write(`, api_name: "${wireValue}"`);
+            }
+        });
+    });
+}

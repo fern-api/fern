@@ -1,0 +1,333 @@
+imports:
+  commons: commons.yml
+
+types:
+  AuthSchemeKey: string
+  AuthScope: string
+
+  WithAuthSchema:
+    properties:
+      auth: optional<ApiAuthSchema>
+      auth-schemes: optional<map<AuthSchemeKey, AuthSchemeDeclarationSchema>>
+
+  ApiAuthSchema:
+    discriminated: false
+    union:
+      - string
+      - AuthSchemeReferenceSchema
+      - AnyAuthSchemesSchema
+      - EndpointSecuritySchema
+
+  AuthSchemeReferenceSchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      scheme: string
+
+  AnyAuthSchemesSchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      any: list<AnyAuthItem>
+
+  EndpointSecuritySchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      endpoint-security:
+        type: EndpointSecuritySchemaDetails
+        docs: Indicates that authentication requirements are defined per-endpoint via the `security` field.
+
+  EndpointSecuritySchemaDetails:
+    properties: {}
+
+  AnyAuthItem:
+    discriminated: false
+    union:
+      - string
+      - AuthSchemeReferenceSchema
+
+  AuthSchemeDeclarationSchema:
+    discriminated: false
+    union:
+      - OAuthSchemeSchema
+      - HeaderAuthSchemeSchema
+      - BasicAuthSchemeSchema
+      - BearerAuthSchemeSchema
+
+  WithEnvironmentVariable:
+    properties:
+      env: optional<string>
+
+  AuthVariable:
+    extends:
+      - WithEnvironmentVariable
+      - commons.WithName
+    properties:
+      omit:
+        type: optional<boolean>
+        docs: If true, the auth variable will be omitted from the SDK.
+      placeholder:
+        type: optional<string>
+        docs: The placeholder value to use in code snippets (e.g., "YOUR_API_KEY").
+
+  HeaderAuthSchemeSchema:
+    extends:
+      - WithEnvironmentVariable
+      - commons.WithName
+      - commons.WithDocsSchema
+    properties:
+      header: string
+      type:
+        type: optional<string>
+        docs: Defaults to string
+      prefix: optional<string>
+      placeholder:
+        type: optional<string>
+        docs: The placeholder value to use in code snippets (e.g., "YOUR_API_KEY").
+
+  BasicAuthSchemeSchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      scheme: literal<"basic">
+      username: optional<AuthVariable>
+      password: optional<AuthVariable>
+
+  BearerAuthSchemeSchema:
+    discriminated: false
+    union:
+      - TokenBearerAuthSchema
+      - InferredBearerAuthSchema
+
+  TokenBearerAuthSchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      scheme: literal<"bearer">
+      token: optional<AuthVariable>
+
+  InferredBearerAuthSchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      scheme: literal<"bearer">
+      get-token: InferredGetTokenEndpointSchema
+    # refresh-token: optional<InferredRefreshTokenEndpointSchema>
+
+  InferredGetTokenEndpointSchema:
+    discriminated: false
+    union:
+      - string
+      - InferredGetTokenEndpointSchemaObject
+
+  InferredGetTokenEndpointSchemaObject:
+    properties:
+      endpoint:
+        type: string
+        docs: The endpoint to get the access token, such as 'auth.get_token'
+      expiry-response-property:
+        type: optional<string>
+        docs: The property name for the expiry time in the response.
+      authenticated-request-headers:
+        type: optional<list<InferredAuthenticatedRequestHeader>>
+        docs: The headers that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint.
+
+  InferredAuthenticatedRequestHeader:
+    docs: A header that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint.
+      These are not headers for the authorization endpoint.
+    properties:
+      response-property:
+        type: string
+        docs: The property to retrieve the header value from the get token or refresh endpoint response.
+      header-name:
+        type: string
+        docs: The header name to put the token in for any authenticated HTTP request.
+      value-prefix:
+        type: optional<string>
+        docs: Commonly used for setting the `Authorization` scheme, but could be used for other things.
+
+  OAuthFlowTypeSchema:
+    enum:
+      - name: ClientCredentials
+        value: client-credentials
+      - name: AuthorizationCode
+        value: authorization-code
+      - name: DeviceCode
+        value: device-code
+
+  OAuthPkceSchema:
+    docs: PKCE (RFC 7636) configuration for the authorization-code flow.
+    properties:
+      method:
+        type: optional<string>
+        docs: The PKCE code challenge method. Only 'S256' is supported. Defaults to 'S256'.
+
+  OAuthSchemeSchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      scheme: literal<"oauth">
+      type:
+        type: OAuthFlowTypeSchema
+        docs: The OAuth flow. Defaults to 'client-credentials'.
+      scopes: optional<list<AuthScope>>
+      token-prefix:
+        type: optional<string>
+        docs: Sets the token header value prefix. Defaults to 'Bearer'
+      token-header:
+        type: optional<string>
+        docs: Sets the token header key name. Defaults to 'Authorization'
+      # --- client-credentials flow ---
+      client-id-env:
+        type: optional<string>
+        docs: >-
+          The environment variable holding the client ID. Used by the client-credentials flow and,
+          for the public-client flows, as an alternative to a literal `client-id`.
+      client-secret-env: optional<string>
+      get-token:
+        type: optional<OAuthGetTokenEndpointSchema>
+        docs: The token endpoint for the client-credentials flow. Required for that flow.
+      refresh-token: optional<OAuthRefreshTokenEndpointSchema>
+      # --- authorization-code (PKCE) and device-code (public client) flows ---
+      client-id:
+        type: optional<string>
+        docs: >-
+          The public client ID (literal). Public clients do not use a client secret. Required for
+          the authorization-code and device-code flows (an environment-variable client ID via
+          `client-id-env` is not yet supported for these flows).
+      authorization-url:
+        type: optional<string>
+        docs: The authorization (consent) endpoint URL. Required for the authorization-code flow.
+      device-authorization-url:
+        type: optional<string>
+        docs: The device authorization endpoint URL. Required for the device-code flow.
+      token-url:
+        type: optional<string>
+        docs: The token endpoint URL. Required for the authorization-code and device-code flows.
+      refresh-url:
+        type: optional<string>
+        docs: The token refresh endpoint URL. Defaults to `token-url` when omitted.
+      redirect-uri:
+        type: optional<RedirectUriSchema>
+        docs: >-
+          The loopback redirect (callback) URI for the authorization-code flow. Must be a loopback
+          host over http — `127.0.0.1` (recommended, RFC 8252 §7.3) or `localhost` — with any path;
+          the generated CLI binds and sends this URI exactly, so it must match the redirect
+          registered with the authorization server (e.g. `http://127.0.0.1:8484/callback` or
+          `http://localhost:8484/callback`). Provide a bare string to pin a single port, or an
+          object with `url` plus `ports` to add backup ports tried when the primary is busy. Omit
+          it entirely to use an ephemeral (OS-assigned) port.
+      success-redirect-url:
+        type: optional<string>
+        docs: >-
+          A page the generated CLI redirects the browser to once it captures the authorization
+          code, for the authorization-code flow. Must be an absolute http(s) URL. This is not an
+          OAuth `redirect_uri` and does not need registering with the authorization server — the
+          redirect happens on the loopback listener after the code is captured, and no `code` or
+          `state` is forwarded. Omit it to serve the CLI's built-in success page.
+      error-redirect-url:
+        type: optional<string>
+        docs: >-
+          A page the generated CLI redirects the browser to when authorization fails (the user
+          denies consent, or the callback is unusable), for the authorization-code flow. Must be an
+          absolute http(s) URL. The `error` and `error_description` query parameters are appended so
+          the page can explain what happened — merged into any query string already on the URL, and
+          inserted before a fragment if there is one. Omit it to serve the CLI's built-in failure
+          page.
+      pkce:
+        type: optional<OAuthPkceSchema>
+        docs: PKCE configuration for the authorization-code flow. PKCE is always applied for that flow.
+      authorization-parameters:
+        type: optional<map<string, string>>
+        docs: Additional literal parameters appended to the authorization request (e.g. `audience`).
+      device-authorization-parameters:
+        type: optional<map<string, string>>
+        docs: Additional literal parameters included in the device authorization request.
+      token-parameters:
+        type: optional<map<string, string>>
+        docs: Additional literal parameters included in the token exchange request.
+      refresh-parameters:
+        type: optional<map<string, string>>
+        docs: Additional literal parameters included in the refresh request.
+
+  RedirectUriSchema:
+    discriminated: false
+    union:
+      - string
+      - RedirectUriWithBackupPortsSchema
+
+  RedirectUriWithBackupPortsSchema:
+    docs: A loopback callback URI with additional backup ports for the authorization-code flow.
+    properties:
+      url:
+        type: string
+        docs: The primary loopback callback URI, e.g. `http://127.0.0.1:8484/callback`.
+      ports:
+        type: optional<list<integer>>
+        docs: >-
+          Backup loopback ports, tried in order when the port in `url` is busy. Each reuses the
+          host and path of `url` (only the port differs) and must be pre-registered with the
+          authorization server.
+
+  OAuthGetTokenEndpointSchema:
+    properties:
+      endpoint:
+        type: string
+        docs: "The endpoint to get the access token, such as 'auth.get_token"
+      request-properties:
+        type: optional<OAuthAccessTokenRequestPropertiesSchema>
+      response-properties:
+        type: optional<OAuthAccessTokenResponsePropertiesSchema>
+
+  OAuthAccessTokenRequestPropertiesSchema:
+    properties:
+      client-id:
+        type: optional<string>
+        docs: The property name for the client ID.
+      client-secret:
+        type: optional<string>
+        docs: The property name for the client secret.
+      scopes:
+        type: optional<string>
+        docs: The property name for the scopes.
+
+  OAuthAccessTokenResponsePropertiesSchema:
+    properties:
+      access-token:
+        type: optional<string>
+        docs: The property name for the access token.
+      expires-in:
+        type: optional<string>
+        docs: The property name for the expires in property.
+      refresh-token:
+        type: optional<string>
+        docs: The property name for the refresh token
+
+  OAuthRefreshTokenEndpointSchema:
+    properties:
+      endpoint:
+        type: string
+        docs: "The endpoint to refresh the access token, such as 'auth.refresh_token"
+      request-properties:
+        type: optional<OAuthRefreshTokenRequestPropertiesSchema>
+      response-properties:
+        type: optional<OAuthRefreshTokenResponsePropertiesSchema>
+
+  OAuthRefreshTokenRequestPropertiesSchema:
+    properties:
+      refresh-token:
+        type: string
+        docs: The property name for the refresh token.
+
+  OAuthRefreshTokenResponsePropertiesSchema:
+    properties:
+      access-token:
+        type: optional<string>
+        docs: The property name for the access token.
+      expires-in:
+        type: optional<string>
+        docs: The property name for the expires in property.
+      refresh-token:
+        type: optional<string>
+        docs: The property name for the refresh token.

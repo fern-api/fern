@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "firstItemType",
+        "secondItemType"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "oneOf": [
+            {
+              "const": "firstItemType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "oneOf": [
+            {
+              "const": "secondItemType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "title"
+      ]
+    }
+  ],
+  "definitions": {}
+}

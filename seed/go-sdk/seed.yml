@@ -1,0 +1,452 @@
+irVersion: v67
+displayName: Go SDK
+image: fernapi/fern-go-sdk
+changelogLocation: ../../generators/go/sdk/versions.yml
+
+buildScripts:
+  compileScript:
+    commands:
+      - go build -v ./...
+  lintScript:
+    commands:
+      - golangci-lint run --timeout=5m
+  testScript:
+    commands:
+      - |
+        PROJECT_NAME="wiremock-$(basename $(dirname $(pwd)) | tr -d '.')"
+        if [ -f wiremock/docker-compose.test.yml ]; then
+          docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+          docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml up -d
+          export WIREMOCK_URL=http://localhost:$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+        fi
+        go test -v ./...
+        TEST_EXIT_CODE=$?
+        if [ -f wiremock/docker-compose.test.yml ]; then
+          docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+        fi
+        exit $TEST_EXIT_CODE
+publish:
+  workingDirectory: generators/go
+  preBuildCommands:
+    - go build ./...
+    - pnpm turbo run dist:cli --filter @fern-api/go-sdk
+  docker:
+    file: ./generators/go/sdk/Dockerfile
+    image: fernapi/fern-go-sdk
+    context: .
+test:
+  docker:
+    image: fernapi/fern-go-sdk:latest
+    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+  podman:
+    image: fernapi/fern-go-sdk:latest
+    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && podman build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+  local:
+    workingDirectory: generators/go
+    buildCommand:
+      # Build TypeScript v2 CLI first
+      - pnpm turbo run dist:cli --filter @fern-api/go-sdk
+      # Build Go v1 CLI
+      - go build -ldflags "-s -w" -trimpath -buildvcs=false -o fern-go-sdk ./cmd/fern-go-sdk
+    runCommand: ./fern-go-sdk {CONFIG_PATH}
+    env:
+      # Set path to the go-v2 CLI built from TypeScript (relative to workingDirectory: generators/go)
+      GO_V2_PATH: "../go-v2/sdk/dist/cli.cjs"
+language: go
+generatorType: SDK
+defaultOutputMode: github
+defaultCustomConfig:
+  # wire tests cannot be run in seed containers due to docker-in-docker issues
+  enableWireTests: false
+fixtures:
+  any-auth:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  examples:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
+    - outputFolder: always-send-required-properties
+      customConfig:
+        alwaysSendRequiredProperties: true
+    - outputFolder: exported-client-name
+      customConfig:
+        exportedClientName: AcmeClient
+    - outputFolder: client-name
+      customConfig:
+        clientName: Acme
+    - outputFolder: client-name-with-custom-constructor-name
+      customConfig:
+        clientName: Acme
+        clientConstructorName: New
+    - outputFolder: readme-config
+      customConfig:
+        clientName: Acme
+        clientConstructorName: New
+        customReadmeSections:
+          - title: "Generator Invocation Custom Section"
+            content: "Generator Invocation Custom Content for {{ owner }}:{{ repo }}:{{ version }}"
+          - title: "Override Section"
+            content: "Override Content"
+      readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - "contributing"
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /big-entity
+        customSections:
+          - title: "Base Readme Custom Section"
+            language: go
+            content: "Base Readme Custom Content for {{ owner }}:{{ repo }}:{{ version }}"
+          - title: "Override Section"
+            language: go
+            content: "Base Content"
+        features:
+          timeouts:
+            - GET /movie/{movieId}
+            - method: POST
+              path: /movie
+    - outputFolder: package-path
+      customConfig:
+        packagePath: pleaseinhere
+    - outputFolder: getters-pass-by-value
+      customConfig:
+        gettersPassByValue: true
+    - outputFolder: export-all-requests-at-root
+      customConfig:
+        exportAllRequestsAtRoot: true
+  go-bytes-request:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: use-reader-for-bytes-request
+      customConfig:
+        useReaderForBytesRequest: true
+  imdb:
+    - outputFolder: with-wiremock-tests
+      customConfig:
+        enableWireTests: true
+        packageName: testPackageName
+        errorCodes: per-endpoint
+        clientConstructorName: NewIMDBClient
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: package-path
+      customConfig:
+        packagePath: inhereplease
+    - outputFolder: deep-package-path
+      customConfig:
+        packagePath: all/the/way/in/here/please
+    - outputFolder: omit-fern-headers
+      customConfig:
+        omitFernHeaders: true
+        maxRetries: 5
+    - outputFolder: include-platform-headers
+      customConfig:
+        includePlatformHeaders: true
+    - outputFolder: allow-user-agent-app-info
+      customConfig:
+        allowUserAgentAppInfo: true
+    - outputFolder: include-platform-headers-app-info
+      customConfig:
+        includePlatformHeaders: true
+        allowUserAgentAppInfo: true
+  undiscriminated-unions:
+    - outputFolder: no-custom-config
+      outputVersion: 0.0.1
+      customConfig:
+        packageName: undiscriminated
+        module:
+          path: github.com/fern-api/undiscriminated-go
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
+  unions:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
+    - outputFolder: package-name
+      outputVersion: 0.0.1
+      customConfig:
+        packageName: unions
+        module:
+          path: github.com/fern-api/unions-go
+  go-union-base-properties:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: dedupe-union-base-properties
+      customConfig:
+        dedupeUnionBaseProperties: true
+  file-upload:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
+    - outputFolder: package-name
+      outputVersion: 0.0.1
+      customConfig:
+        packageName: upload
+        module:
+          path: github.com/fern-api/file-upload-go
+  path-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
+    - outputFolder: package-name
+      outputVersion: 0.0.1
+      customConfig:
+        packageName: path
+        module:
+          path: github.com/fern-api/path-parameters-go
+  package-yml:
+    - outputFolder: no-custom-config
+      customConfig: null
+  streaming:
+    - outputFolder: .
+      outputVersion: v2.0.0
+      customConfig:
+        packageName: stream
+        module:
+          path: github.com/fern-api/stream-go
+  server-sent-event-examples:
+    - outputFolder: with-wire-tests
+      customConfig:
+        enableWireTests: true
+        packageName: sse
+        module:
+          path: github.com/fern-api/sse-examples-go
+  server-sent-events:
+    - outputFolder: with-wire-tests
+      customConfig:
+        enableWireTests: true
+        packageName: sse
+        module:
+          path: github.com/fern-api/sse-go
+  server-sent-events-openapi:
+    - outputFolder: with-wire-tests
+      customConfig:
+        enableWireTests: true
+  server-sent-events-resumable:
+    - outputFolder: .
+      customConfig:
+        packageName: sseresumable
+        module:
+          path: github.com/fern-api/sse-resumable-go
+  go-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        serverUrlVariables: false
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        serverUrlVariables: false
+  openapi-request-body-ref:
+    - outputFolder: no-custom-config
+      customConfig: null
+  idempotency-headers:
+    - outputFolder: .
+      outputVersion: 0.0.1
+      customConfig:
+        packageName: fern
+        module:
+          path: github.com/idempotency-headers/fern
+        includeLegacyClientOptions: true
+    - outputFolder: auto-generate-idempotency-key
+      outputVersion: 0.0.1
+      customConfig:
+        packageName: fern
+        module:
+          path: github.com/idempotency-headers/fern
+        includeLegacyClientOptions: true
+        auto-generate-idempotency-key: true
+  literals-unions:
+    - outputFolder: no-custom-config
+      customConfig: null
+  mixed-case:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: default-values
+      customConfig:
+        useDefaultRequestParameterValues: true
+  nullable-request-body:
+    - outputFolder: dynamic-snippets-disabled
+      disableDynamicSnippetTests: true
+  oauth-client-credentials:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  oauth-client-credentials-mandatory-auth:
+    - outputFolder: no-custom-config
+      customConfig: null
+  go-oauth-token-nullable:
+    - outputFolder: no-custom-config
+      customConfig: null
+  go-oauth-token-optional:
+    - outputFolder: no-custom-config
+      customConfig: null
+  oauth-pkce:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  pagination-custom:
+    - outputFolder: .
+      customConfig:
+        customPagerName: PayrocPager
+  go-request-body-pagination:
+    - outputFolder: .
+      customConfig:
+        enableRequestBodyPagination: true
+  go-pagination-offset-item-index:
+    - outputFolder: .
+      customConfig:
+        offsetSemantics: item-index
+        enableRequestBodyPagination: true
+  go-optional-literal-alias:
+    - outputFolder: .
+      customConfig: null
+  go-optional-request-body:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: respect-optional-request-body
+      customConfig:
+        respectOptionalRequestBody: true
+  go-undiscriminated-union-wire-tests:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+        packageName: fern
+        module:
+          path: github.com/go-undiscriminated-union-wire-tests/fern
+  go-deterministic-ordering:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+        exportAllRequestsAtRoot: true
+  go-date-containers:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  go-nullable-wire-tests:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  exhaustive:
+    - outputFolder: no-custom-config
+      customConfig:
+        enableWireTests: true
+    - outputFolder: omit-empty-request-wrappers
+      customConfig:
+        enableWireTests: true
+        omitEmptyRequestWrappers: true
+  inferred-auth-implicit:
+    - outputFolder: .
+      customConfig: null
+  inferred-auth-explicit:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  endpoint-security-auth:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  inferred-auth-implicit-api-key:
+    - outputFolder: .
+      customConfig: null
+  inferred-auth-implicit-no-expiry:
+    - outputFolder: .
+      customConfig: null
+  inferred-auth-implicit-reference:
+    - outputFolder: .
+      customConfig: null
+  basic-auth-pw-omitted:
+    - outputFolder: wire-tests
+      customConfig:
+        enableWireTests: true
+  go-nested-cross-package:
+    - outputFolder: .
+      customConfig: null
+  go-subpackage-collision:
+    - outputFolder: .
+      customConfig: null
+  union-query-parameters:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  literal:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  x-fern-default:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: apply-query-defaults-on-nil-request
+      customConfig:
+        applyQueryDefaultsOnNilRequest: true
+scripts:
+  - image: fernapi/go-seed:2.0.0
+    commands:
+      build:
+        - |
+          printf 'version: "2"\nlinters:\n  exclusions:\n    paths:\n      - dynamic-snippets\n' > .golangci.yml
+          golangci-lint run --timeout=5m --allow-parallel-runners
+      test:
+        - |
+          PROJECT_NAME="wiremock-$(basename $(dirname $(pwd)) | tr -d '.')"
+          if [ -f wiremock/docker-compose.test.yml ]; then
+            docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+            docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml up -d
+            export WIREMOCK_URL=http://localhost:$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+            for i in $(seq 1 30); do
+              if wget -q --spider "$WIREMOCK_URL/__admin/mappings" 2>/dev/null; then
+                break
+              fi
+              sleep 1
+            done
+          fi
+          CGO_ENABLED=0 go test ./...
+          TEST_EXIT_CODE=$?
+          if [ -f wiremock/docker-compose.test.yml ]; then
+            docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+          fi
+          exit $TEST_EXIT_CODE
+allowedFailures:
+  # Unsupported features in the v1 Go generator (generation aborts with
+  # "not supported yet" or a nil-pointer panic). These need feature work.
+
+  # Generated Go code does not compile. Each needs a generator fix.
+  - request-parameters # int64 default 9223372036854775807 loses precision in the IR pipeline

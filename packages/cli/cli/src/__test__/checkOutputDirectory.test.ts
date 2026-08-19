@@ -1,0 +1,146 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { mkdir, writeFile } from "fs/promises";
+import tmp from "tmp-promise";
+import { afterEach, beforeEach, describe, expect, it, Mock, vi } from "vitest";
+
+import { CliContext } from "../cli-context/CliContext.js";
+import { checkOutputDirectory } from "../commands/generate/checkOutputDirectory.js";
+import { getOutputDirectories } from "../persistence/output-directories/getOutputDirectories.js";
+import { storeOutputDirectories } from "../persistence/output-directories/storeOutputDirectories.js";
+
+vi.mock("../utils/isCI", () => ({
+    isCI: vi.fn().mockReturnValue(false)
+}));
+
+vi.mock("../persistence/output-directories/getOutputDirectories");
+vi.mock("../persistence/output-directories/storeOutputDirectories");
+
+describe.sequential("checkOutputDirectory", () => {
+    let mockCliContext: {
+        confirmPrompt: Mock & ((message: string, defaultValue?: boolean) => Promise<boolean>);
+    };
+
+    beforeEach(() => {
+        process.env = {};
+        mockCliContext = {
+            confirmPrompt: vi.fn().mockImplementation(async () => true)
+        };
+        // Reset mocks before each test
+        vi.mocked(getOutputDirectories).mockReset();
+        vi.mocked(storeOutputDirectories).mockReset();
+        // Default mock implementation - no directories in safelist
+        vi.mocked(getOutputDirectories).mockResolvedValue([]);
+    });
+
+    afterEach(() => {
+        vi.clearAllMocks();
+    });
+
+    it("doesn't prompt if directory doesn't exist", async () => {
+        const tmpDir = await tmp.dir();
+        const nonExistentPath = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("non-existent"));
+
+        const result = await checkOutputDirectory(nonExistentPath, mockCliContext as unknown as CliContext, false);
+
+        expect(result).toEqual({
+            shouldProceed: true
+        });
+        expect(mockCliContext.confirmPrompt).not.toHaveBeenCalled();
+    });
+
+    it("doesn't prompt if directory is empty", async () => {
+        const tmpDir = await tmp.dir();
+        const emptyDir = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("empty"));
+        await mkdir(emptyDir);
+
+        const result = await checkOutputDirectory(emptyDir, mockCliContext as unknown as CliContext, false);
+
+        expect(result).toEqual({
+            shouldProceed: true
+        });
+        expect(mockCliContext.confirmPrompt).not.toHaveBeenCalled();
+    });
+
+    it("prompts for confirmation if directory has files and not in safelist", async () => {
+        const tmpDir = await tmp.dir();
+        const dirWithFiles = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("with-files"));
+        await mkdir(dirWithFiles);
+        await writeFile(join(dirWithFiles, RelativeFilePath.of("test.txt")), "test");
+
+        mockCliContext.confirmPrompt.mockResolvedValueOnce(true);
+
+        const result = await checkOutputDirectory(dirWithFiles, mockCliContext as unknown as CliContext, false);
+
+        expect(result).toEqual({
+            shouldProceed: true
+        });
+        expect(mockCliContext.confirmPrompt).toHaveBeenCalledTimes(1);
+    });
+
+    it("doesn't prompt if directory is in safelist", async () => {
+        const tmpDir = await tmp.dir();
+        const safelistedDir = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("safelisted"));
+        await mkdir(safelistedDir);
+        await writeFile(join(safelistedDir, RelativeFilePath.of("test.txt")), "test");
+
+        // Mock that the directory is in the safelist
+        vi.mocked(getOutputDirectories).mockResolvedValue([safelistedDir]);
+
+        const result = await checkOutputDirectory(safelistedDir, mockCliContext as unknown as CliContext, false);
+
+        expect(result).toEqual({
+            shouldProceed: true
+        });
+        expect(mockCliContext.confirmPrompt).not.toHaveBeenCalled();
+    });
+
+    it("saves directory to safelist when requested", async () => {
+        const tmpDir = await tmp.dir();
+        const dirToSafelist = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("to-safelist"));
+        await mkdir(dirToSafelist);
+        await writeFile(join(dirToSafelist, RelativeFilePath.of("test.txt")), "test");
+
+        // Mock that the directory is not initially in the safelist
+        vi.mocked(getOutputDirectories).mockResolvedValue([]);
+        vi.mocked(storeOutputDirectories).mockResolvedValue();
+
+        mockCliContext.confirmPrompt.mockResolvedValueOnce(true);
+
+        const result = await checkOutputDirectory(dirToSafelist, mockCliContext as unknown as CliContext, false);
+
+        expect(result).toEqual({
+            shouldProceed: true
+        });
+
+        // Verify storeOutputDirectories was called with the directory
+        expect(storeOutputDirectories).toHaveBeenCalledWith([dirToSafelist]);
+    });
+
+    it("doesn't proceed if user declines overwrite", async () => {
+        const tmpDir = await tmp.dir();
+        const dirWithFiles = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("with-files"));
+        await mkdir(dirWithFiles);
+        await writeFile(join(dirWithFiles, RelativeFilePath.of("test.txt")), "test");
+
+        mockCliContext.confirmPrompt.mockResolvedValueOnce(false); // overwrite prompt
+
+        const result = await checkOutputDirectory(dirWithFiles, mockCliContext as unknown as CliContext, false);
+
+        expect(result).toEqual({
+            shouldProceed: false
+        });
+        expect(mockCliContext.confirmPrompt).toHaveBeenCalledTimes(1);
+    });
+
+    it("doesn't prompt if force is true", async () => {
+        const tmpDir = await tmp.dir();
+        const dirWithFiles = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("with-files"));
+        await mkdir(dirWithFiles);
+        await writeFile(join(dirWithFiles, RelativeFilePath.of("test.txt")), "test");
+
+        const result = await checkOutputDirectory(dirWithFiles, mockCliContext as unknown as CliContext, true);
+
+        expect(result).toEqual({ shouldProceed: true });
+        expect(mockCliContext.confirmPrompt).not.toHaveBeenCalled();
+    });
+});

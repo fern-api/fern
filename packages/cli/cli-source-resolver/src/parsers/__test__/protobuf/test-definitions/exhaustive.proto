@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package user.v1;
+
+option csharp_namespace = "User.V1";
+
+message CreateRequest {}
+
+message CreateResponse {}
+
+service User {
+    rpc Create(CreateRequest) returns (CreateResponse) {}
+}

@@ -1,0 +1,160 @@
+openapi: 3.1.0
+info:
+  title: validation
+  version: 0.0.0
+paths:
+  /create:
+    post:
+      operationId: create
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                decimal:
+                  type: number
+                  format: double
+                  exclusiveMinimum: 1.1
+                  maximum: 2.2
+                  multipleOf: 1.1
+                even:
+                  type: integer
+                  minimum: 0
+                  exclusiveMaximum: 100
+                  multipleOf: 2
+                name:
+                  type: string
+                  format: custom
+                  pattern: ^[a-z]+$
+                  minLength: 3
+                  maxLength: 10
+                shape:
+                  $ref: '#/components/schemas/Shape'
+              required:
+                - decimal
+                - even
+                - name
+                - shape
+  /:
+    get:
+      operationId: get
+      tags:
+        - ''
+      parameters:
+        - name: decimal
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+            exclusiveMinimum: 1.1
+            maximum: 2.2
+            multipleOf: 1.1
+        - name: even
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+            exclusiveMaximum: 100
+            multipleOf: 2
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+            format: custom
+            pattern: ^[a-z]+$
+            minLength: 3
+            maxLength: 10
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Type'
+components:
+  schemas:
+    SmallInteger:
+      title: SmallInteger
+      type: integer
+      exclusiveMinimum: 0
+      exclusiveMaximum: 10
+      multipleOf: 1
+    LargeInteger:
+      title: LargeInteger
+      type: integer
+      minimum: 10000
+      maximum: 100000
+    Double:
+      title: Double
+      type: number
+      format: double
+      minimum: 256.42
+      maximum: 512.84
+    Word:
+      title: Word
+      type: string
+      minLength: 2
+      maxLength: 26
+    Sentence:
+      title: Sentence
+      type: string
+      minLength: 4
+      maxLength: 256
+    Shape:
+      title: Shape
+      type: string
+      enum:
+        - SQUARE
+        - CIRCLE
+        - TRIANGLE
+    Type:
+      title: Type
+      type: object
+      description: Defines properties with default values and validation rules.
+      properties:
+        decimal:
+          type: number
+          format: double
+          exclusiveMinimum: 1.1
+          maximum: 2.2
+          multipleOf: 1.1
+          examples:
+            - 1.1
+        even:
+          type: integer
+          minimum: 0
+          exclusiveMaximum: 100
+          multipleOf: 2
+          examples:
+            - 2
+        name:
+          type: string
+          format: custom
+          pattern: ^[a-z]+$
+          minLength: 3
+          maxLength: 10
+          examples:
+            - rules
+        shape:
+          $ref: '#/components/schemas/Shape'
+      required:
+        - decimal
+        - even
+        - name
+        - shape
+  securitySchemes: {}

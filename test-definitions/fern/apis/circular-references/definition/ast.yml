@@ -1,0 +1,45 @@
+types:
+  TorU:
+    discriminated: false
+    union:
+      - T
+      - U
+  T:
+    properties:
+      child: TorU
+  U:
+    properties:
+      child: T
+  FieldValue:
+    union:
+      primitive_value: PrimitiveValue
+      object_value: ObjectValue
+      container_value: ContainerValue
+  ContainerValue:
+    union:
+      list: list<FieldValue>
+      optional: optional<FieldValue>
+  PrimitiveValue:
+    enum:
+      - STRING
+      - NUMBER
+  ObjectValue:
+    properties: {}
+  JsonLike:
+    discriminated: false
+    union:
+      - list<JsonLike>
+      - map<string, JsonLike>
+      - string
+      - integer
+      - boolean
+  JsonLikeWithNullAndUndefined:
+    discriminated: false
+    union:
+      - list<optional<nullable<JsonLikeWithNullAndUndefined>>>
+      - map<string, optional<nullable<JsonLikeWithNullAndUndefined>>>
+      - optional<nullable<string>>
+      - optional<nullable<integer>>
+      - optional<nullable<boolean>>
+      - optional<nullable<integer>>
+      - optional<nullable<boolean>>

@@ -1,0 +1,9 @@
+imports:
+  commons: commons.yml
+
+name: java-streaming-accept-header
+error-discrimination:
+  strategy: status-code
+
+errors:
+  - commons.BadRequestError

@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Expose `Stream[T].LastRetryMs()` on the SSE runtime, mirroring `LastEventID()`.
+    It returns the most recently advertised `retry:` reconnection time in
+    milliseconds (sticky per the SSE spec), so callers can read the directive
+    even when the server sends it in its own frame with no `data:` — in which
+    case the per-event `StreamEvent.Retry` is 0. The value persists across
+    reconnects.
+  type: feat

@@ -1,0 +1,9 @@
+- summary: |
+    Property-level `x-fern-audiences` filtering now also applies on the V3 OpenAPI / AsyncAPI /
+    OpenRPC import path used by `fern docs dev` and `fern generate --from-openapi`. Inline
+    request-body properties, query parameters, inline webhook payload properties, named-type
+    properties, `v2RequestBodies`, and the docs `v2Examples` blocks (type-level, request body,
+    response body, endpoint-level, `v2Responses`, and webhook payload examples) are now scrubbed
+    using the same exclusion semantics as the Fern Definition path. Untagged elements remain
+    universal and are never silently removed.
+  type: fix

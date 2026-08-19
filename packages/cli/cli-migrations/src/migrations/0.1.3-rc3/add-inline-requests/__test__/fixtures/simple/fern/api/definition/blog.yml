@@ -1,0 +1,88 @@
+services:
+  http:
+    MyService:
+      base-path: /
+      auth: true
+      endpoints:
+        # i'm endpoint A
+        a:
+          path: ""
+          method: GET
+        # i'm endpoint B
+        b:
+          path: ""
+          method: GET
+          # i'm some query parameters
+          query-parameters:
+            # i'm a query parameter
+            foo: string
+        # i'm endpoint C
+        c:
+          path: ""
+          method: GET
+          # i'm some query parameters
+          query-parameters:
+            # i'm a query parameter
+            foo: string
+          # i'm headers
+          headers:
+            # i'm a header
+            foo: string
+        # i'm endpoint D
+        d:
+          path: ""
+          method: GET
+          # i'm some query parameters
+          query-parameters:
+            # i'm a query parameter
+            foo: string
+          # i'm headers
+          headers:
+            # i'm a header
+            foo: string
+          # i'm a request
+          request: string
+        # i'm endpoint E
+        e:
+          path: ""
+          method: GET
+          # i'm some query parameters
+          query-parameters:
+            # i'm a query parameter
+            foo: string
+          # i'm headers
+          headers:
+            # i'm a header
+            foo: string
+          # i'm a request with docs
+          request:
+            # i'm request docs
+            docs: i'm a request
+            # i'm request type
+            type: string
+        # i'm endpoint F
+        f:
+          path: ""
+          method: GET
+          # i'm a request referencing a non-object named type
+          request:
+            # i'm request docs
+            docs: i'm a request
+            # i'm request type
+            type: StringAlias
+        # i'm endpoint G
+        g:
+          path: ""
+          method: GET
+          # i'm a request referencing an object named type
+          request:
+            # i'm request docs
+            docs: i'm a request
+            # i'm request type
+            type: MyGetRequest
+
+types:
+  StringAlias: string
+  MyGetRequest:
+    properties:
+      foo: string

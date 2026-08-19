@@ -1,0 +1,69 @@
+openapi: 3.1.0
+info:
+  title: Webhook Audience Test
+  version: 1.0.0
+  description: |
+    Tests that webhooks with x-fern-audiences are correctly included when
+    generating for matching audiences. This fixture verifies the fix for
+    webhook audience filtering in the v3 importer.
+paths:
+  /public-webhook:
+    post:
+      operationId: public-webhook
+      x-fern-webhook: true
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: webhooks
+      x-fern-sdk-method-name: publicWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PublicPayload"
+  /private-webhook:
+    post:
+      operationId: private-webhook
+      x-fern-webhook: true
+      x-fern-audiences:
+        - private
+      x-fern-sdk-group-name: webhooks
+      x-fern-sdk-method-name: privateWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PrivatePayload"
+  /no-audience-webhook:
+    post:
+      operationId: no-audience-webhook
+      x-fern-webhook: true
+      x-fern-sdk-group-name: webhooks
+      x-fern-sdk-method-name: noAudienceWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NoAudiencePayload"
+components:
+  schemas:
+    PublicPayload:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    PrivatePayload:
+      type: object
+      properties:
+        secret:
+          type: string
+      required:
+        - secret
+    NoAudiencePayload:
+      type: object
+      properties:
+        data:
+          type: string
+      required:
+        - data

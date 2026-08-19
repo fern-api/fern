@@ -1,0 +1,102 @@
+openapi: 3.1.0
+info:
+  title: no-content-response
+  version: 0.0.0
+paths:
+  /contacts:
+    post:
+      description: >-
+        Creates a new contact. Returns 200 with the contact or 204 with no
+        content.
+      operationId: contacts_create
+      tags:
+        - Contacts
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/Contact'
+                  - type: 'null'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    email: email
+      summary: Create Contact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  examples:
+                    - name
+                email:
+                  type:
+                    - string
+                    - 'null'
+              required:
+                - name
+            examples:
+              Example1:
+                value:
+                  name: name
+  /contacts/{id}:
+    get:
+      description: Gets a contact by ID. Returns 200 with the contact.
+      operationId: contacts_get
+      tags:
+        - Contacts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    email: email
+      summary: Get Contact
+components:
+  schemas:
+    Contact:
+      title: Contact
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - id
+        name:
+          type: string
+          examples:
+            - name
+        email:
+          type:
+            - string
+            - 'null'
+      required:
+        - id
+        - name
+  securitySchemes: {}

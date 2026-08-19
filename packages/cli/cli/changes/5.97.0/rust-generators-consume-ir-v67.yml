@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Send IR v67 to the Rust SDK generator from 0.46.0 and the Rust model generator from 0.6.0-rc.0,
+    which is where they start reading whether an endpoint's request body is required. Earlier Rust
+    generator versions keep receiving v66.
+  type: internal

@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "complete",
+    "length",
+    "error"
+  ],
+  "description": "Why generation stopped.",
+  "definitions": {}
+}

@@ -1,0 +1,111 @@
+{
+  "mappings": [
+    {
+      "id": "da00c5d3-8997-4a3a-ac5a-78907c04708e",
+      "name": "stream - Stream completions",
+      "request": {
+        "urlPathTemplate": "/stream",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"delta\":\"foo\",\"tokens\":1}\n\nevent: completion\ndata: {\"delta\":\"bar\",\"tokens\":2}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "da00c5d3-8997-4a3a-ac5a-78907c04708e",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "9a6b501e-3920-47d3-a852-e05e4eba58a6",
+      "name": "streamEvents - Stream events",
+      "request": {
+        "urlPathTemplate": "/stream-events",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: error\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "9a6b501e-3920-47d3-a852-e05e4eba58a6",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "b9c132a6-4cb0-462f-a27c-c8c4c9a457d4",
+      "name": "streamEventsDiscriminantInData - Stream events where discriminant is embedded in data and SSE event line is empty",
+      "request": {
+        "urlPathTemplate": "/stream-events-discriminant-in-data",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"type\":\"group.created\",\"offset\":\"offset-1\",\"group_id\":\"g1\"}\n\nevent: message\ndata: {\"type\":\"group.deleted\",\"offset\":\"offset-2\",\"group_id\":\"g2\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "b9c132a6-4cb0-462f-a27c-c8c4c9a457d4",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "0913bb86-4b39-4c8a-9875-111a5210a147",
+      "name": "streamEventsContextProtocol - Stream events context protocol",
+      "request": {
+        "urlPathTemplate": "/stream-events-context-protocol",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: error\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "0913bb86-4b39-4c8a-9875-111a5210a147",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 4
+  }
+}

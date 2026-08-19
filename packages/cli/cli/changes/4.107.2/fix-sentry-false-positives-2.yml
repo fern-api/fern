@@ -1,0 +1,6 @@
+- summary: |
+    Suppress additional Sentry false positives: EADDRINUSE port conflicts,
+    MDX/acorn parse errors from docs preview and publishing, version range
+    strings in generators.yml, missing fern project when using --id flag,
+    non-JSON fern.config.json, and absolute filepath in OpenAPI spec config.
+  type: fix

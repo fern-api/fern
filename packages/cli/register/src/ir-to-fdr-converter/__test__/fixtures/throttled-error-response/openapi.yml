@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: Throttled Error Response Test
+  version: 1.0.0
+  description: Tests 429 response with headers and detail property
+paths:
+  /api/resource:
+    get:
+      operationId: getResource
+      summary: Get a resource
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                required:
+                  - id
+                  - name
+        "429":
+          description: Request was throttled.
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before the next request.
+              schema:
+                type: number
+                example: 10
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    example: "Request was throttled. Expected available in 10 seconds."

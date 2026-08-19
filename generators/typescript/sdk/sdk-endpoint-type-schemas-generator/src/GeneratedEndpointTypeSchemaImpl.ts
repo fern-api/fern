@@ -1,0 +1,38 @@
+import { FernIr } from "@fern-fern/ir-sdk";
+import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
+import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
+import { FileContext } from "@fern-typescript/contexts";
+import { ModuleDeclaration, ts } from "ts-morph";
+
+import { AbstractGeneratedEndpointTypeSchema } from "./AbstractGeneratedEndpointTypeSchema.js";
+
+export declare namespace GeneratedEndpointTypeSchemaImpl {
+    export interface Init extends AbstractGeneratedEndpointTypeSchema.Init {
+        type: FernIr.TypeReference;
+    }
+}
+
+export class GeneratedEndpointTypeSchemaImpl extends AbstractGeneratedEndpointTypeSchema {
+    private type: FernIr.TypeReference;
+
+    constructor({ type, ...superInit }: GeneratedEndpointTypeSchemaImpl.Init) {
+        super(superInit);
+        this.type = type;
+    }
+
+    protected generateRawTypeDeclaration(context: FileContext, module: ModuleDeclaration): void {
+        module.addTypeAlias({
+            name: AbstractGeneratedSchema.RAW_TYPE_NAME,
+            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.type).typeNode),
+            isExported: true
+        });
+    }
+
+    protected getReferenceToParsedShape(context: FileContext): ts.TypeNode {
+        return context.type.getReferenceToType(this.type).typeNode;
+    }
+
+    protected buildSchema(context: FileContext): Zurg.Schema {
+        return context.typeSchema.getSchemaOfTypeReference(this.type);
+    }
+}

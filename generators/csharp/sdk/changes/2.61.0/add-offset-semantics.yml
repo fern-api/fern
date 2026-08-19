@@ -1,0 +1,3 @@
+- summary: |
+    Add `offset-semantics` config option. When set to `"page-index"`, offset pagination increments by 1 each page instead of by the number of items returned (`"item-index"`, the default).
+  type: feat

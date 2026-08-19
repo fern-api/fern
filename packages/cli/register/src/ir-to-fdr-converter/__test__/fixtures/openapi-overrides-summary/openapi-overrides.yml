@@ -1,0 +1,11 @@
+# Testing summary field in OpenAPI overrides
+paths:
+  /authorize:
+    post:
+      summary: Request token (override)
+  /contacts/{id}:
+    get:
+      summary: Retrieve contact (override only)
+  /payments:
+    post:
+      summary: Create payment (override)

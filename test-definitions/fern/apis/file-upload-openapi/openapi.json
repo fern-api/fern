@@ -1,0 +1,71 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "api",
+    "version": ""
+  },
+  "paths": {
+    "/upload-file": {
+      "post": {
+        "description": "Upload a file to the database",
+        "operationId": "uploadFile",
+        "tags": ["FileUploadExample"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileId"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadFileRequest"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FileId": {
+        "title": "FileId",
+        "type": "string",
+        "description": "The unique identifier for a File in the database"
+      },
+      "UploadFileRequest": {
+        "title": "UploadFileRequest",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "file": {
+            "description": "The file to upload.",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "binary"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File"
+          }
+        },
+        "required": ["name"]
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "mode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ToolMode"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Force the model to perform in a given mode."
+    },
+    "function_name": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Force the model to call a particular function."
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ToolMode": {
+      "type": "string",
+      "enum": [
+        "TOOL_MODE_INVALID",
+        "TOOL_MODE_AUTO",
+        "TOOL_MODE_NONE",
+        "TOOL_MODE_REQUIRED"
+      ]
+    }
+  }
+}

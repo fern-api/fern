@@ -1,0 +1,196 @@
+---
+title: Vector Search Over Chat History
+subtitle: >-
+  Zep helps developers search through long-term memory stores to find relevant
+  historical conversations efficiently. With automated embedding and advanced
+  indexing, Zep offers robust search capabilities that are straightforward and
+  effective.
+slug: chat-history-memory/search
+---
+
+
+## Searching for Messages or Summaries
+
+Zep enables vector similarity searches for Messages or Summaries stored within its system. This feature lets you populate prompts with past conversations that are contextually similar to a specific query, organizing the results by a similarity Score.
+
+### Choosing Between Summaries and Messages
+
+Zep supports searches for both Messages and Summaries. Since individual messages might miss some conversational context, Summaries are often the preferred choice for executing searches. For more on this, check out the section on [message limitations](#limitations-when-searching-over-messages-or-short-document-chunks).
+
+### MMR Reranking for Summaries
+
+Summaries can sometimes overlap in information, especially when the Message Window is set low. In such cases, employing [Maximum Marginal Relevance (MMR)](/working-with-search#how-zeps-mmr-re-ranking-works) to rerank search results can be beneficial. Zep includes built-in, hardware-accelerated support for MMR, making it simple and easy to use.
+
+<Note>
+**Constructing Search Queries**
+
+Zep's Collection and Memory search support semantic search queries, JSONPath-based metadata filters, and a combination
+of both.
+
+Memory search also supports querying by message creation date.
+
+Read more about [constructing search queries](/working-with-search#maximal-marginal-relevance-re-ranking).
+
+</Note>
+
+<Tabs group="search">
+
+<Tab title="Python" group-key="python">
+
+```python
+from zep_python import (
+    MemorySearchPayload,
+    ZepClient,
+)
+
+# This uniquely identifies the user's session
+session_id = "my_session_id"
+
+# Initialize the Zep client before running this code
+search_payload = MemorySearchPayload(
+    text="Is Lauren Olamina a character in a book?",
+    search_scope="summary", # This could be messages or summary
+    search_type="mmr", # remove this if you'd prefer not to rerank results
+    mmr_lambda=0.5, # tune diversity vs relevance
+)
+
+search_results = await client.memory.asearch_memory(session_id, search_payload)
+
+for search_result in search_results:
+    # Uncomment for message search
+    # print(search_result.messsage.dict())
+    print(search_result.summary.dict())
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+import { MemorySearchPayload, ZepClient } from "@getzep/zep-js";
+
+// This uniquely identifies the user's session
+const session_id: string = "my_session_id";
+
+// Initialize the Zep client before running this code
+const search_payload: MemorySearchPayload = {
+  text: "Is Lauren Olamina a character in a book?",
+  search_scope: "summary", // This could be messages or summary
+  search_type: "mmr", // Remove this if you'd prefer not to rerank results
+  mmr_lambda: 0.5, // Tune diversity vs relevance
+};
+
+const search_results = await client.memory.searchMemory(session_id, search_payload);
+
+search_results.forEach((search_result) => {
+  // Uncomment for message search
+  // console.log(search_result.message);
+  console.log(search_result.summary);
+});
+```
+
+</Tab>
+</Tabs>
+
+```json
+{
+  "summary": {
+    "uuid": "b47b83da-16ae-49c8-bacb-f7d049f9df99",
+    "created_at": "2023-11-02T18:22:10.103867Z",
+    "content": "The human asks the AI to explain the book Parable of the Sower by Octavia Butler. The AI responds by explaining that Parable of the Sower is a science fiction novel by Octavia Butler. The book follows the story of Lauren Olamina, a young woman living in a dystopian future where society has collapsed due to environmental disasters, poverty, and violence.",
+    "token_count": 66
+  },
+  "metadata": null,
+  "dist": 0.8440576791763306
+}
+```
+
+## Hybrid Search for Chat History with Metadata Filters
+
+Besides the vector similarity search for Messages and Summaries stored in Zep, you can also use metadata filters for your searches. You also have the option to conduct searches based purely on metadata.
+
+<Tabs group="search">
+
+<Tab title="Python" group-key="python">
+
+```python
+zep_client.memory.search_memory(
+    session_id=session_id,
+    search_payload=MemorySearchPayload(
+        query="I enjoy reading science fiction.",
+        metadata={
+            "where": {"jsonpath": '$[*] ? (@.foo == "bar")'},
+        },
+    ),
+)
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+await client.memory.searchMemory(session_id, {
+  query: "I enjoy reading science fiction.",
+  metadata: {
+    where: { jsonpath: '$[*] ? (@.foo == "bar")' },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+```json
+{
+  "dist": 0.7170433826192629,
+  "message": {
+    "content": "I've read many books written by Octavia Butler.",
+    "created_at": "2023-06-03T22:00:43.034056Z",
+    "metadata": {
+      "foo": "bar",
+      "system": {
+        "entities": [
+          {
+            "Label": "PERSON",
+            "Matches": [
+              {
+                "End": 46,
+                "Start": 32,
+                "Text": "Octavia Butler"
+              }
+            ],
+            "Name": "Octavia Butler"
+          }
+        ]
+      }
+    },
+    "role": "human",
+    "token_count": 13,
+    "uuid": "8f3a06dd-0625-41da-a2af-b549f2056b3f"
+  },
+  "metadata": null,
+  "summary": null
+}
+```
+
+### Search Ranking and Limits
+
+#### Vector Indexes
+
+Zep automatically creates HNSW (Hierarchical Navigable Small World) indexes for all messages, summaries, and documents. This means you get speedy and relevant search results right out of the box, without the hassle of manually setting up or integrating a vector store and building indexes. Zep uses an optimized distance function similar to cosine distance for search ranking.
+
+#### Embedding Models
+
+Zep uses the `BAAI/bge-large-en` model for text embeddings, known for its high performance and optimization for semantic search. Keep in mind, this model has a 512 token maximum sequence length, which is important when deciding how to chunk your documents.
+
+#### Limitations When Searching Over Messages or Short Document Chunks
+
+Zep can return all messages from a search up to a certain row limit. This limit can be adjusted by passing a `limit` query string argument to the search API. Due to the sparsity issue we'll touch on below, we recommend sticking to the top 2-3 messages in your prompts. Or, you could analyze your search results and use a distance threshold to filter out messages that aren't relevant.
+
+<Info>
+**Handling Short Texts in Embeddings**
+
+Searching through chat histories can be tricky. Chat messages are often brief and might not carry much "information". When these short texts are turned into high-dimensional embedding vectors, the result can be very sparse vectors.
+
+This sparsity means a lot of these vectors end up being close to each other in the vector space, which can lead to a higher chance of getting false positives in your search results for relevant messages. As a result, we recommend searching over Summaries, which include more information than Messages.
+
+</Info>

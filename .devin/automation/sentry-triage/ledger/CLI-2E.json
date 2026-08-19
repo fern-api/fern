@@ -1,0 +1,9 @@
+{
+  "title": "YAML parse in OpenAPI load",
+  "disposition": "shipped",
+  "rationale": "YAMLException from user spec misclassified as InternalError.",
+  "fixSummary": "Wrap yaml.load in loadOpenAPI; CliError(ParseError) with file/line/column.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-04-21",
+  "problemSignature": "Invalid YAML while loading a user OpenAPI spec (yaml.load path); parser exception treated as InternalError."
+}

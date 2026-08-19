@@ -1,0 +1,32 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`convertColorsConfiguration > should support accentPrimaryDeprecated 1`] = `
+{
+  "accent1": undefined,
+  "accent10": undefined,
+  "accent11": undefined,
+  "accent12": undefined,
+  "accent2": undefined,
+  "accent3": undefined,
+  "accent4": undefined,
+  "accent5": undefined,
+  "accent6": undefined,
+  "accent7": undefined,
+  "accent8": undefined,
+  "accent9": undefined,
+  "accentPrimary": {
+    "a": 1,
+    "b": 238,
+    "g": 101,
+    "r": 93,
+  },
+  "background": undefined,
+  "backgroundImage": undefined,
+  "border": undefined,
+  "cardBackground": undefined,
+  "headerBackground": undefined,
+  "logo": undefined,
+  "sidebarBackground": undefined,
+  "type": "light",
+}
+`;

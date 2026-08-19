@@ -1,0 +1,191 @@
+openapi: 3.0.3
+info:
+  title: Default Integer Format Test API
+  description: Test API for validating defaultIntegerFormat feature with int64 default
+  version: 1.0.0
+paths:
+  /integers:
+    post:
+      summary: Create integer resource
+      description: Test unformatted integers in request body using int64 default
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IntegerRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IntegerResponse"
+    get:
+      summary: Get integers with parameters
+      description: Test unformatted integers in query/path parameters using int64 default
+      parameters:
+        - name: unformattedParam
+          in: query
+          required: false
+          description: Query parameter with unformatted integer (should use int64 default)
+          schema:
+            type: integer
+        - name: explicitInt32Param
+          in: query
+          required: false
+          description: Query parameter with explicit int32 format (should override default)
+          schema:
+            type: integer
+            format: int32
+        - name: explicitInt64Param
+          in: query
+          required: false
+          description: Query parameter with explicit int64 format (same as default)
+          schema:
+            type: integer
+            format: int64
+        - name: explicitUint32Param
+          in: query
+          required: false
+          description: Query parameter with explicit uint32 format (should override default)
+          schema:
+            type: integer
+            format: uint32
+        - name: explicitUint64Param
+          in: query
+          required: false
+          description: Query parameter with explicit uint64 format (should override default)
+          schema:
+            type: integer
+            format: uint64
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IntegerResponse"
+  /integers/{integerId}:
+    get:
+      summary: Get integer by ID
+      description: Test unformatted integer in path parameter using int64 default
+      parameters:
+        - name: integerId
+          in: path
+          required: true
+          description: Path parameter with unformatted integer (should use int64 default)
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IntegerResponse"
+components:
+  schemas:
+    IntegerRequest:
+      type: object
+      description: Request schema testing various integer scenarios
+      properties:
+        unformattedInteger:
+          type: integer
+          description: Unformatted integer property (should use int64 default)
+          example: 9223372036854775807
+        explicitInt32:
+          type: integer
+          format: int32
+          description: Explicit int32 format (should override default)
+          example: 2147483647
+        explicitInt64:
+          type: integer
+          format: int64
+          description: Explicit int64 format (same as default)
+          example: 9223372036854775807
+        explicitUint32:
+          type: integer
+          format: uint32
+          description: Explicit uint32 format (should override default)
+          example: 4294967295
+        explicitUint64:
+          type: integer
+          format: uint64
+          description: Explicit uint64 format (should override default)
+          example: 18446744073709551615
+        integerArray:
+          type: array
+          description: Array of unformatted integers (should use int64 default)
+          items:
+            type: integer
+          example: [1, 2, 3, 9223372036854775807]
+        mixedFormatArray:
+          type: array
+          description: Array with mixed explicit formats
+          items:
+            anyOf:
+              - type: integer
+                format: int32
+              - type: integer
+                format: int64
+          example: [2147483647, 9223372036854775807]
+        nestedObject:
+          type: object
+          description: Nested object with integer properties
+          properties:
+            nestedUnformatted:
+              type: integer
+              description: Nested unformatted integer (should use int64 default)
+              example: 9223372036854775807
+            nestedExplicit:
+              type: integer
+              format: int32
+              description: Nested explicit format (should override default)
+              example: 2147483647
+        optionalInteger:
+          type: integer
+          description: Optional unformatted integer (should use int64 default)
+          example: 9223372036854775807
+          nullable: true
+      required:
+        - unformattedInteger
+        - explicitInt32
+        - explicitInt64
+        - integerArray
+    IntegerResponse:
+      type: object
+      description: Response schema testing integer scenarios
+      properties:
+        responseInteger:
+          type: integer
+          description: Response unformatted integer (should use int64 default)
+          example: 9223372036854775807
+        metadata:
+          type: object
+          description: Metadata with integer properties
+          properties:
+            count:
+              type: integer
+              description: Count as unformatted integer (should use int64 default)
+              example: 1000000000000
+            maxValue:
+              type: integer
+              format: int64
+              description: Max value as explicit int64 (same as default)
+              example: 9223372036854775807
+            minValue:
+              type: integer
+              format: int32
+              description: Min value as explicit int32 (should override default)
+              example: -2147483648
+        results:
+          type: array
+          description: Array of unformatted integer results (should use int64 default)
+          items:
+            type: integer
+          example: [9223372036854775807, 1000000000000, 500000000000]
+      required:
+        - responseInteger
+        - metadata
+        - results

@@ -1,0 +1,5 @@
+- summary: |
+    Bump @fern-api/generator-cli to 0.9.30, which includes @fern-api/replay
+    0.15.2 with a fix for customer commits on merged regen branches surviving
+    replay detection.
+  type: chore

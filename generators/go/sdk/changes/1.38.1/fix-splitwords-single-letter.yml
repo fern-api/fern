@@ -1,0 +1,6 @@
+- summary: |
+    Fix casing bug where a single-letter uppercase word between a lowercase word and a
+    PascalCase word (e.g. the `I` in `WhoAmIResponseData`) was merged into the following
+    word, producing `WhoAmIresponseData`. `splitWords` now matches lodash's `words()`
+    behaviour and tokenizes this as `Who|Am|I|Response|Data`.
+  type: fix

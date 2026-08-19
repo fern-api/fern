@@ -1,0 +1,6 @@
+imports:
+  a: subfolder-a/a.yml
+  b: ./subfolder-b/b.yml
+  missing: missing/missing.yml
+types:
+  MyType: string

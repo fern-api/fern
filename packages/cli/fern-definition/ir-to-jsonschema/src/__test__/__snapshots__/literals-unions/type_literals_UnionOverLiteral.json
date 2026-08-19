@@ -1,0 +1,17 @@
+{
+  "anyOf": [
+    {
+      "type": "string"
+    },
+    {
+      "$ref": "#/definitions/literals.LiteralString"
+    }
+  ],
+  "description": "An undiscriminated union over a literal.",
+  "definitions": {
+    "literals.LiteralString": {
+      "const": "literally",
+      "description": "A string literal."
+    }
+  }
+}

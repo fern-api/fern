@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/plants",
+                "method": "GET",
+                "identifier_override": "endpoint_.listPlants"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/openapi-subtitle/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.ListPlants(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/plants/{plantId}",
+                "method": "GET",
+                "identifier_override": "endpoint_.getPlant"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/openapi-subtitle/fern\"\n\tfernclient \"github.com/openapi-subtitle/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.GetPlant(\n\tcontext.TODO(),\n\t\u0026fern.GetPlantRequest{\n\t\tPlantID: \"plantId\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-csharp-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "output-path": {
+      "library": "lib/SeedApi",
+      "test": "test/SeedApi.Test",
+      "solution": ".",
+      "other": "lib/SeedApi"
+    }
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github",
+  "sdkVersion": "0.0.1"
+}

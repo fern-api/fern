@@ -1,0 +1,34 @@
+types:
+  WithDocs:
+    properties:
+      docs: string
+
+  Movie:
+    properties:
+      id: string
+
+  Response:
+    extends:
+      - WithDocs
+    properties:
+      data: Movie
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    getMovie:
+      method: POST
+      path: /movie
+      request: string
+      response:
+        type: Response
+        property: data
+
+    getMovieDocs:
+      method: POST
+      path: /movie
+      request: string
+      response:
+        type: Response
+        property: docs

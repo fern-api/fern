@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "TEST"
+  ],
+  "description": "Keep in sync with SubmissionType.",
+  "definitions": {}
+}

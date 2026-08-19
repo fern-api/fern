@@ -1,0 +1,30 @@
+openapi: 3.0.0
+info:
+  title: API 2
+  version: 1.0.0
+paths:
+  /posts:
+    get:
+      operationId: getPosts
+      summary: Get posts
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Post"
+components:
+  schemas:
+    Post:
+      type: object
+      required:
+        - id
+        - title
+      properties:
+        id:
+          type: integer
+        title:
+          type: string

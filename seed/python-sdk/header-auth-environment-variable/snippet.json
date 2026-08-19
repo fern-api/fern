@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/apiKey",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getWithBearerToken"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedHeaderTokenEnvironmentVariable\n\nclient = SeedHeaderTokenEnvironmentVariable(\n    header_token_auth=\"YOUR_HEADER_TOKEN_AUTH\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_with_bearer_token()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedHeaderTokenEnvironmentVariable\n\nclient = AsyncSeedHeaderTokenEnvironmentVariable(\n    header_token_auth=\"YOUR_HEADER_TOKEN_AUTH\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.get_with_bearer_token()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

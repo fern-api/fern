@@ -1,0 +1,66 @@
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { Header } from "@fern-api/openapi-ir";
+import { RelativeFilePath } from "@fern-api/path-utils";
+import { camelCase } from "lodash-es";
+import { buildTypeReference } from "./buildTypeReference.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { convertAvailability } from "./utils/convertAvailability.js";
+import { getDefaultFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference.js";
+
+export function buildHeader({
+    header,
+    context,
+    fileContainingReference,
+    namespace
+}: {
+    header: Header;
+    context: OpenApiIrConverterContext;
+    fileContainingReference: RelativeFilePath;
+    namespace: string | undefined;
+}): RawSchemas.HttpHeaderSchema {
+    const typeReference = buildTypeReference({
+        schema: header.schema,
+        context,
+        fileContainingReference,
+        namespace,
+        declarationDepth: 0
+    });
+    const headerType = getTypeFromTypeReference(typeReference);
+    const headerDefault = getDefaultFromTypeReference(typeReference);
+    const headerWithoutXPrefix = header.name.replace(/^x-|^X-/, "");
+    const headerVariableName =
+        header.parameterNameOverride != null ? header.parameterNameOverride : camelCase(headerWithoutXPrefix);
+    if (
+        header.description == null &&
+        header.name === headerVariableName &&
+        header.env == null &&
+        header.availability == null &&
+        header.clientDefault == null &&
+        headerDefault == null
+    ) {
+        return headerType;
+    }
+    const headerSchema: RawSchemas.HttpHeaderSchema = {
+        type: headerType
+    };
+    if (headerVariableName !== header.name) {
+        headerSchema.name = headerVariableName;
+    }
+    if (header.description != null) {
+        headerSchema.docs = header.description;
+    }
+    if (header.env != null) {
+        headerSchema.env = header.env;
+    }
+    if (header.availability != null) {
+        headerSchema.availability = convertAvailability(header.availability);
+    }
+    if (header.clientDefault != null) {
+        headerSchema["client-default"] = header.clientDefault;
+    }
+    if (headerDefault != null) {
+        headerSchema.default = headerDefault;
+    }
+
+    return headerSchema;
+}

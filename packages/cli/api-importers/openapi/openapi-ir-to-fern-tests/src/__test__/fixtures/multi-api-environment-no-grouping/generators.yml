@@ -1,0 +1,27 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: latest
+        output:
+          location: local-file-system
+          path: ../../../../../../seed/sdk/java-sdk/multi-api-environment-no-grouping
+      - name: fernapi/fern-java-model
+        version: latest
+        output:
+          location: local-file-system
+          path: ../../../../../../seed/model/java-model/multi-api-environment-no-grouping
+      - name: fernapi/fern-java-spring
+        version: latest
+        output:
+          location: local-file-system
+          path: ../../../../../../seed/server-spring/java-spring/multi-api-environment-no-grouping
+api:
+  specs:
+    - openapi: openapi/fintech-api.yml
+      settings:
+        group-multi-api-environments: false
+    - openapi: openapi/payments-api.yml
+      settings:
+        group-multi-api-environments: false

@@ -1,0 +1,3 @@
+- summary: |
+    Fix localized docs builds so translated OpenAPI specs are used for API reference content and navigation titles.
+  type: fix

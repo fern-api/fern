@@ -1,0 +1,565 @@
+{
+  "title": "Security Schemes Test",
+  "description": "Test various security inheritance scenarios",
+  "servers": [
+    {
+      "url": "https://api.example.com/v1"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Search plants (inherits global ApiKeyAuth)",
+      "audiences": [],
+      "operationId": "searchPlants",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "name": "query",
+          "schema": {
+            "generatedName": "SearchPlantsRequestQuery",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "SearchPlantsRequestQuery",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "SearchPlantsRequest",
+      "response": {
+        "description": "List of plants",
+        "schema": {
+          "value": {
+            "generatedName": "SearchPlantsResponseItem",
+            "schema": "Plant",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "generatedName": "SearchPlantsResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": true,
+      "security": [],
+      "method": "GET",
+      "path": "/plants/search",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "query",
+              "value": {
+                "value": {
+                  "value": "query",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "name": {
+                      "value": {
+                        "value": "name",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "status": {
+                      "value": "available",
+                      "type": "enum"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get plant by ID (requires OAuth)",
+      "audiences": [],
+      "operationId": "getPlantById",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "plantId",
+          "schema": {
+            "schema": {
+              "type": "int"
+            },
+            "generatedName": "GetPlantByIdRequestPlantId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetPlantByIdRequest",
+      "response": {
+        "description": "Plant details",
+        "schema": {
+          "generatedName": "GetPlantByIdResponse",
+          "schema": "Plant",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": true,
+      "security": [
+        {
+          "OAuth": [
+            "read:plants"
+          ]
+        }
+      ],
+      "method": "GET",
+      "path": "/plants/{plantId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "plantId",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "status": {
+                  "value": "available",
+                  "type": "enum"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Add a new plant (OAuth OR OrgApiKeyAuth)",
+      "audiences": [],
+      "operationId": "addPlant",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "AddPlantRequest",
+      "request": {
+        "schema": {
+          "generatedName": "AddPlantRequest",
+          "schema": "Plant",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Plant created",
+        "schema": {
+          "generatedName": "AddPlantResponse",
+          "schema": "Plant",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 201,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": true,
+      "security": [
+        {
+          "OAuth": [
+            "write:plants"
+          ]
+        },
+        {
+          "OrgApiKeyAuth": []
+        }
+      ],
+      "method": "POST",
+      "path": "/plants",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "status": {
+                  "value": "available",
+                  "type": "enum"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get public plants (no auth required)",
+      "audiences": [],
+      "operationId": "getPublicPlants",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetPublicPlantsRequest",
+      "response": {
+        "description": "List of public plants",
+        "schema": {
+          "value": {
+            "generatedName": "GetPublicPlantsResponseItem",
+            "schema": "Plant",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "generatedName": "GetPublicPlantsResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/plants/public",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "name": {
+                      "value": {
+                        "value": "name",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "status": {
+                      "value": "available",
+                      "type": "enum"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Plant": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "plantId",
+            "key": "id",
+            "schema": {
+              "generatedName": "plantId",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "PlantId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "plantName",
+            "key": "name",
+            "schema": {
+              "generatedName": "plantName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PlantName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "plantStatus",
+            "key": "status",
+            "schema": {
+              "generatedName": "plantStatus",
+              "value": {
+                "generatedName": "PlantStatus",
+                "values": [
+                  {
+                    "generatedName": "available",
+                    "value": "available",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "pending",
+                    "value": "pending",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "sold",
+                    "value": "sold",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Plant",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {
+    "OAuth": {
+      "scopesEnum": {
+        "generatedName": "OauthScope",
+        "values": [
+          {
+            "generatedName": "ReadPlants",
+            "value": "read:plants",
+            "description": "Read access to plant information",
+            "casing": {}
+          },
+          {
+            "generatedName": "WritePlants",
+            "value": "write:plants",
+            "description": "Write access to plant operations",
+            "casing": {}
+          }
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "type": "oauth"
+    },
+    "ApiKeyAuth": {
+      "headerName": "x-api-key",
+      "type": "header"
+    },
+    "OrgApiKeyAuth": {
+      "headerName": "x-org-api-key",
+      "type": "header"
+    }
+  },
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

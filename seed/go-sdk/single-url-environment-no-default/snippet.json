@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/dummy",
+                "method": "GET",
+                "identifier_override": "endpoint_dummy.getDummy"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/single-url-environment-no-default/fern\"\n\tfernclient \"github.com/single-url-environment-no-default/fern/client\"\n\toption \"github.com/single-url-environment-no-default/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.Dummy.GetDummy(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

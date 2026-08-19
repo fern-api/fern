@@ -1,0 +1,1 @@
+/// This is a very long line of documentation that should be wrapped properly to ensure it doesn't cause any syntax errors in the generated Rust code when the line exceeds reasonable length limits and needs to be broken into multiple comment lines for better readability

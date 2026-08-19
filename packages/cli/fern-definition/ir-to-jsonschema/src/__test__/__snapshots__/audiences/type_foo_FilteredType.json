@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "public_property": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "private_property": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "private_property"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

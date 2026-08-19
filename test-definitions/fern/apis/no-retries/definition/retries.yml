@@ -1,0 +1,16 @@
+types:
+  User:
+    properties:
+      id: string
+      name: string
+
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    getUsers:
+      path: ""
+      method: GET
+      response: list<User>
+      retries:
+        disabled: true

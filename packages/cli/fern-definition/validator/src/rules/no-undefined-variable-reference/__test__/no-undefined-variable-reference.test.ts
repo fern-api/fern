@@ -1,0 +1,50 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ValidationViolation } from "../../../ValidationViolation.js";
+import { NoUndefinedVariableReferenceRule } from "../no-undefined-variable-reference.js";
+
+describe("no-undefined-variable-reference", () => {
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoUndefinedVariableReferenceRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("simple")
+            )
+        });
+
+        const expectedViolations: ValidationViolation[] = [
+            {
+                message: "Variable $var-missing is not defined.",
+                nodePath: ["path-parameters", "baz"],
+                relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "no-undefined-variable-reference",
+                severity: "fatal"
+            },
+            {
+                message: "Variable reference must start with $",
+                nodePath: ["path-parameters", "biz", "variable"],
+                relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "no-undefined-variable-reference",
+                severity: "fatal"
+            },
+            {
+                message: "Variable $var-missing is not defined.",
+                nodePath: ["service", "endpoints", "test", "path-parameters", "baz"],
+                relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "no-undefined-variable-reference",
+                severity: "fatal"
+            },
+            {
+                message: "Variable reference must start with $",
+                nodePath: ["service", "endpoints", "test", "path-parameters", "biz", "variable"],
+                relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "no-undefined-variable-reference",
+                severity: "fatal"
+            }
+        ];
+
+        expect(violations).toEqual(expectedViolations);
+    });
+});

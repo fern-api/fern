@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fixed inline literal query parameters so they are typed correctly in the
+    generated client method instead of falling back to the placeholder
+    `JSONValue`. A boolean literal now maps to `Bool` and a string literal maps
+    to a dedicated literal enum nested on the owning client. Previously the
+    parameter was typed as `JSONValue` while the generated snippets and wire
+    tests emitted the literal enum case, causing a type mismatch that failed to
+    compile.
+  type: fix

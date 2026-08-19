@@ -1,0 +1,9 @@
+{
+  "title": "Replay resolve failed no-lockfile",
+  "disposition": "shipped",
+  "rationale": "Replay resolve no-lockfile is user/worktree state, not an internal CLI defect.",
+  "fixSummary": "Map fallback replay resolve failures to UserError in both CLI implementations.",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "Replay resolve failed with no-lockfile or other user/worktree state and was explicitly reported as InternalError."
+}

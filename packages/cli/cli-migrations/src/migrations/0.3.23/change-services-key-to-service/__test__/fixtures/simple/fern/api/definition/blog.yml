@@ -1,0 +1,10 @@
+imports: {}
+
+# services!
+service:
+  base-path: /
+  auth: false
+  endpoints: {}
+
+types:
+  MyAlias: string

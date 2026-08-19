@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "filesByLanguage": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/v2.problem.Files"
+      }
+    }
+  },
+  "required": [
+    "filesByLanguage"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "v2.problem.FileInfoV2": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        },
+        "editable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "filename",
+        "directory",
+        "contents",
+        "editable"
+      ],
+      "additionalProperties": false
+    },
+    "v2.problem.Files": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v2.problem.FileInfoV2"
+          }
+        }
+      },
+      "required": [
+        "files"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

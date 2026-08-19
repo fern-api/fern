@@ -1,0 +1,3 @@
+rootProject.name = 'enum'
+
+include 'sample-app'

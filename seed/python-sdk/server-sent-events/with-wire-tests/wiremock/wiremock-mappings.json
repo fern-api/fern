@@ -1,0 +1,59 @@
+{
+  "mappings": [
+    {
+      "id": "da00c5d3-8997-4a3a-ac5a-78907c04708e",
+      "name": "stream - Stream completions",
+      "request": {
+        "urlPathTemplate": "/stream",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"delta\":\"hello\",\"tokens\":1}\n\nevent: completion\ndata: {\"delta\":\" world\",\"tokens\":2}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "da00c5d3-8997-4a3a-ac5a-78907c04708e",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "392a038a-4138-4153-a873-41da36997679",
+      "name": "streamWithoutTerminator - Stream without terminator",
+      "request": {
+        "urlPathTemplate": "/stream-no-terminator",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"delta\":\"delta\",\"tokens\":1}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "392a038a-4138-4153-a873-41da36997679",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 2
+  }
+}

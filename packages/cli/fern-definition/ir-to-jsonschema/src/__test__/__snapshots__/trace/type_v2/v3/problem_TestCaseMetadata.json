@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/definitions/v2.v3.problem.TestCaseId"
+    },
+    "name": {
+      "type": "string"
+    },
+    "hidden": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "hidden"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "v2.v3.problem.TestCaseId": {
+      "type": "string"
+    }
+  }
+}

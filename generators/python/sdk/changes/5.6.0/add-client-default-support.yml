@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support `x-fern-default` as fallback value for parameters in generated Python SDKs.
+    When a header, query parameter, or path parameter has a `clientDefault` value in the IR,
+    the generated Python function signature makes that parameter optional with the default
+    value automatically applied. This enables patterns like optional API version headers
+    that fall back to a pinned version.
+  type: feat

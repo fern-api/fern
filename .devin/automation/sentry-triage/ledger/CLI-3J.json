@@ -1,0 +1,9 @@
+{
+  "title": "Windows temp OpenAPI filepath is not relative",
+  "disposition": "keep_sentry",
+  "rationale": "Absolute/Windows path reached a relative-path invariant; needs path normalization or boundary validation fix.",
+  "fixSummary": "—",
+  "prOrIssue": "Keep in Sentry until product fix",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "OpenAPI or workspace path conversion received an absolute path where a relative path was required; path boundary bug until fixed."
+}

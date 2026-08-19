@@ -1,0 +1,63 @@
+openapi: 3.1.0
+info:
+  title: Sample API
+  version: 1.0.0
+paths:
+  /v1/categories:
+    get:
+      summary: List categories (deprecated)
+      operationId: list-categories-deprecated
+      x-fern-ignore: true
+      responses:
+        "200":
+          description: Successful retrieval
+          content:
+            application/json:
+              schema:
+                type: string
+  /v1/categories/{id}:
+    get:
+      summary: Retrieve category (deprecated)
+      operationId: retrieve-category-deprecated
+      x-fern-ignore: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful retrieval
+          content:
+            application/json:
+              schema:
+                type: string
+  /v1/connect/categories:
+    get:
+      summary: List categories
+      operationId: list-categories
+      responses:
+        "200":
+          description: Successful retrieval
+          content:
+            application/json:
+              schema:
+                type: string
+  /v1/connect/categories/{id}:
+    get:
+      summary: Retrieve category
+      operationId: retrieve-category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful retrieval
+          content:
+            application/json:
+              schema:
+                type: string

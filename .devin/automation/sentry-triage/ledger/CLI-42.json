@@ -1,0 +1,9 @@
+{
+  "title": "Generic Error (minified, no actionable signature)",
+  "disposition": "ignored",
+  "rationale": "Single event with generic Error and no useful stack trace or context after minification; no actionable product signature to fix or suppress safely.",
+  "fixSummary": "—",
+  "prOrIssue": "Ignored after event-level review",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "Minified generic Error with no actionable stack trace or context."
+}

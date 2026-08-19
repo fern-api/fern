@@ -1,0 +1,128 @@
+openapi: 3.1.0
+info:
+  title: Test x-fern-global-parameters extension
+  version: 0.0.0
+paths:
+  /v1/products/{regionId}/search:
+    post:
+      operationId: products_search
+      tags:
+        - Products
+      parameters:
+        - name: regionId
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: regionId
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchProductsResponse'
+              examples:
+                Example1:
+                  value:
+                    results:
+                      - id: id
+                        name: name
+                        price: 1.1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type:
+                    - string
+                    - 'null'
+                config:
+                  anyOf:
+                    - $ref: '#/components/schemas/SearchProductsRequestConfig'
+                    - type: 'null'
+            examples:
+              Example1:
+                value: {}
+  /v1/products/{regionId}/{productId}:
+    get:
+      operationId: products_get
+      tags:
+        - Products
+      parameters:
+        - name: regionId
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: regionId
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: productId
+      responses:
+        '200':
+          description: Product details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    price: 1.1
+components:
+  schemas:
+    SearchProductsRequestConfig:
+      title: SearchProductsRequestConfig
+      type: object
+      properties:
+        currency:
+          type:
+            - string
+            - 'null'
+        limit:
+          type:
+            - integer
+            - 'null'
+    SearchProductsResponse:
+      title: SearchProductsResponse
+      type: object
+      properties:
+        results:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/Product'
+    Product:
+      title: Product
+      type: object
+      properties:
+        id:
+          type:
+            - string
+            - 'null'
+        name:
+          type:
+            - string
+            - 'null'
+        price:
+          type:
+            - number
+            - 'null'
+          format: double
+  securitySchemes: {}

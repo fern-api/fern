@@ -1,0 +1,19 @@
+import { GeneratorError } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
+
+export function getContentTypeFromRequestBody(endpoint: HttpEndpoint): string | undefined {
+    if (!endpoint.requestBody) {
+        return undefined;
+    }
+    return endpoint.requestBody._visit<string | undefined>({
+        inlinedRequestBody: (body) => body.contentType,
+        reference: (body) => body.contentType,
+        fileUpload: (_) => undefined,
+        bytes: (body) => body.contentType,
+        _other: (body) => {
+            throw GeneratorError.internalError(`Unexpected request body type: ${body.type}`);
+        }
+    });
+}

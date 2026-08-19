@@ -1,0 +1,5 @@
+- summary: |
+    Always emit a build+test CI workflow (check, compile, test) for GitHub
+    outputs, even when npm publishing is not configured. Previously, no
+    ci.yml was emitted unless npmPublishInfo was present.
+  type: feat

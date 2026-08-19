@@ -1,0 +1,3 @@
+rootProject.name = 'java-oauth-token-required-enum-grant-type'
+
+include 'sample-app'

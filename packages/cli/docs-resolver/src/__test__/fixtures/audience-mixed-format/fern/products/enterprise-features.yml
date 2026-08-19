@@ -1,0 +1,23 @@
+navigation:
+  - page: Enterprise Overview
+    path: ../pages/enterprise.mdx
+    # Test array format
+    audiences:
+      - enterprise
+      - admin
+  - api: Enterprise API
+    # Test array format
+    audiences:
+      - enterprise
+      - internal
+      - admin
+    layout:
+      - section:
+          title: Advanced Management
+          # Test array format at section level
+          audiences:
+            - enterprise
+            - admin
+          contents:
+            - GET /enterprise/organizations
+            - POST /enterprise/provisioning

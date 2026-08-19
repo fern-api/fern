@@ -1,0 +1,7 @@
+- summary: |
+    Add consumer-side support for the `global-theme` key in docs.yml. When a docs site
+    declares `global-theme: <name>`, the CLI fetches the named theme from Fern's cloud
+    registry and merges it into the docs configuration before building (theme values win
+    for branding fields). Works with `fern generate --docs`, `fern generate --docs --preview`,
+    and `fern docs dev` (dev mode requires FERN_TOKEN to be set).
+  type: feat

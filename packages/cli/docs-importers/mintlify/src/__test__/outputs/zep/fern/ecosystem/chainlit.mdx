@@ -1,0 +1,148 @@
+---
+title: Chainlit
+subtitle: >-
+  Chainlit is an open-source async Python framework which allows developers to
+  build scalable Conversational AI or agentic applications.
+slug: ecosystem/chainlit
+---
+
+
+<Note>
+  You can follow Chainlit installation steps on their
+  <a href="https://docs.chainlit.io/get-started/installation">Getting Started Page</a>
+</Note>
+
+By integrating Zep into your Chainlit LLM application, you elevate your conversational agent with powerful features like long-term memory and context fusion.
+
+In this guide, we'll walk you through the steps to build a simple Question and Answer agent using Chainlit, Open AI and Zep.
+
+### Steps to Use Zep Cloud with ChainLit
+
+1. **Setup Zep Client**: Initialize the Zep Client within your ChainLit application using your [Zep Project API key](https://help.getzep.com/projects).
+
+```python
+# Import necessary modules from Zep Python SDK and ChainLit.
+from zep_python import ZepClient
+from zep_python.memory import Memory, Session
+from zep_python.message import Message
+from zep_python.user import CreateUserRequest
+import chainlit as cl
+import uuid
+import os
+from openai import AsyncOpenAI
+
+# Retrieve API keys from environment variables.
+ZEP_API_KEY = os.environ.get("ZEP_API_KEY")
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+
+# Initialize clients for OpenAI GPT-4 and Zep with respective API keys.
+openai_client = AsyncOpenAI(api_key=OPENAI_API_KEY)
+zep = ZepClient(api_key=ZEP_API_KEY)
+```
+
+2. **User and Session Management**: Leverage the `CreateUserRequest` and [`Session`](https://help.getzep.com/chat-history-memory/sessions) models to manage your application's users and sessions effectively.
+
+```python
+@cl.on_chat_start
+async def start_chat():
+    """Handles the event triggered at the start of a new chat through ChainLit."""
+    # Generate unique identifiers for the user and session.
+    user_id = str(uuid.uuid4())
+    session_id = str(uuid.uuid4())
+
+    # Save user and session identifiers in the current session context.
+    cl.user_session.set("user_id", user_id)
+    cl.user_session.set("session_id", session_id)
+
+    # Register a new user in Zep's system using the generated User ID.
+    await zep.user.aadd(CreateUserRequest(user_id=user_id))
+
+    # Start a new session for the user in Zep.
+    await zep.memory.aadd_session(Session(user_id=user_id, session_id=session_id))
+```
+
+3. **Zep Dialog tools**: Elevate agent knowledge with ChainLit Steps and Zep Dialog Tools
+   <Info>
+     Discover more about Zep's dialog tools on the{" "}
+     <a href="https://help.getzep.com/dialog-classification"> Zep Documentation Page</a>.
+   </Info>
+
+```python
+@cl.step(name="session classification", type="tool")
+async def classify_session(session_id: str):
+    """Classify dialog with custom instructions."""
+    # Define categories for classification.
+    classes = [
+        "General",
+        "Travel",
+        "Shopping",
+        "Cars",
+    ]
+    # Use Zep's dialog async classification feature with custom instruction for session classification.
+    classification = await zep.memory.aclassify_session(
+        session_id, "session_classification", classes, persist=True, instruction="you are a helpful assistance, give a conversation classify 0 for General topics, 1 for Travel-related discussions, 2 for Shopping conversations, and 3 for talks about Cars. For example, a chat about visiting Paris for landmarks and cuisine should be classified as 1."
+    )
+    return classification
+```
+
+4. **Message Handling**: You can effectively store and fetch your Chainlit application chat history on Zep memory store, enhancing your LLM conversational context.
+
+<Info>
+  Discover more about Zep's memory store capabilities on the{" "}
+  <a href="https://help.getzep.com/chat-history-memory/memories"> Zep Documentation Page</a>.
+</Info>
+
+```python
+
+@cl.step(name="OpenAI", type="llm")
+async def call_openai(session_id):
+    """Invokes the OpenAI API to generate a response based on the  session message history."""
+    # Fetch session messages from Zep.
+    memory = await zep.message.aget_session_messages(session_id)
+    memory_history = [m.to_dict() for m in memory]
+
+    # Prepare data, excluding certain fields for privacy/security.
+    cleaned_data = [{k: v for k, v in item.items() if k not in ['created_at', 'role_type', 'token_count', 'uuid']} for item in memory_history]
+
+    # Generate a response from OpenAI using the cleaned session data.
+    response = await openai_client.chat.completions.create(
+        model="gpt-4",
+        temperature=0.1,
+        messages=cleaned_data,
+    )
+    return response.choices[0].message
+
+@cl.on_message
+async def on_message(message: cl.Message):
+    """Processes each incoming message, integrates with OpenAI for response, and updates Zep memory."""
+    session_id = cl.user_session.get("session_id")
+    # classify user message to give the LLM a semantic insights to what the user request is about
+    classify_sess = await classify_session(session_id)
+    # Store the incoming message in Zep's session memory and append the classified dialog.
+    await zep.memory.aadd_memory(
+        session_id,
+        Memory(messages=[Message(role_type="user", content=message.content + "\n" + "conversation_topic: " + classify_sess.class_, role="user")]),
+    )
+
+    # Retrieve a response from the OpenAI model.
+    response_message = await call_openai(session_id)
+
+    # Send the generated response back through ChainLit.
+    msg = cl.Message(author="Answer", content=(response_message.content))
+    await msg.send()
+
+    # Update Zep's session memory with the assistant's response for continuity.
+    await zep.memory.aadd_memory(
+        session_id,
+        Memory(messages=[Message(role_type="assistant", content=response_message.content, role="assistant")]),
+    )
+
+```
+
+5. To access your LLM session data, navigate to the Zep Cloud Console, select a session, and review all the associated session data and logs.
+
+<img alt="Zep Cloud session console example" src="images/session-chainlit-ecosystem.png" />
+
+In conclusion, integrating Zep Cloud with Chainlit empowers developers to create conversational AI applications that are more intelligent, context-aware, and efficient.
+
+For additional examples, check out more [use cases](https://github.com/getzep/zep-python/tree/main/examples).

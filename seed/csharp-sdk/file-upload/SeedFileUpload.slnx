@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedFileUpload.Test/SeedFileUpload.Test.csproj" />
+  <Project Path="src/SeedFileUpload/SeedFileUpload.csproj" />
+</Solution>

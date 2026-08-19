@@ -1,0 +1,317 @@
+import { Writer } from "@fern-api/java-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+
+interface MultiUrlEnvironment {
+    urls?: Record<string, unknown>;
+}
+
+/**
+ * Builder for generating test class boilerplate including setup/teardown methods.
+ */
+export class TestClassBuilder {
+    constructor(private readonly context: SdkGeneratorContext) {}
+
+    /**
+     * Checks if the API uses OAuth authentication.
+     * Exposed as public so TestMethodBuilder can use it.
+     */
+    public isOAuthApi(): boolean {
+        return this.context.ir.auth?.schemes?.some((scheme) => scheme.type === "oauth") ?? false;
+    }
+
+    /**
+     * Creates the test class boilerplate with JUnit 5 setup.
+     */
+    public createTestClassBoilerplate(
+        className: string,
+        clientClassName: string,
+        hasAuth: boolean,
+        additionalImports?: Set<string>
+    ): (writer: Writer) => void {
+        return (writer) => {
+            writer.addImport("org.junit.jupiter.api.Assertions");
+            writer.addImport("com.fasterxml.jackson.databind.ObjectMapper");
+            writer.addImport("com.fasterxml.jackson.databind.JsonNode");
+            writer.addImport("okhttp3.mockwebserver.MockResponse");
+            writer.addImport("okhttp3.mockwebserver.MockWebServer");
+            writer.addImport("okhttp3.mockwebserver.RecordedRequest");
+            writer.addImport("org.junit.jupiter.api.AfterEach");
+            writer.addImport("org.junit.jupiter.api.BeforeEach");
+            writer.addImport("org.junit.jupiter.api.Test");
+            writer.addImport(`${this.context.getRootPackageName()}.core.ObjectMappers`);
+
+            // Add Environment import for multi-URL environments
+            if (this.isMultiUrlEnvironment(this.context.ir.environments)) {
+                writer.addImport(`${this.context.getRootPackageName()}.core.Environment`);
+            }
+
+            // Add any additional imports collected from snippets and type resolution
+            if (additionalImports) {
+                additionalImports.forEach((importStatement) => {
+                    writer.addImport(importStatement);
+                });
+            }
+
+            writer.writeLine(`public class ${className} {`);
+            writer.indent();
+
+            writer.writeLine("private MockWebServer server;");
+            writer.writeLine(`private ${clientClassName} client;`);
+            writer.writeLine("private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;");
+
+            writer.writeLine("@BeforeEach");
+            writer.writeLine("public void setup() throws Exception {");
+            writer.indent();
+            writer.writeLine("server = new MockWebServer();");
+            writer.writeLine("server.start();");
+
+            // Note: For OAuth APIs, each test method enqueues its own OAuth token response
+            // because the token is fetched lazily on first API call
+
+            // For OAuth APIs, use withCredentials() instead of builder()
+            const isOAuth = this.isOAuthApi();
+            if (isOAuth) {
+                writer.writeLine(`client = ${clientClassName}.withCredentials("test-client-id", "test-client-secret")`);
+                writer.indent();
+                this.generateEnvironmentConfiguration(writer);
+                writer.writeLine(".build();");
+            } else {
+                writer.writeLine(`client = ${clientClassName}.builder()`);
+                writer.indent();
+
+                this.generateEnvironmentConfiguration(writer);
+
+                const authConfig = this.getAuthClientBuilderCalls();
+                if (authConfig) {
+                    writer.writeLine(authConfig);
+                }
+
+                writer.writeLine(".build();");
+            }
+            writer.dedent();
+            writer.dedent();
+            writer.writeLine("}");
+
+            writer.writeLine("@AfterEach");
+            writer.writeLine("public void teardown() throws Exception {");
+            writer.indent();
+            writer.writeLine("server.shutdown();");
+            writer.dedent();
+            writer.writeLine("}");
+        };
+    }
+
+    public closeTestClass(writer: Writer): void {
+        // Generate compact helper method for numeric equivalence comparison
+        this.generateJsonEqualsHelper(writer);
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    /**
+     * Generates a compact helper for JSON comparison with numeric equivalence.
+     * Treats integers and doubles as numerically equal, which handles the common
+     * case where OpenAPI specs have integer examples but Java types are Double.
+     */
+    private generateJsonEqualsHelper(writer: Writer): void {
+        writer.writeLine("");
+        writer.writeLine("/**");
+        writer.writeLine(" * Compares two JsonNodes with numeric equivalence and null safety.");
+        writer.writeLine(
+            " * For objects, checks that all fields in 'expected' exist in 'actual' with matching values."
+        );
+        writer.writeLine(" * Allows 'actual' to have extra fields (e.g., default values added during serialization).");
+        writer.writeLine(" */");
+        writer.writeLine("private boolean jsonEquals(JsonNode expected, JsonNode actual) {");
+        writer.indent();
+        writer.writeLine("if (expected == null && actual == null) return true;");
+        writer.writeLine("if (expected == null || actual == null) return false;");
+        writer.writeLine("if (expected.equals(actual)) return true;");
+        writer.writeLine(
+            "if (expected.isNumber() && actual.isNumber()) return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;"
+        );
+        writer.writeLine("if (expected.isObject() && actual.isObject()) {");
+        writer.indent();
+        // Don't check size equality - actual may have extra fields with default values
+        writer.writeLine("java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();");
+        writer.writeLine("while (iter.hasNext()) {");
+        writer.indent();
+        writer.writeLine("java.util.Map.Entry<String, JsonNode> entry = iter.next();");
+        writer.writeLine("JsonNode actualValue = actual.get(entry.getKey());");
+        writer.writeLine("if (actualValue == null) { if (!entry.getValue().isNull()) return false; }");
+        writer.writeLine("else if (!jsonEquals(entry.getValue(), actualValue)) return false;");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("return true;");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("if (expected.isArray() && actual.isArray()) {");
+        writer.indent();
+        writer.writeLine("if (expected.size() != actual.size()) return false;");
+        writer.writeLine("for (int i = 0; i < expected.size(); i++) {");
+        writer.indent();
+        writer.writeLine("if (!jsonEquals(expected.get(i), actual.get(i))) return false;");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("return true;");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("return false;");
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    /**
+     * Generates environment configuration for the client builder
+     * Supports both single URL and multi-URL environment setups
+     */
+    private generateEnvironmentConfiguration(writer: Writer): void {
+        const environments = this.context.ir.environments;
+
+        if (!environments) {
+            writer.writeLine('.url(server.url("/").toString())');
+            return;
+        }
+
+        const isMultiUrlEnvironment = this.isMultiUrlEnvironment(environments);
+
+        if (isMultiUrlEnvironment) {
+            this.generateMultiUrlEnvironmentConfiguration(writer, environments);
+        } else {
+            writer.writeLine('.url(server.url("/").toString())');
+        }
+    }
+
+    /**
+     * Determines if the environment configuration uses multiple URLs
+     */
+    private isMultiUrlEnvironment(environments: FernIr.EnvironmentsConfig | undefined): boolean {
+        if (!environments?.environments) {
+            return false;
+        }
+
+        return environments.environments.type === "multipleBaseUrls";
+    }
+
+    /**
+     * Generates client environment configuration for APIs with multiple base URLs.
+     * Uses Environment.custom() builder which sets all URLs to the mock server.
+     */
+    private generateMultiUrlEnvironmentConfiguration(writer: Writer, environments: FernIr.EnvironmentsConfig): void {
+        if (environments.environments.type !== "multipleBaseUrls") {
+            writer.writeLine('.url(server.url("/").toString())');
+            return;
+        }
+
+        const multiUrlEnv = environments.environments;
+        const baseUrls = multiUrlEnv.baseUrls;
+
+        if (!baseUrls || baseUrls.length === 0) {
+            writer.writeLine('.url(server.url("/").toString())');
+            return;
+        }
+
+        writer.writeLine(".environment(Environment.custom()");
+        writer.indent();
+
+        for (const baseUrl of baseUrls) {
+            const methodName = this.context.caseConverter.camelSafe(baseUrl.name);
+            writer.writeLine(`.${methodName}(server.url("/").toString())`);
+        }
+
+        writer.writeLine(".build())");
+        writer.dedent();
+    }
+
+    /**
+     * Generates authentication client builder calls based on test example data.
+     * Extracts realistic auth values from the example HTTP requests.
+     * Supports multiple authentication schemes including Bearer, Basic, Header, and OAuth.
+     * Handles APIs with multiple auth schemes (e.g., OAuth + API key header).
+     */
+    private getAuthClientBuilderCalls(): string | undefined {
+        const auth = this.context.ir.auth;
+        if (!auth?.schemes || auth.schemes.length === 0) {
+            return undefined;
+        }
+
+        // Handle ALL auth schemes, not just the first one
+        const authCalls: string[] = [];
+        for (const scheme of auth.schemes) {
+            const authCall = this.getAuthCallForScheme(scheme);
+            if (authCall) {
+                authCalls.push(authCall);
+            }
+        }
+
+        if (authCalls.length === 0) {
+            return undefined;
+        }
+
+        return authCalls.join("\n            ");
+    }
+
+    /**
+     * Generates the appropriate auth configuration call for a given authentication scheme.
+     * Maps each auth scheme type to its corresponding client builder method with appropriate test values.
+     */
+    private getAuthCallForScheme(scheme: FernIr.AuthScheme): string | undefined {
+        switch (scheme.type) {
+            case "bearer":
+                return '.token("test-token")';
+            case "basic": {
+                const usernameOmitted = !!scheme.usernameOmit;
+                const passwordOmitted = !!scheme.passwordOmit;
+                if (usernameOmitted && passwordOmitted) {
+                    return undefined;
+                }
+                const credentialParts: string[] = [];
+                if (!usernameOmitted) {
+                    credentialParts.push('"test-username"');
+                }
+                if (!passwordOmitted) {
+                    credentialParts.push('"test-password"');
+                }
+                return `.credentials(${credentialParts.join(", ")})`;
+            }
+            case "header": {
+                if (scheme.name != null) {
+                    const methodName = this.context.caseConverter.camelUnsafe(scheme.name);
+                    return `.${methodName}("test-api-key")`;
+                }
+                return '.apiKey("test-api-key")';
+            }
+            case "oauth": {
+                // OAuth clients use clientId/clientSecret, not token
+                // The OAuthTokenSupplier will automatically fetch a token from the mocked endpoint
+                const oauthCalls: string[] = ['.clientId("test-client-id")', '.clientSecret("test-client-secret")'];
+
+                // Check if OAuth token endpoint has custom headers that become client-level params
+                // For example, some APIs require an apiKey header for the token endpoint
+                const tokenEndpoint = scheme.configuration?.tokenEndpoint;
+                if (tokenEndpoint?.endpointReference?.endpointId) {
+                    // Look up the endpoint to check for extra required headers
+                    const endpointId = tokenEndpoint.endpointReference.endpointId;
+                    for (const service of Object.values(this.context.ir.services)) {
+                        for (const endpoint of service.endpoints) {
+                            if (endpoint.id === endpointId) {
+                                // Check for header parameters that aren't part of standard OAuth
+                                for (const header of endpoint.headers) {
+                                    const headerName = this.context.caseConverter.camelSafe(header.name);
+                                    if (headerName !== "authorization" && headerName !== "contentType") {
+                                        oauthCalls.push(`.${headerName}("test-${headerName}")`);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return oauthCalls.join("\n            ");
+            }
+            default:
+                return undefined;
+        }
+    }
+}

@@ -1,0 +1,45 @@
+---
+title: "List Subaccounts"
+api: "GET https://api.bland.ai/v1/subaccounts"
+description: "View all your subaccounts and their details."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Whether the subaccount creation succeeded.
+</ResponseField>
+
+<ResponseField name="subaccounts" type="array[object]">
+  An array of your subaccounts.
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+    "status": "success",
+    "subaccounts": [
+        {
+            "subaccount_id": "1234567890",
+            "first_name": "John",
+            "last_name": "Doe",
+            "balance": 150,
+            "api_key": "sub-sk-1234567890"
+        },
+        {
+            "subaccount_id": "0987654321",
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "balance": 200,
+            "api_key": "sub-sk-0987654321"
+        }
+    ]
+}
+```
+</ResponseExample>

@@ -1,0 +1,36 @@
+---
+slug: paths
+description: Enterprise API URL Construction Guidelines
+---
+
+## Overview
+Our Enterprise API Platform implements a robust hierarchical path parameter system that must be included in all requests to ensure proper enterprise resource routing and access control.
+
+<Note>The complete set of environment-specific parameters can be retrieved through the Enterprise Configuration Console within your Pied Piper Enterprise Portal.</Note>
+
+## Required Parameters
+
+The Enterprise API Platform requires three mandatory path parameters to be included in every request, in the following hierarchical order:
+1. `tenant`
+2. `environment` 
+3. `company`
+
+### 1. Tenant
+- **Type**: String (UUID format)
+- **Description**: The unique identifier for your enterprise's Microsoft Entra ID tenant, ensuring proper authentication and access control.
+
+### 2. Environment
+
+- **Type**: String
+- **Description**: Designates the specific enterprise environment tier (e.g., production, staging, development) within your organization's infrastructure.
+
+### 3. Company
+
+- **Type**: String
+- **Description**: Identifies the specific business entity or organizational unit within your enterprise environment.
+
+<Note>For detailed information about enterprise organizational unit management, please refer to our [Company Management documentation](/api-reference/system-services/companies).</Note>
+
+## URL Structure
+
+The Enterprise API Platform follows this standardized URL structure:

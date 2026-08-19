@@ -1,0 +1,6 @@
+- summary: |
+    Fix request URLs containing duplicate slashes (e.g. `/{id}//{nestedId}`) when a
+    base-path, service base-path, and endpoint path are joined together. Consecutive
+    slashes in the generated URL are now collapsed into a single slash, matching the
+    URL used in generated wire tests.
+  type: fix

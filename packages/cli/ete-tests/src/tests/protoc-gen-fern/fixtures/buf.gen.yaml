@@ -1,0 +1,5 @@
+version: v2
+plugins:
+  - local: ["bash", "./protoc-gen-fern"]
+    out: output
+    strategy: all

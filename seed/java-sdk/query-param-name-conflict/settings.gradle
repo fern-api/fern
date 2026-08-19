@@ -1,0 +1,3 @@
+rootProject.name = 'query-param-name-conflict'
+
+include 'sample-app'

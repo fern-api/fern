@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  GitHubConfig:
+    docs: |
+      The configuration used to interact with a GitHub repository.
+    properties:
+      sourceDirectory:
+        docs: The directory from which to read the contents of the GitHub repository.
+        type: string
+      uri:
+        docs: The URI of the GitHub repository.
+        type: string
+      token:
+        docs: The token used to access the GitHub repository.
+        type: string
+      branch:
+        docs: The branch to use when interacting with the GitHub repository.
+        type: optional<string>

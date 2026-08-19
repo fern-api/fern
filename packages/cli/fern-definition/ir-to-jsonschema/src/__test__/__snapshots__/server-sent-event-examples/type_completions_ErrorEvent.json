@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "string"
+    },
+    "code": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "error"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

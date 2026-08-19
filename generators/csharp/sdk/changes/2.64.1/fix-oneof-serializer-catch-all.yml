@@ -1,0 +1,6 @@
+- summary: |
+    Fix OneOfSerializer to prefer strongly-typed deserialization over catch-all
+    matches. When a discriminated union type inside a OneOf uses a catch-all for
+    unknown discriminators, the serializer now tries all types and selects the
+    best match instead of returning the first success.
+  type: fix

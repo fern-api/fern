@@ -1,0 +1,122 @@
+import { CaseConverter } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { deduplicateExamples, GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
+import { BaseContext, BaseGeneratedType } from "@fern-typescript/contexts";
+import { ModuleDeclarationStructure, StatementStructures, ts, WriterFunction } from "ts-morph";
+
+export declare namespace AbstractGeneratedType {
+    export interface Init<Shape, Context> {
+        typeName: string;
+        shape: Shape;
+        examples: FernIr.ExampleType[];
+        docs: string | undefined;
+        fernFilepath: FernIr.FernFilepath;
+        getReferenceToSelf: (context: Context) => Reference;
+        includeSerdeLayer: boolean;
+        noOptionalProperties: boolean;
+        retainOriginalCasing: boolean;
+        /** Whether inline types should be inlined */
+        enableInlineTypes: boolean;
+        generateReadWriteOnlyTypes: boolean;
+        caseConverter: CaseConverter;
+    }
+    export namespace getDocs {
+        export interface Args<Context> {
+            context: Context;
+            opts?: {
+                isForRequest?: boolean;
+                isForResponse?: boolean;
+            };
+        }
+    }
+}
+
+const EXAMPLE_PREFIX = "    ";
+
+export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> implements BaseGeneratedType<Context> {
+    protected readonly typeName: string;
+    protected readonly shape: Shape;
+    protected readonly examples: FernIr.ExampleType[];
+    protected readonly fernFilepath: FernIr.FernFilepath;
+    protected readonly getReferenceToSelf: (context: Context) => Reference;
+    protected readonly includeSerdeLayer: boolean;
+    protected readonly noOptionalProperties: boolean;
+    protected readonly retainOriginalCasing: boolean;
+    protected readonly enableInlineTypes: boolean;
+    protected readonly generateReadWriteOnlyTypes: boolean;
+    protected readonly case: CaseConverter;
+
+    private docs: string | undefined;
+
+    constructor({
+        getReferenceToSelf,
+        typeName,
+        shape,
+        examples,
+        docs,
+        fernFilepath,
+        includeSerdeLayer,
+        noOptionalProperties,
+        retainOriginalCasing,
+        enableInlineTypes,
+        generateReadWriteOnlyTypes,
+        caseConverter
+    }: AbstractGeneratedType.Init<Shape, Context>) {
+        this.typeName = typeName;
+        this.shape = shape;
+        this.examples = examples;
+        this.getReferenceToSelf = getReferenceToSelf;
+        this.docs = docs;
+        this.fernFilepath = fernFilepath;
+        this.includeSerdeLayer = includeSerdeLayer;
+        this.noOptionalProperties = noOptionalProperties;
+        this.retainOriginalCasing = retainOriginalCasing;
+        this.enableInlineTypes = enableInlineTypes;
+        this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
+        this.case = caseConverter;
+    }
+
+    protected getDocs({ context, opts }: AbstractGeneratedType.getDocs.Args<Context>): string | undefined {
+        const groups: string[] = [];
+        if (this.docs) {
+            groups.push(this.docs);
+        }
+        const allExamples = this.examples.map((example) => {
+            const exampleStr =
+                "@example\n" +
+                getTextOfTsNode(
+                    this.buildExample(example.shape, context, {
+                        isForComment: true,
+                        isForTypeDeclarationComment: true,
+                        isForRequest: opts?.isForRequest,
+                        isForResponse: opts?.isForResponse
+                    })
+                );
+            return exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
+        });
+        groups.push(...deduplicateExamples(allExamples));
+        if (groups.length === 0) {
+            return undefined;
+        }
+        return groups.join("\n\n");
+    }
+
+    public writeToFile(context: Context): void {
+        context.sourceFile.addStatements(this.generateStatements(context));
+    }
+
+    public abstract generateStatements(
+        context: Context
+    ): string | WriterFunction | (string | WriterFunction | StatementStructures)[];
+    public abstract generateForInlineUnion(context: Context): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    };
+    public abstract generateModule(context: Context): ModuleDeclarationStructure | undefined;
+    public abstract buildExample(
+        example: FernIr.ExampleTypeShape,
+        context: Context,
+        opts: GetReferenceOpts
+    ): ts.Expression;
+}

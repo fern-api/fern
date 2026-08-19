@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "normalField": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableField": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "description": "Object inheriting from a nullable schema via allOf.",
+  "definitions": {}
+}

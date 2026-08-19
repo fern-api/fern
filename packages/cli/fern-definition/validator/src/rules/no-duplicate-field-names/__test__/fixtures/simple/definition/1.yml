@@ -1,0 +1,86 @@
+imports:
+  blog: blog.yml
+types:
+  ObjectWithNoDuplicateNames:
+    properties:
+      a: string
+      b: integer
+      c:
+        type: boolean
+        name: d
+  ObjectWithDuplicateNames:
+    properties:
+      a: string
+      b: integer
+      c:
+        type: boolean
+        name: b
+
+  ObjectWithExtensionButNoDuplicates:
+    extends: blog.BlogPostAlias
+    properties:
+      a: string
+      b: integer
+
+  ObjectWithDuplicatedNameDirectAndByExtension:
+    extends: blog.BlogPostAlias
+    properties:
+      a: string
+      blogPostName: boolean
+
+  ObjectWithDuplicatedNameFooByDifferentExtensions:
+    extends:
+      - ObjectWithFooProperty
+      - ObjectWithFooAndBarProperties
+    properties:
+      a: string
+      b: boolean
+  ObjectWithFooProperty:
+    properties:
+      foo: string
+  ObjectWithFooAndBarProperties:
+    properties:
+      propertyWithFooName:
+        type: string
+        name: foo
+      bar: string
+
+  EnumWithNoDuplicates:
+    enum:
+      - A
+      - B
+      - name: C
+        value: C
+
+  EnumWithDuplicates:
+    enum:
+      - A
+      - B
+      - name: A
+        value: C
+
+  UnionWithNoDuplicates:
+    union:
+      foo: ObjectWithFooProperty
+      fooBar: ObjectWithFooAndBarProperties
+
+  UnionWithOverlap:
+    discriminant: type
+    union:
+      a: ObjectWithTypeProperty
+
+  ObjectWithTypeProperty:
+    properties:
+      type: string
+
+  UnionWithOverlapWithCustomName:
+    discriminant:
+      value: _type
+      name: foo
+    union:
+      a: ObjectWithDuplicatedNameFooByDifferentExtensions
+
+  # shouldn't throw
+  ObjectWithUndefinedReference:
+    properties:
+      madeUp: MadeUpType

@@ -1,0 +1,26 @@
+imports:
+  root: ../__package__.yml
+  user: ../user.yml
+
+types:
+  Event:
+    properties:
+      id: root.Id
+      name: string
+
+service:
+  auth: false
+  base-path: /users/events
+  endpoints:
+    listEvents:
+      path: /
+      method: GET
+      auth: false
+      docs: List all user events.
+      request:
+        name: ListUserEventsRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: The maximum number of results to return.
+      response: list<Event>

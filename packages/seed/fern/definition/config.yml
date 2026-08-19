@@ -1,0 +1,297 @@
+imports:
+  features: features.yml
+types:
+  CliSeedWorkspaceConfiguration:
+    properties:
+      publishGa: PublishCommand
+      publishRc: PublishCommand
+      publishDev: PublishCommand
+      changelogLocation:
+        type: optional<string>
+        docs: |
+          The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
+
+  SeedWorkspaceConfiguration:
+    properties:
+      image: string
+      imageAliases: optional<list<string>>
+      displayName: string
+      irVersion: string
+      disabled:
+        type: optional<boolean>
+        docs: |
+          If true, this generator workspace is disabled. Seed commands will skip it.
+          Useful for retaining the workspace directory (and its `seed.yml`) for documentation
+          purposes without running any tests, publishing, or builds against it.
+      test: TestConfiguration
+      publish: PublishConfiguration
+      changelogLocation:
+        type: optional<string>
+        docs: |
+          The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
+
+      language: optional<Language>
+      defaultCustomConfig: optional<map<string, unknown>>
+      defaultOutputMode: OutputMode
+      generatorType: GeneratorType
+
+      buildScripts: optional<BuildScripts>
+
+      customFixtureConfig:
+        type: optional<FixtureConfigurations>
+        docs: |
+          Configuration that will be used for any custom fixture specified by --custom-fixture
+      fixtures:
+        type: optional<map<string, list<FixtureConfigurations>>>
+      scripts: optional<ScriptsConfiguration>
+      allowedFailures:
+        type: optional<list<string>>
+        docs: |
+          List any fixtures that are okay to fail. For normal fixtures
+          just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
+      features: optional<features.GeneratorFeatures>
+
+  PublishDockerConfiguration:
+    properties:
+      context: string
+      image: string
+      aliases: optional<list<string>>
+      file: string
+
+  PublishSentryConfiguration:
+    docs: |
+      Per-generator Sentry upload configuration. Only fields that are set
+      are processed, so each generator can opt in incrementally.
+    properties:
+      project:
+        type: string
+        docs: |
+          Sentry project slug for this generator (e.g. `csharp-sdk`,
+          `go-model`). Each generator has its own project so that issues,
+          releases, and alerts are scoped per SDK.
+      sourceMaps:
+        type: optional<list<SentrySourceMapArtifact>>
+        docs: |
+          JS/TS source map directories. Supports multiple entries so hybrid
+          generators can upload maps for both their v1 and v2 CLIs.
+
+  SentrySourceMapArtifact:
+    properties:
+      dir:
+        type: string
+        docs: |
+          Path to the built TypeScript dist directory, relative to the repo
+          root (e.g. `generators/csharp/model/dist`).
+      urlPrefix:
+        type: optional<string>
+        docs: |
+          URL prefix used to match runtime stack frame paths to uploaded
+          source files. Defaults to `app:///`, which matches Node's
+          `--enable-source-maps` output when the CLI is copied into the
+          image at `/dist/cli.cjs` or `/bin/<lang>-v2`.
+
+  PublishDocker:
+    docs: |
+      Configuration for publishing from a docker image, assuming a vanilla docker deployment.
+    properties:
+      workingDirectory: optional<string>
+      preBuildCommands: optional<DockerCommand>
+      docker: PublishDockerConfiguration
+      sentry:
+        type: optional<PublishSentryConfiguration>
+        docs: |
+          Artifacts to upload to Sentry as a step of the publish pipeline.
+          All uploads share the release name `${docker.image}:${version}`,
+          which matches the release tag produced by the generator runtimes'
+          SentryClient (see generators/base/src/telemetry/SentryClient.ts).
+
+  PublishCommand:
+    docs: |
+      Configuration for publishing from a command, assuming something packaged up, like with the TypeScript generator.
+      ex. `pnpm turbo run dockerTagVersion --filter @fern-typescript/express-generator-cli -- "$VERSION"`
+      Commands can be multi-line, we'll run them all!
+    properties:
+      workingDirectory: optional<string>
+      versionSubstitution:
+        type: optional<string>
+        docs: |
+          The string to substitute for the version in the command. ex. `"$VERSION"`
+      command: DockerCommand
+
+  PublishConfiguration:
+    discriminated: false
+    union:
+      - PublishDocker
+      - PublishCommand
+
+  TestContainerConfiguration:
+    properties:
+      image: string
+      command: optional<DockerCommand>
+
+  TestConfiguration:
+    properties:
+      docker: TestContainerConfiguration
+      podman: optional<TestContainerConfiguration>
+      local: optional<LocalBuildInfo>
+
+  LocalBuildInfo:
+    properties:
+      workingDirectory:
+        type: string
+        docs: |
+          The working directory for the generator.
+      buildCommand:
+        type: list<string>
+        docs: |
+          The command to build the generator locally.
+          `yarn workspace @fern-api/openapi-generator build` for example.
+      runCommand:
+        type: string
+        docs: |
+          The command to run the generator locally.
+          `node generators/openapi/dist/cli.cjs` for example.
+      env:
+        type: optional<map<string, string>>
+        docs: |
+          Environment variables to set when running the generator locally.
+
+  BuildScripts:
+    docs: Scripts pertaining to the artifact produced by this generator and how to build them (e.g. yarn install && yarn build for the TS SDK)
+    properties:
+      preInstallScript: optional<Script>
+      installScript: optional<Script>
+      compileScript: optional<Script>
+      testScript: optional<Script>
+
+  DockerCommand:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+
+  ScriptCommands:
+    docs: |
+      Commands can be either a simple list of strings (legacy format, treated as build commands),
+      or an object with separate build and test command arrays.
+    discriminated: false
+    union:
+      - list<string>
+      - ScriptCommandsByPhase
+
+  ScriptCommandsByPhase:
+    docs: Commands separated by phase (build vs test)
+    properties:
+      build:
+        docs: Commands to run during the build phase
+        type: optional<list<string>>
+      test:
+        docs: Commands to run during the test phase
+        type: optional<list<string>>
+
+  Script:
+    properties:
+      name:
+        docs: The name of the script. If provided, this enables fixtures to skip certain scripts.
+        type: optional<string>
+      commands: ScriptCommands
+
+  ContainerScriptConfig:
+    extends: Script
+    properties:
+      image: string
+
+  ScriptsConfiguration:
+    docs: |
+      Scripts can be specified as either a simple list of container script configs (legacy format),
+      or as an object with separate docker and local script arrays for multi-environment support.
+    discriminated: false
+    union:
+      - list<ContainerScriptConfig>
+      - ScriptsByEnvironment
+
+  ScriptsByEnvironment:
+    docs: Scripts separated by runtime environment (docker/local)
+    properties:
+      docker:
+        docs: Scripts to run in a Docker container
+        type: optional<list<ContainerScriptConfig>>
+      local:
+        docs: Scripts to run locally (without a container)
+        type: optional<list<Script>>
+
+  Language:
+    enum:
+      - python
+      - java
+      - typescript
+      - go
+      - ruby
+      - csharp
+      - swift
+      - php
+
+  GeneratorType:
+    enum:
+      - SDK
+      - Model
+      - Server
+      - Documentation
+
+  FixtureConfigurations:
+    properties:
+      publishConfig: unknown
+      publishMetadata: unknown
+      customConfig: unknown
+      readmeConfig: optional<ReadmeConfig>
+      audiences: optional<list<string>>
+      outputFolder: string
+      outputVersion: optional<string>
+      disableDynamicSnippetTests:
+        type: optional<boolean>
+        docs: |
+          If true, dynamic snippet tests will not be generated for this fixture.
+          This is useful for situations where the main parts of the sdk are working, but the dynamic snippet tests are not.
+          Disabling the dynamic snippet tests allows the fixture to compile and run tests, surfacing issues when failures there start to occur.
+      outputMode:
+        type: optional<OutputMode>
+        docs: Overrides the default output mode
+      license: optional<unknown>
+      skipScripts:
+        docs: |
+          Either a boolean to skip all scripts, or a list of script names to skip.
+          When true, all build and test scripts will be skipped for this fixture.
+        type: optional<SkipScripts>
+
+  SkipScripts:
+    discriminated: false
+    union:
+      - boolean
+      - list<string>
+
+  ReadmeConfig:
+    properties:
+      defaultEndpoint: optional<ReadmeEndpoint>
+      bannerLink: optional<string>
+      apiReferenceLink: optional<string>
+      features: optional<map<string, list<ReadmeEndpoint>>>
+      apiName: optional<string>
+      disabledSections: optional<list<string>>
+
+  ReadmeEndpoint:
+    discriminated: false
+    union:
+      - string
+      - ReadmeEndpointObject
+
+  ReadmeEndpointObject:
+    properties:
+      method: string
+      path: string
+      stream: optional<boolean>
+
+  OutputMode:
+    enum:
+      - github
+      - local_files
+      - publish

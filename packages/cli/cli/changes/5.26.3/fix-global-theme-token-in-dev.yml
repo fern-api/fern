@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `fern docs dev` grabbing the local fern token for authentication when loading a global theme
+  type: fix

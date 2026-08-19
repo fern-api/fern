@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump @fern-api/generator-cli to 0.9.35, which disables minimatch negation
+    on `.fernignore` patterns so a stray `!pattern` no longer silently inverts
+    the match and discards generator output.
+  type: fix

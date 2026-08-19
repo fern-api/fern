@@ -1,0 +1,1001 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`migrateFromV54ToV53 > simple 1`] = `
+{
+  "apiDisplayName": null,
+  "apiDocs": null,
+  "apiName": {
+    "camelCase": {
+      "safeName": "simpleAPI",
+      "unsafeName": "simpleAPI",
+    },
+    "originalName": "simple-api",
+    "pascalCase": {
+      "safeName": "SimpleAPI",
+      "unsafeName": "SimpleAPI",
+    },
+    "screamingSnakeCase": {
+      "safeName": "SIMPLE_API",
+      "unsafeName": "SIMPLE_API",
+    },
+    "snakeCase": {
+      "safeName": "simple_api",
+      "unsafeName": "simple_api",
+    },
+  },
+  "apiVersion": null,
+  "auth": {
+    "docs": null,
+    "requirement": "ALL",
+    "schemes": [
+      {
+        "_type": "bearer",
+        "docs": null,
+        "token": {
+          "camelCase": {
+            "safeName": "token",
+            "unsafeName": "token",
+          },
+          "originalName": "token",
+          "pascalCase": {
+            "safeName": "Token",
+            "unsafeName": "Token",
+          },
+          "screamingSnakeCase": {
+            "safeName": "TOKEN",
+            "unsafeName": "TOKEN",
+          },
+          "snakeCase": {
+            "safeName": "token",
+            "unsafeName": "token",
+          },
+        },
+        "tokenEnvVar": null,
+      },
+    ],
+  },
+  "basePath": null,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "dynamic": {
+    "endpoints": {
+      "endpoint_service.getAudioFile": {
+        "auth": {
+          "token": {
+            "camelCase": {
+              "safeName": "token",
+              "unsafeName": "token",
+            },
+            "originalName": "token",
+            "pascalCase": {
+              "safeName": "Token",
+              "unsafeName": "Token",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TOKEN",
+              "unsafeName": "TOKEN",
+            },
+            "snakeCase": {
+              "safeName": "token",
+              "unsafeName": "token",
+            },
+          },
+          "type": "bearer",
+        },
+        "declaration": {
+          "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+                "originalName": "service",
+                "pascalCase": {
+                  "safeName": "Service",
+                  "unsafeName": "Service",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SERVICE",
+                  "unsafeName": "SERVICE",
+                },
+                "snakeCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+              },
+            ],
+            "file": {
+              "camelCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+              "originalName": "service",
+              "pascalCase": {
+                "safeName": "Service",
+                "unsafeName": "Service",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SERVICE",
+                "unsafeName": "SERVICE",
+              },
+              "snakeCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+            },
+            "packagePath": [],
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "getAudioFile",
+              "unsafeName": "getAudioFile",
+            },
+            "originalName": "getAudioFile",
+            "pascalCase": {
+              "safeName": "GetAudioFile",
+              "unsafeName": "GetAudioFile",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_AUDIO_FILE",
+              "unsafeName": "GET_AUDIO_FILE",
+            },
+            "snakeCase": {
+              "safeName": "get_audio_file",
+              "unsafeName": "get_audio_file",
+            },
+          },
+        },
+        "location": {
+          "method": "GET",
+          "path": "/audio",
+        },
+        "request": {
+          "body": null,
+          "declaration": {
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "camelCase": {
+                    "safeName": "service",
+                    "unsafeName": "service",
+                  },
+                  "originalName": "service",
+                  "pascalCase": {
+                    "safeName": "Service",
+                    "unsafeName": "Service",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "SERVICE",
+                    "unsafeName": "SERVICE",
+                  },
+                  "snakeCase": {
+                    "safeName": "service",
+                    "unsafeName": "service",
+                  },
+                },
+              ],
+              "file": {
+                "camelCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+                "originalName": "service",
+                "pascalCase": {
+                  "safeName": "Service",
+                  "unsafeName": "Service",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SERVICE",
+                  "unsafeName": "SERVICE",
+                },
+                "snakeCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+              },
+              "packagePath": [],
+            },
+            "name": {
+              "camelCase": {
+                "safeName": "getAudioRequest",
+                "unsafeName": "getAudioRequest",
+              },
+              "originalName": "GetAudioRequest",
+              "pascalCase": {
+                "safeName": "GetAudioRequest",
+                "unsafeName": "GetAudioRequest",
+              },
+              "screamingSnakeCase": {
+                "safeName": "GET_AUDIO_REQUEST",
+                "unsafeName": "GET_AUDIO_REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "get_audio_request",
+                "unsafeName": "get_audio_request",
+              },
+            },
+          },
+          "headers": [],
+          "metadata": {
+            "includePathParameters": false,
+            "onlyPathParameters": false,
+          },
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "format",
+                    "unsafeName": "format",
+                  },
+                  "originalName": "format",
+                  "pascalCase": {
+                    "safeName": "Format",
+                    "unsafeName": "Format",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "FORMAT",
+                    "unsafeName": "FORMAT",
+                  },
+                  "snakeCase": {
+                    "safeName": "format",
+                    "unsafeName": "format",
+                  },
+                },
+                "wireValue": "format",
+              },
+              "typeReference": {
+                "type": "named",
+                "value": "type_service:AudioFormat",
+              },
+            },
+          ],
+          "type": "inlined",
+        },
+        "response": {
+          "type": "json",
+        },
+      },
+    },
+    "headers": [],
+    "types": {
+      "type_service:AudioFormat": {
+        "declaration": {
+          "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+                "originalName": "service",
+                "pascalCase": {
+                  "safeName": "Service",
+                  "unsafeName": "Service",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SERVICE",
+                  "unsafeName": "SERVICE",
+                },
+                "snakeCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+              },
+            ],
+            "file": {
+              "camelCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+              "originalName": "service",
+              "pascalCase": {
+                "safeName": "Service",
+                "unsafeName": "Service",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SERVICE",
+                "unsafeName": "SERVICE",
+              },
+              "snakeCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+            },
+            "packagePath": [],
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "audioFormat",
+              "unsafeName": "audioFormat",
+            },
+            "originalName": "AudioFormat",
+            "pascalCase": {
+              "safeName": "AudioFormat",
+              "unsafeName": "AudioFormat",
+            },
+            "screamingSnakeCase": {
+              "safeName": "AUDIO_FORMAT",
+              "unsafeName": "AUDIO_FORMAT",
+            },
+            "snakeCase": {
+              "safeName": "audio_format",
+              "unsafeName": "audio_format",
+            },
+          },
+        },
+        "type": "enum",
+        "values": [
+          {
+            "name": {
+              "camelCase": {
+                "safeName": "mp3",
+                "unsafeName": "mp3",
+              },
+              "originalName": "MP3",
+              "pascalCase": {
+                "safeName": "Mp3",
+                "unsafeName": "Mp3",
+              },
+              "screamingSnakeCase": {
+                "safeName": "MP3",
+                "unsafeName": "MP3",
+              },
+              "snakeCase": {
+                "safeName": "mp3",
+                "unsafeName": "mp3",
+              },
+            },
+            "wireValue": "MP3",
+          },
+          {
+            "name": {
+              "camelCase": {
+                "safeName": "wav",
+                "unsafeName": "wav",
+              },
+              "originalName": "WAV",
+              "pascalCase": {
+                "safeName": "Wav",
+                "unsafeName": "Wav",
+              },
+              "screamingSnakeCase": {
+                "safeName": "WAV",
+                "unsafeName": "WAV",
+              },
+              "snakeCase": {
+                "safeName": "wav",
+                "unsafeName": "wav",
+              },
+            },
+            "wireValue": "WAV",
+          },
+          {
+            "name": {
+              "camelCase": {
+                "safeName": "ogg",
+                "unsafeName": "ogg",
+              },
+              "originalName": "OGG",
+              "pascalCase": {
+                "safeName": "Ogg",
+                "unsafeName": "Ogg",
+              },
+              "screamingSnakeCase": {
+                "safeName": "OGG",
+                "unsafeName": "OGG",
+              },
+              "snakeCase": {
+                "safeName": "ogg",
+                "unsafeName": "ogg",
+              },
+            },
+            "wireValue": "OGG",
+          },
+        ],
+      },
+    },
+    "version": "1.0.0",
+  },
+  "environments": null,
+  "errorDiscriminationStrategy": {
+    "type": "statusCode",
+  },
+  "errors": {},
+  "fdrApiDefinitionId": null,
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "publishConfig": null,
+  "readmeConfig": null,
+  "rootPackage": {
+    "docs": null,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": null,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": true,
+    "navigationConfig": null,
+    "service": null,
+    "subpackages": [
+      "subpackage_service",
+    ],
+    "types": [],
+    "webhooks": null,
+    "websocket": null,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version",
+      "userAgent": null,
+    },
+  },
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {
+      "service_service": [
+        "type_service:AudioFormat",
+      ],
+    },
+  },
+  "services": {
+    "service_service": {
+      "availability": null,
+      "basePath": {
+        "head": "/",
+        "parts": [],
+      },
+      "displayName": null,
+      "encoding": {
+        "json": {},
+        "proto": null,
+      },
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "autogeneratedExamples": [],
+          "availability": null,
+          "basePath": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "fullPath": {
+            "head": "/audio",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_service.getAudioFile",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "getAudioFile",
+              "unsafeName": "getAudioFile",
+            },
+            "originalName": "getAudioFile",
+            "pascalCase": {
+              "safeName": "GetAudioFile",
+              "unsafeName": "GetAudioFile",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_AUDIO_FILE",
+              "unsafeName": "GET_AUDIO_FILE",
+            },
+            "snakeCase": {
+              "safeName": "get_audio_file",
+              "unsafeName": "get_audio_file",
+            },
+          },
+          "pagination": null,
+          "path": {
+            "head": "/audio",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "allowMultiple": false,
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "format",
+                    "unsafeName": "format",
+                  },
+                  "originalName": "format",
+                  "pascalCase": {
+                    "safeName": "Format",
+                    "unsafeName": "Format",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "FORMAT",
+                    "unsafeName": "FORMAT",
+                  },
+                  "snakeCase": {
+                    "safeName": "format",
+                    "unsafeName": "format",
+                  },
+                },
+                "wireValue": "format",
+              },
+              "valueType": {
+                "_type": "named",
+                "default": null,
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "service",
+                        "unsafeName": "service",
+                      },
+                      "originalName": "service",
+                      "pascalCase": {
+                        "safeName": "Service",
+                        "unsafeName": "Service",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "SERVICE",
+                        "unsafeName": "SERVICE",
+                      },
+                      "snakeCase": {
+                        "safeName": "service",
+                        "unsafeName": "service",
+                      },
+                    },
+                  ],
+                  "file": {
+                    "camelCase": {
+                      "safeName": "service",
+                      "unsafeName": "service",
+                    },
+                    "originalName": "service",
+                    "pascalCase": {
+                      "safeName": "Service",
+                      "unsafeName": "Service",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "SERVICE",
+                      "unsafeName": "SERVICE",
+                    },
+                    "snakeCase": {
+                      "safeName": "service",
+                      "unsafeName": "service",
+                    },
+                  },
+                  "packagePath": [],
+                },
+                "inline": null,
+                "name": {
+                  "camelCase": {
+                    "safeName": "audioFormat",
+                    "unsafeName": "audioFormat",
+                  },
+                  "originalName": "AudioFormat",
+                  "pascalCase": {
+                    "safeName": "AudioFormat",
+                    "unsafeName": "AudioFormat",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "AUDIO_FORMAT",
+                    "unsafeName": "AUDIO_FORMAT",
+                  },
+                  "snakeCase": {
+                    "safeName": "audio_format",
+                    "unsafeName": "audio_format",
+                  },
+                },
+                "typeId": "type_service:AudioFormat",
+              },
+            },
+          ],
+          "requestBody": null,
+          "response": {
+            "body": {
+              "docs": null,
+              "type": "fileDownload",
+            },
+            "status-code": null,
+          },
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "bodyKey": {
+                "camelCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+                "originalName": "body",
+                "pascalCase": {
+                  "safeName": "Body",
+                  "unsafeName": "Body",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BODY",
+                  "unsafeName": "BODY",
+                },
+                "snakeCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+              },
+              "includePathParameters": false,
+              "onlyPathParameters": false,
+              "type": "wrapper",
+              "wrapperName": {
+                "camelCase": {
+                  "safeName": "getAudioRequest",
+                  "unsafeName": "getAudioRequest",
+                },
+                "originalName": "GetAudioRequest",
+                "pascalCase": {
+                  "safeName": "GetAudioRequest",
+                  "unsafeName": "GetAudioRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "GET_AUDIO_REQUEST",
+                  "unsafeName": "GET_AUDIO_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "get_audio_request",
+                  "unsafeName": "get_audio_request",
+                },
+              },
+            },
+            "streamParameter": null,
+          },
+          "transport": null,
+          "userSpecifiedExamples": [],
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+              "originalName": "service",
+              "pascalCase": {
+                "safeName": "Service",
+                "unsafeName": "Service",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SERVICE",
+                "unsafeName": "SERVICE",
+              },
+              "snakeCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+            "originalName": "service",
+            "pascalCase": {
+              "safeName": "Service",
+              "unsafeName": "Service",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SERVICE",
+              "unsafeName": "SERVICE",
+            },
+            "snakeCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+          },
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+      "transport": {
+        "type": "http",
+      },
+    },
+  },
+  "sourceConfig": null,
+  "subpackages": {
+    "subpackage_service": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+            "originalName": "service",
+            "pascalCase": {
+              "safeName": "Service",
+              "unsafeName": "Service",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SERVICE",
+              "unsafeName": "SERVICE",
+            },
+            "snakeCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "service",
+            "unsafeName": "service",
+          },
+          "originalName": "service",
+          "pascalCase": {
+            "safeName": "Service",
+            "unsafeName": "Service",
+          },
+          "screamingSnakeCase": {
+            "safeName": "SERVICE",
+            "unsafeName": "SERVICE",
+          },
+          "snakeCase": {
+            "safeName": "service",
+            "unsafeName": "service",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "service",
+          "unsafeName": "service",
+        },
+        "originalName": "service",
+        "pascalCase": {
+          "safeName": "Service",
+          "unsafeName": "Service",
+        },
+        "screamingSnakeCase": {
+          "safeName": "SERVICE",
+          "unsafeName": "SERVICE",
+        },
+        "snakeCase": {
+          "safeName": "service",
+          "unsafeName": "service",
+        },
+      },
+      "navigationConfig": null,
+      "service": "service_service",
+      "subpackages": [],
+      "types": [
+        "type_service:AudioFormat",
+      ],
+      "webhooks": null,
+      "websocket": null,
+    },
+  },
+  "types": {
+    "type_service:AudioFormat": {
+      "autogeneratedExamples": [],
+      "availability": null,
+      "docs": null,
+      "encoding": {
+        "json": {},
+        "proto": null,
+      },
+      "inline": null,
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+              "originalName": "service",
+              "pascalCase": {
+                "safeName": "Service",
+                "unsafeName": "Service",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SERVICE",
+                "unsafeName": "SERVICE",
+              },
+              "snakeCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+            "originalName": "service",
+            "pascalCase": {
+              "safeName": "Service",
+              "unsafeName": "Service",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SERVICE",
+              "unsafeName": "SERVICE",
+            },
+            "snakeCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "audioFormat",
+            "unsafeName": "audioFormat",
+          },
+          "originalName": "AudioFormat",
+          "pascalCase": {
+            "safeName": "AudioFormat",
+            "unsafeName": "AudioFormat",
+          },
+          "screamingSnakeCase": {
+            "safeName": "AUDIO_FORMAT",
+            "unsafeName": "AUDIO_FORMAT",
+          },
+          "snakeCase": {
+            "safeName": "audio_format",
+            "unsafeName": "audio_format",
+          },
+        },
+        "typeId": "type_service:AudioFormat",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "enum",
+        "default": null,
+        "values": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "mp3",
+                  "unsafeName": "mp3",
+                },
+                "originalName": "MP3",
+                "pascalCase": {
+                  "safeName": "Mp3",
+                  "unsafeName": "Mp3",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MP3",
+                  "unsafeName": "MP3",
+                },
+                "snakeCase": {
+                  "safeName": "mp3",
+                  "unsafeName": "mp3",
+                },
+              },
+              "wireValue": "MP3",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "wav",
+                  "unsafeName": "wav",
+                },
+                "originalName": "WAV",
+                "pascalCase": {
+                  "safeName": "Wav",
+                  "unsafeName": "Wav",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "WAV",
+                  "unsafeName": "WAV",
+                },
+                "snakeCase": {
+                  "safeName": "wav",
+                  "unsafeName": "wav",
+                },
+              },
+              "wireValue": "WAV",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "ogg",
+                  "unsafeName": "ogg",
+                },
+                "originalName": "OGG",
+                "pascalCase": {
+                  "safeName": "Ogg",
+                  "unsafeName": "Ogg",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "OGG",
+                  "unsafeName": "OGG",
+                },
+                "snakeCase": {
+                  "safeName": "ogg",
+                  "unsafeName": "ogg",
+                },
+              },
+              "wireValue": "OGG",
+            },
+          },
+        ],
+      },
+      "source": null,
+      "userProvidedExamples": [],
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+  "websocketChannels": {},
+}
+`;

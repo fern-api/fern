@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "nullableField": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "description": "This schema has nullable:true at the top level.",
+  "definitions": {}
+}

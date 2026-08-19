@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "updated_count": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {}
+}

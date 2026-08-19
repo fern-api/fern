@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "imported": {
+      "$ref": "#/definitions/commons.Imported"
+    }
+  },
+  "required": [
+    "imported"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "commons.Imported": {
+      "type": "string"
+    }
+  }
+}

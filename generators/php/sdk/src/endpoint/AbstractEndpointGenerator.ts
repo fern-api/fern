@@ -1,0 +1,149 @@
+import { getOriginalName } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
+import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+import { DefaultValueExtractor } from "../DefaultValueExtractor.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
+import { EndpointRequest } from "./request/EndpointRequest.js";
+import { getEndpointRequest } from "./utils/getEndpointRequest.js";
+import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
+
+export abstract class AbstractEndpointGenerator {
+    protected readonly context: SdkGeneratorContext;
+
+    public constructor({ context }: { context: SdkGeneratorContext }) {
+        this.context = context;
+    }
+
+    public getEndpointSignatureInfo({
+        serviceId,
+        service,
+        endpoint
+    }: {
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
+    }): EndpointSignatureInfo {
+        const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ serviceId, endpoint });
+        const request = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
+        const requestParameter = request != null ? this.getRequestParameter({ request }) : undefined;
+        // Sort parameters so required params (no initializer) come before optional params (with initializer).
+        // PHP requires this ordering to avoid "required parameter follows optional parameter" errors.
+        const allParams = [...pathParameters, requestParameter].filter((p): p is php.Parameter => p != null);
+        const requiredParams = allParams.filter((p) => p.initializer == null);
+        const optionalParams = allParams.filter((p) => p.initializer != null);
+        return {
+            baseParameters: [...requiredParams, ...optionalParams],
+            pathParameters,
+            pathParameterReferences,
+            request,
+            requestParameter,
+            returnType: getEndpointReturnType({ context: this.context, endpoint })
+        };
+    }
+
+    private getAllPathParameters({
+        serviceId,
+        endpoint
+    }: {
+        serviceId: FernIr.ServiceId;
+        endpoint: FernIr.HttpEndpoint;
+    }): Pick<EndpointSignatureInfo, "pathParameters" | "pathParameterReferences"> {
+        const includePathParametersInSignature = this.includePathParametersInEndpointSignature({ endpoint });
+        const pathParameters: php.Parameter[] = [];
+        const service = this.context.getHttpServiceOrThrow(serviceId);
+        const pathParameterReferences: Record<string, string> = {};
+        for (const pathParam of [
+            ...this.context.ir.pathParameters,
+            ...service.pathParameters,
+            ...endpoint.pathParameters
+        ]) {
+            const parameterName = this.context.getParameterName(pathParam.name);
+            pathParameterReferences[getOriginalName(pathParam.name)] = this.accessPathParameterValue({
+                pathParameter: pathParam,
+                sdkRequest: endpoint.sdkRequest,
+                includePathParametersInEndpointSignature: includePathParametersInSignature
+            });
+            if (includePathParametersInSignature) {
+                const clientDefaultInit = DefaultValueExtractor.extractClientDefaultCodeBlock(pathParam.clientDefault);
+                const type = this.context.phpTypeMapper.convert({ reference: pathParam.valueType });
+                pathParameters.push(
+                    php.parameter({
+                        docs: pathParam.docs,
+                        name: parameterName,
+                        type,
+                        initializer: clientDefaultInit
+                    })
+                );
+            }
+        }
+        return {
+            pathParameters,
+            pathParameterReferences
+        };
+    }
+
+    private getRequestParameter({ request }: { request: EndpointRequest }): php.Parameter {
+        const defaultInitializer = request.shouldIncludeDefaultInitializer()
+            ? php.codeblock((writer) => {
+                  writer.write("new ");
+                  writer.writeNode(request.getRequestParameterType());
+                  writer.write("()");
+              })
+            : undefined;
+        return php.parameter({
+            type: request.getRequestParameterType(),
+            name: request.getRequestParameterName(),
+            initializer: request.getRequestParameterInitializer() ?? defaultInitializer
+        });
+    }
+
+    private includePathParametersInEndpointSignature({ endpoint }: { endpoint: FernIr.HttpEndpoint }): boolean {
+        const shape = endpoint.sdkRequest?.shape;
+        if (shape == null) {
+            return true;
+        }
+        switch (shape.type) {
+            case "wrapper": {
+                return !this.context.includePathParametersInWrappedRequest({ endpoint, wrapper: shape });
+            }
+            case "justRequestBody": {
+                return true;
+            }
+            default: {
+                assertNever(shape);
+            }
+        }
+    }
+
+    private accessPathParameterValue({
+        sdkRequest,
+        pathParameter,
+        includePathParametersInEndpointSignature
+    }: {
+        sdkRequest: FernIr.SdkRequest | undefined;
+        pathParameter: FernIr.PathParameter;
+        includePathParametersInEndpointSignature: boolean;
+    }): string {
+        const reference =
+            sdkRequest == null || includePathParametersInEndpointSignature
+                ? `$${this.context.getPropertyName(pathParameter.name)}`
+                : this.context.accessRequestProperty({
+                      requestParameterName: sdkRequest.requestParameterName,
+                      propertyName: pathParameter.name
+                  });
+        if (this.isBooleanPathParameter(pathParameter)) {
+            // PHP coerces a bool to "1"/"" when interpolated into a string, so a boolean path
+            // parameter must be rendered explicitly as "true"/"false" to produce a valid URL.
+            return `${reference} ? 'true' : 'false'`;
+        }
+        return reference;
+    }
+
+    private isBooleanPathParameter(pathParameter: FernIr.PathParameter): boolean {
+        const dereferenced = this.context.dereferenceOptional(pathParameter.valueType);
+        return dereferenced.type === "primitive" && dereferenced.primitive.v1 === FernIr.PrimitiveTypeV1.Boolean;
+    }
+}

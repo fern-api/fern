@@ -1,0 +1,18 @@
+name: api
+environments:
+  Production:
+    url: https://www.yoursite.com
+    audiences:
+      - external
+  Staging:
+    docs: This staging environment is helpful for testing!
+    url: https://www.staging.yoursite.com
+    audiences:
+      - internal
+      - development
+error-discrimination:
+  strategy: status-code
+audiences:
+  - external
+  - internal
+  - development

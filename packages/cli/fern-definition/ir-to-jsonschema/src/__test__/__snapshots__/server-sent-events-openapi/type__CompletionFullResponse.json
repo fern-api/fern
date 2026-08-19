@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "answer": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The complete generated answer."
+    },
+    "finishReason": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CompletionFullResponseFinishReason"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Why generation stopped."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Full response returned when streaming is disabled.",
+  "definitions": {
+    "CompletionFullResponseFinishReason": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "length",
+        "error"
+      ],
+      "description": "Why generation stopped."
+    }
+  }
+}

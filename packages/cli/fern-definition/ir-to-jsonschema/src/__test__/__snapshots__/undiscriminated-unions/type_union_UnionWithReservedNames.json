@@ -1,0 +1,15 @@
+{
+  "anyOf": [
+    {
+      "const": "type"
+    },
+    {
+      "const": "value"
+    },
+    {
+      "type": "string"
+    }
+  ],
+  "description": "Tests that union members named 'Type' or 'Value' don't collide with internal properties",
+  "definitions": {}
+}

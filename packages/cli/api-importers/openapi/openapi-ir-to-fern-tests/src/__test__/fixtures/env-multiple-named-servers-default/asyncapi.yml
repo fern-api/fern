@@ -1,0 +1,56 @@
+asyncapi: 3.0.0
+info:
+  title: Test AsyncAPI
+  version: 1.0.0
+# WebSocket servers that intentionally share x-fern-server-name values with the
+# OpenAPI HTTP servers (`Production`, `Agent`). Under the default behavior
+# (flag off) each HTTP environment receives the WebSocket URLs as named URLs;
+# when names would collide with HTTP URLs, the WebSocket entry falls back to a
+# protocol-suffixed key (e.g. `Agent_wss`) so both URLs remain addressable.
+servers:
+  production:
+    host: api.example.com
+    protocol: wss
+    x-fern-server-name: Production
+  agent:
+    host: agent.example.com
+    protocol: wss
+    x-fern-server-name: Agent
+channels:
+  transcriptionChannel:
+    address: "/v1/listen"
+    servers:
+      - $ref: "#/servers/production"
+    messages:
+      transcribe:
+        $ref: "#/components/messages/transcribe"
+  agentChannel:
+    address: "/v1/agent/converse"
+    servers:
+      - $ref: "#/servers/agent"
+    messages:
+      converse:
+        $ref: "#/components/messages/converse"
+operations:
+  transcribe:
+    action: send
+    channel:
+      $ref: "#/channels/transcriptionChannel"
+    messages:
+      - $ref: "#/channels/transcriptionChannel/messages/transcribe"
+  converse:
+    action: send
+    channel:
+      $ref: "#/channels/agentChannel"
+    messages:
+      - $ref: "#/channels/agentChannel/messages/converse"
+components:
+  messages:
+    transcribe:
+      summary: Transcription request.
+      payload:
+        type: string
+    converse:
+      summary: Agent conversation request.
+      payload:
+        type: string

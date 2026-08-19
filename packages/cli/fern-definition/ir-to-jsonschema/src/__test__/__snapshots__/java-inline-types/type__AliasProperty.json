@@ -1,0 +1,17 @@
+{
+  "$ref": "#/definitions/AliasPropertyType",
+  "definitions": {
+    "AliasPropertyType": {
+      "type": "object",
+      "properties": {
+        "prop": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prop"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

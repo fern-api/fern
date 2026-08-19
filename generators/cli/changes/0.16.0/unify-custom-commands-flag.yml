@@ -1,0 +1,7 @@
+- summary: |
+    Replace `embedTypes` and `embedSdk` config options with a single
+    `customCommands` flag. When true (default), the generator produces
+    the full custom command infrastructure (types crate, SDK crate,
+    sdk_glue, and custom.rs scaffold). Set to false for a spec-only
+    CLI with no custom command support.
+  type: feat

@@ -1,0 +1,3 @@
+rootProject.name = 'trace'
+
+include 'sample-app'

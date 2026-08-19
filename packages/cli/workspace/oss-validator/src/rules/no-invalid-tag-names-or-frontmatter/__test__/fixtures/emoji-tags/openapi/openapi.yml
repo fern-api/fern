@@ -1,0 +1,19 @@
+openapi: 3.1.0
+info:
+  title: Test API
+  version: 1.0.0
+tags:
+  - name: "\U0001F512 Authentication"
+    description: Auth endpoints
+  - name: "\U0001F4E6 Orders"
+    description: Order endpoints
+paths:
+  /login:
+    post:
+      tags:
+        - "\U0001F512 Authentication"
+      summary: Login
+      operationId: login
+      responses:
+        "200":
+          description: Success

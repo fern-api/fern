@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Update `@types/node` from `^18.19.70` to `^20.0.0` in generated SDKs to
+    satisfy vitest 4.x peer dependency requirements. Previously, `npm install`
+    failed with `ERESOLVE` because vitest 4.x requires
+    `@types/node@^20.0.0 || ^22.0.0 || >=24.0.0`.
+  type: fix

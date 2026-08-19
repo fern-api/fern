@@ -1,0 +1,6 @@
+- summary: |
+    Fix WireMock test generation to use percent-encoded query parameter keys,
+    matching what spec-compliant HTTP clients send. Also split comma-delimited
+    query parameter examples into multiple values in a single `WithParam()` call,
+    since WireMock.Net parses comma-separated values into arrays.
+  type: fix

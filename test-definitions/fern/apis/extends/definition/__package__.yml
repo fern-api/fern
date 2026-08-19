@@ -1,0 +1,52 @@
+service:
+  auth: false
+  base-path: /extends
+  endpoints:
+    extendedInlineRequestBody:
+      path: /extended-inline-request-body
+      method: POST
+      request:
+        name: Inlined
+        body:
+          properties:
+            unique: string
+          extends: ExampleType
+types:
+  ExampleType:
+    extends: Docs
+    properties:
+      name: string
+    examples:
+      - name: One
+        value:
+          docs: This is an example type.
+          name: Example
+
+  NestedType:
+    extends: JSON
+    properties:
+      name: string
+    examples:
+      - name: One
+        value:
+          docs: This is an example nested type.
+          name: NestedExample
+          raw: '{"nested": "example"}'
+
+  Docs:
+    properties:
+      docs: string
+    examples:
+      - name: One
+        value:
+          docs: Types extend this type to include a docs property.
+
+  JSON:
+    extends: Docs
+    properties:
+      raw: string
+    examples:
+      - name: One
+        value:
+          docs: Types extend this type to include a docs and json property.
+          raw: '{"docs": true, "json": true}'

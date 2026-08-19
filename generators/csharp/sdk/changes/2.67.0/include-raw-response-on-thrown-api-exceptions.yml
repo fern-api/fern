@@ -1,0 +1,3 @@
+- summary: |
+    `*ApiException` now exposes a `RawResponse` property carrying the failed HTTP response's status code, URL, and headers. Lets callers read `Retry-After` off a 429, pull `X-Request-Id` for support tickets, or inspect rate-limit headers off a thrown exception. Existing constructors still work — this is purely additive.
+  type: feat

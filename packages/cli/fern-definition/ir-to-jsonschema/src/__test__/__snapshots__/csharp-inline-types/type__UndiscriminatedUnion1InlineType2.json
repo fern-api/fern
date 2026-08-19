@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "baz": {
+      "type": "string",
+      "description": "lorem ipsum"
+    },
+    "ref": {
+      "$ref": "#/definitions/ReferenceType",
+      "description": "lorem ipsum"
+    }
+  },
+  "required": [
+    "baz",
+    "ref"
+  ],
+  "additionalProperties": false,
+  "description": "lorem ipsum",
+  "definitions": {
+    "ReferenceType": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string",
+          "description": "lorem ipsum"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false,
+      "description": "lorem ipsum"
+    }
+  }
+}

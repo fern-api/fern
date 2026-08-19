@@ -1,0 +1,68 @@
+{
+  "type": "object",
+  "properties": {
+    "paging": {
+      "$ref": "#/definitions/PagingCursors"
+    },
+    "results": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Current page of results from the requested resource."
+    }
+  },
+  "required": [
+    "paging"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "PagingCursors": {
+      "type": "object",
+      "properties": {
+        "next": {
+          "type": "string",
+          "description": "Cursor for the next page of results."
+        },
+        "previous": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Cursor for the previous page of results."
+        }
+      },
+      "required": [
+        "next"
+      ],
+      "additionalProperties": false
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "email"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

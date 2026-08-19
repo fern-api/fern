@@ -1,0 +1,5 @@
+- summary: |
+    Retain a reference to the upstream `Response` on streaming and SSE response
+    bodies so that undici's `FinalizationRegistry` does not garbage-collect the
+    `Response` and cancel the body stream on Node 18+.
+  type: fix

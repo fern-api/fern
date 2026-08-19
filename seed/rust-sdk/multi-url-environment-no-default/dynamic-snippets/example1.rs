@@ -1,0 +1,20 @@
+use seed_multi_url_environment_no_default::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = MultiUrlEnvironmentNoDefaultClient::new(config).expect("Failed to build client");
+    client
+        .s3
+        .get_presigned_url(
+            &GetPresignedUrlRequest {
+                s3key: "s3Key".to_string(),
+            },
+            None,
+        )
+        .await;
+}

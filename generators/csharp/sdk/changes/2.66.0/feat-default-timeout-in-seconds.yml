@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `default-timeout-in-seconds` config option to the C# SDK generator.
+    When set, the generated `ClientOptions.Timeout` defaults to the configured
+    value (or `Timeout.InfiniteTimeSpan` when set to `"infinity"`) instead of
+    the previously hardcoded 30 seconds. SDK users can still override the
+    timeout per-request via `RequestOptions.Timeout`.
+  type: feat

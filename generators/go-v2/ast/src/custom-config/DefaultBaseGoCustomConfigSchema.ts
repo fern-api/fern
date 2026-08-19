@@ -1,0 +1,10 @@
+import { BaseGoCustomConfigSchema } from "./BaseGoCustomConfigSchema.js";
+
+export const defaultBaseGoCustomConfigSchema: BaseGoCustomConfigSchema = {
+    alwaysSendRequiredProperties: true,
+    inlinePathParameters: true,
+    inlineFileProperties: true,
+    useReaderForBytesRequest: true,
+    union: "v1",
+    enableWireTests: true
+};

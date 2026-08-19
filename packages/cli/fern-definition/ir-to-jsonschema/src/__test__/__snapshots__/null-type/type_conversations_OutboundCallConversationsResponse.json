@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "conversation_id": {
+      "oneOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "array",
+            "null"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Always null when dry_run is true."
+    },
+    "dry_run": {
+      "type": "boolean",
+      "description": "Always true for this response."
+    }
+  },
+  "required": [
+    "conversation_id",
+    "dry_run"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Organization create validation / network",
+  "disposition": "shipped",
+  "rationale": "ValidationError/NetworkError passed explicitly instead of InternalError.",
+  "fixSummary": "createOrganizationIfDoesNotExist explicit codes.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-04-21",
+  "problemSignature": "Organization create flow: validation or network failures bubbled up as InternalError instead of explicit validation/network CLI errors."
+}

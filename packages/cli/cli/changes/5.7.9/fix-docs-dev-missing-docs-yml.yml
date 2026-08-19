@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern docs dev` now fails with a clear error when no `docs.yml` is present, instead of exiting silently.
+  type: fix

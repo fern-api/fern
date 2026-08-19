@@ -1,0 +1,41 @@
+import { ContainerRunner } from "@fern-api/core-utils";
+import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
+import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
+import { GenerationRunner } from "./GenerationRunner.js";
+import { NativeExecutionEnvironment } from "./NativeExecutionEnvironment.js";
+
+export async function runContainerizedGenerationForSeed(
+    args: GenerationRunner.RunArgs & {
+        keepDocker: boolean;
+        dockerImage: string;
+        runner?: ContainerRunner;
+        executionEnvironment?: ExecutionEnvironment;
+    }
+): Promise<void> {
+    process.env.IGNORE_GIT_IN_METADATA = "true";
+    const executionEnv =
+        args.executionEnvironment ??
+        new ContainerExecutionEnvironment({
+            containerImage: args.dockerImage,
+            keepContainer: args.keepDocker,
+            runner: args.runner ?? "podman"
+        });
+    const runner = new GenerationRunner(executionEnv);
+    await runner.run(args);
+}
+
+export async function runNativeGenerationForSeed(
+    args: GenerationRunner.RunArgs,
+    commands: string[],
+    workingDirectory?: string,
+    env?: Record<string, string>
+): Promise<void> {
+    process.env.IGNORE_GIT_IN_METADATA = "true";
+    const executionEnv = new NativeExecutionEnvironment({ commands, workingDirectory, env });
+    const runner = new GenerationRunner(executionEnv);
+    await runner.run(args);
+}
+
+export async function runNativeGenerationWithCommand(args: GenerationRunner.RunArgs, command: string): Promise<void> {
+    return runNativeGenerationForSeed(args, [command]);
+}

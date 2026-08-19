@@ -1,0 +1,4 @@
+- summary: |
+    Bump WireMock.Net from 2.2.0 to 2.6.0 in generated test projects to resolve Snyk
+    vulnerability reports flagging the older version.
+  type: fix

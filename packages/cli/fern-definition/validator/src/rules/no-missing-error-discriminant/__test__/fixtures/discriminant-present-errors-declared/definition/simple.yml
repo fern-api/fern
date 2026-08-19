@@ -1,0 +1,5 @@
+types:
+  Foo: string
+errors:
+  MyError:
+    status-code: 422

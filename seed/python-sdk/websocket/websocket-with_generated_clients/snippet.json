@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/status",
+                "method": "GET",
+                "identifier_override": "endpoint_status.get_status"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedWebsocket\n\nclient = SeedWebsocket(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.status.get_status()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedWebsocket\n\nclient = AsyncSeedWebsocket(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.status.get_status()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

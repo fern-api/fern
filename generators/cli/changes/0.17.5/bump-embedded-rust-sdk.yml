@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Rebuild to pick up rust-sdk 0.40.6 which fixes serde imports in
+    `environment.rs` for multi-URL environments when embedded in the CLI.
+  type: chore

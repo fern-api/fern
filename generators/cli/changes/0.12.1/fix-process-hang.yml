@@ -1,0 +1,5 @@
+- summary: |
+    Fix process hanging indefinitely after generation completes by
+    explicitly calling process.exit() instead of relying on the
+    event loop to drain.
+  type: fix

@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "next": {
+      "type": "string",
+      "description": "Cursor for the next page of results."
+    },
+    "previous": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Cursor for the previous page of results."
+    }
+  },
+  "required": [
+    "next"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

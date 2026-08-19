@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "sortField": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SortField"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The sort field to use"
+    },
+    "query": {
+      "type": "string",
+      "description": "The search query"
+    }
+  },
+  "required": [
+    "query"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "SortField": {
+      "const": "DEFAULT",
+      "description": "A sort field that only allows the value \"DEFAULT\""
+    }
+  }
+}

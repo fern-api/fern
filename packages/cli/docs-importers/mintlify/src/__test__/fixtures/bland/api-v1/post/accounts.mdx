@@ -1,0 +1,36 @@
+---
+title: "Create Encrypted Key"
+api: "POST https://api.bland.ai/v1/accounts"
+description: "Integrate your own Twilio account with Bland. See [Enterprise Twilio Integration](/enterprise-features/custom-twilio) for more information."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Body
+
+<ParamField body="account_sid" type="string" required>
+  Your Twilio account SID.
+</ParamField>
+
+<ParamField body="auth_token" type="string" required>
+  Your Twilio auth token.
+</ParamField>
+
+### Response
+
+<ResponseField body="encrypted_key" type="string">
+  Your `encrypted_key` to store and use in future requests.
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+    "status": "success",
+    "encrypted_key": "YOUR_ENCRYPTED_KEY"
+}
+```
+</ResponseExample>

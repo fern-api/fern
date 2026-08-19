@@ -1,0 +1,20 @@
+imports:
+  commons: commons.yml
+name: my-api
+docs: foo bar baz
+headers:
+  X-API-VERSION:
+    name: apiVersion
+    type: optional<string>
+error-discrimination:
+  strategy: property
+  property-name: error
+audiences:
+  - internal
+  - test
+errors:
+  - commons.BadRequestError
+
+base-path: /test/{rootPathParam}
+path-parameters:
+  rootPathParam: string

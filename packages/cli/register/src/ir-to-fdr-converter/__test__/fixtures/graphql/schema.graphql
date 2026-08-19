@@ -1,0 +1,139 @@
+"""
+Simple GraphQL schema for testing OSS workspace schema loading
+"""
+
+type Query {
+  """Get a user by their ID"""
+  user(id: ID!): User
+
+  """Get all users with optional filtering"""
+  users(limit: Int = 10, offset: Int = 0, active: Boolean): [User!]!
+
+  """Health check endpoint"""
+  health: HealthStatus!
+}
+
+type Mutation {
+  """Create a new user"""
+  createUser(input: CreateUserInput!): CreateUserResult!
+
+  """Update an existing user"""
+  updateUser(id: ID!, input: UpdateUserInput!): UpdateUserResult!
+}
+
+type Subscription {
+  """Subscribe to user updates"""
+  userUpdates(userId: ID): UserUpdate!
+
+  """Subscribe to system notifications"""
+  notifications: Notification!
+}
+
+"""User type representing a platform user"""
+type User {
+  id: ID!
+  email: String!
+  firstName: String
+  lastName: String
+  createdAt: DateTime!
+  isActive: Boolean!
+  role: UserRole!
+  metadata: JSON
+}
+
+"""Input type for creating a user"""
+input CreateUserInput {
+  email: String!
+  firstName: String
+  lastName: String
+  role: UserRole = USER
+  metadata: JSON
+}
+
+"""Input type for updating a user"""
+input UpdateUserInput {
+  email: String
+  firstName: String
+  lastName: String
+  role: UserRole
+  isActive: Boolean
+  metadata: JSON
+}
+
+"""User role enumeration"""
+enum UserRole {
+  ADMIN
+  USER
+  MODERATOR
+}
+
+"""Health status information"""
+type HealthStatus {
+  status: ServiceStatus!
+  version: String!
+  timestamp: DateTime!
+  uptime: Int!
+}
+
+"""Service status enumeration"""
+enum ServiceStatus {
+  HEALTHY
+  DEGRADED
+  UNHEALTHY
+}
+
+"""Result type for user creation"""
+union CreateUserResult = User | UserCreationError
+
+"""Result type for user updates"""
+union UpdateUserResult = User | UserUpdateError
+
+"""User creation error"""
+type UserCreationError {
+  code: String!
+  message: String!
+  field: String
+}
+
+"""User update error"""
+type UserUpdateError {
+  code: String!
+  message: String!
+  field: String
+}
+
+"""User update notification"""
+type UserUpdate {
+  user: User!
+  changeType: ChangeType!
+  timestamp: DateTime!
+}
+
+"""System notification"""
+type Notification {
+  id: ID!
+  type: NotificationType!
+  title: String!
+  message: String!
+  timestamp: DateTime!
+}
+
+"""Type of change for user updates"""
+enum ChangeType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""Type of system notification"""
+enum NotificationType {
+  INFO
+  WARNING
+  ERROR
+}
+
+"""Custom scalar for date-time values"""
+scalar DateTime
+
+"""Custom scalar for JSON data"""
+scalar JSON

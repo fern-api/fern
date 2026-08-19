@@ -1,0 +1,5 @@
+- summary: |
+    Fix `fern logout` showing a "localhost refused to connect" error page by
+    starting a local server to serve a branded confirmation page, matching the login flow.
+    Also update both login and logout confirmation pages with new branded designs.
+  type: fix

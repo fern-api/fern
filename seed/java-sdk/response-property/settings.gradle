@@ -1,0 +1,3 @@
+rootProject.name = 'response-property'
+
+include 'sample-app'

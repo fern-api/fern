@@ -1,0 +1,40 @@
+openapi: 3.0.0
+info:
+  title: Parameter Reference Test
+  version: 1.0.0
+paths:
+  /search:
+    get:
+      operationId: search
+      summary: Search with filter
+      parameters:
+        - name: filter
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/SearchFilter"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+components:
+  schemas:
+    SearchFilter:
+      type: object
+      description: This schema is referenced by a parameter and should be kept
+      properties:
+        query:
+          type: string
+        limit:
+          type: integer
+    UnusedFilter:
+      type: object
+      description: This schema should be pruned as it's not referenced
+      properties:
+        unused:
+          type: string

@@ -1,0 +1,3 @@
+rootProject.name = 'websocket-multi-url'
+
+include 'sample-app'

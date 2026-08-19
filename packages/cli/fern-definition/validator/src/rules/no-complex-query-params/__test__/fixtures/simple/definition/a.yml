@@ -1,0 +1,89 @@
+types:
+  Object:
+    properties:
+      foo: string
+  NestedObject:
+    properties:
+      foo: string
+      object: Object
+  ObjectWithLiteral:
+    properties:
+      foo: string
+      helloWorld: literal<"hello world">
+  NestedObjectWithLiteral:
+    properties:
+      foo: string
+      object: ObjectWithLiteral
+  ObjectWithUnion:
+    properties:
+      foo: string
+      union: Union
+  NestedObjectWithUnion:
+    properties:
+      foo: string
+      object: ObjectWithUnion
+
+  AliasOfObject: Object
+  AliasOfAliasOfObject: Object
+
+  AliasOfPrimitive: boolean
+  AliasOfAliasOfPrimitive: string
+
+  Union:
+    union:
+      str: string
+      bool: boolean
+
+  PrimitiveUndiscriminatedUnion:
+    discriminated: false
+    union:
+      - string
+      - boolean
+
+  UndiscriminatedUnion:
+    discriminated: false
+    union:
+      - string
+      - Object
+      - Union
+
+  Color:
+    enum:
+      - RED
+      - BLACK
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    foo:
+      path: ""
+      method: POST
+    bar:
+      path: ""
+      method: POST
+      request:
+        query-parameters:
+          a: string
+          b: optional<string>
+          c: list<string>
+          d: unknown
+          e: optional<AliasOfPrimitive>
+          f: optional<AliasOfAliasOfPrimitive>
+          g: optional<AliasOfAliasOfObject>
+          h: MadeUpType
+          i: optional<Color>
+          j: literal<"hello world">
+          k: Object
+          l: ObjectWithLiteral
+          m: NestedObject
+          n: NestedObjectWithLiteral
+          o: Union
+          p: UndiscriminatedUnion
+          q: ObjectWithUnion
+          r: NestedObjectWithUnion
+          s: map<string, string>
+          t: map<string, User>
+          u: map<string, ObjectWithLiteral>
+          v: map<string, unknown>
+          w: PrimitiveUndiscriminatedUnion

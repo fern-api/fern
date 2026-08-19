@@ -1,0 +1,6 @@
+- summary: |
+    Fix `fern docs dev` hot reload not working for .mdx file changes. The backend
+    now updates the docs definition before notifying the browser to refresh, and
+    the reload handler properly recovers from errors instead of silently blocking
+    all future reloads.
+  type: fix

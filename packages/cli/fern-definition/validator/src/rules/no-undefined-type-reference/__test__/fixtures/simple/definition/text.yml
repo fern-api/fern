@@ -1,0 +1,19 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    streamText:
+      method: POST
+      path: /
+      response-stream: text
+    streamText2:
+      method: POST
+      path: /
+      response-stream:
+        type: text
+    returnText:
+      method: POST
+      path: /
+      response: text
+types:
+  ListOfText: list<text>

@@ -1,0 +1,23 @@
+using SeedExhaustive;
+using SeedExhaustive.Types.Object;
+using System.Globalization;
+
+public partial class Examples
+{
+    public async Task Example30() {
+        var client = new SeedExhaustiveClient(
+            token: "<token>",
+            clientOptions: new ClientOptions {
+                BaseUrl = "https://api.fern.com"
+            }
+        );
+
+        await client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(
+            new ObjectWithDatetimeLikeString {
+                DatetimeLikeString = "2023-08-31T14:15:22Z",
+                ActualDatetime = DateTime.Parse("2023-08-31T14:15:22Z", null, DateTimeStyles.AdjustToUniversal)
+            }
+        );
+    }
+
+}

@@ -1,0 +1,25 @@
+{
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/users.User"
+  },
+  "description": "A type alias for a list of users",
+  "definitions": {
+    "users.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Improve SSE event parsing and deserialization performance by caching resolved type hints
+    and short-circuiting `convert_and_respect_annotation_metadata` when a type has no aliased
+    fields. Previously every call recomputed `typing.get_type_hints` and walked the entire type
+    graph, which was very expensive for streams parsing many events against large discriminated
+    unions. Output is unchanged.
+  type: fix

@@ -1,0 +1,9 @@
+- summary: |
+    Fix Go SDKs being flagged as a breaking change (spurious major version bump) on no-op
+    regenerations under `--version AUTO`. The freshly generated code carries the magic placeholder
+    version (major 0, no `/vN` module-path suffix) while the previously published SDK has `/vN` on
+    its module directive and every import. Because git groups all deletions before all additions in
+    an import block, the diff cleaner only stripped the first import's suffix churn and leaked the
+    rest to the AI diff analyzer, which misclassified the regeneration as breaking. The cleaner now
+    removes all Go module-path `/vN` suffix-only churn regardless of diff layout.
+  type: fix

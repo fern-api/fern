@@ -1,0 +1,4 @@
+- summary: |
+    Sync cli-sdk runtime with CliExecutor bridge for SDK
+    execution-sharing in custom commands.
+  type: feat

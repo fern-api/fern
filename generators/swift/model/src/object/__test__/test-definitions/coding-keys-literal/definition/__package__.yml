@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  ObjectWithCodingKeysLiteral:
+    properties:
+      field1: string
+      field2: optional<string>
+      literalField1: literal<"CodingKeys">
+      literalField2: literal<"codingKeys">

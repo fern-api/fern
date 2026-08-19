@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the Rust SDK and Rust model generator containers' Node base image from
+    `node:22.22-alpine3.23` to `node:24.15-alpine3.23`. Aligns the generators
+    with the rest of the Fern generator containers on a single Node major
+    version (Node 24) and picks up Node 24's CVE patches. The Rust SDK's
+    in-place `npm@11.13.0` self-upgrade and the bundled `ip-address` patch are
+    retained because the Node 24 `npm` ship (`11.12.1`) still vendors
+    `ip-address@10.1.0`, which is vulnerable to GHSA-v2v4-37r5-5v8g.
+  type: chore

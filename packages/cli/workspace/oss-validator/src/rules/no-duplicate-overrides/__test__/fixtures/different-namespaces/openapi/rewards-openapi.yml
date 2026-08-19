@@ -1,0 +1,25 @@
+openapi: 3.0.0
+info:
+  title: Rewards API
+  version: "1.0"
+paths:
+  /referrals/reward-balance:
+    get:
+      operationId: ReferralsController_getRewardBalance
+      x-fern-sdk-method-name: fetchRewardBalance
+      x-fern-sdk-group-name:
+        - referrals
+      x-fern-audiences:
+        - public
+      summary: Get reward balance
+      description: Get reward balance for authorized user
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  usdCents:
+                    type: number

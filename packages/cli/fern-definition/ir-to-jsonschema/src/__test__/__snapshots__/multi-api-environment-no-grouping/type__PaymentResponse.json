@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/definitions/PaymentResponseStatus"
+    },
+    "message": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "status"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "PaymentResponseStatus": {
+      "type": "string",
+      "enum": [
+        "accepted",
+        "rejected"
+      ]
+    }
+  }
+}

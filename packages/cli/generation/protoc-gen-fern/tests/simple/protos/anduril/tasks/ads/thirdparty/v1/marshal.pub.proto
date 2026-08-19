@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package anduril.tasks.ads.thirdparty.v1;
+
+import "anduril/tasks/v2/objective.pub.proto";
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "Anduril.Tasks.ADS.ThirdParty.v1";
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/tasks/ads/thirdparty/v1;tasksv1";
+option java_multiple_files = true;
+option java_outer_classname = "ThirdPartyPowerTaskProto";
+option java_package = "com.anduril.tasks.ADS.thirdparty.v1";
+option objc_class_prefix = "ADSThirdParty";
+option php_namespace = "Anduril\\Tasks\\ADS\\ThirdParty\\v1";
+
+// Maps to BREVITY code Marshal.
+// Establish(ed) at a specific point, typically used to posture forces in preparation for an offensive operation.
+message Marshal {
+  // Objective to Marshal to.
+  anduril.tasks.v2.Objective objective = 1;
+
+  // Speed in Meters/Second
+  google.protobuf.DoubleValue surface_speed_ms = 2;
+}

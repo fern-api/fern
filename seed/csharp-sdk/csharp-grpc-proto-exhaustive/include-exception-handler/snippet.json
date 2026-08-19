@@ -1,0 +1,125 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/data.v1.DataService/Check",
+                "method": "POST",
+                "identifier_override": "endpoint_dataService.Check"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.CheckAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/data.v1.DataService/Create",
+                "method": "POST",
+                "identifier_override": "endpoint_dataService.Create"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.CreateAsync(new CreateRequest { Name = \"name\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/data.v1.DataService/Delete",
+                "method": "POST",
+                "identifier_override": "endpoint_dataService.Delete"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.DeleteAsync(new DeleteRequest());\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/data.v1.DataService/Describe",
+                "method": "POST",
+                "identifier_override": "endpoint_dataService.Describe"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.DescribeAsync(new DescribeRequest());\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/data.v1.DataService/Query",
+                "method": "POST",
+                "identifier_override": "endpoint_dataService.Query"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.QueryAsync(new QueryRequest { TopK = 1 });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/data.v1.DataService/Upload",
+                "method": "POST",
+                "identifier_override": "endpoint_dataService.Upload"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.UploadAsync(\n    new UploadRequest\n    {\n        Columns = new List<SeedApi.Column>()\n        {\n            new SeedApi.Column\n            {\n                Id = \"id\",\n                Values = new List<float>() { 1.1f },\n            },\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/data/fetch",
+                "method": "GET",
+                "identifier_override": "endpoint_dataService.Fetch"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.FetchAsync(new FetchRequest());\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/data/list",
+                "method": "GET",
+                "identifier_override": "endpoint_dataService.List"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.ListAsync(new ListRequest());\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/data/update",
+                "method": "POST",
+                "identifier_override": "endpoint_dataService.Update"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.UpdateAsync(new UpdateRequest { Id = \"id\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/foo",
+                "method": "POST",
+                "identifier_override": "endpoint_.postFoo"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.PostFooAsync();\n"
+            }
+        }
+    ]
+}

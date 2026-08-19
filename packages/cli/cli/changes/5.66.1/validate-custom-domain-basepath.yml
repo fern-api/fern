@@ -1,0 +1,5 @@
+- summary: |
+    Validate that a docs instance's `url` and `custom-domain` share the same basepath for all
+    sites, not just basepath-aware ones. Navigation links and redirects are generated relative to
+    the basepath, so the CLI now fails with a clear error when they differ.
+  type: fix

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+    rather than in the order they happen to appear in the input request, so generated
+    examples line up with the actual SDK method signature even when the spec lists path
+    parameters in a different order.
+  type: fix

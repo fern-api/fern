@@ -1,0 +1,81 @@
+name: "✨ Feature Request"
+description: "How can we make Fern even more awesome?"
+type: "feature"
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: product
+    attributes:
+      label: "Component"
+      options:
+        - "CLI"
+        - "SDKs"
+        - "Docs"
+        - "Dashboard"
+        - "Other"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "Priority"
+      options:
+        - "P0 - Critical (Blocking work)"
+        - "P1 - High (Strongly needed)"
+        - "P2 - Medium (Would be helpful)"
+        - "P3 - Low (Nice to have)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: sdk-language
+    attributes:
+      label: "SDK Language(s)"
+      description: "Only if you selected 'SDKs' above. Skip this field otherwise."
+      multiple: true
+      options:
+        - "TypeScript"
+        - "Python"
+        - "Java"
+        - "Go"
+        - "C#"
+        - "PHP"
+        - "Ruby"
+        - "Swift"
+        - "Rust"
+    validations:
+      required: false
+
+  - type: textarea
+    id: proposed-feature
+    attributes:
+      label: "Feature Description"
+      description: "Clearly describe the functionality and how it is useful. Component, priority, and language are captured by the fields above — no need to repeat them."
+      placeholder: |
+        Example:
+        - **Feature**: Auto-retry for failed SDK requests.
+        - **Why**: Reduces manual retry logic.
+        - **How**: Add built-in retries with configurable settings.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Any alternatives?"
+      description: "Have you tried workarounds or similar solutions?"
+      placeholder: "Describe any alternatives..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: "Are you interested in contributing this feature?"
+      description: "If this feature is in line with the project's goals, the maintainers are happy to support with guidance and review."
+      options:
+        - "No"
+        - "Yes"
+    validations:
+      required: true

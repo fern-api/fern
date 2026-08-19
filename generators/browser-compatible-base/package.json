@@ -1,0 +1,51 @@
+{
+  "name": "@fern-api/browser-compatible-base-generator",
+  "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern.git",
+    "directory": "generators/browser-compatible-base"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": ["lib"],
+  "scripts": {
+    "clean": "rm -rf ./lib",
+    "compile": "tsc",
+    "compile:debug": "tsc --sourceMap",
+    "depcheck": "knip --config ../../knip.json --no-config-hints",
+    "test": "vitest --passWithNoTests --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
+    "test:update": "vitest --passWithNoTests --run -u"
+  },
+  "dependencies": {
+    "@fern-api/casings-generator": "workspace:*",
+    "@fern-api/configuration": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/dynamic-ir-sdk": "66.1.0",
+    "@fern-api/fern-definition-schema": "workspace:*",
+    "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/logger": "workspace:*",
+    "@fern-api/path-utils": "workspace:*",
+    "@fern-fern/generator-exec-sdk": "catalog:"
+  },
+  "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

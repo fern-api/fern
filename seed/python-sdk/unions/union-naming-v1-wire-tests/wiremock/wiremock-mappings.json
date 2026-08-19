@@ -1,0 +1,147 @@
+{
+  "mappings": [
+    {
+      "id": "b1f32ca9-b912-472c-b65c-0dd721da6993",
+      "name": "get - default",
+      "request": {
+        "urlPathTemplate": "/bigunion/{id}",
+        "method": "GET",
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"type\": \"normalSweet\",\n  \"value\": \"value\",\n  \"id\": \"id\",\n  \"created-at\": \"2024-01-15T09:30:00Z\",\n  \"archived-at\": \"2024-01-15T09:30:00Z\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "b1f32ca9-b912-472c-b65c-0dd721da6993",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "b512b590-3d02-4a21-bd0d-b20388dba9f3",
+      "name": "update - default",
+      "request": {
+        "urlPathTemplate": "/bigunion",
+        "method": "PATCH"
+      },
+      "response": {
+        "status": 200,
+        "body": "true",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "b512b590-3d02-4a21-bd0d-b20388dba9f3",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "f08d1bf3-46e1-482b-a8f0-39c16c3a2d84",
+      "name": "update-many - default",
+      "request": {
+        "urlPathTemplate": "/bigunion/many",
+        "method": "PATCH"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "f08d1bf3-46e1-482b-a8f0-39c16c3a2d84",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "c355b619-2495-4caf-b85f-77766995a146",
+      "name": "get - default",
+      "request": {
+        "urlPathTemplate": "/{id}",
+        "method": "GET",
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"type\": \"circle\",\n  \"radius\": 1.1,\n  \"id\": \"id\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "c355b619-2495-4caf-b85f-77766995a146",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "7b5d90dc-ff29-4059-a8d7-e30f4286d795",
+      "name": "update - default",
+      "request": {
+        "urlPathTemplate": "/",
+        "method": "PATCH"
+      },
+      "response": {
+        "status": 200,
+        "body": "true",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "7b5d90dc-ff29-4059-a8d7-e30f4286d795",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 5
+  }
+}

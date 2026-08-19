@@ -1,0 +1,88 @@
+# Rust stage: provides the full toolchain (cargo, rustc, rustfmt) needed for
+# publishing to crates.io and running tests.
+# Using the official Rust image handles multi-arch (amd64/arm64) automatically.
+# See: https://hub.docker.com/_/rust
+FROM rust:1.91-alpine3.23 AS rust
+RUN rustup component add rustfmt
+
+FROM node:24.17-alpine3.23
+
+RUN apk update && apk upgrade --no-cache
+
+# Update bundled npm to refresh transitive dependencies (picomatch, brace-expansion,
+# ip-address, etc.) that ship inside /usr/local/lib/node_modules/npm and otherwise
+# carry known CVEs into the image. We install into a fresh prefix and swap directories
+# because in-place self-upgrade of the bundled npm in node:22.22-alpine3.23 fails with
+# a stale module-resolution error.
+RUN mkdir -p /tmp/npm-upgrade \
+    && npm install --prefix /tmp/npm-upgrade npm@11.17.0 \
+    && rm -rf /usr/local/lib/node_modules/npm \
+    && mv /tmp/npm-upgrade/node_modules/npm /usr/local/lib/node_modules/npm \
+    && rm -rf /tmp/npm-upgrade \
+    && rm -f /usr/local/bin/npm /usr/local/bin/npx \
+    && ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
+    && npm --version
+
+# Patch npm's transitively bundled ip-address to 10.1.1 to address GHSA-v2v4-37r5-5v8g.
+# npm 11.13.0 still ships ip-address@10.1.0 via socks > socks-proxy-agent > @npmcli/agent.
+RUN mkdir -p /tmp/ip-address-upgrade \
+    && cd /tmp/ip-address-upgrade \
+    && npm pack ip-address@10.1.1 \
+    && tar -xzf ip-address-10.1.1.tgz \
+    && rm -rf /usr/local/lib/node_modules/npm/node_modules/ip-address \
+    && mv package /usr/local/lib/node_modules/npm/node_modules/ip-address \
+    && rm -rf /tmp/ip-address-upgrade
+
+# Patch undici to 6.27.0 to fix CVE-2026-12151.
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack undici@6.27.0 && \
+    rm -rf undici && \
+    mkdir undici && \
+    tar -xzf undici-6.27.0.tgz --strip-components=1 -C undici/ && \
+    rm undici-6.27.0.tgz
+
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; npm 11.17.0 vendors 5.0.5).
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack brace-expansion@5.0.6 && \
+    rm -rf brace-expansion && \
+    mkdir brace-expansion && \
+    tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
+    rm brace-expansion-5.0.6.tgz
+
+# Patch tar to 7.5.16 to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh
+# (PAX size override applied to intermediary GNU long-name/long-link headers,
+# causing tar parser interpretation differential / file smuggling).
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack tar@7.5.16 && \
+    rm -rf tar && \
+    mkdir tar && \
+    tar -xzf tar-7.5.16.tgz --strip-components=1 -C tar/ && \
+    rm tar-7.5.16.tgz
+
+ARG SENTRY_DSN
+ARG SENTRY_ENVIRONMENT=production
+ARG SENTRY_RELEASE
+ENV SENTRY_DSN=$SENTRY_DSN
+ENV SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
+ENV SENTRY_RELEASE=$SENTRY_RELEASE
+
+# Install system dependencies
+RUN apk --no-cache add bash curl git zip gcc musl-dev openssl-dev pkgconfig
+
+# Copy the full Rust toolchain from the official image
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:$PATH
+COPY --from=rust /usr/local/rustup /usr/local/rustup
+COPY --from=rust /usr/local/cargo /usr/local/cargo
+RUN rustfmt --version && cargo --version
+
+RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
+    git config --global user.name "fern-api"
+
+COPY generators/rust/sdk/dist /dist
+COPY generators/rust/sdk/dist/asIs /asIs
+COPY generators/rust/sdk/features.yml /assets/features.yml
+
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs", "rust-sdk"]

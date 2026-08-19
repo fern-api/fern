@@ -1,0 +1,235 @@
+import {
+    AbstractAstNode,
+    AbstractFormatter,
+    addGlobalFunctionFilter,
+    at,
+    enableStackTracking,
+    getFramesForTaggedObject
+} from "@fern-api/browser-compatible-base-generator";
+import { Generation } from "../../context/generation-info.js";
+import { type Origin } from "../../context/model-navigator.js";
+import { type Class } from "../types/Class.js";
+import { type ClassReference } from "../types/ClassReference.js";
+import { type Interface } from "../types/Interface.js";
+import { Writer } from "./Writer.js";
+
+type Namespace = string;
+
+export interface FormattedAstNodeSnippet {
+    imports: string | undefined;
+    body: string;
+}
+
+// don't track stack frames for the internals of AstNode.
+addGlobalFunctionFilter("AstNode");
+
+export abstract class AstNode extends AbstractAstNode {
+    constructor(public readonly generation: Generation) {
+        super();
+    }
+
+    protected get csharp() {
+        return this.generation.csharp;
+    }
+    protected get registry() {
+        return this.generation.registry;
+    }
+    protected get settings() {
+        return this.generation.settings;
+    }
+    protected get namespaces() {
+        return this.generation.namespaces;
+    }
+    protected get names() {
+        return this.generation.names;
+    }
+    protected get model() {
+        return this.generation.model;
+    }
+    protected get format() {
+        return this.generation.format;
+    }
+    protected get Types() {
+        return this.generation.Types;
+    }
+
+    protected get System() {
+        return this.generation.extern.System;
+    }
+    protected get NUnit() {
+        return this.generation.extern.NUnit;
+    }
+    protected get OneOf() {
+        return this.generation.extern.OneOf;
+    }
+    protected get Google() {
+        return this.generation.extern.Google;
+    }
+    protected get WireMock() {
+        return this.generation.extern.WireMock;
+    }
+    protected get Primitive() {
+        return this.generation.Primitive;
+    }
+    protected get Value() {
+        return this.generation.Value;
+    }
+    protected get Collection() {
+        return this.generation.Collection;
+    }
+
+    /**
+     * Writes the node to a string.
+     */
+    public override toString({
+        namespace,
+        allNamespaceSegments,
+        allTypeClassReferences,
+        generation,
+        formatter,
+        skipImports = false,
+        skipGlobalQualifier = false
+    }: {
+        namespace: string;
+        allNamespaceSegments: Set<string>;
+        allTypeClassReferences: Map<string, Set<Namespace>>;
+        generation: Generation;
+        formatter?: AbstractFormatter;
+        skipImports?: boolean;
+        skipGlobalQualifier?: boolean;
+    }): string {
+        const writer = new Writer({
+            namespace,
+            allNamespaceSegments,
+            allTypeClassReferences,
+            generation,
+            skipImports,
+            skipGlobalQualifier
+        });
+        this.write(writer);
+        const stringNode = writer.toString(skipImports);
+        return formatter != null ? formatter.formatSync(stringNode) : stringNode;
+    }
+    public toStringAsync({
+        namespace,
+        allNamespaceSegments,
+        allTypeClassReferences,
+        generation,
+        formatter,
+        skipImports = false,
+        skipGlobalQualifier = false
+    }: {
+        namespace: string;
+        allNamespaceSegments: Set<string>;
+        allTypeClassReferences: Map<string, Set<Namespace>>;
+        generation: Generation;
+        formatter?: AbstractFormatter;
+        skipImports?: boolean;
+        skipGlobalQualifier?: boolean;
+    }): Promise<string> {
+        const writer = new Writer({
+            namespace,
+            allNamespaceSegments,
+            allTypeClassReferences,
+            generation,
+            skipImports,
+            skipGlobalQualifier
+        });
+        this.write(writer);
+        const stringNode = writer.toString(skipImports);
+        return formatter != null ? formatter.format(stringNode) : Promise.resolve(stringNode);
+    }
+
+    public toFormattedSnippet({
+        allNamespaceSegments,
+        allTypeClassReferences,
+        generation,
+        formatter,
+        skipImports = false
+    }: {
+        allNamespaceSegments: Set<string>;
+        allTypeClassReferences: Map<string, Set<Namespace>>;
+        generation: Generation;
+        formatter: AbstractFormatter;
+        skipImports: boolean;
+    }): FormattedAstNodeSnippet {
+        const writer = new Writer({
+            namespace: "",
+            allNamespaceSegments,
+            allTypeClassReferences,
+            generation,
+            skipImports
+        });
+        this.write(writer);
+        return {
+            imports: writer.importsToString(),
+            body: formatter.formatSync(writer.buffer)
+        };
+    }
+
+    public async toFormattedSnippetAsync({
+        allNamespaceSegments,
+        allTypeClassReferences,
+        generation,
+        formatter,
+        skipImports = false
+    }: {
+        allNamespaceSegments: Set<string>;
+        allTypeClassReferences: Map<string, Set<Namespace>>;
+        generation: Generation;
+        formatter: AbstractFormatter;
+        skipImports?: boolean;
+    }): Promise<FormattedAstNodeSnippet> {
+        const writer = new Writer({
+            namespace: "",
+            allNamespaceSegments,
+            allTypeClassReferences,
+            generation,
+            skipImports
+        });
+        this.write(writer);
+        return {
+            imports: writer.importsToString(),
+            body: await formatter.format(writer.buffer)
+        };
+    }
+
+    public get debugInfo(): string {
+        return enableStackTracking
+            ? `Debug Info:\n    at:\n    ${at({ multiline: true }).replaceAll("\n", "\n    ")}\n    creation stack:\n${getFramesForTaggedObject(
+                  this
+              )
+                  .map((each) => `    ${each.fn} - ${each.path}:${each.position}`)
+                  .join("\n")}`
+            : "";
+    }
+}
+
+export namespace Node {
+    export interface Args {
+        origin?: Origin;
+    }
+}
+
+export abstract class Node extends AstNode {
+    public readonly origin?: Origin;
+    constructor(origin: Origin | undefined, generation: Generation) {
+        super(generation);
+        this.origin = this.model.origin(origin);
+    }
+}
+
+export namespace MemberNode {
+    export interface Args extends Node.Args {
+        enclosingType?: Class | Interface | ClassReference;
+    }
+}
+//
+export abstract class MemberNode extends Node {
+    public readonly enclosingType?: Class | Interface | ClassReference;
+
+    constructor(args: MemberNode.Args, origin: Origin | undefined, generation: Generation) {
+        super(origin, generation);
+        this.enclosingType = args.enclosingType;
+    }
+}

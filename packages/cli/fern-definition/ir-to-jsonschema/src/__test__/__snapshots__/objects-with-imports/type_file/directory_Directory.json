@@ -1,0 +1,111 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "files": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/file.File"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "directories": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/file.directory.Directory"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "file.FileInfo": {
+      "type": "string",
+      "oneOf": [
+        {
+          "const": "REGULAR",
+          "description": "A regular file (e.g. foo.txt)."
+        },
+        {
+          "const": "DIRECTORY",
+          "description": "A directory (e.g. foo/)."
+        }
+      ]
+    },
+    "file.File": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        },
+        "info": {
+          "$ref": "#/definitions/file.FileInfo"
+        }
+      },
+      "required": [
+        "name",
+        "contents",
+        "info"
+      ],
+      "additionalProperties": false
+    },
+    "file.directory.Directory": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "files": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/file.File"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "directories": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/file.directory.Directory"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

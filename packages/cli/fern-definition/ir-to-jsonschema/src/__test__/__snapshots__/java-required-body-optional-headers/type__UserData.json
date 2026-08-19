@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "age": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "User's age"
+    }
+  },
+  "required": [
+    "name",
+    "email"
+  ],
+  "additionalProperties": false,
+  "description": "User data for creation/update",
+  "definitions": {}
+}

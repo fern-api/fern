@@ -1,0 +1,4 @@
+- summary: |
+    Fix OpenAPI parsing crash when specs contain non-standard `additionalProperties: "true"` (string instead of boolean).
+    The parser was attempting to use the `in` operator on a string value, causing a `Cannot use 'in' operator to search for 'type' in true` error.
+  type: fix

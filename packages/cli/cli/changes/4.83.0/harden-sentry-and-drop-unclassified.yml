@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Harden Sentry reporting for the legacy CLI:
+      - Opt in to the `onUncaughtException`, `onUnhandledRejection`, `linkedErrors`,
+        and `nodeContext` integrations so errors that escape the top-level handler
+        (fire-and-forget callbacks, unhandled rejections, wrapped `.cause` chains)
+        still reach Sentry with full context.
+      - Attach stack traces even for non-Error throws, and disable client reports
+        and performance sampling since the CLI doesn't emit transactions.
+      - Drop the `UNCLASSIFIED` error code now that every CLI package has been
+        migrated to the typed `CliError` system. Unknown errors now fall back to
+        `INTERNAL_ERROR` and are reported to Sentry, closing the last gap where
+        uncategorized failures went unobserved.
+  type: internal

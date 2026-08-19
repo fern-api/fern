@@ -1,0 +1,198 @@
+# GraphQL schema to test interface type handling
+
+"""
+A product option interface with common fields
+"""
+interface ProductOption {
+  """
+  Unique ID for the option.
+  """
+  entityId: Int!
+
+  """
+  Display name for the option.
+  """
+  displayName: String!
+
+  """
+  Whether the option is required.
+  """
+  isRequired: Boolean!
+}
+
+"""
+A checkbox option with checked state.
+"""
+type CheckboxOption implements ProductOption {
+  """
+  Whether the checkbox is checked by default.
+  """
+  checkedByDefault: Boolean!
+
+  """
+  Label of the checkbox.
+  """
+  label: String!
+
+  """
+  Unique ID for the option.
+  """
+  entityId: Int!
+
+  """
+  Display name for the option.
+  """
+  displayName: String!
+
+  """
+  Whether the option is required.
+  """
+  isRequired: Boolean!
+}
+
+"""
+A multiple choice option with selectable values.
+"""
+type MultipleChoiceOption implements ProductOption {
+  """
+  The display style for this option.
+  """
+  displayStyle: String!
+
+  """
+  List of available values.
+  """
+  values: [String!]!
+
+  """
+  Unique ID for the option.
+  """
+  entityId: Int!
+
+  """
+  Display name for the option.
+  """
+  displayName: String!
+
+  """
+  Whether the option is required.
+  """
+  isRequired: Boolean!
+}
+
+"""
+A text field option for free-form input.
+"""
+type TextFieldOption implements ProductOption {
+  """
+  The default text value.
+  """
+  defaultValue: String
+
+  """
+  The maximum length allowed.
+  """
+  maxLength: Int
+
+  """
+  Unique ID for the option.
+  """
+  entityId: Int!
+
+  """
+  Display name for the option.
+  """
+  displayName: String!
+
+  """
+  Whether the option is required.
+  """
+  isRequired: Boolean!
+}
+
+"""
+An object with an ID.
+"""
+interface Node {
+  """
+  The id of the object.
+  """
+  id: ID!
+}
+
+"""
+A product that implements the Node interface.
+"""
+type Product implements Node {
+  """
+  The id of the object.
+  """
+  id: ID!
+
+  """
+  The product name.
+  """
+  name: String!
+
+  """
+  The product options.
+  """
+  options: [ProductOption!]!
+}
+
+"""
+A category that implements the Node interface.
+"""
+type Category implements Node {
+  """
+  The id of the object.
+  """
+  id: ID!
+
+  """
+  The category name.
+  """
+  name: String!
+
+  """
+  The category path.
+  """
+  path: String!
+}
+
+"""
+Search result union type.
+"""
+union SearchResult = Product | Category
+
+"""
+An interface with no implementations.
+"""
+interface OrphanInterface {
+  """
+  Some field.
+  """
+  value: String!
+}
+
+type Query {
+  """
+  Get a product by ID.
+  """
+  product(id: ID!): Product
+
+  """
+  Get product options.
+  """
+  productOptions(productId: ID!): [ProductOption!]!
+
+  """
+  Fetch a node by ID.
+  """
+  node(id: ID!): Node
+
+  """
+  Search for items.
+  """
+  search(query: String!): [SearchResult!]!
+}

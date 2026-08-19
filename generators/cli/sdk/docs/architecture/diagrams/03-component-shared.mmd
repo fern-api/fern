@@ -1,0 +1,69 @@
+%% Component view — shared infra that sits above both protocol paths.
+
+flowchart TB
+    subgraph binary["Binary harness (cli/&lt;name&gt;/main.rs)"]
+        CliApp["CliApp builder"]
+    end
+
+    subgraph cli_runtime["CLI runtime helpers"]
+        cli_args["cli_args.rs<br/><i>--version, --base-url, JSON help</i>"]
+        early_intercept["early_intercept.rs<br/><i>completion / man / errors short-circuits</i>"]
+        completions["completions.rs<br/><i>clap_complete</i>"]
+        man["man.rs<br/><i>clap_mangen</i>"]
+        custom_commands["custom_commands.rs<br/><i>handler registry + dispatch</i>"]
+    end
+
+    subgraph auth["src/auth/"]
+        provider["provider.rs<br/><i>AuthProvider trait;<br/>apply(req, endpoint)</i>"]
+        credential["credential.rs<br/><i>AuthCredentialSource:<br/>env / cli / file / literal /<br/>closure / any-chain</i>"]
+        schemes["schemes.rs<br/><i>per-scheme providers</i>"]
+        oauth2["oauth2.rs<br/><i>token cache,<br/>refresh-token grant,<br/>client-credentials</i>"]
+        compose["compose.rs<br/><i>RoutingAuthProvider —<br/>per-operation security: dispatch</i>"]
+        builder["builder.rs<br/><i>CliApp::auth_scheme* methods</i>"]
+    end
+
+    subgraph http_ws["Transports"]
+        http["http.rs<br/><i>HttpConfig::resolve()<br/>→ ResolvedTlsConfig</i>"]
+        ws["websocket/<br/><i>tokio-tungstenite client,<br/>NDJSON, app-level ping/pong</i>"]
+    end
+
+    subgraph output["Output + errors + logging"]
+        formatter["formatter.rs<br/><i>OutputPipeline:<br/>json / table / yaml / csv;<br/>--json proj, --jq, --template,<br/>NO_COLOR / FORCE_COLOR / TTY</i>"]
+        error["error.rs<br/><i>CliError JSON contract;<br/>&lt;cli&gt; errors subcommand</i>"]
+        logging["logging.rs<br/><i>&lt;NAME&gt;_LOG, &lt;NAME&gt;_LOG_FILE</i>"]
+    end
+
+    subgraph safety["Input safety"]
+        validate["validate.rs<br/><i>path traversal,<br/>encode_path_segment,<br/>validate_resource_name</i>"]
+    end
+
+    CliApp --> builder
+    CliApp --> cli_args
+    CliApp --> early_intercept
+    early_intercept --> completions
+    early_intercept --> man
+    CliApp --> custom_commands
+
+    builder --> provider
+    builder --> credential
+    builder --> schemes
+    builder --> oauth2
+    builder --> compose
+
+    compose --> provider
+    schemes --> provider
+    oauth2 --> provider
+
+    CliApp --> http
+    CliApp --> ws
+    http -. "resolve()" .-> ws
+
+    CliApp --> formatter
+    CliApp --> logging
+    CliApp --> error
+
+    formatter --> error
+    builder --> validate
+
+    classDef shared fill:#e8f5e9,stroke:#2e7d32
+    class provider,credential,schemes,oauth2,compose,builder,http,ws,formatter,error,logging,validate,cli_args,early_intercept,completions,man,custom_commands shared

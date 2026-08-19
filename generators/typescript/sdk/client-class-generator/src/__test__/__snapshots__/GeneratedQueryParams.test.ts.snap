@@ -1,0 +1,117 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedQueryParams > getBuildStatements > emits Array.isArray ternary for alias resolving to an undiscriminated union 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    eventType: Array.isArray(eventType) ? eventType.map(item => item.toString()) : eventType.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > emits Array.isArray ternary for optional<undiscriminated union> with allowMultiple: false (serde) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    eventType: Array.isArray(eventType) ? eventType.map(item => item.toString()) : eventType.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > emits Array.isArray ternary for undiscriminated union with allowMultiple: false (no serde) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    eventType: Array.isArray(eventType) ? eventType.map(item => item.toString()) : eventType.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates allowMultiple with date-time list items (stringify map) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    dates: Array.isArray(dates) ? dates.map(item => item.toString()) : dates.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates allowMultiple with object type list items and serde layer (async map) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    items: Array.isArray(items) ? await Promise.all(items.map(async (item) => serializer.jsonOrThrow(item))) : items.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates allowMultiple with string list items (no transform needed) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    tags: Array.isArray(tags) ? tags : tags.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params for multiple parameters 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    name,
+    age,
+    active
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params for single string parameter 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    name
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params with alias resolving to primitive 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    aliased
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params with allowMultiple and array check 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    tags: Array.isArray(tags) ? tags : tags.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params with date-time type needing stringify 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    createdAfter: createdAfter.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params with nullable wrapping a primitive 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    optName
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params with object type and serde layer (serializer call) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    filter: serializer.jsonOrThrow(filter)
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params with object type without serde layer (passthrough) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    filter
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params with optional object type and serde layer (conditional serializer) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    filter: filter != null ? serializer.jsonOrThrow(filter) : filter
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params with unknown type (stringify fallback) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    data: data.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params with wire value different from name 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    filter_by: filterBy
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > handles special characters in wire values 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    "filter.date": request.filterDate
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > uses originalName when retainOriginalCasing is true 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    filter_data: serializer.jsonOrThrow(filter_data)
+};"
+`;

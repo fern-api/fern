@@ -1,0 +1,12 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    post:
+      path: "/{endpointParam}"
+      path-parameters:
+        endpointParam: $rootVariable
+      method: POST
+      examples:
+        - path-parameters:
+            endpointParam: "endpointParam"

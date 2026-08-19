@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_package.test"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNurseryApi;\n\nvar client = new SeedNurseryApiClient();\nawait client.Package.TestAsync(new TestRequest { For = \"for\" });\n"
+            }
+        }
+    ]
+}

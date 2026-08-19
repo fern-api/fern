@@ -1,0 +1,27 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Test API
+servers:
+  - url: http://prod2.api.com
+    x-fern-server-name: Prod
+  - url: http://dev2.api.com
+    x-fern-server-name: Dev
+paths:
+  /petstore:
+    get:
+      operationId: list
+      servers:
+        - url: http://debug2.api.com
+          x-fern-server-name: Debug
+      parameters:
+        - name: limit
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: A response
+          content:
+            application/json:
+              schema:
+                type: string

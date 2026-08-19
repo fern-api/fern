@@ -1,0 +1,21 @@
+{
+  "$ref": "#/definitions/union.AliasToLeafB",
+  "description": "An alias around an alias around LeafObjectB, to exercise the alias-walk loop.",
+  "definitions": {
+    "union.LeafObjectB": {
+      "type": "object",
+      "properties": {
+        "onlyInB": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "onlyInB"
+      ],
+      "additionalProperties": false
+    },
+    "union.AliasToLeafB": {
+      "$ref": "#/definitions/union.LeafObjectB"
+    }
+  }
+}

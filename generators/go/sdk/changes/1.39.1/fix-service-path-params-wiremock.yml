@@ -1,0 +1,6 @@
+- summary: |
+    Fix wire test generation for endpoints with service-level base-path parameters.
+    The wiremock mapping now includes service and root path parameters alongside
+    endpoint path parameters, so test verification URLs use actual example values
+    instead of URL-encoded placeholder syntax.
+  type: fix

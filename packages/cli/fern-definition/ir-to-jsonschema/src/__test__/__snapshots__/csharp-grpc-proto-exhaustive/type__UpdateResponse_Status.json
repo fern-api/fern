@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "STATUS_UNSPECIFIED",
+    "STATUS_PENDING",
+    "STATUS_ACTIVE",
+    "STATUS_FAILED"
+  ],
+  "definitions": {}
+}

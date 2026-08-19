@@ -1,0 +1,880 @@
+{
+  "leaf_with_mixed_content": {
+    "name": "distillation",
+    "path": "nemo_rl.algorithms.distillation",
+    "classes": [
+      {
+        "name": "DistillationConfig",
+        "path": "nemo_rl.algorithms.distillation.DistillationConfig",
+        "kind": "TYPEDDICT",
+        "bases": [
+          {
+            "name": "TypedDict",
+            "typeInfo": {
+              "display": "TypedDict",
+              "resolvedPath": "typing.TypedDict",
+              "basePath": null
+            }
+          }
+        ],
+        "constructorParams": [],
+        "methods": [],
+        "attributes": [
+          {
+            "name": "max_num_epochs",
+            "path": "nemo_rl.algorithms.distillation.DistillationConfig.max_num_epochs",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "max_num_steps",
+            "path": "nemo_rl.algorithms.distillation.DistillationConfig.max_num_steps",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "max_rollout_turns",
+            "path": "nemo_rl.algorithms.distillation.DistillationConfig.max_rollout_turns",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "max_val_samples",
+            "path": "nemo_rl.algorithms.distillation.DistillationConfig.max_val_samples",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "num_generations_per_prompt",
+            "path": "nemo_rl.algorithms.distillation.DistillationConfig.num_generations_per_prompt",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "num_prompts_per_step",
+            "path": "nemo_rl.algorithms.distillation.DistillationConfig.num_prompts_per_step",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "seed",
+            "path": "nemo_rl.algorithms.distillation.DistillationConfig.seed",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "topk_logits_k",
+            "path": "nemo_rl.algorithms.distillation.DistillationConfig.topk_logits_k",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "val_at_start",
+            "path": "nemo_rl.algorithms.distillation.DistillationConfig.val_at_start",
+            "typeInfo": {
+              "display": "bool",
+              "resolvedPath": "bool",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "val_batch_size",
+            "path": "nemo_rl.algorithms.distillation.DistillationConfig.val_batch_size",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "val_period",
+            "path": "nemo_rl.algorithms.distillation.DistillationConfig.val_period",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          }
+        ],
+        "decorators": [],
+        "isAbstract": false,
+        "hasSlots": false,
+        "typedDictFields": [
+          {
+            "name": "max_num_epochs",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "max_num_steps",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "max_rollout_turns",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "max_val_samples",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "num_generations_per_prompt",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "num_prompts_per_step",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "seed",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "topk_logits_k",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "val_at_start",
+            "typeInfo": {
+              "display": "bool",
+              "resolvedPath": "bool",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "val_batch_size",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "val_period",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          }
+        ],
+        "sourceLocation": {
+          "startLine": 73,
+          "endLine": 85
+        },
+        "docstring": null,
+        "metaclass": null,
+        "enumMembers": null
+      },
+      {
+        "name": "DistillationSaveState",
+        "path": "nemo_rl.algorithms.distillation.DistillationSaveState",
+        "kind": "TYPEDDICT",
+        "bases": [
+          {
+            "name": "TypedDict",
+            "typeInfo": {
+              "display": "TypedDict",
+              "resolvedPath": "typing.TypedDict",
+              "basePath": null
+            }
+          }
+        ],
+        "constructorParams": [],
+        "methods": [],
+        "attributes": [
+          {
+            "name": "consumed_samples",
+            "path": "nemo_rl.algorithms.distillation.DistillationSaveState.consumed_samples",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "current_epoch",
+            "path": "nemo_rl.algorithms.distillation.DistillationSaveState.current_epoch",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "current_step",
+            "path": "nemo_rl.algorithms.distillation.DistillationSaveState.current_step",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "total_steps",
+            "path": "nemo_rl.algorithms.distillation.DistillationSaveState.total_steps",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "total_valid_tokens",
+            "path": "nemo_rl.algorithms.distillation.DistillationSaveState.total_valid_tokens",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          },
+          {
+            "name": "val_reward",
+            "path": "nemo_rl.algorithms.distillation.DistillationSaveState.val_reward",
+            "typeInfo": {
+              "display": "NotRequired[float]",
+              "resolvedPath": "typing.NotRequired[float]",
+              "basePath": null
+            },
+            "value": null,
+            "docstring": null
+          }
+        ],
+        "decorators": [],
+        "isAbstract": false,
+        "hasSlots": false,
+        "typedDictFields": [
+          {
+            "name": "consumed_samples",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "current_epoch",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "current_step",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "total_steps",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "total_valid_tokens",
+            "typeInfo": {
+              "display": "int",
+              "resolvedPath": "int",
+              "basePath": null
+            },
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "val_reward",
+            "typeInfo": {
+              "display": "NotRequired[float]",
+              "resolvedPath": "typing.NotRequired[float]",
+              "basePath": null
+            },
+            "required": false,
+            "description": null
+          }
+        ],
+        "sourceLocation": {
+          "startLine": 88,
+          "endLine": 96
+        },
+        "docstring": null,
+        "metaclass": null,
+        "enumMembers": null
+      }
+    ],
+    "functions": [
+      {
+        "name": "_default_distillation_save_state",
+        "path": "nemo_rl.algorithms.distillation._default_distillation_save_state",
+        "signature": "def nemo_rl.algorithms.distillation._default_distillation_save_state() -> nemo_rl.algorithms.distillation.DistillationSaveState",
+        "parameters": [],
+        "returnTypeInfo": {
+          "display": "DistillationSaveState",
+          "resolvedPath": "nemo_rl.algorithms.distillation.DistillationSaveState",
+          "basePath": "nemo_rl.algorithms.distillation.DistillationSaveState"
+        },
+        "isAsync": false,
+        "decorators": [],
+        "isClassmethod": false,
+        "isStaticmethod": false,
+        "isProperty": false,
+        "sourceLocation": {
+          "startLine": 99,
+          "endLine": 107
+        },
+        "docstring": null
+      },
+      {
+        "name": "check_vocab_equality",
+        "path": "nemo_rl.algorithms.distillation.check_vocab_equality",
+        "signature": "def nemo_rl.algorithms.distillation.check_vocab_equality(\n    tokenizer: nemo_rl.algorithms.distillation.TokenizerType,\n    student_model_name: str,\n    teacher_model_name: str\n) -> None",
+        "docstring": {
+          "summary": "Check if the vocab of the tokenizer (student) and the teacher tokenizer are equal.",
+          "description": "Check if the vocab of the tokenizer (student) and the teacher tokenizer are equal.",
+          "params": [],
+          "raises": [],
+          "examples": [],
+          "notes": [],
+          "warnings": [],
+          "returns": null
+        },
+        "parameters": [
+          {
+            "name": "tokenizer",
+            "typeInfo": {
+              "display": "TokenizerType",
+              "resolvedPath": "nemo_rl.algorithms.distillation.TokenizerType",
+              "basePath": "nemo_rl.algorithms.distillation.TokenizerType"
+            },
+            "kind": "POSITIONAL",
+            "default": null,
+            "description": null
+          },
+          {
+            "name": "student_model_name",
+            "typeInfo": {
+              "display": "str",
+              "resolvedPath": "str",
+              "basePath": null
+            },
+            "kind": "POSITIONAL",
+            "default": null,
+            "description": null
+          },
+          {
+            "name": "teacher_model_name",
+            "typeInfo": {
+              "display": "str",
+              "resolvedPath": "str",
+              "basePath": null
+            },
+            "kind": "POSITIONAL",
+            "default": null,
+            "description": null
+          }
+        ],
+        "returnTypeInfo": {
+          "display": "None",
+          "resolvedPath": "None",
+          "basePath": null
+        },
+        "isAsync": false,
+        "decorators": [],
+        "isClassmethod": false,
+        "isStaticmethod": false,
+        "isProperty": false,
+        "sourceLocation": {
+          "startLine": 127,
+          "endLine": 152
+        }
+      }
+    ],
+    "attributes": [
+      {
+        "name": "TokenizerType",
+        "path": "nemo_rl.algorithms.distillation.TokenizerType",
+        "value": "TypeVar('TokenizerType', bound=PreTrainedTokenizerBase)",
+        "typeInfo": null,
+        "docstring": null
+      }
+    ],
+    "submodules": [],
+    "sourceCode": "# Copyright (c) 2025, NVIDIA CORPORATION.  All rights reserved.\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this file except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#     http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and limitations.\n# limitations under the License.\nimport os\nimport warnings\nfrom pathlib import Path\nfrom typing import Any, NotRequired, Optional, TypedDict, TypeVar, cast\n\nimport numpy as np\nimport ray\nimport torch\nfrom torchdata.stateful_dataloader import StatefulDataLoader\nfrom transformers import AutoConfig, AutoTokenizer\nfrom transformers.tokenization_utils_base import PreTrainedTokenizerBase\n\nfrom nemo_rl.algorithms.grpo import _should_use_async_rollouts, refit_policy_generation\nfrom nemo_rl.algorithms.loss_functions import (\n    DistillationLossConfig,\n    DistillationLossDataDict,\n    DistillationLossFn,\n)\nfrom nemo_rl.algorithms.utils import set_seed\nfrom nemo_rl.data import DataConfig\nfrom nemo_rl.data.collate_fn import rl_collate_fn\nfrom nemo_rl.data.datasets import AllTaskProcessedDataset\nfrom nemo_rl.data.interfaces import DatumSpec\nfrom nemo_rl.data.llm_message_utils import (\n    batched_message_log_to_flat_message,\n    get_keys_from_message_log,\n)\nfrom nemo_rl.distributed.batched_data_dict import BatchedDataDict\nfrom nemo_rl.distributed.virtual_cluster import (\n    ClusterConfig,\n    RayVirtualCluster,\n)\nfrom nemo_rl.environments.interfaces import EnvironmentInterface\nfrom nemo_rl.experience.rollouts import (\n    run_async_multi_turn_rollout,\n    run_multi_turn_rollout,\n)\nfrom nemo_rl.models.generation.interfaces import (\n    GenerationInterface,\n)\nfrom nemo_rl.models.generation.vllm import VllmConfig, VllmGeneration\nfrom nemo_rl.models.policy import PolicyConfig\nfrom nemo_rl.models.policy.interfaces import ColocatablePolicyInterface\nfrom nemo_rl.models.policy.lm_policy import Policy\nfrom nemo_rl.utils.checkpoint import CheckpointingConfig, CheckpointManager\nfrom nemo_rl.utils.logger import (\n    Logger,\n    LoggerConfig,\n    print_message_log_samples,\n)\nfrom nemo_rl.utils.nsys import maybe_gpu_profile_step\nfrom nemo_rl.utils.timer import TimeoutChecker, Timer\n\n# ===============================================================================\n# Configuration\n# ===============================================================================\nTokenizerType = TypeVar(\"TokenizerType\", bound=PreTrainedTokenizerBase)\n\n\nclass DistillationConfig(TypedDict):\n    # Training configuration\n    num_prompts_per_step: int\n    num_generations_per_prompt: int\n    max_rollout_turns: int  # for multi-turn rollouts. Math Environments just have 1 turn (answering the question)\n    max_num_steps: int  # maximum number of steps to train for\n    max_num_epochs: int  # maximum number of epochs to train for\n    val_batch_size: int\n    val_period: int\n    val_at_start: bool\n    max_val_samples: int\n    topk_logits_k: int\n    seed: int\n\n\nclass DistillationSaveState(TypedDict):\n    total_steps: int  # Track total number of steps across all epochs\n    current_epoch: int  # Track current epoch\n    current_step: int  # Track step within current epoch\n    val_reward: NotRequired[\n        float\n    ]  # Can be any metric. Setted to 'accuracy' by default in validation.\n    consumed_samples: int\n    total_valid_tokens: int  # Track total number of non-padding tokens during training\n\n\ndef _default_distillation_save_state() -> DistillationSaveState:\n    return {\n        \"current_epoch\": 0,\n        \"current_step\": 0,\n        \"total_steps\": 0,\n        \"val_reward\": -99999999.0,  # Aligned with GRPO\n        \"consumed_samples\": 0,\n        \"total_valid_tokens\": 0,\n    }\n\n\nclass MasterConfig(TypedDict):\n    \"\"\"Main configuration structure.\"\"\"\n\n    policy: PolicyConfig  # Student model configuration\n    teacher: PolicyConfig  # Teacher model configuration\n    loss_fn: DistillationLossConfig  # Loss function configuration\n    env: dict[str, Any]  # Environment configuration\n    data: DataConfig  # Data configuration\n    distillation: DistillationConfig  # Distillation configuration\n    logger: LoggerConfig  # Logger configuration\n    cluster: ClusterConfig  # Cluster configuration\n    checkpointing: CheckpointingConfig  # Checkpointing configuration\n\n\n# ===============================================================================\n# Setup & Initialization\n# ===============================================================================\ndef check_vocab_equality(\n    tokenizer: TokenizerType, student_model_name: str, teacher_model_name: str\n) -> None:\n    \"\"\"Check if the vocab of the tokenizer (student) and the teacher tokenizer are equal.\"\"\"\n    teacher_tokenizer = AutoTokenizer.from_pretrained(teacher_model_name)\n\n    skip_hint = \"Set NRL_SKIP_DISTILLATION_TOKENIZER_CHECK=true to skip this check.\"\n\n    # 1) Exact token->id mapping equality\n    vocab_a = tokenizer.get_vocab()\n    vocab_b = teacher_tokenizer.get_vocab()\n    assert vocab_a == vocab_b, (\n        f\"Token->ID mapping differs between student and teacher. {skip_hint}\"\n    )\n\n    # 2) Size consistency (sanity checks)\n    assert len(tokenizer) == len(teacher_tokenizer), (\n        f\"Effective vocab sizes differ between student and teacher. {skip_hint}\"\n    )\n\n    # 3) Chech model.config.vocab_size to guarantee the last dimension of the logits is the same\n    student_config = AutoConfig.from_pretrained(student_model_name)\n    teacher_config = AutoConfig.from_pretrained(teacher_model_name)\n    assert student_config.vocab_size == teacher_config.vocab_size, (\n        f\"Model config vocab sizes differ between student and teacher. {skip_hint}\"\n    )\n\n\ndef setup(\n    master_config: MasterConfig,\n    tokenizer: TokenizerType,\n    train_dataset: AllTaskProcessedDataset,\n    val_dataset: Optional[AllTaskProcessedDataset],\n) -> tuple[\n    ColocatablePolicyInterface,  # student_policy\n    ColocatablePolicyInterface,  # teacher_policy\n    Optional[GenerationInterface],  # student_generation\n    StatefulDataLoader,\n    Optional[StatefulDataLoader],\n    DistillationLossFn,\n    Logger,\n    CheckpointManager,\n    DistillationSaveState,\n    MasterConfig,\n]:\n    \"\"\"Main entry point for distillation algorithm.\n\n    Returns:\n        tuple of student_policy, teacher_policy, student_generation,\n        train_dataloader, val_dataloader,\n        loss_fn, logger, checkpointer, distillation_save_state, master_config\n    \"\"\"\n    # Extract configuration\n    policy_config = master_config[\"policy\"]\n    teacher_config = master_config[\"teacher\"]\n    generation_config = master_config[\"policy\"][\"generation\"]\n    loss_config = master_config[\"loss_fn\"]\n    distillation_config = master_config[\"distillation\"]\n    data_config = master_config[\"data\"]\n    logger_config = master_config[\"logger\"]\n    cluster_config = master_config[\"cluster\"]\n\n    assert generation_config is not None, (\n        \"A generation config in the PolicyConfig is required for distillation\"\n    )\n\n    # Disallow SP + packing for dtensor path\n    for cfg, who in ((policy_config, \"student\"), (teacher_config, \"teacher\")):\n        # DTensor sequence parallel is supported; ensure CP and SP are not enabled together\n        # This incompatibility is enforced in DTensor workers during initialization.\n        # Additionally, SP may not be compatible with sequence packing for some models.\n        # Refer to https://github.com/NVIDIA-NeMo/RL/issues/1178 for more details.\n        # Therefore, we disable SP + packing for distillation.\n        dtensor_enabled = cfg[\"dtensor_cfg\"][\"enabled\"]\n        sequence_packing_enabled = (\n            \"sequence_packing\" in cfg and cfg[\"sequence_packing\"][\"enabled\"]\n        )\n        sequence_parallel_enabled = (\n            \"sequence_parallel\" in cfg[\"dtensor_cfg\"]\n            and cfg[\"dtensor_cfg\"][\"sequence_parallel\"]\n        )\n\n        if dtensor_enabled and sequence_packing_enabled and sequence_parallel_enabled:\n            raise AssertionError(\n                f\"Distillation does not support DTensor sequence parallel + sequence packing ({who} policy). \"\n                \"Please refer to https://github.com/NVIDIA-NeMo/RL/issues/1178 for more details.\"\n            )\n\n    # Set random seed\n    set_seed(distillation_config[\"seed\"])\n\n    # ==========================\n    #         Logger\n    # ==========================\n    logger = Logger(logger_config)\n    logger.log_hyperparams(master_config)\n\n    # ==========================\n    #      Checkpointing\n    # ==========================\n    checkpointer = CheckpointManager(master_config[\"checkpointing\"])\n    last_checkpoint_path = checkpointer.get_latest_checkpoint_path()\n    distillation_save_state: Optional[DistillationSaveState] = cast(\n        Optional[DistillationSaveState],\n        checkpointer.load_training_info(last_checkpoint_path),\n    )\n    if distillation_save_state is None:\n        distillation_save_state = _default_distillation_save_state()\n\n    # ==========================\n    #           Data\n    # ==========================\n    dataloader = StatefulDataLoader(\n        train_dataset,\n        batch_size=distillation_config[\"num_prompts_per_step\"],\n        shuffle=data_config[\"shuffle\"],\n        collate_fn=rl_collate_fn,\n        drop_last=True,\n    )\n\n    if last_checkpoint_path:\n        dataloader_state_dict = torch.load(\n            os.path.join(last_checkpoint_path, \"train_dataloader.pt\")\n        )\n        dataloader.load_state_dict(dataloader_state_dict)\n\n    print(\n        f\"  ✓ Training dataloader loaded with {len(train_dataset)} samples\", flush=True\n    )\n\n    # Load validation dataset if provided\n    val_dataloader: Optional[StatefulDataLoader] = None\n    # If validation is enabled, load the validation dataloader\n    if distillation_config[\"val_period\"] > 0 or distillation_config[\"val_at_start\"]:\n        assert val_dataset is not None, (\n            \"Validation dataset is required if validation is enabled\"\n        )\n        val_dataloader = StatefulDataLoader(\n            val_dataset,\n            batch_size=distillation_config[\"val_batch_size\"],\n            shuffle=False,\n            collate_fn=rl_collate_fn,\n        )\n        print(\n            f\"  ✓ Validation dataloader loaded with {len(val_dataset)} samples\",\n            flush=True,\n        )\n\n    # ==========================\n    #          Cluster\n    # ==========================\n    print(\"\\n▶ Setting up compute cluster...\", flush=True)\n    colocated_inference = generation_config[\"colocated\"][\"enabled\"]\n\n    if colocated_inference:\n        cluster = RayVirtualCluster(\n            name=\"distillation_cluster\",\n            bundle_ct_per_node_list=[cluster_config[\"gpus_per_node\"]]\n            * cluster_config[\"num_nodes\"],\n            use_gpus=True,\n            num_gpus_per_node=cluster_config[\"gpus_per_node\"],\n            max_colocated_worker_groups=1\n            if generation_config[\"backend\"] == \"megatron\"\n            else 3,\n        )\n        train_cluster = cluster\n        inference_cluster = cluster\n        print(\n            f\"  ✓ Ray cluster initialized with {cluster_config['num_nodes']} nodes\",\n            flush=True,\n        )\n    else:\n        assert generation_config[\"backend\"] != \"megatron\", (\n            \"Non-colocated inference is not supported for Megatron generation backends. \"\n            \"Please use vLLM backend for generation.\"\n        )\n\n        # train resources will be updated through overall and inference resources below\n        train_gpus_per_node = cluster_config[\"gpus_per_node\"]\n        train_nodes = cluster_config[\"num_nodes\"]\n\n        inference_resources = generation_config[\"colocated\"][\"resources\"]\n        inference_gpus_per_node = inference_resources[\"gpus_per_node\"]\n        inference_nodes = inference_resources[\"num_nodes\"]\n\n        # validate and configure resources\n        if cluster_config[\"num_nodes\"] == 1:\n            assert (\n                inference_gpus_per_node is not None and inference_gpus_per_node > 0\n            ), (\n                \"policy.generation.colocated.resources.gpus_per_node must be explicitly set to a value > 0 \"\n                \"when cluster.num_nodes = 1 and inference is non-colocated, \"\n                f\"but got {inference_gpus_per_node}.\"\n            )\n            assert inference_nodes is None or inference_nodes == 1, (\n                \"policy.generation.colocated.resources.num_nodes must be 1 or set to null \"\n                \"when cluster.num_nodes = 1 and inference is non-colocated, \"\n                f\"but got {inference_nodes}.\"\n            )\n            inference_nodes = 1\n            train_gpus_per_node -= inference_gpus_per_node\n        else:\n            assert inference_nodes > 0, (\n                \"policy.generation.colocated.resources.num_nodes must be > 0 \"\n                \"when cluster.num_nodes > 1 and inference is non-colocated, \"\n                f\"but got {inference_nodes}.\"\n            )\n            assert (\n                inference_gpus_per_node is not None\n                and inference_gpus_per_node == cluster_config[\"gpus_per_node\"]\n            ), (\n                \"policy.generation.colocated.resources.gpus_per_node must be explicitly set and equal to cluster.gpus_per_node \"\n                \"when cluster.num_nodes > 1 and inference is non-colocated, \"\n                f\"but got inference_gpus_per_node={inference_gpus_per_node}, cluster.gpus_per_node={cluster_config['gpus_per_node']}.\"\n            )\n            train_nodes -= inference_nodes\n\n        # create clusters\n        train_cluster = RayVirtualCluster(\n            name=\"distillation_train_cluster\",\n            bundle_ct_per_node_list=[train_gpus_per_node] * train_nodes,\n            use_gpus=True,\n            num_gpus_per_node=train_gpus_per_node,\n            max_colocated_worker_groups=3,\n        )\n        inference_cluster = RayVirtualCluster(\n            name=\"distillation_inference_cluster\",\n            bundle_ct_per_node_list=[inference_gpus_per_node] * inference_nodes,\n            use_gpus=True,\n            num_gpus_per_node=inference_gpus_per_node,\n            max_colocated_worker_groups=3,\n        )\n        print(\n            f\"  ✓ Separate clusters created: train={train_nodes}x{train_gpus_per_node}GPUs, inference={inference_nodes}x{inference_gpus_per_node}GPUs\",\n            flush=True,\n        )\n\n    # ==========================\n    #      Teacher Policy\n    # ==========================\n    print(\"\\n▶ Setting up teacher policy...\", flush=True)\n    # Checkpoint paths\n    weights_path = None\n    optimizer_path = None\n\n    if not bool(os.getenv(\"NRL_SKIP_DISTILLATION_TOKENIZER_CHECK\", False)):\n        check_vocab_equality(\n            tokenizer, policy_config[\"model_name\"], teacher_config[\"model_name\"]\n        )\n\n    if \"megatron_cfg\" in teacher_config and teacher_config[\"megatron_cfg\"][\"enabled\"]:\n        ## NOTE: this is equal to the total number of scheduler steps\n        total_train_iters = min(\n            distillation_config[\"max_num_steps\"],\n            distillation_config[\"max_num_epochs\"] * len(dataloader),\n        )\n        teacher_config[\"megatron_cfg\"][\"train_iters\"] = total_train_iters\n\n    teacher_policy = Policy(\n        name_prefix=\"teacher\",\n        cluster=train_cluster,\n        config=teacher_config,\n        tokenizer=tokenizer,\n        weights_path=weights_path,\n        optimizer_path=optimizer_path,\n        init_optimizer=False,\n        init_reference_model=False,\n    )\n    teacher_policy.offload_after_refit()\n\n    # ==========================\n    #    Student Generation Interface\n    # ==========================\n    backend = generation_config[\"backend\"]\n    generation_config[\"model_name\"] = policy_config[\"model_name\"]  # Needed for vLLM\n\n    if backend == \"megatron\":\n        student_generation = None\n    elif backend == \"vllm\":\n        generation_config = cast(VllmConfig, generation_config)\n        if \"vllm_cfg\" in generation_config:\n            ## make vllm hf overrides match the training policy\n            generation_config[\"vllm_cfg\"][\"hf_overrides\"] = policy_config.get(\n                \"hf_config_overrides\", {}\n            )\n        student_generation = VllmGeneration(\n            cluster=inference_cluster, config=generation_config\n        )\n        student_generation.finish_generation()\n        print(\n            f\"  ✓ Using vLLM backend for generation with {policy_config['model_name']}\",\n            flush=True,\n        )\n\n    # ==========================\n    #      Student Policy\n    # ==========================\n    print(\"\\n▶ Setting up student policy...\", flush=True)\n\n    # Checkpoint paths\n    if last_checkpoint_path:\n        weights_path = Path(last_checkpoint_path) / \"policy\" / \"weights\"\n        optimizer_path = Path(last_checkpoint_path) / \"policy\" / \"optimizer\"\n    else:\n        weights_path = None\n        optimizer_path = None\n\n    if \"megatron_cfg\" in policy_config and policy_config[\"megatron_cfg\"][\"enabled\"]:\n        ## NOTE: this is equal to the total number of scheduler steps\n        total_train_iters = min(\n            distillation_config[\"max_num_steps\"],\n            distillation_config[\"max_num_epochs\"] * len(dataloader),\n        )\n        policy_config[\"megatron_cfg\"][\"train_iters\"] = total_train_iters\n\n    student_policy = Policy(\n        name_prefix=\"student\",\n        cluster=train_cluster,\n        config=policy_config,\n        tokenizer=tokenizer,\n        weights_path=weights_path,\n        optimizer_path=optimizer_path,\n        init_optimizer=True,\n        init_reference_model=False,\n    )\n\n    if student_generation is not None:\n        state_dict_info = student_policy.prepare_refit_info()\n        student_generation.prepare_refit_info(state_dict_info)\n\n    # if it is not colocated inference, initialize collective communication for update weights\n    if not colocated_inference:\n        ip, port = train_cluster.get_master_address_and_port()\n        print(f\"Using ip: {ip}, port: {port} for collective communication\", flush=True)\n        train_world_size = train_cluster.world_size()\n        # inference cluster + head node of the train cluster\n        world_size = train_world_size + inference_nodes * inference_gpus_per_node\n        # init collective\n        futures_train = student_policy.init_collective(\n            ip, port, world_size, train_world_size=train_world_size\n        )\n        futures_inference = student_generation.init_collective(\n            ip, port, world_size, train_world_size=train_world_size\n        )  # type: ignore\n        # wait for all futures to complete\n        ray.get(futures_train + futures_inference)\n\n    loss_fn = DistillationLossFn(loss_config)\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\" \" * 18 + \"SETUP COMPLETE\")\n    print(\"=\" * 60 + \"\\n\", flush=True)\n\n    return (\n        student_policy,\n        teacher_policy,\n        student_generation,\n        dataloader,\n        val_dataloader,\n        loss_fn,\n        logger,\n        checkpointer,\n        distillation_save_state,\n        master_config,\n    )\n\n\n# ===============================================================================\n# Training & Validation\n# ===============================================================================\n\n\ndef distillation_train(\n    student_policy: ColocatablePolicyInterface,\n    teacher_policy: ColocatablePolicyInterface,\n    student_generation: Optional[GenerationInterface],\n    dataloader: StatefulDataLoader,\n    val_dataloader: Optional[StatefulDataLoader],\n    tokenizer: TokenizerType,\n    loss_fn: DistillationLossFn,\n    task_to_env: dict[str, EnvironmentInterface],\n    val_task_to_env: Optional[dict[str, EnvironmentInterface]],\n    logger: Logger,\n    checkpointer: CheckpointManager,\n    distillation_save_state: DistillationSaveState,\n    master_config: MasterConfig,\n) -> None:\n    \"\"\"Run Distillation training algorithm.\"\"\"\n    timer = Timer()\n    timeout = TimeoutChecker(\n        timeout=master_config[\"checkpointing\"][\"checkpoint_must_save_by\"],\n        fit_last_save_time=True,\n    )\n    timeout.start_iterations()\n\n    NEED_REFIT = True\n    # If student_generation is None, use the student_policy as the generation interface (megatron framework backend)\n    if student_generation is None:\n        student_generation = student_policy  # type: ignore\n        NEED_REFIT = False\n    POLICY_GENERATION_STALE = True  # tracks if generation needs a refit before running\n    assert student_generation is not None  # for mypy type check\n\n    # common config/state items\n    current_epoch = distillation_save_state[\"current_epoch\"]  # current epoch\n    current_step = distillation_save_state[\n        \"current_step\"\n    ]  # current step within current epoch\n    total_steps = distillation_save_state[\n        \"total_steps\"\n    ]  # total number of steps across all epochs\n    consumed_samples = distillation_save_state[\"consumed_samples\"]\n    total_valid_tokens = distillation_save_state[\"total_valid_tokens\"]\n    val_period = master_config[\"distillation\"][\"val_period\"]\n    val_at_start = master_config[\"distillation\"][\"val_at_start\"]\n    colocated_inference = master_config[\"policy\"][\"generation\"][\"colocated\"][\"enabled\"]\n    max_epochs = master_config[\"distillation\"][\n        \"max_num_epochs\"\n    ]  # max number of epochs to train for\n    max_steps = master_config[\"distillation\"][\n        \"max_num_steps\"\n    ]  # max number of steps to train for\n\n    # Run validation at the start if configured\n    if val_at_start and total_steps == 0:\n        print(\"\\n🔍 Running initial validation...\", flush=True)\n        if NEED_REFIT and POLICY_GENERATION_STALE:\n            refit_policy_generation(\n                student_policy, student_generation, colocated_inference\n            )\n            POLICY_GENERATION_STALE = False\n        else:\n            student_generation.prepare_for_generation()\n        val_metrics, validation_timings = validate(\n            student_generation,\n            val_dataloader,\n            tokenizer,\n            val_task_to_env,\n            step=total_steps,\n            master_config=master_config,\n        )\n        student_generation.finish_generation()\n        logger.log_metrics(val_metrics, total_steps, prefix=\"validation\")\n        logger.log_metrics(validation_timings, total_steps, prefix=\"timing/validation\")\n\n    # Run distillation training (multi-epoch until reaching max_num_steps or max_num_epochs)\n    batch: BatchedDataDict[DatumSpec]\n\n    while total_steps < max_steps and current_epoch < max_epochs:\n        print(\n            f\"\\n{'=' * 25} Epoch {current_epoch + 1}/{max_epochs} {'=' * 25}\",\n            flush=True,\n        )\n\n        for batch in dataloader:\n            print(\n                f\"\\n{'=' * 25} Step {current_step + 1}/{min(len(dataloader), max_steps)} {'=' * 25}\",\n                flush=True,\n            )\n            maybe_gpu_profile_step(student_policy, total_steps + 1)\n            if student_policy != student_generation:\n                maybe_gpu_profile_step(student_generation, total_steps + 1)\n            val_metrics, validation_timings = None, None\n\n            with timer.time(\"total_step_time\"):\n                # Prepare batch\n                print(\"▶ Preparing batch...\", flush=True)\n                with timer.time(\"data_processing\"):\n                    # Repeat batch items\n                    repeated_batch: BatchedDataDict[DatumSpec] = (\n                        batch.repeat_interleave(\n                            master_config[\"distillation\"][\"num_generations_per_prompt\"]\n                        )\n                    )\n\n                # Generate responses - this updates the LLMMessageLogType in repeated_batch\n                print(\n                    f\"▶ Generating responses for batch of size {repeated_batch.size}...\",\n                    flush=True,\n                )\n                with timer.time(\"prepare_for_generation\"):\n                    if NEED_REFIT and POLICY_GENERATION_STALE:\n                        refit_policy_generation(\n                            student_policy,\n                            student_generation,\n                            colocated_inference,\n                            timer=timer,\n                        )\n                        POLICY_GENERATION_STALE = False\n                    else:\n                        student_generation.prepare_for_generation()\n\n                with timer.time(\"generation\"):\n                    # Use async rollouts if vLLM async engine is enabled\n                    if _should_use_async_rollouts(master_config):\n                        (\n                            repeated_batch,\n                            rollout_metrics,\n                        ) = run_async_multi_turn_rollout(\n                            policy_generation=student_generation,\n                            input_batch=repeated_batch,\n                            tokenizer=tokenizer,\n                            task_to_env=task_to_env,\n                            max_seq_len=master_config[\"policy\"][\n                                \"max_total_sequence_length\"\n                            ],\n                            max_rollout_turns=master_config[\"distillation\"][\n                                \"max_rollout_turns\"\n                            ],\n                            greedy=False,\n                        )\n                    else:\n                        repeated_batch, rollout_metrics = run_multi_turn_rollout(\n                            policy_generation=student_generation,\n                            input_batch=repeated_batch,\n                            tokenizer=tokenizer,\n                            task_to_env=task_to_env,\n                            max_seq_len=master_config[\"policy\"][\n                                \"max_total_sequence_length\"\n                            ],\n                            max_rollout_turns=master_config[\"distillation\"][\n                                \"max_rollout_turns\"\n                            ],\n                            greedy=False,\n                        )\n                    student_generation.finish_generation()\n\n                with timer.time(\"data_processing\"):\n                    # Add loss mask and advantages to each message in LLMMessageLogType\n                    for message_log in repeated_batch[\"message_log\"]:\n                        for message in message_log:\n                            if message[\"role\"] == \"assistant\":\n                                message[\"token_loss_mask\"] = torch.ones_like(\n                                    message[\"token_ids\"]\n                                )\n                            else:\n                                message[\"token_loss_mask\"] = torch.zeros_like(\n                                    message[\"token_ids\"]\n                                )\n\n                    # Convert updated LLMMessageLogType to FlatMessagesType for training\n                    flat_messages, input_lengths = batched_message_log_to_flat_message(\n                        repeated_batch[\"message_log\"],\n                        pad_value_dict={\"token_ids\": tokenizer.pad_token_id},\n                        make_sequence_length_divisible_by=master_config[\"policy\"][\n                            \"make_sequence_length_divisible_by\"\n                        ],\n                    )\n\n                    # Create training data from flattened messages\n                    train_data = BatchedDataDict[DistillationLossDataDict](\n                        {\n                            \"input_ids\": flat_messages[\"token_ids\"],\n                            \"input_lengths\": input_lengths,\n                            \"token_mask\": flat_messages[\"token_loss_mask\"],\n                            \"sample_mask\": repeated_batch[\"loss_multiplier\"],\n                        }\n                    )\n                    # this will be mini-batched inside the policy, so maintain the packed multimodal structure\n                    train_data.update(\n                        flat_messages.get_multimodal_dict(as_tensors=False)\n                    )\n                    train_data.to(\"cpu\")\n\n                print(\"▶ Preparing for teacher logprob inference...\", flush=True)\n                with timer.time(\"teacher_logprob_inference_prep\"):\n                    teacher_policy.prepare_for_lp_inference()\n\n                print(\"▶ Computing teacher logprobs...\", flush=True)\n                with timer.time(\"teacher_logprob_inference\"):\n                    teacher_topk = teacher_policy.get_topk_logits(\n                        train_data, k=master_config[\"distillation\"][\"topk_logits_k\"]\n                    )\n                    train_data[\"teacher_topk_logits\"] = teacher_topk[\"topk_logits\"]\n                    train_data[\"teacher_topk_indices\"] = teacher_topk[\"topk_indices\"]\n\n                print(\"▶ Preparing for training...\", flush=True)\n                with timer.time(\"training_prep\"):\n                    teacher_policy.offload_after_refit()\n                    student_policy.prepare_for_training()  # set model train and reload optim to GPU\n                    POLICY_GENERATION_STALE = True\n\n                print(\"▶ Training policy...\", flush=True)\n                with timer.time(\"policy_training\"):\n                    train_results = student_policy.train(train_data, loss_fn)\n\n                is_last_step = (total_steps + 1 >= max_steps) or (\n                    (current_epoch + 1 == max_epochs)\n                    and (current_step + 1 == len(dataloader))\n                )\n\n                # Run validation if it's a validation step\n                if val_period > 0 and (total_steps + 1) % val_period == 0:\n                    if NEED_REFIT and POLICY_GENERATION_STALE:\n                        refit_policy_generation(\n                            student_policy, student_generation, colocated_inference\n                        )\n                        POLICY_GENERATION_STALE = False\n                    else:\n                        student_generation.prepare_for_generation()\n                    val_metrics, validation_timings = validate(\n                        student_generation,\n                        val_dataloader,\n                        tokenizer,\n                        val_task_to_env,\n                        step=total_steps + 1,\n                        master_config=master_config,\n                    )\n                    student_generation.finish_generation()\n                    logger.log_metrics(\n                        validation_timings, total_steps + 1, prefix=\"timing/validation\"\n                    )\n                    logger.log_metrics(\n                        val_metrics, total_steps + 1, prefix=\"validation\"\n                    )\n\n                metrics = {\n                    \"loss\": train_results[\"loss\"].numpy(),\n                    \"grad_norm\": train_results[\"grad_norm\"].numpy(),\n                    \"mean_prompt_length\": repeated_batch[\"length\"].numpy(),\n                    \"total_num_tokens\": input_lengths.numpy(),\n                }\n                metrics.update(train_results[\"all_mb_metrics\"])\n                for k, v in metrics.items():\n                    if k in {\n                        \"lr\",\n                        \"wd\",\n                        \"global_valid_seqs\",\n                        \"global_valid_toks\",\n                        \"mean_prompt_length\",\n                    }:\n                        metrics[k] = np.mean(v).item()\n                    else:\n                        metrics[k] = np.sum(v).item()\n                metrics.update(rollout_metrics)\n                total_valid_tokens += metrics[\"global_valid_toks\"]\n\n                ## Checkpointing\n                consumed_samples += master_config[\"distillation\"][\n                    \"num_prompts_per_step\"\n                ]\n                timeout.mark_iteration()\n\n                should_save_by_step = (\n                    is_last_step\n                    or (total_steps + 1) % master_config[\"checkpointing\"][\"save_period\"]\n                    == 0\n                )\n                # +1 because total_steps is 0-indexed\n                # Check if timeout-based checkpointing is enabled in config.\n                should_save_by_timeout = timeout.check_save()\n\n                if master_config[\"checkpointing\"][\"enabled\"] and (\n                    should_save_by_step or should_save_by_timeout\n                ):\n                    student_policy.prepare_for_training()\n\n                    distillation_save_state[\"current_epoch\"] = current_epoch\n                    distillation_save_state[\"current_step\"] = current_step + 1\n                    distillation_save_state[\"total_steps\"] = total_steps + 1\n                    distillation_save_state[\"total_valid_tokens\"] = total_valid_tokens\n                    if val_metrics is not None:\n                        distillation_save_state[\"val_reward\"] = val_metrics[\"accuracy\"]\n                    elif \"val_reward\" in distillation_save_state:\n                        del distillation_save_state[\"val_reward\"]\n                    distillation_save_state[\"consumed_samples\"] = consumed_samples\n\n                    full_metric_name = master_config[\"checkpointing\"][\"metric_name\"]\n                    if full_metric_name is not None:\n                        assert full_metric_name.startswith(\n                            \"train:\"\n                        ) or full_metric_name.startswith(\"val:\"), (\n                            f\"metric_name={full_metric_name} must start with 'val:' or 'train:',\\n\"\n                            f'followed by the corresponding name in the \"val\" or \"train\" metrics dictionary.'\n                            f\"  If you are using an old config, please updated checkpointing.metric_name to the new format, \"\n                            f\" e.g. 'val_reward --> 'val:accuracy'\"\n                        )\n                        prefix, metric_name = full_metric_name.split(\":\", 1)\n                        metrics_source = metrics if prefix == \"train\" else val_metrics\n                        if not metrics_source:\n                            warnings.warn(\n                                f\"You asked to save checkpoints based on {metric_name} but no {prefix} metrics were collected. \"\n                                \"This checkpoint will not be saved as top-k.\",\n                                stacklevel=2,\n                            )\n                            if full_metric_name in distillation_save_state:\n                                del distillation_save_state[full_metric_name]\n                        elif metric_name not in metrics_source:\n                            raise ValueError(\n                                f\"Metric {metric_name} not found in {prefix} metrics\"\n                            )\n                        else:\n                            distillation_save_state[full_metric_name] = metrics_source[\n                                metric_name\n                            ]\n\n                    with timer.time(\"checkpointing\"):\n                        print(\n                            f\"Saving checkpoint for step {total_steps + 1}...\",\n                            flush=True,\n                        )\n                        checkpoint_path = checkpointer.init_tmp_checkpoint(\n                            total_steps + 1, distillation_save_state, master_config\n                        )\n                        student_policy.save_checkpoint(\n                            weights_path=os.path.join(\n                                checkpoint_path, \"policy\", \"weights\"\n                            ),\n                            optimizer_path=os.path.join(\n                                checkpoint_path, \"policy\", \"optimizer\"\n                            ),\n                            tokenizer_path=os.path.join(\n                                checkpoint_path, \"policy\", \"tokenizer\"\n                            ),\n                            checkpointing_cfg=master_config[\"checkpointing\"],\n                        )\n                        torch.save(\n                            dataloader.state_dict(),\n                            os.path.join(checkpoint_path, \"train_dataloader.pt\"),\n                        )\n                        checkpointer.finalize_checkpoint(checkpoint_path)\n\n            # Logging\n            # Log training data\n            log_data = {\"content\": flat_messages[\"content\"]}\n            log_data[\"input_lengths\"] = input_lengths.tolist()\n            logger.log_batched_dict_as_jsonl(\n                log_data, f\"train_data_step{total_steps + 1}.jsonl\"\n            )\n\n            timing_metrics: dict[str, float] = timer.get_timing_metrics(\n                reduction_op=\"sum\"\n            )  # type: ignore\n\n            print(\"\\n📊 Training Results:\")\n\n            print(f\"  • Loss: {metrics['loss']:.4f}\")\n            print(\n                f\"  • Mean Generation Length: {rollout_metrics['mean_gen_tokens_per_sample']:.4f}\"\n            )\n            if \"total_flops\" in train_results:\n                total_tflops = (\n                    train_results[\"total_flops\"]\n                    / timing_metrics[\"policy_training\"]\n                    / 1e12\n                )\n                num_ranks = train_results[\"num_ranks\"]\n                print(\n                    f\"  • Training FLOPS: {total_tflops:.2f} TFLOPS ({total_tflops / num_ranks:.2f} TFLOPS per rank)\",\n                    flush=True,\n                )\n                if \"theoretical_tflops\" in train_results:\n                    theoretical_tflops = train_results[\"theoretical_tflops\"]\n                    print(\n                        f\"  • Training Model Floating Point Utilization: {100 * total_tflops / theoretical_tflops:.2f}%\",\n                        flush=True,\n                    )\n                    metrics[\"train_fp_utilization\"] = total_tflops / theoretical_tflops\n\n            print(\"\\n⏱️  Timing:\", flush=True)\n            # Display total time first, separately\n            total_time = timing_metrics.get(\"total_step_time\", 0)\n\n            total_num_gpus = (\n                master_config[\"cluster\"][\"num_nodes\"]\n                * master_config[\"cluster\"][\"gpus_per_node\"]\n            )\n            metrics.update(\n                {\n                    \"tokens_per_sec_per_gpu\": metrics[\"total_num_tokens\"]\n                    / total_time\n                    / total_num_gpus\n                }\n            )\n\n            print(f\"  • Total step time: {total_time:.2f}s\", flush=True)\n\n            # Display all other timing metrics\n            for k, v in sorted(\n                timing_metrics.items(), key=lambda item: item[1], reverse=True\n            ):\n                if k != \"total_step_time\":\n                    percent = (v / total_time * 100) if total_time > 0 else 0\n                    print(f\"  • {k}: {v:.2f}s ({percent:.1f}%)\", flush=True)\n\n            timing_metrics[\"valid_tokens_per_sec_per_gpu\"] = (\n                metrics[\"global_valid_toks\"] / total_time / total_num_gpus\n            )\n            logger.log_metrics(metrics, total_steps + 1, prefix=\"train\")\n            logger.log_metrics(timing_metrics, total_steps + 1, prefix=\"timing/train\")\n\n            timer.reset()\n            current_step += 1\n            total_steps += 1\n            if should_save_by_timeout:\n                print(\"Timeout has been reached, stopping training early\", flush=True)\n                return\n            if total_steps >= max_steps:\n                print(\n                    \"Max number of steps has been reached, stopping training early\",\n                    flush=True,\n                )\n                return\n\n        # End of epoch\n        current_epoch += 1\n        current_step = 0  # Reset step counter for new epoch\n\n\ndef validate(\n    policy_generation: GenerationInterface,\n    val_dataloader: Optional[StatefulDataLoader],\n    tokenizer,\n    val_task_to_env: Optional[dict[str, EnvironmentInterface]],\n    step: int,\n    master_config: MasterConfig,\n) -> tuple[dict[str, Any], dict[str, Any]]:\n    \"\"\"Run validation on the validation dataset.\"\"\"\n    if val_dataloader is None:\n        print(\"  ⚠️ No validation dataloader provided, skipping validation\", flush=True)\n        return {}, {}\n\n    if val_task_to_env is None:\n        print(\n            \"  ⚠️ No validation task to environment mapping provided, skipping validation\",\n            flush=True,\n        )\n        return {}, {}\n\n    timer = Timer()\n    with timer.time(\"total_validation_time\"):\n        print(f\"▶ Starting validation at step {step}...\", flush=True)\n\n        total_rewards = []  # Can be any metric. Setted to 'accuracy' by default.\n        total_lengths = []\n        all_message_logs = []  # Collect all message logs\n\n        max_batches = (\n            master_config[\"distillation\"][\"max_val_samples\"]\n            // master_config[\"distillation\"][\"val_batch_size\"]\n        )\n        for batch_idx, val_batch in enumerate(val_dataloader):\n            if batch_idx >= max_batches:\n                break\n\n            # Generate responses (updates the LLMMessageLogType in batch_with_msg_logs)\n            # Use async rollouts if vLLM async engine is enabled\n            if _should_use_async_rollouts(master_config):\n                val_batch, gen_metrics = run_async_multi_turn_rollout(\n                    policy_generation,\n                    val_batch,\n                    tokenizer,\n                    val_task_to_env,\n                    max_seq_len=master_config[\"policy\"][\"max_total_sequence_length\"],\n                    max_rollout_turns=master_config[\"distillation\"][\n                        \"max_rollout_turns\"\n                    ],\n                    greedy=False,\n                )\n            else:\n                val_batch, gen_metrics = run_multi_turn_rollout(\n                    policy_generation,\n                    val_batch,\n                    tokenizer,\n                    val_task_to_env,\n                    max_seq_len=master_config[\"policy\"][\"max_total_sequence_length\"],\n                    max_rollout_turns=master_config[\"distillation\"][\n                        \"max_rollout_turns\"\n                    ],\n                    greedy=False,\n                )\n            rewards = val_batch[\"total_reward\"]\n\n            total_rewards.extend(rewards.tolist())\n            total_lengths.append(gen_metrics[\"mean_gen_tokens_per_sample\"])\n\n            # Collect message logs for later display\n            to_env = [\n                get_keys_from_message_log(\n                    val_batch[\"message_log\"][i], [\"role\", \"content\"]\n                )\n                for i in range(len(val_batch[\"message_log\"]))\n            ]\n\n            all_message_logs.extend(to_env)\n\n        # Calculate validation metrics\n        accuracy = (\n            sum(total_rewards) / len(total_rewards) if len(total_rewards) > 0 else 0\n        )\n        avg_length = (\n            sum(total_lengths) / len(total_lengths) if len(total_lengths) > 0 else 0\n        )\n\n        val_metrics = {\n            \"accuracy\": accuracy,\n            \"avg_length\": avg_length,\n        }\n\n        # Print sample conversations only once at the end of validation\n        try:\n            print_message_log_samples(\n                all_message_logs,\n                total_rewards,\n                num_samples=min(\n                    master_config[\"logger\"][\"num_val_samples_to_print\"],\n                    len(all_message_logs),\n                ),\n                step=step,\n            )\n        except Exception as e:\n            print(f\"\\n  ⚠️ Error displaying message samples: {str(e)}\")\n            print(\"  ⚠️ Continuing validation without displaying samples...\", flush=True)\n\n    # Get timing metrics\n    timing_metrics = timer.get_timing_metrics(reduction_op=\"sum\")\n    validation_time = timing_metrics.get(\"total_validation_time\", 0)\n\n    # Print summary of validation results\n    print(\"\\n📊 Validation Results:\")\n    print(f\"    • Accuracy: {accuracy:.4f}\")\n    print(f\"    • Average response length: {avg_length:.1f} tokens\")\n    print(f\"    • Samples processed: {len(total_rewards)}\", flush=True)\n\n    # Print timing information\n    print(\"\\n  ⏱️  Validation Timing:\")\n    validation_time = timing_metrics.get(\"total_validation_time\", 0)\n    print(f\"    • Total validation time: {validation_time:.2f}s\", flush=True)\n\n    # Make sure to reset the timer after validation\n    timer.reset()\n\n    return val_metrics, timing_metrics\n",
+    "sourceFilePath": "nemo_rl/algorithms/distillation.py",
+    "docstring": null
+  },
+  "leaf_attributes_only": {
+    "name": "package_info",
+    "path": "nemo_rl.package_info",
+    "classes": [],
+    "functions": [],
+    "attributes": [
+      {
+        "name": "MAJOR",
+        "path": "nemo_rl.package_info.MAJOR",
+        "value": "0",
+        "typeInfo": null,
+        "docstring": null
+      },
+      {
+        "name": "MINOR",
+        "path": "nemo_rl.package_info.MINOR",
+        "value": "5",
+        "typeInfo": null,
+        "docstring": null
+      },
+      {
+        "name": "PATCH",
+        "path": "nemo_rl.package_info.PATCH",
+        "value": "0",
+        "typeInfo": null,
+        "docstring": null
+      }
+    ],
+    "submodules": [],
+    "sourceCode": "# Copyright (c) 2025, NVIDIA CORPORATION.  All rights reserved.\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this file except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#     http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n\n\nMAJOR = 0\nMINOR = 5\nPATCH = 0\nPRE_RELEASE = \"rc0\"\n\n# Use the following formatting: (major, minor, patch, pre-release)\nVERSION = (MAJOR, MINOR, PATCH, PRE_RELEASE)\n\n__shortversion__ = \".\".join(map(str, VERSION[:3]))\n__version__ = \".\".join(map(str, VERSION[:3])) + \"\".join(VERSION[3:])\n\n__package_name__ = \"nemo_rl\"\n__contact_names__ = \"NVIDIA\"\n__contact_emails__ = \"nemo-tookit@nvidia.com\"\n__homepage__ = \"https://docs.nvidia.com/deeplearning/nemo/user-guide/docs/en/stable/\"\n__repository_url__ = \"https://github.com/NVIDIA-NeMo/RL\"\n__download_url__ = \"https://github.com/NVIDIA-NeMo/RL/releases\"\n__description__ = \"NeMo-RL - a toolkit for model alignment\"\n__license__ = \"Apache2\"\n__keywords__ = \"deep learning, machine learning, gpu, NLP, NeMo, nvidia, pytorch, torch, language, reinforcement learning, RLHF, preference modeling, SteerLM, DPO\"\n",
+    "sourceFilePath": "nemo_rl/package_info.py",
+    "docstring": null
+  },
+  "package_with_content": {
+    "name": "nemo_rl",
+    "path": "nemo_rl",
+    "classes": [],
+    "functions": [
+      {
+        "name": "_check_container_fingerprint",
+        "path": "nemo_rl._check_container_fingerprint",
+        "signature": "def nemo_rl._check_container_fingerprint()",
+        "docstring": {
+          "summary": "Check if container dependencies match the current code (container-only).",
+          "description": "Check if container dependencies match the current code (container-only).\n\nThis check only runs when NRL_CONTAINER=1 is set (inside containers).\nIt compares the container's fingerprint (computed at build time) with\nthe current code's fingerprint to detect dependency drift.\n\nThis check is also skipped entirely if NRL_FORCE_REBUILD_VENVS=true is set,\nsince environment rebuilding will ensure dependencies are consistent regardless\nof a mismatch.\n\nIf there's a mismatch, raises RuntimeError unless NRL_IGNORE_VERSION_MISMATCH is set.",
+          "params": [],
+          "raises": [],
+          "examples": [],
+          "notes": [],
+          "warnings": [],
+          "returns": null
+        },
+        "parameters": [],
+        "isAsync": false,
+        "decorators": [],
+        "isClassmethod": false,
+        "isStaticmethod": false,
+        "isProperty": false,
+        "sourceLocation": {
+          "startLine": 71,
+          "endLine": 198
+        },
+        "returnTypeInfo": null
+      },
+      {
+        "name": "_is_build_isolation",
+        "path": "nemo_rl._is_build_isolation",
+        "signature": "def nemo_rl._is_build_isolation()",
+        "docstring": {
+          "summary": "Detect if we're running in a uv build isolation environment.",
+          "description": "Detect if we're running in a uv build isolation environment.\n\nWhen running uv lock/sync, uv creates a temporary isolated environment\nin ~/.cache/uv/builds-v*/ to build packages and introspect metadata.\nWe skip the fingerprint check in this context since the user is updating dependencies.\n\nReturns True if in build isolation, False otherwise.",
+          "params": [],
+          "raises": [],
+          "examples": [],
+          "notes": [],
+          "warnings": [],
+          "returns": null
+        },
+        "parameters": [],
+        "isAsync": false,
+        "decorators": [],
+        "isClassmethod": false,
+        "isStaticmethod": false,
+        "isProperty": false,
+        "sourceLocation": {
+          "startLine": 57,
+          "endLine": 68
+        },
+        "returnTypeInfo": null
+      }
+    ],
+    "attributes": [
+      {
+        "name": "megatron_path",
+        "path": "nemo_rl.megatron_path",
+        "value": "Path(__file__).parent.parent / '3rdparty' / 'Megatron-LM-workspace' / 'Megatron-LM'",
+        "typeInfo": null,
+        "docstring": null
+      }
+    ],
+    "submodules": [
+      {
+        "name": "algorithms",
+        "path": "nemo_rl.algorithms",
+        "docstring": null,
+        "submodules": [
+          {
+            "name": "async_utils",
+            "path": "nemo_rl.algorithms.async_utils",
+            "docstring": null,
+            "submodules": [],
+            "classes": [],
+            "functions": [],
+            "attributes": []
+          }
+        ],
+        "classes": [],
+        "functions": [],
+        "attributes": []
+      },
+      {
+        "name": "data",
+        "path": "nemo_rl.data",
+        "docstring": null,
+        "submodules": [
+          {
+            "name": "chat_templates",
+            "path": "nemo_rl.data.chat_templates",
+            "docstring": null,
+            "submodules": [],
+            "classes": [],
+            "functions": [],
+            "attributes": []
+          }
+        ],
+        "classes": [],
+        "functions": [],
+        "attributes": []
+      },
+      {
+        "name": "distributed",
+        "path": "nemo_rl.distributed",
+        "docstring": null,
+        "submodules": [
+          {
+            "name": "batched_data_dict",
+            "path": "nemo_rl.distributed.batched_data_dict",
+            "docstring": null,
+            "submodules": [],
+            "classes": [],
+            "functions": [],
+            "attributes": []
+          }
+        ],
+        "classes": [],
+        "functions": [],
+        "attributes": []
+      },
+      {
+        "name": "environments",
+        "path": "nemo_rl.environments",
+        "docstring": null,
+        "submodules": [
+          {
+            "name": "code_environment",
+            "path": "nemo_rl.environments.code_environment",
+            "docstring": null,
+            "submodules": [],
+            "classes": [],
+            "functions": [],
+            "attributes": []
+          }
+        ],
+        "classes": [],
+        "functions": [],
+        "attributes": []
+      }
+    ],
+    "sourceCode": "# Copyright (c) 2025, NVIDIA CORPORATION.  All rights reserved.\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this file except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#     http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\nimport logging\nimport os\nimport sys\nfrom pathlib import Path\n\n# Configure logging to show file location\nlogging.basicConfig(\n    format=\"%(levelname)s:%(name)s:%(filename)s:%(lineno)d: %(message)s\",\n)\n\n\"\"\"\nThis is a work around to ensure whenever NeMo RL is imported, that we\nadd Megatron-LM to the python path. This is because the only sub-package\nthat's officially installed is megatron.core. So we add the whole repo into\nthe path so we can access megatron.{training,legacy,inference,...}\n\nSince users may pip install NeMo RL, this is a convenience so they do not\nhave to manually run with PYTHONPATH=3rdparty/Megatron-LM-workspace/Megatron-LM.\n\"\"\"\nmegatron_path = (\n    Path(__file__).parent.parent / \"3rdparty\" / \"Megatron-LM-workspace\" / \"Megatron-LM\"\n)\nif megatron_path.exists() and str(megatron_path) not in sys.path:\n    sys.path.append(str(megatron_path))\n\nfrom nemo_rl.package_info import (\n    __contact_emails__,\n    __contact_names__,\n    __description__,\n    __download_url__,\n    __homepage__,\n    __keywords__,\n    __license__,\n    __package_name__,\n    __repository_url__,\n    __shortversion__,\n    __version__,\n)\n\nos.environ[\"RAY_USAGE_STATS_ENABLED\"] = \"0\"\nos.environ[\"RAY_ENABLE_UV_RUN_RUNTIME_ENV\"] = \"0\"\n\n\ndef _is_build_isolation():\n    \"\"\"Detect if we're running in a uv build isolation environment.\n\n    When running uv lock/sync, uv creates a temporary isolated environment\n    in ~/.cache/uv/builds-v*/ to build packages and introspect metadata.\n    We skip the fingerprint check in this context since the user is updating dependencies.\n\n    Returns True if in build isolation, False otherwise.\n    \"\"\"\n    # Check if we're in uv's build isolation directory\n    # uv always uses paths like: /root/.cache/uv/builds-v0/.tmp*/\n    return \"/builds-v\" in sys.prefix\n\n\ndef _check_container_fingerprint():\n    \"\"\"Check if container dependencies match the current code (container-only).\n\n    This check only runs when NRL_CONTAINER=1 is set (inside containers).\n    It compares the container's fingerprint (computed at build time) with\n    the current code's fingerprint to detect dependency drift.\n\n    This check is also skipped entirely if NRL_FORCE_REBUILD_VENVS=true is set,\n    since environment rebuilding will ensure dependencies are consistent regardless\n    of a mismatch.\n\n    If there's a mismatch, raises RuntimeError unless NRL_IGNORE_VERSION_MISMATCH is set.\n    \"\"\"\n    # Skip check if not in container or if we're going to force venv rebuild anyway\n    if not os.environ.get(\"NRL_CONTAINER\"):\n        return\n    if os.environ.get(\"NRL_FORCE_REBUILD_VENVS\", \"\").lower() == \"true\":\n        logging.info(\n            \"Skipping container fingerprint check because NRL_FORCE_REBUILD_VENVS=true (venvs will be rebuilt anyway)\"\n        )\n        return\n\n    # Skip check if we're in a build isolation environment (e.g., during uv lock/sync)\n    if _is_build_isolation():\n        logging.debug(\n            \"Skipping container fingerprint check because we're in a build isolation environment\"\n        )\n        return\n\n    try:\n        import json\n        import runpy\n        import sys\n        from io import StringIO\n\n        # Get repo root (relative to this module)\n        repo_root = Path(__file__).parent.parent\n        fingerprint_script = repo_root / \"tools\" / \"generate_fingerprint.py\"\n\n        # Check if script exists\n        if not fingerprint_script.exists():\n            logging.warning(\n                f\"Fingerprint script not found at {fingerprint_script}, skipping version check\"\n            )\n            return\n\n        # Compute current code fingerprint using runpy (cleaner than subprocess)\n        old_stdout = sys.stdout\n        sys.stdout = captured_output = StringIO()\n        try:\n            runpy.run_path(str(fingerprint_script), run_name=\"__main__\")\n            current_fingerprint_json = captured_output.getvalue().strip()\n        finally:\n            sys.stdout = old_stdout\n\n        if not current_fingerprint_json:\n            logging.warning(\"Failed to compute code fingerprint: empty output\")\n            return\n\n        current_fingerprint = json.loads(current_fingerprint_json)\n\n        # Read container fingerprint\n        container_fingerprint_file = Path(\"/opt/nemo_rl_container_fingerprint\")\n        if not container_fingerprint_file.exists():\n            logging.warning(\n                \"Container fingerprint file not found, skipping version check\"\n            )\n            return\n\n        container_fingerprint = json.loads(\n            container_fingerprint_file.read_text().strip()\n        )\n\n        # Compare fingerprints and find differences\n        all_keys = set(current_fingerprint.keys()) | set(container_fingerprint.keys())\n        differences = []\n\n        for key in sorted(all_keys):\n            current_val = current_fingerprint.get(key, \"missing\")\n            container_val = container_fingerprint.get(key, \"missing\")\n\n            if current_val != container_val:\n                differences.append(f\"  - {key}:\")\n                differences.append(f\"      Container: {container_val}\")\n                differences.append(f\"      Current:   {current_val}\")\n\n        if differences:\n            diff_text = \"\\n\".join(differences)\n            sep_line = \"\\n\" + (\"-\" * 80)\n            warning_msg = (\n                f\"{sep_line}\\n\"\n                \"WARNING: Container/Code Version Mismatch Detected!\\n\"\n                f\"{sep_line}\\n\"\n                \"Your container's dependencies do not match your current code.\\n\"\n                \"\\n\"\n                \"Differences found:\\n\"\n                f\"{diff_text}\\n\"\n                \"\\n\"\n                \"This can lead to unexpected behavior or errors.\\n\"\n                \"\\n\"\n                \"Solutions:\\n\"\n                \"  1. Rebuild the container to match your code\\n\"\n                \"  2. Set NRL_FORCE_REBUILD_VENVS=true to rebuild virtual environments\\n\"\n                \"     (This forces Ray workers to recreate their venvs with updated dependencies)\\n\"\n                \"  3. Update the container fingerprint to match your current code (for local dev):\\n\"\n                \"     python tools/generate_fingerprint.py > /opt/nemo_rl_container_fingerprint\\n\"\n                \"  4. Set NRL_IGNORE_VERSION_MISMATCH=1 to bypass this check (not recommended)\\n\"\n                \"\\n\"\n                \"Learn more about dependency management:\\n\"\n                \"  https://github.com/NVIDIA-NeMo/RL/blob/main/docs/design-docs/dependency-management.md\\n\"\n                f\"{sep_line}\\n\"\n            )\n\n            # Check if user wants to ignore the mismatch\n            if not bool(os.environ.get(\"NRL_IGNORE_VERSION_MISMATCH\")):\n                logging.warning(\n                    warning_msg\n                    + \"Proceeding anyway (NRL_IGNORE_VERSION_MISMATCH is set)...\"\n                )\n        else:\n            logging.debug(\"Container fingerprint matches code fingerprint\")\n\n    except RuntimeError:\n        # Re-raise RuntimeError for version mismatches (user should see this)\n        raise\n    except Exception as e:\n        # Log other errors but don't crash on version check failures\n        logging.debug(f\"Version check failed (non-fatal): {e}\")\n\n\n# Perform container version check\n_check_container_fingerprint()\n\n\ndef _patch_nsight_file():\n    \"\"\"Patch the nsight.py file to fix the context.py_executable assignment.\n\n    Until this fix is upstreamed, we will maintain this patch here. This patching\n    logic is only applied if the user intends to use nsys profiling which they enable with\n    NRL_NSYS_WORKER_PATTERNS.\n\n    If enabled, will effectively apply the following patch in an idempotent manner:\n\n    https://github.com/ray-project/ray/compare/master...terrykong:ray:tk/nsight-py-exeutable-fix?expand=1\n\n    This hack works b/c the nsight plugin is not called from the main driver process, so\n    as soon as nemo_rl is imported, the patch is applied and the source of the nsight.py module\n    is up to date before the nsight.py is actually needed.\n    \"\"\"\n    # Only apply patch if user intends to use nsys profiling\n\n    # Don't rely on nemo_rl.utils.nsys.NRL_NSYS_WORKER_PATTERNS since nemo_rl may not be available\n    # on the node that imports nemo_rl.\n    if not os.environ.get(\"NRL_NSYS_WORKER_PATTERNS\"):\n        return\n\n    try:\n        from ray._private.runtime_env import nsight\n\n        file_to_patch = nsight.__file__\n\n        # Read the current file content\n        with open(file_to_patch, \"r\") as f:\n            content = f.read()\n\n        # The line we want to replace\n        old_line = 'context.py_executable = \" \".join(self.nsight_cmd) + \" python\"'\n        new_line = 'context.py_executable = \" \".join(self.nsight_cmd) + f\" {context.py_executable}\"'\n\n        # Check if patch has already been applied (idempotent check)\n        if new_line in content:\n            # Already patched\n            logging.info(f\"Ray nsight plugin already patched at {file_to_patch}\")\n            return\n\n        # Check if the old line exists to patch\n        if old_line not in content:\n            # Nothing to patch or file structure has changed\n            logging.warning(\n                f\"Expected line not found in {file_to_patch} - Ray version may have changed\"\n            )\n            return\n\n        # Apply the patch\n        patched_content = content.replace(old_line, new_line)\n\n        # Write back the patched content\n        with open(file_to_patch, \"w\") as f:\n            f.write(patched_content)\n\n        logging.info(f\"Successfully patched Ray nsight plugin at {file_to_patch}\")\n\n    except (ImportError, FileNotFoundError, PermissionError) as e:\n        # Allow failures gracefully - Ray might not be installed or file might be read-only\n        pass\n\n\n# Apply the patch\n_patch_nsight_file()\n\n\n# Need to set PYTHONPATH to include transformers downloaded modules.\n# Assuming the cache directory is the same cross venvs.\ndef patch_transformers_module_dir(env_vars: dict[str, str]):\n    hf_home = os.environ.get(\"HF_HOME\", None)\n    if hf_home is None:\n        return env_vars\n\n    module_dir = os.path.join(hf_home, \"modules\")\n    if not os.path.isdir(module_dir):\n        return env_vars\n\n    if \"PYTHONPATH\" not in env_vars:\n        env_vars[\"PYTHONPATH\"] = module_dir\n    else:\n        env_vars[\"PYTHONPATH\"] = f\"{module_dir}:{env_vars['PYTHONPATH']}\"\n\n    return env_vars\n\n\npatch_transformers_module_dir(os.environ)\n",
+    "sourceFilePath": "nemo_rl/__init__.py",
+    "docstring": null
+  },
+  "module_with_docstring": {
+    "name": "aime",
+    "path": "nemo_rl.data.datasets.eval_datasets.aime",
+    "docstring": {
+      "summary": "AIME dataset.",
+      "description": "AIME dataset.",
+      "params": [],
+      "raises": [],
+      "examples": [],
+      "notes": [],
+      "warnings": [],
+      "returns": null
+    },
+    "classes": [
+      {
+        "name": "AIMEDataset",
+        "path": "nemo_rl.data.datasets.eval_datasets.aime.AIMEDataset",
+        "kind": "CLASS",
+        "bases": [],
+        "constructorParams": [
+          {
+            "name": "variant",
+            "typeInfo": {
+              "display": "Literal['2024', '2025']",
+              "resolvedPath": "typing.Literal['2024', '2025']",
+              "basePath": null
+            },
+            "default": "'2025'",
+            "kind": "POSITIONAL",
+            "description": null
+          },
+          {
+            "name": "prompt_file",
+            "typeInfo": {
+              "display": "Optional[str]",
+              "resolvedPath": "typing.Optional[str]",
+              "basePath": null
+            },
+            "default": "None",
+            "kind": "POSITIONAL",
+            "description": null
+          },
+          {
+            "name": "system_prompt_file",
+            "typeInfo": {
+              "display": "Optional[str]",
+              "resolvedPath": "typing.Optional[str]",
+              "basePath": null
+            },
+            "default": "None",
+            "kind": "POSITIONAL",
+            "description": null
+          }
+        ],
+        "methods": [
+          {
+            "name": "_rekey",
+            "path": "nemo_rl.data.datasets.eval_datasets.aime.AIMEDataset._rekey",
+            "signature": "def nemo_rl.data.datasets.eval_datasets.aime.AIMEDataset._rekey(self, data: dict[str, typing.Any])",
+            "parameters": [
+              {
+                "name": "self",
+                "kind": "POSITIONAL",
+                "typeInfo": null,
+                "default": null,
+                "description": null
+              },
+              {
+                "name": "data",
+                "typeInfo": {
+                  "display": "dict[str, Any]",
+                  "resolvedPath": "dict[str, typing.Any]",
+                  "basePath": null
+                },
+                "kind": "POSITIONAL",
+                "default": null,
+                "description": null
+              }
+            ],
+            "isAsync": false,
+            "decorators": [],
+            "isClassmethod": false,
+            "isStaticmethod": false,
+            "isProperty": false,
+            "sourceLocation": {
+              "startLine": 51,
+              "endLine": 55
+            },
+            "docstring": null,
+            "returnTypeInfo": null
+          }
+        ],
+        "attributes": [
+          {
+            "name": "input_key",
+            "path": "nemo_rl.data.datasets.eval_datasets.aime.AIMEDataset.input_key",
+            "value": "'problem'",
+            "typeInfo": null,
+            "docstring": null
+          },
+          {
+            "name": "processor",
+            "path": "nemo_rl.data.datasets.eval_datasets.aime.AIMEDataset.processor",
+            "value": "processors.math_data_processor",
+            "typeInfo": null,
+            "docstring": null
+          },
+          {
+            "name": "rekeyed_ds",
+            "path": "nemo_rl.data.datasets.eval_datasets.aime.AIMEDataset.rekeyed_ds",
+            "value": "ds.map(self._rekey, remove_columns=(ds.column_names))",
+            "typeInfo": null,
+            "docstring": null
+          },
+          {
+            "name": "task_spec",
+            "path": "nemo_rl.data.datasets.eval_datasets.aime.AIMEDataset.task_spec",
+            "value": "TaskDataSpec(task_name=f'aime{variant}', prompt_file=prompt_file, system_prompt_file=system_prompt_file)",
+            "typeInfo": null,
+            "docstring": null
+          }
+        ],
+        "decorators": [],
+        "isAbstract": false,
+        "hasSlots": false,
+        "sourceLocation": {
+          "startLine": 25,
+          "endLine": 55
+        },
+        "docstring": null,
+        "metaclass": null,
+        "typedDictFields": null,
+        "enumMembers": null
+      }
+    ],
+    "functions": [],
+    "attributes": [],
+    "submodules": [],
+    "sourceCode": "# Copyright (c) 2025, NVIDIA CORPORATION.  All rights reserved.\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this file except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#     http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n\n\"\"\"AIME dataset.\"\"\"\n\nfrom typing import Any, Literal, Optional\n\nfrom datasets import concatenate_datasets, load_dataset\n\nfrom nemo_rl.data import processors\nfrom nemo_rl.data.interfaces import TaskDataSpec\n\n\nclass AIMEDataset:\n    def __init__(\n        self,\n        variant: Literal[\"2024\", \"2025\"] = \"2025\",\n        prompt_file: Optional[str] = None,\n        system_prompt_file: Optional[str] = None,\n    ):\n        if variant == \"2024\":\n            ds = load_dataset(\"HuggingFaceH4/aime_2024\", split=\"train\")\n            self.input_key = \"problem\"\n        elif variant == \"2025\":\n            ds0 = load_dataset(\"opencompass/AIME2025\", \"AIME2025-I\", split=\"test\")\n            ds1 = load_dataset(\"opencompass/AIME2025\", \"AIME2025-II\", split=\"test\")\n            ds = concatenate_datasets([ds0, ds1])\n            self.input_key = \"question\"\n        else:\n            raise ValueError(f\"Invalid variant for aime dataset: aime{variant}\")\n\n        self.rekeyed_ds = ds.map(self._rekey, remove_columns=ds.column_names)\n        self.task_spec = TaskDataSpec(\n            task_name=f\"aime{variant}\",\n            prompt_file=prompt_file,\n            system_prompt_file=system_prompt_file,\n        )\n        self.processor = processors.math_data_processor\n\n    def _rekey(self, data: dict[str, Any]):\n        return {\n            \"problem\": data[self.input_key],\n            \"expected_answer\": data[\"answer\"],\n        }\n",
+    "sourceFilePath": "nemo_rl/data/datasets/eval_datasets/aime.py"
+  },
+  "package_submodules_only": {
+    "name": "evals",
+    "path": "nemo_rl.evals",
+    "classes": [],
+    "functions": [],
+    "attributes": [],
+    "submodules": [
+      {
+        "name": "answer_parsing",
+        "path": "nemo_rl.evals.answer_parsing",
+        "docstring": null,
+        "submodules": [],
+        "classes": [],
+        "functions": [],
+        "attributes": []
+      },
+      {
+        "name": "eval",
+        "path": "nemo_rl.evals.eval",
+        "docstring": null,
+        "submodules": [],
+        "classes": [],
+        "functions": [],
+        "attributes": []
+      }
+    ],
+    "sourceCode": "",
+    "sourceFilePath": "nemo_rl/evals/__init__.py",
+    "docstring": null
+  }
+}

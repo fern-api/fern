@@ -1,0 +1,6 @@
+rootProject.name = 'fern-java-plugins'
+
+include 'model'
+include 'sdk'
+include 'spring'
+include 'generator-utils'

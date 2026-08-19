@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    test-availability:
+      path: /test-availability
+      method: POST
+      request:
+        name: RequestObject
+        body:
+          properties:
+            random:
+              type: string
+              availability: pre-release
+            random-alpha:
+              type: string
+              availability: alpha
+            random-beta:
+              type: string
+              availability: beta
+            random-preview:
+              type: string
+              availability: preview
+            random-legacy:
+              type: string
+              availability: legacy
+      response: string
+
+types:
+  Object:
+    properties:
+      id:
+        type: string
+        availability: pre-release
+      alpha-prop:
+        type: string
+        availability: alpha
+      beta-prop:
+        type: string
+        availability: beta
+      preview-prop:
+        type: string
+        availability: preview
+      legacy-prop:
+        type: string
+        availability: legacy

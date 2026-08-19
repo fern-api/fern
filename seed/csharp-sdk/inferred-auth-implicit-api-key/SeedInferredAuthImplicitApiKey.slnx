@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedInferredAuthImplicitApiKey.Test/SeedInferredAuthImplicitApiKey.Test.csproj" />
+  <Project Path="src/SeedInferredAuthImplicitApiKey/SeedInferredAuthImplicitApiKey.csproj" />
+</Solution>

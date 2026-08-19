@@ -1,0 +1,88 @@
+{
+  "type": "object",
+  "properties": {
+    "created_date": {
+      "$ref": "#/definitions/Iso8601Date"
+    },
+    "fraud_date": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Iso8601DateNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "resolved_date": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Iso8601DateTimeNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NullableString"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "title": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "created_date",
+    "title"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Iso8601Date": {
+      "type": "string",
+      "format": "date",
+      "description": "A date in YYYY-MM-DD format."
+    },
+    "Iso8601DateNullable": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A date in YYYY-MM-DD format, or null."
+    },
+    "Iso8601DateTimeNullable": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A date-time in ISO 8601 format, or null."
+    },
+    "NullableString": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A string or null."
+    }
+  }
+}

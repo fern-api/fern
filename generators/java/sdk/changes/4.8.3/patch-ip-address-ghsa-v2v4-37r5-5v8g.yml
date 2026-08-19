@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Patch the npm-bundled `ip-address` package to 10.2.0 in the Java SDK generator container to address GHSA-v2v4-37r5-5v8g (CVE-2026-42338): XSS in `Address6` HTML-emitting methods. The vulnerable copy was pulled in transitively via `socks-proxy-agent` -> `socks` -> `ip-address@10.1.0` inside `/usr/local/lib/node_modules/npm`.
+  type: chore

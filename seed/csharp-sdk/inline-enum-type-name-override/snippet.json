@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/load",
+                "method": "POST",
+                "identifier_override": "endpoint_reporting.load"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Reporting.LoadAsync(new LoadRequest());\n"
+            }
+        }
+    ]
+}

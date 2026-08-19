@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump `@fern-fern/fiddle-sdk` catalog pin to `1.0.2`. The new SDK exposes
+    `replay` on `CreateJobRequestV2`, so the field added to `createJobV3` in
+    PR #15690 stops being silently stripped by the SDK serializer and now
+    actually reaches Fiddle. With this in place, customers setting
+    `replay.enabled: false` in `generators.yml` get the legacy GitHub push/PR
+    path on cloud generation. Final activation step for FER-10343.
+  type: chore

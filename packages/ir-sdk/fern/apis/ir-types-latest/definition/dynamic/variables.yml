@@ -1,0 +1,21 @@
+imports:
+  commons: ../commons.yml
+  types: ./types.yml
+
+types:
+  VariableDeclaration:
+    audiences:
+      - dynamic
+    docs: |
+      A variable that is configured at the client level and can be
+      referenced in path parameters and other contexts.
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for the variable
+      name:
+        type: commons.Name
+        docs: The name of the variable
+      typeReference:
+        type: types.TypeReference
+        docs: The type of the variable

@@ -1,0 +1,9 @@
+imports:
+  user: ../user/user.yml
+
+types:
+  Id: string
+
+  Token:
+    properties:
+      username: user.Username

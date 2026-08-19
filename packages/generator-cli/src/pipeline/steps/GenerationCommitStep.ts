@@ -1,0 +1,117 @@
+import { execFileSync } from "child_process";
+import { ReplayPrepareError, type ReplayPrepareState, replayPrepare } from "../../replay/replay-run";
+import type { PipelineLogger } from "../PipelineLogger";
+import type { GenerationCommitStepConfig, GenerationCommitStepResult, PipelineContext } from "../types";
+import { BaseStep } from "./BaseStep";
+
+/**
+ * Phase 1 of the replay flow: commit the freshly-generated working tree as
+ * `[fern-generated]`. Produces the `PreparedReplay` handle plus the previous /
+ * current `[fern-generated]` SHAs needed by downstream steps (AutoVersionStep
+ * diffs the two SHAs; ReplayStep feeds the handle back into `replayApply`).
+ *
+ * Runs before AutoVersionStep and ReplayStep so the autoversion diff sees pure
+ * generator output on both sides and sits as a commit between `[fern-generated]`
+ * and `[fern-replay]`.
+ *
+ * When replay isn't initialized (no `.fern/replay.lock`) or prepare fails, the
+ * step returns `preparedReplay: null` and downstream steps short-circuit — the
+ * pipeline proceeds as if replay were disabled for this run.
+ */
+export class GenerationCommitStep extends BaseStep {
+    readonly name = "generationCommit";
+
+    constructor(
+        outputDir: string,
+        logger: PipelineLogger,
+        private readonly config: GenerationCommitStepConfig,
+        private readonly cliVersion?: string,
+        private readonly generatorVersions?: Record<string, string>
+    ) {
+        super(outputDir, logger);
+    }
+
+    async execute(_context: PipelineContext): Promise<GenerationCommitStepResult> {
+        // Capture HEAD before prepare runs so we can roll back partial mutations
+        // if prepare crashes mid-flight (the prepare phase may write the lockfile
+        // and create the [fern-generated] commit before throwing).
+        const headBeforePrepare = tryRevParse(this.outputDir, "HEAD");
+
+        // Out-param so the bootstrapAttempted signal survives even when
+        // replayPrepare returns null (bootstrap couldn't anchor / threw).
+        const prepareState: ReplayPrepareState = { bootstrapAttempted: false };
+
+        let prepared: Awaited<ReturnType<typeof replayPrepare>>;
+        try {
+            prepared = await replayPrepare(
+                {
+                    outputDir: this.outputDir,
+                    cliVersion: this.cliVersion,
+                    generatorVersions: this.generatorVersions,
+                    skipApplication: this.config.skipApplication,
+                    logger: this.logger
+                },
+                prepareState
+            );
+        } catch (error) {
+            const reason = error instanceof ReplayPrepareError ? error.reason : String(error);
+            // Best-effort rollback: prepare may have committed [fern-generated]
+            // before throwing. Reset HEAD to the pre-prepare commit so downstream
+            // steps (GithubStep) don't push a half-mutated tree to the remote.
+            if (headBeforePrepare != null) {
+                try {
+                    execFileSync("git", ["reset", "--hard", headBeforePrepare], {
+                        cwd: this.outputDir,
+                        stdio: "pipe"
+                    });
+                } catch {
+                    // Best-effort — if reset fails, the working tree may still be
+                    // mutated, but we surface the original prepare error so the
+                    // operator can recover.
+                }
+            }
+            // success: true so the orchestrator does NOT propagate this to
+            // pipelineResult.success = false (which would abort generation).
+            // The replay error is carried as errorMessage and consumed by
+            // ReplayStep, which records it on its own result for telemetry.
+            return {
+                executed: true,
+                success: true,
+                errorMessage: reason,
+                preparedReplay: null,
+                bootstrapAttempted: prepareState.bootstrapAttempted
+            };
+        }
+
+        if (prepared == null) {
+            return {
+                executed: true,
+                success: true,
+                preparedReplay: null,
+                bootstrapAttempted: prepareState.bootstrapAttempted
+            };
+        }
+
+        return {
+            executed: true,
+            success: true,
+            preparedReplay: prepared,
+            previousGenerationSha: prepared.previousGenerationSha ?? undefined,
+            currentGenerationSha: prepared.currentGenerationSha,
+            flow: prepared.flow,
+            bootstrapAttempted: prepareState.bootstrapAttempted
+        };
+    }
+}
+
+function tryRevParse(cwd: string, rev: string): string | null {
+    try {
+        return execFileSync("git", ["rev-parse", "--verify", rev], {
+            cwd,
+            encoding: "utf-8",
+            stdio: "pipe"
+        }).trim();
+    } catch {
+        return null;
+    }
+}

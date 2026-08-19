@@ -1,0 +1,85 @@
+{
+  "get_tokenizer": {
+    "summary": "Get the tokenizer and set pad token to eos token if it is not already set.",
+    "description": "Get the tokenizer and set pad token to eos token if it is not already set.\n\nThis function initializes a tokenizer from the Hugging Face transformers library\nand configures it with appropriate chat templates and padding tokens.",
+    "params": [
+      {
+        "name": "tokenizer_config",
+        "type": "TokenizerConfig",
+        "description": "A dictionary containing tokenizer configuration.\nRequired keys:\n    - name: The name or path of the pretrained tokenizer\nOptional keys:\n    - chat_template: The chat template to use.",
+        "default": null
+      },
+      {
+        "name": "get_processor",
+        "type": "bool",
+        "description": "Whether to return a processor (via AutoProcessor) instead of a tokenizer.",
+        "default": "False"
+      }
+    ],
+    "returns": {
+      "type": "PreTrainedTokenizerBase",
+      "description": "The configured tokenizer instance"
+    },
+    "raises": [],
+    "examples": [
+      {
+        "code": ">>> config = {\"name\": \"meta-llama/Llama-3.2-1B-Instruct\"}\n>>> tokenizer = get_tokenizer(config)",
+        "description": null
+      }
+    ],
+    "notes": [],
+    "warnings": []
+  },
+  "validate_tensor_consistency": {
+    "summary": "Validate that all tensors have consistent dtypes and devices.",
+    "description": "Validate that all tensors have consistent dtypes and devices.",
+    "params": [
+      {
+        "name": "tensors",
+        "type": "list[Tensor]",
+        "description": "List of tensors to validate",
+        "default": null
+      }
+    ],
+    "returns": null,
+    "raises": [
+      {
+        "type": "RuntimeError",
+        "description": "If tensors have different dtypes or devices"
+      }
+    ],
+    "examples": [],
+    "notes": [],
+    "warnings": []
+  },
+  "eval_collate_fn": {
+    "summary": "Collate function for evaluation.",
+    "description": "Collate function for evaluation.\n\nTakes a list of data samples and combines them into a single batched dictionary\nfor model evaluation.\n\nExamples:\n```{doctest}\n>>> import torch\n>>> from nemo_rl.data.collate_fn import eval_collate_fn\n>>> output = eval_collate_fn(data_batch)\n>>> output['message_log'][0]\n[{'role': 'user', 'content': 'Hello'}]\n```",
+    "params": [
+      {
+        "name": "data_batch",
+        "type": "list[DatumSpec]",
+        "description": "List of data samples with message_log, extra_env_info, and idx fields.",
+        "default": null
+      }
+    ],
+    "returns": {
+      "type": "BatchedDataDict[Any]",
+      "description": "BatchedDataDict with message_log, extra_env_info, and idx fields."
+    },
+    "raises": [],
+    "examples": [],
+    "notes": [],
+    "warnings": []
+  },
+  "clipped_pg_loss": {
+    "summary": "Generalized Clipped Policy Gradient loss function w/ KL regularization.",
+    "description": "Generalized Clipped Policy Gradient loss function w/ KL regularization.\n\nFormula:\nL(θ) = E_t [ min(r_t(θ) * A_t, clip(r_t(θ), 1-ε, 1+ε) * A_t) ] - β * KL(π_θ || π_ref)\n\nAlso supports \"Dual-Clipping\" from https://arxiv.org/pdf/1912.09729, which\nimposes an additional upper bound: $rA << 0$ -> $cA$(clipped)",
+    "params": [],
+    "returns": null,
+    "raises": [],
+    "examples": [],
+    "notes": [],
+    "warnings": []
+  }
+}

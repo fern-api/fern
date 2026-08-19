@@ -1,0 +1,46 @@
+import { generatorsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { readFile, rm } from "fs/promises";
+
+import { runFernCli } from "../../utils/runFernCli.js";
+
+export async function generateFdrApiDefinitionAsString({
+    fixturePath,
+    language,
+    audiences,
+    apiName,
+    version,
+    signal
+}: {
+    fixturePath: AbsoluteFilePath;
+    language?: generatorsYml.GenerationLanguage;
+    audiences?: string[];
+    apiName?: string;
+    version?: string;
+    signal?: AbortSignal;
+}): Promise<string> {
+    const fdrOutputPath = join(fixturePath, RelativeFilePath.of("fdr.json"));
+    await rm(fdrOutputPath, { force: true, recursive: true });
+
+    const command = ["fdr", fdrOutputPath];
+    if (language != null) {
+        command.push("--language", language);
+    }
+    if (audiences != null) {
+        command.push("--audience");
+        for (const audience of audiences) {
+            command.push(audience);
+        }
+    }
+    if (apiName != null) {
+        command.push("--api", apiName);
+    }
+    if (version != null) {
+        command.push("--version", version);
+    }
+
+    await runFernCli(command, { cwd: fixturePath, signal });
+
+    const fdrContents = await readFile(fdrOutputPath);
+    return fdrContents.toString();
+}

@@ -1,0 +1,93 @@
+---
+title: "Analyze Batch with AI"
+api: "POST https://api.bland.ai/v1/batches/{batch_id}/analyze"
+description: "Analyzes a batch of calls based on using questions and goals."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="batch_id" type="string" required>
+  The unique identifier for the batch of calls to be analyzed.
+</ParamField>
+
+### Request Body
+
+<ParamField body="goal" type="string" required>
+  This is the overall purpose of the batch of calls. Provides context for the analysis to guide how the
+  questions/transcripts are interpreted.
+</ParamField>
+
+<ParamField body="questions" type="array" required>
+  An array of questions to be analyzed for each call in the batch. 
+  
+  Each question should be an array with two elements: the question text and the expected answer type (e.g., "string", "boolean").
+
+Fairly flexible in terms of the expected answer type, and unanswerable questions will default to `null`.
+
+Examples:
+
+```json
+"questions": [
+      ["Who answered the call?", "human or voicemail"],
+      ["Positive feedback about the product: ", "string"],
+      ["Negative feedback about the product: ", "string"],
+      ["Customer confirmed they were satisfied", "boolean"]
+  ]
+```
+
+</ParamField>
+
+### Response
+
+<ResponseField type="object" name="status">
+  Will be `success` if the request was successful.
+</ResponseField>
+
+<ResponseField type="string" name="message">
+  Confirms the request was successful, or provides an error message if the request failed.
+</ResponseField>
+
+<ResponseField type="object" name="answers">
+  Contains the analyzed answers for each call in the batch.
+
+The keys are `call_id`s from the batch, and the array values are the analysis results for each question in the batch.
+
+</ResponseField>
+
+<ResponseField type="number" name="credits_used">
+  Token-based price for the analysis request.
+
+As a rough estimate, the base cost is `0.003` credits with an additional `0.0015` credits per call in the batch.
+
+Longer call transcripts and higher numbers of questions can increase the cost, however the cost scales very effectively with batches vs. individual calls.
+
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+    "status": "success",
+    "message": "Successfully analyzed batch",
+    "answers": {
+        "123e4567-e89b-12d3-a456-426614174000": [
+            "human",
+            "Customer found the product sturdy and reliable",
+            "A bit heavy",
+            true
+        ],
+        "123e4567-e89b-12d3-a456-426614174001": [
+            "voicemail",
+            null,
+            null,
+            false
+        ]
+    }
+}
+```
+</ResponseExample>

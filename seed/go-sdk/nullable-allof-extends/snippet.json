@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/test",
+                "method": "GET",
+                "identifier_override": "endpoint_.getTest"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/nullable-allof-extends/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.GetTest(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/test",
+                "method": "POST",
+                "identifier_override": "endpoint_.createTest"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-allof-extends/fern\"\n\tfernclient \"github.com/nullable-allof-extends/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreateTest(\n\tcontext.TODO(),\n\t\u0026fern.RootObject{},\n)\n"
+            }
+        }
+    ]
+}

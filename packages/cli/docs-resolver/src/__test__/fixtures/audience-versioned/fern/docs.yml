@@ -1,0 +1,18 @@
+instances: []
+versions:
+  - display-name: "V2.0"
+    path: ./versions/v2.yml
+    audiences:
+      - external
+      - internal
+    availability: ga
+  - display-name: "V1.0"
+    path: ./versions/v1.yml
+    audiences:
+      - external
+    availability: stable
+  - display-name: "V3.0 Beta"
+    path: ./versions/v3.yml
+    audiences:
+      - internal
+    availability: beta

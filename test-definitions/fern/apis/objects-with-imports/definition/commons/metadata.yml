@@ -1,0 +1,12 @@
+types:
+  Metadata:
+    properties:
+      id: string
+      data: optional<map<string, string>>
+    examples:
+      - name: One
+        value:
+          id: metadata-js8dg24b
+          data:
+            foo: bar
+            baz: qux

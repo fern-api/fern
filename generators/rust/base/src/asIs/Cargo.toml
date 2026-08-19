@@ -1,0 +1,18 @@
+[package]
+name = "{{PACKAGE_NAME}}"
+version = "{{PACKAGE_VERSION}}"
+edition = "2021"
+description = "{{PACKAGE_DESCRIPTION}}"
+{{PACKAGE_LICENSE_FIELD}}
+repository = "{{PACKAGE_REPOSITORY}}"
+documentation = "{{PACKAGE_DOCUMENTATION}}"
+
+[lib]
+doctest = false
+
+[dependencies]
+{{EXTRA_DEPENDENCIES}}
+
+[dev-dependencies]
+{{EXTRA_DEV_DEPENDENCIES}}
+{{FEATURES}}

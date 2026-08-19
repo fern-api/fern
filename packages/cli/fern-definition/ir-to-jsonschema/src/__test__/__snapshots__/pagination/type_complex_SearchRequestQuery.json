@@ -1,0 +1,112 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/complex.SingleFilterSearchRequest"
+    },
+    {
+      "$ref": "#/definitions/complex.MultipleFilterSearchRequest"
+    }
+  ],
+  "definitions": {
+    "complex.SingleFilterSearchRequestOperator": {
+      "type": "string",
+      "enum": [
+        "=",
+        "!=",
+        "IN",
+        "NIN",
+        "<",
+        ">",
+        "~",
+        "!~",
+        "^",
+        "$"
+      ]
+    },
+    "complex.SingleFilterSearchRequest": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operator": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/complex.SingleFilterSearchRequestOperator"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "complex.MultipleFilterSearchRequestOperator": {
+      "type": "string",
+      "enum": [
+        "AND",
+        "OR"
+      ]
+    },
+    "complex.MultipleFilterSearchRequestValue": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/complex.MultipleFilterSearchRequest"
+          }
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/complex.SingleFilterSearchRequest"
+          }
+        }
+      ]
+    },
+    "complex.MultipleFilterSearchRequest": {
+      "type": "object",
+      "properties": {
+        "operator": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/complex.MultipleFilterSearchRequestOperator"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/complex.MultipleFilterSearchRequestValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

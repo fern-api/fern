@@ -1,0 +1,3 @@
+- summary: |
+    Send `customDomains` when publishing docs translations so FDR mirrors the translated blob to every URL the docs are published to. Previously translations were only written under the canonical fern URL, so docs sites served from a custom domain with a basepath (e.g. `buildwithfern.com/learn`) 404'd on every localized page.
+  type: fix

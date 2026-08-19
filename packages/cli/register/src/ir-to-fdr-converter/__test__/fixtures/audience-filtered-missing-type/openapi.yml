@@ -1,0 +1,71 @@
+openapi: 3.0.3
+info:
+  title: Audience Filtered Missing Type Test
+  version: 1.0.0
+paths:
+  /v2/chat:
+    post:
+      operationId: chat
+      x-fern-audiences:
+        - public
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                messages:
+                  x-fern-audiences:
+                    - public
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/ChatMessageV2"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  text:
+                    type: string
+components:
+  schemas:
+    ChatMessageV2:
+      title: ChatMessageV2
+      oneOf:
+        - $ref: "#/components/schemas/UserMessage"
+        - $ref: "#/components/schemas/AssistantMessage"
+      discriminator:
+        propertyName: role
+        mapping:
+          USER: "#/components/schemas/UserMessage"
+          ASSISTANT: "#/components/schemas/AssistantMessage"
+    UserMessage:
+      title: UserMessage
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+            - USER
+        content:
+          type: string
+      required:
+        - role
+        - content
+    AssistantMessage:
+      title: AssistantMessage
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+            - ASSISTANT
+        content:
+          type: string
+      required:
+        - role
+        - content

@@ -1,0 +1,49 @@
+---
+title: "Webhooks"
+---
+
+<img style={{ borderRadius: "0.5rem" }} src="/tutorials/webhook.png" />
+
+## Introduction
+
+This is a quick tutorial to help you set up and test your Bland AI webhook. We'll include instructions both for inbound and outbound phone calls.
+
+We'll start with inbound because it's more popular.
+
+## Step 1: Create your webhook
+
+To create a test webhook visit [Webhook.site](https://webhook.site/)
+
+The website will automatically provide you a unique webhook URL.
+
+## Step 2: Connect to your inbound phone number
+
+Open your [developer portal](https://app.bland.ai) and visit the [inbound phone numbers](https://app.bland.ai/home?page=inbound-number) page.
+
+<img style={{ borderRadius: "0.5rem" }} src="/tutorials/inbound-number-webhook.png" />
+
+Paste your webhook into the `webhook` field. Make sure to remove the initial `https://` when you insert the URL. Then click `test webhook`.
+
+## Step 3: Verifying your outputs
+
+Navigate to webhook.site page, and check if the test webhook fired correctly. You'll know it worked because a new record will populate.
+
+<img style={{ borderRadius: "0.5rem" }} src="/tutorials/webhook-fires-successfully.png" />
+
+At this point, if your record fails to populate, double check that you provided the correct URL - and that you REMOVED the initial `https://` from it.
+
+Otherwise, if issues persist, jump into the [discord](https://discord.gg/QvxDz8zcKe) - one of our teammates will help you asap.
+
+## Step 4: test a live phone call
+
+Call your inbound phone number. Once it ends, visit the Webhook site and confirm once again that a new record populated.
+
+If that's working, then you're set!
+
+## Step 5: Testing for outbound calls
+
+To test for outbound calls, once again create your webhook by referring back to step 1.
+
+Then, follow the [send phone call docs](https://docs.bland.ai/api-v1/post/calls) to create and send a phone call. Make sure you include the `webhook` as a parameter in your request. After, confirm that the webhook data populated on your webhook site page.
+
+And again, if you encounter issues, jump into [discord](https://discord.gg/QvxDz8zcKe) and message us - we will help asap.

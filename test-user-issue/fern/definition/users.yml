@@ -1,0 +1,30 @@
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    getUser:
+      docs: Get a user by ID
+      method: GET
+      path: /{userId}
+      path-parameters:
+        userId: string
+      response: User
+
+    createUser:
+      docs: Create a new user
+      method: POST
+      path: ""
+      request: CreateUserRequest
+      response: User
+
+types:
+  User:
+    properties:
+      id: string
+      name: string
+      email: string
+
+  CreateUserRequest:
+    properties:
+      name: string
+      email: string

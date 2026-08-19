@@ -1,0 +1,31 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/basic-auth",
+                "method": "GET",
+                "identifier_override": "endpoint_basic-auth.getWithBasicAuth"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedBasicAuth\n\nclient = SeedBasicAuth(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.basic_auth.get_with_basic_auth()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedBasicAuth\n\nclient = AsyncSeedBasicAuth(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.basic_auth.get_with_basic_auth()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/basic-auth",
+                "method": "POST",
+                "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedBasicAuth\n\nclient = SeedBasicAuth(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.basic_auth.post_with_basic_auth(\n    request={\"key\": \"value\"},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedBasicAuth\n\nclient = AsyncSeedBasicAuth(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.basic_auth.post_with_basic_auth(\n        request={\"key\": \"value\"},\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

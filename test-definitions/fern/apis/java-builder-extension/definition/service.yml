@@ -1,0 +1,13 @@
+service:
+  auth: true
+  base-path: /api
+  endpoints:
+    hello:
+      method: GET
+      path: /hello
+      response: HelloResponse
+
+types:
+  HelloResponse:
+    properties:
+      message: string

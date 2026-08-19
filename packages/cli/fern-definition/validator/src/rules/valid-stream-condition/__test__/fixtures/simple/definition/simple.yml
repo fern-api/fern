@@ -1,0 +1,109 @@
+types:
+  ObjectWithStream:
+    properties:
+      stream: boolean
+
+  ObjectWithoutStream:
+    properties:
+      notStream: boolean
+
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    streamConditionButNoResponse:
+      path: ""
+      method: POST
+      request:
+        body:
+          properties:
+            stream: boolean
+      stream-condition: $request.stream
+    responsesButNoStreamCondition:
+      path: ""
+      method: POST
+      response: string
+      response-stream:
+        type: string
+    invalidStreamCondition:
+      path: ""
+      method: POST
+      request:
+        body:
+          properties:
+            stream: boolean
+      stream-condition: invalid-selector
+      response: string
+      response-stream:
+        type: string
+    missingRequestBody:
+      path: ""
+      method: POST
+      stream-condition: $request.stream
+      response: string
+      response-stream:
+        type: string
+    missingPropertyStreamCondition:
+      path: ""
+      method: POST
+      request: ObjectWithoutStream
+      stream-condition: $request.stream
+      response: string
+      response-stream: string
+    nonBooleanStreamCondition:
+      path: ""
+      method: POST
+      request:
+        body:
+          properties:
+            stream: string
+      stream-condition: $request.stream
+      response: string
+      response-stream:
+        type: string
+    booleanStreamCondition:
+      path: ""
+      method: POST
+      request:
+        body: ObjectWithStream
+      stream-condition: $request.stream
+      response: string
+      response-stream:
+        type: string
+    optionalBooleanStreamCondition:
+      path: ""
+      method: POST
+      request:
+        body:
+          properties:
+            stream: optional<boolean>
+      stream-condition: $request.stream
+      response: string
+      response-stream: string
+    validQueryParam:
+      path: ""
+      method: POST
+      request:
+        query-parameters:
+          stream: optional<boolean>
+      stream-condition: $query.stream
+      response: string
+      response-stream: string
+    missingQueryParam:
+      path: ""
+      method: POST
+      request:
+        query-parameters:
+          foo: optional<boolean>
+      stream-condition: $query.stream
+      response: string
+      response-stream: string
+    nonBooleanQueryParam:
+      path: ""
+      method: POST
+      request:
+        query-parameters:
+          stream: integer
+      stream-condition: $query.stream
+      response: string
+      response-stream: string

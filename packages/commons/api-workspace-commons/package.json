@@ -1,0 +1,63 @@
+{
+  "name": "@fern-api/api-workspace-commons",
+  "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern.git",
+    "directory": "packages/commons/api-workspace-commons"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": ["lib"],
+  "scripts": {
+    "clean": "rm -rf ./lib",
+    "compile": "tsc",
+    "compile:debug": "tsc --sourceMap",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
+    "test": "vitest --run --passWithNoTests",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
+    "test:update": "vitest --passWithNoTests --run -u"
+  },
+  "dependencies": {
+    "@fern-api/configuration": "workspace:*",
+    "@fern-api/github": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/ir-sdk": "workspace:*",
+    "@fern-fern/fiddle-sdk": "catalog:",
+    "@fern-api/fern-definition-schema": "workspace:*",
+    "@fern-api/openapi-ir": "workspace:*",
+    "@fern-api/openapi-ir-parser": "workspace:*",
+    "@fern-api/openapi-ir-to-fern": "workspace:*",
+    "@fern-api/path-utils": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
+    "@redocly/openapi-core": "catalog:",
+    "js-yaml": "catalog:",
+    "latest-version": "catalog:",
+    "lodash-es": "catalog:",
+
+    "openapi-types": "^12.1.3",
+    "semver": "^7.7.3"
+  },
+  "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@types/js-yaml": "catalog:",
+    "@types/lodash-es": "catalog:",
+    "@types/node": "catalog:",
+    "@types/semver": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

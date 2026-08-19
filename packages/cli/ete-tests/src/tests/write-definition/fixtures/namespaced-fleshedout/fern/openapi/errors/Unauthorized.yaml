@@ -1,0 +1,11 @@
+description: |
+  This error indicates that the operation attempted to be performed is not allowed. This could be because:
+    - The api token is invalid
+    - The user does not have the necessary permissions
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        data:
+          type: string

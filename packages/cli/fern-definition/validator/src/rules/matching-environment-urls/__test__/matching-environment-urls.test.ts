@@ -1,0 +1,69 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ValidationViolation } from "../../../ValidationViolation.js";
+import { MatchingEnvironmentUrlsRule } from "../matching-environment-urls.js";
+
+describe("matching-environment-urls", () => {
+    it("matching-urls", async () => {
+        const violations = await getViolationsForRule({
+            rule: MatchingEnvironmentUrlsRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("matching-urls")
+            )
+        });
+        expect(violations).toEqual([]);
+    });
+
+    it("not-matching-urls", async () => {
+        const violations = await getViolationsForRule({
+            rule: MatchingEnvironmentUrlsRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("not-matching-urls")
+            )
+        });
+
+        const expectedViolations: ValidationViolation[] = [
+            {
+                message: "Environment SingleUrl is missing URL for A",
+                nodePath: ["environments", "SingleUrl"],
+                relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
+                severity: "fatal"
+            },
+            {
+                message: "Environment SingleUrl is missing URL for B",
+                nodePath: ["environments", "SingleUrl"],
+                relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
+                severity: "fatal"
+            },
+            {
+                message: "Environment SingleUrl is missing URL for C",
+                nodePath: ["environments", "SingleUrl"],
+                relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
+                severity: "fatal"
+            },
+            {
+                message: "Environment Staging is missing URL for C",
+                nodePath: ["environments", "Staging"],
+                relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
+                severity: "fatal"
+            },
+            {
+                message: "Environment Production is missing URL for A",
+                nodePath: ["environments", "Production"],
+                relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
+                severity: "fatal"
+            }
+        ];
+
+        expect(violations).toEqual(expectedViolations);
+    });
+});

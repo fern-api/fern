@@ -1,0 +1,91 @@
+plugins:
+  - rubocop-minitest
+
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+
+Style/AccessModifierDeclarations:
+  Enabled: false
+
+Lint/ConstantDefinitionInBlock:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Layout/LineLength:
+  Enabled: false
+
+Naming/VariableNumber:
+  EnforcedStyle: normalcase
+  Severity: error
+
+Style/Documentation:
+  Enabled: false
+
+Style/Lambda:
+  EnforcedStyle: literal
+
+Minitest/MultipleAssertions:
+  Enabled: false
+
+Minitest/UselessAssertion:
+  Enabled: false
+
+# Dynamic snippets are code samples for documentation, not standalone Ruby files.
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - "dynamic-snippets/**/*"
+
+Layout/FirstHashElementIndentation:
+  Exclude:
+    - "dynamic-snippets/**/*"
+    - "test/wire/**/*"
+
+Layout/FirstArgumentIndentation:
+  Exclude:
+    - "test/wire/**/*"
+
+# IR-derived type names (e.g. Get_With_Query) follow API spec conventions, not Ruby naming.
+Naming/ClassAndModuleCamelCase:
+  Enabled: false
+
+# Generated code may have duplicate hash keys when the API spec defines overlapping field names.
+Lint/DuplicateHashKey:
+  Enabled: false
+
+# Single path-parameter URLs produce "#{expr}" which is equivalent to expr.to_s.
+Style/RedundantInterpolation:
+  Enabled: false
+
+# Generated code uses multi-line if blocks for clarity; modifier form is a style preference.
+Style/IfUnlessModifier:
+  Enabled: false

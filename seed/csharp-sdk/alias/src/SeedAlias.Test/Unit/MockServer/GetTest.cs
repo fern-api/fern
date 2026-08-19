@@ -1,0 +1,18 @@
+using NUnit.Framework;
+
+namespace SeedAlias.Test.Unit.MockServer;
+
+[TestFixture]
+[Parallelizable(ParallelScope.Self)]
+public class GetTest : BaseMockServerTest
+{
+    [NUnit.Framework.Test]
+    public void MockServerTest()
+    {
+        Server
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/typeId").UsingGet())
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
+
+        Assert.DoesNotThrowAsync(async () => await Client.GetAsync("typeId"));
+    }
+}

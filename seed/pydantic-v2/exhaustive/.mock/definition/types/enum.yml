@@ -1,0 +1,12 @@
+types:
+  WeatherReport:
+    enum:
+      - SUNNY
+      - CLOUDY
+      - RAINING
+      - SNOWING
+
+errors:
+  ErrorWithEnumBody:
+    status-code: 400
+    type: WeatherReport #does this even make sense? the type of the error body would be enum, and it could only be one of the 4 values?

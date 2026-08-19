@@ -1,0 +1,5 @@
+- summary: |
+    Fix per-endpoint server overrides being ignored when top-level servers
+    define multiple base URLs with x-fern-server-name. Endpoints now correctly
+    resolve to their specified server URL instead of always using the default.
+  type: fix

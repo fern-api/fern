@@ -1,0 +1,7 @@
+- summary: |
+    Fix namespace collision when referencing nested discriminated union variant
+    types in generated test code. When the enclosing type name matches a segment
+    of the test file's namespace, the C# compiler resolves it as the namespace
+    instead of the SDK type (CS0234). Now emits fully qualified type references
+    in this case.
+  type: fix

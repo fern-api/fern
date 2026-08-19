@@ -1,0 +1,35 @@
+instances: []
+products:
+  - display-name: Core Platform
+    icon: fa-solid fa-server
+    subtitle: Core platform with mixed audience formats
+    path: ./products/core-platform.yml
+    # Test array format
+    audiences:
+      - external
+      - internal
+    slug: core-platform
+  - display-name: Analytics
+    icon: fa-solid fa-chart-line
+    subtitle: Internal analytics (string format)
+    path: ./products/analytics.yml
+    # Test string format
+    audiences: internal
+    slug: analytics
+  - display-name: Mobile SDK
+    icon: fa-solid fa-mobile-screen
+    subtitle: External mobile SDK (string format)
+    path: ./products/mobile-sdk.yml
+    # Test string format
+    audiences: external
+    slug: mobile-sdk
+  - display-name: Enterprise Features
+    icon: fa-solid fa-building
+    subtitle: Multi-audience enterprise features
+    path: ./products/enterprise-features.yml
+    # Test array format with multiple values
+    audiences:
+      - enterprise
+      - internal
+      - admin
+    slug: enterprise

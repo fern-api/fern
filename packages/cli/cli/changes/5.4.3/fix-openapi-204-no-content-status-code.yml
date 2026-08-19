@@ -1,0 +1,6 @@
+- summary: |
+    Fix OpenAPI endpoints that declare only a `204 No Content` success response
+    being dropped during OpenAPI -> IR conversion. The user-defined `204` status
+    code is now preserved on the endpoint response so docs display it correctly
+    instead of falling back to a default `200`.
+  type: fix

@@ -1,0 +1,500 @@
+---
+title: "Document Collections"
+---
+
+Zep's document vector store lets you embed and search documents using vector similarity search, Maximum Marginal Relevance Re-Ranking, and metadata filtering.
+
+You can manage collections, ingest documents, and search using _Zep's SDKs_, _LangChain_, or _LlamaIndex_.
+
+<Info>
+    `zep-python` supports async operations.
+
+    All methods come in sync and async flavors, with async methods prefixed with `a`.
+
+    For instance, `zep-python` offers both `zep_client.memory.add_memory` and `zep_client.memory.aadd_memory`.
+
+</Info>
+
+## Key Concepts
+
+### Collections
+
+A `Collection` is a group of documents that use the same embedding strategy and model. _Zep automatically creates embeddings_ for the documents you provide.
+
+### Documents
+
+`Documents` are the texts you want to embed and search. You can add documents to collections and optionally assign them a unique ID and metadata. _If you add metadata, it can help filter search results._
+
+## Initializing the Zep Client
+
+For details on initializing the Zep client, check out the [SDK documentation](sdks).
+
+## Creating a Collection
+
+<Tabs group="collections">
+
+<Tab title="Python" group-key="python">
+
+```python
+client = ZepClient(api_key="zep_api_key")
+
+collection_name = "babbagedocs" # the name of your collection. alphanum values only
+
+collection = client.document.add_collection(
+    name=collection_name,  # required
+    description="Babbage's Calculating Engine",  # optional
+    metadata={"foo": "bar"},  # optional metadata to associate with this collection
+)
+```
+
+</Tab>
+
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const client = await ZepClient.init("zep_api_key");
+
+const collection_name: string = "babbagedocs"; // The name of your collection. Alphanumeric values only
+
+const collection = await client.document.addCollection({
+  name: collection_name, // Required
+  description: "Babbage's Calculating Engine", // Optional
+  metadata: { foo: "bar" }, // Optional metadata to associate with this collection
+});
+```
+
+</Tab>
+
+</Tabs>
+
+## Loading an Existing Collection
+
+<Tabs group="collections">
+
+<Tab title="Python" group-key="python">
+
+```python
+collection = client.document.get_collection(collection_name)
+```
+
+</Tab>
+
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const collection = await client.document.getCollection(collection_name);
+```
+
+</Tab>
+
+</Tabs>
+
+## Adding Documents to a Collection
+
+<Tabs group="collections">
+
+<Tab title="Python" group-key="python">
+
+```python
+chunks = read_chunks_from_file(file, max_chunk_size)  # your custom function to read chunks from a file
+
+documents = [
+    Document(
+        content=chunk,
+        document_id=f"{collection_name}-{i}",  # optional document ID
+        metadata={"bar": i},  # optional metadata
+    )
+    for i, chunk in enumerate(chunks)
+]
+
+uuids = collection.add_documents(documents)
+```
+
+`document_id` is an optional identifier you can assign to each document. It's handy for linking a document chunk with a specific ID you choose.
+
+The `metadata` is an optional dictionary that holds metadata related to your document. Zep leverages this metadata for hybrid searches across a collection, enabling you to filter search results more effectively.
+
+When you use `collection.add_documents`, it returns a list of Zep UUIDs corresponding to the documents you've added to the collection.
+
+</Tab>
+
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const chunks: string[] = read_chunks_from_file(file, max_chunk_size); // Your custom function to read chunks from a file
+
+const documents: Document[] = chunks.map((chunk, index) => {
+  return new Document({
+    content: chunk,
+    documentId: `${collection_name}-${index}`, // Optional document ID
+    metadata: { bar: index }, // Optional metadata
+  });
+});
+
+const uuids: string[] = await client.document.addDocuments(collection_name, documents);
+```
+
+`document_id` is an optional identifier you can assign to each document. It's handy for linking a document chunk with a specific ID you choose.
+
+The `metadata` is an optional dictionary that holds metadata related to your document. Zep leverages this metadata for hybrid searches across a collection, enabling you to filter search results more effectively.
+
+When you use `collection.addDocuments`, it returns a list of Zep UUIDs corresponding to the documents you've added to the collection.
+
+</Tab>
+
+<Tab title="Langchain">
+
+<Info>Zep's document vector store has VectorStore support for Langchain.</Info>
+
+**Python Example:**
+
+```python
+from langchain.docstore.base import Document
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from zep_python.langchain import ZepVectorStore
+
+vectorstore = ZepVectorStore(collection)
+
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=400,
+    chunk_overlap=50,
+    length_function=len,
+)
+
+docs = text_splitter.create_documents([raw_text])
+uuids = vectorstore.add_documents(docs)
+```
+
+**Typescript Example:**
+
+```typescript
+import { ZepClient } from "@getzep/zep-js";
+import { ZepVectorStore } from "@getzep/zep-js/langchain";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+
+const vectorStore = await ZepVectorStore.init({
+  client: zepClient,
+  collectionName: "<name_of_your_collection>",
+});
+const text_splitter = new RecursiveCharacterTextSplitter({
+  chunkSize: 400,
+  chunkOverlap: 50,
+  lengthFunction: (text: string) => text.length, // Assuming lengthFunction accepts a function that returns the length of the text
+});
+
+const docs = await text_splitter.createDocuments([raw_text]);
+const uuids = await vectorstore.addDocuments(docs);
+```
+
+</Tab>
+
+</Tabs>
+
+### Chunking your documents
+
+Choosing the right _chunking strategy_ is crucial and highly dependent on your specific needs. A variety of 3rd-party libraries, including Langchain, offer support for processing documents from numerous sources and dividing them into smaller segments suitable for embedding.
+
+We recommend experimenting with various extractors, chunking strategies, sizes, and overlaps to discover the optimal approach for your project.
+
+## Monitoring Embedding Progress
+
+The process of embedding documents in Zep is asynchronous. To keep track of your collection's embedding progress, you can periodically check the collection's status:
+
+<Tabs group="collections">
+
+<Tab title="Python" group-key="python">
+
+```python
+import time
+
+while True:
+    c = client.document.get_collection(collection_name)
+    print(
+        "Embedding status: "
+        f"{c.document_embedded_count}/{c.document_count} documents embedded"
+    )
+    time.sleep(1)
+    if c.status == "ready":
+        break
+```
+
+</Tab>
+
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+while (true) {
+  const collection = await client.document.getCollection(collectionName);
+  console.log(`Embedding status: ${c.document_embedded_count}/${c.document_count} documents embedded`);
+  await sleep(1000); // Sleep for 1 second (1000 milliseconds)
+  if (collection.status === "ready") {
+    break;
+  }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+Once the collection's status changes to `ready`, it means all documents have been successfully embedded and are now searchable.
+
+## Searching a Collection with Hybrid Vector Search
+
+Zep enables hybrid vector search across your collections, allowing you to pinpoint the most relevant documents based on semantic similarity. Additionally, you have the option to refine your search by filtering through document metadata.
+
+You can initiate a search using either a text query or an embedding vector, depending on your needs.
+
+<Info>
+    Zep's Collection and Memory search support semantic search queries, JSONPath-based metadata filters, and a combination of both. Memory search also supports querying by message creation date.
+
+    Read more about [constructing search queries](working-with-search).
+
+</Info>
+
+<Tabs group="collections">
+
+<Tab title="Python" group-key="python">
+
+```python
+# search for documents using only a query string
+query = "the moon"
+results = collection.search(text=query, limit=5)
+
+# hybrid search for documents using a query string and metadata filter
+metadata_query = {
+    "where": {"jsonpath": '$[*] ? (@.baz == "qux")'},
+}
+results = collection.search(text=query, metadata=metadata_query, limit=5)
+
+# Search by embedding vector, rather than text query
+# embedding is a list of floats
+results = collection.search(
+    embedding=embedding, limit=5
+)
+```
+
+`metadata` is an optional dictionary of [JSONPath filters](https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html) used to match on metadata associated with your documents.
+
+`limit` is an optional integer indicating the maximum number of results to return.
+
+</Tab>
+
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const query = "the moon";
+let results = await collection.search({ text: query, limit: 5 });
+
+// Hybrid search for documents using a query string and metadata filter
+const metadataQuery = {
+  where: { jsonpath: '$[*] ? (@.baz == "qux")' },
+};
+results = await collection.search({ text: query, metadata: metadataQuery, limit: 5 });
+
+// Search by embedding vector, rather than text query
+// embedding is a list of floats
+results = await collection.search({ embedding: embedding, limit: 5 });
+```
+
+`metadata` is an optional dictionary of [JSONPath filters](https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html) used to match on metadata associated with your documents.
+
+`limit` is an optional integer indicating the maximum number of results to return.
+
+</Tab>
+
+<Tab title="Langchain">
+**Python Example:**
+
+```python
+query = "What is Charles Babbage best known for?"
+
+print(f"\nSearching for '{query}'\n")
+results = vectorstore.search(query, search_type="similarity", k=5)
+print_results(results)
+
+print(f"\nSearching for '{query}' with MMR reranking\n")
+results = vectorstore.search(query, search_type="mmr", k=5)
+print_results(results)
+```
+
+**Typescript Example:**
+
+```typescript
+const query = "What is Charles Babbage best known for?";
+
+console.log(`\nSearching for '${query}'\n`);
+const resultsSimilarity = await vectorstore.search(query, { searchType: "similarity", k: 5 });
+console.log(resultsSimilarity);
+
+console.log(`\nSearching for '${query}' with MMR reranking\n`);
+const resultsMMR = await vectorstore.search(query, { searchType: "mmr", k: 5 });
+console.log(resultsMMR);
+```
+
+_You can also use `ZepVectoreStore` as a retriever with langchain_
+
+Python example
+
+```python
+retriever = vectorstore.as_retriever()
+_inputs = RunnableParallel(
+    {
+        "question": lambda x: x["question"],
+        "context": extract_question | retriever | _combine_documents,
+    },
+).with_types(input_type=UserInput)
+
+chain = (_inputs | answer_prompt | ChatOpenAI() | StrOutputParser())
+```
+
+    <Note> **Please check the complete python [rag vector store chain example](https://github.com/getzep/zep-python/blob/main/examples/langchain-langserve/app/rag_vector_store_chain.py)** </Note>
+
+Typescript example
+
+```typescript
+const retriever = vectorStore.asRetriever();
+
+const setupAndRetrieval = RunnableMap.from({
+  context: new RunnableLambda({
+    func: (input: string) => retriever.invoke(input).then(combineDocuments),
+  }),
+  question: new RunnablePassthrough(),
+});
+const outputParser = new StringOutputParser();
+
+const chain = setupAndRetrieval.pipe(prompt).pipe(model).pipe(outputParser);
+```
+
+> _Please check the complete typescript [rag vector store chain example](https://github.com/getzep/zep-js/blob/main/examples/langchain/vector_store_example.ts)_
+
+</Tab>
+
+</Tabs>
+
+## Retrieving Documents by UUID
+
+Zep supports retrieving a list of documents by Zep UUID:
+
+<Tabs group="collections">
+
+<Tab title="Python" group-key="python">
+
+```python
+docs_to_get = uuids[40:50]
+documents = collection.get_documents(docs_to_get)
+```
+
+</Tab>
+
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const docsToGet = uuids.slice(40, 50);
+const documents = await collection.getDocuments(docsToGet);
+```
+
+</Tab>
+
+</Tabs>
+
+## Other Common Operations
+
+This section covers additional common operations you might need to perform, such as listing all collections within your client's scope. The examples above demonstrate how to create an index on a collection and list all collections for both Python and TypeScript.
+
+### Updating a Collection's Description or Metadata
+
+<Tabs group="collections">
+
+<Tab title="Python" group-key="python">
+
+```python
+client.document.update_collection(
+    collection_name,
+    description="Charles Babbage's Babbage's Calculating Engine 2",
+    metadata={"newfoo": "newbar"},
+)
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+await client.document.updateCollection(collectionName, {
+  description: "Charles Babbage's Babbage's Calculating Engine 2",
+  metadata: { newfoo: "newbar" },
+});
+```
+
+</Tab>
+
+</Tabs>
+
+### Update a Document's ID or Metadata
+
+<Tabs group="collections">
+
+<Tab title="Python" group-key="python">
+
+```python
+collection.update_document(document_uuid, document_id="new_id", metadata={"foo": "bar"})
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+await collection.updateDocument(documentUUID, { documentId: "new_id", metadata: { foo: "bar" } });
+```
+
+</Tab>
+
+</Tabs>
+
+### Deleting Documents
+
+Zep supports deleting documents from a collection by UUID:
+
+<Tabs group="collections">
+
+<Tab title="Python" group-key="python">
+
+```python
+collection.delete_document(document_uuid)
+```
+
+</Tab>
+
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+await collection.deleteDocument(document_uuid);
+```
+
+</Tab>
+
+</Tabs>
+
+### Deleting a Collection
+
+Deleting a collection will delete all documents in the collection, as well as the collection itself.
+
+<Tabs group="collections">
+
+<Tab title="Python" group-key="python">
+
+```python
+client.document.delete_collection(collection_name)
+```
+
+</Tab>
+
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+await client.document.deleteCollection(collection_name);
+```
+
+</Tab>
+
+</Tabs>

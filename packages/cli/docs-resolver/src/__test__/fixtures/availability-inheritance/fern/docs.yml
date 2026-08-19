@@ -1,0 +1,37 @@
+instances: []
+navigation:
+  - api: API Reference
+    availability: stable
+    layout:
+      # Section with beta availability - should be inherited by children
+      - beta-section:
+          title: Beta Features
+          availability: beta
+          contents:
+            # Package inheriting from beta section
+            - users:
+                title: User Management
+                contents:
+                  - getUser # Should inherit beta from section
+                  - createUser # Should use its own beta (same as parent)
+                  - deleteUser # Should use its own deprecated (overrides parent)
+
+      # Package with deprecated availability
+      - admin:
+          title: Admin Operations
+          availability: deprecated
+          contents:
+            # This should inherit deprecated from package
+            - healthCheck
+            # This should use its own alpha (overrides parent)
+            - reboot
+
+      # Section without availability - should inherit stable from API
+      - stable-section:
+          title: Stable APIs
+          contents:
+            # Should inherit stable from API section
+            - users:
+                contents:
+                  - getUser # Should inherit stable
+                  - createUser # Should use its own beta (overrides parent)

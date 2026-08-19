@@ -1,0 +1,75 @@
+import { assertNever } from "@fern-api/core-utils";
+import { ContainerType } from "@fern-api/ir-sdk";
+import { JSONSchema4 } from "json-schema";
+
+import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext.js";
+import { convertTypeReferenceToJsonSchema } from "./typeReferenceToJsonSchema.js";
+
+export function convertContainerToJsonSchema({
+    container,
+    context
+}: {
+    container: ContainerType;
+    context: JsonSchemaConverterContext;
+}): JSONSchema4 {
+    switch (container.type) {
+        case "list":
+            return {
+                type: "array",
+                items: convertTypeReferenceToJsonSchema({ typeReference: container.list, context })
+            };
+        case "map":
+            return {
+                type: "object",
+                additionalProperties: convertTypeReferenceToJsonSchema({ typeReference: container.valueType, context })
+            };
+        case "optional":
+            if (container.optional.type === "container" && container.optional.container.type === "nullable") {
+                return {
+                    oneOf: [
+                        convertTypeReferenceToJsonSchema({
+                            typeReference: container.optional.container.nullable,
+                            context
+                        }),
+                        { type: "null" }
+                    ]
+                };
+            }
+            return {
+                oneOf: [
+                    convertTypeReferenceToJsonSchema({ typeReference: container.optional, context }),
+                    { type: "null" }
+                ]
+            };
+        case "nullable":
+            return {
+                oneOf: [
+                    convertTypeReferenceToJsonSchema({ typeReference: container.nullable, context }),
+                    { type: "null" }
+                ]
+            };
+        case "set":
+            return {
+                type: "array",
+                items: convertTypeReferenceToJsonSchema({ typeReference: container.set, context }),
+                uniqueItems: true
+            };
+        // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow
+        case "literal":
+            switch (container.literal.type) {
+                case "string":
+                    return {
+                        const: container.literal.string
+                    };
+                case "boolean":
+                    return {
+                        const: container.literal.boolean
+                    };
+                default:
+                    assertNever(container.literal);
+            }
+        // eslint-disable-next-line no-fallthrough
+        default:
+            assertNever(container);
+    }
+}

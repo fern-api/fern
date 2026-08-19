@@ -1,0 +1,21 @@
+types:
+  AudioFormat:
+    enum:
+      - MP3
+      - WAV
+      - OGG
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getAudioFile:
+      method: GET
+      path: /audio
+      request:
+        name: GetAudioRequest
+        query-parameters:
+          format:
+            type: AudioFormat
+            default: MP3
+      response: bytes

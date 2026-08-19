@@ -1,0 +1,222 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "related_resources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ResourceList"
+      }
+    },
+    "memo": {
+      "$ref": "#/definitions/Memo"
+    },
+    "resource_type": {
+      "const": "Practitioner"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "related_resources",
+    "memo",
+    "resource_type",
+    "name"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Memo": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "account": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Account"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "Script": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "related_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          }
+        },
+        "memo": {
+          "$ref": "#/definitions/Memo"
+        },
+        "resource_type": {
+          "const": "Script"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "related_resources",
+        "memo",
+        "resource_type",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "Patient": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "related_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          }
+        },
+        "memo": {
+          "$ref": "#/definitions/Memo"
+        },
+        "resource_type": {
+          "const": "Patient"
+        },
+        "name": {
+          "type": "string"
+        },
+        "scripts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Script"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "related_resources",
+        "memo",
+        "resource_type",
+        "name",
+        "scripts"
+      ],
+      "additionalProperties": false
+    },
+    "Practitioner": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "related_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          }
+        },
+        "memo": {
+          "$ref": "#/definitions/Memo"
+        },
+        "resource_type": {
+          "const": "Practitioner"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "related_resources",
+        "memo",
+        "resource_type",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "Account": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "related_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          }
+        },
+        "memo": {
+          "$ref": "#/definitions/Memo"
+        },
+        "resource_type": {
+          "const": "Account"
+        },
+        "name": {
+          "type": "string"
+        },
+        "patient": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Patient"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "practitioner": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Practitioner"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "related_resources",
+        "memo",
+        "resource_type",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "ResourceList": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Account"
+        },
+        {
+          "$ref": "#/definitions/Patient"
+        },
+        {
+          "$ref": "#/definitions/Practitioner"
+        },
+        {
+          "$ref": "#/definitions/Script"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,198 @@
+---
+slug: chat-history-memory/messages
+---
+
+<Card title="Messages" icon="message">
+  Messages are the individual components of a conversation, each linked to a [Session](sessions) in a many-to-one
+  relationship. To incorporate messages into sessions, utilize the [Memories](memories) feature.
+</Card>
+
+## Get a Specific Message from a Session
+
+To fetch a particular message from a session, utilize the `get_session_message` method. Below are examples in Python and TypeScript:
+
+<Tabs group="messages">
+
+<Tab title="Python" group-key="python">
+
+```python
+async with ZepClient(api_key=api_key) as client:
+    try:
+        session_id = "3e0e4af9-71ff-4541-b206-6133574bbbc6"  # Replace with the actual session_id
+        message_id = "3e0e4af9-71ff-4541-b206-6133574bbbc7"  # Replace with the actual message_id
+        message = await client.message.aget_session_message(session_id, message_id)
+        print(message.to_dict())
+    except NotFoundError:
+        print("Message not found")
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const client: ZepClient = await ZepClient.init(api_key);
+
+try {
+  const session_id: string = "3e0e4af9-71ff-4541-b206-6133574bbbc6"; // Replace with the actual session_id
+  const message_id: string = "3e0e4af9-71ff-4541-b206-6133574bbbc7"; // Replace with the actual message_id
+
+  const message: Message = await client.message.getSessionMessage(session_id, message_id);
+  console.log(message);
+} catch (error) {
+  if (error instanceof NotFoundError) {
+    console.log("Message not found");
+  } else {
+    throw error;
+  }
+}
+```
+
+</Tab>
+</Tabs>
+
+```json
+{
+  "uuid": "3e0e4af9-71ff-4541-b206-6133574bbbc7",
+  "created_at": "2023-12-08T22:17:33.185756Z",
+  "updated_at": "0001-01-01T00:00:00Z",
+  "role": "human",
+  "role_type": "user",
+  "content": "Who were her contemporaries?",
+  "metadata": {
+    "system": {
+      "entities": [],
+      "intent": "The subject is requesting information about the people who were living at the same time as the woman in question."
+    }
+  }
+}
+```
+
+## Getting all Messages from a Session
+
+<Tabs group="messages">
+
+<Tab title="Python" group-key="python">
+
+```python
+async with ZepClient(api_key) as client:
+    try:
+        messages = await client.message.aget_session_messages(session_id)
+        for message in messages:
+            print(message.to_dict())
+    except NotFoundError:
+        print("Sesssion not found")
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const client: ZepClient = await ZepClient.init(api_key);
+
+try {
+  const messages: Message[] = await client.message.getSessionMessages(session_id);
+  messages.forEach((message: Message) => {
+    console.log(message);
+  });
+} catch (error) {
+  if (error instanceof NotFoundError) {
+    console.log("Message not found");
+  } else {
+    throw error;
+  }
+}
+```
+
+</Tab>
+</Tabs>
+
+```json
+{
+  "messages": [
+    {
+      "uuid": "3e0e4af9-71ff-4541-b206-6133574bbbc7",
+      "created_at": "2023-12-08T22:17:33.185756Z",
+      "updated_at": "0001-01-01T00:00:00Z",
+      "role": "human",
+      "role_type": "user",
+      "content": "Who were her contemporaries?",
+      "metadata": {
+        "system": {
+          "entities": [],
+          "intent": "The subject is requesting information about the people who were living at the same time as the woman in question."
+        }
+      },
+      "token_count": 0
+    }
+  ],
+  ...
+}
+```
+
+## Updating Session Message Metadata
+
+You have the ability to modify the metadata of a message. Please provide the metadata in the following format. Note that at this time, it's not possible to update the content of a message itself.
+
+```json
+{
+  "metadata": {
+    "foo": "bar"
+  }
+}
+```
+
+<Tabs group="messages">
+
+<Tab title="Python" group-key="python">
+
+```python
+async with ZepClient(api_key) as client:
+    try:
+        session_id = "3e0e4af9-71ff-4541-b206-6133574bbbc6" # Replace with the actual session_id
+        message_uuid = "3e0e4af9-71ff-4541-b206-6133574bbbc7"  # Replace with the actual message_id
+        metadata = {
+            "metadata": {
+                "foo": "bar"
+            }
+        }
+        await client.message.update_session_message_metadata(session_id, message_id, metadata)
+    except NotFoundError:
+        print("Session not found")
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const client: ZepClient = await ZepClient.init(api_key);
+
+try {
+  const session_id: string = "3e0e4af9-71ff-4541-b206-6133574bbbc6"; // Replace with the actual session_id
+  const message_uuid: string = "3e0e4af9-71ff-4541-b206-6133574bbbc7"; // Replace with the actual message_id
+  const metadata: any = { metadata: { foo: "bar" } }; // Replace with the desired metadata
+  await client.message.updateSessionMessageMetadata(session_id, message_uuid, metadata);
+} catch (error) {
+  console.error("Session not found", error);
+}
+```
+
+</Tab>
+</Tabs>
+
+```json
+{
+  "uuid": "3e0e4af9-71ff-4541-b206-6133574bbbc7",
+  "created_at": "2023-12-08T22:17:33.185756Z",
+  "updated_at": "0001-01-01T00:00:00Z",
+  "role": "human",
+  "role_type": "user",
+  "content": "Who were her contemporaries?",
+  "metadata": {
+    "foo": "bar",
+    "system": {
+      "entities": [],
+      "intent": "The subject is requesting information about the people who were living at the same time as the woman in question."
+    }
+  }
+}
+```

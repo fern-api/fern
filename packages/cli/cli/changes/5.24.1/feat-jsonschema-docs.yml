@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Propagate Fern `docs:` strings into generated JSON Schemas so editor hovers
+    work for schemas served from `schema.buildwithfern.dev`.
+  type: chore

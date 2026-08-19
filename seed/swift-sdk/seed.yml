@@ -1,0 +1,135 @@
+displayName: Swift SDK
+irVersion: v66
+image: fernapi/fern-swift-sdk
+changelogLocation: ../../generators/swift/sdk/versions.yml
+
+publish:
+  preBuildCommands:
+    - pnpm turbo run dist:cli --filter @fern-api/swift-sdk
+  docker:
+    file: ./generators/swift/sdk/Dockerfile
+    image: fernapi/fern-swift-sdk
+    context: .
+  sentry:
+    name: fern-swift-sdk
+    project: swift-sdk
+    sourceMaps:
+      - dir: generators/swift/sdk/dist
+
+test:
+  docker:
+    image: fernapi/fern-swift-sdk:latest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/swift-sdk
+  podman:
+    image: fernapi/fern-swift-sdk:latest
+    command: pnpm turbo run podmanTagLatest --filter @fern-api/swift-sdk
+  local:
+    workingDirectory: generators/swift
+    buildCommand:
+      - pnpm turbo run dist:cli --filter @fern-api/swift-sdk
+    runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
+
+language: swift
+generatorType: SDK
+defaultOutputMode: github
+defaultCustomConfig: {}
+
+scripts:
+  docker:
+    - image: swift:6.1.2
+      commands:
+        build:
+          - swift test -c release
+        test:
+          # Tests run during the build step via `swift test -c release` to avoid a
+          # second SPM invocation. Seed always runs build→test sequentially.
+          - echo "tests ran during build step"
+  local:
+    - commands:
+        build:
+          - if [ -d /Applications/Xcode.app/Contents/Developer ]; then export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer; else export DEVELOPER_DIR=/Library/Developer/CommandLineTools; fi
+          - if [ -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk ]; then export SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk; else export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk; fi
+          - export PATH="$HOME/.local/bin:$PATH"
+          - swift test -c release
+        test:
+          # Tests run during the build step via `swift test -c release` to avoid a
+          # second SPM invocation. Seed always runs build→test sequentially.
+          - echo "tests ran during build step"
+
+fixtures:
+  client-side-params:
+    - customConfig:
+        moduleName: MyCustomModule
+        clientClassName: MyCustomClient
+      outputFolder: with-custom-config
+    - customConfig: null
+      outputFolder: no-custom-config
+  examples:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        customReadmeSections:
+          - title: "Override Section"
+            content: "Override Content"
+          - title: "Generator Invocation Custom Section"
+            content: "Generator Invocation Custom Content for {{ gitUrl }}:{{ minVersion }}"
+      readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - apiReference
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /movie
+        customSections:
+          - title: "Base Readme Custom Section"
+            language: swift
+            content: "Base Readme Custom Content for {{ gitUrl }}:{{ minVersion }}"
+          - title: "Override Section"
+            language: swift
+            content: "Base Content"
+        features:
+          timeouts:
+            - GET /movie/{movieId}
+      outputFolder: readme-config
+  nullable:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        decodeNullableToOptional: true
+      outputFolder: nullable-as-optional
+  nullable-optional:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        decodeNullableToOptional: true
+      outputFolder: nullable-as-optional
+  pagination:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        custom-pager-name: MyPager
+      outputFolder: custom-pager
+    - customConfig:
+        custom-pager-name: MyPager
+        include-exception-handler: true
+      outputFolder: custom-pager-with-exception-handler
+  required-nullable:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        decodeNullableToOptional: true
+      outputFolder: nullable-as-optional
+  single-url-environment-default:
+    - customConfig:
+        maxRetries: 5
+      outputFolder: no-custom-config
+    - customConfig:
+        environmentEnumName: MyCustomEnvironment
+      outputFolder: with-custom-config
+
+allowedFailures:
+  - multi-url-environment
+  - multi-url-environment-no-default
+  - multi-url-environment-reference
+  # Server URL templating not yet supported in Swift SDK
+  - server-url-templating

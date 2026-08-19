@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/vendors/batch",
+                "method": "POST",
+                "identifier_override": "endpoint_.batchCreate"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpReadonlyRequest;\n\nvar client = new SeedCsharpReadonlyRequestClient();\nawait client.BatchCreateAsync(\n    new CreateVendorRequest\n    {\n        Vendors = new Dictionary<string, Vendor>()\n        {\n            {\n                \"vendor-1\",\n                new Vendor\n                {\n                    Id = \"vendor-1\",\n                    Name = \"Acme Corp\",\n                    CreatedAt = \"2024-01-01T00:00:00Z\",\n                    UpdatedAt = \"2024-01-01T00:00:00Z\",\n                }\n            },\n        },\n    }\n);\n"
+            }
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+types: 
+  Operand:
+    docs: | 
+      Tests enum name and value can be 
+      different.
+    enum:
+      - value: ">"
+        name: GREATER_THAN 
+      - value: "="
+        name: EQUAL_TO
+      - value: "less_than"
+        docs: | 
+          The name and value should be similar
+          are similar for less than. 
+    examples:
+      - name: GreaterThan
+        value: ">"
+      - name: LessThan
+        value: "less_than"

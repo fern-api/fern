@@ -1,0 +1,5 @@
+- summary: |
+    Preserve OpenAPI `info.version` through the IR as `specVersion`. This allows
+    non-semver version formats (e.g. CalVer `2026-06-23`) to be carried through
+    the pipeline instead of being replaced with the default `1.0.0`.
+  type: feat

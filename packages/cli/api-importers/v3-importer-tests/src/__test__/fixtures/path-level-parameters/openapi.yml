@@ -1,0 +1,65 @@
+openapi: 3.0.3
+info:
+  title: Path Level Parameters Test
+  version: 1.0.0
+paths:
+  /items/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        required: true
+        schema:
+          type: string
+          default: application/json
+      - name: format
+        in: query
+        required: false
+        schema:
+          type: string
+          default: json
+    get:
+      operationId: getItem
+      summary: Get an item (inherits all path-level parameters)
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+    put:
+      operationId: updateItem
+      summary: Update an item (overrides Accept header at operation level)
+      parameters:
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+            default: text/xml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string

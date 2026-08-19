@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "problems": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/commons.ProblemId"
+      },
+      "description": "The problems that make up the playlist."
+    }
+  },
+  "required": [
+    "name",
+    "problems"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "commons.ProblemId": {
+      "type": "string"
+    }
+  }
+}

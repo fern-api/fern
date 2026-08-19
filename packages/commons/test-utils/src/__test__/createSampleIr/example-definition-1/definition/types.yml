@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  OrderItem:
+    properties:
+      productId: string
+      quantity: integer
+      unitPrice: double
+
+  Order:
+    properties:
+      id: string
+      userId: string
+      items: list<OrderItem>
+      total: double
+      createdAt: string
+      status: OrderStatus
+
+  OrderStatus:
+    enum:
+      - pending
+      - processing
+      - shipped
+      - delivered
+      - cancelled

@@ -1,0 +1,172 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import fs from "fs/promises";
+import { glob } from "glob";
+import path from "path";
+import { Project } from "ts-morph";
+
+const asIsFilePath = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("assets/asIs"));
+
+const DEFAULT_PACKAGE_PATH = "src";
+const DEFAULT_IDEMPOTENCY_KEY_HEADER = "Idempotency-Key";
+
+/**
+ * The `core/idempotency.ts` helper hardcodes the default `Idempotency-Key` header name so it lives
+ * in exactly one place instead of being repeated at every endpoint call site. When the SDK is
+ * configured with a custom header name, swap it in here.
+ */
+export function substituteIdempotencyKeyHeaderName(fileContent: string, idempotencyKeyHeaderName: string): string {
+    if (idempotencyKeyHeaderName === DEFAULT_IDEMPOTENCY_KEY_HEADER) {
+        return fileContent;
+    }
+    return fileContent.replace(`"${DEFAULT_IDEMPOTENCY_KEY_HEADER}"`, JSON.stringify(idempotencyKeyHeaderName));
+}
+export namespace AsIsManager {
+    export interface Init {
+        useBigInt: boolean;
+        generateWireTests: boolean;
+        relativePackagePath: string;
+        relativeTestPath: string;
+        generatorType: "sdk" | "model" | "express";
+        formatter: "prettier" | "biome" | "oxfmt" | "none";
+        linter: "biome" | "oxlint" | "none";
+        autoGenerateIdempotencyKey: boolean;
+        idempotencyKeyHeaderName: string;
+    }
+}
+
+export class AsIsManager {
+    private readonly useBigInt: boolean;
+    private readonly generateWireTests: boolean;
+    private readonly relativePackagePath: string;
+    private readonly relativeTestPath: string;
+    private readonly generatorType: "sdk" | "model" | "express";
+    private readonly formatter: "prettier" | "biome" | "oxfmt" | "none";
+    private readonly linter: "biome" | "oxlint" | "none";
+    private readonly autoGenerateIdempotencyKey: boolean;
+    private readonly idempotencyKeyHeaderName: string;
+
+    constructor({
+        useBigInt,
+        generateWireTests,
+        relativePackagePath,
+        relativeTestPath,
+        generatorType,
+        formatter,
+        linter,
+        autoGenerateIdempotencyKey,
+        idempotencyKeyHeaderName
+    }: AsIsManager.Init) {
+        this.useBigInt = useBigInt;
+        this.generateWireTests = generateWireTests;
+        this.relativePackagePath = relativePackagePath;
+        this.relativeTestPath = relativeTestPath;
+        this.generatorType = generatorType;
+        this.formatter = formatter;
+        this.linter = linter;
+        this.autoGenerateIdempotencyKey = autoGenerateIdempotencyKey;
+        this.idempotencyKeyHeaderName = idempotencyKeyHeaderName;
+    }
+
+    /**
+     * A map containing the original source path and the target path in the generated project
+     */
+    private getAsIsFiles() {
+        return {
+            biomeJson: { "biome.json": "biome.json" },
+            oxfmtrcJson: { "oxfmtrc.json": ".oxfmtrc.json" },
+            core: {
+                mergeHeaders: { "core/headers.ts": `${this.relativePackagePath}/core/headers.ts` },
+                idempotency: { "core/idempotency.ts": `${this.relativePackagePath}/core/idempotency.ts` },
+                mergeAdditionalBodyParameters: { "core/requestBody.ts": `${this.relativePackagePath}/core/requestBody.ts` },
+                json: {
+                    vanilla: { "core/json.vanilla.ts": `${this.relativePackagePath}/core/json.ts` },
+                    bigint: { "core/json.bigint.ts": `${this.relativePackagePath}/core/json.ts` }
+                }
+            },
+            tests: {
+                mockServer: {
+                    ["tests/mock-server/*"]: `${this.relativeTestPath}/mock-server/`
+                },
+                bigintSetup: { ["tests/bigint.setup.ts"]: `${this.relativeTestPath}/bigint.setup.ts` }
+            },
+            scripts: {
+                renameToEsmFiles: {
+                    "scripts/rename-to-esm-files.js": "scripts/rename-to-esm-files.js"
+                }
+            }
+        };
+    }
+
+    public async addToTsProject({ project }: { project: Project }): Promise<void> {
+        const filesToCopy: Record<string, string>[] = [];
+        const asIsFiles = this.getAsIsFiles();
+
+        if (this.formatter === "biome" || this.linter === "biome") {
+            filesToCopy.push(asIsFiles.biomeJson);
+        }
+        if (this.formatter === "oxfmt") {
+            filesToCopy.push(asIsFiles.oxfmtrcJson);
+        }
+        if (this.generatorType === "sdk" || this.generatorType === "model") {
+            filesToCopy.push(asIsFiles.core.mergeHeaders);
+            if (this.autoGenerateIdempotencyKey) {
+                filesToCopy.push(asIsFiles.core.idempotency);
+            }
+            filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
+            if (this.useBigInt) {
+                filesToCopy.push(asIsFiles.tests.bigintSetup);
+                filesToCopy.push(asIsFiles.core.json.bigint);
+            } else {
+                filesToCopy.push(asIsFiles.core.json.vanilla);
+            }
+        }
+        if (this.generatorType === "sdk") {
+            filesToCopy.push(asIsFiles.core.mergeAdditionalBodyParameters);
+            if (this.generateWireTests) {
+                filesToCopy.push(asIsFiles.tests.mockServer);
+            }
+        }
+
+        for (const [sourcePattern, targetPattern] of filesToCopy.flatMap(Object.entries) as [string, string][]) {
+            if (sourcePattern.includes("*")) {
+                const matches = await glob(sourcePattern, {
+                    cwd: asIsFilePath,
+                    absolute: false
+                });
+
+                for (const match of matches) {
+                    const sourceFilePath = path.join(asIsFilePath, match);
+                    // Extract just the filename from the match to append to the target pattern
+                    const fileName = path.basename(match);
+                    const targetFilePath = path.join(targetPattern, fileName);
+                    let fileContent = await fs.readFile(sourceFilePath, "utf-8");
+
+                    // Transform import paths in test files
+                    if (sourcePattern.includes("tests")) {
+                        // Only change the import paths if the relativePackagePath is not "src"
+                        if (this.relativePackagePath !== DEFAULT_PACKAGE_PATH) {
+                            // Calculate the relative path from the test file to the package path
+                            const testDir = path.dirname(targetFilePath);
+                            const relativePathToPackage = path.relative(testDir, this.relativePackagePath);
+                            const normalizedPath = relativePathToPackage.replace(/\\/g, "/"); // Normalize for Windows paths
+
+                            // Replace the import path with the calculated relative path
+                            fileContent = fileContent.replace(
+                                /from "([^"]*\/)src\/([^"]*)"/g,
+                                `from "${normalizedPath}/$2"`
+                            );
+                        }
+                    }
+                    project.createSourceFile(targetFilePath, fileContent, { overwrite: true });
+                }
+            } else {
+                // Handle direct file mapping
+                let fileContent = await fs.readFile(path.join(asIsFilePath, sourcePattern), "utf-8");
+                if (sourcePattern === "core/idempotency.ts") {
+                    fileContent = substituteIdempotencyKeyHeaderName(fileContent, this.idempotencyKeyHeaderName);
+                }
+                project.createSourceFile(targetPattern, fileContent, { overwrite: true });
+            }
+        }
+    }
+}

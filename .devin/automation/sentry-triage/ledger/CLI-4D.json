@@ -1,0 +1,9 @@
+{
+  "title": "YAML bad sequence indentation",
+  "disposition": "shipped",
+  "rationale": "User-authored docs.yml had malformed indentation and previously surfaced as an InternalError while loading raw docs configuration.",
+  "fixSummary": "Wrap docs.yml yaml.load in loadRawDocsConfiguration as CliError(ParseError).",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15698",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "YAMLException while parsing docs.yml or referenced docs navigation YAML; parser exception treated as InternalError."
+}

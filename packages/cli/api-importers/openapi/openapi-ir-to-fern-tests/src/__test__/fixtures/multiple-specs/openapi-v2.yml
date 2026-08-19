@@ -1,0 +1,28 @@
+openapi: 3.0.3
+info:
+  title: Test file upload v2
+  version: 1.0.0
+paths:
+  /upload-list:
+    post:
+      summary: Upload a list of files
+      operationId: upload-list
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                list_file:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                    description: A list of files to upload
+                maybe_list_file:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                    description: An optional list of files to upload
+              required: [list_file]

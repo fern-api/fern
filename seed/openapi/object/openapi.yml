@@ -1,0 +1,169 @@
+openapi: 3.1.0
+info:
+  title: object
+  version: 0.0.0
+paths: {}
+components:
+  schemas:
+    Type:
+      title: Type
+      type: object
+      description: Exercises all of the built-in types.
+      properties:
+        one:
+          type: integer
+          examples:
+            - 1
+        two:
+          type: number
+          format: double
+          examples:
+            - 2
+        three:
+          type: string
+          examples:
+            - three
+        four:
+          type: boolean
+          examples:
+            - true
+        five:
+          type: integer
+          format: int64
+          examples:
+            - 5
+        six:
+          type: string
+          format: date-time
+          examples:
+            - '1994-01-01T01:01:01Z'
+        seven:
+          type: string
+          format: date
+          examples:
+            - '1994-01-01'
+        eight:
+          type: string
+          format: uuid
+          examples:
+            - 7f71f677-e138-4a5c-bb01-e4453a19bfef
+        nine:
+          type: string
+          format: byte
+          examples:
+            - TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu
+        ten:
+          type: array
+          items:
+            type: integer
+          examples:
+            - - 10
+              - 10
+        eleven:
+          type: array
+          items:
+            type: number
+            format: double
+        twelve:
+          type: object
+          additionalProperties:
+            type: boolean
+        thirteen:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        fourteen: {}
+        fifteen:
+          type: array
+          items:
+            type: array
+            items:
+              type: integer
+        sixteen:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: integer
+        seventeen:
+          type: array
+          items:
+            type:
+              - string
+              - 'null'
+            format: uuid
+        eighteen:
+          type: string
+          const: eighteen
+        nineteen:
+          $ref: '#/components/schemas/Name'
+        twenty:
+          type: integer
+          format: int64
+          examples:
+            - 20
+        twentyone:
+          type: integer
+          format: int64
+          examples:
+            - 21
+        twentytwo:
+          type: integer
+          format: float
+          examples:
+            - 22.22
+        twentythree:
+          type: integer
+          format: bigint
+          examples:
+            - '23'
+        twentyfour:
+          type:
+            - string
+            - 'null'
+          format: date-time
+        twentyfive:
+          type:
+            - string
+            - 'null'
+          format: date
+      required:
+        - one
+        - two
+        - three
+        - four
+        - five
+        - six
+        - seven
+        - eight
+        - nine
+        - ten
+        - eleven
+        - twelve
+        - fourteen
+        - fifteen
+        - sixteen
+        - seventeen
+        - eighteen
+        - nineteen
+        - twenty
+        - twentyone
+        - twentytwo
+        - twentythree
+    Name:
+      title: Name
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - name-sdfg8ajk
+        value:
+          type: string
+          examples:
+            - name
+      required:
+        - id
+        - value
+  securitySchemes: {}

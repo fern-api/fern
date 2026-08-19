@@ -1,0 +1,44 @@
+openapi: 3.1.0
+info:
+  title: error-property
+  version: 0.0.0
+paths:
+  /property-based-error:
+    get:
+      description: GET request that always throws an error
+      operationId: propertyBasedError_ThrowError
+      tags:
+        - PropertyBasedError
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: PropertyBasedErrorTest
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      errorName:
+                        type: string
+                        enum:
+                          - PropertyBasedErrorTest
+                      content:
+                        $ref: '#/components/schemas/PropertyBasedErrorTestBody'
+components:
+  schemas:
+    PropertyBasedErrorTestBody:
+      title: PropertyBasedErrorTestBody
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+  securitySchemes: {}

@@ -1,0 +1,27 @@
+service:
+  base-path: /
+  headers:
+    serviceHeader: string
+    optionalServiceHeader: optional<string>
+  auth: true
+  endpoints:
+    get:
+      method: GET
+      path: /{endpointHeader}/{optionalEndpointHeader}
+      request:
+        name: GetThingRequest
+        headers:
+          endpointHeader: string
+          optionalEndpointHeader: optional<string>
+      examples:
+        - {}
+        - headers: {}
+        - headers:
+            serviceHeader: hello
+            endpointHeader: hello
+        - headers:
+            serviceHeader: hello
+            optionalServiceHeader: hello
+            endpointHeader: hello
+            optionalEndpointHeader: hello
+            extraHeader: hello

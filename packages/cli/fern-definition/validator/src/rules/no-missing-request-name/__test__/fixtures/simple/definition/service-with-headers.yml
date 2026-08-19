@@ -1,0 +1,14 @@
+service:
+  base-path: /
+  headers:
+    Service-Header: string
+  auth: false
+  endpoints:
+    get:
+      path: ""
+      method: GET
+    get2:
+      path: ""
+      method: GET
+      request:
+        name: Get2Request

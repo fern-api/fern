@@ -1,0 +1,4 @@
+- summary: |
+    Include docs translation metadata in the docs definition published to FDR so generated `fdr.json`
+    advertises configured locales alongside uploaded translation files.
+  type: fix

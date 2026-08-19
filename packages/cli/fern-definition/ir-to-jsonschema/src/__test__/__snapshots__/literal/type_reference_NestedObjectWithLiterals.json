@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "literal1": {
+      "const": "literal1"
+    },
+    "literal2": {
+      "const": "literal2"
+    },
+    "strProp": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "literal1",
+    "literal2",
+    "strProp"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

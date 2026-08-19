@@ -1,0 +1,43 @@
+instances: []
+products:
+  - display-name: Core Platform
+    icon: ./virus.svg
+    subtitle: Core platform services and APIs
+    path: ./products/core-platform.yml
+    audiences:
+      - external
+      - internal
+    slug: core-platform
+  - display-name: Analytics
+    icon: ./atom.svg
+    subtitle: Internal analytics and monitoring
+    path: ./products/analytics.yml
+    audiences:
+      - internal
+    slug: analytics
+  - display-name: Mobile SDK
+    icon: fa-solid fa-mobile-screen
+    subtitle: Mobile application development kit
+    path: ./products/mobile-sdk.yml
+    audiences:
+      - external
+    slug: mobile-sdk
+  - display-name: Enterprise Features
+    icon: ./atom.svg
+    subtitle: Advanced enterprise capabilities
+    path: ./products/enterprise-features.yml
+    audiences:
+      - enterprise
+    slug: enterprise
+
+navbar-links:
+  - type: minimal
+    text: "External Link"
+    href: "https://www.google.com"
+    icon: ./fern.svg
+    rightIcon: ./fern.svg
+  - type: minimal
+    text: "External Link"
+    href: "https://www.google.com"
+    icon: square
+    rightIcon: circle

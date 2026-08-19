@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    cli-v2: add `fern update` command for installing and switching between CLI
+    versions. Includes `fern update`, `fern update list`, `fern update use
+    <version>`, `fern update --check`, and `fern update --to <version>`. Versions
+    are stored in `~/.cache/fern/v1/versions/<version>/` and tracked in
+    `~/.fernrc` under the new `cli` field. A new opt-in `--versions` flag was
+    added to `fern cache clear`; the default behavior continues to leave
+    installed CLI binaries untouched. `fern cache show` now reports the versions
+    cache alongside IR and logs. After every successful command, the CLI runs a
+    rate-limited (24-hour) probe against the release feed and prints a one-line
+    nag when a newer version is available.
+  type: feat

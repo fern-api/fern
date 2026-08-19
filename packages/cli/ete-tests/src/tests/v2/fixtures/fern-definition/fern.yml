@@ -1,0 +1,24 @@
+edition: 2026-01-01
+
+org: test-org
+
+api:
+  specs:
+    - fern: ./definition
+
+sdks:
+  targets:
+    go:
+      version: 1.34.3
+      output:
+        path: ./sdks/go
+
+    typescript:
+      version: 3.63.3
+      output:
+        path: ./sdks/typescript
+
+    python:
+      version: 4.64.1
+      output:
+        path: ./sdks/python

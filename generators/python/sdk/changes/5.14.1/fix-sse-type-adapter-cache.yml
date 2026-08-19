@@ -1,0 +1,6 @@
+- summary: |
+    Fix SSE streaming performance regression by caching `pydantic.TypeAdapter` instances
+    in `parse_obj_as()`. Previously, a new TypeAdapter was constructed on every call, which
+    is extremely expensive for discriminated union types. This caused ~8x slowdown in SSE
+    event parsing introduced in v4.51.0 (`parse_sse_obj`).
+  type: fix

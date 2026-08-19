@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedMultiLineDocs;\n\nvar client = new SeedMultiLineDocsClient();\nawait client.User.GetUserAsync(\"userId\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedMultiLineDocs;\n\nvar client = new SeedMultiLineDocsClient();\nawait client.User.CreateUserAsync(new CreateUserRequest { Name = \"name\", Age = 1 });\n"
+            }
+        }
+    ]
+}

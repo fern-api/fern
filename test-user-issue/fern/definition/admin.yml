@@ -1,0 +1,9 @@
+service:
+  base-path: /admin
+  auth: false
+  endpoints:
+    reboot:
+      docs: Reboot the system
+      method: POST
+      path: /reboot
+      response: string

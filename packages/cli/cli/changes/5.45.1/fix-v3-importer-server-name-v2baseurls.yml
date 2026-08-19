@@ -1,0 +1,5 @@
+- summary: |
+    Fix v3 OpenAPI importer to check `x-fern-server-name` extension in `getEndpointBaseUrls()`,
+    preventing path-level server descriptions from being misinterpreted as base URL IDs when the
+    extension is present.
+  type: fix

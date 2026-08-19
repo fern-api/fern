@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`compatible-ir-versions > simple failure 1`] = `
+[
+  {
+    "message": "baz has content-type, but the request is not multipart",
+    "name": "content-type-only-for-multipart",
+    "nodePath": [
+      "service",
+      "endpoints",
+      "json",
+    ],
+    "relativeFilepath": "simple.yml",
+    "severity": "fatal",
+  },
+]
+`;

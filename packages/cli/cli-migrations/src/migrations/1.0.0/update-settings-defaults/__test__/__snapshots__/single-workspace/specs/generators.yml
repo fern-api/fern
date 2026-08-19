@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ./openapi.yml
+      settings:
+        title-as-schema-name: true
+        type-dates-as-strings: true
+        object-query-parameters: false
+        idiomatic-request-names: false
+        respect-nullable-schemas: false
+        wrap-references-to-nullable-in-optional: true
+        coerce-optional-schemas-to-nullable: true
+        inline-path-parameters: false
+    - openapi: ./openapi2.yml
+      overrides: ./openapi2.overrides.yml
+      origin: dummy2
+      settings:
+        title-as-schema-name: false
+        type-dates-as-strings: true
+        object-query-parameters: false
+        idiomatic-request-names: false
+        respect-nullable-schemas: false
+        wrap-references-to-nullable-in-optional: true
+        coerce-optional-schemas-to-nullable: true
+        inline-path-parameters: false
+    - asyncapi: ./asyncapi.yml
+      settings:
+        title-as-schema-name: true
+        idiomatic-request-names: false
+        respect-nullable-schemas: false
+        wrap-references-to-nullable-in-optional: true
+        coerce-optional-schemas-to-nullable: true
+    - asyncapi: ./asyncapi2.yml
+      overrides: ./asyncapi2.overrides.yml
+      origin: dummy2
+      settings:
+        message-naming: v2
+        title-as-schema-name: true
+        idiomatic-request-names: false
+        respect-nullable-schemas: false
+        wrap-references-to-nullable-in-optional: true
+        coerce-optional-schemas-to-nullable: true
+    - proto:
+        root: ./proto
+        overrides: ./proto/overrides.yml
+        target: ./proto/target
+        local-generation: true
+groups: {}

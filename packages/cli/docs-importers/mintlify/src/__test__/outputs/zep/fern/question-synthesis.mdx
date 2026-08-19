@@ -1,0 +1,58 @@
+---
+title: Question Synthesis
+slug: question-synthesis
+---
+
+
+Users often respond to questions with single-word answers that don't offer much information for search.
+For example, a user may respond to a question about their favorite book with "Dune" or a question about their
+dietary restrictions with "dairy".
+
+<Info>
+  Without context, many user messages lack information necessary to successfully embed a search query, resulting in poor
+  or irrelevant search results.
+</Info>
+
+Zep provides a low-latency question synthesis API that can be used to generate a question from the current conversation context, using
+the most recent message to center the question. The resulting question can be used to search over document Collections or
+chat history Messages and Summaries.
+
+Zep's [Perpetual Memory](/chat-history-memory) uses this question synthesis functionality internally to ensure
+that Memories it returns are relevant and useful.
+
+While it's possible to synthesize a question using a general purpose LLM, this is often a slow and inaccurate exercise.
+Zep's private, fine-tuned models are designed to return results in hundreds of milliseconds.
+
+<Info>
+  Want to see Question Synthesis in action? Take a look at [Zep's LangService VectorStore
+  example](https://github.com/getzep/zep-python/blob/main/examples/langchain-langserve/app/message_history_vector_store_chain.py).
+</Info>
+
+<Tabs group="sessions">
+
+<Tab title="Python" group-key="python">
+
+```Python
+question = zep.memory.synthesize_question(session_id)
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```Typescript
+const question = await zepClient.memory.synthesizeQuestion(sessionId);
+```
+
+</Tab>
+</Tabs>
+
+```Text
+assistant: Iceland can be expensive. Costs depend on factors like accommodations, activities, and dining preferences. However, you can expect to spend around $200-$300 per day, not including flights.
+user: Is it easy to find vegetarian or vegan food in Iceland?
+assistant: Yes, Reykjavik has several vegetarian and vegan-friendly restaurants. Do you have any dietary restrictions?
+user: Yes, dairy.
+```
+
+```Text
+Can the user eat dairy products?
+```

@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+
+# Test complex api configuration with multiple patterns
+api:
+  # Test top-level api settings (should get path-parameter-order added)
+  settings:
+    use-title: false
+    idiomatic-request-names: true
+
+  # Test specs configuration
+  specs:
+    # OpenAPI spec without settings (should get settings created)
+    - openapi: "./openapi1.yml"
+      audiences: ["public"]
+
+    # OpenAPI spec with existing settings (should add path-parameter-order)
+    - openapi: "./openapi2.yml"
+      overrides: "./openapi2.overrides.yml"
+      settings:
+        title-as-schema-name: false
+        inline-path-parameters: true
+
+    # OpenAPI spec with existing path-parameter-order (should be preserved)
+    - openapi: "./openapi3.yml"
+      settings:
+        use-title: false
+        path-parameter-order: url-order
+
+    # AsyncAPI spec (should get path-parameter-order added)
+    - asyncapi: "./asyncapi1.yml"
+      settings:
+        message-naming: v1
+
+    # AsyncAPI spec without settings
+    - asyncapi: "./asyncapi2.yml"
+      audiences: ["internal"]
+
+    # Another OpenAPI spec with spec-order already set (should be preserved)
+    - openapi: "./openapi4.yml"
+      settings:
+        path-parameter-order: spec-order
+        title-as-schema-name: true
+
+    # Proto spec (should be skipped)
+    - proto:
+        root: "./proto-specs"
+        target: "./proto-specs/target"
+        local-generation: true
+
+# Test separate OpenAPI configuration
+openapi:
+  path: "./separate-openapi.yml"
+  settings:
+    use-title: true
+    inline-path-parameters: false
+
+groups:
+  production:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.9.0
+        output:
+          location: npm
+          package-name: "@acme/typescript-sdk"

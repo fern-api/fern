@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "6fab11ee",
+            "id": {
+                "method": "POST",
+                "path": "/send-optional-body",
+                "identifier_override": "endpoint_optional.sendOptionalBody"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport java.util.HashMap;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalBody(\n            Optional.of(\n                new HashMap<String, Object>() {{\n                    put(\"string\", new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }});\n                }}\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport java.util.HashMap;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalBody(\n            Optional.of(\n                new HashMap<String, Object>() {{\n                    put(\"string\", new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }});\n                }}\n            )\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

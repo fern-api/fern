@@ -1,0 +1,74 @@
+imports:
+  commons: ./commons.yml
+  types: ./types.yml
+
+types:
+  Auth:
+    union:
+      basic: BasicAuth
+      bearer: BearerAuth
+      header: HeaderAuth
+      oauth: OAuth
+      inferred: InferredAuth
+
+  AuthValues:
+    union:
+      basic: BasicAuthValues
+      bearer: BearerAuthValues
+      header: HeaderAuthValues
+      oauth: OAuthValues
+      inferred: InferredAuthValues
+
+  BasicAuth:
+    properties:
+      username: commons.Name
+      password: commons.Name
+
+  BasicAuthValues:
+    properties:
+      username: string
+      password: string
+
+  InferredAuth:
+    docs: |
+      Inferred auth retrieves tokens dynamically. The client constructor parameters
+      are defined by the parameters list.
+    properties:
+      parameters:
+        type: optional<list<types.NamedParameter>>
+        docs: List of parameters (from token endpoint) needed for auth, including their types.
+
+  InferredAuthValues:
+    docs: |
+      Parameter values for inferred auth in code snippets.
+      The keys are wire values matching the parameters in InferredAuth.
+    properties:
+      values:
+        type: optional<map<string, unknown>>
+        docs: Map of wire values to their example values for snippets.
+
+  BearerAuth:
+    properties:
+      token: commons.Name
+
+  BearerAuthValues:
+    properties:
+      token: string
+
+  HeaderAuth:
+    properties:
+      header: types.NamedParameter
+
+  HeaderAuthValues:
+    properties:
+      value: unknown
+
+  OAuth:
+    properties:
+      clientId: commons.Name
+      clientSecret: commons.Name
+
+  OAuthValues:
+    properties:
+      clientId: string
+      clientSecret: string

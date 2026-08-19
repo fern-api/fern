@@ -1,0 +1,57 @@
+{
+  "name": "@fern-api/api-workspace-validator",
+  "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern.git",
+    "directory": "packages/cli/workspace/api-workspace-validator"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": ["lib"],
+  "scripts": {
+    "clean": "rm -rf ./lib",
+    "compile": "tsc",
+    "compile:debug": "tsc --sourceMap",
+    "depcheck": "knip --config ../../../../knip.json --no-config-hints",
+    "test": "vitest --passWithNoTests --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
+    "test:update": "vitest --passWithNoTests --run -u"
+  },
+  "dependencies": {
+    "@fern-api/api-workspace-commons": "workspace:*",
+    "@fern-api/cli-logger": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fern-definition-schema": "workspace:*",
+    "@fern-api/fern-definition-validator": "workspace:*",
+    "@fern-api/generators-validator": "workspace:*",
+    "@fern-api/lazy-fern-workspace": "workspace:*",
+    "@fern-api/logger": "workspace:*",
+    "@fern-api/oss-validator": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
+    "chalk": "catalog:",
+    "lodash-es": "catalog:",
+    "validate-npm-package-name": "catalog:"
+  },
+  "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@types/lodash-es": "catalog:",
+    "@types/node": "catalog:",
+    "@types/validate-npm-package-name": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,39 @@
+imports:
+  objects: ../types/object.yml
+
+service:
+  auth: true
+  base-path: /duplicate-names-c
+  endpoints:
+    create:
+      docs: Create endpoint for service C
+      path: ""
+      method: POST
+      request:
+        name: CreateRequestC
+        body:
+          properties:
+            label: string
+            priority: integer
+      response: objects.ObjectWithOptionalField
+
+    get:
+      docs: Get endpoint for service C
+      path: /{id}
+      method: GET
+      request:
+        name: GetRequestC
+        path-parameters:
+          id: string
+        query-parameters:
+          verbose: optional<boolean>
+
+    list:
+      docs: List endpoint for service C
+      path: ""
+      method: GET
+      request:
+        name: ListRequestC
+        query-parameters:
+          offset: optional<integer>
+          count: optional<integer>

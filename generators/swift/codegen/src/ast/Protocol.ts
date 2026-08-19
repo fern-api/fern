@@ -1,0 +1,15 @@
+export const Protocol = {
+    CaseIterable: "CaseIterable",
+    Codable: "Codable",
+    CodingKey: "CodingKey",
+    CodingKeyRepresentable: "CodingKeyRepresentable",
+    Decodable: "Decodable",
+    Encodable: "Encodable",
+    Equatable: "Equatable",
+    Error: "Error",
+    Hashable: "Hashable",
+    Sendable: "Sendable",
+    MultipartFormDataConvertible: "MultipartFormDataConvertible"
+} as const;
+
+export type Protocol = (typeof Protocol)[keyof typeof Protocol];

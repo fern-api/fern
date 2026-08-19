@@ -1,0 +1,77 @@
+from typing import List, Optional
+
+from ....context.pydantic_generator_context import PydanticGeneratorContext
+from ...custom_config import PydanticModelCustomConfig
+from ..object_generator import (
+    AbstractObjectGenerator,
+    AbstractObjectSnippetGenerator,
+    ObjectProperty,
+)
+from fern_python.codegen import AST, SourceFile
+from fern_python.generators.pydantic_model.typeddict import FernTypedDict
+from fern_python.snippet import SnippetWriter
+from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
+
+import fern.ir.resources as ir_types
+
+
+class TypeddictObjectGenerator(AbstractObjectGenerator):
+    def __init__(
+        self,
+        name: Optional[ir_types.DeclaredTypeName],
+        extends: List[ir_types.DeclaredTypeName],
+        properties: List[ObjectProperty],
+        context: PydanticGeneratorContext,
+        source_file: SourceFile,
+        custom_config: PydanticModelCustomConfig,
+        docs: Optional[str],
+        class_name: Optional[str] = None,
+        snippet: Optional[str] = None,
+    ):
+        super().__init__(
+            name=name,
+            extends=extends,
+            properties=properties,
+            context=context,
+            source_file=source_file,
+            custom_config=custom_config,
+            docs=docs,
+            class_name=class_name,
+            snippet=snippet,
+            as_request=True,
+        )
+
+    def generate(self) -> None:
+        with FernTypedDict(
+            context=self._context,
+            source_file=self._source_file,
+            type_name=self._name,
+            should_export=True,
+            extended_types=self._extends,
+            docstring=self._docs,
+            class_name=self._class_name,
+        ) as typed_dict:
+            for property in self._properties:
+                typed_dict.add_field(
+                    name=resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name,
+                    type_reference=property.value_type,
+                    json_field_name=get_wire_value(property.name),
+                    description=property.docs,
+                )
+
+
+class TypeddictObjectSnippetGenerator(AbstractObjectSnippetGenerator):
+    def __init__(
+        self,
+        snippet_writer: SnippetWriter,
+        name: ir_types.DeclaredTypeName,
+        example: ir_types.ExampleObjectType,
+    ):
+        super().__init__(
+            snippet_writer=snippet_writer,
+            name=name,
+            example=example,
+        )
+
+    def generate_snippet(self) -> AST.Expression:
+        return FernTypedDict.type_to_snippet(example=self.example, snippet_writer=self.snippet_writer)

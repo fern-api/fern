@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `fern check --api <name>` failing when broken-links validation is enabled
+    and `docs.yml` references multiple APIs. The docs validator now always sees
+    the full set of API workspaces (so the `valid-markdown-links` rule can resolve
+    every API referenced from the docs navigation), while the `--api` filter is
+    still applied to API-level validation only.
+  type: fix

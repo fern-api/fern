@@ -1,0 +1,3 @@
+rootProject.name = 'error-property'
+
+include 'sample-app'

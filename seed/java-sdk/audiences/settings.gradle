@@ -1,0 +1,3 @@
+rootProject.name = 'audiences'
+
+include 'sample-app'

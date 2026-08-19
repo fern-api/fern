@@ -1,0 +1,82 @@
+{
+  "type": "object",
+  "properties": {
+    "animal": {
+      "$ref": "#/definitions/ast.Animal"
+    }
+  },
+  "required": [
+    "animal"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ast.Acai": {
+      "type": "object",
+      "properties": {
+        "animal": {
+          "$ref": "#/definitions/ast.Animal"
+        }
+      },
+      "required": [
+        "animal"
+      ],
+      "additionalProperties": false
+    },
+    "ast.Fig": {
+      "type": "object",
+      "properties": {
+        "animal": {
+          "$ref": "#/definitions/ast.Animal"
+        }
+      },
+      "required": [
+        "animal"
+      ],
+      "additionalProperties": false
+    },
+    "ast.Fruit": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ast.Acai"
+        },
+        {
+          "$ref": "#/definitions/ast.Fig"
+        }
+      ]
+    },
+    "ast.Cat": {
+      "type": "object",
+      "properties": {
+        "fruit": {
+          "$ref": "#/definitions/ast.Fruit"
+        }
+      },
+      "required": [
+        "fruit"
+      ],
+      "additionalProperties": false
+    },
+    "ast.Dog": {
+      "type": "object",
+      "properties": {
+        "fruit": {
+          "$ref": "#/definitions/ast.Fruit"
+        }
+      },
+      "required": [
+        "fruit"
+      ],
+      "additionalProperties": false
+    },
+    "ast.Animal": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ast.Cat"
+        },
+        {
+          "$ref": "#/definitions/ast.Dog"
+        }
+      ]
+    }
+  }
+}

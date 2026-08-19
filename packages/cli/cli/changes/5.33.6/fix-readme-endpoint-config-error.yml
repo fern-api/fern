@@ -1,0 +1,3 @@
+- summary: |
+    Classify missing readme endpoint references in generators.yml as configuration errors.
+  type: fix

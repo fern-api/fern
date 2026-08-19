@@ -1,0 +1,2495 @@
+{
+  "type": "object",
+  "properties": {
+    "docs": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "display-name": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "default-url": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "default-environment": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "environments": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/environments.EnvironmentSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "auth": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/auth.ApiAuthSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "auth-schemes": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/auth.AuthSchemeDeclarationSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "headers": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/service.HttpHeaderSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Global Headers for the entire API"
+    },
+    "name": {
+      "type": "string"
+    },
+    "imports": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "error-discrimination": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/file.ErrorDiscriminationSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "audiences": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "errors": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "base-path": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "path-parameters": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/service.HttpPathParameterSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "idempotency-headers": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/service.HttpHeaderSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "variables": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/variables.VariableDeclarationSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "global-parameters": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/global-parameters.GlobalParameterDeclarationSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pagination": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/pagination.PaginationSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "product": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/products.ProductDeclarationSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "version": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/versioning.VersionDeclarationSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "environments.ServerVariableSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The variable name as it appears in the URL template"
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The default value for this variable"
+        },
+        "values": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Allowed values for this variable (from enum)"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "environments.SingleBaseUrlEnvironmentSchema": {
+      "type": "object",
+      "properties": {
+        "audiences": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": "string"
+        },
+        "default-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A separate default URL to use when no variables are provided (from x-fern-default-url extension)"
+        },
+        "url-template": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The original URL template with variable placeholders (e.g., \"https://api.{region}.example.com\")"
+        },
+        "variables": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/environments.ServerVariableSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Server variables for URL templating"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "environments.MultipleBaseUrlsEnvironmentSchema": {
+      "type": "object",
+      "properties": {
+        "audiences": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "urls": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "url-templates": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "URL templates with variable placeholders for each base URL (e.g., \"https://api.{region}.example.com\")"
+        },
+        "default-urls": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Default URLs to use when no variables are provided (from x-fern-default-url extension)"
+        },
+        "variables": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/environments.ServerVariableSchema"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Server variables for URL templating, keyed by base URL ID"
+        }
+      },
+      "required": [
+        "urls"
+      ],
+      "additionalProperties": false
+    },
+    "environments.EnvironmentSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/environments.SingleBaseUrlEnvironmentSchema"
+        },
+        {
+          "$ref": "#/definitions/environments.MultipleBaseUrlsEnvironmentSchema"
+        }
+      ]
+    },
+    "auth.AuthSchemeReferenceSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scheme": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "scheme"
+      ],
+      "additionalProperties": false
+    },
+    "auth.AnyAuthItem": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/auth.AuthSchemeReferenceSchema"
+        }
+      ]
+    },
+    "auth.AnyAuthSchemesSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "any": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/auth.AnyAuthItem"
+          }
+        }
+      },
+      "required": [
+        "any"
+      ],
+      "additionalProperties": false
+    },
+    "auth.EndpointSecuritySchemaDetails": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "auth.EndpointSecuritySchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "endpoint-security": {
+          "$ref": "#/definitions/auth.EndpointSecuritySchemaDetails",
+          "description": "Indicates that authentication requirements are defined per-endpoint via the `security` field."
+        }
+      },
+      "required": [
+        "endpoint-security"
+      ],
+      "additionalProperties": false
+    },
+    "auth.ApiAuthSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/auth.AuthSchemeReferenceSchema"
+        },
+        {
+          "$ref": "#/definitions/auth.AnyAuthSchemesSchema"
+        },
+        {
+          "$ref": "#/definitions/auth.EndpointSecuritySchema"
+        }
+      ]
+    },
+    "auth.OAuthFlowTypeSchema": {
+      "type": "string",
+      "enum": [
+        "client-credentials",
+        "authorization-code",
+        "device-code"
+      ]
+    },
+    "auth.AuthScope": {
+      "type": "string"
+    },
+    "auth.OAuthAccessTokenRequestPropertiesSchema": {
+      "type": "object",
+      "properties": {
+        "client-id": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The property name for the client ID."
+        },
+        "client-secret": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The property name for the client secret."
+        },
+        "scopes": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The property name for the scopes."
+        }
+      },
+      "additionalProperties": false
+    },
+    "auth.OAuthAccessTokenResponsePropertiesSchema": {
+      "type": "object",
+      "properties": {
+        "access-token": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The property name for the access token."
+        },
+        "expires-in": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The property name for the expires in property."
+        },
+        "refresh-token": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The property name for the refresh token"
+        }
+      },
+      "additionalProperties": false
+    },
+    "auth.OAuthGetTokenEndpointSchema": {
+      "type": "object",
+      "properties": {
+        "endpoint": {
+          "type": "string",
+          "description": "The endpoint to get the access token, such as 'auth.get_token"
+        },
+        "request-properties": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.OAuthAccessTokenRequestPropertiesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "response-properties": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.OAuthAccessTokenResponsePropertiesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "endpoint"
+      ],
+      "additionalProperties": false
+    },
+    "auth.OAuthRefreshTokenRequestPropertiesSchema": {
+      "type": "object",
+      "properties": {
+        "refresh-token": {
+          "type": "string",
+          "description": "The property name for the refresh token."
+        }
+      },
+      "required": [
+        "refresh-token"
+      ],
+      "additionalProperties": false
+    },
+    "auth.OAuthRefreshTokenResponsePropertiesSchema": {
+      "type": "object",
+      "properties": {
+        "access-token": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The property name for the access token."
+        },
+        "expires-in": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The property name for the expires in property."
+        },
+        "refresh-token": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The property name for the refresh token."
+        }
+      },
+      "additionalProperties": false
+    },
+    "auth.OAuthRefreshTokenEndpointSchema": {
+      "type": "object",
+      "properties": {
+        "endpoint": {
+          "type": "string",
+          "description": "The endpoint to refresh the access token, such as 'auth.refresh_token"
+        },
+        "request-properties": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.OAuthRefreshTokenRequestPropertiesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "response-properties": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.OAuthRefreshTokenResponsePropertiesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "endpoint"
+      ],
+      "additionalProperties": false
+    },
+    "auth.RedirectUriWithBackupPortsSchema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The primary loopback callback URI, e.g. `http://127.0.0.1:8484/callback`."
+        },
+        "ports": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Backup loopback ports, tried in order when the port in `url` is busy. Each reuses the host and path of `url` (only the port differs) and must be pre-registered with the authorization server."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false,
+      "description": "A loopback callback URI with additional backup ports for the authorization-code flow."
+    },
+    "auth.RedirectUriSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/auth.RedirectUriWithBackupPortsSchema"
+        }
+      ]
+    },
+    "auth.OAuthPkceSchema": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The PKCE code challenge method. Only 'S256' is supported. Defaults to 'S256'."
+        }
+      },
+      "additionalProperties": false,
+      "description": "PKCE (RFC 7636) configuration for the authorization-code flow."
+    },
+    "auth.OAuthSchemeSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scheme": {
+          "const": "oauth"
+        },
+        "type": {
+          "$ref": "#/definitions/auth.OAuthFlowTypeSchema",
+          "description": "The OAuth flow. Defaults to 'client-credentials'."
+        },
+        "scopes": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/auth.AuthScope"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "token-prefix": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Sets the token header value prefix. Defaults to 'Bearer'"
+        },
+        "token-header": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Sets the token header key name. Defaults to 'Authorization'"
+        },
+        "client-id-env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The environment variable holding the client ID. Used by the client-credentials flow and, for the public-client flows, as an alternative to a literal `client-id`."
+        },
+        "client-secret-env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "get-token": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.OAuthGetTokenEndpointSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The token endpoint for the client-credentials flow. Required for that flow."
+        },
+        "refresh-token": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.OAuthRefreshTokenEndpointSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client-id": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The public client ID (literal). Public clients do not use a client secret. Required for the authorization-code and device-code flows (an environment-variable client ID via `client-id-env` is not yet supported for these flows)."
+        },
+        "authorization-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The authorization (consent) endpoint URL. Required for the authorization-code flow."
+        },
+        "device-authorization-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The device authorization endpoint URL. Required for the device-code flow."
+        },
+        "token-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The token endpoint URL. Required for the authorization-code and device-code flows."
+        },
+        "refresh-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The token refresh endpoint URL. Defaults to `token-url` when omitted."
+        },
+        "redirect-uri": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.RedirectUriSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The loopback redirect (callback) URI for the authorization-code flow. Must be a loopback host over http — `127.0.0.1` (recommended, RFC 8252 §7.3) or `localhost` — with any path; the generated CLI binds and sends this URI exactly, so it must match the redirect registered with the authorization server (e.g. `http://127.0.0.1:8484/callback` or `http://localhost:8484/callback`). Provide a bare string to pin a single port, or an object with `url` plus `ports` to add backup ports tried when the primary is busy. Omit it entirely to use an ephemeral (OS-assigned) port."
+        },
+        "success-redirect-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A page the generated CLI redirects the browser to once it captures the authorization code, for the authorization-code flow. Must be an absolute http(s) URL. This is not an OAuth `redirect_uri` and does not need registering with the authorization server — the redirect happens on the loopback listener after the code is captured, and no `code` or `state` is forwarded. Omit it to serve the CLI's built-in success page."
+        },
+        "error-redirect-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A page the generated CLI redirects the browser to when authorization fails (the user denies consent, or the callback is unusable), for the authorization-code flow. Must be an absolute http(s) URL. The `error` and `error_description` query parameters are appended so the page can explain what happened — merged into any query string already on the URL, and inserted before a fragment if there is one. Omit it to serve the CLI's built-in failure page."
+        },
+        "pkce": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.OAuthPkceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PKCE configuration for the authorization-code flow. PKCE is always applied for that flow."
+        },
+        "authorization-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters appended to the authorization request (e.g. `audience`)."
+        },
+        "device-authorization-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters included in the device authorization request."
+        },
+        "token-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters included in the token exchange request."
+        },
+        "refresh-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Additional literal parameters included in the refresh request."
+        }
+      },
+      "required": [
+        "scheme",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "auth.HeaderAuthSchemeSchema": {
+      "type": "object",
+      "properties": {
+        "env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "header": {
+          "type": "string"
+        },
+        "type": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Defaults to string"
+        },
+        "prefix": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "placeholder": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The placeholder value to use in code snippets (e.g., \"YOUR_API_KEY\")."
+        }
+      },
+      "required": [
+        "header"
+      ],
+      "additionalProperties": false
+    },
+    "auth.AuthVariable": {
+      "type": "object",
+      "properties": {
+        "env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "omit": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, the auth variable will be omitted from the SDK."
+        },
+        "placeholder": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The placeholder value to use in code snippets (e.g., \"YOUR_API_KEY\")."
+        }
+      },
+      "additionalProperties": false
+    },
+    "auth.BasicAuthSchemeSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scheme": {
+          "const": "basic"
+        },
+        "username": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.AuthVariable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "password": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.AuthVariable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "scheme"
+      ],
+      "additionalProperties": false
+    },
+    "auth.TokenBearerAuthSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scheme": {
+          "const": "bearer"
+        },
+        "token": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.AuthVariable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "scheme"
+      ],
+      "additionalProperties": false
+    },
+    "auth.InferredAuthenticatedRequestHeader": {
+      "type": "object",
+      "properties": {
+        "response-property": {
+          "type": "string",
+          "description": "The property to retrieve the header value from the get token or refresh endpoint response."
+        },
+        "header-name": {
+          "type": "string",
+          "description": "The header name to put the token in for any authenticated HTTP request."
+        },
+        "value-prefix": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Commonly used for setting the `Authorization` scheme, but could be used for other things."
+        }
+      },
+      "required": [
+        "response-property",
+        "header-name"
+      ],
+      "additionalProperties": false,
+      "description": "A header that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint. These are not headers for the authorization endpoint."
+    },
+    "auth.InferredGetTokenEndpointSchemaObject": {
+      "type": "object",
+      "properties": {
+        "endpoint": {
+          "type": "string",
+          "description": "The endpoint to get the access token, such as 'auth.get_token'"
+        },
+        "expiry-response-property": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The property name for the expiry time in the response."
+        },
+        "authenticated-request-headers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/auth.InferredAuthenticatedRequestHeader"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The headers that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint."
+        }
+      },
+      "required": [
+        "endpoint"
+      ],
+      "additionalProperties": false
+    },
+    "auth.InferredGetTokenEndpointSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/auth.InferredGetTokenEndpointSchemaObject"
+        }
+      ]
+    },
+    "auth.InferredBearerAuthSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scheme": {
+          "const": "bearer"
+        },
+        "get-token": {
+          "$ref": "#/definitions/auth.InferredGetTokenEndpointSchema"
+        }
+      },
+      "required": [
+        "scheme",
+        "get-token"
+      ],
+      "additionalProperties": false
+    },
+    "auth.BearerAuthSchemeSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/auth.TokenBearerAuthSchema"
+        },
+        {
+          "$ref": "#/definitions/auth.InferredBearerAuthSchema"
+        }
+      ]
+    },
+    "auth.AuthSchemeDeclarationSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/auth.OAuthSchemeSchema"
+        },
+        {
+          "$ref": "#/definitions/auth.HeaderAuthSchemeSchema"
+        },
+        {
+          "$ref": "#/definitions/auth.BasicAuthSchemeSchema"
+        },
+        {
+          "$ref": "#/definitions/auth.BearerAuthSchemeSchema"
+        }
+      ]
+    },
+    "encoding.ProtobufTypeSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The name of the Protobuf type (e.g. google.protobuf.Struct)."
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "encoding.EncodingSchema": {
+      "type": "object",
+      "properties": {
+        "proto": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.ProtobufTypeSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "validation.StringValidationSchema": {
+      "type": "object",
+      "properties": {
+        "minLength": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maxLength": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pattern": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "format": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "validation.NumberValidationSchema": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "max": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exclusiveMin": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exclusiveMax": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "multipleOf": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "validation.ListValidationSchema": {
+      "type": "object",
+      "properties": {
+        "minItems": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maxItems": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "validation.MapValidationSchema": {
+      "type": "object",
+      "properties": {
+        "minProperties": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maxProperties": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "validation.ValidationSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/validation.StringValidationSchema"
+        },
+        {
+          "$ref": "#/definitions/validation.NumberValidationSchema"
+        },
+        {
+          "$ref": "#/definitions/validation.ListValidationSchema"
+        },
+        {
+          "$ref": "#/definitions/validation.MapValidationSchema"
+        }
+      ]
+    },
+    "availability.AvailabilityStatusSchema": {
+      "type": "string",
+      "enum": [
+        "in-development",
+        "pre-release",
+        "deprecated",
+        "generally-available",
+        "alpha",
+        "beta",
+        "preview",
+        "legacy"
+      ]
+    },
+    "availability.AvailabilitySchema": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/availability.AvailabilityStatusSchema"
+        },
+        "message": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "availability.AvailabilityUnionSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/availability.AvailabilityStatusSchema"
+        },
+        {
+          "$ref": "#/definitions/availability.AvailabilitySchema"
+        }
+      ]
+    },
+    "service.TypeReferenceDeclarationWithEnvOverrideSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client-default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "encoding": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.EncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "validation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/validation.ValidationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "audiences": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "service.TypeReferenceDeclarationWithEnvOverride": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/service.TypeReferenceDeclarationWithEnvOverrideSchema"
+        }
+      ]
+    },
+    "service.HttpHeaderSchema": {
+      "$ref": "#/definitions/service.TypeReferenceDeclarationWithEnvOverride"
+    },
+    "file.PropertyBasedErrorDiscrimination": {
+      "type": "object",
+      "properties": {
+        "strategy": {
+          "const": "property"
+        },
+        "property-name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "strategy",
+        "property-name"
+      ],
+      "additionalProperties": false
+    },
+    "file.StatusCodeBasedErrorDiscrimination": {
+      "type": "object",
+      "properties": {
+        "strategy": {
+          "const": "status-code"
+        }
+      },
+      "required": [
+        "strategy"
+      ],
+      "additionalProperties": false
+    },
+    "file.ErrorDiscriminationSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/file.PropertyBasedErrorDiscrimination"
+        },
+        {
+          "$ref": "#/definitions/file.StatusCodeBasedErrorDiscrimination"
+        }
+      ]
+    },
+    "types.TypeReferenceDetailedSchema": {
+      "type": "object",
+      "properties": {
+        "default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client-default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "encoding": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.EncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "validation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/validation.ValidationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "audiences": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "types.TypeReferenceSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/types.TypeReferenceDetailedSchema"
+        }
+      ]
+    },
+    "variables.VariableReferenceSchema": {
+      "type": "object",
+      "properties": {
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/availability.AvailabilityUnionSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "variable": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "variable"
+      ],
+      "additionalProperties": false
+    },
+    "service.HttpPathParameterSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/types.TypeReferenceSchema"
+        },
+        {
+          "$ref": "#/definitions/variables.VariableReferenceSchema"
+        }
+      ]
+    },
+    "variables.VariableDeclarationDetailed": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "variables.VariableDeclarationSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/variables.VariableDeclarationDetailed"
+        }
+      ]
+    },
+    "global-parameters.GlobalParameterDeclarationSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "in": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The location of the parameter: body, query, header, or path.\nDefaults to body if not specified."
+        },
+        "target": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The wire-level injection path for the parameter.\nIf not specified, defaults to the parameter name."
+        },
+        "type": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The type of the parameter: string, integer, double, boolean.\nDefaults to string if not specified."
+        },
+        "env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Environment variable to read the default value from."
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Client-side default value for the parameter."
+        },
+        "optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether the parameter is optional."
+        },
+        "apply": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How the parameter is applied: explicit or auto.\nexplicit requires per-operation opt-in via x-fern-global-parameter.\nauto injects on every operation with the target field."
+        },
+        "parameter-name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "SDK/CLI alias for the parameter name.\nIf specified, this name is used in generated SDKs and CLIs\ninstead of the parameter name key."
+        }
+      },
+      "additionalProperties": false
+    },
+    "pagination.CursorPaginationSchema": {
+      "type": "object",
+      "properties": {
+        "cursor": {
+          "type": "string",
+          "description": "The path to the request property for the cursor."
+        },
+        "next_cursor": {
+          "type": "string",
+          "description": "The path to the response property for the next cursor."
+        },
+        "results": {
+          "type": "string",
+          "description": "The path to the response property for the page elements."
+        }
+      },
+      "required": [
+        "cursor",
+        "next_cursor",
+        "results"
+      ],
+      "additionalProperties": false
+    },
+    "pagination.OffsetPaginationSchema": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "string",
+          "description": "The path to the request property for the page offset."
+        },
+        "results": {
+          "type": "string",
+          "description": "The path to the response property for the page elements."
+        },
+        "step": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The path to the request property for the page step."
+        },
+        "has-next-page": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The path to the response property indicating next page presence."
+        }
+      },
+      "required": [
+        "offset",
+        "results"
+      ],
+      "additionalProperties": false
+    },
+    "pagination.CustomPaginationSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "custom",
+          "description": "The type of pagination."
+        },
+        "results": {
+          "type": "string",
+          "description": "The response property is used to determine the results response type\ngenerated in the endpoint."
+        }
+      },
+      "required": [
+        "type",
+        "results"
+      ],
+      "additionalProperties": false,
+      "description": "Pagination where the SDK author is responsible for implementing the pagination\nlogic in the SDK."
+    },
+    "pagination.UriPaginationSchema": {
+      "type": "object",
+      "properties": {
+        "next_uri": {
+          "type": "string",
+          "description": "The path to the response property for the next URI."
+        },
+        "results": {
+          "type": "string",
+          "description": "The path to the response property for the page elements."
+        }
+      },
+      "required": [
+        "next_uri",
+        "results"
+      ],
+      "additionalProperties": false
+    },
+    "pagination.PathPaginationSchema": {
+      "type": "object",
+      "properties": {
+        "next_path": {
+          "type": "string",
+          "description": "The path to the response property for the next path."
+        },
+        "results": {
+          "type": "string",
+          "description": "The path to the response property for the page elements."
+        }
+      },
+      "required": [
+        "next_path",
+        "results"
+      ],
+      "additionalProperties": false
+    },
+    "pagination.PaginationSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/pagination.CursorPaginationSchema"
+        },
+        {
+          "$ref": "#/definitions/pagination.OffsetPaginationSchema"
+        },
+        {
+          "$ref": "#/definitions/pagination.CustomPaginationSchema"
+        },
+        {
+          "$ref": "#/definitions/pagination.UriPaginationSchema"
+        },
+        {
+          "$ref": "#/definitions/pagination.PathPaginationSchema"
+        }
+      ]
+    },
+    "versioning.VersionValueDetailed": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "versioning.VersionValue": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/versioning.VersionValueDetailed"
+        }
+      ]
+    },
+    "versioning.VersionDeclarationHeaderObjectSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The name of the parameter used to represent the header"
+        },
+        "env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The environment variable to read the header value from (if any)"
+        },
+        "value": {
+          "type": "string",
+          "description": "The wire representation of the header (e.g. X-API-Version)"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "versioning.VersionDeclarationHeaderSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/versioning.VersionDeclarationHeaderObjectSchema"
+        }
+      ]
+    },
+    "versioning.VersionDeclarationSchema": {
+      "type": "object",
+      "properties": {
+        "default": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/versioning.VersionValue"
+          }
+        },
+        "header": {
+          "$ref": "#/definitions/versioning.VersionDeclarationHeaderSchema"
+        }
+      },
+      "required": [
+        "values",
+        "header"
+      ],
+      "additionalProperties": false
+    },
+    "products.ProductValueDetailed": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "type": "string"
+        },
+        "versions": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/versioning.VersionDeclarationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "products.ProductValue": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/products.ProductValueDetailed"
+        }
+      ]
+    },
+    "products.ProductDeclarationHeaderObjectSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The name of the parameter used to represent the header"
+        },
+        "env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The environment variable to read the header value from (if any)"
+        },
+        "value": {
+          "type": "string",
+          "description": "The wire representation of the header (e.g. X-API-Product)"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "products.ProductDeclarationHeaderSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/products.ProductDeclarationHeaderObjectSchema"
+        }
+      ]
+    },
+    "products.ProductDeclarationSchema": {
+      "type": "object",
+      "properties": {
+        "default": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/products.ProductValue"
+          }
+        },
+        "header": {
+          "$ref": "#/definitions/products.ProductDeclarationHeaderSchema"
+        }
+      },
+      "required": [
+        "values",
+        "header"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

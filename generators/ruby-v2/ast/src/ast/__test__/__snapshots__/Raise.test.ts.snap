@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Raise > writes raise with a specific error class 1`] = `"raise StandardError"`;
+
+exports[`Raise > writes raise with a specific error class and a message 1`] = `"raise StandardError, "my message""`;
+
+exports[`Raise > writes raise with an arbitrary expression 1`] = `"raise condition ? StandardError : RuntimeError"`;
+
+exports[`Raise > writes raise with no arguments 1`] = `"raise"`;

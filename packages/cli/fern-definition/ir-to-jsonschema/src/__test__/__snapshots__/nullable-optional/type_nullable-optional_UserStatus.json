@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "enum": [
+    "active",
+    "inactive",
+    "suspended",
+    "deleted"
+  ],
+  "description": "Test enum with values for optional enum fields",
+  "definitions": {}
+}

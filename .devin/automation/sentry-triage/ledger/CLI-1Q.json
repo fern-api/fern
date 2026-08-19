@@ -1,0 +1,9 @@
+{
+  "title": "formatDocs replace is not a function",
+  "disposition": "keep_sentry",
+  "rationale": "formatDocs expected a string and received another shape; needs product validation or conversion fix.",
+  "fixSummary": "—",
+  "prOrIssue": "Keep in Sentry until product fix",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "IR docs formatting TypeError because docs value was not a string; true product/data-shape bug until fixed."
+}

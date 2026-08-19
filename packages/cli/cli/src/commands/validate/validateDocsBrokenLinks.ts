@@ -1,0 +1,49 @@
+import { logViolations } from "@fern-api/api-workspace-validator";
+import { filterOssWorkspaces } from "@fern-api/docs-resolver";
+import { validateDocsWorkspace } from "@fern-api/docs-validator";
+import { Project } from "@fern-api/project-loader";
+import { CliError } from "@fern-api/task-context";
+import { CliContext } from "../../cli-context/CliContext.js";
+
+export async function validateDocsBrokenLinks({
+    project,
+    cliContext,
+    errorOnBrokenLinks
+}: {
+    project: Project;
+    cliContext: CliContext;
+    errorOnBrokenLinks: boolean;
+}): Promise<void> {
+    const docsWorkspace = project.docsWorkspaces;
+
+    if (docsWorkspace == null) {
+        cliContext.failAndThrow("No docs workspace found", undefined, { code: CliError.Code.ConfigError });
+        return;
+    }
+
+    await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+        const startTime = performance.now();
+        const ossWorkspaces = await filterOssWorkspaces(project);
+        const violations = await validateDocsWorkspace(
+            docsWorkspace,
+            context,
+            project.apiWorkspaces,
+            ossWorkspaces,
+            true
+        );
+
+        const elapsedMillis = performance.now() - startTime;
+        logViolations({
+            violations,
+            context,
+            logWarnings: true,
+            logSummary: true,
+            logBreadcrumbs: false,
+            elapsedMillis
+        });
+
+        if (violations.length > 0 && errorOnBrokenLinks) {
+            context.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
+        }
+    });
+}

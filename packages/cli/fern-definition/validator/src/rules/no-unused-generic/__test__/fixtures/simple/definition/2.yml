@@ -1,0 +1,10 @@
+types:
+  GenericUsedType<T>:
+    properties:
+      foo: T
+      bar: string
+
+  GenericUnusedType<T>:
+    properties:
+      foo: T
+      bar: number

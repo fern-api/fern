@@ -1,0 +1,5 @@
+- summary: |
+    Add `placeholder` field to auth scheme configuration (basic, bearer, header) for controlling
+    example values in dynamic code snippets. The fallback chain is: explicit placeholder > generic placeholder.
+    Configurable via Fern definition YAML and OpenAPI extensions (x-fern-basic, x-fern-bearer, x-fern-header).
+  type: feat

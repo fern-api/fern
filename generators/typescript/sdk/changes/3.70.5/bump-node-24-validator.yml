@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the TypeScript SDK validator container's Node base image to
+    `node:24.15-trixie-slim`. Aligns the validator with the rest of the
+    Fern generator containers on a single Node major version (Node 24) on
+    top of the trixie-slim base introduced for `typescript-sdk-cli` and
+    `typescript-sdk-validator` by PR #15779.
+  type: chore

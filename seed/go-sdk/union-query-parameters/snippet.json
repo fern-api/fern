@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/events",
+                "method": "GET",
+                "identifier_override": "endpoint_events.subscribe"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/union-query-parameters/fern\"\n\tfernclient \"github.com/union-query-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Events.Subscribe(\n\tcontext.TODO(),\n\t\u0026fern.SubscribeEventsRequest{\n\t\tEventType: \u0026fern.EventTypeParam{\n\t\t\tEventTypeEnum: fern.EventTypeEnumGroupCreated,\n\t\t},\n\t\tTags: \u0026fern.StringOrListParam{\n\t\t\tString: \"tags\",\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}

@@ -1,0 +1,42 @@
+types:
+  ValidUnionWithDefaultDiscriminant:
+    union:
+      a: string
+      b: string
+  ValidUnionWithSuppliedDiscriminant:
+    discriminant: type2
+    union:
+      a: string
+      b: string
+  ValidUnionWithSuppliedNestedDiscriminant:
+    discriminant:
+      value: type2
+    union:
+      a: string
+      b: string
+  ValidUnionWithSuppliedName:
+    discriminant:
+      value: type2
+      name: type3
+    union:
+      a: string
+      b: string
+  UnionWithInvalidDiscriminant:
+    discriminant: _type
+    union:
+      a: string
+      b: string
+  UnionWithInvalidName:
+    discriminant:
+      value: type
+      name: _type
+    union:
+      a: string
+      b: string
+  UnionWithInvalidDiscriminantButValidName:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      a: string
+      b: string

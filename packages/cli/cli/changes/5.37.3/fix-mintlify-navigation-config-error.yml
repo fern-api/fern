@@ -1,0 +1,3 @@
+- summary: |
+    Report invalid Mintlify navigation configuration as a user-facing config error during docs import.
+  type: fix

@@ -1,0 +1,32 @@
+---
+title: Authentication
+slug: auth
+---
+
+To access the API, you'll need:
+- An Entra App with appropriate permissions
+- An authentication library that supports Microsoft Authentication Library (MSAL):
+https://learn.microsoft.com/en-us/entra/identity-platform/msal-overview
+
+## Creating an Entra App
+<Warning>Note: Only Entra ID Global Administrators can create applications. This process will create a single-tenant application requiring admin consent.</Warning>
+
+1. Navigate to "Microsoft Entra Applications" in Business Central
+2. Select "Actions" -> "Entra App Management" -> "Create Entra App"
+3. Enter a name for your application
+4. Select the required permissions - typically one permission set per API group (e.g., "POS", "Memberships")
+5. Click "Create Microsoft Entra Application"
+6. Grant admin consent
+7. Record the client_id and client_secret - the client_secret cannot be retrieved after initial creation
+8. You can now use these credentials to authenticate your API requests
+
+## OAuth Authentication
+To obtain an access token from Entra ID, you'll need:
+- Scope: "https://api.businesscentral.dynamics.com/.default"
+- Token URL: "https://login.microsoftonline.com/:tenantId/oauth2/v2.0/token"
+
+For testing in Postman:
+- Set Authorization type to OAuth 2.0
+- Use "Client Credentials" grant type
+- Set scope to "https://api.businesscentral.dynamics.com/.default"
+- Set token URL to "https://login.microsoftonline.com/:tenantId/oauth2/v2.0/token"

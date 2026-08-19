@@ -1,0 +1,41 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifier_override": "endpoint_folder-a/service.getDirectThread"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCrossPackageTypeNames;\n\nvar client = new SeedCrossPackageTypeNamesClient();\nawait client.FolderA.Service.GetDirectThreadAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifier_override": "endpoint_folder-d/service.getDirectThread"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCrossPackageTypeNames;\n\nvar client = new SeedCrossPackageTypeNamesClient();\nawait client.FolderD.Service.GetDirectThreadAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_foo.find"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCrossPackageTypeNames;\n\nvar client = new SeedCrossPackageTypeNamesClient();\nawait client.Foo.FindAsync(\n    new FindRequest\n    {\n        OptionalString = \"optionalString\",\n        PublicProperty = \"publicProperty\",\n        PrivateProperty = 1,\n    }\n);\n"
+            }
+        }
+    ]
+}

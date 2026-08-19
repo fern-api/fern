@@ -1,0 +1,12 @@
+default-environment: Default
+default-url: Base
+display-name: Alpha One
+environments:
+  Default:
+    urls:
+      Base: http://petstore.swagger.io/v1
+      websocket: wss://api.async.com
+      websocket2: wss://api2.async.com
+error-discrimination:
+  strategy: status-code
+name: api

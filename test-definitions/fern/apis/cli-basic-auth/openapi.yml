@@ -1,0 +1,63 @@
+openapi: 3.1.0
+info:
+  title: Basic Auth CLI
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+paths:
+  /widgets:
+    get:
+      operationId: widgets_list
+      x-fern-sdk-group-name: widgets
+      x-fern-sdk-method-name: list
+      summary: List widgets
+      security:
+        - BasicAuth: []
+      responses:
+        "200":
+          description: Widgets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Widget"
+  # `security: []` — unauthenticated on purpose. Pins the *gate*: the harness
+  # must not demand the credential header here, because the CLI correctly sends
+  # none. Without the gate this case's mock is unmatchable and it fails for a
+  # reason unrelated to what it tests.
+  /health:
+    get:
+      operationId: system_health
+      x-fern-sdk-group-name: system
+      x-fern-sdk-method-name: health
+      summary: Health check
+      security: []
+      responses:
+        "200":
+          description: Health
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                required:
+                  - status
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    Widget:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name

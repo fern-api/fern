@@ -1,0 +1,11 @@
+{
+    "types": {
+        "type_:Node": "from seed import Node\nfrom seed.commons.metadata import Metadata\n\nNode(\n    id=\"node-8dvgfja2\",\n    label=\"left\",\n    metadata=Metadata(\n        id=\"metadata-kjasf923\",\n        data={\"foo\": \"bar\", \"baz\": \"qux\"},\n    ),\n)\n",
+        "type_:Tree": "from seed import Node, Tree\nfrom seed.commons.metadata import Metadata\n\nTree(\n    nodes=[\n        Node(\n            id=\"node-8dvgfja2\",\n            label=\"left\",\n            metadata=Metadata(\n                id=\"metadata-kjasf923\",\n                data={\"foo\": \"bar\", \"baz\": \"qux\"},\n            ),\n        ),\n        Node(\n            id=\"node-cwda9fi2x\",\n            label=\"right\",\n            metadata=Metadata(\n                id=\"metadata-lkasdfv9j\",\n                data={\"one\": \"two\", \"three\": \"four\"},\n            ),\n        ),\n    ],\n)\n",
+        "type_commons/metadata:Metadata": "from seed.commons.metadata import Metadata\n\nMetadata(\n    id=\"metadata-js8dg24b\",\n    data={\"foo\": \"bar\", \"baz\": \"qux\"},\n)\n",
+        "type_file:File": "from seed.file import File\n\nFile(\n    name=\"file.txt\",\n    contents=\"...\",\n    info=\"REGULAR\",\n)\n",
+        "type_file:FileInfo": "\"REGULAR\"\n",
+        "type_file/directory:Directory": "from seed.file import File\nfrom seed.file.directory import Directory\n\nDirectory(\n    name=\"root\",\n    files=[\n        File(\n            name=\"file.txt\",\n            contents=\"...\",\n            info=\"REGULAR\",\n        )\n    ],\n    directories=[\n        Directory(\n            name=\"tmp\",\n            files=[\n                File(\n                    name=\"another_file.txt\",\n                    contents=\"...\",\n                    info=\"REGULAR\",\n                )\n            ],\n        )\n    ],\n)\n"
+    },
+    "endpoints": []
+}

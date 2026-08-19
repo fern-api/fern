@@ -1,0 +1,7 @@
+- summary: |
+    Replace switch-on-type WebSocket message dispatch with shape-based trial
+    deserialization. Messages are now matched by checking required-field presence
+    and literal values before attempting Jackson conversion. This correctly handles
+    AsyncAPI channels where multiple message schemas share the same discriminator
+    value (e.g., two "History" variants with disjoint required fields).
+  type: fix

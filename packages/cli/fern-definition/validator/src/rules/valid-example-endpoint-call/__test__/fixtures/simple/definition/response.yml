@@ -1,0 +1,64 @@
+imports:
+  errors: errors.yml
+service:
+  base-path: /
+  auth: true
+  endpoints:
+    a:
+      path: ""
+      method: GET
+      errors:
+        - errors.ErrorWithStringBody
+        - ErrorWithNoBody
+      response: boolean
+      examples:
+        - {}
+        - response:
+            body: hello
+        - response:
+            body: true
+        - response:
+            error: errors.ErrorWithStringBody
+        - response:
+            error: errors.ErrorWithStringBody
+            body: true
+        - response:
+            error: errors.ErrorWithStringBody
+            body: hello
+        - response:
+            error: ErrorWithNoBody
+        - response:
+            error: ErrorWithNoBody
+            body: hello
+        - response:
+            error: NotFoundError
+        - response:
+            error: NotFoundError
+            body: hello
+    b:
+      path: ""
+      method: GET
+      examples:
+        - response:
+            body: hello
+    datetime:
+      path: ""
+      method: GET
+      response: datetime
+      examples:
+        - response:
+            body: 2023-02-16T16:47:38.259Z
+
+types:
+  ObjectWithFoo:
+    properties:
+      foo: string
+
+errors:
+  ErrorWithStringBody:
+    status-code: 500
+    type: string
+  ErrorWithNoBody:
+    status-code: 500
+  NotFoundError:
+    status-code: 404

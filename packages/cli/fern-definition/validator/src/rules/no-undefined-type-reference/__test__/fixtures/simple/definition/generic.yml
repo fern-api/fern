@@ -1,0 +1,8 @@
+types:
+  GenericApplication:
+    type: GenericUsedType<string>
+
+  GenericUsedType<T>:
+    properties:
+      foo: T
+      bar: string

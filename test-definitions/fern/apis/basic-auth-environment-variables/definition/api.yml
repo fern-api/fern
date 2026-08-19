@@ -1,0 +1,15 @@
+name: basic-auth-environment-variables
+auth: Basic
+auth-schemes:
+  Basic:
+    scheme: basic
+    username:
+      name: username
+      env: USERNAME
+      placeholder: YOUR_USERNAME
+    password:
+      name: accessToken
+      env: PASSWORD
+      placeholder: YOUR_PASSWORD
+error-discrimination:
+  strategy: status-code

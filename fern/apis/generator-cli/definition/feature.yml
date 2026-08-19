@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  FeatureId:
+    docs: |
+      A unique identifier for a feature (e.g. OPTIONALS). This is typed as a freeform string
+      to allow for arbitrary features, but callers are expected to use the StructuredFeatureId
+      string representation whenever possible.
+    discriminated: false
+    union:
+      - string
+      - StructuredFeatureId
+
+  StructuredFeatureId:
+    docs: |
+      Unique identifiers for features that can be demonstrated with snippets.
+    enum:
+      - AUTHENTICATION
+      - ERRORS
+      - USAGE
+      - PAGINATION
+      - RETRIES
+      - REQUEST_OPTIONS
+      - STREAMING
+      - TIMEOUTS
+      - CUSTOM_CLIENT
+      - CONTRIBUTING
+
+  FeatureConfig:
+    docs: |
+      The configuration used to specify a generator's set of supported features.
+      This is static data associated with a particular version of a generator, and
+      is expected to be written as a static features.yml file in the generator's
+      repository.
+    properties:
+      features: list<FeatureSpec>
+
+  FeatureSpec:
+    docs: |
+      A specification for a feature supported by a generator. This includes the
+      feature's ID, a description, and any additional information that should be
+      included in the README.md.
+    properties:
+      id: FeatureId
+      description: optional<string>
+      addendum: optional<string>
+      advanced: optional<boolean>

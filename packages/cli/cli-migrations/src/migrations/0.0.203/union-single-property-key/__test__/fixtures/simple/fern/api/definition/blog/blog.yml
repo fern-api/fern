@@ -1,0 +1,20 @@
+types:
+  a: string
+  b: boolean
+  c:
+    properties:
+      a: integer
+  d:
+    # here's a comment
+    union:
+      a: string
+      b: boolean
+      d: d # there's a comment
+  e:
+    union:
+      a:
+        type: string
+      b: boolean
+      d:
+        type: d
+        docs: hello

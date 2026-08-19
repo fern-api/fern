@@ -1,0 +1,33 @@
+---
+title: Plaid Configuration object
+slug: api-reference/plaid
+---
+
+Layer uses Plaid to connect to pull information from your customers' external bank accounts and credit cards. The Plaid Configuration object allows you to manage the Plaid configuration associated with your Layer account.
+
+### Attributes
+
+<ParamField body="type" type="string">
+  Resource type. Value will be: "Plaid_Configuration"
+</ParamField>
+<ParamField body="client_id" type="string">
+  Account-wide client id.
+</ParamField>
+<ParamField body="secret_last_4" type="string">
+  Account-wide plaid secret. Only the last 4 characters will be displayed.
+</ParamField>
+
+
+<ResponseExample>
+
+```json Example
+{
+  "data":{
+    "type":"Plaid_Configuration",
+    "client_id":"6488fafd7a73ae00122004d6",
+    "secret_last_4":"acae"
+  }
+}
+```
+
+</ResponseExample>

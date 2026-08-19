@@ -1,0 +1,6 @@
+- summary: |
+    Register synthesized request-envelope types for endpoints with a
+    referenced request body AND query parameters in the model generator's
+    `types/mod.rs`. Previously these types were generated but never
+    declared as modules, causing unresolved-type errors in the SDK crate.
+  type: fix

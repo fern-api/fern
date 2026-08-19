@@ -1,0 +1,119 @@
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+
+import { type NpmPackage } from "../NpmPackage.js";
+import { PublishInfo } from "../PublishInfo.js";
+
+export interface constructNpmPackageArgs {
+    packageName?: string;
+    version?: string;
+    repoUrl?: string;
+    publishInfo?: PublishInfo;
+    licenseConfig?: FernGeneratorExec.LicenseConfig;
+    isPackagePrivate: boolean;
+}
+
+export function constructNpmPackageFromArgs(args: constructNpmPackageArgs): NpmPackage | undefined {
+    const { packageName, version, repoUrl, publishInfo, licenseConfig, isPackagePrivate } = args;
+    if (packageName == null || version == null) {
+        return undefined;
+    }
+
+    return {
+        packageName,
+        version,
+        private: isPackagePrivate,
+        publishInfo,
+        license: licenseFromLicenseConfig(licenseConfig),
+        repoUrl: getRepoUrlFromUrl(repoUrl)
+    };
+}
+
+export function constructNpmPackage({
+    generatorConfig,
+    isPackagePrivate
+}: {
+    generatorConfig: FernGeneratorExec.GeneratorConfig;
+    isPackagePrivate: boolean;
+}): NpmPackage | undefined {
+    const outputMode = generatorConfig.output.mode;
+    switch (outputMode.type) {
+        case "downloadFiles":
+            return undefined;
+        case "publish":
+            return {
+                packageName: outputMode.registriesV2.npm.packageName,
+                version: outputMode.version,
+                private: isPackagePrivate,
+                publishInfo: {
+                    registryUrl: outputMode.registriesV2.npm.registryUrl,
+                    token: outputMode.registriesV2.npm.token
+                },
+                license: licenseFromLicenseConfig(generatorConfig.license),
+                repoUrl: undefined
+            };
+        case "github":
+            if (outputMode.publishInfo != null && outputMode.publishInfo.type !== "npm") {
+                throw new Error(
+                    `Expected to receive npm publish info but received ${outputMode.publishInfo.type} instead`
+                );
+            }
+            return {
+                packageName: outputMode.publishInfo != null ? outputMode.publishInfo.packageName : "",
+                version: outputMode.version,
+                private: isPackagePrivate,
+                publishInfo: undefined,
+                repoUrl: getRepoUrlFromUrl(outputMode.repoUrl),
+                license: licenseFromLicenseConfig(generatorConfig.license)
+            };
+        default:
+            throw new Error(`Encountered unknown output mode: ${outputMode}`);
+    }
+}
+
+export function getRepoUrlFromUrl(repoUrl: string | undefined): string | undefined {
+    if (repoUrl == null) {
+        return undefined;
+    }
+    if (repoUrl.startsWith("https://github.com/")) {
+        // Maybe temporary. Simplifying output so local generation matches remote generation.
+        // return `github:${removeGitSuffix(repoUrl).replace("https://github.com/", "")}`;
+        return `git+${repoUrl}`;
+    }
+    if (repoUrl.startsWith("ssh://github.com/")) {
+        return `github:${removeGitSuffix(repoUrl).replace("ssh://github.com/", "")}`;
+    }
+    if (repoUrl.startsWith("https://bitbucket.org/")) {
+        return `bitbucket:${removeGitSuffix(repoUrl).replace("https://bitbucket.org/", "")}`;
+    }
+    if (repoUrl.startsWith("ssh://bitbucket.org/")) {
+        return `bitbucket:${removeGitSuffix(repoUrl).replace("ssh://bitbucket.org/", "")}`;
+    }
+    if (repoUrl.startsWith("https://gitlab.com/")) {
+        return `gitlab:${removeGitSuffix(repoUrl).replace("https://gitlab.com/", "")}`;
+    }
+    if (repoUrl.startsWith("ssh://gitlab.com/")) {
+        return `gitlab:${removeGitSuffix(repoUrl).replace("ssh://gitlab.com/", "")}`;
+    }
+    if (!repoUrl.startsWith("git+")) {
+        repoUrl = `git+${repoUrl}`;
+    }
+    if (!repoUrl.endsWith(".git")) {
+        repoUrl = `${repoUrl}.git`;
+    }
+    return repoUrl;
+}
+
+function removeGitSuffix(repoUrl: string): string {
+    if (repoUrl.endsWith(".git")) {
+        return repoUrl.slice(0, -4);
+    }
+    return repoUrl;
+}
+
+function licenseFromLicenseConfig(licenseConfig: FernGeneratorExec.LicenseConfig | undefined): string | undefined {
+    return licenseConfig?._visit({
+        basic: (basic) => basic.id,
+        custom: (custom) => `See ${custom.filename}`,
+        _other: () => undefined
+    });
+}

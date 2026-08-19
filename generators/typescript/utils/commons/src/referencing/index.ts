@@ -1,0 +1,11 @@
+export { getDirectReferenceToExport } from "./getDirectReferenceToExport.js";
+export { getEntityNameOfDirectory } from "./getEntityNameOfDirectory.js";
+export { getExportedDirectoriesForFernFilepath } from "./getExportedDirectoriesForFernFilepath.js";
+export { getExpressionToDirectory } from "./getExpressionToDirectory.js";
+export { getQualifiedNameOfDirectory } from "./getQualifiedNameOfDirectory.js";
+export { getReferenceToExportFromPackage } from "./getReferenceToExportFromPackage.js";
+export { getReferenceToExportFromRoot } from "./getReferenceToExportFromRoot.js";
+export { getReferenceToExportViaNamespaceImport } from "./getReferenceToExportViaNamespaceImport.js";
+export { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo.js";
+export { type ModuleSpecifier } from "./ModuleSpecifier.js";
+export { type GetReferenceOpts, type Reference } from "./Reference.js";

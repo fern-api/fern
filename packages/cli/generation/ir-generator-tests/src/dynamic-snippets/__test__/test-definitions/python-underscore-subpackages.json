@@ -1,0 +1,213 @@
+{
+    "version": "1.0.0",
+    "types": {},
+    "headers": [],
+    "endpoints": {
+        "endpoint__agents.create": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "create",
+                    "camelCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE",
+                        "safeName": "CREATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Create",
+                        "safeName": "Create"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "_agents",
+                            "camelCase": {
+                                "unsafeName": "agents",
+                                "safeName": "agents"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "agents",
+                                "safeName": "agents"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AGENTS",
+                                "safeName": "AGENTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Agents",
+                                "safeName": "Agents"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "_agents",
+                        "camelCase": {
+                            "unsafeName": "agents",
+                            "safeName": "agents"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "agents",
+                            "safeName": "agents"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AGENTS",
+                            "safeName": "AGENTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Agents",
+                            "safeName": "Agents"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/agents/create"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null,
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint__agents/_internal.create": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "create",
+                    "camelCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE",
+                        "safeName": "CREATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Create",
+                        "safeName": "Create"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "_agents",
+                            "camelCase": {
+                                "unsafeName": "agents",
+                                "safeName": "agents"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "agents",
+                                "safeName": "agents"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AGENTS",
+                                "safeName": "AGENTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Agents",
+                                "safeName": "Agents"
+                            }
+                        },
+                        {
+                            "originalName": "_internal",
+                            "camelCase": {
+                                "unsafeName": "internal",
+                                "safeName": "internal"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "internal",
+                                "safeName": "internal"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INTERNAL",
+                                "safeName": "INTERNAL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Internal",
+                                "safeName": "Internal"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "_agents",
+                            "camelCase": {
+                                "unsafeName": "agents",
+                                "safeName": "agents"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "agents",
+                                "safeName": "agents"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AGENTS",
+                                "safeName": "AGENTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Agents",
+                                "safeName": "Agents"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "_internal",
+                        "camelCase": {
+                            "unsafeName": "internal",
+                            "safeName": "internal"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "internal",
+                            "safeName": "internal"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INTERNAL",
+                            "safeName": "INTERNAL"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Internal",
+                            "safeName": "Internal"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/agents/nested"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null,
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}

@@ -1,0 +1,5 @@
+- summary: |
+    Fix commit author attribution for GitHub Enterprise: API-created commits now
+    use the Fern bot identity instead of the PAT-owning user, matching the git CLI
+    behavior of Fern 3.x generators.
+  type: fix

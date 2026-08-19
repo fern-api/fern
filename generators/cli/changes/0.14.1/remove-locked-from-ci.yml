@@ -1,0 +1,7 @@
+- summary: |
+    Remove `--locked` from `cargo build` commands in generated CI
+    publish workflows. The lockfile produced at generation time may
+    become stale when users add custom code or dev-dependencies,
+    causing `--locked` builds to reject the lockfile. CI now allows
+    Cargo to re-resolve dependencies at build time.
+  type: fix

@@ -1,0 +1,19 @@
+types:
+  MyAlias:
+    properties:
+      foo: string
+    examples:
+      - value:
+          foo: $MyStringAlias.Example1
+      - value:
+          foo: $MyNumberAlias.Example1
+  MyStringAlias:
+    type: string
+    examples:
+      - name: Example1
+        value: 123
+  MyNumberAlias:
+    type: integer
+    examples:
+      - name: Example1
+        value: 123

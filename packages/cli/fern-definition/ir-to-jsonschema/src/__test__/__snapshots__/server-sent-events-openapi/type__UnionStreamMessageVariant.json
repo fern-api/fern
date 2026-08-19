@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "stream_response": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Whether to stream the response."
+    },
+    "prompt": {
+      "type": "string",
+      "description": "The input prompt."
+    },
+    "message": {
+      "type": "string",
+      "description": "The message content."
+    }
+  },
+  "required": [
+    "prompt",
+    "message"
+  ],
+  "additionalProperties": false,
+  "description": "A user input message. Inherits stream_response from base via allOf.",
+  "definitions": {}
+}

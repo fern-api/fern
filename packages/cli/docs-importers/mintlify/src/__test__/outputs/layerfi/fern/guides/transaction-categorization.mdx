@@ -1,0 +1,175 @@
+---
+title: Transaction Categorization
+slug: guides/transaction-categorization
+---
+
+
+In order to get an accurate picture of their accounting, your customers must categorize and reconcile their bank account and credit card activity. This ensures all banking activity is recorded into the correct revenue and expense categories and matched with any other revenue, payroll, or bill data that has been imported into Layer.
+
+Transaction categorization is one of the most common workflows performed within accounting software and will usually be done by either your customer or a bookkeeper hired by your customer. 
+
+Layer's embedded accounting platform allows your customers to complete their transaction categorization workflows directly within your platform. There are two ways to offer transaction categorization within your platform:
+* **Embedded UI component** - Embed Layer's _Transaction List_ UI component within your experience.
+* **API** - Build a customized transaction categorization workflows on top of Layer's transaction categorization API.
+
+
+## Embedded component
+Install Layer's Transaction List UI component via npm and embed it directly within your frontend. The Transaction List component handles all workflows related to transaction categorization including: displaying the list of transactions to categorize, surfacing suggested categorizations, matching transactions with invoices, and displaying the list of already categorized transactions. More detail on using Layer's embedded UI components is available [here](/guides/embedded-components).
+
+![Transaction List Component](/images/bank-transactions-component.png)
+
+
+## API
+For full control over the transaction categorization experience, you can build all transaction categorization workflows on top of Layer's API. 
+
+### Retrieving categorized transactions
+The first step of transaction categorization is to retrieve Layer’s assigned categories and recommended categorization flows for all bank account and credit card transactions that have been imported into Layer. This is done by making a call to the [List all Bank Transactions](/api-reference/bank-transactions/list) endpoint.
+
+```bash Request
+curl https://sandbox.layerfi.com/v1/businesses/:business_id/bank-transactions \
+  -H "Authorization: Bearer <access_token>"
+```
+
+The API will respond with a list of all imported transactions.
+
+```json Response
+{
+    "data": [
+        {
+            "type": "Bank_Transaction",
+            "id": "0e46b2b1-56b5-4ee4-bb5e-b0b708e50b47",
+            "business_id": "d2f6d97f-3345-4299-9ec2-468738c5d536",
+            "source": "UNIT",
+            "source_transaction_id": "2093489",
+            "source_account_id": "219384290",
+            "imported_at": "2023-12-15T05:45:06.150088Z",
+            "date": "2023-05-15T14:13:07Z",
+            "direction": "DEBIT",
+            "amount": 8026,
+            "counterparty_name": "HOME DEPOT",
+            "description": null,
+            "categorization_status": "READY_FOR_INPUT",
+            "category": null,
+            "categorization_method": null,
+            "categorization_flow": {
+                "type": "ASK_FROM_SUGGESTIONS",
+                "suggestions": [
+                    {
+                        "type": "Account",
+                        "id": "885a3a95-fe3c-40fb-8424-86c44b7def15",
+                        "stable_name": "JOB_SUPPLIES",
+                        "category": "JOB_SUPPLIES",
+                        "display_name": "Job supplies"
+                    },
+                    {
+                        "type": "Account",
+                        "id": "2b3e300a-0fe8-4581-bfa5-c5a74dae0a7f",
+                        "stable_name": "EQUIPMENT",
+                        "category": "EQUIPMENT",
+                        "display_name": "Equipment & Tools"
+                    },
+                    {
+                        "type": "Account",
+                        "id": "3015ef8d-42aa-485e-90a9-3263f55155bc",
+                        "stable_name": "VEHICLE_EXPENSES",
+                        "category": "VEHICLE_EXPENSES",
+                        "display_name": "Vehicle Expenses"
+                    }
+                ]
+            },
+            "projected_income_category": "EXPENSE"
+        }
+    ],
+    "meta": {
+        "pagination": {
+            "sort_by": "date",
+            "sort_order": "ASC",
+            "cursor": null,
+            "has_more": false
+        }
+    }
+}
+```
+
+Each Bank Transaction in the returned list will include two fields:
+- `category` is the journaled category that has been assigned to the transaction and determines how the transaction will be journaled to the general ledger of the business in Layer’s systems. When Layer has high confidence in the category of a transaction, this will be set automatically. It can also be populated using input from the end user on your platform.
+- `categorization_flow` is Layer's recommended approach for categorizing the transaction. In some cases, this will be automatically categorizing the transaction without any human input. In other cases, Layer will recommend prompting the end user to select from a list of suggested categories. 
+
+### Categorizing transactions
+Transactions can be categorized via API any time after they’ve been imported, regardless of whether the business has SMS based categorized flows turned on or off.
+
+Transactions are categorized one at a time with a `PUT` request to the [Categorize Bank Transaction](/api-reference/bank-transaction/categorize) endpoint. Transactions can be recategorized after an original categorization is assigned, however this will change reports for any time period including the transaction.
+
+```bash Request
+curl -X PUT  https://sandbox.layerfi.com/v1/businesses/:business_id/bank-transactions/:transaction_id/categorize \
+  -H "Authorization: Bearer <access_token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "type": "Category",
+    "category": {
+        "type": "StableName",
+        "stable_name": "JOB_SUPPLIES"
+    }
+}'
+```
+
+The API will respond with a single [Bank Transaction](/api-reference/bank-transaction/bank-transaction) object.
+
+```json Response
+{
+  "data":{
+    "type":"Bank_Transaction",
+    "id":"0e46b2b1-56b5-4ee4-bb5e-b0b708e50b47",
+    "business_id":"d2f6d97f-3345-4299-9ec2-468738c5d536",
+    "source":"UNIT",
+    "source_transaction_id":"2093489",
+    "source_account_id":"219384290",
+    "imported_at":"2023-12-15T05:45:06.150088Z",
+    "date":"2023-05-15T14:13:07Z",
+    "direction":"DEBIT",
+    "amount":8026,
+    "counterparty_name":"HOME DEPOT",
+    "description":null,
+    "categorization_status":"CATEGORIZED",
+    "category":{
+      "type":"Account",
+      "id":"885a3a95-fe3c-40fb-8424-86c44b7def15",
+      "stable_name":"JOB_SUPPLIES",
+      "category":"JOB_SUPPLIES",
+      "display_name":"Job supplies"
+    },
+    "categorization_method":"API",
+    "categorization_flow":{
+      "type":"ASK_FROM_SUGGESTIONS",
+      "suggestions":[
+        {
+          "type":"Account",
+          "id":"885a3a95-fe3c-40fb-8424-86c44b7def15",
+          "stable_name":"JOB_SUPPLIES",
+          "category":"JOB_SUPPLIES",
+          "display_name":"Job supplies"
+        },
+        {
+          "type":"Account",
+          "id":"2b3e300a-0fe8-4581-bfa5-c5a74dae0a7f",
+          "stable_name":"EQUIPMENT",
+          "category":"EQUIPMENT",
+          "display_name":"Equipment & Tools"
+        },
+        {
+          "type":"Account",
+          "id":"3015ef8d-42aa-485e-90a9-3263f55155bc",
+          "stable_name":"VEHICLE_EXPENSES",
+          "category":"VEHICLE_EXPENSES",
+          "display_name":"Vehicle Expenses"
+        }
+      ]
+    },
+    "projected_income_category":"EXPENSE"
+  }
+}
+```
+
+The `categorization_method` field will be populated to identify how the category was set (ex. “API”)
+
+Even after categorization, the `categorization_flow` and nested `suggestions` array are retained on the [Bank Transaction](/api-reference/bank-transaction/bank-transaction) object so that they can be re-displayed in a UI if a user wants to recategorize.

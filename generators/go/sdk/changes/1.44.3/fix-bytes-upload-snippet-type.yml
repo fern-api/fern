@@ -1,0 +1,9 @@
+- summary: |
+    Fixed the generated dynamic code snippets for endpoints with a bytes request
+    body so that they compile. A bytes body referenced as a property of a request
+    wrapper is now instantiated as a `[]byte`, matching the generated struct
+    field, and a standalone bytes parameter now defaults to `io.Reader` (matching
+    the SDK's `useReaderForBytesRequest` default) instead of being keyed off an
+    unset config value. Previously the snippet wrapped the wrapped-request body in
+    `bytes.NewReader`, producing code that did not match the `[]byte` field type.
+  type: fix

@@ -1,0 +1,171 @@
+# Generated with protoc-gen-openapi
+# https://github.com/fern-api/protoc-gen-openapi/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+  title: OneOfService API
+  description: Service definition
+  version: 0.0.1
+paths:
+  /v1/user:
+    post:
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+components:
+  schemas:
+    UserRequest:
+      type: object
+      properties:
+        no-summary-or-title:
+          description: The login method to use. No display name should be generated for variants.
+          oneOf:
+            - $ref: "#/components/schemas/EmailObject"
+            - $ref: "#/components/schemas/PhoneNumberObject"
+        no-summary-and-title:
+          description: The login method to use. Display name should be generated for variants from the title.
+          oneOf:
+            - $ref: "#/components/schemas/SquareObject"
+            - $ref: "#/components/schemas/RectangleObject"
+        summary-and-title:
+          description: The verification method to use. Display name should be generated for variants from the summary.
+          oneOf:
+            - summary: App
+              $ref: "#/components/schemas/App"
+            - summary: Email
+              $ref: "#/components/schemas/Email"
+        useless-property:
+          description: This property is useless. But no display name should be generated for variants.
+          type: "#/components/schemas/EmptyOneOf"
+        inlined-one-of-no-names:
+          description: Inlined one of. No display name should be generated for variants.
+          oneOf:
+            - required:
+                - email
+              type: object
+              properties:
+                email:
+                  type: string
+            - required:
+                - phone_number
+              type: object
+              properties:
+                phone_number:
+                  type: string
+            - type: "null"
+        inlined-one-of-with-names:
+          description: Inlined one of. Display name should be generated for variants from the title.
+          oneOf:
+            - required:
+                - email
+              type: object
+              properties:
+                email:
+                  $ref: "#/components/schemas/EmailObject"
+              title: Email
+            - required:
+                - phone_number
+              type: object
+              properties:
+                phone_number:
+                  $ref: "#/components/schemas/PhoneNumberObject"
+              title: Phone Number
+            - type: "null"
+              title: "Null"
+        one-of-with-sibling-properties:
+          description: A oneOf with sibling properties that become baseProperties on the undiscriminated union.
+          $ref: "#/components/schemas/ContactMethod"
+        one-of-with-sibling-properties-inline:
+          description: A oneOf with sibling properties and inline sub-schemas. Sibling properties should only appear in baseProperties, not duplicated into inline variants.
+          properties:
+            tag:
+              type: string
+              description: A tag for the notification.
+          required:
+            - tag
+          oneOf:
+            - type: object
+              properties:
+                sms_number:
+                  type: string
+              required:
+                - sms_number
+            - type: object
+              properties:
+                push_token:
+                  type: string
+              required:
+                - push_token
+    ContactMethod:
+      title: ContactMethod
+      properties:
+        category:
+          type: string
+          description: The category of the contact method.
+        id:
+          type: string
+          description: A unique identifier for the contact method.
+      required:
+        - category
+      oneOf:
+        - $ref: "#/components/schemas/EmailObject"
+        - $ref: "#/components/schemas/PhoneNumberObject"
+    SquareObject:
+      title: Square
+      type: object
+      properties:
+        sideLength:
+          type: number
+    RectangleObject:
+      title: Rectangle
+      type: object
+      properties:
+        width:
+          type: number
+        height:
+          type: number
+    App:
+      title: DO NOT USE THIS TITLE
+      type: object
+      properties:
+        app:
+          type: string
+    Email:
+      title: DO NOT USE THIS TITLE
+      type: object
+      properties:
+        email:
+          type: string
+    EmailObject:
+      type: object
+      properties:
+        email:
+          type: string
+    PhoneNumberObject:
+      type: object
+      properties:
+        phone_number:
+          type: string
+    EmptyOneOf:
+      oneOf:
+        - required:
+            - anonymous
+          type: object
+          properties:
+            anonymous:
+              type: object
+        - type: "null"
+tags:
+  - name: OneOfService

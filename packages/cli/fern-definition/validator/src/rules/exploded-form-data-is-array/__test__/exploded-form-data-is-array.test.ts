@@ -1,0 +1,33 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ExplodedFormDataIsArrayRule } from "../exploded-form-data-is-array.js";
+
+describe("exploded-form-data-is-array", () => {
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
+            rule: ExplodedFormDataIsArrayRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("simple")
+            )
+        });
+
+        expect(violations).toMatchInlineSnapshot(`
+          [
+            {
+              "message": "invalid-exploded is exploded and must be a list. Did you mean list<string>?",
+              "name": "exploded-form-data-is-array",
+              "nodePath": [
+                "service",
+                "endpoints",
+                "uploadDocument",
+              ],
+              "relativeFilepath": "1.yml",
+              "severity": "error",
+            },
+          ]
+        `);
+    });
+});

@@ -1,0 +1,73 @@
+features:
+  - id: USAGE
+    description: |
+      Instantiate and use the client with the following:
+
+  - id: ENVIRONMENTS
+    description: |
+      This SDK allows you to configure different environments for API requests.
+
+  - id: ASYNC_CLIENT
+    description: |
+      The SDK also exports an `async` client so that you can make non-blocking calls to our API. Note that if you are constructing an Async httpx client class to pass into this client, use `httpx.AsyncClient()` instead of `httpx.Client()` (e.g. for the `httpx_client` parameter of this client).
+
+  - id: EXCEPTION_HANDLING
+    description: |
+      When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
+      will be thrown.
+
+  - id: STREAMING
+    description: |
+      The SDK supports streaming responses, as well, the response will be a generator that you can loop over.
+
+  - id: PAGINATION
+    description: |
+      Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
+
+  - id: ACCESS_RAW_RESPONSE_DATA
+    advanced: true
+    description: |
+      The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+      The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+  - id: RETRIES
+    description: |
+      The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+      as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+      retry limit (default: 2).
+
+      Which status codes are retried depends on the `retryStatusCodes` generator configuration:
+
+      **`legacy`** (current default): retries on
+      - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+      - [409](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409) (Conflict)
+      - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+      - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors, including 500)
+
+      **`recommended`**: retries on
+      - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+      - [409](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409) (Conflict)
+      - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+      - [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
+      - [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
+      - [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
+
+      Use the `max_retries` request option to configure this behavior.
+
+  - id: TIMEOUTS
+    description: |
+      The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+
+  - id: CUSTOM_CLIENT
+    description: |
+      You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
+      and transports.
+
+  - id: WEBSOCKETS
+    description: |
+      The SDK supports both sync and async websocket connections for real-time, low-latency communication. Sockets can be created using the `connect` method, which returns a context manager. 
+      You can either iterate through the returned `SocketClient` to process messages as they arrive, or attach handlers to respond to specific events.
+
+  - id: OAUTH_TOKEN_OVERRIDE
+    description: |
+      This SDK supports two authentication methods: OAuth client credentials flow (automatic token management) or direct bearer token authentication. You can choose between these options when initializing the client:

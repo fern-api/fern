@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/oauth/authorize",
+                "method": "GET",
+                "identifier_override": "endpoint_oauth.authorize"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedOauthPkceClient } from \"@fern/oauth-pkce\";\n\nconst client = new SeedOauthPkceClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.oauth.authorize({\n    response_type: \"code\",\n    client_id: \"client_abc123\",\n    redirect_uri: \"https://example.com/callback\",\n    code_challenge: \"E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM\",\n    code_challenge_method: \"S256\",\n    scope: \"read write\",\n    state: \"xyz\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

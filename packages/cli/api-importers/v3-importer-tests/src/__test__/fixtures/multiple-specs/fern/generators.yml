@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ../openapi-v1.yml
+    - openapi: ../openapi-v2.yml
+    - openapi: ../openapi-v3.yml

@@ -1,0 +1,121 @@
+---
+openapi: 3.0.0
+info:
+  title: Hume AI Batch API
+  description: The Batch API provides access to Hume models through an asynchronous
+    job-based interface. You can submit a job to have many different files processed
+    in parallel. The status of a job can then be checked with the job ID. Email notifications
+    are available to alert on completed jobs.
+  version: 0.1.0
+servers:
+  - url: https://api.hume.ai
+tags:
+  - name: Start Job
+  - name: Get Job Predictions
+  - name: List Jobs
+paths: []
+components:
+  schemas:
+    Source:
+      type: object
+      oneOf:
+        - "$ref": "#/components/schemas/Source_Url"
+        - "$ref": "#/components/schemas/Source_File"
+      discriminator:
+        propertyName: type
+        mapping:
+          url: "#/components/schemas/Source_Url"
+          file: "#/components/schemas/Source_File"
+    SourceResult:
+      type: object
+      required:
+        - source
+      properties:
+        source:
+          "$ref": "#/components/schemas/Source"
+        results:
+          "$ref": "#/components/schemas/Results"
+        error:
+          type: string
+          title: Error Message
+          description: An error message.
+    Source_File:
+      allOf:
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              example: file
+        - "$ref": "#/components/schemas/File"
+    Source_Url:
+      allOf:
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              example: url
+        - "$ref": "#/components/schemas/Url"
+    Url:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          description: The URL of the source media file.
+    File:
+      type: object
+      required:
+        - md5sum
+      properties:
+        filename:
+          type: string
+          description: The name of the file.
+        content_type:
+          type: string
+          description: The content type of the file.
+        md5sum:
+          type: string
+          description: The MD5 checksum of the file.
+    Results:
+      type: object
+      required:
+        - predictions
+        - errors
+      properties:
+        predictions:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Prediction"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Error"
+    Prediction:
+      type: object
+      required:
+        - file
+        - models
+      properties:
+        file:
+          type: string
+          title: File
+          description: A file path relative to the top level source URL or file.
+    Error:
+      type: object
+      required:
+        - message
+        - file
+      properties:
+        message:
+          type: string
+          title: Error Message
+          description: An error message.
+        file:
+          type: string
+          title: File
+          description: A file path relative to the top level source URL or file.

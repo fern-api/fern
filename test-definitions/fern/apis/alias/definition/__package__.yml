@@ -1,0 +1,37 @@
+types:
+  TypeId:
+    docs: An alias for type IDs.
+    type: string
+    examples:
+      - name: One
+        value: type-kaljhv87
+
+  Type:
+    docs: A simple type with just a name.
+    properties:
+      id: TypeId
+      name: string
+    examples:
+      - name: One
+        value:
+          id: type-df89sdg1
+          name: foo
+
+  Object:
+    docs: Object is an alias for a type.
+    type: Type
+    examples:
+      - name: One
+        value:
+          id: kljasc85
+          name: bar
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    get:
+      path: "/{typeId}"
+      path-parameters:
+        typeId: TypeId
+      method: GET

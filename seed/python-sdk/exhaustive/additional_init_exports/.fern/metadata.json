@@ -1,0 +1,21 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "additional_init_exports": [
+      {
+        "from": "client_additions",
+        "imports": [
+          "myCustomFunction",
+          "AnotherCustomClient"
+        ]
+      }
+    ]
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github",
+  "sdkVersion": "0.0.1"
+}

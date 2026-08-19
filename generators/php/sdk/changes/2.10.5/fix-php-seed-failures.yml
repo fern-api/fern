@@ -1,0 +1,6 @@
+- summary: |
+    Fix multiple PHP generator bugs: add missing HEAD enum case, fix fully-qualified
+    exception class references, use preserveEnums for union return types, fix required
+    parameter ordering after optional parameters, prevent toJson on literal types, cast
+    boolean header values to strings, and fix basic-auth null checks when env vars are set.
+  type: fix

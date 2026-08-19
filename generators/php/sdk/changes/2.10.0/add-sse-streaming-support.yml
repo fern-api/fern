@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support streaming response bodies in generated PHP SDKs (Server-Sent Events,
+    NDJSON, and raw text). Endpoints with a `response-stream` now return a typed
+    `SseStream<T>`, `JsonStream<T>`, or `TextStream` that iterates the response
+    frame-by-frame and deserializes each one into the declared payload type.
+    Previously these endpoints were emitted as broken `void` methods that always
+    threw `<Sdk>ApiException` regardless of HTTP status.
+  type: feat

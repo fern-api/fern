@@ -1,0 +1,13 @@
+instances: []
+
+navigation:
+  - api: GraphQL API Reference
+    layout:
+      - operation: INVALID_FORMAT # Missing operation name
+        title: "Invalid Operation 1"
+      - operation: QUERY # Missing operation name
+        title: "Invalid Operation 2"
+      - operation: QUERY nonExistentOperation # Operation doesn't exist
+        title: "Non-existent Operation"
+      - operation: MUTATION getUserProfile # Wrong operation type
+        title: "Wrong Operation Type"

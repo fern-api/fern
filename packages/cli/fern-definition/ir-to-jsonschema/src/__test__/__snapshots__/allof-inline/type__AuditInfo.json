@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "properties": {
+    "createdBy": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The user who created this resource."
+    },
+    "createdDateTime": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "When this resource was created."
+    },
+    "modifiedBy": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The user who last modified this resource."
+    },
+    "modifiedDateTime": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "When this resource was last modified."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Common audit metadata.",
+  "definitions": {}
+}

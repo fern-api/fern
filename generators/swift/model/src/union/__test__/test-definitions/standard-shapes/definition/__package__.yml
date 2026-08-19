@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  # samePropertiesAsObject: variants reference standalone named types, properties flattened
+  ObjectVariantsUnion:
+    discriminant: type
+    union:
+      dog: Dog
+      cat: Cat
+
+  # singleProperty with primitives: variants wrap a primitive under the default "value" key
+  PrimitiveVariantsUnion:
+    discriminant: type
+    union:
+      integer: integer
+      string: string
+
+  # singleProperty with explicit keys: variants wrap named types under specified keys
+  KeyedVariantsUnion:
+    discriminant: type
+    union:
+      triangle:
+        type: Triangle
+        key: triangle
+      square:
+        type: Square
+        key: square
+
+  # noProperties: variants carry no data, just the discriminant
+  EmptyVariantsUnion:
+    discriminant: type
+    union:
+      active: {}
+      inactive: {}
+
+  # All three shapes combined in one union
+  MixedShapesUnion:
+    discriminant: type
+    union:
+      dog: Dog
+      count: integer
+      empty: {}
+
+  Dog:
+    properties:
+      name: string
+      likesToWoof: boolean
+
+  Cat:
+    properties:
+      name: string
+      likesToMeow: boolean
+
+  Triangle:
+    properties:
+      a: double
+      b: double
+      c: double
+
+  Square:
+    properties:
+      length: double

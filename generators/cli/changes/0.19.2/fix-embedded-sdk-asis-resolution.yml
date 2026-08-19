@@ -1,0 +1,6 @@
+- summary: |
+    Fix embedded SDK generation failure (ENOENT on asIs templates like
+    prelude.rs, http_client.rs) by setting FERN_RUST_ASIS_DIR before
+    invoking the Rust SDK generator in-process, ensuring the bundled
+    rust-sdk-dist/asIs/ directory is discovered correctly.
+  type: fix

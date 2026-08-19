@@ -1,0 +1,6 @@
+# Simple test for generating a type with just string types.
+types:
+  Movie:
+    properties:
+      id: string
+      title: string

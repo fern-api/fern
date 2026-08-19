@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Import `serde::{Deserialize, Serialize}` directly in `environment.rs` for
+    multi-URL environments instead of relying on the crate prelude. The CLI
+    generator embeds the SDK and replaces `src/prelude.rs` with a bare
+    types-crate re-export, which dropped the serde derive macros and broke
+    compilation with `cannot find derive macro `Serialize` in this scope`.
+  type: fix

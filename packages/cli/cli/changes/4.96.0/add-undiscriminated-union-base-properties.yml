@@ -1,0 +1,5 @@
+- summary: |
+    Add optional `baseProperties` field to `UndiscriminatedUnionTypeDeclaration` in the IR schema.
+    Both the V3 importer and the legacy OpenAPI importer now extract sibling properties from
+    `oneOf`/`anyOf` schemas and populate `baseProperties` on undiscriminated unions.
+  type: feat

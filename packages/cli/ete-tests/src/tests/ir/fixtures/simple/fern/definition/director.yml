@@ -1,0 +1,17 @@
+types:
+  Director:
+    properties:
+      name: string
+      age: Age
+    examples:
+      - name: GeorgeExample
+        value:
+          name: George the Director
+          age: $Age.Example1
+  Age:
+    type: integer
+    examples:
+      - name: Example1
+        value: 20
+  LiteralBoolean: literal<true>
+  LiteralString: literal<"hello">

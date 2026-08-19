@@ -1,0 +1,53 @@
+---
+title: "Flowise"
+description: "Flowise is a low-code/no-code drag & drop tool with the aim to make it easy for people to visualize and build LLM apps."
+---
+
+<Note>
+  You can follow Flowise installation steps on their
+  <a href="https://docs.flowiseai.com/getting-started">Getting Started Page</a>
+</Note>
+
+## Using Zep Cloud Nodes
+
+Once you have Flowise app up and running, you can use Zep Cloud nodes in your LLM apps.
+
+We expose the following nodes:
+
+- `Zep Memory - Cloud` - wrapper around Zep Memory API. You can use this node to add Long-Term memory to your app.
+  <Info>Learn more about [Zep Memory](/chat-history-memory)</Info>
+
+In order to use this node, you will need to have a Zep Project API key and add it as a Connect Credential in your Flowise app.
+
+<img style={{ width: "40%" }} alt="Zep Cloud Memory Flowise Node" src="/images/flowise-memory-node.png" />
+
+A complete chain using Zep Memory Node, may look like this:
+
+<img
+  style={{ width: "40%" }}
+  alt="Zep Cloud Memory Flowise Node Complete Example"
+  src="/images/flowise-memory-node-complete.png"
+/>
+
+- `Zep Collection - Cloud` - wrapper around Zep’s document vector store. It lets you embed and search documents. You can use this node to add RAG capabilities to your app.
+  <Info>Learn more about [Zep Collections](/document-collections)</Info>
+
+In order to use this node, you will need to have a Zep Project API key and add it as a Connect Credential in your Flowise app.
+
+You will also need to provide the collection name for your Zep Collection.
+
+<img style={{ width: "40%" }} alt="Zep Cloud Collection Flowise Node" src="/images/flowise-collection-node.png" />
+
+A complete chain using Zep Collection Node, may look like this:
+
+<Note>
+    Note that we are using a Website Crawler node to load documents about **Marie Curie** into a **Zep Collection**.
+    You can also connect any other Document Loader available on Flowise platform.
+
+    We are using **Zep Collection Node** as a retriever passed into **Conversational Retrieval QA Chain**.
+
+    This example also illustrates how you can use **Zep Memory** in combination with **Zep Collection**.
+
+</Note>
+
+<img alt="Zep Cloud Collection Flowise Node Complete Example" src="/images/flowise-collection-node-complete.png" />

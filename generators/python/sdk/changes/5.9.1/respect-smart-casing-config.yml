@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Respect the customer's `smart-casing` flag from `generators.yml` when computing
+    Python identifiers from compressed v66 IR strings. Previously the v1 Python
+    generator's `_smart_snake` and v2's `PYTHON_CASE_CONVERTER` were both hardcoded
+    with `smartCasing: true`, causing names produced by the generator to diverge
+    from the IR's pre-computed `snake_case` values when the customer set
+    `smart-casing: false`. This manifested as wire-test method calls and Pydantic
+    field aliases that did not exist on the generated client (e.g. test calling
+    `set_fcmv_1_provider()` while the client method was named `set_fcmv1provider`).
+
+    `_smart_snake` and the v2 `caseConverter` now read `casingsConfig.smartCasing`
+    from the IR and switch between smart-casing semantics (default) and plain
+    lodash semantics (`smart-casing: false`). No effect for customers who use
+    the default; fixes generation for customers like auth0 that opt out.
+  type: fix

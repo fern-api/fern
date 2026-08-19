@@ -1,0 +1,215 @@
+"""
+Helpers for IR v66 compressed Name types.
+
+In IR v66, Name fields may be compressed to plain strings (NameOrString = str | Name).
+Similarly, NameAndWireValue fields may be compressed (NameAndWireValueOrString = str | NameAndWireValue).
+These helpers safely access properties regardless of whether the value is compressed.
+"""
+
+import functools
+import keyword
+import re
+from typing import Union
+
+from .pascal_case import pascal_case as to_pascal
+from .snake_case import snake_case as to_snake
+
+import fern.ir.resources as ir_types
+
+_DIGIT_SPLIT = re.compile(r"(\d+)")
+_NON_LOWER_ALNUM_START = re.compile(r"^[^a-z0-9]")
+
+# Mirrors @fern-api/casings-generator's `smartCasing` config from the customer's
+# generators.yml (`smart-casing: true|false`). The IR pre-computes Name.snake_case
+# using this flag; recomputed names from compressed v66 strings must use the same
+# semantics or v1's output diverges from the IR's pre-computed values (and from v2).
+_smart_casing_enabled = True
+
+# Mirrors `smart-casing-digit-word-boundary` in generators.yml (IR
+# casingsConfig.smartCasingDigitWordBoundary). When enabled, a segment that
+# starts a new word after a digit run keeps its snake_case word boundary.
+_smart_casing_digit_word_boundary_enabled = False
+
+
+def configure_smart_casing(enabled: bool, digit_word_boundary: bool = False) -> None:
+    """Set whether _smart_snake uses smartCasing semantics. Must be called before
+    any name resolution (cache is cleared to invalidate any pre-flag results)."""
+    global _smart_casing_enabled, _smart_casing_digit_word_boundary_enabled
+    if _smart_casing_enabled == enabled and _smart_casing_digit_word_boundary_enabled == digit_word_boundary:
+        return
+    _smart_casing_enabled = enabled
+    _smart_casing_digit_word_boundary_enabled = digit_word_boundary
+    _resolve_string_name.cache_clear()
+
+
+def _to_camel(s: str) -> str:
+    snake = to_snake(s)
+    parts = snake.split("_")
+    if not parts:
+        return ""
+    return parts[0] + "".join(p.capitalize() for p in parts[1:])
+
+
+def _smart_snake(s: str) -> str:
+    """Snake_case matching @fern-api/casings-generator's snakeCase output.
+
+    When smartCasing is enabled (the default), digits adjacent to letters stay
+    attached so ``3d`` -> ``3d`` and ``base64`` -> ``base64``. When the
+    digit-word-boundary flag is also enabled, a segment that starts a new word
+    after a digit run (uppercase letter or an existing separator) keeps its
+    word boundary: ``ConversationsV2Configuration`` ->
+    ``conversations_v2_configuration``; otherwise the digit run stays fused to
+    the following word (``conversations_v2configuration``).
+
+    When smartCasing is disabled (``smart-casing: false`` in generators.yml), every
+    digit run is treated as a separate word, matching plain lodash ``snakeCase``:
+    ``setFcmv1Provider`` -> ``set_fcmv_1_provider``, ``auth0_mapping`` -> ``auth_0_mapping``.
+    """
+    if not _smart_casing_enabled:
+        return "_".join(to_snake(part) for part in s.split(" "))
+
+    def smart_snake_part(part: str) -> str:
+        segments = _DIGIT_SPLIT.split(part)
+        result = []
+        for index, segment in enumerate(segments):
+            cased = to_snake(segment)
+            if not cased:
+                continue
+            previous = segments[index - 1] if index > 0 else None
+            starts_new_word = (
+                _smart_casing_digit_word_boundary_enabled
+                and previous is not None
+                and previous.isdigit()
+                and _NON_LOWER_ALNUM_START.match(segment)
+            )
+            result.append(f"_{cased}" if starts_new_word else cased)
+        return "".join(result)
+
+    return "_".join(smart_snake_part(part) for part in s.split(" "))
+
+
+def _to_screaming_snake(s: str) -> str:
+    return _smart_snake(s).upper()
+
+
+_PYTHON_RESERVED_BUILTINS = frozenset(
+    {
+        # Must match @fern-api/casings-generator reserved.ts (Python section) exactly.
+        # Do NOT add extras — the IR server computes safe_names using this same set,
+        # so any divergence produces different names for v66 compressed strings vs v65
+        # pre-computed Names.
+        "float",
+        "int",
+        "complex",
+        "bool",
+        "uuid",
+        "list",
+        "set",
+        "map",
+        "long",
+        "self",
+        "all",
+        "kwargs",
+    }
+)
+
+
+def _make_safe(name: str) -> str:
+    if keyword.iskeyword(name) or name in _PYTHON_RESERVED_BUILTINS:
+        return name + "_"
+    # Python identifiers cannot start with a digit. Prefix with "_" to match
+    # the canonical sanitizeName behavior in @fern-api/casings-generator;
+    # downstream pydantic_model code rewrites leading "_" to "f_".
+    if name and name[0].isdigit():
+        return "_" + name
+    return name
+
+
+@functools.lru_cache(maxsize=None)
+def _resolve_string_name(s: str) -> ir_types.Name:
+    snake = _smart_snake(s)
+    pascal = to_pascal(s)
+    camel = _to_camel(s)
+    screaming = _to_screaming_snake(s)
+    return ir_types.Name(
+        original_name=s,
+        camel_case=ir_types.SafeAndUnsafeString(safe_name=_make_safe(camel), unsafe_name=camel),
+        pascal_case=ir_types.SafeAndUnsafeString(safe_name=_make_safe(pascal), unsafe_name=pascal),
+        snake_case=ir_types.SafeAndUnsafeString(safe_name=_make_safe(snake), unsafe_name=snake),
+        screaming_snake_case=ir_types.SafeAndUnsafeString(safe_name=_make_safe(screaming), unsafe_name=screaming),
+    )
+
+
+def resolve_name(name_or_str: Union[str, ir_types.Name]) -> ir_types.Name:
+    """String inputs are cached (lru_cache); Name objects pass through as-is."""
+    if isinstance(name_or_str, ir_types.Name):
+        return name_or_str
+    return _resolve_string_name(name_or_str)
+
+
+_LEADING_UNDERSCORES = re.compile(r"^(_+)")
+_TRAILING_UNDERSCORES = re.compile(r"(_+)$")
+
+
+def _underscore_affixes(original_name: str) -> tuple[str, str]:
+    leading_match = _LEADING_UNDERSCORES.match(original_name)
+    leading = leading_match.group(1) if leading_match is not None else ""
+    core = original_name[len(leading) :]
+    trailing_match = _TRAILING_UNDERSCORES.search(core)
+    trailing = trailing_match.group(1) if trailing_match is not None else ""
+    return leading, trailing
+
+
+def resolve_name_preserving_underscores(name_or_str: Union[str, ir_types.Name]) -> ir_types.Name:
+    """Like ``resolve_name`` but re-attaches leading/trailing underscores from the
+    original name that the casing functions would otherwise strip.
+
+    This is scoped to namespace/module names (subpackage names and FernFilepath
+    parts derived from ``x-fern-sdk-group-name``) so that a group named ``_agents``
+    generates a private ``_agents`` module. It is intentionally NOT applied to
+    parameter, field, or property names, whose casing must stay unchanged to avoid
+    breaking existing SDK method signatures.
+    """
+    resolved = resolve_name(name_or_str)
+    leading, trailing = _underscore_affixes(get_original_name(name_or_str))
+    if not leading and not trailing:
+        return resolved
+
+    def reattach(value: ir_types.SafeAndUnsafeString) -> ir_types.SafeAndUnsafeString:
+        return ir_types.SafeAndUnsafeString(
+            safe_name=f"{leading}{value.safe_name}{trailing}",
+            unsafe_name=f"{leading}{value.unsafe_name}{trailing}",
+        )
+
+    return ir_types.Name(
+        original_name=resolved.original_name,
+        camel_case=reattach(resolved.camel_case),
+        pascal_case=reattach(resolved.pascal_case),
+        snake_case=reattach(resolved.snake_case),
+        screaming_snake_case=reattach(resolved.screaming_snake_case),
+    )
+
+
+def get_wire_value(name_and_wire_value_or_str: Union[str, ir_types.NameAndWireValue]) -> str:
+    if isinstance(name_and_wire_value_or_str, str):
+        return name_and_wire_value_or_str
+    return name_and_wire_value_or_str.wire_value
+
+
+def get_name_from_wire_value(
+    name_and_wire_value_or_str: Union[str, ir_types.NameAndWireValue],
+) -> Union[str, ir_types.Name]:
+    if isinstance(name_and_wire_value_or_str, str):
+        return name_and_wire_value_or_str
+    return name_and_wire_value_or_str.name
+
+
+def resolve_wire_name(name_and_wire_value_or_str: Union[str, ir_types.NameAndWireValue]) -> ir_types.Name:
+    """Shorthand for resolve_name(get_name_from_wire_value(x)) — the most common accessor pattern."""
+    return resolve_name(get_name_from_wire_value(name_and_wire_value_or_str))
+
+
+def get_original_name(name_or_str: Union[str, ir_types.Name]) -> str:
+    if isinstance(name_or_str, str):
+        return name_or_str
+    return name_or_str.original_name

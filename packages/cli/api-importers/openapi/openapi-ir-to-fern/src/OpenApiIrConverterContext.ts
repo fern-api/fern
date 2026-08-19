@@ -1,0 +1,399 @@
+import { assertNever } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
+import { Logger } from "@fern-api/logger";
+import {
+    HttpMethod,
+    isSchemaEqual,
+    ObjectSchema,
+    OneOfSchema,
+    OpenApiIntermediateRepresentation,
+    Schema,
+    SchemaId
+} from "@fern-api/openapi-ir";
+import { TaskContext } from "@fern-api/task-context";
+import { ConvertOpenAPIOptions, getConvertOptions } from "./ConvertOpenAPIOptions.js";
+import { SchemaReachability, SchemaVariantPlan } from "./computeSchemaReachability.js";
+import { State } from "./State.js";
+
+export interface OpenApiIrConverterContextOpts {
+    taskContext: TaskContext;
+    ir: OpenApiIntermediateRepresentation;
+
+    options?: ConvertOpenAPIOptions;
+    authOverrides?: RawSchemas.WithAuthSchema;
+    environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
+    globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
+}
+
+export class OpenApiIrConverterContext {
+    public logger: Logger;
+    public taskContext: TaskContext;
+    public ir: OpenApiIntermediateRepresentation;
+    public builder: FernDefinitionBuilder;
+    public environmentOverrides: RawSchemas.WithEnvironmentsSchema | undefined;
+    public authOverrides: RawSchemas.WithAuthSchema | undefined;
+    public globalHeaderOverrides: RawSchemas.WithHeadersSchema | undefined;
+    public readonly options: ConvertOpenAPIOptions;
+
+    private enableUniqueErrorsPerEndpoint: boolean;
+    private defaultServerName: string | undefined = undefined;
+    private unknownSchema: Set<number> = new Set();
+
+    /**
+     * The set of referenced schema ids to include in the generated definition.
+     * If this value is undefined, _all_ schemaIds should be treated as referenced,
+     * and therefore included in the generated definition.
+     */
+    private referencedSchemaIds: Set<SchemaId> | undefined;
+
+    /**
+     * Maps server URLs to their resolved URL IDs, accounting for protocol collisions.
+     * Used when groupEnvironmentsByHost is enabled to ensure channels use the same
+     * URL IDs as the environments they reference.
+     */
+    private urlIdMap: Map<string, string> = new Map();
+
+    /**
+     * The current endpoint method being processed. This is used to determine
+     * whether certain properties should be included in the generated definition
+     * (e.g. readonly properties are excluded for POST/PUT endpoints).
+     */
+    private endpointMethod: HttpMethod | undefined;
+
+    /**
+     * Tracks the state in which a schema is being processed (e.g. endpoint, channel, webhook,
+     * request). It's possible that a schema is being processed in multiple states (e.g. an
+     * endpoint and a request).
+     */
+    private state: Set<State> = new Set();
+
+    /**
+     * Maps original schema IDs to their final names after readonly processing.
+     * Used to resolve schema references correctly when respect-readonly-schemas is enabled.
+     */
+    private schemaNameMapping: Map<string, string> = new Map();
+
+    /**
+     * The computed variant plan for readonly schema handling.
+     * Set when respectReadonlySchemas is enabled.
+     */
+    private variantPlan: SchemaVariantPlan | undefined;
+
+    /**
+     * The raw reachability sets from graph analysis.
+     * Set when respectReadonlySchemas is enabled.
+     */
+    private reachability: SchemaReachability | undefined;
+
+    constructor({
+        taskContext,
+        ir,
+        options,
+        environmentOverrides,
+        globalHeaderOverrides,
+        authOverrides
+    }: OpenApiIrConverterContextOpts) {
+        this.logger = taskContext.logger;
+        this.taskContext = taskContext;
+        this.ir = ir;
+        this.environmentOverrides = environmentOverrides;
+        this.authOverrides = authOverrides;
+        this.globalHeaderOverrides = globalHeaderOverrides;
+
+        this.options = getConvertOptions({ options });
+        this.enableUniqueErrorsPerEndpoint = this.options.enableUniqueErrorsPerEndpoint;
+        this.referencedSchemaIds = this.options.onlyIncludeReferencedSchemas ? new Set() : undefined;
+        this.builder = new FernDefinitionBuilderImpl(this.enableUniqueErrorsPerEndpoint);
+        if (ir.title != null) {
+            this.builder.setDisplayName({ displayName: ir.title });
+        }
+
+        const schemaByStatusCode: Record<number, Schema> = {};
+        if (!this.enableUniqueErrorsPerEndpoint) {
+            for (const endpoint of ir.endpoints) {
+                for (const [statusCodeString, error] of Object.entries(endpoint.errors)) {
+                    const statusCode = parseInt(statusCodeString);
+                    const existingSchema = schemaByStatusCode[statusCode];
+                    if (existingSchema == null && error.schema != null) {
+                        schemaByStatusCode[statusCode] = error.schema;
+                    } else if (
+                        existingSchema != null &&
+                        error.schema != null &&
+                        isSchemaEqual(existingSchema, error.schema)
+                    ) {
+                        // pass
+                    } else {
+                        this.unknownSchema.add(statusCode);
+                    }
+                }
+            }
+        }
+    }
+
+    public getReferencedSchemaIds(): SchemaId[] | undefined {
+        if (this.referencedSchemaIds == null) {
+            return undefined;
+        }
+        return Array.from(this.referencedSchemaIds);
+    }
+
+    public getSchema(id: SchemaId, namespace: string | undefined): Schema | undefined {
+        if (namespace == null) {
+            return this.ir.groupedSchemas.rootSchemas[id];
+        }
+        return this.ir.groupedSchemas.namespacedSchemas[namespace]?.[id];
+    }
+
+    /**
+     * Returns the default server URL. This URL should only be set for multi-url cases.
+     */
+    public getDefaultServerName(): string | undefined {
+        return this.defaultServerName;
+    }
+
+    /**
+     * Sets the default server URL. This URL should only be set for multi-url cases.
+     */
+    public setDefaultServerName(name: string): void {
+        this.defaultServerName = name;
+    }
+
+    /**
+     * Sets the resolved URL ID for a server URL (used for collision-aware URL ID generation)
+     */
+    public setUrlId(serverUrl: string, urlId: string): void {
+        this.urlIdMap.set(serverUrl, urlId);
+    }
+
+    /**
+     * Gets the resolved URL ID for a server URL, or undefined if not set
+     */
+    public getUrlId(serverUrl: string): string | undefined {
+        return this.urlIdMap.get(serverUrl);
+    }
+
+    /**
+     * Is error an unknown schema
+     */
+    public isErrorUnknownSchema(statusCode: number): boolean {
+        return this.unknownSchema.has(statusCode);
+    }
+
+    /**
+     * Returns the current endpoint method being processed
+     */
+    public getEndpointMethod(): HttpMethod | undefined {
+        return this.endpointMethod;
+    }
+
+    /**
+     * Sets the current endpoint method being processed
+     */
+    public setEndpointMethod(method: HttpMethod): void {
+        this.endpointMethod = method;
+    }
+
+    /**
+     * Unsets the current endpoint method being processed
+     */
+    public unsetEndpointMethod(): void {
+        this.endpointMethod = undefined;
+    }
+
+    /**
+     * Returns whether we're currently processing the given state.
+     */
+    public isInState(state: State): boolean {
+        return this.state.has(state);
+    }
+
+    /**
+     * Sets that we're currently processing the given state.
+     */
+    public setInState(state: State): void {
+        this.state.add(state);
+    }
+
+    /**
+     * Unsets that we're currently processing the given state.
+     */
+    public unsetInState(state: State): void {
+        this.state.delete(state);
+    }
+
+    public shouldMarkSchemaAsReferenced(): boolean {
+        return (
+            this.options.onlyIncludeReferencedSchemas && this.isInAnyState(State.Channel, State.Endpoint, State.Webhook)
+        );
+    }
+
+    /**
+     * Marks a schema as referenced.
+     */
+    public markSchemaAsReferenced(schema: Schema, namespace: string | undefined): void {
+        switch (schema.type) {
+            case "primitive":
+                return;
+            case "object":
+                this.markObjectSchemaAsReferenced(schema, namespace);
+                return;
+            case "array":
+                this.markSchemaAsReferenced(schema.value, namespace);
+                return;
+            case "map":
+                this.markSchemaAsReferenced(schema.value, namespace);
+                return;
+            case "optional":
+                this.markSchemaAsReferenced(schema.value, namespace);
+                return;
+            case "reference":
+                this.markSchemaIdAsReferenced(schema.schema, namespace);
+                return;
+            case "oneOf":
+                this.markOneofSchemaAsReferenced(schema.value, namespace);
+                return;
+            case "nullable":
+                this.markSchemaAsReferenced(schema.value, namespace);
+                return;
+            case "enum":
+                return;
+            case "literal":
+                return;
+            case "unknown":
+                return;
+            default:
+                assertNever(schema);
+        }
+    }
+
+    private markObjectSchemaAsReferenced(schema: ObjectSchema, namespace: string | undefined): void {
+        for (const allOf of schema.allOf) {
+            this.markSchemaIdAsReferenced(allOf.schema, namespace);
+        }
+        for (const property of schema.properties) {
+            this.markSchemaAsReferenced(property.schema, namespace);
+        }
+    }
+
+    private markOneofSchemaAsReferenced(schema: OneOfSchema, namespace: string | undefined): void {
+        switch (schema.type) {
+            case "discriminated":
+                for (const oneOf of Object.values(schema.schemas)) {
+                    this.markSchemaAsReferenced(oneOf, namespace);
+                }
+                return;
+            case "undiscriminated":
+                for (const oneOf of schema.schemas) {
+                    this.markSchemaAsReferenced(oneOf, namespace);
+                }
+                return;
+            default:
+                assertNever(schema);
+        }
+    }
+
+    private markSchemaIdAsReferenced(id: SchemaId, namespace: string | undefined): void {
+        if (this.referencedSchemaIds != null && !this.referencedSchemaIds.has(id)) {
+            this.referencedSchemaIds.add(id);
+
+            const schema = this.getSchema(id, namespace);
+            if (schema != null) {
+                this.markSchemaAsReferenced(schema, namespace);
+            }
+        }
+    }
+
+    private isInAnyState(...states: State[]): boolean {
+        return states.some((state) => this.isInState(state));
+    }
+
+    /**
+     * Records the final name for a schema after readonly processing.
+     */
+    public setSchemaFinalName(schemaId: string, finalName: string): void {
+        this.schemaNameMapping.set(schemaId, finalName);
+    }
+
+    /**
+     * Returns true if the given schema has a read variant name mapping.
+     */
+    public hasReadVariant(schemaName: string): boolean {
+        return this.schemaNameMapping.has(schemaName);
+    }
+
+    /**
+     * Sets the variant plan and reachability data, and populates schemaNameMapping
+     * for all schemas that need both Read and Write variants.
+     */
+    public setVariantPlan(plan: SchemaVariantPlan, reachability: SchemaReachability): void {
+        this.variantPlan = plan;
+        this.reachability = reachability;
+
+        // Populate schemaNameMapping for schemas that need both variants
+        const allSchemas: Record<string, Schema>[] = [
+            this.ir.groupedSchemas.rootSchemas,
+            ...Object.values(this.ir.groupedSchemas.namespacedSchemas)
+        ];
+        for (const schemas of allSchemas) {
+            for (const [id, schema] of Object.entries(schemas)) {
+                if (plan.needsBothVariants.has(id) && schema.type === "object") {
+                    const originalName = schema.nameOverride ?? schema.generatedName;
+                    this.schemaNameMapping.set(originalName, `${originalName}Read`);
+                }
+            }
+        }
+    }
+
+    /**
+     * Returns true if the given schema needs both Read and Write variants.
+     */
+    public needsBothVariants(id: SchemaId): boolean {
+        return this.variantPlan?.needsBothVariants.has(id) ?? false;
+    }
+
+    /**
+     * Returns true if the given schema is request-only with readonly properties.
+     */
+    public isRequestOnlyWithReadonly(id: SchemaId): boolean {
+        return this.variantPlan?.requestOnlyWithReadonly.has(id) ?? false;
+    }
+
+    /**
+     * Returns true if the given schema is reachable from response contexts
+     * (i.e., used outside of request bodies).
+     */
+    public isResponseReachable(id: SchemaId): boolean {
+        if (this.reachability == null) {
+            // Fall back to the IR's nonRequestReferencedSchemas if no reachability computed
+            return this.ir.nonRequestReferencedSchemas.has(id);
+        }
+        return this.reachability.responseReachable.has(id);
+    }
+
+    /**
+     * Returns true if the given schema is only reachable from request contexts
+     * (not from responses, errors, parameters, webhooks, or channels).
+     */
+    public isRequestOnly(id: SchemaId): boolean {
+        if (this.reachability == null) {
+            return !this.ir.nonRequestReferencedSchemas.has(id);
+        }
+        return this.reachability.requestReachable.has(id) && !this.reachability.responseReachable.has(id);
+    }
+
+    /**
+     * Gets the final name for a schema based on the variant being built.
+     * variant === "write" → always returns original name
+     * variant === "read" → returns Read variant name if it exists
+     */
+    public getSchemaFinalName(schemaId: string, variant: "read" | "write"): string {
+        if (!this.options.respectReadonlySchemas) {
+            return schemaId;
+        }
+        if (variant === "write") {
+            return schemaId;
+        }
+        return this.schemaNameMapping.get(schemaId) ?? schemaId;
+    }
+}

@@ -1,0 +1,136 @@
+using global::System.Text.Json.Serialization;
+using Google.Protobuf;
+using Google.Rpc;
+using SeedApi.Core;
+using Proto = Data.V1.Grpc;
+using ProtoDataV1Grpc = Data.V1.Grpc;
+
+namespace SeedApi;
+
+[Serializable]
+public record UpdateRequest
+{
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
+
+    [JsonPropertyName("values")]
+    public ReadOnlyMemory<float>? Values { get; set; }
+
+    [JsonPropertyName("set_metadata")]
+    public Metadata? SetMetadata { get; set; }
+
+    [JsonPropertyName("namespace")]
+    public string? Namespace { get; set; }
+
+    [JsonPropertyName("indexed_data")]
+    public IndexedData? IndexedData { get; set; }
+
+    [JsonPropertyName("index_type")]
+    public IndexType? IndexType { get; set; }
+
+    [JsonPropertyName("details")]
+    public object? Details { get; set; }
+
+    [JsonPropertyName("index_types")]
+    public IEnumerable<IndexType>? IndexTypes { get; set; }
+
+    [JsonPropertyName("aspect_ratio")]
+    public AspectRatio? AspectRatio { get; set; }
+
+    [JsonPropertyName("status")]
+    public Status? Status { get; set; }
+
+    /// <summary>
+    /// Tests bytes field mapping (string &lt;-&gt; ByteString conversion).
+    /// </summary>
+    [JsonPropertyName("content")]
+    public byte[]? Content { get; set; }
+
+    /// <summary>
+    /// Maps the UpdateRequest type into its Protobuf-equivalent representation.
+    /// </summary>
+    internal Proto.UpdateRequest ToProto()
+    {
+        var result = new Proto.UpdateRequest();
+        result.Id = Id;
+        if (Values != null && !Values.Value.IsEmpty)
+        {
+            result.Values.AddRange(Values.Value.ToArray());
+        }
+        if (SetMetadata != null)
+        {
+            result.SetMetadata = SetMetadata.ToProto();
+        }
+        if (Namespace != null)
+        {
+            result.Namespace = Namespace ?? "";
+        }
+        if (IndexedData != null)
+        {
+            result.IndexedData = IndexedData.ToProto();
+        }
+        if (IndexType != null)
+        {
+            result.IndexType = IndexType.Value.Value switch
+            {
+                SeedApi.IndexType.Values.IndexTypeInvalid => ProtoDataV1Grpc.IndexType.Invalid,
+                SeedApi.IndexType.Values.IndexTypeDefault => ProtoDataV1Grpc.IndexType.Default,
+                SeedApi.IndexType.Values.IndexTypeStrict => ProtoDataV1Grpc.IndexType.Strict,
+                _ => throw new ArgumentException($"Unknown enum value: {IndexType.Value.Value}"),
+            };
+        }
+        if (Details != null)
+        {
+            result.Details = ProtoAnyMapper.ToProto(Details);
+        }
+        if (IndexTypes != null && IndexTypes.Any())
+        {
+            result.IndexTypes.AddRange(
+                IndexTypes.Select(type =>
+                    type.Value switch
+                    {
+                        SeedApi.IndexType.Values.IndexTypeInvalid => ProtoDataV1Grpc
+                            .IndexType
+                            .Invalid,
+                        SeedApi.IndexType.Values.IndexTypeDefault => ProtoDataV1Grpc
+                            .IndexType
+                            .Default,
+                        SeedApi.IndexType.Values.IndexTypeStrict => ProtoDataV1Grpc
+                            .IndexType
+                            .Strict,
+                        _ => throw new ArgumentException($"Unknown enum value: {type}"),
+                    }
+                )
+            );
+        }
+        if (AspectRatio != null)
+        {
+            result.AspectRatio = AspectRatio.Value.Value switch
+            {
+                SeedApi.AspectRatio.Values.AspectRatioUnspecified => ProtoDataV1Grpc
+                    .AspectRatio
+                    .Unspecified,
+                SeedApi.AspectRatio.Values.AspectRatio11 => ProtoDataV1Grpc.AspectRatio._11,
+                SeedApi.AspectRatio.Values.AspectRatio169 => ProtoDataV1Grpc.AspectRatio._169,
+                SeedApi.AspectRatio.Values.AspectRatio916 => ProtoDataV1Grpc.AspectRatio._916,
+                SeedApi.AspectRatio.Values.AspectRatio43 => ProtoDataV1Grpc.AspectRatio._43,
+                _ => throw new ArgumentException($"Unknown enum value: {AspectRatio.Value.Value}"),
+            };
+        }
+        if (Status != null)
+        {
+            result.Status = Status;
+        }
+        if (Content != null)
+        {
+            result.Content = ByteString.CopyFrom(Content);
+        }
+        return result;
+    }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

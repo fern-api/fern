@@ -1,0 +1,11 @@
+auth-schemes:
+  bearerAuth: # Same name as OpenAPI securityScheme
+    scheme: bearer
+    token:
+      name: customToken # Different config from OpenAPI version
+      env: CUSTOM_TOKEN_ENV
+
+api:
+  auth: bearerAuth # References the generators.yml version
+  specs:
+    - openapi: openapi.yml

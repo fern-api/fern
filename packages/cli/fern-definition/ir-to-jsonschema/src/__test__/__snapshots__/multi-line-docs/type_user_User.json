@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "description": "The user's name. This name is unique to each user. A few examples are included below:\n - Alice\n - Bob\n - Charlie"
+    },
+    "age": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The user's age."
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ],
+  "additionalProperties": false,
+  "description": "A user object. This type is used throughout the following APIs:\n  - createUser\n  - getUser",
+  "definitions": {}
+}

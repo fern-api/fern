@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "requiredString": {
+      "type": "string"
+    },
+    "requiredInteger": {
+      "type": "integer"
+    },
+    "optionalString": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "requiredLong": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "requiredString",
+    "requiredInteger",
+    "requiredLong"
+  ],
+  "additionalProperties": false,
+  "description": "Tests that dynamic snippets include all required properties even when\nthe example data only provides a subset. In C#, properties marked as\n`required` must be set in the object initializer.",
+  "definitions": {}
+}

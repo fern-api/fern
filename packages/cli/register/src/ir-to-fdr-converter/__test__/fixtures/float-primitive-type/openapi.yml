@@ -1,0 +1,46 @@
+openapi: 3.0.3
+info:
+  title: Float Primitive Type Test API
+  version: 1.0.0
+  description: Tests that float types render as float (not double) in FDR output
+
+paths:
+  /measurements:
+    post:
+      operationId: createMeasurement
+      summary: Create a measurement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Measurement"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Measurement"
+
+components:
+  schemas:
+    Measurement:
+      type: object
+      required:
+        - temperature
+      properties:
+        temperature:
+          type: number
+          format: float
+          description: Temperature reading in Celsius
+        pressure:
+          type: number
+          format: double
+          description: Pressure reading in hPa
+        humidity:
+          type: number
+          format: float
+          description: Relative humidity percentage
+          minimum: 0
+          maximum: 100

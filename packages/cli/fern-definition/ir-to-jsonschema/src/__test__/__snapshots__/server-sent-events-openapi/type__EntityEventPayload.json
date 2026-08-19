@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "entityId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "eventType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/EntityEventPayloadEventType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "updatedTime": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "EntityEventPayloadEventType": {
+      "type": "string",
+      "enum": [
+        "CREATED",
+        "UPDATED",
+        "DELETED",
+        "PREEXISTING"
+      ]
+    }
+  }
+}

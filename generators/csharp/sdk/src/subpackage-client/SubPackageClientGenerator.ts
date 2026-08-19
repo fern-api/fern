@@ -1,0 +1,221 @@
+import { GeneratorError } from "@fern-api/base-generator";
+import { CSharpFile, FileGenerator, GrpcClientInfo } from "@fern-api/csharp-base";
+import { ast, lazy } from "@fern-api/csharp-codegen";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type Subpackage = FernIr.Subpackage;
+type HttpService = FernIr.HttpService;
+type ServiceId = FernIr.ServiceId;
+
+import { RawClient } from "../endpoint/http/RawClient.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
+
+export declare namespace SubClientGenerator {
+    interface Args {
+        subpackage: Subpackage;
+        context: SdkGeneratorContext;
+        serviceId?: ServiceId;
+        service?: HttpService;
+    }
+}
+
+export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
+    private classReference: ast.ClassReference;
+    private subpackage: Subpackage;
+    private serviceId?: ServiceId;
+    private service?: HttpService;
+    private rawClient: RawClient;
+    private grpcClientInfo: GrpcClientInfo | undefined;
+
+    constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
+        super(context);
+        this.classReference = this.context.getSubpackageClassReference(subpackage);
+        this.subpackage = subpackage;
+        this.rawClient = new RawClient(context);
+        this.service = service;
+        this.serviceId = serviceId;
+        this.grpcClientInfo =
+            this.serviceId != null ? this.context.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
+    }
+    private members = lazy({
+        client: () => this.classReference.explicit("_client"),
+        grpcClient: () => this.classReference.explicit("_grpc"),
+        clientName: () => this.model.getPropertyNameFor(this.members.client),
+        grpcClientName: () => this.model.getPropertyNameFor(this.members.grpcClient)
+    });
+    /**
+     * Generates the c# factory methods to create the websocket api client.
+     *
+     * @remarks
+     * This method only returns methods if WebSockets are enabled via the `enableWebsockets`
+     *
+     * @returns an array of ast.Method objects that represent the factory methods.
+     */
+    private generateWebsocketFactories(cls: ast.Class) {
+        // add functions to create the websocket api client
+        if (this.settings.enableWebsockets) {
+            for (const subpackage of this.getSubpackages()) {
+                if (subpackage.websocket != null) {
+                    const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
+                    if (websocketChannel != null) {
+                        WebSocketClientGenerator.createWebSocketApiFactories(
+                            cls,
+                            subpackage,
+                            this.context,
+                            this.classReference.namespace,
+                            websocketChannel
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    public doGenerate(): CSharpFile {
+        const interfaceReference = this.context.getSubpackageInterfaceReference(this.subpackage);
+        const class_ = this.csharp.class_({
+            reference: this.classReference,
+            partial: true,
+            access: ast.Access.Public,
+            interfaceReferences: [interfaceReference]
+        });
+
+        class_.addField({
+            origin: this.members.client,
+            access: ast.Access.Private,
+            type: this.Types.RawClient,
+            readonly: true
+        });
+
+        if (this.grpcClientInfo != null) {
+            class_.addField({
+                origin: this.members.grpcClient,
+                access: ast.Access.Private,
+                type: this.Types.RawGrpcClient,
+                readonly: true
+            });
+
+            class_.addField({
+                origin: class_.explicit(this.grpcClientInfo.privatePropertyName),
+                access: ast.Access.Private,
+                type: this.grpcClientInfo.classReference
+            });
+        }
+
+        for (const subpackage of this.getSubpackages()) {
+            // skip subpackages that have no endpoints (recursively)
+            if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
+                class_.addField({
+                    origin: subpackage,
+                    access: ast.Access.Public,
+                    get: true,
+                    type: this.context.getSubpackageInterfaceReference(subpackage)
+                });
+            }
+        }
+
+        class_.addConstructor(this.getConstructorMethod());
+        if (this.service != null && this.serviceId != null) {
+            this.generateEndpoints(class_);
+        }
+
+        // add websocket api endpoints if needed
+        this.generateWebsocketFactories(class_);
+
+        return new CSharpFile({
+            clazz: class_,
+            directory: RelativeFilePath.of(this.context.getDirectoryForSubpackage(this.subpackage)),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
+            namespace: this.classReference.namespace,
+            generation: this.generation
+        });
+    }
+
+    private generateEndpoints(cls: ast.Class) {
+        const service = this.service;
+        if (!service) {
+            throw GeneratorError.internalError("Internal error; Service is not defined");
+        }
+        const serviceId = this.serviceId;
+        if (!serviceId) {
+            throw GeneratorError.internalError("Internal error; ServiceId is not defined");
+        }
+        service.endpoints.flatMap((endpoint) => {
+            this.context.endpointGenerator.generate(cls, {
+                serviceId,
+                endpoint,
+                rawClientReference: this.members.clientName,
+                rawClient: this.rawClient,
+                rawGrpcClientReference: this.members.grpcClientName,
+                grpcClientInfo: this.grpcClientInfo
+            });
+        });
+    }
+
+    private getConstructorMethod() {
+        const parameters: ast.Parameter[] = [
+            this.csharp.parameter({
+                name: "client",
+                type: this.Types.RawClient
+            })
+        ];
+        return {
+            access: ast.Access.Internal,
+            parameters,
+            body: this.csharp.codeblock((writer) => {
+                const writeConstructorBody = (innerWriter: typeof writer) => {
+                    innerWriter.writeLine(`${this.members.clientName} = client;`);
+
+                    if (this.grpcClientInfo != null) {
+                        innerWriter.writeLine(`${this.members.grpcClientName} = ${this.members.clientName}.Grpc;`);
+                        innerWriter.write(this.grpcClientInfo.privatePropertyName);
+                        innerWriter.write(" = ");
+                        innerWriter.writeNodeStatement(
+                            this.csharp.instantiateClass({
+                                classReference: this.grpcClientInfo.classReference,
+                                arguments_: [this.csharp.codeblock(`${this.members.grpcClientName}.Channel`)]
+                            })
+                        );
+                    }
+
+                    const arguments_ = [this.csharp.codeblock(this.members.clientName)];
+                    for (const subpackage of this.getSubpackages()) {
+                        // skip subpackages that are completely empty (recursively)
+                        if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
+                            innerWriter.writeLine(`${this.case.pascalSafe(subpackage.name)} = `);
+                            innerWriter.writeNodeStatement(
+                                this.csharp.instantiateClass({
+                                    classReference: this.context.getSubpackageClassReference(subpackage),
+                                    arguments_
+                                })
+                            );
+                        }
+                    }
+                };
+
+                if (this.settings.includeExceptionHandler) {
+                    writer.controlFlowWithoutStatement("try");
+                    writeConstructorBody(writer);
+                    writer.endControlFlow();
+                    writer.controlFlow("catch", this.csharp.codeblock("Exception ex"));
+                    writer.writeLine("client.Options.ExceptionHandler?.CaptureException(ex);");
+                    writer.writeLine("throw;");
+                    writer.endControlFlow();
+                } else {
+                    writeConstructorBody(writer);
+                }
+            })
+        };
+    }
+
+    private getSubpackages(): Subpackage[] {
+        return this.context.getSubpackages(this.subpackage.subpackages);
+    }
+
+    protected getFilepath(): RelativeFilePath {
+        return join(this.constants.folders.sourceFiles, RelativeFilePath.of(`${this.classReference.name}.cs`));
+    }
+}

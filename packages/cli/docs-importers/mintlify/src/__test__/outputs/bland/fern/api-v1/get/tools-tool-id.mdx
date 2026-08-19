@@ -1,0 +1,70 @@
+---
+title: Custom Tool Details
+subtitle: Retrieve a Custom Tool you've created.
+slug: api-v1/get/tools-tool-id
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="tool_id" type="string" required>
+  The ID of the tool you want to retrieve (starting with `TL-`).
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Whether the requet succeeded or failed.
+</ResponseField>
+
+<ResponseField name="tool" type="array">
+  The tool you've created.
+</ResponseField>
+
+<ResponseExample>
+```json Response
+{
+    "status": "success",
+    "tool": {
+        "tool_id": "TL-5da8347d-0ab7-415d-b156-a7fc5c6074dc",
+        "label": null,
+        "tool": {
+            "name": "BookAppointment",
+            "description": "Books the appointment. Can only be used once.",
+            "speech": "Please wait while I book that appointment for you",
+            "method": "POST",
+            "timeout": 99999999,
+            "url": "https://...",
+            "body": {
+                "slot": "{{input}}"
+            },
+            "input_schema": {
+                "type": "object",
+                "example": {
+                    "date": "2024-03-16",
+                    "time": "5:00 PM"
+                },
+                "required": [
+                    "date",
+                    "time"
+                ],
+                "properties": {
+                    "date": "YYYY-MM-DD",
+                    "time": "HH:MM (AM|PM)"
+                }
+            },
+            "response": {
+                "confirmation_message": "$.message"
+            }
+        },
+        "public": false
+    }
+}
+```
+</ResponseExample>

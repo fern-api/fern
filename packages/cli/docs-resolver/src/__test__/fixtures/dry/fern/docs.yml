@@ -1,0 +1,4 @@
+instances: []
+navigation:
+  - page: Testing Page
+    path: ./page.mdx

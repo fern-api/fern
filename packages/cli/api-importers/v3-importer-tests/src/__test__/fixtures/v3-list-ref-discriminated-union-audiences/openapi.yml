@@ -1,0 +1,68 @@
+openapi: 3.1.0
+info:
+  title: list-ref-discriminated-union-audiences
+  version: 1.0.0
+# Regression fixture: a discriminated union (`ChatMessage`) is referenced ONLY
+# through a named array alias (`Messages` = list of $ref ChatMessage), which in
+# turn is referenced by an in-audience endpoint. Neither the union nor its
+# variants carry `x-fern-audiences`. Before the fix, the array alias recorded an
+# empty `referencedTypes`, so audience filtering pruned `ChatMessage` (+ variants)
+# and left a dangling reference (rendered as `list of any` in docs).
+paths:
+  /chat:
+    post:
+      operationId: chat
+      x-fern-audiences: ["public"]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [messages]
+              properties:
+                messages:
+                  $ref: "#/components/schemas/Messages"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  text:
+                    type: string
+components:
+  schemas:
+    Messages:
+      type: array
+      items:
+        $ref: "#/components/schemas/ChatMessage"
+    ChatMessage:
+      oneOf:
+        - $ref: "#/components/schemas/UserMessage"
+        - $ref: "#/components/schemas/AssistantMessage"
+      discriminator:
+        propertyName: role
+        mapping:
+          user: "#/components/schemas/UserMessage"
+          assistant: "#/components/schemas/AssistantMessage"
+    UserMessage:
+      type: object
+      required: [role, content]
+      properties:
+        role:
+          type: string
+          enum: [user]
+        content:
+          type: string
+    AssistantMessage:
+      type: object
+      required: [role, content]
+      properties:
+        role:
+          type: string
+          enum: [assistant]
+        content:
+          type: string

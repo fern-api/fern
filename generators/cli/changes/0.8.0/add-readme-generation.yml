@@ -1,0 +1,6 @@
+- summary: |
+    Generate a README.md in every generated CLI project. The README includes
+    installation, authentication, usage, output formats, configuration, and
+    shell completion sections. Customer-authored H2 sections are preserved
+    on regeneration via the existing Fern SDK README merge mechanism.
+  type: feat

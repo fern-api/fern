@@ -1,0 +1,3 @@
+- summary: |
+    Update oxfmt from 0.42.0 to 0.48.0, oxlint from 1.57.0 to 1.63.0, and oxlint-tsgolint from 0.17.4 to 0.22.1.
+  type: chore

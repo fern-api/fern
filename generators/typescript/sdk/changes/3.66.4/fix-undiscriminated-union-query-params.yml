@@ -1,0 +1,5 @@
+- summary: |
+    Fix undiscriminated-union query parameters so the list variant is sent as
+    repeated keys (`?key=a&key=b`) instead of a URL-encoded JSON blob. Mirrors
+    the Go fix in #15526.
+  type: fix

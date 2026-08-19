@@ -1,0 +1,256 @@
+openapi: 3.0.0
+info:
+  title: Additional Properties Edge Cases
+  version: 1.0.0
+
+paths:
+  /flexible:
+    post:
+      operationId: createFlexible
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FlexibleObject"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlexibleObject"
+
+  /strict:
+    post:
+      operationId: createStrict
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StrictObject"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StrictObject"
+
+  /string-map:
+    post:
+      operationId: createStringMap
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StringMap"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StringMap"
+
+  /object-map:
+    post:
+      operationId: createObjectMap
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ObjectMap"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ObjectMap"
+
+  /user-map:
+    post:
+      operationId: createUserMap
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserMap"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserMap"
+
+  /array-map:
+    post:
+      operationId: createArrayMap
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArrayMap"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArrayMap"
+
+  /extended-with-any:
+    post:
+      operationId: createExtendedWithAny
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExtendedWithAdditionalPropertiesAny"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExtendedWithAdditionalPropertiesAny"
+
+  /extended-with-typed:
+    post:
+      operationId: createExtendedWithTyped
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExtendedWithAdditionalPropertiesTyped"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExtendedWithAdditionalPropertiesTyped"
+
+  /extended-with-ref:
+    post:
+      operationId: createExtendedWithRef
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExtendedWithAdditionalPropertiesRef"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExtendedWithAdditionalPropertiesRef"
+
+components:
+  schemas:
+    FlexibleObject:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      additionalProperties: true
+
+    StrictObject:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      additionalProperties: false
+
+    StringMap:
+      type: object
+      properties:
+        id:
+          type: string
+      additionalProperties:
+        type: string
+
+    ObjectMap:
+      type: object
+      additionalProperties:
+        type: object
+        properties:
+          value:
+            type: string
+          count:
+            type: integer
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+
+    UserMap:
+      type: object
+      additionalProperties:
+        $ref: "#/components/schemas/User"
+
+    ArrayMap:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          type: string
+
+    BaseObject:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+
+    ExtendedWithAdditionalPropertiesAny:
+      allOf:
+        - $ref: "#/components/schemas/BaseObject"
+        - type: object
+          properties:
+            name:
+              type: string
+          required:
+            - name
+      additionalProperties: true
+
+    ExtendedWithAdditionalPropertiesTyped:
+      allOf:
+        - $ref: "#/components/schemas/BaseObject"
+        - type: object
+          properties:
+            name:
+              type: string
+      additionalProperties:
+        type: string
+
+    ExtendedWithAdditionalPropertiesRef:
+      allOf:
+        - $ref: "#/components/schemas/BaseObject"
+        - type: object
+          properties:
+            primaryUser:
+              $ref: "#/components/schemas/User"
+      additionalProperties:
+        $ref: "#/components/schemas/User"
+
+    ExtendedOnlyRefWithAdditionalProperties:
+      description: "Options with only ref-based inheritance and additionalProperties"
+      type: object
+      additionalProperties: true
+      allOf:
+        - $ref: "#/components/schemas/BaseObject"

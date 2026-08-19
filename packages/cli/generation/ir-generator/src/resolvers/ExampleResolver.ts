@@ -1,0 +1,220 @@
+import { isPlainObject } from "@fern-api/core-utils";
+import { EXAMPLE_REFERENCE_PREFIX } from "@fern-api/fern-definition-schema";
+import { CliError } from "@fern-api/task-context";
+import { FernFileContext } from "../FernFileContext.js";
+import { TypeResolver } from "./TypeResolver.js";
+
+export interface ExampleResolver {
+    resolveAllReferencesInExample: (args: {
+        example: unknown;
+        file: FernFileContext;
+    }) => { resolvedExample: unknown } | undefined;
+    resolveAllReferencesInExampleOrThrow: (args: { example: unknown; file: FernFileContext }) => {
+        resolvedExample: unknown;
+    };
+    resolveExample: (args: {
+        example: unknown;
+        file: FernFileContext;
+    }) => { resolvedExample: unknown; file: FernFileContext } | undefined;
+    resolveExampleOrThrow: (args: { example: unknown; file: FernFileContext }) => {
+        resolvedExample: unknown;
+        file: FernFileContext;
+    };
+    parseExampleReference: (exampleReference: string) => { rawTypeReference: string; exampleName: string } | undefined;
+}
+
+export class ExampleResolverImpl implements ExampleResolver {
+    constructor(private readonly typeResolver: TypeResolver) {}
+
+    public resolveAllReferencesInExample({
+        example,
+        file
+    }: {
+        example: unknown;
+        file: FernFileContext;
+    }): { resolvedExample: unknown } | undefined {
+        if (typeof example === "string") {
+            const resolvedExample = this.resolveExample({
+                example,
+                file
+            });
+
+            if (resolvedExample == null) {
+                return resolvedExample;
+            }
+            if (typeof resolvedExample.resolvedExample === "string") {
+                if (resolvedExample.resolvedExample.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`)) {
+                    resolvedExample.resolvedExample = resolvedExample.resolvedExample.slice(1);
+                }
+                return resolvedExample;
+            }
+
+            return this.resolveAllReferencesInExample({
+                example: resolvedExample.resolvedExample,
+                file: resolvedExample.file
+            });
+        } else if (isPlainObject(example)) {
+            const newExample: typeof example = {};
+            for (const [exampleKey, exampleValue] of Object.entries(example)) {
+                const resolvedExampleValue = this.resolveAllReferencesInExample({ example: exampleValue, file });
+                if (resolvedExampleValue == null) {
+                    return undefined;
+                }
+                const unescapedKey = exampleKey.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`)
+                    ? exampleKey.slice(1)
+                    : exampleKey;
+                newExample[unescapedKey] = resolvedExampleValue.resolvedExample;
+            }
+            return { resolvedExample: newExample };
+        } else if (Array.isArray(example)) {
+            const newExample = [];
+            for (const exampleItem of example) {
+                const resolvedExampleItem = this.resolveAllReferencesInExample({ example: exampleItem, file });
+                if (resolvedExampleItem == null) {
+                    return undefined;
+                }
+                newExample.push(resolvedExampleItem.resolvedExample);
+            }
+            return { resolvedExample: newExample };
+        }
+
+        return { resolvedExample: example };
+    }
+
+    public resolveAllReferencesInExampleOrThrow({ example, file }: { example: unknown; file: FernFileContext }): {
+        resolvedExample: unknown;
+    } {
+        const resolvedExample = this.resolveAllReferencesInExample({ example, file });
+        if (resolvedExample == null) {
+            throw new CliError({ message: "Failed to resolve examples", code: CliError.Code.ResolutionError });
+        }
+        return resolvedExample;
+    }
+
+    public resolveExample({
+        example,
+        file
+    }: {
+        example: unknown;
+        file: FernFileContext;
+    }): { resolvedExample: unknown; file: FernFileContext } | undefined {
+        if (typeof example !== "string") {
+            return {
+                resolvedExample: example,
+                file
+            };
+        }
+
+        if (!example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
+            return {
+                resolvedExample: example,
+                file
+            };
+        }
+
+        // First check if this is a valid example reference format.
+        // If not (e.g., "$3.00"), treat it as a literal string.
+        const parsedReference = this.parseExampleReference(example);
+        if (parsedReference == null) {
+            // Not a valid example reference format, treat as literal string
+            return {
+                resolvedExample: example,
+                file
+            };
+        }
+
+        return this.resolveExampleReference(example, file);
+    }
+
+    private resolveExampleReference(
+        example: string,
+        file: FernFileContext
+    ): { resolvedExample: unknown; file: FernFileContext } | undefined {
+        const parsedExampleReference = this.parseExampleReference(example);
+        if (parsedExampleReference == null) {
+            return undefined;
+        }
+
+        const typeDeclaration = this.typeResolver.getDeclarationOfNamedType({
+            referenceToNamedType: parsedExampleReference.rawTypeReference,
+            file
+        });
+        if (
+            typeDeclaration == null ||
+            typeof typeDeclaration.declaration === "string" ||
+            typeDeclaration.declaration.examples == null
+        ) {
+            return undefined;
+        }
+
+        const resolvedExample = typeDeclaration.declaration.examples.find(
+            (otherExample) => otherExample.name === parsedExampleReference.exampleName
+        );
+        if (resolvedExample == null) {
+            return undefined;
+        }
+        return this.resolveExample({ example: resolvedExample.value, file: typeDeclaration.file });
+    }
+
+    public resolveExampleOrThrow({ example, file }: { example: unknown; file: FernFileContext }): {
+        resolvedExample: unknown;
+        file: FernFileContext;
+    } {
+        const resolvedExample = this.resolveExample({ example, file });
+        if (resolvedExample == null) {
+            throw new CliError({ message: "Cannot resolve example: " + example, code: CliError.Code.ResolutionError });
+        }
+        return resolvedExample;
+    }
+
+    public parseExampleReference(
+        exampleReference: string
+    ): { rawTypeReference: string; exampleName: string } | undefined {
+        const [first, second, third, ...rest] = exampleReference.split(".");
+
+        if (first == null || second == null || rest.length > 0) {
+            return undefined;
+        }
+
+        // if third is null, then the reference is to a $Type.Example in the
+        // same file
+        if (third == null) {
+            const rawTypeReference = first.slice(EXAMPLE_REFERENCE_PREFIX.length);
+            // Type names must start with a letter (per Fern's naming rules).
+            // This ensures strings like "$3.00" are treated as literals, not references.
+            if (!isValidTypeNameStart(rawTypeReference)) {
+                return undefined;
+            }
+            return {
+                rawTypeReference,
+                exampleName: second
+            };
+        }
+
+        // otherwise, the reference is $imported.Type.Example
+        const importName = first.slice(EXAMPLE_REFERENCE_PREFIX.length);
+        // Import names must start with a letter (per Fern's naming rules).
+        // This ensures strings like "$3.00" are treated as literals, not references.
+        if (!isValidTypeNameStart(importName) || !isValidTypeNameStart(second)) {
+            return undefined;
+        }
+        return {
+            rawTypeReference: `${importName}.${second}`,
+            exampleName: third
+        };
+    }
+}
+
+/**
+ * Checks if a string is a valid start for a Fern type or import name.
+ * Type names must start with a letter (per Fern's naming rules).
+ * This ensures strings like "$3.00" are treated as literals, not example references.
+ */
+function isValidTypeNameStart(name: string): boolean {
+    if (name.length === 0) {
+        return false;
+    }
+    const firstChar = name.charAt(0);
+    // Type names must start with a letter (a-z or A-Z)
+    return (firstChar >= "a" && firstChar <= "z") || (firstChar >= "A" && firstChar <= "Z");
+}

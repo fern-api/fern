@@ -1,0 +1,33 @@
+types:
+  ValidationSchema:
+    discriminated: false
+    union:
+      - StringValidationSchema
+      - NumberValidationSchema
+      - ListValidationSchema
+      - MapValidationSchema
+
+  StringValidationSchema:
+    properties:
+      minLength: optional<integer>
+      maxLength: optional<integer>
+      pattern: optional<string>
+      format: optional<string>
+
+  NumberValidationSchema:
+    properties:
+      min: optional<double>
+      max: optional<double>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<double>
+
+  ListValidationSchema:
+    properties:
+      minItems: optional<integer>
+      maxItems: optional<integer>
+
+  MapValidationSchema:
+    properties:
+      minProperties: optional<integer>
+      maxProperties: optional<integer>

@@ -1,0 +1,81 @@
+openapi: 3.1.0
+info:
+  title: pagination
+  version: 0.0.0
+paths:
+  /users:
+    get:
+      operationId: users_listWithCustomPager
+      tags:
+        - Users
+      parameters:
+        - name: limit
+          in: query
+          description: The maximum number of results to return.
+          required: false
+          schema:
+            type:
+              - integer
+              - 'null'
+        - name: starting_after
+          in: query
+          description: The cursor used for pagination.
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersListResponse'
+components:
+  schemas:
+    UsersListResponse:
+      title: UsersListResponse
+      type: object
+      properties:
+        limit:
+          type:
+            - integer
+            - 'null'
+        count:
+          type:
+            - integer
+            - 'null'
+        has_more:
+          type:
+            - boolean
+            - 'null'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+        data:
+          type: array
+          items:
+            type: string
+      required:
+        - links
+        - data
+    Link:
+      title: Link
+      type: object
+      properties:
+        rel:
+          type: string
+        method:
+          type: string
+        href:
+          type: string
+      required:
+        - rel
+        - method
+        - href
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

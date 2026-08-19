@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `commit-and-release` mode support for self-hosted GitHub configuration.
+    Users can now set `mode: commit-and-release` in their self-hosted `github:`
+    block to commit directly to a branch and create a GitHub release.
+  type: feat

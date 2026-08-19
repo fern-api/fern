@@ -1,0 +1,5 @@
+- summary: |
+    Fix discriminated union snippet generation to include base properties (e.g. extra, tags)
+    inherited from the union's base type. Also fix conftest generation to skip non-string
+    constructor parameters like headers from os.getenv() wrapping.
+  type: fix

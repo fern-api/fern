@@ -1,0 +1,62 @@
+openapi: 3.0.1
+info:
+  title: csharp-property-name-collision
+  version: ""
+paths:
+  /catalog:
+    post:
+      operationId: createCatalog
+      tags:
+        - ""
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CatalogV1Id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CatalogV1Id"
+  /activity:
+    post:
+      operationId: createActivity
+      tags:
+        - ""
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Activity"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Activity"
+components:
+  schemas:
+    CatalogV1Id:
+      title: CatalogV1Id
+      type: object
+      properties:
+        catalog_v1_id:
+          type: string
+        location_id:
+          type: string
+    Activity:
+      title: Activity
+      type: object
+      properties:
+        activity:
+          type: string
+        timestamp:
+          type: string
+  securitySchemes: {}

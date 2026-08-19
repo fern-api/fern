@@ -1,0 +1,203 @@
+types:
+  StreamedCompletion:
+    properties:
+      delta: string
+      tokens: optional<integer>
+
+  CompletionEvent:
+    properties:
+      content: string
+
+  EventEvent:
+    properties:
+      event: string
+      name: string
+
+  ErrorEvent:
+    properties:
+      error: string
+      code: optional<integer>
+
+  StreamEventContextProtocol:
+    discriminant:
+      value: event
+      context: protocol
+    union:
+      completion: CompletionEvent
+      error: ErrorEvent
+      event: EventEvent
+
+  GroupCreatedEvent:
+    properties:
+      offset: string
+      group_id: string
+
+  GroupDeletedEvent:
+    properties:
+      offset: string
+      group_id: string
+
+  StreamEventDiscriminantInData:
+    discriminant:
+      value: type
+      context: protocol
+    union:
+      "group.created": GroupCreatedEvent
+      "group.deleted": GroupDeletedEvent
+
+  StreamEvent:
+    discriminant:
+      value: event
+    union:
+      completion: CompletionEvent
+      error: ErrorEvent
+
+errors:
+  BadRequestError:
+    status-code: 400
+    type: string
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    stream:
+      method: POST
+      path: /stream
+      request:
+        name: StreamCompletionRequest
+        body:
+          properties:
+            query: string
+      response-stream:
+        type: StreamedCompletion
+        format: sse
+        terminator: "[[DONE]]"
+      errors:
+        - BadRequestError
+      examples:
+        - name: "Stream completions"
+          request:
+            query: "foo"
+          response:
+            stream:
+              - event: completion
+                data:
+                  delta: "foo"
+                  tokens: 1
+              - event: completion
+                data:
+                  delta: "bar"
+                  tokens: 2
+        - name: "Bad request"
+          request:
+            query: ""
+          response:
+            error: BadRequestError
+            body: "bad request"
+
+    streamEvents:
+      method: POST
+      path: /stream-events
+      request:
+        name: StreamEventsRequest
+        body:
+          properties:
+            query: string
+      response-stream:
+        type: StreamEvent
+        format: sse
+        terminator: "[DONE]"
+      errors:
+        - BadRequestError
+      examples:
+        - name: "Stream events"
+          request:
+            query: "query"
+          response:
+            stream:
+              - event: completion
+                data:
+                  event: completion
+                  content: "hello"
+              - event: error
+                data:
+                  event: error
+                  error: "something went wrong"
+        - name: "Bad request"
+          request:
+            query: ""
+          response:
+            error: BadRequestError
+            body: "bad request"
+
+    streamEventsDiscriminantInData:
+      method: POST
+      path: /stream-events-discriminant-in-data
+      request:
+        name: StreamEventsDiscriminantInDataRequest
+        body:
+          properties:
+            query: string
+      response-stream:
+        type: StreamEventDiscriminantInData
+        format: sse
+      errors:
+        - BadRequestError
+      examples:
+        - name: "Stream events where discriminant is embedded in data and SSE event line is empty"
+          request:
+            query: "query"
+          response:
+            stream:
+              # The customer-facing SSE wire pattern: server sends an empty `event:`
+              # line and the union discriminant travels inside the data payload.
+              - event: ""
+                data:
+                  type: "group.created"
+                  offset: "offset-1"
+                  group_id: "g1"
+              - event: ""
+                data:
+                  type: "group.deleted"
+                  offset: "offset-2"
+                  group_id: "g2"
+
+    streamEventsContextProtocol:
+      method: POST
+      path: /stream-events-context-protocol
+      request:
+        name: StreamEventsContextProtocolRequest
+        body:
+          properties:
+            query: string
+      response-stream:
+        type: StreamEventContextProtocol
+        format: sse
+        terminator: "[DONE]"
+      errors:
+        - BadRequestError
+      examples:
+        - name: "Stream events context protocol"
+          request:
+            query: "query"
+          response:
+            stream:
+              - event: completion
+                data:
+                  content: "hello"
+              - event: error
+                data:
+                  error: "something went wrong"
+              # This example is causing fern check failures because of how it assumes we can flatten
+              # Removing for now, but keeping in comments to demonstrate how we should be testing
+              # - event: event
+              #   data:
+              #     name: "some particular update"
+              #     event: "update"
+        - name: "Bad request context protocol"
+          request:
+            query: ""
+          response:
+            error: BadRequestError
+            body: "bad request"

@@ -1,0 +1,5 @@
+- summary: |
+    Add `--locked` to cargo check/build/test commands in generated CI workflow
+    so dependency resolution matches the committed lockfile (consistent with the
+    publish job which already used `--locked`).
+  type: fix

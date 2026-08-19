@@ -1,0 +1,71 @@
+import { GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
+import { FernWorkspace } from "@fern-api/workspace-loader";
+import { visitGeneratorsYamlAst } from "./ast/visitGeneratorsYamlAst.js";
+import { createGeneratorsYmlAstVisitorForRules } from "./createGeneratorsYmlAstVisitorForRules.js";
+import { getAllRules } from "./getAllRules.js";
+import { NamedRuleVisitors, Rule } from "./Rule.js";
+import { ValidationViolation } from "./ValidationViolation.js";
+
+export async function validateGeneratorsWorkspace(
+    workspace: FernWorkspace,
+    logger: Logger
+): Promise<ValidationViolation[]> {
+    return runRulesOnWorkspace({ workspace, rules: getAllRules(), logger });
+}
+
+// exported for testing
+export async function runRulesOnWorkspace({
+    workspace,
+    rules,
+    logger
+}: {
+    workspace: FernWorkspace;
+    rules: Rule[];
+    logger: Logger;
+}): Promise<ValidationViolation[]> {
+    const violations: ValidationViolation[] = [];
+
+    const allRuleVisitors: NamedRuleVisitors[] = await Promise.all(
+        rules.map(async (rule) => ({
+            name: rule.name,
+            visitors: await rule.create({ workspace, logger })
+        }))
+    );
+
+    if (workspace.generatorsConfiguration?.rawConfiguration) {
+        const violationsForGeneratorsYml = await validateGeneratorsYmlFile({
+            contents: workspace.generatorsConfiguration.rawConfiguration,
+            allRuleVisitors,
+            cliVersion: workspace.cliVersion
+        });
+        violations.push(...violationsForGeneratorsYml);
+    }
+
+    return violations;
+}
+
+async function validateGeneratorsYmlFile({
+    contents,
+    allRuleVisitors,
+    cliVersion
+}: {
+    contents: generatorsYml.GeneratorsConfigurationSchema;
+    allRuleVisitors: NamedRuleVisitors[];
+    cliVersion: string;
+}): Promise<ValidationViolation[]> {
+    const violations: ValidationViolation[] = [];
+
+    const astVisitor = createGeneratorsYmlAstVisitorForRules({
+        relativeFilepath: RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME),
+        contents,
+        allRuleVisitors,
+        addViolations: (newViolations: ValidationViolation[]) => {
+            violations.push(...newViolations);
+        }
+    });
+    await visitGeneratorsYamlAst(contents, cliVersion, astVisitor);
+
+    return violations;
+}

@@ -1,0 +1,35 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    foo:
+      path: ""
+      method: POST
+    foo2:
+      path: ""
+      method: POST
+      request: string
+    bar:
+      path: ""
+      method: GET
+      request:
+        body: string
+    baz:
+      path: ""
+      method: GET
+      request:
+        body:
+          properties:
+            foo: string
+    bing:
+      path: ""
+      method: GET
+      request:
+        query-parameters:
+          foo: string
+    bat:
+      path: ""
+      method: GET
+      request:
+        headers:
+          My-Header: string

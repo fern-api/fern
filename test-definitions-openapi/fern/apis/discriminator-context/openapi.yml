@@ -1,0 +1,160 @@
+openapi: 3.0.3
+info:
+  title: Discriminator Context Test
+  version: 1.0.0
+paths:
+  /sse-events:
+    get:
+      operationId: getSseEvents
+      responses:
+        "200":
+          description: SSE events stream
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/SseServerEvent"
+  /regular-events:
+    get:
+      operationId: getRegularEvents
+      responses:
+        "200":
+          description: Regular events
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegularUnion"
+  /explicit-context:
+    get:
+      operationId: getExplicitContext
+      responses:
+        "200":
+          description: Events with explicit context
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/ExplicitContextUnion"
+components:
+  schemas:
+    # SSE-shaped discriminated union: all variants have only event/data/id/retry fields
+    # Should infer discriminatorContext = "protocol"
+    SseServerEvent:
+      oneOf:
+        - $ref: "#/components/schemas/SseMessageEvent"
+        - $ref: "#/components/schemas/SseHeartbeatEvent"
+        - $ref: "#/components/schemas/SseErrorEvent"
+      discriminator:
+        propertyName: event
+        mapping:
+          message: "#/components/schemas/SseMessageEvent"
+          heartbeat: "#/components/schemas/SseHeartbeatEvent"
+          error: "#/components/schemas/SseErrorEvent"
+
+    SseMessageEvent:
+      type: object
+      properties:
+        event:
+          type: string
+        data:
+          type: object
+          properties:
+            text:
+              type: string
+        id:
+          type: string
+      required:
+        - event
+        - data
+
+    SseHeartbeatEvent:
+      type: object
+      properties:
+        event:
+          type: string
+        id:
+          type: string
+      required:
+        - event
+
+    SseErrorEvent:
+      type: object
+      properties:
+        event:
+          type: string
+        data:
+          type: string
+        retry:
+          type: integer
+      required:
+        - event
+        - data
+
+    # Non-SSE discriminated union: variants have extra fields beyond event/data/id/retry
+    # Should default discriminatorContext = "data" (undefined in IR)
+    RegularUnion:
+      oneOf:
+        - $ref: "#/components/schemas/DogVariant"
+        - $ref: "#/components/schemas/CatVariant"
+      discriminator:
+        propertyName: type
+        mapping:
+          dog: "#/components/schemas/DogVariant"
+          cat: "#/components/schemas/CatVariant"
+
+    DogVariant:
+      type: object
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        breed:
+          type: string
+      required:
+        - type
+        - name
+
+    CatVariant:
+      type: object
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        indoor:
+          type: boolean
+      required:
+        - type
+        - name
+
+    # Explicit x-fern-discriminator-context override
+    # Should use the explicit value "data" even though shape matches SSE spec
+    ExplicitContextUnion:
+      oneOf:
+        - $ref: "#/components/schemas/ExplicitMessageEvent"
+        - $ref: "#/components/schemas/ExplicitHeartbeatEvent"
+      discriminator:
+        propertyName: event
+        x-fern-discriminator-context: data
+        mapping:
+          message: "#/components/schemas/ExplicitMessageEvent"
+          heartbeat: "#/components/schemas/ExplicitHeartbeatEvent"
+
+    ExplicitMessageEvent:
+      type: object
+      properties:
+        event:
+          type: string
+        data:
+          type: string
+      required:
+        - event
+
+    ExplicitHeartbeatEvent:
+      type: object
+      properties:
+        event:
+          type: string
+        id:
+          type: string
+      required:
+        - event

@@ -1,0 +1,89 @@
+irVersion: v66
+displayName: Pydantic Model
+image: fernapi/fern-pydantic-model
+# This generator is no longer actively supported. The workspace is retained for
+# historical reference but seed tests, publishing, and builds are skipped.
+disabled: true
+changelogLocation: ../../generators/python/pydantic/versions.yml
+
+buildScripts:
+  installScript:
+    commands:
+      - poetry install
+  compileScript:
+    commands:
+      - poetry run mypy .
+      - PYTHONWARNINGS=error::SyntaxWarning python -m compileall -q -f .
+
+publish:
+  workingDirectory: generators/python
+  preBuildCommands:
+    - pip install poetry
+    - poetry config virtualenvs.in-project true
+    - poetry install
+  docker:
+    file: ./generators/python/pydantic/Dockerfile
+    image: fernapi/fern-pydantic-model
+    context: ./generators/python
+test:
+  docker:
+    image: fernapi/fern-pydantic-model:latest
+    command: docker build -f ./generators/python/pydantic/Dockerfile -t fernapi/fern-pydantic-model:latest ./generators/python
+
+language: python
+generatorType: Model
+defaultOutputMode: github
+fixtures:
+  alias-extends:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  circular-references:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  circular-references-advanced:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  exhaustive:
+    - customConfig:
+        version: v1
+        recursion_limit: 1234
+      outputFolder: pydantic-v1
+    - customConfig:
+        version: v2
+      outputFolder: pydantic-v2
+  file-download:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  pagination:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  simple-fhir:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+allowedFailures:
+  # Complex circular refs
+  - simple-fhir

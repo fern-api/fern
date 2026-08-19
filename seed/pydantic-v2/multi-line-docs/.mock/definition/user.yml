@@ -1,0 +1,61 @@
+imports:
+  root: __package__.yml
+
+types:
+  User:
+    docs: |
+      A user object. This type is used throughout the following APIs:
+        - createUser
+        - getUser
+    properties:
+      id: string
+      name:
+        type: string
+        docs: |
+          The user's name. This name is unique to each user. A few examples are included below:
+           - Alice
+           - Bob
+           - Charlie
+      age:
+        type: optional<integer>
+        docs: |
+          The user's age.
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    getUser:
+      docs: |
+        Retrieve a user.
+        This endpoint is used to retrieve a user.
+      path: /users/{userId}
+      method: GET
+      path-parameters:
+        userId:
+          type: string
+          docs: |
+            The ID of the user to retrieve.
+            This ID is unique to each user.
+
+    createUser:
+      docs: |
+        Create a new user.
+        This endpoint is used to create a new user.
+      path: /users
+      method: POST
+      request:
+        name: CreateUserRequest
+        body:
+          properties:
+            name:
+              type: string
+              docs: |
+                The name of the user to create.
+                This name is unique to each user.
+            age:
+              type: optional<integer>
+              docs: |
+                The age of the user.
+                This property is not required.
+      response: User

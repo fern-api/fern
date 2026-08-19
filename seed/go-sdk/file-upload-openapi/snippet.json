@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/upload-file",
+                "method": "POST",
+                "identifier_override": "endpoint_fileUploadExample.uploadFile"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload-openapi/fern\"\n\tfernclient \"github.com/file-upload-openapi/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.FileUploadExample.UploadFile(\n\tcontext.TODO(),\n\t\u0026fern.UploadFileRequest{\n\t\tName: \"name\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

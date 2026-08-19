@@ -1,0 +1,3 @@
+- summary: |
+    Fix dynamic IR upload and check endpoints to pass correct field names (version, snippetConfiguration) matching the FDR server contract, resolving 500 errors during SDK generation.
+  type: fix

@@ -1,0 +1,105 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "message",
+        "interrupt",
+        "compact"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "message"
+        },
+        "stream_response": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether to stream the response."
+        },
+        "prompt": {
+          "type": "string",
+          "description": "The input prompt."
+        },
+        "message": {
+          "type": "string",
+          "description": "The message content."
+        }
+      },
+      "required": [
+        "type",
+        "prompt",
+        "message"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "interrupt"
+        },
+        "stream_response": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether to stream the response."
+        },
+        "prompt": {
+          "type": "string",
+          "description": "The input prompt."
+        }
+      },
+      "required": [
+        "type",
+        "prompt"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "compact"
+        },
+        "stream_response": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether to stream the response."
+        },
+        "prompt": {
+          "type": "string",
+          "description": "The input prompt."
+        },
+        "data": {
+          "type": "string",
+          "description": "Compact data payload."
+        }
+      },
+      "required": [
+        "type",
+        "prompt",
+        "data"
+      ]
+    }
+  ],
+  "description": "A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.",
+  "definitions": {}
+}

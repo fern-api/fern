@@ -1,0 +1,304 @@
+import { mkdir, mkdtemp, readFile, rm } from "fs/promises";
+import os from "os";
+import path from "path";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { emitCiWorkflow, emitPublishWorkflow } from "../emitPublishWorkflow.js";
+import type { ResolvedNpmPublishInfo } from "../resolveOutputConfig.js";
+
+/**
+ * Direct unit tests for `emitPublishWorkflow`. Validates the emitted
+ * `.github/workflows/ci.yml` content for token handling, OIDC
+ * permissions, and correct interpolation of binary/package names.
+ */
+describe("emitPublishWorkflow", () => {
+    let tmpDir: string;
+    let outputDir: string;
+
+    beforeEach(async () => {
+        tmpDir = await mkdtemp(path.join(os.tmpdir(), "emitPublishWorkflow-"));
+        outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+    });
+
+    afterEach(async () => {
+        await rm(tmpDir, { recursive: true, force: true });
+    });
+
+    async function emitAndRead(
+        npmPublishInfo: ResolvedNpmPublishInfo,
+        binaryName = "acme",
+        repoUrl: string | undefined = undefined
+    ): Promise<string> {
+        await emitPublishWorkflow({ outputDir, binaryName, npmPublishInfo, repoUrl });
+        return readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
+    }
+
+    const baseInfo: ResolvedNpmPublishInfo = {
+        packageName: "@acme/cli",
+        registryUrl: "https://registry.npmjs.org",
+        tokenEnvironmentVariable: "NPM_TOKEN",
+        useOidc: false
+    };
+
+    // ── Standard token-based publishing ────────────────────────────
+
+    it("emits NODE_AUTH_TOKEN referencing the configured secret", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}");
+        expect(yaml).not.toContain("id-token: write");
+    });
+
+    it("invokes npm publish directly on a pinned Node toolchain (no wrapper, no npm@latest)", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("npm publish --access public");
+        expect(yaml).not.toContain("npm@latest");
+        expect(yaml).not.toMatch(/publish\(\)\s*\{/);
+        expect(yaml).toContain('node-version: "lts/Krypton"');
+    });
+
+    it("includes backport detection for stable releases", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("dist-tags.latest");
+        expect(yaml).toContain("--tag backport");
+        expect(yaml).toContain("npx -y semver@7.8.1");
+    });
+
+    it("uses a custom token variable name in the secret reference", async () => {
+        const yaml = await emitAndRead({
+            ...baseInfo,
+            tokenEnvironmentVariable: "CUSTOM_REGISTRY_TOKEN"
+        });
+
+        expect(yaml).toContain("NODE_AUTH_TOKEN: ${{ secrets.CUSTOM_REGISTRY_TOKEN }}");
+    });
+
+    // ── OIDC-based publishing ──────────────────────────────────────
+
+    it("OIDC mode omits NODE_AUTH_TOKEN and adds id-token permissions", async () => {
+        const yaml = await emitAndRead({
+            ...baseInfo,
+            tokenEnvironmentVariable: "<USE_OIDC>",
+            useOidc: true
+        });
+
+        expect(yaml).not.toContain("NODE_AUTH_TOKEN");
+        expect(yaml).not.toContain("secrets.");
+        expect(yaml).toContain("id-token: write");
+        expect(yaml).toContain("contents: read");
+    });
+
+    // ── Empty token fallback (the bug from item 1) ─────────────────
+
+    it("does not produce an empty secrets reference (guards the empty-token bug)", async () => {
+        // In local mode the token can resolve to "" before reaching the
+        // generator. resolveNpmPublishInfo now normalises this to
+        // "NPM_TOKEN", but even if the caller passed "" directly the
+        // workflow template must never contain `secrets. }}`
+        const yaml = await emitAndRead({
+            ...baseInfo,
+            tokenEnvironmentVariable: "NPM_TOKEN",
+            useOidc: false
+        });
+
+        // Should NOT match the broken pattern `secrets. }}`
+        expect(yaml).not.toMatch(/secrets\.\s*\}\}/);
+    });
+
+    // ── Structural assertions ──────────────────────────────────────
+
+    it("contains the expected CI jobs (check, compile, test, publish, publish-launcher)", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("check:");
+        expect(yaml).toContain("compile:");
+        expect(yaml).toContain("test:");
+        expect(yaml).toContain("publish:");
+        expect(yaml).toContain("publish-launcher:");
+    });
+
+    it("interpolates the binary name and package name into the workflow", async () => {
+        const yaml = await emitAndRead(baseInfo, "my-tool");
+
+        expect(yaml).toContain('BINARY_NAME="my-tool"');
+        expect(yaml).toContain("@acme/cli");
+        expect(yaml).toContain("x86_64-unknown-linux-musl");
+        expect(yaml).toContain("aarch64-apple-darwin");
+    });
+
+    it("uses the configured registry URL in setup-node", async () => {
+        const yaml = await emitAndRead({
+            ...baseInfo,
+            registryUrl: "https://npm.pkg.github.com"
+        });
+
+        expect(yaml).toContain('registry-url: "https://npm.pkg.github.com"');
+    });
+
+    it("tag-based publishing only triggers on tag pushes", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("contains(github.ref, 'refs/tags/')");
+    });
+
+    it("uses actions/checkout@v6 and actions/setup-node@v6", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("actions/checkout@v6");
+        expect(yaml).not.toContain("actions/checkout@v4");
+        expect(yaml).toContain("actions/setup-node@v6");
+        expect(yaml).not.toContain("actions/setup-node@v4");
+    });
+
+    it("uses musl targets for Linux with native ARM runner", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("x86_64-unknown-linux-musl");
+        expect(yaml).toContain("aarch64-unknown-linux-musl");
+        expect(yaml).not.toContain("unknown-linux-gnu");
+        expect(yaml).toContain("ubuntu-24.04-arm");
+    });
+
+    it("installs musl-tools and leaves feature selection to Cargo.toml", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("musl-tools");
+        expect(yaml).not.toContain("--no-default-features");
+        expect(yaml).not.toContain("--features rustls");
+        expect(yaml).not.toContain("gcc-aarch64-linux-gnu");
+    });
+
+    it("gates publishing on the tag matching the crate version", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        // The version job exists and publish depends on it.
+        expect(yaml).toContain("version:");
+        expect(yaml).toContain("needs: [check, compile, test, version]");
+        expect(yaml).toContain('TAG_VERSION="${GITHUB_REF_NAME#v}"');
+        expect(yaml).toContain("cargo metadata --no-deps --format-version 1");
+        expect(yaml).toContain('if [[ "${TAG_VERSION}" != "${CRATE_VERSION}" ]]; then');
+    });
+
+    it("fails clearly when the crate version can't be resolved (empty CRATE_VERSION guard)", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        // The guard must run after CRATE_VERSION is computed and before the
+        // tag comparison, so an unresolved lookup produces an actionable
+        // error rather than a misleading empty-string mismatch.
+        expect(yaml).toContain('if [[ -z "${CRATE_VERSION}" ]]; then');
+        expect(yaml).toContain(
+            "Could not determine the crate version from cargo metadata (no package matched ${PWD}/Cargo.toml)."
+        );
+
+        const crateVersionIndex = yaml.indexOf("| .version')");
+        const guardIndex = yaml.indexOf('if [[ -z "${CRATE_VERSION}" ]]; then');
+        const comparisonIndex = yaml.indexOf('if [[ "${TAG_VERSION}" != "${CRATE_VERSION}" ]]; then');
+        expect(crateVersionIndex).toBeGreaterThan(-1);
+        expect(guardIndex).toBeGreaterThan(crateVersionIndex);
+        expect(comparisonIndex).toBeGreaterThan(guardIndex);
+    });
+
+    it("does not select rustls via build flags — feature selection lives in Cargo.toml (musl regression guard)", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).not.toContain("--features rustls");
+        expect(yaml).not.toContain("--no-default-features");
+    });
+
+    it("gives musl targets a C compiler but leaves linking to rustc, so the binary is static-pie", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("CC_${TARGET_UNDERSCORE}=musl-gcc");
+        expect(yaml).not.toContain("_LINKER=musl-gcc");
+        expect(yaml).not.toContain("export CC=musl-gcc");
+    });
+
+    it("includes repository.url in package.json when repoUrl is provided", async () => {
+        const yaml = await emitAndRead(baseInfo, "acme", "https://github.com/acme/acme-cli");
+
+        expect(yaml).toContain('"repository"');
+        expect(yaml).toContain('"url": "https://github.com/acme/acme-cli"');
+    });
+
+    it("omits repository field from package.json when repoUrl is undefined", async () => {
+        const yaml = await emitAndRead(baseInfo, "acme", undefined);
+
+        expect(yaml).not.toContain('"repository"');
+    });
+
+    it("both publish steps call npm publish directly with backport logic", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        // No publish() wrapper is defined anymore — npm publish is inlined.
+        expect(yaml).not.toMatch(/publish\(\)\s*\{/);
+
+        // Each step inlines four npm publish calls (alpha, beta, backport,
+        // stable) across the two publish steps.
+        const npmPublishMatches = yaml.match(/npm publish --access public/g);
+        expect(npmPublishMatches).toHaveLength(8);
+
+        // Both platform and launcher steps should have backport logic
+        // Each step has 2 occurrences: the echo message + the publish call
+        const backportMatches = yaml.match(/--tag backport/g);
+        expect(backportMatches).toHaveLength(4);
+    });
+});
+
+/**
+ * Tests for `emitCiWorkflow` — the build+test-only workflow emitted
+ * when the output mode is `github` without npm publish info.
+ */
+describe("emitCiWorkflow", () => {
+    let tmpDir: string;
+    let outputDir: string;
+
+    beforeEach(async () => {
+        tmpDir = await mkdtemp(path.join(os.tmpdir(), "emitCiWorkflow-"));
+        outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+    });
+
+    afterEach(async () => {
+        await rm(tmpDir, { recursive: true, force: true });
+    });
+
+    async function emitAndRead(binaryName = "acme"): Promise<string> {
+        await emitCiWorkflow({ outputDir, binaryName });
+        return readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
+    }
+
+    it("emits check, compile, and test jobs", async () => {
+        const yaml = await emitAndRead();
+
+        expect(yaml).toContain("name: ci");
+        expect(yaml).toContain("check:");
+        expect(yaml).toContain("compile:");
+        expect(yaml).toContain("test:");
+    });
+
+    it("does not contain publish or npm references", async () => {
+        const yaml = await emitAndRead();
+
+        expect(yaml).not.toContain("publish:");
+        expect(yaml).not.toContain("publish-launcher:");
+        expect(yaml).not.toContain("NPM_TOKEN");
+        expect(yaml).not.toContain("NODE_AUTH_TOKEN");
+        expect(yaml).not.toContain("npm");
+        expect(yaml).not.toContain("setup-node");
+    });
+
+    it("triggers on push", async () => {
+        const yaml = await emitAndRead();
+
+        expect(yaml).toContain("on: [push]");
+    });
+
+    it("uses actions/checkout@v6 and actions-rust-lang/setup-rust-toolchain@v1", async () => {
+        const yaml = await emitAndRead();
+
+        expect(yaml).toContain("actions/checkout@v6");
+        expect(yaml).toContain("actions-rust-lang/setup-rust-toolchain@v1");
+    });
+});

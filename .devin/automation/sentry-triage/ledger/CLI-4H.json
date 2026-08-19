@@ -1,0 +1,10 @@
+{
+  "title": "TypeError: fetch failed (source upload)",
+  "disposition": "duplicate",
+  "rationale": "Same boundary-level fetch wrapping as CLI-43; SourceUploader.uploadSource now catches TypeError and classifies as NetworkError.",
+  "fixSummary": "—",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-16",
+  "duplicateOf": "CLI-43",
+  "problemSignature": "Undici TypeError fetch failed during source upload surfaced as InternalError instead of NetworkError."
+}

@@ -1,0 +1,15 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    doThing:
+      path: /{id}
+      method: GET
+      request:
+        name: GetThingRequest
+        path-parameters:
+          id: string
+        query-parameters:
+          include-remote-data: optional<boolean>
+      response:
+        type: string

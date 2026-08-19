@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "ttl": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "ttl"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

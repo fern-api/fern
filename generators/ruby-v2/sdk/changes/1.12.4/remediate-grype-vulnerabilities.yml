@@ -1,0 +1,14 @@
+- summary: |
+    Remediate container vulnerabilities flagged by the May 2026 Grype scan of the
+    `fernapi/fern-ruby-sdk` image. Bumps the base image from `ruby:3.3-alpine3.20`
+    (EOL) to `ruby:3.3-alpine3.23`, picking up updated openssl, musl, busybox,
+    zlib, curl, git, c-ares, ada-libs, sqlite-libs, and a Ruby 3.3.11 with newer
+    default gems (resolv, zlib, rexml, uri). Also patches `erb` and `net-imap`
+    over the base image (with stale gemspec cleanup so SBOM scanners see the
+    fixed versions), upgrades npm's bundled vulnerable packages (tar, minimatch,
+    ip-address, picomatch, brace-expansion, @isaacs/brace-expansion, diff), and
+    drops `build-base` from the runtime image (added as a virtual install-time
+    package and removed after gem install) so binutils CVEs no longer ship in
+    the final image. Reduces grype findings from 78 to 15 (all remaining are
+    upstream Alpine packages with no fix available yet).
+  type: chore

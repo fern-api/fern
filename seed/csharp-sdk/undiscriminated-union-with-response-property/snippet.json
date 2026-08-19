@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/union",
+                "method": "GET",
+                "identifier_override": "endpoint_.getUnion"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnionWithResponseProperty;\n\nvar client = new SeedUndiscriminatedUnionWithResponsePropertyClient();\nawait client.GetUnionAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/unions",
+                "method": "GET",
+                "identifier_override": "endpoint_.listUnions"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnionWithResponseProperty;\n\nvar client = new SeedUndiscriminatedUnionWithResponsePropertyClient();\nawait client.ListUnionsAsync();\n"
+            }
+        }
+    ]
+}

@@ -1,0 +1,4 @@
+navigation:
+  - page: Enterprise Overview
+    icon: ./snow.svg
+    path: ../enterprise/overview.mdx

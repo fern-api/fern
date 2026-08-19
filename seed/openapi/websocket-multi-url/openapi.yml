@@ -1,0 +1,42 @@
+openapi: 3.1.0
+info:
+  title: websocket-multi-url
+  version: 0.0.0
+paths: {}
+components:
+  schemas:
+    SendEvent:
+      title: SendEvent
+      type: object
+      properties:
+        text:
+          type: string
+        priority:
+          type: integer
+      required:
+        - text
+        - priority
+    ReceiveEvent:
+      title: ReceiveEvent
+      type: object
+      properties:
+        data:
+          type: string
+        timestamp:
+          type: integer
+      required:
+        - data
+        - timestamp
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+servers:
+  - url: https://api.production.com
+    description: Production (rest)
+  - url: wss://ws.production.com
+    description: Production (wss)
+  - url: https://api.staging.com
+    description: Staging (rest)
+  - url: wss://ws.staging.com
+    description: Staging (wss)

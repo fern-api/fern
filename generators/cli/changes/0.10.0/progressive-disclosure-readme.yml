@@ -1,0 +1,6 @@
+- summary: |
+    Restructure generated README to follow progressive disclosure: TOC,
+    Install → Auth → Quick start → Usage → Documentation link → Advanced
+    (Common flags, Environment variables, Output formats, Shell completion
+    collapsed as subsections). Removes the --help dump from Usage.
+  type: feat

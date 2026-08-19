@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Properly escape control characters, real newlines, real backslashes, and
+    real double quotes when emitting Swift string literals that wrap raw user
+    data (example values, dynamic snippet inputs, JSON wire test fixtures).
+    Previously, an example value containing a real newline (e.g. a multi-line
+    iCalendar string) caused the generated SDK to fail Swift compilation with
+    `error: unterminated string literal`.
+  type: fix

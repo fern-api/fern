@@ -1,0 +1,204 @@
+openapi: 3.0.0
+info:
+  title: Discriminator Unions Edge Cases
+  version: 1.0.0
+
+paths:
+  /animal:
+    post:
+      operationId: createAnimal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Animal"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Animal"
+
+  /shape:
+    post:
+      operationId: createShape
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Shape"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Shape"
+
+  /payment:
+    post:
+      operationId: createPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Payment"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+
+components:
+  schemas:
+    Dog:
+      type: object
+      properties:
+        animalType:
+          type: string
+          enum:
+            - dog
+        breed:
+          type: string
+        barkVolume:
+          type: number
+      required:
+        - animalType
+        - breed
+
+    Cat:
+      type: object
+      properties:
+        animalType:
+          type: string
+          enum:
+            - cat
+        color:
+          type: string
+        indoor:
+          type: boolean
+      required:
+        - animalType
+
+    Bird:
+      type: object
+      properties:
+        animalType:
+          type: string
+          enum:
+            - bird
+        wingspan:
+          type: number
+        canFly:
+          type: boolean
+      required:
+        - animalType
+        - canFly
+
+    Animal:
+      oneOf:
+        - $ref: "#/components/schemas/Dog"
+        - $ref: "#/components/schemas/Cat"
+        - $ref: "#/components/schemas/Bird"
+      discriminator:
+        propertyName: animalType
+        mapping:
+          dog: "#/components/schemas/Dog"
+          cat: "#/components/schemas/Cat"
+          bird: "#/components/schemas/Bird"
+
+    Circle:
+      type: object
+      properties:
+        shapeType:
+          type: string
+        radius:
+          type: number
+      required:
+        - shapeType
+        - radius
+
+    Square:
+      type: object
+      properties:
+        shapeType:
+          type: string
+        sideLength:
+          type: number
+      required:
+        - shapeType
+        - sideLength
+
+    Shape:
+      oneOf:
+        - $ref: "#/components/schemas/Circle"
+        - $ref: "#/components/schemas/Square"
+      discriminator:
+        propertyName: shapeType
+
+    CreditCardPayment:
+      type: object
+      properties:
+        paymentMethod:
+          type: string
+          enum:
+            - credit_card
+        cardNumber:
+          type: string
+        expiryDate:
+          type: string
+        cvv:
+          type: string
+      required:
+        - paymentMethod
+        - cardNumber
+
+    BankTransferPayment:
+      type: object
+      properties:
+        paymentMethod:
+          type: string
+          enum:
+            - bank_transfer
+        accountNumber:
+          type: string
+        routingNumber:
+          type: string
+        bankName:
+          type: string
+      required:
+        - paymentMethod
+        - accountNumber
+
+    CryptoPayment:
+      type: object
+      properties:
+        paymentMethod:
+          type: string
+          enum:
+            - crypto
+        walletAddress:
+          type: string
+        currency:
+          type: string
+          enum:
+            - BTC
+            - ETH
+            - USDT
+        network:
+          type: string
+      required:
+        - paymentMethod
+        - walletAddress
+        - currency
+
+    Payment:
+      oneOf:
+        - $ref: "#/components/schemas/CreditCardPayment"
+        - $ref: "#/components/schemas/BankTransferPayment"
+        - $ref: "#/components/schemas/CryptoPayment"
+      discriminator:
+        propertyName: paymentMethod

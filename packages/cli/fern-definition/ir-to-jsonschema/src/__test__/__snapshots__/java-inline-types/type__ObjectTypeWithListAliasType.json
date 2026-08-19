@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "prop": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/AliasProperty"
+      }
+    }
+  },
+  "required": [
+    "prop"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "AliasPropertyType": {
+      "type": "object",
+      "properties": {
+        "prop": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prop"
+      ],
+      "additionalProperties": false
+    },
+    "AliasProperty": {
+      "$ref": "#/definitions/AliasPropertyType"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "event": {
+      "type": "string",
+      "description": "An event type field inside the data payload that collides with the SSE envelope's event field used for discrimination."
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "event"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

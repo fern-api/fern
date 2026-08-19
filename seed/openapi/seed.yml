@@ -1,0 +1,56 @@
+irVersion: v66
+displayName: OpenAPI
+image: fernapi/fern-openapi
+changelogLocation: ../../generators/openapi/versions.yml
+publish:
+  preBuildCommands:
+    - pnpm turbo run dist:cli --filter @fern-api/openapi-generator
+  docker:
+    file: ./generators/openapi/Dockerfile
+    image: fernapi/fern-openapi
+    context: ./generators/openapi
+test:
+  docker:
+    image: fernapi/fern-openapi:latest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/openapi-generator
+  local:
+    workingDirectory: generators/openapi
+    buildCommand:
+      - pnpm turbo run dist:cli --filter @fern-api/openapi-generator
+    runCommand: node --enable-source-maps dist/cli.cjs openapi {CONFIG_PATH}
+generatorType: Documentation
+defaultOutputMode: local_files
+fixtures:
+  imdb:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        customOverrides: 
+          components: 
+            schemas: 
+              MovieId: 
+                type: null
+      outputFolder: override
+    - customConfig:
+        customOverrides:
+          info:
+            license:
+              name: MIT
+      outputFolder: custom-overrides
+    - customConfig:
+        filename: imdb.yaml
+      outputFolder: custom-filename
+    - customConfig:
+        format: json
+      outputFolder: json-format
+  enum: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        customOverrides: 
+          components: 
+            schemas: 
+              Operand: 
+                type: null     
+      outputFolder: custom-overrides
+allowedFailures: []

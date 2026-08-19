@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix the OpenAPI importer silently dropping the request body of an operation
+    that combines `x-fern-streaming` (with `stream-condition`) with a `oneOf` or
+    `anyOf` request body schema. Endpoints whose body is a plain object
+    (`properties`/`allOf`) are unaffected.
+  type: fix

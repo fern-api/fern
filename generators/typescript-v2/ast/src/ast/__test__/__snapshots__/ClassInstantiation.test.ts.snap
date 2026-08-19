@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ClassInstantiation > new Instantiation > Should generate a new instantiation without arguments 1`] = `"new TestClass()"`;
+
+exports[`ClassInstantiation > new Instantiation with 2 arguments > Should generate a new instantiation with arguments 1`] = `"new TestClass("https://api.example.com", "https://api.otherexample.com")"`;
+
+exports[`ClassInstantiation > new Instantiation with arguments > Should generate a new instantiation with arguments 1`] = `"new TestClass("https://api.example.com")"`;

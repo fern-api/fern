@@ -1,0 +1,45 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/union.TokenizeCard"
+    },
+    {
+      "$ref": "#/definitions/union.ConvertToken"
+    }
+  ],
+  "description": "Tests that nested properties with camelCase wire names are properly\nconverted from snake_case Ruby keys when passed as Hash values.",
+  "definitions": {
+    "union.TokenizeCard": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "cardNumber": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "cardNumber"
+      ],
+      "additionalProperties": false
+    },
+    "union.ConvertToken": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "tokenId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "tokenId"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

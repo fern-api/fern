@@ -1,0 +1,8 @@
+- summary: |
+    Add support for webhook body-hash binding in the generated `verifySignature` helper.
+    When a webhook's signature declares a body-hash binding, the helper now hashes the raw
+    request body and compares it to the hash transmitted separately as a query parameter on
+    the notification URL (e.g. Twilio's `bodySHA256`) before verifying the HMAC signature.
+    Both checks must pass. The body-hash algorithm and encoding are independent of the outer
+    HMAC's.
+  type: feat

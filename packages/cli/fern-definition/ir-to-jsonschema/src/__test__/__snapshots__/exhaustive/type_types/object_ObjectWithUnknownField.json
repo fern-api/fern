@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "unknown": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "unknown"
+  ],
+  "additionalProperties": false,
+  "description": "Tests that unknown/any values containing backslashes in map keys\nare properly escaped in Go string literals.",
+  "definitions": {}
+}

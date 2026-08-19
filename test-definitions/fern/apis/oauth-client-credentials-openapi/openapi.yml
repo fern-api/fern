@@ -1,0 +1,101 @@
+openapi: 3.1.0
+info:
+  title: OAuth Client Credentials OpenAPI
+  version: 1.0.0
+paths:
+  /identity/token:
+    post:
+      operationId: identity_getToken
+      x-fern-sdk-group-name: identity
+      x-fern-sdk-method-name: getToken
+      summary: Get an access token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username
+                - password
+      responses:
+        "200":
+          description: Successful token response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+  /plants:
+    get:
+      operationId: plants_list
+      x-fern-sdk-group-name: plants
+      x-fern-sdk-method-name: list
+      summary: List all plants
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: A list of plants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plant"
+  /plants/{plantId}:
+    get:
+      operationId: plants_get
+      x-fern-sdk-group-name: plants
+      x-fern-sdk-method-name: get
+      summary: Get a plant by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A plant
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+        refresh_token:
+          type: string
+      required:
+        - access_token
+        - expires_in
+    Plant:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        species:
+          type: string
+      required:
+        - id
+        - name

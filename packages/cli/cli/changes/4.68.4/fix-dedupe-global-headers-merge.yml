@@ -1,0 +1,3 @@
+- summary: |
+    Deduplicate global headers when merging IRs from multiple OpenAPI specs. Previously, if multiple specs shared the same `globalHeaderOverrides` from `generators.yml`, the same header would appear once per spec in the merged IR.
+  type: fix

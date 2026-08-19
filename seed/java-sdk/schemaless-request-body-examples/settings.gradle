@@ -1,0 +1,3 @@
+rootProject.name = 'schemaless-request-body-examples'
+
+include 'sample-app'

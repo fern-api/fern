@@ -1,0 +1,12 @@
+service:
+  base-path: /{pathParam}
+  path-parameters:
+    pathParam: string
+  auth: false
+  endpoints:
+    foo:
+      path: /foo
+      method: GET
+    bar:
+      path: /bar
+      method: GET

@@ -1,0 +1,8 @@
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    getText:
+      path: /text
+      method: POST
+      response: text

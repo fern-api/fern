@@ -1,0 +1,77 @@
+---
+title: 'Bank Accounts and Credit Cards'
+---
+
+Layer ingests data from your customers' business bank accounts and credit cards to incorporate into their accounting. Layer can connect to external customer accounts at traditional financial institutions as well as any embedded bank accounts and credit cards your platform already provides to customers.
+
+## External accounts
+Layer leverages [Plaid](https://plaid.com/) to connect with your customers' accounts at external financial insitutions. 
+
+### Using Layer's Plaid connection
+If your platform does not already have a Plaid integration, you can utilize Layer's Plaid connection to import to your customers' external bank accounts and credit card data. Layer will manage all aspects of the Plaid integration on your behalf.
+
+To start importing customers' bank accounts and credit cards into Layer, embed Layer's _Bank Linking_ react component within your product. This component manages all aspects Layer's plaid connection and walks customers through the process of granting read-only access to their bank account and credit card activity. More detail on using Layer's embedded UI components is available [here](/guides/embedded-components).
+
+![Bank Linking Component](/images/bank-linking-component.png)
+
+Once your customers have connected their accounts, Layer will automatically start importing their bank account and credit card transactions. 
+
+### Using your own Plaid connection
+If your platform already has an integration with Plaid, you can grant Layer access to your existing Plaid data through Plaid's [processor token functionality](https://plaid.com/docs/api/processors/). Reach out to your Layer contact to set up this access.
+
+## Embedded accounts
+If your platform provides an embedded bank account or credit card to your customers, you can pass this banking data to Layer as well. There are two ways to pass embedded banking activity to Layer:
+* **API** - Pass bank and credit card transactions to Layer's API directly.
+* **Layer integrations** - Layer has direct connections with top embedded banking platforms. You can grant Layer access to pull your customers' data from these platforms on your behalf. Layer currently supports: [Unit](https://www.unit.co/) and [Stripe Treasury](https://stripe.com/treasury).
+
+### Importing transactions via API
+To import bank transactions to Layer, make a call to the [Import Bank Transactions](/api-reference/import-transactions) endpoint. This endpoint takes in the data on a bank transaction that is needed for Layer’s categorization and accounting logic.
+
+Note that the `bank_account_id` field should correspond to the `internal_bank_account_ids` field specified when [onboarding the Business](/guides/business-onboarding) as in the example below.
+
+```bash Request
+curl -X POST https://sandbox.layerfi.com/v1/internal-bank-transactions \
+  -H "Authorization: Bearer <access_token>" \
+  -H "Content-Type: application/json" \
+  -d '[{
+        "external_id": 2093489,
+        "bank_account_id": "219384290",
+        "created_at": "2023-05-15T14:13:07Z",
+        "transaction_type": "Purchase",
+        "direction": "Debit",
+        "amount": 8026,
+        "balance": 40049,
+        "processed_counterparty_name": "HOME DEPOT",
+        "merchant_type": 5200,
+        "merchant_location": "HOUSTON, TX, US"
+    }]'
+```
+
+The API will respond with a list of ingested [Bank Transactions](/api-reference/bank-transaction).
+
+```json Response
+{
+  "data":[
+    {
+      "type":"Flat_Bank_Transaction",
+      "id":"0e46b2b1-56b5-4ee4-bb5e-b0b708e50b47",
+      "bank_transaction_id":"2093489",
+      "created_at":"2023-05-15T14:13:07Z",
+      "transaction_type":"Purchase",
+      "bank_account_id":"219384290",
+      "business_id":"d2f6d97f-3345-4299-9ec2-468738c5d536",
+      "direction":"DEBIT",
+      "balance":40049,
+      "amount":8026,
+      "merchant_type":"5200",
+      "processed_counterparty_name":"HOME DEPOT",
+      "categorizationStatus":"PENDING"
+    }
+  ],
+  "meta":{
+  }
+}
+```
+
+### Using Layer's integrations
+To leverage Layer's embedded banking integrations with [Unit](https://www.unit.co/) and [Stripe Treasury](https://stripe.com/treasury), reach out to your Layer conact.

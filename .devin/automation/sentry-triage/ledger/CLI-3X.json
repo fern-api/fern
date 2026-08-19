@@ -1,0 +1,10 @@
+{
+  "title": "ENOENT reading OpenAPI spec",
+  "disposition": "duplicate",
+  "rationale": "ENOENT is already mapped to EnvironmentError by the errno classification shipped in CLI-2X.",
+  "fixSummary": "—",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-05-16",
+  "duplicateOf": "CLI-2X",
+  "problemSignature": "Filesystem errno ENOENT from user environment surfaced as InternalError instead of EnvironmentError."
+}

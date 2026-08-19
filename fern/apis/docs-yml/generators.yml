@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 3.66.1
+        output:
+          location: local-file-system
+          path: ../../../packages/cli/configuration/src/docs-yml/schemas/sdk
+        config:
+          outputSourceFiles: true
+          outputSrcOnly: true
+          includeUtilsOnUnionMembers: false
+          noOptionalProperties: false
+          noSerdeLayer: false
+        smart-casing: false
+  publish:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.51.7
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/docs-config"
+        config:
+          outputSourceFiles: true
+          includeUtilsOnUnionMembers: false
+          noOptionalProperties: false
+          noSerdeLayer: false
+        smart-casing: false

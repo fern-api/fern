@@ -1,0 +1,3 @@
+- summary: |
+    Resolve image and link destinations delimited by angle brackets, e.g. `![alt](<path/to/image.png>)`.
+  type: fix

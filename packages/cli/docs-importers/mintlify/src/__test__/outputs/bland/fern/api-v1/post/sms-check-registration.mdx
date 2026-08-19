@@ -1,0 +1,30 @@
+---
+title: Check SMS A2P status
+subtitle: Check the status of an A2P registration.
+slug: api-v1/post/sms-check-registration
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Body
+
+<ParamField body="registration_id" type="string">
+  The `registration_id` for the a2p registration.
+</ParamField>
+
+<ResponseExample>
+
+```json Response
+{
+    status: "pending" || "approved" || "failed",
+    brandType: //string of the brand type,
+    failureReason: null || "reason here"
+}
+```
+
+</ResponseExample>

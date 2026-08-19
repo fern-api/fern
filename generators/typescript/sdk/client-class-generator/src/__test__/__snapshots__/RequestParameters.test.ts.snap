@@ -1,0 +1,27 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`RequestWrapperParameter > extractDefaultValue > returns BigInt call for bigInteger type with useBigInt 1`] = `"const { bigVal = BigInt("123456789012345678901234567890"), ..._body } = request;"`;
+
+exports[`RequestWrapperParameter > extractDefaultValue > returns BigInt call for long type with useBigInt 1`] = `"const { bigId = BigInt("9007199254740991"), ..._body } = request;"`;
+
+exports[`RequestWrapperParameter > extractDefaultValue > returns boolean default for boolean type with default value 1`] = `"const { verbose = true, ..._body } = request;"`;
+
+exports[`RequestWrapperParameter > extractDefaultValue > returns no default for file type parameter 1`] = `"const { avatar, ..._body } = request;"`;
+
+exports[`RequestWrapperParameter > extractDefaultValue > returns numeric default for integer type with default value 1`] = `"const { limit = 10, ..._body } = request;"`;
+
+exports[`RequestWrapperParameter > extractDefaultValue > returns numeric literal for double type with default value 1`] = `"const { rate = 0.5, ..._body } = request;"`;
+
+exports[`RequestWrapperParameter > extractDefaultValue > returns string default for string type with default value 1`] = `"const { sort = "asc", ..._body } = request;"`;
+
+exports[`RequestWrapperParameter > extractDefaultValue > returns string literal for bigInteger type without useBigInt 1`] = `"const { bigVal = "123456789", ..._body } = request;"`;
+
+exports[`RequestWrapperParameter > extractDefaultValue > unwraps optional before extracting default 1`] = `"const { limit = 25, ..._body } = request;"`;
+
+exports[`RequestWrapperParameter > getInitialStatements handles variable name conflicts 1`] = `"const { "data": data_, ..._body } = request;"`;
+
+exports[`RequestWrapperParameter > getInitialStatements includes body property when hasBodyProperty=true 1`] = `"const { userId, body: _body } = request;"`;
+
+exports[`RequestWrapperParameter > getInitialStatements returns destructuring when there are non-body keys 1`] = `"const { userId, ..._body } = request;"`;
+
+exports[`RequestWrapperParameter > getInitialStatements uses spread for inlined body with non-body keys 1`] = `"const { userId, ..._body } = request;"`;

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Remove the abandoned `@fern-api/docs-parsers` dependency from `@fern-api/docs-resolver` and drop
+    the hidden `fern fdr <path> --v2` code path that was the only remaining consumer. The upstream
+    package was deleted from fern-platform in https://github.com/fern-api/fern-platform/pull/2420
+    and hasn't been published since; removing it clears the transitive `uuid@9.0.1` from the lockfile.
+  type: internal

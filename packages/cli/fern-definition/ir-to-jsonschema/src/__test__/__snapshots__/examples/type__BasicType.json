@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "primitive",
+    "literal"
+  ],
+  "definitions": {}
+}

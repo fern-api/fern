@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedServerSentEvents.Test/SeedServerSentEvents.Test.csproj" />
+  <Project Path="src/SeedServerSentEvents/SeedServerSentEvents.csproj" />
+</Solution>

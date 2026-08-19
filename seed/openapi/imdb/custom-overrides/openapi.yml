@@ -1,0 +1,114 @@
+openapi: 3.1.0
+info:
+  title: api
+  version: 0.0.0
+  license:
+    name: MIT
+paths:
+  /movies/create-movie:
+    post:
+      description: Add a movie to the database using the movies/* /... path.
+      operationId: imdb_createMovie
+      tags:
+        - Imdb
+      parameters: []
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieId'
+              examples:
+                Example1:
+                  value: string
+      x-fern-availability: pre-release
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  examples:
+                    - title
+                rating:
+                  type: number
+                  format: double
+                  examples:
+                    - 1.1
+              required:
+                - title
+                - rating
+            examples:
+              Example1:
+                value:
+                  title: title
+                  rating: 1.1
+  /movies/{movieId}:
+    get:
+      operationId: imdb_getMovie
+      tags:
+        - Imdb
+      parameters:
+        - name: movieId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/MovieId'
+          examples:
+            Example1:
+              value: movieId
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    title: title
+                    rating: 1.1
+        '404':
+          description: NotFoundError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieId'
+      x-fern-availability: deprecated
+components:
+  schemas:
+    MovieId:
+      title: MovieId
+      type: string
+    Movie:
+      title: Movie
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MovieId'
+        title:
+          type: string
+          examples:
+            - title
+        rating:
+          type: number
+          format: double
+          description: The rating scale is one to five stars
+          examples:
+            - 1.1
+          x-fern-availability: deprecated
+      required:
+        - id
+        - title
+        - rating
+      x-fern-availability: generally-available
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

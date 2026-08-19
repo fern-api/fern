@@ -1,0 +1,47 @@
+---
+title: "FAQ"
+---
+
+<Accordion title="Is there a free version of Zep Cloud?">
+    Yes - Zep offers a free tier. See [Service Plans and Limits](/service-plans) for more information.
+</Accordion>
+<Accordion title="Does Zep Cloud work with LangChain?">
+    Yes - Zep offers a LangChain `ZepChatMessageHistory` and `ZepVectorStore` class that you may use in your LangChain
+    Expression Language (LCEL) project.
+
+    Please use the classes available in the Cloud SDKs and not in the LangChain SDKs.
+
+</Accordion>
+<Accordion title="Does Zep Cloud work with LlamaIndex?">
+    Not yet - we are working on adding support for LlamaIndex.
+</Accordion>
+<Accordion title="Does Zep Cloud work with Flowise?">
+    Yes, you can use `Zep Memory - Cloud` and `Zep Collection - Cloud` nodes in the latest Flowise release.
+
+    You can learn more in our [Flowise Ecosystem section](/ecosystem/flowise).
+
+</Accordion>
+
+<Accordion title="Are there any features missing from Zep Cloud that are available in Zep Open Source?">
+    Yes - we've deprecated Intent Analysis and replaced it with a [Session Classifier](/dialog-classification).
+
+    We've also removed the Named Entity Recognition (NER) feature.
+    We are in the process of replacing NER with a more powerful and flexible Structured Data Extractor.
+
+</Accordion>
+<Accordion title="What is the API URL for Zep Cloud?">
+    The API URL for Zep Cloud is `https://api.getzep.com`. Note that you do not need to specify the API URL when using the Cloud SDKs.
+    If a service requests the Zep URL it is possible it's only compatible with the Zep Open Source service.
+</Accordion>
+<Accordion title="Does Zep Cloud support multiple spoken languages?">
+    Currently, Zep Cloud only supports English. We're working on adding support for other languages. Contact us if you're
+    interested in a specific language.
+</Accordion>
+<Accordion title="What is the relationship between Zep Cloud and Zep Open Source?">
+    Zep Cloud is currently a major update to the Zep Open Source product. Going forward, Zep Open Source will offer a
+    subset of Zep Cloud's functionality, primarily as proprietary language models are used exclusively in Zep Cloud.
+</Accordion>
+<Accordion title="Will you be updating Zep Open Source?">
+    Yes - we will be releasing a new version of Zep Open Source based on Zep Cloud functionality.
+    See above for more.
+</Accordion>

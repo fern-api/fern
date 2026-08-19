@@ -1,0 +1,17 @@
+paths:
+  /v1/categories:
+    get:
+      x-fern-sdk-group-name: categories
+      x-fern-sdk-method-name: list
+  /v1/categories/{id}:
+    get:
+      x-fern-sdk-group-name: categories
+      x-fern-sdk-method-name: retrieve
+  /v1/connect/categories:
+    get:
+      x-fern-sdk-group-name: categories
+      x-fern-sdk-method-name: list
+  /v1/connect/categories/{id}:
+    get:
+      x-fern-sdk-group-name: categories
+      x-fern-sdk-method-name: retrieve

@@ -1,0 +1,11 @@
+auth-schemes:
+  apiKeyAuth:
+    header: X-API-Key
+    name: api_key
+    env: API_KEY_ENV
+    docs: User's custom documentation that should take priority over OpenAPI description
+
+api:
+  auth: apiKeyAuth
+  specs:
+    - openapi: openapi.yml

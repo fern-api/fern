@@ -1,0 +1,10 @@
+# Simple test for generating a type that relies on another custom type.
+types:
+  Type:
+    properties:
+      name: string
+
+  AnotherType:
+    properties:
+      string: optional<string>
+      type: optional<Type>

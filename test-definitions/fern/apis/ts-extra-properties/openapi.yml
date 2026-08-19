@@ -1,0 +1,63 @@
+openapi: 3.0.3
+info:
+  title: Extra Properties Test API
+  version: 1.0.0
+paths:
+  /user:
+    get:
+      operationId: getUser
+      summary: Get a user with extra properties
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    post:
+      operationId: createUser
+      summary: Create a user with extra properties
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserRequest"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+components:
+  schemas:
+    User:
+      type: object
+      additionalProperties: true
+      required:
+        - id
+        - user_name
+        - created_at
+      properties:
+        id:
+          type: string
+        user_name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    CreateUserRequest:
+      type: object
+      additionalProperties: true
+      required:
+        - user_name
+      properties:
+        user_name:
+          type: string
+        meta_data:
+          type: object
+          additionalProperties: true

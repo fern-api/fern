@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fixed argument ordering in generated wire tests and snippets so they match
+    the order in which the corresponding Swift types declare their memberwise
+    initializer parameters. Example object properties were previously emitted in
+    the example's authoring order, and file-upload fields were grouped by kind
+    (files before body properties), both of which could produce arguments in the
+    wrong positional order and fail to compile. Wire-test response objects are
+    now reordered to match the generated struct's declaration order, and
+    file-upload request snippets preserve the original schema declaration order.
+  type: fix

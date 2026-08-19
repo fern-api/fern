@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "Client identifier"
+    },
+    "client_secret": {
+      "type": "string",
+      "description": "Client secret"
+    }
+  },
+  "required": [
+    "client_id",
+    "client_secret"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

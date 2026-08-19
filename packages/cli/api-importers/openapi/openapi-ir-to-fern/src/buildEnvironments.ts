@@ -1,0 +1,929 @@
+import { isRawMultipleBaseUrlsEnvironment, RawSchemas } from "@fern-api/fern-definition-schema";
+
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { extractPathSegment, generateWebsocketUrlId, getProtocol } from "./utils/generateUrlId.js";
+
+interface ApiServerConfig {
+    url: string;
+    audiences?: string[];
+    defaultUrl?: string;
+    urlTemplate?: string;
+    variables?: ServerVariable[];
+}
+
+interface ServerVariable {
+    id: string;
+    default?: string;
+    values?: string[];
+}
+
+interface SingleApiServer {
+    type?: "single";
+    name?: string;
+    description?: string;
+    url: string;
+    audiences?: string[];
+    defaultUrl?: string;
+    urlTemplate?: string;
+    variables?: ServerVariable[];
+}
+
+interface GroupedMultiApiServer {
+    type: "grouped";
+    name?: string;
+    description?: string;
+    urls: Record<string, ApiServerConfig>;
+}
+
+type ServerType = SingleApiServer | GroupedMultiApiServer;
+
+function isGroupedMultiApiServer(server: unknown): server is GroupedMultiApiServer {
+    return (
+        typeof server === "object" &&
+        server !== null &&
+        "type" in server &&
+        (server as { type?: string }).type === "grouped"
+    );
+}
+
+const DEFAULT_URL_NAME = "Base";
+const DEFAULT_ENVIRONMENT_NAME = "Default";
+
+/**
+ * Extract the host from a URL (e.g., "https://api.com/foo" -> "api.com")
+ */
+function extractHost(url: string): string | undefined {
+    try {
+        const urlObj = new URL(url);
+        return urlObj.hostname;
+    } catch {
+        return undefined;
+    }
+}
+
+/**
+ * Get environment name from server name, or use default if not specified.
+ * We rely on the OpenAPI/AsyncAPI server names (if provided) rather than
+ * trying to infer from URL patterns.
+ */
+function getEnvironmentName(serverName: string | undefined): string {
+    return serverName ?? DEFAULT_ENVIRONMENT_NAME;
+}
+
+/**
+ * Group HTTP and WebSocket servers by host to merge them into unified environments.
+ * All servers with the same host are grouped together.
+ */
+interface GroupedServers {
+    environmentName: string;
+    httpServers: Array<{ name: string | undefined; url: string; audiences?: string[] }>;
+    websocketServers: Array<{ name: string | undefined; url: string; audiences?: string[] }>;
+}
+
+function groupServersByHost(
+    httpServers: ServerType[],
+    websocketServers: Array<{ name: string | undefined; url: string; audiences?: string[] }>
+): Map<string, GroupedServers> {
+    const grouped = new Map<string, GroupedServers>();
+
+    // Process HTTP servers - group by host
+    for (const server of httpServers) {
+        if (isGroupedMultiApiServer(server)) {
+            // Handle grouped multi-API servers separately - these define their own structure
+            continue;
+        }
+
+        if (!("url" in server) || !server.url) {
+            continue;
+        }
+
+        const host = extractHost(server.url) ?? server.url;
+        if (!grouped.has(host)) {
+            grouped.set(host, {
+                environmentName: getEnvironmentName(server.name),
+                httpServers: [],
+                websocketServers: []
+            });
+        }
+        grouped.get(host)?.httpServers.push({
+            name: server.name,
+            url: server.url,
+            audiences: server.audiences
+        });
+    }
+
+    // Process WebSocket servers - group by host
+    for (const server of websocketServers) {
+        const host = extractHost(server.url) ?? server.url;
+        if (!grouped.has(host)) {
+            grouped.set(host, {
+                environmentName: getEnvironmentName(server.name),
+                httpServers: [],
+                websocketServers: []
+            });
+        }
+        grouped.get(host)?.websocketServers.push(server);
+    }
+
+    return grouped;
+}
+
+function extractUrlsFromEnvironmentSchema(
+    record: Record<string, RawSchemas.EnvironmentSchema>
+): Record<string, string> {
+    return Object.entries(record).reduce<Record<string, string>>((acc, [name, schemaOrUrl]) => {
+        if (isRawMultipleBaseUrlsEnvironment(schemaOrUrl)) {
+            Object.entries(schemaOrUrl.urls).forEach(([urlsName, urlsValue]) => {
+                acc[urlsName] = urlsValue;
+            });
+        } else {
+            acc[name] = typeof schemaOrUrl === "string" ? schemaOrUrl : schemaOrUrl.url;
+        }
+
+        return acc;
+    }, {});
+}
+
+/**
+ * Merge WebSocket URLs onto an environment's URL map without letting a WebSocket
+ * URL that shares an `x-fern-server-name` with an existing HTTP URL silently
+ * overwrite it. On collision, the WebSocket URL is keyed with its protocol
+ * appended (e.g. `Agent_wss`) so both URLs remain addressable.
+ */
+function mergeWebsocketUrlsWithoutOverwriting(
+    urls: Record<string, string>,
+    websocketUrls: Record<string, string>,
+    context: OpenApiIrConverterContext
+): void {
+    for (const [wsName, wsUrl] of Object.entries(websocketUrls)) {
+        if (wsUrl == null) {
+            continue;
+        }
+        if (urls[wsName] != null && urls[wsName] !== wsUrl) {
+            const wsProtocol = getProtocol(wsUrl);
+            const dedupedName = wsProtocol != null ? `${wsName}_${wsProtocol}` : `${wsName}_ws`;
+            urls[dedupedName] = wsUrl;
+            context.setUrlId(wsUrl, dedupedName);
+        } else {
+            urls[wsName] = wsUrl;
+            context.setUrlId(wsUrl, wsName);
+        }
+    }
+}
+
+export function buildEnvironments(context: OpenApiIrConverterContext): void {
+    if (context.environmentOverrides != null) {
+        for (const [environment, environmentDeclaration] of Object.entries(
+            context.environmentOverrides.environments ?? {}
+        )) {
+            context.builder.addEnvironment({
+                name: environment,
+                schema: environmentDeclaration
+            });
+        }
+        if (context.environmentOverrides["default-environment"] != null) {
+            context.builder.setDefaultEnvironment(context.environmentOverrides["default-environment"]);
+        }
+        if (context.environmentOverrides["default-url"] != null) {
+            context.builder.setDefaultUrl(context.environmentOverrides["default-url"]);
+        }
+        return;
+    }
+
+    const topLevelServersWithName: Record<
+        string,
+        string | RawSchemas.SingleBaseUrlEnvironmentSchema | RawSchemas.MultipleBaseUrlsEnvironmentSchema
+    > = {};
+    const topLevelSkippedServers = [];
+
+    const hasGroupedMultipleApis = context.ir.servers.some((server) => isGroupedMultiApiServer(server));
+
+    const servers = context.ir.servers as ServerType[];
+
+    for (const server of servers) {
+        // Handle grouped multiple base URLs
+        if (isGroupedMultiApiServer(server)) {
+            const multiUrlEnvironment: RawSchemas.MultipleBaseUrlsEnvironmentSchema = {
+                urls: {}
+            };
+
+            const groupedUrlTemplates: Record<string, string> = {};
+            const groupedDefaultUrls: Record<string, string> = {};
+            const groupedVariables: Record<string, Array<{ id: string; default?: string; values?: string[] }>> = {};
+
+            for (const [apiName, apiConfig] of Object.entries(server.urls)) {
+                multiUrlEnvironment.urls[apiName] = apiConfig.defaultUrl ?? apiConfig.url;
+                if (apiConfig.urlTemplate) {
+                    groupedUrlTemplates[apiName] = apiConfig.urlTemplate;
+                }
+                if (apiConfig.defaultUrl) {
+                    groupedDefaultUrls[apiName] = apiConfig.defaultUrl;
+                }
+                if (apiConfig.variables && apiConfig.variables.length > 0) {
+                    groupedVariables[apiName] = apiConfig.variables;
+                }
+            }
+
+            const hasGroupedTemplateData =
+                Object.keys(groupedUrlTemplates).length > 0 || Object.keys(groupedVariables).length > 0;
+            if (hasGroupedTemplateData) {
+                multiUrlEnvironment["url-templates"] = groupedUrlTemplates;
+                multiUrlEnvironment["default-urls"] = groupedDefaultUrls;
+                multiUrlEnvironment.variables = groupedVariables;
+            }
+
+            if (server.name) {
+                topLevelServersWithName[server.name] = multiUrlEnvironment;
+            }
+        } else if ("url" in server && server.url) {
+            // Handle regular single URL servers
+            const hasServerVariables =
+                server.urlTemplate != null && server.variables != null && server.variables.length > 0;
+            const environmentSchema: string | RawSchemas.SingleBaseUrlEnvironmentSchema = hasServerVariables
+                ? {
+                      url: server.url,
+                      audiences: server.audiences,
+                      "default-url": server.defaultUrl,
+                      "url-template": server.urlTemplate,
+                      variables: server.variables?.map((v) => ({
+                          id: v.id,
+                          default: v.default,
+                          values: v.values
+                      }))
+                  }
+                : server.audiences
+                  ? {
+                        url: server.url,
+                        audiences: server.audiences
+                    }
+                  : server.url;
+            if (server.name == null) {
+                topLevelSkippedServers.push(environmentSchema);
+                continue;
+            }
+            topLevelServersWithName[server.name] = environmentSchema;
+        }
+    }
+
+    const endpointLevelServersByName: Record<
+        string,
+        Array<{ url: string | undefined; audiences: string[] | undefined }>
+    > = {};
+    const endpointLevelServersWithName: Record<string, string | RawSchemas.SingleBaseUrlEnvironmentSchema> = {};
+    const endpointLevelSkippedServers = [];
+    const endpointLevelUrlTemplates: Record<string, string> = {};
+    const endpointLevelDefaultUrls: Record<string, string> = {};
+    const endpointLevelVariables: Record<string, Array<{ id: string; default?: string; values?: string[] }>> = {};
+
+    for (const endpoint of context.ir.endpoints) {
+        for (const server of endpoint.servers) {
+            if (server.url == null && server.name != null) {
+                if (!endpointLevelServersByName[server.name]) {
+                    endpointLevelServersByName[server.name] = [];
+                }
+                continue;
+            }
+
+            if (server.url == null) {
+                continue;
+            }
+
+            const serverRecord = server as unknown as Record<string, unknown>;
+            const serverDefaultUrl =
+                "defaultUrl" in server && typeof serverRecord["defaultUrl"] === "string"
+                    ? (serverRecord["defaultUrl"] as string)
+                    : undefined;
+            const serverUrlTemplate =
+                "urlTemplate" in server && typeof serverRecord["urlTemplate"] === "string"
+                    ? (serverRecord["urlTemplate"] as string)
+                    : undefined;
+            const serverVariables =
+                "variables" in server && Array.isArray(serverRecord["variables"])
+                    ? (serverRecord["variables"] as Array<{ id: string; default?: string; values?: string[] }>)
+                    : undefined;
+            const serverUrl = serverDefaultUrl ?? server.url;
+            const environmentSchema = server.audiences
+                ? {
+                      url: serverUrl,
+                      audiences: server.audiences
+                  }
+                : serverUrl;
+            if (server.name == null) {
+                endpointLevelSkippedServers.push(environmentSchema);
+                continue;
+            }
+
+            // Track servers with URLs by name
+            if (!endpointLevelServersByName[server.name]) {
+                endpointLevelServersByName[server.name] = [];
+            }
+            endpointLevelServersByName[server.name]?.push({
+                url: serverUrl,
+                audiences: server.audiences
+            });
+
+            endpointLevelServersWithName[server.name] = environmentSchema;
+
+            // Track URL template and variable data for multi-URL environments
+            if (serverUrlTemplate && server.name) {
+                endpointLevelUrlTemplates[server.name] = serverUrlTemplate;
+            }
+            if (serverDefaultUrl && server.name) {
+                endpointLevelDefaultUrls[server.name] = serverDefaultUrl;
+            }
+            if (serverVariables && serverVariables.length > 0 && server.name) {
+                endpointLevelVariables[server.name] = serverVariables;
+            }
+        }
+    }
+
+    const websocketServersWithName: Record<string, string | RawSchemas.SingleBaseUrlEnvironmentSchema> = {};
+    const websocketSkippedServers = [];
+    for (const server of context.ir.websocketServers) {
+        context.logger.debug(
+            `[buildEnvironments] Processing WebSocket server: name="${server.name}", url="${server.url}"`
+        );
+        const environmentSchema = server.audiences
+            ? {
+                  url: server.url,
+                  audiences: server.audiences
+              }
+            : server.url;
+        if (server.name == null) {
+            websocketSkippedServers.push(environmentSchema);
+            continue;
+        }
+        websocketServersWithName[server.name] = environmentSchema;
+    }
+
+    const numTopLevelServersWithName = Object.keys(topLevelServersWithName).length;
+    const hasTopLevelServersWithName = numTopLevelServersWithName > 0;
+    const hasEndpointLevelServersWithName = Object.keys(endpointLevelServersWithName).length > 0;
+    const hasEndpointServersWithoutUrls = Object.keys(endpointLevelServersByName).some(
+        (name) => endpointLevelServersByName[name]?.length === 0
+    );
+    const hasWebsocketServersWithName = Object.keys(websocketServersWithName).length > 0;
+
+    // Group servers by host when feature flag is enabled and we have both HTTP and WebSocket servers
+    //
+    // URL ID Generation Strategy:
+    // When groupEnvironmentsByHost is enabled, URL IDs are generated from path segments only:
+    //   - wss://api.com/v0/foo → "foo"
+    //   - wss://api.com/v0/bar → "bar"
+    //
+    // Protocol Collision Handling:
+    // If multiple protocols use the same path segment, protocol is appended to resolve collision:
+    //   - https://api.com/v0/foo → "foo" (first occurrence, no protocol)
+    //   - wss://api.com/v0/foo → "foo_wss" (collision detected, protocol appended)
+    //
+    // This ensures channels can correctly reference their environment URLs while keeping
+    // URL IDs clean and readable when there are no collisions.
+    if (
+        context.options.groupEnvironmentsByHost &&
+        hasWebsocketServersWithName &&
+        (hasTopLevelServersWithName || context.ir.servers.length > 0)
+    ) {
+        const websocketServersList = Object.entries(websocketServersWithName).map(([name, schema]) => ({
+            name,
+            url: typeof schema === "string" ? schema : schema.url,
+            audiences: typeof schema === "string" ? undefined : schema.audiences
+        }));
+
+        const groupedByHost = groupServersByHost(servers, websocketServersList);
+
+        // If we successfully grouped servers by host, use that grouping
+        if (groupedByHost.size > 0) {
+            let firstEnvironment = true;
+            for (const [_host, group] of groupedByHost.entries()) {
+                const urls: Record<string, string> = {};
+
+                // Collect all servers to check for path collisions
+                const allServers: Array<{ name: string | undefined; url: string; isHttp: boolean }> = [
+                    ...group.httpServers.map((s) => ({ ...s, isHttp: true })),
+                    ...group.websocketServers.map((s) => ({ ...s, isHttp: false }))
+                ];
+
+                // Track which protocols use each path segment
+                const pathToProtocols = new Map<string, Set<string>>();
+                for (const server of allServers) {
+                    const pathSegment = extractPathSegment(server.url);
+                    const protocol = getProtocol(server.url);
+                    if (pathSegment && protocol) {
+                        if (!pathToProtocols.has(pathSegment)) {
+                            pathToProtocols.set(pathSegment, new Set());
+                        }
+                        pathToProtocols.get(pathSegment)?.add(protocol);
+                    }
+                }
+
+                // Add HTTP URLs
+                if (group.httpServers.length > 0) {
+                    const firstServer = group.httpServers[0];
+                    if (firstServer != null) {
+                        // Use the first HTTP URL as the base
+                        urls[DEFAULT_URL_NAME] = firstServer.url;
+                        context.setUrlId(firstServer.url, DEFAULT_URL_NAME);
+                    }
+
+                    // Add any additional HTTP URLs with collision-aware IDs
+                    for (let i = 1; i < group.httpServers.length; i++) {
+                        const server = group.httpServers[i];
+                        if (server != null) {
+                            const pathSegment = extractPathSegment(server.url);
+                            const protocol = getProtocol(server.url);
+                            const protocols = pathSegment ? pathToProtocols.get(pathSegment) : undefined;
+                            const hasCollision = protocols && protocols.size > 1;
+
+                            // Only append protocol for non-HTTPS protocols when there's a collision
+                            const needsProtocol = hasCollision && protocol !== "https";
+                            const urlId = needsProtocol ? `${pathSegment}_${protocol}` : pathSegment || `Http${i + 1}`;
+
+                            context.logger.debug(
+                                `[buildEnvironments] HTTP server: url="${server.url}", pathSegment="${pathSegment}", protocol="${protocol}", hasCollision=${hasCollision}, urlId="${urlId}"`
+                            );
+                            urls[urlId] = server.url;
+                            context.setUrlId(server.url, urlId);
+                        }
+                    }
+                }
+
+                // Add WebSocket URLs with collision-aware IDs
+                for (const wsServer of group.websocketServers) {
+                    const pathSegment = extractPathSegment(wsServer.url);
+                    const protocol = getProtocol(wsServer.url);
+                    const protocols = pathSegment ? pathToProtocols.get(pathSegment) : undefined;
+                    const hasCollision = protocols && protocols.size > 1;
+
+                    // For WebSocket URLs, always append protocol (wss) when there's a collision
+                    const urlId = hasCollision
+                        ? `${pathSegment}_${protocol}`
+                        : generateWebsocketUrlId(wsServer.name, wsServer.url, true);
+
+                    context.logger.debug(
+                        `[buildEnvironments] WebSocket server: name="${wsServer.name}", url="${wsServer.url}", pathSegment="${pathSegment}", protocol="${protocol}", hasCollision=${hasCollision}, urlId="${urlId}"`
+                    );
+                    urls[urlId] = wsServer.url;
+                    context.setUrlId(wsServer.url, urlId);
+                }
+
+                // Only create multi-URL environment if we have multiple URLs
+                if (Object.keys(urls).length > 1) {
+                    context.builder.addEnvironment({
+                        name: group.environmentName,
+                        schema: { urls }
+                    });
+                } else if (Object.keys(urls).length === 1) {
+                    // Single URL environment
+                    const singleUrl = Object.values(urls)[0];
+                    if (singleUrl != null) {
+                        context.builder.addEnvironment({
+                            name: group.environmentName,
+                            schema: singleUrl
+                        });
+                    }
+                }
+
+                if (firstEnvironment) {
+                    if (context.options.inferDefaultEnvironment !== false) {
+                        context.builder.setDefaultEnvironment(group.environmentName);
+                    }
+                    if (Object.keys(urls).length > 1) {
+                        context.builder.setDefaultUrl(DEFAULT_URL_NAME);
+                    }
+                    firstEnvironment = false;
+                }
+            }
+            return;
+        }
+    }
+
+    if (
+        !hasTopLevelServersWithName &&
+        !hasEndpointLevelServersWithName &&
+        hasWebsocketServersWithName &&
+        context.ir.servers.length === 0
+    ) {
+        for (const [name, schema] of Object.entries(websocketServersWithName)) {
+            context.builder.addEnvironment({
+                name,
+                schema
+            });
+        }
+        if (context.options.inferDefaultEnvironment !== false) {
+            context.builder.setDefaultEnvironment(Object.keys(websocketServersWithName)[0] as string);
+        }
+        context.builder.setDefaultUrl(DEFAULT_URL_NAME);
+        return;
+    }
+
+    // Endpoint level servers must always have a name attached. If they don't, we'll throw an error.
+    if (endpointLevelSkippedServers.length > 0) {
+        context.logger.debug(
+            `Skipping endpoint level servers ${endpointLevelSkippedServers
+                .map((server) => (typeof server === "string" ? server : server.url))
+                .join(", ")} because x-fern-server-name was not provided.`
+        );
+    }
+
+    if (!hasTopLevelServersWithName) {
+        const firstServer = context.ir.servers[0];
+        const singleURL = firstServer?.url;
+        const singleURLAudiences = firstServer?.audiences;
+        const singleURLDefaultUrl = firstServer?.defaultUrl;
+        const singleURLTemplate = firstServer?.urlTemplate;
+        const singleURLVariables = firstServer?.variables;
+        if (singleURL != null) {
+            const hasServerVariables =
+                singleURLTemplate != null && singleURLVariables != null && singleURLVariables.length > 0;
+            const newEnvironmentSchema: string | RawSchemas.SingleBaseUrlEnvironmentSchema = hasServerVariables
+                ? {
+                      url: singleURL,
+                      audiences: singleURLAudiences,
+                      "default-url": singleURLDefaultUrl,
+                      "url-template": singleURLTemplate,
+                      variables: singleURLVariables?.map((v) => ({
+                          id: v.id,
+                          default: v.default,
+                          values: v.values
+                      }))
+                  }
+                : singleURLAudiences
+                  ? {
+                        url: singleURL,
+                        audiences: singleURLAudiences
+                    }
+                  : singleURL;
+            topLevelServersWithName[DEFAULT_ENVIRONMENT_NAME] = newEnvironmentSchema;
+        }
+    }
+
+    const topLevelServerUrls = Object.values(topLevelServersWithName).map((schema) =>
+        typeof schema === "string"
+            ? schema
+            : isRawMultipleBaseUrlsEnvironment(schema)
+              ? Object.values(schema.urls)[0]
+              : schema.url
+    );
+    const filteredSkippedServers = topLevelSkippedServers.filter((server) => {
+        const serverUrl = typeof server === "string" ? server : server.url;
+        return !topLevelServerUrls.includes(serverUrl);
+    });
+    if (filteredSkippedServers.length > 0) {
+        context.logger.debug(
+            `Skipping top level servers ${filteredSkippedServers
+                .map((server) => (typeof server === "string" ? server : server.url))
+                .join(", ")} because x-fern-server-name was not provided.`
+        );
+    }
+
+    if (hasGroupedMultipleApis) {
+        let firstEnvironment = true;
+        for (const [name, schema] of Object.entries(topLevelServersWithName)) {
+            context.builder.addEnvironment({
+                name,
+                schema
+            });
+            if (firstEnvironment) {
+                if (context.options.inferDefaultEnvironment !== false) {
+                    context.builder.setDefaultEnvironment(name);
+                }
+                if (isRawMultipleBaseUrlsEnvironment(schema)) {
+                    const firstApiName = Object.keys(schema.urls)[0];
+                    if (firstApiName) {
+                        context.builder.setDefaultUrl(firstApiName);
+                    }
+                }
+                firstEnvironment = false;
+            }
+        }
+        return;
+    }
+
+    // At this stage, we have at least one top level named server. We now build the environments.
+    if (!hasEndpointLevelServersWithName && !hasEndpointServersWithoutUrls) {
+        let firstEnvironment = true;
+        for (const [name, schema] of Object.entries(topLevelServersWithName)) {
+            if (firstEnvironment) {
+                if (hasWebsocketServersWithName) {
+                    const baseUrl =
+                        typeof schema === "string"
+                            ? schema
+                            : isRawMultipleBaseUrlsEnvironment(schema)
+                              ? Object.values(schema.urls)[0]
+                              : (schema["default-url"] ?? schema.url);
+                    if (baseUrl != null) {
+                        context.setUrlId(baseUrl, DEFAULT_URL_NAME);
+                    }
+                    context.builder.addEnvironment({
+                        name,
+                        schema: {
+                            urls: {
+                                ...{ [DEFAULT_URL_NAME]: baseUrl ?? "" },
+                                ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
+                            }
+                        }
+                    });
+                } else {
+                    context.builder.addEnvironment({
+                        name,
+                        schema
+                    });
+                }
+                if (context.options.inferDefaultEnvironment !== false) {
+                    context.builder.setDefaultEnvironment(name);
+                }
+                firstEnvironment = false;
+            } else {
+                if (hasWebsocketServersWithName) {
+                    const baseUrl =
+                        typeof schema === "string"
+                            ? schema
+                            : isRawMultipleBaseUrlsEnvironment(schema)
+                              ? Object.values(schema.urls)[0]
+                              : (schema["default-url"] ?? schema.url);
+                    if (baseUrl != null) {
+                        context.setUrlId(baseUrl, DEFAULT_URL_NAME);
+                    }
+                    context.builder.addEnvironment({
+                        name,
+                        schema: {
+                            urls: {
+                                ...{ [DEFAULT_URL_NAME]: baseUrl ?? "" },
+                                ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
+                            }
+                        }
+                    });
+                } else {
+                    context.builder.addEnvironment({
+                        name,
+                        schema
+                    });
+                }
+            }
+        }
+        if (hasWebsocketServersWithName) {
+            context.builder.setDefaultUrl(DEFAULT_URL_NAME);
+        }
+    } else {
+        if (numTopLevelServersWithName === 1) {
+            const environmentName = Object.keys(topLevelServersWithName)[0] as string;
+            const topLevelServerSchema = Object.values(topLevelServersWithName)[0] as
+                | string
+                | RawSchemas.SingleBaseUrlEnvironmentSchema
+                | RawSchemas.MultipleBaseUrlsEnvironmentSchema;
+            const topLevelServerUrl =
+                typeof topLevelServerSchema === "string"
+                    ? topLevelServerSchema
+                    : isRawMultipleBaseUrlsEnvironment(topLevelServerSchema)
+                      ? Object.values(topLevelServerSchema.urls)[0]
+                      : (topLevelServerSchema["default-url"] ?? topLevelServerSchema.url);
+
+            // Collect URL template/variable data for multi-URL environments
+            const multiUrlTemplates: Record<string, string> = {};
+            const multiDefaultUrls: Record<string, string> = {};
+            const multiVariables: Record<string, Array<{ id: string; default?: string; values?: string[] }>> = {};
+
+            if (typeof topLevelServerSchema !== "string" && !isRawMultipleBaseUrlsEnvironment(topLevelServerSchema)) {
+                if (topLevelServerSchema["url-template"]) {
+                    multiUrlTemplates[DEFAULT_URL_NAME] = topLevelServerSchema["url-template"];
+                }
+                if (topLevelServerSchema["default-url"]) {
+                    multiDefaultUrls[DEFAULT_URL_NAME] = topLevelServerSchema["default-url"];
+                }
+                if (topLevelServerSchema.variables && topLevelServerSchema.variables.length > 0) {
+                    multiVariables[DEFAULT_URL_NAME] = topLevelServerSchema.variables;
+                }
+            }
+
+            // Add endpoint-level URL template/variable data
+            Object.assign(multiUrlTemplates, endpointLevelUrlTemplates);
+            Object.assign(multiDefaultUrls, endpointLevelDefaultUrls);
+            Object.assign(multiVariables, endpointLevelVariables);
+
+            const hasTemplateData = Object.keys(multiUrlTemplates).length > 0 || Object.keys(multiVariables).length > 0;
+
+            if (topLevelServerUrl != null) {
+                context.setUrlId(topLevelServerUrl, DEFAULT_URL_NAME);
+            }
+
+            const multiUrlSchema: RawSchemas.MultipleBaseUrlsEnvironmentSchema = {
+                urls: {
+                    ...{ [DEFAULT_URL_NAME]: topLevelServerUrl ?? "" },
+                    ...extractUrlsFromEnvironmentSchema(endpointLevelServersWithName),
+                    ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
+                },
+                ...(hasTemplateData
+                    ? {
+                          "url-templates": multiUrlTemplates,
+                          "default-urls": multiDefaultUrls,
+                          variables: multiVariables
+                      }
+                    : {})
+            };
+
+            context.builder.addEnvironment({
+                name: environmentName,
+                schema: multiUrlSchema
+            });
+            if (context.options.inferDefaultEnvironment !== false) {
+                context.builder.setDefaultEnvironment(environmentName);
+            }
+            context.builder.setDefaultUrl(DEFAULT_URL_NAME);
+        } else {
+            const apiToUrls = new Map<string, Map<string, string>>();
+
+            for (const endpoint of context.ir.endpoints) {
+                for (const server of endpoint.servers) {
+                    if (server.url != null && server.name != null) {
+                        if (!apiToUrls.has(server.name)) {
+                            apiToUrls.set(server.name, new Map());
+                        }
+                        // Extract environment suffix from URL
+                        const urlSuffix = server.url.match(/[-]([a-z0-9]+)\./i)?.[1]?.toLowerCase() || "production";
+                        const urlMap = apiToUrls.get(server.name);
+                        if (urlMap) {
+                            urlMap.set(urlSuffix, server.url);
+                        }
+                    }
+                }
+            }
+
+            // Check if endpoint-level servers reference top-level server names,
+            // indicating multiple base URLs within a single environment rather than
+            // separate environments (e.g., api.box.com + upload.box.com + dl.boxcloud.com)
+            const endpointServerNamesSet = new Set(apiToUrls.keys());
+            const topLevelServerNamesSet = new Set(Object.keys(topLevelServersWithName));
+            const endpointServersReferenceTopLevel =
+                endpointServerNamesSet.size > 0 &&
+                [...endpointServerNamesSet].every((name) => topLevelServerNamesSet.has(name));
+
+            if (
+                context.options.multiServerStrategy === "urls-per-environment" &&
+                apiToUrls.size > 0 &&
+                endpointServersReferenceTopLevel
+            ) {
+                // Top-level servers define different base URLs for a single API.
+                // Create one multi-URL environment with all servers as named URLs.
+                const entries = Object.entries(topLevelServersWithName);
+                const firstEntry = entries[0];
+                if (firstEntry) {
+                    const [envName, firstSchema] = firstEntry;
+                    const baseUrl =
+                        typeof firstSchema === "string"
+                            ? firstSchema
+                            : isRawMultipleBaseUrlsEnvironment(firstSchema)
+                              ? Object.values(firstSchema.urls)[0]
+                              : (firstSchema["default-url"] ?? firstSchema.url);
+
+                    const urls: Record<string, string> = {};
+                    if (baseUrl != null) {
+                        urls[DEFAULT_URL_NAME] = baseUrl;
+                        context.setUrlId(baseUrl, DEFAULT_URL_NAME);
+                    }
+
+                    // Add all other top-level servers as named URLs
+                    for (let i = 1; i < entries.length; i++) {
+                        const entry = entries[i];
+                        if (entry == null) {
+                            continue;
+                        }
+                        const [name, schema] = entry;
+                        const url =
+                            typeof schema === "string"
+                                ? schema
+                                : isRawMultipleBaseUrlsEnvironment(schema)
+                                  ? Object.values(schema.urls)[0]
+                                  : (schema["default-url"] ?? schema.url);
+                        if (url != null) {
+                            urls[name] = url;
+                            context.setUrlId(url, name);
+                        }
+                    }
+
+                    if (hasWebsocketServersWithName) {
+                        // Merge WebSocket servers, but do not let a WebSocket URL with
+                        // the same x-fern-server-name silently overwrite an HTTP URL we
+                        // already placed on this environment. When names collide, fall
+                        // back to a protocol-suffixed key (e.g. `Agent_wss`) so both
+                        // URLs remain addressable.
+                        mergeWebsocketUrlsWithoutOverwriting(
+                            urls,
+                            extractUrlsFromEnvironmentSchema(websocketServersWithName),
+                            context
+                        );
+                    }
+
+                    context.builder.addEnvironment({
+                        name: envName,
+                        schema: { urls }
+                    });
+                    if (context.options.inferDefaultEnvironment !== false) {
+                        context.builder.setDefaultEnvironment(envName);
+                    }
+                    context.builder.setDefaultUrl(DEFAULT_URL_NAME);
+                }
+            } else if (apiToUrls.size > 0) {
+                let firstEnvironment = true;
+
+                for (const [envName, envSchema] of Object.entries(topLevelServersWithName)) {
+                    const baseUrl =
+                        typeof envSchema === "string"
+                            ? envSchema
+                            : isRawMultipleBaseUrlsEnvironment(envSchema)
+                              ? Object.values(envSchema.urls)[0]
+                              : (envSchema["default-url"] ?? envSchema.url);
+
+                    if (!baseUrl) {
+                        continue; // Skip if no base URL
+                    }
+
+                    context.setUrlId(baseUrl, DEFAULT_URL_NAME);
+
+                    const envSuffix = baseUrl.match(/[-]([a-z0-9]+)\./i)?.[1]?.toLowerCase() || "production";
+
+                    const urls: Record<string, string> = {
+                        [DEFAULT_URL_NAME]: baseUrl
+                    };
+
+                    for (const [apiName, apiUrlMap] of apiToUrls.entries()) {
+                        const apiUrl =
+                            apiUrlMap.get(envSuffix) || apiUrlMap.get("production") || apiUrlMap.values().next().value;
+                        if (apiUrl) {
+                            urls[apiName] = apiUrl;
+                        }
+                    }
+
+                    // Include websocket servers when we have multi-API grouping.
+                    // Matches historical behavior: when a WebSocket server shares an
+                    // `x-fern-server-name` with an HTTP server, the WebSocket URL
+                    // silently overwrites the HTTP URL under that name. The
+                    // protocol-suffixed disambiguation lives only in the opt-in
+                    // consolidated branch (`multi-server-strategy: urls-per-environment`).
+                    if (hasWebsocketServersWithName) {
+                        Object.assign(urls, extractUrlsFromEnvironmentSchema(websocketServersWithName));
+                    }
+
+                    if (Object.keys(urls).length > 1) {
+                        context.builder.addEnvironment({
+                            name: envName,
+                            schema: { urls }
+                        });
+                    } else {
+                        context.builder.addEnvironment({
+                            name: envName,
+                            schema: baseUrl
+                        });
+                    }
+
+                    if (firstEnvironment) {
+                        if (context.options.inferDefaultEnvironment !== false) {
+                            context.builder.setDefaultEnvironment(envName);
+                        }
+                        firstEnvironment = false;
+                    }
+                }
+
+                // Set default URL if we have multiple URLs
+                if (apiToUrls.size > 0) {
+                    context.builder.setDefaultUrl(DEFAULT_URL_NAME);
+                }
+            } else {
+                let firstEnvironment = true;
+                for (const [name, schema] of Object.entries(topLevelServersWithName)) {
+                    if (hasWebsocketServersWithName || Object.keys(endpointLevelServersWithName).length > 0) {
+                        const baseUrl =
+                            typeof schema === "string"
+                                ? schema
+                                : isRawMultipleBaseUrlsEnvironment(schema)
+                                  ? Object.values(schema.urls)[0]
+                                  : (schema["default-url"] ?? schema.url);
+                        if (baseUrl != null) {
+                            context.setUrlId(baseUrl, DEFAULT_URL_NAME);
+                        }
+                        context.builder.addEnvironment({
+                            name,
+                            schema: {
+                                urls: {
+                                    ...{ [DEFAULT_URL_NAME]: baseUrl ?? "" },
+                                    ...extractUrlsFromEnvironmentSchema(endpointLevelServersWithName),
+                                    ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
+                                }
+                            }
+                        });
+                    } else {
+                        context.builder.addEnvironment({
+                            name,
+                            schema
+                        });
+                    }
+                    if (firstEnvironment) {
+                        if (context.options.inferDefaultEnvironment !== false) {
+                            context.builder.setDefaultEnvironment(name);
+                        }
+                        firstEnvironment = false;
+                    }
+                }
+            }
+        }
+    }
+}

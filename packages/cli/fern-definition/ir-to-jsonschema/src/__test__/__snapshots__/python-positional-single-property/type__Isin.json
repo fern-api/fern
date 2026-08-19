@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "isin": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "isin"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

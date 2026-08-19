@@ -1,0 +1,70 @@
+types:
+  User:
+    properties:
+      name: string
+      tags: list<string>
+
+service:
+  base-path: /user
+  auth: false
+  endpoints:
+    getUser:
+      path: "/{user_id}"
+      method: GET
+      request:
+        name: GetUsersRequest
+        path-parameters:
+          user_id: string
+      response: User
+
+    createUser:
+      path: "/"
+      method: POST
+      request:
+        name: CreateUserRequest
+        body: User
+      response: User
+
+    updateUser:
+      path: "/{user_id}"
+      method: PATCH
+      request:
+        name: UpdateUserRequest
+        body: User
+        path-parameters:
+          user_id: string
+      response: User
+
+    searchUsers:
+      path: "/{user_id}/search"
+      method: GET
+      request:
+        name: SearchUsersRequest
+        path-parameters:
+          user_id: string
+        query-parameters:
+          limit: optional<integer>
+      response: list<User>
+
+    getUserMetadata:
+      path: "/{user_id}/metadata/v{version}"
+      method: GET
+      docs: Test endpoint with path parameter that has a text prefix (v{version})
+      request:
+        name: GetUserMetadataRequest
+        path-parameters:
+          user_id: string
+          version: integer
+      response: User
+
+    getUserSpecifics:
+      path: "/{user_id}/specifics/{version}/{thought}"
+      method: GET
+      docs: Test endpoint with path parameters listed in different order than found in path
+      request:
+        name: GetUserSpecificsRequest
+        path-parameters:
+          thought: string
+          user_id: string
+          version: integer
+      response: User

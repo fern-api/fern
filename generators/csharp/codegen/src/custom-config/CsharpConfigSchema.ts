@@ -1,0 +1,169 @@
+import { z } from "zod";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
+
+/**
+ * Schema for configuring output paths for generated C# SDK files.
+ *
+ * Supports either a simple string (all files go to that path) or an object
+ * with specific paths for library, test, solution, and other files.
+ *
+ * Examples:
+ * - Simple: `outputPath: src`
+ * - Object: `outputPath: { library: path/to/src/ApiLib, test: path/to/test/ApiLib.Test }`
+ */
+export const OutputPathSchema = z.union([
+    z.string(),
+    z.object({
+        /** Path for the library project (e.g., "src" or "path/to/src/ApiLib") */
+        library: z.string().optional(),
+        /** Path for the test project (e.g., "src" or "path/to/test/ApiLib.Test") */
+        test: z.string().optional(),
+        /** Path for the solution file (e.g., "." or "path/to") */
+        solution: z.string().optional(),
+        /** Path for other files like README.md and reference.md (e.g., "." or "path/to/src/ApiLib") */
+        other: z.string().optional()
+    })
+]);
+
+export type OutputPathSchema = z.infer<typeof OutputPathSchema>;
+
+export const CsharpConfigSchema = z.object({
+    // Influence dynamic snippets.
+    namespace: z.string().optional(),
+    "base-api-exception-class-name": z.string().optional(),
+    "simplify-object-dictionaries": z.boolean().optional(),
+    "base-exception-class-name": z.string().optional(),
+    "client-class-name": z.string().optional(),
+    "environment-class-name": z.string().optional(),
+    "exported-client-class-name": z.string().optional(),
+    "explicit-namespaces": z.boolean().optional(),
+    "inline-path-parameters": z.boolean().optional(),
+    "read-only-memory-types": z.optional(z.array(z.string())),
+    "root-namespace-for-core-classes": z.boolean().optional(),
+    "use-discriminated-unions": z.boolean().optional(),
+    "use-undiscriminated-unions": z.boolean().optional(),
+    // When true, a discriminated union's base properties are owned solely by the union envelope:
+    // `samePropertiesAsObject` variant leaves that duplicate them (per the IR's
+    // deferredUnionBaseProperties fact) stop re-declaring them. Off by default so existing generated
+    // output is unchanged; opt in to drop the duplicated leaf fields.
+    "dedupe-union-base-properties": z.boolean().optional(),
+    "experimental-fully-qualified-namespaces": z.boolean().optional(),
+    "experimental-dotnet-format": z.boolean().optional(),
+
+    // new experimental options
+    "experimental-enable-websockets": z.boolean().optional(),
+    "experimental-readonly-constants": z.boolean().optional(),
+    "generate-literals": z.boolean().optional(),
+    "experimental-explicit-nullable-optional": z.boolean().optional(),
+    "use-default-request-parameter-values": z.boolean().optional(),
+    "respect-optional-request-body": z.boolean().optional(),
+    "redact-response-body-on-error": z.boolean().optional(),
+    "enable-inline-types": z.boolean().optional(),
+
+    // temporary options to unblock websocket URIs generation
+    //
+    // example
+    // temporary-websocket-environments:
+    //   '/stream/input':       # channel path
+    //      default-environment: 'prod'  # name used in
+    //      environments:
+    //        'prod': 'wss://api.company.com/foo/bar'
+    //        'dev': 'wss://dev.api.company.com/v2/foo/bar'
+    //
+    // or for a service that doesn't define an environment name
+    // like the websocket fixture, use an empty string as the environment name
+    // temporary-websocket-environments:
+    //   '/realtime/':
+    //      environments:
+    //        '': 'wss://api.company.com/foo/bar'
+
+    "temporary-websocket-environments": z
+        .record(
+            z.object({
+                "default-environment": z.string().optional(),
+                environments: z.record(z.string())
+            })
+        )
+        .optional(),
+
+    // Output path configuration.
+    // Supports either a simple string (all files go to that path) or an object
+    // with specific paths for library, test, solution, and other files.
+    "output-path": OutputPathSchema.optional(),
+
+    // General options.
+    "root-client-class-access": z.enum(["public", "internal"]).optional(),
+    "custom-pager-name": z.string().optional(),
+    "offset-semantics": z.enum(["item-index", "page-index"]).optional(),
+    "enable-forward-compatible-enums": z.boolean().optional(),
+    "generate-error-types": z.boolean().optional(),
+    "package-id": z.string().optional(),
+    "generate-mock-server-tests": z.boolean().optional(),
+    "enable-wire-tests": z.boolean().optional(),
+    "include-exception-handler": z.boolean().optional(),
+    "exception-interceptor-class-name": z.string().optional(),
+    "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
+    "omit-fern-headers": z.boolean().optional(),
+    // When true (and the API composes OAuth client-credentials with basic auth via
+    // `auth: any`), auth credentials passed explicitly to the client constructor take
+    // precedence over environment-variable defaults when selecting the auth scheme
+    // (e.g. explicit basic auth wins over OAuth env vars). Off by default so existing
+    // behavior is unchanged.
+    "prefer-explicit-auth": z.boolean().optional(),
+    // When true, emits the platform observability headers `X-Fern-Runtime`,
+    // `X-Fern-Runtime-Version`, and `X-Fern-Platform` on generated SDK requests.
+    // Off by default so existing generated output is unchanged. Still subject to
+    // `omit-fern-headers`.
+    "include-platform-headers": z.boolean().optional(),
+    // When true, generated clients accept an `AppInfo` client option (`Name`,
+    // `Version?`, `Comment?`) whose sanitized product token is appended to whatever
+    // `User-Agent` the SDK would otherwise send (`{sdk}/{version} ... {product}/{ver}
+    // ({comment})`), following RFC 9110. Off by default so existing generated output
+    // is unchanged. Independent of `include-platform-headers`; still overridable by an
+    // explicit `User-Agent` header and suppressed by `omit-fern-headers`.
+    "allow-user-agent-app-info": z.boolean().optional(),
+    "unified-client-options": z.boolean().optional(),
+    // When true (default), server URL variables declared on the API's environments (e.g. region)
+    // are exposed as ClientOptions properties and interpolated into the environment URL template(s)
+    // at construction time. When false, these client options and the URL-template interpolation are
+    // suppressed and the SDK falls back to the pre-feature base-URL behavior.
+    "server-url-variables": z.boolean().optional(),
+    // When true, fall back to `$"<NuGetPackageId>/{Version.Current}"` for the
+    // `User-Agent` platform header when the IR's `platformHeaders.userAgent` is
+    // unset (e.g. SDKs imported from OpenAPI). Off by default to preserve the
+    // pre-existing behavior of emitting no `User-Agent` header in that case.
+    "user-agent-name-from-package": z.boolean().optional(),
+
+    // Deprecated.
+    "extra-dependencies": z
+        .record(z.string())
+        .optional()
+        .describe(
+            "(Deprecated) The extra dependencies to add into the csproj file. Use the [ProjectName].Custom.props to configure additional dependencies instead."
+        ),
+    "pascal-case-environments": z.boolean().optional(),
+
+    "experimental-enable-forward-compatible-enums": z.boolean().optional(),
+
+    // Solution file format option.
+    // "sln" generates both .sln and .slnx files for compatibility with older
+    // .NET tooling or CI systems that do not yet support .slnx.
+    // "slnx" (default) generates only the modern .slnx format.
+    "sln-format": z.enum(["sln", "slnx"]).optional(),
+    maxRetries: z.number().int().min(0).optional(),
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),
+    "default-timeout-in-seconds": z
+        .union([z.number().positive(), z.literal("infinity")])
+        .optional()
+        .describe(
+            "(Deprecated) The default timeout for network requests, in seconds. Use `default-timeout-in-milliseconds` instead. Set to `infinity` to disable the default timeout. SDK users can still override this per-request via request options."
+        ),
+    "default-timeout-in-milliseconds": z
+        .union([z.number().positive(), z.literal("infinity")])
+        .optional()
+        .describe(
+            "The default timeout for network requests, in milliseconds. Set to `infinity` to disable the default timeout. Takes precedence over the deprecated `default-timeout-in-seconds`. SDK users can still override this per-request via request options."
+        )
+});
+
+export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;

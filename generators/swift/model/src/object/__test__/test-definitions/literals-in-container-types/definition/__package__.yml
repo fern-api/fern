@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  ObjectWithLiteralsInContainerTypes:
+    properties:
+      stringField: string
+      intField: optional<integer>
+      literalFieldAbc: literal<"abc">
+      optionalFieldAbc: optional<literal<"abc">>
+      optionalLiteralFieldDef: optional<literal<"def">>
+      listOfLiteralsFieldGhi: list<literal<"ghi">>

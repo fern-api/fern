@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedSdkClientClassImpl > getBaseUrl > returns baseUrl ?? environment reference 1`] = `"await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment)"`;
+
+exports[`GeneratedSdkClientClassImpl > getReferenceToFetcher > returns options.fetcher ?? core.fetcher when custom fetcher allowed 1`] = `"this._options.fetcher ?? core.fetcher"`;

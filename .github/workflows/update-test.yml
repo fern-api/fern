@@ -1,0 +1,67 @@
+name: Update Test
+
+on:
+  workflow_dispatch:
+
+# Cancel previous workflows on previous push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DO_NOT_TRACK: "1"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
+
+jobs:
+  update-test:
+    if: github.repository == 'fern-api/fern' && github.ref != 'refs/heads/main'
+    runs-on: Test
+    timeout-minutes: 90
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          lfs: true
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Cache Fern bin dependencies
+        uses: actions/cache@v5
+        with:
+          path: ~/.fern/bin
+          key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-fern-bin-
+
+      - name: Build CLI for install-dependencies
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
+
+      - name: Install protobuf dependencies (buf + protoc-gen-openapi)
+        run: |
+          FERN_NO_VERSION_REDIRECTION=true node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+          echo "$HOME/.fern/bin" >> $GITHUB_PATH
+
+      - name: Run test:update
+        run: pnpm test:update
+
+      - name: Run test:ete:update
+        timeout-minutes: 30
+        env:
+          FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+        run: FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm test:ete:update
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: update test snapshots"
+            git push
+          else
+            echo "No snapshot changes to commit"
+          fi

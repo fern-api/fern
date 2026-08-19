@@ -1,0 +1,6 @@
+
+syntax = "proto3";
+
+// Includes an arbitrary amount of whitespace.
+package  user.v1;
+

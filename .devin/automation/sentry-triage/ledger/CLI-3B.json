@@ -1,0 +1,9 @@
+{
+  "title": "Null overlay in applyOverlays",
+  "disposition": "shipped",
+  "rationale": "Null overlay documents are user-authored invalid overlay input and are now handled by overlay boundary validation instead of throwing an internal TypeError.",
+  "fixSummary": "Validate parsed OpenAPI overlay documents as objects before reading required fields.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15948",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "Workspace overlay loading TypeError on null overlay; true validation/product bug until fixed."
+}

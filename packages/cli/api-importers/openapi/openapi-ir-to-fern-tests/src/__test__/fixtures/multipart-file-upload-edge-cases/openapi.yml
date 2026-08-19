@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: Multipart File Upload Edge Cases
+  version: 1.0.0
+
+paths:
+  /upload:
+    post:
+      operationId: uploadFile
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                description:
+                  type: string
+              required:
+                - file
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fileId:
+                    type: string
+                  url:
+                    type: string
+
+  /upload-multiple:
+    post:
+      operationId: uploadMultipleFiles
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                metadata:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    tags:
+                      type: array
+                      items:
+                        type: string
+              required:
+                - files
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uploadedCount:
+                    type: integer
+
+  /upload-with-json:
+    post:
+      operationId: uploadWithJson
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                data:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    size:
+                      type: integer
+              required:
+                - file
+                - data
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean

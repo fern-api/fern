@@ -1,0 +1,135 @@
+name: product-audience-api
+display-name: Product Audience Test API
+
+auth: false
+
+types:
+  Status:
+    properties:
+      healthy: boolean
+      timestamp: datetime
+
+  Event:
+    properties:
+      id: string
+      name: string
+      data: map<string, unknown>
+      timestamp: datetime
+
+  Report:
+    properties:
+      id: string
+      title: string
+      data: list<map<string, unknown>>
+
+  Organization:
+    properties:
+      id: string
+      name: string
+      tier: string
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    # Core Platform APIs
+    getCoreStatus:
+      display-name: Get Core Status
+      method: GET
+      path: /core/status
+      response: Status
+
+    initializeCore:
+      display-name: Initialize Core
+      method: POST
+      path: /core/initialize
+      request:
+        properties:
+          config: map<string, unknown>
+      response: Status
+
+    getCoreMetrics:
+      display-name: Get Core Metrics (Internal)
+      method: GET
+      path: /core/metrics
+      response: map<string, integer>
+
+    resetCore:
+      display-name: Reset Core (Admin)
+      method: POST
+      path: /core/admin/reset
+      response: Status
+
+    # Analytics APIs
+    submitEvent:
+      display-name: Submit Event
+      method: POST
+      path: /analytics/events
+      request: Event
+      response: boolean
+
+    getReport:
+      display-name: Get Report
+      method: GET
+      path: /analytics/reports/{id}
+      path-parameters:
+        id: string
+      response: Report
+
+    # Mobile APIs
+    mobileLogin:
+      display-name: Mobile Login
+      method: POST
+      path: /mobile/auth/login
+      request:
+        properties:
+          username: string
+          password: string
+      response:
+        properties:
+          token: string
+          expires: datetime
+
+    refreshMobileToken:
+      display-name: Refresh Mobile Token
+      method: POST
+      path: /mobile/auth/refresh
+      request:
+        properties:
+          refreshToken: string
+      response:
+        properties:
+          token: string
+          expires: datetime
+
+    syncMobileData:
+      display-name: Sync Mobile Data
+      method: GET
+      path: /mobile/sync/data
+      response: list<map<string, unknown>>
+
+    uploadMobileData:
+      display-name: Upload Mobile Data
+      method: POST
+      path: /mobile/sync/upload
+      request:
+        properties:
+          data: list<map<string, unknown>>
+      response: boolean
+
+    # Enterprise APIs
+    getOrganizations:
+      display-name: Get Organizations
+      method: GET
+      path: /enterprise/organizations
+      response: list<Organization>
+
+    provisionEnterprise:
+      display-name: Provision Enterprise
+      method: POST
+      path: /enterprise/provisioning
+      request:
+        properties:
+          organizationId: string
+          features: list<string>
+      response: Organization

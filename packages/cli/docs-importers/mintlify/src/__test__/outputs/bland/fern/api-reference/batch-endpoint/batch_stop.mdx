@@ -1,0 +1,50 @@
+---
+title: Cancel Batch
+subtitle: Terminates every dispatched call for a specific batch.
+slug: api-reference/batch-endpoint/batch_stop
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Body
+
+<ParamField body="batch_id" type="string" required>
+  The unique identifier for the batch to be cancelled.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  The status of the request. If anything other than 'success', an error has occurred or all calls have already been
+  completed.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  A message describing the status of the request.
+</ResponseField>
+
+<ResponseField name="num_calls" type="number">
+  The number of calls that were cancelled.
+</ResponseField>
+
+<ResponseField name="batch_id" type="array">
+  The `batch_id` of the cancelled batch.
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "status": "success",
+  "message": "Successfully stopped batch",
+  "num_calls": 1204,
+  "batch_id": "5e5b1a3a-2b0a-4b9e-8b9e-asdf-gen-batch"
+}
+```
+
+</ResponseExample>

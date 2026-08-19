@@ -1,0 +1,5 @@
+- summary: |
+    Derive sync-sdk.sh rsync set and build.mjs SDK_IGNORE from cli-sdk's
+    sync-manifest.toml instead of hardcoded path lists. Eliminates layout
+    drift between the two repos.
+  type: chore

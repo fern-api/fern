@@ -1,0 +1,217 @@
+---
+title: Get transcript
+subtitle: >-
+  After dispatching a phone call, you can ping this endpoint repeatedly (e.g.
+  every two seconds) to get live updates. View the example below.
+slug: api-reference/endpoint/logs
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Body
+
+<ParamField body="call_id" type="string" required>
+  The unique identifier for the call.
+</ParamField>
+
+### Response
+
+<ResponseField name="transcripts" type="array of objects">
+  An array of phrases spoken during the call. Each index includes: - `id` - `created_at` - `text` - `user` (can be
+  `user`, `assistant`, `robot`, or `agent-action`)
+</ResponseField>
+
+<ResponseField name="c_id" type="number">
+  The unique identifier for the call.
+</ResponseField>
+
+<ResponseField name="to" type="string">
+  The phone number that received the call.
+</ResponseField>
+
+<ResponseField name="from" type="string">
+  The phone number that made the call.
+</ResponseField>
+
+<ResponseField name="request_data" type="object">
+  Details about parameters in the original api request.
+</ResponseField>
+
+<ResponseField name="completed" type="boolean">
+  Whether the call has been completed. If it differs from the value of 'queue_status', this will be the most up-to-date
+  status.
+</ResponseField>
+
+<ResponseField name="queue_status" type="string">
+  The status of the call. During extremely high volume periods, calls may be queued for a short period of time before being dispatched.
+
+Progresses through the following stages:
+
+- `new`: An API request has been received.
+- `queued`: Call pararameters have been validated and authentication succeeded.
+- `allocated`: Extremely brief, the call is being dispatched.
+- `started`: The phone call is live and in progress.
+- `complete`: The phone call has ended successfully.
+
+The following statuses show the point that was reached before an error:
+
+- `pre_queue_error`: An error occurred before the call was queued. Invalid parameters generally cause this.
+- `queue_error`: Error occurred while the call was queued. Ex. Valid phone number but to an unserviced area.
+- `call_error`: Error occurred during live call. May be caused by transferring to an invalid phone number or an unforeseen error.
+- `complete_error`: Error occurred after the call was completed. Ex. A post-call webhook failed.
+
+If at any point an error occurs, it will be recorded in the `error_message` field.
+
+</ResponseField>
+
+<ResponseField name="error_message" type="string or null">
+  If an error occurs, this will contain a description of the error. Otherwise, it will be null.
+</ResponseField>
+
+<ResponseField name="endpoint_url" type="string">
+  The URL that was called to dispatch the phone call.
+</ResponseField>
+
+<ResponseField name="max_duration" type="number">
+  The maximum length of time the call was allowed to last. If the call would exceed this length, it's ended early.
+</ResponseField>
+
+<ResponseField name="corrected_duration" type="number">
+  The total length of time the call was connected. This differs from call_length in that it includes ringing and
+  connection time.
+</ResponseField>
+
+<ResponseField name="call_length" type="number">
+  The length of the call in minutes. Only counts connected time.
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  The timestamp for when the call was dispatched.
+</ResponseField>
+
+# Polling example
+
+To track the status of a live phone call, you can use a 'polling' technique to repeatedly ping the logs endpoint.
+
+Here's an example in Javascript and Python.
+
+<CodeGroup>
+```javascript PollLogs.js
+const axios = require('axios');
+
+// Headers
+const headers = {
+'authorization': 'YOUR-API-KEY-HERE'
+};
+
+// Data
+const data = {
+call_id: "YOUR-CALL-ID",
+};
+
+// Function to make the API request
+const makeRequest = async () => {
+try {
+const response = await axios.post("https://api.bland.ai/logs", data, { headers });
+console.log("Success:", response.data);
+} catch (error) {
+console.error("Failed:", error);
+}
+};
+
+// Ping the endpoint every 2 seconds (2000 milliseconds)
+setInterval(makeRequest, 2000);
+
+````
+
+```python PollLogs.py
+import requests
+import time
+
+def make_request():
+    headers = {'authorization': 'YOUR-API-KEY-HERE'}
+    data = {'call_id': 'YOUR-CALL-ID'}
+    try:
+        response = requests.post('https://api.bland.ai/logs', json=data, headers=headers)
+        if response.status_code == 200:
+            print(f"Success: {response.json()}")
+        else:
+            print(f"Failed: {response.status_code}, {response.text}")
+    except Exception as e:
+        print(f"Exception: {e}")
+
+# Ping the endpoint every 2 seconds
+while True:
+    make_request()
+    time.sleep(2)
+````
+
+</CodeGroup>
+
+<ResponseExample>
+
+```json Response
+{
+  "c_id": "0e75bfda-8c5c-424a-8d08-b497078e39b3",
+  "to": "1112223344",
+  "from": "5556667788",
+  "corrected_duration": "97",
+  "max_duration": 30,
+  "queue_status": "complete",
+  "error_message": null,
+  "endpoint_url": "api.bland.ai",
+  "request_data": {
+    "phone_number": "1112223344",
+    "reduce_latency": false,
+    "wait": false,
+    "language": "ENG"
+  },
+  "completed": true,
+  "created_at": "2023-09-22T19:14:27.015663+00:00",
+  "transcripts": [
+    {
+      "id": 95859,
+      "created_at": "2023-09-22T19:14:34.319713+00:00",
+      "text": "Hi this is Blandy. Im calling to say hi. How are you doing today?",
+      "user": "assistant",
+      "c_id": "0e75bfda-8c5c-424a-8d08-b497078e39b3"
+    },
+    {
+      "id": 95860,
+      "created_at": "2023-09-22T19:14:47.176008+00:00",
+      "text": "I'm doing great. How are you doing?",
+      "user": "user",
+      "c_id": "0e75bfda-8c5c-424a-8d08-b497078e39b3"
+    },
+    {
+      "id": 95861,
+      "created_at": "2023-09-22T19:14:48.572245+00:00",
+      "text": "Im doing well thank you for asking! Just here to assist you with any questions or concerns you may have. How can I help you today?",
+      "user": "assistant",
+      "c_id": "0e75bfda-8c5c-424a-8d08-b497078e39b3"
+    },
+    {
+      "id": 95874,
+      "created_at": "2023-09-22T19:16:03.97614+00:00",
+      "text": "End phone call.",
+      "user": "user",
+      "c_id": "0e75bfda-8c5c-424a-8d08-b497078e39b3"
+    },
+    {
+      "id": 95875,
+      "created_at": "2023-09-22T19:16:04.564979+00:00",
+      "text": " FINISH",
+      "user": "assistant",
+      "c_id": "0e75bfda-8c5c-424a-8d08-b497078e39b3"
+    }
+  ],
+  "call_length": 1.5
+}
+```
+
+</ResponseExample>

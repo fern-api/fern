@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `JsonError` and `ParseError` constructors to set `this.name` and use
+    `new.target.prototype` so that error names survive esbuild minification.
+  type: fix

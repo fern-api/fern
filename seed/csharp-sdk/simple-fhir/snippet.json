@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/account/{account_id}",
+                "method": "GET",
+                "identifier_override": "endpoint_.getAccount"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.GetAccountAsync(\"account_id\");\n"
+            }
+        }
+    ]
+}

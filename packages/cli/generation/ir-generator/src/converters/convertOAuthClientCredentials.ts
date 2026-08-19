@@ -1,0 +1,60 @@
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { OAuthClientCredentials } from "@fern-api/ir-sdk";
+import { CliError } from "@fern-api/task-context";
+import { FernFileContext } from "../FernFileContext.js";
+import { EndpointResolver } from "../resolvers/EndpointResolver.js";
+import { PropertyResolver } from "../resolvers/PropertyResolver.js";
+import { TypeResolver } from "../resolvers/TypeResolver.js";
+import { convertOAuthRefreshEndpoint } from "./convertOAuthRefreshEndpoint.js";
+import { convertOAuthTokenEndpoint } from "./convertOAuthTokenEndpoint.js";
+import { RefreshTokenEndpoint, TokenEndpoint } from "./convertOAuthUtils.js";
+
+export function convertOAuthClientCredentials({
+    propertyResolver,
+    endpointResolver,
+    typeResolver,
+    file,
+    oauthScheme,
+    tokenEndpoint,
+    refreshTokenEndpoint
+}: {
+    propertyResolver: PropertyResolver;
+    endpointResolver: EndpointResolver;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    oauthScheme: RawSchemas.OAuthSchemeSchema;
+    tokenEndpoint: TokenEndpoint;
+    refreshTokenEndpoint: RefreshTokenEndpoint | undefined;
+}): OAuthClientCredentials {
+    const oauthTokenEndpoint = convertOAuthTokenEndpoint({
+        propertyResolver,
+        endpointResolver,
+        typeResolver,
+        file,
+        tokenEndpoint
+    });
+    if (oauthTokenEndpoint == null) {
+        throw new CliError({
+            message: "Failed to convert OAuth token endpoint.",
+            code: CliError.Code.IrConversionError
+        });
+    }
+    const refreshEndpoint =
+        refreshTokenEndpoint != null
+            ? convertOAuthRefreshEndpoint({
+                  propertyResolver,
+                  endpointResolver,
+                  file,
+                  refreshTokenEndpoint
+              })
+            : undefined;
+    return {
+        clientIdEnvVar: oauthScheme["client-id-env"],
+        clientSecretEnvVar: oauthScheme["client-secret-env"],
+        tokenPrefix: oauthScheme["token-prefix"],
+        tokenHeader: oauthScheme["token-header"],
+        scopes: oauthScheme.scopes,
+        tokenEndpoint: oauthTokenEndpoint,
+        refreshEndpoint
+    };
+}

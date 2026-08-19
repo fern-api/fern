@@ -1,0 +1,66 @@
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
+export type EndpointSnippetRequest = Omit<FernIr.dynamic.EndpointSnippetRequest, "baseUrl"> & {
+    baseURL: string | undefined;
+};
+
+/**
+ * The @fern-api/dynamic-ir-sdk doesn't include the serialization layer, so the casing
+ * convention doesn't match.
+ */
+export function convertDynamicEndpointSnippetRequest(
+    request: FernIr.dynamic.EndpointSnippetRequest
+): EndpointSnippetRequest {
+    return {
+        ...request,
+        baseURL: request.baseUrl
+    };
+}
+
+/**
+ * Converts an FernIr.ExampleEndpointCall from the IR to a FernIr.dynamic.EndpointSnippetRequest
+ * that can be used for snippet generation.
+ */
+export function convertExampleEndpointCallToSnippetRequest(
+    example: FernIr.ExampleEndpointCall,
+    endpoint: FernIr.HttpEndpoint
+): FernIr.dynamic.EndpointSnippetRequest {
+    // Create endpoint location from the FernIr.HttpEndpoint
+    let path = endpoint.fullPath.head;
+    for (const part of endpoint.fullPath.parts) {
+        path += `{${part.pathParameter}}${part.tail}`;
+    }
+
+    const endpointLocation: FernIr.dynamic.EndpointLocation = {
+        method: endpoint.method,
+        path
+    };
+
+    const pathParameters: Record<string, unknown> = {};
+    [...example.rootPathParameters, ...example.servicePathParameters, ...example.endpointPathParameters].forEach(
+        (param) => {
+            pathParameters[getOriginalName(param.name)] = param.value.jsonExample;
+        }
+    );
+
+    const queryParameters: Record<string, unknown> = {};
+    example.queryParameters.forEach((param) => {
+        queryParameters[getWireValue(param.name)] = param.value.jsonExample;
+    });
+
+    const headers: Record<string, unknown> = {};
+    [...example.serviceHeaders, ...example.endpointHeaders].forEach((header) => {
+        headers[getWireValue(header.name)] = header.value.jsonExample;
+    });
+
+    return {
+        endpoint: endpointLocation,
+        baseUrl: undefined,
+        environment: undefined,
+        auth: undefined,
+        pathParameters: Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
+        queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
+        headers: Object.keys(headers).length > 0 ? headers : undefined,
+        requestBody: example.request?.jsonExample
+    };
+}

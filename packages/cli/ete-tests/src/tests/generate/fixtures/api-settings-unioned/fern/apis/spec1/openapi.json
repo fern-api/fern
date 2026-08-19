@@ -1,0 +1,696 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "contact": {
+      "name": "Train Support",
+      "url": "https://example.com/support",
+      "email": "support@example.com"
+    },
+    "license": {
+      "name": "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International",
+      "identifier": "CC-BY-NC-SA-4.0"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com",
+      "description": "Production"
+    }
+  ],
+  "security": [
+    {
+      "OAuth2": [
+        "read"
+      ]
+    }
+  ],
+  "paths": {},
+  "components": {
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "OAuth 2.0 authorization code following RFC8725 best practices.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://example.com/oauth/authorize",
+            "tokenUrl": "https://example.com/oauth/token",
+            "scopes": {
+              "read": "Read access",
+              "write": "Write access"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Station": {
+        "type": "object",
+        "xml": {
+          "name": "station"
+        },
+        "required": [
+          "id",
+          "name",
+          "address",
+          "country_code"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier for the station.",
+            "examples": [
+              "efdbb9d1-02c2-4bc3-afb7-6788d8782b1e",
+              "b2e783e1-c824-4d63-b37a-d8d698862f1d"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the station",
+            "examples": [
+              "Berlin Hauptbahnhof",
+              "Paris Gare du Nord"
+            ]
+          },
+          "address": {
+            "type": "string",
+            "description": "The address of the station.",
+            "examples": [
+              "Invalidenstraße 10557 Berlin, Germany",
+              "18 Rue de Dunkerque 75010 Paris, France"
+            ]
+          },
+          "country_code": {
+            "type": "string",
+            "description": "The country code of the station.",
+            "format": "iso-country-code",
+            "examples": [
+              "DE",
+              "FR"
+            ]
+          },
+          "timezone": {
+            "type": "string",
+            "description": "The timezone of the station in the [IANA Time Zone Database format](https://www.iana.org/time-zones).",
+            "examples": [
+              "Europe/Berlin",
+              "Europe/Paris"
+            ]
+          }
+        }
+      },
+      "Links-Self": {
+        "type": "object",
+        "properties": {
+          "self": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "Links-Pagination": {
+        "type": "object",
+        "properties": {
+          "next": {
+            "type": "string",
+            "format": "uri"
+          },
+          "prev": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "Trip": {
+        "type": "object",
+        "xml": {
+          "name": "trip"
+        },
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier for the trip",
+            "examples": [
+              "4f4e4e1-c824-4d63-b37a-d8d698862f1d"
+            ]
+          },
+          "origin": {
+            "type": "string",
+            "description": "The starting station of the trip",
+            "examples": [
+              "Berlin Hauptbahnhof",
+              "Paris Gare du Nord"
+            ]
+          },
+          "destination": {
+            "type": "string",
+            "description": "The destination station of the trip",
+            "examples": [
+              "Paris Gare du Nord",
+              "Berlin Hauptbahnhof"
+            ]
+          },
+          "departure_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time when the trip departs",
+            "examples": [
+              "2024-02-01T10:00:00Z"
+            ]
+          },
+          "arrival_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time when the trip arrives",
+            "examples": [
+              "2024-02-01T16:00:00Z"
+            ]
+          },
+          "operator": {
+            "type": "string",
+            "description": "The name of the operator of the trip",
+            "examples": [
+              "Deutsche Bahn",
+              "SNCF"
+            ]
+          },
+          "price": {
+            "type": "number",
+            "description": "The cost of the trip",
+            "examples": [
+              50
+            ]
+          },
+          "bicycles_allowed": {
+            "type": "boolean",
+            "description": "Indicates whether bicycles are allowed on the trip"
+          },
+          "dogs_allowed": {
+            "type": "boolean",
+            "description": "Indicates whether dogs are allowed on the trip"
+          }
+        }
+      },
+      "Booking": {
+        "type": "object",
+        "xml": {
+          "name": "booking"
+        },
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier for the booking",
+            "readOnly": true,
+            "examples": [
+              "3f3e3e1-c824-4d63-b37a-d8d698862f1d"
+            ]
+          },
+          "trip_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Identifier of the booked trip",
+            "examples": [
+              "4f4e4e1-c824-4d63-b37a-d8d698862f1d"
+            ]
+          },
+          "passenger_name": {
+            "type": "string",
+            "description": "Name of the passenger",
+            "examples": [
+              "John Doe"
+            ]
+          },
+          "has_bicycle": {
+            "type": "boolean",
+            "description": "Indicates whether the passenger has a bicycle."
+          },
+          "has_dog": {
+            "type": "boolean",
+            "description": "Indicates whether the passenger has a dog."
+          }
+        }
+      },
+      "Wrapper-Collection": {
+        "description": "This is a generic request/response wrapper which contains both data and links which serve as hypermedia controls (HATEOAS).",
+        "type": "object",
+        "properties": {
+          "data": {
+            "description": "The wrapper for a collection is an array of objects.",
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "links": {
+            "description": "A set of hypermedia links which serve as controls for the client.",
+            "type": "object",
+            "readOnly": true
+          }
+        },
+        "xml": {
+          "name": "data"
+        }
+      },
+      "BookingPayment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier for the payment. This will be a unique identifier for the payment, and is used to reference the payment in other objects.",
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "amount": {
+            "description": "Amount intended to be collected by this payment. A positive decimal figure describing the amount to be collected.",
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "examples": [
+              49.99
+            ]
+          },
+          "currency": {
+            "description": "Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.",
+            "type": "string",
+            "enum": [
+              "bam",
+              "bgn",
+              "chf",
+              "eur",
+              "gbp",
+              "nok",
+              "sek",
+              "try"
+            ]
+          },
+          "source": {
+            "unevaluatedProperties": false,
+            "description": "The payment source to take the payment from. This can be a card or a bank account. Some of these properties will be hidden on read to protect PII leaking.",
+            "anyOf": [
+              {
+                "title": "Card",
+                "description": "A card (debit or credit) to take payment from.",
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "const": "card"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Cardholder's full name as it appears on the card.",
+                    "examples": [
+                      "Francis Bourgeois"
+                    ]
+                  },
+                  "number": {
+                    "type": "string",
+                    "description": "The card number, as a string without any separators. On read all but the last four digits will be masked for security.",
+                    "examples": [
+                      "4242424242424242"
+                    ]
+                  },
+                  "cvc": {
+                    "type": "integer",
+                    "description": "Card security code, 3 or 4 digits usually found on the back of the card.",
+                    "minLength": 3,
+                    "maxLength": 4,
+                    "writeOnly": true,
+                    "example": 123
+                  },
+                  "exp_month": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Two-digit number representing the card's expiration month.",
+                    "examples": [
+                      12
+                    ]
+                  },
+                  "exp_year": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Four-digit number representing the card's expiration year.",
+                    "examples": [
+                      2025
+                    ]
+                  },
+                  "address_line1": {
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  "address_line2": {
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  "address_city": {
+                    "type": "string"
+                  },
+                  "address_country": {
+                    "type": "string"
+                  },
+                  "address_post_code": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "number",
+                  "cvc",
+                  "exp_month",
+                  "exp_year",
+                  "address_country"
+                ]
+              },
+              {
+                "title": "Bank Account",
+                "description": "A bank account to take payment from. Must be able to make payments in the currency specified in the payment.",
+                "type": "object",
+                "properties": {
+                  "object": {
+                    "const": "bank_account",
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "string",
+                    "description": "The account number for the bank account, in string form. Must be a current account."
+                  },
+                  "sort_code": {
+                    "type": "string",
+                    "description": "The sort code for the bank account, in string form. Must be a six-digit number."
+                  },
+                  "account_type": {
+                    "enum": [
+                      "individual",
+                      "company"
+                    ],
+                    "type": "string",
+                    "description": "The type of entity that holds the account. This can be either `individual` or `company`."
+                  },
+                  "bank_name": {
+                    "type": "string",
+                    "description": "The name of the bank associated with the routing number.",
+                    "examples": [
+                      "Starling Bank"
+                    ]
+                  },
+                  "country": {
+                    "type": "string",
+                    "description": "Two-letter country code (ISO 3166-1 alpha-2)."
+                  }
+                },
+                "required": [
+                  "name",
+                  "number",
+                  "account_type",
+                  "bank_name",
+                  "country"
+                ]
+              }
+            ]
+          },
+          "status": {
+            "description": "The status of the payment, one of `pending`, `succeeded`, or `failed`.",
+            "type": "string",
+            "enum": [
+              "pending",
+              "succeeded",
+              "failed"
+            ],
+            "readOnly": true
+          }
+        }
+      },
+      "Links-Booking": {
+        "type": "object",
+        "properties": {
+          "booking": {
+            "type": "string",
+            "format": "uri",
+            "examples": [
+              "https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb"
+            ]
+          }
+        }
+      }
+    },
+    "headers": {
+      "RateLimit": {
+        "description": "The RateLimit header communicates quota policies. It contains a `limit` to\nconvey the expiring limit, `remaining` to convey the remaining quota units,\nand `reset` to convey the time window reset time.\n",
+        "schema": {
+          "type": "string",
+          "examples": [
+            "limit=10, remaining=0, reset=10"
+          ]
+        }
+      },
+      "Retry-After": {
+        "description": "The Retry-After header indicates how long the user agent should wait before making a follow-up request. \nThe value is in seconds and can be an integer or a date in the future. \nIf the value is an integer, it indicates the number of seconds to wait. \nIf the value is a date, it indicates the time at which the user agent should make a follow-up request. \n",
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "integer": {
+            "value": "120",
+            "summary": "Retry after 120 seconds"
+          },
+          "date": {
+            "value": "Fri, 31 Dec 2021 23:59:59 GMT",
+            "summary": "Retry after the specified date"
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Bad Request",
+        "headers": {
+          "RateLimit": {
+            "$ref": "#/components/headers/RateLimit"
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "example": {
+              "type": "https://example.com/errors/bad-request",
+              "title": "Bad Request",
+              "status": 400,
+              "detail": "The request is invalid or missing required parameters."
+            }
+          },
+          "application/problem+xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "example": {
+              "type": "https://example.com/errors/bad-request",
+              "title": "Bad Request",
+              "status": 400,
+              "detail": "The request is invalid or missing required parameters."
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Conflict",
+        "headers": {
+          "RateLimit": {
+            "$ref": "#/components/headers/RateLimit"
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "example": {
+              "type": "https://example.com/errors/conflict",
+              "title": "Conflict",
+              "status": 409,
+              "detail": "There is a conflict with an existing resource."
+            }
+          },
+          "application/problem+xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "example": {
+              "type": "https://example.com/errors/conflict",
+              "title": "Conflict",
+              "status": 409,
+              "detail": "There is a conflict with an existing resource."
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden",
+        "headers": {
+          "RateLimit": {
+            "$ref": "#/components/headers/RateLimit"
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "example": {
+              "type": "https://example.com/errors/forbidden",
+              "title": "Forbidden",
+              "status": 403,
+              "detail": "Access is forbidden with the provided credentials."
+            }
+          },
+          "application/problem+xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "example": {
+              "type": "https://example.com/errors/forbidden",
+              "title": "Forbidden",
+              "status": 403,
+              "detail": "Access is forbidden with the provided credentials."
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Internal Server Error",
+        "headers": {
+          "RateLimit": {
+            "$ref": "#/components/headers/RateLimit"
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "example": {
+              "type": "https://example.com/errors/internal-server-error",
+              "title": "Internal Server Error",
+              "status": 500,
+              "detail": "An unexpected error occurred."
+            }
+          },
+          "application/problem+xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "example": {
+              "type": "https://example.com/errors/internal-server-error",
+              "title": "Internal Server Error",
+              "status": 500,
+              "detail": "An unexpected error occurred."
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found",
+        "headers": {
+          "RateLimit": {
+            "$ref": "#/components/headers/RateLimit"
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "example": {
+              "type": "https://example.com/errors/not-found",
+              "title": "Not Found",
+              "status": 404,
+              "detail": "The requested resource was not found."
+            }
+          },
+          "application/problem+xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "example": {
+              "type": "https://example.com/errors/not-found",
+              "title": "Not Found",
+              "status": 404,
+              "detail": "The requested resource was not found."
+            }
+          }
+        }
+      },
+      "TooManyRequests": {
+        "description": "Too Many Requests",
+        "headers": {
+          "RateLimit": {
+            "$ref": "#/components/headers/RateLimit"
+          },
+          "Retry-After": {
+            "$ref": "#/components/headers/Retry-After"
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "example": {
+              "type": "https://example.com/errors/too-many-requests",
+              "title": "Too Many Requests",
+              "status": 429,
+              "detail": "You have exceeded the rate limit."
+            }
+          },
+          "application/problem+xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "example": {
+              "type": "https://example.com/errors/too-many-requests",
+              "title": "Too Many Requests",
+              "status": 429,
+              "detail": "You have exceeded the rate limit."
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "headers": {
+          "RateLimit": {
+            "$ref": "#/components/headers/RateLimit"
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "example": {
+              "type": "https://example.com/errors/unauthorized",
+              "title": "Unauthorized",
+              "status": 401,
+              "detail": "You do not have the necessary permissions."
+            }
+          },
+          "application/problem+xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "example": {
+              "type": "https://example.com/errors/unauthorized",
+              "title": "Unauthorized",
+              "status": 401,
+              "detail": "You do not have the necessary permissions."
+            }
+          }
+        }
+      }
+    }
+  }
+}

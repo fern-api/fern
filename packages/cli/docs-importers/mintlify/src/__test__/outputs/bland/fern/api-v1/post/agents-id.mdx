@@ -1,0 +1,211 @@
+---
+title: Update Web Agent Settings
+subtitle: Update your web agent's settings, prompt and other details.
+slug: api-v1/post/agents-id
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="agent_id" type="string">
+  The web agent you'll be updating.
+</ParamField>
+
+### Body
+
+<ParamField body="prompt" type="string" required>
+    Provide instructions, relevant information, and examples of the ideal conversation flow.
+
+    <Accordion title="Best Practices">
+        #### Out-of-the-Box Behaviors (Summarized):
+        - Speech pattern: Direct, concise, casual
+        - Spells out symbols, acronyms, abbreviations, percentages, etc. ($4,000,000 -> "four million dollars")
+        - Asks clarifying questions
+
+        #### Prompting Tips:
+        - Want to easily test out exactly how your agent will behave?
+            - [Try out Agent Testing!](https://app.bland.ai/home?page=testing)
+        - Aim for less than >2,000 characters where possible.
+        - Simple, direct prompts are the most predictable and reliable.
+        - Frame instructions positively:
+            - `"Do this"` rather than `"Don't do this"`.
+            - Ex. "Keep the conversation casual" rather than "Don't be too formal".
+            - This gives concrete examples of what to do, instead of leaving expected behavior open to interpretation.
+    </Accordion>
+
+</ParamField>
+
+<ParamField body="voice" type="string">
+  Set your agent's voice - all available voices can be found with the [List Voices](/api-v1/get/voices) endpoint.
+</ParamField>
+
+<ParamField body="analysis_schema" type="object">
+  Define a JSON schema for how you want to get information about the call - information like email addresses, names, appointment times or any other type of custom data.
+
+In the webhook response or whenever you retrieve call data later, you'll get the data you defined back under `analysis`.
+
+For example, if you wanted to retrieve this information from the call:
+
+```json
+"analysis_schema": {
+  "email_address": "email",
+  "first_name": "string",
+  "last_name": "string",
+  "wants_to_book_appointment": "boolean",
+  "appointment_time": "YYYY-MM-DD HH:MM:SS"
+}
+```
+
+You would get it filled out like this in your webhook once the call completes:
+
+```json
+"analysis": {
+  "email_address": "johndoe@gmail.com",
+  "first_name": "John",
+  "last_name": "Doe",
+  "wants_to_book_appointment": true,
+  "appointment_time": "2024-01-01 12:00:00"
+}
+```
+
+</ParamField>
+
+<ParamField body="metadata" type="object">
+  Add any additional information you want to associate with the call. This can be useful for tracking or categorizing
+  calls.
+</ParamField>
+
+<ParamField body="pathway_id" type="string">
+    Set the pathway that your agent will follow. This will override the `prompt` field, so there is no need to pass the 'prompt' field if you are setting a pathway.
+
+    Warning: Setting a pathway will set the following fields to `null` / their default value - `prompt`, `first_sentence`, `model`, `dynamic_data`, `tools`
+
+    Set to `null` or an empty string to clear the pathway.
+
+</ParamField>
+
+<ParamField body="language" type="string" default="ENG">
+  Select a supported language of your choice. Optimizes every part of our API for that language - transcription, speech,
+  and other inner workings. Supported Languages and their codes: - English: ```ENG``` - Spanish: ```ESP``` - French:
+  ```FRE``` - Polish: ```POL``` - German: ```GER``` - Italian: ```ITA``` - Brazilian Portuguese: ```PBR``` - Portuguese:
+  ```POR```
+</ParamField>
+
+<ParamField body="webhook" type="string">
+  The webhook should be a http / https callback url. We will send the call_id
+  and transcript to this URL after the call completes. This can be useful if you
+  want to have real time notifications when calls finish.
+
+Set to `null` or an empty string to clear the webhook.
+
+</ParamField>
+
+<ParamField body="model" type="string" default="enhanced">
+  Select a model to use for your call.
+
+Options: `base`, `turbo` and `enhanced`.
+
+In nearly all cases, `enhanced` is the best choice for now.
+
+  <Accordion title="Model Differences">
+
+There are three different ways to use Bland:
+
+- `model: base`
+
+  - The original, follows scripts/procedures most effectively.
+  - Supports all features and capabilities.
+  - Best for Custom Tools
+
+- `model: enhanced`
+
+  - Much faster latency and very conversational, works best with objective-based prompts.
+  - Supports all features and capabilities.
+
+- `model: turbo`
+
+  - The absolute fastest latency possible, can be verbose at times
+  - Limited capabilities currently (excludes Transferring, IVR navigation, Custom Tools)
+  - Extremely realistic conversation capabilities
+
+        </Accordion>
+
+    </ParamField>
+
+<ParamField body="first_sentence" type="string">
+  A phrase that your call will start with instead of a generating one on the fly. This works both with and without `wait_for_greeting`. Can be more than one sentence, but must be less than 200 characters.
+
+To remove, set to `null` or an empty string.
+
+</ParamField>
+
+<ParamField body="tools" type="array">
+  Interact with the real world through API calls.
+
+Detailed tutorial here: [Custom Tools](/tutorials/custom-tools)
+
+</ParamField>
+
+<ParamField body="dynamic_data" type="object">
+  Integrate data from external APIs into your agent's knowledge.
+
+Set to `null` or an empty string to clear dynamic data settings.
+
+Detailed usage in the [Send Call](/api-v1/post/calls) endpoint.
+
+</ParamField>
+
+<ParamField body="interruption_threshold" type="integer (milliseconds)" default={50}>
+  When you increase the interruption latency, you force the AI phone agent to listen longer before responding. In practice, increasing the threshold results in less interruptions and more latency.
+
+Try setting the threshold to `500` milliseconds. You'll encounter higher latency, but you'll be interrupted less frequently.
+
+Set to `null` to reset to default.
+
+</ParamField>
+
+<ParamField body="max_duration" type="integer (minutes)" default={30}>
+  The maximum duration that calls to your agent can last before being automatically terminated.
+
+Set to `null` to reset to default.
+
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Whether the update was successful or not - will be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  A message describing the status of the update.
+</ResponseField>
+
+<ResponseField name="updates" type="object">
+  An object containing the updated settings for the agent.
+</ResponseField>
+
+<ResponseField name="failed_updates" type="object">
+  If the update was unsuccessful, this will contain the settings that failed to update. Useful to determine how your
+  request is being interpreted on our end.
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "status": "success",
+  "message": "Successfully updated agent 46f37229-7d12-44be-b343-6e68274cfbea.",
+  "updates": {
+    "model": "enhanced"
+  }
+}
+```
+
+</ResponseExample>

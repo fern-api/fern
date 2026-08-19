@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/definitions/migration.MigrationStatus"
+    }
+  },
+  "required": [
+    "name",
+    "status"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "migration.MigrationStatus": {
+      "type": "string",
+      "oneOf": [
+        {
+          "const": "RUNNING",
+          "description": "The migration is running"
+        },
+        {
+          "const": "FAILED",
+          "description": "The migration is failed"
+        },
+        {
+          "const": "FINISHED"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Accept `branch` under `github` when `mode` is `release` in `generators.yml`. This
+    allows users to configure a non-default branch for release mode in preparation for
+    wiring the field through to the remote generation service.
+  type: feat

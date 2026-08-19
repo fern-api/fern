@@ -1,0 +1,11 @@
+name: api
+display-name: Pave API
+auth: apiKey
+auth-schemes:
+  apiKey:
+    header: X-API-KEY
+    type: string
+environments:
+  Production: https://api.pave.dev/
+  Sandbox: https://sandbox.pave.dev/
+default-environment: Production

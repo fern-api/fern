@@ -1,0 +1,5 @@
+- summary: |
+    Add PR title, body, and commit message to `fern automations upgrade --json` output.
+    The new `pr` field in the JSON output allows GitHub Actions consumers to use
+    CLI-generated PR formatting directly, eliminating duplicated presentation logic.
+  type: feat

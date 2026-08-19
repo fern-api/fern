@@ -1,0 +1,81 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "compileError",
+        "runtimeError",
+        "internalError"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "compileError"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "message"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "runtimeError"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "message"
+      ],
+      "description": "If the submission cannot be executed and throws a runtime error before getting to any of the testcases."
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "internalError"
+        },
+        "exceptionInfo": {
+          "$ref": "#/definitions/submission.ExceptionInfo"
+        }
+      },
+      "required": [
+        "type",
+        "exceptionInfo"
+      ],
+      "description": "If the trace backend encounters an unexpected error."
+    }
+  ],
+  "definitions": {
+    "submission.ExceptionInfo": {
+      "type": "object",
+      "properties": {
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

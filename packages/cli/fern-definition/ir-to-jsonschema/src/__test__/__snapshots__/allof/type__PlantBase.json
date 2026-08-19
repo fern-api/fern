@@ -1,0 +1,55 @@
+{
+  "type": "object",
+  "properties": {
+    "species": {
+      "type": "string",
+      "description": "The botanical species name."
+    },
+    "family": {
+      "type": "string",
+      "description": "The botanical family."
+    },
+    "genus": {
+      "type": "string",
+      "description": "The botanical genus."
+    },
+    "commonName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The common name of the plant."
+    },
+    "wateringFrequency": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PlantBaseWateringFrequency"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "species",
+    "family",
+    "genus"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "PlantBaseWateringFrequency": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "biweekly",
+        "monthly"
+      ]
+    }
+  }
+}

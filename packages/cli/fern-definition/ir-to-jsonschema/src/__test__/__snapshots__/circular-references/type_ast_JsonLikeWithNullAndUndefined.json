@@ -1,0 +1,122 @@
+{
+  "anyOf": [
+    {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/definitions/ast.JsonLikeWithNullAndUndefined"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "$ref": "#/definitions/ast.JsonLikeWithNullAndUndefined"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  ],
+  "definitions": {
+    "ast.JsonLikeWithNullAndUndefined": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/ast.JsonLikeWithNullAndUndefined"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/ast.JsonLikeWithNullAndUndefined"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

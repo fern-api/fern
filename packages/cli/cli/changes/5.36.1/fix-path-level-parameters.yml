@@ -1,0 +1,5 @@
+- summary: |
+    Fix OpenAPI 3.1 importer to inherit path-level parameters (headers, query params) into operations.
+    Previously, only operation-level parameters were processed, causing path-level headers like
+    `Accept: application/json` to be silently dropped.
+  type: fix

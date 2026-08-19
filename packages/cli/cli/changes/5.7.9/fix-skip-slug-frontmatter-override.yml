@@ -1,0 +1,5 @@
+- summary: |
+    Fix section landing pages with `skip-slug: true` ignoring frontmatter `slug` declarations.
+    Sections now compute separate slugs for the overview page (honors frontmatter) and for
+    children (respects skip-slug), so both features work correctly together.
+  type: fix

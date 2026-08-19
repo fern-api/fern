@@ -1,0 +1,88 @@
+import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-api/ir-sdk";
+import { getPascalCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
+import { OpenAPIV3 } from "openapi-types";
+
+export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityRequirementObject[] {
+    return AuthSchemesRequirement._visit<OpenAPIV3.SecurityRequirementObject[]>(apiAuth.requirement, {
+        all: () => {
+            return [
+                apiAuth.schemes.reduce<OpenAPIV3.SecurityRequirementObject>(
+                    (acc, scheme) => ({
+                        ...acc,
+                        [getNameForAuthScheme(scheme)]: []
+                    }),
+                    {}
+                )
+            ];
+        },
+        any: () =>
+            apiAuth.schemes.map((scheme) => ({
+                [getNameForAuthScheme(scheme)]: []
+            })),
+        endpointSecurity: () => {
+            // When auth is endpoint-security, security is defined per-endpoint, not globally
+            return [];
+        },
+        _other: () => {
+            throw new CliError({
+                message: "Unknown auth scheme requirement: " + apiAuth.requirement,
+                code: CliError.Code.InternalError
+            });
+        }
+    });
+}
+
+export function constructSecuritySchemes(apiAuth: ApiAuth): Record<string, OpenAPIV3.SecuritySchemeObject> {
+    const securitySchemes: Record<string, OpenAPIV3.SecuritySchemeObject> = {};
+
+    for (const scheme of apiAuth.schemes) {
+        const oasScheme = AuthScheme._visit<OpenAPIV3.SecuritySchemeObject | undefined>(scheme, {
+            bearer: () => ({
+                type: "http",
+                scheme: "bearer"
+            }),
+            basic: () => ({
+                type: "http",
+                scheme: "basic"
+            }),
+            header: (header) => ({
+                type: "apiKey",
+                in: "header",
+                name: getWireValue(header.name)
+            }),
+            oauth: () => ({
+                type: "http",
+                scheme: "bearer"
+            }),
+            inferred: () => undefined,
+            _other: () => {
+                throw new CliError({
+                    message: "Unknown auth scheme: " + scheme.type,
+                    code: CliError.Code.InternalError
+                });
+            }
+        });
+        if (oasScheme) {
+            securitySchemes[getNameForAuthScheme(scheme)] = oasScheme;
+        }
+    }
+
+    return securitySchemes;
+}
+
+function getNameForAuthScheme(authScheme: AuthScheme): string {
+    return AuthScheme._visit(authScheme, {
+        bearer: () => "BearerAuth",
+        inferred: () => "InferredAuth",
+        basic: () => "BasicAuth",
+        oauth: () => "BearerAuth",
+        header: (header) => `${getPascalCaseUnsafe(header.name)}Auth`,
+        _other: () => {
+            throw new CliError({
+                message: "Unknown auth scheme: " + authScheme.type,
+                code: CliError.Code.InternalError
+            });
+        }
+    });
+}

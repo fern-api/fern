@@ -1,0 +1,74 @@
+{
+  "type": "object",
+  "properties": {
+    "union": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/union.MetadataUnion"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "union.OptionalMetadata": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "union.NamedMetadata": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "union.MetadataUnion": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/union.OptionalMetadata"
+        },
+        {
+          "$ref": "#/definitions/union.NamedMetadata"
+        }
+      ]
+    }
+  }
+}

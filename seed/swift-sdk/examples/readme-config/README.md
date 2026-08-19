@@ -1,0 +1,207 @@
+# Seed Swift Library
+
+![](https://www.fernapi.com)
+
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FSwift)
+![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-orange.svg)
+
+The Seed Swift library provides convenient access to the Seed APIs from Swift.
+
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Base Readme Custom Section](#base-readme-custom-section)
+- [Override Section](#override-section)
+- [Generator Invocation Custom Section](#generator-invocation-custom-section)
+- [Usage](#usage)
+- [Environments](#environments)
+- [Errors](#errors)
+- [Advanced](#advanced)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Timeouts](#timeouts)
+  - [Custom Networking Client](#custom-networking-client)
+- [Contributing](#contributing)
+
+## Documentation
+
+API reference documentation is available [here](https://www.docs.fernapi.com).
+
+## Requirements
+
+This SDK requires:
+- Swift 5.7+
+- iOS 15+
+- macOS 12+
+- tvOS 15+
+- watchOS 8+
+
+## Installation
+
+With Swift Package Manager (SPM), add the following to the top-level `dependencies` array within your `Package.swift` file:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/examples/fern", from: "0.0.1"),
+]
+```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
+## Base Readme Custom Section
+
+Base Readme Custom Content for https://github.com/examples/fern:0.0.1
+
+## Override Section
+
+Override Content
+
+## Generator Invocation Custom Section
+
+Generator Invocation Custom Content for https://github.com/examples/fern:0.0.1
+
+## Usage
+
+Instantiate and use the client with the following:
+
+```swift
+import Foundation
+import Examples
+
+private func main() async throws {
+    let client = ExamplesClient(token: "<token>")
+
+    _ = try await client.service.createMovie(request: Movie(
+        id: "movie-c06a4ad7",
+        prequel: "movie-cv9b914f",
+        title: "The Boy and the Heron",
+        from: "Hayao Miyazaki",
+        rating: 8,
+        type: .movie,
+        tag: "tag-wf9as23d",
+        metadata: [
+            "actors": .array([
+                .string("Christian Bale"),
+                .string("Florence Pugh"),
+                .string("Willem Dafoe")
+            ]), 
+            "releaseDate": .string("2023-12-08"), 
+            "ratings": .object([
+                "rottenTomatoes": .number(97), 
+                "imdb": .number(7.6)
+            ])
+        ],
+        revenue: 1000000
+    ))
+}
+
+try await main()
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```swift
+import Examples
+
+let client = ExamplesClient(
+    token: "YOUR_API_KEY",
+    environment: .production
+)
+```
+
+## Errors
+
+The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
+
+```swift
+import Examples
+
+let client = ExamplesClient(token: "YOUR_API_KEY")
+
+do {
+    let response = try await client.service.createMovie(...)
+    // Handle successful response
+} catch let error as ExamplesError {
+    switch error {
+    case .httpError(let httpError):
+        print("Status code:", httpError.statusCode)
+        print("Kind:", httpError.kind)
+        print("Message:", httpError.body?.message ?? httpError.localizedDescription)
+    case .encodingError(let underlying):
+        print("Encoding error:", underlying)
+    case .networkError(let underlying):
+        print("Network error:", underlying)
+    default:
+        print("Other client error:", error)
+    }
+} catch {
+    print("Unexpected error:", error)
+}
+```
+
+## Advanced
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
+
+```swift
+try await client.service.createMovie(..., requestOptions: .init(
+    additionalHeaders: [
+        "X-Custom-Header": "custom value"
+    ]
+))
+```
+
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
+
+```swift
+try await client.service.createMovie(..., requestOptions: .init(
+    additionalQueryParameters: [
+        "custom_query_param_key": "custom_query_param_value"
+    ]
+))
+```
+
+### Timeouts
+
+The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
+
+```swift
+try await client.service.getMovie(..., requestOptions: .init(
+    timeout: 30
+))
+```
+
+### Custom Networking Client
+
+The SDK allows you to customize the underlying `URLSession` used for HTTP requests. Use the `urlSession` option to provide your own configured `URLSession` instance.
+
+```swift
+import Foundation
+import Examples
+
+let client = ExamplesClient(
+    token: "YOUR_API_KEY",
+    urlSession: // Provide your implementation here
+)
+```
+
+## Contributing
+
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!

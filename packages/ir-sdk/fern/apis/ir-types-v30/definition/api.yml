@@ -1,0 +1,8 @@
+name: ir-v30
+docs: |
+  Changes in this version of IR include:
+  - Adds the new ExampleUnionType.
+  - Adds the new EscapedString type particularly suited for string literals
+    that contain characters that must be escaped (e.g. '{"foo": "bar"}').
+  - Refactors path parameters, query parameters, and headers to include the
+    full Name type rather than just their respective wire representations.

@@ -1,0 +1,18 @@
+imports:
+  types: ../../types.yml
+
+service:
+  auth: true
+  base-path: /file/notification/{notificationId}
+  path-parameters:
+    notificationId: string
+  endpoints:
+    getException:
+      method: GET
+      path: ""
+      response: types.Exception
+      examples:
+        - path-parameters:
+            notificationId: notification-hsy129x
+          response:
+            body: $types.Exception.One

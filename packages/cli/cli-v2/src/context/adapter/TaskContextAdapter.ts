@@ -1,0 +1,232 @@
+import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
+import {
+    type CaptureExceptionOptions,
+    type CliError,
+    type CreateInteractiveTaskParams,
+    type Finishable,
+    type InteractiveTaskContext,
+    type PosthogEvent,
+    type Startable,
+    TaskAbortSignal,
+    type TaskContext,
+    TaskResult
+} from "@fern-api/task-context";
+
+import type { Task } from "../../ui/Task.js";
+import type { Context } from "../Context.js";
+import { reportError } from "../withContext.js";
+import { TaskContextLogger } from "./TaskContextLogger.js";
+
+/**
+ * Adapts the CLI context to the legacy TaskContext interface.
+ *
+ * When a task is provided, logs are written to the task's log display
+ * and to the log file via TaskContextLogger.
+ *
+ * When no task is provided (e.g., during validation), logs are written
+ * directly to stderr, filtered by logLevel (defaults to Warn).
+ *
+ * @param context - The CLI context
+ * @param task - Optional task for log file writing
+ * @param logLevel - Minimum log level to display. Defaults to Warn (only warnings and errors).
+ *                   Pass LogLevel.Info to include info messages (e.g., for device code flow).
+ */
+export class TaskContextAdapter implements TaskContext {
+    private result: TaskResult = TaskResult.Success;
+    private lastFailureMessage: string | undefined = undefined;
+    private readonly context: Context;
+
+    public readonly logger: Logger;
+
+    constructor({ context, task, logLevel = LogLevel.Warn }: { context: Context; task?: Task; logLevel?: LogLevel }) {
+        this.context = context;
+        if (task != null) {
+            this.logger = new TaskContextLogger({ context, task, logLevel });
+        } else {
+            // When no task is provided, write directly to stderr.
+            this.logger = createLogger((level: LogLevel, ...args: string[]) => {
+                if (LOG_LEVELS.indexOf(level) >= LOG_LEVELS.indexOf(logLevel)) {
+                    context.stderr.log(level, ...args);
+                }
+            });
+        }
+    }
+
+    public async takeOverTerminal(run: () => void | Promise<void>): Promise<void> {
+        await run();
+    }
+
+    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
+        this.failWithoutThrowing(message, error, options);
+        throw new TaskAbortSignal();
+    }
+
+    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
+        this.result = TaskResult.Failure;
+        if (error instanceof TaskAbortSignal) {
+            return;
+        }
+        const fullMessage = this.getFullErrorMessage(message, error);
+        if (fullMessage != null) {
+            this.lastFailureMessage = fullMessage;
+            this.logger.error(fullMessage);
+        }
+
+        reportError(this.context, error, { ...options, message });
+    }
+
+    public getLastFailureMessage(): string | undefined {
+        return this.lastFailureMessage;
+    }
+
+    public captureException(error: unknown, options?: CaptureExceptionOptions): string | undefined {
+        return this.context.telemetry.captureException(error, options);
+    }
+
+    private getFullErrorMessage(message?: string, error?: unknown): string | undefined {
+        const errorDetails = this.formatError(error);
+        if (message != null && errorDetails != null) {
+            // Avoid stuttering when the message already contains the error details.
+            // Legacy callers often pass the same message and error as the second
+            // argument.
+            return message.includes(errorDetails) ? message : `${message}: ${errorDetails}`;
+        }
+        return message ?? errorDetails;
+    }
+
+    public getResult(): TaskResult {
+        return this.result;
+    }
+
+    public addInteractiveTask(_params: CreateInteractiveTaskParams): Startable<InteractiveTaskContext> {
+        const subtask: InteractiveTaskContext & Startable<InteractiveTaskContext> & Finishable = {
+            logger: this.logger,
+            takeOverTerminal: this.takeOverTerminal.bind(this),
+            failAndThrow: this.failAndThrow.bind(this),
+            failWithoutThrowing: this.failWithoutThrowing.bind(this),
+            captureException: this.captureException.bind(this),
+            getResult: () => this.result,
+            getLastFailureMessage: this.getLastFailureMessage.bind(this),
+            addInteractiveTask: this.addInteractiveTask.bind(this),
+            runInteractiveTask: this.runInteractiveTask.bind(this),
+            instrumentPostHogEvent: this.instrumentPostHogEvent.bind(this),
+            setSubtitle: (_subtitle: string | undefined) => {
+                // no-op
+            },
+            start: () => {
+                // no-op
+                return subtask;
+            },
+            isStarted: () => true,
+            finish: () => {
+                // no-op
+            },
+            isFinished: () => true
+        };
+        return subtask;
+    }
+
+    public async runInteractiveTask(
+        params: CreateInteractiveTaskParams,
+        run: (context: InteractiveTaskContext) => void | Promise<void>
+    ): Promise<boolean> {
+        const subtask = this.addInteractiveTask(params).start();
+        try {
+            await run(subtask);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    public instrumentPostHogEvent(event: PosthogEvent): void {
+        // Translate the legacy PosthogEvent shape ({command, orgId, properties})
+        // into v2's TelemetryClient.sendEvent. Filters properties to primitives
+        // since Tags requires string|number|boolean|null. Defensive try/catch —
+        // telemetry must never fail the calling operation.
+        try {
+            // Refuse nameless events. Falling back to "cli" would collide with
+            // TelemetryClient.sendLifecycleEvent's `event: "cli"`, polluting the
+            // lifecycle event's property bag with arbitrary caller properties.
+            if (event.command == null || event.command.length === 0) {
+                return;
+            }
+            const eventName = event.command;
+            const tags: Record<string, string | number | boolean | null> = {};
+            if (event.orgId != null) {
+                tags.org = event.orgId;
+            }
+            for (const [key, value] of Object.entries(event.properties ?? {})) {
+                if (
+                    typeof value === "string" ||
+                    typeof value === "number" ||
+                    typeof value === "boolean" ||
+                    value === null
+                ) {
+                    tags[String(key)] = value;
+                }
+                // Non-primitives (objects, arrays, Date, BigInt, Symbol, undefined)
+                // are silently dropped — Tags schema rejects nested values to
+                // control PostHog cardinality.
+            }
+            this.context.telemetry.sendEvent(eventName, tags);
+        } catch {
+            // no-op — telemetry must never fail the caller
+        }
+    }
+
+    private formatError(error: unknown): string | undefined {
+        if (error == null) {
+            return undefined;
+        }
+        if (error instanceof Error) {
+            return error.message;
+        }
+        if (typeof error === "string") {
+            return error;
+        }
+        if (typeof error === "object") {
+            const message = this.extractErrorMessage(error);
+            if (message != null) {
+                return message;
+            }
+        }
+        try {
+            return JSON.stringify(error);
+        } catch {
+            return String(error);
+        }
+    }
+
+    /**
+     * Attempts to extract a human-readable message from a structured error object.
+     *
+     * Handles common shapes from the FDR SDK and other API clients, e.g.:
+     *   { content: { body: { message: "..." } } }
+     *   { body: { message: "..." } }
+     *   { message: "..." }
+     */
+    private extractErrorMessage(error: object): string | undefined {
+        const record = error as Record<string, unknown>;
+
+        // { message: "..." }
+        if (typeof record.message === "string") {
+            return record.message;
+        }
+
+        // { body: { message: "..." } }
+        if (record.body != null && typeof record.body === "object") {
+            const body = record.body as Record<string, unknown>;
+            if (typeof body.message === "string") {
+                return body.message;
+            }
+        }
+
+        // { content: { body: { message: "..." } } }
+        if (record.content != null && typeof record.content === "object") {
+            return this.extractErrorMessage(record.content);
+        }
+
+        return undefined;
+    }
+}

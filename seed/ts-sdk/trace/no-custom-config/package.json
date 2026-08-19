@@ -1,0 +1,190 @@
+{
+    "name": "@fern/trace",
+    "version": "0.0.1",
+    "private": false,
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/trace/fern.git"
+    },
+    "type": "commonjs",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.mjs",
+    "types": "./dist/cjs/index.d.ts",
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/esm/index.d.mts",
+                "default": "./dist/esm/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/index.d.ts",
+                "default": "./dist/cjs/index.js"
+            },
+            "default": "./dist/cjs/index.js"
+        },
+        "./v2": {
+            "import": {
+                "types": "./dist/esm/api/resources/v2/exports.d.mts",
+                "default": "./dist/esm/api/resources/v2/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/v2/exports.d.ts",
+                "default": "./dist/cjs/api/resources/v2/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/v2/exports.js"
+        },
+        "./admin": {
+            "import": {
+                "types": "./dist/esm/api/resources/admin/exports.d.mts",
+                "default": "./dist/esm/api/resources/admin/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/admin/exports.d.ts",
+                "default": "./dist/cjs/api/resources/admin/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/admin/exports.js"
+        },
+        "./homepage": {
+            "import": {
+                "types": "./dist/esm/api/resources/homepage/exports.d.mts",
+                "default": "./dist/esm/api/resources/homepage/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/homepage/exports.d.ts",
+                "default": "./dist/cjs/api/resources/homepage/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/homepage/exports.js"
+        },
+        "./migration": {
+            "import": {
+                "types": "./dist/esm/api/resources/migration/exports.d.mts",
+                "default": "./dist/esm/api/resources/migration/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/migration/exports.d.ts",
+                "default": "./dist/cjs/api/resources/migration/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/migration/exports.js"
+        },
+        "./playlist": {
+            "import": {
+                "types": "./dist/esm/api/resources/playlist/exports.d.mts",
+                "default": "./dist/esm/api/resources/playlist/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/playlist/exports.d.ts",
+                "default": "./dist/cjs/api/resources/playlist/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/playlist/exports.js"
+        },
+        "./problem": {
+            "import": {
+                "types": "./dist/esm/api/resources/problem/exports.d.mts",
+                "default": "./dist/esm/api/resources/problem/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/problem/exports.d.ts",
+                "default": "./dist/cjs/api/resources/problem/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/problem/exports.js"
+        },
+        "./submission": {
+            "import": {
+                "types": "./dist/esm/api/resources/submission/exports.d.mts",
+                "default": "./dist/esm/api/resources/submission/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/submission/exports.d.ts",
+                "default": "./dist/cjs/api/resources/submission/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/submission/exports.js"
+        },
+        "./sysprop": {
+            "import": {
+                "types": "./dist/esm/api/resources/sysprop/exports.d.mts",
+                "default": "./dist/esm/api/resources/sysprop/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/sysprop/exports.d.ts",
+                "default": "./dist/cjs/api/resources/sysprop/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/sysprop/exports.js"
+        },
+        "./v2/problem": {
+            "import": {
+                "types": "./dist/esm/api/resources/v2/resources/problem/exports.d.mts",
+                "default": "./dist/esm/api/resources/v2/resources/problem/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/v2/resources/problem/exports.d.ts",
+                "default": "./dist/cjs/api/resources/v2/resources/problem/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/v2/resources/problem/exports.js"
+        },
+        "./v2/v3": {
+            "import": {
+                "types": "./dist/esm/api/resources/v2/resources/v3/exports.d.mts",
+                "default": "./dist/esm/api/resources/v2/resources/v3/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/v2/resources/v3/exports.d.ts",
+                "default": "./dist/cjs/api/resources/v2/resources/v3/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/v2/resources/v3/exports.js"
+        },
+        "./v2/v3/problem": {
+            "import": {
+                "types": "./dist/esm/api/resources/v2/resources/v3/resources/problem/exports.d.mts",
+                "default": "./dist/esm/api/resources/v2/resources/v3/resources/problem/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/v2/resources/v3/resources/problem/exports.d.ts",
+                "default": "./dist/cjs/api/resources/v2/resources/v3/resources/problem/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/v2/resources/v3/resources/problem/exports.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "dist",
+        "reference.md",
+        "README.md",
+        "LICENSE"
+    ],
+    "scripts": {
+        "format": "biome format --write --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "format:check": "biome format --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "lint": "biome lint --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "lint:fix": "biome lint --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "check": "biome check --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "check:fix": "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "build": "pnpm build:cjs && pnpm build:esm",
+        "build:cjs": "tsc --project ./tsconfig.cjs.json",
+        "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
+        "test": "vitest",
+        "test:unit": "vitest --project unit",
+        "test:wire": "vitest --project wire"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "webpack": "^5.105.4",
+        "ts-loader": "^9.5.4",
+        "vitest": "^4.1.1",
+        "msw": "2.11.2",
+        "@types/node": "^20.0.0",
+        "typescript": "~5.9.3",
+        "@biomejs/biome": "2.4.10"
+    },
+    "browser": {
+        "fs": false,
+        "os": false,
+        "path": false,
+        "stream": false,
+        "crypto": false
+    },
+    "packageManager": "pnpm@10.33.0",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "sideEffects": false
+}

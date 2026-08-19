@@ -1,0 +1,16 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-java-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "inline-path-parameters": true,
+    "custom-dependencies": [
+      "implementation jakarta.websocket:jakarta.websocket-api:2.1.0"
+    ]
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github",
+  "sdkVersion": "0.0.1"
+}

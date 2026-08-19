@@ -1,0 +1,4 @@
+- summary: |
+    Strip Windows drive letter prefixes from resolved image paths in docs preview
+    to prevent raw filesystem paths from leaking into rendered HTML on Windows.
+  type: fix

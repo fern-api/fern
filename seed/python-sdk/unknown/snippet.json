@@ -1,0 +1,33 @@
+{
+    "types": {
+        "type_unknown:MyObject": "from seed.unknown import MyObject\n\nMyObject(\n    unknown={\"boolVal\": True, \"strVal\": \"string\"},\n)\n"
+    },
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_unknown.post"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedUnknownAsAny\n\nclient = SeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.unknown.post(\n    request={\"key\": \"value\"},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnknownAsAny\n\nclient = AsyncSeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.unknown.post(\n        request={\"key\": \"value\"},\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/with-object",
+                "method": "POST",
+                "identifier_override": "endpoint_unknown.postObject"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedUnknownAsAny\n\nclient = SeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.unknown.post_object(\n    unknown={\"key\": \"value\"},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnknownAsAny\n\nclient = AsyncSeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.unknown.post_object(\n        unknown={\"key\": \"value\"},\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

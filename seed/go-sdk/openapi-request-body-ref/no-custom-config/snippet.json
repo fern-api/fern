@@ -1,0 +1,59 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/catalog/images",
+                "method": "POST",
+                "identifier_override": "endpoint_catalog.createCatalogImage"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/openapi-request-body-ref/fern\"\n\tfernclient \"github.com/openapi-request-body-ref/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Catalog.CreateCatalogImage(\n\tcontext.TODO(),\n\t\u0026fern.CreateCatalogImageBody{\n\t\tRequest: \u0026fern.CreateCatalogImageRequest{\n\t\t\tCatalogObjectID: \"catalog_object_id\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/catalog/images/{image_id}",
+                "method": "GET",
+                "identifier_override": "endpoint_catalog.getCatalogImage"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/openapi-request-body-ref/fern\"\n\tfernclient \"github.com/openapi-request-body-ref/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Catalog.GetCatalogImage(\n\tcontext.TODO(),\n\t\u0026fern.GetCatalogImageRequest{\n\t\tImageID: \"image_id\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/team-members/{team_member_id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_teamMember.updateTeamMember"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/openapi-request-body-ref/fern\"\n\tfernclient \"github.com/openapi-request-body-ref/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.TeamMember.UpdateTeamMember(\n\tcontext.TODO(),\n\t\u0026fern.UpdateTeamMemberRequest{\n\t\tTeamMemberID: \"team_member_id\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/vendors",
+                "method": "POST",
+                "identifier_override": "endpoint_vendor.createVendor"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/openapi-request-body-ref/fern\"\n\tfernclient \"github.com/openapi-request-body-ref/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Vendor.CreateVendor(\n\tcontext.TODO(),\n\t\u0026fern.CreateVendorRequest{\n\t\tName: \"name\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/vendors/{vendor_id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_vendor.updateVendor"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/openapi-request-body-ref/fern\"\n\tfernclient \"github.com/openapi-request-body-ref/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Vendor.UpdateVendor(\n\tcontext.TODO(),\n\t\u0026fern.UpdateVendorBody{\n\t\tVendorID: \"vendor_id\",\n\t\tBody: \u0026fern.UpdateVendorRequest{\n\t\t\tName: \"name\",\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}

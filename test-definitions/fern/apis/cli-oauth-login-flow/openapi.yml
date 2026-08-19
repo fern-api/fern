@@ -1,0 +1,133 @@
+openapi: 3.0.3
+info:
+  title: Login Flow Test API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+paths:
+  # Authenticated: the CLI must attach the keyring bearer that `auth login`
+  # populated, and the wire test asserts that header.
+  /widgets:
+    get:
+      operationId: widgets_list
+      x-fern-sdk-group-name: widgets
+      x-fern-sdk-method-name: list
+      summary: List widgets
+      security:
+        - OAuth2:
+            - read:widgets
+      responses:
+        "200":
+          description: Widgets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /widgets/{widgetId}:
+    get:
+      operationId: widgets_get
+      x-fern-sdk-group-name: widgets
+      x-fern-sdk-method-name: get
+      summary: Get a widget
+      security:
+        - OAuth2:
+            - read:widgets
+      parameters:
+        - name: widgetId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Widget
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Widget"
+  # Unauthenticated (`security: []`) and exposed as an ordinary command. This is
+  # the regression guard: the harness must NOT require the login-flow bearer
+  # here, because the CLI correctly sends no credential — it authenticates with
+  # client credentials in the body. Requiring one makes the mock unmatchable and
+  # the case fails for a reason unrelated to what it tests.
+  /oauth/token:
+    post:
+      operationId: tokens_exchange
+      x-fern-sdk-group-name: tokens
+      x-fern-sdk-method-name: exchange
+      summary: Exchange client credentials for an access token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+              required:
+                - client_id
+                - client_secret
+      responses:
+        "200":
+          description: Token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+  # A second unauthenticated endpoint, with no request body, so the gate is
+  # covered for a plain GET as well as a POST-with-body.
+  /health:
+    get:
+      operationId: system_health
+      x-fern-sdk-group-name: system
+      x-fern-sdk-method-name: health
+      security: []
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                required:
+                  - status
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.example.com/oauth/authorize
+          tokenUrl: https://api.example.com/oauth/token
+          scopes:
+            read:widgets: Read widgets
+  schemas:
+    Widget:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+      required:
+        - access_token
+        - expires_in

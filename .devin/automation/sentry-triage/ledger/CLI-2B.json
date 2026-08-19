@@ -1,0 +1,10 @@
+{
+  "title": "Failed to compare versions: Failed to parse version: 0.x",
+  "disposition": "duplicate",
+  "rationale": "Same invalid-version classification as CLI-31.",
+  "fixSummary": "—",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-04",
+  "duplicateOf": "CLI-31",
+  "problemSignature": "Invalid generator or CLI version string (e.g. 0.x, 1.x, *) reached Sentry as plain Error instead of VersionError."
+}

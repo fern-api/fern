@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "deleted_at": {
+      "oneOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "array",
+            "null"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Always null for active users."
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "deleted_at"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

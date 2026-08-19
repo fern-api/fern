@@ -1,0 +1,25 @@
+changelogLocation: ../../packages/cli/cli/versions.yml
+publishGa:
+  workingDirectory: packages/cli/cli
+  versionSubstitution: $VERSION
+  command:
+    - pnpm install
+    - pnpm turbo run dist:cli:prod --filter @fern-api/cli -- $VERSION
+    - pnpm --filter @fern-api/cli publish:cli:prod --tag latest
+    - pnpm exec sentry-cli sourcemaps upload --org buildwithfern --project cli --release cli@$VERSION --url-prefix app:/// dist/prod/
+publishRc:
+  workingDirectory: packages/cli/cli
+  versionSubstitution: $VERSION
+  command:
+    - pnpm install
+    - pnpm turbo run dist:cli:prod --filter @fern-api/cli -- $VERSION
+    - pnpm --filter @fern-api/cli publish:cli:prod --tag prerelease
+    - pnpm exec sentry-cli sourcemaps upload --org buildwithfern --project cli --release cli@$VERSION --url-prefix app:/// dist/prod/
+publishDev:
+  workingDirectory: packages/cli/cli
+  versionSubstitution: $VERSION
+  command:
+    - pnpm install
+    - pnpm turbo run dist:cli:dev --filter @fern-api/cli -- $VERSION
+    - pnpm --filter @fern-api/cli publish:cli:dev --access public --tag latest
+    - pnpm exec sentry-cli sourcemaps upload --org buildwithfern --project cli --release cli@$VERSION --url-prefix app:/// dist/dev/

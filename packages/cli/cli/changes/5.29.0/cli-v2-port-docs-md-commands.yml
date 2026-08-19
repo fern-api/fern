@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Port the hidden `fern docs md` command group from CLI v1 to CLI v2.
+    Adds `fern docs md generate` (beta library documentation generation
+    from source code) and `fern docs md check` (MDX-only syntax validation)
+    with CLI v2's consistent UI.
+  type: feat

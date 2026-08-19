@@ -1,0 +1,9 @@
+- summary: |
+    Add new `docs.yml` metadata fields for controlling dynamically generated OG images:
+    `og:dynamic:text-color`, `og:dynamic:background-color`, `og:dynamic:logo-color`
+    (`dark` | `light`), and five visibility toggle flags (`og:dynamic:show-logo`,
+    `og:dynamic:show-section`, `og:dynamic:show-description`, `og:dynamic:show-url`,
+    `og:dynamic:show-gradient`).
+    Also fixes a pre-existing gap where `og:dynamic` and `og:background-image` were
+    missing from the Zod `MetadataConfig` schema, causing `fern check` to reject them.
+  type: feat

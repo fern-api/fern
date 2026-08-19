@@ -1,0 +1,102 @@
+asyncapi: 3.0.0
+
+info:
+  title: WebSocket Bindings Query Test API
+  version: 1.0.0
+  description: Tests that query parameters from channel.bindings.ws.query are parsed correctly
+
+servers:
+  production:
+    host: api.example.com
+    protocol: wss
+
+channels:
+  listen:
+    address: /v1/listen
+    description: Channel with query parameters defined via bindings.ws.query
+    bindings:
+      ws:
+        query:
+          type: object
+          properties:
+            model:
+              $ref: "#/components/schemas/Model"
+            encoding:
+              $ref: "#/components/schemas/Encoding"
+            sample_rate:
+              type: integer
+              description: Sample rate of the audio in Hz
+          required:
+            - model
+        headers:
+          type: object
+          properties:
+            Authorization:
+              type: string
+              description: Bearer token for authentication
+    messages:
+      AudioData:
+        $ref: "#/components/messages/AudioData"
+      Transcript:
+        $ref: "#/components/messages/Transcript"
+
+operations:
+  sendAudio:
+    action: send
+    channel:
+      $ref: "#/channels/listen"
+    messages:
+      - $ref: "#/channels/listen/messages/AudioData"
+
+  receiveTranscript:
+    action: receive
+    channel:
+      $ref: "#/channels/listen"
+    messages:
+      - $ref: "#/channels/listen/messages/Transcript"
+
+components:
+  messages:
+    AudioData:
+      name: AudioData
+      contentType: application/octet-stream
+      payload:
+        $ref: "#/components/schemas/AudioPayload"
+
+    Transcript:
+      name: Transcript
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/TranscriptPayload"
+
+  schemas:
+    Model:
+      type: string
+      description: The AI model to use for transcription
+      enum:
+        - nova-2
+        - nova-3
+        - whisper
+
+    Encoding:
+      type: string
+      description: Encoding of the audio
+      enum:
+        - linear16
+        - flac
+        - opus
+
+    AudioPayload:
+      type: object
+      properties:
+        data:
+          type: string
+          format: binary
+
+    TranscriptPayload:
+      type: object
+      properties:
+        transcript:
+          type: string
+        confidence:
+          type: number

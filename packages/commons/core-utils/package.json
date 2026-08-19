@@ -1,0 +1,57 @@
+{
+  "name": "@fern-api/core-utils",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern.git",
+    "directory": "packages/commons/core-utils"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": ["lib"],
+  "scripts": {
+    "clean": "rm -rf ./lib",
+    "compile": "tsc",
+    "compile:debug": "tsc --sourceMap",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
+    "test": "vitest --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
+    "test:update": "vitest --run -u"
+  },
+  "dependencies": {
+    "@types/semver": "catalog:",
+    "ajv": "^8.18.0",
+    "json-schema": "catalog:",
+    "jsonpath-plus": "catalog:",
+    "lodash-es": "catalog:",
+    "semver": "^7.5.8",
+    "strip-ansi": "catalog:",
+    "title": "catalog:",
+    "ua-parser-js": "catalog:",
+    "whatwg-mimetype": "catalog:"
+  },
+  "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@types/json-schema": "catalog:",
+    "@types/lodash": "catalog:",
+    "@types/lodash-es": "catalog:",
+    "@types/node": "catalog:",
+    "@types/title": "catalog:",
+    "@types/ua-parser-js": "catalog:",
+    "@types/whatwg-mimetype": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

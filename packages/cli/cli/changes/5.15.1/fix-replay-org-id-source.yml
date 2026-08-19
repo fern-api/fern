@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Source `org_id` on the replay PostHog event from `fern.config.json` (the project organization slug, like every other CLI flow), not from a Venus token lookup.
+  type: fix

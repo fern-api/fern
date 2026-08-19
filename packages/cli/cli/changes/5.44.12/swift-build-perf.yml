@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix SPM auto-compiling dynamic snippet files as 650+ separate executables by
+    moving snippets into Tests/Snippets/ and wrapping them as library code (compiled
+    as part of the test target instead of standalone executables).
+  type: fix
+- summary: |
+    Combine build and test into single `swift test -c release` invocation to avoid
+    redundant recompilation in seed scripts.
+  type: chore

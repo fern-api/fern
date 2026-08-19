@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedPaginationUriPath.Test/SeedPaginationUriPath.Test.csproj" />
+  <Project Path="src/SeedPaginationUriPath/SeedPaginationUriPath.csproj" />
+</Solution>

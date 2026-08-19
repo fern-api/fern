@@ -1,0 +1,93 @@
+paths:
+  /data/fetch:
+    get:
+      x-fern-request-name: FetchRequest
+  /data/list:
+    get:
+      x-fern-request-name: ListRequest
+  /data/update:
+    post:
+      requestBody:
+        application/json:
+          schema:
+            properties:
+              index_type:
+                $ref: "#/components/schemas/IndexType"
+              details:
+                $ref: "#/components/schemas/GoogleProtobufAny"
+components:
+  schemas:
+    Metadata:
+      oneOf:
+        - type: object
+          additionalProperties:
+            $ref: "#/components/schemas/MetadataValue"
+        - type: object
+      x-fern-encoding:
+        proto:
+          type: google.protobuf.Struct
+    MetadataValue:
+      oneOf:
+        - type: number
+          format: double
+        - type: string
+        - type: boolean
+      x-fern-encoding:
+        proto:
+          type: google.protobuf.Value
+    DeleteRequest:
+      properties:
+        filter:
+          $ref: "#/components/schemas/Metadata"
+    DescribeRequest:
+      properties:
+        filter:
+          $ref: "#/components/schemas/Metadata"
+    QueryRequest:
+      properties:
+        filter:
+          $ref: "#/components/schemas/Metadata"
+    QueryColumn:
+      properties:
+        filter:
+          $ref: "#/components/schemas/Metadata"
+    ScoredColumn:
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+    UpdateRequest:
+      properties:
+        set_metadata:
+          $ref: "#/components/schemas/Metadata"
+        index_type:
+          $ref: "#/components/schemas/IndexType"
+        index_types:
+          type: array
+          items:
+            $ref: "#/components/schemas/IndexType"
+        details:
+          $ref: "#/components/schemas/GoogleProtobufAny"
+    UpdateResponse:
+      properties:
+        index_type:
+          $ref: "#/components/schemas/IndexType"
+        details:
+          $ref: "#/components/schemas/GoogleProtobufAny"
+        index_types:
+          type: array
+          items:
+            $ref: "#/components/schemas/IndexType"
+    CreateRequest:
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+    Column:
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+    IndexType:
+      x-fern-type-name: IndexType
+      enum:
+        - INDEX_TYPE_INVALID
+        - INDEX_TYPE_DEFAULT
+        - INDEX_TYPE_STRICT

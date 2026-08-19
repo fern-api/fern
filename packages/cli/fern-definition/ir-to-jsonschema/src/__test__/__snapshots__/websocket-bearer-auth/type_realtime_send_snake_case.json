@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "send_text": {
+      "type": "string"
+    },
+    "send_param": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "send_text",
+    "send_param"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

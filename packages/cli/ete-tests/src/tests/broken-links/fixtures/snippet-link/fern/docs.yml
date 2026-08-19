@@ -1,0 +1,8 @@
+instances:
+  - url: docs.example.com
+
+navigation:
+  - page: Test
+    path: test.mdx
+  - page: Getting Started
+    path: getting-started.mdx

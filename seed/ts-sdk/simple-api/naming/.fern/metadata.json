@@ -1,0 +1,21 @@
+{
+    "cliVersion": "DUMMY",
+    "generatorName": "fernapi/fern-typescript-sdk",
+    "generatorVersion": "local",
+    "generatorConfig": {
+        "naming": {
+            "namespace": "acme",
+            "client": "AcmeSdkClient",
+            "error": "AcmeApiError",
+            "timeoutError": "AcmeRequestTimeoutError",
+            "environment": "AcmeApiEnvironment",
+            "environmentUrls": "AcmeApiEnvironmentUrls",
+            "version": "AcmeApiVersion"
+        }
+    },
+    "originGitCommit": "DUMMY",
+    "invokedBy": "ci",
+    "requestedVersion": "0.0.1",
+    "ciProvider": "github",
+    "sdkVersion": "0.0.1"
+}

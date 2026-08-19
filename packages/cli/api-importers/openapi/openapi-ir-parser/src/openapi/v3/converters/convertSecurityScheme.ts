@@ -1,0 +1,146 @@
+import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
+import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../../../getExtension.js";
+import { convertEnum } from "../../../schema/convertEnum.js";
+import { convertSchemaWithExampleToSchema } from "../../../schema/utils/convertSchemaWithExampleToSchema.js";
+import { isReferenceObject } from "../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext.js";
+import { OpenAPIExtension } from "../extensions/extensions.js";
+import { FernOpenAPIExtension } from "../extensions/fernExtensions.js";
+import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames.js";
+import {
+    getBasicSecuritySchemeNameAndEnvvar,
+    HeaderSecuritySchemeNames,
+    SecuritySchemeNames
+} from "../extensions/getSecuritySchemeNameAndEnvvars.js";
+
+export function convertSecurityScheme(
+    securityScheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV3.ReferenceObject,
+    source: Source,
+    taskContext: TaskContext,
+    context?: AbstractOpenAPIV3ParserContext
+): SecurityScheme | undefined {
+    if (isReferenceObject(securityScheme)) {
+        if (context == null) {
+            throw new CliError({
+                message: `Converting referenced security schemes requires context: ${JSON.stringify(securityScheme)}`,
+                code: CliError.Code.InternalError
+            });
+        }
+        const resolvedSecurityScheme = context.resolveSecuritySchemeReference(securityScheme);
+        return convertSecuritySchemeHelper(resolvedSecurityScheme, source, taskContext);
+    }
+    return convertSecuritySchemeHelper(securityScheme, source, taskContext);
+}
+
+function convertSecuritySchemeHelper(
+    securityScheme: OpenAPIV3.SecuritySchemeObject,
+    source: Source,
+    taskContext: TaskContext
+): SecurityScheme | undefined {
+    try {
+        if (securityScheme.type === "apiKey" && securityScheme.in === "header") {
+            const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT);
+            const headerNames = getExtension<HeaderSecuritySchemeNames>(
+                securityScheme,
+                FernOpenAPIExtension.FERN_HEADER_AUTH
+            );
+            return SecurityScheme.header({
+                headerName: securityScheme.name,
+                prefix: bearerFormat != null ? "Bearer" : headerNames?.prefix,
+                headerVariableName:
+                    headerNames?.name ??
+                    getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME),
+                headerEnvVar: headerNames?.env,
+                headerPlaceholder: headerNames?.placeholder
+            });
+        } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "bearer") {
+            // ^ case insensitivity for securityScheme.scheme required in OAS
+            const bearerNames = getExtension<SecuritySchemeNames>(
+                securityScheme,
+                FernOpenAPIExtension.FERN_BEARER_TOKEN
+            );
+            return SecurityScheme.bearer({
+                tokenVariableName:
+                    bearerNames?.name ??
+                    getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME),
+                tokenEnvVar: bearerNames?.env,
+                tokenPlaceholder: bearerNames?.placeholder
+            });
+        } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "basic") {
+            // ^ case insensitivity for securityScheme.scheme required in OAS
+            const basicSecuritySchemeNamingAndEnvvar = getBasicSecuritySchemeNameAndEnvvar(securityScheme);
+            const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme);
+            return SecurityScheme.basic({
+                usernameVariableName:
+                    basicSecuritySchemeNamingAndEnvvar?.username?.name ?? basicSecuritySchemeNaming.usernameVariable,
+                usernameEnvVar: basicSecuritySchemeNamingAndEnvvar?.username?.env,
+                usernamePlaceholder: basicSecuritySchemeNamingAndEnvvar?.username?.placeholder,
+                passwordVariableName:
+                    basicSecuritySchemeNamingAndEnvvar?.password?.name ?? basicSecuritySchemeNaming.passwordVariable,
+                passwordEnvVar: basicSecuritySchemeNamingAndEnvvar?.password?.env,
+                passwordPlaceholder: basicSecuritySchemeNamingAndEnvvar?.password?.placeholder
+            });
+        } else if (securityScheme.type === "openIdConnect") {
+            return SecurityScheme.bearer({
+                tokenVariableName: undefined,
+                tokenEnvVar: undefined,
+                tokenPlaceholder: undefined
+            });
+        } else if (securityScheme.type === "oauth2") {
+            return SecurityScheme.oauth({
+                scopesEnum: getScopes(securityScheme, source)
+            });
+        }
+    } catch (error) {
+        taskContext.logger.debug(`Error converting security scheme: ${(error as Error)?.message}`);
+    }
+    taskContext.logger.debug(
+        `Skipping security scheme: ${JSON.stringify(securityScheme, null)} - not currently supported. Please reach out to Fern support team!`
+    );
+    return undefined;
+}
+
+function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: Source): EnumSchema | undefined {
+    const scopes =
+        oauthSecurityScheme.flows.authorizationCode?.scopes ??
+        oauthSecurityScheme.flows.clientCredentials?.scopes ??
+        oauthSecurityScheme.flows.implicit?.scopes ??
+        oauthSecurityScheme.flows.password?.scopes;
+    if (scopes != null) {
+        const schemaWithExample = convertEnum({
+            nameOverride: undefined,
+            generatedName: "OauthScope",
+            title: undefined,
+            enumValues: Object.keys(scopes),
+            fernEnum: Object.fromEntries(
+                Object.entries(scopes).map(([scope, description]) => {
+                    return [
+                        scope,
+                        {
+                            description
+                        }
+                    ];
+                })
+            ),
+            _default: undefined,
+            description: undefined,
+            availability: undefined,
+            enumVarNames: undefined,
+            wrapAsOptional: false,
+            wrapAsNullable: false,
+            namespace: undefined,
+            groupName: undefined,
+            context: undefined,
+            source,
+            inline: undefined
+        });
+        const schema = convertSchemaWithExampleToSchema(schemaWithExample);
+        if (schema.type === "enum") {
+            return schema;
+        }
+    }
+    return undefined;
+}

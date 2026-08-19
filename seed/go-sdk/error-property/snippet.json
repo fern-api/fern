@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/property-based-error",
+                "method": "GET",
+                "identifier_override": "endpoint_property-based-error.ThrowError"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/error-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.PropertyBasedError.ThrowError(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

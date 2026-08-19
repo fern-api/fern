@@ -1,0 +1,14 @@
+service:
+  base-path: /test-headers
+  auth: true
+  headers:
+    X-TEST-SERVICE-HEADER: string
+  endpoints:
+    getWithCustomHeader:
+      path: /custom-header
+      method: POST
+      request:
+        name: ReqWithHeaders
+        headers:
+          X-TEST-ENDPOINT-HEADER: string
+        body: string

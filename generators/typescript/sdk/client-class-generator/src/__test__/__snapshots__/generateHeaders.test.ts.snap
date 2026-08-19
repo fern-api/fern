@@ -1,0 +1,72 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`generateHeaders > filters out Authorization header from root-level overridable headers 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Custom": requestOptions?.xCustom ?? this._options?.xCustom }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates auth headers when auth provider exists and endpoint requires auth 1`] = `
+"const _authRequest: AuthRequest = getAuthRequest(this._authProvider);
+let _headers: Fetcher.Args["headers"] = mergeHeaders(_authRequest.headers, this._options?.headers, requestOptions?.headers);"
+`;
+
+exports[`generateHeaders > generates auth headers with endpoint metadata when generateEndpointMetadata is true 1`] = `
+"const _authRequest: AuthRequest = getAuthRequest(this._authProvider, { endpointMetadata: _metadata });
+let _headers: Fetcher.Args["headers"] = mergeHeaders(_authRequest.headers, this._options?.headers, requestOptions?.headers);"
+`;
+
+exports[`generateHeaders > generates header with stringify for date type 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Date": request.xDate.toString() }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates header with stringify for list container type 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Tags": request.xTags.toString() }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates header with stringify for map container type 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Meta": request.xMeta.toString() }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates header with stringify for named alias to DATE_TIME type 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Timestamp": request.xTimestamp.toString() }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates header with stringify for named object type 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Config": request.xConfig.toString() }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates header with stringify for set container type 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Ids": request.xIds.toString() }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates header with stringify for unknown type 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Unknown": request.xUnknown.toString() }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates header without stringify for named enum type 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Status": request.xStatus }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers with additional headers parameter 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Extra": "extra-value" }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers with additional spread headers 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...(spreadHeaders) }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers with headersToMergeAfterClientOptionsHeaders 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, afterHeaders, requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers with idempotency headers when endpoint is idempotent 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Idempotency-Key": requestOptions?.idempotencyKey }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers with literal header value 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Fern-Language": "JavaScript" }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers with no service/endpoint headers and no auth 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers with root-level overridable headers 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Custom-Header": requestOptions?.xCustomHeader ?? this._options?.xCustomHeader }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers with service and endpoint headers 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-API-Version": request.xApiVersion, "X-Request-Id": request.xRequestId }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers without idempotency headers when endpoint is not idempotent 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates idempotency header with stringify for date type 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Idempotency-Timestamp": (requestOptions?.idempotencyTimestamp).toString() }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates nullable header value with ?? undefined coalescing 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Nullable": request.xNullable ?? undefined }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates nullable header with named alias to nullable type (typeContainsNullable named branch) 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-NullableAlias": request.xNullableAlias ?? undefined }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates nullable header with optional wrapping nullable (typeContainsNullable recurses) 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-OptNullable": request.xOptNullable ?? undefined }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates nullable idempotency header with ?? undefined coalescing 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Idempotency-Nullable": requestOptions?.idempotencyNullable ?? undefined }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates root-level header with non-literal non-boolean value (fallback ?? this._options) 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Tenant": requestOptions?.xTenant ?? this._options?.xTenant }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates root-level overridable header with boolean literal value 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Feature-Flag": (requestOptions?.xFeatureFlag ?? true).toString() }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates version header when version context has generated version 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.xApiVersion }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > includes auth headers when alwaysSendAuth is true even if endpoint.auth is false 1`] = `
+"const _authRequest: AuthRequest = getAuthRequest(this._authProvider);
+let _headers: Fetcher.Args["headers"] = mergeHeaders(_authRequest.headers, this._options?.headers, requestOptions?.headers);"
+`;
+
+exports[`generateHeaders > skips auth headers on auth endpoints even when alwaysSendAuth is true (prevents auth loop) 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);"`;
+
+exports[`generateHeaders > skips auth headers when alwaysSendAuth is false and endpoint.auth is false 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);"`;

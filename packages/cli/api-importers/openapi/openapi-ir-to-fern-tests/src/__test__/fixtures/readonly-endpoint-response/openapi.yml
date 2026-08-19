@@ -1,0 +1,95 @@
+openapi: 3.1.0
+info:
+  title: Readonly Endpoint Response API
+  description: >
+    Tests that when a schema with readOnly properties is used as the direct
+    response type of an endpoint (not just nested within another schema), the
+    endpoint response type reference is correctly remapped to the Read variant.
+  version: 1.0.0
+
+paths:
+  /webhooks:
+    post:
+      summary: Create a webhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Webhook"
+      responses:
+        "200":
+          description: Webhook created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Webhook"
+
+  /webhooks/{id}:
+    get:
+      summary: Get a webhook
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Webhook retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Webhook"
+
+    patch:
+      summary: Update a webhook
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookUpdate"
+      responses:
+        "200":
+          description: Webhook updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Webhook"
+
+components:
+  schemas:
+    Webhook:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          description: Output only. The ID of the webhook.
+        uri:
+          type: string
+          description: The URI to which webhook events will be sent.
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Output only. When the webhook was created.
+        state:
+          type: string
+          readOnly: true
+          enum: [enabled, disabled]
+          description: Output only. The state of the webhook.
+
+    WebhookUpdate:
+      type: object
+      properties:
+        uri:
+          type: string
+          description: The URI to which webhook events will be sent.

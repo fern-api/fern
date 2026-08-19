@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add git-ref-based docs versioning. A version entry in `docs.yml` can now name a
+    git `ref:` (a branch, tag, or commit SHA) instead of pointing only at the working
+    tree. On publish, the CLI resolves the ref to a commit, materializes the repository
+    at that commit, and builds that version's pages, navigation, assets, API definitions,
+    and committed library output from the ref, composed with the current branch's theme,
+    shell, and `versions:` metadata. Branch refs are resolved to their latest commit on
+    the remote; tags and commit SHAs are immutable. `fern docs dev` builds only the
+    working-tree version (git-ref-backed versions are built on publish).
+  type: feat

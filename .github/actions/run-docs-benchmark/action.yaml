@@ -1,0 +1,123 @@
+name: Run Docs Generation Benchmark
+description: Run docs generation with --preview against benchmark fixture and record timing
+
+inputs:
+  fern-token:
+    description: "Fern API token authorized for the benchmark org"
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Generate fixture pages
+      shell: bash
+      run: |
+        PAGE_COUNT=37
+        bash benchmarks/fern/generate-fixture-pages.sh "$PAGE_COUNT"
+        echo "Generated ${PAGE_COUNT} fixture pages"
+
+    - name: Generate fixture versions
+      shell: bash
+      run: |
+        PAGE_COUNT=37
+
+        bash benchmarks/fern/generate-fixture-versions.sh "$PAGE_COUNT"
+
+        # Validate: each version file should reference exactly PAGE_COUNT pages
+        VERSIONS_DIR="benchmarks/fern/versions"
+        if [ -d "$VERSIONS_DIR" ]; then
+          for vfile in "$VERSIONS_DIR"/v*.yml; do
+            [ -f "$vfile" ] || continue
+            VPAGE_COUNT=$(grep -c 'path: ../pages/page-' "$vfile")
+            if [ "$VPAGE_COUNT" -ne "$PAGE_COUNT" ]; then
+              echo "::error::Page count mismatch in $(basename "$vfile"): expected ${PAGE_COUNT}, found ${VPAGE_COUNT}"
+              exit 1
+            fi
+          done
+          VERSION_COUNT=$(ls -1 "$VERSIONS_DIR"/v*.yml 2>/dev/null | wc -l)
+          echo "Validated: ${VERSION_COUNT} versions, each with ${PAGE_COUNT} pages"
+        else
+          echo "No versions generated (unversioned mode)"
+        fi
+
+    - name: Build Fern CLI
+      shell: bash
+      run: pnpm run fern:build
+
+    - name: Run docs benchmark
+      shell: bash
+      env:
+        FERN_TOKEN: ${{ inputs.fern-token }}
+      run: |
+        RESULTS_DIR="${GITHUB_WORKSPACE}/benchmark-results"
+        mkdir -p "$RESULTS_DIR"
+
+        # Count versioned specs (square-YYYY-MM-DD directories)
+        VERSIONS_FOUND=0
+        for spec_dir in benchmarks/fern/apis/square-*/; do
+          if [ -f "${spec_dir}openapi.json" ]; then
+            VERSIONS_FOUND=$((VERSIONS_FOUND + 1))
+          fi
+        done
+
+        if [ "$VERSIONS_FOUND" -eq 0 ]; then
+          echo "::warning::Skipping docs benchmark — no versioned OpenAPI specs available"
+          echo "{\"type\":\"docs\",\"spec\":\"none\",\"duration_seconds\":0,\"exit_code\":-1,\"skipped\":true}" \
+            >> "${RESULTS_DIR}/docs.jsonl"
+          exit 0
+        fi
+
+        LOG_FILE="${RESULTS_DIR}/docs-cli-output.log"
+
+        echo "Benchmarking docs generation (${VERSIONS_FOUND} API versions)"
+
+        # Use sub-second precision timing (date +%s.%N) since the benchmark
+        # may run several minutes and we want accurate measurements.
+        START_TIME=$(date +%s.%N)
+
+        # Run the actual docs generation command with --preview for safety.
+        # --preview creates an ephemeral preview deployment, never touches production.
+        # --id ensures repeated runs overwrite the same preview URL.
+        # --force skips any confirmation prompts.
+        # FERN_CWD tells the CLI which project directory to use (avoids fragile `cd`).
+        # GitHub Actions sets `bash -eo pipefail`, so a failing command
+        # normally kills the step.  Temporarily disable errexit so we can
+        # capture the exit code AND the CLI output via tee.
+        set +e
+        FERN_CWD="${GITHUB_WORKSPACE}/benchmarks/fern" \
+        node --enable-source-maps "${GITHUB_WORKSPACE}/packages/cli/cli/dist/prod/cli.cjs" \
+          generate --docs --preview --id benchmark-run --force \
+          2>&1 | tee "$LOG_FILE"
+        EXIT_CODE=$?
+        set -e
+
+        END_TIME=$(date +%s.%N)
+        DURATION=$(awk "BEGIN {printf \"%.1f\", ${END_TIME} - ${START_TIME}}")
+
+        if [ "$EXIT_CODE" -ne 0 ]; then
+          echo ""
+          echo "========================================"
+          echo "CLI FAILED (exit ${EXIT_CODE}) after ${DURATION}s"
+          echo "Last 30 lines of CLI output:"
+          echo "========================================"
+          tail -30 "$LOG_FILE"
+          echo "========================================"
+          # Capture the last few lines of output — these typically contain the
+          # real failure reason.  The previous grep-based approach was too noisy
+          # (it matched summary lines like "Found 0 errors and 26 warnings").
+          ERROR_MSG=$(tail -5 "$LOG_FILE" | sed ':a;N;$!ba;s/\n/ | /g' | head -c 300)
+        fi
+
+        echo "Duration: ${DURATION}s (exit ${EXIT_CODE}, ${VERSIONS_FOUND} versions)"
+
+        # Write result as JSON using jq for safe escaping.
+        # -c produces compact single-line output required for JSONL format.
+        jq -cn \
+          --arg type "docs" \
+          --arg spec "combined" \
+          --argjson vc "$VERSIONS_FOUND" \
+          --argjson dur "$DURATION" \
+          --argjson ec "$EXIT_CODE" \
+          --arg err "${ERROR_MSG:-}" \
+          '{type:$type, spec:$spec, versions_count:$vc, duration_seconds:$dur, exit_code:$ec} + (if $err != "" then {error:$err} else {} end)' \
+          >> "${RESULTS_DIR}/docs.jsonl"

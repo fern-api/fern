@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix AsyncAPI v2 enum collision where multiple channels with identically
+    named query parameters (or headers/path params) that have different enum
+    values would overwrite each other. The v2 channel converter now passes
+    `parameterNamePrefix` (the channel path) to the ParameterConverter,
+    matching the v3 converter behavior.
+  type: fix

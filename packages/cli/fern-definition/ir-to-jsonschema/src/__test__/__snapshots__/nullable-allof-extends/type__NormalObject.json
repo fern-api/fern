@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "normalField": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "description": "A standard object with no nullable issues.",
+  "definitions": {}
+}

@@ -1,0 +1,19 @@
+type: object
+properties:
+  username:
+    description: User supplied username
+    type: string
+    minLength: 4
+    example: John78
+  firstName:
+    description: User first name
+    type: string
+    minLength: 1
+    example: John
+  lastName:
+    description: User last name
+    type: string
+    minLength: 1
+    example: Smith
+  email:
+    $ref: ./Email.yaml

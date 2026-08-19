@@ -1,0 +1,6 @@
+- summary: |
+    Add `payload-format` support for asymmetric webhook signature verification,
+    allowing the timestamp and other components to be included in the signed
+    payload. Previously, only the raw body was signed for asymmetric webhooks,
+    making the timestamp tolerance check ineffective against replay attacks.
+  type: fix

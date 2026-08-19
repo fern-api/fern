@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/extends/extended-inline-request-body",
+                "method": "POST",
+                "identifier_override": "endpoint_.extendedInlineRequestBody"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExtends;\n\nvar client = new SeedExtendsClient();\nawait client.ExtendedInlineRequestBodyAsync(\n    new Inlined\n    {\n        Unique = \"unique\",\n        Name = \"name\",\n        Docs = \"docs\",\n    }\n);\n"
+            }
+        }
+    ]
+}

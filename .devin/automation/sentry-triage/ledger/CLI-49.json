@@ -1,0 +1,9 @@
+{
+  "title": "YAML multiline key parse failure",
+  "disposition": "shipped",
+  "rationale": "User-authored version navigation YAML failed during getVersionedNavigationConfiguration and previously surfaced as an InternalError.",
+  "fixSummary": "Wrap product/version navigation yaml.load calls in getNavigationConfiguration/getVersionedNavigationConfiguration as CliError(ParseError).",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15937",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "YAMLException while parsing docs.yml or referenced docs navigation YAML; parser exception treated as InternalError."
+}

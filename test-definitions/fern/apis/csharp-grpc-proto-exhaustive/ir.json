@@ -1,0 +1,496 @@
+{
+    "selfHosted": false,
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "Api",
+            "safeName": "Api"
+        }
+    },
+    "apiDisplayName": "Test API",
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {},
+    "errors": {},
+    "services": {
+        "service_dataservice": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "dataservice",
+                            "camelCase": {
+                                "unsafeName": "dataservice",
+                                "safeName": "dataservice"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "dataservice",
+                                "safeName": "dataservice"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATASERVICE",
+                                "safeName": "DATASERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Dataservice",
+                                "safeName": "Dataservice"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "dataservice",
+                        "camelCase": {
+                            "unsafeName": "dataservice",
+                            "safeName": "dataservice"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "dataservice",
+                            "safeName": "dataservice"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DATASERVICE",
+                            "safeName": "DATASERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Dataservice",
+                            "safeName": "Dataservice"
+                        }
+                    }
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_dataservice.foo",
+                    "name": {
+                        "originalName": "foo",
+                        "camelCase": {
+                            "unsafeName": "foo",
+                            "safeName": "foo"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "foo",
+                            "safeName": "foo"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FOO",
+                            "safeName": "FOO"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Foo",
+                            "safeName": "Foo"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/foo",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "foo",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "v2RequestBodies": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "map",
+                                        "keyType": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
+                                        },
+                                        "valueType": {
+                                            "_type": "unknown"
+                                        }
+                                    }
+                                },
+                                "docs": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": 200,
+                        "isWildcardStatusCode": null,
+                        "docs": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": null
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": {
+        "defaultEnvironment": "Default",
+        "environments": {
+            "type": "singleBaseUrl",
+            "environments": [
+                {
+                    "id": "Default",
+                    "name": {
+                        "originalName": "Default",
+                        "camelCase": {
+                            "unsafeName": "default",
+                            "safeName": "default"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "default",
+                            "safeName": "default"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DEFAULT",
+                            "safeName": "DEFAULT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Default",
+                            "safeName": "Default"
+                        }
+                    },
+                    "url": "https://localhost",
+                    "docs": null
+                }
+            ]
+        }
+    },
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
+    "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "publishConfig": null,
+    "dynamic": {
+        "version": "1.0.0",
+        "types": {},
+        "headers": [],
+        "endpoints": {
+            "endpoint_dataservice.foo": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "foo",
+                        "camelCase": {
+                            "unsafeName": "foo",
+                            "safeName": "foo"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "foo",
+                            "safeName": "foo"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FOO",
+                            "safeName": "FOO"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Foo",
+                            "safeName": "Foo"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "dataservice",
+                                "camelCase": {
+                                    "unsafeName": "dataservice",
+                                    "safeName": "dataservice"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "dataservice",
+                                    "safeName": "dataservice"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DATASERVICE",
+                                    "safeName": "DATASERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Dataservice",
+                                    "safeName": "Dataservice"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "dataservice",
+                            "camelCase": {
+                                "unsafeName": "dataservice",
+                                "safeName": "dataservice"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "dataservice",
+                                "safeName": "dataservice"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATASERVICE",
+                                "safeName": "DATASERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Dataservice",
+                                "safeName": "Dataservice"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/foo"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": null
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            }
+        },
+        "pathParameters": [],
+        "environments": {
+            "defaultEnvironment": "Default",
+            "environments": {
+                "type": "singleBaseUrl",
+                "environments": [
+                    {
+                        "id": "Default",
+                        "name": {
+                            "originalName": "Default",
+                            "camelCase": {
+                                "unsafeName": "default",
+                                "safeName": "default"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "default",
+                                "safeName": "default"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DEFAULT",
+                                "safeName": "DEFAULT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Default",
+                                "safeName": "Default"
+                            }
+                        },
+                        "url": "https://localhost",
+                        "docs": null
+                    }
+                ]
+            }
+        },
+        "variables": null,
+        "generatorConfig": null
+    },
+    "audiences": null,
+    "generationMetadata": null,
+    "apiPlayground": true,
+    "subpackages": {
+        "subpackage_dataservice": {
+            "name": {
+                "originalName": "dataservice",
+                "camelCase": {
+                    "unsafeName": "dataservice",
+                    "safeName": "dataservice"
+                },
+                "snakeCase": {
+                    "unsafeName": "dataservice",
+                    "safeName": "dataservice"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "DATASERVICE",
+                    "safeName": "DATASERVICE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Dataservice",
+                    "safeName": "Dataservice"
+                }
+            },
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "dataservice",
+                        "camelCase": {
+                            "unsafeName": "dataservice",
+                            "safeName": "dataservice"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "dataservice",
+                            "safeName": "dataservice"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DATASERVICE",
+                            "safeName": "DATASERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Dataservice",
+                            "safeName": "Dataservice"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "dataservice",
+                    "camelCase": {
+                        "unsafeName": "dataservice",
+                        "safeName": "dataservice"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "dataservice",
+                        "safeName": "dataservice"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DATASERVICE",
+                        "safeName": "DATASERVICE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Dataservice",
+                        "safeName": "Dataservice"
+                    }
+                }
+            },
+            "service": "service_dataservice",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": null,
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "subpackage_dataservice"
+        ],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
+        }
+    }
+}

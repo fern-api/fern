@@ -1,0 +1,55 @@
+webhooks:
+  userAdded:
+    audiences:
+      - external
+    display-name: User Added
+    method: POST
+    payload: User
+    signature:
+      type: hmac
+      header: x-webhook-signature
+      algorithm: sha256
+      encoding: hex
+      signature-prefix: "sha256="
+      payload-format:
+        components:
+          - timestamp
+          - body
+        delimiter: "."
+      timestamp:
+        header: x-webhook-timestamp
+        format: unix-seconds
+        tolerance: 300
+
+  userDeleted:
+    display-name: User Added
+    method: POST
+    payload: User
+
+  messageStatus:
+    display-name: Message Status
+    method: POST
+    payload: User
+    signature:
+      type: hmac
+      header: X-Twilio-Signature
+      algorithm: sha1
+      encoding: base64
+      payload-format:
+        components:
+          - notification-url
+        delimiter: ""
+      body-hash-binding:
+        algorithm: sha256
+        encoding: hex
+        location:
+          type: query-parameter
+          name: bodySHA256
+      url-normalization:
+        port-variants: true
+        legacy-query-encoding: true
+
+types:
+  User:
+    properties:
+      name: string

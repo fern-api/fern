@@ -1,0 +1,69 @@
+openapi: 3.1.0
+info:
+  title: Array enum defaults
+  version: 1.0.0
+  description: |
+    Regression fixture for FER-9790. Verifies that OpenAPI `default` values on
+    arrays (including arrays of enums) are surfaced through the
+    OpenAPI-IR -> Fern Definition pipeline so that docs can render
+    `Defaults to [...]` metadata. Covers query parameters with
+    `allow-multiple: true` plus inlined body properties.
+paths:
+  /search:
+    get:
+      operationId: search
+      parameters:
+        - name: formats
+          in: query
+          description: Output formats to include
+          schema:
+            type: array
+            default: ["html"]
+            items:
+              type: string
+              enum: [html, json, markdown, csv]
+        - name: tags
+          in: query
+          description: Tags to filter by
+          schema:
+            type: array
+            default: ["green", "leafy"]
+            items:
+              type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /widgets:
+    post:
+      operationId: createWidget
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Widget"
+      responses:
+        "200":
+          description: ok
+components:
+  schemas:
+    Widget:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        careTags:
+          type: array
+          description: Care tags for the widget
+          default: ["beginner-friendly"]
+          items:
+            type: string
+            enum: [beginner-friendly, advanced-care, pet-safe]

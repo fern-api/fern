@@ -1,0 +1,11 @@
+default-group: docs
+
+api:
+  specs:
+    graphql: ./definition/schema.graphql
+
+groups:
+  docs:
+    generators:
+      - name: fern-docs
+        version: latest

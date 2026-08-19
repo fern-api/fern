@@ -1,0 +1,6 @@
+types:
+  MyType: MissingType
+  MyListType: list<MissingType>
+  MyListType2: list<commons.MissingType>
+  MyListType3: list<nonExistentFile.MissingType>
+  ImportedType: commons.DoesNotExist

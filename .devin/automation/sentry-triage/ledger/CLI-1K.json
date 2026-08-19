@@ -1,0 +1,9 @@
+{
+  "title": "GitHub pull request base branch invalid",
+  "disposition": "shipped",
+  "rationale": "Remote generation task failures are generator/container task failures, not CLI internal defects.",
+  "fixSummary": "RemoteTaskHandler maps failed remote tasks to non-reportable ContainerError in current code.",
+  "prOrIssue": "Already handled in current code; ledger corrected in this PR",
+  "lastAnalyzed": "2026-05-05",
+  "problemSignature": "Remote generation task failed because downstream generator/GitHub output rejected user configuration; should be non-reportable task/container failure."
+}

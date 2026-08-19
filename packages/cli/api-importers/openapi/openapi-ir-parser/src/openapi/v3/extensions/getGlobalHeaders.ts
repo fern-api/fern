@@ -1,0 +1,43 @@
+import { GlobalHeader } from "@fern-api/openapi-ir";
+import { OpenAPIV3 } from "openapi-types";
+
+import { getExtension } from "../../../getExtension.js";
+import { FernOpenAPIExtension } from "./fernExtensions.js";
+import { getSchemaFromFernType } from "./getFernTypeExtension.js";
+
+interface GlobalHeaderExtension {
+    header: string;
+    name: string | undefined;
+    optional: boolean | undefined;
+    env: string | undefined;
+    type: string | undefined;
+    "x-fern-default": unknown | undefined;
+}
+
+export function getGlobalHeaders(document: OpenAPIV3.Document): GlobalHeader[] {
+    const globalHeaders = getExtension<GlobalHeaderExtension[]>(document, FernOpenAPIExtension.FERN_GLOBAL_HEADERS);
+    const result: GlobalHeader[] = [];
+    for (const header of globalHeaders ?? []) {
+        result.push({
+            header: header.header,
+            name: header.name,
+            optional: header.optional,
+            env: header.env,
+            clientDefault: header["x-fern-default"],
+            schema:
+                header.type != null
+                    ? getSchemaFromFernType({
+                          fernType: header.type,
+                          description: undefined,
+                          availability: undefined,
+                          generatedName: header.name ?? header.header,
+                          title: undefined,
+                          namespace: undefined,
+                          groupName: undefined,
+                          nameOverride: undefined
+                      })
+                    : undefined
+        });
+    }
+    return result;
+}

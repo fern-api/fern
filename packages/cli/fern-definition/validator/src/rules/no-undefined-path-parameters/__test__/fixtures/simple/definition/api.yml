@@ -1,0 +1,8 @@
+name: simple-api
+
+base-path: /{foo}/{bar}
+path-parameters:
+  foo: integer
+
+variables:
+  someVariable: string

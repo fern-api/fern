@@ -1,0 +1,12 @@
+auth-schemes:
+  customAuth:
+    scheme: bearer
+    token:
+      name: token
+      env: CUSTOM_AUTH_TOKEN
+
+api:
+  auth: customAuth
+  specs:
+    - openapi: openapi.yml
+      overrides: overrides.yml

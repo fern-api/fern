@@ -1,0 +1,41 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/items",
+                "method": "GET",
+                "identifier_override": "endpoint_items.listItems"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Items.ListItemsAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/oauth/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.gettoken"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Auth.GettokenAsync(\n    new AuthGetTokenRequest { ClientId = \"client_id\", ClientSecret = \"client_secret\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/files/content",
+                "method": "POST",
+                "identifier_override": "endpoint_files.upload"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Files.UploadAsync(new FilesUploadRequest { Name = \"name\", ParentId = \"parent_id\" });\n"
+            }
+        }
+    ]
+}

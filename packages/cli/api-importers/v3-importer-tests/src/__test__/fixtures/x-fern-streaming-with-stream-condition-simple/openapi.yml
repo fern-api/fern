@@ -1,0 +1,52 @@
+openapi: 3.1.0
+info:
+  version: 0.1.0
+  title: TEST API v2
+servers:
+  - url: https://api.test.io
+paths:
+  /v2/test:
+    post:
+      summary: Create a Test
+      operationId: create
+      x-fern-streaming:
+        stream-condition: $request.stream_response
+        response:
+          $ref: "#/components/schemas/FullResponse"
+        response-stream:
+          $ref: "#/components/schemas/StreamedResponse"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request"
+      responses:
+        "200":
+          description: A response to a chat request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FullResponse"
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/StreamedResponse"
+components:
+  schemas:
+    Request:
+      type: object
+      properties:
+        query:
+          type: string
+        stream_response:
+          type: boolean
+          default: false
+    FullResponse:
+      type: object
+      properties:
+        answer:
+          type: string
+    StreamedResponse:
+      type: object
+      properties:
+        chunk:
+          type: string

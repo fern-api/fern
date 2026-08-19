@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "problems": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/commons.ProblemId"
+      }
+    },
+    "playlist_id": {
+      "$ref": "#/definitions/playlist.PlaylistId"
+    },
+    "owner-id": {
+      "$ref": "#/definitions/commons.UserId"
+    }
+  },
+  "required": [
+    "name",
+    "problems",
+    "playlist_id",
+    "owner-id"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "commons.ProblemId": {
+      "type": "string"
+    },
+    "playlist.PlaylistId": {
+      "type": "string"
+    },
+    "commons.UserId": {
+      "type": "string"
+    }
+  }
+}

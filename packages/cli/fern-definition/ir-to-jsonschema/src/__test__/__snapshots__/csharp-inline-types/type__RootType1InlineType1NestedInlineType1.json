@@ -1,0 +1,55 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": {
+      "type": "string",
+      "description": "lorem ipsum"
+    },
+    "bar": {
+      "type": "string",
+      "description": "lorem ipsum"
+    },
+    "myEnum": {
+      "$ref": "#/definitions/InlineEnum1",
+      "description": "lorem ipsum"
+    },
+    "ref": {
+      "$ref": "#/definitions/ReferenceType",
+      "description": "lorem ipsum"
+    }
+  },
+  "required": [
+    "foo",
+    "bar",
+    "myEnum",
+    "ref"
+  ],
+  "additionalProperties": false,
+  "description": "lorem ipsum",
+  "definitions": {
+    "InlineEnum1": {
+      "type": "string",
+      "enum": [
+        "SUNNY",
+        "CLOUDY",
+        "RAINING",
+        "SNOWING"
+      ],
+      "description": "lorem ipsum"
+    },
+    "ReferenceType": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string",
+          "description": "lorem ipsum"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false,
+      "description": "lorem ipsum"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+service:
+  base-path: /c
+  auth: false
+  endpoints:
+    foo:
+      path: /foo
+      method: GET
+    bar:
+      path: /{pathParam}
+      path-parameters:
+        pathParam: string
+      method: GET
+    samePathDifferentMethod:
+      path: /{pathParam}
+      path-parameters:
+        pathParam: string
+      method: POST

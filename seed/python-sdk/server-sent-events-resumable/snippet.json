@@ -1,0 +1,31 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "Stream completions (resumable)",
+            "id": {
+                "path": "/stream",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.stream"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedServerSentEventsResumable\n\nclient = SeedServerSentEventsResumable(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.completions.stream(\n    query=\"foo\",\n)\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedServerSentEventsResumable\n\nclient = AsyncSeedServerSentEventsResumable(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.completions.stream(\n        query=\"foo\",\n    )\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "Stream completions (non-resumable)",
+            "id": {
+                "path": "/stream-non-resumable",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.streamNonResumable"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedServerSentEventsResumable\n\nclient = SeedServerSentEventsResumable(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.completions.stream_non_resumable(\n    query=\"bar\",\n)\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedServerSentEventsResumable\n\nclient = AsyncSeedServerSentEventsResumable(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.completions.stream_non_resumable(\n        query=\"bar\",\n    )\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

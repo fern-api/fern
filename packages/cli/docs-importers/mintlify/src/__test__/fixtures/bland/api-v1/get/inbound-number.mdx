@@ -1,0 +1,77 @@
+---
+title: "Inbound Number Details"
+api: "GET https://api.bland.ai/v1/inbound/{phone_number}"
+description: "Retrieve settings for your inbound phone number."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="phone_number" type="string">
+    The inbound phone number to update. 
+    
+    Formatting notes:
+    - The `'+'` or `'%2B'` prefix is optional.
+    - Will assume a US country code if no country code is provided.
+
+    Valid Examples for `+13334445555`:
+    - `%2B13334445555`
+    - `13334445555`
+    - `3334445555`
+
+</ParamField>
+
+### Response
+
+<ResponseField name="created_at" type="string">
+  The timestamp when the inbound number was configured.
+</ResponseField>
+
+<ResponseField name="phone_number" type="string">
+  The specific inbound phone number.
+</ResponseField>
+
+<ResponseField name="prompt" type="string">
+  The prompt your agent is using.
+</ResponseField>
+
+<ResponseField name="webhook" type="string">
+  The webhook URL, if any, where transcripts are sent after each call to the number completes.
+</ResponseField>
+
+<ResponseField name="voice_" type="integer">
+  The `voice` your agent is using - will be a `reduce_latency` voice. For more information, see [List
+  Voices](/api-v1/get/voices).
+</ResponseField>
+
+<ResponseField name="pathway_id" type="string">
+    The `pathway_id` your agent is using.
+
+</ResponseField>
+
+<ResponseField name="dynamic_data" type="string">
+  Any dynamic data associated with the inbound number, if applicable.
+</ResponseField>
+
+<ResponseField name="max_duration" type="integer">
+  The maximum duration of a call to the inbound number, in minutes.
+</ResponseField>
+
+<ResponseExample>
+```json Response
+{
+    "created_at": "2023-11-27T17:21:38.33359+00:00",
+    "phone_number": "+18584139939",
+    "prompt": "You're Blandie, the helpful AI assistant. The person calling you has inquired...",
+    "webhook": "https://webhook.site/0a0a0a0a-0a0a-0a0a-0a0a-0a0a0a0a0a0",
+    "voice_id": 2,
+    "dynamic_data": null,
+    "max_duration": 30
+}
+```
+</ResponseExample>

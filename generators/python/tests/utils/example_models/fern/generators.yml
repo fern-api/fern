@@ -1,0 +1,13 @@
+default-group: dummy_types
+groups:
+  dummy_types:
+    generators:
+      - name: ferntest/fern-pydantic-model
+        ir-version: v53
+        version: 0.0.0
+        output:
+          location: local-file-system
+          path: ../types
+        config:
+          skip_validation: true
+          use_provided_defaults: true

@@ -1,0 +1,12 @@
+{
+  "oneOf": [
+    {
+      "type": "string"
+    },
+    {
+      "type": "null"
+    }
+  ],
+  "description": "An alias for a nullable user ID",
+  "definitions": {}
+}

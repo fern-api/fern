@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  DateObject:
+    properties:
+      date_property: date
+    examples:
+      - value:
+          date_property: "2022-07-01"

@@ -1,0 +1,10 @@
+- summary: |
+    Fix docs preview server showing "ready" message when the server process
+    crashes on startup. The CLI now exits with a clear error message instead.
+  type: fix
+- summary: |
+    On Windows, recover critical standalone node_modules packages (next,
+    react-dom, styled-jsx) when symlink resolution fails due to long .pnpm
+    directory names. The CLI now scans the .pnpm store and copies packages
+    directly as a fallback.
+  type: fix

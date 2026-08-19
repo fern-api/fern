@@ -1,0 +1,64 @@
+import { assertNever } from "@fern-api/core-utils";
+import type { Schema, SdkGroupName } from "@fern-api/openapi-ir";
+import type { RelativeFilePath } from "@fern-api/path-utils";
+
+import { convertSdkGroupNameToFile } from "./convertSdkGroupName.js";
+
+export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
+    switch (schema.type) {
+        case "object":
+        case "primitive":
+        case "enum":
+        case "array":
+        case "map":
+        case "reference":
+        case "literal":
+        case "optional":
+        case "nullable":
+        case "unknown":
+            return getDeclarationFileFromGroupName({
+                namespace: schema.namespace,
+                groupName: schema.groupName
+            });
+        case "oneOf":
+            return getDeclarationFileFromGroupName({
+                namespace: schema.value.namespace,
+                groupName: schema.value.groupName
+            });
+        default:
+            assertNever(schema);
+    }
+}
+
+/**
+ * Get the declaration file for a group name.
+ * If the group name is null or undefined, the package marker file will be returned.
+ * If the group name is a string, the group name will be camel cased and a .yml extension will be added.
+ * If the group name is an array, we create a directory with the group name and add a file with the group name camel cased and a .yml extension.
+ */
+export function getDeclarationFileFromGroupName({
+    namespace,
+    groupName
+}: {
+    namespace: string | undefined;
+    groupName: SdkGroupName | undefined;
+}): RelativeFilePath {
+    if (namespace != null && groupName != null) {
+        return convertSdkGroupNameToFile([
+            {
+                type: "namespace",
+                name: namespace
+            },
+            ...groupName
+        ]);
+    }
+    if (namespace != null) {
+        return convertSdkGroupNameToFile([
+            {
+                type: "namespace",
+                name: namespace
+            }
+        ]);
+    }
+    return convertSdkGroupNameToFile(groupName);
+}

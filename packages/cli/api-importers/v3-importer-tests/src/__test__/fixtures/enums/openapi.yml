@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: Example API
+  version: 1.0.0
+paths:
+  /example:
+    get:
+      summary: Get Example
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleResponse"
+  /open-ended:
+    get:
+      summary: Get Open Ended Enum
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpenEndedEnumResponse"
+components:
+  schemas:
+    ExampleResponse:
+      oneOf:
+        - $ref: "#/components/schemas/StatusEnum"
+        - $ref: "#/components/schemas/PriorityEnum"
+        - $ref: "#/components/schemas/ErrorCodeEnum"
+    StatusEnum:
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+        - PENDING
+      description: Status of the resource
+    PriorityEnum:
+      type: integer
+      enum:
+        - 1
+        - 2
+        - 3
+      description: Priority level (1=Low, 2=Medium, 3=High)
+    ErrorCodeEnum:
+      type: string
+      enum:
+        - NOT_FOUND
+        - UNAUTHORIZED
+        - BAD_REQUEST
+      description: Error codes
+    OpenEndedEnumResponse:
+      type: object
+      properties:
+        status:
+          $ref: "#/components/schemas/OpenEndedStatus"
+        category:
+          $ref: "#/components/schemas/OpenEndedCategory"
+    OpenEndedStatus:
+      description: A status enum that explicitly allows unknown values
+      oneOf:
+        - type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+        - type: string
+    OpenEndedCategory:
+      description: A category enum using anyOf for open-endedness
+      anyOf:
+        - $ref: "#/components/schemas/CategoryEnum"
+        - type: string
+    CategoryEnum:
+      type: string
+      enum:
+        - BUG
+        - FEATURE
+        - IMPROVEMENT

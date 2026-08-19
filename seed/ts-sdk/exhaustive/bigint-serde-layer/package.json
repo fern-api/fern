@@ -1,0 +1,271 @@
+{
+    "name": "@fern/exhaustive",
+    "version": "0.0.1",
+    "private": false,
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/exhaustive/fern.git"
+    },
+    "type": "commonjs",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.mjs",
+    "types": "./dist/cjs/index.d.ts",
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/esm/index.d.mts",
+                "default": "./dist/esm/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/index.d.ts",
+                "default": "./dist/cjs/index.js"
+            },
+            "default": "./dist/cjs/index.js"
+        },
+        "./serialization": {
+            "import": {
+                "types": "./dist/esm/serialization/index.d.mts",
+                "default": "./dist/esm/serialization/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/serialization/index.d.ts",
+                "default": "./dist/cjs/serialization/index.js"
+            },
+            "default": "./dist/cjs/serialization/index.js"
+        },
+        "./endpoints": {
+            "import": {
+                "types": "./dist/esm/api/resources/endpoints/exports.d.mts",
+                "default": "./dist/esm/api/resources/endpoints/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/endpoints/exports.d.ts",
+                "default": "./dist/cjs/api/resources/endpoints/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/endpoints/exports.js"
+        },
+        "./endpoints/container": {
+            "import": {
+                "types": "./dist/esm/api/resources/endpoints/resources/container/exports.d.mts",
+                "default": "./dist/esm/api/resources/endpoints/resources/container/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/endpoints/resources/container/exports.d.ts",
+                "default": "./dist/cjs/api/resources/endpoints/resources/container/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/endpoints/resources/container/exports.js"
+        },
+        "./endpoints/contentType": {
+            "import": {
+                "types": "./dist/esm/api/resources/endpoints/resources/contentType/exports.d.mts",
+                "default": "./dist/esm/api/resources/endpoints/resources/contentType/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/endpoints/resources/contentType/exports.d.ts",
+                "default": "./dist/cjs/api/resources/endpoints/resources/contentType/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/endpoints/resources/contentType/exports.js"
+        },
+        "./endpoints/enum_": {
+            "import": {
+                "types": "./dist/esm/api/resources/endpoints/resources/enum/exports.d.mts",
+                "default": "./dist/esm/api/resources/endpoints/resources/enum/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/endpoints/resources/enum/exports.d.ts",
+                "default": "./dist/cjs/api/resources/endpoints/resources/enum/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/endpoints/resources/enum/exports.js"
+        },
+        "./endpoints/httpMethods": {
+            "import": {
+                "types": "./dist/esm/api/resources/endpoints/resources/httpMethods/exports.d.mts",
+                "default": "./dist/esm/api/resources/endpoints/resources/httpMethods/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/endpoints/resources/httpMethods/exports.d.ts",
+                "default": "./dist/cjs/api/resources/endpoints/resources/httpMethods/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/endpoints/resources/httpMethods/exports.js"
+        },
+        "./endpoints/object": {
+            "import": {
+                "types": "./dist/esm/api/resources/endpoints/resources/object/exports.d.mts",
+                "default": "./dist/esm/api/resources/endpoints/resources/object/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/endpoints/resources/object/exports.d.ts",
+                "default": "./dist/cjs/api/resources/endpoints/resources/object/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/endpoints/resources/object/exports.js"
+        },
+        "./endpoints/pagination": {
+            "import": {
+                "types": "./dist/esm/api/resources/endpoints/resources/pagination/exports.d.mts",
+                "default": "./dist/esm/api/resources/endpoints/resources/pagination/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/endpoints/resources/pagination/exports.d.ts",
+                "default": "./dist/cjs/api/resources/endpoints/resources/pagination/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/endpoints/resources/pagination/exports.js"
+        },
+        "./endpoints/params": {
+            "import": {
+                "types": "./dist/esm/api/resources/endpoints/resources/params/exports.d.mts",
+                "default": "./dist/esm/api/resources/endpoints/resources/params/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/endpoints/resources/params/exports.d.ts",
+                "default": "./dist/cjs/api/resources/endpoints/resources/params/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/endpoints/resources/params/exports.js"
+        },
+        "./endpoints/primitive": {
+            "import": {
+                "types": "./dist/esm/api/resources/endpoints/resources/primitive/exports.d.mts",
+                "default": "./dist/esm/api/resources/endpoints/resources/primitive/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/endpoints/resources/primitive/exports.d.ts",
+                "default": "./dist/cjs/api/resources/endpoints/resources/primitive/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/endpoints/resources/primitive/exports.js"
+        },
+        "./endpoints/put": {
+            "import": {
+                "types": "./dist/esm/api/resources/endpoints/resources/put/exports.d.mts",
+                "default": "./dist/esm/api/resources/endpoints/resources/put/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/endpoints/resources/put/exports.d.ts",
+                "default": "./dist/cjs/api/resources/endpoints/resources/put/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/endpoints/resources/put/exports.js"
+        },
+        "./endpoints/union": {
+            "import": {
+                "types": "./dist/esm/api/resources/endpoints/resources/union/exports.d.mts",
+                "default": "./dist/esm/api/resources/endpoints/resources/union/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/endpoints/resources/union/exports.d.ts",
+                "default": "./dist/cjs/api/resources/endpoints/resources/union/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/endpoints/resources/union/exports.js"
+        },
+        "./endpoints/urls": {
+            "import": {
+                "types": "./dist/esm/api/resources/endpoints/resources/urls/exports.d.mts",
+                "default": "./dist/esm/api/resources/endpoints/resources/urls/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/endpoints/resources/urls/exports.d.ts",
+                "default": "./dist/cjs/api/resources/endpoints/resources/urls/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/endpoints/resources/urls/exports.js"
+        },
+        "./inlinedRequests": {
+            "import": {
+                "types": "./dist/esm/api/resources/inlinedRequests/exports.d.mts",
+                "default": "./dist/esm/api/resources/inlinedRequests/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/inlinedRequests/exports.d.ts",
+                "default": "./dist/cjs/api/resources/inlinedRequests/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/inlinedRequests/exports.js"
+        },
+        "./noAuth": {
+            "import": {
+                "types": "./dist/esm/api/resources/noAuth/exports.d.mts",
+                "default": "./dist/esm/api/resources/noAuth/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/noAuth/exports.d.ts",
+                "default": "./dist/cjs/api/resources/noAuth/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/noAuth/exports.js"
+        },
+        "./noReqBody": {
+            "import": {
+                "types": "./dist/esm/api/resources/noReqBody/exports.d.mts",
+                "default": "./dist/esm/api/resources/noReqBody/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/noReqBody/exports.d.ts",
+                "default": "./dist/cjs/api/resources/noReqBody/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/noReqBody/exports.js"
+        },
+        "./reqWithHeaders": {
+            "import": {
+                "types": "./dist/esm/api/resources/reqWithHeaders/exports.d.mts",
+                "default": "./dist/esm/api/resources/reqWithHeaders/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/reqWithHeaders/exports.d.ts",
+                "default": "./dist/cjs/api/resources/reqWithHeaders/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/reqWithHeaders/exports.js"
+        },
+        "./types": {
+            "import": {
+                "types": "./dist/esm/api/resources/types/exports.d.mts",
+                "default": "./dist/esm/api/resources/types/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/types/exports.d.ts",
+                "default": "./dist/cjs/api/resources/types/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/types/exports.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "dist",
+        "reference.md",
+        "README.md",
+        "LICENSE"
+    ],
+    "scripts": {
+        "format": "biome format --write --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "format:check": "biome format --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "lint": "biome lint --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "lint:fix": "biome lint --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "check": "biome check --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "check:fix": "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "build": "pnpm build:cjs && pnpm build:esm",
+        "build:cjs": "tsc --project ./tsconfig.cjs.json",
+        "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
+        "test": "jest --config jest.config.mjs",
+        "test:unit": "jest --selectProjects unit",
+        "test:wire": "jest --selectProjects wire"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "webpack": "^5.105.4",
+        "ts-loader": "^9.5.4",
+        "jest": "^29.7.0",
+        "@jest/globals": "^29.7.0",
+        "@types/jest": "^29.5.14",
+        "ts-jest": "^29.3.4",
+        "jest-environment-jsdom": "^29.7.0",
+        "msw": "2.11.2",
+        "@types/node": "^20.0.0",
+        "typescript": "~5.9.3",
+        "@biomejs/biome": "2.4.10"
+    },
+    "browser": {
+        "fs": false,
+        "os": false,
+        "path": false,
+        "stream": false,
+        "crypto": false
+    },
+    "packageManager": "pnpm@10.33.0",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "sideEffects": false
+}

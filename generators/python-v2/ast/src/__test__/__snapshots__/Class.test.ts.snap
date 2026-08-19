@@ -1,0 +1,79 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`class > Renders docs correctly 1`] = `
+"class MyClass:
+    """This is a class"""
+    pass"
+`;
+
+exports[`class > Renders docs with multi-line strings correctly 1`] = `
+"class MyClass:
+    """This is a class.
+    I'm on a new line.
+    So am I."""
+    pass"
+`;
+
+exports[`class > basic 1`] = `
+"class Car:
+    pass"
+`;
+
+exports[`class > class with a decorator 1`] = `
+"@dataclass
+class MyDataClass:
+    pass"
+`;
+
+exports[`class > class with generic parent reference 1`] = `
+"class MyClass(MyParentClass[MyParentType]):
+    pass"
+`;
+
+exports[`class > class with various forms of multi-line strings 1`] = `
+"class MyClass:
+    has_newline_chars__basic: str = """Hello,
+World!"""
+    has_no_newline_chars__basic: str = """Hello, World!"""
+    has_newline_chars__start_on_new_line: str = """\\
+Hello,
+World!"""
+    has_newline_chars__end_with_new_line: str = """Hello,
+World!\\
+"""
+    has_newline_chars__start_and_end_with_new_line: str = """\\
+Hello,
+World!\\
+"""
+"
+`;
+
+exports[`class > fields with annotation and initializer 1`] = `
+"class Car:
+    color: str = 'red'
+    partNameById: Dict[int, str] = {}
+"
+`;
+
+exports[`class > inherits from a parent class imported from another module 1`] = `
+"class SportsCar(Vehicle):
+    pass"
+`;
+
+exports[`class > inherits from one parent class 1`] = `
+"class ElectricCar(Car):
+    pass"
+`;
+
+exports[`class > inherits from two parent classes 1`] = `
+"class HybridCar(ElectricCar, GasCar):
+    pass"
+`;
+
+exports[`class > should generate a class with local classes 1`] = `
+"class OuterClass:
+    class InnerClass(ParentClass):
+        def inner_method(self: str):
+            return "Inner method called"
+"
+`;

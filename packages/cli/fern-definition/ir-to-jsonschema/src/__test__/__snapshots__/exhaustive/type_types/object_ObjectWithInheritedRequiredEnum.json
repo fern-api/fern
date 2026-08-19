@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "requiredEnum": {
+      "$ref": "#/definitions/types.enum.WeatherReport"
+    },
+    "requiredString": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "requiredEnum",
+    "requiredString"
+  ],
+  "additionalProperties": false,
+  "description": "A base object that has a required enum field, preventing Default derive\nin Rust because enums don't implement Default.",
+  "definitions": {
+    "types.enum.WeatherReport": {
+      "type": "string",
+      "enum": [
+        "SUNNY",
+        "CLOUDY",
+        "RAINING",
+        "SNOWING"
+      ]
+    }
+  }
+}

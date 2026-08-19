@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`add-generator-groups > property 1`] = `
+"name: fiddle
+error-discrimination:
+  strategy: property
+  property-name: error
+"
+`;
+
+exports[`add-generator-groups > status-code 1`] = `
+"name: api
+auth: bearer
+audiences:
+  - external
+"
+`;

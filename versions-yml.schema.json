@@ -1,0 +1,85 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "array",
+    "items": {
+        "$ref": "#/definitions/VersionEntry"
+    },
+    "definitions": {
+        "VersionEntry": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "version": {
+                    "type": "string"
+                },
+                "changelogEntry": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ChangelogEntry"
+                    }
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date"
+                }
+            },
+            "required": [
+                "changelogEntry",
+                "version"
+            ],
+            "title": "Version"
+        },
+        "ChangelogEntry": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "summary": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/ChangelogType"
+                },
+                "fixed": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "added": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "changed": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "removed": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "summary",
+                "type"
+            ],
+            "title": "Changelog"
+        },
+        "ChangelogType": {
+            "type": "string",
+            "enum": [
+                "fix",
+                "chore",
+                "feat",
+                "internal",
+                "break"
+            ],
+            "title": "Changelog Type"
+        }
+    }
+}

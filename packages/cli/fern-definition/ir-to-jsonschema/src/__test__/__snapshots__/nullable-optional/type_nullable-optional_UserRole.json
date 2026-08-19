@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "enum": [
+    "ADMIN",
+    "USER",
+    "GUEST",
+    "MODERATOR"
+  ],
+  "description": "Test enum for nullable enum fields",
+  "definitions": {}
+}

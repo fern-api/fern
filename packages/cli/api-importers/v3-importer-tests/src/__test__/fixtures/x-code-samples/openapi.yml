@@ -1,0 +1,54 @@
+openapi: 3.1.0
+info:
+  title: Code Samples API
+  version: 1.0.0
+  description: API for testing x-codeSamples extension
+
+paths:
+  /users/{userId}:
+    get:
+      operationId: getUser
+      summary: Get a user by ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+      x-codeSamples:
+        - lang: python
+          label: Python (SDK)
+          source: |-
+            from example_sdk import ExampleClient
+
+            client = ExampleClient(api_key="your-api-key")
+            user = client.users.get(user_id="123")
+            print(user.name)
+      x-code-samples:
+        - lang: typescript
+          label: Typescript (SDK)
+          source:
+            $ref: ./code_samples/ts/get_user.ts
+        - lang: go
+          source: |-
+            package main
+
+            import "fmt"
+
+            func main() {
+                fmt.Println("Hello from Go")
+            }

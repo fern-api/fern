@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/task/",
+                "method": "PUT",
+                "identifier_override": "endpoint_.bulkUpdateTasks"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.BulkUpdateTasksAsync(new BulkUpdateTasksRequest());\n"
+            }
+        }
+    ]
+}

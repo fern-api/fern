@@ -1,0 +1,98 @@
+openapi: 3.1.0
+info:
+  title: objects-with-imports
+  version: 0.0.0
+paths: {}
+components:
+  schemas:
+    Node:
+      title: Node
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - node-8dvgfja2
+        label:
+          type:
+            - string
+            - 'null'
+        metadata:
+          anyOf:
+            - $ref: '#/components/schemas/commonsMetadata'
+            - type: 'null'
+      required:
+        - id
+    Tree:
+      title: Tree
+      type: object
+      properties:
+        nodes:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/Node'
+    commonsMetadata:
+      title: commonsMetadata
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - metadata-js8dg24b
+        data:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            type: string
+      required:
+        - id
+    File:
+      title: File
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+            - file.txt
+        contents:
+          type: string
+          examples:
+            - ...
+        info:
+          $ref: '#/components/schemas/FileInfo'
+      required:
+        - name
+        - contents
+        - info
+    FileInfo:
+      title: FileInfo
+      type: string
+      enum:
+        - REGULAR
+        - DIRECTORY
+    fileDirectory:
+      title: fileDirectory
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+            - root
+        files:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/File'
+        directories:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/fileDirectory'
+      required:
+        - name
+  securitySchemes: {}

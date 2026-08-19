@@ -1,0 +1,4 @@
+- summary: |
+    Bump aiohttp lower bound from >=3.13.4 to >=3.14.0 and tighten Python
+    marker to >=3.10 to address CVE-2026-47265 and CVE-2026-47266.
+  type: chore

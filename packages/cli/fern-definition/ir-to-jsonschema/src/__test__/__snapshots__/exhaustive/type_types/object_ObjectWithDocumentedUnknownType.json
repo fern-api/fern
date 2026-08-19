@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "documentedUnknownType": {
+      "$ref": "#/definitions/types.object.DocumentedUnknownType"
+    }
+  },
+  "required": [
+    "documentedUnknownType"
+  ],
+  "additionalProperties": false,
+  "description": "Tests that unknown types are able to preserve their type names.",
+  "definitions": {
+    "types.object.DocumentedUnknownType": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ],
+      "description": "Tests that unknown types are able to preserve their docstrings."
+    }
+  }
+}

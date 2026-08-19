@@ -1,0 +1,203 @@
+features:
+  - id: USAGE
+    description: |
+      Instantiate and use the client with the following:
+
+  - id: ENVIRONMENTS
+    description: |
+      This SDK allows you to configure different environments for API requests.
+
+  - id: AUTHENTICATION
+    description: ""
+
+  - id: REQUEST_AND_RESPONSE_TYPES
+    description: |
+      The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+      following namespace:
+
+  - id: SUBPACKAGE_EXPORTS
+    advanced: true
+    description: |
+      This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+
+  - id: EXCEPTION_HANDLING
+    description: |
+      When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
+      will be thrown.
+
+  - id: STREAMING_RESPONSE
+    description: |
+      Some endpoints return streaming responses instead of returning the full response at once.
+      The SDK uses async iterators, so you can consume the responses using a `for await...of` loop.
+
+  - id: FILE_UPLOADS
+    description: |
+      You can upload files using the client:
+    addendum: |
+      The client accepts a variety of types for file upload parameters:
+      * Stream types: `fs.ReadStream`, `stream.Readable`, and `ReadableStream`
+      * Buffered types: `Buffer`, `Blob`, `File`, `ArrayBuffer`, `ArrayBufferView`, and `Uint8Array`
+
+      ### Metadata
+
+      You can configure metadata when uploading a file:
+      ```typescript
+      const file: Uploadable.WithMetadata = {
+          data: createReadStream("path/to/file"),
+          filename: "my-file",       // optional
+          contentType: "audio/mpeg", // optional
+          contentLength: 1949,       // optional
+      };
+      ```
+
+      Alternatively, you can upload a file directly from a file path:
+      ```typescript
+      const file : Uploadable.FromPath = {
+          path: "path/to/file",
+          filename: "my-file",        // optional
+          contentType: "audio/mpeg",  // optional
+          contentLength: 1949,        // optional
+      };
+      ```
+
+      The metadata is used to set the `Content-Length`, `Content-Type`, and `Content-Disposition` headers. If not provided, the client will attempt to determine them automatically.
+      For example, `fs.ReadStream` has a `path` property which the SDK uses to retrieve the file size from the filesystem without loading it into memory.
+
+  - id: BINARY_RESPONSE
+    description: |
+      You can consume binary data from endpoints using the `BinaryResponse` type which lets you choose how to consume the data:
+
+  - id: PAGINATION
+    description: |
+      List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+  - id: ADDITIONAL_HEADERS
+    advanced: true
+    description: |
+      If you would like to send additional headers as part of the request, use the `headers` request option.
+
+  - id: ADDITIONAL_QUERY_STRING_PARAMETERS
+    advanced: true
+    description: |
+      If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
+
+  - id: RETRIES
+    advanced: true
+    description: |
+      The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+      as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+      retry limit (default: 2).
+
+      Which status codes are retried depends on the `retryStatusCodes` generator configuration:
+
+      **`legacy`** (current default): retries on
+      - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+      - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+      - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors, including 500)
+
+      **`recommended`**: retries on
+      - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+      - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+      - [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
+      - [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
+      - [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
+
+      Use the `maxRetries` request option to configure this behavior.
+
+  - id: TIMEOUTS
+    advanced: true
+    description: |
+      The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
+
+  - id: ABORTING_REQUESTS
+    advanced: true
+    description: |
+      The SDK allows users to abort requests at any point by passing in an abort signal.
+
+  - id: ACCESS_RAW_RESPONSE_DATA
+    advanced: true
+    description: |
+      The SDK provides access to raw response data, including headers, through the `.withRawResponse()` method.
+      The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
+
+  - id: LOGGING
+    advanced: true
+    description: |
+      The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
+    addendum: |
+      The `logging` object can have the following properties:
+      - `level`: The log level to use. Defaults to `logging.LogLevel.Info`.
+      - `logger`: The logger to use. Defaults to a `logging.ConsoleLogger`.
+      - `silent`: Whether to silence the logger. Defaults to `true`.
+
+      The `level` property can be one of the following values:
+      - `logging.LogLevel.Debug`
+      - `logging.LogLevel.Info`
+      - `logging.LogLevel.Warn`
+      - `logging.LogLevel.Error`
+
+      To provide a custom logger, you can pass in an object that implements the `logging.ILogger` interface.
+
+      <details>
+      <summary>Custom logger examples</summary>
+
+      Here's an example using the popular `winston` logging library.
+      ```ts
+      import winston from 'winston';
+
+      const winstonLogger = winston.createLogger({...});
+
+      const logger: logging.ILogger = {
+          debug: (msg, ...args) => winstonLogger.debug(msg, ...args),
+          info: (msg, ...args) => winstonLogger.info(msg, ...args),
+          warn: (msg, ...args) => winstonLogger.warn(msg, ...args),
+          error: (msg, ...args) => winstonLogger.error(msg, ...args),
+      };
+      ```
+
+      Here's an example using the popular `pino` logging library.
+
+      ```ts
+      import pino from 'pino';
+
+      const pinoLogger = pino({...});
+
+      const logger: logging.ILogger = {
+        debug: (msg, ...args) => pinoLogger.debug(args, msg),
+        info: (msg, ...args) => pinoLogger.info(args, msg),
+        warn: (msg, ...args) => pinoLogger.warn(args, msg),
+        error: (msg, ...args) => pinoLogger.error(args, msg),
+      };
+      ```
+      </details>
+
+  - id: CUSTOM_FETCH
+    advanced: true
+    description: |
+      The SDK provides a low-level `fetch` method for making custom HTTP requests while still
+      benefiting from SDK-level configuration like authentication, retries, timeouts, and logging.
+      This is useful for calling API endpoints not yet supported in the SDK.
+
+  - id: CUSTOM_FETCHER
+    advanced: true
+    description: |
+      The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
+      unsupported environment, this provides a way for you to break glass and ensure the SDK works.
+
+  - id: RUNTIME_COMPATIBILITY
+    advanced: true
+    description: |
+      <% if (fetchSupport === "node-fetch") { %>
+      The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
+      runtimes:
+      <% } else { %>
+      The SDK works in the following runtimes:
+      <% } %>
+
+
+      - Node.js 18+
+      - Vercel
+      - Cloudflare Workers
+      - Deno v1.25+
+      - Bun 1.0+
+      - React Native

@@ -1,0 +1,90 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  MovieId:
+    type: string
+    docs: The unique identifier for a Movie in the database
+
+  # Type with mixed audience tags. Filter [external] should keep `id`, `title`,
+  # and `untaggedField`; should drop `internalNote` and `secretRating`.
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      untaggedField: string
+      internalNote:
+        type: string
+        audiences:
+          - internal
+      secretRating:
+        type: double
+        audiences:
+          - internal
+
+errors:
+  MovieDoesNotExistError:
+    status-code: 404
+    type: MovieId
+
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    # Inline request body with mixed audience tags + query parameters with mixed
+    # audience tags. Filter [external] should keep `title`, `untaggedDraft`, and
+    # query param `ref`; should drop `internalDraft` and query param `internalRef`.
+    createMovie:
+      audiences:
+        - external
+      method: POST
+      path: /create-movie
+      request:
+        name: CreateMovieRequest
+        query-parameters:
+          ref:
+            type: optional<string>
+            audiences:
+              - external
+          internalRef:
+            type: string
+            audiences:
+              - internal
+        body:
+          properties:
+            title: string
+            untaggedDraft: boolean
+            internalDraft:
+              type: boolean
+              audiences:
+                - internal
+      response: MovieId
+
+    # Endpoint where every body property is tagged [internal] but the endpoint
+    # itself is [external]. Regression: under the buggy whitelist, the empty
+    # active-audience match would disengage filtering and KEEP `internalOnly`.
+    # The fix correctly excludes `internalOnly`.
+    archiveMovie:
+      audiences:
+        - external
+      method: POST
+      path: /archive
+      request:
+        name: ArchiveMovieRequest
+        body:
+          properties:
+            internalOnly:
+              type: string
+              audiences:
+                - internal
+      response: MovieId
+
+    # Endpoint that returns Movie so the type (and its audience-filtered properties)
+    # appears in the snapshot.
+    getMovie:
+      audiences:
+        - external
+      method: GET
+      path: /{id}
+      path-parameters:
+        id: MovieId
+      response: Movie

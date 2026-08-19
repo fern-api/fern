@@ -1,0 +1,5 @@
+- summary: |
+    Support BCP 47 locale tags (e.g. `ja-JP`, `pt-BR`, `zh-Hans-CN`) in the
+    `translations` and `languages` fields of `docs.yml`. Previously only
+    two-letter language codes were accepted.
+  type: feat

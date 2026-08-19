@@ -1,0 +1,37 @@
+openapi: 3.0.1
+info:
+  title: python-reserved-keyword-subpackages
+  version: ""
+paths:
+  /import:
+    post:
+      operationId: import_create
+      x-fern-sdk-group-name:
+        - automations
+        - import
+      x-fern-sdk-method-name: create
+      responses:
+        "204":
+          description: ""
+  /export:
+    post:
+      operationId: export_create
+      x-fern-sdk-group-name:
+        - automations
+        - export
+      x-fern-sdk-method-name: create
+      responses:
+        "204":
+          description: ""
+  /class:
+    post:
+      operationId: class_create
+      x-fern-sdk-group-name:
+        - class
+      x-fern-sdk-method-name: create
+      responses:
+        "204":
+          description: ""
+components:
+  schemas: {}
+  securitySchemes: {}

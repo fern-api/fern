@@ -1,0 +1,15 @@
+default-environment: Prod
+default-url: Base
+display-name: Test API
+environments:
+  Dev:
+    urls:
+      Base: http://dev.api.com
+      Debug: http://debug.api.com
+  Prod:
+    urls:
+      Base: http://prod.api.com
+      Debug: http://debug.api.com
+error-discrimination:
+  strategy: status-code
+name: api

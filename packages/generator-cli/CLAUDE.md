@@ -1,0 +1,137 @@
+# generator-cli
+
+Post-generation orchestration for Fern-generated SDKs. Runs after a language generator produces SDK files, handling customization preservation (Replay), documentation generation (README/reference), and GitHub delivery (commit/push/PR).
+
+## Package Identity
+
+- **Package**: `@fern-api/generator-cli`
+- **Entry point (CLI)**: `src/cli.ts` (yargs-based, invoked as `generator-cli`)
+- **Entry point (API)**: `src/api.ts` (programmatic exports consumed by generators and the Fern CLI)
+- **Published to**: npm (bundled via `build.mjs` using tsup)
+
+## Commands
+
+```bash
+pnpm compile                                          # TypeScript compilation
+pnpm turbo run test --filter @fern-api/generator-cli  # Run tests
+pnpm turbo run dist:cli --filter @fern-api/generator-cli  # Bundle CLI
+```
+
+## How generator-cli is Consumed
+
+generator-cli is consumed in **two ways**:
+
+1. **Inside generators** (via `generators/base`): `generators/base/package.json` depends on `"@fern-api/generator-cli": "catalog:"`. Every TypeScript-based generator that extends `AbstractGeneratorAgent` bundles generator-cli into its Docker image. The `GeneratorAgentClient` in `generators/base/src/GeneratorAgentClient.ts` imports `generateReadme`, `generateReference`, `githubPr`, and `githubPush` directly from `@fern-api/generator-cli`. This means both local and remote (Fiddle) generation flows use generator-cli — it's baked into the generator Docker images, Fiddle doesn't have its own implementation.
+
+2. **Inside the Fern CLI** (for local gen with self-hosted GitHub): `packages/cli/generation/local-generation/local-workspace-runner/` imports `PostGenerationPipeline` directly via `"@fern-api/generator-cli": "workspace:*"`.
+
+There is no subprocess invocation in either path — generator-cli is always used as a library import.
+
+## Architecture
+
+### Layer 1: CLI (`src/cli.ts`)
+
+Yargs command tree. Commands: `pipeline run`, `replay init/bootstrap/status/forget/reset`, `github push/pr/release`, `generate readme/reference`. The standalone CLI exists for manual use but is not called by the main Fern CLI or generators.
+
+### Layer 2: API Functions (`src/api/`)
+
+Thin, typed wrappers re-exported from `src/api.ts`. Modules: `generate-readme.ts`, `generate-reference.ts`, `github-pr.ts`, `github-push.ts`, `github-release.ts`.
+
+### Layer 3: Pipeline (`src/pipeline/`)
+
+Sequential step orchestration. `PostGenerationPipeline` instantiates enabled steps from `PipelineConfig` and runs them in order.
+
+**Step execution order**: ReplayStep → (FernignoreStep, Phase 2 placeholder) → VerificationStep (opt-in) → GithubStep
+
+### Key Files
+
+Pipeline core:
+- `src/pipeline/PostGenerationPipeline.ts` — Orchestrator
+- `src/pipeline/types.ts` — All pipeline interfaces
+- `src/pipeline/steps/ReplayStep.ts` — Thin wrapper around `replayRun()`
+- `src/pipeline/steps/GithubStep.ts` — Commit/push/PR/conflict visualization
+- `src/pipeline/steps/FernignoreStep.ts` — Phase 2 placeholder (not yet implemented)
+- `src/pipeline/steps/VerificationStep.ts` — Opt-in step that runs `.fern/verify.sh` inside a `{generatorImage}-validator:{version}` container; failure aborts the pipeline before GithubStep
+- `src/pipeline/replay-summary.ts` — PR body formatting, conflict reason mapping
+
+Replay integration:
+- `src/replay/replay-run.ts` — Replay invocation + divergent merge detection
+
+Autoversioning (`src/autoversion/`, exported under the `@fern-api/generator-cli/autoversion` subpath):
+- `AutoVersioningService.ts` — Diff cleaning + chunking, magic-version placeholder rewrite, Go v2+ module-path suffix, git-tag fallback.
+- `VersionUtils.ts` — Language detection, magic-version constants, semver bump, `VersionBump` enum, chunk-size constants.
+- `AutoVersioningCache.ts` — Per-invocation deduplication cache for FAI analysis calls across parallel generators.
+
+Consumed by `@fern-api/local-workspace-runner`'s `LocalTaskHandler`, `packages/cli/cli`'s `sdk-diff` command, and `AutoVersionStep` in the post-generation pipeline.
+
+`AutoVersionStep` receives `previousGenerationSha` from replay's `PreparedReplay`, but that value is the **raw lockfile hint** (`current_generation`, read verbatim — replay does not reconcile it before returning). Per [ADR 0001](./docs/adr/0001-delegate-divergent-merge-recovery-to-replay.md) the recorded SHA is not a load-bearing invariant, so `AutoVersionStep` does **not** trust it: it re-anchors the diff base on the most recent reachable `[fern-generated]` commit (`git log --first-parent`) when the recorded SHA is unreachable, and always rewrites the magic placeholder even when no baseline is reachable. See [ADR 0002](./docs/adr/0002-autoversion-baseline-reanchoring.md).
+
+GitHub helpers (`src/pipeline/github/`):
+- `createReplayBranch.ts` — Synthetic divergent commit creation
+- `findExistingUpdatablePR.ts` — Find reusable fern-bot PRs
+- `parseCommitMessage.ts` — PR title/body extraction
+- `constants.ts` — Fern bot identity (name, email, login)
+
+Documentation:
+- `src/readme/ReadmeGenerator.ts` — Section generation, block merging, TOC
+- `src/readme/ReadmeParser.ts` — Parses existing README into header + blocks
+- `src/readme/BlockMerger.ts` — Preserves user edits during regeneration
+- `src/reference/ReferenceGenerator.ts` — `reference.md` with endpoint docs and parameter tables
+
+Configuration:
+- `src/configuration/loadReadmeConfig.ts`, `loadReferenceConfig.ts`, `loadGitHubConfig.ts` — Config loaders
+- `src/configuration/sdk/` — Generated SDK client types
+
+## Pipeline Behavior
+
+`PostGenerationPipeline` runs steps sequentially. Each step receives a `PipelineContext` with results from prior steps. Step failure marks the pipeline as failed but does not abort — subsequent steps still run. Replay errors return null report rather than failing generation.
+
+**Exception — VerificationStep aborts on failure**: VerificationStep is the one step whose semantic purpose is to gate the pipeline. When it returns `success: false` (or throws), the orchestrator `break`s the loop so `GithubStep` does not run — we never want to open a PR for an SDK that failed compile-time verification. This asymmetry is intentional and covered by integration tests in `src/__test__/verification-step.test.ts`.
+
+**Key invariant**: `skipCommit` means replay already committed — GithubStep must NOT `commitAllChanges()` again.
+
+## Testing
+
+25+ test files in `src/__test__/` covering:
+- **README generation**: `basic-go.test.ts`, `basic-java.test.ts`, `basic-php.test.ts`, `basic-rust.test.ts`, `basic-swift.test.ts`, `advanced.test.ts`, `cohere-go.test.ts`, `cohere-go-merged.test.ts`
+- **README parsing/merging**: `block-merger.test.ts`, `readme-parser.test.ts`, `add-new-blocks.test.ts`, `custom-sections.test.ts`, `remove-disabled-sections.test.ts`, `remove-generated-sections.test.ts`, `filter-table-of-contents.test.ts`
+- **Reference docs**: `basic-reference.test.ts`, `reference-generator.test.ts`, `reference-md.test.ts`
+- **Replay**: `replay-core.test.ts`, `replay-advanced.test.ts`, `replay-pure.test.ts`
+- **GitHub**: `pr.test.ts`, `github/` directory
+- **Helpers**: `testGenerateReadme.ts`, `testGenerateReference.ts`
+- **Snapshot directory**: `__snapshots__/`, `fixtures/`
+
+## Versioning & Release Process
+
+### Version bump process
+
+generator-cli uses the changelog-based release flow (see `.claude/release-versioning.md`). Do **not** hand-edit `packages/generator-cli/versions.yml`:
+
+1. Add an unreleased changelog file under `packages/generator-cli/changes/unreleased/` (copy `.template.yml`). The `release-software.yml` workflow bumps `versions.yml` automatically when the change lands on main, which triggers npm publish via `publish-generator-cli.yml`.
+2. After the new version is published, update the catalog pin in `pnpm-workspace.yaml` (e.g., `"@fern-api/generator-cli": 0.8.1`) and add a CLI changelog entry under `packages/cli/cli/changes/unreleased/` so the CLI picks up the new version.
+
+### How generators pick up the change
+
+Generators pick up new generator-cli versions **lazily** — the next time a generator gets its own version bump and Docker image rebuild, it naturally includes the latest catalog-pinned generator-cli. There is no automation that bumps all generator versions when generator-cli changes. For critical changes, manually bump each generator's `versions.yml` to force new Docker images.
+
+## Dependencies
+
+- `@fern-api/replay` — Core replay engine
+- `@fern-api/github` — `ClonedRepository` for git operations
+- `@fern-api/fs-utils` — Path utilities
+- `@fern-api/cli-ai` — BAML FAI client + `VersionBump` enum (used by autoversion)
+- `@fern-api/logging-execa` — Shell execution with structured logging (used by autoversion)
+- `@fern-api/task-context` — Logger interface (used by autoversion)
+- `@octokit/rest` — GitHub API client
+- `semver` — Semantic version parsing (used by autoversion)
+- `yargs` — CLI argument parsing
+
+## Common Gotchas
+
+- `skipCommit` means replay already committed — GithubStep must NOT `commitAllChanges()` again
+- Force push required when updating existing PR with replay commits (replay rewrites branch history)
+- Divergent-merge recovery (squash-merge of a regen PR, force-push past a generation, lost-then-found generations) is owned entirely by `@fern-api/replay`'s derived scan boundary — `replayPrepare` no longer runs a precondition gauntlet to detect or sync it. See [ADR 0001](./docs/adr/0001-delegate-divergent-merge-recovery-to-replay.md).
+- The `previousGenerationSha` on `PreparedReplay` is a hint (the raw lockfile `current_generation`), **not** a guaranteed-reachable commit. `pushSignedCommit` recreates every local commit via the GitHub API, so the `[fern-generated]` commit gets a new remote SHA and the recorded SHA can be unreachable in the next clone. Any consumer diffing against it (e.g. `AutoVersionStep`) must probe reachability and re-anchor from history rather than passing it straight to `git diff`. See [ADR 0002](./docs/adr/0002-autoversion-baseline-reanchoring.md).
+- The `[fern-generation-base]` tag is still written but no longer read by this version of generator-cli. It exists for backward compatibility with older deployed generator-cli versions whose bundled gauntlet still reads it; remove the write side once the catalog has rolled forward across all generators.
+- Pipeline continues on step failure — replay errors return null report to not fail generation. **Exception**: VerificationStep failure aborts the pipeline so GithubStep is skipped (broken SDK never gets a PR).
+- Generator name sanitization: `/` replaced with `--` for tag names and commit status context

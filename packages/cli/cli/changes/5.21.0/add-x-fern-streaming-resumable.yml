@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a new `resumable` sub-property to the `x-fern-streaming` OpenAPI extension
+    (and a corresponding `resumable` field on Fern Definition `response-stream`
+    blocks). When set on an SSE endpoint, the IR carries `resumable: true` on
+    the SSE chunk so generators can emit a client-side reconnect loop using
+    standard SSE primitives (`Last-Event-ID`, `retry:`).
+
+    The flag is inheritable: setting `x-fern-streaming.resumable: true` at the
+    OpenAPI document level applies to every SSE endpoint unless an operation
+    overrides it (silent fallback). Defaults to `false`. The IR field is
+    optional, so generators that don't read it are unaffected.
+  type: feat

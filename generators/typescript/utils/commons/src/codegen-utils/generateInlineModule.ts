@@ -1,0 +1,246 @@
+import { assertNever } from "@fern-api/core-utils";
+import { FernIr } from "@fern-fern/ir-sdk";
+import {
+    ModuleDeclarationKind,
+    ModuleDeclarationStructure,
+    StatementStructures,
+    StructureKind,
+    TypeAliasDeclarationStructure,
+    WriterFunction
+} from "ts-morph";
+
+import { InlineConsts } from "./inlineConsts.js";
+
+export function generateInlinePropertiesModule({
+    generateStatements,
+    getTypeDeclaration,
+    properties
+}: InlinePropertiesParams): (string | WriterFunction | StatementStructures)[] {
+    const inlineProperties = getInlineProperties(properties, getTypeDeclaration);
+    if (inlineProperties.length === 0) {
+        return [];
+    }
+    return inlineProperties.flatMap(
+        ([propertyName, typeReference, typeDeclaration]: [string, FernIr.TypeReference, FernIr.TypeDeclaration]) => {
+            return generateTypeVisitor(typeReference, {
+                named: () => generateStatements(typeDeclaration.name, propertyName),
+                list: () => propertyListOrSetStatementGenerator(propertyName, typeDeclaration, generateStatements),
+                set: () => propertyListOrSetStatementGenerator(propertyName, typeDeclaration, generateStatements),
+                map: () => {
+                    const statements: StatementStructures[] = [];
+                    const mapModule: ModuleDeclarationStructure = {
+                        kind: StructureKind.Module,
+                        declarationKind: ModuleDeclarationKind.Namespace,
+                        isExported: true,
+                        hasDeclareKeyword: false,
+                        name: propertyName,
+                        statements: generateStatements(typeDeclaration.name, InlineConsts.MAP_VALUE_TYPE_NAME)
+                    };
+
+                    statements.push(mapModule);
+                    return statements;
+                },
+                other: () => {
+                    throw new Error(`Only named, list, map, and set properties can be inlined.
+                              Property: ${JSON.stringify(propertyName)}`);
+                }
+            });
+        }
+    );
+}
+
+function propertyListOrSetStatementGenerator(
+    propertyName: string,
+    typeDeclaration: FernIr.TypeDeclaration,
+    generateStatements: GenerateStatements
+) {
+    const statements: StatementStructures[] = [];
+    const listType: TypeAliasDeclarationStructure = {
+        kind: StructureKind.TypeAlias,
+        name: propertyName,
+        type: `${propertyName}.${InlineConsts.LIST_ITEM_TYPE_NAME}[]`,
+        isExported: true
+    };
+    statements.push(listType);
+
+    const listModule: ModuleDeclarationStructure = {
+        kind: StructureKind.Module,
+        declarationKind: ModuleDeclarationKind.Namespace,
+        isExported: true,
+        hasDeclareKeyword: false,
+        name: propertyName,
+        statements: generateStatements(typeDeclaration.name, InlineConsts.LIST_ITEM_TYPE_NAME)
+    };
+
+    statements.push(listModule);
+    return statements;
+}
+
+export function generateInlineAliasModule({
+    generateStatements,
+    getTypeDeclaration,
+    aliasTypeName,
+    typeReference
+}: InlineAliasParams): ModuleDeclarationStructure | undefined {
+    const inlineModuleStatements = generateTypeVisitor(typeReference, {
+        list: (itemType) => aliasListOrSetStatementGenerator(itemType, generateStatements, getTypeDeclaration),
+        set: (itemType) => aliasListOrSetStatementGenerator(itemType, generateStatements, getTypeDeclaration),
+        map: (mapType: FernIr.MapType) => {
+            const namedType = getNamedType(mapType.valueType);
+            if (!namedType) {
+                return undefined;
+            }
+            const typeDeclaration = getTypeDeclaration(namedType);
+            if (!typeDeclaration.inline) {
+                return undefined;
+            }
+
+            return generateStatements(typeDeclaration.name, InlineConsts.MAP_VALUE_TYPE_NAME);
+        },
+        named: () => undefined,
+        other: () => undefined
+    });
+    if (!inlineModuleStatements) {
+        return undefined;
+    }
+    return {
+        kind: StructureKind.Module,
+        name: aliasTypeName,
+        isExported: true,
+        hasDeclareKeyword: false,
+        declarationKind: ModuleDeclarationKind.Namespace,
+        statements: inlineModuleStatements
+    };
+}
+
+function aliasListOrSetStatementGenerator(
+    listItemType: FernIr.TypeReference,
+    generateStatements: GenerateStatements,
+    getTypeDeclaration: GetTypeDeclaration
+): undefined | string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
+    const namedType = getNamedType(listItemType);
+    if (!namedType) {
+        return undefined;
+    }
+    const typeDeclaration = getTypeDeclaration(namedType);
+    if (!typeDeclaration.inline) {
+        return undefined;
+    }
+
+    return generateStatements(typeDeclaration.name, InlineConsts.LIST_ITEM_TYPE_NAME);
+}
+
+function getInlineProperties(
+    properties: Property[],
+    getTypeDeclaration: GetTypeDeclaration
+): [string, FernIr.TypeReference, FernIr.TypeDeclaration][] {
+    return properties
+        .map(({ propertyName, typeReference }): [string, FernIr.TypeReference, FernIr.TypeDeclaration] | undefined => {
+            const declaration = getInlineTypeDeclaration(typeReference, getTypeDeclaration);
+            if (!declaration) {
+                return undefined;
+            }
+            return [propertyName, typeReference, declaration];
+        })
+        .filter((x): x is [string, FernIr.TypeReference, FernIr.TypeDeclaration] => x !== undefined);
+}
+
+function getInlineTypeDeclaration(
+    typeReference: FernIr.TypeReference,
+    getTypeDeclaration: GetTypeDeclaration
+): FernIr.TypeDeclaration | undefined {
+    const namedType = getNamedType(typeReference);
+    if (!namedType) {
+        return undefined;
+    }
+    const typeDeclaration = getTypeDeclaration(namedType);
+    if (!typeDeclaration.inline) {
+        return undefined;
+    }
+
+    return typeDeclaration;
+}
+
+export interface InlinePropertiesParams {
+    generateStatements: GenerateStatements;
+    getTypeDeclaration: GetTypeDeclaration;
+    properties: Property[];
+}
+
+interface Property {
+    typeReference: FernIr.TypeReference;
+    propertyName: string;
+}
+
+export interface InlineAliasParams {
+    generateStatements: GenerateStatements;
+    getTypeDeclaration: GetTypeDeclaration;
+    typeReference: FernIr.TypeReference;
+    aliasTypeName: string;
+}
+
+type GenerateStatements = (
+    typeName: FernIr.DeclaredTypeName,
+    typeNameOverride?: string
+) => string | WriterFunction | (string | WriterFunction | StatementStructures)[];
+
+type GetTypeDeclaration = (namedType: FernIr.NamedType) => FernIr.TypeDeclaration;
+
+function generateTypeVisitor<TOut>(
+    typeReference: FernIr.TypeReference,
+    visitor: {
+        named: (namedType: FernIr.NamedType) => TOut;
+        list: (itemType: FernIr.TypeReference) => TOut;
+        map: (mapType: FernIr.MapType) => TOut;
+        set: (itemType: FernIr.TypeReference) => TOut;
+        other: () => TOut;
+    }
+): TOut {
+    return typeReference._visit({
+        named: visitor.named,
+        primitive: visitor.other,
+        unknown: visitor.other,
+        container: (containerType) =>
+            containerType._visit({
+                list: visitor.list,
+                literal: visitor.other,
+                map: visitor.map,
+                set: visitor.set,
+                optional: (typeReference) => generateTypeVisitor(typeReference, visitor),
+                nullable: (typeReference) => generateTypeVisitor(typeReference, visitor),
+                _other: visitor.other
+            }),
+        _other: visitor.other
+    });
+}
+
+function getNamedType(typeReference: FernIr.TypeReference): FernIr.NamedType | undefined {
+    switch (typeReference.type) {
+        case "named":
+            return typeReference;
+        case "container":
+            switch (typeReference.container.type) {
+                case "nullable":
+                    return getNamedType(typeReference.container.nullable);
+                case "optional":
+                    return getNamedType(typeReference.container.optional);
+                case "list":
+                    return getNamedType(typeReference.container.list);
+                case "map":
+                    return getNamedType(typeReference.container.valueType);
+                case "set":
+                    return getNamedType(typeReference.container.set);
+                case "literal":
+                    return undefined;
+                default:
+                    return assertNever(typeReference.container);
+            }
+        // fallthrough
+        case "primitive":
+            return undefined;
+        case "unknown":
+            return undefined;
+        default:
+            return assertNever(typeReference);
+    }
+}

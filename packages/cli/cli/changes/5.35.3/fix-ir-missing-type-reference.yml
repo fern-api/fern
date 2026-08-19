@@ -1,0 +1,3 @@
+- summary: |
+    Treat missing type declarations during IR generation as user reference errors instead of reportable resolver failures.
+  type: fix

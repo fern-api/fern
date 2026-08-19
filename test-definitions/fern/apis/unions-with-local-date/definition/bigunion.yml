@@ -1,0 +1,217 @@
+types:
+  BigUnion:
+    base-properties:
+      id: string
+      created-at: datetime
+      archived-at: optional<datetime>
+    union:
+      normalSweet: NormalSweet
+      thankfulFactor: ThankfulFactor
+      jumboEnd: JumboEnd
+      hastyPain: HastyPain
+      mistySnow: MistySnow
+      distinctFailure: DistinctFailure
+      practicalPrinciple: PracticalPrinciple
+      limpingStep: LimpingStep
+      vibrantExcitement: VibrantExcitement
+      activeDiamond: ActiveDiamond
+      popularLimit: PopularLimit
+      falseMirror: FalseMirror
+      primaryBlock: PrimaryBlock
+      rotatingRatio: RotatingRatio
+      colorfulCover: ColorfulCover
+      disloyalValue: DisloyalValue
+      gruesomeCoach: GruesomeCoach
+      totalWork: TotalWork
+      harmoniousPlay: HarmoniousPlay
+      uniqueStress: UniqueStress
+      unwillingSmoke: UnwillingSmoke
+      frozenSleep: FrozenSleep
+      diligentDeal: DiligentDeal
+      attractiveScript: AttractiveScript
+      hoarseMouse: HoarseMouse
+      circularCard: CircularCard
+      potableBad: PotableBad
+      triangularRepair: TriangularRepair
+      gaseousRoad: GaseousRoad
+    examples:
+      - name: One
+        value:
+          type: normalSweet
+          id: id
+          "created-at": 2024-01-15T09:30:00Z
+          "archived-at": 2024-01-15T09:30:00Z
+          value: example1
+      - name: Two
+        value:
+          type: thankfulFactor
+          id: id
+          "created-at": 2024-01-15T09:30:00Z
+          "archived-at": 2024-01-15T09:30:00Z
+          value: example2
+      - name: Three
+        value:
+          type: jumboEnd
+          id: id
+          "created-at": 2024-01-15T09:30:00Z
+          "archived-at": 2024-01-15T09:30:00Z
+          value: example3
+
+  NormalSweet:
+    properties:
+      value: string
+    examples:
+      - name: One
+        value:
+          value: example1
+      - name: Two
+        value:
+          value: example2
+      - name: Three
+        value:
+          value: example3
+
+  ThankfulFactor:
+    properties:
+      value: string
+    examples:
+      - name: One
+        value:
+          value: example1
+      - name: Two
+        value:
+          value: example2
+      - name: Three
+        value:
+          value: example3
+
+  JumboEnd:
+    properties:
+      value: string
+
+  HastyPain:
+    properties:
+      value: string
+
+  MistySnow:
+    properties:
+      value: string
+
+  DistinctFailure:
+    properties:
+      value: string
+
+  PracticalPrinciple:
+    properties:
+      value: string
+
+  LimpingStep:
+    properties:
+      value: string
+
+  VibrantExcitement:
+    properties:
+      value: string
+
+  ActiveDiamond:
+    properties:
+      value: string
+
+  PopularLimit:
+    properties:
+      value: string
+
+  FalseMirror:
+    properties:
+      value: string
+
+  PrimaryBlock:
+    properties:
+      value: string
+
+  RotatingRatio:
+    properties:
+      value: string
+
+  ColorfulCover:
+    properties:
+      value: string
+
+  DisloyalValue:
+    properties:
+      value: string
+
+  GruesomeCoach:
+    properties:
+      value: string
+
+  TotalWork:
+    properties:
+      value: string
+
+  HarmoniousPlay:
+    properties:
+      value: string
+
+  UniqueStress:
+    properties:
+      value: string
+
+  UnwillingSmoke:
+    properties:
+      value: string
+
+  FrozenSleep:
+    properties:
+      value: string
+
+  DiligentDeal:
+    properties:
+      value: string
+
+  AttractiveScript:
+    properties:
+      value: string
+
+  HoarseMouse:
+    properties:
+      value: string
+
+  CircularCard:
+    properties:
+      value: string
+
+  PotableBad:
+    properties:
+      value: string
+
+  TriangularRepair:
+    properties:
+      value: string
+
+  GaseousRoad:
+    properties:
+      value: string
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    get:
+      path: /{id}
+      method: GET
+      path-parameters:
+        id: string
+      response: BigUnion
+
+    update:
+      path: ""
+      method: PATCH
+      request: BigUnion
+      response: boolean
+
+    update-many:
+      path: /many
+      method: PATCH
+      request: list<BigUnion>
+      response: map<string, boolean>

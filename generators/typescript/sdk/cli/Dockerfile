@@ -1,0 +1,107 @@
+FROM node:24.17-trixie-slim
+
+# Apply latest Debian security updates so that grype-tracked OS package
+# vulnerabilities (glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
+# krb5, etc.) are resolved on top of the base image. trixie ships
+# patched versions of these packages that are not available on bookworm
+# (bookworm publishes the upstream fixes only via the next-stable
+# branch), so the base-image choice — not just dist-upgrade — is what
+# clears the AWS Inspector findings.
+# Some trixie packages still lag behind on fixes; pin sid as a
+# low-priority source and pull the patched packages from there.
+RUN apt-get update \
+    && apt-get -y --no-install-recommends dist-upgrade \
+    && apt-get install -y --no-install-recommends ca-certificates git zip \
+    && apt-get -y autoremove \
+    && rm -rf /var/lib/apt/lists/*
+RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
+    && echo "URIs: http://deb.debian.org/debian" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Suites: sid" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Components: main" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg" >> /etc/apt/sources.list.d/sid.sources \
+    && echo 'Package: *\nPin: release n=sid\nPin-Priority: 100' > /etc/apt/preferences.d/sid-low \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends -t sid \
+       libkrb5-3 libkrb5support0 libk5crypto3 libgssapi-krb5-2 \
+       curl libcurl4t64 libgnutls30t64 \
+       libexpat1 \
+       libssh2-1t64 libtasn1-6 \
+       perl-base perl \
+    && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
+    && rm -rf /var/lib/apt/lists/*
+RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
+    git config --global user.name "fern-api"
+
+ENV PNPM_STORE_PATH=/.pnpm-cache
+ENV YARN_CACHE_FOLDER=/.yarn-cache
+ENV PNPM_HOME=/.pnpm
+ENV PATH=$PNPM_HOME/bin:$PNPM_HOME:$PATH
+ARG SENTRY_DSN
+ARG SENTRY_ENVIRONMENT=production
+ARG SENTRY_RELEASE
+ENV SENTRY_DSN=$SENTRY_DSN
+ENV SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
+ENV SENTRY_RELEASE=$SENTRY_RELEASE
+
+# Upgrade bundled npm and patch vendored dependencies (ip-address,
+# brace-expansion) to versions that clear vulnerability scanners.
+RUN npm install -g npm@11.17.0 --force && \
+    cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack ip-address@10.1.1 && \
+    rm -rf ip-address && \
+    mkdir ip-address && \
+    tar -xzf ip-address-10.1.1.tgz --strip-components=1 -C ip-address/ && \
+    rm ip-address-10.1.1.tgz && \
+    npm pack undici@6.27.0 && \
+    rm -rf undici && \
+    mkdir undici && \
+    tar -xzf undici-6.27.0.tgz --strip-components=1 -C undici/ && \
+    rm undici-6.27.0.tgz && \
+    npm pack brace-expansion@5.0.6 && \
+    rm -rf brace-expansion && \
+    mkdir brace-expansion && \
+    tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
+    rm brace-expansion-5.0.6.tgz
+
+# Patch tar to 7.5.16 to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh
+# (PAX size override applied to intermediary GNU long-name/long-link headers,
+# causing tar parser interpretation differential / file smuggling).
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack tar@7.5.16 && \
+    rm -rf tar && \
+    mkdir tar && \
+    tar -xzf tar-7.5.16.tgz --strip-components=1 -C tar/ && \
+    rm tar-7.5.16.tgz
+
+# pnpm 11.8.0+ clears CVE-2026-55697, GHSA-fr4h-3cph-29xv, GHSA-qrv3-253h-g69c,
+# GHSA-72r4-9c5j-mj57, and bundles patched picomatch, brace-expansion, tar (7.5.16),
+# and ip-address.
+RUN npm install -g pnpm@11.8.0 --force
+RUN npm install -g yarn@1.22.22 --force
+RUN pnpm add -g typescript@~5.9.3 \
+  prettier@3.8.1 \
+  oxfmt@0.57.0 \
+  @biomejs/biome@2.4.10 \
+  oxlint@1.72.0 \
+  oxlint-tsgolint@0.24.0 \
+  @types/node@^20.0.0 \
+  ts-loader@^9.5.4 \
+  webpack@^5.105.4 \
+  msw@2.12.14 \
+  vitest@^4.1.1
+
+# Clean caches to reduce image size. Do NOT remove /.pnpm/store —
+# pnpm 11 global packages are symlinked into it; deleting it breaks
+# every globally installed tool (biome, oxfmt, prettier, etc.).
+# Patch pnpm's bundled undici to 6.27.0 to clear CVE-2026-12151.
+RUN rm -rf /.pnpm-cache /root/.cache/node/corepack && \
+    cd /usr/local/lib/node_modules/pnpm/dist/node_modules && \
+    npm pack undici@6.27.0 && \
+    rm -rf undici && \
+    mkdir undici && \
+    tar -xzf undici-6.27.0.tgz --strip-components=1 -C undici/ && \
+    rm undici-6.27.0.tgz
+
+COPY generators/typescript/sdk/cli/dist/ /
+
+ENTRYPOINT ["node", "--enable-source-maps", "/cli.cjs"]

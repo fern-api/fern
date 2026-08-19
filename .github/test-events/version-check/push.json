@@ -1,0 +1,5 @@
+{
+  "push": {
+    "paths": ["generators/typescript/sdk/versions.yml"]
+  }
+}

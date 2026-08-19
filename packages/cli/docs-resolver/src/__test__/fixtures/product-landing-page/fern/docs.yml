@@ -1,0 +1,24 @@
+instances:
+  - url: https://example.docs.buildwithfern.com
+products:
+  - display-name: Sunflower API
+    icon: fa-solid fa-sun
+    path: ./products/sunflower.yml
+    slug: sunflower
+  - display-name: Cactus API
+    icon: fa-solid fa-seedling
+    path: ./products/cactus.yml
+    slug: cactus
+  # Versioned product with a product-level landing page whose slug (and mdx)
+  # collide with the "Overview" page inside each version's navigation.
+  - display-name: Rose API
+    icon: fa-solid fa-fan
+    path: ./products/rose.yml
+    slug: rose
+    versions:
+      - display-name: v2
+        path: products/versions/rose-v2.yml
+        slug: v2
+      - display-name: v1
+        path: products/versions/rose-v1.yml
+        slug: v1

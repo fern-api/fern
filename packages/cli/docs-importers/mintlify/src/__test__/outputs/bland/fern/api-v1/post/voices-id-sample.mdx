@@ -1,0 +1,46 @@
+---
+title: Generate Audio Sample
+subtitle: Generate an audio sample for a voice.
+slug: api-v1/post/voices-id-sample
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="id" type="string" required>
+  The ID of the voice to generate the audio sample for, or it's name (like "maya").
+</ParamField>
+
+### Request Body
+
+<ParamField body="text" type="string" required>
+  The text content to be spoken in the voice sample.
+
+Character limit: `200` characters.
+
+</ParamField>
+
+<ParamField body="voice_settings" type="object" optional>
+  Alternate `voice_settings` can be passed in to override the preset's default settings.
+</ParamField>
+
+<ParamField body="language" type="string" optional>
+  The language of the text content. Default is `ENG`.
+
+Some other language codes: "ESP", "GER", "FRE"
+
+</ParamField>
+
+### Response
+
+<ResponseField type="audio" name="sample">
+  The generated audio file of the spoken text using the specified or overridden voice preset settings.
+</ResponseField>
+
+<ResponseExample>```json (Generated audio file) ```</ResponseExample>

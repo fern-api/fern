@@ -1,0 +1,169 @@
+name: Python Generator
+
+on:
+  pull_request:
+    paths:
+      - "generators/python/**"
+    branches:
+      - main
+  workflow_call:
+
+env:
+  DO_NOT_TRACK: "1"
+
+jobs:
+  compile:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 2.1.4
+
+      - name: Install Dependencies
+        working-directory: ./generators/python
+        run: poetry install
+
+      - name: Type check
+        working-directory: ./generators/python
+        run: poetry run mypy --show-traceback
+
+      - name: pre-commit
+        working-directory: ./generators/python
+        run: poetry run pre-commit run --all-files
+
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 2.1.4
+
+      - name: Update models for testing
+        working-directory: ./generators/python
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          npm install -g fern-api
+
+          docker build -f ./pydantic/Dockerfile -t ferntest/fern-pydantic-model:0.0.0 .
+          cd tests/utils/example_models
+          fern generate --group dummy_types --local || true
+
+          cd ../typeddict_models
+          fern generate --group dummy_td_types --local || true
+
+          cd ../union_utils
+          fern generate --group dummy_union_types --local || true
+
+          cd ../unaliased_models
+          fern generate --group dummy_unaliased_types --local || true
+
+      - name: Install Dependencies - Pydantic V1
+        working-directory: ./generators/python
+        run: |
+          poetry add pydantic=^1.10
+          poetry lock
+          poetry install
+      - name: Unit Test - Pydantic V1
+        working-directory: ./generators/python
+        # We have to ignore these tests as they pull in the custom config which uses a model validator,
+        # the syntax of which is not valid in Pydantic V1, now that we've moved to V2.
+        run: poetry run pytest -sv --ignore ./tests/utils/casing --ignore ./tests/sdk
+
+      - name: Install Dependencies - Pydantic V2
+        working-directory: ./generators/python
+        run: |
+          poetry add pydantic=^2.8.2
+          poetry lock
+          poetry install
+      - name: Unit Test - Pydantic V2
+        working-directory: ./generators/python
+        run: poetry run pytest -sv
+
+  # Lean cross-OS gate for the platform-guarded TCP keepalive socket-option
+  # builder. It runs ONLY the keepalive test file (no Docker model generation)
+  # so we can afford to run it on Linux/macOS/Windows and prove the per-platform
+  # socket-constant guards behave correctly on real OSes.
+  keepalive-cross-os:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-14, windows-latest]
+    runs-on: ${{ matrix.os }}
+    # Run every step under bash (Git Bash on Windows) so `poetry` resolves on PATH
+    # consistently across all three OSes; the default Windows shell (pwsh) does not
+    # pick up the snok/install-poetry PATH entry, causing "poetry: not recognized".
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 2.1.4
+
+      - name: Install Dependencies
+        working-directory: ./generators/python
+        run: poetry install
+
+      - name: Unit Test - TCP keepalive socket options
+        working-directory: ./generators/python
+        run: poetry run pytest -sv tests/utils/test_keepalive_socket_options.py
+
+  # Verify the keepalive socket options are accepted by both the pinned floor
+  # (httpx>=0.25, the version required when tcp_keepalive is opted in) and the
+  # latest httpx. Mirrors the intent of the pydantic v1/v2 floor-vs-latest
+  # matrix, kept as a dedicated job so it does not run across every seed fixture.
+  keepalive-httpx-matrix:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        httpx: ["0.25.0", "latest"]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 2.1.4
+
+      - name: Install Dependencies
+        working-directory: ./generators/python
+        run: poetry install
+
+      - name: Pin httpx (floor)
+        if: ${{ matrix.httpx != 'latest' }}
+        working-directory: ./generators/python
+        run: poetry run pip install "httpx==${{ matrix.httpx }}"
+
+      - name: Pin httpx (latest)
+        if: ${{ matrix.httpx == 'latest' }}
+        working-directory: ./generators/python
+        run: poetry run pip install --upgrade httpx
+
+      - name: Unit Test - TCP keepalive socket options
+        working-directory: ./generators/python
+        run: poetry run pytest -sv tests/utils/test_keepalive_socket_options.py

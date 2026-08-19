@@ -1,0 +1,17 @@
+import Foundation
+import Pagination
+
+enum Example8 {
+    static func snippet() async throws {
+        let client = PaginationClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>"
+        )
+
+        _ = try await client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage(
+            page: 1,
+            limit: 1,
+            order: .asc
+        )
+    }
+}

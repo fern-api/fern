@@ -1,0 +1,228 @@
+# Reference
+## Auth
+<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">getTokenWithClientCredentials</a>(request: Requests.GetTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import OauthClientCredentialsMandatoryAuth
+
+private func main() async throws {
+    let client = OauthClientCredentialsMandatoryAuthClient()
+
+    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
+        clientId: "my_oauth_app_123",
+        clientSecret: "sk_live_abcdef123456789",
+        audience: .httpsApiExampleCom,
+        grantType: .clientCredentials,
+        scope: "read:users"
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Requests.GetTokenRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">refreshToken</a>(request: Requests.RefreshTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import OauthClientCredentialsMandatoryAuth
+
+private func main() async throws {
+    let client = OauthClientCredentialsMandatoryAuthClient()
+
+    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
+        clientId: "my_oauth_app_123",
+        clientSecret: "sk_live_abcdef123456789",
+        audience: .httpsApiExampleCom,
+        grantType: .clientCredentials,
+        scope: "read:users"
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Requests.RefreshTokenRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Nested Api
+<details><summary><code>client.nested.api.<a href="/Sources/Resources/Nested/Api/ApiClient.swift">getSomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import OauthClientCredentialsMandatoryAuth
+
+private func main() async throws {
+    let client = OauthClientCredentialsMandatoryAuthClient()
+
+    _ = try await client.nested.api.getSomething()
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Simple
+<details><summary><code>client.simple.<a href="/Sources/Resources/Simple/SimpleClient.swift">getSomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import OauthClientCredentialsMandatoryAuth
+
+private func main() async throws {
+    let client = OauthClientCredentialsMandatoryAuthClient()
+
+    _ = try await client.simple.getSomething()
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

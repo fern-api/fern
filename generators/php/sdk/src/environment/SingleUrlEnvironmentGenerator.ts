@@ -1,0 +1,51 @@
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { FileGenerator, PhpFile } from "@fern-api/php-base";
+import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+export declare namespace SingleUrlEnvironmentGenerator {
+    interface Args {
+        context: SdkGeneratorContext;
+        singleUrlEnvironments: FernIr.SingleBaseUrlEnvironments;
+    }
+}
+
+export class SingleUrlEnvironmentGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private singleUrlEnvironments: FernIr.SingleBaseUrlEnvironments;
+
+    constructor({ context, singleUrlEnvironments }: SingleUrlEnvironmentGenerator.Args) {
+        super(context);
+        this.singleUrlEnvironments = singleUrlEnvironments;
+    }
+
+    public doGenerate(): PhpFile {
+        const enum_ = php.enum_({
+            ...this.context.getEnvironmentsClassReference(),
+            backing: "string"
+        });
+
+        for (const environment of this.singleUrlEnvironments.environments) {
+            enum_.addMember({
+                name: this.context.getEnvironmentName(environment.name),
+                value: environment.url
+            });
+        }
+
+        return new PhpFile({
+            clazz: enum_,
+            directory: RelativeFilePath.of(""),
+            rootNamespace: this.context.getRootNamespace(),
+            customConfig: this.context.customConfig
+        });
+    }
+
+    protected getFilepath(): RelativeFilePath {
+        return join(
+            this.context.project.filepaths.getSourceDirectory(),
+            RelativeFilePath.of(`${this.context.getEnvironmentsClassReference().name}.php`)
+        );
+    }
+}

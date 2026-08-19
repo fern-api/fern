@@ -1,0 +1,53 @@
+import { assertNever } from "@fern-api/core-utils";
+import { createNumericLiteralSafe, createNumericLiteralSafeTypeNode, getPropertyKey } from "@fern-typescript/commons";
+import { ModelContext } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
+
+import { GeneratedUnionImpl } from "../GeneratedUnionImpl.js";
+import { AbstractParsedSingleUnionType } from "../parsed-single-union-type/AbstractParsedSingleUnionType.js";
+import { KnownSingleUnionType } from "./KnownSingleUnionType.js";
+
+export abstract class AbstractKnownSingleUnionType<Context extends ModelContext>
+    extends AbstractParsedSingleUnionType<Context>
+    implements KnownSingleUnionType<Context>
+{
+    public abstract override getDiscriminantValue(): string | number;
+
+    public getDiscriminantValueType(): ts.TypeNode {
+        const discriminantValue = this.getDiscriminantValue();
+        if (typeof discriminantValue === "string") {
+            return ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(discriminantValue));
+        }
+        if (typeof discriminantValue === "number") {
+            return createNumericLiteralSafeTypeNode(discriminantValue);
+        }
+        assertNever(discriminantValue);
+    }
+
+    protected getNonVisitProperties({
+        context,
+        generatedUnion
+    }: {
+        context: Context;
+        generatedUnion: GeneratedUnionImpl<Context>;
+    }): ts.ObjectLiteralElementLike[] {
+        return [
+            ...this.singleUnionType.getNonDiscriminantPropertiesForBuilder(context),
+            ts.factory.createPropertyAssignment(
+                getPropertyKey(generatedUnion.discriminant),
+                this.getDiscriminantValueAsExpression()
+            )
+        ];
+    }
+
+    public getDiscriminantValueAsExpression(): ts.Expression {
+        const discriminantValue = this.getDiscriminantValueOrThrow();
+        if (typeof discriminantValue === "string") {
+            return ts.factory.createStringLiteral(discriminantValue);
+        }
+        if (typeof discriminantValue === "number") {
+            return createNumericLiteralSafe(discriminantValue);
+        }
+        assertNever(discriminantValue);
+    }
+}

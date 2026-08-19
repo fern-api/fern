@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/definitions/Id"
+    },
+    "name": {
+      "type": "string"
+    },
+    "users": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/user.User"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "users"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Id": {
+      "type": "string"
+    },
+    "user.User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/Id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "age"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

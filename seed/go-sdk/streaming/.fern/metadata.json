@@ -1,0 +1,17 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-go-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "enableWireTests": false,
+    "packageName": "stream",
+    "module": {
+      "path": "github.com/fern-api/stream-go"
+    }
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "ci",
+  "requestedVersion": "v2.0.0",
+  "ciProvider": "github",
+  "sdkVersion": "v2.0.0"
+}

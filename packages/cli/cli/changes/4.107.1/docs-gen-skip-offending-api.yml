@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Make OpenAPI validation errors non-fatal during docs generation. Previously,
+    validation issues like "Self-referencing circular pointer" or parameter name
+    collisions would abort `fern generate --docs` entirely. The CLI now logs
+    warnings and skips the offending API workspace so the rest of the docs can
+    still be published. These validations remain errors in `fern check`.
+  type: fix

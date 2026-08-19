@@ -1,0 +1,14 @@
+types:
+  UsersListResponse:
+    properties:
+      limit: optional<integer>
+      count: optional<integer>
+      has_more: optional<boolean>
+      links: list<Link>
+      data: list<string>
+
+  Link:
+    properties:
+      rel: string
+      method: string
+      href: string

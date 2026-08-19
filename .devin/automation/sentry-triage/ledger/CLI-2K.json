@@ -1,0 +1,10 @@
+{
+  "title": "No fern directory found with --id",
+  "disposition": "duplicate",
+  "rationale": "Same validation path as CLI-2Y.",
+  "fixSummary": "—",
+  "prOrIssue": "Already on main",
+  "lastAnalyzed": "2026-05-04",
+  "duplicateOf": "CLI-2Y",
+  "problemSignature": "Docs preview delete --id outside a Fern project failed as InternalError instead of ValidationError guidance."
+}

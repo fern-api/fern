@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Preserve the declaration order of undiscriminated union members in generated
+    code. Members were previously sorted alphabetically, which reordered the
+    decoding attempts emitted in the `Decodable` initializer. For a union
+    containing both `int` and `double`, this tried `Double` before `Int` and
+    decoded integral JSON numbers (e.g. `1`) as a `Double` (`1.0`), so wire tests
+    failed to round-trip. Members are now decoded in declaration order, matching
+    Fern's undiscriminated union semantics.
+  type: fix

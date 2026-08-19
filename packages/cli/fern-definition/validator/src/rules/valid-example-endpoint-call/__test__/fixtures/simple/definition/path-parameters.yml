@@ -1,0 +1,25 @@
+service:
+  base-path: /{servicePathParam}/{optionalServicePathParam}
+  path-parameters:
+    servicePathParam: string
+    optionalServicePathParam: optional<string>
+  auth: true
+  endpoints:
+    get:
+      method: GET
+      path: /{endpointPathParam}/{optionalEndpointPathParam}
+      path-parameters:
+        endpointPathParam: string
+        optionalEndpointPathParam: optional<string>
+      examples:
+        - {}
+        - path-parameters: {}
+        - path-parameters:
+            servicePathParam: hello
+            endpointPathParam: hello
+        - path-parameters:
+            servicePathParam: hello
+            optionalServicePathParam: hello
+            endpointPathParam: hello
+            optionalEndpointPathParam: hello
+            extraParam: hello

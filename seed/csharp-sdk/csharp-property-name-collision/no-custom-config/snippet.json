@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/catalog",
+                "method": "POST",
+                "identifier_override": "endpoint_.createCatalog"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client._.CreateCatalogAsync(new CatalogV1Id());\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/activity",
+                "method": "POST",
+                "identifier_override": "endpoint_.createActivity"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client._.CreateActivityAsync(new Activity());\n"
+            }
+        }
+    ]
+}

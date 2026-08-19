@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `max_retries:` keyword argument to the generated root `Client`
+    constructor. Consumers can now configure the default retry count once
+    at client construction (e.g. `Client.new(max_retries: 5)`) instead of
+    relying on the generation-time `maxRetries` setting in `generators.yml`.
+    The constructor default still respects the configured value (or `2`
+    when unset), so existing behavior is preserved.
+  type: feat

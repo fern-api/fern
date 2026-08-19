@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/definitions/TypeId"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ],
+  "additionalProperties": false,
+  "description": "A simple type with just a name.",
+  "definitions": {
+    "TypeId": {
+      "type": "string",
+      "description": "An alias for type IDs."
+    }
+  }
+}

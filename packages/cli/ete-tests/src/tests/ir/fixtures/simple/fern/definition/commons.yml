@@ -1,0 +1,24 @@
+types:
+  Internal:
+    audiences:
+      - internal
+    properties:
+      name: string
+
+  Type:
+    audiences:
+      - test
+    properties:
+      name: string
+
+  UndiscriminatedUnion:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - integer
+      - list<list<integer>>
+
+errors:
+  BadRequestError:
+    status-code: 400

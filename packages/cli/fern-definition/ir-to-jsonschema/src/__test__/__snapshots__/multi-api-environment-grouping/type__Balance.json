@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "available": {
+      "type": "number"
+    },
+    "pending": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "available",
+    "pending",
+    "currency"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

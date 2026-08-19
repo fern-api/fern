@@ -1,0 +1,87 @@
+---
+title: Setting max duration
+slug: tutorials/max-duration
+---
+
+
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/maxduration.jpg" />
+
+## Introduction
+
+Controlling the length of your AI-powered phone calls is crucial for efficiency and cost-effectiveness. In this guide, we'll walk you through how to set a `max_duration` for your calls using Bland AI.
+
+## Step 1: Understand max_duration
+
+The `max_duration` parameter allows you to specify the longest duration you want your call to last, measured in minutes. Once the set duration is reached, the call will automatically end.
+
+## Step 2: Setup Your Authorization
+
+Ensure you have your API key ready for authentication. If you haven't obtained one, sign up on the [developer portal](app.bland.ai).
+
+## Step 3: Define max_duration in Your Call Data
+
+When preparing your call data, include the `max_duration` parameter. You can set it as a float or a string.
+
+Example values: `"30", "5.5", 45, 2.8`.
+
+Here’s how you might include it in your request data:
+
+```javascript
+{
+    "phone_number": "+11233456789",
+    "task": "Inquire about the latest product updates.",
+    "max_duration": "10", // Call lasts for 10 minutes max
+}
+```
+
+## Step 4: Send the API Request
+
+Use the provided JavaScript or Python code snippet to make the API request, ensuring you include the `max_duration` parameter.
+
+## Step 5: Test and Adjust
+
+After setting `max_duration`, test your calls to ensure they're ending at the desired time. Adjust as necessary based on your needs and feedback.
+
+## Conclusion
+
+Setting a `max_duration` for your calls ensures they are concise and to the point, saving time and resources. You're now ready to efficiently manage the length of your AI-powered calls with Bland AI.
+
+Remember, the key is to find the right balance between giving enough time for meaningful interaction and keeping the calls concise. Happy calling!
+
+<RequestExample>
+
+```javascript SendCall.js
+// Headers
+const headers = {
+  authorization: "YOUR-API-KEY-HERE",
+};
+
+// Data
+const data = {
+  phone_number: "+11233456789",
+  task: "Inquire about the latest product updates.",
+  max_duration: "10", // Call lasts for 10 minutes max
+};
+
+// API request
+await axios.post("https://api.bland.ai/v1/calls", data, { headers });
+```
+
+```python SendCall.py
+# Headers
+headers = {
+    'authorization': 'YOUR-API-KEY-HERE'
+}
+
+# Data
+data = {
+    'phone_number': '+11233456789',
+    'task': 'Inquire about the latest product updates.',
+    'max_duration': '10', # Call lasts for 10 minutes max
+}
+
+# API request
+response = requests.post('https://api.bland.ai/v1/calls', json=data, headers=headers)
+```
+
+</RequestExample>

@@ -1,0 +1,6 @@
+- summary: |
+    Fix `fern docs dev` hanging indefinitely on Node.js v26+ on Linux by disabling
+    io_uring in the child server process. Node 26 enables io_uring by default in
+    libuv, which has a busy-loop bug where worker threads spin on an internal
+    eventfd, starving the main event loop.
+  type: fix

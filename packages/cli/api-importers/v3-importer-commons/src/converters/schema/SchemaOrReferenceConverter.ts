@@ -1,0 +1,236 @@
+import { Availability, ContainerType, TypeReference } from "@fern-api/ir-sdk";
+import { OpenAPIV3_1 } from "openapi-types";
+
+import { AbstractConverter, AbstractConverterContext } from "../../index.js";
+import { SchemaConverter } from "./SchemaConverter.js";
+
+export declare namespace SchemaOrReferenceConverter {
+    export interface Args extends AbstractConverter.AbstractArgs {
+        schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+        schemaIdOverride?: string;
+        wrapAsOptional?: boolean;
+        wrapAsNullable?: boolean;
+    }
+
+    export interface Output {
+        type: TypeReference;
+        schema?: SchemaConverter.ConvertedSchema;
+        inlinedTypes: Record<string, SchemaConverter.ConvertedSchema>;
+        availability?: Availability;
+        encoding?: {
+            [media: string]: OpenAPIV3_1.EncodingObject;
+        };
+    }
+}
+
+export class SchemaOrReferenceConverter extends AbstractConverter<
+    AbstractConverterContext<object>,
+    SchemaOrReferenceConverter.Output | undefined
+> {
+    private readonly schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+    private readonly schemaIdOverride: string | undefined;
+    private readonly wrapAsOptional: boolean;
+    private readonly wrapAsNullable: boolean;
+
+    constructor({
+        context,
+        breadcrumbs,
+        schemaOrReference,
+        schemaIdOverride,
+        wrapAsOptional = false,
+        wrapAsNullable = false
+    }: SchemaOrReferenceConverter.Args) {
+        super({ context, breadcrumbs });
+        this.schemaOrReference = schemaOrReference;
+        this.schemaIdOverride = schemaIdOverride;
+        this.wrapAsOptional = wrapAsOptional;
+        this.wrapAsNullable = wrapAsNullable;
+    }
+
+    public convert(): SchemaOrReferenceConverter.Output | undefined {
+        const maybeConvertedReferenceObject = this.maybeConvertReferenceObject({
+            schemaOrReference: this.schemaOrReference
+        });
+        if (maybeConvertedReferenceObject != null) {
+            return maybeConvertedReferenceObject;
+        }
+        const maybeSingularAllOfReferenceOutput = this.maybeConvertSingularAllOfReferenceObject();
+        if (maybeSingularAllOfReferenceOutput != null) {
+            return maybeSingularAllOfReferenceOutput;
+        }
+        return this.convertSchemaObject({ schema: this.schemaOrReference });
+    }
+
+    private maybeConvertReferenceObject({
+        schemaOrReference
+    }: {
+        schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+    }): SchemaOrReferenceConverter.Output | undefined {
+        if (this.context.isReferenceObject(schemaOrReference)) {
+            const response = this.context.convertReferenceToTypeReference({
+                reference: schemaOrReference,
+                breadcrumbs: this.breadcrumbs
+            });
+            if (response.ok) {
+                return {
+                    type: this.wrapTypeReference(response.reference),
+                    inlinedTypes: response.inlinedTypes ?? {}
+                };
+            }
+        }
+        return undefined;
+    }
+
+    private maybeConvertSingularAllOfReferenceObject(): SchemaOrReferenceConverter.Output | undefined {
+        if (this.context.isReferenceObject(this.schemaOrReference) || this.schemaOrReference.allOf == null) {
+            return undefined;
+        }
+
+        // Single $ref allOf — convert directly as a type reference
+        if (this.schemaOrReference.allOf.length === 1) {
+            const allOfReference = this.schemaOrReference.allOf[0];
+            if (this.context.isReferenceObject(allOfReference)) {
+                const response = this.context.convertReferenceToTypeReference({
+                    reference: allOfReference,
+                    breadcrumbs: this.breadcrumbs
+                });
+                if (response.ok) {
+                    return {
+                        type: this.wrapTypeReference(response.reference),
+                        inlinedTypes: response.inlinedTypes ?? {}
+                    };
+                }
+            }
+            return undefined;
+        }
+
+        // When allOf has exactly one $ref to a non-object type (e.g. enum) and the
+        // remaining elements are inline primitive constraints (no properties, no enum,
+        // no composition keywords, no additional validation rules), reference the $ref
+        // type directly instead of creating a synthetic merged copy.
+        const refElements = this.schemaOrReference.allOf.filter((s) => this.context.isReferenceObject(s));
+        const inlineElements = this.schemaOrReference.allOf.filter(
+            (s): s is OpenAPIV3_1.SchemaObject =>
+                typeof s === "object" && s !== null && !this.context.isReferenceObject(s)
+        );
+        const singleRef = refElements.length === 1 ? refElements[0] : undefined;
+
+        if (singleRef != null && inlineElements.every((s) => isMetadataOnlySchema(s))) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: singleRef,
+                breadcrumbs: this.breadcrumbs
+            });
+            if (
+                resolved != null &&
+                resolved.type !== "object" &&
+                !resolved.properties &&
+                !resolved.allOf &&
+                !resolved.oneOf &&
+                !resolved.anyOf &&
+                !resolved.format
+            ) {
+                const response = this.context.convertReferenceToTypeReference({
+                    reference: singleRef as OpenAPIV3_1.ReferenceObject,
+                    breadcrumbs: this.breadcrumbs
+                });
+                if (response.ok) {
+                    return {
+                        type: this.wrapTypeReference(response.reference),
+                        inlinedTypes: response.inlinedTypes ?? {}
+                    };
+                }
+            }
+        }
+
+        return undefined;
+    }
+
+    private convertSchemaObject({
+        schema
+    }: {
+        schema: OpenAPIV3_1.SchemaObject;
+    }): SchemaOrReferenceConverter.Output | undefined {
+        const schemaId = this.schemaIdOverride ?? this.context.convertBreadcrumbsToName(this.breadcrumbs);
+        const namespacedSchemaId = this.context.getNamespacedSchemaId(schemaId);
+        const schemaConverter = new SchemaConverter({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            schema,
+            id: schemaId
+        });
+        const availability = this.context.getAvailability({
+            node: schema,
+            breadcrumbs: this.breadcrumbs
+        });
+        const convertedSchema = schemaConverter.convert();
+        if (convertedSchema != null) {
+            const convertedSchemaShape = convertedSchema.convertedSchema.typeDeclaration.shape;
+            if (convertedSchemaShape.type === "alias") {
+                return {
+                    type: this.wrapTypeReference(convertedSchemaShape.aliasOf),
+                    schema: convertedSchema.convertedSchema,
+                    inlinedTypes: convertedSchema.inlinedTypes,
+                    availability
+                };
+            }
+            return {
+                type: this.wrapTypeReference(this.context.createNamedTypeReference(schemaId)),
+                schema: convertedSchema.convertedSchema,
+                inlinedTypes: {
+                    ...convertedSchema.inlinedTypes,
+                    [namespacedSchemaId]: convertedSchema.convertedSchema
+                },
+                availability
+            };
+        }
+        return undefined;
+    }
+
+    private wrapTypeReference(type: TypeReference): TypeReference {
+        if (this.wrapAsOptional && this.wrapAsNullable) {
+            return this.wrapInOptional(this.wrapInNullable(type));
+        }
+        if (this.wrapAsOptional) {
+            return this.wrapInOptional(type);
+        }
+        if (this.wrapAsNullable) {
+            return this.wrapInNullable(type);
+        }
+        return type;
+    }
+
+    private wrapInOptional(type: TypeReference): TypeReference {
+        return TypeReference.container(ContainerType.optional(type));
+    }
+
+    private wrapInNullable(type: TypeReference): TypeReference {
+        return TypeReference.container(ContainerType.nullable(type));
+    }
+}
+
+/**
+ * When an allOf has a single $ref to a non-object type (e.g. an enum or
+ * primitive), these annotation-only fields on the inline sibling cannot alter
+ * the type shape, so we short-circuit to the $ref directly. Any field NOT in
+ * this set (e.g. properties, pattern, enum) is assumed to carry meaningful
+ * content and forces a proper allOf merge.
+ *
+ * Notably, `type` is excluded: it can express nullability (e.g. `type: "null"`
+ * or `type: ["string", "null"]`) which changes the semantics of the allOf.
+ * Since `type` is not in this set, any inline element that carries nullability
+ * will always fail this check and force a full merge.
+ */
+const METADATA_ONLY_FIELDS = new Set([
+    "description",
+    "title",
+    "deprecated",
+    "readOnly",
+    "writeOnly",
+    "xml",
+    "externalDocs",
+    "x-fern-type-name"
+]);
+
+function isMetadataOnlySchema(schema: OpenAPIV3_1.SchemaObject): boolean {
+    return Object.keys(schema).every((key) => METADATA_ONLY_FIELDS.has(key));
+}

@@ -1,0 +1,8 @@
+# Use 3.10 because some of our internal SDKs are on extremely old generator
+# versions that don't support 3.8
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+pyenv shell 3.10
+pip install poetry
+poetry env use 3.10

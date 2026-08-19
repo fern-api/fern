@@ -1,0 +1,5 @@
+- summary: |
+    Fix image path resolution on Windows for `fern docs dev` and `fern generate docs`.
+    Path utilities (`resolve`, `dirname`, `join`) now normalize output to forward slashes,
+    preventing file ID lookup mismatches caused by mixed path separators on Windows.
+  type: fix

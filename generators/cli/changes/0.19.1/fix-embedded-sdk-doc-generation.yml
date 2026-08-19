@@ -1,0 +1,6 @@
+- summary: |
+    Fix embedded SDK generation failure ("failed to read feature configuration")
+    by skipping standalone doc generation (README, CONTRIBUTING, reference.md)
+    when the Rust SDK generator runs in cliEmbedded mode. Also stage features.yml
+    into the CLI dist for future extensibility.
+  type: fix

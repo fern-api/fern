@@ -1,0 +1,57 @@
+type Query {
+  # This will create user.getInfo (conflicts with admin.getInfo)
+  getInfo(id: ID!): UserInfo
+
+  # Unique user operation
+  getProfile(userId: ID!): UserProfile
+}
+
+type Mutation {
+  # This will create user.createRecord (conflicts with admin.createRecord)
+  createRecord(input: UserRecordInput!): UserRecord
+
+  # Unique user mutation
+  updateProfile(userId: ID!, input: UpdateProfileInput!): UserProfile
+}
+
+type Subscription {
+  # Only in user schema
+  userUpdates(userId: ID!): UserInfo
+}
+
+type UserInfo {
+  id: ID!
+  name: String!
+  email: String!
+  createdAt: String!
+}
+
+type UserProfile {
+  id: ID!
+  bio: String
+  avatar: String
+  preferences: UserPreferences
+}
+
+type UserPreferences {
+  theme: String!
+  notifications: Boolean!
+}
+
+type UserRecord {
+  id: ID!
+  userId: ID!
+  data: String!
+  timestamp: String!
+}
+
+input UserRecordInput {
+  userId: ID!
+  data: String!
+}
+
+input UpdateProfileInput {
+  bio: String
+  avatar: String
+  preferences: UserPreferences
+}

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Update CLI v2 authentication error messages to reference `fern auth login` instead of `fern login`.
+    This covers SDK generation permission errors, docs publish auth failures, and missing-token hints
+    produced by CLI v2 code paths. The legacy `fern login` wording is preserved for the v1 CLI.
+  type: fix

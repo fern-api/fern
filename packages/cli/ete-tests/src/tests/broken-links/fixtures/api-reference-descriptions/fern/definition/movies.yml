@@ -1,0 +1,24 @@
+types:
+  Movie:
+    docs: See the [Movies guide](/guides/does-not-exist) for more details.
+    properties:
+      id:
+        type: string
+        docs: A unique identifier. Learn more in our [ID conventions](/conventions/missing).
+      title: string
+
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    getMovie:
+      docs: |
+        Get a movie by its ID.
+
+        See [the related broken guide](/api/missing-endpoint-doc) for more context.
+      method: GET
+      path: /{movieId}
+      path-parameters:
+        movieId:
+          type: string
+          docs: The movie ID. See [path param docs](/docs/missing-path-param).

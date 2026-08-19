@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "normal": {
+      "type": "string"
+    },
+    "read": {
+      "type": "string"
+    },
+    "write": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "normal",
+    "read",
+    "write"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

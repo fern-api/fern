@@ -1,0 +1,58 @@
+types:
+  StreamedCompletion:
+    properties:
+      delta: string
+      tokens: optional<integer>
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    stream:
+      method: POST
+      path: /stream
+      request:
+        name: StreamCompletionRequest
+        body:
+          properties:
+            query: string
+      response-stream:
+        type: StreamedCompletion
+        format: sse
+        terminator: "[[DONE]]"
+      examples:
+        - name: "Stream completions"
+          request:
+            query: "foo"
+          response:
+            stream:
+              - event: completion
+                data:
+                  delta: "hello"
+                  tokens: 1
+              - event: completion
+                data:
+                  delta: " world"
+                  tokens: 2
+
+    streamWithoutTerminator:
+      method: POST
+      path: /stream-no-terminator
+      request:
+        name: StreamCompletionRequestWithoutTerminator
+        body:
+          properties:
+            query: string
+      response-stream:
+        type: StreamedCompletion
+        format: sse
+      examples:
+        - name: "Stream without terminator"
+          request:
+            query: "query"
+          response:
+            stream:
+              - event: completion
+                data:
+                  delta: "delta"
+                  tokens: 1

@@ -1,0 +1,13 @@
+{
+  "oneOf": [
+    {
+      "type": "string",
+      "format": "date"
+    },
+    {
+      "type": "null"
+    }
+  ],
+  "description": "A date in YYYY-MM-DD format, or null.",
+  "definitions": {}
+}

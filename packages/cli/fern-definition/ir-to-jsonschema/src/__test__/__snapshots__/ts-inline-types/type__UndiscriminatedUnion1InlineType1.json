@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": {
+      "type": "string",
+      "description": "lorem ipsum"
+    },
+    "bar": {
+      "$ref": "#/definitions/UndiscriminatedUnion1InlineType1InlineType1",
+      "description": "lorem ipsum"
+    },
+    "ref": {
+      "$ref": "#/definitions/ReferenceType",
+      "description": "lorem ipsum"
+    }
+  },
+  "required": [
+    "foo",
+    "bar",
+    "ref"
+  ],
+  "additionalProperties": false,
+  "description": "lorem ipsum",
+  "definitions": {
+    "ReferenceType": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string",
+          "description": "lorem ipsum"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false,
+      "description": "lorem ipsum"
+    },
+    "UndiscriminatedUnion1InlineType1InlineType1": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string",
+          "description": "lorem ipsum"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType",
+          "description": "lorem ipsum"
+        }
+      },
+      "required": [
+        "foo",
+        "ref"
+      ],
+      "additionalProperties": false,
+      "description": "lorem ipsum"
+    }
+  }
+}

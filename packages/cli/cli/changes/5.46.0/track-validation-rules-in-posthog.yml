@@ -1,0 +1,5 @@
+- summary: |
+    Track which validation rules fired during `fern check` as part of the PostHog CLI telemetry event.
+    The event now includes `validationRules` (array of rule names that produced violations),
+    `numErrors`, `numWarnings`, and `passed` properties.
+  type: feat

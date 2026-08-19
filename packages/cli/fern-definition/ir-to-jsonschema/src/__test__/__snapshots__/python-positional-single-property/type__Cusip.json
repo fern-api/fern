@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "cusip": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "cusip"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

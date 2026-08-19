@@ -1,0 +1,15 @@
+{
+  "anyOf": [
+    {
+      "type": "string"
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  ],
+  "description": "Either a single string or a list of strings.",
+  "definitions": {}
+}

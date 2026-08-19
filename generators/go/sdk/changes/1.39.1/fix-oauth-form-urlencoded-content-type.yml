@@ -1,0 +1,6 @@
+- summary: |
+    Fix OAuth token endpoint to use application/x-www-form-urlencoded content type.
+    Per RFC 6749 §4.4.2, the OAuth 2.0 client credentials token request must be
+    form-encoded. The generated raw_client.go now emits the correct Content-Type
+    header for the token endpoint instead of application/json.
+  type: fix

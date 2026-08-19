@@ -1,0 +1,17 @@
+openapi: 3.0.3
+info:
+  title: API Three
+  version: 1.0.0
+servers:
+  - url: https://three.example.com
+paths:
+  /three:
+    get:
+      operationId: getThree
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string

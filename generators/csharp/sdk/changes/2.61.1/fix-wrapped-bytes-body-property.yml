@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Emit a `Body` property of type `System.IO.Stream` on wrapped request records
+    for endpoints whose request body is `bytes`. Previously the endpoint client
+    method emitted `Body = request.Body` but the generated request record did
+    not declare a `Body` property, producing a CS1061 compile error on any
+    endpoint that combined a binary body with other wrapped parameters
+    (e.g. query parameters, headers, or path parameters).
+  type: fix

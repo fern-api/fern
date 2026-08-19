@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "enum": [
+    "SUNNY",
+    "CLOUDY",
+    "RAINING",
+    "SNOWING"
+  ],
+  "description": "lorem ipsum",
+  "definitions": {}
+}

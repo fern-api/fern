@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "map": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "map"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

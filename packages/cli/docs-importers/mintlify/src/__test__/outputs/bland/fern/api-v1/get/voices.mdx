@@ -1,0 +1,100 @@
+---
+title: List Voices
+subtitle: Retrieves all available voices for your account.
+slug: api-v1/get/voices
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Response
+
+<ResponseField type="array" name="voices">
+    Contains a list of the voices available for your account.
+
+    <ResponseField type="string" name="voices[].id">
+        The unique identifier for the voice.
+    </ResponseField>
+
+    <ResponseField type="string" name="voices[].name">
+        The name of the voice. This value can also be used in the `voice` parameter when sending calls.
+    </ResponseField>
+
+    <ResponseField type="string" name="voices[].description">
+        A brief description of the voice.
+    </ResponseField>
+
+    <ResponseField type="boolean" name="voices[].public">
+        Indicates whether the voice is publicly available or specific to your account.
+    </ResponseField>
+
+    <ResponseField type="array" name="voices[].tags">
+        A list of tags that describe the voice. We recommend "Bland Curated" voices for the best quality over the phone.
+    </ResponseField>
+
+    <ResponseField type="number" name="voices[].total_ratings">
+        The number of ratings the voice has received.
+    </ResponseField>
+
+    <ResponseField type="number" name="voices[].average_rating">
+        The average rating of the voice, out of 5.
+    </ResponseField>
+
+    Note: Ratings are under development at this time and may display incomplete/inaccurate data.
+
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+    "voices": [
+        {
+            "id": "2f9fdbc7-4bf2-4792-8a18-21ce3c93978f",
+            "name": "maya",
+            "description": "Young American Female",
+            "public": true,
+            "tags": [
+                "english",
+                "soft",
+                "Bland Curated"
+            ]
+        },
+        {
+            "id": "37b3f1c8-a01e-4d70-b251-294733f08371",
+            "name": "ryan",
+            "description": "Professional American Male",
+            "public": true,
+            "tags": [
+                "english",
+                "Bland Curated"
+            ]
+        },
+        {
+            "id": "90295ec4-f0fe-4783-ab33-8b997ddc3ae4",
+            "name": "mason",
+            "description": "American Male",
+            "public": true,
+            "tags": [
+                "english",
+                "Bland Curated"
+            ]
+        },
+        {
+            "id": "bbeabae6-ec8d-444f-92ad-c8e620d3de8d",
+            "name": "tina",
+            "description": "Gentle American Female",
+            "public": true,
+            "tags": [
+                "english",
+                "gentle"
+            ]
+        },
+        //...
+    ]
+}
+```
+</ResponseExample>

@@ -1,0 +1,747 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
+import { ClonedRepository, parseRepository } from "@fern-api/github";
+import { Octokit } from "@octokit/rest";
+import { access, readFile, writeFile } from "fs/promises";
+import { join } from "path";
+import { changelogContainsVersion, prependChangelogBlock } from "../../autoversion/index";
+import { createReplayBranch } from "../github/createReplayBranch";
+import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
+import { parseCommitMessageForPR } from "../github/parseCommitMessage";
+import { pushSignedCommit, resolveCommitAuthor } from "../github/pushSignedCommit";
+import type { PipelineLogger } from "../PipelineLogger";
+import { formatReplayPrBody } from "../replay-summary";
+import type {
+    AutoVersionStepResult,
+    GithubStepConfig,
+    GithubStepResult,
+    PipelineContext,
+    ReplayStepResult
+} from "../types";
+import { BaseStep } from "./BaseStep";
+
+export class GithubStep extends BaseStep {
+    readonly name = "github";
+
+    constructor(
+        outputDir: string,
+        logger: PipelineLogger,
+        private readonly config: GithubStepConfig
+    ) {
+        super(outputDir, logger);
+    }
+
+    async execute(context: PipelineContext): Promise<GithubStepResult> {
+        const replayResult = context.previousStepResults.replay;
+        const autoVersionResult = context.previousStepResults.autoVersion;
+        const skipCommit = this.config.skipCommit ?? this.deriveSkipCommit(replayResult);
+        const replayConflictInfo = this.config.replayConflictInfo ?? this.deriveReplayConflictInfo(replayResult);
+        const resolvedPrFields = this.resolvePrFields(autoVersionResult);
+
+        try {
+            this.logger.debug("Starting GitHub self-hosted flow in directory: " + this.outputDir);
+            const repository = ClonedRepository.createAtPath(this.outputDir);
+
+            // Ensure full git history is available.
+            // Fiddle clones with --depth 1 for performance.
+            // Replay references historical SHAs from .fern/replay.lock that won't exist
+            // in a shallow clone.
+            try {
+                await repository.fetch(["--unshallow"]);
+            } catch {
+                // Not a shallow clone — already has full history. This is fine.
+            }
+
+            const now = new Date();
+            const formattedDate = now
+                .toISOString()
+                .replace("T", "_")
+                .replace(/:/g, "-")
+                .replace("Z", "")
+                .replace(".", "_");
+            const newPrBranch = `fern-bot/${formattedDate}`;
+
+            const mode = this.config.mode;
+            switch (mode) {
+                case "pull-request":
+                    return await this.executePullRequestMode(
+                        repository,
+                        newPrBranch,
+                        skipCommit,
+                        replayConflictInfo,
+                        replayResult,
+                        resolvedPrFields
+                    );
+                case "push":
+                    return await this.executePushMode(repository, resolvedPrFields);
+                case "commit-and-release":
+                    return await this.executeCommitAndReleaseMode(repository, resolvedPrFields);
+                default: {
+                    const exhaustive: never = mode;
+                    throw new Error(`Unexpected GitHub mode: ${String(exhaustive)}`);
+                }
+            }
+        } catch (error) {
+            const message = `Error during GitHub self-hosted flow: ${String(error)}`;
+            this.logger.error(message);
+            return {
+                executed: true,
+                success: false,
+                errorMessage: message
+            };
+        }
+    }
+
+    private async executePullRequestMode(
+        repository: ClonedRepository,
+        newPrBranch: string,
+        skipCommit: boolean,
+        replayConflictInfo:
+            | {
+                  previousGenerationSha: string;
+                  currentGenerationSha: string;
+              }
+            | undefined,
+        replayResult: ReplayStepResult | undefined,
+        resolved: ResolvedPrFields
+    ): Promise<GithubStepResult> {
+        const baseBranch = this.config.branch ?? (await repository.getDefaultBranch());
+        const octokit = this.createOctokit();
+        const { owner, repo, remote } = parseRepository(this.config.uri);
+
+        let prBranch: string;
+        let isUpdatingExistingPR = false;
+        let generationBaseSha: string | undefined;
+        let existingPR: Awaited<ReturnType<typeof findExistingUpdatablePR>> | undefined;
+
+        if (!this.config.automationMode) {
+            existingPR = await findExistingUpdatablePR(octokit, owner, repo, baseBranch, this.logger);
+        }
+
+        if (existingPR != null) {
+            this.logger.info(
+                `Found existing updatable PR #${existingPR.number}, will update branch ${existingPR.headBranch}`
+            );
+            prBranch = existingPR.headBranch;
+            isUpdatingExistingPR = true;
+        } else {
+            this.logger.debug(
+                this.config.automationMode
+                    ? `Automation mode: creating new branch ${newPrBranch}`
+                    : `No existing updatable PR found, creating new branch ${newPrBranch}`
+            );
+            prBranch = newPrBranch;
+        }
+
+        const branchAction = resolveBranchAction({
+            automationMode: this.config.automationMode === true,
+            skipCommit,
+            existingPR
+        });
+        switch (branchAction) {
+            case "replay-branch":
+                if (shouldPushGenerationBaseTag(replayResult)) {
+                    generationBaseSha = await createReplayBranch(
+                        repository,
+                        prBranch,
+                        resolved.commitMessage,
+                        replayConflictInfo,
+                        this.logger
+                    );
+                } else {
+                    await repository.createBranchFromHead(prBranch);
+                }
+                break;
+            case "create-from-head":
+                await repository.createBranchFromHead(prBranch);
+                break;
+            case "checkout-remote":
+                await repository.checkoutRemoteBranch(prBranch);
+                break;
+            default: {
+                const _exhaustive: never = branchAction;
+                throw new Error(`Unexpected branch action: ${String(_exhaustive)}`);
+            }
+        }
+
+        const createdChangelog = await this.ensureChangelogFile(resolved);
+
+        if (!skipCommit) {
+            await this.ensureFernignore();
+
+            this.logger.debug("Committing changes...");
+            await repository.commitAllChanges(resolved.commitMessage);
+            this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
+        } else if (createdChangelog) {
+            // Replay already produced the generation commit (skipCommit) but it did not include
+            // changelog.md. Stage and commit only the reconstructed changelog so the
+            // "See full changelog" link resolves at the pushed head SHA — without re-committing
+            // generation output (which the skipCommit invariant forbids).
+            this.logger.debug("Committing reconstructed changelog.md on top of the replay commit...");
+            await repository.add("changelog.md");
+            await repository.commit(resolved.commitMessage);
+        }
+
+        // When skipIfNoDiff is enabled, detect no-diff before pushing.
+        // --version AUTO already returns shouldCommit=false for NO_CHANGE, which prevents the
+        // pipeline from running at all. This tree-hash check is a safety net for edge cases
+        // where the version changes but the generated output doesn't.
+        if (shouldCheckNoDiff(this.config)) {
+            const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
+            if (noDiff) {
+                this.logger.info("No changes detected after generation — skipping PR creation");
+                return { executed: true, success: true, skippedNoDiff: true };
+            }
+        }
+
+        const result: GithubStepResult = {
+            executed: true,
+            success: true,
+            updatedExistingPr: isUpdatingExistingPR
+        };
+
+        if (!this.config.previewMode) {
+            // Create a signed commit via the GitHub API. Using the App installation token causes
+            // GitHub to sign the commit with the App's key. `force=true` when updating an existing
+            // fern-bot/* PR branch (bot-owned, pipeline-owned) — same safety posture as forcePush().
+            await pushSignedCommit({
+                repository,
+                octokit,
+                owner,
+                repo,
+                branch: prBranch,
+                force: isUpdatingExistingPR,
+                author: resolveCommitAuthor(this.config.token, this.config.author),
+                logger: this.logger
+            });
+            const pushedBranch = await repository.getCurrentBranch();
+            result.branchUrl = `https://${remote}/${owner}/${repo}/tree/${pushedBranch}`;
+            this.logger.info(`Pushed branch: ${result.branchUrl}`);
+
+            if (generationBaseSha != null) {
+                try {
+                    const sanitizedName = this.config.generatorName?.replace(/\//g, "--");
+                    const tagName =
+                        sanitizedName != null ? `fern-generation-base--${sanitizedName}` : "fern-generation-base";
+                    await repository.createAndPushTag(tagName, generationBaseSha);
+                    this.logger.debug(`Pushed ${tagName} tag for generation tracking`);
+                    result.generationBaseTagSha = generationBaseSha;
+                } catch (error) {
+                    this.logger.debug(`Could not push generation tag: ${extractErrorMessage(error)}`);
+                }
+            }
+        }
+
+        const headSha = await repository.getHeadSha();
+        // Only emit the "See full changelog" link when changelog.md is actually tracked in the
+        // committed tree at the pushed head SHA — otherwise the link 404s.
+        const changelogCommitted = (await repository.listTrackedFiles()).includes("changelog.md");
+        const changelogUrl = resolveChangelogUrl({
+            changelogEntry: resolved.changelogEntry,
+            changelogCommitted,
+            remote,
+            owner,
+            repo,
+            headSha
+        });
+        if (resolved.changelogEntry && !changelogCommitted) {
+            this.logger.warn(
+                'changelog.md is not present in the committed tree; omitting the "See full changelog" link.'
+            );
+        }
+        const { prTitle, prBody } = parseCommitMessageForPR(
+            resolved.commitMessage,
+            resolved.changelogEntry,
+            resolved.prDescription,
+            resolved.versionBumpReason,
+            resolved.previousVersion,
+            resolved.newVersion,
+            resolved.versionBump,
+            changelogUrl
+        );
+        const replaySection = formatReplayPrBody(replayResult, { branchName: prBranch, repoUri: this.config.uri });
+        let enrichedBody = replaySection != null ? prBody + "\n\n---\n\n" + replaySection : prBody;
+        enrichedBody = enrichPrBodyForAutomation(enrichedBody, this.config, resolved);
+
+        if (isUpdatingExistingPR && existingPR != null) {
+            this.logger.info(`Updated existing pull request: ${existingPR.htmlUrl}`);
+            result.prUrl = existingPR.htmlUrl;
+            result.prNumber = existingPR.number;
+
+            try {
+                await octokit.pulls.update({
+                    owner,
+                    repo,
+                    pull_number: existingPR.number,
+                    title: prTitle,
+                    body: enrichedBody
+                });
+                this.logger.debug(`Updated PR #${existingPR.number} title and body`);
+            } catch (error) {
+                this.logger.debug(`Failed to update PR title/body: ${extractErrorMessage(error)}`);
+            }
+        } else {
+            const head = `${owner}:${prBranch}`;
+
+            try {
+                const { data: pullRequest } = await octokit.pulls.create({
+                    owner,
+                    repo,
+                    title: prTitle,
+                    body: enrichedBody,
+                    head,
+                    base: baseBranch
+                });
+
+                this.logger.info(`Created pull request: ${pullRequest.html_url}`);
+                result.prUrl = pullRequest.html_url;
+                result.prNumber = pullRequest.number;
+
+                // In automation mode, enable GitHub automerge on non-breaking PRs.
+                // Uses the built-in octokit.graphql() from @octokit/core (no extra dependency).
+                // The SDK repo's own branch protection rules govern whether the PR actually merges.
+                if (shouldEnableAutomerge(this.config, resolved) && pullRequest.node_id) {
+                    try {
+                        await octokit.graphql(
+                            `mutation($pullRequestId: ID!) {
+                                enablePullRequestAutoMerge(input: {
+                                    pullRequestId: $pullRequestId,
+                                    mergeMethod: SQUASH
+                                }) { clientMutationId }
+                            }`,
+                            { pullRequestId: pullRequest.node_id }
+                        );
+                        this.logger.info(`Enabled automerge on PR #${pullRequest.number}`);
+                        result.autoMergeEnabled = true;
+                    } catch (autoMergeError) {
+                        // Automerge may not be available (repo settings, branch protection, permissions)
+                        this.logger.warn(`Could not enable automerge: ${extractErrorMessage(autoMergeError)}`);
+                    }
+                }
+            } catch (error) {
+                const message = extractErrorMessage(error);
+                if (message.includes("A pull request already exists for")) {
+                    this.logger.warn(`A pull request already exists for ${head}`);
+                } else {
+                    throw error;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private async executePushMode(repository: ClonedRepository, resolved: ResolvedPrFields): Promise<GithubStepResult> {
+        const baseBranch = this.config.branch ?? (await repository.getDefaultBranch());
+
+        if (this.config.branch != null) {
+            this.logger.debug(`Checking out branch ${this.config.branch}`);
+            await repository.checkout(this.config.branch);
+        }
+
+        await this.ensureChangelogFile(resolved);
+        await this.ensureFernignore();
+
+        this.logger.debug("Committing changes...");
+        await repository.commitAllChanges(resolved.commitMessage);
+        this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
+
+        // When skipIfNoDiff is enabled, detect no-diff before pushing
+        if (shouldCheckNoDiff(this.config)) {
+            const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
+            if (noDiff) {
+                this.logger.info("No changes detected after generation — skipping push");
+                return { executed: true, success: true, skippedNoDiff: true };
+            }
+        }
+
+        const result: GithubStepResult = {
+            executed: true,
+            success: true
+        };
+
+        if (!this.config.previewMode) {
+            const octokit = this.createOctokit();
+            const { owner, repo, remote } = parseRepository(this.config.uri);
+            await pushSignedCommit({
+                repository,
+                octokit,
+                owner,
+                repo,
+                branch: baseBranch,
+                force: false,
+                rebaseOnConflict: true,
+                author: resolveCommitAuthor(this.config.token, this.config.author),
+                logger: this.logger
+            });
+
+            const pushedBranch = await repository.getCurrentBranch();
+            result.branchUrl = `https://${remote}/${owner}/${repo}/tree/${pushedBranch}`;
+            this.logger.info(`Pushed branch: ${result.branchUrl}`);
+        }
+
+        return result;
+    }
+
+    private async executeCommitAndReleaseMode(
+        repository: ClonedRepository,
+        resolved: ResolvedPrFields
+    ): Promise<GithubStepResult> {
+        const baseBranch = this.config.branch ?? (await repository.getDefaultBranch());
+
+        if (this.config.branch != null) {
+            this.logger.debug(`Checking out branch ${this.config.branch}`);
+            await repository.checkout(this.config.branch);
+        }
+
+        await this.ensureChangelogFile(resolved);
+        await this.ensureFernignore();
+
+        this.logger.debug("Committing changes...");
+        await repository.commitAllChanges(resolved.commitMessage);
+        this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
+
+        // When skipIfNoDiff is enabled, detect no-diff before pushing
+        if (shouldCheckNoDiff(this.config)) {
+            const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
+            if (noDiff) {
+                this.logger.info("No changes detected after generation — skipping commit-and-release");
+                return { executed: true, success: true, skippedNoDiff: true };
+            }
+        }
+
+        const result: GithubStepResult = {
+            executed: true,
+            success: true
+        };
+
+        if (!this.config.previewMode) {
+            const octokit = this.createOctokit();
+            const { owner, repo, remote } = parseRepository(this.config.uri);
+            await pushSignedCommit({
+                repository,
+                octokit,
+                owner,
+                repo,
+                branch: baseBranch,
+                force: false,
+                rebaseOnConflict: true,
+                author: resolveCommitAuthor(this.config.token, this.config.author),
+                logger: this.logger
+            });
+
+            const pushedBranch = await repository.getCurrentBranch();
+            result.branchUrl = `https://${remote}/${owner}/${repo}/tree/${pushedBranch}`;
+            this.logger.info(`Pushed branch: ${result.branchUrl}`);
+
+            // Create a GitHub release if a new version is available
+            if (resolved.newVersion == null) {
+                this.logger.warn(
+                    "No new version available — skipping release tag creation. " +
+                        "Pass --version <semver> or --version AUTO to fern generate to enable release tagging."
+                );
+            } else {
+                try {
+                    const tagName = resolved.newVersion;
+                    const headSha = await repository.getHeadSha();
+                    await octokit.repos.createRelease({
+                        owner,
+                        repo,
+                        tag_name: tagName,
+                        target_commitish: headSha,
+                        name: tagName,
+                        body: resolved.changelogEntry ?? resolved.commitMessage,
+                        draft: false,
+                        prerelease: false
+                    });
+                    this.logger.info(`Created GitHub release ${tagName}`);
+                    result.releaseUrl = `https://${remote}/${owner}/${repo}/releases/tag/${tagName}`;
+                } catch (error) {
+                    this.logger.warn(`Could not create GitHub release: ${extractErrorMessage(error)}`);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private createOctokit(): Octokit {
+        const opts: ConstructorParameters<typeof Octokit>[0] = { auth: this.config.token };
+        if (this.config.apiBaseUrl != null) {
+            opts.baseUrl = this.config.apiBaseUrl;
+        }
+        return new Octokit(opts);
+    }
+
+    private async ensureFernignore(): Promise<void> {
+        this.logger.debug("Checking for .fernignore file...");
+        const fernignorePath = join(this.outputDir, ".fernignore");
+        try {
+            await access(fernignorePath);
+            this.logger.debug(".fernignore already exists");
+        } catch {
+            this.logger.debug("Creating .fernignore file...");
+            await writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
+        }
+    }
+
+    /**
+     * Guarantees `changelog.md` records this run whenever there is a changelog entry or a
+     * resolved version, so the file lands in the committed tree that GithubStep pushes and the
+     * "See full changelog" link resolves. AutoVersionStep normally writes this file via
+     * `prependChangelogEntry`; this covers the paths where that write never reached the
+     * directory GithubStep commits (e.g. non-replay self-hosted generation) and explicitly
+     * versioned runs (`--version X.Y.Z`), which record a version-only entry with an empty
+     * description. Existing entries are always preserved — the new block is prepended.
+     *
+     * Returns `true` when it created or modified the file, `false` when the version's entry was
+     * already recorded (e.g. by AutoVersionStep) or there is nothing to write.
+     */
+    private async ensureChangelogFile(resolved: ResolvedPrFields): Promise<boolean> {
+        const entry = resolved.changelogEntry?.trim() ?? "";
+        const version = resolved.newVersion ?? resolved.previousVersion;
+        // A version-only entry (empty description) is only recorded for runs that produced a
+        // new version (e.g. an explicit `--version X.Y.Z`).
+        if (entry.length === 0 && resolved.newVersion == null) {
+            return false;
+        }
+        const changelogPath = join(this.outputDir, "changelog.md");
+        let existing: string | undefined;
+        try {
+            existing = await readFile(changelogPath, "utf-8");
+        } catch {
+            existing = undefined;
+        }
+        if (existing != null) {
+            if (version == null || changelogContainsVersion(existing, version)) {
+                // Already written (e.g. by AutoVersionStep) — don't duplicate the entry.
+                return false;
+            }
+        }
+        await writeFile(
+            changelogPath,
+            prependChangelogBlock({ existingContent: existing ?? "", version, entry }),
+            "utf-8"
+        );
+        this.logger.debug(`Wrote changelog.md${version != null ? ` for ${version}` : ""}.`);
+        return true;
+    }
+
+    private deriveSkipCommit(replayResult: ReplayStepResult | undefined): boolean {
+        if (replayResult == null) {
+            return false;
+        }
+        return replayResult.executed && replayResult.flow != null && replayResult.flow !== "first-generation";
+    }
+
+    private deriveReplayConflictInfo(replayResult: ReplayStepResult | undefined):
+        | {
+              previousGenerationSha: string;
+              currentGenerationSha: string;
+          }
+        | undefined {
+        if (replayResult == null) {
+            return undefined;
+        }
+        const previousGenerationSha = replayResult.previousGenerationSha;
+        const currentGenerationSha = replayResult.currentGenerationSha;
+        if (previousGenerationSha != null && currentGenerationSha != null) {
+            return {
+                previousGenerationSha,
+                currentGenerationSha
+            };
+        }
+        return undefined;
+    }
+
+    private resolvePrFields(autoVersion: AutoVersionStepResult | undefined): ResolvedPrFields {
+        return resolvePrFields(this.config, autoVersion);
+    }
+}
+
+export interface ResolvedPrFields {
+    /** Always populated — falls back to "SDK Generation" when neither config nor autoVersion provides one. */
+    commitMessage: string;
+    changelogEntry: string | undefined;
+    prDescription: string | undefined;
+    versionBumpReason: string | undefined;
+    previousVersion: string | undefined;
+    newVersion: string | undefined;
+    versionBump: string | undefined;
+    hasBreakingChanges: boolean;
+    breakingChangesSummary: string | undefined;
+}
+
+/**
+ * Merges PR-body fields from explicit `GithubStepConfig` with `AutoVersionStep`
+ * results in `previousStepResults.autoVersion`. Explicit config values always
+ * win — same policy as `skipCommit` / `replayConflictInfo`.
+ *
+ * Consumers that delegate autoversion to the pipeline (e.g. fiddle post-FER-9982)
+ * cannot populate these fields at config-emission time because they're pipeline
+ * outputs, not inputs. Without this fallback the PR body would ship without a
+ * version header, changelog entry, or breaking-change warning even when
+ * `AutoVersionStep` computed real values.
+ *
+ * `hasBreakingChanges` / `breakingChangesSummary` are derived from the autoVersion
+ * result as well so automerge (which disables on breaking changes) and the
+ * automation-mode Breaking Changes section stay consistent with the version
+ * header rendered by `parseCommitMessageForPR`.
+ *
+ * Exported for testing.
+ */
+export function resolvePrFields(
+    config: GithubStepConfig,
+    autoVersion: AutoVersionStepResult | undefined
+): ResolvedPrFields {
+    const autoVersionBreaking = autoVersion?.versionBump === "MAJOR";
+    return {
+        commitMessage: config.commitMessage ?? autoVersion?.commitMessage ?? "SDK Generation",
+        changelogEntry: config.changelogEntry ?? autoVersion?.changelogEntry,
+        prDescription: config.prDescription ?? autoVersion?.prDescription,
+        versionBumpReason: config.versionBumpReason ?? autoVersion?.versionBumpReason,
+        previousVersion: config.previousVersion ?? autoVersion?.previousVersion,
+        newVersion: config.newVersion ?? autoVersion?.version,
+        versionBump: config.versionBump ?? autoVersion?.versionBump,
+        hasBreakingChanges: config.hasBreakingChanges ?? autoVersionBreaking,
+        breakingChangesSummary: config.breakingChangesSummary ?? autoVersion?.prDescription
+    };
+}
+
+/**
+ * Appends automation-specific sections to the PR body.
+ * Exported for testing.
+ *
+ * `breaking` carries the derived hasBreakingChanges + breakingChangesSummary that
+ * may come from either explicit config or `AutoVersionStep`'s result. Callers
+ * outside the step pass an empty object to preserve the config-only behavior.
+ */
+export function enrichPrBodyForAutomation(
+    body: string,
+    config: { automationMode?: boolean; hasBreakingChanges?: boolean; breakingChangesSummary?: string; runId?: string },
+    breaking: { hasBreakingChanges?: boolean; breakingChangesSummary?: string } = {}
+): string {
+    if (!config.automationMode) {
+        return body;
+    }
+    const hasBreakingChanges = breaking.hasBreakingChanges ?? config.hasBreakingChanges;
+    const breakingChangesSummary = breaking.breakingChangesSummary ?? config.breakingChangesSummary;
+    let result = body;
+    if (hasBreakingChanges && breakingChangesSummary) {
+        result +=
+            "\n\n---\n\n## ⚠️ Breaking Changes\n\n" +
+            "This release contains breaking changes that require manual review:\n\n" +
+            breakingChangesSummary;
+    }
+    if (config.runId) {
+        result += `\n\n---\n\n_Fern Run ID: \`${config.runId}\`_`;
+    }
+    return result;
+}
+
+/**
+ * Determines whether automerge should be enabled on a PR.
+ * Exported for testing.
+ *
+ * `breaking` carries the derived hasBreakingChanges that may come from either
+ * explicit config or `AutoVersionStep`'s result. Callers outside the step pass
+ * an empty object to preserve the config-only behavior.
+ */
+export function shouldEnableAutomerge(
+    config: { automationMode?: boolean; autoMerge?: boolean; hasBreakingChanges?: boolean },
+    breaking: { hasBreakingChanges?: boolean } = {}
+): boolean {
+    const hasBreakingChanges = breaking.hasBreakingChanges ?? config.hasBreakingChanges;
+    return config.automationMode === true && config.autoMerge === true && hasBreakingChanges !== true;
+}
+
+/**
+ * Determines whether the no-diff tree-hash check should run before push/PR creation.
+ * Independent of automationMode: callers opt into this behavior explicitly via skipIfNoDiff.
+ * Exported for testing.
+ */
+export function shouldCheckNoDiff(config: { skipIfNoDiff?: boolean }): boolean {
+    return config.skipIfNoDiff === true;
+}
+
+/**
+ * Push the fern-generation-base tag only when the current replay produced conflicts
+ * that a human will resolve during merge. On clean replays, pushing the tag creates a
+ * stale pointer: if the PR is closed without merging, the forward-projected tree ends
+ * up diffed against the still-unmerged main HEAD, producing a "customer patch" that
+ * encodes a version downgrade as a customization.
+ *
+ * The tag is written for older deployed generator-cli versions whose bundled
+ * divergent-merge gauntlet still reads it. The current generator-cli no longer needs
+ * the tag — replay's derived scan boundary recovers from squash-merges via the
+ * first-parent walk in `findPreviousGenerationFromHistory`. Once the generator-cli
+ * catalog rolls forward across all generators, the write side can also be removed.
+ * Exported for testing.
+ */
+export function shouldPushGenerationBaseTag(replayResult: ReplayStepResult | undefined): boolean {
+    return (replayResult?.patchesWithConflicts ?? 0) > 0;
+}
+
+/**
+ * Determines which git branch operation to perform for pull-request mode.
+ * New branches must use "create" (git checkout -b), existing remote branches use "checkout-remote".
+ * When replay already committed (skipCommit), branch creation is handled by createReplayBranch instead.
+ * Exported for testing.
+ */
+export function resolveBranchAction({
+    automationMode,
+    skipCommit,
+    existingPR
+}: {
+    automationMode: boolean;
+    skipCommit: boolean;
+    existingPR: { headBranch: string } | null | undefined;
+}): "create-from-head" | "checkout-remote" | "replay-branch" {
+    if (skipCommit) {
+        return "replay-branch";
+    }
+    if (automationMode) {
+        return "create-from-head";
+    }
+    if (existingPR != null) {
+        return "checkout-remote";
+    }
+    return "create-from-head";
+}
+
+/**
+ * Builds the contents of a fresh `changelog.md` from a changelog entry, mirroring the format
+ * produced by AutoVersionStep's `prependChangelogEntry`. Used as a safety net so the file always
+ * exists in the committed tree that GithubStep pushes.
+ */
+export function buildChangelogFileContents(entry: string, version: string | undefined): string {
+    const trimmed = entry.trim();
+    const now = new Date().toISOString().slice(0, 10);
+    const header = version != null ? `## [${version}] - ${now}\n` : `## ${now}\n`;
+    return `# Changelog\n\n${header}${trimmed}\n\n`;
+}
+
+/**
+ * Resolves the "See full changelog" link. Returns `undefined` (so the link is omitted) unless
+ * there is a changelog entry AND `changelog.md` is actually tracked in the committed tree at the
+ * pushed head SHA — otherwise the link would 404.
+ */
+export function resolveChangelogUrl({
+    changelogEntry,
+    changelogCommitted,
+    remote,
+    owner,
+    repo,
+    headSha
+}: {
+    changelogEntry: string | undefined;
+    changelogCommitted: boolean;
+    remote: string;
+    owner: string;
+    repo: string;
+    headSha: string;
+}): string | undefined {
+    if (changelogEntry == null || changelogEntry.trim().length === 0 || !changelogCommitted) {
+        return undefined;
+    }
+    return `https://${remote}/${owner}/${repo}/blob/${headSha}/changelog.md`;
+}

@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+groups:
+  php-sdk:
+    generators:
+      - name: fernapi/fern-php-sdk
+        version: latest
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/php-sdk-tests
+          branch: basic-auth-pw-omitted
+  go-sdk:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: latest
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/go-sdk-tests
+          branch: basic-auth-pw-omitted
+  java-sdk:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: latest
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/java-sdk-tests
+          branch: basic-auth-pw-omitted

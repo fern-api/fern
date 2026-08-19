@@ -1,0 +1,20 @@
+types:
+  Movie:
+    properties:
+      id: string
+
+  Response:
+    properties:
+      data: Movie
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getMovie:
+      path: ""
+      method: POST
+      request: string
+      response:
+        type: Response
+        property: id

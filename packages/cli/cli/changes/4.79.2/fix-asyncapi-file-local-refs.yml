@@ -1,0 +1,5 @@
+- summary: |
+    Fix AsyncAPI bundler silently degrading typed models to `unknown` when
+    multi-file specs use file-local `$ref` pointers (e.g. `$ref: '#/Sibling'`)
+    inside schemas that are inlined from external files.
+  type: fix

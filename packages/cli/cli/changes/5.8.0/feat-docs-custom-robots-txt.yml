@@ -1,0 +1,5 @@
+- summary: |
+    Add support for a custom `robots.txt` file in `docs.yml`. Set `agents.robots-txt` to a relative
+    filepath and Fern will host the file at `/robots.txt` on your docs site, overriding the
+    auto-generated default.
+  type: feat

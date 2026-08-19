@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "transcript"
+    },
+    "data": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "data"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

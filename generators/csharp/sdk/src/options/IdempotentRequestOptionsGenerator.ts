@@ -1,0 +1,75 @@
+import { getWireValue } from "@fern-api/base-generator";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { ast, is } from "@fern-api/csharp-codegen";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { BaseOptionsGenerator } from "./BaseOptionsGenerator.js";
+
+export class IdempotentRequestOptionsGenerator extends FileGenerator<CSharpFile> {
+    private baseOptionsGenerator: BaseOptionsGenerator;
+
+    constructor(context: SdkGeneratorContext, baseOptionsGenerator: BaseOptionsGenerator) {
+        super(context);
+
+        this.baseOptionsGenerator = baseOptionsGenerator;
+    }
+
+    public doGenerate(): CSharpFile {
+        const class_ = this.csharp.class_({
+            reference: this.Types.IdempotentRequestOptions,
+            partial: true,
+            access: ast.Access.Public,
+            interfaceReferences: [this.Types.IdempotentRequestOptionsInterface],
+            annotations: [this.System.Serializable]
+        });
+        this.baseOptionsGenerator.getRequestOptionFields(class_);
+        this.context.getIdempotencyFields(class_);
+        class_.addMethod({
+            name: "GetIdempotencyHeaders",
+            parameters: [],
+            return_: this.System.Collections.Generic.Dictionary(this.Primitive.string, this.Primitive.string),
+            interfaceReference: this.Types.IdempotentRequestOptionsInterface,
+            type: ast.MethodType.INSTANCE,
+            body: this.csharp.codeblock((writer) => {
+                writer.write(
+                    "return new ",
+                    this.System.Collections.Generic.Dictionary(this.Primitive.string, this.Primitive.string),
+                    "()"
+                );
+                writer.writeLine();
+                writer.pushScope();
+                for (const header of this.context.getIdempotencyHeaders()) {
+                    const type = this.context.csharpTypeMapper.convert({
+                        reference: header.valueType
+                    });
+                    const isString = is.Primitive.string(type.asNonOptional());
+                    const toString = isString ? "" : ".ToString()";
+                    // In header values, we only accept simple types, so we can assume that none are nullable (apart from string),
+                    // unless the type is optional
+                    const nullConditionalOperator = !isString && type.isOptional ? "?" : "";
+                    writer.writeLine(
+                        `["${getWireValue(header.name)}"] = ${this.case.pascalSafe(header.name)}${nullConditionalOperator}${toString},`
+                    );
+                }
+                writer.popScope();
+                writer.writeTextStatement(";");
+            })
+        });
+        return new CSharpFile({
+            clazz: class_,
+            directory: this.context.getPublicCoreDirectory(),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
+            namespace: this.namespaces.publicCore,
+            generation: this.generation
+        });
+    }
+
+    protected getFilepath(): RelativeFilePath {
+        return join(
+            this.constants.folders.publicCoreFiles,
+            RelativeFilePath.of(`${this.Types.IdempotentRequestOptions.name}.cs`)
+        );
+    }
+}

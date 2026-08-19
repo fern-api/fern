@@ -1,0 +1,60 @@
+imports:
+  commons: commons.yml
+
+types:
+  WithEnvironmentsSchema:
+    properties:
+      default-url: optional<string>
+      default-environment: optional<string>
+      environments: optional<map<string, EnvironmentSchema>>
+
+  EnvironmentSchema:
+    discriminated: false
+    union:
+      - string
+      - SingleBaseUrlEnvironmentSchema
+      - MultipleBaseUrlsEnvironmentSchema
+
+  SingleBaseUrlEnvironmentSchema:
+    extends:
+      - commons.WithAudiences
+      - commons.WithDocsSchema
+    properties:
+      url: string
+      default-url:
+        type: optional<string>
+        docs: A separate default URL to use when no variables are provided (from x-fern-default-url extension)
+      url-template:
+        type: optional<string>
+        docs: The original URL template with variable placeholders (e.g., "https://api.{region}.example.com")
+      variables:
+        type: optional<list<ServerVariableSchema>>
+        docs: Server variables for URL templating
+
+  ServerVariableSchema:
+    properties:
+      id:
+        type: string
+        docs: The variable name as it appears in the URL template
+      default:
+        type: optional<string>
+        docs: The default value for this variable
+      values:
+        type: optional<list<string>>
+        docs: Allowed values for this variable (from enum)
+
+  MultipleBaseUrlsEnvironmentSchema:
+    extends:
+      - commons.WithAudiences
+      - commons.WithDocsSchema
+    properties:
+      urls: map<string, string>
+      url-templates:
+        type: optional<map<string, string>>
+        docs: URL templates with variable placeholders for each base URL (e.g., "https://api.{region}.example.com")
+      default-urls:
+        type: optional<map<string, string>>
+        docs: Default URLs to use when no variables are provided (from x-fern-default-url extension)
+      variables:
+        type: optional<map<string, list<ServerVariableSchema>>>
+        docs: Server variables for URL templating, keyed by base URL ID

@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`discriminant > simple 1`] = `
+"types:
+  a: string
+  b: boolean
+  c:
+    properties:
+      a: integer
+  d:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      a: string
+      b: boolean
+"
+`;

@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ./swagger.json
+      overrides: ./openapi.overrides.yml
+      origin: dummy
+      settings:
+        title-as-schema-name: false
+
+groups: {}

@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "delta": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The incremental text chunk."
+    },
+    "tokens": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Number of tokens in this chunk."
+    }
+  },
+  "additionalProperties": false,
+  "description": "A single chunk in a streamed completion response.",
+  "definitions": {}
+}

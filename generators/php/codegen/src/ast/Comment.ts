@@ -1,0 +1,107 @@
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Type } from "./Type.js";
+import { convertToPhpVariableName } from "./utils/convertToPhpVariableName.js";
+
+export type TagType = "param" | "property" | "return" | "throws" | "var";
+
+export const TagType = {
+    Param: "param",
+    Property: "property",
+    Returns: "return",
+    Throws: "throws",
+    Var: "var"
+} as const;
+
+export declare namespace Comment {
+    interface Args {
+        /* The preface docs of the comment, if any */
+        docs?: string;
+        /* A usage code example rendered as a fenced code block, if any */
+        codeExample?: string;
+    }
+
+    interface Tag {
+        /* The type of the comment tag (e.g. @param) */
+        tagType: TagType;
+        /* The type included in the @<tag> comment */
+        type: Type;
+        /* The name of the variable in the @<tag> comment, if any */
+        name?: string;
+        /* The in-line docs associated with the type, if any */
+        docs?: string;
+    }
+}
+
+export class Comment extends AstNode {
+    public readonly docs: string | undefined;
+    public readonly codeExample: string | undefined;
+
+    private tags: Comment.Tag[] = [];
+
+    constructor({ docs, codeExample }: Comment.Args = {}) {
+        super();
+        this.docs = docs;
+        this.codeExample = codeExample;
+    }
+
+    public addTag(tag: Comment.Tag): void {
+        this.tags.push({
+            ...tag,
+            name: tag.name != null ? convertToPhpVariableName(tag.name) : undefined
+        });
+    }
+
+    public write(writer: Writer): void {
+        writer.writeLine("/**");
+        if (this.docs != null) {
+            this.docs.split("\n").forEach((line) => {
+                writer.writeLine(` * ${line}`);
+            });
+            if (this.codeExample != null || this.tags.length > 0) {
+                writer.writeLine(" *");
+            }
+        }
+        if (this.codeExample != null) {
+            writer.writeLine(" * Example:");
+            writer.writeLine(" * ```php");
+            this.codeExample.split("\n").forEach((line) => {
+                writer.writeLine(` * ${this.escapeDocs(line)}`.trimEnd());
+            });
+            writer.writeLine(" * ```");
+            if (this.tags.length > 0) {
+                writer.writeLine(" *");
+            }
+        }
+        for (const tag of this.tags) {
+            this.writeTag({ writer, tag });
+        }
+        writer.writeLine(" */");
+    }
+
+    private escapeDocs(line: string): string {
+        return line.replaceAll("*/", "*\\/");
+    }
+
+    private writeTag({ writer, tag }: { writer: Writer; tag: Comment.Tag }): void {
+        const docsSplit = tag.docs != null ? tag.docs.split("\n") : undefined;
+        if (docsSplit != null && docsSplit.length > 1) {
+            docsSplit.forEach((line) => {
+                writer.writeLine(` * ${line}`);
+            });
+            writer.writeLine(" *");
+        }
+
+        writer.write(` * @${tag.tagType} `);
+        tag.type.write(writer, { comment: true });
+        if (tag.name != null) {
+            writer.write(` ${tag.name}`);
+        }
+
+        if (docsSplit != null && docsSplit.length === 1) {
+            writer.write(` ${docsSplit[0]}`);
+        }
+
+        writer.newLine();
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Auth0 SSO connection returned HTTP 400",
+  "disposition": "shipped",
+  "rationale": "SSO connection resolution 400 is an auth/login boundary failure, not an internal CLI defect.",
+  "fixSummary": "Map Auth0 SSO resolve HTTP 400 responses to CliError(AuthError).",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-05",
+  "problemSignature": "Auth0 login/SSO request returned HTTP 400 and surfaced as AxiosError; should be auth semantics."
+}

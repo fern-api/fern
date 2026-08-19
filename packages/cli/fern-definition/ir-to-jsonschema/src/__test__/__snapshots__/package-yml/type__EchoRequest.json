@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "size": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "name",
+    "size"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

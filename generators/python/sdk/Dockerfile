@@ -1,0 +1,163 @@
+# Stage 1: Copy Node.js from official image
+FROM node:24.17-trixie-slim AS node
+
+# Stage 2: Base Python image with dependencies
+# Pinned to the latest 3.13 patch release to pull in CPython security fixes
+# (e.g. CVE-2025-13836, CVE-2026-3644, CVE-2026-4224).
+FROM python:3.13.14-slim AS python-base
+
+# Copy Node.js and npm from the node stage
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
+    ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
+
+# Security update 2026-05-18: trixie's krb5 (1.21.3-5), curl (8.14.1),
+# and gnutls28 (3.8.9) are still vulnerable to CVE-2026-40355,
+# CVE-2026-40356 (krb5), CVE-2026-1965/4873/5545/6253/6429 (curl),
+# CVE-2026-3832 (gnutls28), and CVE-2026-45186 (expat). Pin sid as a
+# low-priority source and pull the fixed packages from there.
+RUN apt-get update \
+    && apt-get -y --no-install-recommends dist-upgrade \
+    && apt-get install -y --no-install-recommends ca-certificates curl git \
+    && apt-get -y autoremove \
+    && rm -rf /var/lib/apt/lists/*
+RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
+    && echo "URIs: http://deb.debian.org/debian" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Suites: sid" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Components: main" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg" >> /etc/apt/sources.list.d/sid.sources \
+    && echo 'Package: *\nPin: release n=sid\nPin-Priority: 100' > /etc/apt/preferences.d/sid-low \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends -t sid \
+       libkrb5-3 libkrb5support0 libk5crypto3 libgssapi-krb5-2 \
+       curl libcurl4t64 libgnutls30t64 \
+       libexpat1 \
+       libssh2-1t64 libtasn1-6 \
+       perl-base perl \
+    && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
+    && rm -rf /var/lib/apt/lists/*
+RUN node --version
+RUN npm --version
+
+# Patch npm's bundled picomatch@4.0.3 -> 4.0.4 (GHSA-c2c7-rcm5-vvqj,
+# GHSA-3v7f-55p6-f55p) and brace-expansion@5.0.4 -> 5.0.6
+# (GHSA-jxxr-4gwj-5jf2) copied from the node stage.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/picomatch \
+      /usr/local/lib/node_modules/npm/node_modules/tinyglobby/node_modules/picomatch; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz -o picomatch-4.0.4.tgz && \
+        tar -xzf picomatch-4.0.4.tgz && \
+        mv package picomatch && \
+        rm picomatch-4.0.4.tgz; \
+      fi; \
+    done && \
+    for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.6.tgz -o brace-expansion-5.0.6.tgz && \
+        tar -xzf brace-expansion-5.0.6.tgz && \
+        mv package brace-expansion && \
+        rm brace-expansion-5.0.6.tgz; \
+      fi; \
+    done
+
+# Patch ip-address to 10.2.0 to fix CVE-2026-42338 / GHSA-v2v4-37r5-5v8g
+# (XSS in Address6 HTML-emitting methods). npm bundles ip-address via socks.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/ip-address; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/ip-address/-/ip-address-10.2.0.tgz -o ip-address-10.2.0.tgz && \
+        tar -xzf ip-address-10.2.0.tgz && \
+        mv package ip-address && \
+        rm ip-address-10.2.0.tgz; \
+      fi; \
+    done
+
+# Patch undici to 6.27.0 to fix CVE-2026-12151.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/undici; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/undici/-/undici-6.27.0.tgz -o undici-6.27.0.tgz && \
+        tar -xzf undici-6.27.0.tgz && \
+        mv package undici && \
+        rm undici-6.27.0.tgz; \
+      fi; \
+    done
+
+# Patch tar to 7.5.16 to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh
+# (PAX size override applied to intermediary GNU long-name/long-link headers,
+# causing tar parser interpretation differential / file smuggling).
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/tar; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/tar/-/tar-7.5.16.tgz -o tar-7.5.16.tgz && \
+        tar -xzf tar-7.5.16.tgz && \
+        mv package tar && \
+        rm tar-7.5.16.tgz; \
+      fi; \
+    done
+
+# Patch @sigstore/core to 3.2.1 to fix GHSA-jfc7-64v2-mr8c.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/@sigstore/core; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/@sigstore/core/-/core-3.2.1.tgz -o core-3.2.1.tgz && \
+        mkdir -p core && \
+        tar -xzf core-3.2.1.tgz --strip-components=1 -C core/ && \
+        rm core-3.2.1.tgz; \
+      fi; \
+    done
+
+# Install ruff.
+RUN pip install ruff==0.15.7
+RUN ruff --version
+
+# Set Python environment
+ENV PYTHONPATH=${PYTHONPATH}:${PWD}
+ENV _TYPER_STANDARD_TRACEBACK=1
+
+# Upgrade pip to 26.1.2+ to address CVE-2025-8869, CVE-2026-3219, CVE-2026-6357,
+# CVE-2026-1703 (self-update flaw running after wheel install), and
+# CVE-2026-8643 (directory traversal via malicious wheel entry-point names).
+RUN pip3 install --upgrade pip==26.1.2
+# Keep in sync with the poetry-core version in pyproject.toml.
+RUN pip3 install poetry==2.4.1
+RUN poetry config virtualenvs.create false
+
+# Copy dependency files first to leverage caching
+COPY ./generators/python/pyproject.toml ./pyproject.toml
+COPY ./generators/python/poetry.lock ./poetry.lock
+COPY ./generators/python/src/__init__.py ./src/__init__.py
+COPY ./generators/python/src/fern_python/__init__.py ./src/fern_python/__init__.py
+
+RUN poetry install
+
+# Copy Node CLI and make it executable
+COPY ./generators/python-v2/sdk/dist/cli.cjs /bin/python-v2
+RUN chmod +x /bin/python-v2
+
+# Copy specific assets and source code
+COPY ./generators/python/core_utilities/sdk /assets/core_utilities
+COPY ./generators/python/core_utilities/shared /assets/core_utilities
+COPY ./generators/python/sdk/features.yml /assets/features.yml
+COPY ./generators/python/tests /assets/tests
+COPY ./generators/python/src ./src
+
+RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
+    git config --global user.name "fern-api"
+
+ENTRYPOINT ["python", "-m", "src.fern_python.generators.sdk.cli"]

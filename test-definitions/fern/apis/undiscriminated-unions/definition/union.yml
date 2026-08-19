@@ -1,0 +1,346 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    get:
+      path: ""
+      method: POST
+      request: MyUnion
+      response: MyUnion
+
+    getMetadata:
+      path: "/metadata"
+      method: GET
+      response: Metadata
+      examples:
+        - response:
+            body:
+              name: exampleName
+              value: exampleValue
+              default: exampleDefault
+
+    updateMetadata:
+      path: "/metadata"
+      method: PUT
+      request: MetadataUnion
+      response: boolean
+      examples:
+        - request:
+            string:
+              key: value
+          response:
+            body: true
+
+    call:
+      path: "/call"
+      method: POST
+      request: Request
+      response: boolean
+      examples:
+        - request:
+            union:
+              string:
+                key: value
+          response:
+            body: true
+
+    duplicateTypesUnion:
+      path: "/duplicate"
+      method: POST
+      request: UnionWithDuplicateTypes
+      response: UnionWithDuplicateTypes
+
+    nestedUnions:
+      path: "/nested"
+      method: POST
+      request: NestedUnionRoot
+      response: string
+
+    nestedObjectUnions:
+      path: "/nested-objects"
+      method: POST
+      request: OuterNestedUnion
+      response: string
+
+    aliasedObjectUnion:
+      path: "/aliased-object"
+      method: POST
+      request: AliasedObjectUnion
+      response: string
+
+    getWithBaseProperties:
+      path: "/with-base-properties"
+      method: POST
+      request: UnionWithBaseProperties
+      response: UnionWithBaseProperties
+
+    testCamelCaseProperties:
+      path: "/camel-case"
+      method: POST
+      request:
+        name: PaymentRequest
+        body:
+          properties:
+            paymentMethod: PaymentMethodUnion
+      response: string
+      examples:
+        - request:
+            paymentMethod:
+              method: card
+              cardNumber: "1234567890123456"
+          response:
+            body: success
+
+types:
+  Request:
+    properties:
+      union: optional<MetadataUnion>
+
+  TypeWithOptionalUnion:
+    properties:
+      myUnion: optional<MyUnion>
+
+  MyUnion:
+    docs: |
+      Several different types are accepted.
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - integer
+      - list<integer>
+      - list<list<integer>>
+      - set<string>
+
+  NestedUnionL2:
+    docs: |
+      Nested layer 2.
+    discriminated: false
+    union:
+      - boolean
+      - set<string>
+      - list<string>
+
+  NestedUnionL1:
+    docs: |
+      Nested layer 1.
+    discriminated: false
+    union:
+      - integer
+      - set<string>
+      - list<string>
+      - NestedUnionL2
+
+  NestedUnionRoot:
+    docs: |
+      Nested union root.
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - NestedUnionL1
+
+  UnionWithDuplicateTypes:
+    docs: |
+      Duplicate types.
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - integer
+      - list<string>
+      - set<string>
+
+  MetadataUnion:
+    discriminated: false
+    union:
+      - OptionalMetadata
+      - NamedMetadata
+
+  NamedMetadata:
+    properties:
+      name: string
+      value: map<string, unknown>
+
+  OptionalMetadata:
+    type: optional<map<string, unknown>>
+
+  Metadata:
+    docs: |
+      Undiscriminated unions can act as a map key
+      as long as all of their values are valid keys
+      (i.e. do they have a valid string representation).
+    type: map<Key, string>
+    examples:
+      - value:
+          name: exampleName
+          value: exampleValue
+          default: exampleDefault
+
+  Key:
+    discriminated: false
+    union:
+      - KeyType
+      - literal<"default">
+
+  KeyType:
+    enum:
+      - name
+      - value
+
+  # Test case for undiscriminated unions with base properties (sibling properties alongside oneOf)
+  UnionWithBaseProperties:
+    docs: |
+      Tests that base-properties on an undiscriminated union are correctly
+      represented in the IR and generated code.
+    discriminated: false
+    base-properties:
+      id: string
+      category: optional<string>
+    union:
+      - NamedMetadata
+      - OptionalMetadata
+
+  # Test cases for undiscriminated unions with identical underlying Java types
+  UnionWithIdenticalStrings:
+    docs: |
+      Multiple string types that all resolve to String in Java.
+      This tests the fix for duplicate method signatures.
+    discriminated: false
+    union:
+      - string
+      - string
+      - string
+
+  UnionWithIdenticalPrimitives:
+    docs: |
+      Mix of primitives where some resolve to the same Java type.
+    discriminated: false
+    union:
+      - integer
+      - integer
+      - double
+      - double
+      - string
+      - string
+
+  # Test case for undiscriminated unions with object members that have camelCase wire names
+  PaymentMethodUnion:
+    docs: |
+      Tests that nested properties with camelCase wire names are properly
+      converted from snake_case Ruby keys when passed as Hash values.
+    discriminated: false
+    union:
+      - TokenizeCard
+      - ConvertToken
+
+  TokenizeCard:
+    properties:
+      method: string
+      cardNumber: string
+
+  ConvertToken:
+    properties:
+      method: string
+      tokenId: string
+
+  # Test union with reserved property name collisions
+  UnionWithReservedNames:
+    docs: Tests that union members named 'Type' or 'Value' don't collide with internal properties
+    discriminated: false
+    union:
+      - literal<"type">
+      - literal<"value">
+      - string
+
+  # Test case for named type aliases that resolve to the same underlying C# type
+  # This tests the fix for CS0557 duplicate implicit conversion operators
+  UserId:
+    docs: A user identifier (alias for string)
+    type: string
+
+  Name:
+    docs: A name (alias for string)
+    type: string
+
+  UnionWithTypeAliases:
+    docs: |
+      Union with multiple named type aliases that all resolve to the same C# type (string).
+      Without the fix, this would generate duplicate implicit operators:
+        public static implicit operator UnionWithTypeAliases(string value) => ...
+        public static implicit operator UnionWithTypeAliases(string value) => ...
+        public static implicit operator UnionWithTypeAliases(string value) => ...
+      causing CS0557 compiler error.
+    discriminated: false
+    union:
+      - string
+      - UserId
+      - Name
+
+  # Test cases for nested undiscriminated unions with object variants
+  LeafTypeA:
+    properties:
+      alpha: string
+      beta: integer
+
+  LeafTypeB:
+    properties:
+      gamma: string
+
+  NestedObjectUnion:
+    docs: |
+      Inner union with two object variants that have disjoint required keys.
+      Tests that required-key guards work correctly inside nested union contexts.
+    discriminated: false
+    union:
+      - LeafTypeA
+      - LeafTypeB
+
+  WrapperObject:
+    properties:
+      inner: NestedObjectUnion
+      label: string
+
+  OuterNestedUnion:
+    docs: |
+      Outer union where one variant is an object containing a nested union field.
+      Tests that the deserializer correctly handles transitive union deserialization.
+    discriminated: false
+    union:
+      - string
+      - WrapperObject
+
+  # Test cases for undiscriminated unions with alias-typed object members.
+  # Under wrappedAliases: false (the Java default), PoetTypeNameMapper unwraps these
+  # aliases to the underlying object's class, so the deserializer would emit an
+  # unguarded convertValue and the alias variant would silently win with all-null
+  # fields. These fixtures verify that getRequiredWireKeys walks alias chains.
+  AliasedLeafA:
+    docs: An alias around LeafObjectA.
+    type: LeafObjectA
+
+  AliasedLeafB:
+    docs: An alias around an alias around LeafObjectB, to exercise the alias-walk loop.
+    type: AliasToLeafB
+
+  AliasToLeafB:
+    type: LeafObjectB
+
+  LeafObjectA:
+    properties:
+      onlyInA: string
+      sharedNumber: integer
+
+  LeafObjectB:
+    properties:
+      onlyInB: string
+
+  AliasedObjectUnion:
+    docs: |
+      Undiscriminated union whose members are named aliases of object types
+      (including an alias-of-alias). Required keys are disjoint, so a correct
+      deserializer must emit containsKey() guards for each alias variant.
+    discriminated: false
+    union:
+      - AliasedLeafA
+      - AliasedLeafB

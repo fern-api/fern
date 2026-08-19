@@ -1,0 +1,5 @@
+- summary: |
+    Add `alpha`, `beta`, `preview`, and `legacy` as supported values for the
+    `x-fern-availability` OpenAPI extension and the `availability` field
+    in Fern Definitions. These flow through the IR to generators and docs.
+  type: feat

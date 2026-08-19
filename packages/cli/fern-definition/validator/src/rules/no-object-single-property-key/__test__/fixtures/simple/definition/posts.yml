@@ -1,0 +1,19 @@
+types:
+  MyPrimitiveAlias: string
+  MyObjectAlias: MyObject
+  MyObject:
+    properties:
+      a: string
+      b: number
+  MyUnion:
+    union:
+      a: MyPrimitiveAlias
+      b:
+        type: string
+        key: hello
+      c: MyObjectAlias
+      d:
+        type: MyObjectAlias
+        key: hello
+      e:
+        key: yoyo

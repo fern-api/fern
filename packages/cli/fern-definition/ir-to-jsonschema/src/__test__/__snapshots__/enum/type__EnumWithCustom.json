@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "safe",
+    "Custom"
+  ],
+  "definitions": {}
+}

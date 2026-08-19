@@ -1,0 +1,10 @@
+{
+  "title": "ENOTEMPTY rmdir generated Java SDK",
+  "disposition": "duplicate",
+  "rationale": "Same ENOTEMPTY errno classification as CLI-4N.",
+  "fixSummary": "—",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-16",
+  "duplicateOf": "CLI-4N",
+  "problemSignature": "Filesystem errno ENOTEMPTY during generated-output cleanup surfaced as InternalError instead of EnvironmentError."
+}

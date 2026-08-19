@@ -1,0 +1,7 @@
+- summary: |
+    Authenticate Venus calls during local Docker generation (`fern generate --local`)
+    by silently picking up an existing `FERN_TOKEN` env var or saved login token,
+    matching the remote generation path. Previously, `useLocalDocker` skipped the
+    auth flow entirely, leaving Venus calls (e.g. `GET /organizations/{org_id}`)
+    unauthenticated.
+  type: fix

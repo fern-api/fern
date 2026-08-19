@@ -1,0 +1,34 @@
+---
+title: 'Pagination'
+---
+
+Listing endpoints, for example [List all Businesses](/api-reference/business/list) and [List all Bank Transactions](/api-reference/bank-transactions/list) support cursor-based pagination. Pagination can be controlled via query string parameters:
+- `sort_by` which supports some timestamp, integer and string keys. Valid sort keys are noted in documentation where applicable. Sort key is optional.
+- `sort_order` specifies either ASC or DESC ordering for the sort key. Optional, ASC by default.
+- `cursor` returned by the previous list request. Do not specify for the initial listing API call.
+- `limit` constrains the number of results to be returned. Defaults to 100 for most endpoints.
+
+```bash Request
+curl https://sandbox.layerfi.com/v1/businesses/:business_id/bank-transactions?sort_by=date&sort_order=DESC&limit=50 \
+  -H "Authorization: Bearer <access_token>"
+```
+
+Responses to paginating endpoints will include pagination data in the meta response field.
+
+```json Response
+{
+  "data": [
+    // Data omitted
+  ],
+  "meta": {
+	"pagination": {
+"sort_by": "date",
+       	"sort_order": ASC,
+       	"cursor": "VGhhbmtzIGZvciByZWFsbHkgcmVhZGluZyB0aGUgZG9jdW1lbnRhdGlvbiE="
+       	"has_more": true
+	}
+   }
+}
+```
+
+When the `has_more` field is true, use the returned cursor in an additional request to fetch the next page of results.

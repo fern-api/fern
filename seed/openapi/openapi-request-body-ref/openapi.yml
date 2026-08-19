@@ -1,0 +1,317 @@
+openapi: 3.1.0
+info:
+  title: openapi-request-body-ref
+  version: 0.0.0
+paths:
+  /vendors/{vendor_id}:
+    put:
+      operationId: vendor_updateVendor
+      tags:
+        - Vendor
+      parameters:
+        - name: vendor_id
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: vendor_id
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    status: ACTIVE
+                    update_request:
+                      name: name
+                      status: ACTIVE
+      summary: Update a vendor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVendorRequest'
+            examples:
+              Example1:
+                value:
+                  name: name
+  /vendors:
+    post:
+      operationId: vendor_createVendor
+      tags:
+        - Vendor
+      parameters:
+        - name: idempotency_key
+          in: header
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    status: ACTIVE
+                    update_request:
+                      name: name
+                      status: ACTIVE
+      summary: Create a vendor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  examples:
+                    - name
+                address:
+                  type:
+                    - string
+                    - 'null'
+              required:
+                - name
+            examples:
+              Example1:
+                value:
+                  name: name
+  /catalog/images:
+    post:
+      operationId: catalog_createCatalogImage
+      tags:
+        - Catalog
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogImage'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    caption: caption
+                    url: url
+                    create_request:
+                      caption: caption
+                      catalog_object_id: catalog_object_id
+      summary: Upload a catalog image (multipart)
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                request:
+                  $ref: '#/components/schemas/CreateCatalogImageRequest'
+                image_file:
+                  type: string
+                  format: binary
+  /catalog/images/{image_id}:
+    get:
+      operationId: catalog_getCatalogImage
+      tags:
+        - Catalog
+      parameters:
+        - name: image_id
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: image_id
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogImage'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    caption: caption
+                    url: url
+                    create_request:
+                      caption: caption
+                      catalog_object_id: catalog_object_id
+      summary: Retrieve a catalog image
+  /team-members/{team_member_id}:
+    put:
+      operationId: teamMember_updateTeamMember
+      tags:
+        - TeamMember
+      parameters:
+        - name: team_member_id
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: team_member_id
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMember'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    given_name: given_name
+                    family_name: family_name
+      summary: Update a team member (body ref, no extra params)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                given_name:
+                  type:
+                    - string
+                    - 'null'
+                family_name:
+                  type:
+                    - string
+                    - 'null'
+                email_address:
+                  type:
+                    - string
+                    - 'null'
+            examples:
+              Example1:
+                value: {}
+components:
+  schemas:
+    UpdateVendorRequestStatus:
+      title: UpdateVendorRequestStatus
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+    UpdateVendorRequest:
+      title: UpdateVendorRequest
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+            - name
+        status:
+          anyOf:
+            - $ref: '#/components/schemas/UpdateVendorRequestStatus'
+            - type: 'null'
+      required:
+        - name
+    VendorStatus:
+      title: VendorStatus
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+    Vendor:
+      title: Vendor
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - id
+        name:
+          type: string
+          examples:
+            - name
+        status:
+          anyOf:
+            - $ref: '#/components/schemas/VendorStatus'
+            - type: 'null'
+        update_request:
+          anyOf:
+            - $ref: '#/components/schemas/UpdateVendorRequest'
+            - type: 'null'
+      required:
+        - id
+        - name
+    CreateCatalogImageRequest:
+      title: CreateCatalogImageRequest
+      type: object
+      properties:
+        caption:
+          type:
+            - string
+            - 'null'
+        catalog_object_id:
+          type: string
+      required:
+        - catalog_object_id
+    CatalogImage:
+      title: CatalogImage
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - id
+        caption:
+          type:
+            - string
+            - 'null'
+        url:
+          type:
+            - string
+            - 'null'
+        create_request:
+          anyOf:
+            - $ref: '#/components/schemas/CreateCatalogImageRequest'
+            - type: 'null'
+      required:
+        - id
+    TeamMember:
+      title: TeamMember
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - id
+        given_name:
+          type:
+            - string
+            - 'null'
+        family_name:
+          type:
+            - string
+            - 'null'
+      required:
+        - id
+  securitySchemes: {}

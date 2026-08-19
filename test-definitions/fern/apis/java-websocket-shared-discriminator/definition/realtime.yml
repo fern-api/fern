@@ -1,0 +1,80 @@
+# yaml-language-server: $schema=./../../../../../fern.schema.json
+
+# Regression fixture: two server messages share the same "type" literal value
+# but have disjoint required fields. The generator must use shape-based trial
+# deserialization (not switch-on-type) to route them correctly.
+
+channel:
+  path: /realtime
+  auth: false
+  messages:
+    send:
+      display-name: Send
+      origin: client
+      body: SendEvent
+    conversation_history:
+      display-name: ConversationHistory
+      origin: server
+      body: ConversationHistoryMessage
+    function_call_history:
+      display-name: FunctionCallHistory
+      origin: server
+      body: FunctionCallHistoryMessage
+    conversation_text:
+      display-name: ConversationText
+      origin: server
+      body: ConversationTextMessage
+  examples:
+    - name: Conversation history
+      messages:
+        - type: send
+          body:
+            text: "hello"
+        - type: conversation_history
+          body:
+            role: "user"
+            content: "hello"
+        - type: function_call_history
+          body:
+            function_calls:
+              - id: "fc_123"
+                name: "lookup"
+                arguments: "{}"
+        - type: conversation_text
+          body:
+            text: "Hi there"
+            confidence: 0.95
+
+types:
+  SendEvent:
+    properties:
+      text: string
+
+  # Both ConversationHistoryMessage and FunctionCallHistoryMessage share the
+  # same "type" literal "History". Without shape-based dispatch, a switch on
+  # "type" cannot distinguish them.
+  ConversationHistoryMessage:
+    properties:
+      type:
+        type: literal<"History">
+      role: string
+      content: string
+
+  FunctionCallHistoryMessage:
+    properties:
+      type:
+        type: literal<"History">
+      function_calls: list<FunctionCall>
+
+  ConversationTextMessage:
+    properties:
+      type:
+        type: literal<"ConversationText">
+      text: string
+      confidence: double
+
+  FunctionCall:
+    properties:
+      id: string
+      name: string
+      arguments: string

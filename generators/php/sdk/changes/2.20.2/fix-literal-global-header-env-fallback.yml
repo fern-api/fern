@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Global headers typed as a `literal<"...">` with an `env` fallback no longer throw when
+    neither the constructor parameter nor the environment variable is set. The literal is
+    known at compile time, so it is now used as the header's default value.
+  type: fix

@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "orderId": {
+      "type": "string"
+    },
+    "total": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "orderId",
+    "total",
+    "currency"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

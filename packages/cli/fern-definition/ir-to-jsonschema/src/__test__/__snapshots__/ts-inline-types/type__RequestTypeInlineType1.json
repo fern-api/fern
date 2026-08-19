@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": {
+      "type": "string",
+      "description": "lorem ipsum"
+    }
+  },
+  "required": [
+    "foo"
+  ],
+  "additionalProperties": false,
+  "description": "lorem ipsum",
+  "definitions": {}
+}

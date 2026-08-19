@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "The prompt or query to complete."
+    },
+    "stream": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Whether to stream the response."
+    }
+  },
+  "required": [
+    "query"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

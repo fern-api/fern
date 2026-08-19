@@ -1,0 +1,82 @@
+openapi: 3.0.3
+info:
+  title: OneOf Titled Test API
+  version: 1.0.0
+  description: Test API for oneOf with title field per OpenAPI spec
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /oneOf/titled:
+    post:
+      tags:
+        - oneOf Examples
+      summary: Example endpoint using oneOf with titles
+      description: Demonstrates oneOf with title field per OpenAPI spec.
+      operationId: oneOfExampleTitled
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/OneOfTitledA"
+                - $ref: "#/components/schemas/OneOfTitledB"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        "400":
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/ErrorTitledA"
+                  - $ref: "#/components/schemas/ErrorTitledB"
+
+components:
+  schemas:
+    OneOfTitledA:
+      title: Titled Variant A
+      type: object
+      description: First variant for oneOf with title
+      required:
+        - titledFieldA
+      properties:
+        titledFieldA:
+          type: string
+    OneOfTitledB:
+      title: Titled Variant B
+      type: object
+      description: Second variant for oneOf with title
+      required:
+        - titledFieldB
+      properties:
+        titledFieldB:
+          type: integer
+    ErrorTitledA:
+      title: Error Type A
+      type: object
+      description: Error variant A with title
+      required:
+        - errorA
+      properties:
+        errorA:
+          type: string
+    ErrorTitledB:
+      title: Error Type B
+      type: object
+      description: Error variant B with title
+      required:
+        - errorB
+      properties:
+        errorB:
+          type: integer

@@ -1,0 +1,37 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    noFile:
+      method: POST
+      path: /
+      request:
+        name: Request1
+        body:
+          extends: MyType
+          properties:
+            foo: string
+    noExtends:
+      method: POST
+      path: /
+      request:
+        name: Request2
+        body:
+          properties:
+            foo: string
+            file: file
+    extendsAndFile:
+      method: POST
+      path: /
+      request:
+        name: Request3
+        body:
+          extends: MyType
+          properties:
+            foo: string
+            file: file
+
+types:
+  MyType:
+    properties:
+      bar: string

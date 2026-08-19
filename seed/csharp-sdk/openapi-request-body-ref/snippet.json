@@ -1,0 +1,65 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/vendors/{vendor_id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_vendor.updateVendor"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Vendor.UpdateVendorAsync(\n    new UpdateVendorBody\n    {\n        VendorId = \"vendor_id\",\n        Body = new UpdateVendorRequest { Name = \"name\" },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/vendors",
+                "method": "POST",
+                "identifier_override": "endpoint_vendor.createVendor"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Vendor.CreateVendorAsync(new CreateVendorRequest { Name = \"name\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/catalog/images",
+                "method": "POST",
+                "identifier_override": "endpoint_catalog.createCatalogImage"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Catalog.CreateCatalogImageAsync(\n    new CreateCatalogImageBody\n    {\n        Request = new CreateCatalogImageRequest { CatalogObjectId = \"catalog_object_id\" },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/catalog/images/{image_id}",
+                "method": "GET",
+                "identifier_override": "endpoint_catalog.getCatalogImage"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Catalog.GetCatalogImageAsync(new GetCatalogImageRequest { ImageId = \"image_id\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/team-members/{team_member_id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_teamMember.updateTeamMember"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.TeamMember.UpdateTeamMemberAsync(\n    new UpdateTeamMemberRequest { TeamMemberId = \"team_member_id\" }\n);\n"
+            }
+        }
+    ]
+}

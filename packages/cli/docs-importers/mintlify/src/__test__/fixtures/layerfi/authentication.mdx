@@ -1,0 +1,46 @@
+---
+title: 'Authentication'
+description: 'Authenticating your calls to the Layer API'
+---
+
+### Client credentials
+
+Layer uses OAuth2's client credentials flow to authenticate API clients. To start your development, we will give you a set of `client_id` and `client_secret` tokens. 
+
+<Info>
+  To obtain a set of client credentials, reach out to our team [here](https://layerfi.com/#contact-form).
+</Info>
+
+
+### Getting a bearer token
+Calls to the Layer API require a bearer access token. To receive an access token and make calls to other API endpoints, provide your `client_id` and `client_secret` in the body of a POST request to Layer’s authorization server as shown below.
+
+```bash
+curl -X POST https://auth.layerfi.com/oauth2/token  \
+  -u <client_id>:<client_secret>  \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  --data-urlencode "grant_type=client_credentials" \
+  --data-urlencode "scope=https://sandbox.layerfi.com/sandbox" \
+  --data-urlencode "client_id=<client_id>"
+```
+
+The authorization server will respond with your granted access token.
+
+```json
+{
+  "access_token": "<access_token>",
+  "expires_in": 3600,
+  "token_type": "Bearer"
+}
+```
+
+### Making authenticated API calls
+
+Use the access token in requests to the API by including it as a Bearer token in the authorization header.
+
+```bash
+curl https://sandbox.layerfi.com/whoami \
+  -H "Authorization: Bearer <access_token>" 
+```
+
+Access tokens expire after 1 hour. To refresh your access token, make another call to Layer’s authorization endpoint with your `client_id` and `client_secret`. We recommend refreshing tokens for new sets of requests rather than persisting access tokens.

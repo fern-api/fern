@@ -1,0 +1,7 @@
+- summary: |
+    Reserve the `ExtraProperties` field name so a user-defined property named
+    `EXTRA_PROPERTIES` (or any casing of it) no longer collides with the built-in
+    `GetExtraProperties()` accessor. The user property is now generated as
+    `FieldExtraProperties` (its JSON wire name is unchanged), so the generated Go
+    compiles.
+  type: fix

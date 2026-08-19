@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`add-error-discriminant > simple 1`] = `
+"name: my-api
+
+error-discriminant: error"
+`;

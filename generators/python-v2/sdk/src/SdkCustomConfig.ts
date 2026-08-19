@@ -1,0 +1,87 @@
+import path from "path";
+import { z } from "zod";
+
+export const OUTPUT_DIRECTORY_OPTIONS = ["project-root", "source-root"] as const;
+export type OutputDirectory = (typeof OUTPUT_DIRECTORY_OPTIONS)[number];
+
+/**
+ * Schema for validating and normalizing relative paths.
+ * Rejects absolute paths, parent traversal, and invalid characters.
+ * Normalizes by stripping leading/trailing slashes.
+ */
+const relativePathSchema = z
+    .string()
+    .refine((pathStr) => !path.isAbsolute(pathStr), {
+        message: "path must be relative, not absolute"
+    })
+    .refine((pathStr) => !pathStr.startsWith("..") && !pathStr.includes("/../"), {
+        message: "for safety reasons, path can't traverse up with /../"
+    })
+    .refine(
+        (pathStr) => {
+            const invalidChars = ["<", ">", ":", '"', "|", "?", "*"];
+            return !invalidChars.some((char) => pathStr.includes(char));
+        },
+        {
+            message: "path contains invalid characters"
+        }
+    )
+    .refine((pathStr) => pathStr.length <= 260, {
+        message: "path too long (max 260 chars)"
+    })
+    .transform((pathStr) => pathStr.replace(/^\/+|\/+$/g, ""));
+
+/**
+ * Schema for client configuration options that affect the generated client class name.
+ */
+const ClientConfigSchema = z.object({
+    filename: z.string().optional(),
+    class_name: z.string().optional(),
+    exported_filename: z.string().optional(),
+    exported_class_name: z.string().optional()
+});
+
+/**
+ * Schema for wire test configuration options.
+ */
+const WireTestsConfigSchema = z.object({
+    enabled: z.boolean().optional(),
+    exclusions: z.array(z.string()).optional()
+});
+
+/**
+ * Schema for custom README sections.
+ */
+const CustomReadmeSectionSchema = z.object({
+    title: z.string(),
+    content: z.string()
+});
+
+export const SdkCustomConfigSchema = z.object({
+    /** @deprecated Use `wire_tests.enabled` instead */
+    enable_wire_tests: z.boolean().optional(),
+    package_path: relativePathSchema.optional(),
+    package_name: z.string().optional(),
+    /**
+     * Controls project layout. `project-root` (default when unset) emits the
+     * standard `src/<package>/...` tree with a pyproject.toml at root.
+     * `source-root` writes source files directly without the `src/` prefix and
+     * skips project scaffolding — useful when embedding into an existing project.
+     */
+    output_directory: z.enum(OUTPUT_DIRECTORY_OPTIONS).optional(),
+    client: ClientConfigSchema.optional(),
+    client_class_name: z.string().optional(),
+    inline_request_params: z.boolean().optional(),
+    flatten_union_request_bodies: z.boolean().optional(),
+    wire_tests: WireTestsConfigSchema.optional(),
+    custom_readme_sections: z.array(CustomReadmeSectionSchema).optional(),
+    /**
+     * When true, datetime values are serialized with millisecond precision
+     * (e.g., "2008-01-02T00:00:00.000Z" instead of "2008-01-02T00:00:00Z").
+     * This also affects WireMock stubs and wire test verification code to ensure
+     * all three components (SDK, stubs, tests) use the same datetime format.
+     */
+    datetime_milliseconds: z.boolean().optional()
+});
+
+export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

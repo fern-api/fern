@@ -1,0 +1,30 @@
+types:
+  StreamedCompletion:
+    properties:
+      delta: string
+      tokens: optional<integer>
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    stream:
+      method: POST
+      path: /stream
+      request:
+        name: StreamCompletionRequest
+        body:
+          properties:
+            query: string
+      response-stream:
+        type: StreamedCompletion
+      examples:
+        - name: "Stream completions"
+          request:
+            query: "foo"
+          response:
+            stream:
+              - delta: "foo"
+                tokens: 1
+              - delta: "bar"
+                tokens: 2

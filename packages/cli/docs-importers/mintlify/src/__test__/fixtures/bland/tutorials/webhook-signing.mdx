@@ -1,0 +1,43 @@
+---
+title: Webhook Signing
+---
+
+Bland webhooks are signed with a secret key to ensure that they are not tampered with in transit and to confirm that they were sent by Bland.
+
+## Signing Webhooks
+
+When Bland sends a webhook, it calculates a signature using the HMAC algorithm with the SHA-256 hash function. The signature is then included in the `X-Webhook-Signature` header of the request.
+
+To create a webhook signing secret, first go to the [Account Settings in the Dev Portal](https://app.bland.ai/dashboard?page=settings) and click on the "Keys" tab.
+
+Here you can create a new secret by clicking "Replace Secret". It will only be shown once, so save it securely.
+
+## Verifying Webhooks
+
+To verify a webhook, you need to calculate the HMAC signature of the request body using the secret key and compare it to the signature in the `X-Webhook-Signature` header.
+
+Note that you must first create a webhook signing secret in the [Account Settings in the Dev Portal](https://app.bland.ai/dashboard?page=settings).
+
+Here is an example of how to verify a webhook in Node.js:
+
+```javascript
+const crypto = require("node:crypto");
+
+function verifyWebhookSignature(key, data, signature) {
+  const expectedSignature = crypto.createHmac("sha256", key).update(data).digest("hex");
+
+  return expectedSignature === signature;
+}
+
+//...
+
+app.post("/webhook", (req, res) => {
+  const isValid = verifyWebhookSignature(
+    process.env.WEBHOOK_SECRET,
+    JSON.stringify(req.body),
+    req.headers["x-webhook-signature"],
+  );
+
+  //...
+});
+```
