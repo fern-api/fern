@@ -58,7 +58,7 @@ public record UnionWithOptionalReference
     public bool IsBar => Type == "bar";
 
     /// <summary>
-    /// Returns the value as a <see cref="Foo?"/> if <see cref="Type"/> is 'foo', otherwise throws an exception.
+    /// Returns the value as a <see cref="Foo"/> if <see cref="Type"/> is 'foo', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public Foo? AsFoo() =>
@@ -67,7 +67,7 @@ public record UnionWithOptionalReference
             : throw new global::System.Exception("UnionWithOptionalReference.Type is not 'foo'");
 
     /// <summary>
-    /// Returns the value as a <see cref="Bar?"/> if <see cref="Type"/> is 'bar', otherwise throws an exception.
+    /// Returns the value as a <see cref="Bar"/> if <see cref="Type"/> is 'bar', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'bar'.</exception>
     public Bar? AsBar() =>
@@ -102,7 +102,7 @@ public record UnionWithOptionalReference
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Foo?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="Foo"/> and returns true if successful.
     /// </summary>
     public bool TryAsFoo(out Foo? value)
     {
@@ -116,7 +116,7 @@ public record UnionWithOptionalReference
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Bar?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="Bar"/> and returns true if successful.
     /// </summary>
     public bool TryAsBar(out Bar? value)
     {

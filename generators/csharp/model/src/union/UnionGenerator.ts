@@ -155,9 +155,9 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
             class_.addConstructor({
                 doc: {
                     summary: (writer) => {
-                        writer.write(`Create an instance of ${this.classReference.name} with <see cref="`);
-                        writer.writeNode(innerClassType);
-                        writer.write('"/>.');
+                        writer.write(`Create an instance of ${this.classReference.name} with `);
+                        writer.writeSeeType(innerClassType);
+                        writer.write(".");
                     }
                 },
                 access: ast.Access.Public,
@@ -200,10 +200,10 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
             return class_.addMethod({
                 doc: {
                     summary: (writer) => {
-                        writer.write('Returns the value as a <see cref="');
-                        writer.writeNode(memberType);
+                        writer.write("Returns the value as a ");
+                        writer.writeSeeType(memberType);
                         writer.write(
-                            `"/> if <see cref="${discriminant.name}"/> is '${escapeForCSharpString(getWireValue(type.discriminantValue))}', otherwise throws an exception.`
+                            ` if <see cref="${discriminant.name}"/> is '${escapeForCSharpString(getWireValue(type.discriminantValue))}', otherwise throws an exception.`
                         );
                     },
                     exceptions: new Map([
@@ -334,9 +334,9 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
             return class_.addMethod({
                 doc: {
                     summary: (writer) => {
-                        writer.write('Attempts to cast the value to a <see cref="');
-                        writer.writeNode(memberType);
-                        writer.write('"/> and returns true if successful.');
+                        writer.write("Attempts to cast the value to a ");
+                        writer.writeSeeType(memberType);
+                        writer.write(" and returns true if successful.");
                     }
                 },
                 access: ast.Access.Public,

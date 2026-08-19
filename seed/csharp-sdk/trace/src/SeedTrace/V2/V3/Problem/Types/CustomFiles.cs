@@ -68,7 +68,7 @@ public record CustomFiles
             : throw new global::System.Exception("CustomFiles.Type is not 'basic'");
 
     /// <summary>
-    /// Returns the value as a <see cref="Dictionary<Language, Files>"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
+    /// Returns the value as a <see cref="Dictionary{Language, Files}"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'custom'.</exception>
     public Dictionary<Language, Files> AsCustom() =>
@@ -125,7 +125,7 @@ public record CustomFiles
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Dictionary<Language, Files>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="Dictionary{Language, Files}"/> and returns true if successful.
     /// </summary>
     public bool TryAsCustom(out Dictionary<Language, Files>? value)
     {

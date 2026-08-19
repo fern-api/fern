@@ -42,6 +42,49 @@ function escapeXmlDocContent(text: string): string {
     return writer.toString();
 }
 
+describe("XmlDocWriter.toCrefTarget", () => {
+    it("should keep a simple type name", () => {
+        expect(XmlDocWriter.toCrefTarget("string")).toBe("string");
+        expect(XmlDocWriter.toCrefTarget("MyClass")).toBe("MyClass");
+    });
+
+    it("should keep a namespace-qualified type name", () => {
+        expect(XmlDocWriter.toCrefTarget("System.Text.Json.Nodes.JsonNode")).toBe("System.Text.Json.Nodes.JsonNode");
+    });
+
+    it("should drop nullable annotations", () => {
+        expect(XmlDocWriter.toCrefTarget("object?")).toBe("object");
+        expect(XmlDocWriter.toCrefTarget("MyClass?")).toBe("MyClass");
+    });
+
+    it("should convert generics to brace syntax with framework type names", () => {
+        expect(XmlDocWriter.toCrefTarget("List<string>")).toBe("List{String}");
+        expect(XmlDocWriter.toCrefTarget("IEnumerable<int>")).toBe("IEnumerable{Int32}");
+        expect(XmlDocWriter.toCrefTarget("Dictionary<string, object>")).toBe("Dictionary{String, Object}");
+    });
+
+    it("should keep non-keyword generic arguments as written", () => {
+        expect(XmlDocWriter.toCrefTarget("IEnumerable<MyClass>")).toBe("IEnumerable{MyClass}");
+        expect(XmlDocWriter.toCrefTarget("OneOf<Foo, Bar>?")).toBe("OneOf{Foo, Bar}");
+    });
+
+    it("should reject nested generic arguments, which cannot be cref identifiers", () => {
+        expect(XmlDocWriter.toCrefTarget("IEnumerable<IEnumerable<int>>")).toBeUndefined();
+        expect(XmlDocWriter.toCrefTarget("Dictionary<string, List<MyClass>>")).toBeUndefined();
+    });
+
+    it("should reject arrays, which cannot be cref identifiers", () => {
+        expect(XmlDocWriter.toCrefTarget("byte[]")).toBeUndefined();
+        expect(XmlDocWriter.toCrefTarget("IEnumerable<byte[]>")).toBeUndefined();
+    });
+
+    it("should reject types that are not plain names", () => {
+        expect(XmlDocWriter.toCrefTarget("")).toBeUndefined();
+        expect(XmlDocWriter.toCrefTarget("(string, int)")).toBeUndefined();
+        expect(XmlDocWriter.toCrefTarget("global::MyNamespace.MyClass")).toBeUndefined();
+    });
+});
+
 describe("XmlDocWriter.escapeXmlDocContent", () => {
     describe("converts HTML tags to XMLDoc equivalents", () => {
         it("should convert inline <code> to <c>", () => {

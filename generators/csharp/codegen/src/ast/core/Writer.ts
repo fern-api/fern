@@ -1,4 +1,4 @@
-import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, AbstractWriter } from "@fern-api/browser-compatible-base-generator";
 import { Generation } from "../../context/generation-info.js";
 import { type ClassReference } from "../types/ClassReference.js";
 
@@ -83,6 +83,31 @@ export class Writer extends AbstractWriter {
 
     public popTypeScope(): void {
         this.typeScopeStack.pop();
+    }
+
+    /* Renders the node in isolation and returns the result instead of appending it to this
+       writer's buffer. References collected while rendering are forwarded to this writer so
+       that the imports the node depends on are still emitted. */
+    public renderNodeToString(node: AbstractAstNode): string {
+        const scratch = new Writer({
+            namespace: this.namespace,
+            allNamespaceSegments: this.allNamespaceSegments,
+            allTypeClassReferences: this.allTypeClassReferences,
+            generation: this.generation,
+            skipImports: this.skipImports,
+            skipGlobalQualifier: this.skipGlobalQualifier
+        });
+        for (const enclosingType of this.typeScopeStack) {
+            scratch.pushTypeScope(enclosingType);
+        }
+        scratch.writeNode(node);
+        for (const [namespace, references] of Object.entries(scratch.references)) {
+            this.addNamespace(namespace);
+            for (const reference of references) {
+                this.addReference(reference);
+            }
+        }
+        return scratch.toString(true);
     }
 
     public addNamespace(namespace: string): void {

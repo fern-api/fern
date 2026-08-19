@@ -76,6 +76,30 @@ export class XmlDocWriter {
     // Matches an ampersand that does not already begin a character or entity reference
     private static readonly BARE_AMPERSAND_PATTERN = /&(?!(?:[a-zA-Z][a-zA-Z0-9]*|#[0-9]+|#x[0-9a-fA-F]+);)/g;
 
+    // A (possibly namespace-qualified) type name, optionally followed by generic arguments
+    private static readonly TYPE_NAME_PATTERN = /^([A-Za-z_][A-Za-z0-9_.]*)(?:<(.+)>)?$/;
+    private static readonly IDENTIFIER_PATTERN = /^[A-Za-z_][A-Za-z0-9_.]*$/;
+
+    // Generic arguments in a cref must be identifiers, so keyword aliases are replaced by the
+    // framework type they alias
+    private static readonly KEYWORD_ALIASES: Record<string, string> = {
+        bool: "Boolean",
+        byte: "Byte",
+        char: "Char",
+        decimal: "Decimal",
+        double: "Double",
+        float: "Single",
+        int: "Int32",
+        long: "Int64",
+        object: "Object",
+        sbyte: "SByte",
+        short: "Int16",
+        string: "String",
+        uint: "UInt32",
+        ulong: "UInt64",
+        ushort: "UInt16"
+    };
+
     private writer: Writer;
     private wrotePrefixOnCurrentLine: boolean = false;
     constructor(writer: Writer) {
@@ -138,6 +162,76 @@ export class XmlDocWriter {
 
     public writeNode(node: AstNode): void {
         this.writer.writeNode(node);
+    }
+
+    /**
+     * Writes a documentation reference to a type. Types that can be expressed as a
+     * documentation comment identifier are written as `<see cref="..."/>` so that the
+     * compiler resolves them and IDEs link them; anything else falls back to inline code.
+     */
+    public writeSeeType(type: AstNode): void {
+        const rendered = this.writer.renderNodeToString(type);
+        const crefTarget = XmlDocWriter.toCrefTarget(rendered);
+        if (crefTarget != null) {
+            this.write(`<see cref="${crefTarget}"/>`);
+            return;
+        }
+        this.write(`<c>${this.escapeXmlDocContent(rendered)}</c>`);
+    }
+
+    /**
+     * Converts C# source syntax for a type into a documentation comment identifier, or returns
+     * undefined when the type cannot be expressed as one.
+     *
+     * Nullable annotations are dropped (`object?` -> `object`) because they are not part of a
+     * type's identifier, and generic arguments use brace syntax (`List<Foo>` -> `List{Foo}`)
+     * because crefs are resolved by the compiler rather than rendered as text. Generic arguments
+     * must be identifiers, so keyword aliases become framework type names
+     * (`List<string>` -> `List{String}`) and arrays or nested generic arguments are rejected.
+     */
+    public static toCrefTarget(renderedType: string): string | undefined {
+        const type = renderedType.trim().replaceAll("?", "");
+        const match = XmlDocWriter.TYPE_NAME_PATTERN.exec(type);
+        if (match == null) {
+            return undefined;
+        }
+        const [, name, genericArguments] = match;
+        if (name == null) {
+            return undefined;
+        }
+        if (genericArguments == null) {
+            return name;
+        }
+        const crefArguments: string[] = [];
+        for (const argument of XmlDocWriter.splitGenericArguments(genericArguments)) {
+            const identifier = XmlDocWriter.KEYWORD_ALIASES[argument] ?? argument;
+            if (!XmlDocWriter.IDENTIFIER_PATTERN.test(identifier)) {
+                return undefined;
+            }
+            crefArguments.push(identifier);
+        }
+        return crefArguments.length === 0 ? undefined : `${name}{${crefArguments.join(", ")}}`;
+    }
+
+    private static splitGenericArguments(genericArguments: string): string[] {
+        const arguments_: string[] = [];
+        let depth = 0;
+        let current = "";
+        for (const character of genericArguments) {
+            if (character === "," && depth === 0) {
+                arguments_.push(current.trim());
+                current = "";
+                continue;
+            }
+            if (character === "<") {
+                depth++;
+            } else if (character === ">") {
+                depth--;
+            }
+            current += character;
+        }
+        arguments_.push(current.trim());
+        return arguments_;
     }
 
     public writeXmlNode(nodeName: string, text: string): void {
