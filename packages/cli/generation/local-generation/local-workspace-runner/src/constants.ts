@@ -52,11 +52,31 @@ export const TYPE_RELOCATIONS_FILENAME = ".fern-type-relocations.json";
 export const TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR = "FERN_TYPE_RELOCATIONS_OUTPUT_FILEPATH";
 
 /**
+ * The Postman SDK adapter. It consumes SDK Config IR rather than a Fern generator config, and
+ * generates from the raw API spec rather than the Fern IR, so it appears in both the spec allowlist
+ * below and the config-format check.
+ */
+export const POSTMAN_SDK_GENERATOR_NAME = "postman/sdk-generator";
+
+/**
  * Generators that receive pre-processed raw API spec files mounted into their
  * Docker container. Add new generator names here as they opt in.
  */
-const GENERATORS_WANTING_SPECS: ReadonlySet<string> = new Set(["fernapi/fern-cli-generator"]);
+const GENERATORS_WANTING_SPECS: ReadonlySet<string> = new Set([
+    "fernapi/fern-cli-generator",
+    POSTMAN_SDK_GENERATOR_NAME
+]);
 
 export function generatorWantsSpecs(generatorName: string): boolean {
     return GENERATORS_WANTING_SPECS.has(generatorName);
+}
+
+/**
+ * Generators handed SDK Config IR at the container config path in place of Fern's own
+ * `GeneratorConfig`. Kept as a set so the check stays a single call site if more adapters adopt it.
+ */
+const GENERATORS_WANTING_SDK_CONFIG_IR: ReadonlySet<string> = new Set([POSTMAN_SDK_GENERATOR_NAME]);
+
+export function generatorWantsSdkConfigIr(generatorName: string): boolean {
+    return GENERATORS_WANTING_SDK_CONFIG_IR.has(generatorName);
 }

@@ -108,6 +108,9 @@ catalogs:
     '@open-rpc/meta-schema':
       specifier: ^1.14.9
       version: 1.14.9
+    '@postman/sdk-config':
+      specifier: 0.0.3
+      version: 0.0.3
     '@redocly/openapi-core':
       specifier: ^1.4.1
       version: 1.34.11
@@ -6236,6 +6239,9 @@ importers:
       '@fern-fern/generator-exec-sdk':
         specifier: 'catalog:'
         version: 0.0.1167
+      '@postman/sdk-config':
+        specifier: 'catalog:'
+        version: 0.0.3
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
@@ -10442,6 +10448,10 @@ packages:
 
   '@posthog/types@1.376.0':
     resolution: {integrity: sha512-gbFfxCuZDs/D4QZMwdE+smD1jsuqgGpS6yKGHZZ19foxMy8RYHsU1E47iG1b88n/uN02fAabLibVwuxLtq8juw==}
+
+  '@postman/sdk-config@0.0.3':
+    resolution: {integrity: sha512-qU9+nzRjalXc3nB2S1NsAg0TDyD259Ojr3hI0udNsdJMd5UmUCKei4NKK9bQE+/3D77a755yXNDzdN8tLdStLA==}
+    engines: {node: '>=24'}
 
   '@prisma/instrumentation@7.6.0':
     resolution: {integrity: sha512-ZPW2gRiwpPzEfgeZgaekhqXrbW+Y2RJKHVqUmlhZhKzRNCcvR6DykzylDrynpArKKRQtLxoZy36fK7U0p3pdgQ==}
@@ -17551,6 +17561,11 @@ snapshots:
       '@posthog/types': 1.376.0
 
   '@posthog/types@1.376.0': {}
+
+  '@postman/sdk-config@0.0.3':
+    dependencies:
+      semver: 7.8.4
+      zod: 4.3.6
 
   '@prisma/instrumentation@7.6.0(@opentelemetry/api@1.9.1)':
     dependencies:

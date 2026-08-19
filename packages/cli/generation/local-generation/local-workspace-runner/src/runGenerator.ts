@@ -10,7 +10,7 @@ import {
     mapMagicVersionForLanguage
 } from "@fern-api/generator-cli/autoversion";
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { GeneratorConfig } from "@fern-fern/generator-exec-sdk/serialization";
@@ -30,6 +30,7 @@ import {
     CONTAINER_SOURCES_DIRECTORY,
     CONTAINER_SPECS_DIRECTORY,
     GENERATOR_CONFIG_FILENAME,
+    generatorWantsSdkConfigIr,
     IR_FILENAME,
     SPECS_DIRECTORY_NAME,
     SPECS_MANIFEST_FILENAME
@@ -38,7 +39,8 @@ import { ExecutionEnvironment, SourceMount } from "./ExecutionEnvironment.js";
 import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
 import { LocalTaskHandler } from "./LocalTaskHandler.js";
-import { collectRawSpecs } from "./rawSpecs.js";
+import { buildSdkConfigIr } from "./postman/buildSdkConfigIr.js";
+import { collectRawSpecs, type RawSpecsManifest } from "./rawSpecs.js";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;
@@ -267,6 +269,7 @@ export async function writeFilesToDiskAndRunGenerator({
     // Pre-process and mount raw API spec files when provided. OpenAPI/AsyncAPI specs are
     // bundled (all $refs resolved), overrides merged, and overlays applied before mounting.
     // Protobuf and GraphQL specs are copied as-is.
+    let rawSpecsManifest: RawSpecsManifest | undefined;
     if (rawApiSpecs != null && rawApiSpecs.length > 0) {
         const rawSpecsDir = join(workspaceTempDir.path, SPECS_DIRECTORY_NAME);
         await mkdir(rawSpecsDir, { recursive: true });
@@ -275,7 +278,7 @@ export async function writeFilesToDiskAndRunGenerator({
         // the actual host paths since there is no Docker volume mount to remap them.
         const containerSpecsDir = environment.usesContainerPaths ? CONTAINER_SPECS_DIRECTORY : rawSpecsDir;
 
-        const manifest = await collectRawSpecs({
+        rawSpecsManifest = await collectRawSpecs({
             specs: rawApiSpecs,
             hostOutputDir: AbsoluteFilePath.of(rawSpecsDir),
             containerBaseDir: containerSpecsDir,
@@ -283,13 +286,34 @@ export async function writeFilesToDiskAndRunGenerator({
             audiences
         });
 
-        await writeFile(join(rawSpecsDir, SPECS_MANIFEST_FILENAME), JSON.stringify(manifest, undefined, 4));
-        context.logger.debug(`Wrote raw specs manifest with ${manifest.specs.length} spec(s) to ${rawSpecsDir}`);
+        await writeFile(join(rawSpecsDir, SPECS_MANIFEST_FILENAME), JSON.stringify(rawSpecsManifest, undefined, 4));
+        context.logger.debug(
+            `Wrote raw specs manifest with ${rawSpecsManifest.specs.length} spec(s) to ${rawSpecsDir}`
+        );
 
         sourceMounts.push({
             hostPath: AbsoluteFilePath.of(rawSpecsDir),
             containerPath: CONTAINER_SPECS_DIRECTORY
         });
+    }
+
+    // The Postman adapter reads SDK Config IR, not a Fern generator config. Overwriting the same file
+    // keeps the container contract unchanged -- the path is still handed over as the sole container
+    // argument -- so only the document at that path differs.
+    if (generatorWantsSdkConfigIr(generatorInvocation.name)) {
+        const built = buildSdkConfigIr({
+            generatorInvocation,
+            organization,
+            workspaceName: workspace.definition.rootApiFile.contents.name,
+            version: mappedOutputVersionOverride ?? version,
+            outputPath: paths.outputDirectory,
+            rawSpecsManifest
+        });
+        if (!built.success) {
+            throw new CliError({ message: built.message, code: CliError.Code.ConfigError });
+        }
+        await writeFile(absolutePathToWriteConfigJson, JSON.stringify(built.sdkConfigIr, undefined, 4));
+        context.logger.debug(`Wrote SDK Config IR for ${generatorInvocation.name} to ${absolutePathToWriteConfigJson}`);
     }
 
     await environment.execute({
