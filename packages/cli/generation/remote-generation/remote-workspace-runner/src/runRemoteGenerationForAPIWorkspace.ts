@@ -15,6 +15,7 @@ import { appendFile } from "fs/promises";
 
 import { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask.js";
+import { FernSdkGenApiBatch, getFernSdkGenApiLanguage, isFernSdkGenApiEnabled } from "./fernSdkGenApi.js";
 import type { PublishTarget } from "./publishTarget.js";
 import type { AutomationRunOptions } from "./RemoteGeneratorRunRecorder.js";
 import { resolveAutoDiscoveredFernignorePath } from "./resolveAutoDiscoveredFernignorePath.js";
@@ -143,9 +144,18 @@ export async function runRemoteGenerationForAPIWorkspace({
         effectiveOccurrenceTracker.recordOccurrences(generatorGroup.generators);
     }
     const generatorsYmlAbsolutePath = workspace.generatorsConfiguration?.absolutePathToConfiguration;
+    const sdkGenApiCandidateIndexes = new Set(
+        isFernSdkGenApiEnabled()
+            ? generatorGroup.generators.flatMap((generator, index) =>
+                  getFernSdkGenApiLanguage(generator.name) != null ? [index] : []
+              )
+            : []
+    );
+    const sdkGenApiBatch =
+        sdkGenApiCandidateIndexes.size > 1 ? new FernSdkGenApiBatch(sdkGenApiCandidateIndexes.size) : undefined;
 
     const results = await Promise.all(
-        generatorGroup.generators.map((generatorInvocation) =>
+        generatorGroup.generators.map((generatorInvocation, generatorIndex) =>
             context.runInteractiveTask({ name: generatorInvocation.name }, (interactiveTaskContext) =>
                 generateOne({
                     generatorInvocation,
@@ -183,6 +193,8 @@ export async function runRemoteGenerationForAPIWorkspace({
                     occurrenceTracker: effectiveOccurrenceTracker,
                     loginCommand,
                     getSpecsTarGzBuffer,
+                    sdkGenApiBatch: sdkGenApiCandidateIndexes.has(generatorIndex) ? sdkGenApiBatch : undefined,
+                    sdkGenApiTargetIdSeed: generatorIndex.toString(),
                     generateFullProject,
                     onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
                 })
@@ -242,6 +254,8 @@ async function generateOne({
     occurrenceTracker,
     loginCommand,
     getSpecsTarGzBuffer,
+    sdkGenApiBatch,
+    sdkGenApiTargetIdSeed,
     generateFullProject,
     onSnippetsProduced
 }: {
@@ -279,6 +293,8 @@ async function generateOne({
     occurrenceTracker: GeneratorOccurrenceTracker;
     loginCommand: string | undefined;
     getSpecsTarGzBuffer: ((generatorName: string) => Promise<Buffer | undefined>) | undefined;
+    sdkGenApiBatch: FernSdkGenApiBatch | undefined;
+    sdkGenApiTargetIdSeed: string;
     generateFullProject: boolean | undefined;
     /** Invoked post-success when the generator produced snippets. */
     onSnippetsProduced: (invocation: generatorsYml.GeneratorInvocation) => void;
@@ -365,6 +381,8 @@ async function generateOne({
             disableTelemetry,
             loginCommand,
             specsTarGzBuffer: await getSpecsTarGzBuffer?.(generatorInvocation.name),
+            sdkGenApiBatch,
+            sdkGenApiTargetIdSeed,
             generateFullProject
         });
 
@@ -418,6 +436,7 @@ async function generateOne({
             isAutomation: automation != null
         });
     } catch (error) {
+        sdkGenApiBatch?.cancel(error);
         if (automation == null) {
             throw error;
         }
