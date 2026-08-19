@@ -415,15 +415,6 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         // TODO: For SDK-IR, errorIds are not guaranteed to be unique.
                         // We'll want to override the type to unknown if errorId is already present.
                         for (const [errorId, error] of Object.entries(endpoint.errors)) {
-                            const existingError = errors[errorId];
-                            // A response without a body, or with an unknown body, carries less type
-                            // information than one pointing at a schema, so it must not overwrite it.
-                            if (
-                                existingError != null &&
-                                getErrorTypeSpecificity(error.type) < getErrorTypeSpecificity(existingError.type)
-                            ) {
-                                continue;
-                            }
                             errors[errorId] = error;
                         }
                     }
@@ -492,16 +483,6 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             }
         }
     }
-}
-
-/**
- * Ranks how much type information an error body carries: no body < unknown < named type.
- */
-function getErrorTypeSpecificity(type: FernIr.TypeReference | undefined): number {
-    if (type == null) {
-        return 0;
-    }
-    return type.type === "unknown" ? 1 : 2;
 }
 
 function convertExtensionDefaultToLiteral(value: unknown): Literal | undefined {

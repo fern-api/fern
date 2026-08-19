@@ -154,7 +154,7 @@
             },
             {
               "example": {
-                "id": "8455cbb3",
+                "id": "61552e02",
                 "url": "/trees",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -165,75 +165,13 @@
                 "response": {
                   "body": {
                     "jsonExample": {
-                      "error_code": "error_code"
+                      "key": "value"
                     },
                     "shape": {
-                      "shape": {
-                        "properties": [
-                          {
-                            "name": "error_code",
-                            "originalTypeDeclaration": {
-                              "typeId": "Error",
-                              "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                              },
-                              "name": "Error"
-                            },
-                            "value": {
-                              "jsonExample": "error_code",
-                              "shape": {
-                                "primitive": {
-                                  "string": {
-                                    "original": "error_code"
-                                  },
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              }
-                            }
-                          },
-                          {
-                            "name": "error_type",
-                            "originalTypeDeclaration": {
-                              "typeId": "Error",
-                              "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                              },
-                              "name": "Error"
-                            },
-                            "value": {
-                              "shape": {
-                                "container": {
-                                  "valueType": {
-                                    "primitive": {
-                                      "v1": "STRING",
-                                      "v2": {
-                                        "validation": {},
-                                        "type": "string"
-                                      }
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "type": "optional"
-                                },
-                                "type": "container"
-                              }
-                            }
-                          }
-                        ],
-                        "type": "object"
+                      "unknown": {
+                        "key": "value"
                       },
-                      "typeName": {
-                        "typeId": "Error",
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "name": "Error"
-                      },
-                      "type": "named"
+                      "type": "unknown"
                     }
                   },
                   "error": {
@@ -447,7 +385,7 @@
             },
             {
               "example": {
-                "id": "cf25ad49",
+                "id": "6ed1b7e0",
                 "url": "/trees/id",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -474,75 +412,13 @@
                 "response": {
                   "body": {
                     "jsonExample": {
-                      "error_code": "error_code"
+                      "key": "value"
                     },
                     "shape": {
-                      "shape": {
-                        "properties": [
-                          {
-                            "name": "error_code",
-                            "originalTypeDeclaration": {
-                              "typeId": "Error",
-                              "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                              },
-                              "name": "Error"
-                            },
-                            "value": {
-                              "jsonExample": "error_code",
-                              "shape": {
-                                "primitive": {
-                                  "string": {
-                                    "original": "error_code"
-                                  },
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              }
-                            }
-                          },
-                          {
-                            "name": "error_type",
-                            "originalTypeDeclaration": {
-                              "typeId": "Error",
-                              "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                              },
-                              "name": "Error"
-                            },
-                            "value": {
-                              "shape": {
-                                "container": {
-                                  "valueType": {
-                                    "primitive": {
-                                      "v1": "STRING",
-                                      "v2": {
-                                        "validation": {},
-                                        "type": "string"
-                                      }
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "type": "optional"
-                                },
-                                "type": "container"
-                              }
-                            }
-                          }
-                        ],
-                        "type": "object"
+                      "unknown": {
+                        "key": "value"
                       },
-                      "typeName": {
-                        "typeId": "Error",
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "name": "Error"
-                      },
-                      "type": "named"
+                      "type": "unknown"
                     }
                   },
                   "error": {
@@ -702,15 +578,7 @@
         "wireValue": "BadRequestError"
       },
       "type": {
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": "Error",
-        "typeId": "Error",
-        "inline": false,
-        "displayName": "Error",
-        "type": "named"
+        "type": "unknown"
       },
       "statusCode": 400,
       "docs": "Bad Request",

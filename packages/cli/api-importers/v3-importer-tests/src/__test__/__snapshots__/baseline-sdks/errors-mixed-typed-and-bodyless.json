@@ -87,13 +87,7 @@
       "docs": "Bad Request",
       "statusCode": 400,
       "type": {
-        "name": "Error",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "typeId": "type_:Error",
-        "type": "named"
+        "type": "unknown"
       },
       "examples": [
         {
@@ -102,43 +96,10 @@
           },
           "shape": {
             "shape": {
-              "typeName": {
-                "typeId": "type_:Error",
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": "Error"
+              "unknown": {
+                "error_code": "error_code"
               },
-              "shape": {
-                "properties": [
-                  {
-                    "name": "error_code",
-                    "value": {
-                      "shape": {
-                        "primitive": {
-                          "string": {
-                            "original": "error_code"
-                          },
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "jsonExample": "error_code"
-                    },
-                    "originalTypeDeclaration": {
-                      "typeId": "type_:Error",
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "name": "Error"
-                    }
-                  }
-                ],
-                "type": "object"
-              },
-              "type": "named"
+              "type": "unknown"
             },
             "jsonExample": {
               "error_code": "error_code"

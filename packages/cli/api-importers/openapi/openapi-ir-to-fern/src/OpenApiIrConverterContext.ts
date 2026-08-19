@@ -111,27 +111,21 @@ export class OpenApiIrConverterContext {
 
         const schemaByStatusCode: Record<number, Schema> = {};
         if (!this.enableUniqueErrorsPerEndpoint) {
-            const statusCodesWithoutSchema = new Set<number>();
             for (const endpoint of ir.endpoints) {
                 for (const [statusCodeString, error] of Object.entries(endpoint.errors)) {
                     const statusCode = parseInt(statusCodeString);
-                    if (error.schema == null || error.schema.type === "unknown") {
-                        // A response without a body carries no type information, so it must not
-                        // downgrade a sibling response that does point at a schema.
-                        statusCodesWithoutSchema.add(statusCode);
-                        continue;
-                    }
                     const existingSchema = schemaByStatusCode[statusCode];
-                    if (existingSchema == null) {
+                    if (existingSchema == null && error.schema != null) {
                         schemaByStatusCode[statusCode] = error.schema;
-                    } else if (!isSchemaEqual(existingSchema, error.schema)) {
+                    } else if (
+                        existingSchema != null &&
+                        error.schema != null &&
+                        isSchemaEqual(existingSchema, error.schema)
+                    ) {
+                        // pass
+                    } else {
                         this.unknownSchema.add(statusCode);
                     }
-                }
-            }
-            for (const statusCode of statusCodesWithoutSchema) {
-                if (schemaByStatusCode[statusCode] == null) {
-                    this.unknownSchema.add(statusCode);
                 }
             }
         }

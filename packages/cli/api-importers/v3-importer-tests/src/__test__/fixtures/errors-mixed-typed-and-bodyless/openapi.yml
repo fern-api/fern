@@ -50,6 +50,7 @@ paths:
             application/json:
               schema:
                 type: string
-        # This error has no body, so it must not downgrade the typed 400 above.
+        # This error has no body, so the shared 400 above cannot be typed: this endpoint's
+        # response would fail to decode and lose its specific error type at runtime.
         "400":
           description: Bad Request

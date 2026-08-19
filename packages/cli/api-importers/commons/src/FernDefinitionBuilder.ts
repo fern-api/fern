@@ -126,12 +126,6 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private basePath: string | undefined = undefined;
     private rootPathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined = undefined;
-    /**
-     * Errors whose body was downgraded to unknown because two declarations named conflicting
-     * types. The downgrade is sticky, so a later typed declaration cannot claim one endpoint's
-     * body shape for every endpoint that shares the error.
-     */
-    private errorsWithConflictingBodies = new Set<string>();
 
     public constructor(public readonly enableUniqueErrorsPerEndpoint: boolean) {
         this.root = new FernDefinitionDirectory();
@@ -398,34 +392,14 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (fernFile.errors == null) {
             fernFile.errors = {};
         }
-        const existingError = fernFile.errors[name];
-        if (existingError == null) {
+        if (fernFile.errors[name] == null) {
             fernFile.errors[name] = schema;
-            return;
+        } else if (fernFile.errors[name]?.type !== schema.type) {
+            fernFile.errors[name] = {
+                "status-code": schema["status-code"],
+                type: "unknown"
+            };
         }
-        if (existingError.type === schema.type) {
-            return;
-        }
-        const conflictKey = `${file}:${name}`;
-        if (this.errorsWithConflictingBodies.has(conflictKey)) {
-            return;
-        }
-        // Responses without a body carry no type information, so the most specific
-        // declaration wins rather than downgrading the error body to unknown.
-        const existingSpecificity = getErrorBodySpecificity(existingError.type);
-        const specificity = getErrorBodySpecificity(schema.type);
-        if (specificity > existingSpecificity) {
-            fernFile.errors[name] = schema;
-            return;
-        }
-        if (specificity < existingSpecificity) {
-            return;
-        }
-        this.errorsWithConflictingBodies.add(conflictKey);
-        fernFile.errors[name] = {
-            "status-code": schema["status-code"],
-            type: "unknown"
-        };
     }
 
     public addErrorExample(
@@ -691,16 +665,4 @@ function isHeaderAuthScheme(
     scheme: RawSchemas.AuthSchemeDeclarationSchema
 ): scheme is RawSchemas.HeaderAuthSchemeSchema {
     return (scheme as RawSchemas.HeaderAuthSchemeSchema)?.header != null;
-}
-
-/**
- * Ranks how much type information an error body declaration carries: a response without a
- * body carries none, an unknown body only tells us that there is one, and anything else
- * names an actual type.
- */
-function getErrorBodySpecificity(errorBodyType: string | undefined): number {
-    if (errorBodyType == null) {
-        return 0;
-    }
-    return errorBodyType === "unknown" ? 1 : 2;
 }

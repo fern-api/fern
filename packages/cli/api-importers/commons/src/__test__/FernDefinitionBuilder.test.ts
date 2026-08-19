@@ -14,14 +14,30 @@ function addErrors(schemas: RawSchemas.ErrorDeclarationSchema[]): RawSchemas.Err
 }
 
 describe("FernDefinitionBuilder.addError", () => {
-    it("keeps the named type when another endpoint declares the same error without a body", () => {
-        expect(addErrors([{ "status-code": 400, type: "Error" }, { "status-code": 400 }])).toEqual({
+    it("keeps the named type when every endpoint declares the same error body", () => {
+        expect(
+            addErrors([
+                { "status-code": 400, type: "Error" },
+                { "status-code": 400, type: "Error" }
+            ])
+        ).toEqual({
             "status-code": 400,
             type: "Error"
         });
     });
 
-    it("keeps the named type when another endpoint declares the same error as unknown", () => {
+    // A shared error is decoded with a single type across every endpoint that declares it, so a
+    // body type only observed on one endpoint must not be claimed for the others: the endpoints
+    // that return something else would fail to decode and lose their specific error type at
+    // runtime.
+    it("falls back to unknown when another endpoint declares the same error without a body", () => {
+        expect(addErrors([{ "status-code": 400, type: "Error" }, { "status-code": 400 }])).toEqual({
+            "status-code": 400,
+            type: "unknown"
+        });
+    });
+
+    it("falls back to unknown when another endpoint declares the same error as unknown", () => {
         expect(
             addErrors([
                 { "status-code": 400, type: "unknown" },
@@ -29,7 +45,7 @@ describe("FernDefinitionBuilder.addError", () => {
             ])
         ).toEqual({
             "status-code": 400,
-            type: "Error"
+            type: "unknown"
         });
     });
 

@@ -1,8 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    Fix OpenAPI error bodies being generated as `unknown` when another endpoint declares a
-    response with the same status code but no body. The declaration that names a schema now
-    wins, so SDKs expose the typed error body (e.g. `Body *MyError` in Go) instead of `any`.
-    Genuinely conflicting bodies for the same shared error still fall back to `unknown`.
-  type: fix
