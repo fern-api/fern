@@ -124,6 +124,10 @@ pub struct RestDescription {
     /// existing groups for documentation.
     #[serde(default, skip)]
     pub groups: HashMap<String, SdkGroupInfo>,
+    /// Descriptions from the document-root OpenAPI `tags` array, keyed by
+    /// kebab-cased tag name so they match tag-derived resource keys.
+    #[serde(default, skip)]
+    pub tag_descriptions: HashMap<String, String>,
 }
 
 /// Metadata for a single group declared via the spec-root

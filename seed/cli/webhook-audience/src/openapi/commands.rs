@@ -200,7 +200,9 @@ pub fn build_cli(doc: &RestDescription) -> Command {
     resource_names.sort();
     for name in resource_names {
         let resource = &doc.resources[name];
-        if let Some(cmd) = build_resource_command(name, resource, &doc.groups) {
+        if let Some(cmd) =
+            build_resource_command(name, resource, &doc.groups, &doc.tag_descriptions)
+        {
             root = root.subcommand(cmd);
         }
     }
@@ -208,32 +210,55 @@ pub fn build_cli(doc: &RestDescription) -> Command {
     root
 }
 
-/// Resolve the `about()` line for a group's clap subcommand. Returns
-/// the `summary` from a matching [`SdkGroupInfo`] entry (sourced from
-/// the document-root `x-fern-groups` extension) when present; falls
-/// back to the legacy `Operations on '<name>'` label otherwise. The
-/// fallback preserves the current default behavior unchanged for any
-/// group identifier that doesn't appear in `x-fern-groups`.
-pub(crate) fn group_about_text(name: &str, groups: &HashMap<String, SdkGroupInfo>) -> String {
+/// Resolve the metadata-backed `about()` line for a group. Fern group
+/// summaries take precedence over OpenAPI tag descriptions; tag descriptions
+/// are truncated for a terminal-friendly one-line help surface.
+pub(crate) fn group_about_metadata(
+    name: &str,
+    groups: &HashMap<String, SdkGroupInfo>,
+    tag_descriptions: &HashMap<String, String>,
+) -> Option<String> {
     groups
         .get(name)
         .and_then(|info| info.summary.clone())
         .filter(|s| !s.is_empty())
+        .or_else(|| {
+            tag_descriptions.get(name).map(|description| {
+                crate::text::truncate_description(
+                    description,
+                    crate::text::CLI_DESCRIPTION_LIMIT,
+                    true,
+                )
+            })
+        })
+}
+
+/// Resolve the `about()` line for a group's clap subcommand. The legacy
+/// fallback is unchanged for groups without metadata.
+pub(crate) fn group_about_text(
+    name: &str,
+    groups: &HashMap<String, SdkGroupInfo>,
+    tag_descriptions: &HashMap<String, String>,
+) -> String {
+    group_about_metadata(name, groups, tag_descriptions)
         .unwrap_or_else(|| format!("Operations on '{name}'"))
 }
 
-/// Resolve the `long_about()` line for a group's clap subcommand from
-/// the document-root `x-fern-groups` extension's `description` field.
-/// `None` when the group has no entry or the entry omits `description`
-/// — clap then falls back to the `about()` text for `--help`.
+/// Resolve the `long_about()` line for a group's clap subcommand. Fern group
+/// descriptions take precedence over full OpenAPI tag descriptions. A
+/// description equal to the about line is omitted to avoid redundant help.
 pub(crate) fn group_long_about_text(
     name: &str,
     groups: &HashMap<String, SdkGroupInfo>,
+    tag_descriptions: &HashMap<String, String>,
 ) -> Option<String> {
+    let about = group_about_text(name, groups, tag_descriptions);
     groups
         .get(name)
         .and_then(|info| info.description.clone())
         .filter(|s| !s.is_empty())
+        .or_else(|| tag_descriptions.get(name).cloned())
+        .filter(|description| description.trim() != about.trim())
 }
 
 /// Stringify a parameter's resolved client-side default value for
@@ -290,13 +315,14 @@ fn build_resource_command(
     name: &str,
     resource: &RestResource,
     groups: &HashMap<String, SdkGroupInfo>,
+    tag_descriptions: &HashMap<String, String>,
 ) -> Option<Command> {
     let mut cmd = Command::new(name.to_string())
-        .about(group_about_text(name, groups))
+        .about(group_about_text(name, groups, tag_descriptions))
         .subcommand_required(true)
         .arg_required_else_help(true);
 
-    if let Some(long_about) = group_long_about_text(name, groups) {
+    if let Some(long_about) = group_long_about_text(name, groups, tag_descriptions) {
         cmd = cmd.long_about(long_about);
     }
 
@@ -600,7 +626,9 @@ fn build_resource_command(
     sub_names.sort();
     for sub_name in sub_names {
         let sub_resource = &resource.resources[sub_name];
-        if let Some(sub_cmd) = build_resource_command(sub_name, sub_resource, groups) {
+        if let Some(sub_cmd) =
+            build_resource_command(sub_name, sub_resource, groups, tag_descriptions)
+        {
             has_children = true;
             cmd = cmd.subcommand(sub_cmd);
         }
@@ -1990,6 +2018,88 @@ mod tests {
         // No `description` → no long_about override; clap will fall
         // back to `about` for `--help`.
         assert!(things.get_long_about().is_none());
+    }
+
+    #[test]
+    fn test_tag_description_drives_about_text() {
+        let mut doc = make_doc_with_things_resource();
+        doc.tag_descriptions.insert(
+            "things".to_string(),
+            "Manage the things available to your account.".to_string(),
+        );
+        let cmd = build_cli(&doc);
+        let things = cmd
+            .find_subcommand("things")
+            .expect("things subcommand missing");
+        assert_eq!(
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
+            "Manage the things available to your account.",
+        );
+        assert_eq!(
+            things
+                .get_long_about()
+                .map(|s| s.to_string())
+                .unwrap_or_default(),
+            "",
+        );
+    }
+
+    #[test]
+    fn test_group_summary_still_wins_over_tag_description() {
+        let mut doc = make_doc_with_things_resource();
+        doc.groups.insert(
+            "things".to_string(),
+            SdkGroupInfo {
+                summary: Some("Things summary".to_string()),
+                description: None,
+            },
+        );
+        doc.tag_descriptions.insert(
+            "things".to_string(),
+            "Description from the OpenAPI tag.".to_string(),
+        );
+        let cmd = build_cli(&doc);
+        let things = cmd
+            .find_subcommand("things")
+            .expect("things subcommand missing");
+        assert_eq!(
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
+            "Things summary",
+        );
+        assert_eq!(
+            things
+                .get_long_about()
+                .map(|s| s.to_string())
+                .unwrap_or_default(),
+            "Description from the OpenAPI tag.",
+        );
+    }
+
+    #[test]
+    fn test_long_tag_description_is_truncated_for_about() {
+        let mut doc = make_doc_with_things_resource();
+        let description = "This is a deliberately long group description that contains enough prose to exceed the CLI help description limit. It has multiple sentences so the about line should stop at a sensible sentence boundary while long_about retains the full original text. The remainder makes the fixture unambiguously longer than the terminal-friendly limit.";
+        doc.tag_descriptions
+            .insert("things".to_string(), description.to_string());
+        let cmd = build_cli(&doc);
+        let things = cmd
+            .find_subcommand("things")
+            .expect("things subcommand missing");
+        assert_eq!(
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
+            crate::text::truncate_description(
+                description,
+                crate::text::CLI_DESCRIPTION_LIMIT,
+                true
+            ),
+        );
+        assert_eq!(
+            things
+                .get_long_about()
+                .map(|s| s.to_string())
+                .unwrap_or_default(),
+            description,
+        );
     }
 
     /// `description` populates `long_about()` so `--help` shows the

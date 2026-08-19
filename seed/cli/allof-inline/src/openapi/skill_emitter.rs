@@ -15,6 +15,7 @@ use std::path::PathBuf;
 use clap::{Arg, Command};
 
 use crate::auth::{AuthCredentialSource, SchemeBinding};
+use crate::openapi::commands::group_about_metadata;
 use crate::openapi::discovery::{RestDescription, RestResource, SecurityScheme};
 use crate::text;
 
@@ -373,14 +374,20 @@ fn render_group_skill(
 }
 
 fn group_description(doc: &RestDescription, group_name: &str) -> String {
-    // Try x-fern-groups metadata first
-    if let Some(info) = doc.groups.get(group_name) {
-        if let Some(ref summary) = info.summary {
-            return summary.clone();
-        }
-        if let Some(ref description) = info.description {
-            return first_sentence(description);
-        }
+    if let Some(description) =
+        group_about_metadata(group_name, &doc.groups, &doc.tag_descriptions)
+    {
+        return description;
+    }
+
+    // Preserve the existing skill behavior for x-fern-groups descriptions
+    // when no summary or tag description is available.
+    if let Some(description) = doc
+        .groups
+        .get(group_name)
+        .and_then(|info| info.description.as_deref())
+    {
+        return first_sentence(description);
     }
 
     // Fall back to spec title/description
@@ -730,6 +737,19 @@ mod tests {
             assert_eq!(fa.0, fb.0);
             assert_eq!(fa.1, fb.1);
         }
+    }
+
+    #[test]
+    fn tag_description_drives_group_skill_description() {
+        let mut doc = minimal_doc();
+        doc.tag_descriptions.insert(
+            "items".to_string(),
+            "Manage the items available to your account.".to_string(),
+        );
+        let files = generate_skills(&doc, "test", &[]);
+        assert!(files[1]
+            .1
+            .contains("description: \"Manage the items available to your account.\""));
     }
 
     #[test]

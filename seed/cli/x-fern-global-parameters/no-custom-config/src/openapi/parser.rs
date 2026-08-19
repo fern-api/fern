@@ -176,6 +176,11 @@ struct OpenApiSpec {
     info: OpenApiInfo,
     #[serde(default)]
     servers: Vec<OpenApiServer>,
+    /// OpenAPI's document-root tags are optional metadata for generated
+    /// groups. Invalid or primitive entries are skipped by the lenient
+    /// deserializer below.
+    #[serde(default, deserialize_with = "deserialize_openapi_tags")]
+    tags: HashMap<String, String>,
     #[serde(default)]
     paths: HashMap<String, OpenApiPathItem>,
     /// OpenAPI 3.1 top-level `webhooks` block. Webhooks describe operations
@@ -236,6 +241,51 @@ struct OpenApiSpec {
     /// `x-fern-sdk-group-name`).
     #[serde(default, rename = "x-fern-groups")]
     x_fern_groups: Option<HashMap<String, RawFernGroup>>,
+}
+
+/// Deserialize document-root OpenAPI tags into the normalized metadata used
+/// by the CLI help surface. Some real-world specs contain primitive entries
+/// in this array, so malformed entries are skipped rather than rejecting the
+/// whole document.
+fn deserialize_openapi_tags<'de, D>(
+    deserializer: D,
+) -> Result<HashMap<String, String>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let value = Option::<serde_yaml::Value>::deserialize(deserializer)?;
+    let Some(value) = value else {
+        return Ok(HashMap::new());
+    };
+    let serde_yaml::Value::Sequence(entries) = value else {
+        tracing::debug!("Skipping document-root OpenAPI tags because the value is not an array");
+        return Ok(HashMap::new());
+    };
+
+    let mut descriptions = HashMap::new();
+    for entry in entries {
+        match serde_yaml::from_value::<RawOpenApiTag>(entry) {
+            Ok(tag) if !tag.name.trim().is_empty() => {
+                if let Some(description) = tag.description.filter(|d| !d.trim().is_empty()) {
+                    descriptions.insert(camel_to_kebab(&tag.name), description);
+                }
+            }
+            Ok(_) => {
+                tracing::debug!("Skipping document-root OpenAPI tag with an empty name");
+            }
+            Err(error) => {
+                tracing::debug!(%error, "Skipping malformed document-root OpenAPI tag");
+            }
+        }
+    }
+    Ok(descriptions)
+}
+
+#[derive(Debug, Deserialize)]
+struct RawOpenApiTag {
+    name: String,
+    #[serde(default)]
+    description: Option<String>,
 }
 
 /// Raw deserialized form of a single entry in `x-fern-idempotency-headers`.
@@ -2635,6 +2685,7 @@ pub fn load_openapi_spec_from_value(
         global_parameters,
         global_headers,
         groups,
+        tag_descriptions: spec.tags,
         ..Default::default()
     };
 
@@ -6855,6 +6906,42 @@ paths:
             doc.groups["my-group"].summary.as_deref(),
             Some("Pretty Label"),
         );
+    }
+
+    #[test]
+    fn test_root_tag_descriptions_are_indexed_by_kebab_case() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: t
+  version: "1"
+tags:
+  - name: myGroup
+    description: Description for the group.
+  - name: no-description
+    x-displayName: Display label only
+paths: {}
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        assert_eq!(
+            doc.tag_descriptions.get("my-group").map(String::as_str),
+            Some("Description for the group."),
+        );
+        assert!(!doc.tag_descriptions.contains_key("no-description"));
+    }
+
+    #[test]
+    fn test_string_array_tags_are_skipped() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: t
+  version: "1"
+tags: [customers, orders]
+paths: {}
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        assert!(doc.tag_descriptions.is_empty());
     }
 
     /// Unrelated extra fields inside a group entry are ignored
