@@ -35,6 +35,8 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
     private environmentExplicitlySetField: ast.Field | undefined;
     private serverVariableFields: ast.Field[] = [];
     private unifiedFields: UnifiedField[] = [];
+    /** The client options generated for literal-typed global headers (e.g. an API version header). */
+    private literalHeaderFields: ast.Field[] = [];
     /** The opt-in `AppInfo` field, present only when `allow-user-agent-app-info` is enabled. */
     private appInfoField: ast.Field | undefined;
 
@@ -73,7 +75,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
 
         this.baseOptionsGenerator.getMaxRetriesField(class_, optionArgs);
         this.baseOptionsGenerator.getTimeoutField(class_, optionArgs);
-        this.baseOptionsGenerator.getLiteralHeaderOptions(class_, optionArgs);
+        this.literalHeaderFields = this.baseOptionsGenerator.getLiteralHeaderOptions(class_, optionArgs);
 
         // The opt-in `allow-user-agent-app-info` client option. The sanitized
         // product token built from these fields is appended to the SDK's
@@ -623,6 +625,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                   const serverVariableFieldLines = this.serverVariableFields
                       .map((field) => `\n    ${field.name} = ${field.name},`)
                       .join("");
+                  const literalHeaderFieldLines = this.literalHeaderFields
+                      .map((field) => `\n    ${field.name} = ${field.name},`)
+                      .join("");
                   writer.writeStatement(
                       `return new ClientOptions
 {${this.baseUrlField ? `\n    ${this.baseUrlField.name} = ${this.baseUrlField.name},` : ""}${this.environmentField ? `\n    ${this.environmentField.name} = ${this.environmentField.name},` : ""}${serverVariableFieldLines}
@@ -634,7 +639,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                       `(new Dictionary<string, `,
                       this.Types.HeaderValue,
                       `>(Headers)),
-    AdditionalHeaders = AdditionalHeaders,${unifiedFieldLines}${this.appInfoField ? `\n    ${this.appInfoField.name} = ${this.appInfoField.name},` : ""}
+    AdditionalHeaders = AdditionalHeaders,${literalHeaderFieldLines}${unifiedFieldLines}${this.appInfoField ? `\n    ${this.appInfoField.name} = ${this.appInfoField.name},` : ""}
     ${this.settings.includeExceptionHandler ? "ExceptionHandler = ExceptionHandler.Clone()," : ""}
 }`
                   );
@@ -705,6 +710,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                     ">(other.Headers))"
                 );
                 writer.writeLine("AdditionalHeaders = other.AdditionalHeaders;");
+                for (const field of this.literalHeaderFields) {
+                    writer.writeLine(`${field.name} = other.${field.name};`);
+                }
                 for (const field of this.unifiedFields) {
                     writer.writeLine(`${field.name} = other.${field.name};`);
                 }

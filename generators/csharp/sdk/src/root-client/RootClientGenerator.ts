@@ -66,6 +66,12 @@ interface ConstructorParameter {
      */
     exampleValue?: string;
     /**
+     * A rendered C# expression to use in examples, for parameters whose value is known at
+     * compile time (a `literal<"...">`-typed or `client-default`ed global header). Takes
+     * precedence over `exampleValue`, which is quoted as a string.
+     */
+    exampleExpression?: string;
+    /**
      * The client default value from x-fern-default.
      * When present, the parameter is optional and uses this value as fallback.
      */
@@ -92,6 +98,18 @@ function getLiteralHeaderValue(param: ConstructorParameter): Literal | undefined
     return typeReference.type === "container" && typeReference.container.type === "literal"
         ? typeReference.container.literal
         : undefined;
+}
+
+/** Renders a literal as the C# expression for its value. */
+function renderLiteral(literal: Literal): string {
+    switch (literal.type) {
+        case "string":
+            return `"${escapeForCSharpString(literal.string)}"`;
+        case "boolean":
+            return literal.boolean ? "true" : "false";
+        default:
+            assertNever(literal);
+    }
 }
 
 export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
@@ -551,6 +569,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
                     for (const param of optionalParameters) {
                         const clientDefaultLiteral = this.getGlobalHeaderDefaultLiteral(param);
+                        if (!unified && getLiteralHeaderValue(param) != null) {
+                            // A literal-typed global header is also exposed as a client option, so
+                            // read it before falling back to the environment variable or the
+                            // literal default. An explicit constructor argument still wins.
+                            innerWriter.writeTextStatement(
+                                `${param.name} ??= clientOptions?.${this.toPascalCase(param.name)}`
+                            );
+                        }
                         if (param.environmentVariable != null) {
                             const target = paramAccess(param);
                             if (anyAuthMultiScheme || endpointSecurity || (param.isGlobalHeader && param.isOptional)) {
@@ -1216,10 +1242,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 if (param.environmentVariable != null && !includeEnvVarArguments) {
                     continue;
                 }
-                const value = param.exampleValue ?? param.name;
                 clientOptionsFields.push({
                     name: this.toPascalCase(param.name),
-                    assignment: this.csharp.codeblock(`"${value}"`)
+                    assignment: this.csharp.codeblock(this.getExampleArgument(param))
                 });
             }
 
@@ -1257,8 +1282,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 }
 
                 // Use example values consistently in both snippets and tests for clarity
-                const value = param.exampleValue ?? param.name;
-                arguments_.push(this.csharp.codeblock(`"${value}"`));
+                arguments_.push(this.csharp.codeblock(this.getExampleArgument(param)));
             }
 
             if (clientOptionsArgument != null) {
@@ -1274,6 +1298,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             classReference: asSnippet ? this.Types.RootClientForSnippets : this.Types.RootClient,
             arguments_
         });
+    }
+
+    /** The C# expression used for a constructor parameter in generated examples. */
+    private getExampleArgument(param: ConstructorParameter): string {
+        return param.exampleExpression ?? `"${param.exampleValue ?? param.name}"`;
     }
 
     private getConstructorParameters(authOnly = false): {
@@ -1518,6 +1547,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         // env vars are strings, so only a string-typed literal can be resolved from one; other
         // literals stay out of the constructor and are surfaced through ClientOptions instead.
         const environmentVariable = literal == null || literal.type === "string" ? header.env : undefined;
+        const knownValue = header.clientDefault ?? literal;
         return {
             name: literal != null ? this.case.pascalSafe(header.name) : this.case.camelSafe(header.name),
             header: {
@@ -1538,6 +1568,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             environmentVariable,
             isGlobalHeader: true,
             exampleValue: this.case.screamingSnakeSafe(header.name),
+            // A global header whose value is known at compile time must not be exemplified with a
+            // `"HEADER_NAME"` placeholder: that placeholder is sent verbatim as the header value.
+            exampleExpression: knownValue != null ? renderLiteral(knownValue) : undefined,
             clientDefault: header.clientDefault
         };
     }
