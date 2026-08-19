@@ -9,7 +9,8 @@ import {
     getFernSdkGenApiLanguage,
     getFernSdkGenApiOrigin,
     isEligibleForFernSdkGenApi,
-    isFernSdkGenApiEnabled
+    isFernSdkGenApiEnabled,
+    runFernSdkGenApiBuild
 } from "../fernSdkGenApi.js";
 
 afterEach(() => {
@@ -164,6 +165,25 @@ describe("isEligibleForFernSdkGenApi", () => {
                 disableExamples: false
             }
         });
+        expect(request.targets[0]?.invocation).not.toHaveProperty("audiences");
+    });
+
+    it("preserves an explicitly selected audience list", () => {
+        const request = createFernSdkGenApiBatchRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            specsTarGzBuffer: Buffer.from("archive"),
+            targets: [
+                {
+                    generatorInvocation: invocation(),
+                    sdkVersion: "1.2.3",
+                    audiences: ["public"]
+                }
+            ]
+        });
+
+        expect(request.targets[0]?.invocation.audiences).toEqual(["public"]);
     });
 
     it("uses the generator language instead of hard-coding TypeScript", () => {
@@ -291,8 +311,33 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(new Set(request.targets.map((target) => target.targetId)).size).toBe(3);
     });
 
+    it("changes the idempotency key when generator configuration or output changes", () => {
+        const createRequest = (generatorInvocation: generatorsYml.GeneratorInvocation) =>
+            createFernSdkGenApiRequest({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation,
+                sdkVersion: "1.2.3",
+                specsTarGzBuffer: Buffer.from("archive")
+            });
+
+        const original = createRequest(invocation());
+        const configured = createRequest(invocation({ config: { packageJson: { name: "@acme/sdk" } } }));
+        const github = createRequest(
+            invocation({
+                outputMode: FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "sdk", branch: "main" })
+                )
+            })
+        );
+
+        expect(configured.idempotencyKey).not.toBe(original.idempotencyKey);
+        expect(github.idempotencyKey).not.toBe(original.idempotencyKey);
+    });
+
     it("submits and polls a multi-language group once", async () => {
-        process.env.FERN_SDK_GEN_API_ORIGIN = "http://sdk-gen-api.test";
+        process.env.FERN_SDK_GEN_API_ORIGIN = "https://sdk-gen-api.test";
         const specsTarGzBuffer = Buffer.from("archive");
         const typescript = invocation();
         const python = invocation({
@@ -360,6 +405,49 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(get).toHaveBeenCalledTimes(1);
         expect(results.map((result) => result.actualVersion)).toEqual(["1.2.3", "1.2.3"]);
     });
+
+    it("stops polling when the build fails before a target reaches a terminal state", async () => {
+        process.env.FERN_SDK_GEN_API_ORIGIN = "https://sdk-gen-api.test";
+        const specsTarGzBuffer = Buffer.from("archive");
+        const generatorInvocation = invocation();
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer
+        });
+        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        const get = vi.spyOn(axios, "get").mockResolvedValue({
+            data: {
+                buildId: "build-1",
+                status: "failed",
+                targets: [{ targetId: request.targets[0]?.targetId, status: "queued", logs: [] }]
+            }
+        } as never);
+        const context = {
+            logger: { debug: vi.fn(), info: vi.fn() },
+            failAndThrow: (message: string) => {
+                throw new Error(message);
+            }
+        } as never;
+
+        await expect(
+            runFernSdkGenApiBuild({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation,
+                sdkVersion: "1.2.3",
+                token: { value: "token" } as never,
+                specsTarGzBuffer,
+                absolutePathToPreview: undefined,
+                context
+            })
+        ).rejects.toThrow("build ended with status failed");
+        expect(get).toHaveBeenCalledTimes(1);
+    });
 });
 
 describe("sdk-gen-api environment configuration", () => {
@@ -396,5 +484,19 @@ describe("sdk-gen-api environment configuration", () => {
         vi.stubEnv("DEFAULT_SDK_GEN_API_ORIGIN", "https://default.example.test/");
 
         expect(getFernSdkGenApiOrigin()).toBe("https://default.example.test");
+    });
+
+    it("allows HTTP only for loopback development origins", () => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "http://localhost:3001/");
+        expect(getFernSdkGenApiOrigin()).toBe("http://localhost:3001");
+
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "http://127.0.0.1:3001/");
+        expect(getFernSdkGenApiOrigin()).toBe("http://127.0.0.1:3001");
+    });
+
+    it("rejects insecure remote origins", () => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "http://sdk-gen-api.example.test");
+
+        expect(() => getFernSdkGenApiOrigin()).toThrow("must use HTTPS unless it targets localhost");
     });
 });

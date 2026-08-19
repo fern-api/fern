@@ -421,7 +421,7 @@ export async function runRemoteGenerationForGenerator({
             absolutePathToPreview,
             context: interactiveTaskContext,
             targetIdSeed: sdkGenApiTargetIdSeed,
-            audiences: audiences.type === "select" ? audiences.audiences : [],
+            audiences: audiences.type === "select" ? audiences.audiences : undefined,
             skipFernignore
         };
         result = await (sdkGenApiBatch?.run(parameters) ?? runFernSdkGenApiBuild(parameters));

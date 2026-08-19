@@ -12,7 +12,9 @@ import path from "path";
 import { downloadFilesForTask } from "./RemoteTaskHandler.js";
 
 const POLL_INTERVAL_MS = 2_000;
+const POLL_TIMEOUT_MS = 15 * 60 * 1_000;
 const REQUEST_TIMEOUT_MS = 60_000;
+const LOOPBACK_HOSTNAMES = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
 
 export type FernSdkGenApiLanguage =
     | "typescript"
@@ -134,7 +136,25 @@ export function isFernSdkGenApiEnabled(): boolean {
 }
 
 export function getFernSdkGenApiOrigin(): string | undefined {
-    return (process.env.FERN_SDK_GEN_API_ORIGIN ?? process.env.DEFAULT_SDK_GEN_API_ORIGIN)?.replace(/\/$/, "");
+    const configured = process.env.FERN_SDK_GEN_API_ORIGIN ?? process.env.DEFAULT_SDK_GEN_API_ORIGIN;
+    if (configured == null) {
+        return undefined;
+    }
+
+    let origin: URL;
+    try {
+        origin = new URL(configured);
+    } catch {
+        throw new Error("FERN_SDK_GEN_API_ORIGIN must be a valid URL");
+    }
+    if (origin.username.length > 0 || origin.password.length > 0) {
+        throw new Error("FERN_SDK_GEN_API_ORIGIN must not contain credentials");
+    }
+    const isLoopbackHttp = origin.protocol === "http:" && LOOPBACK_HOSTNAMES.has(origin.hostname);
+    if (origin.protocol !== "https:" && !isLoopbackHttp) {
+        throw new Error("FERN_SDK_GEN_API_ORIGIN must use HTTPS unless it targets localhost");
+    }
+    return origin.toString().replace(/\/$/, "");
 }
 
 export function getFernSdkGenApiLanguage(generatorName: string): FernSdkGenApiLanguage | undefined {
@@ -507,23 +527,26 @@ export class FernSdkGenApiBatch {
             return;
         }
         this.dispatched = true;
-        void executeFernSdkGenApiBuild(this.participants)
-            .then((results) => {
-                results.forEach((result, index) => {
-                    const participant = this.participants[index];
-                    if (result.status === "fulfilled") {
-                        participant?.resolve(result.value);
-                    } else {
-                        participant?.reject(result.reason);
-                    }
-                });
-            })
-            .catch((error) => {
-                this.terminalError = error;
-                for (const participant of this.participants) {
-                    participant.reject(error);
+        void this.dispatch();
+    }
+
+    private async dispatch(): Promise<void> {
+        try {
+            const results = await executeFernSdkGenApiBuild(this.participants);
+            results.forEach((result, index) => {
+                const participant = this.participants[index];
+                if (result.status === "fulfilled") {
+                    participant?.resolve(result.value);
+                } else {
+                    participant?.reject(result.reason);
                 }
             });
+        } catch (error) {
+            this.terminalError = error;
+            for (const participant of this.participants) {
+                participant.reject(error);
+            }
+        }
     }
 }
 
@@ -544,7 +567,18 @@ async function executeFernSdkGenApiBuild(
     if (first == null) {
         throw new Error("Cannot submit an empty Fern sdk-gen-api build");
     }
-    const origin = getFernSdkGenApiOrigin();
+    let origin: string | undefined;
+    try {
+        origin = getFernSdkGenApiOrigin();
+    } catch (error) {
+        return first.context.failAndThrow(
+            error instanceof Error ? error.message : "Invalid sdk-gen-api origin",
+            error,
+            {
+                code: CliError.Code.ConfigError
+            }
+        );
+    }
     if (!origin) {
         return first.context.failAndThrow(
             "FERN_SDK_GEN_API_ORIGIN is required when FERN_USE_SDK_GEN_API=true",
@@ -599,6 +633,7 @@ async function executeFernSdkGenApiBuild(
         participant.context.logger.debug(`sdk-gen-api build ID: ${buildId}`);
     }
     const loggedByTarget = new Map<string, number>();
+    const pollDeadline = Date.now() + POLL_TIMEOUT_MS;
     for (;;) {
         let status: FernBuildStatus;
         try {
@@ -640,11 +675,19 @@ async function executeFernSdkGenApiBuild(
             loggedByTarget.set(target.targetId, target.logs.length);
         }
 
-        if (request.targets.every((requestTarget) => isTerminal(status, requestTarget.targetId))) {
+        const allTargetsTerminal = request.targets.every((requestTarget) => isTerminal(status, requestTarget.targetId));
+        if (allTargetsTerminal || status.status === "failed" || status.status === "succeeded") {
             return Promise.allSettled(
                 participants.map((participant, index) =>
                     finishFernSdkGenApiTarget(participant, request.targets[index]?.targetId, status)
                 )
+            );
+        }
+        if (Date.now() >= pollDeadline) {
+            return first.context.failAndThrow(
+                `Timed out waiting for sdk-gen-api build ${buildId} after ${POLL_TIMEOUT_MS / 60_000} minutes`,
+                undefined,
+                { code: CliError.Code.NetworkError }
             );
         }
         await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
@@ -675,6 +718,13 @@ async function finishFernSdkGenApiTarget(
         return participant.context.failAndThrow(target.error?.message ?? "sdk-gen-api generation failed", undefined, {
             code: CliError.Code.ContainerError
         });
+    }
+    if (target.status !== "succeeded") {
+        return participant.context.failAndThrow(
+            `sdk-gen-api build ended with status ${status.status} while target ${target.targetId} remained ${target.status}`,
+            undefined,
+            { code: CliError.Code.InternalError }
+        );
     }
     if (target.result?.artifactUrl == null) {
         return participant.context.failAndThrow("sdk-gen-api target completed without an artifact URL", undefined, {
@@ -816,13 +866,17 @@ export function createFernSdkGenApiBatchRequest({
             requestedOutput: output.requestedOutput
         };
     });
+    const apiInputs: FernSdkGenApiRequest["apiInputs"] = [{ id: "default", specIndexes: "all" }];
     const idempotencyKey = createHash("sha256")
         .update(specsTarGzBuffer)
         .update(
-            `${organization}:${requestTargets
-                .map((target) => `${target.targetId}:${target.sdk.version}`)
-                .sort()
-                .join(":")}`
+            JSON.stringify({
+                protocolVersion: 1,
+                organization,
+                apiName,
+                apiInputs,
+                targets: requestTargets
+            })
         )
         .digest("hex");
 
@@ -831,7 +885,7 @@ export function createFernSdkGenApiBatchRequest({
         apiName,
         ...(cliVersion ? { cliVersion } : {}),
         idempotencyKey,
-        apiInputs: [{ id: "default", specIndexes: "all" }],
+        apiInputs,
         targets: requestTargets
     };
 }

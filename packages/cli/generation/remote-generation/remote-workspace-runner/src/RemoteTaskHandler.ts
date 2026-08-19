@@ -452,7 +452,7 @@ export async function downloadFilesForTask({
     absolutePathToLocalOutput: AbsoluteFilePath;
     context: InteractiveTaskContext;
     skipFernignore?: boolean;
-}) {
+}): Promise<void> {
     try {
         const isFernIgnorePresent = await checkFernIgnorePresent(absolutePathToLocalOutput);
         const isExistingGitRepo = await checkIsGitRepository(absolutePathToLocalOutput);
