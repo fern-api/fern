@@ -83,6 +83,17 @@ function extractLines(content: string, linesParam: string): string {
 const CODE_TAG_REGEX = /([ \t]*)<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
 
 /**
+ * Removes `<Code src="..."/>` tags, e.g. so that their references are not mistaken for assets when
+ * scanning content that has not had its includes resolved yet.
+ */
+export function removeCodeIncludeTags(markdown: string): string {
+    if (!markdown.includes("<Code")) {
+        return markdown;
+    }
+    return markdown.replace(new RegExp(CODE_TAG_REGEX.source, CODE_TAG_REGEX.flags), "");
+}
+
+/**
  * Scans markdown content for <Code src="https://..."/> tags and returns the external URLs.
  */
 export function collectCodeSrcUrls(markdown: string): string[] {

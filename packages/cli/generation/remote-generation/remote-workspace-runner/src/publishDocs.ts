@@ -11,7 +11,7 @@ import {
     findIncompatibleTranslatedApiIds,
     getTranslatedAnnouncement,
     type RegisterApiFn,
-    replaceImagePathsAndUrls,
+    replaceImagePathsAndUrlsInTranslatedPage,
     replaceReferencedCode,
     replaceReferencedMarkdown,
     stripMdxComments,
@@ -1070,18 +1070,16 @@ export async function publishDocs({
                                     // Strip MDX comments
                                     let processedMarkdown = stripMdxComments(importsResolved);
 
-                                    // Replace image paths using the base page's location for resolution
-                                    // (translated pages reference the same images as the default locale)
-                                    processedMarkdown = replaceImagePathsAndUrls(
-                                        processedMarkdown,
-                                        collectedFileIds,
+                                    processedMarkdown = replaceImagePathsAndUrlsInTranslatedPage({
+                                        markdown: processedMarkdown,
+                                        fileIdsMap: collectedFileIds,
                                         markdownFilesToPathName,
-                                        {
-                                            absolutePathToMarkdownFile,
-                                            absolutePathToFernFolder: docsWorkspacePath
-                                        },
+                                        absolutePathToFernFolder: docsWorkspacePath,
+                                        absolutePathToDefaultLocaleMarkdownFile: absolutePathToMarkdownFile,
+                                        absolutePathToTranslatedMarkdownFile:
+                                            await resolveLocalePath(absolutePathToMarkdownFile),
                                         context
-                                    );
+                                    });
 
                                     // Rewrite editThisPageUrl to point to the translated file
                                     let editThisPageUrl = basePage?.editThisPageUrl;

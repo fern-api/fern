@@ -3,7 +3,7 @@ import {
     applyTranslatedNavigationOverlays,
     type DocsDefinitionResolver,
     getTranslatedAnnouncement,
-    replaceImagePathsAndUrls,
+    replaceImagePathsAndUrlsInTranslatedPage,
     replaceReferencedCode,
     replaceReferencedMarkdown,
     stripMdxComments,
@@ -100,16 +100,15 @@ export async function buildTranslatedDocsDefinition({
 
                 let processedMarkdown = stripMdxComments(importsResolved);
 
-                processedMarkdown = replaceImagePathsAndUrls(
-                    processedMarkdown,
-                    collectedFileIds,
+                processedMarkdown = replaceImagePathsAndUrlsInTranslatedPage({
+                    markdown: processedMarkdown,
+                    fileIdsMap: collectedFileIds,
                     markdownFilesToPathName,
-                    {
-                        absolutePathToMarkdownFile,
-                        absolutePathToFernFolder: docsWorkspacePath
-                    },
+                    absolutePathToFernFolder: docsWorkspacePath,
+                    absolutePathToDefaultLocaleMarkdownFile: absolutePathToMarkdownFile,
+                    absolutePathToTranslatedMarkdownFile: await resolveLocalePath(absolutePathToMarkdownFile),
                     context
-                );
+                });
 
                 let editThisPageUrl = basePage?.editThisPageUrl;
                 if (editThisPageUrl != null) {

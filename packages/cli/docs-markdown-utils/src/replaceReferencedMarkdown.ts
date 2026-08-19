@@ -66,6 +66,19 @@ function substituteVariables(content: string, variables: Record<string, string>)
     return result;
 }
 
+const MARKDOWN_TAG_REGEX = /([ \t]*)<Markdown\s+([^>]+)\/>/g;
+
+/**
+ * Removes `<Markdown src="..."/>` tags, e.g. so that their references are not mistaken for assets
+ * when scanning content that has not had its includes resolved yet.
+ */
+export function removeMarkdownIncludeTags(markdown: string): string {
+    if (!markdown.includes("<Markdown")) {
+        return markdown;
+    }
+    return markdown.replace(new RegExp(MARKDOWN_TAG_REGEX.source, MARKDOWN_TAG_REGEX.flags), "");
+}
+
 export async function replaceReferencedMarkdown({
     markdown,
     absolutePathToFernFolder,
@@ -90,7 +103,7 @@ export async function replaceReferencedMarkdown({
         return { markdown, referencedFiles: Array.from(collectedFiles.values()) };
     }
 
-    const regex = /([ \t]*)<Markdown\s+([^>]+)\/>/g;
+    const regex = new RegExp(MARKDOWN_TAG_REGEX.source, MARKDOWN_TAG_REGEX.flags);
 
     let newMarkdown = markdown;
 

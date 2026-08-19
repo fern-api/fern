@@ -3,6 +3,7 @@ import { type docsYml } from "@fern-api/configuration";
 // Re-export markdown utilities needed for translation processing
 export {
     replaceImagePathsAndUrls,
+    replaceImagePathsAndUrlsInTranslatedPage,
     replaceReferencedCode,
     replaceReferencedMarkdown,
     stripMdxComments,

@@ -7,7 +7,7 @@ import { DocsDefinitionResolver } from "../DocsDefinitionResolver.js";
 
 const context = createMockTaskContext();
 
-async function resolveFixture(): Promise<DocsDefinitionResolver> {
+async function resolveFixture(): Promise<{ uploadedFiles: string[] }> {
     const docsWorkspace = await loadDocsWorkspace({
         fernDirectory: resolve(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/translation-images/fern")),
         context
@@ -17,36 +17,39 @@ async function resolveFixture(): Promise<DocsDefinitionResolver> {
         throw new Error("Failed to load docs workspace");
     }
 
+    const uploadedFiles: string[] = [];
     const resolver = new DocsDefinitionResolver({
         domain: "https://translation-images.docs.buildwithfern.com",
         docsWorkspace,
         ossWorkspaces: [],
         apiWorkspaces: [],
         taskContext: context,
-        uploadFiles: async (files) => files.map((file) => ({ ...file, fileId: String(file.relativeFilePath) })),
+        uploadFiles: async (files) =>
+            files.map((file) => {
+                uploadedFiles.push(String(file.relativeFilePath));
+                return { ...file, fileId: String(file.relativeFilePath) };
+            }),
         registerApi: async () => ""
     });
 
     await resolver.resolve();
-    return resolver;
+    return { uploadedFiles };
 }
 
 describe("images in translated pages", () => {
-    it("replaces image paths in translated pages with the uploaded file ids", async () => {
-        const resolver = await resolveFixture();
-        const translationPages = resolver.getTranslationPages();
+    it("uploads images that only a translated page references", async () => {
+        const { uploadedFiles } = await resolveFixture();
 
-        expect(translationPages?.tr?.[RelativeFilePath.of("pages/landing.mdx")]).toContain(
-            'src="file:assets/logo.png"'
-        );
+        // Authored relative to the translated file, and relative to the default-locale page.
+        expect(uploadedFiles).toContain("assets/logo-tr.png");
+        expect(uploadedFiles).toContain("assets/logo-pt.png");
     });
 
-    it("falls back to the default-locale page's location when the translation mirrors its image paths", async () => {
-        const resolver = await resolveFixture();
-        const translationPages = resolver.getTranslationPages();
+    it("skips references that are not uploadable assets", async () => {
+        const { uploadedFiles } = await resolveFixture();
 
-        expect(translationPages?.pt?.[RelativeFilePath.of("pages/landing.mdx")]).toContain(
-            'src="file:assets/logo.png"'
-        );
+        // A reference with no file on disk, and a `<Markdown src/>` include.
+        expect(uploadedFiles).not.toContain("assets/missing.png");
+        expect(uploadedFiles).not.toContain("snippets/shared.mdx");
     });
 });

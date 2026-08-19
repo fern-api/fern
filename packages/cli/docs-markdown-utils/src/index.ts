@@ -6,12 +6,19 @@ export {
     isValidRelativeSlug,
     parseImagePaths,
     replaceImagePathsAndUrls,
+    replaceImagePathsAndUrlsInTranslatedPage,
     trimAnchor
 } from "./parseImagePaths.js";
 export { parseMarkdownBodyToTree, parseMarkdownToTree } from "./parseMarkdownToTree.js";
-export { collectCodeSrcUrls, prefetchCodeSrcUrls, replaceReferencedCode } from "./replaceReferencedCode.js";
+export {
+    collectCodeSrcUrls,
+    prefetchCodeSrcUrls,
+    removeCodeIncludeTags,
+    replaceReferencedCode
+} from "./replaceReferencedCode.js";
 export {
     type ReferencedMarkdownFile,
+    removeMarkdownIncludeTags,
     type ReplaceReferencedMarkdownResult,
     replaceReferencedMarkdown
 } from "./replaceReferencedMarkdown.js";
