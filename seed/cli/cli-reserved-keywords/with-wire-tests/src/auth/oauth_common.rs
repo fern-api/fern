@@ -224,27 +224,6 @@ pub(crate) fn config_dir() -> Option<PathBuf> {
     }
 }
 
-/// Write `data` to `path` atomically: sibling temp file → owner-only
-/// permissions (0600 on Unix) → rename into place.
-///
-/// The temp file name is unique per writer — pid plus a process-local
-/// counter. Deriving it from the target alone meant every concurrent writer
-/// used the *same* sibling (`auth-keyring.tmp`): whichever one renamed first
-/// moved it away, and the rest failed with `ENOENT` from `rename`. That
-/// surfaced as intermittent `auth login --with-token` failures across a
-/// wire-test suite large enough to run many CLI processes at once, killing a
-/// different subset of cases on each run.
-///
-/// The pid covers the case that actually bit us (separate CLI processes); the
-/// counter covers two writers inside one process, and is what makes the
-/// behavior unit-testable without spawning subprocesses.
-///
-/// `rename` is still atomic for readers, which is what keeps a partially
-/// written credential file unobservable. This only fixes writer-vs-writer
-/// collisions on the temp path. `FileKeyringStore::set` remains a
-/// read-modify-write of the whole map with no lock, so simultaneous writers
-/// can still clobber one another's *entries*; making that safe needs file
-/// locking, which is a larger change.
 /// Unlinks a temp file on drop unless [`TempFileGuard::disarm`]ed. Covers
 /// every early return *and* a panic between creating the temp file and
 /// renaming it into place.
@@ -278,6 +257,30 @@ impl Drop for TempFileGuard {
     }
 }
 
+/// Write `data` to `path` atomically: sibling temp file → owner-only
+/// permissions (0600 on Unix) → rename into place.
+///
+/// The temp file name is unique per writer — pid plus a process-local
+/// counter. Deriving it from the target alone meant every concurrent writer
+/// used the *same* sibling (`auth-keyring.tmp`): whichever one renamed first
+/// moved it away, and the rest failed with `ENOENT` from `rename`. That
+/// surfaced as intermittent `auth login --with-token` failures across a
+/// wire-test suite large enough to run many CLI processes at once, killing a
+/// different subset of cases on each run.
+///
+/// The pid covers the case that actually bit us (separate CLI processes); the
+/// counter covers two writers inside one process, and is what makes the
+/// behavior unit-testable without spawning subprocesses.
+///
+/// A [`TempFileGuard`] unlinks the temp file if anything between creating it
+/// and renaming it fails, so unique names cannot accumulate as orphans.
+///
+/// `rename` is still atomic for readers, which is what keeps a partially
+/// written credential file unobservable. This only fixes writer-vs-writer
+/// collisions on the temp path. `FileKeyringStore::set` remains a
+/// read-modify-write of the whole map with no lock, so simultaneous writers
+/// can still clobber one another's *entries*; making that safe needs file
+/// locking, which is a larger change.
 pub(crate) fn atomic_write(path: &Path, data: &[u8]) -> Result<(), CliError> {
     static TMP_SEQ: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let seq = TMP_SEQ.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
