@@ -5,4 +5,11 @@
     instead of `Fdx` and `CraReport` in type, method and package names. This applies to the
     sub-client fields on the root client as well as the generated models, so both halves of
     the SDK agree on the acronym spelling and the generated code compiles.
+
+    Enabling `additional-acronyms` is source-breaking for consumers of the generated SDK: every
+    affected exported identifier is renamed, including type names, method names, package names and
+    the sub-client fields on the root client (`client.Fdx` becomes `client.FDX`,
+    `CraReportGetRequest` becomes `CRAReportGetRequest`). Existing user code referencing those
+    names will no longer compile, so release the SDK as a major version when you turn this on.
+    SDKs that do not set the option are unaffected — output is byte-identical to before.
   type: feat

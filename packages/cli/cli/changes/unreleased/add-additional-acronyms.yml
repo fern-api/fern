@@ -5,4 +5,10 @@
     `additional-acronyms: [FDX, CRA]` turns `fdx` into `FDX` and `cra_report` into
     `CRAReport` instead of `Fdx` and `CraReport`. Matching is case-insensitive, so
     `fdx`, `FDX` and `f_d_x` all produce `FDX`.
+
+    Enabling the option is source-breaking for consumers of the generated SDK: every affected
+    exported identifier is renamed — type names, method names and the sub-client fields on the
+    root client — so existing user code referencing the old spellings will no longer compile.
+    Release the SDK as a major version when you turn this on. SDKs that do not set the option, or
+    that set `smart-casing: false`, are unaffected and generate byte-identical output.
   type: feat
