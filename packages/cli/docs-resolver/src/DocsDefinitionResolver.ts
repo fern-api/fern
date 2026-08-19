@@ -62,6 +62,12 @@ interface DocsTranslationsConfig {
     translations: string[] | undefined;
 }
 
+/** The paths that references inside a markdown file are resolved against. */
+interface MarkdownPathMetadata {
+    absolutePathToMarkdownFile: AbsoluteFilePath;
+    absolutePathToFernFolder: AbsoluteFilePath;
+}
+
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
 // DocsV1Write.DocsConfig includes the translations field.
 interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
@@ -412,6 +418,8 @@ export class DocsDefinitionResolver {
         };
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
+    /** Keyed by `<locale>:<relative path>`, so the replace step reuses the parse step's resolution. */
+    private translationPageMetadata: Map<string, MarkdownPathMetadata> = new Map();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToSidebarTitle: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
@@ -625,6 +633,7 @@ export class DocsDefinitionResolver {
                 });
             }
         }
+        this.parseImagePathsInTranslationPages(filesToUploadSet);
         const imageParseTime = performance.now() - imageParseStart;
         this.taskContext.logger.debug(`Parsed image paths in ${imageParseTime.toFixed(0)}ms`);
 
@@ -742,6 +751,7 @@ export class DocsDefinitionResolver {
                 });
             }
         }
+        this.replaceImagePathsAndUrlsInTranslationPages(markdownFilesToPathName);
         const replaceTime = performance.now() - replaceStart;
         this.taskContext.logger.debug(`Replaced image paths in ${replaceTime.toFixed(0)}ms`);
 
@@ -825,6 +835,148 @@ export class DocsDefinitionResolver {
         );
 
         return { config, pages, jsFiles };
+    }
+
+    /**
+     * Extracts images from translated page content the same way as from default-locale pages, so
+     * that assets only referenced by a translation are uploaded. Without this the translated
+     * markdown reaches FDR with its authored relative paths and renders as broken images.
+     */
+    private parseImagePathsInTranslationPages(filesToUploadSet: Set<AbsoluteFilePath>): void {
+        const translationPages = this.parsedDocsConfig.translationPages;
+        if (translationPages == null) {
+            return;
+        }
+
+        for (const [locale, pages] of Object.entries(translationPages)) {
+            for (const [relativePath, markdown] of Object.entries(pages)) {
+                const relativeFilePath = RelativeFilePath.of(relativePath);
+                try {
+                    const {
+                        markdown: newMarkdown,
+                        filepaths,
+                        metadata
+                    } = this.parseTranslationPageImagePaths({
+                        locale,
+                        relativeFilePath,
+                        markdown
+                    });
+
+                    pages[relativeFilePath] = newMarkdown;
+                    this.translationPageMetadata.set(this.toTranslationPageKey(locale, relativeFilePath), metadata);
+
+                    for (const filepath of filepaths) {
+                        filesToUploadSet.add(filepath);
+                    }
+                } catch (error) {
+                    throw new CliError({
+                        message: `Failed to parse markdown file translations/${locale}/${relativePath}: ${extractErrorMessage(error)}`,
+                        code: CliError.Code.ParseError
+                    });
+                }
+            }
+        }
+    }
+
+    /**
+     * Resolves a translated page's image references against the translated file's own location.
+     * Translations that copy the default-locale page's paths verbatim point outside the workspace,
+     * so the default-locale page's location is used when that is the resolution hitting real files.
+     */
+    private parseTranslationPageImagePaths({
+        locale,
+        relativeFilePath,
+        markdown
+    }: {
+        locale: string;
+        relativeFilePath: RelativeFilePath;
+        markdown: string;
+    }): { markdown: string; filepaths: AbsoluteFilePath[]; metadata: MarkdownPathMetadata } {
+        const translatedFileMetadata: MarkdownPathMetadata = {
+            absolutePathToMarkdownFile: this.resolveTranslationFilepath(locale, relativeFilePath),
+            absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
+        };
+        const parsed = parseImagePaths(markdown, translatedFileMetadata, this.taskContext);
+        const missingFilepaths = parsed.filepaths.filter((filepath) => !existsSync(filepath));
+        if (missingFilepaths.length === 0) {
+            return { ...parsed, metadata: translatedFileMetadata };
+        }
+
+        const defaultLocaleFileMetadata: MarkdownPathMetadata = {
+            absolutePathToMarkdownFile: this.resolveFilepath(relativeFilePath),
+            absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
+        };
+        const parsedFromDefaultLocale = parseImagePaths(markdown, defaultLocaleFileMetadata, this.taskContext);
+        if (
+            parsedFromDefaultLocale.filepaths.length > 0 &&
+            parsedFromDefaultLocale.filepaths.every((filepath) => existsSync(filepath))
+        ) {
+            return { ...parsedFromDefaultLocale, metadata: defaultLocaleFileMetadata };
+        }
+
+        for (const filepath of missingFilepaths) {
+            this.taskContext.logger.warn(
+                `translations/${locale}/${relativeFilePath} references ${filepath}, which does not exist.`
+            );
+        }
+        return {
+            ...parsed,
+            filepaths: parsed.filepaths.filter((filepath) => existsSync(filepath)),
+            metadata: translatedFileMetadata
+        };
+    }
+
+    /** Swaps translated pages' image paths for the uploaded file IDs. */
+    private replaceImagePathsAndUrlsInTranslationPages(
+        markdownFilesToPathName: Record<AbsoluteFilePath, string>
+    ): void {
+        const translationPages = this.parsedDocsConfig.translationPages;
+        if (translationPages == null) {
+            return;
+        }
+
+        for (const [locale, pages] of Object.entries(translationPages)) {
+            for (const [relativePath, markdown] of Object.entries(pages)) {
+                const relativeFilePath = RelativeFilePath.of(relativePath);
+                const metadata = this.translationPageMetadata.get(
+                    this.toTranslationPageKey(locale, relativeFilePath)
+                ) ?? {
+                    absolutePathToMarkdownFile: this.resolveTranslationFilepath(locale, relativeFilePath),
+                    absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
+                };
+
+                try {
+                    pages[relativeFilePath] = replaceImagePathsAndUrls(
+                        markdown,
+                        this.collectedFileIds,
+                        markdownFilesToPathName,
+                        metadata,
+                        this.taskContext
+                    );
+                } catch (error) {
+                    throw new CliError({
+                        message: `Failed to replace image paths in markdown file translations/${locale}/${relativePath}: ${extractErrorMessage(error)}`,
+                        code: CliError.Code.ParseError
+                    });
+                }
+            }
+        }
+    }
+
+    private toTranslationPageKey(locale: string, relativeFilePath: RelativeFilePath): string {
+        return `${locale}:${relativeFilePath}`;
+    }
+
+    /**
+     * Translated pages live at `translations/<locale>/<relative path of the default-locale page>`.
+     */
+    private resolveTranslationFilepath(locale: string, relativeFilePath: RelativeFilePath): AbsoluteFilePath {
+        return join(
+            this.docsWorkspace.absoluteFilePath,
+            RelativeFilePath.of("translations"),
+            RelativeFilePath.of(locale),
+            relativeFilePath
+        );
     }
 
     private resolveFilepath(unresolvedFilepath: string): AbsoluteFilePath;

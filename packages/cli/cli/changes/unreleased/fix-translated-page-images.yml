@@ -1,0 +1,5 @@
+- summary: |
+    Fix images and other local file references in translated pages not rendering. Translated
+    page content is now run through the same image parse, upload, and file ID replacement
+    pipeline as default-locale pages.
+  type: fix

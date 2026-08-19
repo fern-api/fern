@@ -1,0 +1,10 @@
+instances:
+  - url: https://translation-images.docs.buildwithfern.com
+translations:
+  - lang: en
+    default: true
+  - lang: tr
+  - lang: pt
+navigation:
+  - page: Landing
+    path: ./pages/landing.mdx
