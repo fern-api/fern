@@ -222,15 +222,31 @@ pub(crate) fn group_about_metadata(
         .get(name)
         .and_then(|info| info.summary.clone())
         .filter(|s| !s.is_empty())
-        .or_else(|| {
-            tag_descriptions.get(name).map(|description| {
-                crate::text::truncate_description(
-                    description,
-                    crate::text::CLI_DESCRIPTION_LIMIT,
-                    true,
-                )
-            })
-        })
+        .or_else(|| group_tag_about_description(name, tag_descriptions))
+}
+
+fn group_tag_about_description(
+    name: &str,
+    tag_descriptions: &HashMap<String, String>,
+) -> Option<String> {
+    tag_descriptions.get(name).map(|description| {
+        let single_line = description.split_whitespace().collect::<Vec<_>>().join(" ");
+        crate::text::truncate_description(
+            &single_line,
+            crate::text::CLI_DESCRIPTION_LIMIT,
+            true,
+        )
+    })
+}
+
+/// Resolve the truncated description from a matching OpenAPI root tag.
+pub(crate) fn group_tag_description(
+    name: &str,
+    tag_descriptions: &HashMap<String, String>,
+) -> Option<String> {
+    tag_descriptions.get(name).map(|description| {
+        crate::text::truncate_description(description, crate::text::CLI_DESCRIPTION_LIMIT, true)
+    })
 }
 
 /// Resolve the `about()` line for a group's clap subcommand. The legacy
@@ -624,10 +640,11 @@ fn build_resource_command(
     // Add sub-resource subcommands (recursive)
     let mut sub_names: Vec<_> = resource.resources.keys().collect();
     sub_names.sort();
+    let no_nested_tag_descriptions = HashMap::new();
     for sub_name in sub_names {
         let sub_resource = &resource.resources[sub_name];
         if let Some(sub_cmd) =
-            build_resource_command(sub_name, sub_resource, groups, tag_descriptions)
+            build_resource_command(sub_name, sub_resource, groups, &no_nested_tag_descriptions)
         {
             has_children = true;
             cmd = cmd.subcommand(sub_cmd);
@@ -2041,6 +2058,89 @@ mod tests {
                 .map(|s| s.to_string())
                 .unwrap_or_default(),
             "",
+        );
+    }
+
+    #[test]
+    fn test_tag_description_about_is_single_line_and_strips_markdown_links() {
+        let mut doc = make_doc_with_things_resource();
+        doc.tag_descriptions.insert(
+            "things".to_string(),
+            "Manage things across\nmultiple lines. See [the API guide](https://example.com/guide)."
+                .to_string(),
+        );
+        let cmd = build_cli(&doc);
+        let things = cmd
+            .find_subcommand("things")
+            .expect("things subcommand missing");
+        assert_eq!(
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
+            "Manage things across multiple lines. See the API guide.",
+        );
+        assert_eq!(
+            things
+                .get_long_about()
+                .map(|s| s.to_string())
+                .unwrap_or_default(),
+            "Manage things across\nmultiple lines. See [the API guide](https://example.com/guide).",
+        );
+    }
+
+    #[test]
+    fn test_nested_resources_do_not_use_root_tag_descriptions() {
+        let mut methods = HashMap::new();
+        methods.insert(
+            "list".to_string(),
+            RestMethod {
+                http_method: "GET".to_string(),
+                path: "/voices".to_string(),
+                ..Default::default()
+            },
+        );
+        let mut nested = HashMap::new();
+        nested.insert(
+            "voices".to_string(),
+            RestResource {
+                methods,
+                resources: HashMap::new(),
+            },
+        );
+        let mut resources = HashMap::new();
+        resources.insert(
+            "text-to-speech".to_string(),
+            RestResource {
+                methods: HashMap::new(),
+                resources: nested,
+            },
+        );
+        let mut doc = RestDescription {
+            name: "test-cli".to_string(),
+            resources,
+            ..Default::default()
+        };
+        doc.tag_descriptions.insert(
+            "text-to-speech".to_string(),
+            "Convert text to speech.".to_string(),
+        );
+        doc.tag_descriptions.insert(
+            "voices".to_string(),
+            "Manage voices.".to_string(),
+        );
+
+        let cmd = build_cli(&doc);
+        let top = cmd
+            .find_subcommand("text-to-speech")
+            .expect("top-level subcommand missing");
+        assert_eq!(
+            top.get_about().map(|s| s.to_string()).unwrap_or_default(),
+            "Convert text to speech.",
+        );
+        let nested = top
+            .find_subcommand("voices")
+            .expect("nested subcommand missing");
+        assert_eq!(
+            nested.get_about().map(|s| s.to_string()).unwrap_or_default(),
+            "Operations on 'voices'",
         );
     }
 

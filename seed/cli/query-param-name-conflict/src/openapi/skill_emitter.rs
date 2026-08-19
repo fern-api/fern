@@ -15,7 +15,7 @@ use std::path::PathBuf;
 use clap::{Arg, Command};
 
 use crate::auth::{AuthCredentialSource, SchemeBinding};
-use crate::openapi::commands::group_about_metadata;
+use crate::openapi::commands::group_tag_description;
 use crate::openapi::discovery::{RestDescription, RestResource, SecurityScheme};
 use crate::text;
 
@@ -374,20 +374,26 @@ fn render_group_skill(
 }
 
 fn group_description(doc: &RestDescription, group_name: &str) -> String {
-    if let Some(description) =
-        group_about_metadata(group_name, &doc.groups, &doc.tag_descriptions)
+    if let Some(summary) = doc
+        .groups
+        .get(group_name)
+        .and_then(|info| info.summary.as_deref())
+        .filter(|summary| !summary.is_empty())
     {
-        return description;
+        return summary.to_string();
     }
 
-    // Preserve the existing skill behavior for x-fern-groups descriptions
-    // when no summary or tag description is available.
     if let Some(description) = doc
         .groups
         .get(group_name)
         .and_then(|info| info.description.as_deref())
+        .filter(|description| !description.is_empty())
     {
         return first_sentence(description);
+    }
+
+    if let Some(description) = group_tag_description(group_name, &doc.tag_descriptions) {
+        return description;
     }
 
     // Fall back to spec title/description
@@ -488,7 +494,9 @@ pub fn example_placeholder(param: &crate::openapi::discovery::MethodParameter) -
 mod tests {
     use super::*;
     use std::collections::HashMap;
-    use crate::openapi::discovery::{MethodParameter, RestDescription, RestMethod, RestResource};
+    use crate::openapi::discovery::{
+        MethodParameter, RestDescription, RestMethod, RestResource, SdkGroupInfo,
+    };
 
     fn minimal_doc() -> RestDescription {
         let mut resources = HashMap::new();
@@ -750,6 +758,33 @@ mod tests {
         assert!(files[1]
             .1
             .contains("description: \"Manage the items available to your account.\""));
+    }
+
+    #[test]
+    fn group_description_wins_over_tag_description_when_summary_is_absent() {
+        let mut doc = minimal_doc();
+        doc.groups.insert(
+            "items".to_string(),
+            SdkGroupInfo {
+                description: Some(
+                    "Manage item inventory across every connected account. This is extended prose."
+                        .to_string(),
+                ),
+                ..Default::default()
+            },
+        );
+        doc.tag_descriptions.insert(
+            "items".to_string(),
+            "Items exposed by the API.".to_string(),
+        );
+
+        let files = generate_skills(&doc, "test", &[]);
+        assert!(files[1]
+            .1
+            .contains("description: \"Manage item inventory across every connected account.\""));
+        assert!(!files[1]
+            .1
+            .contains("description: \"Items exposed by the API.\""));
     }
 
     #[test]

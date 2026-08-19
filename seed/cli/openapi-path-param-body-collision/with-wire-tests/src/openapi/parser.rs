@@ -267,7 +267,19 @@ where
         match serde_yaml::from_value::<RawOpenApiTag>(entry) {
             Ok(tag) if !tag.name.trim().is_empty() => {
                 if let Some(description) = tag.description.filter(|d| !d.trim().is_empty()) {
-                    descriptions.insert(camel_to_kebab(&tag.name), description);
+                    let normalized_name = camel_to_kebab(&tag.name);
+                    match descriptions.entry(normalized_name) {
+                        std::collections::hash_map::Entry::Vacant(entry) => {
+                            entry.insert(description);
+                        }
+                        std::collections::hash_map::Entry::Occupied(entry) => {
+                            tracing::debug!(
+                                tag_name = %tag.name,
+                                normalized_name = %entry.key(),
+                                "Keeping the first document-root OpenAPI tag description after normalization collision"
+                            );
+                        }
+                    }
                 }
             }
             Ok(_) => {
@@ -6928,6 +6940,27 @@ paths: {}
             Some("Description for the group."),
         );
         assert!(!doc.tag_descriptions.contains_key("no-description"));
+    }
+
+    #[test]
+    fn test_root_tag_description_normalization_collision_keeps_first() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: t
+  version: "1"
+tags:
+  - name: myGroup
+    description: First description.
+  - name: my-group
+    description: Second description.
+paths: {}
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        assert_eq!(
+            doc.tag_descriptions.get("my-group").map(String::as_str),
+            Some("First description."),
+        );
     }
 
     #[test]
