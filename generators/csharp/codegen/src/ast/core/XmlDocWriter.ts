@@ -73,6 +73,9 @@ export class XmlDocWriter {
         "tbody"
     ]);
 
+    // Matches an ampersand that does not already begin a character or entity reference
+    private static readonly BARE_AMPERSAND_PATTERN = /&(?!(?:[a-zA-Z][a-zA-Z0-9]*|#[0-9]+|#x[0-9a-fA-F]+);)/g;
+
     private writer: Writer;
     private wrotePrefixOnCurrentLine: boolean = false;
     constructor(writer: Writer) {
@@ -198,7 +201,10 @@ export class XmlDocWriter {
             }
             return match;
         });
-        const escaped = withPlaceholders.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+        const escaped = withPlaceholders
+            .replace(XmlDocWriter.BARE_AMPERSAND_PATTERN, "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;");
 
         return escaped.replace(/\uE000(\d+)\uE000/g, (_, index: string) => tags[parseInt(index, 10)] ?? "");
     }

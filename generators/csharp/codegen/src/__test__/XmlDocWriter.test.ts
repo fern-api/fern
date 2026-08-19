@@ -213,6 +213,28 @@ describe("XmlDocWriter.escapeXmlDocContent", () => {
         });
     });
 
+    describe("escapes bare ampersands", () => {
+        it("should escape a standalone ampersand", () => {
+            const result = escapeXmlDocContent("- &: HTML entities");
+            expect(result).toBe("- &amp;: HTML entities");
+        });
+
+        it("should escape ampersands in urls", () => {
+            const result = escapeXmlDocContent("/search?a=1&b=2");
+            expect(result).toBe("/search?a=1&amp;b=2");
+        });
+
+        it("should not double-escape existing entities", () => {
+            const result = escapeXmlDocContent("&amp; &lt; &gt;");
+            expect(result).toBe("&amp; &lt; &gt;");
+        });
+
+        it("should escape ampersands alongside angle brackets", () => {
+            const result = escapeXmlDocContent("List<string> & Dictionary<string, int>");
+            expect(result).toBe("List&lt;string&gt; &amp; Dictionary&lt;string, int&gt;");
+        });
+    });
+
     describe("handles mixed content", () => {
         it("should handle comparison within sentence with converted link", () => {
             const result = escapeXmlDocContent('When x < y, see <a href="https://example.com">docs</a>');
