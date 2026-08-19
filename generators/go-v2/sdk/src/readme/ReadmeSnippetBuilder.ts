@@ -91,7 +91,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 ? {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
                           renderer: this.renderPaginationSnippet.bind(this),
-                          predicate: (endpoint: EndpointWithFilepath) => endpoint.endpoint.pagination != null
+                          predicate: (endpoint: EndpointWithFilepath) =>
+                              this.context.isEnabledPaginationEndpoint(endpoint.endpoint)
                       }
                   }
                 : undefined)
@@ -548,10 +549,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
         const defaultEndpoint = this.endpointsById[this.defaultEndpointId];
-        if (defaultEndpoint?.endpoint.pagination != null) {
+        if (defaultEndpoint != null && this.context.isEnabledPaginationEndpoint(defaultEndpoint.endpoint)) {
             return defaultEndpoint;
         }
-        return Object.values(this.endpointsById).find((endpoint) => endpoint.endpoint.pagination != null);
+        return Object.values(this.endpointsById).find((endpoint) =>
+            this.context.isEnabledPaginationEndpoint(endpoint.endpoint)
+        );
     }
 
     private getConfiguredEndpointIdsForFeature(featureId: FernIr.FeatureId): FernIr.EndpointId[] | undefined {

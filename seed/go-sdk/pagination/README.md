@@ -97,7 +97,7 @@ is the only attribute you will need for most use cases. But if need be, several 
 ```go
 // Loop over the items using the provided iterator.
 ctx := context.TODO()
-page, err := client.Complex.Search(
+page, err := client.InlineUsers.InlineUsers.ListWithCursorPagination(
     ctx,
     ...
 )
@@ -128,7 +128,7 @@ for page != nil {
 }
 
 // Paginated endpoints return a Page with directly accessible headers, status code, and full response
-page, err = client.Complex.Search(
+page, err = client.InlineUsers.InlineUsers.ListWithCursorPagination(
     ctx,
     ...
 )
