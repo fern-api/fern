@@ -18,8 +18,8 @@ export {
 } from "./replaceReferencedCode.js";
 export {
     type ReferencedMarkdownFile,
-    removeMarkdownIncludeTags,
     type ReplaceReferencedMarkdownResult,
+    removeMarkdownIncludeTags,
     replaceReferencedMarkdown
 } from "./replaceReferencedMarkdown.js";
 export { stripMdxComments } from "./stripMdxComments.js";
