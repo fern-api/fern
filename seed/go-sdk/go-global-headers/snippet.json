@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/global-headers",
+                "method": "GET",
+                "identifier_override": "endpoint_service.get"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-global-headers/fern/client\"\n\toption \"github.com/go-global-headers/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.Get(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}
