@@ -5,6 +5,20 @@
     "__package__.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
+        "errors": {
+          "BadRequestError": {
+            "docs": "Bad request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 400,
+            "type": "nullable<UserError>",
+          },
+        },
         "service": {
           "auth": false,
           "base-path": "",
@@ -13,6 +27,9 @@
               "auth": undefined,
               "display-name": "Create a user",
               "docs": undefined,
+              "errors": [
+                "BadRequestError",
+              ],
               "examples": [
                 {
                   "request": {},
@@ -66,6 +83,9 @@
               "auth": undefined,
               "display-name": "Get a user",
               "docs": undefined,
+              "errors": [
+                "BadRequestError",
+              ],
               "examples": [
                 {
                   "path-parameters": {
@@ -190,6 +210,16 @@
               "openapi": "../openapi.yml",
             },
           },
+          "UserError": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "errorCode": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "UserSettings": {
             "docs": undefined,
             "inline": undefined,
@@ -227,7 +257,14 @@
           },
         },
       },
-      "rawContents": "service:
+      "rawContents": "errors:
+  BadRequestError:
+    status-code: 400
+    type: nullable<UserError>
+    docs: Bad request
+    examples:
+      - value: {}
+service:
   auth: false
   base-path: ''
   endpoints:
@@ -249,6 +286,8 @@
         docs: User created successfully
         type: User
         status-code: 200
+      errors:
+        - BadRequestError
       examples:
         - request: {}
           response:
@@ -316,6 +355,8 @@
         docs: User retrieved successfully
         type: User
         status-code: 200
+      errors:
+        - BadRequestError
       examples:
         - path-parameters:
             userId: userId
@@ -353,6 +394,11 @@ types:
       theme: optional<string>
       notifications: optional<boolean>
       lastModified: optional<nullable<datetime>>
+    source:
+      openapi: ../openapi.yml
+  UserError:
+    properties:
+      errorCode: optional<string>
     source:
       openapi: ../openapi.yml
   UserStatsAccountStatus:

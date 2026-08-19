@@ -14,6 +14,8 @@ export function isSchemaEqual(a: Schema, b: Schema): boolean {
         return a.schema === b.schema;
     } else if (a.type === "optional" && b.type === "optional") {
         return isSchemaEqual(a.value, b.value);
+    } else if (a.type === "nullable" && b.type === "nullable") {
+        return isSchemaEqual(a.value, b.value);
     } else if (a.type === "oneOf" && b.type === "oneOf") {
         return isOneOfEqual(a.value, b.value);
     } else if (a.type === "object" && b.type === "object") {

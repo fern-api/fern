@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Error responses that reference the same `nullable` schema from two or more endpoints now
+    generate a typed error body instead of an untyped one. Previously two responses referring
+    to the identical nullable schema were treated as conflicting shapes and the body was
+    downgraded to `unknown`.
+
+    **This changes generated error-handling signatures for specs with that shape**, so those
+    SDKs may warrant a major bump. The trigger condition is narrow: two or more endpoints must
+    share a status code whose error schema is the same nullable schema. Errors declared by a
+    single endpoint, and shared errors whose schemas are not nullable, were already typed and
+    are unaffected.
+
+    If your spec has that shape, error handling that indexes into the body must move to the
+    typed field:
+
+    - Go fails to compile: `err.Body.(map[string]any)["error_code"]` becomes
+      `err.Body.ErrorCode`.
+    - Java fails to compile: casts such as `(Map<String, Object>) e.body()` no longer apply.
+    - **Python fails at runtime, not at build time**: the body is parsed into a model, so
+      `e.body["error_code"]` raises `TypeError: 'ErrorBody' object is not subscriptable` the
+      first time the error path fires. Use `e.body.error_code`.
+    - TypeScript is unaffected in practice, since the body was already `unknown` and had to be
+      narrowed.
+  type: fix
