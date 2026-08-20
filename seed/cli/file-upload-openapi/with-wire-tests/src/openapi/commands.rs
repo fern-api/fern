@@ -384,17 +384,40 @@ fn group_about_text_for_group(
     )
     .filter(|description| !description.is_empty());
 
+    // An explicit `x-fern-groups.description` is Fern-side configuration, so
+    // it outranks prose inferred from the spec's tags — the same precedence
+    // the agent-skill emitter already applies. Only its first sentence
+    // reaches the command table; `long_about` keeps the full text.
+    let configured_description = groups
+        .get(name)
+        .and_then(|info| info.description.as_deref())
+        .filter(|description| !description.trim().is_empty())
+        .map(|description| {
+            crate::text::truncate_description(
+                &crate::text::first_sentence(description),
+                crate::text::CLI_SHORT_DESCRIPTION_LIMIT,
+                true,
+            )
+            .trim()
+            .to_string()
+        })
+        .filter(|description| !description.is_empty());
+
     if let Some(summary) = groups
         .get(name)
         .and_then(|info| info.summary.clone())
         .filter(|s| !s.is_empty())
     {
-        if !crate::text::is_name_restating(&summary, name) || tag_description.is_none() {
+        if !crate::text::is_name_restating(&summary, name)
+            || (configured_description.is_none() && tag_description.is_none())
+        {
             return summary;
         }
     }
 
-    tag_description.unwrap_or_else(|| generic_group_about(name))
+    configured_description
+        .or(tag_description)
+        .unwrap_or_else(|| generic_group_about(name))
 }
 
 /// Resolve the `long_about()` line for a group's clap subcommand. Fern group
@@ -2762,13 +2785,16 @@ mod tests {
         );
     }
 
-    /// `description` populates `long_about()` so `--help` shows the
-    /// detailed prose for the group. Setting `description` alone
-    /// (without `summary`) keeps the legacy short label — fern's IR
-    /// allows either field to be present without the other and we
-    /// preserve that asymmetry.
+    /// `description` alone (no `summary`) used to leave the command table
+    /// showing `Operations on '<name>'`, with the prose reachable only from
+    /// `--help`. That asymmetry stopped making sense once tag prose could
+    /// reach the table: a group with no Fern configuration at all would get
+    /// a real table line from its tag while a group whose owner had written
+    /// a description explicitly would not. `description` is the more
+    /// authoritative of the two, so it now drives the table line as well.
+    /// A single-sentence description that already fits needs no `long_about`.
     #[test]
-    fn test_group_description_sets_long_about_only() {
+    fn test_group_description_drives_about_and_is_not_repeated_in_long_about() {
         let mut doc = make_doc_with_things_resource();
         doc.groups.insert(
             "things".to_string(),
@@ -2783,14 +2809,62 @@ mod tests {
             .expect("things subcommand missing");
         assert_eq!(
             things.get_about().map(|s| s.to_string()).unwrap_or_default(),
-            "Operations on 'things'",
+            "Long-form prose about things.",
+        );
+        assert!(things.get_long_about().is_none());
+    }
+
+    /// Only the first sentence of a configured description reaches the
+    /// table; the full prose stays available under `--help`.
+    #[test]
+    fn test_multi_sentence_group_description_splits_across_about_and_long_about() {
+        let description = "Manage the things in your account. Each thing carries its own settings, and deleting one cannot be undone.";
+        let mut doc = make_doc_with_things_resource();
+        doc.groups.insert(
+            "things".to_string(),
+            SdkGroupInfo {
+                summary: None,
+                description: Some(description.to_string()),
+            },
+        );
+        let cmd = build_cli(&doc);
+        let things = cmd
+            .find_subcommand("things")
+            .expect("things subcommand missing");
+        assert_eq!(
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
+            "Manage the things in your account.",
         );
         assert_eq!(
             things
                 .get_long_about()
                 .map(|s| s.to_string())
                 .unwrap_or_default(),
-            "Long-form prose about things.",
+            description,
+        );
+    }
+
+    /// A configured description outranks prose inferred from the spec's
+    /// tags, matching the precedence the agent-skill emitter already uses.
+    #[test]
+    fn test_group_description_outranks_tag_description() {
+        let mut doc = make_doc_with_things_resource();
+        doc.groups.insert(
+            "things".to_string(),
+            SdkGroupInfo {
+                summary: None,
+                description: Some("Configured prose wins.".to_string()),
+            },
+        );
+        doc.tag_descriptions
+            .insert("things".to_string(), "Tag prose loses.".to_string());
+        let cmd = build_cli(&doc);
+        assert_eq!(
+            cmd.find_subcommand("things")
+                .and_then(|command| command.get_about())
+                .map(ToString::to_string)
+                .as_deref(),
+            Some("Configured prose wins."),
         );
     }
 

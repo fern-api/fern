@@ -12,5 +12,8 @@
     help text at abbreviations such as `e.g.`, `i.e.`, or `U.S.`. A tag named
     after the group owns that group's description: when it documents nothing,
     a sibling tag's prose no longer stands in for it, and a tag the group
-    declares less often than another never names the whole group.
+    declares less often than another never names the whole group. An explicit
+    `x-fern-groups.description` now drives the group's command-table line too
+    (first sentence, with the full prose kept in long help) instead of only
+    populating long help while the table showed the generic label.
   type: feat
