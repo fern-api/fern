@@ -1,5 +1,4 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { createHttpEndpoint } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
@@ -124,7 +123,7 @@ describe("requestOptionsParameter", () => {
 
         it("generates max retries with nullish coalescing", () => {
             const result = getMaxRetriesExpression({
-                endpoint: createHttpEndpoint(),
+                endpoint: { retries: undefined },
                 maxRetriesReference,
                 referenceToOptions
             });
@@ -135,7 +134,7 @@ describe("requestOptionsParameter", () => {
 
         it("generates zero when the endpoint disables retries", () => {
             const result = getMaxRetriesExpression({
-                endpoint: createHttpEndpoint({ retries: { disabled: true } }),
+                endpoint: { retries: { disabled: true } },
                 maxRetriesReference,
                 referenceToOptions
             });

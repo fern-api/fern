@@ -295,7 +295,6 @@ export function createHttpEndpoint(opts?: {
     sdkRequest?: FernIr.SdkRequest;
     userSpecifiedExamples?: FernIr.UserSpecifiedEndpointExample[];
     docs?: string;
-    retries?: FernIr.RetriesConfiguration;
 }): FernIr.HttpEndpoint {
     return {
         id: "endpoint_test",
@@ -329,7 +328,7 @@ export function createHttpEndpoint(opts?: {
         transport: undefined,
         source: undefined,
         audiences: undefined,
-        retries: opts?.retries,
+        retries: undefined,
         apiPlayground: undefined,
         docs: opts?.docs,
         availability: undefined,

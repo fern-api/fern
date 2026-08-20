@@ -114,7 +114,7 @@ export const getMaxRetriesExpression = ({
     maxRetriesReference,
     referenceToOptions
 }: {
-    endpoint: FernIr.HttpEndpoint;
+    endpoint: Pick<FernIr.HttpEndpoint, "retries">;
     maxRetriesReference: (args: { referenceToRequestOptions: ts.Expression; isNullable: boolean }) => ts.Expression;
     referenceToOptions: ts.Expression;
 }): ts.Expression => {

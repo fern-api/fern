@@ -6,8 +6,6 @@ paths:
   /users:
     get:
       operationId: retries_getUsers
-      x-fern-retries:
-        disabled: true
       tags:
         - Retries
       parameters: []
