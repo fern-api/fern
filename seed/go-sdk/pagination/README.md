@@ -97,7 +97,7 @@ is the only attribute you will need for most use cases. But if need be, several 
 ```go
 // Loop over the items using the provided iterator.
 ctx := context.TODO()
-page, err := client.Complex.Search(
+page, err := client.InlineUsers.InlineUsers.ListWithCursorPagination(
     ctx,
     ...
 )
@@ -128,8 +128,7 @@ for page != nil {
 }
 
 // Paginated endpoints return a Page with directly accessible headers, status code, and full response
-ctx := context.TODO()
-page, err := client.Complex.Search(
+page, err = client.InlineUsers.InlineUsers.ListWithCursorPagination(
     ctx,
     ...
 )
@@ -157,7 +156,7 @@ with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 response, err := client.Complex.Search(...)
 if err != nil {
     var apiError *core.APIError
-    if errors.As(err, apiError) {
+    if errors.As(err, &apiError) {
         // Do something with the API error ...
     }
     return err
