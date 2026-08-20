@@ -100,7 +100,7 @@ public record WorkspaceSubmissionStatus
     public bool IsTraced => Type == "traced";
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stopped'.</exception>
     public object? AsStopped() =>
@@ -197,7 +197,7 @@ public record WorkspaceSubmissionStatus
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsStopped(out object? value)
     {

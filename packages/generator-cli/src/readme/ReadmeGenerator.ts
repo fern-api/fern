@@ -76,7 +76,7 @@ export class ReadmeGenerator {
                 })
             );
         }
-        if (this.readmeConfig.requirements != null) {
+        if (this.readmeConfig.requirements != null && this.readmeConfig.requirements.length > 0) {
             blocks.push(
                 await this.generateRequirements({
                     requirements: this.readmeConfig.requirements

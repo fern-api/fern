@@ -38,17 +38,17 @@ public class UnionWithTypeAliases
     public object? Value { get; internal set; }
 
     /// <summary>
-    /// Factory method to create a union from a string value.
+    /// Factory method to create a union from a <see cref="string"/> value.
     /// </summary>
     public static UnionWithTypeAliases FromString(string value) => new("string", value);
 
     /// <summary>
-    /// Factory method to create a union from a string value.
+    /// Factory method to create a union from a <see cref="string"/> value.
     /// </summary>
     public static UnionWithTypeAliases FromUserId(string value) => new("userId", value);
 
     /// <summary>
-    /// Factory method to create a union from a string value.
+    /// Factory method to create a union from a <see cref="string"/> value.
     /// </summary>
     public static UnionWithTypeAliases FromName(string value) => new("name", value);
 

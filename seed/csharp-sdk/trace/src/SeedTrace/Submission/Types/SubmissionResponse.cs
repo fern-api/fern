@@ -114,7 +114,7 @@ public record SubmissionResponse
     public bool IsTerminated => Type == "terminated";
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'serverInitialized', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'serverInitialized', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'serverInitialized'.</exception>
     public object? AsServerInitialized() =>
@@ -136,7 +136,7 @@ public record SubmissionResponse
             );
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'workspaceInitialized', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'workspaceInitialized', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'workspaceInitialized'.</exception>
     public object? AsWorkspaceInitialized() =>
@@ -234,7 +234,7 @@ public record SubmissionResponse
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsServerInitialized(out object? value)
     {
@@ -262,7 +262,7 @@ public record SubmissionResponse
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsWorkspaceInitialized(out object? value)
     {

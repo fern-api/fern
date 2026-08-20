@@ -111,7 +111,7 @@ public record SubmissionRequest
             );
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'initializeWorkspaceRequest', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'initializeWorkspaceRequest', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'initializeWorkspaceRequest'.</exception>
     public object? AsInitializeWorkspaceRequest() =>
@@ -217,7 +217,7 @@ public record SubmissionRequest
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsInitializeWorkspaceRequest(out object? value)
     {

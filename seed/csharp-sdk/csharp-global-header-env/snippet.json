@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCsharpGlobalHeaderEnv;\n\nvar client = new SeedCsharpGlobalHeaderEnvClient(\"USERNAME\", \"PASSWORD\", \"TOKEN\", \"VERSION\");\nawait client.Service.GetWithApiVersionAsync();\n"
+                "client": "using SeedCsharpGlobalHeaderEnv;\n\nvar client = new SeedCsharpGlobalHeaderEnvClient(\"USERNAME\", \"PASSWORD\", \"TOKEN\", \"2024-01-01\");\nawait client.Service.GetWithApiVersionAsync();\n"
             }
         }
     ]

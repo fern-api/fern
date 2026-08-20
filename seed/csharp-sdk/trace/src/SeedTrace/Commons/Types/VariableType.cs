@@ -170,7 +170,7 @@ public record VariableType
     public bool IsDoublyLinkedListType => Type == "doublyLinkedListType";
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'integerType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'integerType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'integerType'.</exception>
     public object? AsIntegerType() =>
@@ -179,7 +179,7 @@ public record VariableType
             : throw new global::System.Exception("VariableType.Type is not 'integerType'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'doubleType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'doubleType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'doubleType'.</exception>
     public object? AsDoubleType() =>
@@ -188,7 +188,7 @@ public record VariableType
             : throw new global::System.Exception("VariableType.Type is not 'doubleType'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'booleanType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'booleanType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'booleanType'.</exception>
     public object? AsBooleanType() =>
@@ -197,7 +197,7 @@ public record VariableType
             : throw new global::System.Exception("VariableType.Type is not 'booleanType'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'stringType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stringType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stringType'.</exception>
     public object? AsStringType() =>
@@ -206,7 +206,7 @@ public record VariableType
             : throw new global::System.Exception("VariableType.Type is not 'stringType'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'charType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'charType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'charType'.</exception>
     public object? AsCharType() =>
@@ -233,7 +233,7 @@ public record VariableType
             : throw new global::System.Exception("VariableType.Type is not 'mapType'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'binaryTreeType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'binaryTreeType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'binaryTreeType'.</exception>
     public object? AsBinaryTreeType() =>
@@ -242,7 +242,7 @@ public record VariableType
             : throw new global::System.Exception("VariableType.Type is not 'binaryTreeType'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'singlyLinkedListType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'singlyLinkedListType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'singlyLinkedListType'.</exception>
     public object? AsSinglyLinkedListType() =>
@@ -251,7 +251,7 @@ public record VariableType
             : throw new global::System.Exception("VariableType.Type is not 'singlyLinkedListType'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'doublyLinkedListType', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'doublyLinkedListType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'doublyLinkedListType'.</exception>
     public object? AsDoublyLinkedListType() =>
@@ -342,7 +342,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsIntegerType(out object? value)
     {
@@ -356,7 +356,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsDoubleType(out object? value)
     {
@@ -370,7 +370,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsBooleanType(out object? value)
     {
@@ -384,7 +384,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsStringType(out object? value)
     {
@@ -398,7 +398,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsCharType(out object? value)
     {
@@ -440,7 +440,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsBinaryTreeType(out object? value)
     {
@@ -454,7 +454,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsSinglyLinkedListType(out object? value)
     {
@@ -468,7 +468,7 @@ public record VariableType
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsDoublyLinkedListType(out object? value)
     {

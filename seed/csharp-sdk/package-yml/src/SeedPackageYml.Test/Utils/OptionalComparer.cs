@@ -65,7 +65,7 @@ public static class OptionalComparerExtensions
 
     /// <summary>
     /// EqualityAdapter for comparing IOneOf instances within NUnitEqualityComparer.
-    /// This enables recursive comparison of nested OneOf values within Optional<T> types.
+    /// This enables recursive comparison of nested OneOf values within <c>Optional&lt;T&gt;</c> types.
     /// </summary>
     private class OneOfEqualityAdapter : EqualityAdapter
     {
