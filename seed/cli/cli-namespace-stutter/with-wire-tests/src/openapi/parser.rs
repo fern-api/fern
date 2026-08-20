@@ -2888,10 +2888,19 @@ pub fn load_openapi_spec_from_value(
                 params.entry(name).or_insert(param);
             }
 
+            // `summary` is the terse label and wins for the command table.
+            // `description` is the prose; keep it separately rather than
+            // discarding it, so `<command> --help` has something to show
+            // beyond the table line. Dropped when it adds nothing.
             let description = operation
                 .summary
                 .clone()
                 .or_else(|| operation.description.clone());
+            let long_description = operation
+                .description
+                .clone()
+                .filter(|prose| !prose.trim().is_empty())
+                .filter(|prose| Some(prose.trim()) != description.as_deref().map(str::trim));
 
             let method_root_url = operation.servers
                 .first()
@@ -3031,6 +3040,7 @@ pub fn load_openapi_spec_from_value(
             let rest_method = RestMethod {
                 id: operation.operation_id.clone(),
                 description,
+                long_description,
                 http_method: http_method.to_string(),
                 path: path.clone(),
                 parameters: params,
@@ -6993,6 +7003,48 @@ paths:
             doc.groups["my-group"].summary.as_deref(),
             Some("Pretty Label"),
         );
+    }
+
+    #[test]
+    fn test_operation_summary_and_description_are_kept_separately() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: t
+  version: "1"
+paths:
+  /things:
+    get:
+      x-fern-sdk-group-name: [things]
+      x-fern-sdk-method-name: list
+      operationId: things_list
+      summary: List things
+      description: Returns every thing visible to the caller, newest first.
+      responses:
+        "200":
+          description: ok
+  /others:
+    get:
+      x-fern-sdk-group-name: [others]
+      x-fern-sdk-method-name: list
+      operationId: others_list
+      description: Only prose, no summary.
+      responses:
+        "200":
+          description: ok
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        let things = first_method(&doc, "things", "list");
+        assert_eq!(things.description.as_deref(), Some("List things"));
+        assert_eq!(
+            things.long_description.as_deref(),
+            Some("Returns every thing visible to the caller, newest first."),
+        );
+        // With no summary the prose already is the description, so keeping a
+        // second copy would only duplicate the line in help output.
+        let others = first_method(&doc, "others", "list");
+        assert_eq!(others.description.as_deref(), Some("Only prose, no summary."));
+        assert_eq!(others.long_description, None);
     }
 
     #[test]

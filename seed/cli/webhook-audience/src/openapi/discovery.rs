@@ -623,6 +623,12 @@ impl RetriesConfig {
 pub struct RestMethod {
     pub id: Option<String>,
     pub description: Option<String>,
+    /// The operation's full `description` when it says more than
+    /// [`RestMethod::description`] (which prefers the terse `summary`).
+    /// `None` when the spec has no separate prose, so the command table and
+    /// the command's own `--help` would otherwise repeat one line.
+    #[serde(default)]
+    pub long_description: Option<String>,
     pub http_method: String,
     pub path: String,
     #[serde(default)]

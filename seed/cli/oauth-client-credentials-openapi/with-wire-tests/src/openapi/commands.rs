@@ -571,9 +571,12 @@ fn build_resource_command(
             crate::text::CLI_SHORT_DESCRIPTION_LIMIT,
             true,
         );
+        // Prefer the operation's own prose when the spec carries it apart
+        // from the terse summary; otherwise the long form is just the
+        // untruncated summary.
         let long_description = crate::text::truncate_description(
-            description,
-            crate::text::CLI_DESCRIPTION_LIMIT,
+            method.long_description.as_deref().unwrap_or(description),
+            crate::text::CLI_LONG_DESCRIPTION_LIMIT,
             true,
         );
         let about = with_availability_badge(&short_description, method.availability);
@@ -2424,8 +2427,47 @@ mod tests {
         assert!(list.get_long_about().is_none());
     }
 
+    /// An operation whose spec carries prose apart from its terse summary
+    /// shows the summary in the parent's table and the prose under its own
+    /// `--help`. Before this, the parser kept only `summary` and the prose
+    /// was unreachable anywhere in the CLI.
+    #[test]
+    fn test_method_long_about_prefers_operation_prose_over_summary() {
+        let mut doc = make_doc_with_things_resource();
+        {
+            let method = doc
+                .resources
+                .get_mut("things")
+                .expect("things resource missing")
+                .methods
+                .get_mut("list")
+                .expect("list method missing");
+            method.description = Some("List things".to_string());
+            method.long_description = Some(
+                "Returns every thing visible to the caller, newest first. Results are paginated."
+                    .to_string(),
+            );
+        }
+
+        let cmd = build_cli(&doc);
+        let list = cmd
+            .find_subcommand("things")
+            .and_then(|things| things.find_subcommand("list"))
+            .expect("list subcommand missing");
+        assert_eq!(
+            list.get_about().map(ToString::to_string).unwrap_or_default(),
+            "List things",
+        );
+        assert_eq!(
+            list.get_long_about()
+                .map(ToString::to_string)
+                .unwrap_or_default(),
+            "Returns every thing visible to the caller, newest first. Results are paginated.",
+        );
+    }
+
     /// Verbose specs must not flood the terminal: `long_about` stays capped
-    /// at [`crate::text::CLI_DESCRIPTION_LIMIT`].
+    /// at [`crate::text::CLI_LONG_DESCRIPTION_LIMIT`].
     #[test]
     fn test_method_long_about_is_capped() {
         let mut doc = make_doc_with_things_resource();
@@ -2446,7 +2488,7 @@ mod tests {
             .map(ToString::to_string)
             .expect("long_about missing");
         assert!(
-            long_about.chars().count() <= crate::text::CLI_DESCRIPTION_LIMIT,
+            long_about.chars().count() <= crate::text::CLI_LONG_DESCRIPTION_LIMIT,
             "long_about was {} chars",
             long_about.chars().count(),
         );
