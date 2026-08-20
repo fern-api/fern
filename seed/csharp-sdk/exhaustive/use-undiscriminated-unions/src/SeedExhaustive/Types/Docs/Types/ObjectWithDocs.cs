@@ -26,11 +26,11 @@ public record ObjectWithDocs : IJsonOnDeserialized
     /// - *: Can interfere with comment blocks
     /// - /**: JSDoc comment start
     /// - ** /: JSDoc comment end
-    /// - &: HTML entities
+    /// - &amp;: HTML entities
     ///
     /// XMLDoc (C#):
     /// - &lt;: &gt;: XML tags
-    /// - &: ': ": &lt;: &gt;: XML special characters
+    /// - &amp;: ': ": &lt;: &gt;: XML special characters
     /// - {: }: Used for interpolated strings
     /// - ///: Comment marker
     /// - /**: Block comment start
@@ -44,7 +44,7 @@ public record ObjectWithDocs : IJsonOnDeserialized
     /// Javadoc (Java):
     /// - @: Used for Javadoc tags
     /// - &lt;: &gt;: HTML tags
-    /// - &: HTML entities
+    /// - &amp;: HTML entities
     /// - *: Can interfere with comment blocks
     /// - /**: Javadoc comment start
     /// - ** /: Javadoc comment end
@@ -53,7 +53,7 @@ public record ObjectWithDocs : IJsonOnDeserialized
     /// - \: Used for Doxygen commands
     /// - @: Alternative command prefix
     /// - &lt;: &gt;: XML/HTML tags
-    /// - &: HTML entities
+    /// - &amp;: HTML entities
     /// - /**: C-style comment start
     /// - ** /: C-style comment end
     ///
@@ -76,7 +76,7 @@ public record ObjectWithDocs : IJsonOnDeserialized
     /// - /**: PHPDoc comment start
     /// - ** /: PHPDoc comment end
     /// - *: Can interfere with comment blocks
-    /// - &: HTML entities
+    /// - &amp;: HTML entities
     /// </summary>
     [JsonPropertyName("string")]
     public required string String { get; set; }

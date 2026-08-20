@@ -152,6 +152,72 @@
                     },
                     "propertyAccess": null,
                     "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "documentationLink",
+                        "name": {
+                            "originalName": "documentationLink",
+                            "camelCase": {
+                                "unsafeName": "documentationLink",
+                                "safeName": "documentationLink"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "documentation_link",
+                                "safeName": "documentation_link"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DOCUMENTATION_LINK",
+                                "safeName": "DOCUMENTATION_LINK"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "DocumentationLink",
+                                "safeName": "DocumentationLink"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "escapedDocumentationLink",
+                        "name": {
+                            "originalName": "escapedDocumentationLink",
+                            "camelCase": {
+                                "unsafeName": "escapedDocumentationLink",
+                                "safeName": "escapedDocumentationLink"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "escaped_documentation_link",
+                                "safeName": "escaped_documentation_link"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ESCAPED_DOCUMENTATION_LINK",
+                                "safeName": "ESCAPED_DOCUMENTATION_LINK"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EscapedDocumentationLink",
+                                "safeName": "EscapedDocumentationLink"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "extends": null,

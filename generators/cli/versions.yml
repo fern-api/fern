@@ -1,4 +1,118 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.35.1
+  changelogEntry:
+    - summary: |
+        Fix a race in credential storage that made `auth login --with-token` fail
+        intermittently when several CLI processes ran at once.
+
+        `atomic_write` derived its temp file name from the target alone, so every
+        concurrent writer used the same sibling path (`auth-keyring.tmp`). Whichever
+        process renamed first moved it away and the rest failed with
+        `error[auth]: Failed to rename .../auth-keyring.tmp: No such file or
+        directory (os error 2)`. The temp name now carries the writer's pid plus a
+        process-local counter, and a drop guard unlinks it on any early return or
+        panic so unique names can't accumulate orphaned credential files.
+
+        This surfaced as flaky generated wire-test suites. The harness gives each
+        case its own temp `HOME`, but `config_dir()` consults `$XDG_CONFIG_HOME`
+        first on Linux and CI runners set it to the real config directory — so the
+        `HOME` override was inert, every authenticated case shared one
+        `auth-keyring.json`, and `cargo test` ran them in parallel. On a workspace
+        with ~680 cases a different subset died on each run. macOS never consults
+        `$XDG_CONFIG_HOME`, so the isolation holds there and the bug cannot
+        reproduce locally on a Mac, which is why it reached a real workspace before
+        ours.
+
+        `rename` was already atomic for readers, so no partially written credential
+        file was ever observable — only writer-vs-writer collisions were affected.
+        `FileKeyringStore::set` is still an unlocked read-modify-write of the whole
+        map, so simultaneous writers can clobber one another's entries; that needs
+        file locking and is left alone here.
+      type: fix
+  createdAt: "2026-08-19"
+  irVersion: 67
+- version: 0.35.0
+  changelogEntry:
+    - summary: |
+        Add `distribution.githubApp`, letting the Homebrew and Scoop publish jobs mint a
+        GitHub App installation token at release time instead of reading a long-lived
+        personal access token out of a secret:
+
+        ```yaml
+        distribution:
+          githubApp:
+            appIdSecret: PUBLISH_APP_ID
+            privateKeySecret: PUBLISH_APP_PRIVATE_KEY
+          homebrew:
+            tap: acme/homebrew-tap
+          scoop:
+            bucket: acme/scoop-bucket
+        ```
+
+        The token is scoped to one repository and expires in an hour, and revoking it is
+        uninstalling an App rather than rotating a credential attached to a person who
+        may have left the org. Declared once for the whole `distribution` block because
+        one App normally serves both channels — an App can be installed on several
+        accounts, and each job passes its own tap/bucket `owner` so it mints from the
+        right installation.
+
+        Precedence is most-specific-first: a channel's `tokenEnvironmentVariable`, then
+        `distribution.githubApp`, then the channel's default PAT secret name. That makes
+        migrating one channel at a time expressible — a shared App plus
+        `scoop.tokenEnvironmentVariable` means "App everywhere except Scoop, which is not
+        migrated yet".
+
+        Additive: omitting `githubApp` leaves the emitted `release.yml` byte-identical, so
+        existing `tokenEnvironmentVariable` consumers are unaffected.
+      type: feat
+    - summary: |
+        Emit a `preflight-distribution` job when a channel uses `distribution.githubApp`.
+        It declares no `needs`, so it reports in roughly twenty seconds rather than after
+        the build matrix and after `gh release create` has already published the release,
+        and it names both the secret and the fix.
+
+        The two failure modes it catches do not describe themselves. An Actions
+        *variable* is not readable as `secrets.<NAME>`, and an undefined secret resolves
+        to the empty string rather than erroring — so a variable named correctly fails
+        forty minutes later with `appId is required`. A PEM pasted as a single line still
+        carries its BEGIN header, so the only signal is the missing line breaks, and it
+        fails with `secretOrPrivateKey must be an asymmetric key`.
+
+        Only the publish jobs depend on it. A bad secret therefore costs the formula and
+        the manifest but still ships archives and installers, and recovery is re-running
+        two jobs. It is skipped on pull requests, where fork secrets are unavailable.
+      type: feat
+  createdAt: "2026-08-18"
+  irVersion: 67
+- version: 0.34.0
+  changelogEntry:
+    - summary: |
+        `auth login` now honors the `success-redirect-url` / `error-redirect-url` fields on an
+        `authorization-code` OAuth scheme: the loopback listener answers the browser with a `302` to the
+        configured page instead of rendering its own. The success redirect forwards no `code` or `state`;
+        the error redirect carries `error` and, when the server sent one, `error_description`, merged
+        into any query string already on the URL and inserted before a fragment.
+      type: feat
+    - summary: |
+        The built-in callback pages served when no redirect URL is configured are now styled,
+        Fern-branded HTML (light and dark) for both the success and failure states, replacing the bare
+        success markup and the `text/plain` failure response. Everything is inlined, so the last screen
+        of the login flow never depends on a network request.
+      type: feat
+    - summary: |
+        The OAuth callback listener now answers the browser only once the login has actually finished.
+        Previously the success page was served as soon as `code` and `state` were parsed — before the
+        `state` was checked, the code was redeemed, or the credential was stored — so a failed token
+        exchange, a rejected `state`, or a keyring the CLI couldn't write to would leave the browser
+        reading "you're all set" while the terminal reported the failure. The connection is now held
+        open across the exchange and answered from the outcome: the success page (or
+        `success-redirect-url`) only on a login that completed, and the failure page (or
+        `error-redirect-url`) otherwise. A rejected `state` reports `error=invalid_request` and a
+        failure after the callback reports `error=server_error`; no `state` value and no token-endpoint
+        detail is forwarded to a hosted page.
+      type: fix
+  createdAt: "2026-08-17"
+  irVersion: 67
 - version: 0.33.0
   changelogEntry:
     - summary: |

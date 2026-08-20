@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "properties": {
+    "thing": {
+      "$ref": "#/definitions/Thing"
+    }
+  },
+  "required": [
+    "thing"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Nested": {
+      "type": "object",
+      "properties": {
+        "inner": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Thing": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "logo": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rank": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nested": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Nested"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": true
+    }
+  }
+}

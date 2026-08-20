@@ -39,6 +39,14 @@ components:
           type: string
           nullable: true
           description: "Special characters: &nbsp; &hellip; &middot; &copy;"
+        documentationLink:
+          type: string
+          nullable: true
+          description: 'See <a href="https://example.com/docs?a=1&b=2">see here</a> for details'
+        escapedDocumentationLink:
+          type: string
+          nullable: true
+          description: 'See <a href="https://example.com/docs?a=1&amp;b=2">see here</a> for details'
       required:
         - timeZoneOffset
         - mathExpression

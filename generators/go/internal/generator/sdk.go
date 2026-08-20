@@ -756,11 +756,16 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			continue
 		}
 		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-		if valueTypeFormat.IsOptional {
+		switch {
+		case valueTypeFormat.IsOptional:
 			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
 			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
 			f.P("}")
-		} else {
+		case isComparableHeaderValueType(header.ValueType, valueTypeFormat, f.types):
+			f.P("if ", headerIsSetCondition("r."+header.Name.Name.PascalCase.UnsafeName, header.ValueType, valueTypeFormat), " {")
+			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
+			f.P("}")
+		default:
 			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
 		}
 	}
@@ -4976,6 +4981,72 @@ func isClientDefaultResolvedAtConstruction(valueType *ir.TypeReference, valueTyp
 		return false
 	}
 	return valueType.Primitive.V1 == common.PrimitiveTypeV1String || valueType.Primitive.V1 == common.PrimitiveTypeV1Boolean
+}
+
+// isComparableHeaderValueType returns true if a header's field can be checked
+// against its zero value in the generated code, so that a header left unset is
+// omitted rather than sent with an empty value (matching how the auth scheme
+// header is generated). Only types whose zero value is never a meaningful wire
+// value are supported: booleans and numbers are excluded because false and 0
+// are legitimate values that cannot be distinguished from an unset field, and
+// so are iterables and composite types (objects, lists, maps, unions). Named
+// types are only supported when they resolve to an enum; an alias of a
+// primitive stays unguarded because the alias' zero value is not necessarily
+// the underlying primitive's.
+func isComparableHeaderValueType(valueType *ir.TypeReference, valueTypeFormat *valueTypeFormat, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	if valueTypeFormat.IsIterable || valueTypeFormat.IsOptional {
+		return false
+	}
+	if primitive := maybePrimitive(valueType); primitive != nil {
+		switch primitive.V1 {
+		case common.PrimitiveTypeV1String,
+			common.PrimitiveTypeV1BigInteger,
+			common.PrimitiveTypeV1Uuid,
+			common.PrimitiveTypeV1Base64,
+			common.PrimitiveTypeV1Date,
+			common.PrimitiveTypeV1DateTime:
+			return true
+		}
+		return false
+	}
+	return isEnumType(valueType, types)
+}
+
+// headerIsSetCondition returns the condition used to determine whether a header
+// field holds a value, e.g. `r.Version != ""`. The caller must first verify the
+// type is supported with isComparableHeaderValueType.
+func headerIsSetCondition(field string, valueType *ir.TypeReference, valueTypeFormat *valueTypeFormat) string {
+	if primitive := maybePrimitive(valueType); primitive != nil {
+		switch primitive.V1 {
+		case common.PrimitiveTypeV1DateTime, common.PrimitiveTypeV1Date:
+			// time.Time is not comparable with the != operator against a composite literal.
+			return "!" + field + ".IsZero()"
+		}
+	}
+	return field + " != " + valueTypeFormat.ZeroValue
+}
+
+// isEnumType returns true if the given type reference resolves to an enum,
+// following alias chains.
+func isEnumType(valueType *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	visited := make(map[common.TypeId]struct{})
+	for valueType.Named != nil {
+		typeId := valueType.Named.TypeId
+		if _, ok := visited[typeId]; ok {
+			// Guard against a self-referential alias chain.
+			return false
+		}
+		visited[typeId] = struct{}{}
+		typeDeclaration, ok := types[typeId]
+		if !ok {
+			return false
+		}
+		if typeDeclaration.Shape.Alias == nil {
+			return typeDeclaration.Shape.Enum != nil
+		}
+		valueType = typeDeclaration.Shape.Alias.AliasOf
+	}
+	return false
 }
 
 // isPrimitiveInteger returns true if the given primitive type is an integer.

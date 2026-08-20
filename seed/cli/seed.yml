@@ -98,12 +98,12 @@ fixtures:
       outputFolder: github-no-publish
       outputMode: github
       outputVersion: "1.0.0"
-    # Homebrew + Scoop distribution. Github output mode is required: both
-    # channels publish *from* a tagged GitHub Release, so `runPipeline`
-    # drops the config outside it. Pins the three artifacts the feature
-    # touches — the cargo-dist keys in `dist-workspace.toml`, the
-    # `publish-homebrew-formula` job in `release.yml`, and the
-    # `publish-scoop` job appended to `ci.yml` — plus the README stanzas.
+    # Homebrew + Scoop distribution, authenticating with a PAT. Github
+    # output mode is required: both channels publish *from* a tagged GitHub
+    # Release, so `runPipeline` drops the config outside it. Pins the three
+    # artifacts the feature touches — the cargo-dist keys in
+    # `dist-workspace.toml` and the `publish-homebrew-formula` and
+    # `publish-scoop` jobs in `release.yml` — plus the README stanzas.
     # The diff on every *other* cli fixture must be empty: that is the
     # mechanical proof that omitting `distribution` changes nothing.
     - customConfig:
@@ -113,6 +113,26 @@ fixtures:
           scoop:
             bucket: acme/scoop-bucket
       outputFolder: github-distribution
+      outputMode: github
+      outputVersion: "1.0.0"
+    # The same two channels authenticating with a GitHub App instead. Exists
+    # so the committed `release.yml` shows the shape a consumer's own
+    # pipeline takes: one `preflight-distribution` job, and a
+    # `create-github-app-token` step per publish job scoped to its own repo
+    # (`homebrew-tap` vs `scoop-bucket`). Diffing it against
+    # `github-distribution` is also how the additive claim is checked at the
+    # file level — everything outside `.github/workflows/release.yml` must
+    # be identical between the two folders.
+    - customConfig:
+        distribution:
+          githubApp:
+            appIdSecret: PUBLISH_APP_ID
+            privateKeySecret: PUBLISH_APP_PRIVATE_KEY
+          homebrew:
+            tap: acme/homebrew-tap
+          scoop:
+            bucket: acme/scoop-bucket
+      outputFolder: github-distribution-app
       outputMode: github
       outputVersion: "1.0.0"
     # Opt-in wire tests — emits `wiremock/wire-test-cases.json` and
@@ -295,6 +315,7 @@ allowedFailures:
   - content-type
   - cross-package-type-names
   - csharp-global-header-env
+  - csharp-global-header-literal-env
   - dollar-string-examples
   - empty-clients
   - endpoint-security-auth
@@ -384,6 +405,7 @@ allowedFailures:
   - pagination-uri-path
   - path-parameters
   - php-global-header-env
+  - php-global-header-literal-env
   - plain-text
   - property-access
   - public-object

@@ -903,7 +903,8 @@ export async function runAppPreviewServer({
                         const importsResolved = transformAtPrefixImports({
                             markdown: codeResolved,
                             absolutePathToFernFolder: docsWorkspacePath,
-                            absolutePathToMarkdownFile
+                            absolutePathToMarkdownFile,
+                            context
                         });
 
                         // Strip MDX comments

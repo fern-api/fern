@@ -9,7 +9,11 @@
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
     <PackageReadmeFile Condition="Exists('..\..\README.md')">README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
     <PackageProjectUrl>https://github.com/csharp-grpc-proto-exhaustive/fern</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/csharp-grpc-proto-exhaustive/fern</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
   </PropertyGroup>
 

@@ -1,3 +1,4 @@
+import { isEndpointSecurityAuthSchemes } from "@fern-api/fern-definition-schema";
 import { AuthScheme, FernIr, IntermediateRepresentation, Literal } from "@fern-api/ir-sdk";
 import { constructHttpPath, convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
 import { stripBasePathFromPaths } from "@fern-api/openapi-ir-parser";
@@ -440,6 +441,14 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
     private overrideOpenApiAuthWithGeneratorsAuth(): void {
         if (!this.context.authOverrides?.["auth-schemes"]) {
+            return;
+        }
+
+        // Under endpoint-security, `auth-schemes` only supplies scheme definitions (OAuth
+        // configuration, header names). The requirements stay with each operation, so the
+        // spec's security must be left alone.
+        const auth = this.context.authOverrides.auth;
+        if (auth != null && isEndpointSecurityAuthSchemes(auth)) {
             return;
         }
 

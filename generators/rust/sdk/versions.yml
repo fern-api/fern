@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.46.0
+  changelogEntry:
+    - summary: |
+        Add `respectOptionalRequestBody`. When enabled, an endpoint whose request body the API does not
+        require takes the body as an `Option`, so a caller who passes `None` sends no body and no
+        `Content-Type`. Examples that omit the body render as `None` in snippets, reference docs, and
+        wire tests. The flag defaults to false, so existing SDKs keep their current method signatures.
+      type: feat
+  createdAt: "2026-08-17"
+  irVersion: 67
 - version: 0.45.0
   changelogEntry:
     - summary: |

@@ -1554,15 +1554,24 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * The configuration of the OAuth client-credentials scheme, if one is configured. The other
+     * OAuth flows carry a different shape, so callers that need the token endpoint go through here.
+     */
+    private getOAuthClientCredentialsConfiguration(): FernIr.OAuthClientCredentials | undefined {
+        const configuration = this.getOAuthClientCredentialsScheme()?.configuration;
+        return configuration?.type === "clientCredentials" ? configuration : undefined;
+    }
+
+    /**
      * Resolve the {@link FernIr.HttpEndpoint} referenced by the OAuth client-credentials
      * token endpoint, if one is configured and resolvable.
      */
     public getOAuthTokenHttpEndpoint(): FernIr.HttpEndpoint | undefined {
-        const scheme = this.getOAuthClientCredentialsScheme();
-        if (scheme == null) {
+        const configuration = this.getOAuthClientCredentialsConfiguration();
+        if (configuration == null) {
             return undefined;
         }
-        const reference = scheme.configuration.tokenEndpoint.endpointReference;
+        const reference = configuration.tokenEndpoint.endpointReference;
         const service = this.ir.services[reference.serviceId];
         if (service == null) {
             return undefined;
@@ -1600,11 +1609,11 @@ export abstract class AbstractRustGeneratorContext<
      * Returns undefined when no OAuth client-credentials scheme is configured.
      */
     public getOAuthTokenExchange(): OAuthTokenExchange | undefined {
-        const scheme = this.getOAuthClientCredentialsScheme();
-        if (scheme == null) {
+        const configuration = this.getOAuthClientCredentialsConfiguration();
+        if (configuration == null) {
             return undefined;
         }
-        const { tokenEndpoint } = scheme.configuration;
+        const { tokenEndpoint } = configuration;
         const clientIdProperty = this.getRequestPropertyWireName(tokenEndpoint.requestProperties.clientId);
         const clientSecretProperty = this.getRequestPropertyWireName(tokenEndpoint.requestProperties.clientSecret);
         const accessTokenProperty = this.getResponsePropertyWireName(tokenEndpoint.responseProperties.accessToken);

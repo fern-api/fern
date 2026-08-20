@@ -1,0 +1,539 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:DateList": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "DateList",
+                    "camelCase": {
+                        "unsafeName": "dateList",
+                        "safeName": "dateList"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "date_list",
+                        "safeName": "date_list"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DATE_LIST",
+                        "safeName": "DATE_LIST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "DateList",
+                        "safeName": "DateList"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "list",
+                "value": {
+                    "type": "primitive",
+                    "value": "DATE"
+                }
+            }
+        },
+        "type_:DateTimeList": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "DateTimeList",
+                    "camelCase": {
+                        "unsafeName": "dateTimeList",
+                        "safeName": "dateTimeList"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "date_time_list",
+                        "safeName": "date_time_list"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DATE_TIME_LIST",
+                        "safeName": "DATE_TIME_LIST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "DateTimeList",
+                        "safeName": "DateTimeList"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "list",
+                "value": {
+                    "type": "primitive",
+                    "value": "DATE_TIME"
+                }
+            }
+        },
+        "type_:Loan": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Loan",
+                    "camelCase": {
+                        "unsafeName": "loan",
+                        "safeName": "loan"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "loan",
+                        "safeName": "loan"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LOAN",
+                        "safeName": "LOAN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Loan",
+                        "safeName": "Loan"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "disbursement_dates",
+                        "name": {
+                            "originalName": "disbursement_dates",
+                            "camelCase": {
+                                "unsafeName": "disbursementDates",
+                                "safeName": "disbursementDates"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "disbursement_dates",
+                                "safeName": "disbursement_dates"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DISBURSEMENT_DATES",
+                                "safeName": "DISBURSEMENT_DATES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "DisbursementDates",
+                                "safeName": "DisbursementDates"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "list",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "unique_dates",
+                        "name": {
+                            "originalName": "unique_dates",
+                            "camelCase": {
+                                "unsafeName": "uniqueDates",
+                                "safeName": "uniqueDates"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "unique_dates",
+                                "safeName": "unique_dates"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNIQUE_DATES",
+                                "safeName": "UNIQUE_DATES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "UniqueDates",
+                                "safeName": "UniqueDates"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "list",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "dates_by_label",
+                        "name": {
+                            "originalName": "dates_by_label",
+                            "camelCase": {
+                                "unsafeName": "datesByLabel",
+                                "safeName": "datesByLabel"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "dates_by_label",
+                                "safeName": "dates_by_label"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATES_BY_LABEL",
+                                "safeName": "DATES_BY_LABEL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "DatesByLabel",
+                                "safeName": "DatesByLabel"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "map",
+                        "key": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "optional_dates",
+                        "name": {
+                            "originalName": "optional_dates",
+                            "camelCase": {
+                                "unsafeName": "optionalDates",
+                                "safeName": "optionalDates"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "optional_dates",
+                                "safeName": "optional_dates"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OPTIONAL_DATES",
+                                "safeName": "OPTIONAL_DATES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "OptionalDates",
+                                "safeName": "OptionalDates"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "list",
+                            "value": {
+                                "type": "primitive",
+                                "value": "DATE"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "aliased_dates",
+                        "name": {
+                            "originalName": "aliased_dates",
+                            "camelCase": {
+                                "unsafeName": "aliasedDates",
+                                "safeName": "aliasedDates"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "aliased_dates",
+                                "safeName": "aliased_dates"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ALIASED_DATES",
+                                "safeName": "ALIASED_DATES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AliasedDates",
+                                "safeName": "AliasedDates"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:DateList"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "timestamps",
+                        "name": {
+                            "originalName": "timestamps",
+                            "camelCase": {
+                                "unsafeName": "timestamps",
+                                "safeName": "timestamps"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "timestamps",
+                                "safeName": "timestamps"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TIMESTAMPS",
+                                "safeName": "TIMESTAMPS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Timestamps",
+                                "safeName": "Timestamps"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "list",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE_TIME"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "unique_timestamps",
+                        "name": {
+                            "originalName": "unique_timestamps",
+                            "camelCase": {
+                                "unsafeName": "uniqueTimestamps",
+                                "safeName": "uniqueTimestamps"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "unique_timestamps",
+                                "safeName": "unique_timestamps"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNIQUE_TIMESTAMPS",
+                                "safeName": "UNIQUE_TIMESTAMPS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "UniqueTimestamps",
+                                "safeName": "UniqueTimestamps"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "list",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE_TIME"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "timestamps_by_label",
+                        "name": {
+                            "originalName": "timestamps_by_label",
+                            "camelCase": {
+                                "unsafeName": "timestampsByLabel",
+                                "safeName": "timestampsByLabel"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "timestamps_by_label",
+                                "safeName": "timestamps_by_label"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TIMESTAMPS_BY_LABEL",
+                                "safeName": "TIMESTAMPS_BY_LABEL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "TimestampsByLabel",
+                                "safeName": "TimestampsByLabel"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "map",
+                        "key": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE_TIME"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "aliased_timestamps",
+                        "name": {
+                            "originalName": "aliased_timestamps",
+                            "camelCase": {
+                                "unsafeName": "aliasedTimestamps",
+                                "safeName": "aliasedTimestamps"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "aliased_timestamps",
+                                "safeName": "aliased_timestamps"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ALIASED_TIMESTAMPS",
+                                "safeName": "ALIASED_TIMESTAMPS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AliasedTimestamps",
+                                "safeName": "AliasedTimestamps"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:DateTimeList"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_loans.getLoan": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getLoan",
+                    "camelCase": {
+                        "unsafeName": "getLoan",
+                        "safeName": "getLoan"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_loan",
+                        "safeName": "get_loan"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_LOAN",
+                        "safeName": "GET_LOAN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetLoan",
+                        "safeName": "GetLoan"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "loans",
+                            "camelCase": {
+                                "unsafeName": "loans",
+                                "safeName": "loans"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "loans",
+                                "safeName": "loans"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LOANS",
+                                "safeName": "LOANS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Loans",
+                                "safeName": "Loans"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "loans",
+                        "camelCase": {
+                            "unsafeName": "loans",
+                            "safeName": "loans"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "loans",
+                            "safeName": "loans"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LOANS",
+                            "safeName": "LOANS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Loans",
+                            "safeName": "Loans"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/loan"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null,
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": {
+        "defaultEnvironment": "Default",
+        "environments": {
+            "type": "singleBaseUrl",
+            "environments": [
+                {
+                    "id": "Default",
+                    "name": {
+                        "originalName": "Default",
+                        "camelCase": {
+                            "unsafeName": "default",
+                            "safeName": "default"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "default",
+                            "safeName": "default"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DEFAULT",
+                            "safeName": "DEFAULT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Default",
+                            "safeName": "Default"
+                        }
+                    },
+                    "url": "https://api.example.com",
+                    "docs": null
+                }
+            ]
+        }
+    },
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}

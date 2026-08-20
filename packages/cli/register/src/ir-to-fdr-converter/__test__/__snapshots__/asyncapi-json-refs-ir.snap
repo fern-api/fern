@@ -506,6 +506,7 @@
   "webhookGroups": {},
   "websocketChannels": {
     "channel_plantOrders": {
+      "apiPlayground": undefined,
       "auth": false,
       "availability": undefined,
       "baseUrl": "production",
@@ -722,6 +723,7 @@
       },
     },
     "channel_plantUpdates": {
+      "apiPlayground": undefined,
       "auth": false,
       "availability": undefined,
       "baseUrl": "production",

@@ -44,7 +44,7 @@ public record UnionTypeWithAliasMapVariant
     public bool IsAliasVariant => Type == "aliasVariant";
 
     /// <summary>
-    /// Returns the value as a <see cref="Dictionary<AliasVariantType, OtherAliasVariantType>"/> if <see cref="Type"/> is 'aliasVariant', otherwise throws an exception.
+    /// Returns the value as a <see cref="Dictionary{AliasVariantType, OtherAliasVariantType}"/> if <see cref="Type"/> is 'aliasVariant', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'aliasVariant'.</exception>
     public Dictionary<AliasVariantType, OtherAliasVariantType> AsAliasVariant() =>
@@ -83,7 +83,7 @@ public record UnionTypeWithAliasMapVariant
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Dictionary<AliasVariantType, OtherAliasVariantType>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="Dictionary{AliasVariantType, OtherAliasVariantType}"/> and returns true if successful.
     /// </summary>
     public bool TryAsAliasVariant(out Dictionary<AliasVariantType, OtherAliasVariantType>? value)
     {

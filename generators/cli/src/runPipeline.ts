@@ -269,6 +269,10 @@ export async function runPipeline(args: {
         await emitReleaseWorkflow({
             outputDir,
             homebrew: distribution?.homebrew,
+            // Shared by both channels. Each job still mints its own token,
+            // scoped to its own repo — the App credentials are what they
+            // have in common, not the resulting token.
+            githubApp: distribution?.githubApp,
             scoop:
                 distribution?.scoop != null
                     ? {

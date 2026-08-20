@@ -51,8 +51,17 @@ export function convertApiAuth({
         }),
         endpointSecurity: () => ({
             docs,
+            // Under endpoint-security, every declared scheme is available for endpoints to
+            // reference from their own `security`. The schemes must still be converted here,
+            // otherwise consumers have no definition to resolve those references against.
             requirement: AuthSchemesRequirement.EndpointSecurity,
-            schemes: []
+            schemes: Object.keys(rawApiFileSchema["auth-schemes"] ?? {}).map((schemeName) =>
+                convertSchemeReference({
+                    reference: schemeName,
+                    authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
+                    casingsGenerator
+                })
+            )
         })
     });
 }

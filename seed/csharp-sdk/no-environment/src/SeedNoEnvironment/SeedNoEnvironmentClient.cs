@@ -14,7 +14,7 @@ public partial class SeedNoEnvironmentClient : ISeedNoEnvironmentClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedNoEnvironment" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedNoEnvironment.Version.Current },
                 { "User-Agent", "Fernno-environment/0.0.1" },
             }
         );

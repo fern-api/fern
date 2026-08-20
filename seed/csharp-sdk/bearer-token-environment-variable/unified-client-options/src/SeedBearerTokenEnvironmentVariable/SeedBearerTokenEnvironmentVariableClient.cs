@@ -18,7 +18,10 @@ public partial class SeedBearerTokenEnvironmentVariableClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedBearerTokenEnvironmentVariable" },
-                { "X-Fern-SDK-Version", Version.Current },
+                {
+                    "X-Fern-SDK-Version",
+                    global::SeedBearerTokenEnvironmentVariable.Version.Current
+                },
                 { "User-Agent", "Fernbearer-token-environment-variable/0.0.1" },
             }
         );

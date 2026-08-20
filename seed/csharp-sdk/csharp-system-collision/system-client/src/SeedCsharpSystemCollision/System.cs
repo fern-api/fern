@@ -15,7 +15,7 @@ public partial class System : ISystem
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedCsharpSystemCollision" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedCsharpSystemCollision.Version.Current },
                 { "User-Agent", "Ferncsharp-system-collision/0.0.1" },
             }
         );

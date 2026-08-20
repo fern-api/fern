@@ -14,7 +14,7 @@ public partial class SeedPlainTextClient : ISeedPlainTextClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedPlainText" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedPlainText.Version.Current },
                 { "User-Agent", "Fernplain-text/0.0.1" },
             }
         );

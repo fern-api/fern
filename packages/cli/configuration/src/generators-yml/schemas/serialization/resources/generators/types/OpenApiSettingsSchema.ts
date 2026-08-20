@@ -38,6 +38,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "infer-discriminated-union-base-properties": core.serialization.boolean().optional(),
         "disambiguate-request-names": core.serialization.boolean().optional(),
         "ignore-tags": core.serialization.boolean().optional(),
+        "respect-parameter-content": core.serialization.boolean().optional(),
     })
     .extend(BaseApiSettingsSchema);
 
@@ -66,5 +67,6 @@ export declare namespace OpenApiSettingsSchema {
         "infer-discriminated-union-base-properties"?: boolean | null;
         "disambiguate-request-names"?: boolean | null;
         "ignore-tags"?: boolean | null;
+        "respect-parameter-content"?: boolean | null;
     }
 }

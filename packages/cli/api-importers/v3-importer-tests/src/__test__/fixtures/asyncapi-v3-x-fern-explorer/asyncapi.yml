@@ -1,0 +1,73 @@
+asyncapi: 3.0.0
+info:
+  title: Test x-fern-explorer extension for AsyncAPI v3
+  version: 1.0.0
+
+x-fern-explorer: false
+
+servers:
+  production:
+    host: api.example.com
+    protocol: wss
+    pathname: /v1/ws
+
+channels:
+  plantMonitor:
+    address: /plants/monitor
+    x-fern-explorer: true
+    messages:
+      moistureReading:
+        $ref: "#/components/messages/MoistureReading"
+  plantUpdates:
+    address: /plants/updates
+    messages:
+      statusUpdate:
+        $ref: "#/components/messages/StatusUpdate"
+
+operations:
+  monitorPlants:
+    action: receive
+    channel:
+      $ref: "#/channels/plantMonitor"
+    messages:
+      - $ref: "#/channels/plantMonitor/messages/moistureReading"
+  subscribePlantUpdates:
+    action: receive
+    channel:
+      $ref: "#/channels/plantUpdates"
+    messages:
+      - $ref: "#/channels/plantUpdates/messages/statusUpdate"
+
+components:
+  messages:
+    MoistureReading:
+      name: MoistureReading
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/MoistureReadingPayload"
+    StatusUpdate:
+      name: StatusUpdate
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/StatusUpdatePayload"
+  schemas:
+    MoistureReadingPayload:
+      type: object
+      required:
+        - plantId
+        - moisture
+      properties:
+        plantId:
+          type: string
+        moisture:
+          type: number
+    StatusUpdatePayload:
+      type: object
+      required:
+        - plantId
+        - status
+      properties:
+        plantId:
+          type: string
+        status:
+          type: string

@@ -94,7 +94,8 @@ export async function buildTranslatedDocsDefinition({
                 const importsResolved = transformAtPrefixImports({
                     markdown: codeResolved,
                     absolutePathToFernFolder: docsWorkspacePath,
-                    absolutePathToMarkdownFile
+                    absolutePathToMarkdownFile,
+                    context
                 });
 
                 let processedMarkdown = stripMdxComments(importsResolved);

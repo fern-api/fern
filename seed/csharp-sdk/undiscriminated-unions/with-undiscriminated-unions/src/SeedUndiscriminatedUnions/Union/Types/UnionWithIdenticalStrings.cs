@@ -34,7 +34,7 @@ public class UnionWithIdenticalStrings
     public object? Value { get; internal set; }
 
     /// <summary>
-    /// Factory method to create a union from a string value.
+    /// Factory method to create a union from a <see cref="string"/> value.
     /// </summary>
     public static UnionWithIdenticalStrings FromString(string value) => new("string", value);
 

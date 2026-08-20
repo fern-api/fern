@@ -29,7 +29,10 @@ public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedOauthClientCredentialsEnvironmentVariables" },
-                { "X-Fern-SDK-Version", Version.Current },
+                {
+                    "X-Fern-SDK-Version",
+                    global::SeedOauthClientCredentialsEnvironmentVariables.Version.Current
+                },
                 { "User-Agent", "Fernoauth-client-credentials-environment-variables/0.0.1" },
             }
         );
