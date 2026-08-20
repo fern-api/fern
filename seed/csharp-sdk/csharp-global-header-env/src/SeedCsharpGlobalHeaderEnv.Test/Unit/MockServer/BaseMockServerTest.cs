@@ -27,7 +27,7 @@ public class BaseMockServerTest
             "USERNAME",
             "PASSWORD",
             "TOKEN",
-            "VERSION",
+            "2024-01-01",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
     }

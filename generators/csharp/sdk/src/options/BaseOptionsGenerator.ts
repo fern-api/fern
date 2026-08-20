@@ -179,11 +179,11 @@ export class BaseOptionsGenerator extends WithGeneration {
             header: HttpHeader;
             options: OptionArgs;
         }
-    ) {
+    ): ast.Field | undefined {
         if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
-            return;
+            return undefined;
         }
-        classOrInterface.addField({
+        return classOrInterface.addField({
             access: ast.Access.Public,
             origin: header,
             get: true,
@@ -251,13 +251,19 @@ export class BaseOptionsGenerator extends WithGeneration {
         this.getBodyPropertiesField(iface, optionArgs);
     }
 
-    public getLiteralHeaderOptions(classOrInterface: ast.Interface | ast.Class, optionArgs: OptionArgs) {
+    /** Adds a client option for every literal-typed global header, and returns the added fields. */
+    public getLiteralHeaderOptions(classOrInterface: ast.Interface | ast.Class, optionArgs: OptionArgs): ast.Field[] {
+        const fields: ast.Field[] = [];
         for (const header of this.context.ir.headers) {
-            this.maybeGetLiteralHeaderField(classOrInterface, {
+            const field = this.maybeGetLiteralHeaderField(classOrInterface, {
                 header,
                 options: optionArgs
             });
+            if (field != null) {
+                fields.push(field);
+            }
         }
+        return fields;
     }
 
     private getLiteralRootClientParameterType({ literal }: { literal: Literal }): ast.Type {

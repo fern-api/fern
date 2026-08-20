@@ -67,7 +67,7 @@ public record UnionWithNoProperties
             : throw new global::System.Exception("UnionWithNoProperties.Type is not 'foo'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'empty', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty'.</exception>
     public object? AsEmpty() =>
@@ -124,7 +124,7 @@ public record UnionWithNoProperties
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsEmpty(out object? value)
     {

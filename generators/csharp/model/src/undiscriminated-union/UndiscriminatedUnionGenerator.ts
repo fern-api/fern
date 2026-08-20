@@ -219,8 +219,8 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
             class_.addMethod({
                 doc: {
                     summary: (writer) => {
-                        writer.write(`Factory method to create a union from a `);
-                        writer.writeNode(member.csharpType);
+                        writer.write("Factory method to create a union from a ");
+                        writer.writeSeeType(member.csharpType);
                         writer.write(" value.");
                     }
                 },
@@ -293,10 +293,10 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
             class_.addMethod({
                 doc: {
                     summary: (writer) => {
-                        writer.write(`Returns the value as a <see cref="`);
-                        writer.writeNode(member.csharpType);
+                        writer.write("Returns the value as a ");
+                        writer.writeSeeType(member.csharpType);
                         writer.write(
-                            `"/> if <see cref="${typeField.name}"/> is '${escapeForCSharpString(member.discriminator)}', otherwise throws an exception.`
+                            ` if <see cref="${typeField.name}"/> is '${escapeForCSharpString(member.discriminator)}', otherwise throws an exception.`
                         );
                     },
                     exceptions: new Map([
@@ -364,9 +364,9 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
             class_.addMethod({
                 doc: {
                     summary: (writer) => {
-                        writer.write(`Attempts to cast the value to a <see cref="`);
-                        writer.writeNode(member.csharpType);
-                        writer.write(`"/> and returns true if successful.`);
+                        writer.write("Attempts to cast the value to a ");
+                        writer.writeSeeType(member.csharpType);
+                        writer.write(" and returns true if successful.");
                     }
                 },
                 access: ast.Access.Public,

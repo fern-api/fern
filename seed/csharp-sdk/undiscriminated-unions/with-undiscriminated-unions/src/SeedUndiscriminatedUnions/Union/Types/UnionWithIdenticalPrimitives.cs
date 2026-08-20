@@ -33,17 +33,17 @@ public class UnionWithIdenticalPrimitives
     public object? Value { get; internal set; }
 
     /// <summary>
-    /// Factory method to create a union from a int value.
+    /// Factory method to create a union from a <see cref="int"/> value.
     /// </summary>
     public static UnionWithIdenticalPrimitives FromInt(int value) => new("int", value);
 
     /// <summary>
-    /// Factory method to create a union from a double value.
+    /// Factory method to create a union from a <see cref="double"/> value.
     /// </summary>
     public static UnionWithIdenticalPrimitives FromDouble(double value) => new("double", value);
 
     /// <summary>
-    /// Factory method to create a union from a string value.
+    /// Factory method to create a union from a <see cref="string"/> value.
     /// </summary>
     public static UnionWithIdenticalPrimitives FromString(string value) => new("string", value);
 

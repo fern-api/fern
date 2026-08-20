@@ -119,10 +119,10 @@ internal static class QueryStringBuilder
 #endif
     }
 
+#if NET6_0_OR_GREATER
     /// <summary>
     /// Builds a query string from the provided parameters.
     /// </summary>
-#if NET6_0_OR_GREATER
     public static string Build(ReadOnlySpan<KeyValuePair<string, string>> parameters)
     {
         if (parameters.IsEmpty)

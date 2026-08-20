@@ -8,7 +8,11 @@
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
     <PackageReadmeFile Condition="Exists('..\..\README.md')">README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
     <PackageProjectUrl>https://github.com/http-head/fern</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/http-head/fern</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
   </PropertyGroup>
 
