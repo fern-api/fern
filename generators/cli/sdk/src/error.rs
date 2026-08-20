@@ -178,41 +178,40 @@ pub fn http_status_reason(status: u16) -> &'static str {
 /// Build a [`CliError::Api`] from an HTTP error response.
 ///
 /// Recognises the shapes services actually return — the Google-style
-/// `{"error": {...}}` envelope, `{"error": "<message>"}`, RFC 7807
-/// `{"detail"/"title"}`, OAuth 2.0 `{"error_description"}`, and bare
-/// `{"message"}` — and lifts one sentence into `message`. A JSON body it can't
-/// interpret keeps its structure in `details` instead of being stringified into
-/// `message`, which would escape a whole JSON document inside a JSON field.
+/// `{"error": {...}}` envelope, `{"error": "<message>"}`, FastAPI/RFC 7807
+/// `{"detail": {...} | [...] | "<message>"}`, `{"title"}`, OAuth 2.0
+/// `{"error_description"}`, and bare `{"message"}` — and lifts one sentence
+/// into `message`. A JSON body it can't interpret keeps its structure in
+/// `details` instead of being stringified into `message`, which would escape a
+/// whole JSON document inside a JSON field.
 pub fn api_error_from_body(status: u16, body: &str) -> CliError {
     let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body) else {
         // Not JSON — the body itself is the most informative message we have.
         return CliError::api(status, body, http_status_reason(status));
     };
 
-    let envelope = parsed.get("error").filter(|e| e.is_object());
-    let scope = envelope.unwrap_or(&parsed);
+    // Services wrap the interesting fields one level down under `error`
+    // (Google, Stripe) or `detail` (FastAPI, which is what a Fern-generated
+    // Python backend emits), so look inside before falling back to the root.
+    let scope = ["error", "detail"]
+        .iter()
+        .filter_map(|k| parsed.get(k))
+        .find(|v| v.is_object())
+        .unwrap_or(&parsed);
 
     let code = scope
         .get("code")
         .and_then(|c| c.as_u64())
         .unwrap_or(status as u64) as u16;
-    let reason = scope
-        .get("errors")
-        .and_then(|e| e.as_array())
-        .and_then(|arr| arr.first())
-        .and_then(|e| e.get("reason"))
-        .and_then(|r| r.as_str())
-        .or_else(|| scope.get("reason").and_then(|r| r.as_str()))
-        .unwrap_or_else(|| http_status_reason(status))
-        .to_string();
-    let message = message_from(scope)
-        .or_else(|| {
-            parsed
-                .get("error")
-                .and_then(|e| e.as_str())
-                .map(str::to_string)
-        })
-        .unwrap_or_else(|| format!("HTTP {status} {reason}"));
+    // A string `code` is a symbolic reason, not an HTTP status — as is Stripe's
+    // and ElevenLabs' `type`.
+    let reason = first_error(scope)
+        .and_then(|e| str_field(e, "reason"))
+        .or_else(|| str_field(scope, "reason"))
+        .or_else(|| str_field(scope, "code"))
+        .or_else(|| str_field(scope, "type"))
+        .unwrap_or_else(|| http_status_reason(status).to_string());
+    let message = message_from(scope).unwrap_or_else(|| format!("HTTP {status} {reason}"));
 
     CliError::Api {
         code,
@@ -222,26 +221,46 @@ pub fn api_error_from_body(status: u16, body: &str) -> CliError {
     }
 }
 
+/// Read a non-empty string field, if present.
+fn str_field(scope: &serde_json::Value, key: &str) -> Option<String> {
+    scope
+        .get(key)
+        .and_then(|v| v.as_str())
+        .filter(|s| !s.is_empty())
+        .map(str::to_string)
+}
+
+/// The first entry of an `errors`/`detail` list of per-problem objects, which is
+/// where Google-style and FastAPI-style bodies put the actual message.
+fn first_error(scope: &serde_json::Value) -> Option<&serde_json::Value> {
+    ["errors", "detail"]
+        .iter()
+        .filter_map(|k| scope.get(k))
+        .filter_map(|v| v.as_array())
+        .find_map(|arr| arr.first())
+}
+
 /// Pull a human-readable sentence out of an error object, accepting the field
 /// names services actually use.
 fn message_from(scope: &serde_json::Value) -> Option<String> {
-    for key in ["message", "detail", "title", "error_description"] {
-        if let Some(s) = scope.get(key).and_then(|v| v.as_str()) {
-            if !s.is_empty() {
-                return Some(s.to_string());
-            }
+    for key in [
+        "message",
+        "msg",
+        "detail",
+        "title",
+        "error_description",
+        "error",
+    ] {
+        if let Some(s) = str_field(scope, key) {
+            return Some(s);
         }
     }
-    scope
-        .get("errors")
-        .and_then(|e| e.as_array())
-        .and_then(|arr| arr.first())
-        .and_then(|first| {
-            first
-                .as_str()
-                .map(str::to_string)
-                .or_else(|| message_from(first))
-        })
+    first_error(scope).and_then(|first| {
+        first
+            .as_str()
+            .map(str::to_string)
+            .or_else(|| message_from(first))
+    })
 }
 
 /// All documented exit codes with their human-readable descriptions.
@@ -667,6 +686,33 @@ mod tests {
         );
         assert_eq!(json["error"]["reason"], "internalServerError");
         assert_eq!(json["error"]["details"]["status"], "internal_server_error");
+    }
+
+    #[test]
+    fn nested_detail_bodies_yield_a_sentence() {
+        // Bodies captured verbatim from api.elevenlabs.io: FastAPI puts the
+        // useful fields under `detail`, as an object, a list, or a bare string.
+        let err = api_error_from_body(
+            401,
+            r#"{"detail":{"type":"authentication_error","code":"unauthorized","message":"Invalid API key","status":"invalid_api_key","request_id":"f883"}}"#,
+        );
+        assert_eq!(err.to_string(), "Invalid API key");
+        let json = err.to_json();
+        // A string `code` is a symbolic reason, so it must not land in `code`.
+        assert_eq!(json["error"]["code"], 401);
+        assert_eq!(json["error"]["reason"], "unauthorized");
+        assert_eq!(json["error"]["details"]["detail"]["request_id"], "f883");
+
+        let err = api_error_from_body(
+            422,
+            r#"{"detail":[{"type":"missing","loc":["body","text"],"msg":"Field required","input":null}]}"#,
+        );
+        assert_eq!(err.to_string(), "Field required");
+        assert_eq!(err.to_json()["error"]["reason"], "unprocessableEntity");
+
+        let err = api_error_from_body(404, r#"{"detail":"Not Found"}"#);
+        assert_eq!(err.to_string(), "Not Found");
+        assert_eq!(err.to_json()["error"]["reason"], "notFound");
     }
 
     #[test]
