@@ -1,4 +1,5 @@
-import { DEFAULT_SCOOP_TOKEN_ENV_VAR, type FernCliScoopConfig } from "./customConfig.js";
+import { type FernCliScoopConfig, type ResolvedChannelAuth } from "./customConfig.js";
+import { appTokenExpression, CREDENTIAL_PREFLIGHT_JOB, constructAppTokenStep } from "./githubAppToken.js";
 
 /**
  * The Rust target whose cargo-dist archive backs Scoop's `64bit`
@@ -36,6 +37,22 @@ export interface ScoopJobArgs {
 }
 
 /**
+ * `ScoopJobArgs` plus the two things only the release-workflow composer
+ * knows. Kept separate so `runPipeline` supplies just the config-derived
+ * fields and never has to resolve auth itself — `resolveChannelAuth` has
+ * exactly one evaluation site, in `constructReleaseWorkflowYaml`.
+ */
+export interface ScoopJobYamlArgs extends ScoopJobArgs {
+    /** How the bucket push authenticates. */
+    auth: ResolvedChannelAuth;
+    /**
+     * Whether a `preflight-distribution` job was emitted, in which case
+     * this job waits on it.
+     */
+    preflightJob: boolean;
+}
+
+/**
  * Build the `publish-scoop` job appended to the generated `release.yml`.
  *
  * cargo-dist has no Scoop support (its installers are shell, powershell,
@@ -61,10 +78,27 @@ export interface ScoopJobArgs {
  * Exported separately from the emitters so the YAML is unit-testable
  * without touching disk.
  */
-export function constructScoopJobYaml(args: ScoopJobArgs): string {
-    const { binaryName, scoop, repoUrl, license, description } = args;
-    const tokenVar = scoop.tokenEnvironmentVariable ?? DEFAULT_SCOOP_TOKEN_ENV_VAR;
+export function constructScoopJobYaml(args: ScoopJobYamlArgs): string {
+    const { binaryName, scoop, repoUrl, license, description, auth, preflightJob } = args;
     const homepage = repoUrl ?? "";
+
+    // Only the cross-repo push needs the App. The two steps above it call
+    // `gh release view` / `gh release download` against *this* repo's own
+    // release, which the built-in token can do, so they keep their
+    // step-level `secrets.GITHUB_TOKEN`.
+    //
+    // The mint step therefore sits immediately before the checkout it
+    // feeds, not at the top of the job: placed first it reads as though it
+    // covers the `gh` steps too, which invites deleting their `GH_TOKEN`.
+    const tokenStep =
+        auth.type === "githubApp"
+            ? `${constructAppTokenStep({ name: "Mint a bucket token", app: auth.app, repo: scoop.bucket })}\n`
+            : "";
+    const checkoutToken = auth.type === "githubApp" ? appTokenExpression() : `\${{ secrets.${auth.tokenSecret} }}`;
+    // Gated on *this* channel's auth, not merely on the job existing — a
+    // PAT-authenticated bucket push must not be skipped because the other
+    // channel's App credentials are malformed.
+    const preflightNeed = preflightJob && auth.type === "githubApp" ? `      - ${CREDENTIAL_PREFLIGHT_JOB}\n` : "";
 
     // Assembled as a jq invocation rather than a heredoc so the manifest
     // is always valid JSON no matter what characters the description or
@@ -105,7 +139,7 @@ export function constructScoopJobYaml(args: ScoopJobArgs): string {
     needs:
       - plan
       - host
-    runs-on: "ubuntu-22.04"
+${preflightNeed}    runs-on: "ubuntu-22.04"
     # The same expression cargo-dist uses for its own publish jobs. A Scoop
     # bucket has no prerelease channel — a manifest simply *is* the version
     # \`scoop install\` hands out — so an RC must not become what every user
@@ -177,11 +211,11 @@ export function constructScoopJobYaml(args: ScoopJobArgs): string {
             echo "autoupdate-url=\${GITHUB_SERVER_URL}/\${GITHUB_REPOSITORY}/releases/download/\${TAG_TEMPLATE}/\${ASSET_NAME}"
           } >> "\$GITHUB_OUTPUT"
 
-      - name: Check out the Scoop bucket
+${tokenStep}      - name: Check out the Scoop bucket
         uses: actions/checkout@v6
         with:
           repository: "${scoop.bucket}"
-          token: \${{ secrets.${tokenVar} }}
+          token: ${checkoutToken}
           path: scoop-bucket
           # Credentials must persist — the next step pushes the manifest back.
           persist-credentials: true

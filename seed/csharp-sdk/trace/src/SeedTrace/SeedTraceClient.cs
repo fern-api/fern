@@ -19,7 +19,7 @@ public partial class SeedTraceClient : ISeedTraceClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedTrace" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedTrace.Version.Current },
                 { "User-Agent", "Ferntrace/0.0.1" },
             }
         );

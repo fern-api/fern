@@ -2710,6 +2710,17 @@
             }
           ],
           "description": "If true, ignore operation-level tags when determining the SDK structure.\nEndpoints fall back to the root package (or their namespace) and method\nnames are derived from each operation's operationId.\nDefaults to false."
+        },
+        "respect-parameter-content": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, header parameters that declare their schema under `content` (e.g. a header\nwhose value is a JSON-encoded object) are typed from that schema instead of falling\nback to a string.\nDefaults to false."
         }
       },
       "additionalProperties": false
@@ -3392,6 +3403,17 @@
             }
           ],
           "description": "If true, ignore operation-level tags when determining the SDK structure.\nEndpoints fall back to the root package (or their namespace) and method\nnames are derived from each operation's operationId.\nDefaults to false."
+        },
+        "respect-parameter-content": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, header parameters that declare their schema under `content` (e.g. a header\nwhose value is a JSON-encoded object) are typed from that schema instead of falling\nback to a string.\nDefaults to false."
         },
         "respect-nullable-schemas": {
           "oneOf": [

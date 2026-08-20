@@ -319,8 +319,18 @@ export class WireMock {
         // matchers entirely in that mode; per-endpoint header enforcement is done
         // explicitly in the generated wire tests (verify_auth_headers).
         const isEndpointSecurity = ir.auth.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity;
+        // The OAuth token (and refresh) endpoint is called to *obtain* a token, so its
+        // request can never carry the Authorization header the other stubs require —
+        // even when the spec marks the endpoint as authed. Skip auth matchers for it.
+        const isOAuthTokenExchangeEndpoint = ir.auth.schemes.some(
+            (scheme) =>
+                scheme.type === "oauth" &&
+                scheme.configuration.type === "clientCredentials" &&
+                (scheme.configuration.tokenEndpoint.endpointReference.endpointId === endpoint.id ||
+                    scheme.configuration.refreshEndpoint?.endpointReference.endpointId === endpoint.id)
+        );
         const authHeaders: Record<string, { matches?: string; equalTo?: string }> = {};
-        if (endpoint.auth && !isEndpointSecurity) {
+        if (endpoint.auth && !isEndpointSecurity && !isOAuthTokenExchangeEndpoint) {
             // Multiple schemes can write the Authorization header (oauth, bearer, basic).
             // Which value the client sends when several are configured (e.g. `auth: any`)
             // is language-dependent (some send the OAuth Bearer token, others Basic

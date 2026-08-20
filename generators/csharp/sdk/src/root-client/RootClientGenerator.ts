@@ -66,6 +66,12 @@ interface ConstructorParameter {
      */
     exampleValue?: string;
     /**
+     * A rendered C# expression to use in examples, for parameters whose value is known at
+     * compile time (a `literal<"...">`-typed or `client-default`ed global header). Takes
+     * precedence over `exampleValue`, which is quoted as a string.
+     */
+    exampleExpression?: string;
+    /**
      * The client default value from x-fern-default.
      * When present, the parameter is optional and uses this value as fallback.
      */
@@ -81,6 +87,29 @@ interface LiteralParameter {
 interface HeaderInfo {
     name: string;
     prefix?: string;
+}
+
+/** The compile-time value of a `literal<"...">`-typed global header, if this parameter is one. */
+function getLiteralHeaderValue(param: ConstructorParameter): Literal | undefined {
+    if (!param.isGlobalHeader) {
+        return undefined;
+    }
+    const { typeReference } = param;
+    return typeReference.type === "container" && typeReference.container.type === "literal"
+        ? typeReference.container.literal
+        : undefined;
+}
+
+/** Renders a literal as the C# expression for its value. */
+function renderLiteral(literal: Literal): string {
+    switch (literal.type) {
+        case "string":
+            return `"${escapeForCSharpString(literal.string)}"`;
+        case "boolean":
+            return literal.boolean ? "true" : "false";
+        default:
+            assertNever(literal);
+    }
 }
 
 export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
@@ -474,7 +503,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     userAgent: platformHeaders.userAgent,
                     packageName: this.generation.names.project.packageId,
                     csharp: this.csharp,
-                    versionValueAccess: this.context.getCurrentVersionValueAccess(),
+                    versionValueAccess: this.context.getCurrentVersionValueAccess({ inInterpolatedString: true }),
                     userAgentNameFromPackage: this.settings.userAgentNameFromPackage
                 });
                 if (userAgentEntry != null) {
@@ -539,10 +568,15 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     }
 
                     for (const param of optionalParameters) {
-                        const clientDefaultLiteral =
-                            param.isGlobalHeader && param.clientDefault != null
-                                ? this.getHeaderFallback(param)
-                                : undefined;
+                        const clientDefaultLiteral = this.getGlobalHeaderDefaultLiteral(param);
+                        if (!unified && getLiteralHeaderValue(param) != null) {
+                            // A literal-typed global header is also exposed as a client option, so
+                            // read it before falling back to the environment variable or the
+                            // literal default. An explicit constructor argument still wins.
+                            innerWriter.writeTextStatement(
+                                `${param.name} ??= clientOptions?.${this.toPascalCase(param.name)}`
+                            );
+                        }
                         if (param.environmentVariable != null) {
                             const target = paramAccess(param);
                             if (anyAuthMultiScheme || endpointSecurity || (param.isGlobalHeader && param.isOptional)) {
@@ -1208,10 +1242,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 if (param.environmentVariable != null && !includeEnvVarArguments) {
                     continue;
                 }
-                const value = param.exampleValue ?? param.name;
                 clientOptionsFields.push({
                     name: this.toPascalCase(param.name),
-                    assignment: this.csharp.codeblock(`"${value}"`)
+                    assignment: this.csharp.codeblock(this.getExampleArgument(param))
                 });
             }
 
@@ -1249,8 +1282,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 }
 
                 // Use example values consistently in both snippets and tests for clarity
-                const value = param.exampleValue ?? param.name;
-                arguments_.push(this.csharp.codeblock(`"${value}"`));
+                arguments_.push(this.csharp.codeblock(this.getExampleArgument(param)));
             }
 
             if (clientOptionsArgument != null) {
@@ -1266,6 +1298,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             classReference: asSnippet ? this.Types.RootClientForSnippets : this.Types.RootClient,
             arguments_
         });
+    }
+
+    /** The C# expression used for a constructor parameter in generated examples. */
+    private getExampleArgument(param: ConstructorParameter): string {
+        return param.exampleExpression ?? `"${param.exampleValue ?? param.name}"`;
     }
 
     private getConstructorParameters(authOnly = false): {
@@ -1503,41 +1540,65 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
     private getParameterForHeader(header: HttpHeader): ConstructorParameter {
         const hasClientDefault = header.clientDefault != null;
+        const literal =
+            header.valueType.type === "container" && header.valueType.container.type === "literal"
+                ? header.valueType.container.literal
+                : undefined;
+        // env vars are strings, so only a string-typed literal can be resolved from one; other
+        // literals stay out of the constructor and are surfaced through ClientOptions instead.
+        const environmentVariable = literal == null || literal.type === "string" ? header.env : undefined;
+        const knownValue = header.clientDefault ?? literal;
         return {
-            name:
-                header.valueType.type === "container" && header.valueType.container.type === "literal"
-                    ? this.case.pascalSafe(header.name)
-                    : this.case.camelSafe(header.name),
+            name: literal != null ? this.case.pascalSafe(header.name) : this.case.camelSafe(header.name),
             header: {
                 name: getWireValue(header.name)
             },
             docs: header.docs,
+            // a literal-typed header's value is known at compile time, so once an env var promotes it
+            // to a constructor parameter it is always optional: it falls back to the literal rather
+            // than requiring the caller or the environment to supply a value.
             isOptional:
                 hasClientDefault ||
-                (header.valueType.type === "container" && header.valueType.container.type === "optional"),
+                (header.valueType.type === "container" && header.valueType.container.type === "optional") ||
+                (literal != null && environmentVariable != null),
             typeReference: header.valueType,
             type: this.context.csharpTypeMapper.convert({
                 reference: header.valueType
             }),
-            environmentVariable: header.env,
+            environmentVariable,
             isGlobalHeader: true,
             exampleValue: this.case.screamingSnakeSafe(header.name),
+            // A global header whose value is known at compile time must not be exemplified with a
+            // `"HEADER_NAME"` placeholder: that placeholder is sent verbatim as the header value.
+            exampleExpression: knownValue != null ? renderLiteral(knownValue) : undefined,
             clientDefault: header.clientDefault
         };
     }
 
     private getHeaderFallback(param: ConstructorParameter): string {
-        if (param.clientDefault != null) {
-            switch (param.clientDefault.type) {
+        const default_ = param.clientDefault ?? getLiteralHeaderValue(param);
+        if (default_ != null) {
+            switch (default_.type) {
                 case "string":
-                    return `"${escapeForCSharpString(param.clientDefault.string)}"`;
+                    return `"${escapeForCSharpString(default_.string)}"`;
                 case "boolean":
-                    return param.clientDefault.boolean ? `"${true.toString()}"` : `"${false.toString()}"`;
+                    return default_.boolean ? `"${true.toString()}"` : `"${false.toString()}"`;
                 default:
-                    assertNever(param.clientDefault);
+                    assertNever(default_);
             }
         }
         return `""`;
+    }
+
+    /**
+     * The compile-time default to fall back to for a global header parameter: its `client-default`,
+     * or the literal value when the header is literal-typed.
+     */
+    private getGlobalHeaderDefaultLiteral(param: ConstructorParameter): string | undefined {
+        if (!param.isGlobalHeader || (param.clientDefault == null && getLiteralHeaderValue(param) == null)) {
+            return undefined;
+        }
+        return this.getHeaderFallback(param);
     }
 
     private getFromEnvironmentOrThrowMethod(cls: ast.Class) {
@@ -1595,7 +1656,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 writer.write(buildUserAgentReturnPrefix(productName));
                 // Written via `writeNode` so the generated `Version` reference
                 // registers its using directive.
-                writer.writeNode(this.context.getCurrentVersionValueAccess());
+                writer.writeNode(this.context.getCurrentVersionValueAccess({ inInterpolatedString: true }));
                 writer.writeLine(BUILD_USER_AGENT_RETURN_SUFFIX);
             }),
             type: ast.MethodType.STATIC

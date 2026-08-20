@@ -28,7 +28,7 @@ public partial class SeedAnyAuthClient : ISeedAnyAuthClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedAnyAuth" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedAnyAuth.Version.Current },
                 { "User-Agent", "Fernany-auth/0.0.1" },
             }
         );

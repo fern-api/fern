@@ -104,6 +104,34 @@ class EndpointResponseCodeWriter:
             ],
         )
 
+    @property
+    def _stream_abstraction(self) -> bool:
+        return self._context.custom_config.stream_abstraction
+
+    def _wrap_in_stream_event(self, *, data: AST.Expression, from_sse: bool) -> AST.Expression:
+        """Wrap a parsed payload in a `StreamEvent`, carrying the server-sent event metadata along.
+
+        Without `stream_abstraction` the payload is yielded on its own, as it always was.
+        """
+        if not self._stream_abstraction:
+            return data
+        kwargs = [("data", data)]
+        if from_sse:
+            sse = EndpointResponseCodeWriter.SSE_VARIABLE
+            kwargs.extend(
+                [
+                    ("id", AST.Expression(f"{sse}.id or None")),
+                    ("event", AST.Expression(f"{sse}.event")),
+                    ("retry", AST.Expression(f"{sse}.retry")),
+                ]
+            )
+        return AST.Expression(
+            AST.ClassInstantiation(
+                class_=self._context.core_utilities.get_stream_event_reference(),
+                kwargs=kwargs,
+            )
+        )
+
     def _handle_success_stream(self, *, writer: AST.NodeWriter, stream_response: ir_types.StreamingResponse) -> None:
         iter_func_body = []
 
@@ -201,6 +229,19 @@ class EndpointResponseCodeWriter:
                                 ],
                                 else_code=None,
                             ),
+                            # Comment-only and retry-only frames are legal SSE and carry no payload,
+                            # so they are skipped instead of being parsed as a model.
+                            AST.ConditionalTree(
+                                conditions=[
+                                    AST.IfConditionLeaf(
+                                        condition=AST.Expression(
+                                            f"len({EndpointResponseCodeWriter.SSE_VARIABLE}.data) == 0"
+                                        ),
+                                        code=[AST.ContinueStatement()],
+                                    ),
+                                ],
+                                else_code=None,
+                            ),
                         ]
                         + sse_for_body,
                         is_async=self._is_async,
@@ -237,9 +278,14 @@ class EndpointResponseCodeWriter:
                         else_code=None,
                     ),
                     AST.YieldStatement(
-                        self._context.core_utilities.get_construct(
-                            self._get_streaming_response_data_type(stream_response),
-                            AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
+                        self._wrap_in_stream_event(
+                            data=self._context.core_utilities.get_construct(
+                                self._get_streaming_response_data_type(stream_response),
+                                AST.Expression(
+                                    Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))
+                                ),
+                            ),
+                            from_sse=False,
                         )
                     ),
                 ]
@@ -271,29 +317,42 @@ class EndpointResponseCodeWriter:
 
         iter_func_body.append(AST.ReturnStatement())
 
+        data: AST.Expression
+        if self._stream_abstraction:
+            event_type = self._context.core_utilities.get_stream_event_type(
+                self._get_streaming_response_data_type(stream_response)
+            )
+            iter_signature = AST.FunctionSignature(
+                return_type=AST.TypeHint.async_generator(event_type)
+                if self._is_async
+                else AST.TypeHint.generator(event_type)
+            )
+            # The stream starts `_iter` itself, so nothing is consumed until the stream is iterated.
+            data = self._context.core_utilities.instantiate_stream(
+                events=AST.Expression("_iter"),
+                is_async=self._is_async,
+            )
+        else:
+            iter_signature = AST.FunctionSignature()
+            data = AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=AST.Reference(
+                        qualified_name_excluding_import=("_iter",),
+                    ),
+                    args=[],
+                )
+            )
+
         writer.write_node(
             AST.FunctionDeclaration(
                 name="_iter",
-                signature=AST.FunctionSignature(),
+                signature=iter_signature,
                 body=iter_func_body,
                 is_async=self._is_async,
             )
         )
 
-        writer.write_node(
-            AST.ReturnStatement(
-                self._instantiate_http_response(
-                    data=AST.Expression(
-                        AST.FunctionInvocation(
-                            function_definition=AST.Reference(
-                                qualified_name_excluding_import=("_iter",),
-                            ),
-                            args=[],
-                        )
-                    )
-                )
-            )
-        )
+        writer.write_node(AST.ReturnStatement(self._instantiate_http_response(data=data)))
 
     def _get_iter_lines_method(self, *, is_async: bool) -> str:
         if is_async:
@@ -908,9 +967,12 @@ class EndpointResponseCodeWriter:
             AST.TryStatement(
                 body=[
                     AST.YieldStatement(
-                        self._context.core_utilities.get_construct_sse(
-                            self._get_streaming_response_data_type(stream_response),
-                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}"),
+                        self._wrap_in_stream_event(
+                            data=self._context.core_utilities.get_construct_sse(
+                                self._get_streaming_response_data_type(stream_response),
+                                AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}"),
+                            ),
+                            from_sse=True,
                         ),
                     ),
                 ],
@@ -1002,7 +1064,7 @@ class EndpointResponseCodeWriter:
                     condition=AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.event == {repr(wire_value)}"),
                     code=[
                         AST.TryStatement(
-                            body=[AST.YieldStatement(yield_expr)],
+                            body=[AST.YieldStatement(self._wrap_in_stream_event(data=yield_expr, from_sse=True))],
                             handlers=[
                                 AST.ExceptHandler(
                                     body=[

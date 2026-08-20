@@ -20,6 +20,7 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
 import { getParameterName } from "../../extensions/getParameterName.js";
 import { getVariableReference } from "../../extensions/getVariableReference.js";
+import { findApplicationJsonRequest } from "./getApplicationJsonSchema.js";
 
 export interface ConvertedParameters {
     pathParameters: PathParameterWithExample[];
@@ -77,10 +78,12 @@ export function convertParameters({
         const [isOptional, isNullable] =
             context.options.coerceOptionalSchemasToNullable && !isHeader ? [false, !isRequired] : [!isRequired, false];
 
+        const parameterSchema = getParameterSchema(resolvedParameter, context);
+
         let schema =
-            resolvedParameter.schema != null
+            parameterSchema != null
                 ? convertSchema(
-                      resolvedParameter.schema,
+                      parameterSchema,
                       isOptional,
                       isNullable,
                       context,
@@ -210,6 +213,29 @@ export function convertParameters({
     }
 
     return convertedParameters;
+}
+
+/**
+ * Resolves the schema describing a parameter's value. Parameters normally declare `schema`
+ * directly, but the OpenAPI spec also allows a `content` map for values that are serialized
+ * in a media type — most commonly a header holding a JSON-encoded object.
+ *
+ * Only headers are resolved from `content`: header values are JSON-encoded when sent, whereas
+ * an object query parameter is serialized as separate key/value pairs rather than as a single
+ * JSON-encoded value, which is not what `content: application/json` describes.
+ */
+function getParameterSchema(
+    parameter: OpenAPIV3.ParameterObject,
+    context: AbstractOpenAPIV3ParserContext
+): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
+    if (parameter.schema != null) {
+        return parameter.schema;
+    }
+    if (!context.options.respectParameterContent || parameter.in !== "header" || parameter.content == null) {
+        return undefined;
+    }
+    const jsonMediaType = findApplicationJsonRequest({ content: parameter.content, context });
+    return jsonMediaType?.[1].schema;
 }
 
 const HEADERS_TO_SKIP = new Set([

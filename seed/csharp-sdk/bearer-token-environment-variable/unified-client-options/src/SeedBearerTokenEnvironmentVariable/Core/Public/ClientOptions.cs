@@ -17,6 +17,7 @@ public partial class ClientOptions
         Timeout = other.Timeout;
         Headers = new Headers(new Dictionary<string, HeaderValue>(other.Headers));
         AdditionalHeaders = other.AdditionalHeaders;
+        Version = other.Version;
         ApiKey = other.ApiKey;
     }
 

@@ -358,7 +358,7 @@ function getReadPageResponseBodyForCursor({
     nextPageType: go.Type | undefined;
     responseType: go.Type;
 }): go.AstNode {
-    const doneCondition = getCursorDoneCondition({ context, cursor, pageType, nextPageType });
+    const doneCondition = getCursorDoneCondition({ context, cursor });
     return go.codeblock((writer) => {
         writer.write("var zeroValue ");
         writer.writeNode(nextPageType ?? pageType);
@@ -494,30 +494,42 @@ function dereferencesNextCursor({
  */
 function getCursorDoneCondition({
     context,
-    cursor,
-    pageType,
-    nextPageType
+    cursor
 }: {
     context: SdkGeneratorContext;
     cursor: FernIr.CursorPagination;
-    pageType: go.Type;
-    nextPageType: go.Type | undefined;
 }): string {
     const zeroValueCondition = "next == zeroValue";
-    const isStringCursor = context.isPrimitive({
-        typeReference: cursor.next.property.valueType,
-        primitive: FernIr.PrimitiveTypeV1.String
-    });
-    if (!isStringCursor) {
-        return zeroValueCondition;
-    }
-    const nextType = nextPageType ?? pageType;
-    if (!nextType.isOptional() || dereferencesNextCursor({ page: cursor.page, cursor: cursor.next })) {
-        // The cursor is a string value, so its zero value is already the empty string.
+    if (
+        !isNilableStringCursor({ context, cursor: cursor.next }) ||
+        dereferencesNextCursor({ page: cursor.page, cursor: cursor.next })
+    ) {
         return zeroValueCondition;
     }
     // Short-circuits before dereferencing a nil cursor.
     return `${zeroValueCondition} || *next == ""`;
+}
+
+/**
+ * Whether the cursor is a string that generates as a Go pointer, so that it can hold an empty
+ * string in addition to nil. Optionality is resolved through named aliases, which generate as the
+ * pointer type they alias (e.g. `type Cursor = *string`) rather than as a Go optional.
+ *
+ * The IR property is the source of truth for the emitted type because `next` is always declared
+ * from the response cursor property's getter.
+ */
+function isNilableStringCursor({
+    context,
+    cursor
+}: {
+    context: SdkGeneratorContext;
+    cursor: FernIr.ResponseProperty;
+}): boolean {
+    const valueType = cursor.property.valueType;
+    if (!context.isPrimitive({ typeReference: valueType, primitive: FernIr.PrimitiveTypeV1.String })) {
+        return false;
+    }
+    return context.isOptional(valueType) || context.isNullable(valueType);
 }
 
 function getNextResultsSetter({

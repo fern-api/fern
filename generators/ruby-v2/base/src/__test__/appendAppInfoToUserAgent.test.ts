@@ -38,7 +38,8 @@ function extractEmittedHelperSource(): string {
             includePlatformHeaders: false,
             allowUserAgentAppInfo: true,
             defaultMaxRetries: 2,
-            endpointSecurity: false
+            endpointSecurity: false,
+            requestLevelMaxRetries: false
         })
         .replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, "[].freeze");
 

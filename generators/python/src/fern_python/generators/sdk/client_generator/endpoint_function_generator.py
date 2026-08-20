@@ -18,6 +18,8 @@ from fern_python.external_dependencies.asyncio import Asyncio
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.constants import (
     CHUNK_VARIABLE,
+    EVENT_VARIABLE,
+    EVENTS_FUNCTION_NAME,
     RESPONSE_VARIABLE,
     SSE_RECONNECT_VARIABLE,
 )
@@ -385,13 +387,29 @@ class EndpointFunctionGenerator:
             snippets=endpoint_snippets or [],
         )
 
+    @property
+    def _stream_abstraction(self) -> bool:
+        return self._context.custom_config.stream_abstraction
+
+    def _raw_data_is_stream(self) -> bool:
+        return self._stream_abstraction and raw_data_is_stream(self._endpoint)
+
+    def _returns_stream_object(self) -> bool:
+        return self._stream_abstraction and returns_stream_object(self._endpoint)
+
     def _get_stream_func_return_type(self) -> AST.TypeHint:
         underlying_type = self._get_response_body_underlying_type(
             response_body=(self._endpoint.response.body if self._endpoint.response is not None else None),
             is_async=self._is_async,
         )
         underlying_type_wrapped = (
-            AST.TypeHint.async_iterator(underlying_type) if self._is_async else AST.TypeHint.iterator(underlying_type)
+            self._context.core_utilities.get_stream_type(underlying_type, is_async=self._is_async)
+            if self._raw_data_is_stream()
+            else (
+                AST.TypeHint.async_iterator(underlying_type)
+                if self._is_async
+                else AST.TypeHint.iterator(underlying_type)
+            )
         )
         return self._get_http_response_wrapper_type(self._is_async, underlying_type_wrapped)
 
@@ -912,6 +930,17 @@ class EndpointFunctionGenerator:
             endpoint_snippet = endpoint_snippet_generator.generate_snippet()
             response_name = "response"
             endpoint_usage = endpoint_snippet_generator.generate_usage(is_async=is_async, response_name=response_name)
+            # Async streaming methods are async generator functions, which cannot be awaited, so the
+            # snippet iterates what they return directly. Methods returning an `AsyncStream` are
+            # plain functions and the stream is awaitable, so those snippets keep the `await`.
+            returns_async_generator = (
+                is_async
+                and not self._is_raw_client
+                and not self._returns_stream_object()
+                and endpoint.response is not None
+                and endpoint.response.body is not None
+                and (endpoint.response.body.get_as_union().type == "streaming" or streaming_parameter == "streaming")
+            )
 
             # HACK: IR should provide stable ids for example
             example_id = "default"
@@ -928,6 +957,7 @@ class EndpointFunctionGenerator:
                             endpoint_usage=endpoint_usage,
                             generated_root_client=generated_root_client,
                             package=package,
+                            write_await=not returns_async_generator,
                         )
                     ),
                 )
@@ -943,10 +973,11 @@ class EndpointFunctionGenerator:
         endpoint_snippet: AST.Expression,
         response_name: str,
         package: ir_types.Package,
+        write_await: bool = True,
     ) -> None:
         if endpoint_usage is not None:
             writer.write(f"{response_name} = ")
-        if is_async:
+        if is_async and write_await:
             writer.write("await ")
 
         writer.write("client.")
@@ -968,6 +999,7 @@ class EndpointFunctionGenerator:
         response_name: str,
         generated_root_client: GeneratedRootClient,
         package: ir_types.Package,
+        write_await: bool = True,
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
             if is_async:
@@ -986,6 +1018,7 @@ class EndpointFunctionGenerator:
                         endpoint_snippet=endpoint_snippet,
                         response_name=response_name,
                         package=package,
+                        write_await=write_await,
                     )
 
                 writer.write_node(Asyncio.run(AST.Expression("main()")), should_write_as_snippet=False)
@@ -997,6 +1030,7 @@ class EndpointFunctionGenerator:
                     endpoint_snippet=endpoint_snippet,
                     response_name=response_name,
                     package=package,
+                    write_await=write_await,
                 )
 
         return AST.CodeWriter(write)
@@ -1232,6 +1266,8 @@ class EndpointFunctionGenerator:
                     )
                     non_stream_return = self._get_http_response_wrapper_type(is_async, non_stream_underlying)
                     return AST.TypeHint.union(streaming_type, non_stream_return)
+            elif self._returns_stream_object():
+                streaming_type = self._context.core_utilities.get_stream_type(type_hint, is_async=is_async)
             else:
                 streaming_type = (
                     AST.TypeHint.async_iterator(type_hint) if is_async else AST.TypeHint.iterator(type_hint)
@@ -1298,8 +1334,10 @@ class EndpointFunctionGenerator:
                 json=lambda json_response: self._write_standard_return(
                     writer, response_hint, json_response.get_as_union().docs
                 ),
-                streaming=lambda stream_response: self._write_yielding_return(
-                    writer, response_hint, stream_response.get_as_union().docs
+                streaming=lambda stream_response: (
+                    self._write_standard_return(writer, response_hint, stream_response.get_as_union().docs)
+                    if self._returns_stream_object() and not self._is_raw_client
+                    else self._write_yielding_return(writer, response_hint, stream_response.get_as_union().docs)
                 ),
                 text=lambda t: self._write_standard_return(writer, response_hint, t.docs),
                 stream_parameter=lambda _: None,
@@ -1971,6 +2009,66 @@ class EndpointFunctionGenerator:
             type_parameters=type_params,
         )
 
+    def _write_stream_method_body(self, *, writer: AST.NodeWriter, raw_client_invocation: AST.Expression) -> None:
+        """Write a method body that returns a lazily-opened `Stream` over the raw client's events.
+
+        The events generator is only started once the stream is iterated, which preserves the
+        behavior of the generator functions these methods used to be: no request is issued (and no
+        error is raised) until the caller starts consuming the stream. Closing the stream closes the
+        generator, which exits the raw client's context manager and releases the connection.
+        """
+        response_variable = "r"
+        event_type = self._context.core_utilities.get_stream_event_type(
+            self._get_response_body_underlying_type(
+                response_body=self._endpoint.response.body if self._endpoint.response is not None else None,
+                is_async=self._is_async,
+            )
+        )
+        events_expression = f"{response_variable}.data.with_metadata()"
+        if self._is_async:
+            with_body: List[AST.AstNode] = [
+                AST.ForStatement(
+                    target=EVENT_VARIABLE,
+                    iterable=AST.Expression(events_expression),
+                    is_async=True,
+                    body=[AST.YieldStatement(AST.Expression(EVENT_VARIABLE))],
+                )
+            ]
+        else:
+            with_body = [AST.YieldStatement(AST.Expression(events_expression), is_yield_from=True)]
+
+        writer.write_node(
+            AST.FunctionDeclaration(
+                name=EVENTS_FUNCTION_NAME,
+                is_async=self._is_async,
+                signature=AST.FunctionSignature(
+                    return_type=AST.TypeHint.async_generator(event_type)
+                    if self._is_async
+                    else AST.TypeHint.generator(event_type)
+                ),
+                body=[
+                    AST.WithStatement(
+                        context_managers=[
+                            AST.WithContextManager(
+                                expression=raw_client_invocation,
+                                as_variable=response_variable,
+                            )
+                        ],
+                        body=with_body,
+                        is_async=self._is_async,
+                    )
+                ],
+            )
+        )
+        writer.write_node(
+            AST.ReturnStatement(
+                self._context.core_utilities.instantiate_stream(
+                    events=AST.Expression(EVENTS_FUNCTION_NAME),
+                    is_async=self._is_async,
+                )
+            )
+        )
+
     def generate_wrapper_function(self) -> AST.FunctionDeclaration:
         """Create a wrapper method that delegates to the raw client and extracts the data property."""
 
@@ -1995,7 +2093,9 @@ class EndpointFunctionGenerator:
                 )
             )
             data_attribute = "data"
-            if is_streaming_endpoint(self._endpoint):
+            if self._returns_stream_object():
+                self._write_stream_method_body(writer=writer, raw_client_invocation=func_invocation_expr)
+            elif is_streaming_endpoint(self._endpoint):
                 response_variable = "r"
                 body: list[AST.AstNode] = []
                 if self._is_async:
@@ -2049,11 +2149,39 @@ class EndpointFunctionGenerator:
 
         return AST.FunctionDeclaration(
             name=get_endpoint_name(self._endpoint),
-            is_async=self._is_async,
+            # Methods returning an `AsyncStream` are plain functions, so that the returned stream can
+            # be consumed with `async for` directly as well as awaited (`AsyncStream` is awaitable).
+            is_async=self._is_async and not self._returns_stream_object(),
             signature=function.signature,
             docstring=function.docstring,
             body=AST.CodeWriter(write_method_body),
         )
+
+
+def raw_data_is_stream(endpoint: ir_types.HttpEndpoint) -> bool:
+    """Whether the raw client's `data` would be a `Stream` (SSE, JSON lines and text streams).
+
+    Only relevant when `stream_abstraction` is enabled; file downloads keep yielding raw `bytes`
+    chunks either way.
+    """
+    return (
+        endpoint.response is not None
+        and endpoint.response.body is not None
+        and endpoint.response.body.get_as_union().type in ("streaming", "streamParameter")
+    )
+
+
+def returns_stream_object(endpoint: ir_types.HttpEndpoint) -> bool:
+    """Whether the endpoint's public method would return the `Stream` itself.
+
+    Only relevant when `stream_abstraction` is enabled. Stream-condition endpoints keep returning an
+    iterator, because their overloads are generated through a separate code path.
+    """
+    return (
+        endpoint.response is not None
+        and endpoint.response.body is not None
+        and endpoint.response.body.get_as_union().type == "streaming"
+    )
 
 
 def is_streaming_endpoint(endpoint: ir_types.HttpEndpoint) -> bool:

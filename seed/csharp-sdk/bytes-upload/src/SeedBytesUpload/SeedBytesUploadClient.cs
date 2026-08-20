@@ -14,7 +14,7 @@ public partial class SeedBytesUploadClient : ISeedBytesUploadClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedBytesUpload" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedBytesUpload.Version.Current },
                 { "User-Agent", "Fernbytes-upload/0.0.1" },
             }
         );

@@ -15,7 +15,7 @@ public partial class SeedValidationClient : ISeedValidationClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedValidation" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedValidation.Version.Current },
                 { "User-Agent", "Fernvalidation/0.0.1" },
             }
         );

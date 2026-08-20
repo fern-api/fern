@@ -19,6 +19,33 @@ types:
       next_cursor: optional<uuid>
       data: list<User>
 
+  Cursor:
+    docs: A named alias that resolves to an optional string, i.e. a pointer in Go.
+    type: optional<string>
+
+  RequiredCursor:
+    docs: A named alias that resolves to a required string, i.e. a value in Go.
+    type: string
+
+  NullableCursor:
+    docs: A named alias that resolves to a nullable string, which is also a pointer in Go.
+    type: nullable<string>
+
+  ListUsersAliasCursorResponse:
+    properties:
+      next_cursor: Cursor
+      data: list<User>
+
+  ListUsersRequiredAliasCursorResponse:
+    properties:
+      next_cursor: RequiredCursor
+      data: list<User>
+
+  ListUsersNullableAliasCursorResponse:
+    properties:
+      next_cursor: NullableCursor
+      data: list<User>
+
   WithCursor:
     properties:
       cursor: optional<string>
@@ -76,6 +103,57 @@ service:
           properties:
             cursor: optional<uuid>
       response: ListUsersUuidCursorResponse
+
+    listWithAliasBodyCursorPagination:
+      docs: |
+        Pagination endpoint whose cursor is a named alias resolving to an optional string. The alias
+        generates as a pointer in Go, so an empty string cursor terminates the pager here too.
+      pagination:
+        cursor: $request.cursor
+        next_cursor: $response.next_cursor
+        results: $response.data
+      method: POST
+      path: /alias-cursor
+      request:
+        name: ListUsersAliasBodyCursorPaginationRequest
+        body:
+          properties:
+            cursor: Cursor
+      response: ListUsersAliasCursorResponse
+
+    listWithRequiredAliasBodyCursorPagination:
+      docs: |
+        Pagination endpoint whose cursor is a named alias resolving to a required string. The alias
+        generates as a value in Go, where the zero value is already the empty string.
+      pagination:
+        cursor: $request.cursor
+        next_cursor: $response.next_cursor
+        results: $response.data
+      method: POST
+      path: /required-alias-cursor
+      request:
+        name: ListUsersRequiredAliasBodyCursorPaginationRequest
+        body:
+          properties:
+            cursor: RequiredCursor
+      response: ListUsersRequiredAliasCursorResponse
+
+    listWithNullableAliasBodyCursorPagination:
+      docs: |
+        Pagination endpoint whose cursor is a named alias resolving to a nullable string. Nullable
+        generates as a pointer in Go, so an empty string cursor terminates the pager here too.
+      pagination:
+        cursor: $request.cursor
+        next_cursor: $response.next_cursor
+        results: $response.data
+      method: POST
+      path: /nullable-alias-cursor
+      request:
+        name: ListUsersNullableAliasBodyCursorPaginationRequest
+        body:
+          properties:
+            cursor: NullableCursor
+      response: ListUsersNullableAliasCursorResponse
 
     listWithBodyOffsetPagination:
       docs: Pagination endpoint with a top-level page field in the request body.

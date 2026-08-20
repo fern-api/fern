@@ -27,6 +27,42 @@ export const OutputPathSchema = z.union([
 
 export type OutputPathSchema = z.infer<typeof OutputPathSchema>;
 
+/**
+ * Schema for NuGet package metadata written into the generated csproj.
+ *
+ * Every field is optional; unset fields are omitted from the csproj so NuGet
+ * falls back to its own defaults (or to values already derived from the IR,
+ * such as the license and the GitHub project URL).
+ */
+export const PackageMetadataSchema = z.object({
+    /** `<Description>` — the package description shown on nuget.org. */
+    description: z.string().optional(),
+    /** `<Authors>` — a single author or a list of authors. */
+    authors: z.union([z.string(), z.array(z.string())]).optional(),
+    /** `<PackageTags>` — search tags, either space-separated or a list. */
+    tags: z.union([z.string(), z.array(z.string())]).optional(),
+    /** `<Copyright>`. */
+    copyright: z.string().optional(),
+    /**
+     * `<PackageIcon>` — path to an image, relative to the project directory,
+     * that is packed into the nupkg. The file itself must be present in the
+     * output (e.g. committed and listed in `.fernignore`).
+     */
+    icon: z.string().optional(),
+    /** `<PackageProjectUrl>` — overrides the URL derived from the GitHub output location. */
+    "project-url": z.string().optional(),
+    /** `<RepositoryUrl>` — defaults to the GitHub output location when unset. */
+    "repository-url": z.string().optional(),
+    /** `<RepositoryType>`. Default: "git" when a repository URL is present. */
+    "repository-type": z.string().optional(),
+    /** When true, adds Microsoft.SourceLink.GitHub and enables deterministic, source-linked builds. Default: false. */
+    "include-source-link": z.boolean().optional(),
+    /** When true, produces a `.snupkg` symbol package alongside the `.nupkg`. Default: false. */
+    "include-symbols": z.boolean().optional()
+});
+
+export type PackageMetadataSchema = z.infer<typeof PackageMetadataSchema>;
+
 export const CsharpConfigSchema = z.object({
     // Influence dynamic snippets.
     namespace: z.string().optional(),
@@ -98,6 +134,13 @@ export const CsharpConfigSchema = z.object({
     "enable-forward-compatible-enums": z.boolean().optional(),
     "generate-error-types": z.boolean().optional(),
     "package-id": z.string().optional(),
+    // When true, the generated csproj sets <GenerateDocumentationFile>, so the
+    // published nupkg ships `lib/<tfm>/<Namespace>.xml` and consumers get
+    // IntelliSense. CS1591 (missing XML comment for a public member) is
+    // suppressed so enabling docs does not add warnings for undocumented types.
+    "generate-documentation-file": z.boolean().optional(),
+    // NuGet package metadata written into the generated csproj.
+    "package-metadata": PackageMetadataSchema.optional(),
     "generate-mock-server-tests": z.boolean().optional(),
     "enable-wire-tests": z.boolean().optional(),
     "include-exception-handler": z.boolean().optional(),

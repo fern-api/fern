@@ -317,7 +317,8 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		t.writer.P("}")
 		t.writer.P("*", receiver, " = ", t.typeName, "(unmarshaler.embed)")
 		for _, date := range objectProperties.dates {
-			t.writer.P(receiver, ".", date.Name.Name.PascalCase.UnsafeName, " = unmarshaler.", date.Name.Name.PascalCase.UnsafeName, ".", date.TimeMethod)
+			fieldName := date.Name.Name.PascalCase.UnsafeName
+			t.writer.P(receiver, ".", fieldName, " = ", date.unmarshaledValue("unmarshaler."+fieldName))
 		}
 		for _, literal := range objectProperties.literals {
 			// Literals must match exactly, otherwise we return an error.
@@ -650,7 +651,8 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			t.writer.P("if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {")
 			t.writer.P("return err")
 			t.writer.P("}")
-			t.writer.P(receiver, ".", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), " = valueUnmarshaler.", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), singleUnionProperty.valueUnmarshalerMethodSuffix)
+			unionFieldName := goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
+			t.writer.P(receiver, ".", unionFieldName, " = ", singleUnionProperty.unmarshaledValue("valueUnmarshaler."+unionFieldName))
 			continue
 		}
 		t.writer.P(singleUnionTypePropertiesToInitializer(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), receiver))
@@ -1393,6 +1395,20 @@ type date struct {
 	StructTag       string
 	IsOptional      bool
 	IsDateTime      bool
+
+	// TimeConverter is the function used to convert the unmarshaled value back
+	// into the property's type. It is set for container properties, where a
+	// method call on the value isn't enough.
+	TimeConverter string
+}
+
+// unmarshaledValue returns the expression that converts the given unmarshaled
+// value into the property's type.
+func (d *date) unmarshaledValue(value string) string {
+	if d.TimeConverter != "" {
+		return fmt.Sprintf("%s(%s)", d.TimeConverter, value)
+	}
+	return fmt.Sprintf("%s.%s", value, d.TimeMethod)
 }
 
 // literal contains the information required to generate code for literal properties.
@@ -2072,6 +2088,7 @@ type singleUnionTypePropertiesVisitor struct {
 	valueMarshalerGoType         string
 	valueMarshalerConstructor    string
 	valueUnmarshalerMethodSuffix string
+	valueUnmarshalerConverter    string
 
 	baseImportPath string
 	importPath     string
@@ -2104,7 +2121,11 @@ func (c *singleUnionTypePropertiesVisitor) VisitSingleProperty(property *ir.Sing
 	if date := maybeDateProperty(property.Type, property.Name, false, c.types); date != nil {
 		c.valueMarshalerGoType = date.TypeDeclaration
 		c.valueMarshalerConstructor = date.Constructor
-		c.valueUnmarshalerMethodSuffix = fmt.Sprintf(".%s", date.TimeMethod)
+		if date.TimeConverter != "" {
+			c.valueUnmarshalerConverter = date.TimeConverter
+		} else {
+			c.valueUnmarshalerMethodSuffix = fmt.Sprintf(".%s", date.TimeMethod)
+		}
 		return nil
 	}
 
@@ -2246,6 +2267,16 @@ type singleUnionProperty struct {
 	// Optional; required for date[-time] properties.
 	valueMarshalerConstructor    string
 	valueUnmarshalerMethodSuffix string
+	valueUnmarshalerConverter    string
+}
+
+// unmarshaledValue returns the expression that converts the given unmarshaled
+// value into the property's type.
+func (s *singleUnionProperty) unmarshaledValue(value string) string {
+	if s.valueUnmarshalerConverter != "" {
+		return fmt.Sprintf("%s(%s)", s.valueUnmarshalerConverter, value)
+	}
+	return value + s.valueUnmarshalerMethodSuffix
 }
 
 // singleUnionTypePropertiesToGoType maps the given container type into its Go-equivalent.
@@ -2269,6 +2300,7 @@ func singleUnionTypePropertiesToGoType(
 		valueMarshalerGoType:         visitor.valueMarshalerGoType,
 		valueMarshalerConstructor:    visitor.valueMarshalerConstructor,
 		valueUnmarshalerMethodSuffix: visitor.valueUnmarshalerMethodSuffix,
+		valueUnmarshalerConverter:    visitor.valueUnmarshalerConverter,
 	}
 }
 
@@ -2724,12 +2756,110 @@ func maybeDateProperty(valueType *ir.TypeReference, name *common.NameAndWireValu
 	if valueType.Named != nil && types != nil {
 		typeDeclaration := types[valueType.Named.TypeId]
 		if typeDeclaration != nil && typeDeclaration.Shape.Alias != nil {
-			return maybeDateProperty(typeDeclaration.Shape.Alias.AliasOf, name, isOptional, types)
+			aliasOf := typeDeclaration.Shape.Alias.AliasOf
+			// An optional alias of a container is generated as a pointer to the
+			// alias (e.g. *DateList), so the conversion helpers need to account
+			// for the extra indirection.
+			if date := maybeDateContainerProperty(aliasOf, name, isOptional, types); date != nil {
+				return date
+			}
+			return maybeDateProperty(aliasOf, name, isOptional, types)
 		}
+	}
+	if date := maybeDateContainerProperty(valueType, name, false, types); date != nil {
+		return date
 	}
 	optionalOrNullableContainer := getOptionalOrNullableContainer(valueType)
 	if optionalOrNullableContainer != nil {
 		return maybeDateProperty(optionalOrNullableContainer, name, true, types)
+	}
+	return nil
+}
+
+// maybeDateContainerProperty retrieves the type information for a list, set, or
+// string-keyed map of dates or date-times. Unlike the scalar case, the elements
+// need to be converted in bulk, so the property is marshaled through a slice or
+// map of the internal date wrapper.
+func maybeDateContainerProperty(valueType *ir.TypeReference, name *common.NameAndWireValue, isPointer bool, types map[common.TypeId]*ir.TypeDeclaration) *date {
+	if valueType.Container == nil {
+		return nil
+	}
+	var (
+		elementType *ir.TypeReference
+		isMap       bool
+	)
+	switch {
+	case valueType.Container.List != nil:
+		elementType = valueType.Container.List
+	case valueType.Container.Set != nil:
+		elementType = valueType.Container.Set
+	case valueType.Container.Map != nil:
+		// Only string-keyed maps are supported; other key types don't map onto
+		// the internal date wrapper's map helpers.
+		if keyPrimitive := resolveAliasedPrimitive(valueType.Container.Map.KeyType, types); keyPrimitive == nil || *keyPrimitive != common.PrimitiveTypeV1String {
+			return nil
+		}
+		elementType = valueType.Container.Map.ValueType
+		isMap = true
+	default:
+		return nil
+	}
+	elementPrimitive := resolveAliasedPrimitive(elementType, types)
+	if elementPrimitive == nil {
+		return nil
+	}
+	var (
+		wrapper    string
+		isDateTime bool
+	)
+	switch *elementPrimitive {
+	case common.PrimitiveTypeV1Date:
+		wrapper = "Date"
+	case common.PrimitiveTypeV1DateTime:
+		wrapper = "DateTime"
+		isDateTime = true
+	default:
+		return nil
+	}
+	container := "List"
+	typeDeclaration := fmt.Sprintf("[]*internal.%s", wrapper)
+	if isMap {
+		container = "Map"
+		typeDeclaration = fmt.Sprintf("map[string]*internal.%s", wrapper)
+	}
+	constructor := fmt.Sprintf("internal.New%s%s", wrapper, container)
+	converter := fmt.Sprintf("internal.TimesFrom%s%s", wrapper, container)
+	if isPointer {
+		constructor = fmt.Sprintf("internal.New%s%sFromPtr", wrapper, container)
+		converter = fmt.Sprintf("internal.TimesPtrFrom%s%s", wrapper, container)
+	}
+	return &date{
+		Name:            name,
+		ValueType:       valueType,
+		Constructor:     constructor,
+		TimeConverter:   converter,
+		TypeDeclaration: typeDeclaration,
+		StructTag:       fmt.Sprintf("`json:\"%s,omitempty\"`", name.WireValue),
+		IsOptional:      true,
+		IsDateTime:      isDateTime,
+	}
+}
+
+// resolveAliasedPrimitive returns the primitive that the given type reference
+// resolves to, following named alias indirection. It returns nil if the type
+// reference doesn't resolve to a primitive.
+func resolveAliasedPrimitive(valueType *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) *common.PrimitiveTypeV1 {
+	if valueType == nil {
+		return nil
+	}
+	if valueType.Primitive != nil {
+		return &valueType.Primitive.V1
+	}
+	if valueType.Named != nil && types != nil {
+		typeDeclaration := types[valueType.Named.TypeId]
+		if typeDeclaration != nil && typeDeclaration.Shape.Alias != nil {
+			return resolveAliasedPrimitive(typeDeclaration.Shape.Alias.AliasOf, types)
+		}
 	}
 	return nil
 }

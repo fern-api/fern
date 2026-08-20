@@ -1,0 +1,139 @@
+openapi: 3.1.0
+info:
+  title: Endpoint Security Per-Endpoint Auth
+  version: 1.0.0
+  description: >
+    Regression fixture for `api.auth: { endpoint-security: {} }` in
+    generators.yml, where auth requirements live on each operation's own
+    `security` field rather than API-wide.
+
+    Three bugs made this configuration render no auth at all in docs:
+      1. `convertApiAuth` returned `schemes: []` for endpoint-security, so the
+         declared `auth-schemes` never reached the IR and the FDR `authSchemes`
+         map came out empty.
+      2. `getDefaultSecurityFromAuthOverrides` returned `undefined` for
+         endpoint-security, wiping every endpoint's `security`.
+      3. `overrideOpenApiAuthWithGeneratorsAuth` replaced the spec's security
+         with a single AND-of-all-schemes requirement and deleted every
+         non-empty operation-level `security`.
+
+    Each operation below asserts a distinct requirement shape: either scheme,
+    a single scheme, explicit opt-out, and no security field at all.
+
+paths:
+  # Token endpoint — explicitly opts out via `security: []`. It cannot require
+  # the token it issues.
+  /oauth/token:
+    post:
+      summary: Get an access token
+      operationId: getToken
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - client_id
+                - client_secret
+              properties:
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+      responses:
+        "200":
+          description: Token response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - access_token
+                  - expires_in
+                properties:
+                  access_token:
+                    type: string
+                  expires_in:
+                    type: integer
+
+  # Accepts either scheme. The two requirements must stay separate (OR), not be
+  # collapsed into one AND-of-both requirement.
+  /plants/{plantId}:
+    get:
+      summary: Get plant by ID
+      operationId: getPlant
+      security:
+        - PlantOAuth: []
+        - PlantApiKey: []
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Plant details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+
+  # OAuth only — must not advertise the API key scheme.
+  /plants/premium:
+    get:
+      summary: List premium plants
+      operationId: listPremiumPlants
+      security:
+        - PlantOAuth: []
+      responses:
+        "200":
+          description: A list of premium plants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plant"
+
+  # No `security` field. Under endpoint-security there is no API-wide default to
+  # inherit, so this endpoint requires no auth.
+  /plants/public:
+    get:
+      summary: List public plants
+      operationId: listPublicPlants
+      responses:
+        "200":
+          description: A list of public plants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plant"
+
+components:
+  securitySchemes:
+    PlantOAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth2 bearer access token from the client-credentials flow.
+    PlantApiKey:
+      type: apiKey
+      in: header
+      name: X-Plant-Token
+      description: Long-lived API token.
+  schemas:
+    Plant:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string

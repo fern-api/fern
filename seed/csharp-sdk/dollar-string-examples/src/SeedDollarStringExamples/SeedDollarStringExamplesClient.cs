@@ -14,7 +14,7 @@ public partial class SeedDollarStringExamplesClient : ISeedDollarStringExamplesC
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedDollarStringExamples" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedDollarStringExamples.Version.Current },
                 { "User-Agent", "Ferndollar-string-examples/0.0.1" },
             }
         );

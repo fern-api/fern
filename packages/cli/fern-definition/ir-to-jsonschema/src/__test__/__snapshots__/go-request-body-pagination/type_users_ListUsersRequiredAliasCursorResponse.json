@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "next_cursor": {
+      "$ref": "#/definitions/users.RequiredCursor"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/users.User"
+      }
+    }
+  },
+  "required": [
+    "next_cursor",
+    "data"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "users.RequiredCursor": {
+      "type": "string",
+      "description": "A named alias that resolves to a required string, i.e. a value in Go."
+    },
+    "users.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

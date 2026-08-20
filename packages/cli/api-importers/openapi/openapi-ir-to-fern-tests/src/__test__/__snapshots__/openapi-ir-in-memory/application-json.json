@@ -91,6 +91,7 @@
     "respectByteFormat": false,
     "shouldInferDiscriminatedUnionBaseProperties": false,
     "disambiguateRequestNames": true,
-    "ignoreTags": false
+    "ignoreTags": false,
+    "respectParameterContent": false
   }
 }

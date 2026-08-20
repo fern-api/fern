@@ -14,7 +14,7 @@ public partial class SeedApiClient : ISeedApiClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedApi" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedApi.Version.Current },
                 { "User-Agent", AppendAppInfoToUserAgent(BuildUserAgent(), clientOptions.AppInfo) },
             }
         );
@@ -66,7 +66,7 @@ public partial class SeedApiClient : ISeedApiClient
             : "";
         var runtimeVersion = global::System.Environment.Version.ToString();
         var runtime = runtimeVersion.Length > 0 ? $" dotnet/{runtimeVersion}" : " dotnet";
-        return $"Fernimdb/{Version.Current}{platform}{runtime}";
+        return $"Fernimdb/{(global::SeedApi.Version.Current)}{platform}{runtime}";
     }
 
     private static string AppendAppInfoToUserAgent(string userAgent, AppInfo? appInfo)

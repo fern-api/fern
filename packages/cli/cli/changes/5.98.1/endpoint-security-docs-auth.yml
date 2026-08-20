@@ -1,0 +1,8 @@
+- summary: |
+    Render per-endpoint auth in docs when `api.auth` is `endpoint-security`. The declared
+    `auth-schemes` and each operation's `security` were both dropped while importing OpenAPI, so
+    every endpoint published with no auth section, no auth headers in copied snippets, and no
+    credential inputs in the API Explorer. Endpoints now document exactly the schemes they declare:
+    either-scheme endpoints render each option separately, single-scheme endpoints render only that
+    scheme, and `security: []` endpoints render none.
+  type: fix

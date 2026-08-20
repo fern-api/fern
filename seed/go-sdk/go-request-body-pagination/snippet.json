@@ -13,6 +13,17 @@
         },
         {
             "id": {
+                "path": "/users/alias-cursor",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithAliasBodyCursorPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-request-body-pagination/fern\"\n\tfernclient \"github.com/go-request-body-pagination/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Users.ListWithAliasBodyCursorPagination(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersAliasBodyCursorPaginationRequest{\n\t\tCursor: fern.String(\n\t\t\t\"cursor\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/users/nested-cursor",
                 "method": "POST",
                 "identifier_override": "endpoint_users.listWithNestedBodyCursorPagination"
@@ -24,6 +35,17 @@
         },
         {
             "id": {
+                "path": "/users/nullable-alias-cursor",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithNullableAliasBodyCursorPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-request-body-pagination/fern\"\n\tfernclient \"github.com/go-request-body-pagination/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Users.ListWithNullableAliasBodyCursorPagination(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersNullableAliasBodyCursorPaginationRequest{\n\t\tCursor: fern.String(\n\t\t\t\"cursor\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/users/offset",
                 "method": "POST",
                 "identifier_override": "endpoint_users.listWithBodyOffsetPagination"
@@ -31,6 +53,17 @@
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-request-body-pagination/fern\"\n\tfernclient \"github.com/go-request-body-pagination/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Users.ListWithBodyOffsetPagination(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersBodyOffsetPaginationRequest{\n\t\tPage: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/required-alias-cursor",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithRequiredAliasBodyCursorPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-request-body-pagination/fern\"\n\tfernclient \"github.com/go-request-body-pagination/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Users.ListWithRequiredAliasBodyCursorPagination(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersRequiredAliasBodyCursorPaginationRequest{\n\t\tCursor: \"cursor\",\n\t},\n)\n"
             }
         },
         {

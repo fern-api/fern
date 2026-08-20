@@ -31,6 +31,7 @@ class CoreUtilities:
         custom_config: SDKCustomConfig,
         has_webhook_signature_verification: bool = False,
         generates_idempotency_key: bool = False,
+        has_streaming_endpoints: bool = False,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
@@ -54,6 +55,8 @@ class CoreUtilities:
         self._default_max_retries = custom_config.default_max_retries
         self._retry_status_codes = custom_config.retry_status_codes
         self._has_webhook_signature_verification = has_webhook_signature_verification
+        self._stream_abstraction = custom_config.stream_abstraction
+        self._has_streaming_endpoints = has_streaming_endpoints
 
     def copy_to_project(self, *, project: Project) -> None:
         datetime_replacements = (
@@ -200,6 +203,19 @@ class CoreUtilities:
             ),
             exports={"HttpResponse", "AsyncHttpResponse"} if not self._exclude_types_from_init_exports else set(),
         )
+
+        if self._has_streaming_endpoints and self._stream_abstraction:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="stream.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="stream"),
+                ),
+                exports={"AsyncStream", "Stream", "StreamEvent"}
+                if not self._exclude_types_from_init_exports
+                else set(),
+            )
 
         self._copy_file_to_project(
             project=project,
@@ -880,6 +896,45 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "pydantic_utilities"),
                 named_import="update_forward_refs",
             ),
+        )
+
+    def get_stream_reference(self, is_async: bool) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "stream"),
+                named_import="AsyncStream" if is_async else "Stream",
+            ),
+        )
+
+    def get_stream_type(self, inner_type: AST.TypeHint, is_async: bool) -> AST.TypeHint:
+        return AST.TypeHint(
+            type=self.get_stream_reference(is_async),
+            type_parameters=[AST.TypeParameter(inner_type)],
+        )
+
+    def get_stream_event_reference(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "stream"),
+                named_import="StreamEvent",
+            ),
+        )
+
+    def get_stream_event_type(self, inner_type: AST.TypeHint) -> AST.TypeHint:
+        return AST.TypeHint(
+            type=self.get_stream_event_reference(),
+            type_parameters=[AST.TypeParameter(inner_type)],
+        )
+
+    def instantiate_stream(self, events: AST.Expression, is_async: bool) -> AST.Expression:
+        return AST.Expression(
+            AST.ClassInstantiation(
+                class_=self.get_stream_reference(is_async),
+                args=[],
+                kwargs=[("events", events)],
+            )
         )
 
     def get_paginator_reference(self, is_async: bool) -> AST.ClassReference:

@@ -86,7 +86,7 @@ public record TestSubmissionStatus
     public bool IsTestCaseIdToState => Type == "testCaseIdToState";
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stopped'.</exception>
     public object? AsStopped() =>
@@ -113,7 +113,7 @@ public record TestSubmissionStatus
             : throw new global::System.Exception("TestSubmissionStatus.Type is not 'running'");
 
     /// <summary>
-    /// Returns the value as a <see cref="Dictionary<string, SubmissionStatusForTestCase>"/> if <see cref="Type"/> is 'testCaseIdToState', otherwise throws an exception.
+    /// Returns the value as a <see cref="Dictionary{String, SubmissionStatusForTestCase}"/> if <see cref="Type"/> is 'testCaseIdToState', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'testCaseIdToState'.</exception>
     public Dictionary<string, SubmissionStatusForTestCase> AsTestCaseIdToState() =>
@@ -170,7 +170,7 @@ public record TestSubmissionStatus
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsStopped(out object? value)
     {
@@ -212,7 +212,7 @@ public record TestSubmissionStatus
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Dictionary<string, SubmissionStatusForTestCase>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="Dictionary{String, SubmissionStatusForTestCase}"/> and returns true if successful.
     /// </summary>
     public bool TryAsTestCaseIdToState(out Dictionary<string, SubmissionStatusForTestCase>? value)
     {

@@ -25,6 +25,9 @@ types:
         type: list<WebSocketMessage>
       examples: list<ExampleWebSocketSession>
       v2Examples: optional<examples.V2WebSocketSessionExamples>
+      apiPlayground:
+        type: optional<boolean>
+        docs: Whether this channel is shown in the API playground
 
   WebSocketName: commons.NameOrString
 

@@ -44,7 +44,7 @@ public record UnionTypeWithAliasListVariant
     public bool IsAliasVariant => Type == "aliasVariant";
 
     /// <summary>
-    /// Returns the value as a <see cref="IEnumerable<AliasVariantType>"/> if <see cref="Type"/> is 'aliasVariant', otherwise throws an exception.
+    /// Returns the value as a <see cref="IEnumerable{AliasVariantType}"/> if <see cref="Type"/> is 'aliasVariant', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'aliasVariant'.</exception>
     public IEnumerable<AliasVariantType> AsAliasVariant() =>
@@ -83,7 +83,7 @@ public record UnionTypeWithAliasListVariant
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="IEnumerable<AliasVariantType>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="IEnumerable{AliasVariantType}"/> and returns true if successful.
     /// </summary>
     public bool TryAsAliasVariant(out IEnumerable<AliasVariantType>? value)
     {
