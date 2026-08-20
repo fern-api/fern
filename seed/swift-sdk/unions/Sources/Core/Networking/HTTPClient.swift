@@ -272,6 +272,8 @@ final class HTTPClient: Swift.Sendable {
         requestOptions: RequestOptions? = nil,
         retriesDisabled: Swift.Bool = false
     ) async throws -> (Foundation.Data, Swift.String?) {
+        // Endpoints declaring `retries: { disabled: true }` never retry, taking precedence over both
+        // the client-level and the per-request retry configuration.
         let maxRetries = retriesDisabled ? 0 : (requestOptions?.maxRetries ?? clientConfig.maxRetries)
         var lastResponse: (Foundation.Data, Networking.HTTPURLResponse)?
 
