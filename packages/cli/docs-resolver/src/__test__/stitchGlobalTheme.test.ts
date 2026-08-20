@@ -2,10 +2,12 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import path from "path";
 
 import {
     deepMergeGlobalWins,
     filenameFromUrl,
+    getGlobalThemeAssetDirectoryPath,
     isPresignedUrl,
     isRemoteUrl,
     mergeThemeOverride,
@@ -115,6 +117,28 @@ describe("filenameFromUrl", () => {
         const encoded = encodeURIComponent('attachment; filename="abc123"');
         const url = `https://s3.amazonaws.com/bucket/hash?response-content-disposition=${encoded}`;
         expect(filenameFromUrl(url)).toBeUndefined();
+    });
+});
+
+describe("getGlobalThemeAssetDirectoryPath", () => {
+    it("returns the same path for the same organization and theme", () => {
+        expect(getGlobalThemeAssetDirectoryPath("acme", "docs")).toBe(getGlobalThemeAssetDirectoryPath("acme", "docs"));
+    });
+
+    it("returns different paths for different organizations or themes", () => {
+        expect(getGlobalThemeAssetDirectoryPath("acme", "docs")).not.toBe(
+            getGlobalThemeAssetDirectoryPath("other-org", "docs")
+        );
+        expect(getGlobalThemeAssetDirectoryPath("acme", "docs")).not.toBe(
+            getGlobalThemeAssetDirectoryPath("acme", "other-theme")
+        );
+    });
+
+    it("uses a safe single-segment directory name for unsafe inputs", () => {
+        const directoryPath = getGlobalThemeAssetDirectoryPath("org/with spaces", "theme\\with?unsafe");
+        expect(path.basename(directoryPath)).toMatch(/^fern-theme-[0-9a-f]{16}$/);
+        expect(path.basename(directoryPath)).not.toContain("/");
+        expect(path.basename(directoryPath)).not.toContain("\\");
     });
 });
 
