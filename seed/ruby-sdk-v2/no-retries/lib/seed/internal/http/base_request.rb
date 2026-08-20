@@ -5,7 +5,7 @@ module Seed
     module Http
       # @api private
       class BaseRequest
-        attr_reader :base_url, :path, :method, :headers, :query, :request_options
+        attr_reader :base_url, :path, :method, :headers, :query, :request_options, :max_retries
 
         # @param base_url [String] The base URL for the request
         # @param path [String] The path for the request
@@ -13,13 +13,15 @@ module Seed
         # @param headers [Hash] Additional headers for the request (optional)
         # @param query [Hash] Query parameters for the request (optional)
         # @param request_options [Seed::RequestOptions, Hash{Symbol=>Object}, nil]
-        def initialize(base_url:, path:, method:, headers: {}, query: {}, request_options: {})
+        # @param max_retries [Integer, nil] Overrides the client's retry count for this request
+        def initialize(base_url:, path:, method:, headers: {}, query: {}, request_options: {}, max_retries: nil)
           @base_url = base_url
           @path = path
           @method = method
           @headers = headers
           @query = query
           @request_options = request_options
+          @max_retries = max_retries
         end
 
         # @return [Hash] The query parameters merged with additional query parameters from request options.

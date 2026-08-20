@@ -14,7 +14,7 @@ public partial class SeedEmptyClientsClient : ISeedEmptyClientsClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedEmptyClients" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedEmptyClients.Version.Current },
                 { "User-Agent", "Fernempty-clients/0.0.1" },
             }
         );

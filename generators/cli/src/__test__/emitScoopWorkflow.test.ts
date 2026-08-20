@@ -7,7 +7,17 @@ const BASE_ARGS = {
     scoop: { bucket: "acme/scoop-bucket" },
     repoUrl: "https://github.com/acme/acme-cli",
     license: "MIT",
-    description: "CLI for the Acme API"
+    description: "CLI for the Acme API",
+    // Auth is resolved by `constructReleaseWorkflowYaml`, so the emitter
+    // takes it already decided rather than re-deriving it from
+    // `scoop.tokenEnvironmentVariable`.
+    auth: { type: "pat", tokenSecret: "SCOOP_BUCKET_TOKEN" },
+    preflightJob: false
+} as const;
+
+const APP = {
+    appIdSecret: "PUBLISH_APP_ID",
+    privateKeySecret: "PUBLISH_APP_PRIVATE_KEY"
 } as const;
 
 /**
@@ -59,7 +69,8 @@ describe("constructScoopJobYaml", () => {
     it("honors a custom token secret name", () => {
         const jobYaml = constructScoopJobYaml({
             ...BASE_ARGS,
-            scoop: { bucket: "acme/scoop-bucket", tokenEnvironmentVariable: "BUCKET_PAT" }
+            scoop: { bucket: "acme/scoop-bucket", tokenEnvironmentVariable: "BUCKET_PAT" },
+            auth: { type: "pat", tokenSecret: "BUCKET_PAT" }
         });
         expect(jobYaml).toContain("token: ${{ secrets.BUCKET_PAT }}");
         expect(jobYaml).not.toContain("SCOOP_BUCKET_TOKEN");
@@ -125,6 +136,67 @@ describe("constructScoopJobYaml", () => {
     it("shell-quotes a description containing an apostrophe", () => {
         const jobYaml = constructScoopJobYaml({ ...BASE_ARGS, description: "Acme's CLI" });
         expect(jobYaml).toContain(`--arg description 'Acme'\\''s CLI'`);
+    });
+
+    describe("github app auth", () => {
+        const APP_ARGS = { ...BASE_ARGS, auth: { type: "githubApp", app: APP } } as const;
+
+        it("mints a token and checks the bucket out with it", () => {
+            const jobYaml = constructScoopJobYaml(APP_ARGS);
+            expect(jobYaml).toContain("uses: actions/create-github-app-token@v2");
+            expect(jobYaml).toContain("app-id: ${{ secrets.PUBLISH_APP_ID }}");
+            expect(jobYaml).toContain("private-key: ${{ secrets.PUBLISH_APP_PRIVATE_KEY }}");
+            expect(jobYaml).toContain("token: ${{ steps.app-token.outputs.token }}");
+            expect(jobYaml).not.toContain("secrets.SCOOP_BUCKET_TOKEN");
+        });
+
+        /**
+         * The failure this exists to catch: the token step is written for
+         * Homebrew first and pasted here, and `owner`/`repositories` come
+         * along with it. The mint succeeds — it is simply scoped to the tap —
+         * and the bucket checkout then fails with `remote: Repository not
+         * found` against a repo that plainly exists.
+         *
+         * Asserted with the *same* App configured for both channels, because
+         * that is the realistic config and the one where the mixup is
+         * invisible on inspection: the secret names are identical, so only
+         * the scope differs.
+         */
+        it("scopes the token to the bucket, not the tap", () => {
+            const releaseYaml = constructReleaseWorkflowYaml({
+                homebrew: { tap: "acme/homebrew-tap" },
+                scoop: BASE_ARGS,
+                githubApp: APP
+            });
+            const scoopJob = releaseYaml.slice(
+                releaseYaml.indexOf("  publish-scoop:"),
+                releaseYaml.indexOf("  announce:")
+            );
+            expect(scoopJob).toContain("repositories: scoop-bucket");
+            expect(scoopJob).not.toContain("repositories: homebrew-tap");
+        });
+
+        it("keeps the release-lookup steps on the built-in token", () => {
+            const jobYaml = constructScoopJobYaml(APP_ARGS);
+            // `gh release view` / `gh release download` read this repo's own
+            // release, which GITHUB_TOKEN can do. Only the cross-repo push
+            // needs the App.
+            expect(jobYaml.match(/GH_TOKEN: \$\{\{ secrets\.GITHUB_TOKEN \}\}/g)).toHaveLength(2);
+        });
+
+        it("mints the token immediately before the checkout it feeds", () => {
+            const jobYaml = constructScoopJobYaml(APP_ARGS);
+            const mintIndex = jobYaml.indexOf("Mint a bucket token");
+            const lookupIndex = jobYaml.indexOf("Resolve the Windows release archive");
+            const checkoutIndex = jobYaml.indexOf("Check out the Scoop bucket");
+            expect(lookupIndex).toBeLessThan(mintIndex);
+            expect(mintIndex).toBeLessThan(checkoutIndex);
+        });
+
+        it("waits on the preflight job when one was emitted", () => {
+            const job = parseJob(constructScoopJobYaml({ ...APP_ARGS, preflightJob: true }));
+            expect(job.needs).toEqual(["plan", "host", "preflight-distribution"]);
+        });
     });
 });
 

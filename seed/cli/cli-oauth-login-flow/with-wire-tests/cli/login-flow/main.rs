@@ -10,7 +10,7 @@ use fern_cli_sdk::auth::{PkceLoginFlow};
 
 fn main() {
     let app = CliApp::new("login-flow")
-        .login_flow(PkceLoginFlow::new("OAuth2").client_id("login-flow-test-client").authorization_url("https://api.example.com/oauth/authorize").token_url("https://api.example.com/oauth/token").scopes(["read:widgets"]))
+        .login_flow(PkceLoginFlow::new("OAuth2").client_id("login-flow-test-client").authorization_url("https://api.example.com/oauth/authorize").token_url("https://api.example.com/oauth/token").scopes(["read:widgets"]).success_redirect_url("https://acme.com/cli/success").error_redirect_url("https://acme.com/cli/error"))
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

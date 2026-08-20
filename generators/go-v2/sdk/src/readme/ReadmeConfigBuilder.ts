@@ -22,6 +22,7 @@ export class ReadmeConfigBuilder {
             endpointSnippets
         });
         const snippetsByFeatureId = readmeSnippetBuilder.buildReadmeSnippetsByFeatureId();
+        const addendumsByFeatureId = readmeSnippetBuilder.buildReadmeAddendumsByFeatureId();
         const features: FernGeneratorCli.ReadmeFeature[] = [];
 
         for (const feature of featureConfig.features) {
@@ -35,6 +36,7 @@ export class ReadmeConfigBuilder {
                 id: feature.id,
                 advanced: feature.advanced,
                 description: feature.description,
+                addendum: addendumsByFeatureId[feature.id] ?? feature.addendum,
                 snippets: snippetsForFeature,
                 snippetsAreOptional: false
             });

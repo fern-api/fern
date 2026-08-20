@@ -81,7 +81,7 @@ public record UnionWithMultipleNoProperties
             : throw new global::System.Exception("UnionWithMultipleNoProperties.Type is not 'foo'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'empty1', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty1', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty1'.</exception>
     public object? AsEmpty1() =>
@@ -92,7 +92,7 @@ public record UnionWithMultipleNoProperties
             );
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'empty2', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty2', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty2'.</exception>
     public object? AsEmpty2() =>
@@ -157,7 +157,7 @@ public record UnionWithMultipleNoProperties
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsEmpty1(out object? value)
     {
@@ -171,7 +171,7 @@ public record UnionWithMultipleNoProperties
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsEmpty2(out object? value)
     {

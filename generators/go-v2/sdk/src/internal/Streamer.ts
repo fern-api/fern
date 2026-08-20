@@ -4,6 +4,7 @@ import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { getDisableRetriesValue } from "../utils/getDisableRetriesValue.js";
 
 export declare namespace Streamer {
     export interface StreamArgs {
@@ -95,12 +96,15 @@ export class Streamer {
             },
             {
                 name: "DisableRetries",
-                value: go.TypeInstantiation.reference(
-                    go.selector({
-                        on: args.optionsReference,
-                        selector: go.codeblock("DisableRetries")
-                    })
-                )
+                value: getDisableRetriesValue({
+                    endpoint: args.endpoint,
+                    whenEnabled: go.TypeInstantiation.reference(
+                        go.selector({
+                            on: args.optionsReference,
+                            selector: go.codeblock("DisableRetries")
+                        })
+                    )
+                })
             },
             {
                 name: "BodyProperties",

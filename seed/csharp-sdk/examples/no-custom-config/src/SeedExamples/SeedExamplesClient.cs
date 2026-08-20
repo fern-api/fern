@@ -18,7 +18,7 @@ public partial class SeedExamplesClient : ISeedExamplesClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedExamples" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedExamples.Version.Current },
                 { "User-Agent", "Fernexamples/0.0.1" },
             }
         );

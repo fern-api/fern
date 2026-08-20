@@ -1,0 +1,12 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-rust-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "respectOptionalRequestBody": true
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "manual",
+  "requestedVersion": "0.0.1",
+  "sdkVersion": "0.0.1"
+}

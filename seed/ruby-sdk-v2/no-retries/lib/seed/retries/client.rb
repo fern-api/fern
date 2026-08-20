@@ -27,7 +27,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/users",
-          request_options: request_options
+          request_options: request_options,
+          max_retries: 0
         )
         begin
           response = @client.send(request)

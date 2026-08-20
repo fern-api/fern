@@ -15,7 +15,7 @@ public partial class SeedCsharpPathParamOrderClient : ISeedCsharpPathParamOrderC
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedCsharpPathParamOrder" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedCsharpPathParamOrder.Version.Current },
                 { "User-Agent", "Ferncsharp-path-param-order/0.0.1" },
             }
         );

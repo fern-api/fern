@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/loan",
+                "method": "GET",
+                "identifier_override": "endpoint_loans.getLoan"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-date-containers/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Loans.GetLoan(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

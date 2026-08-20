@@ -1,4 +1,78 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.57.7
+  changelogEntry:
+    - summary: |
+        Fixed generated WireMock stubs for OAuth client credentials APIs whose token endpoint is
+        itself marked as authenticated: the token (and refresh) endpoint stub no longer requires
+        an `Authorization` header, since the token request is made to obtain the token and cannot
+        carry one yet.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 1.57.6
+  changelogEntry:
+    - summary: |
+        An empty string terminates cursor pagination when the cursor is a named type that resolves to an
+        optional string (e.g. `type Cursor = *string`), matching an inline optional string. Optionality
+        is now resolved through aliases, so both spellings of the same type generate the same
+        termination check. Required string, uuid, int, and datetime cursors are unchanged.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 1.57.5
+  changelogEntry:
+    - summary: |
+        Fixed generated wire tests for OAuth client credentials APIs: the test client is now
+        constructed with client credentials so requests carry the `Authorization` header the
+        WireMock stubs require, instead of failing with `Header is not present`.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 1.57.4
+  changelogEntry:
+    - summary: |
+        Fix several issues in the generated README:
+        - The Request Options example now renders the auth options the SDK actually
+          generates (e.g., `option.WithSecret` for header auth, `option.WithBasicAuth`
+          for basic auth) instead of always assuming `option.WithToken`.
+        - The Errors example now passes a pointer to `errors.As` so the snippet
+          compiles and doesn't panic.
+        - The Pagination section is now emitted whenever the API has an endpoint
+          with a generated paginated client, by selecting such an endpoint for the
+          example, rather than relying on the default endpoint being paginated. The
+          section is omitted entirely when no paginated client is generated (e.g.
+          custom, URI, and path pagination), so the example no longer references an
+          iterator that doesn't exist.
+        - The Request Options section now documents the environment variables the
+          generated client reads credentials from when they aren't explicitly provided.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 1.57.3
+  changelogEntry:
+    - summary: |
+        Omit global headers (declared under `api.headers`) from requests when they are
+        left unset, instead of sending them with an empty value. This matches the
+        behavior of auth scheme headers, which were already guarded. This applies to
+        string, UUID, bytes, date, datetime, and enum headers; boolean and numeric
+        headers are unchanged, since `false` and `0` are meaningful values that
+        cannot be distinguished from an unset field. Unset UUID, date, and datetime
+        headers are no longer sent as `00000000-0000-0000-0000-000000000000` and
+        `0001-01-01` either.
+      type: fix
+  createdAt: "2026-08-19"
+  irVersion: 67
+- version: 1.57.2
+  changelogEntry:
+    - summary: |
+        Fix JSON deserialization of `date` and `datetime` values nested in containers.
+        Lists, sets, and string-keyed maps of dates (including optional containers and
+        aliases of containers) are now unmarshaled through the internal date wrappers,
+        so date-only values such as `"2002-08-28"` no longer fail with
+        `parsing time "2002-08-28" as "2006-01-02T15:04:05Z07:00"`.
+      type: fix
+  createdAt: "2026-08-17"
+  irVersion: 67
 - version: 1.57.1
   changelogEntry:
     - summary: |

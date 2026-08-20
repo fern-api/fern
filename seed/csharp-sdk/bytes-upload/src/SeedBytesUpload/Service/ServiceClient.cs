@@ -127,9 +127,6 @@ public partial class ServiceClient : IServiceClient
         }
     }
 
-    /// <example><code>
-    /// await client.Service.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("[bytes]")));
-    /// </code></example>
     public WithRawResponseTask UploadAsync(
         Stream request,
         RequestOptions? options = null,
@@ -139,11 +136,6 @@ public partial class ServiceClient : IServiceClient
         return new WithRawResponseTask(UploadAsyncCore(request, options, cancellationToken));
     }
 
-    /// <example><code>
-    /// await client.Service.UploadWithQueryParamsAsync(
-    ///     new UploadWithQueryParamsRequest { Model = "nova-2" }
-    /// );
-    /// </code></example>
     public WithRawResponseTask UploadWithQueryParamsAsync(
         UploadWithQueryParamsRequest request,
         RequestOptions? options = null,

@@ -23,7 +23,7 @@ public partial class SeedInferredAuthImplicitNoExpiryClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedInferredAuthImplicitNoExpiry" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedInferredAuthImplicitNoExpiry.Version.Current },
                 { "User-Agent", "Ferninferred-auth-implicit-no-expiry/0.0.1" },
             }
         );

@@ -14,8 +14,9 @@ module <%= gem_namespace %>
         # @param query [Hash] Query parameters for the request (optional)
         # @param body [Object, nil] The form-urlencoded request body (optional)
         # @param request_options [<%= gem_namespace %>::RequestOptions, Hash{Symbol=>Object}, nil]
-        def initialize(base_url:, path:, method:, headers: {}, query: {}, body: nil, request_options: {})
-          super(base_url:, path:, method:, headers:, query:, request_options:)
+<% if (requestLevelMaxRetries) { %>        # @param max_retries [Integer, nil] Overrides the client's retry count for this request
+<% } %>        def initialize(base_url:, path:, method:, headers: {}, query: {}, body: nil, request_options: {}<% if (requestLevelMaxRetries) { %>, max_retries: nil<% } %>)
+          super(base_url:, path:, method:, headers:, query:, request_options:<% if (requestLevelMaxRetries) { %>, max_retries:<% } %>)
 
           @body = body
         end

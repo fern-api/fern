@@ -16,7 +16,7 @@ public partial class SeedAudiencesClient : ISeedAudiencesClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedAudiences" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedAudiences.Version.Current },
                 { "User-Agent", "Fernaudiences/0.0.1" },
             }
         );

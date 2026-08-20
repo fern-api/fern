@@ -14,7 +14,7 @@ public partial class SeedOauthPkceClient : ISeedOauthPkceClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedOauthPkce" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedOauthPkce.Version.Current },
                 { "User-Agent", "Fernoauth-pkce/0.0.1" },
             }
         );

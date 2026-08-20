@@ -15,7 +15,7 @@ public partial class SeedExhaustiveClient : ISeedExhaustiveClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedExhaustive" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedExhaustive.Version.Current },
                 { "User-Agent", "Fern.Exhaustive/0.0.1" },
             }
         );

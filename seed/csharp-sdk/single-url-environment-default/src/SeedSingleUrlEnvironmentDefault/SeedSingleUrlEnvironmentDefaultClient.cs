@@ -17,7 +17,7 @@ public partial class SeedSingleUrlEnvironmentDefaultClient : ISeedSingleUrlEnvir
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedSingleUrlEnvironmentDefault" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedSingleUrlEnvironmentDefault.Version.Current },
                 { "User-Agent", "Fernsingle-url-environment-default/0.0.1" },
             }
         );

@@ -15,7 +15,7 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedPackageYml" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedPackageYml.Version.Current },
                 { "User-Agent", "Fernpackage-yml/0.0.1" },
             }
         );

@@ -236,6 +236,202 @@ func (c *Client) ListWithUUIDBodyCursorPagination(
 	return pager.GetPage(ctx, request.Cursor)
 }
 
+// Pagination endpoint whose cursor is a named alias resolving to an optional string. The alias
+// generates as a pointer in Go, so an empty string cursor terminates the pager here too.
+//
+// Example:
+//
+//	request := &fern.ListUsersAliasBodyCursorPaginationRequest{
+//	    Cursor: fern.String(
+//	        "cursor",
+//	    ),
+//	}
+//	client.Users.ListWithAliasBodyCursorPagination(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) ListWithAliasBodyCursorPagination(
+	ctx context.Context,
+	request *fern.ListUsersAliasBodyCursorPaginationRequest,
+	opts ...option.RequestOption,
+) (*core.Page[fern.Cursor, *fern.User, *fern.ListUsersAliasCursorResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/users/alias-cursor"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[fern.Cursor]) *internal.CallParams {
+		nextRequest := *request
+		nextRequest.Cursor = pageRequest.Cursor
+		nextURL := endpointURL
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         &nextRequest,
+			Response:        pageRequest.Response,
+		}
+	}
+	readPageResponse := func(response *fern.ListUsersAliasCursorResponse) *core.PageResponse[fern.Cursor, *fern.User, *fern.ListUsersAliasCursorResponse] {
+		var zeroValue fern.Cursor
+		next := response.GetNextCursor()
+		results := response.GetData()
+		return &core.PageResponse[fern.Cursor, *fern.User, *fern.ListUsersAliasCursorResponse]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue || *next == "",
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, request.Cursor)
+}
+
+// Pagination endpoint whose cursor is a named alias resolving to a required string. The alias
+// generates as a value in Go, where the zero value is already the empty string.
+//
+// Example:
+//
+//	request := &fern.ListUsersRequiredAliasBodyCursorPaginationRequest{
+//	    Cursor: "cursor",
+//	}
+//	client.Users.ListWithRequiredAliasBodyCursorPagination(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) ListWithRequiredAliasBodyCursorPagination(
+	ctx context.Context,
+	request *fern.ListUsersRequiredAliasBodyCursorPaginationRequest,
+	opts ...option.RequestOption,
+) (*core.Page[fern.RequiredCursor, *fern.User, *fern.ListUsersRequiredAliasCursorResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/users/required-alias-cursor"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[fern.RequiredCursor]) *internal.CallParams {
+		nextRequest := *request
+		nextRequest.Cursor = pageRequest.Cursor
+		nextURL := endpointURL
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         &nextRequest,
+			Response:        pageRequest.Response,
+		}
+	}
+	readPageResponse := func(response *fern.ListUsersRequiredAliasCursorResponse) *core.PageResponse[fern.RequiredCursor, *fern.User, *fern.ListUsersRequiredAliasCursorResponse] {
+		var zeroValue fern.RequiredCursor
+		next := response.GetNextCursor()
+		results := response.GetData()
+		return &core.PageResponse[fern.RequiredCursor, *fern.User, *fern.ListUsersRequiredAliasCursorResponse]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, request.Cursor)
+}
+
+// Pagination endpoint whose cursor is a named alias resolving to a nullable string. Nullable
+// generates as a pointer in Go, so an empty string cursor terminates the pager here too.
+//
+// Example:
+//
+//	request := &fern.ListUsersNullableAliasBodyCursorPaginationRequest{
+//	    Cursor: fern.String(
+//	        "cursor",
+//	    ),
+//	}
+//	client.Users.ListWithNullableAliasBodyCursorPagination(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) ListWithNullableAliasBodyCursorPagination(
+	ctx context.Context,
+	request *fern.ListUsersNullableAliasBodyCursorPaginationRequest,
+	opts ...option.RequestOption,
+) (*core.Page[fern.NullableCursor, *fern.User, *fern.ListUsersNullableAliasCursorResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/users/nullable-alias-cursor"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[fern.NullableCursor]) *internal.CallParams {
+		nextRequest := *request
+		nextRequest.Cursor = pageRequest.Cursor
+		nextURL := endpointURL
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         &nextRequest,
+			Response:        pageRequest.Response,
+		}
+	}
+	readPageResponse := func(response *fern.ListUsersNullableAliasCursorResponse) *core.PageResponse[fern.NullableCursor, *fern.User, *fern.ListUsersNullableAliasCursorResponse] {
+		var zeroValue fern.NullableCursor
+		next := response.GetNextCursor()
+		results := response.GetData()
+		return &core.PageResponse[fern.NullableCursor, *fern.User, *fern.ListUsersNullableAliasCursorResponse]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue || *next == "",
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, request.Cursor)
+}
+
 // Pagination endpoint with a top-level page field in the request body.
 //
 // Example:

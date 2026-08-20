@@ -38,8 +38,8 @@ export const V67_TO_V66_MIGRATION: IrMigration<
         [GeneratorName.SWIFT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PHP_SDK]: "2.11.2-rc.0",
-        [GeneratorName.RUST_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUST_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.RUST_MODEL]: "0.6.0-rc.0",
+        [GeneratorName.RUST_SDK]: "0.46.0",
         [GeneratorName.CLI]: "0.0.1"
     },
     jsonifyEarlierVersion: (ir) =>

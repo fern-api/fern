@@ -266,7 +266,7 @@ public record DebugVariableValue
             : throw new global::System.Exception("DebugVariableValue.Type is not 'mapValue'");
 
     /// <summary>
-    /// Returns the value as a <see cref="IEnumerable<DebugVariableValue>"/> if <see cref="Type"/> is 'listValue', otherwise throws an exception.
+    /// Returns the value as a <see cref="IEnumerable{DebugVariableValue}"/> if <see cref="Type"/> is 'listValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'listValue'.</exception>
     public IEnumerable<DebugVariableValue> AsListValue() =>
@@ -308,7 +308,7 @@ public record DebugVariableValue
             );
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'undefinedValue', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'undefinedValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'undefinedValue'.</exception>
     public object? AsUndefinedValue() =>
@@ -317,7 +317,7 @@ public record DebugVariableValue
             : throw new global::System.Exception("DebugVariableValue.Type is not 'undefinedValue'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'nullValue', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'nullValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'nullValue'.</exception>
     public object? AsNullValue() =>
@@ -523,7 +523,7 @@ public record DebugVariableValue
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="IEnumerable<DebugVariableValue>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="IEnumerable{DebugVariableValue}"/> and returns true if successful.
     /// </summary>
     public bool TryAsListValue(out IEnumerable<DebugVariableValue>? value)
     {
@@ -583,7 +583,7 @@ public record DebugVariableValue
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsUndefinedValue(out object? value)
     {
@@ -597,7 +597,7 @@ public record DebugVariableValue
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsNullValue(out object? value)
     {

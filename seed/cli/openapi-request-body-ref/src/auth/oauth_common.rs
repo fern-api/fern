@@ -224,23 +224,80 @@ pub(crate) fn config_dir() -> Option<PathBuf> {
     }
 }
 
+/// Unlinks a temp file on drop unless [`TempFileGuard::disarm`]ed. Covers
+/// every early return *and* a panic between creating the temp file and
+/// renaming it into place.
+///
+/// This exists because the temp name is unique per writer. The old shared
+/// `auth-keyring.tmp` was self-limiting — a failed write left one stale file
+/// that the next write reused — whereas unique names would leak a distinct
+/// credential-bearing file on every failure, in a directory nothing prunes. A
+/// `SIGKILL` still leaks, since no in-process guard can cover that.
+struct TempFileGuard {
+    path: PathBuf,
+    armed: bool,
+}
+
+impl TempFileGuard {
+    fn new(path: PathBuf) -> Self {
+        Self { path, armed: true }
+    }
+
+    /// Relinquish the file — call once `rename` has moved it into place.
+    fn disarm(&mut self) {
+        self.armed = false;
+    }
+}
+
+impl Drop for TempFileGuard {
+    fn drop(&mut self) {
+        if self.armed {
+            let _ = std::fs::remove_file(&self.path);
+        }
+    }
+}
+
 /// Write `data` to `path` atomically: sibling temp file → owner-only
 /// permissions (0600 on Unix) → rename into place.
+///
+/// The temp file name is unique per writer — pid plus a process-local
+/// counter. Deriving it from the target alone meant every concurrent writer
+/// used the *same* sibling (`auth-keyring.tmp`): whichever one renamed first
+/// moved it away, and the rest failed with `ENOENT` from `rename`. That
+/// surfaced as intermittent `auth login --with-token` failures across a
+/// wire-test suite large enough to run many CLI processes at once, killing a
+/// different subset of cases on each run.
+///
+/// The pid covers the case that actually bit us (separate CLI processes); the
+/// counter covers two writers inside one process, and is what makes the
+/// behavior unit-testable without spawning subprocesses.
+///
+/// A [`TempFileGuard`] unlinks the temp file if anything between creating it
+/// and renaming it fails, so unique names cannot accumulate as orphans.
+///
+/// `rename` is still atomic for readers, which is what keeps a partially
+/// written credential file unobservable. This only fixes writer-vs-writer
+/// collisions on the temp path. `FileKeyringStore::set` remains a
+/// read-modify-write of the whole map with no lock, so simultaneous writers
+/// can still clobber one another's *entries*; making that safe needs file
+/// locking, which is a larger change.
 pub(crate) fn atomic_write(path: &Path, data: &[u8]) -> Result<(), CliError> {
-    let tmp = path.with_extension("tmp");
-    std::fs::write(&tmp, data).map_err(|e| {
-        CliError::Auth(format!("Failed to write {}: {e}", tmp.display()))
-    })?;
+    static TMP_SEQ: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+    let seq = TMP_SEQ.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+    let tmp = path.with_extension(format!("tmp.{}.{}", std::process::id(), seq));
+    let mut guard = TempFileGuard::new(tmp.clone());
+    std::fs::write(&tmp, data)
+        .map_err(|e| CliError::Auth(format!("Failed to write {}: {e}", tmp.display())))?;
     #[cfg(unix)]
     {
         use std::os::unix::fs::PermissionsExt;
         let perms = std::fs::Permissions::from_mode(0o600);
         let _ = std::fs::set_permissions(&tmp, perms);
     }
-    std::fs::rename(&tmp, path).map_err(|e| {
-        let _ = std::fs::remove_file(&tmp);
-        CliError::Auth(format!("Failed to rename {}: {e}", tmp.display()))
-    })
+    std::fs::rename(&tmp, path)
+        .map_err(|e| CliError::Auth(format!("Failed to rename {}: {e}", tmp.display())))?;
+    guard.disarm();
+    Ok(())
 }
 
 // ---------------------------------------------------------------------------
@@ -250,6 +307,101 @@ pub(crate) fn atomic_write(path: &Path, data: &[u8]) -> Result<(), CliError> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// Regression test for the temp-file collision that made
+    /// `auth login --with-token` fail intermittently: every writer derived the
+    /// same sibling path from the target, so the first `rename` moved it away
+    /// and the rest got `ENOENT`.
+    ///
+    /// Reverting `atomic_write` to a target-derived temp name fails this with
+    /// "Failed to rename ...: No such file or directory".
+    #[test]
+    fn atomic_write_tolerates_concurrent_writers() {
+        let dir = tempfile::tempdir().unwrap();
+        let target = dir.path().join("auth-keyring.json");
+
+        let results: Vec<Result<(), CliError>> = std::thread::scope(|scope| {
+            let handles: Vec<_> = (0..16)
+                .map(|i| {
+                    let target = target.clone();
+                    scope.spawn(move || atomic_write(&target, format!(r#"{{"writer":{i}}}"#).as_bytes()))
+                })
+                .collect();
+            handles.into_iter().map(|h| h.join().unwrap()).collect()
+        });
+
+        let failed: Vec<String> = results
+            .iter()
+            .filter_map(|r| r.as_ref().err().map(|e| e.to_string()))
+            .collect();
+        assert!(failed.is_empty(), "concurrent writers failed: {failed:?}");
+
+        // Last writer wins, but the file must always be one writer's complete
+        // payload — never a mix, and never absent.
+        let contents = std::fs::read_to_string(&target).unwrap();
+        let parsed: serde_json::Value = serde_json::from_str(&contents)
+            .unwrap_or_else(|e| panic!("target is not valid JSON after concurrent writes: {e} in {contents:?}"));
+        assert!(parsed.get("writer").is_some(), "unexpected payload: {contents}");
+
+        // No temp files orphaned in the directory.
+        let leftovers: Vec<String> = std::fs::read_dir(dir.path())
+            .unwrap()
+            .filter_map(|e| e.ok())
+            .map(|e| e.file_name().to_string_lossy().into_owned())
+            .filter(|n| n.contains(".tmp"))
+            .collect();
+        assert!(leftovers.is_empty(), "temp files left behind: {leftovers:?}");
+    }
+
+    /// A failed write must not leave its temp file behind. Renaming a file onto
+    /// an existing directory fails on every platform, which drives the error
+    /// path without mocking the filesystem.
+    ///
+    /// The pre-`TempFileGuard` code already cleaned up on a `rename` error, so
+    /// this pins an invariant rather than catching a regression — see
+    /// `temp_file_guard_unlinks_unless_disarmed` for the guard's own coverage.
+    #[test]
+    fn atomic_write_cleans_up_temp_file_on_failure() {
+        let dir = tempfile::tempdir().unwrap();
+
+        // The target is a *directory*, so `rename` cannot replace it.
+        let target = dir.path().join("auth-keyring.json");
+        std::fs::create_dir(&target).unwrap();
+        std::fs::write(target.join("occupant"), b"x").unwrap();
+
+        let result = atomic_write(&target, br#"{"writer":0}"#);
+        assert!(result.is_err(), "expected rename onto a directory to fail");
+
+        let leftovers: Vec<String> = std::fs::read_dir(dir.path())
+            .unwrap()
+            .filter_map(|e| e.ok())
+            .map(|e| e.file_name().to_string_lossy().into_owned())
+            .filter(|n| n.contains(".tmp"))
+            .collect();
+        assert!(leftovers.is_empty(), "temp file leaked after a failed write: {leftovers:?}");
+    }
+
+    /// Pins [`TempFileGuard`]: armed drops unlink, disarmed drops don't. Drop
+    /// running on an armed guard is what covers early returns and unwinding
+    /// panics between `write` and `rename` — paths the old `rename`-only
+    /// cleanup missed. Deleting the guard or the `disarm()` call fails this.
+    #[test]
+    fn temp_file_guard_unlinks_unless_disarmed() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("auth-keyring.tmp.0.0");
+
+        std::fs::write(&path, b"x").unwrap();
+        drop(TempFileGuard::new(path.clone()));
+        assert!(!path.exists(), "armed guard must unlink on drop");
+
+        // The post-`rename` case: the file has been moved away, so the guard
+        // must not touch whatever now sits at that path.
+        std::fs::write(&path, b"x").unwrap();
+        let mut guard = TempFileGuard::new(path.clone());
+        guard.disarm();
+        drop(guard);
+        assert!(path.exists(), "disarmed guard must not unlink");
+    }
 
     #[test]
     fn token_bundle_roundtrip() {

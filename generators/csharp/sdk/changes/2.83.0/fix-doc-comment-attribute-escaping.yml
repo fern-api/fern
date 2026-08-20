@@ -1,0 +1,6 @@
+- summary: |
+    Escape markup characters in the attribute values of documentation comment tags. Descriptions
+    containing links such as `<a href="https://example.com/docs?a=1&b=2">` no longer emit invalid
+    XML (CS1570) in generated documentation comments, while attribute values that already contain
+    character or entity references are left untouched.
+  type: fix

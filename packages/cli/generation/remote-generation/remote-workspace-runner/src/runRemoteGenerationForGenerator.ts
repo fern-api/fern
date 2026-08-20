@@ -32,6 +32,13 @@ import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob.js";
+import {
+    FernSdkGenApiBatch,
+    getFernSdkGenApiLanguage,
+    isEligibleForFernSdkGenApi,
+    isFernSdkGenApiEnabled,
+    runFernSdkGenApiBuild
+} from "./fernSdkGenApi.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus.js";
 import { RemoteTaskHandler } from "./RemoteTaskHandler.js";
@@ -68,6 +75,8 @@ export async function runRemoteGenerationForGenerator({
     disableTelemetry,
     loginCommand,
     specsTarGzBuffer,
+    sdkGenApiBatch,
+    sdkGenApiTargetIdSeed,
     generateFullProject
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -118,6 +127,8 @@ export async function runRemoteGenerationForGenerator({
      */
     loginCommand?: string;
     specsTarGzBuffer?: Buffer;
+    sdkGenApiBatch?: FernSdkGenApiBatch;
+    sdkGenApiTargetIdSeed?: string;
     /**
      * When true, filesystem (local-file-system / download) outputs are generated as full,
      * packageable projects (pyproject.toml, README.md, etc.) instead of source-only output.
@@ -354,81 +365,148 @@ export async function runRemoteGenerationForGenerator({
         };
     }
 
-    const job = await createAndStartJob({
-        projectConfig,
-        workspace,
-        organization,
-        generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
-        context: interactiveTaskContext,
-        version: resolvedVersion,
-        intermediateRepresentation: {
-            ...ir,
-            fdrApiDefinitionId,
-            publishConfig: getPublishConfig({
-                generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
-                version: resolvedVersion,
-                userProvidedVersion: version,
-                packageName,
-                selfHosted: ir.selfHosted ?? false,
-                generateFullProject,
-                context: interactiveTaskContext
-            })
-        },
-        shouldLogS3Url,
-        token,
-        whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
-        replay,
-        irVersionOverride,
-        absolutePathToPreview,
-        fiddlePreview,
-        pushPreviewBranch,
-        fernignorePath,
-        skipFernignore,
-        retryRateLimited,
-        automationMode,
-        autoMerge,
-        skipIfNoDiff,
-        verify,
-        loginCommand,
-        specsTarGzBuffer
-    });
-    interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
-
-    const taskId = job.taskIds[0];
-    if (taskId == null) {
-        interactiveTaskContext.failAndThrow("Did not receive a task ID.", undefined, {
-            code: CliError.Code.NetworkError
-        });
-        return undefined;
-    }
-    interactiveTaskContext.logger.debug(`Task ID: ${taskId}`);
-
-    const taskHandler = new RemoteTaskHandler({
-        job,
-        taskId,
-        generatorInvocation,
-        interactiveTaskContext,
-        absolutePathToPreview,
-        telemetryContext: {
-            cliVersion: workspace.cliVersion,
-            orgId: projectConfig.organization,
-            automationMode: automationMode === true,
-            autoMerge: autoMerge === true,
-            skipIfNoDiff: skipIfNoDiff === true,
-            versionArg: version == null ? "none" : isAutoVersion(version) ? "auto" : "explicit",
-            versionBump: undefined,
-            replayConfigEnabled: replay?.enabled === true,
-            noReplayFlag: noReplay === true,
-            disableTelemetry: disableTelemetry === true
+    let result: RemoteTaskHandler.Response | undefined;
+    let usedSdkGenApi = false;
+    const sdkGenApiEnabled = isFernSdkGenApiEnabled();
+    const sdkGenApiLanguage = getFernSdkGenApiLanguage(generatorInvocationWithEnvVarSubstitutions.name);
+    if (sdkGenApiEnabled && sdkGenApiLanguage != null) {
+        if (replay?.enabled === true) {
+            return interactiveTaskContext.failAndThrow("sdk-gen-api does not yet support replay", undefined, {
+                code: CliError.Code.ConfigError
+            });
         }
-    });
+        if (generateFullProject === true) {
+            return interactiveTaskContext.failAndThrow(
+                "sdk-gen-api does not yet support full-project generation",
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+        const candidate = {
+            generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
+            sdkVersion: resolvedVersion,
+            specsTarGzBuffer,
+            whitelabel
+        };
+        if (!isEligibleForFernSdkGenApi(candidate)) {
+            const reason =
+                resolvedVersion == null
+                    ? "the SDK version could not be resolved"
+                    : isAutoVersion(resolvedVersion)
+                      ? "automatic SDK versioning has not yet moved from Fiddle to the shared pipeline"
+                      : whitelabel != null
+                        ? "whitelabel generation has not yet moved from Fiddle to the shared pipeline"
+                        : specsTarGzBuffer == null
+                          ? "the source archive is unavailable"
+                          : `generator language ${generatorInvocationWithEnvVarSubstitutions.language ?? "unknown"} does not match ${sdkGenApiLanguage}`;
+            return interactiveTaskContext.failAndThrow(
+                `Cannot submit SDK generation to sdk-gen-api: ${reason}`,
+                undefined,
+                {
+                    code: CliError.Code.ConfigError
+                }
+            );
+        }
+        if (verify === true) {
+            interactiveTaskContext.logger.warn("sdk-gen-api does not yet run Fern's post-generation verification step");
+        }
+        const parameters = {
+            apiName: getOriginalName(ir.apiName),
+            organization,
+            cliVersion: workspace.cliVersion,
+            generatorInvocation: candidate.generatorInvocation,
+            sdkVersion: candidate.sdkVersion,
+            token,
+            specsTarGzBuffer: candidate.specsTarGzBuffer,
+            absolutePathToPreview,
+            context: interactiveTaskContext,
+            targetIdSeed: sdkGenApiTargetIdSeed,
+            audiences: audiences.type === "select" ? audiences.audiences : undefined,
+            skipFernignore
+        };
+        result = await (sdkGenApiBatch?.run(parameters) ?? runFernSdkGenApiBuild(parameters));
+        usedSdkGenApi = true;
+    } else {
+        sdkGenApiBatch?.skip();
+    }
 
-    let result = await pollJobAndReportStatus({
-        job,
-        taskHandler,
-        taskId,
-        context: interactiveTaskContext
-    });
+    if (!usedSdkGenApi) {
+        const job = await createAndStartJob({
+            projectConfig,
+            workspace,
+            organization,
+            generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
+            context: interactiveTaskContext,
+            version: resolvedVersion,
+            intermediateRepresentation: {
+                ...ir,
+                fdrApiDefinitionId,
+                publishConfig: getPublishConfig({
+                    generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
+                    version: resolvedVersion,
+                    userProvidedVersion: version,
+                    packageName,
+                    selfHosted: ir.selfHosted ?? false,
+                    generateFullProject,
+                    context: interactiveTaskContext
+                })
+            },
+            shouldLogS3Url,
+            token,
+            whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
+            replay,
+            irVersionOverride,
+            absolutePathToPreview,
+            fiddlePreview,
+            pushPreviewBranch,
+            fernignorePath,
+            skipFernignore,
+            retryRateLimited,
+            automationMode,
+            autoMerge,
+            skipIfNoDiff,
+            verify,
+            loginCommand,
+            specsTarGzBuffer
+        });
+        interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
+
+        const taskId = job.taskIds[0];
+        if (taskId == null) {
+            interactiveTaskContext.failAndThrow("Did not receive a task ID.", undefined, {
+                code: CliError.Code.NetworkError
+            });
+            return undefined;
+        }
+        interactiveTaskContext.logger.debug(`Task ID: ${taskId}`);
+
+        const taskHandler = new RemoteTaskHandler({
+            job,
+            taskId,
+            generatorInvocation,
+            interactiveTaskContext,
+            absolutePathToPreview,
+            telemetryContext: {
+                cliVersion: workspace.cliVersion,
+                orgId: projectConfig.organization,
+                automationMode: automationMode === true,
+                autoMerge: autoMerge === true,
+                skipIfNoDiff: skipIfNoDiff === true,
+                versionArg: version == null ? "none" : isAutoVersion(version) ? "auto" : "explicit",
+                versionBump: undefined,
+                replayConfigEnabled: replay?.enabled === true,
+                noReplayFlag: noReplay === true,
+                disableTelemetry: disableTelemetry === true
+            }
+        });
+
+        result = await pollJobAndReportStatus({
+            job,
+            taskHandler,
+            taskId,
+            context: interactiveTaskContext
+        });
+    }
 
     // Fall back to the locally-resolved version when Fiddle doesn't echo it back
     // (e.g. GitHub push modes where no registry publish or release tag occurs).

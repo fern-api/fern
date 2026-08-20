@@ -16,7 +16,7 @@ public partial class SeedCrossPackageTypeNamesClient : ISeedCrossPackageTypeName
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedCrossPackageTypeNames" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedCrossPackageTypeNames.Version.Current },
                 { "User-Agent", "Ferncross-package-type-names/0.0.1" },
             }
         );

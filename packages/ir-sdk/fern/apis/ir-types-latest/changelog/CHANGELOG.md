@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.23.0] - 2026-08-17
+
+- Add `WebSocketChannel.apiPlayground` (optional `boolean`) controlling whether a WebSocket
+  channel is shown in the API playground. This mirrors `HttpEndpoint.apiPlayground` and is
+  populated from the `x-fern-explorer` extension in AsyncAPI specs (global default, overridable
+  per channel).
+
 ## [v67.22.0] - 2026-08-14
 
 - Add `successRedirectUrl` and `errorRedirectUrl` to `OAuthAuthorizationCode`. Both are absolute
@@ -82,6 +89,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   crates/go targets already do, so the C# generator can stamp the SDK name/version into the
   generated `Version.cs` and the structured `User-Agent` header.
 
+>>>>>>> origin/main
 ## [v67.15.0] - 2026-07-21
 
 - Add `HmacSignatureVerification.notificationUrlNormalization` (optional

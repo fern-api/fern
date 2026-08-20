@@ -15,6 +15,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
 import { mayOmitRequestBody } from "../utils/mayOmitRequestBody.js";
+import { getRetriesDisabledStatement } from "../utils/retriesDisabled.js";
 
 type PagingEndpoint = FernIr.HttpEndpoint & { pagination: NonNullable<FernIr.HttpEndpoint["pagination"]> };
 
@@ -159,6 +160,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     )
                 );
 
+                this.writeRetriesDisabledOverride({ writer, endpoint });
+
                 this.writeEndpointAuthHeaders({ writer, endpoint });
 
                 const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
@@ -226,6 +229,20 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
             })
         });
+    }
+
+    private writeRetriesDisabledOverride({
+        writer,
+        endpoint
+    }: {
+        writer: php.Writer;
+        endpoint: FernIr.HttpEndpoint;
+    }): void {
+        const statement = getRetriesDisabledStatement({ context: this.context, endpoint });
+        if (statement == null) {
+            return;
+        }
+        writer.writeTextStatement(statement);
     }
 
     /**

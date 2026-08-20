@@ -42,6 +42,49 @@ function escapeXmlDocContent(text: string): string {
     return writer.toString();
 }
 
+describe("XmlDocWriter.toCrefTarget", () => {
+    it("should keep a simple type name", () => {
+        expect(XmlDocWriter.toCrefTarget("string")).toBe("string");
+        expect(XmlDocWriter.toCrefTarget("MyClass")).toBe("MyClass");
+    });
+
+    it("should keep a namespace-qualified type name", () => {
+        expect(XmlDocWriter.toCrefTarget("System.Text.Json.Nodes.JsonNode")).toBe("System.Text.Json.Nodes.JsonNode");
+    });
+
+    it("should drop nullable annotations", () => {
+        expect(XmlDocWriter.toCrefTarget("object?")).toBe("object");
+        expect(XmlDocWriter.toCrefTarget("MyClass?")).toBe("MyClass");
+    });
+
+    it("should convert generics to brace syntax with framework type names", () => {
+        expect(XmlDocWriter.toCrefTarget("List<string>")).toBe("List{String}");
+        expect(XmlDocWriter.toCrefTarget("IEnumerable<int>")).toBe("IEnumerable{Int32}");
+        expect(XmlDocWriter.toCrefTarget("Dictionary<string, object>")).toBe("Dictionary{String, Object}");
+    });
+
+    it("should keep non-keyword generic arguments as written", () => {
+        expect(XmlDocWriter.toCrefTarget("IEnumerable<MyClass>")).toBe("IEnumerable{MyClass}");
+        expect(XmlDocWriter.toCrefTarget("OneOf<Foo, Bar>?")).toBe("OneOf{Foo, Bar}");
+    });
+
+    it("should reject nested generic arguments, which cannot be cref identifiers", () => {
+        expect(XmlDocWriter.toCrefTarget("IEnumerable<IEnumerable<int>>")).toBeUndefined();
+        expect(XmlDocWriter.toCrefTarget("Dictionary<string, List<MyClass>>")).toBeUndefined();
+    });
+
+    it("should reject arrays, which cannot be cref identifiers", () => {
+        expect(XmlDocWriter.toCrefTarget("byte[]")).toBeUndefined();
+        expect(XmlDocWriter.toCrefTarget("IEnumerable<byte[]>")).toBeUndefined();
+    });
+
+    it("should reject types that are not plain names", () => {
+        expect(XmlDocWriter.toCrefTarget("")).toBeUndefined();
+        expect(XmlDocWriter.toCrefTarget("(string, int)")).toBeUndefined();
+        expect(XmlDocWriter.toCrefTarget("global::MyNamespace.MyClass")).toBeUndefined();
+    });
+});
+
 describe("XmlDocWriter.escapeXmlDocContent", () => {
     describe("converts HTML tags to XMLDoc equivalents", () => {
         it("should convert inline <code> to <c>", () => {
@@ -210,6 +253,50 @@ describe("XmlDocWriter.escapeXmlDocContent", () => {
         it("should escape nested generic types", () => {
             const result = escapeXmlDocContent("Returns Dictionary<string, List<int>>");
             expect(result).toBe("Returns Dictionary&lt;string, List&lt;int&gt;&gt;");
+        });
+    });
+
+    describe("escapes bare ampersands", () => {
+        it("should escape a standalone ampersand", () => {
+            const result = escapeXmlDocContent("- &: HTML entities");
+            expect(result).toBe("- &amp;: HTML entities");
+        });
+
+        it("should escape ampersands in urls", () => {
+            const result = escapeXmlDocContent("/search?a=1&b=2");
+            expect(result).toBe("/search?a=1&amp;b=2");
+        });
+
+        it("should not double-escape existing entities", () => {
+            const result = escapeXmlDocContent("&amp; &lt; &gt;");
+            expect(result).toBe("&amp; &lt; &gt;");
+        });
+
+        it("should escape ampersands alongside angle brackets", () => {
+            const result = escapeXmlDocContent("List<string> & Dictionary<string, int>");
+            expect(result).toBe("List&lt;string&gt; &amp; Dictionary&lt;string, int&gt;");
+        });
+    });
+
+    describe("escapes attribute values", () => {
+        it("should escape ampersands in a converted link href", () => {
+            const result = escapeXmlDocContent('See <a href="https://example.com/docs?a=1&b=2">here</a>');
+            expect(result).toBe('See <see href="https://example.com/docs?a=1&amp;b=2">here</see>');
+        });
+
+        it("should not double-escape entities already in a href", () => {
+            const result = escapeXmlDocContent('See <a href="https://example.com/docs?a=1&amp;b=2">here</a>');
+            expect(result).toBe('See <see href="https://example.com/docs?a=1&amp;b=2">here</see>');
+        });
+
+        it("should escape ampersands in preserved tag attributes", () => {
+            const result = escapeXmlDocContent('See <see href="https://example.com?a=1&b=2">here</see>');
+            expect(result).toBe('See <see href="https://example.com?a=1&amp;b=2">here</see>');
+        });
+
+        it("should escape angle brackets and quotes in attribute values", () => {
+            const result = escapeXmlDocContent('<paramref name="a<b"/>');
+            expect(result).toBe('<paramref name="a&lt;b"/>');
         });
     });
 

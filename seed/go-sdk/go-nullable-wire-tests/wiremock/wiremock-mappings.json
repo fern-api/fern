@@ -1,0 +1,34 @@
+{
+  "mappings": [
+    {
+      "id": "551e67f5-b62b-4c9b-a9f0-bc74506c787c",
+      "name": "getThing - default",
+      "request": {
+        "urlPathTemplate": "/thing",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"thing\": {\n    \"id\": \"thing-1\",\n    \"logo\": null,\n    \"rank\": null,\n    \"nested\": null\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "551e67f5-b62b-4c9b-a9f0-bc74506c787c",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    }
+  ],
+  "meta": {
+    "total": 1
+  }
+}

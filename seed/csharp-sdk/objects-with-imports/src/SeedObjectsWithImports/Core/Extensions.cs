@@ -20,6 +20,7 @@ internal static class Extensions
     /// <summary>
     /// Asserts that a condition is true, throwing an exception with the specified message if it is false.
     /// </summary>
+    /// <param name="value">The object the extension method is invoked on; unused.</param>
     /// <param name="condition">The condition to assert.</param>
     /// <param name="message">The exception message if the assertion fails.</param>
     /// <exception cref="Exception">Thrown when the condition is false.</exception>
@@ -35,6 +36,7 @@ internal static class Extensions
     /// Asserts that a value is not null, throwing an exception with the specified message if it is null.
     /// </summary>
     /// <typeparam name="TValue">The type of the value to assert.</typeparam>
+    /// <param name="_unused">The object the extension method is invoked on; unused.</param>
     /// <param name="value">The value to assert is not null.</param>
     /// <param name="message">The exception message if the assertion fails.</param>
     /// <returns>The non-null value.</returns>

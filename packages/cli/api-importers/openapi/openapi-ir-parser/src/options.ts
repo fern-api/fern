@@ -164,6 +164,14 @@ export interface ParseOpenAPIOptions {
      * Defaults to false.
      */
     ignoreTags: boolean;
+
+    /**
+     * If true, header parameters that declare their schema under `content` (e.g. a header
+     * whose value is a JSON-encoded object) are typed from that schema instead of falling
+     * back to a string.
+     * Defaults to false.
+     */
+    respectParameterContent: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -206,7 +214,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     respectByteFormat: false,
     shouldInferDiscriminatedUnionBaseProperties: false,
     disambiguateRequestNames: true,
-    ignoreTags: false
+    ignoreTags: false,
+    respectParameterContent: false
 };
 
 function mergeOptions<T extends object>(params: {
