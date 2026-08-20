@@ -1,0 +1,6 @@
+- summary: |
+    Fixed generated WireMock stubs for OAuth client credentials APIs whose token endpoint is
+    itself marked as authenticated: the token (and refresh) endpoint stub no longer requires
+    an `Authorization` header, since the token request is made to obtain the token and cannot
+    carry one yet.
+  type: fix
