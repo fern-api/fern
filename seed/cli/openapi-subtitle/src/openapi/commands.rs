@@ -512,12 +512,25 @@ fn build_resource_command(
 
         has_children = true;
 
-        let about = crate::text::truncate_description(
-            &crate::text::first_sentence(method.description.as_deref().unwrap_or("")),
+        // `about` is the one-line entry in the parent's command table, so it
+        // stays a single short sentence. `long_about` is what `<method>
+        // --help` renders, where the user has asked for detail — keep the
+        // fuller prose there, still capped so a verbose spec can't flood the
+        // terminal.
+        let description = method.description.as_deref().unwrap_or("");
+        let short_description = crate::text::truncate_description(
+            &crate::text::first_sentence(description),
             crate::text::CLI_SHORT_DESCRIPTION_LIMIT,
             true,
         );
-        let about = with_availability_badge(&about, method.availability);
+        let long_description = crate::text::truncate_description(
+            description,
+            crate::text::CLI_DESCRIPTION_LIMIT,
+            true,
+        );
+        let about = with_availability_badge(&short_description, method.availability);
+        let long_about = (long_description.trim() != short_description.trim())
+            .then(|| with_availability_badge(&long_description, method.availability));
 
         let mut method_cmd = Command::new(method_name.to_string())
             .about(about)
@@ -527,6 +540,10 @@ fn build_resource_command(
                     .help("Additional parameters as JSON (overrides individual flags)")
                     .value_name("JSON"),
             );
+
+        if let Some(long_about) = long_about {
+            method_cmd = method_cmd.long_about(long_about);
+        }
 
         // `-o, --output PATH` is only meaningful for operations that can
         // return a binary body — the JSON path in `process_response` never
@@ -2302,6 +2319,88 @@ mod tests {
                 .map(ToString::to_string)
                 .unwrap_or_default(),
             "This method's first sentence also has enough words to exceed the short CLI…",
+        );
+    }
+
+    #[test]
+    fn test_method_long_about_keeps_prose_the_table_line_drops() {
+        let mut doc = make_doc_with_things_resource();
+        let description = "This method's first sentence also has enough words to exceed the short CLI limit. The remaining prose is only shown by the method's own help.";
+        doc.resources
+            .get_mut("things")
+            .expect("things resource missing")
+            .methods
+            .get_mut("list")
+            .expect("list method missing")
+            .description = Some(description.to_string());
+
+        let cmd = build_cli(&doc);
+        let list = cmd
+            .find_subcommand("things")
+            .and_then(|things| things.find_subcommand("list"))
+            .expect("list subcommand missing");
+        assert_eq!(
+            list.get_about().map(ToString::to_string).unwrap_or_default(),
+            "This method's first sentence also has enough words to exceed the short CLI…",
+        );
+        assert_eq!(
+            list.get_long_about()
+                .map(ToString::to_string)
+                .unwrap_or_default(),
+            description,
+        );
+    }
+
+    /// A description that already fits the table line adds nothing as
+    /// `long_about`, so it is left unset rather than rendered twice.
+    #[test]
+    fn test_method_long_about_omitted_when_it_matches_the_table_line() {
+        let mut doc = make_doc_with_things_resource();
+        doc.resources
+            .get_mut("things")
+            .expect("things resource missing")
+            .methods
+            .get_mut("list")
+            .expect("list method missing")
+            .description = Some("Lists the things.".to_string());
+
+        let cmd = build_cli(&doc);
+        let list = cmd
+            .find_subcommand("things")
+            .and_then(|things| things.find_subcommand("list"))
+            .expect("list subcommand missing");
+        assert_eq!(
+            list.get_about().map(ToString::to_string).unwrap_or_default(),
+            "Lists the things.",
+        );
+        assert!(list.get_long_about().is_none());
+    }
+
+    /// Verbose specs must not flood the terminal: `long_about` stays capped
+    /// at [`crate::text::CLI_DESCRIPTION_LIMIT`].
+    #[test]
+    fn test_method_long_about_is_capped() {
+        let mut doc = make_doc_with_things_resource();
+        let description = "Sentence one is long enough to matter here. ".repeat(20);
+        doc.resources
+            .get_mut("things")
+            .expect("things resource missing")
+            .methods
+            .get_mut("list")
+            .expect("list method missing")
+            .description = Some(description);
+
+        let cmd = build_cli(&doc);
+        let long_about = cmd
+            .find_subcommand("things")
+            .and_then(|things| things.find_subcommand("list"))
+            .and_then(|list| list.get_long_about())
+            .map(ToString::to_string)
+            .expect("long_about missing");
+        assert!(
+            long_about.chars().count() <= crate::text::CLI_DESCRIPTION_LIMIT,
+            "long_about was {} chars",
+            long_about.chars().count(),
         );
     }
 
