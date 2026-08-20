@@ -28,6 +28,11 @@ impl RetriesClient {
     /// }
     /// ```
     pub async fn get_users(&self, options: Option<RequestOptions>) -> Result<Vec<User>, ApiError> {
+        let options = {
+            let mut o = options.unwrap_or_default();
+            o.max_retries = Some(0);
+            Some(o)
+        };
         self.http_client
             .execute_request(Method::GET, "/users", None, None, options)
             .await

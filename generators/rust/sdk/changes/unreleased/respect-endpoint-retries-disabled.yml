@@ -1,0 +1,5 @@
+- summary: |
+    Endpoints that declare `retries: { disabled: true }` (`x-fern-retries` in OpenAPI) no longer
+    retry. The generated method pins `max_retries` to zero on the request options, overriding both
+    the client-level default and any caller-supplied value.
+  type: fix
