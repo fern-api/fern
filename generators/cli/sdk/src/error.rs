@@ -200,8 +200,14 @@ pub fn http_status_reason(status: u16) -> &'static str {
 /// whole JSON document inside a JSON field.
 pub fn api_error_from_body(status: u16, body: &str) -> CliError {
     let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body) else {
-        // Not JSON — the body itself is the most informative message we have.
-        return CliError::api(status, body, http_status_reason(status));
+        // Not JSON — the body itself is the most informative message we have,
+        // but a proxy or CDN failure (the 502/503 case) answers with an HTML
+        // page, and a page-sized `message` is unreadable either way.
+        return CliError::api(
+            status,
+            truncate_body(body, MAX_MESSAGE_BODY_BYTES),
+            http_status_reason(status),
+        );
     };
 
     // Services wrap the interesting fields one level down under `error`
@@ -213,9 +219,13 @@ pub fn api_error_from_body(status: u16, body: &str) -> CliError {
         .find(|v| v.is_object())
         .unwrap_or(&parsed);
 
+    // Only an HTTP-shaped `code` may override the status: application error
+    // codes (`{"code": 100234}`) would otherwise truncate into a nonsense
+    // status and produce a bogus docs link.
     let code = scope
         .get("code")
         .and_then(|c| c.as_u64())
+        .filter(|c| (100..=599).contains(c))
         .unwrap_or(status as u64) as u16;
     // A string `code` is a symbolic reason, not an HTTP status — as is Stripe's
     // and ElevenLabs' `type`.
@@ -234,6 +244,21 @@ pub fn api_error_from_body(status: u16, body: &str) -> CliError {
         reason,
         details: Some(parsed),
     }
+}
+
+/// Upper bound on a non-JSON body reproduced verbatim in `message`.
+const MAX_MESSAGE_BODY_BYTES: usize = 500;
+
+/// Clip `body` to `max` bytes on a char boundary, marking the elision.
+fn truncate_body(body: &str, max: usize) -> String {
+    if body.len() <= max {
+        return body.to_string();
+    }
+    let mut end = max;
+    while end > 0 && !body.is_char_boundary(end) {
+        end -= 1;
+    }
+    format!("{}… ({} bytes total)", &body[..end], body.len())
 }
 
 /// Read a non-empty string field, if present.
@@ -819,6 +844,37 @@ mod tests {
         let err = api_error_from_body(502, "upstream connect error");
         assert_eq!(err.to_string(), "upstream connect error");
         assert!(err.to_json()["error"].get("details").is_none());
+    }
+
+    #[test]
+    fn api_error_from_body_clips_page_sized_non_json_bodies() {
+        // A CDN answering 502 with an HTML page must not put kilobytes of
+        // markup into `message`.
+        let page = format!("<html><body>{}</body></html>", "x".repeat(4000));
+        let err = api_error_from_body(502, &page);
+        let message = err.to_string();
+        assert!(
+            message.len() < 600,
+            "expected a clipped message, got {} bytes",
+            message.len()
+        );
+        assert!(
+            message.contains(&format!("{} bytes total", page.len())),
+            "got: {message}"
+        );
+        assert!(message.starts_with("<html><body>"));
+    }
+
+    #[test]
+    fn api_error_from_body_ignores_application_codes_outside_http_range() {
+        // Services commonly return their own error numbering; `error.code` is
+        // documented as the HTTP status, and `as u16` would silently truncate.
+        let err = api_error_from_body(400, r#"{"code":100234,"message":"Bad thing"}"#);
+        assert_eq!(err.to_json()["error"]["code"], 400);
+        assert_eq!(err.to_string(), "Bad thing");
+        // An HTTP-shaped code is still honoured.
+        let err = api_error_from_body(400, r#"{"code":422,"message":"Bad thing"}"#);
+        assert_eq!(err.to_json()["error"]["code"], 422);
     }
 
     #[test]

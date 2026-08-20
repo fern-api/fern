@@ -302,6 +302,8 @@ impl OutputFormat {
 /// values fall through to the default rather than erroring — the format
 /// resolution performed by clap already reports those.
 pub fn resolve_format_from_raw_args(args: &[String], app_name: &str) -> OutputFormat {
+    // Anything after `--` belongs to the command being invoked, not to us.
+    let args = args_before_separator(args);
     if let Some(parsed) = explicit_format_arg(args).and_then(|v| OutputFormat::parse(&v).ok()) {
         return parsed;
     }
@@ -317,6 +319,14 @@ pub fn resolve_format_from_raw_args(args: &[String], app_name: &str) -> OutputFo
     let env_var = format!("{}_OUTPUT", app_name.to_uppercase().replace('-', "_"));
     let env_value = std::env::var(env_var).ok();
     resolve_default_format(env_value.as_deref(), std::io::stdout().is_terminal())
+}
+
+/// The leading slice of argv that clap treats as our own flags.
+fn args_before_separator(args: &[String]) -> &[String] {
+    match args.iter().position(|a| a == "--") {
+        Some(i) => &args[..i],
+        None => args,
+    }
 }
 
 /// Extract the value of an explicit `--format` / `--format=` flag from argv.
@@ -1328,6 +1338,28 @@ mod tests {
                 "my-cli"
             ),
             OutputFormat::Yaml
+        );
+    }
+
+    #[test]
+    fn resolve_format_from_raw_args_ignores_args_after_separator() {
+        // `mycli run -- --format=table` forwards the flag to the invoked
+        // command; it must not flip our error representation.
+        assert_eq!(
+            args_before_separator(&[
+                "run".to_string(),
+                "--".to_string(),
+                "--format=table".to_string()
+            ]),
+            &["run".to_string()]
+        );
+        assert_eq!(
+            explicit_format_arg(args_before_separator(&[
+                "run".to_string(),
+                "--".to_string(),
+                "--format=table".to_string(),
+            ])),
+            None
         );
     }
 

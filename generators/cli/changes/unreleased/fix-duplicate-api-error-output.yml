@@ -10,7 +10,12 @@
     parsed body in `error.details`, and `reason` is derived from the HTTP status
     (`internalServerError` for 500) instead of always `httpError`. Top-level
     shapes such as `{"status", "message"}`, `{"error": "<message>"}`, RFC 7807
-    `detail`/`title`, and OAuth 2.0 `error_description` are now recognized.
+    `detail`/`title`, and OAuth 2.0 `error_description` are now recognized. Two
+    consequences worth noting for anyone scripting against these fields: CLIs
+    generated in SDK mode now report `reason: "rateLimited"` on 429 rather than
+    `tooManyRequests`, matching what OpenAPI-mode CLIs have always reported; and
+    `error.code` is always the HTTP status, so a body carrying its own
+    application error code (`{"code": 100234}`) no longer overwrites it.
   type: fix
 
 - summary: |
