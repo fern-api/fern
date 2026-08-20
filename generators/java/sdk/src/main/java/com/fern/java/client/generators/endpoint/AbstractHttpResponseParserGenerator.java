@@ -52,6 +52,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
     private static final String INTEGER_ONE = "1";
     private static final String DECIMAL_ONE = "1.0";
+    private static final String MAX_RETRIES_OVERRIDE_CLASS_NAME = "MaxRetriesOverride";
 
     /** Helper method to generate diagnostic string for container types. Useful for debugging and error messages. */
     private static String getContainerDiagnosticString(com.fern.ir.model.types.ContainerType container) {
@@ -166,7 +167,15 @@ public abstract class AbstractHttpResponseParserGenerator {
         });
     }
 
-    private void addDisabledRetriesTag(CodeBlock.Builder httpResponseBuilder, ClassName maxRetriesOverrideClassName) {
+    private ClassName getMaxRetriesOverrideClassName() {
+        return clientGeneratorContext
+                .getPoetClassNameFactory()
+                .getRetryInterceptorClassName()
+                .nestedClass(MAX_RETRIES_OVERRIDE_CLASS_NAME);
+    }
+
+    private void addDisabledRetriesTag(CodeBlock.Builder httpResponseBuilder) {
+        ClassName maxRetriesOverrideClassName = getMaxRetriesOverrideClassName();
         httpResponseBuilder.addStatement(
                 "$L = $L.newBuilder().tag($T.class, new $T(0)).build()",
                 variables.getOkhttpRequestName(),
@@ -176,9 +185,7 @@ public abstract class AbstractHttpResponseParserGenerator {
     }
 
     public CodeBlock getResponseParserCodeBlock(MethodSpec.Builder endpointMethodBuilder) {
-        ClassName retryInterceptorClassName =
-                clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName();
-        ClassName maxRetriesOverrideClassName = retryInterceptorClassName.nestedClass("MaxRetriesOverride");
+        ClassName maxRetriesOverrideClassName = getMaxRetriesOverrideClassName();
         boolean retriesDisabled = retriesDisabled(httpEndpoint.getRetries());
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
                 // Default the request client
@@ -201,7 +208,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                         AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
                 .endControlFlow();
         if (retriesDisabled) {
-            addDisabledRetriesTag(httpResponseBuilder, maxRetriesOverrideClassName);
+            addDisabledRetriesTag(httpResponseBuilder);
         } else {
             httpResponseBuilder
                     .beginControlFlow(
@@ -244,9 +251,7 @@ public abstract class AbstractHttpResponseParserGenerator {
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder();
         // Note: OkHttpClient is already initialized by the caller, so we skip that here
         if (retriesDisabled(httpEndpoint.getRetries())) {
-            ClassName retryInterceptorClassName =
-                    clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName();
-            addDisabledRetriesTag(httpResponseBuilder, retryInterceptorClassName.nestedClass("MaxRetriesOverride"));
+            addDisabledRetriesTag(httpResponseBuilder);
         }
         if (isStreamingEndpoint()) {
             httpResponseBuilder.addStatement(
