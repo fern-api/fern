@@ -1,8 +1,9 @@
 import { docsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { sanitizeNullValues } from "@fern-api/core-utils";
+import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 
-import { readFile } from "fs/promises";
+import { readFile, stat } from "fs/promises";
 import yaml from "js-yaml";
 
 const RedirectsFile = docsYml.DocsYmlSchemas.RedirectsFile;
@@ -13,10 +14,6 @@ const RedirectsFile = docsYml.DocsYmlSchemas.RedirectsFile;
 export type DocsConfigurationWithResolvedRedirects = Omit<docsYml.RawSchemas.DocsConfiguration, "redirects"> & {
     redirects?: docsYml.RawSchemas.RedirectConfig[];
 };
-
-function isFilepathList(redirects: docsYml.RawSchemas.RedirectsConfiguration): redirects is string[] {
-    return Array.isArray(redirects) && redirects.every((redirect) => typeof redirect === "string");
-}
 
 /**
  * `redirects` accepts either an inline list of redirects, or one or more filepaths to YAML files
@@ -34,18 +31,33 @@ export async function resolveRedirects({
         return undefined;
     }
 
-    if (typeof redirects === "string") {
-        return await loadRedirectsFile({ filepath: redirects, absoluteFilepathToDocsConfig });
+    const entries: (string | docsYml.RawSchemas.RedirectConfig)[] =
+        typeof redirects === "string" ? [redirects] : redirects;
+    if (isRedirectList(entries)) {
+        return entries;
     }
-
-    if (!isFilepathList(redirects)) {
-        return redirects;
+    if (!isFilepathList(entries)) {
+        throw new CliError({
+            message:
+                "Failed to load redirects: `redirects` must be either a list of redirects or a list of filepaths, not a mix of both",
+            code: CliError.Code.ParseError
+        });
     }
 
     const loaded = await Promise.all(
-        redirects.map((filepath) => loadRedirectsFile({ filepath, absoluteFilepathToDocsConfig }))
+        entries.map((filepath) => loadRedirectsFile({ filepath, absoluteFilepathToDocsConfig }))
     );
     return loaded.flat();
+}
+
+function isRedirectList(
+    redirects: (string | docsYml.RawSchemas.RedirectConfig)[]
+): redirects is docsYml.RawSchemas.RedirectConfig[] {
+    return redirects.every((redirect) => typeof redirect !== "string");
+}
+
+function isFilepathList(redirects: (string | docsYml.RawSchemas.RedirectConfig)[]): redirects is string[] {
+    return redirects.every((redirect) => typeof redirect === "string");
 }
 
 async function loadRedirectsFile({
@@ -55,8 +67,17 @@ async function loadRedirectsFile({
     filepath: string;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
 }): Promise<docsYml.RawSchemas.RedirectConfig[]> {
+    if (filepath.trim().length === 0) {
+        throw new CliError({
+            message: "Failed to load redirects: `redirects` contains an empty filepath",
+            code: CliError.Code.ParseError
+        });
+    }
+
     const absoluteFilepathToRedirects = resolve(dirname(absoluteFilepathToDocsConfig), filepath);
-    if (filepath.trim().length === 0 || !(await doesPathExist(absoluteFilepathToRedirects, "file"))) {
+    // stat (rather than lstat) so that a symlink to a redirects file is accepted.
+    const stats = await stat(absoluteFilepathToRedirects).catch(() => undefined);
+    if (stats == null || !stats.isFile()) {
         throw new CliError({
             message: `Failed to load redirects: ${absoluteFilepathToRedirects} is not a file`,
             code: CliError.Code.ParseError
@@ -76,7 +97,15 @@ async function loadRedirectsFile({
         });
     }
 
-    const parsed = RedirectsFile.safeParse(contents ?? { redirects: [] });
+    if (contents == null) {
+        throw new CliError({
+            message: `Failed to parse ${absoluteFilepathToRedirects}: the file is empty and must contain a \`redirects\` list`,
+            code: CliError.Code.ParseError
+        });
+    }
+
+    // docs.yml itself is sanitized before parsing, so nulls are tolerated the same way here.
+    const parsed = RedirectsFile.safeParse(sanitizeNullValues(contents));
     if (!parsed.success) {
         throw new CliError({
             message: `Failed to parse ${absoluteFilepathToRedirects}. The file must contain only a \`redirects\` list:\n${parsed.error.issues

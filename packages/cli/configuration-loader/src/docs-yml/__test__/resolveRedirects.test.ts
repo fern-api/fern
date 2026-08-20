@@ -1,6 +1,7 @@
+import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { mkdtemp, writeFile } from "fs/promises";
+import { mkdtemp, symlink, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import path from "path";
 import { beforeAll, describe, expect, it } from "vitest";
@@ -36,6 +37,12 @@ describe("resolveRedirects", () => {
             join(dir, RelativeFilePath.of("more-redirects.yml")),
             "redirects:\n  - source: /old-seeds\n    destination: /seeds"
         );
+        await writeFile(join(dir, RelativeFilePath.of("comments-only.yml")), "# no redirects here\n");
+        await writeFile(
+            join(dir, RelativeFilePath.of("null-permanent.yml")),
+            "redirects:\n  - source: /old-plants\n    destination: /plants\n    permanent:"
+        );
+        await symlink(join(dir, RelativeFilePath.of("redirects.yml")), join(dir, RelativeFilePath.of("symlinked.yml")));
     });
 
     it("passes through an inline list", async () => {
@@ -72,6 +79,33 @@ describe("resolveRedirects", () => {
         ]);
     });
 
+    it("follows a symlink to a redirects file", async () => {
+        expect(await resolveRedirects({ redirects: "./symlinked.yml", absoluteFilepathToDocsConfig })).toHaveLength(2);
+    });
+
+    it("tolerates a null value for an optional field, like docs.yml does", async () => {
+        expect(await resolveRedirects({ redirects: "./null-permanent.yml", absoluteFilepathToDocsConfig })).toEqual([
+            { source: "/old-plants", destination: "/plants" }
+        ]);
+    });
+
+    it("fails when the file has no redirects", async () => {
+        await expect(
+            resolveRedirects({ redirects: "./comments-only.yml", absoluteFilepathToDocsConfig })
+        ).rejects.toThrowError(/the file is empty/);
+    });
+
+    it("fails when redirects and filepaths are mixed", async () => {
+        // docs.yml validation rejects this shape, so it has to be constructed by hand here
+        const mixed = [
+            "./redirects.yml",
+            { source: "/old-seeds", destination: "/seeds" }
+        ] as docsYml.RawSchemas.RedirectsConfiguration;
+        await expect(resolveRedirects({ redirects: mixed, absoluteFilepathToDocsConfig })).rejects.toThrowError(
+            /not a mix of both/
+        );
+    });
+
     it("fails when one of several filepaths does not exist", async () => {
         await expect(
             resolveRedirects({ redirects: ["./redirects.yml", "./missing.yml"], absoluteFilepathToDocsConfig })
@@ -86,7 +120,7 @@ describe("resolveRedirects", () => {
 
     it("fails when the filepath is empty", async () => {
         await expect(resolveRedirects({ redirects: "", absoluteFilepathToDocsConfig })).rejects.toThrowError(
-            /is not a file/
+            /contains an empty filepath/
         );
     });
 
