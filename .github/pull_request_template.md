@@ -1,6 +1,7 @@
 ## Description
-Linear ticket: Closes 
-<!-- Use "Closes" to automatically close the ticket when PR merges, or "Refs" to link without closing -->
+Jira ticket: Closes 
+<!-- Link the Jira issue, e.g. Closes FERNDOCS-123 (or paste the full https://postmanlabs.atlassian.net/browse/... URL) -->
+<!-- Use "Closes" to indicate the ticket is resolved by this PR, or "Refs" to link without resolving -->
 <!-- Provide a clear and concise description of the changes made in this PR -->
 
 ## Changes Made
