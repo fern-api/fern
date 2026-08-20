@@ -131,13 +131,25 @@ impl CliError {
                 }
                 json!({ "error": error })
             }
-            CliError::Validation(msg) => json!({
-                "error": {
+            CliError::Validation(msg) => {
+                // A usage error arrives as clap's rendered block — a sentence,
+                // then a tip, a usage line and boilerplate. The human path wants
+                // all of it; `message` is supposed to be one sentence, so the
+                // rest becomes fields of its own rather than embedded newlines.
+                let usage = UsageText::parse(msg);
+                let mut error = json!({
                     "code": 400,
-                    "message": msg,
+                    "message": usage.message,
                     "reason": "validationError",
+                });
+                if let Some(help) = usage.help {
+                    error["help"] = json!(help);
                 }
-            }),
+                if let Some(usage) = usage.usage {
+                    error["usage"] = json!(usage);
+                }
+                json!({ "error": error })
+            }
             CliError::Auth(msg) => json!({
                 "error": {
                     "code": 401,
@@ -251,6 +263,65 @@ pub fn api_error_from_body(status: u16, body: &str) -> CliError {
         help: None,
         reason,
         details,
+    }
+}
+
+/// A validation message split into the parts an envelope keeps apart.
+///
+/// Single-line messages — the overwhelming majority, raised by our own
+/// validators — pass through as `message` with nothing else set.
+struct UsageText {
+    message: String,
+    help: Option<String>,
+    usage: Option<String>,
+}
+
+impl UsageText {
+    /// Boilerplate that only makes sense as terminal output: an agent reading
+    /// the envelope cannot "try `--help`".
+    const TRY_HELP: &'static str = "For more information, try";
+
+    fn parse(text: &str) -> Self {
+        let mut message = Vec::new();
+        let mut help = Vec::new();
+        let mut usage = Vec::new();
+        // Everything from `Usage:` up to the next blank line: clap wraps long
+        // usage strings onto continuation lines.
+        let mut in_usage = false;
+
+        for line in text.lines() {
+            let trimmed = line.trim();
+            if trimmed.is_empty() {
+                in_usage = false;
+                continue;
+            }
+            if let Some(rest) = trimmed.strip_prefix("Usage:") {
+                in_usage = true;
+                usage.push(rest.trim().to_string());
+            } else if in_usage {
+                usage.push(trimmed.to_string());
+            } else if let Some(rest) = trimmed.strip_prefix("tip:") {
+                help.push(rest.trim().to_string());
+            } else if trimmed.starts_with(Self::TRY_HELP) {
+                continue;
+            } else if message.is_empty() {
+                message.push(trimmed.strip_prefix("error:").unwrap_or(trimmed).trim().to_string());
+            } else {
+                // A wrapped sentence or a `[possible values: ...]` list — advice
+                // about the failure rather than the failure itself.
+                help.push(trimmed.to_string());
+            }
+        }
+
+        Self {
+            message: if message.is_empty() {
+                text.trim().to_string()
+            } else {
+                message.remove(0)
+            },
+            help: (!help.is_empty()).then(|| help.join(" ")),
+            usage: (!usage.is_empty()).then(|| usage.join(" ")),
+        }
     }
 }
 
@@ -641,6 +712,89 @@ mod tests {
         let err = CliError::Validation("Invalid input".to_string());
         let json = err.to_json();
         assert_eq!(json["error"]["code"], 400);
+    }
+
+    #[test]
+    fn single_line_validation_messages_pass_through_untouched() {
+        let err = CliError::Validation(
+            "Required parameter 'user_id' is missing. Provide it via --user-id or --params"
+                .to_string(),
+        );
+        let json = err.to_json();
+        assert_eq!(
+            json["error"]["message"],
+            "Required parameter 'user_id' is missing. Provide it via --user-id or --params"
+        );
+        assert!(json["error"].get("usage").is_none());
+        assert!(json["error"].get("help").is_none());
+    }
+
+    #[test]
+    fn clap_usage_block_is_split_out_of_the_message() {
+        // clap's rendering for a mistyped subcommand, verbatim.
+        let err = CliError::Validation(
+            "error: unrecognized subcommand 'lst'\n\n  \
+             tip: a similar subcommand exists: 'list'\n\n\
+             Usage: openapi-fixture users [OPTIONS] <COMMAND>\n\n\
+             For more information, try '--help'.\n"
+                .to_string(),
+        );
+        let json = err.to_json();
+        assert_eq!(json["error"]["message"], "unrecognized subcommand 'lst'");
+        assert_eq!(json["error"]["help"], "a similar subcommand exists: 'list'");
+        assert_eq!(
+            json["error"]["usage"],
+            "openapi-fixture users [OPTIONS] <COMMAND>"
+        );
+        // The one-sentence promise: no embedded newlines anywhere.
+        for field in ["message", "help", "usage"] {
+            let value = json["error"][field].as_str().expect("string field");
+            assert!(!value.contains('\n'), "{field} should be a single line: {value}");
+        }
+    }
+
+    #[test]
+    fn flag_conflicts_keep_their_sentence_and_usage_apart() {
+        let err = CliError::Validation(
+            "error: the argument '--json' cannot be used with '--human'\n\n\
+             Usage: openapi-fixture --json <COMMAND>\n\n\
+             For more information, try '--help'.\n"
+                .to_string(),
+        );
+        let json = err.to_json();
+        assert_eq!(
+            json["error"]["message"],
+            "the argument '--json' cannot be used with '--human'"
+        );
+        assert_eq!(json["error"]["usage"], "openapi-fixture --json <COMMAND>");
+        assert!(json["error"].get("help").is_none());
+    }
+
+    #[test]
+    fn possible_values_lists_land_in_help() {
+        let err = CliError::Validation(
+            "error: invalid value 'xml' for '--format <FORMAT>'\n  \
+             [possible values: json, table, yaml]\n\n\
+             For more information, try '--help'.\n"
+                .to_string(),
+        );
+        let json = err.to_json();
+        assert_eq!(
+            json["error"]["message"],
+            "invalid value 'xml' for '--format <FORMAT>'"
+        );
+        assert_eq!(json["error"]["help"], "[possible values: json, table, yaml]");
+    }
+
+    #[test]
+    fn human_rendering_of_a_usage_error_keeps_the_whole_block() {
+        // The split is a JSON-envelope concern: `Display` — what the human path
+        // prints on stderr — must still carry clap's tip and usage lines.
+        let rendered = "error: unrecognized subcommand 'lst'\n\n  \
+                        tip: a similar subcommand exists: 'list'\n\n\
+                        Usage: openapi-fixture users [OPTIONS] <COMMAND>\n";
+        let err = CliError::Validation(rendered.to_string());
+        assert_eq!(err.to_string(), rendered);
     }
 
     #[test]
