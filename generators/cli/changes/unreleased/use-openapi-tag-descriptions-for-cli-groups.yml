@@ -18,7 +18,8 @@
     renders under its own `--help`. Flag help is split the same way — `-h`
     shows a one-line form and `--help` the fuller prose — and multipart field
     help, which previously bypassed truncation entirely, is now capped and has
-    its spec indentation collapsed like every other parameter. An explicit
+    its spec indentation collapsed like every other parameter. `--help` keeps
+    whatever the spec documents in full; only `-h` trims. An explicit
     `x-fern-groups.description` now drives the group's command-table line too
     (first sentence, with the full prose kept in long help) instead of only
     populating long help while the table showed the generic label.

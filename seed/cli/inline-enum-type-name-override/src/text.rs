@@ -8,11 +8,15 @@ pub const CLI_DESCRIPTION_LIMIT: usize = 200;
 /// Max chars for single-line CLI `--help` descriptions.
 pub const CLI_SHORT_DESCRIPTION_LIMIT: usize = 80;
 
-/// Max chars for the detailed body a command renders under its own
-/// `--help`. Larger than [`CLI_DESCRIPTION_LIMIT`] because this text is only
-/// shown when the user asks for one specific command, but still bounded so a
-/// spec with pages of prose per operation cannot flood the terminal.
-pub const CLI_LONG_DESCRIPTION_LIMIT: usize = 600;
+/// Max chars for the detailed text rendered under `--help` — both a
+/// command's own description and its flags'.
+///
+/// `--help` is the thorough tier: whatever the spec documents about a flag
+/// (constraints, pricing, examples) belongs there in full, so this is set
+/// well above anything real specs contain rather than as an editorial
+/// trim. It exists only so a pathological spec cannot flood the terminal;
+/// [`CLI_SHORT_DESCRIPTION_LIMIT`] is what keeps `-h` scannable.
+pub const CLI_LONG_DESCRIPTION_LIMIT: usize = 2000;
 
 /// Abbreviations that end in a period without ending a sentence. Splitting
 /// on them truncates help text mid-phrase (`Fetch a user, e.g.`), so they

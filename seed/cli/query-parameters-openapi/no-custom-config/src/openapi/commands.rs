@@ -827,7 +827,7 @@ fn build_resource_command(
             ));
             let long_help_text = decorate(&crate::text::truncate_description(
                 &description,
-                crate::text::CLI_DESCRIPTION_LIMIT,
+                crate::text::CLI_LONG_DESCRIPTION_LIMIT,
                 true,
             ));
 
@@ -1040,7 +1040,7 @@ fn build_multipart_field_arg(field: &MultipartField) -> Arg {
     ));
     let long_help_text = compose(&crate::text::truncate_description(
         &description,
-        crate::text::CLI_DESCRIPTION_LIMIT,
+        crate::text::CLI_LONG_DESCRIPTION_LIMIT,
         true,
     ));
 
@@ -1574,7 +1574,10 @@ mod tests {
             long.len() > short.len() && long.starts_with("Diarization threshold to apply. A higher"),
             "long help should carry the fuller prose; got: {long}",
         );
-        assert!(long.chars().count() <= crate::text::CLI_DESCRIPTION_LIMIT);
+        assert!(
+            long.ends_with("merged into one."),
+            "long help should keep the whole description; got: {long}",
+        );
     }
 
     /// A flag whose prose already fits gets no second copy, so `-h` and
@@ -3259,9 +3262,8 @@ paths:
             "spec indentation should be collapsed; got: {long}",
         );
         assert!(
-            long.chars().count() <= crate::text::CLI_DESCRIPTION_LIMIT,
-            "long help was {} chars",
-            long.chars().count(),
+            long.ends_with("Each keyterm must be under 50 characters."),
+            "long help should keep the pricing/constraint clauses; got: {long}",
         );
     }
 
