@@ -1,8 +1,8 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import path from "path";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     deepMergeGlobalWins,
