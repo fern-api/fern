@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    On a docs site served under a basepath, a section whose explicit `slug` is written relative to
+    the basepath and starts with its own product slug (e.g. `core/introduction` inside product
+    `core`) no longer publishes with the product segment repeated. Such pages previously landed at
+    `/docs/core/core/introduction/...` instead of `/docs/core/introduction/...`.
+  type: fix
