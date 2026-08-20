@@ -67,7 +67,7 @@ module Seed
 
             response = conn.request(http_request)
 
-            break unless should_retry?(response, attempt)
+            break unless should_retry?(response, attempt, max_retries: request.max_retries)
 
             delay = retry_delay(response, attempt)
             sleep(delay)
@@ -89,9 +89,11 @@ module Seed
         # Determines if a request should be retried based on the response status code.
         # @param response [Net::HTTPResponse] The HTTP response.
         # @param attempt [Integer] The current retry attempt (0-indexed).
+        # @param max_retries [Integer, nil] The request-level retry count, when the endpoint
+        #   overrides the client-level setting.
         # @return [Boolean] Whether the request should be retried.
-        def should_retry?(response, attempt)
-          return false if attempt >= @max_retries
+        def should_retry?(response, attempt, max_retries: nil)
+          return false if attempt >= (max_retries || @max_retries)
 
           status = response.code.to_i
           RETRYABLE_STATUSES.include?(status)

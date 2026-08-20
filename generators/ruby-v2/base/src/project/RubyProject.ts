@@ -8,6 +8,7 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import { join as pathJoin } from "path";
 import { AsIsFiles, topologicalCompareAsIsFiles } from "../AsIs.js";
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext.js";
+import { hasEndpointWithRetriesDisabled } from "../utils/retries.js";
 import { RubocopFile } from "./RubocopFile.js";
 
 const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
@@ -213,7 +214,10 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     maxRetries: this.rubyContext.customConfig.maxRetries,
                     retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
                     respectOptionalRequestBody: this.rubyContext.customConfig.respectOptionalRequestBody,
-                    endpointSecurity: this.rubyContext.ir.auth.requirement === "ENDPOINT_SECURITY"
+                    endpointSecurity: this.rubyContext.ir.auth.requirement === "ENDPOINT_SECURITY",
+                    requestLevelMaxRetries: hasEndpointWithRetriesDisabled(
+                        Object.values(this.rubyContext.ir.services).flatMap((service) => service.endpoints)
+                    )
                 })
             );
         }
@@ -230,7 +234,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         maxRetries,
         retryStatusCodes,
         respectOptionalRequestBody,
-        endpointSecurity
+        endpointSecurity,
+        requestLevelMaxRetries
     }: {
         filename: string;
         gemNamespace: string;
@@ -243,6 +248,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         retryStatusCodes?: string;
         respectOptionalRequestBody?: boolean;
         endpointSecurity?: boolean;
+        requestLevelMaxRetries?: boolean;
     }): Promise<File> {
         let rendered = replaceTemplate({
             contents: (await readFile(getAsIsFilepath(filename))).toString(),
@@ -255,7 +261,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 allowUserAgentAppInfo,
                 maxRetries,
                 respectOptionalRequestBody,
-                endpointSecurity
+                endpointSecurity,
+                requestLevelMaxRetries
             })
         });
 
@@ -319,7 +326,8 @@ function getTemplateVariables({
     allowUserAgentAppInfo,
     maxRetries,
     respectOptionalRequestBody,
-    endpointSecurity
+    endpointSecurity,
+    requestLevelMaxRetries
 }: {
     gemNamespace: string;
     rootFolderName: string;
@@ -330,6 +338,7 @@ function getTemplateVariables({
     maxRetries?: number;
     respectOptionalRequestBody?: boolean;
     endpointSecurity?: boolean;
+    requestLevelMaxRetries?: boolean;
 }): Record<string, unknown> {
     return {
         gem_namespace: gemNamespace,
@@ -349,7 +358,10 @@ function getTemplateVariables({
         respectOptionalRequestBody: respectOptionalRequestBody ?? false,
         // Emits the RawClient#auth_headers_for_endpoint delegator only for
         // endpoint-security SDKs, so ALL/ANY SDKs see zero change to raw_client.rb.
-        endpointSecurity: endpointSecurity ?? false
+        endpointSecurity: endpointSecurity ?? false,
+        // Emits the request-level `max_retries` override only for APIs with an endpoint
+        // that disables retries, so every other SDK's core files stay byte-identical.
+        requestLevelMaxRetries: requestLevelMaxRetries ?? false
     };
 }
 
