@@ -13,8 +13,6 @@
 //!
 //! [hcf]: crate::auth::AuthProvider::has_credentials_for
 
-use serde_json::Value;
-
 use crate::auth::provider::{AuthProvider, EndpointAuthMetadata};
 use crate::error::CliError;
 
@@ -70,13 +68,19 @@ pub fn handle_error_response<T>(
 fn decorate_with_source_hint(err: CliError, hints: &[String]) -> CliError {
     let joined = hints.join(", ");
     match err {
-        CliError::Api { code, message, reason } => CliError::Api {
+        CliError::Api {
+            code,
+            message,
+            reason,
+            details,
+        } => CliError::Api {
             code,
             message: format!(
                 "{message}\nCredentials were supplied via: {joined}. \
                  Run `auth status` to see all visible sources and check for shadowing."
             ),
             reason,
+            details,
         },
         other => other,
     }
@@ -94,38 +98,7 @@ fn dedup_preserve_order(items: Vec<String>) -> Vec<String> {
 /// Shared parsing for the auth-aware error handler. Returns a structured
 /// [`CliError::Api`] whether or not the body was JSON.
 fn parse_api_error(status: reqwest::StatusCode, error_body: &str) -> CliError {
-    if let Ok(error_json) = serde_json::from_str::<Value>(error_body) {
-        if let Some(err_obj) = error_json.get("error") {
-            let code = err_obj
-                .get("code")
-                .and_then(|c| c.as_u64())
-                .unwrap_or(status.as_u16() as u64) as u16;
-            let message = err_obj
-                .get("message")
-                .and_then(|m| m.as_str())
-                .unwrap_or("Unknown error")
-                .to_string();
-            let reason = err_obj
-                .get("errors")
-                .and_then(|e| e.as_array())
-                .and_then(|arr| arr.first())
-                .and_then(|e| e.get("reason"))
-                .and_then(|r| r.as_str())
-                .or_else(|| err_obj.get("reason").and_then(|r| r.as_str()))
-                .unwrap_or("unknown")
-                .to_string();
-            return CliError::Api {
-                code,
-                message,
-                reason,
-            };
-        }
-    }
-    CliError::Api {
-        code: status.as_u16(),
-        message: error_body.to_string(),
-        reason: "httpError".to_string(),
-    }
+    crate::error::api_error_from_body(status.as_u16(), error_body)
 }
 
 #[cfg(test)]
@@ -183,7 +156,12 @@ mod tests {
         )
         .unwrap_err();
         match err {
-            CliError::Api { code, message, reason } => {
+            CliError::Api {
+                code,
+                message,
+                reason,
+                ..
+            } => {
                 assert_eq!(code, 401);
                 assert!(message.contains("invalid authentication credentials"));
                 assert_eq!(reason, "authError");
@@ -223,10 +201,15 @@ mod tests {
         )
         .unwrap_err();
         match err {
-            CliError::Api { code, message, reason } => {
+            CliError::Api {
+                code,
+                message,
+                reason,
+                ..
+            } => {
                 assert_eq!(code, 500);
                 assert_eq!(message, "Internal Server Error Text");
-                assert_eq!(reason, "httpError");
+                assert_eq!(reason, "internalServerError");
             }
             _ => panic!("Expected Api"),
         }

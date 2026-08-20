@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fixed API errors being printed twice and with the server's JSON body escaped
+    inside the `message` string. An error is now rendered in exactly one
+    representation — the JSON envelope on stdout for machine formats
+    (`json`/`jsonl`/`yaml`, which includes the piped/non-TTY default), or a single
+    `error[api]: <message>` line on stderr for `table`/`csv` — and the server's
+    body is parsed rather than stringified: a sentence lands in `message`, the
+    parsed body in `error.details`, and `reason` is derived from the HTTP status
+    (`internalServerError` for 500) instead of always `httpError`. Top-level
+    shapes such as `{"status", "message"}`, `{"error": "<message>"}`, RFC 7807
+    `detail`/`title`, and OAuth 2.0 `error_description` are now recognized.
+  type: fix

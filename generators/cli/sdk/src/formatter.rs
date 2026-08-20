@@ -268,6 +268,48 @@ impl OutputFormat {
     pub fn from_str(s: &str) -> Self {
         Self::parse(s).unwrap_or(Self::Json)
     }
+
+    /// Whether this format is meant for a program rather than a person.
+    ///
+    /// Drives the error contract in [`crate::error::write_error_json`]: machine
+    /// formats get the structured envelope on stdout, human formats get one
+    /// line on stderr. `Raw` and `Http` are human-side here — they mean "hand
+    /// me the server's bytes", so an envelope of ours on stdout would corrupt
+    /// what the caller asked for.
+    pub fn is_machine_readable(&self) -> bool {
+        matches!(self, Self::Json | Self::Jsonl | Self::Yaml)
+    }
+}
+
+/// Resolve the output format from *raw* argv, for use before clap has parsed.
+///
+/// The error path runs outside the parsed-matches world (a spec can fail to
+/// load before any `ArgMatches` exists), but it must land on the same format
+/// the success path would have chosen, so this mirrors
+/// [`OutputPipeline::from_matches`]: explicit `--format` wins, then
+/// `<NAME>_OUTPUT`, then the TTY-aware default. Unknown `--format` values fall
+/// through to the default rather than erroring — the format resolution
+/// performed by clap already reports those.
+pub fn resolve_format_from_raw_args(args: &[String], app_name: &str) -> OutputFormat {
+    if let Some(parsed) = explicit_format_arg(args).and_then(|v| OutputFormat::parse(&v).ok()) {
+        return parsed;
+    }
+    let env_var = format!("{}_OUTPUT", app_name.to_uppercase().replace('-', "_"));
+    let env_value = std::env::var(env_var).ok();
+    resolve_default_format(env_value.as_deref(), std::io::stdout().is_terminal())
+}
+
+/// Extract the value of an explicit `--format` / `--format=` flag from argv.
+fn explicit_format_arg(args: &[String]) -> Option<String> {
+    for (i, a) in args.iter().enumerate() {
+        if let Some(rest) = a.strip_prefix("--format=") {
+            return Some(rest.to_string());
+        }
+        if a == "--format" {
+            return args.get(i + 1).cloned();
+        }
+    }
+    None
 }
 
 /// Format a JSON value according to the specified output format.
@@ -1214,6 +1256,52 @@ mod tests {
     // -----------------------------------------------------------------------
     // Default-format precedence: flag > <NAME>_OUTPUT env > TTY-aware default
     // -----------------------------------------------------------------------
+
+    #[test]
+    fn is_machine_readable_covers_structured_formats_only() {
+        for f in [OutputFormat::Json, OutputFormat::Jsonl, OutputFormat::Yaml] {
+            assert!(f.is_machine_readable(), "{f:?} should be machine-readable");
+        }
+        // Raw/Http hand back the server's bytes — our envelope would corrupt them.
+        for f in [
+            OutputFormat::Table,
+            OutputFormat::Csv,
+            OutputFormat::Raw,
+            OutputFormat::Http,
+        ] {
+            assert!(!f.is_machine_readable(), "{f:?} should be human-side");
+        }
+    }
+
+    #[test]
+    fn explicit_format_arg_reads_both_spellings() {
+        let split = vec![
+            "users".to_string(),
+            "--format".to_string(),
+            "yaml".to_string(),
+        ];
+        assert_eq!(explicit_format_arg(&split).as_deref(), Some("yaml"));
+        let joined = vec!["--format=csv".to_string()];
+        assert_eq!(explicit_format_arg(&joined).as_deref(), Some("csv"));
+        assert!(explicit_format_arg(&["users".to_string()]).is_none());
+        // A trailing `--format` with no value must not panic.
+        assert!(explicit_format_arg(&["--format".to_string()]).is_none());
+    }
+
+    #[test]
+    fn resolve_format_from_raw_args_prefers_explicit_flag() {
+        // Explicit flag beats env and TTY state, so an agent can always pin JSON.
+        let args = vec!["--format".to_string(), "json".to_string()];
+        assert_eq!(
+            resolve_format_from_raw_args(&args, "my-cli"),
+            OutputFormat::Json
+        );
+        let args = vec!["--format=table".to_string()];
+        assert_eq!(
+            resolve_format_from_raw_args(&args, "my-cli"),
+            OutputFormat::Table
+        );
+    }
 
     #[test]
     fn resolve_default_format_no_env_piped_is_json() {

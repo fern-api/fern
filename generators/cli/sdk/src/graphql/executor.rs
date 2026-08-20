@@ -111,10 +111,12 @@ fn build_http_request(
 /// and the partial data is returned. Only when there is no `data` at all do we
 /// treat the errors as fatal.
 fn parse_graphql_response(body_text: &str) -> Result<String, CliError> {
-    let json_val: Value = serde_json::from_str(body_text).map_err(|e| CliError::Api {
-        code: 400,
-        message: format!("Invalid GraphQL response: {e}"),
-        reason: "graphql_parse_error".to_string(),
+    let json_val: Value = serde_json::from_str(body_text).map_err(|e| {
+        CliError::api(
+            400,
+            format!("Invalid GraphQL response: {e}"),
+            "graphql_parse_error",
+        )
     })?;
 
     let has_data = json_val
@@ -136,6 +138,9 @@ fn parse_graphql_response(body_text: &str) -> Result<String, CliError> {
                     code: 400,
                     message,
                     reason: "graphql_error".to_string(),
+                    // GraphQL puts every error's location/path/extensions here;
+                    // keep them for machine consumers.
+                    details: Some(json!({ "errors": errors })),
                 });
             }
         }
@@ -155,10 +160,12 @@ fn parse_graphql_response(body_text: &str) -> Result<String, CliError> {
         json_val
     };
 
-    serde_json::to_string(&unwrapped).map_err(|e| CliError::Api {
-        code: 500,
-        message: format!("Failed to serialize GraphQL response: {e}"),
-        reason: "graphql_serialize_error".to_string(),
+    serde_json::to_string(&unwrapped).map_err(|e| {
+        CliError::api(
+            500,
+            format!("Failed to serialize GraphQL response: {e}"),
+            "graphql_serialize_error",
+        )
     })
 }
 

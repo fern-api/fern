@@ -701,6 +701,11 @@ impl CliApp {
         let ctx = ErrorDisplayContext {
             docs_base_url: self.error_docs_base_url.clone(),
             help_hint: Some(help_hint),
+            // Resolved from raw argv because an error can precede clap parsing;
+            // the resolver is the same one the success path uses, so errors land
+            // in whichever representation the caller already asked for.
+            machine_readable: crate::formatter::resolve_format_from_raw_args(&str_args, &self.name)
+                .is_machine_readable(),
         };
         match self.dispatch_pipeline(args, out).await {
             Ok(PipelineOutcome::Success) => 0,
