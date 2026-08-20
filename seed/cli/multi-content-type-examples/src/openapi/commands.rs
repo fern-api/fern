@@ -200,8 +200,17 @@ pub fn build_cli(doc: &RestDescription) -> Command {
     resource_names.sort();
     for name in resource_names {
         let resource = &doc.resources[name];
-        if let Some(cmd) =
-            build_resource_command(name, resource, &doc.groups, &doc.tag_descriptions)
+        if let Some(cmd) = build_resource_command(
+            name,
+            resource,
+            &doc.groups,
+            &doc.tag_descriptions,
+            &doc.group_tag_names,
+            &doc.group_tag_operation_counts,
+            &doc.group_operation_counts,
+            &doc.tag_group_names,
+            &doc.tag_description_order,
+        )
         {
             root = root.subcommand(cmd);
         }
@@ -210,70 +219,187 @@ pub fn build_cli(doc: &RestDescription) -> Command {
     root
 }
 
-/// Resolve the metadata-backed `about()` line for a group. Fern group
-/// summaries take precedence over OpenAPI tag descriptions; tag descriptions
-/// are truncated for a terminal-friendly one-line help surface.
-pub(crate) fn group_about_metadata(
+pub(crate) fn group_tag_description_for_group(
     name: &str,
-    groups: &HashMap<String, SdkGroupInfo>,
+    group_tags: Option<&[String]>,
     tag_descriptions: &HashMap<String, String>,
+    group_tag_operation_counts: Option<&HashMap<String, usize>>,
+    group_operation_count: Option<usize>,
+    tag_group_names: &HashMap<String, Vec<String>>,
+    tag_description_order: &[String],
 ) -> Option<String> {
-    groups
-        .get(name)
-        .and_then(|info| info.summary.clone())
-        .filter(|s| !s.is_empty())
-        .or_else(|| group_tag_about_description(name, tag_descriptions))
-}
-
-fn group_tag_about_description(
-    name: &str,
-    tag_descriptions: &HashMap<String, String>,
-) -> Option<String> {
-    tag_descriptions.get(name).map(|description| {
-        let single_line = description.split_whitespace().collect::<Vec<_>>().join(" ");
+    find_tag_description(
+        name,
+        group_tags,
+        tag_descriptions,
+        group_tag_operation_counts,
+        group_operation_count,
+        tag_group_names,
+        tag_description_order,
+    )
+    .map(|description| {
         crate::text::truncate_description(
-            &single_line,
-            crate::text::CLI_DESCRIPTION_LIMIT,
+            &crate::text::first_sentence(description),
+            crate::text::CLI_SHORT_DESCRIPTION_LIMIT,
             true,
         )
+        .trim()
+        .to_string()
     })
 }
 
-/// Resolve the truncated description from a matching OpenAPI root tag.
-pub(crate) fn group_tag_description(
+fn tag_match_key(value: &str) -> String {
+    value
+        .chars()
+        .filter(|c| c.is_alphanumeric())
+        .flat_map(char::to_lowercase)
+        .collect()
+}
+
+fn find_tag_description<'a>(
     name: &str,
-    tag_descriptions: &HashMap<String, String>,
-) -> Option<String> {
-    tag_descriptions.get(name).map(|description| {
-        crate::text::truncate_description(description, crate::text::CLI_DESCRIPTION_LIMIT, true)
-    })
+    group_tags: Option<&[String]>,
+    tag_descriptions: &'a HashMap<String, String>,
+    group_tag_operation_counts: Option<&HashMap<String, usize>>,
+    group_operation_count: Option<usize>,
+    tag_group_names: &HashMap<String, Vec<String>>,
+    tag_description_order: &[String],
+) -> Option<&'a String> {
+    if let Some(group_tags) = group_tags {
+        let name_key = tag_match_key(name);
+        for declared_tag in tag_description_order {
+            let declared_tag_key = tag_match_key(declared_tag);
+            if declared_tag_key == name_key
+                && group_tags
+                    .iter()
+                    .any(|tag| tag_match_key(tag) == declared_tag_key)
+            {
+                if let Some(description) = tag_descriptions.get(declared_tag) {
+                    return Some(description);
+                }
+            }
+        }
+        let operation_count = group_operation_count.unwrap_or(0);
+        if operation_count > 0 {
+            let mut candidates = group_tags
+                .iter()
+                .filter_map(|operation_tag| {
+                    let tag_key = tag_match_key(operation_tag);
+                    let declared_tag = tag_description_order
+                        .iter()
+                        .find(|declared| tag_match_key(declared) == tag_key)?;
+                    if operation_tag.contains(':')
+                        || declared_tag.contains(':')
+                        || !tag_group_names
+                            .get(&tag_key)
+                            .is_some_and(|groups| groups.len() == 1 && groups[0] == name)
+                    {
+                        return None;
+                    }
+                    let count = group_tag_operation_counts
+                        .and_then(|counts| counts.get(&tag_key))
+                        .copied()
+                        .unwrap_or(0);
+                    if count * 2 < operation_count {
+                        return None;
+                    }
+                    let declaration_index = tag_description_order
+                        .iter()
+                        .position(|declared| declared == declared_tag)?;
+                    Some((count, declaration_index, declared_tag))
+                })
+                .collect::<Vec<_>>();
+            candidates.sort_by_key(|(count, declaration_index, _)| {
+                (std::cmp::Reverse(*count), *declaration_index)
+            });
+            if let Some((_, _, declared_tag)) = candidates.first() {
+                if let Some(description) = tag_descriptions.get(*declared_tag) {
+                    return Some(description);
+                }
+            }
+        }
+    }
+
+    tag_descriptions
+        .get(name)
+        .or_else(|| {
+            let normalized_name = tag_match_key(name);
+            tag_descriptions
+                .iter()
+                .find(|(tag_name, _)| tag_match_key(tag_name) == normalized_name)
+                .map(|(_, description)| description)
+        })
 }
 
 /// Resolve the `about()` line for a group's clap subcommand. The legacy
 /// fallback is unchanged for groups without metadata.
-pub(crate) fn group_about_text(
+fn group_about_text_for_group(
     name: &str,
     groups: &HashMap<String, SdkGroupInfo>,
     tag_descriptions: &HashMap<String, String>,
+    group_tag_names: &HashMap<String, Vec<String>>,
+    group_tag_operation_counts: &HashMap<String, HashMap<String, usize>>,
+    group_operation_counts: &HashMap<String, usize>,
+    tag_group_names: &HashMap<String, Vec<String>>,
+    tag_description_order: &[String],
 ) -> String {
-    group_about_metadata(name, groups, tag_descriptions)
+    groups
+        .get(name)
+        .and_then(|info| info.summary.clone())
+        .filter(|s| !s.is_empty())
+        .or_else(|| {
+            group_tag_description_for_group(
+                name,
+                group_tag_names.get(name).map(Vec::as_slice),
+                tag_descriptions,
+                group_tag_operation_counts.get(name),
+                group_operation_counts.get(name).copied(),
+                tag_group_names,
+                tag_description_order,
+            )
+        })
         .unwrap_or_else(|| format!("Operations on '{name}'"))
 }
 
 /// Resolve the `long_about()` line for a group's clap subcommand. Fern group
 /// descriptions take precedence over full OpenAPI tag descriptions. A
 /// description equal to the about line is omitted to avoid redundant help.
-pub(crate) fn group_long_about_text(
+fn group_long_about_text_for_group(
     name: &str,
     groups: &HashMap<String, SdkGroupInfo>,
     tag_descriptions: &HashMap<String, String>,
+    group_tag_names: &HashMap<String, Vec<String>>,
+    group_tag_operation_counts: &HashMap<String, HashMap<String, usize>>,
+    group_operation_counts: &HashMap<String, usize>,
+    tag_group_names: &HashMap<String, Vec<String>>,
+    tag_description_order: &[String],
 ) -> Option<String> {
-    let about = group_about_text(name, groups, tag_descriptions);
+    let about = group_about_text_for_group(
+        name,
+        groups,
+        tag_descriptions,
+        group_tag_names,
+        group_tag_operation_counts,
+        group_operation_counts,
+        tag_group_names,
+        tag_description_order,
+    );
     groups
         .get(name)
         .and_then(|info| info.description.clone())
         .filter(|s| !s.is_empty())
-        .or_else(|| tag_descriptions.get(name).cloned())
+        .or_else(|| {
+            find_tag_description(
+                name,
+                group_tag_names.get(name).map(Vec::as_slice),
+                tag_descriptions,
+                group_tag_operation_counts.get(name),
+                group_operation_counts.get(name).copied(),
+                tag_group_names,
+                tag_description_order,
+            )
+            .cloned()
+        })
         .filter(|description| description.trim() != about.trim())
 }
 
@@ -332,13 +458,36 @@ fn build_resource_command(
     resource: &RestResource,
     groups: &HashMap<String, SdkGroupInfo>,
     tag_descriptions: &HashMap<String, String>,
+    group_tag_names: &HashMap<String, Vec<String>>,
+    group_tag_operation_counts: &HashMap<String, HashMap<String, usize>>,
+    group_operation_counts: &HashMap<String, usize>,
+    tag_group_names: &HashMap<String, Vec<String>>,
+    tag_description_order: &[String],
 ) -> Option<Command> {
     let mut cmd = Command::new(name.to_string())
-        .about(group_about_text(name, groups, tag_descriptions))
+        .about(group_about_text_for_group(
+            name,
+            groups,
+            tag_descriptions,
+            group_tag_names,
+            group_tag_operation_counts,
+            group_operation_counts,
+            tag_group_names,
+            tag_description_order,
+        ))
         .subcommand_required(true)
         .arg_required_else_help(true);
 
-    if let Some(long_about) = group_long_about_text(name, groups, tag_descriptions) {
+    if let Some(long_about) = group_long_about_text_for_group(
+        name,
+        groups,
+        tag_descriptions,
+        group_tag_names,
+        group_tag_operation_counts,
+        group_operation_counts,
+        tag_group_names,
+        tag_description_order,
+    ) {
         cmd = cmd.long_about(long_about);
     }
 
@@ -353,8 +502,8 @@ fn build_resource_command(
         has_children = true;
 
         let about = crate::text::truncate_description(
-            method.description.as_deref().unwrap_or(""),
-            crate::text::CLI_DESCRIPTION_LIMIT,
+            &crate::text::first_sentence(method.description.as_deref().unwrap_or("")),
+            crate::text::CLI_SHORT_DESCRIPTION_LIMIT,
             true,
         );
         let about = with_availability_badge(&about, method.availability);
@@ -643,8 +792,17 @@ fn build_resource_command(
     let no_nested_tag_descriptions = HashMap::new();
     for sub_name in sub_names {
         let sub_resource = &resource.resources[sub_name];
-        if let Some(sub_cmd) =
-            build_resource_command(sub_name, sub_resource, groups, &no_nested_tag_descriptions)
+        if let Some(sub_cmd) = build_resource_command(
+            sub_name,
+            sub_resource,
+            groups,
+            &no_nested_tag_descriptions,
+            &HashMap::new(),
+            &HashMap::new(),
+            &HashMap::new(),
+            &HashMap::new(),
+            &[],
+        )
         {
             has_children = true;
             cmd = cmd.subcommand(sub_cmd);
@@ -2075,7 +2233,7 @@ mod tests {
             .expect("things subcommand missing");
         assert_eq!(
             things.get_about().map(|s| s.to_string()).unwrap_or_default(),
-            "Manage things across multiple lines. See the API guide.",
+            "Manage things across multiple lines.",
         );
         assert_eq!(
             things
@@ -2083,6 +2241,128 @@ mod tests {
                 .map(|s| s.to_string())
                 .unwrap_or_default(),
             "Manage things across\nmultiple lines. See [the API guide](https://example.com/guide).",
+        );
+    }
+
+    #[test]
+    fn test_short_about_uses_first_sentence_and_preserves_long_about() {
+        let mut doc = make_doc_with_things_resource();
+        let description = "This is the first sentence with enough words to exceed the short CLI limit. The full description remains available from the group help.";
+        doc.tag_descriptions
+            .insert("things".to_string(), description.to_string());
+        doc.group_tag_names
+            .insert("things".to_string(), vec!["things".to_string()]);
+        doc.group_tag_operation_counts.insert(
+            "things".to_string(),
+            HashMap::from([("things".to_string(), 1)]),
+        );
+        doc.group_operation_counts.insert("things".to_string(), 1);
+        doc.tag_description_order = vec!["things".to_string()];
+        doc.resources
+            .get_mut("things")
+            .expect("things resource missing")
+            .methods
+            .get_mut("list")
+            .expect("list method missing")
+            .description = Some(
+                "This method's first sentence also has enough words to exceed the short CLI limit. The remaining prose is not shown in the table."
+                    .to_string(),
+            );
+
+        let cmd = build_cli(&doc);
+        let things = cmd
+            .find_subcommand("things")
+            .expect("things subcommand missing");
+        assert_eq!(
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
+            "This is the first sentence with enough words to exceed the short CLI limit.",
+        );
+        assert_eq!(
+            things
+                .get_long_about()
+                .map(|s| s.to_string())
+                .unwrap_or_default(),
+            description,
+        );
+        assert_eq!(
+            things
+                .find_subcommand("list")
+                .and_then(|command| command.get_about())
+                .map(ToString::to_string)
+                .unwrap_or_default(),
+            "This method's first sentence also has enough words to exceed the short CLI…",
+        );
+    }
+
+    #[test]
+    fn test_colon_tag_is_not_borrowed_for_group_help() {
+        let mut doc = make_doc_with_things_resource();
+        doc.tag_descriptions
+            .insert("access-all".to_string(), "Access everything.".to_string());
+        doc.group_tag_names.insert(
+            "things".to_string(),
+            vec!["access:all".to_string()],
+        );
+        doc.group_tag_operation_counts.insert(
+            "things".to_string(),
+            HashMap::from([("accessall".to_string(), 1)]),
+        );
+        doc.group_operation_counts.insert("things".to_string(), 1);
+        doc.tag_group_names
+            .insert("accessall".to_string(), vec!["things".to_string()]);
+        doc.tag_description_order = vec!["access-all".to_string()];
+
+        let cmd = build_cli(&doc);
+        assert_eq!(
+            cmd.find_subcommand("things")
+                .and_then(|command| command.get_about())
+                .map(ToString::to_string)
+                .as_deref(),
+            Some("Operations on 'things'"),
+        );
+    }
+
+    #[test]
+    fn test_exclusive_tag_with_majority_coverage_is_selected() {
+        let mut doc = make_doc_with_things_resource();
+        doc.tag_descriptions.insert(
+            "minority".to_string(),
+            "Minority description.".to_string(),
+        );
+        doc.tag_descriptions.insert(
+            "majority".to_string(),
+            "Majority description.".to_string(),
+        );
+        doc.group_tag_names.insert(
+            "things".to_string(),
+            vec!["minority".to_string(), "majority".to_string()],
+        );
+        doc.group_tag_operation_counts.insert(
+            "things".to_string(),
+            HashMap::from([
+                ("minority".to_string(), 1),
+                ("majority".to_string(), 3),
+            ]),
+        );
+        doc.group_operation_counts.insert("things".to_string(), 4);
+        doc.tag_group_names.insert(
+            "minority".to_string(),
+            vec!["things".to_string()],
+        );
+        doc.tag_group_names.insert(
+            "majority".to_string(),
+            vec!["things".to_string()],
+        );
+        doc.tag_description_order =
+            vec!["minority".to_string(), "majority".to_string()];
+
+        let cmd = build_cli(&doc);
+        assert_eq!(
+            cmd.find_subcommand("things")
+                .and_then(|command| command.get_about())
+                .map(ToString::to_string)
+                .as_deref(),
+            Some("Majority description."),
         );
     }
 
@@ -2188,8 +2468,8 @@ mod tests {
         assert_eq!(
             things.get_about().map(|s| s.to_string()).unwrap_or_default(),
             crate::text::truncate_description(
-                description,
-                crate::text::CLI_DESCRIPTION_LIMIT,
+                &crate::text::first_sentence(description),
+                crate::text::CLI_SHORT_DESCRIPTION_LIMIT,
                 true
             ),
         );

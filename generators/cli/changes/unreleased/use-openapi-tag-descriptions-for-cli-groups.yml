@@ -1,4 +1,6 @@
 - summary: |
-    Use OpenAPI root tag descriptions for generated CLI group help and agent skills
-    when no x-fern-groups summary is provided.
+    Use safe OpenAPI root tag descriptions for generated CLI group help and agent
+    skills when no x-fern-groups summary is provided. Match operation-declared
+    tags to groups without borrowing ambiguous or scope-style descriptions, and
+    keep CLI help table lines concise while preserving full prose in long help.
   type: feat

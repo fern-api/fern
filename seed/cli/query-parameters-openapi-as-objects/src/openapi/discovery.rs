@@ -128,6 +128,21 @@ pub struct RestDescription {
     /// kebab-cased tag name so they match tag-derived resource keys.
     #[serde(default, skip)]
     pub tag_descriptions: HashMap<String, String>,
+    #[serde(default, skip)]
+    pub group_tag_names: HashMap<String, Vec<String>>,
+    /// Number of operations in each top-level group that declare each tag,
+    /// keyed by the lenient tag matching key.
+    #[serde(default, skip)]
+    pub group_tag_operation_counts: HashMap<String, HashMap<String, usize>>,
+    /// Number of operations in each top-level group.
+    #[serde(default, skip)]
+    pub group_operation_counts: HashMap<String, usize>,
+    /// Top-level groups carrying each operation-declared tag, keyed by the
+    /// lenient tag matching key.
+    #[serde(default, skip)]
+    pub tag_group_names: HashMap<String, Vec<String>>,
+    #[serde(default, skip)]
+    pub tag_description_order: Vec<String>,
 }
 
 /// Metadata for a single group declared via the spec-root

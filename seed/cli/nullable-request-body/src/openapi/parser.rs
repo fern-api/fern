@@ -3,7 +3,7 @@
 //! Converts an OpenAPI 3.0 YAML specification into the internal `RestDescription`
 //! representation used by the CLI command builder and executor.
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 use serde::{Deserialize, Deserializer};
 
@@ -180,7 +180,7 @@ struct OpenApiSpec {
     /// groups. Invalid or primitive entries are skipped by the lenient
     /// deserializer below.
     #[serde(default, deserialize_with = "deserialize_openapi_tags")]
-    tags: HashMap<String, String>,
+    tags: OpenApiTagMetadata,
     #[serde(default)]
     paths: HashMap<String, OpenApiPathItem>,
     /// OpenAPI 3.1 top-level `webhooks` block. Webhooks describe operations
@@ -249,25 +249,27 @@ struct OpenApiSpec {
 /// whole document.
 fn deserialize_openapi_tags<'de, D>(
     deserializer: D,
-) -> Result<HashMap<String, String>, D::Error>
+) -> Result<OpenApiTagMetadata, D::Error>
 where
     D: Deserializer<'de>,
 {
     let value = Option::<serde_yaml::Value>::deserialize(deserializer)?;
     let Some(value) = value else {
-        return Ok(HashMap::new());
+        return Ok(OpenApiTagMetadata::default());
     };
     let serde_yaml::Value::Sequence(entries) = value else {
         tracing::debug!("Skipping document-root OpenAPI tags because the value is not an array");
-        return Ok(HashMap::new());
+        return Ok(OpenApiTagMetadata::default());
     };
 
     let mut descriptions = HashMap::new();
+    let mut order = Vec::new();
     for entry in entries {
         match serde_yaml::from_value::<RawOpenApiTag>(entry) {
             Ok(tag) if !tag.name.trim().is_empty() => {
                 if let Some(description) = tag.description.filter(|d| !d.trim().is_empty()) {
                     let normalized_name = camel_to_kebab(&tag.name);
+                    order.push(normalized_name.clone());
                     match descriptions.entry(normalized_name) {
                         std::collections::hash_map::Entry::Vacant(entry) => {
                             entry.insert(description);
@@ -290,7 +292,13 @@ where
             }
         }
     }
-    Ok(descriptions)
+    Ok(OpenApiTagMetadata { descriptions, order })
+}
+
+#[derive(Debug, Default)]
+struct OpenApiTagMetadata {
+    descriptions: HashMap<String, String>,
+    order: Vec<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -2697,7 +2705,12 @@ pub fn load_openapi_spec_from_value(
         global_parameters,
         global_headers,
         groups,
-        tag_descriptions: spec.tags,
+        tag_descriptions: spec.tags.descriptions,
+        group_tag_names: HashMap::new(),
+        group_tag_operation_counts: HashMap::new(),
+        group_operation_counts: HashMap::new(),
+        tag_group_names: HashMap::new(),
+        tag_description_order: spec.tags.order,
         ..Default::default()
     };
 
@@ -3045,8 +3058,44 @@ pub fn load_openapi_spec_from_value(
             // Walk group_name to create/find nested resources
             let kebab_groups: Vec<String> =
                 group_name.iter().map(|g| camel_to_kebab(g)).collect();
+            let operation_tags = operation.tags.as_deref().unwrap_or(&[]);
+            if let Some(top_level_group) = kebab_groups.first() {
+                *doc.group_operation_counts
+                    .entry(top_level_group.clone())
+                    .or_default() += 1;
+                append_unique_tags(
+                    doc.group_tag_names
+                        .entry(top_level_group.clone())
+                        .or_default(),
+                    operation_tags,
+                );
+                let tag_counts = doc
+                    .group_tag_operation_counts
+                    .entry(top_level_group.clone())
+                    .or_default();
+                let mut counted_tags = HashSet::new();
+                for tag in operation_tags {
+                    let tag_key = tag_match_key(tag);
+                    if counted_tags.insert(tag_key.clone()) {
+                        *tag_counts.entry(tag_key.clone()).or_default() += 1;
+                    }
+                    append_unique_tags(
+                        doc.tag_group_names
+                            .entry(tag_key)
+                            .or_default(),
+                        std::slice::from_ref(top_level_group),
+                    );
+                }
+            }
 
-            insert_method_into_resources(&mut doc.resources, &kebab_groups, &method_name, rest_method);
+            insert_method_into_resources(
+                &mut doc.resources,
+                &kebab_groups,
+                &method_name,
+                rest_method,
+                operation_tags,
+                &mut doc.group_tag_names,
+            );
         }
     }
 
@@ -3074,6 +3123,8 @@ fn insert_method_into_resources(
     groups: &[String],
     method_name: &str,
     method: RestMethod,
+    tags: &[String],
+    group_tag_names: &mut HashMap<String, Vec<String>>,
 ) {
     if groups.is_empty() {
         return;
@@ -3082,12 +3133,36 @@ fn insert_method_into_resources(
     let resource = resources
         .entry(groups[0].clone())
         .or_default();
+    append_unique_tags(group_tag_names.entry(groups[0].clone()).or_default(), tags);
 
     if groups.len() == 1 {
         resource.methods.insert(method_name.to_string(), method);
     } else {
-        insert_method_into_resources(&mut resource.resources, &groups[1..], method_name, method);
+        insert_method_into_resources(
+            &mut resource.resources,
+            &groups[1..],
+            method_name,
+            method,
+            tags,
+            group_tag_names,
+        );
     }
+}
+
+fn append_unique_tags(existing: &mut Vec<String>, incoming: &[String]) {
+    for tag in incoming {
+        if !existing.iter().any(|existing_tag| existing_tag == tag) {
+            existing.push(tag.clone());
+        }
+    }
+}
+
+fn tag_match_key(value: &str) -> String {
+    value
+        .chars()
+        .filter(|c| c.is_alphanumeric())
+        .flat_map(char::to_lowercase)
+        .collect()
 }
 
 /// Extract request body info from an OpenAPI requestBody.
@@ -6975,6 +7050,200 @@ paths: {}
 "#;
         let doc = load_openapi_spec(yaml, "test").unwrap();
         assert!(doc.tag_descriptions.is_empty());
+    }
+
+    #[test]
+    fn test_group_descriptions_follow_operation_tags_when_names_differ() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: t
+  version: "1"
+tags:
+  - name: speech-history
+    description: Speech history description.
+  - name: music-generation
+    description: Music generation description.
+  - name: Pronunciation Dictionary
+    description: Pronunciation dictionary description.
+  - name: Conversational AI
+    description: Conversational AI description.
+paths:
+  /history:
+    get:
+      tags: [speech-history]
+      x-fern-sdk-group-name: [history]
+      operationId: history_list
+      responses:
+        "200":
+          description: ok
+  /music:
+    get:
+      tags: [music-generation]
+      x-fern-sdk-group-name: [music]
+      operationId: music_list
+      responses:
+        "200":
+          description: ok
+  /pronunciation-dictionaries:
+    get:
+      tags: [Pronunciation Dictionary]
+      x-fern-sdk-group-name: [pronunciation-dictionaries]
+      operationId: pronunciation_list
+      responses:
+        "200":
+          description: ok
+  /conversational-ai:
+    get:
+      tags: [Conversational AI]
+      x-fern-sdk-group-name: [conversational-ai]
+      operationId: conversational_list
+      responses:
+        "200":
+          description: ok
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        let resource_names: std::collections::BTreeSet<String> =
+            doc.resources.keys().cloned().collect();
+        assert_eq!(
+            resource_names,
+            [
+                "conversational-ai",
+                "history",
+                "music",
+                "pronunciation-dictionaries",
+            ]
+            .into_iter()
+            .map(String::from)
+            .collect()
+        );
+        assert_eq!(
+            doc.group_tag_names.get("history"),
+            Some(&vec!["speech-history".to_string()])
+        );
+        assert_eq!(
+            doc.group_tag_names.get("music"),
+            Some(&vec!["music-generation".to_string()])
+        );
+        assert_eq!(
+            doc.group_tag_names.get("pronunciation-dictionaries"),
+            Some(&vec!["Pronunciation Dictionary".to_string()])
+        );
+        assert_eq!(
+            doc.group_tag_names.get("conversational-ai"),
+            Some(&vec!["Conversational AI".to_string()])
+        );
+        assert_eq!(
+            doc.group_operation_counts.get("history"),
+            Some(&1),
+        );
+        assert_eq!(
+            doc.group_tag_operation_counts
+                .get("history")
+                .and_then(|counts| counts.get("speechhistory")),
+            Some(&1),
+        );
+
+        let cli = crate::openapi::commands::build_cli(&doc);
+        for (group, description) in [
+            ("history", "Speech history description."),
+            ("music", "Music generation description."),
+            (
+                "pronunciation-dictionaries",
+                "Pronunciation dictionary description.",
+            ),
+            ("conversational-ai", "Conversational AI description."),
+        ] {
+            assert_eq!(
+                cli.find_subcommand(group)
+                    .and_then(|command| command.get_about())
+                    .map(ToString::to_string)
+                    .as_deref(),
+                Some(description)
+            );
+        }
+    }
+
+    #[test]
+    fn test_shared_tags_are_rejected_but_group_name_tags_win() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: t
+  version: "1"
+tags:
+  - name: shared
+    description: Shared description.
+  - name: Named Group
+    description: Named group description.
+paths:
+  /first:
+    get:
+      tags: [shared]
+      x-fern-sdk-group-name: [first]
+      operationId: first_list
+      responses:
+        "200":
+          description: ok
+  /second:
+    get:
+      tags: [shared]
+      x-fern-sdk-group-name: [second]
+      operationId: second_list
+      responses:
+        "200":
+          description: ok
+  /named-group:
+    get:
+      tags: [shared, Named Group]
+      x-fern-sdk-group-name: [named-group]
+      operationId: named_group_list
+      responses:
+        "200":
+          description: ok
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        let shared_groups = doc
+            .tag_group_names
+            .get("shared")
+            .cloned()
+            .unwrap_or_default()
+            .into_iter()
+            .collect::<std::collections::BTreeSet<_>>();
+        assert_eq!(
+            shared_groups,
+            ["first", "second", "named-group"]
+                .into_iter()
+                .map(String::from)
+                .collect()
+        );
+        assert_eq!(
+            doc.tag_group_names.get("namedgroup"),
+            Some(&vec!["named-group".to_string()])
+        );
+
+        let cli = crate::openapi::commands::build_cli(&doc);
+        assert_eq!(
+            cli.find_subcommand("first")
+                .and_then(|command| command.get_about())
+                .map(ToString::to_string)
+                .as_deref(),
+            Some("Operations on 'first'")
+        );
+        assert_eq!(
+            cli.find_subcommand("second")
+                .and_then(|command| command.get_about())
+                .map(ToString::to_string)
+                .as_deref(),
+            Some("Operations on 'second'")
+        );
+        assert_eq!(
+            cli.find_subcommand("named-group")
+                .and_then(|command| command.get_about())
+                .map(ToString::to_string)
+                .as_deref(),
+            Some("Named group description.")
+        );
     }
 
     /// Unrelated extra fields inside a group entry are ignored

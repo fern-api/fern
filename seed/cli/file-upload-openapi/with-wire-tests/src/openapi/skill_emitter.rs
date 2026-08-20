@@ -15,7 +15,7 @@ use std::path::PathBuf;
 use clap::{Arg, Command};
 
 use crate::auth::{AuthCredentialSource, SchemeBinding};
-use crate::openapi::commands::group_tag_description;
+use crate::openapi::commands::group_tag_description_for_group;
 use crate::openapi::discovery::{RestDescription, RestResource, SecurityScheme};
 use crate::text;
 
@@ -389,10 +389,18 @@ fn group_description(doc: &RestDescription, group_name: &str) -> String {
         .and_then(|info| info.description.as_deref())
         .filter(|description| !description.is_empty())
     {
-        return first_sentence(description);
+        return text::first_sentence(description);
     }
 
-    if let Some(description) = group_tag_description(group_name, &doc.tag_descriptions) {
+    if let Some(description) = group_tag_description_for_group(
+        group_name,
+        doc.group_tag_names.get(group_name).map(Vec::as_slice),
+        &doc.tag_descriptions,
+        doc.group_tag_operation_counts.get(group_name),
+        doc.group_operation_counts.get(group_name).copied(),
+        &doc.tag_group_names,
+        &doc.tag_description_order,
+    ) {
         return description;
     }
 
@@ -401,14 +409,6 @@ fn group_description(doc: &RestDescription, group_name: &str) -> String {
         return format!("{title}: Operations on {group_name}");
     }
     format!("Operations on {group_name}")
-}
-
-fn first_sentence(s: &str) -> String {
-    if let Some(idx) = s.find(". ") {
-        s[..=idx].to_string()
-    } else {
-        s.to_string()
-    }
 }
 
 fn render_resource_tree(out: &mut String, resource: &RestResource, depth: usize) {

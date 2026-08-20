@@ -245,6 +245,49 @@ fn merge_tag_descriptions(
     }
 }
 
+fn merge_group_tag_names(
+    acc: &mut HashMap<String, Vec<String>>,
+    incoming: HashMap<String, Vec<String>>,
+) {
+    for (group, tags) in incoming {
+        let existing = acc.entry(group).or_default();
+        for tag in tags {
+            if !existing.iter().any(|existing_tag| existing_tag == &tag) {
+                existing.push(tag);
+            }
+        }
+    }
+}
+
+fn merge_group_tag_operation_counts(
+    acc: &mut HashMap<String, HashMap<String, usize>>,
+    incoming: HashMap<String, HashMap<String, usize>>,
+) {
+    for (group, tags) in incoming {
+        let existing = acc.entry(group).or_default();
+        for (tag, count) in tags {
+            *existing.entry(tag).or_default() += count;
+        }
+    }
+}
+
+fn merge_group_operation_counts(
+    acc: &mut HashMap<String, usize>,
+    incoming: HashMap<String, usize>,
+) {
+    for (group, count) in incoming {
+        *acc.entry(group).or_default() += count;
+    }
+}
+
+fn merge_tag_description_order(acc: &mut Vec<String>, incoming: Vec<String>) {
+    for tag in incoming {
+        if !acc.iter().any(|existing| existing == &tag) {
+            acc.push(tag);
+        }
+    }
+}
+
 /// Merge `x-fern-sdk-variables` declarations across specs. First write
 /// wins on name collisions, mirroring [`merge_schemas`] and
 /// [`merge_security_schemes`]. Multi-spec setups that share a common
@@ -1202,6 +1245,20 @@ impl CliApp {
                     merge_schemas(&mut acc.schemas, spec_doc.schemas)?;
                     merge_security_schemes(&mut acc.security_schemes, spec_doc.security_schemes);
                     merge_tag_descriptions(&mut acc.tag_descriptions, spec_doc.tag_descriptions);
+                    merge_group_tag_names(&mut acc.group_tag_names, spec_doc.group_tag_names);
+                    merge_group_tag_operation_counts(
+                        &mut acc.group_tag_operation_counts,
+                        spec_doc.group_tag_operation_counts,
+                    );
+                    merge_group_operation_counts(
+                        &mut acc.group_operation_counts,
+                        spec_doc.group_operation_counts,
+                    );
+                    merge_group_tag_names(&mut acc.tag_group_names, spec_doc.tag_group_names);
+                    merge_tag_description_order(
+                        &mut acc.tag_description_order,
+                        spec_doc.tag_description_order,
+                    );
                     merge_sdk_variables(&mut acc.sdk_variables, spec_doc.sdk_variables);
                     merge_global_headers(&mut acc.global_headers, spec_doc.global_headers);
                     merge_global_parameters(&mut acc.global_parameters, spec_doc.global_parameters);

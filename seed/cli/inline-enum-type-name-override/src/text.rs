@@ -5,6 +5,19 @@ use unicode_normalization::UnicodeNormalization;
 /// Max chars for CLI `--help` method descriptions (terminal-width friendly).
 pub const CLI_DESCRIPTION_LIMIT: usize = 200;
 
+/// Max chars for single-line CLI `--help` descriptions.
+pub const CLI_SHORT_DESCRIPTION_LIMIT: usize = 80;
+
+/// Return the first sentence of prose, with embedded whitespace normalized.
+pub fn first_sentence(s: &str) -> String {
+    let normalized = s.split_whitespace().collect::<Vec<_>>().join(" ");
+    if let Some(idx) = normalized.find(". ") {
+        normalized[..=idx].to_string()
+    } else {
+        normalized
+    }
+}
+
 /// Convert a parameter name to an idiomatic kebab-case CLI flag.
 ///
 /// Handles snake_case (`min_start_time` → `min-start-time`), camelCase
