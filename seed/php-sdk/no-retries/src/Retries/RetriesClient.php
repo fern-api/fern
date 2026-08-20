@@ -70,6 +70,7 @@ class RetriesClient
     public function getUsers(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
+        $options['maxRetries'] = 0;
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
