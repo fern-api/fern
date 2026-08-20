@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Refresh the vendored Cargo.lock to clear two advisories that shipped into
+    every generated CLI: h2 0.4.15 -> 0.4.16 (RUSTSEC-2026-0258) and
+    webbrowser 1.2.1 -> 1.2.4 (RUSTSEC-2026-0257).
+  type: fix
+- summary: |
+    Make the generated release workflow re-runnable. The final step ran a bare
+    `gh release create`, so a release that already existed for the tag - cut
+    from the GitHub UI, or a re-run of a failed `host` job - failed the release
+    after every build had already succeeded. It now edits and re-uploads into
+    an existing release, and only creates when there is none.
+  type: fix

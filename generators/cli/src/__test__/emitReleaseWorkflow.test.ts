@@ -59,6 +59,24 @@ describe("constructReleaseWorkflowYaml", () => {
         expect(yaml).not.toContain("HOMEBREW_TAP_TOKEN");
     });
 
+    it("updates an existing GitHub release and overwrites its assets", () => {
+        const yaml = constructReleaseWorkflowYaml({});
+        const releaseStep = yaml.slice(yaml.indexOf("gh release view"));
+
+        expect(releaseStep).toContain('gh release view "${{ needs.plan.outputs.tag }}"');
+        expect(releaseStep).toContain("gh release edit");
+        expect(releaseStep).toContain("--prerelease=false");
+        // A release drafted in the UI must be published, not just filled in —
+        // and its tag must land on the commit that was actually built.
+        expect(releaseStep).toContain("--draft=false");
+        for (const edit of releaseStep.split("\n").filter((line) => line.includes("gh release edit"))) {
+            expect(edit).toContain('--target "$RELEASE_COMMIT"');
+        }
+        expect(releaseStep).toContain("gh release upload");
+        expect(releaseStep).toContain("--clobber");
+        expect(releaseStep).toContain("gh release create");
+    });
+
     describe("with homebrew configured", () => {
         const yaml = constructReleaseWorkflowYaml({ homebrew: { tap: "acme/homebrew-tap" } });
 
