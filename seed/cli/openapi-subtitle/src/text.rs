@@ -63,9 +63,18 @@ fn is_sentence_boundary(chars: &[char], period_index: usize) -> bool {
     }
 }
 
+/// Collapse runs of whitespace (including newlines) into single spaces.
+///
+/// Specs routinely carry hand-indented prose whose leading whitespace
+/// survives YAML block scalars; rendered verbatim in a help column it shows
+/// up as long gaps mid-sentence.
+pub fn collapse_whitespace(s: &str) -> String {
+    s.split_whitespace().collect::<Vec<_>>().join(" ")
+}
+
 /// Return the first sentence of prose, with embedded whitespace normalized.
 pub fn first_sentence(s: &str) -> String {
-    let normalized = s.split_whitespace().collect::<Vec<_>>().join(" ");
+    let normalized = collapse_whitespace(s);
     let chars: Vec<char> = normalized.chars().collect();
     for index in 0..chars.len() {
         if chars[index] == '.'

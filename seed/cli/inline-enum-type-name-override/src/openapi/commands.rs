@@ -789,12 +789,6 @@ fn build_resource_command(
                 Cow::Borrowed(base_value_name)
             };
 
-            let help_text = crate::text::truncate_description(
-                param.description.as_deref().unwrap_or(""),
-                crate::text::CLI_DESCRIPTION_LIMIT,
-                true,
-            );
-            let help_text = with_availability_badge(&help_text, param.availability);
             // When the CLI flag differs from the wire name — whether via
             // `x-fern-parameter-name` rename or sanitization — surface
             // the original wire name in `--help` so users can correlate
@@ -803,35 +797,51 @@ fn build_resource_command(
             // name in their description, so they skip this.
             let flag_differs_from_wire = param.flag_name_override.is_none()
                 && kebab_name != *param_name;
-            let help_text = if flag_differs_from_wire {
-                if help_text.is_empty() {
-                    format!("(api: {param_name})")
+            // Both tiers carry the same annotations; only the amount of
+            // prose differs. The `[default: ...]` suffix mirrors the shape
+            // clap renders for `x-fern-default`, so the user sees "there is
+            // a default" without being told who applies it. The CLI itself
+            // does not send the documentation default on the wire.
+            let decorate = |text: &str| -> String {
+                let text = with_availability_badge(text, param.availability);
+                let text = if flag_differs_from_wire {
+                    if text.is_empty() {
+                        format!("(api: {param_name})")
+                    } else {
+                        format!("{text} (api: {param_name})")
+                    }
                 } else {
-                    format!("{help_text} (api: {param_name})")
+                    text
+                };
+                match documentation_default_help_suffix(&param.documentation_default_value) {
+                    Some(suffix) => format!("{text}{suffix}"),
+                    None => text,
                 }
-            } else {
-                help_text
             };
-            // Append the OpenAPI standard `default:` value as a
-            // `[default: ...]` suffix when it is the only default
-            // source. Same visual shape as clap's auto-rendered
-            // `[default: ...]` for `x-fern-default` — the user sees
-            // "there is a default" without being told whether the CLI
-            // or the server applies it. The CLI itself does not send
-            // this value on the wire (only `x-fern-default` populates
-            // `default_value` below).
-            let help_text = match documentation_default_help_suffix(
-                &param.documentation_default_value,
-            ) {
-                Some(suffix) => format!("{help_text}{suffix}"),
-                None => help_text,
-            };
+            let description =
+                crate::text::collapse_whitespace(param.description.as_deref().unwrap_or(""));
+            let help_text = decorate(&crate::text::truncate_description(
+                &crate::text::first_sentence(&description),
+                crate::text::CLI_SHORT_DESCRIPTION_LIMIT,
+                true,
+            ));
+            let long_help_text = decorate(&crate::text::truncate_description(
+                &description,
+                crate::text::CLI_DESCRIPTION_LIMIT,
+                true,
+            ));
 
             let arg_id = param_clap_arg_id(param_name);
             let mut arg = Arg::new(arg_id)
                 .long(kebab_name)
                 .value_name(value_name)
-                .help(help_text);
+                .help(help_text.clone());
+            // `-h` shows the one-line form, `--help` the fuller prose. Only
+            // set the long form when it actually says more, so `-h` and
+            // `--help` do not print identical blocks.
+            if long_help_text != help_text {
+                arg = arg.long_help(long_help_text);
+            }
 
             // Only `x-fern-default` (lowered into `default_value`)
             // becomes a clap default. The standard `default:` keyword
@@ -1009,17 +1019,38 @@ fn build_multipart_field_arg(field: &MultipartField) -> Arg {
         ("VALUE", "")
     };
 
-    let help_text = match (&field.description, help_prefix) {
-        (Some(desc), "") => desc.clone(),
-        (Some(desc), prefix) => format!("{prefix}. {desc}"),
-        (None, prefix) if !prefix.is_empty() => prefix.to_string(),
-        _ => String::new(),
+    // Multipart field prose used to reach `--help` untruncated, while every
+    // other parameter went through `truncate_description`. A single upload
+    // operation could therefore render several hundred characters per flag.
+    let description = crate::text::collapse_whitespace(
+        field.description.as_deref().unwrap_or(""),
+    );
+    let compose = |text: &str| -> String {
+        match (text.is_empty(), help_prefix) {
+            (false, "") => text.to_string(),
+            (false, prefix) => format!("{prefix}. {text}"),
+            (true, prefix) if !prefix.is_empty() => prefix.to_string(),
+            _ => String::new(),
+        }
     };
+    let help_text = compose(&crate::text::truncate_description(
+        &crate::text::first_sentence(&description),
+        crate::text::CLI_SHORT_DESCRIPTION_LIMIT,
+        true,
+    ));
+    let long_help_text = compose(&crate::text::truncate_description(
+        &description,
+        crate::text::CLI_DESCRIPTION_LIMIT,
+        true,
+    ));
 
     let mut arg = Arg::new(field.wire_name.clone())
         .long(kebab)
         .value_name(value_name)
-        .help(help_text);
+        .help(help_text.clone());
+    if long_help_text != help_text {
+        arg = arg.long_help(long_help_text);
+    }
 
     if field.required {
         arg = arg.required(true);
@@ -1489,6 +1520,105 @@ mod tests {
             .find(|a| a.get_id() == "date_created:min")
             .unwrap();
         assert_eq!(date_min.get_long().unwrap(), "date-created-min");
+    }
+
+    /// `-h` shows a one-line form of a flag's prose and `--help` the fuller
+    /// text. Before this the same 200-char block was printed in both, so a
+    /// request with 40 documented fields made `-h` unusable as a quick scan.
+    #[test]
+    fn test_flag_help_is_short_in_h_and_full_in_long_help() {
+        let mut params = HashMap::new();
+        params.insert(
+            "threshold".to_string(),
+            MethodParameter {
+                param_type: Some("string".to_string()),
+                description: Some(
+                    "Diarization threshold to apply. A higher value means a lower chance of one speaker being split in two, and a higher chance of two speakers being merged into one."
+                        .to_string(),
+                ),
+                location: Some("query".to_string()),
+                ..Default::default()
+            },
+        );
+        let mut methods = HashMap::new();
+        methods.insert(
+            "list".to_string(),
+            RestMethod {
+                http_method: "GET".to_string(),
+                path: "/things".to_string(),
+                parameters: params,
+                ..Default::default()
+            },
+        );
+        let mut resources = HashMap::new();
+        resources.insert(
+            "things".to_string(),
+            RestResource { methods, resources: HashMap::new() },
+        );
+        let doc = RestDescription {
+            name: "test-cli".to_string(),
+            resources,
+            ..Default::default()
+        };
+
+        let cmd = build_cli(&doc);
+        let arg = cmd
+            .find_subcommand("things")
+            .and_then(|c| c.find_subcommand("list"))
+            .and_then(|c| c.get_arguments().find(|a| a.get_id() == "threshold").cloned())
+            .expect("threshold arg missing");
+        let short = arg.get_help().expect("short help missing").to_string();
+        let long = arg.get_long_help().expect("long help missing").to_string();
+        assert_eq!(short, "Diarization threshold to apply.");
+        assert!(
+            long.len() > short.len() && long.starts_with("Diarization threshold to apply. A higher"),
+            "long help should carry the fuller prose; got: {long}",
+        );
+        assert!(long.chars().count() <= crate::text::CLI_DESCRIPTION_LIMIT);
+    }
+
+    /// A flag whose prose already fits gets no second copy, so `-h` and
+    /// `--help` do not print the same block twice.
+    #[test]
+    fn test_short_flag_help_has_no_redundant_long_help() {
+        let mut params = HashMap::new();
+        params.insert(
+            "id".to_string(),
+            MethodParameter {
+                param_type: Some("string".to_string()),
+                description: Some("Filter by ID.".to_string()),
+                location: Some("query".to_string()),
+                ..Default::default()
+            },
+        );
+        let mut methods = HashMap::new();
+        methods.insert(
+            "list".to_string(),
+            RestMethod {
+                http_method: "GET".to_string(),
+                path: "/things".to_string(),
+                parameters: params,
+                ..Default::default()
+            },
+        );
+        let mut resources = HashMap::new();
+        resources.insert(
+            "things".to_string(),
+            RestResource { methods, resources: HashMap::new() },
+        );
+        let doc = RestDescription {
+            name: "test-cli".to_string(),
+            resources,
+            ..Default::default()
+        };
+        let cmd = build_cli(&doc);
+        let arg = cmd
+            .find_subcommand("things")
+            .and_then(|c| c.find_subcommand("list"))
+            .and_then(|c| c.get_arguments().find(|a| a.get_id() == "id").cloned())
+            .expect("id arg missing");
+        assert_eq!(arg.get_help().map(ToString::to_string).as_deref(), Some("Filter by ID."));
+        assert!(arg.get_long_help().is_none());
     }
 
     #[test]
@@ -3103,6 +3233,36 @@ paths:
             out
         };
         assert_eq!(collect_tree(yaml_without), collect_tree(yaml_with));
+    }
+
+    /// Multipart field prose reached `--help` untruncated while every other
+    /// parameter was capped, and spec indentation survived into the help
+    /// column. Both are now handled like any other flag.
+    #[test]
+    fn test_multipart_field_help_is_capped_and_whitespace_collapsed() {
+        let field = crate::openapi::discovery::MultipartField {
+            wire_name: "keyterms".to_string(),
+            is_file: false,
+            description: Some(
+                "A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 1000.           Each keyterm must be under 50 characters."
+                    .to_string(),
+            ),
+            required: false,
+            content_type: None,
+        };
+        let arg = build_multipart_field_arg(&field);
+        let short = arg.get_help().expect("short help missing").to_string();
+        let long = arg.get_long_help().expect("long help missing").to_string();
+        assert_eq!(short, "A list of keyterms to bias the transcription towards.");
+        assert!(
+            !long.contains("  "),
+            "spec indentation should be collapsed; got: {long}",
+        );
+        assert!(
+            long.chars().count() <= crate::text::CLI_DESCRIPTION_LIMIT,
+            "long help was {} chars",
+            long.chars().count(),
+        );
     }
 
     #[test]
