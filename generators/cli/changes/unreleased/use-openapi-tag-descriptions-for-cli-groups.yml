@@ -9,5 +9,8 @@
     when a colliding API group has only the generic fallback. Method help now
     keeps the fuller description under `<method> --help` while the command
     table stays a single short sentence, and sentence splitting no longer cuts
-    help text at abbreviations such as `e.g.`, `i.e.`, or `U.S.`.
+    help text at abbreviations such as `e.g.`, `i.e.`, or `U.S.`. A tag named
+    after the group owns that group's description: when it documents nothing,
+    a sibling tag's prose no longer stands in for it, and a tag the group
+    declares less often than another never names the whole group.
   type: feat

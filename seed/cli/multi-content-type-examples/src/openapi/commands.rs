@@ -279,7 +279,32 @@ fn find_tag_description<'a>(
                 }
             }
         }
+        // A tag named after the group is the group's own identity. When the
+        // group's operations declare it, it is the only tag allowed to
+        // describe the group: the loop above already returned if it carries a
+        // description, so reaching here means it documents nothing and the
+        // group has no description of its own. Borrowing a sibling tag's
+        // prose there mislabels the group — an ElevenLabs `voices` group whose
+        // ops carry both `voices` (no description) and `pvc-voices` would be
+        // announced as "Create and manage Professional Voice Clones (PVCs)",
+        // naming a subset of what the group actually does.
+        let group_declares_own_name_tag = group_tags
+            .iter()
+            .any(|tag| tag_match_key(tag) == name_key);
+        if group_declares_own_name_tag {
+            return None;
+        }
+
         let operation_count = group_operation_count.unwrap_or(0);
+        // The group's most-declared tag, counting tags that carry no root
+        // description. A tag the group's own operations declare *less* often
+        // than another describes a subset of the group, not the group — e.g.
+        // a `voices` group whose ops split 19 `voices` / 14 `pvc-voices`
+        // would otherwise be labelled "Professional Voice Clones (PVCs)"
+        // purely because the dominant tag happens to document nothing.
+        let dominant_tag_operation_count = group_tag_operation_counts
+            .and_then(|counts| counts.values().copied().max())
+            .unwrap_or(0);
         if operation_count > 0 {
             let mut candidates = group_tags
                 .iter()
@@ -300,7 +325,7 @@ fn find_tag_description<'a>(
                         .and_then(|counts| counts.get(&tag_key))
                         .copied()
                         .unwrap_or(0);
-                    if count * 2 < operation_count {
+                    if count * 2 < operation_count || count < dominant_tag_operation_count {
                         return None;
                     }
                     let declaration_index = tag_description_order
@@ -2401,6 +2426,75 @@ mod tests {
             long_about.chars().count() <= crate::text::CLI_DESCRIPTION_LIMIT,
             "long_about was {} chars",
             long_about.chars().count(),
+        );
+    }
+
+    /// A tag named after the group owns the group's description. When it
+    /// carries no prose, a sibling tag's prose must not stand in for it —
+    /// that names a subset of the group. Modeled on ElevenLabs' `voices`
+    /// group, whose ops carry `voices` (undocumented) and `pvc-voices`.
+    #[test]
+    fn test_group_name_tag_without_description_blocks_sibling_prose() {
+        let mut doc = make_doc_with_things_resource();
+        doc.tag_descriptions.insert(
+            "pvc-things".to_string(),
+            "Create and manage professional clones.".to_string(),
+        );
+        doc.group_tag_names.insert(
+            "things".to_string(),
+            vec!["things".to_string(), "pvc-things".to_string()],
+        );
+        doc.group_tag_operation_counts.insert(
+            "things".to_string(),
+            HashMap::from([("things".to_string(), 12), ("pvcthings".to_string(), 14)]),
+        );
+        doc.group_operation_counts.insert("things".to_string(), 27);
+        doc.tag_group_names
+            .insert("pvcthings".to_string(), vec!["things".to_string()]);
+        doc.tag_group_names
+            .insert("things".to_string(), vec!["things".to_string()]);
+        doc.tag_description_order = vec!["pvc-things".to_string()];
+
+        let cmd = build_cli(&doc);
+        assert_eq!(
+            cmd.find_subcommand("things")
+                .and_then(|command| command.get_about())
+                .map(ToString::to_string)
+                .as_deref(),
+            Some("Operations on 'things'"),
+        );
+    }
+
+    /// A described tag the group declares less often than another tag
+    /// describes part of the group, so it does not get to name the whole
+    /// group even when it clears the coverage majority.
+    #[test]
+    fn test_minority_tag_does_not_describe_the_group() {
+        let mut doc = make_doc_with_things_resource();
+        doc.tag_descriptions
+            .insert("subset".to_string(), "Prose about a subset.".to_string());
+        doc.group_tag_names.insert(
+            "things".to_string(),
+            vec!["primary".to_string(), "subset".to_string()],
+        );
+        doc.group_tag_operation_counts.insert(
+            "things".to_string(),
+            HashMap::from([("primary".to_string(), 10), ("subset".to_string(), 6)]),
+        );
+        doc.group_operation_counts.insert("things".to_string(), 10);
+        doc.tag_group_names
+            .insert("subset".to_string(), vec!["things".to_string()]);
+        doc.tag_group_names
+            .insert("primary".to_string(), vec!["things".to_string()]);
+        doc.tag_description_order = vec!["subset".to_string()];
+
+        let cmd = build_cli(&doc);
+        assert_eq!(
+            cmd.find_subcommand("things")
+                .and_then(|command| command.get_about())
+                .map(ToString::to_string)
+                .as_deref(),
+            Some("Operations on 'things'"),
         );
     }
 
