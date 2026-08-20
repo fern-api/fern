@@ -161,7 +161,7 @@ serde = "1"
 serde_yaml = "0.9.34"
 
 [dev-dependencies]
-serial_test = "3.4.0"
+serial_test = "4.0.1"
 tempfile = "3"
 wiremock = "0.6"
 tokio = { version = "1", features = ["full"] }
