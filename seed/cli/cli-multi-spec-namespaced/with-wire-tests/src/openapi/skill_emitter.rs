@@ -374,13 +374,26 @@ fn render_group_skill(
 }
 
 fn group_description(doc: &RestDescription, group_name: &str) -> String {
+    let tag_description = group_tag_description_for_group(
+        group_name,
+        doc.group_tag_names.get(group_name).map(Vec::as_slice),
+        &doc.tag_descriptions,
+        doc.group_tag_operation_counts.get(group_name),
+        doc.group_operation_counts.get(group_name).copied(),
+        &doc.tag_group_names,
+        &doc.tag_description_order,
+    )
+    .filter(|description| !description.is_empty());
+
     if let Some(summary) = doc
         .groups
         .get(group_name)
         .and_then(|info| info.summary.as_deref())
         .filter(|summary| !summary.is_empty())
     {
-        return summary.to_string();
+        if !text::is_name_restating(summary, group_name) || tag_description.is_none() {
+            return summary.to_string();
+        }
     }
 
     if let Some(description) = doc
@@ -392,15 +405,7 @@ fn group_description(doc: &RestDescription, group_name: &str) -> String {
         return text::first_sentence(description);
     }
 
-    if let Some(description) = group_tag_description_for_group(
-        group_name,
-        doc.group_tag_names.get(group_name).map(Vec::as_slice),
-        &doc.tag_descriptions,
-        doc.group_tag_operation_counts.get(group_name),
-        doc.group_operation_counts.get(group_name).copied(),
-        &doc.tag_group_names,
-        &doc.tag_description_order,
-    ) {
+    if let Some(description) = tag_description {
         return description;
     }
 
@@ -758,6 +763,28 @@ mod tests {
         assert!(files[1]
             .1
             .contains("description: \"Manage the items available to your account.\""));
+    }
+
+    #[test]
+    fn name_restating_summary_falls_through_to_tag_description() {
+        let mut doc = minimal_doc();
+        doc.groups.insert(
+            "items".to_string(),
+            SdkGroupInfo {
+                summary: Some("Items".to_string()),
+                ..Default::default()
+            },
+        );
+        doc.tag_descriptions.insert(
+            "items".to_string(),
+            "Manage the items available to your account.".to_string(),
+        );
+
+        let files = generate_skills(&doc, "test", &[]);
+        assert!(files[1]
+            .1
+            .contains("description: \"Manage the items available to your account.\""));
+        assert!(!files[1].1.contains("description: \"Items\""));
     }
 
     #[test]

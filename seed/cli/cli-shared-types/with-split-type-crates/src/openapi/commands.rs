@@ -331,6 +331,11 @@ fn find_tag_description<'a>(
         })
 }
 
+/// Return the generic `about()` line for a group without usable metadata.
+pub(crate) fn generic_group_about(name: &str) -> String {
+    format!("Operations on '{name}'")
+}
+
 /// Resolve the `about()` line for a group's clap subcommand. The legacy
 /// fallback is unchanged for groups without metadata.
 fn group_about_text_for_group(
@@ -343,22 +348,28 @@ fn group_about_text_for_group(
     tag_group_names: &HashMap<String, Vec<String>>,
     tag_description_order: &[String],
 ) -> String {
-    groups
+    let tag_description = group_tag_description_for_group(
+        name,
+        group_tag_names.get(name).map(Vec::as_slice),
+        tag_descriptions,
+        group_tag_operation_counts.get(name),
+        group_operation_counts.get(name).copied(),
+        tag_group_names,
+        tag_description_order,
+    )
+    .filter(|description| !description.is_empty());
+
+    if let Some(summary) = groups
         .get(name)
         .and_then(|info| info.summary.clone())
         .filter(|s| !s.is_empty())
-        .or_else(|| {
-            group_tag_description_for_group(
-                name,
-                group_tag_names.get(name).map(Vec::as_slice),
-                tag_descriptions,
-                group_tag_operation_counts.get(name),
-                group_operation_counts.get(name).copied(),
-                tag_group_names,
-                tag_description_order,
-            )
-        })
-        .unwrap_or_else(|| format!("Operations on '{name}'"))
+    {
+        if !crate::text::is_name_restating(&summary, name) || tag_description.is_none() {
+            return summary;
+        }
+    }
+
+    tag_description.unwrap_or_else(|| generic_group_about(name))
 }
 
 /// Resolve the `long_about()` line for a group's clap subcommand. Fern group
@@ -2453,6 +2464,82 @@ mod tests {
                 .unwrap_or_default(),
             "Description from the OpenAPI tag.",
         );
+    }
+
+    #[test]
+    fn test_name_restating_summary_falls_through_to_tag_description() {
+        for summary in ["Things", "T-h_i.n g s", "THINGS"] {
+            let mut doc = make_doc_with_things_resource();
+            doc.groups.insert(
+                "things".to_string(),
+                SdkGroupInfo {
+                    summary: Some(summary.to_string()),
+                    description: None,
+                },
+            );
+            doc.tag_descriptions.insert(
+                "things".to_string(),
+                "Manage the things available to your account.".to_string(),
+            );
+
+            let cmd = build_cli(&doc);
+            let things = cmd
+                .find_subcommand("things")
+                .expect("things subcommand missing");
+            assert_eq!(
+                things.get_about().map(|s| s.to_string()).unwrap_or_default(),
+                "Manage the things available to your account.",
+                "summary {summary:?} should fall through to the tag description",
+            );
+        }
+    }
+
+    #[test]
+    fn test_name_restating_summary_is_kept_without_tag_description() {
+        let mut doc = make_doc_with_things_resource();
+        doc.groups.insert(
+            "things".to_string(),
+            SdkGroupInfo {
+                summary: Some("Things".to_string()),
+                description: None,
+            },
+        );
+        let cmd = build_cli(&doc);
+        let things = cmd
+            .find_subcommand("things")
+            .expect("things subcommand missing");
+        assert_eq!(
+            things.get_about().map(|s| s.to_string()).unwrap_or_default(),
+            "Things",
+        );
+    }
+
+    #[test]
+    fn test_informative_and_plural_near_match_summaries_are_kept() {
+        for summary in ["Things summary", "Thing"] {
+            let mut doc = make_doc_with_things_resource();
+            doc.groups.insert(
+                "things".to_string(),
+                SdkGroupInfo {
+                    summary: Some(summary.to_string()),
+                    description: None,
+                },
+            );
+            doc.tag_descriptions.insert(
+                "things".to_string(),
+                "Manage the things available to your account.".to_string(),
+            );
+
+            let cmd = build_cli(&doc);
+            let things = cmd
+                .find_subcommand("things")
+                .expect("things subcommand missing");
+            assert_eq!(
+                things.get_about().map(|s| s.to_string()).unwrap_or_default(),
+                summary,
+                "summary {summary:?} should remain authoritative",
+            );
+        }
     }
 
     #[test]

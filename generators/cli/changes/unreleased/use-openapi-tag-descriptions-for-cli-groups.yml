@@ -3,4 +3,8 @@
     skills when no x-fern-groups summary is provided. Match operation-declared
     tags to groups without borrowing ambiguous or scope-style descriptions, and
     keep CLI help table lines concise while preserving full prose in long help.
+    Treat summaries that only restate a group's command name as non-informative
+    when a usable tag description exists, while retaining them when no such
+    description is available. Preserve framework built-in group descriptions
+    when a colliding API group has only the generic fallback.
   type: feat

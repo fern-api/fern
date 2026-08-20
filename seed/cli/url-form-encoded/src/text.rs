@@ -18,6 +18,19 @@ pub fn first_sentence(s: &str) -> String {
     }
 }
 
+/// Return whether a summary merely restates a command name, ignoring case
+/// and non-alphanumeric characters.
+pub fn is_name_restating(summary: &str, name: &str) -> bool {
+    let normalize = |value: &str| {
+        value
+            .chars()
+            .filter(|character| character.is_alphanumeric())
+            .flat_map(char::to_lowercase)
+            .collect::<String>()
+    };
+    normalize(summary) == normalize(name)
+}
+
 /// Convert a parameter name to an idiomatic kebab-case CLI flag.
 ///
 /// Handles snake_case (`min_start_time` → `min-start-time`), camelCase
@@ -477,6 +490,15 @@ mod tests {
         // single token
         assert_eq!(to_screaming_snake("uuid"), "UUID");
         assert_eq!(to_screaming_snake(""), "");
+    }
+
+    #[test]
+    fn test_is_name_restating() {
+        assert!(is_name_restating("Models", "models"));
+        assert!(is_name_restating("Text To Speech", "text-to-speech"));
+        assert!(is_name_restating("Audio_Isolation", "audio-isolation"));
+        assert!(!is_name_restating("Pronunciation Dictionary", "pronunciation-dictionaries"));
+        assert!(!is_name_restating("Manage models", "models"));
     }
 
     // ------------------------------------------------------------------
