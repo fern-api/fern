@@ -62,9 +62,11 @@ pub fn handle_error_response<T>(
     Err(parse_api_error(status, error_body))
 }
 
-/// Append a "Credentials were supplied via: …" line to an existing
-/// `CliError::Api` message, preserving the structured fields. For
-/// non-`Api` variants (defensive — shouldn't happen here), pass through.
+/// Attach a "Credentials were supplied via: …" note to an existing
+/// `CliError::Api`, preserving the structured fields. The note goes in `help`
+/// rather than `message` — it is advice for diagnosing shadowing, not part of
+/// what the server reported. For non-`Api` variants (defensive — shouldn't
+/// happen here), pass through.
 fn decorate_with_source_hint(err: CliError, hints: &[String]) -> CliError {
     let joined = hints.join(", ");
     match err {
@@ -73,14 +75,16 @@ fn decorate_with_source_hint(err: CliError, hints: &[String]) -> CliError {
             message,
             reason,
             details,
+            ..
         } => CliError::Api {
             code,
-            message: format!(
-                "{message}\nCredentials were supplied via: {joined}. \
-                 Run `auth status` to see all visible sources and check for shadowing."
-            ),
+            message,
             reason,
             details,
+            help: Some(format!(
+                "Credentials were supplied via: {joined}. \
+                 Run `auth status` to see all visible sources and check for shadowing."
+            )),
         },
         other => other,
     }
@@ -409,9 +413,13 @@ mod tests {
         )
         .unwrap_err();
         match err {
-            CliError::Api { message, .. } => {
-                assert!(message.contains("__FERN_TEST_SHADOW_TOKEN"));
-                assert!(message.contains("auth status"));
+            CliError::Api { message, help, .. } => {
+                // The hint is advice, so it lives in `help` — `message` stays
+                // exactly what the server said.
+                assert_eq!(message, "bad token");
+                let help = help.expect("credential source hint");
+                assert!(help.contains("__FERN_TEST_SHADOW_TOKEN"));
+                assert!(help.contains("auth status"));
             }
             other => panic!("expected Api with source-hint suffix, got: {other:?}"),
         }
@@ -433,8 +441,10 @@ mod tests {
         )
         .unwrap_err();
         match err {
-            CliError::Api { message, .. } => {
-                assert!(message.contains("__FERN_TEST_FORBIDDEN_TOKEN"));
+            CliError::Api { help, .. } => {
+                assert!(help
+                    .expect("credential source hint")
+                    .contains("__FERN_TEST_FORBIDDEN_TOKEN"));
             }
             other => panic!("expected Api with source-hint suffix, got: {other:?}"),
         }
@@ -456,8 +466,9 @@ mod tests {
         )
         .unwrap_err();
         match err {
-            CliError::Api { message, .. } => {
+            CliError::Api { message, help, .. } => {
                 assert!(!message.contains("__FERN_TEST_NONAUTH_TOKEN"));
+                assert!(help.is_none());
             }
             _ => panic!("expected Api"),
         }

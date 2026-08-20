@@ -19,6 +19,13 @@ pub enum CliError {
         /// it into the message string would emit an escaped JSON document
         /// inside a JSON field, forcing consumers to parse twice.
         details: Option<serde_json::Value>,
+        /// Actionable advice that is not part of the failure itself, e.g. which
+        /// credential source supplied the rejected token.
+        ///
+        /// Kept out of `message` so that field is one sentence for every error
+        /// class — a consumer keying off `error.message` gets the same shape
+        /// whether or not the CLI had advice to offer.
+        help: Option<String>,
     },
 
     #[error("{0}")]
@@ -53,6 +60,7 @@ impl CliError {
             message: message.into(),
             reason: reason.into(),
             details: None,
+            help: None,
         }
     }
 
@@ -67,11 +75,13 @@ impl CliError {
                 message,
                 reason,
                 details,
+                help,
             } => Self::Api {
                 code: *code,
                 message: message.clone(),
                 reason: reason.clone(),
                 details: details.clone(),
+                help: help.clone(),
             },
             Self::Validation(msg) => Self::Validation(msg.clone()),
             Self::Auth(msg) => Self::Auth(msg.clone()),
@@ -104,6 +114,7 @@ impl CliError {
                 message,
                 reason,
                 details,
+                help,
             } => {
                 let mut error = json!({
                     "code": code,
@@ -112,6 +123,9 @@ impl CliError {
                 });
                 if let Some(details) = details {
                     error["details"] = details.clone();
+                }
+                if let Some(help) = help {
+                    error["help"] = json!(help);
                 }
                 json!({ "error": error })
             }
@@ -216,6 +230,7 @@ pub fn api_error_from_body(status: u16, body: &str) -> CliError {
     CliError::Api {
         code,
         message,
+        help: None,
         reason,
         details: Some(parsed),
     }
@@ -432,8 +447,20 @@ pub fn write_error_json(
         Some(ctx) => ctx.machine_readable,
         None => true,
     };
+    let docs_url = ctx
+        .and_then(|ctx| ctx.docs_base_url.as_deref())
+        .zip(match err {
+            CliError::Api { code, .. } => Some(code),
+            _ => None,
+        })
+        .map(|(base, code)| format!("{}/{}", base.trim_end_matches('/'), code));
     if machine_readable {
-        let json = err.to_json();
+        let mut json = err.to_json();
+        // The human rendering has always printed this link; carrying it in the
+        // envelope too keeps both representations equally informative.
+        if let Some(url) = &docs_url {
+            json["error"]["docs_url"] = json!(url);
+        }
         let _ = writeln!(
             out,
             "{}",
@@ -446,13 +473,16 @@ pub fn write_error_json(
         error_label(err),
         sanitize_for_terminal(&err.to_string())
     );
+    if let CliError::Api {
+        help: Some(help), ..
+    } = err
+    {
+        eprintln!("{}", sanitize_for_terminal(help));
+    }
+    if let Some(url) = &docs_url {
+        eprintln!("  → {}", sanitize_for_terminal(url));
+    }
     if let Some(ctx) = ctx {
-        if let Some(base) = &ctx.docs_base_url {
-            if let CliError::Api { code, .. } = err {
-                let url = format!("{}/{}", base.trim_end_matches('/'), code);
-                eprintln!("  → {}", sanitize_for_terminal(&url));
-            }
-        }
         if matches!(err, CliError::Validation(_)) {
             if let Some(hint) = &ctx.help_hint {
                 // `--help` is the right next step for a malformed flag, but not
@@ -540,12 +570,7 @@ mod tests {
 
     #[test]
     fn test_error_to_json_api() {
-        let err = CliError::Api {
-            code: 404,
-            message: "Not Found".to_string(),
-            reason: "notFound".to_string(),
-            details: None,
-        };
+        let err = CliError::api(404, "Not Found".to_string(), "notFound".to_string());
         let json = err.to_json();
         assert_eq!(json["error"]["code"], 404);
         assert_eq!(json["error"]["message"], "Not Found");
@@ -597,12 +622,7 @@ mod tests {
 
     #[test]
     fn test_print_error_json_all_variants_no_panic() {
-        print_error_json(&CliError::Api {
-            code: 500,
-            message: "oops".to_string(),
-            reason: "err".to_string(),
-            details: None,
-        });
+        print_error_json(&CliError::api(500, "oops".to_string(), "err".to_string()));
         print_error_json(&CliError::Validation("bad input".to_string()));
         print_error_json(&CliError::Auth("no auth".to_string()));
         print_error_json(&CliError::Discovery("no spec".to_string()));
@@ -611,12 +631,7 @@ mod tests {
 
     #[test]
     fn write_error_json_stdout_unchanged_with_context() {
-        let err = CliError::Api {
-            code: 401,
-            message: "Unauthorized".to_string(),
-            reason: "authError".to_string(),
-            details: None,
-        };
+        let err = CliError::api(401, "Unauthorized".to_string(), "authError".to_string());
         let ctx = ErrorDisplayContext {
             docs_base_url: Some("https://docs.example.com/errors".to_string()),
             help_hint: Some("mycli users list --help".to_string()),
@@ -628,6 +643,36 @@ mod tests {
         let parsed: serde_json::Value = serde_json::from_str(&stdout).unwrap();
         assert_eq!(parsed["error"]["code"], 401);
         assert_eq!(parsed["error"]["message"], "Unauthorized");
+        // The docs link is part of both representations, not just the human one.
+        assert_eq!(
+            parsed["error"]["docs_url"],
+            "https://docs.example.com/errors/401"
+        );
+    }
+
+    #[test]
+    fn help_is_a_separate_field_from_message() {
+        // `message` must be one sentence for every error class, so advice such
+        // as the credential-source hint gets its own field rather than being
+        // appended with a newline.
+        let err = CliError::Api {
+            code: 401,
+            message: "Invalid API key".to_string(),
+            reason: "unauthorized".to_string(),
+            details: None,
+            help: Some("Credentials were supplied via: MY_CLI_API_KEY.".to_string()),
+        };
+        let parsed = err.to_json();
+        assert_eq!(parsed["error"]["message"], "Invalid API key");
+        assert_eq!(
+            parsed["error"]["help"],
+            "Credentials were supplied via: MY_CLI_API_KEY."
+        );
+        // Absent advice means an absent field, not an empty string.
+        assert!(
+            CliError::api(500, "Server blew up", "internalServerError").to_json()["error"]["help"]
+                .is_null()
+        );
     }
 
     #[test]
@@ -639,10 +684,15 @@ mod tests {
         };
         // Validation errors should not get docs URLs (no HTTP status code).
         let mut out = Vec::new();
-        write_error_json(&CliError::Validation("bad input".to_string()), &mut out, Some(&ctx));
+        write_error_json(
+            &CliError::Validation("bad input".to_string()),
+            &mut out,
+            Some(&ctx),
+        );
         let stdout = String::from_utf8(out).unwrap();
         let parsed: serde_json::Value = serde_json::from_str(&stdout).unwrap();
         assert_eq!(parsed["error"]["code"], 400);
+        assert!(parsed["error"]["docs_url"].is_null());
     }
 
     #[test]
@@ -821,12 +871,7 @@ mod tests {
 
     #[test]
     fn test_duplicate_preserves_variant() {
-        let api = CliError::Api {
-            code: 404,
-            message: "Not Found".to_string(),
-            reason: "notFound".to_string(),
-            details: None,
-        };
+        let api = CliError::api(404, "Not Found".to_string(), "notFound".to_string());
         let dup = api.duplicate();
         assert_eq!(dup.exit_code(), CliError::EXIT_CODE_API);
         assert_eq!(dup.to_json()["error"]["code"], 404);
@@ -931,12 +976,7 @@ mod tests {
     #[test]
     fn is_raw_sentinel_false_for_api_with_raw_reason() {
         // A server returning reason "raw" must NOT collide with the sentinel.
-        let err = CliError::Api {
-            code: 500,
-            message: String::new(),
-            reason: "raw".to_string(),
-            details: None,
-        };
+        let err = CliError::api(500, String::new(), "raw".to_string());
         assert!(!err.is_raw_sentinel());
     }
 
@@ -966,20 +1006,22 @@ mod tests {
         let err = CliError::RawSentinel { code: 500 };
         let mut buf: Vec<u8> = Vec::new();
         write_error_json(&err, &mut buf, None);
-        assert!(buf.is_empty(), "raw sentinel should suppress stdout JSON, got: {:?}", String::from_utf8_lossy(&buf));
+        assert!(
+            buf.is_empty(),
+            "raw sentinel should suppress stdout JSON, got: {:?}",
+            String::from_utf8_lossy(&buf)
+        );
     }
 
     #[test]
     fn write_error_json_normal_api_error_writes_json() {
-        let err = CliError::Api {
-            code: 404,
-            message: "Not Found".to_string(),
-            reason: "notFound".to_string(),
-            details: None,
-        };
+        let err = CliError::api(404, "Not Found".to_string(), "notFound".to_string());
         let mut buf: Vec<u8> = Vec::new();
         write_error_json(&err, &mut buf, None);
-        assert!(!buf.is_empty(), "normal API error should write JSON to stdout");
+        assert!(
+            !buf.is_empty(),
+            "normal API error should write JSON to stdout"
+        );
         let s = String::from_utf8(buf).unwrap();
         assert!(s.contains("Not Found"));
     }

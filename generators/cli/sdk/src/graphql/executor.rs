@@ -64,9 +64,10 @@ fn parse_and_validate_inputs(
         Map::new()
     };
 
-    let gql = method.graphql.as_ref().ok_or_else(|| {
-        CliError::Discovery("GraphQL method info missing from spec".to_string())
-    })?;
+    let gql = method
+        .graphql
+        .as_ref()
+        .ok_or_else(|| CliError::Discovery("GraphQL method info missing from spec".to_string()))?;
 
     for (param_name, param_def) in &method.parameters {
         if param_def.required
@@ -141,6 +142,7 @@ fn parse_graphql_response(body_text: &str) -> Result<String, CliError> {
                     // GraphQL puts every error's location/path/extensions here;
                     // keep them for machine consumers.
                     details: Some(json!({ "errors": errors })),
+                    help: None,
                 });
             }
         }
