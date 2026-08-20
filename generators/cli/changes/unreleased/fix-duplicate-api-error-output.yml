@@ -11,9 +11,12 @@
     (`internalServerError` for 500) instead of always `httpError`. Top-level
     shapes such as `{"status", "message"}`, `{"error": "<message>"}`, RFC 7807
     `detail`/`title`, and OAuth 2.0 `error_description` are now recognized. Two
-    consequences worth noting for anyone scripting against these fields: CLIs
-    generated in SDK mode now report `reason: "rateLimited"` on 429 rather than
-    `tooManyRequests`, matching what OpenAPI-mode CLIs have always reported; and
+    consequences worth noting for anyone scripting against these fields: 429 now
+    always reports `reason: "rateLimited"`. Previously a generated CLI reported
+    either that or `tooManyRequests` for the same status depending on which code
+    path produced the error — the runtime's `sdk_executor` already said
+    `rateLimited`, while the generated request adapter said `tooManyRequests`.
+    Both now come from one mapping. Also,
     `error.code` is always the HTTP status, so a body carrying its own
     application error code (`{"code": 100234}`) no longer overwrites it.
   type: fix
