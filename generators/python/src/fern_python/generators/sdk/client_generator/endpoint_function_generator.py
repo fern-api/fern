@@ -939,9 +939,7 @@ class EndpointFunctionGenerator:
                 and not self._returns_stream_object()
                 and endpoint.response is not None
                 and endpoint.response.body is not None
-                and (
-                    endpoint.response.body.get_as_union().type == "streaming" or streaming_parameter == "streaming"
-                )
+                and (endpoint.response.body.get_as_union().type == "streaming" or streaming_parameter == "streaming")
             )
 
             # HACK: IR should provide stable ids for example
