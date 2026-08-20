@@ -1,0 +1,9 @@
+- summary: |
+    `error.details` no longer repeats the sentence already reported in
+    `error.message`. The parsed server body is still carried structurally, so
+    fields a consumer cannot get anywhere else — `request_id`, a validation
+    error's `loc`, a GraphQL error's `path`/`extensions` — are unchanged, but the
+    message text is removed from wherever it sat in the body, and `details` is
+    omitted entirely when the body said nothing beyond that message (so
+    `{"detail": "Not Found"}` now yields just `code`/`message`/`reason`).
+  type: fix

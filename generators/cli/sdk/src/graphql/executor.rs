@@ -135,13 +135,16 @@ fn parse_graphql_response(body_text: &str) -> Result<String, CliError> {
             if has_data {
                 eprintln!("GraphQL partial errors: {message}");
             } else {
+                // GraphQL puts every error's location/path/extensions here;
+                // keep them for machine consumers, minus the message text that
+                // is already reported above it.
+                let details =
+                    crate::error::without_message(&json!({ "errors": errors }), &message);
                 return Err(CliError::Api {
                     code: 400,
                     message,
                     reason: "graphql_error".to_string(),
-                    // GraphQL puts every error's location/path/extensions here;
-                    // keep them for machine consumers.
-                    details: Some(json!({ "errors": errors })),
+                    details,
                     help: None,
                 });
             }

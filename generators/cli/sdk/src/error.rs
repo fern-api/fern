@@ -12,12 +12,14 @@ pub enum CliError {
         code: u16,
         message: String,
         reason: String,
-        /// The server's response body, parsed, when it was JSON.
+        /// The server's response body, parsed, minus whatever `message`
+        /// already reports.
         ///
         /// Carried structurally rather than folded into `message`: a body we
         /// don't recognise still belongs in the JSON envelope, and serializing
         /// it into the message string would emit an escaped JSON document
-        /// inside a JSON field, forcing consumers to parse twice.
+        /// inside a JSON field, forcing consumers to parse twice. `None` when
+        /// the body held nothing `message` does not already say.
         details: Option<serde_json::Value>,
         /// Actionable advice that is not part of the failure itself, e.g. which
         /// credential source supplied the rejected token.
@@ -237,12 +239,45 @@ pub fn api_error_from_body(status: u16, body: &str) -> CliError {
         .unwrap_or_else(|| http_status_reason(status).to_string());
     let message = message_from(scope).unwrap_or_else(|| format!("HTTP {status} {reason}"));
 
+    // `details` exists to preserve what `message` could not carry — a
+    // `request_id`, the `loc` of the offending field. Whatever we already
+    // lifted into `message` would only be the same sentence twice, so drop it,
+    // and drop `details` altogether once nothing unique is left.
+    let details = without_message(&parsed, &message);
+
     CliError::Api {
         code,
         message,
         help: None,
         reason,
-        details: Some(parsed),
+        details,
+    }
+}
+
+/// Copy `value` without any string equal to `message`, and without containers
+/// left empty by that removal. `None` means the body said nothing beyond the
+/// message itself.
+pub(crate) fn without_message(
+    value: &serde_json::Value,
+    message: &str,
+) -> Option<serde_json::Value> {
+    match value {
+        serde_json::Value::String(s) if s == message => None,
+        serde_json::Value::Object(map) => {
+            let kept: serde_json::Map<String, serde_json::Value> = map
+                .iter()
+                .filter_map(|(k, v)| without_message(v, message).map(|v| (k.clone(), v)))
+                .collect();
+            (!kept.is_empty()).then(|| serde_json::Value::Object(kept))
+        }
+        serde_json::Value::Array(items) => {
+            let kept: Vec<serde_json::Value> = items
+                .iter()
+                .filter_map(|v| without_message(v, message))
+                .collect();
+            (!kept.is_empty()).then_some(serde_json::Value::Array(kept))
+        }
+        other => Some(other.clone()),
     }
 }
 
@@ -788,6 +823,48 @@ mod tests {
         let err = api_error_from_body(404, r#"{"detail":"Not Found"}"#);
         assert_eq!(err.to_string(), "Not Found");
         assert_eq!(err.to_json()["error"]["reason"], "notFound");
+    }
+
+    #[test]
+    fn details_never_repeat_the_message() {
+        // The sentence lifted into `message` is dropped from `details`, however
+        // deeply it sat, while everything unique to the body survives.
+        let err = api_error_from_body(
+            401,
+            r#"{"detail":{"type":"authentication_error","code":"unauthorized","message":"Invalid API key","request_id":"f883"}}"#,
+        );
+        let json = err.to_json();
+        assert_eq!(json["error"]["message"], "Invalid API key");
+        assert_eq!(json["error"]["details"]["detail"]["request_id"], "f883");
+        assert!(
+            json["error"]["details"]["detail"].get("message").is_none(),
+            "got: {json:#}"
+        );
+
+        let err = api_error_from_body(
+            422,
+            r#"{"detail":[{"type":"missing","loc":["body","text"],"msg":"Field required"}]}"#,
+        );
+        let json = err.to_json();
+        assert_eq!(json["error"]["message"], "Field required");
+        assert_eq!(json["error"]["details"]["detail"][0]["loc"][1], "text");
+        assert!(json["error"]["details"]["detail"][0].get("msg").is_none());
+    }
+
+    #[test]
+    fn details_are_omitted_when_the_body_is_only_the_message() {
+        // Nothing to preserve once the sentence is lifted, so the field would
+        // be an empty husk restating `message`.
+        for body in [
+            r#"{"detail":"Not Found"}"#,
+            r#"{"message":"Not Found"}"#,
+            r#"{"error":"Not Found"}"#,
+            r#"{"errors":["Not Found"]}"#,
+        ] {
+            let json = api_error_from_body(404, body).to_json();
+            assert_eq!(json["error"]["message"], "Not Found", "body: {body}");
+            assert!(json["error"].get("details").is_none(), "body: {body}");
+        }
     }
 
     #[test]
