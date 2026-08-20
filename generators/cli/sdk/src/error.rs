@@ -756,17 +756,17 @@ mod tests {
     #[test]
     fn flag_conflicts_keep_their_sentence_and_usage_apart() {
         let err = CliError::Validation(
-            "error: the argument '--json' cannot be used with '--human'\n\n\
-             Usage: openapi-fixture --json <COMMAND>\n\n\
+            "error: the argument '--human' cannot be used with '--format <FORMAT>'\n\n\
+             Usage: openapi-fixture --human <COMMAND>\n\n\
              For more information, try '--help'.\n"
                 .to_string(),
         );
         let json = err.to_json();
         assert_eq!(
             json["error"]["message"],
-            "the argument '--json' cannot be used with '--human'"
+            "the argument '--human' cannot be used with '--format <FORMAT>'"
         );
-        assert_eq!(json["error"]["usage"], "openapi-fixture --json <COMMAND>");
+        assert_eq!(json["error"]["usage"], "openapi-fixture --human <COMMAND>");
         assert!(json["error"].get("help").is_none());
     }
 

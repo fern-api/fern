@@ -445,7 +445,7 @@ function generateAdvanced(args: { binaryName: string; envPrefix: string }): Bloc
             "",
             "Use the global `--format` flag to control output. Supported values: `json`, `table`, `yaml`, `csv`, `jsonl`, `raw`, `http`.",
             "",
-            "Without `--format`, output (including errors) is `table` when stdout is a terminal and `json` when it is piped or redirected — so scripts and agents get JSON by default. `--json` and `--human` are shorthands that pin either audience explicitly.",
+            "Without `--format`, output (including errors) is `table` when stdout is a terminal and `json` when it is piped or redirected — so scripts and agents get JSON by default. Pass `--human` to keep the interactive rendering when piping to a pager, and `--format json` to pin JSON in a terminal.",
             "",
             "```bash",
             `# Pipe JSON output through jq`,

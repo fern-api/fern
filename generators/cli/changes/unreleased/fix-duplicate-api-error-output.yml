@@ -22,10 +22,11 @@
   type: fix
 
 - summary: |
-    Added global `--json` and `--human` flags, shorthands for `--format json` and
-    `--format table`. They let a caller pin the audience without naming a format:
-    `--json` for a script or agent, `--human` to keep the interactive rendering
-    when stdout is piped or redirected. Without either flag the existing
-    TTY-aware default still applies (`table` on a terminal, `json` when piped),
-    and passing them alongside `--format` is rejected.
+    Added a global `--human` flag, shorthand for `--format table`, for the one
+    case TTY detection gets wrong: a person piping into a pager or a file still
+    wants the interactive rendering. Without it the existing TTY-aware default
+    applies (`table` on a terminal, `json` when piped), and passing it alongside
+    `--format` is rejected. There is deliberately no `--json` counterpart:
+    endpoints with a request body already spell that flag `--json <JSON>`, so
+    the name cannot mean "render JSON" everywhere; use `--format json`.
   type: feat

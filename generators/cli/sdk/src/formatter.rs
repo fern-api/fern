@@ -57,8 +57,8 @@ impl OutputPipeline {
     ///
     /// Resolves the output format with this precedence when `--format` is
     /// **not** passed:
-    ///   1. an explicit `--format` flag, or its `--json` / `--human`
-    ///      shorthands (always wins);
+    ///   1. an explicit `--format` flag, or the `--human` shorthand
+    ///      (always wins);
     ///   2. the per-binary `<NAME>_OUTPUT` env var, if set to a valid format
     ///      (`NAME` is `app_name` uppercased with `-` → `_`, mirroring the
     ///      `<NAME>_LOG` logging convention);
@@ -82,7 +82,6 @@ impl OutputPipeline {
         };
         let format = match matches.get_one::<String>("format") {
             Some(s) => OutputFormat::parse(s).map_err(FormatError::UnknownFormat)?,
-            None if flag("json") => OutputFormat::Json,
             None if flag("human") => OutputFormat::Table,
             None => {
                 let env_var = format!("{}_OUTPUT", app_name.to_uppercase().replace('-', "_"));
@@ -297,7 +296,7 @@ impl OutputFormat {
 /// The error path runs outside the parsed-matches world (a spec can fail to
 /// load before any `ArgMatches` exists), but it must land on the same format
 /// the success path would have chosen, so this mirrors
-/// [`OutputPipeline::from_matches`]: explicit `--format` / `--json` / `--human`
+/// [`OutputPipeline::from_matches`]: an explicit `--format` or `--human`
 /// wins, then `<NAME>_OUTPUT`, then the TTY-aware default. Unknown `--format`
 /// values fall through to the default rather than erroring — the format
 /// resolution performed by clap already reports those.
@@ -307,12 +306,9 @@ pub fn resolve_format_from_raw_args(args: &[String], app_name: &str) -> OutputFo
     if let Some(parsed) = explicit_format_arg(args).and_then(|v| OutputFormat::parse(&v).ok()) {
         return parsed;
     }
-    // `--json` / `--human` are mutually exclusive at the clap layer, so their
-    // order here only matters for the pre-clap error path, where the first one
-    // wins rather than reporting the conflict.
-    if args.iter().any(|a| a == "--json") {
-        return OutputFormat::Json;
-    }
+    // Deliberately no `--json` rung: on every endpoint with a request body
+    // `--json` is that body's flag, so reading it as a format would make
+    // `create --json '{...}'` silently pin the output format too.
     if args.iter().any(|a| a == "--human") {
         return OutputFormat::Table;
     }
@@ -1319,25 +1315,43 @@ mod tests {
     }
 
     #[test]
-    fn resolve_format_from_raw_args_honors_json_and_human_shorthands() {
-        // `--json` / `--human` sit at the same precedence rung as `--format`,
-        // so a caller can pin the audience without naming a format.
-        assert_eq!(
-            resolve_format_from_raw_args(&["users".to_string(), "--json".to_string()], "my-cli"),
-            OutputFormat::Json
-        );
+    fn resolve_format_from_raw_args_honors_human_shorthand() {
+        // `--human` sits at the same precedence rung as `--format`, so a caller
+        // can force the interactive rendering without naming a format.
         assert_eq!(
             resolve_format_from_raw_args(&["users".to_string(), "--human".to_string()], "my-cli"),
             OutputFormat::Table
         );
-        // An explicit --format still outranks them (clap rejects the combination
+        // An explicit --format still outranks it (clap rejects the combination
         // before this runs; the pre-clap error path must not disagree).
         assert_eq!(
             resolve_format_from_raw_args(
-                &["--json".to_string(), "--format=yaml".to_string()],
+                &["--human".to_string(), "--format=yaml".to_string()],
                 "my-cli"
             ),
             OutputFormat::Yaml
+        );
+    }
+
+    #[test]
+    fn resolve_format_from_raw_args_leaves_json_body_flag_alone() {
+        // `--json` is the request-body flag on every endpoint that has a body;
+        // treating it as an output format would make sending a body silently
+        // pin the rendering too. With stdout not a terminal under test, the
+        // TTY-aware default applies either way — what matters is that the flag
+        // itself carries no format meaning.
+        assert_eq!(
+            resolve_format_from_raw_args(
+                &[
+                    "users".to_string(),
+                    "create".to_string(),
+                    "--json".to_string(),
+                    "{\"name\":\"Ada\"}".to_string(),
+                    "--human".to_string(),
+                ],
+                "my-cli"
+            ),
+            OutputFormat::Table
         );
     }
 
