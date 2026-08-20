@@ -393,6 +393,23 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     }
 
     /**
+     * Checks if the API has any endpoints that disable retries.
+     * @returns True if the API has any endpoints configured with `retries: { disabled: true }`.
+     */
+    public get hasRetriesDisabledEndpoints(): boolean {
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some((endpoint) => this.areRetriesDisabled(endpoint))
+        );
+    }
+
+    /**
+     * Checks if the endpoint disables retries, regardless of the client or per-request options.
+     */
+    public areRetriesDisabled(endpoint: HttpEndpoint): boolean {
+        return endpoint.retries?.disabled === true;
+    }
+
+    /**
      * Checks if the endpoint has a resumable SSE streaming result.
      */
     public endpointHasResumableSseResult(endpoint: HttpEndpoint): boolean {

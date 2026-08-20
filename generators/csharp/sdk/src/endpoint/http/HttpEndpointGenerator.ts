@@ -1640,7 +1640,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         request: this.csharp.codeblock(this.names.variables.httpRequest),
                         options: this.csharp.codeblock(optionsParamName),
                         clientReference: rawClientReference,
-                        cancellationToken: this.csharp.codeblock(cancellationTokenName)
+                        cancellationToken: this.csharp.codeblock(cancellationTokenName),
+                        retriesDisabled: this.context.areRetriesDisabled(endpoint)
                     })
                 );
 

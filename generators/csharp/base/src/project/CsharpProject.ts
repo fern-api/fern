@@ -637,7 +637,8 @@ dotnet_diagnostic.IDE0005.severity = error
                 context: this.context,
                 namespaces: this.namespaces,
                 clientOptionsRequiredDefaults: this.getClientOptionsRequiredDefaults(),
-                retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy"
+                retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy",
+                hasRetriesDisabledEndpoints: this.context.hasRetriesDisabledEndpoints
             }
         });
         return new File(filename.replace("test/", "").replace(".Template", ""), RelativeFilePath.of(""), rendered);
@@ -705,7 +706,8 @@ dotnet_diagnostic.IDE0005.severity = error
                 additionalProperties: true,
                 context: this.context,
                 namespaces: this.namespaces,
-                retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy"
+                retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy",
+                hasRetriesDisabledEndpoints: this.context.hasRetriesDisabledEndpoints
             }
         });
         return new File(filename.replace(".Template", ""), RelativeFilePath.of(""), rendered);
