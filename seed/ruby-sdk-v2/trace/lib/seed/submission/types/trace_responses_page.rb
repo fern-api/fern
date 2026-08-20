@@ -6,7 +6,7 @@ module Seed
       class TraceResponsesPage < Internal::Types::Model
         field :offset, -> { Integer }, optional: true, nullable: false
 
-        field :trace_responses, -> { Internal::Types::Array[Seed::Submission::Types::TraceResponse] }, optional: false, nullable: false, api_name: "traceResponses"
+        field :trace_responses, -> { Internal::Types::Array[::Seed::Submission::Types::TraceResponse] }, optional: false, nullable: false, api_name: "traceResponses"
       end
     end
   end

@@ -3,9 +3,9 @@
 module Seed
   module Types
     class RuleTypeSearchResponse < Internal::Types::Model
-      field :paging, -> { Seed::Types::PagingCursors }, optional: false, nullable: false
+      field :paging, -> { ::Seed::Types::PagingCursors }, optional: false, nullable: false
 
-      field :results, -> { Internal::Types::Array[Seed::Types::RuleType] }, optional: true, nullable: false
+      field :results, -> { Internal::Types::Array[::Seed::Types::RuleType] }, optional: true, nullable: false
     end
   end
 end

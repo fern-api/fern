@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_user</a>(request) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_user</a>(request) -> ::Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 

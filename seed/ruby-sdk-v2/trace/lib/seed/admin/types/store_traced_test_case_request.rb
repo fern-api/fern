@@ -8,9 +8,9 @@ module Seed
 
         field :test_case_id, -> { String }, optional: false, nullable: false, api_name: "testCaseId"
 
-        field :result, -> { Seed::Submission::Types::TestCaseResultWithStdout }, optional: false, nullable: false
+        field :result, -> { ::Seed::Submission::Types::TestCaseResultWithStdout }, optional: false, nullable: false
 
-        field :trace_responses, -> { Internal::Types::Array[Seed::Submission::Types::TraceResponse] }, optional: false, nullable: false, api_name: "traceResponses"
+        field :trace_responses, -> { Internal::Types::Array[::Seed::Submission::Types::TraceResponse] }, optional: false, nullable: false, api_name: "traceResponses"
       end
     end
   end

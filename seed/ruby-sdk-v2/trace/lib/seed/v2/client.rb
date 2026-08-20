@@ -3,14 +3,14 @@
 module Seed
   module V2
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -23,7 +23,7 @@ module Seed
       #
       # @return [untyped]
       def test(request_options: {}, **_params)
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "",
@@ -32,23 +32,23 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @return [Seed::Problem::Client]
+      # @return [::Seed::Problem::Client]
       def problem
-        @problem ||= Seed::V2::Problem::Client.new(client: @client)
+        @problem ||= ::Seed::V2::Problem::Client.new(client: @client)
       end
 
-      # @return [Seed::V3::Client]
+      # @return [::Seed::V3::Client]
       def v3
-        @v3 ||= Seed::V2::V3::Client.new(client: @client)
+        @v3 ||= ::Seed::V2::V3::Client.new(client: @client)
       end
     end
   end

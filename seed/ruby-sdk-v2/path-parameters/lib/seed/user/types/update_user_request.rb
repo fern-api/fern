@@ -8,7 +8,7 @@ module Seed
 
         field :user_id, -> { String }, optional: false, nullable: false
 
-        field :body, -> { Seed::User::Types::User }, optional: false, nullable: false
+        field :body, -> { ::Seed::User::Types::User }, optional: false, nullable: false
       end
     end
   end

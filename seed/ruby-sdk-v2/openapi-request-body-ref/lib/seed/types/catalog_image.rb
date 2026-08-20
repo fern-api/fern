@@ -9,7 +9,7 @@ module Seed
 
       field :url, -> { String }, optional: true, nullable: false
 
-      field :create_request, -> { Seed::Types::CreateCatalogImageRequest }, optional: true, nullable: false
+      field :create_request, -> { ::Seed::Types::CreateCatalogImageRequest }, optional: true, nullable: false
     end
   end
 end

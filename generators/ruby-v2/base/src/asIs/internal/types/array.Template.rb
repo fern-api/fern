@@ -5,7 +5,7 @@ module <%= gem_namespace %>
     module Types
       # An array of a specific type
       class Array
-        include <%= gem_namespace %>::Internal::Types::Type
+        include ::<%= gem_namespace %>::Internal::Types::Type
 
         attr_reader :type
 

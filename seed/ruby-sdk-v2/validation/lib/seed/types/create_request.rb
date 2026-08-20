@@ -9,7 +9,7 @@ module Seed
 
       field :name, -> { String }, optional: false, nullable: false
 
-      field :shape, -> { Seed::Types::Shape }, optional: false, nullable: false
+      field :shape, -> { ::Seed::Types::Shape }, optional: false, nullable: false
     end
   end
 end

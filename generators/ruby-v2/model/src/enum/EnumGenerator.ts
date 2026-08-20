@@ -30,7 +30,7 @@ export class EnumGenerator extends FileGenerator<RubyFile, ModelCustomConfigSche
         });
         enumModule.addStatement(
             ruby.codeblock((writer) => {
-                writer.write(`extend ${this.context.getRootModuleName()}::Internal::Types::Enum`);
+                writer.write(`extend ::${this.context.getRootModuleName()}::Internal::Types::Enum`);
                 writer.newLine();
             })
         );

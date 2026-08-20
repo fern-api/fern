@@ -46,7 +46,7 @@ client.events.subscribe(
 <dl>
 <dd>
 
-**event_type:** `Seed::Events::Types::EventTypeParam` 
+**event_type:** `::Seed::Events::Types::EventTypeParam` 
     
 </dd>
 </dl>
@@ -54,7 +54,7 @@ client.events.subscribe(
 <dl>
 <dd>
 
-**tags:** `Seed::Events::Types::StringOrListParam` 
+**tags:** `::Seed::Events::Types::StringOrListParam` 
     
 </dd>
 </dl>

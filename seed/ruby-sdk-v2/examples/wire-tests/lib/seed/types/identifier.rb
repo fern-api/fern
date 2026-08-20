@@ -3,7 +3,7 @@
 module Seed
   module Types
     class Identifier < Internal::Types::Model
-      field :type, -> { Seed::Types::Type }, optional: false, nullable: false
+      field :type, -> { ::Seed::Types::Type }, optional: false, nullable: false
 
       field :value, -> { String }, optional: false, nullable: false
 

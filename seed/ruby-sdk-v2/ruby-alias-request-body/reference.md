@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">create_store</a>(request) -> Seed::Service::Types::StoreResponse</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">create_store</a>(request) -> ::Seed::Service::Types::StoreResponse</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.service.create_store(display_name: "sandbox")
 <dl>
 <dd>
 
-**request:** `Seed::Service::Types::StoreRequest` 
+**request:** `::Seed::Service::Types::StoreRequest` 
     
 </dd>
 </dl>

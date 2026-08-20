@@ -6,13 +6,13 @@ module Seed
       module Problem
         module Types
           class TestCaseFunction < Internal::Types::Model
-            extend Seed::Internal::Types::Union
+            extend ::Seed::Internal::Types::Union
 
             discriminant :type
 
-            member -> { Seed::V2::V3::Problem::Types::TestCaseWithActualResultImplementation }, key: "WITH_ACTUAL_RESULT"
+            member -> { ::Seed::V2::V3::Problem::Types::TestCaseWithActualResultImplementation }, key: "WITH_ACTUAL_RESULT"
 
-            member -> { Seed::V2::V3::Problem::Types::VoidFunctionDefinition }, key: "CUSTOM"
+            member -> { ::Seed::V2::V3::Problem::Types::VoidFunctionDefinition }, key: "CUSTOM"
           end
         end
       end

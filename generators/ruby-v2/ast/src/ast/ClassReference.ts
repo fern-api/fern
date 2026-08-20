@@ -7,7 +7,7 @@ export declare namespace ClassReference {
         name: string;
         /** The module path as an array of strings (e.g., ["MyApi", "V1"]) */
         modules?: string[];
-        /** Force the class reference to be fully qualified (with modules) */
+        /** Force the class reference to be fully qualified from the top-level namespace */
         fullyQualified?: boolean;
     }
 }
@@ -28,7 +28,7 @@ export class ClassReference extends AstNode {
         // If fullyQualified or modules are present, write the full module path
         if (this.fullyQualified || this.modules.length > 0) {
             const fullPath = [...this.modules, this.name].join("::");
-            writer.write(fullPath);
+            writer.write(this.fullyQualified ? `::${fullPath}` : fullPath);
             return;
         }
         writer.write(this.name);

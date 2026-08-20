@@ -32,7 +32,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**operand:** `Seed::Types::Operand` 
+**operand:** `::Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -40,7 +40,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**maybe_operand:** `Seed::Types::Operand` 
+**maybe_operand:** `::Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**operand_or_color:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `::Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -56,7 +56,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `::Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -108,7 +108,7 @@ client.inlined_request.send_(
 <dl>
 <dd>
 
-**operand:** `Seed::Types::Operand` 
+**operand:** `::Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -116,7 +116,7 @@ client.inlined_request.send_(
 <dl>
 <dd>
 
-**maybe_operand:** `Seed::Types::Operand` 
+**maybe_operand:** `::Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -124,7 +124,7 @@ client.inlined_request.send_(
 <dl>
 <dd>
 
-**operand_or_color:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `::Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -132,7 +132,7 @@ client.inlined_request.send_(
 <dl>
 <dd>
 
-**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `::Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -185,7 +185,7 @@ client.path_param.send_(
 <dl>
 <dd>
 
-**operand:** `Seed::Types::Operand` 
+**operand:** `::Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -193,7 +193,7 @@ client.path_param.send_(
 <dl>
 <dd>
 
-**operand_or_color:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `::Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -245,7 +245,7 @@ client.query_param.send_(
 <dl>
 <dd>
 
-**operand:** `Seed::Types::Operand` 
+**operand:** `::Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -253,7 +253,7 @@ client.query_param.send_(
 <dl>
 <dd>
 
-**maybe_operand:** `Seed::Types::Operand` 
+**maybe_operand:** `::Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -261,7 +261,7 @@ client.query_param.send_(
 <dl>
 <dd>
 
-**operand_or_color:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `::Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -269,7 +269,7 @@ client.query_param.send_(
 <dl>
 <dd>
 
-**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `::Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -317,7 +317,7 @@ client.query_param.send_list
 <dl>
 <dd>
 
-**operand:** `Seed::Types::Operand` 
+**operand:** `::Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -325,7 +325,7 @@ client.query_param.send_list
 <dl>
 <dd>
 
-**maybe_operand:** `Seed::Types::Operand` 
+**maybe_operand:** `::Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -333,7 +333,7 @@ client.query_param.send_list
 <dl>
 <dd>
 
-**operand_or_color:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `::Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -341,7 +341,7 @@ client.query_param.send_list
 <dl>
 <dd>
 
-**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `::Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>

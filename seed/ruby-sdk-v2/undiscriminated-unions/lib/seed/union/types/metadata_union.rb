@@ -4,11 +4,11 @@ module Seed
   module Union
     module Types
       class MetadataUnion < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         member -> { Internal::Types::Hash[String, Object] }
 
-        member -> { Seed::Union::Types::NamedMetadata }
+        member -> { ::Seed::Union::Types::NamedMetadata }
       end
     end
   end

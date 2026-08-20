@@ -11,7 +11,7 @@ module Seed
 
       field :common_name, -> { String }, optional: true, nullable: false, api_name: "commonName"
 
-      field :watering_frequency, -> { Seed::Types::PlantBaseWateringFrequency }, optional: true, nullable: false, api_name: "wateringFrequency"
+      field :watering_frequency, -> { ::Seed::Types::PlantBaseWateringFrequency }, optional: true, nullable: false, api_name: "wateringFrequency"
     end
   end
 end

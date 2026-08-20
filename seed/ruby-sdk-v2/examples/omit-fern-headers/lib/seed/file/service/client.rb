@@ -4,7 +4,7 @@ module Seed
   module File
     module Service
       class Client
-        # @param client [Seed::Internal::Http::RawClient]
+        # @param client [::Seed::Internal::Http::RawClient]
         #
         # @return [void]
         def initialize(client:)
@@ -13,7 +13,7 @@ module Seed
 
         # This endpoint returns a file by its name.
         #
-        # @param request_options [Hash]
+        # @param request_options [::Hash]
         # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
@@ -28,10 +28,10 @@ module Seed
         #     x_file_api_version: "0.0.2"
         #   )
         #
-        # @return [Seed::Types::Types::File]
+        # @return [::Seed::Types::Types::File]
         def get_file(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.normalize_keys(params)
-          request = Seed::Internal::JSON::Request.new(
+          params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "/file/#{URI.encode_uri_component(params[:filename].to_s)}",
@@ -40,13 +40,13 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Types::Types::File.load(response.body)
+            ::Seed::Types::Types::File.load(response.body)
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end

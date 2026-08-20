@@ -4,7 +4,7 @@ module Seed
   module Service
     module Types
       module ObjectType
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         FOO = "FOO"
         BAR = "BAR"

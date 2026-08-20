@@ -4,7 +4,7 @@ module Seed
   module Union
     module Types
       module KeyType
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         NAME = "name"
         VALUE = "value"

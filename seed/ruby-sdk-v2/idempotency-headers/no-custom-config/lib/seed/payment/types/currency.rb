@@ -4,7 +4,7 @@ module Seed
   module Payment
     module Types
       module Currency
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         USD = "USD"
         YEN = "YEN"

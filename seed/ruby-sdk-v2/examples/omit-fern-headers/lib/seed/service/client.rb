@@ -3,14 +3,14 @@
 module Seed
   module Service
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -22,10 +22,10 @@ module Seed
       # @example
       #   client.service.get_movie(movie_id: "movie-c06a4ad7")
       #
-      # @return [Seed::Types::Types::Movie]
+      # @return [::Seed::Types::Types::Movie]
       def get_movie(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/movie/#{URI.encode_uri_component(params[:movie_id].to_s)}",
@@ -34,19 +34,19 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::Movie.load(response.body)
+          ::Seed::Types::Types::Movie.load(response.body)
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end
 
-      # @param request_options [Hash]
-      # @param params [Seed::Types::Types::Movie]
+      # @param request_options [::Hash]
+      # @param params [::Seed::Types::Types::Movie]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -75,29 +75,29 @@ module Seed
       #
       # @return [String]
       def create_movie(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/movie",
-          body: Seed::Types::Types::Movie.new(params).to_h,
+          body: ::Seed::Types::Types::Movie.new(params).to_h,
           request_options: request_options
         )
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::MovieID.load(response.body)
+          ::Seed::Types::Types::MovieID.load(response.body)
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -114,9 +114,9 @@ module Seed
       #     x_api_version: "0.0.1"
       #   )
       #
-      # @return [Seed::Types::Types::Metadata]
+      # @return [::Seed::Types::Types::Metadata]
       def get_metadata(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["shallow"] = params[:shallow] if params.key?(:shallow)
         query_params["tag"] = params[:tag] if params.key?(:tag)
@@ -124,7 +124,7 @@ module Seed
         headers = {}
         headers["X-API-Version"] = params[:x_api_version] if params[:x_api_version]
 
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/metadata",
@@ -135,19 +135,19 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::Metadata.load(response.body)
+          ::Seed::Types::Types::Metadata.load(response.body)
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end
 
-      # @param request_options [Hash]
-      # @param params [Seed::Types::Types::BigEntity]
+      # @param request_options [::Hash]
+      # @param params [::Seed::Types::Types::BigEntity]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -290,31 +290,31 @@ module Seed
       #     }
       #   )
       #
-      # @return [Seed::Types::Types::Response]
+      # @return [::Seed::Types::Types::Response]
       def create_big_entity(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/big-entity",
-          body: Seed::Types::Types::BigEntity.new(params).to_h,
+          body: ::Seed::Types::Types::BigEntity.new(params).to_h,
           request_options: request_options
         )
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::Response.load(response.body)
+          ::Seed::Types::Types::Response.load(response.body)
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -329,8 +329,8 @@ module Seed
       #
       # @return [untyped]
       def refresh_token(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/refresh-token",
@@ -340,12 +340,12 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end

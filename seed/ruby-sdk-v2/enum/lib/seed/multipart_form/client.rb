@@ -3,14 +3,14 @@
 module Seed
   module MultipartForm
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -20,7 +20,7 @@ module Seed
       #
       # @return [untyped]
       def multipart_form(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         if params[:color]
@@ -48,7 +48,7 @@ module Seed
           )
         end
 
-        request = Seed::Internal::Multipart::Request.new(
+        request = ::Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "multipart",
@@ -58,12 +58,12 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end

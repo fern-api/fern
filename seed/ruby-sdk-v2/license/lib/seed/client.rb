@@ -2,7 +2,7 @@
 
 module Seed
   class Client
-    # @param request_options [Hash]
+    # @param request_options [::Hash]
     # @param _params [Hash]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
@@ -15,7 +15,7 @@ module Seed
     #
     # @return [untyped]
     def get(request_options: {}, **_params)
-      request = Seed::Internal::JSON::Request.new(
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "GET",
         path: "/",
@@ -24,12 +24,12 @@ module Seed
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       return if code.between?(200, 299)
 
-      error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+      error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
       raise error_class.new(response.body, code: code)
     end
 
@@ -38,7 +38,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_license/0.0.1",

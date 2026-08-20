@@ -4,7 +4,7 @@ module Seed
   module Inlined
     module Types
       class UndiscriminatedLiteral < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         member -> { String }
 

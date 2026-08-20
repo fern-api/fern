@@ -1,6 +1,6 @@
 # Reference
 ## NullableOptional
-<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">get_user</a>(user_id:) -> Seed::NullableOptional::Types::UserResponse</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">get_user</a>(user_id:) -> ::Seed::NullableOptional::Types::UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -62,7 +62,7 @@ client.nullable_optional.get_user(user_id: "userId")
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">create_user</a>(request) -> Seed::NullableOptional::Types::UserResponse</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">create_user</a>(request) -> ::Seed::NullableOptional::Types::UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -117,7 +117,7 @@ client.nullable_optional.create_user(
 <dl>
 <dd>
 
-**request:** `Seed::NullableOptional::Types::CreateUserRequest` 
+**request:** `::Seed::NullableOptional::Types::CreateUserRequest` 
     
 </dd>
 </dl>
@@ -137,7 +137,7 @@ client.nullable_optional.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">update_user</a>(user_id:, request) -> Seed::NullableOptional::Types::UserResponse</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">update_user</a>(user_id:, request) -> ::Seed::NullableOptional::Types::UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -201,7 +201,7 @@ client.nullable_optional.update_user(
 <dl>
 <dd>
 
-**request:** `Seed::NullableOptional::Types::UpdateUserRequest` 
+**request:** `::Seed::NullableOptional::Types::UpdateUserRequest` 
     
 </dd>
 </dl>
@@ -221,7 +221,7 @@ client.nullable_optional.update_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">list_users</a>() -> Internal::Types::Array[Seed::NullableOptional::Types::UserResponse]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">list_users</a>() -> Internal::Types::Array[::Seed::NullableOptional::Types::UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -312,7 +312,7 @@ client.nullable_optional.list_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">search_users</a>() -> Internal::Types::Array[Seed::NullableOptional::Types::UserResponse]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">search_users</a>() -> Internal::Types::Array[::Seed::NullableOptional::Types::UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -403,7 +403,7 @@ client.nullable_optional.search_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">create_complex_profile</a>(request) -> Seed::NullableOptional::Types::ComplexProfile</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">create_complex_profile</a>(request) -> ::Seed::NullableOptional::Types::ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -472,7 +472,7 @@ client.nullable_optional.create_complex_profile(
 <dl>
 <dd>
 
-**request:** `Seed::NullableOptional::Types::ComplexProfile` 
+**request:** `::Seed::NullableOptional::Types::ComplexProfile` 
     
 </dd>
 </dl>
@@ -492,7 +492,7 @@ client.nullable_optional.create_complex_profile(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">get_complex_profile</a>(profile_id:) -> Seed::NullableOptional::Types::ComplexProfile</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">get_complex_profile</a>(profile_id:) -> ::Seed::NullableOptional::Types::ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -554,7 +554,7 @@ client.nullable_optional.get_complex_profile(profile_id: "profileId")
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">update_complex_profile</a>(profile_id:, request) -> Seed::NullableOptional::Types::ComplexProfile</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">update_complex_profile</a>(profile_id:, request) -> ::Seed::NullableOptional::Types::ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -609,7 +609,7 @@ client.nullable_optional.update_complex_profile(
 <dl>
 <dd>
 
-**nullable_role:** `Seed::NullableOptional::Types::UserRole` 
+**nullable_role:** `::Seed::NullableOptional::Types::UserRole` 
     
 </dd>
 </dl>
@@ -617,7 +617,7 @@ client.nullable_optional.update_complex_profile(
 <dl>
 <dd>
 
-**nullable_status:** `Seed::NullableOptional::Types::UserStatus` 
+**nullable_status:** `::Seed::NullableOptional::Types::UserStatus` 
     
 </dd>
 </dl>
@@ -625,7 +625,7 @@ client.nullable_optional.update_complex_profile(
 <dl>
 <dd>
 
-**nullable_notification:** `Seed::NullableOptional::Types::NotificationMethod` 
+**nullable_notification:** `::Seed::NullableOptional::Types::NotificationMethod` 
     
 </dd>
 </dl>
@@ -633,7 +633,7 @@ client.nullable_optional.update_complex_profile(
 <dl>
 <dd>
 
-**nullable_search_result:** `Seed::NullableOptional::Types::SearchResult` 
+**nullable_search_result:** `::Seed::NullableOptional::Types::SearchResult` 
     
 </dd>
 </dl>
@@ -661,7 +661,7 @@ client.nullable_optional.update_complex_profile(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">test_deserialization</a>(request) -> Seed::NullableOptional::Types::DeserializationTestResponse</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">test_deserialization</a>(request) -> ::Seed::NullableOptional::Types::DeserializationTestResponse</code></summary>
 <dl>
 <dd>
 
@@ -729,7 +729,7 @@ client.nullable_optional.test_deserialization(
 <dl>
 <dd>
 
-**request:** `Seed::NullableOptional::Types::DeserializationTestRequest` 
+**request:** `::Seed::NullableOptional::Types::DeserializationTestRequest` 
     
 </dd>
 </dl>
@@ -749,7 +749,7 @@ client.nullable_optional.test_deserialization(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">filter_by_role</a>() -> Internal::Types::Array[Seed::NullableOptional::Types::UserResponse]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">filter_by_role</a>() -> Internal::Types::Array[::Seed::NullableOptional::Types::UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -795,7 +795,7 @@ client.nullable_optional.filter_by_role(
 <dl>
 <dd>
 
-**role:** `Seed::NullableOptional::Types::UserRole` 
+**role:** `::Seed::NullableOptional::Types::UserRole` 
     
 </dd>
 </dl>
@@ -803,7 +803,7 @@ client.nullable_optional.filter_by_role(
 <dl>
 <dd>
 
-**status:** `Seed::NullableOptional::Types::UserStatus` 
+**status:** `::Seed::NullableOptional::Types::UserStatus` 
     
 </dd>
 </dl>
@@ -811,7 +811,7 @@ client.nullable_optional.filter_by_role(
 <dl>
 <dd>
 
-**secondary_role:** `Seed::NullableOptional::Types::UserRole` 
+**secondary_role:** `::Seed::NullableOptional::Types::UserRole` 
     
 </dd>
 </dl>
@@ -831,7 +831,7 @@ client.nullable_optional.filter_by_role(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">get_notification_settings</a>(user_id:) -> Seed::NullableOptional::Types::NotificationMethod</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">get_notification_settings</a>(user_id:) -> ::Seed::NullableOptional::Types::NotificationMethod</code></summary>
 <dl>
 <dd>
 
@@ -984,7 +984,7 @@ client.nullable_optional.update_tags(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">get_search_results</a>(request) -> Internal::Types::Array[Seed::NullableOptional::Types::SearchResult]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/lib/seed/nullable_optional/client.rb">get_search_results</a>(request) -> Internal::Types::Array[::Seed::NullableOptional::Types::SearchResult]</code></summary>
 <dl>
 <dd>
 

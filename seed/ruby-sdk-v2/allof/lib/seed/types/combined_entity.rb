@@ -3,7 +3,7 @@
 module Seed
   module Types
     class CombinedEntity < Internal::Types::Model
-      field :status, -> { Seed::Types::CombinedEntityStatus }, optional: false, nullable: false
+      field :status, -> { ::Seed::Types::CombinedEntityStatus }, optional: false, nullable: false
 
       field :id, -> { String }, optional: false, nullable: false
 

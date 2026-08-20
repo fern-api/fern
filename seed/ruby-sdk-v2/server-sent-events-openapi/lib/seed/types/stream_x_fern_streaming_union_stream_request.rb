@@ -6,15 +6,15 @@ module Seed
     # UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level,
     # but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
     class StreamXFernStreamingUnionStreamRequest < Internal::Types::Model
-      extend Seed::Internal::Types::Union
+      extend ::Seed::Internal::Types::Union
 
       discriminant :type
 
-      member -> { Seed::Types::UnionStreamMessageVariant }, key: "MESSAGE"
+      member -> { ::Seed::Types::UnionStreamMessageVariant }, key: "MESSAGE"
 
-      member -> { Seed::Types::UnionStreamInterruptVariant }, key: "INTERRUPT"
+      member -> { ::Seed::Types::UnionStreamInterruptVariant }, key: "INTERRUPT"
 
-      member -> { Seed::Types::UnionStreamCompactVariant }, key: "COMPACT"
+      member -> { ::Seed::Types::UnionStreamCompactVariant }, key: "COMPACT"
     end
   end
 end

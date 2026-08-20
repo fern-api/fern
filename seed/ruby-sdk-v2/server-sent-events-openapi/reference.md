@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_protocol_no_collision</a>(request) -> Seed::Types::StreamProtocolNoCollisionResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_protocol_no_collision</a>(request) -> ::Seed::Types::StreamProtocolNoCollisionResponse</code></summary>
 <dl>
 <dd>
 
@@ -41,7 +41,7 @@ client.stream_protocol_no_collision
 <dl>
 <dd>
 
-**request:** `Seed::Types::StreamRequest` 
+**request:** `::Seed::Types::StreamRequest` 
     
 </dd>
 </dl>
@@ -61,7 +61,7 @@ client.stream_protocol_no_collision
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_protocol_collision</a>(request) -> Seed::Types::StreamProtocolCollisionResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_protocol_collision</a>(request) -> ::Seed::Types::StreamProtocolCollisionResponse</code></summary>
 <dl>
 <dd>
 
@@ -103,7 +103,7 @@ client.stream_protocol_collision
 <dl>
 <dd>
 
-**request:** `Seed::Types::StreamRequest` 
+**request:** `::Seed::Types::StreamRequest` 
     
 </dd>
 </dl>
@@ -123,7 +123,7 @@ client.stream_protocol_collision
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_data_context</a>(request) -> Seed::Types::StreamDataContextResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_data_context</a>(request) -> ::Seed::Types::StreamDataContextResponse</code></summary>
 <dl>
 <dd>
 
@@ -165,7 +165,7 @@ client.stream_data_context
 <dl>
 <dd>
 
-**request:** `Seed::Types::StreamRequest` 
+**request:** `::Seed::Types::StreamRequest` 
     
 </dd>
 </dl>
@@ -185,7 +185,7 @@ client.stream_data_context
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_no_context</a>(request) -> Seed::Types::StreamNoContextResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_no_context</a>(request) -> ::Seed::Types::StreamNoContextResponse</code></summary>
 <dl>
 <dd>
 
@@ -227,7 +227,7 @@ client.stream_no_context
 <dl>
 <dd>
 
-**request:** `Seed::Types::StreamRequest` 
+**request:** `::Seed::Types::StreamRequest` 
     
 </dd>
 </dl>
@@ -247,7 +247,7 @@ client.stream_no_context
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_protocol_with_flat_schema</a>(request) -> Seed::Types::StreamProtocolWithFlatSchemaResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_protocol_with_flat_schema</a>(request) -> ::Seed::Types::StreamProtocolWithFlatSchemaResponse</code></summary>
 <dl>
 <dd>
 
@@ -289,7 +289,7 @@ client.stream_protocol_with_flat_schema
 <dl>
 <dd>
 
-**request:** `Seed::Types::StreamRequest` 
+**request:** `::Seed::Types::StreamRequest` 
     
 </dd>
 </dl>
@@ -309,7 +309,7 @@ client.stream_protocol_with_flat_schema
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_data_context_with_envelope_schema</a>(request) -> Seed::Types::StreamDataContextWithEnvelopeSchemaResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_data_context_with_envelope_schema</a>(request) -> ::Seed::Types::StreamDataContextWithEnvelopeSchemaResponse</code></summary>
 <dl>
 <dd>
 
@@ -351,7 +351,7 @@ client.stream_data_context_with_envelope_schema
 <dl>
 <dd>
 
-**request:** `Seed::Types::StreamRequest` 
+**request:** `::Seed::Types::StreamRequest` 
     
 </dd>
 </dl>
@@ -371,7 +371,7 @@ client.stream_data_context_with_envelope_schema
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_oas_spec_native</a>(request) -> Seed::Types::Event</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_oas_spec_native</a>(request) -> ::Seed::Types::Event</code></summary>
 <dl>
 <dd>
 
@@ -413,7 +413,7 @@ client.stream_oas_spec_native
 <dl>
 <dd>
 
-**request:** `Seed::Types::StreamRequest` 
+**request:** `::Seed::Types::StreamRequest` 
     
 </dd>
 </dl>
@@ -433,7 +433,7 @@ client.stream_oas_spec_native
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_condition_stream</a>(request) -> Seed::Types::CompletionStreamChunk</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_condition_stream</a>(request) -> ::Seed::Types::CompletionStreamChunk</code></summary>
 <dl>
 <dd>
 
@@ -506,7 +506,7 @@ client.stream_x_fern_streaming_condition_stream(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_condition</a>(request) -> Seed::Types::CompletionFullResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_condition</a>(request) -> ::Seed::Types::CompletionFullResponse</code></summary>
 <dl>
 <dd>
 
@@ -579,7 +579,7 @@ client.stream_x_fern_streaming_condition_stream(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_shared_schema_stream</a>(request) -> Seed::Types::CompletionStreamChunk</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_shared_schema_stream</a>(request) -> ::Seed::Types::CompletionStreamChunk</code></summary>
 <dl>
 <dd>
 
@@ -661,7 +661,7 @@ client.stream_x_fern_streaming_shared_schema_stream(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_shared_schema</a>(request) -> Seed::Types::CompletionFullResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_shared_schema</a>(request) -> ::Seed::Types::CompletionFullResponse</code></summary>
 <dl>
 <dd>
 
@@ -743,7 +743,7 @@ client.stream_x_fern_streaming_shared_schema_stream(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">validate_completion</a>(request) -> Seed::Types::CompletionFullResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">validate_completion</a>(request) -> ::Seed::Types::CompletionFullResponse</code></summary>
 <dl>
 <dd>
 
@@ -824,7 +824,7 @@ client.validate_completion(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_union_stream</a>(request) -> Seed::Types::CompletionStreamChunk</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_union_stream</a>(request) -> ::Seed::Types::CompletionStreamChunk</code></summary>
 <dl>
 <dd>
 
@@ -866,7 +866,7 @@ client.stream_x_fern_streaming_union_stream
 <dl>
 <dd>
 
-**request:** `Seed::Types::StreamXFernStreamingUnionStreamRequest` — A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
+**request:** `::Seed::Types::StreamXFernStreamingUnionStreamRequest` — A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
     
 </dd>
 </dl>
@@ -886,7 +886,7 @@ client.stream_x_fern_streaming_union_stream
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_union</a>(request) -> Seed::Types::CompletionFullResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_union</a>(request) -> ::Seed::Types::CompletionFullResponse</code></summary>
 <dl>
 <dd>
 
@@ -928,7 +928,7 @@ client.stream_x_fern_streaming_union_stream
 <dl>
 <dd>
 
-**request:** `Seed::Types::StreamXFernStreamingUnionRequest` — A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
+**request:** `::Seed::Types::StreamXFernStreamingUnionRequest` — A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
     
 </dd>
 </dl>
@@ -948,7 +948,7 @@ client.stream_x_fern_streaming_union_stream
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">validate_union_request</a>(request) -> Seed::Types::ValidateUnionRequestResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">validate_union_request</a>(request) -> ::Seed::Types::ValidateUnionRequestResponse</code></summary>
 <dl>
 <dd>
 
@@ -990,7 +990,7 @@ client.validate_union_request(prompt: "prompt")
 <dl>
 <dd>
 
-**request:** `Seed::Types::UnionStreamRequestBase` 
+**request:** `::Seed::Types::UnionStreamRequestBase` 
     
 </dd>
 </dl>
@@ -1010,7 +1010,7 @@ client.validate_union_request(prompt: "prompt")
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_nullable_condition_stream</a>(request) -> Seed::Types::CompletionStreamChunk</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_nullable_condition_stream</a>(request) -> ::Seed::Types::CompletionStreamChunk</code></summary>
 <dl>
 <dd>
 
@@ -1083,7 +1083,7 @@ client.stream_x_fern_streaming_nullable_condition_stream(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_nullable_condition</a>(request) -> Seed::Types::CompletionFullResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">stream_x_fern_streaming_nullable_condition</a>(request) -> ::Seed::Types::CompletionFullResponse</code></summary>
 <dl>
 <dd>
 
@@ -1198,7 +1198,7 @@ client.stream_x_fern_streaming_sse_only
 <dl>
 <dd>
 
-**request:** `Seed::Types::StreamRequest` 
+**request:** `::Seed::Types::StreamRequest` 
     
 </dd>
 </dl>

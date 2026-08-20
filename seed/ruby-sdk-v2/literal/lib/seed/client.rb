@@ -7,7 +7,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_literal/0.0.1",
@@ -19,29 +19,29 @@ module Seed
       )
     end
 
-    # @return [Seed::Headers::Client]
+    # @return [::Seed::Headers::Client]
     def headers
-      @headers ||= Seed::Headers::Client.new(client: @raw_client)
+      @headers ||= ::Seed::Headers::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Inlined::Client]
+    # @return [::Seed::Inlined::Client]
     def inlined
-      @inlined ||= Seed::Inlined::Client.new(client: @raw_client)
+      @inlined ||= ::Seed::Inlined::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Path::Client]
+    # @return [::Seed::Path::Client]
     def path
-      @path ||= Seed::Path::Client.new(client: @raw_client)
+      @path ||= ::Seed::Path::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Query::Client]
+    # @return [::Seed::Query::Client]
     def query
-      @query ||= Seed::Query::Client.new(client: @raw_client)
+      @query ||= ::Seed::Query::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Reference::Client]
+    # @return [::Seed::Reference::Client]
     def reference
-      @reference ||= Seed::Reference::Client.new(client: @raw_client)
+      @reference ||= ::Seed::Reference::Client.new(client: @raw_client)
     end
   end
 end

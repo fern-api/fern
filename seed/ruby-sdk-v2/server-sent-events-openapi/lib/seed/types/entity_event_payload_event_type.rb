@@ -3,7 +3,7 @@
 module Seed
   module Types
     module EntityEventPayloadEventType
-      extend Seed::Internal::Types::Enum
+      extend ::Seed::Internal::Types::Enum
 
       CREATED = "CREATED"
       UPDATED = "UPDATED"

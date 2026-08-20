@@ -8,7 +8,7 @@ module Seed
 
         field :line_number, -> { Integer }, optional: false, nullable: false, api_name: "lineNumber"
 
-        field :scopes, -> { Internal::Types::Array[Seed::Submission::Types::Scope] }, optional: false, nullable: false
+        field :scopes, -> { Internal::Types::Array[::Seed::Submission::Types::Scope] }, optional: false, nullable: false
       end
     end
   end

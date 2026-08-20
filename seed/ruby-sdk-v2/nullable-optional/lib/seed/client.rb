@@ -7,7 +7,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_nullable-optional/0.0.1",
@@ -17,9 +17,9 @@ module Seed
       )
     end
 
-    # @return [Seed::NullableOptional::Client]
+    # @return [::Seed::NullableOptional::Client]
     def nullable_optional
-      @nullable_optional ||= Seed::NullableOptional::Client.new(client: @raw_client)
+      @nullable_optional ||= ::Seed::NullableOptional::Client.new(client: @raw_client)
     end
   end
 end

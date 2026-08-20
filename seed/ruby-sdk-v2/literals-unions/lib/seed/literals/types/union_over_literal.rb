@@ -5,7 +5,7 @@ module Seed
     module Types
       # An undiscriminated union over a literal.
       class UnionOverLiteral < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         member -> { String }
 

@@ -21,7 +21,7 @@ module Seed
 
         field :updated_at, -> { String }, optional: false, nullable: false
 
-        field :identities, -> { Internal::Types::Array[Seed::Types::Types::Identity] }, optional: true, nullable: false
+        field :identities, -> { Internal::Types::Array[::Seed::Types::Types::Identity] }, optional: true, nullable: false
 
         field :app_metadata, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
 

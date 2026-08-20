@@ -14,9 +14,9 @@ module Seed
 
         field :bytes, -> { String }, optional: false, nullable: false
 
-        field :user, -> { Seed::User::Types::User }, optional: false, nullable: false
+        field :user, -> { ::Seed::User::Types::User }, optional: false, nullable: false
 
-        field :user_list, -> { Internal::Types::Array[Seed::User::Types::User] }, optional: false, nullable: false, api_name: "userList"
+        field :user_list, -> { Internal::Types::Array[::Seed::User::Types::User] }, optional: false, nullable: false, api_name: "userList"
 
         field :optional_deadline, -> { String }, optional: true, nullable: false, api_name: "optionalDeadline"
 
@@ -24,11 +24,11 @@ module Seed
 
         field :optional_string, -> { String }, optional: true, nullable: false, api_name: "optionalString"
 
-        field :nested_user, -> { Seed::User::Types::NestedUser }, optional: false, nullable: false, api_name: "nestedUser"
+        field :nested_user, -> { ::Seed::User::Types::NestedUser }, optional: false, nullable: false, api_name: "nestedUser"
 
-        field :optional_user, -> { Seed::User::Types::User }, optional: true, nullable: false, api_name: "optionalUser"
+        field :optional_user, -> { ::Seed::User::Types::User }, optional: true, nullable: false, api_name: "optionalUser"
 
-        field :exclude_user, -> { Seed::User::Types::User }, optional: false, nullable: false, api_name: "excludeUser"
+        field :exclude_user, -> { ::Seed::User::Types::User }, optional: false, nullable: false, api_name: "excludeUser"
 
         field :filter, -> { String }, optional: false, nullable: false
 

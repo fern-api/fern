@@ -6,7 +6,7 @@ module Seed
       # Multiple string types that all resolve to String in Java.
       # This tests the fix for duplicate method signatures.
       class UnionWithIdenticalStrings < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         member -> { String }
       end

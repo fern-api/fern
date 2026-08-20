@@ -5,7 +5,7 @@ module Seed
     module Types
       # An array of a specific type
       class Array
-        include Seed::Internal::Types::Type
+        include ::Seed::Internal::Types::Type
 
         attr_reader :type
 

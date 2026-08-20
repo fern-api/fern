@@ -3,7 +3,7 @@
 module Seed
   module Types
     module CompletionFullResponseFinishReason
-      extend Seed::Internal::Types::Enum
+      extend ::Seed::Internal::Types::Enum
 
       COMPLETE = "complete"
       LENGTH = "length"

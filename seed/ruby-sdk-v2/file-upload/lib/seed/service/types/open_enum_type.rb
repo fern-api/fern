@@ -4,7 +4,7 @@ module Seed
   module Service
     module Types
       module OpenEnumType
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         OPTION_A = "OPTION_A"
         OPTION_B = "OPTION_B"

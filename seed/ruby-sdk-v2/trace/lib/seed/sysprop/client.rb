@@ -3,14 +3,14 @@
 module Seed
   module Sysprop
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -28,8 +28,8 @@ module Seed
       #
       # @return [untyped]
       def set_num_warm_instances(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
           path: "/sysprop/num-warm-instances/#{URI.encode_uri_component(params[:language].to_s)}/#{URI.encode_uri_component(params[:num_warm_instances].to_s)}",
@@ -38,16 +38,16 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -58,9 +58,9 @@ module Seed
       # @example
       #   client.sysprop.get_num_warm_instances
       #
-      # @return [Hash[Seed::Commons::Types::Language, Integer]]
+      # @return [Hash[::Seed::Commons::Types::Language, Integer]]
       def get_num_warm_instances(request_options: {}, **_params)
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/sysprop/num-warm-instances",
@@ -69,12 +69,12 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end

@@ -7,7 +7,7 @@ module Seed
 
       field :label, -> { String }, optional: true, nullable: false
 
-      field :metadata, -> { Seed::Commons::Metadata::Types::Metadata }, optional: true, nullable: false
+      field :metadata, -> { ::Seed::Commons::Metadata::Types::Metadata }, optional: true, nullable: false
     end
   end
 end

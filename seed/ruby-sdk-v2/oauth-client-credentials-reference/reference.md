@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token</a>(request) -> ::Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -31,7 +31,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**request:** `Seed::Auth::Types::GetTokenRequest` 
+**request:** `::Seed::Auth::Types::GetTokenRequest` 
     
 </dd>
 </dl>

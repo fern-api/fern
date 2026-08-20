@@ -3,7 +3,7 @@
 module Seed
   module Types
     module AstllmNodeWithSchemaType
-      extend Seed::Internal::Types::Enum
+      extend ::Seed::Internal::Types::Enum
 
       LLM = "llm"
     end

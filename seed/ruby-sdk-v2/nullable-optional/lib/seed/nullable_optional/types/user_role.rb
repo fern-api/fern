@@ -4,7 +4,7 @@ module Seed
   module NullableOptional
     module Types
       module UserRole
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         ADMIN = "ADMIN"
         USER = "USER"

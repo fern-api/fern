@@ -4,13 +4,13 @@ module Seed
   module Service
     module Types
       class Resource < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         discriminant :resource_type
 
-        member -> { Seed::Service::Types::User }, key: "USER"
+        member -> { ::Seed::Service::Types::User }, key: "USER"
 
-        member -> { Seed::Service::Types::Organization }, key: "ORGANIZATION"
+        member -> { ::Seed::Service::Types::Organization }, key: "ORGANIZATION"
       end
     end
   end

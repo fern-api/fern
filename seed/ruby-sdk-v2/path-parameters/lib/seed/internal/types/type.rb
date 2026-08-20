@@ -5,7 +5,7 @@ module Seed
     module Types
       # @abstract
       module Type
-        include Seed::Internal::JSON::Serializable
+        include ::Seed::Internal::JSON::Serializable
 
         # Coerces a value to this type
         #

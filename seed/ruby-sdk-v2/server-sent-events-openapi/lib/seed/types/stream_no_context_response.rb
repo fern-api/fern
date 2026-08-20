@@ -3,13 +3,13 @@
 module Seed
   module Types
     class StreamNoContextResponse < Internal::Types::Model
-      extend Seed::Internal::Types::Union
+      extend ::Seed::Internal::Types::Union
 
       discriminant :event
 
-      member -> { Seed::Types::DataContextHeartbeat }, key: "HEARTBEAT"
+      member -> { ::Seed::Types::DataContextHeartbeat }, key: "HEARTBEAT"
 
-      member -> { Seed::Types::DataContextEntityEvent }, key: "ENTITY"
+      member -> { ::Seed::Types::DataContextEntityEvent }, key: "ENTITY"
     end
   end
 end

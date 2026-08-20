@@ -22,7 +22,7 @@ module Seed
 
       if !client_id.to_s.empty? && !client_secret.to_s.empty? && (explicit_oauth_auth || !explicit_basic_auth)
         # Create an unauthenticated client for the auth endpoint
-        auth_raw_client = Seed::Internal::Http::RawClient.new(
+        auth_raw_client = ::Seed::Internal::Http::RawClient.new(
           base_url: base_url,
           headers: {
             "X-Fern-Language" => "Ruby"
@@ -30,10 +30,10 @@ module Seed
         )
 
         # Create the auth client for token retrieval
-        auth_client = Seed::Auth::Client.new(client: auth_raw_client)
+        auth_client = ::Seed::Auth::Client.new(client: auth_raw_client)
 
         # Create the OAuth provider with the auth client and credentials
-        @auth_provider = Seed::Internal::OAuthProvider.new(
+        @auth_provider = ::Seed::Internal::OAuthProvider.new(
           auth_client: auth_client,
           options: { base_url: base_url, client_id: client_id, client_secret: client_secret }
         )
@@ -46,7 +46,7 @@ module Seed
         "X-API-Key" => api_key.to_s
       }
       headers["Authorization"] = "Basic #{Base64.strict_encode64("#{username}:#{password}")}" if !username.nil? && !password.nil?
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: headers,
         auth_provider: @auth_provider,
@@ -54,14 +54,14 @@ module Seed
       )
     end
 
-    # @return [Seed::Auth::Client]
+    # @return [::Seed::Auth::Client]
     def auth
-      @auth ||= Seed::Auth::Client.new(client: @raw_client)
+      @auth ||= ::Seed::Auth::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::User::Client]
+    # @return [::Seed::User::Client]
     def user
-      @user ||= Seed::User::Client.new(client: @raw_client)
+      @user ||= ::Seed::User::Client.new(client: @raw_client)
     end
   end
 end

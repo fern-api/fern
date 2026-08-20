@@ -4,7 +4,7 @@ module Seed
   module Nullable
     module Types
       class WeirdNumber < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         member -> { Integer }
 

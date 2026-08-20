@@ -7,7 +7,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_error-property/0.0.1",
@@ -17,9 +17,9 @@ module Seed
       )
     end
 
-    # @return [Seed::PropertyBasedError::Client]
+    # @return [::Seed::PropertyBasedError::Client]
     def property_based_error
-      @property_based_error ||= Seed::PropertyBasedError::Client.new(client: @raw_client)
+      @property_based_error ||= ::Seed::PropertyBasedError::Client.new(client: @raw_client)
     end
   end
 end

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">update_profile_identifier</a>(profile_id:, id_type_path_param:, request) -> Seed::Types::UpdateProfileIdentifierResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">update_profile_identifier</a>(profile_id:, id_type_path_param:, request) -> ::Seed::Types::UpdateProfileIdentifierResponse</code></summary>
 <dl>
 <dd>
 

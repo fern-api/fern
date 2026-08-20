@@ -47,7 +47,7 @@ client.echo(request: "Hello world!\\n\\nwith\\n\\tnewlines")
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">create_type</a>(request) -> Seed::Types::Identifier</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create_type</a>(request) -> ::Seed::Types::Identifier</code></summary>
 <dl>
 <dd>
 
@@ -75,7 +75,7 @@ client.echo(request: "primitive")
 <dl>
 <dd>
 
-**request:** `Seed::Types::Type` 
+**request:** `::Seed::Types::Type` 
     
 </dd>
 </dl>
@@ -96,7 +96,7 @@ client.echo(request: "primitive")
 </details>
 
 ## File Notification Service
-<details><summary><code>client.file.notification.service.<a href="/lib/seed/file/notification/service/client.rb">get_exception</a>(notification_id:) -> Seed::Types::Types::Exception</code></summary>
+<details><summary><code>client.file.notification.service.<a href="/lib/seed/file/notification/service/client.rb">get_exception</a>(notification_id:) -> ::Seed::Types::Types::Exception</code></summary>
 <dl>
 <dd>
 
@@ -145,7 +145,7 @@ client.file.notification.service.get_exception(notification_id: "notification-hs
 </details>
 
 ## File Service
-<details><summary><code>client.file.service.<a href="/lib/seed/file/service/client.rb">get_file</a>(filename:) -> Seed::Types::Types::File</code></summary>
+<details><summary><code>client.file.service.<a href="/lib/seed/file/service/client.rb">get_file</a>(filename:) -> ::Seed::Types::Types::File</code></summary>
 <dl>
 <dd>
 
@@ -328,7 +328,7 @@ client.health.service.ping
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie</a>(movie_id:) -> Seed::Types::Types::Movie</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie</a>(movie_id:) -> ::Seed::Types::Types::Movie</code></summary>
 <dl>
 <dd>
 
@@ -421,7 +421,7 @@ client.service.create_movie(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Types::Movie` 
+**request:** `::Seed::Types::Types::Movie` 
     
 </dd>
 </dl>
@@ -441,7 +441,7 @@ client.service.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_metadata</a>() -> Seed::Types::Types::Metadata</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_metadata</a>() -> ::Seed::Types::Types::Metadata</code></summary>
 <dl>
 <dd>
 
@@ -508,7 +508,7 @@ client.service.get_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">create_big_entity</a>(request) -> Seed::Types::Types::Response</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">create_big_entity</a>(request) -> ::Seed::Types::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -669,7 +669,7 @@ client.service.create_big_entity(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Types::BigEntity` 
+**request:** `::Seed::Types::Types::BigEntity` 
     
 </dd>
 </dl>
@@ -719,7 +719,7 @@ client.service.refresh_token(request: {
 <dl>
 <dd>
 
-**request:** `Seed::Types::Types::RefreshTokenRequest` 
+**request:** `::Seed::Types::Types::RefreshTokenRequest` 
     
 </dd>
 </dl>

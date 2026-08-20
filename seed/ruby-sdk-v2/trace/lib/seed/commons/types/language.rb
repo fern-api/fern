@@ -4,7 +4,7 @@ module Seed
   module Commons
     module Types
       module Language
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         JAVA = "JAVA"
         JAVASCRIPT = "JAVASCRIPT"

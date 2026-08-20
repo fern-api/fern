@@ -7,7 +7,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_audiences/0.0.1",
@@ -17,19 +17,19 @@ module Seed
       )
     end
 
-    # @return [Seed::FolderA::Client]
+    # @return [::Seed::FolderA::Client]
     def folder_a
-      @folder_a ||= Seed::FolderA::Client.new(client: @raw_client)
+      @folder_a ||= ::Seed::FolderA::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::FolderD::Client]
+    # @return [::Seed::FolderD::Client]
     def folder_d
-      @folder_d ||= Seed::FolderD::Client.new(client: @raw_client)
+      @folder_d ||= ::Seed::FolderD::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Foo::Client]
+    # @return [::Seed::Foo::Client]
     def foo
-      @foo ||= Seed::Foo::Client.new(client: @raw_client)
+      @foo ||= ::Seed::Foo::Client.new(client: @raw_client)
     end
   end
 end

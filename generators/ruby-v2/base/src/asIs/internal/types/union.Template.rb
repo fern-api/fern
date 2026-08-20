@@ -5,7 +5,7 @@ module <%= gem_namespace %>
     module Types
       # Define a union between two types
       module Union
-        include <%= gem_namespace %>::Internal::Types::Type
+        include ::<%= gem_namespace %>::Internal::Types::Type
 
         def members
           @members ||= []
@@ -46,9 +46,9 @@ module <%= gem_namespace %>
         # @return [Boolean]
         private def type_matches?(value, member_type)
           case member_type
-          when <%= gem_namespace %>::Internal::Types::Hash
+          when ::<%= gem_namespace %>::Internal::Types::Hash
             value.is_a?(::Hash)
-          when <%= gem_namespace %>::Internal::Types::Array
+          when ::<%= gem_namespace %>::Internal::Types::Array
             value.is_a?(::Array)
           when Class, Module
             value.is_a?(member_type)

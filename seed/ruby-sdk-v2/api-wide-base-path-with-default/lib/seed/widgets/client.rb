@@ -3,15 +3,15 @@
 module Seed
   module Widgets
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Hash]
-      # @param params [Seed::Types::Widget]
+      # @param request_options [::Hash]
+      # @param params [::Seed::Types::Widget]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -25,26 +25,26 @@ module Seed
       #     name: "name"
       #   )
       #
-      # @return [Seed::Types::Widget]
+      # @return [::Seed::Types::Widget]
       def create(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
+        params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/#{URI.encode_uri_component(params.fetch(:api_version, "v1beta").to_s)}/widgets",
-          body: Seed::Types::Widget.new(params).to_h,
+          body: ::Seed::Types::Widget.new(params).to_h,
           request_options: request_options
         )
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Widget.load(response.body)
+          ::Seed::Types::Widget.load(response.body)
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end

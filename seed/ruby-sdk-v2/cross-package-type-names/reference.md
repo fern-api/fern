@@ -1,6 +1,6 @@
 # Reference
 ## FolderA Service
-<details><summary><code>client.folder_a.service.<a href="/lib/seed/folder_a/service/client.rb">get_direct_thread</a>() -> Seed::FolderA::Service::Types::Response</code></summary>
+<details><summary><code>client.folder_a.service.<a href="/lib/seed/folder_a/service/client.rb">get_direct_thread</a>() -> ::Seed::FolderA::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -41,7 +41,7 @@ client.folder_a.service.get_direct_thread
 </details>
 
 ## FolderD Service
-<details><summary><code>client.folder_d.service.<a href="/lib/seed/folder_d/service/client.rb">get_direct_thread</a>() -> Seed::FolderD::Service::Types::Response</code></summary>
+<details><summary><code>client.folder_d.service.<a href="/lib/seed/folder_d/service/client.rb">get_direct_thread</a>() -> ::Seed::FolderD::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -82,7 +82,7 @@ client.folder_a.service.get_direct_thread
 </details>
 
 ## Foo
-<details><summary><code>client.foo.<a href="/lib/seed/foo/client.rb">find</a>(request) -> Seed::Foo::Types::ImportingType</code></summary>
+<details><summary><code>client.foo.<a href="/lib/seed/foo/client.rb">find</a>(request) -> ::Seed::Foo::Types::ImportingType</code></summary>
 <dl>
 <dd>
 

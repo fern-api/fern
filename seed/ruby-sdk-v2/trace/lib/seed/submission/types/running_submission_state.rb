@@ -4,7 +4,7 @@ module Seed
   module Submission
     module Types
       module RunningSubmissionState
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         QUEUEING_SUBMISSION = "QUEUEING_SUBMISSION"
         KILLING_HISTORICAL_SUBMISSIONS = "KILLING_HISTORICAL_SUBMISSIONS"

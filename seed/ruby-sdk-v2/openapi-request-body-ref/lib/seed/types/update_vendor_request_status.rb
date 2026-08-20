@@ -3,7 +3,7 @@
 module Seed
   module Types
     module UpdateVendorRequestStatus
-      extend Seed::Internal::Types::Enum
+      extend ::Seed::Internal::Types::Enum
 
       ACTIVE = "ACTIVE"
       INACTIVE = "INACTIVE"

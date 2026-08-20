@@ -4,14 +4,14 @@ module Seed
   module Endpoints
     module Container
       class Client
-        # @param client [Seed::Internal::Http::RawClient]
+        # @param client [::Seed::Internal::Http::RawClient]
         #
         # @return [void]
         def initialize(client:)
           @client = client
         end
 
-        # @param request_options [Hash]
+        # @param request_options [::Hash]
         # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
@@ -24,8 +24,8 @@ module Seed
         #
         # @return [Array[String]]
         def get_and_return_list_of_primitives(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.normalize_keys(params)
-          request = Seed::Internal::JSON::Request.new(
+          params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/list-of-primitives",
@@ -35,16 +35,16 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           return if code.between?(200, 299)
 
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
 
-        # @param request_options [Hash]
+        # @param request_options [::Hash]
         # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
@@ -59,10 +59,10 @@ module Seed
         #     string: "string"
         #   }])
         #
-        # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
+        # @return [Array[::Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_list_of_objects(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.normalize_keys(params)
-          request = Seed::Internal::JSON::Request.new(
+          params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/list-of-objects",
@@ -72,16 +72,16 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           return if code.between?(200, 299)
 
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
 
-        # @param request_options [Hash]
+        # @param request_options [::Hash]
         # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
@@ -94,8 +94,8 @@ module Seed
         #
         # @return [Array[String]]
         def get_and_return_set_of_primitives(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.normalize_keys(params)
-          request = Seed::Internal::JSON::Request.new(
+          params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/set-of-primitives",
@@ -105,16 +105,16 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           return if code.between?(200, 299)
 
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
 
-        # @param request_options [Hash]
+        # @param request_options [::Hash]
         # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
@@ -127,10 +127,10 @@ module Seed
         #     string: "string"
         #   }]))
         #
-        # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
+        # @return [Array[::Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_set_of_objects(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.normalize_keys(params)
-          request = Seed::Internal::JSON::Request.new(
+          params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/set-of-objects",
@@ -140,16 +140,16 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           return if code.between?(200, 299)
 
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
 
-        # @param request_options [Hash]
+        # @param request_options [::Hash]
         # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
@@ -164,8 +164,8 @@ module Seed
         #
         # @return [Hash[String, String]]
         def get_and_return_map_prim_to_prim(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.normalize_keys(params)
-          request = Seed::Internal::JSON::Request.new(
+          params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-prim-to-prim",
@@ -175,16 +175,16 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           return if code.between?(200, 299)
 
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
 
-        # @param request_options [Hash]
+        # @param request_options [::Hash]
         # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
@@ -199,10 +199,10 @@ module Seed
         #     }
         #   })
         #
-        # @return [Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]]
+        # @return [Hash[String, ::Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_map_of_prim_to_object(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.normalize_keys(params)
-          request = Seed::Internal::JSON::Request.new(
+          params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-prim-to-object",
@@ -212,16 +212,16 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           return if code.between?(200, 299)
 
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
 
-        # @param request_options [Hash]
+        # @param request_options [::Hash]
         # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
@@ -234,10 +234,10 @@ module Seed
         #     string: 1.1
         #   })
         #
-        # @return [Hash[String, Seed::Types::Union::Types::MixedType]]
+        # @return [Hash[String, ::Seed::Types::Union::Types::MixedType]]
         def get_and_return_map_of_prim_to_undiscriminated_union(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.normalize_keys(params)
-          request = Seed::Internal::JSON::Request.new(
+          params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-prim-to-union",
@@ -247,16 +247,16 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           return if code.between?(200, 299)
 
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
 
-        # @param request_options [Hash]
+        # @param request_options [::Hash]
         # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
@@ -269,10 +269,10 @@ module Seed
         #     string: "string"
         #   })
         #
-        # @return [Seed::Types::Object_::Types::ObjectWithRequiredField, nil]
+        # @return [::Seed::Types::Object_::Types::ObjectWithRequiredField, nil]
         def get_and_return_optional(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.normalize_keys(params)
-          request = Seed::Internal::JSON::Request.new(
+          params = ::Seed::Internal::Types::Utils.normalize_keys(params)
+          request = ::Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/opt-objects",
@@ -282,12 +282,12 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise ::Seed::Errors::TimeoutError
           end
           code = response.code.to_i
           return if code.between?(200, 299)
 
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end

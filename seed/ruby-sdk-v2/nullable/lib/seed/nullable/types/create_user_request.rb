@@ -8,7 +8,7 @@ module Seed
 
         field :tags, -> { Internal::Types::Array[String] }, optional: true, nullable: false
 
-        field :metadata, -> { Seed::Nullable::Types::Metadata }, optional: true, nullable: false
+        field :metadata, -> { ::Seed::Nullable::Types::Metadata }, optional: true, nullable: false
 
         field :avatar, -> { String }, optional: true, nullable: false
       end

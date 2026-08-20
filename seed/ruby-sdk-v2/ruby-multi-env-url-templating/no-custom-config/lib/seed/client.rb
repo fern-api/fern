@@ -3,24 +3,24 @@
 module Seed
   class Client
     # @param base_url [String, nil]
-    # @param environment [Hash[Symbol, String], nil]
+    # @param environment [Hash[::Symbol, String], nil]
     # @param region [String, nil]
     # @param max_retries [Integer]
     #
     # @return [void]
-    def initialize(base_url: nil, environment: Seed::Environment::PRODUCTION, region: nil, max_retries: 2)
+    def initialize(base_url: nil, environment: ::Seed::Environment::PRODUCTION, region: nil, max_retries: 2)
       unless region.nil?
         region_value = region.nil? ? "us1" : region
         environment_url_templates = {
-          Seed::Environment::PRODUCTION => {
+          ::Seed::Environment::PRODUCTION => {
             acme: "https://api.#{region_value}.acme.com",
             oauth: "https://oauth.#{region_value}.acme.com"
           },
-          Seed::Environment::STAGING => {
+          ::Seed::Environment::STAGING => {
             acme: "https://api.stage.#{region_value}.acme.com",
             oauth: "https://oauth.stage.#{region_value}.acme.com"
           },
-          Seed::Environment::DEVELOPMENT => {
+          ::Seed::Environment::DEVELOPMENT => {
             acme: "https://api.dev.#{region_value}.acme.com",
             oauth: "https://oauth.dev.#{region_value}.acme.com"
           }
@@ -35,7 +35,7 @@ module Seed
       @base_url = base_url
       @environment = environment
 
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url || environment&.dig(:acme),
         headers: {
           "User-Agent" => "fern_ruby-multi-env-url-templating/0.0.1",
@@ -45,14 +45,14 @@ module Seed
       )
     end
 
-    # @return [Seed::Auth::Client]
+    # @return [::Seed::Auth::Client]
     def auth
-      @auth ||= Seed::Auth::Client.new(client: @raw_client, base_url: @base_url, environment: @environment)
+      @auth ||= ::Seed::Auth::Client.new(client: @raw_client, base_url: @base_url, environment: @environment)
     end
 
-    # @return [Seed::Core::Client]
+    # @return [::Seed::Core::Client]
     def core
-      @core ||= Seed::Core::Client.new(client: @raw_client, base_url: @base_url, environment: @environment)
+      @core ||= ::Seed::Core::Client.new(client: @raw_client, base_url: @base_url, environment: @environment)
     end
   end
 end

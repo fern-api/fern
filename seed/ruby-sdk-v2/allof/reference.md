@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">search_rule_types</a>() -> Seed::Types::RuleTypeSearchResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">search_rule_types</a>() -> ::Seed::Types::RuleTypeSearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -47,7 +47,7 @@ client.search_rule_types
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">create_rule</a>(request) -> Seed::Types::RuleResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create_rule</a>(request) -> ::Seed::Types::RuleResponse</code></summary>
 <dl>
 <dd>
 
@@ -86,7 +86,7 @@ client.create_rule(
 <dl>
 <dd>
 
-**execution_context:** `Seed::Types::RuleCreateRequestExecutionContext` — Execution context for the rule, excluding the prod environment.
+**execution_context:** `::Seed::Types::RuleCreateRequestExecutionContext` — Execution context for the rule, excluding the prod environment.
     
 </dd>
 </dl>
@@ -106,7 +106,7 @@ client.create_rule(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">list_users</a>() -> Seed::Types::UserSearchResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">list_users</a>() -> ::Seed::Types::UserSearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -146,7 +146,7 @@ client.list_users
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_entity</a>() -> Seed::Types::CombinedEntity</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_entity</a>() -> ::Seed::Types::CombinedEntity</code></summary>
 <dl>
 <dd>
 
@@ -186,7 +186,7 @@ client.get_entity
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_organization</a>() -> Seed::Types::Organization</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_organization</a>() -> ::Seed::Types::Organization</code></summary>
 <dl>
 <dd>
 
@@ -226,7 +226,7 @@ client.get_organization
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">create_plant</a>(request) -> Seed::Types::PlantStrict</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create_plant</a>(request) -> ::Seed::Types::PlantStrict</code></summary>
 <dl>
 <dd>
 
@@ -273,7 +273,7 @@ client.create_plant(
 <dl>
 <dd>
 
-**sun_exposure:** `Seed::Types::PlantPostSunExposure` — Required sun exposure level.
+**sun_exposure:** `::Seed::Types::PlantPostSunExposure` — Required sun exposure level.
     
 </dd>
 </dl>
@@ -309,7 +309,7 @@ client.create_plant(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">create_tree</a>(request) -> Seed::Types::TreeRecord</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create_tree</a>(request) -> ::Seed::Types::TreeRecord</code></summary>
 <dl>
 <dd>
 
@@ -351,7 +351,7 @@ client.create_tree(id: "id")
 <dl>
 <dd>
 
-**request:** `Seed::Types::TreeRecord` 
+**request:** `::Seed::Types::TreeRecord` 
     
 </dd>
 </dl>

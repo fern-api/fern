@@ -3,7 +3,7 @@
 module Seed
   module Types
     module RuleCreateRequestExecutionContext
-      extend Seed::Internal::Types::Enum
+      extend ::Seed::Internal::Types::Enum
 
       PROD = "prod"
       STAGING = "staging"

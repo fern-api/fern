@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="/lib/seed/dummy/client.rb">generate_stream</a>(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
+<details><summary><code>client.dummy.<a href="/lib/seed/dummy/client.rb">generate_stream</a>(request) -> ::Seed::Dummy::Types::StreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -59,7 +59,7 @@ client.dummy.generate_stream(
 </dl>
 </details>
 
-<details><summary><code>client.dummy.<a href="/lib/seed/dummy/client.rb">generate</a>(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
+<details><summary><code>client.dummy.<a href="/lib/seed/dummy/client.rb">generate</a>(request) -> ::Seed::Dummy::Types::StreamResponse</code></summary>
 <dl>
 <dd>
 

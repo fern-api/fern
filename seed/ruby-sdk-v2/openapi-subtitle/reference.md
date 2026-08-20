@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">list_plants</a>() -> Internal::Types::Array[Seed::Types::Plant]</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">list_plants</a>() -> Internal::Types::Array[::Seed::Types::Plant]</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ client.list_plants
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_plant</a>(plant_id:) -> Seed::Types::Plant</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_plant</a>(plant_id:) -> ::Seed::Types::Plant</code></summary>
 <dl>
 <dd>
 

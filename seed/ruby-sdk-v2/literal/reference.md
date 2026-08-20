@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.<a href="/lib/seed/headers/client.rb">send_</a>(request) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.headers.<a href="/lib/seed/headers/client.rb">send_</a>(request) -> ::Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -68,7 +68,7 @@ client.headers.send_(
 </dl>
 </details>
 
-<details><summary><code>client.headers.<a href="/lib/seed/headers/client.rb">send_literals_only</a>() -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.headers.<a href="/lib/seed/headers/client.rb">send_literals_only</a>() -> ::Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -130,7 +130,7 @@ client.headers.send_literals_only(request_options: {
 </details>
 
 ## Inlined
-<details><summary><code>client.inlined.<a href="/lib/seed/inlined/client.rb">send_</a>(request) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.inlined.<a href="/lib/seed/inlined/client.rb">send_</a>(request) -> ::Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -227,7 +227,7 @@ client.inlined.send_(
 <dl>
 <dd>
 
-**object_with_literal:** `Seed::Inlined::Types::ATopLevelLiteral` 
+**object_with_literal:** `::Seed::Inlined::Types::ATopLevelLiteral` 
     
 </dd>
 </dl>
@@ -248,7 +248,7 @@ client.inlined.send_(
 </details>
 
 ## Path
-<details><summary><code>client.path.<a href="/lib/seed/path/client.rb">send_</a>(id:) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.path.<a href="/lib/seed/path/client.rb">send_</a>(id:) -> ::Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -297,7 +297,7 @@ client.path.send_(id: "123")
 </details>
 
 ## Query
-<details><summary><code>client.query.<a href="/lib/seed/query/client.rb">send_</a>() -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.query.<a href="/lib/seed/query/client.rb">send_</a>() -> ::Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -420,7 +420,7 @@ client.query.send_(
 </details>
 
 ## Reference
-<details><summary><code>client.reference.<a href="/lib/seed/reference/client.rb">send_</a>(request) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.reference.<a href="/lib/seed/reference/client.rb">send_</a>(request) -> ::Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -460,7 +460,7 @@ client.reference.send_(
 <dl>
 <dd>
 
-**request:** `Seed::Reference::Types::SendRequest` 
+**request:** `::Seed::Reference::Types::SendRequest` 
     
 </dd>
 </dl>

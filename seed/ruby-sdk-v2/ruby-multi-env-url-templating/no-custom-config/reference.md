@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token</a>() -> Seed::Auth::Types::GetTokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token</a>() -> ::Seed::Auth::Types::GetTokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -41,7 +41,7 @@ client.auth.get_token
 </details>
 
 ## Core
-<details><summary><code>client.core.<a href="/lib/seed/core/client.rb">list_things</a>() -> Seed::Core::Types::ListThingsResponse</code></summary>
+<details><summary><code>client.core.<a href="/lib/seed/core/client.rb">list_things</a>() -> ::Seed::Core::Types::ListThingsResponse</code></summary>
 <dl>
 <dd>
 

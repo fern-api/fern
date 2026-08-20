@@ -3,7 +3,7 @@
 module Seed
   module Types
     class AstllmNodeWithSchema < Internal::Types::Model
-      field :type, -> { Seed::Types::AstllmNodeWithSchemaType }, optional: false, nullable: false
+      field :type, -> { ::Seed::Types::AstllmNodeWithSchemaType }, optional: false, nullable: false
 
       field :model, -> { String }, optional: false, nullable: false
 

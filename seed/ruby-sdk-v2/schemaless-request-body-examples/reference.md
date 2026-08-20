@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">create_plant</a>(request) -> Seed::Types::CreatePlantResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create_plant</a>(request) -> ::Seed::Types::CreatePlantResponse</code></summary>
 <dl>
 <dd>
 
@@ -70,7 +70,7 @@ client.create_plant(request: {
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">update_plant</a>(plant_id:, request) -> Seed::Types::UpdatePlantResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">update_plant</a>(plant_id:, request) -> ::Seed::Types::UpdatePlantResponse</code></summary>
 <dl>
 <dd>
 
@@ -148,7 +148,7 @@ client.update_plant(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">create_plant_with_schema</a>(request) -> Seed::Types::CreatePlantWithSchemaResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create_plant_with_schema</a>(request) -> ::Seed::Types::CreatePlantWithSchemaResponse</code></summary>
 <dl>
 <dd>
 

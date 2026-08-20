@@ -8,13 +8,13 @@ module Seed
 
         field :line_number, -> { Integer }, optional: false, nullable: false, api_name: "lineNumber"
 
-        field :file, -> { Seed::Submission::Types::TracedFile }, optional: false, nullable: false
+        field :file, -> { ::Seed::Submission::Types::TracedFile }, optional: false, nullable: false
 
-        field :return_value, -> { Seed::Commons::Types::DebugVariableValue }, optional: true, nullable: false, api_name: "returnValue"
+        field :return_value, -> { ::Seed::Commons::Types::DebugVariableValue }, optional: true, nullable: false, api_name: "returnValue"
 
-        field :expression_location, -> { Seed::Submission::Types::ExpressionLocation }, optional: true, nullable: false, api_name: "expressionLocation"
+        field :expression_location, -> { ::Seed::Submission::Types::ExpressionLocation }, optional: true, nullable: false, api_name: "expressionLocation"
 
-        field :stack, -> { Seed::Submission::Types::StackInformation }, optional: false, nullable: false
+        field :stack, -> { ::Seed::Submission::Types::StackInformation }, optional: false, nullable: false
 
         field :stdout, -> { String }, optional: true, nullable: false
       end

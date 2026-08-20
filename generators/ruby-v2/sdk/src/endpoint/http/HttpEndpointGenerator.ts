@@ -78,7 +78,8 @@ export class HttpEndpointGenerator {
                     ruby.invokeMethod({
                         on: ruby.classReference({
                             name: "Utils",
-                            modules: [this.context.getRootModuleName(), "Internal", "Types"]
+                            modules: [this.context.getRootModuleName(), "Internal", "Types"],
+                            fullyQualified: true
                         }),
                         method: "normalize_keys",
                         arguments_: [ruby.codeblock(PARAMS_VN)]
@@ -197,7 +198,8 @@ export class HttpEndpointGenerator {
                         ruby.invokeMethod({
                             on: ruby.classReference({
                                 name: customPagerClassName,
-                                modules: [this.context.getRootModuleName(), "Internal"]
+                                modules: [this.context.getRootModuleName(), "Internal"],
+                                fullyQualified: true
                             }),
                             method: "new",
                             arguments_: [ruby.codeblock("parsed_response")],
@@ -224,7 +226,8 @@ export class HttpEndpointGenerator {
                         ruby.invokeMethod({
                             on: ruby.classReference({
                                 name: "CursorItemIterator",
-                                modules: [this.context.getRootModuleName(), "Internal"]
+                                modules: [this.context.getRootModuleName(), "Internal"],
+                                fullyQualified: true
                             }),
                             method: "new",
                             arguments_: [],
@@ -267,7 +270,8 @@ export class HttpEndpointGenerator {
                         ruby.invokeMethod({
                             on: ruby.classReference({
                                 name: "OffsetItemIterator",
-                                modules: [this.context.getRootModuleName(), "Internal"]
+                                modules: [this.context.getRootModuleName(), "Internal"],
+                                fullyQualified: true
                             }),
                             method: "new",
                             arguments_: [],
@@ -394,7 +398,7 @@ export class HttpEndpointGenerator {
             );
         // Generation of the key lives in a single core helper so the underlying
         // source of randomness is not repeated at every eligible endpoint.
-        const generateExpression = `${this.context.getRootModuleName()}::Internal::IdempotencyKey.generate`;
+        const generateExpression = `::${this.context.getRootModuleName()}::Internal::IdempotencyKey.generate`;
         const expression = declaresIdempotencyKey
             ? `request_options[:idempotency_key] || ${generateExpression}`
             : generateExpression;
@@ -433,7 +437,8 @@ export class HttpEndpointGenerator {
                         body: ruby.raise({
                             errorClass: ruby.classReference({
                                 name: "TimeoutError",
-                                modules: [this.context.getRootModuleName(), "Errors"]
+                                modules: [this.context.getRootModuleName(), "Errors"],
+                                fullyQualified: true
                             })
                         })
                     }
@@ -453,7 +458,7 @@ export class HttpEndpointGenerator {
         const errorBody = ruby.codeblock((writer) => {
             const rootModuleName = this.context.getRootModuleName();
             writer.writeLine(
-                `${ERROR_CLASS_VN} = ${rootModuleName}::Errors::ResponseError.subclass_for_code(${CODE_VN})`
+                `${ERROR_CLASS_VN} = ::${rootModuleName}::Errors::ResponseError.subclass_for_code(${CODE_VN})`
             );
 
             ruby.raise({

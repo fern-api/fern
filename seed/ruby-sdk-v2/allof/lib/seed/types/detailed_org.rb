@@ -3,7 +3,7 @@
 module Seed
   module Types
     class DetailedOrg < Internal::Types::Model
-      field :metadata, -> { Seed::Types::DetailedOrgMetadata }, optional: true, nullable: false
+      field :metadata, -> { ::Seed::Types::DetailedOrgMetadata }, optional: true, nullable: false
     end
   end
 end

@@ -10,7 +10,7 @@ module Seed
 
         field :phone, -> { String }, optional: true, nullable: false
 
-        field :address, -> { Seed::NullableOptional::Types::Address }, optional: true, nullable: false
+        field :address, -> { ::Seed::NullableOptional::Types::Address }, optional: true, nullable: false
       end
     end
   end

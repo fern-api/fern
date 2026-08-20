@@ -5,9 +5,9 @@ module Seed
     module Problem
       module Types
         class DefaultProvidedFile < Internal::Types::Model
-          field :file, -> { Seed::V2::Problem::Types::FileInfoV2 }, optional: false, nullable: false
+          field :file, -> { ::Seed::V2::Problem::Types::FileInfoV2 }, optional: false, nullable: false
 
-          field :related_types, -> { Internal::Types::Array[Seed::Commons::Types::VariableType] }, optional: false, nullable: false, api_name: "relatedTypes"
+          field :related_types, -> { Internal::Types::Array[::Seed::Commons::Types::VariableType] }, optional: false, nullable: false, api_name: "relatedTypes"
         end
       end
     end

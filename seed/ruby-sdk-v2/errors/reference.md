@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>client.simple.<a href="/lib/seed/simple/client.rb">foo_without_endpoint_error</a>(request) -> Seed::Simple::Types::FooResponse</code></summary>
+<details><summary><code>client.simple.<a href="/lib/seed/simple/client.rb">foo_without_endpoint_error</a>(request) -> ::Seed::Simple::Types::FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.simple.foo_without_endpoint_error(bar: "bar")
 <dl>
 <dd>
 
-**request:** `Seed::Simple::Types::FooRequest` 
+**request:** `::Seed::Simple::Types::FooRequest` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.simple.foo_without_endpoint_error(bar: "bar")
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="/lib/seed/simple/client.rb">foo</a>(request) -> Seed::Simple::Types::FooResponse</code></summary>
+<details><summary><code>client.simple.<a href="/lib/seed/simple/client.rb">foo</a>(request) -> ::Seed::Simple::Types::FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -76,7 +76,7 @@ client.simple.foo(bar: "bar")
 <dl>
 <dd>
 
-**request:** `Seed::Simple::Types::FooRequest` 
+**request:** `::Seed::Simple::Types::FooRequest` 
     
 </dd>
 </dl>
@@ -96,7 +96,7 @@ client.simple.foo(bar: "bar")
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="/lib/seed/simple/client.rb">foo_with_examples</a>(request) -> Seed::Simple::Types::FooResponse</code></summary>
+<details><summary><code>client.simple.<a href="/lib/seed/simple/client.rb">foo_with_examples</a>(request) -> ::Seed::Simple::Types::FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -124,7 +124,7 @@ client.simple.foo_with_examples(bar: "hello")
 <dl>
 <dd>
 
-**request:** `Seed::Simple::Types::FooRequest` 
+**request:** `::Seed::Simple::Types::FooRequest` 
     
 </dd>
 </dl>

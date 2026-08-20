@@ -14,16 +14,16 @@ module Seed
         "X-Fern-Language" => "Ruby"
       }
       headers["Authorization"] = "Basic #{Base64.strict_encode64("#{username}:#{access_token}")}"
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: headers,
         max_retries: max_retries
       )
     end
 
-    # @return [Seed::BasicAuth::Client]
+    # @return [::Seed::BasicAuth::Client]
     def basic_auth
-      @basic_auth ||= Seed::BasicAuth::Client.new(client: @raw_client)
+      @basic_auth ||= ::Seed::BasicAuth::Client.new(client: @raw_client)
     end
   end
 end

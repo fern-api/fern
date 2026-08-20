@@ -38,7 +38,7 @@ client.refund(
 <dl>
 <dd>
 
-**request:** `Seed::Types::RefundRequest` 
+**request:** `::Seed::Types::RefundRequest` 
     
 </dd>
 </dl>
@@ -97,7 +97,7 @@ client.required_refund(
 <dl>
 <dd>
 
-**request:** `Seed::Types::RefundRequest` 
+**request:** `::Seed::Types::RefundRequest` 
     
 </dd>
 </dl>
@@ -145,7 +145,7 @@ client.bulk_refund
 <dl>
 <dd>
 
-**request:** `Seed::Types::RefundRequest` 
+**request:** `::Seed::Types::RefundRequest` 
     
 </dd>
 </dl>

@@ -3,7 +3,7 @@
 module Seed
   module Types
     class AstllmNodeWithPrompt < Internal::Types::Model
-      field :type, -> { Seed::Types::AstllmNodeWithPromptType }, optional: false, nullable: false
+      field :type, -> { ::Seed::Types::AstllmNodeWithPromptType }, optional: false, nullable: false
 
       field :model, -> { String }, optional: false, nullable: false
 

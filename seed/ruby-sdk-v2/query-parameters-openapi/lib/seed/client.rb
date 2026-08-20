@@ -2,7 +2,7 @@
 
 module Seed
   class Client
-    # @param request_options [Hash]
+    # @param request_options [::Hash]
     # @param params [Hash]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
@@ -15,17 +15,17 @@ module Seed
     # @option params [String] :deadline
     # @option params [String] :bytes
     # @option params [Seed::Types::User] :user
-    # @option params [Seed::Types::User, nil] :user_list
+    # @option params [::Seed::Types::User, nil] :user_list
     # @option params [String, nil] :optional_deadline
     # @option params [Hash[String, String], nil] :key_value
     # @option params [String, nil] :optional_string
-    # @option params [Seed::Types::NestedUser, nil] :nested_user
-    # @option params [Seed::Types::User, nil] :optional_user
-    # @option params [Seed::Types::User, nil] :exclude_user
+    # @option params [::Seed::Types::NestedUser, nil] :nested_user
+    # @option params [::Seed::Types::User, nil] :optional_user
+    # @option params [::Seed::Types::User, nil] :exclude_user
     # @option params [String, nil] :filter
     # @option params [String, nil] :tags
     # @option params [String, nil] :optional_tags
-    # @option params [Seed::Types::SearchRequestNeighbor, nil] :neighbor
+    # @option params [::Seed::Types::SearchRequestNeighbor, nil] :neighbor
     # @option params [Seed::Types::SearchRequestNeighborRequired] :neighbor_required
     #
     # @example
@@ -65,9 +65,9 @@ module Seed
     #     }
     #   )
     #
-    # @return [Seed::Types::SearchResponse]
+    # @return [::Seed::Types::SearchResponse]
     def search(request_options: {}, **params)
-      params = Seed::Internal::Types::Utils.normalize_keys(params)
+      params = ::Seed::Internal::Types::Utils.normalize_keys(params)
       query_params = {}
       query_params["limit"] = params[:limit] if params.key?(:limit)
       query_params["id"] = params[:id] if params.key?(:id)
@@ -88,7 +88,7 @@ module Seed
       query_params["neighbor"] = params[:neighbor] if params.key?(:neighbor)
       query_params["neighborRequired"] = params[:neighbor_required] if params.key?(:neighbor_required)
 
-      request = Seed::Internal::JSON::Request.new(
+      request = ::Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "GET",
         path: "user/getUsername",
@@ -98,13 +98,13 @@ module Seed
       begin
         response = @client.send(request)
       rescue Net::HTTPRequestTimeout
-        raise Seed::Errors::TimeoutError
+        raise ::Seed::Errors::TimeoutError
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::SearchResponse.load(response.body)
+        ::Seed::Types::SearchResponse.load(response.body)
       else
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end
@@ -114,7 +114,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_query-parameters-openapi/0.0.1",

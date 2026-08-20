@@ -4,7 +4,7 @@ module Seed
   module Types
     module Types
       module MigrationStatus
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         RUNNING = "RUNNING"
         FAILED = "FAILED"

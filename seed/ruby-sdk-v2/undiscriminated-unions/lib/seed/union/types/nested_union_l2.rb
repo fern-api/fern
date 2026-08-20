@@ -5,7 +5,7 @@ module Seed
     module Types
       # Nested layer 2.
       class NestedUnionL2 < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         member -> { Internal::Types::Boolean }
 

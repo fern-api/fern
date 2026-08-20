@@ -12,7 +12,7 @@ module Seed
     # @return [void]
     def initialize(client_id:, client_secret:, scp:, entity_id:, base_url: nil, max_retries: 2)
       # Create an unauthenticated client for the auth endpoint
-      auth_raw_client = Seed::Internal::Http::RawClient.new(
+      auth_raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "X-Fern-Language" => "Ruby"
@@ -20,15 +20,15 @@ module Seed
       )
 
       # Create the auth client for token retrieval
-      auth_client = Seed::Auth::Client.new(client: auth_raw_client)
+      auth_client = ::Seed::Auth::Client.new(client: auth_raw_client)
 
       # Create the OAuth provider with the auth client and credentials
-      @auth_provider = Seed::Internal::OAuthProvider.new(
+      @auth_provider = ::Seed::Internal::OAuthProvider.new(
         auth_client: auth_client,
         options: { base_url: base_url, client_id: client_id, client_secret: client_secret, scp: scp, entity_id: entity_id }
       )
 
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_oauth-client-credentials-custom/0.0.1",
@@ -39,24 +39,24 @@ module Seed
       )
     end
 
-    # @return [Seed::Auth::Client]
+    # @return [::Seed::Auth::Client]
     def auth
-      @auth ||= Seed::Auth::Client.new(client: @raw_client)
+      @auth ||= ::Seed::Auth::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::NestedNoAuth::Client]
+    # @return [::Seed::NestedNoAuth::Client]
     def nested_no_auth
-      @nested_no_auth ||= Seed::NestedNoAuth::Client.new(client: @raw_client)
+      @nested_no_auth ||= ::Seed::NestedNoAuth::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Nested::Client]
+    # @return [::Seed::Nested::Client]
     def nested
-      @nested ||= Seed::Nested::Client.new(client: @raw_client)
+      @nested ||= ::Seed::Nested::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Simple::Client]
+    # @return [::Seed::Simple::Client]
     def simple
-      @simple ||= Seed::Simple::Client.new(client: @raw_client)
+      @simple ||= ::Seed::Simple::Client.new(client: @raw_client)
     end
   end
 end

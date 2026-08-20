@@ -13,7 +13,7 @@ module Seed
 
         field :total, -> { Integer }, optional: true, nullable: false
 
-        field :clients, -> { Internal::Types::Array[Seed::Types::Types::Client] }, optional: false, nullable: false
+        field :clients, -> { Internal::Types::Array[::Seed::Types::Types::Client] }, optional: false, nullable: false
       end
     end
   end

@@ -4,13 +4,13 @@ module Seed
   module Package
     module Types
       class DependencyItem < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend ::Seed::Internal::Types::Union
 
         discriminant :type
 
-        member -> { Seed::Package::Types::KnownDependency }, key: "KNOWN"
+        member -> { ::Seed::Package::Types::KnownDependency }, key: "KNOWN"
 
-        member -> { Seed::Package::Types::KnownDependency }, key: "UNKNOWN"
+        member -> { ::Seed::Package::Types::KnownDependency }, key: "UNKNOWN"
       end
     end
   end

@@ -4,11 +4,11 @@ module Seed
   module Types
     # Example of an undiscriminated union
     class UserOrAdmin < Internal::Types::Model
-      extend Seed::Internal::Types::Union
+      extend ::Seed::Internal::Types::Union
 
-      member -> { Seed::Types::User }
+      member -> { ::Seed::Types::User }
 
-      member -> { Seed::Types::Admin }
+      member -> { ::Seed::Types::Admin }
     end
   end
 end

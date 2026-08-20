@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_union</a>() -> Seed::Types::UnionResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_union</a>() -> ::Seed::Types::UnionResponse</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ client.get_union
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">list_unions</a>() -> Seed::Types::UnionListResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">list_unions</a>() -> ::Seed::Types::UnionListResponse</code></summary>
 <dl>
 <dd>
 

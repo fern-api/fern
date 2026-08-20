@@ -8,7 +8,7 @@ module Seed
 
         field :query, -> { String }, optional: true, nullable: false
 
-        field :config, -> { Seed::Products::Types::SearchProductsRequestConfig }, optional: true, nullable: false
+        field :config, -> { ::Seed::Products::Types::SearchProductsRequestConfig }, optional: true, nullable: false
       end
     end
   end

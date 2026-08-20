@@ -39,7 +39,7 @@ client.echo(
 <dl>
 <dd>
 
-**request:** `Seed::Types::EchoRequest` 
+**request:** `::Seed::Types::EchoRequest` 
     
 </dd>
 </dl>

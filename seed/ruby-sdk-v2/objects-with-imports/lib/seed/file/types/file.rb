@@ -8,7 +8,7 @@ module Seed
 
         field :contents, -> { String }, optional: false, nullable: false
 
-        field :info, -> { Seed::File::Types::FileInfo }, optional: false, nullable: false
+        field :info, -> { ::Seed::File::Types::FileInfo }, optional: false, nullable: false
       end
     end
   end

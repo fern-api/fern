@@ -1,6 +1,6 @@
 # Reference
 ## Identity
-<details><summary><code>client.identity.<a href="/lib/seed/identity/client.rb">get_token</a>(request) -> Seed::Types::TokenResponse</code></summary>
+<details><summary><code>client.identity.<a href="/lib/seed/identity/client.rb">get_token</a>(request) -> ::Seed::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -60,7 +60,7 @@ client.identity.get_token(
 </details>
 
 ## Plants
-<details><summary><code>client.plants.<a href="/lib/seed/plants/client.rb">list</a>() -> Internal::Types::Array[Seed::Types::Plant]</code></summary>
+<details><summary><code>client.plants.<a href="/lib/seed/plants/client.rb">list</a>() -> Internal::Types::Array[::Seed::Types::Plant]</code></summary>
 <dl>
 <dd>
 
@@ -100,7 +100,7 @@ client.plants.list
 </dl>
 </details>
 
-<details><summary><code>client.plants.<a href="/lib/seed/plants/client.rb">get</a>(plant_id:) -> Seed::Types::Plant</code></summary>
+<details><summary><code>client.plants.<a href="/lib/seed/plants/client.rb">get</a>(plant_id:) -> ::Seed::Types::Plant</code></summary>
 <dl>
 <dd>
 

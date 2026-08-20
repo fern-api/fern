@@ -3,14 +3,14 @@
 module Seed
   module Service
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -23,7 +23,7 @@ module Seed
       #
       # @return [untyped]
       def endpoint(request_options: {}, **_params)
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
           path: "/container/",
@@ -32,12 +32,12 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         return if code.between?(200, 299)
 
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
     end

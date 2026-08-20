@@ -80,7 +80,7 @@ client.unknown.post_object(unknown: {
 <dl>
 <dd>
 
-**request:** `Seed::Unknown::Types::MyObject` 
+**request:** `::Seed::Unknown::Types::MyObject` 
     
 </dd>
 </dl>

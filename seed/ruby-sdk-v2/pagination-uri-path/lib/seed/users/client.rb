@@ -3,14 +3,14 @@
 module Seed
   module Users
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [::Seed::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -21,9 +21,9 @@ module Seed
       # @example
       #   client.users.list_with_uri_pagination
       #
-      # @return [Seed::Users::Types::ListUsersURIPaginationResponse]
+      # @return [::Seed::Users::Types::ListUsersURIPaginationResponse]
       def list_with_uri_pagination(request_options: {}, **_params)
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/users/uri",
@@ -32,19 +32,19 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          parsed_response = Seed::Users::Types::ListUsersURIPaginationResponse.load(response.body)
+          parsed_response = ::Seed::Users::Types::ListUsersURIPaginationResponse.load(response.body)
           [parsed_response, response]
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end
 
-      # @param request_options [Hash]
+      # @param request_options [::Hash]
       # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -55,9 +55,9 @@ module Seed
       # @example
       #   client.users.list_with_path_pagination
       #
-      # @return [Seed::Users::Types::ListUsersPathPaginationResponse]
+      # @return [::Seed::Users::Types::ListUsersPathPaginationResponse]
       def list_with_path_pagination(request_options: {}, **_params)
-        request = Seed::Internal::JSON::Request.new(
+        request = ::Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/users/path",
@@ -66,14 +66,14 @@ module Seed
         begin
           response = @client.send(request)
         rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
+          raise ::Seed::Errors::TimeoutError
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          parsed_response = Seed::Users::Types::ListUsersPathPaginationResponse.load(response.body)
+          parsed_response = ::Seed::Users::Types::ListUsersPathPaginationResponse.load(response.body)
           [parsed_response, response]
         else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          error_class = ::Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end

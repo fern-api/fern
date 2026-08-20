@@ -8,7 +8,7 @@ module Seed
     #
     # @return [void]
     def initialize(token:, base_url: nil, max_retries: 2)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = ::Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_pagination-uri-path/0.0.1",
@@ -19,9 +19,9 @@ module Seed
       )
     end
 
-    # @return [Seed::Users::Client]
+    # @return [::Seed::Users::Client]
     def users
-      @users ||= Seed::Users::Client.new(client: @raw_client)
+      @users ||= ::Seed::Users::Client.new(client: @raw_client)
     end
   end
 end

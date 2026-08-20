@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated SDKs failing to load when a service has the same Ruby module name as the SDK's
+    root module. References to generated root-module constants now resolve from Ruby's top-level
+    namespace instead of being redirected by lexical constant lookup.
+  type: fix

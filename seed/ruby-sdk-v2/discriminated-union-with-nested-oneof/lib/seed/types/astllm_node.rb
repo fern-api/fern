@@ -6,11 +6,11 @@ module Seed
     # sharing the same discriminant value, to test that the importer merges
     # them into a single object rather than wrapping in a "value" property.
     class AstllmNode < Internal::Types::Model
-      extend Seed::Internal::Types::Union
+      extend ::Seed::Internal::Types::Union
 
-      member -> { Seed::Types::AstllmNodeWithSchema }
+      member -> { ::Seed::Types::AstllmNodeWithSchema }
 
-      member -> { Seed::Types::AstllmNodeWithPrompt }
+      member -> { ::Seed::Types::AstllmNodeWithPrompt }
     end
   end
 end

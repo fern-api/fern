@@ -4,7 +4,7 @@ module Seed
   module Events
     module Types
       module EventTypeEnum
-        extend Seed::Internal::Types::Enum
+        extend ::Seed::Internal::Types::Enum
 
         GROUP_CREATED = "group.created"
         USER_UPDATED = "user.updated"

@@ -4,7 +4,7 @@ module Seed
   module Internal
     module Types
       module Unknown
-        include Seed::Internal::Types::Type
+        include ::Seed::Internal::Types::Type
 
         def coerce(value)
           value

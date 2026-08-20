@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">create_user</a>(request) -> Seed::Types::User</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create_user</a>(request) -> ::Seed::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ client.create_user(
 <dl>
 <dd>
 
-**request:** `Seed::Types::User` 
+**request:** `::Seed::Types::User` 
     
 </dd>
 </dl>
