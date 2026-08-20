@@ -57,7 +57,8 @@ impl OutputPipeline {
     ///
     /// Resolves the output format with this precedence when `--format` is
     /// **not** passed:
-    ///   1. an explicit `--format` flag (always wins);
+    ///   1. an explicit `--format` flag, or its `--json` / `--human`
+    ///      shorthands (always wins);
     ///   2. the per-binary `<NAME>_OUTPUT` env var, if set to a valid format
     ///      (`NAME` is `app_name` uppercased with `-` → `_`, mirroring the
     ///      `<NAME>_LOG` logging convention);
@@ -71,8 +72,18 @@ impl OutputPipeline {
     /// `--format` values. Callers should map this into their error type
     /// (e.g. `CliError::Validation`).
     pub fn from_matches(matches: &clap::ArgMatches, app_name: &str) -> Result<Self, FormatError> {
+        let flag = |id: &str| {
+            matches
+                .try_get_one::<bool>(id)
+                .ok()
+                .flatten()
+                .copied()
+                .unwrap_or(false)
+        };
         let format = match matches.get_one::<String>("format") {
             Some(s) => OutputFormat::parse(s).map_err(FormatError::UnknownFormat)?,
+            None if flag("json") => OutputFormat::Json,
+            None if flag("human") => OutputFormat::Table,
             None => {
                 let env_var = format!("{}_OUTPUT", app_name.to_uppercase().replace('-', "_"));
                 let env_value = std::env::var(env_var).ok();
@@ -286,13 +297,22 @@ impl OutputFormat {
 /// The error path runs outside the parsed-matches world (a spec can fail to
 /// load before any `ArgMatches` exists), but it must land on the same format
 /// the success path would have chosen, so this mirrors
-/// [`OutputPipeline::from_matches`]: explicit `--format` wins, then
-/// `<NAME>_OUTPUT`, then the TTY-aware default. Unknown `--format` values fall
-/// through to the default rather than erroring — the format resolution
-/// performed by clap already reports those.
+/// [`OutputPipeline::from_matches`]: explicit `--format` / `--json` / `--human`
+/// wins, then `<NAME>_OUTPUT`, then the TTY-aware default. Unknown `--format`
+/// values fall through to the default rather than erroring — the format
+/// resolution performed by clap already reports those.
 pub fn resolve_format_from_raw_args(args: &[String], app_name: &str) -> OutputFormat {
     if let Some(parsed) = explicit_format_arg(args).and_then(|v| OutputFormat::parse(&v).ok()) {
         return parsed;
+    }
+    // `--json` / `--human` are mutually exclusive at the clap layer, so their
+    // order here only matters for the pre-clap error path, where the first one
+    // wins rather than reporting the conflict.
+    if args.iter().any(|a| a == "--json") {
+        return OutputFormat::Json;
+    }
+    if args.iter().any(|a| a == "--human") {
+        return OutputFormat::Table;
     }
     let env_var = format!("{}_OUTPUT", app_name.to_uppercase().replace('-', "_"));
     let env_value = std::env::var(env_var).ok();
@@ -1286,6 +1306,29 @@ mod tests {
         assert!(explicit_format_arg(&["users".to_string()]).is_none());
         // A trailing `--format` with no value must not panic.
         assert!(explicit_format_arg(&["--format".to_string()]).is_none());
+    }
+
+    #[test]
+    fn resolve_format_from_raw_args_honors_json_and_human_shorthands() {
+        // `--json` / `--human` sit at the same precedence rung as `--format`,
+        // so a caller can pin the audience without naming a format.
+        assert_eq!(
+            resolve_format_from_raw_args(&["users".to_string(), "--json".to_string()], "my-cli"),
+            OutputFormat::Json
+        );
+        assert_eq!(
+            resolve_format_from_raw_args(&["users".to_string(), "--human".to_string()], "my-cli"),
+            OutputFormat::Table
+        );
+        // An explicit --format still outranks them (clap rejects the combination
+        // before this runs; the pre-clap error path must not disagree).
+        assert_eq!(
+            resolve_format_from_raw_args(
+                &["--json".to_string(), "--format=yaml".to_string()],
+                "my-cli"
+            ),
+            OutputFormat::Yaml
+        );
     }
 
     #[test]

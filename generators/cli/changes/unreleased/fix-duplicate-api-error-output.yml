@@ -12,3 +12,12 @@
     shapes such as `{"status", "message"}`, `{"error": "<message>"}`, RFC 7807
     `detail`/`title`, and OAuth 2.0 `error_description` are now recognized.
   type: fix
+
+- summary: |
+    Added global `--json` and `--human` flags, shorthands for `--format json` and
+    `--format table`. They let a caller pin the audience without naming a format:
+    `--json` for a script or agent, `--human` to keep the interactive rendering
+    when stdout is piped or redirected. Without either flag the existing
+    TTY-aware default still applies (`table` on a terminal, `json` when piped),
+    and passing them alongside `--format` is rejected.
+  type: feat

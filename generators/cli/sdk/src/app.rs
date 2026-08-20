@@ -919,6 +919,25 @@ impl CliApp {
                     .value_name("FORMAT")
                     .global(true),
             )
+            // Shorthands for the two formats that matter to a caller who only
+            // cares *who* is reading: `--json` for a script or agent, `--human`
+            // to force the interactive rendering when stdout isn't a TTY.
+            .arg(
+                clap::Arg::new("json")
+                    .long("json")
+                    .help("Shorthand for --format json")
+                    .action(clap::ArgAction::SetTrue)
+                    .conflicts_with_all(["human", "format"])
+                    .global(true),
+            )
+            .arg(
+                clap::Arg::new("human")
+                    .long("human")
+                    .help("Shorthand for --format table, even when piped")
+                    .action(clap::ArgAction::SetTrue)
+                    .conflicts_with_all(["json", "format"])
+                    .global(true),
+            )
             .arg(
                 clap::Arg::new("base-url")
                     .long("base-url")
@@ -1217,6 +1236,8 @@ fn graft_merged_subtree(
     //    avoid clap panic on duplicates).
     let mut seen_arg_ids: std::collections::HashSet<String> = [
         "format".to_string(),
+        "json".to_string(),
+        "human".to_string(),
         "base-url".to_string(),
         "user-agent-suffix".to_string(),
         "schema".to_string(),
