@@ -6,7 +6,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
  * Whether the endpoint declares `retries: { disabled: true }` (the `x-fern-retries` OpenAPI
  * extension), meaning its requests must never be retried.
  */
-export function isRetriesDisabled(endpoint: FernIr.HttpEndpoint): boolean {
+export function isRetriesDisabled(endpoint: Pick<FernIr.HttpEndpoint, "retries">): boolean {
     return endpoint.retries?.disabled === true;
 }
 
@@ -20,7 +20,7 @@ export function getRetriesDisabledStatement({
     endpoint
 }: {
     context: Pick<SdkGeneratorContext, "getRequestOptionsName" | "getMaxRetriesOptionName">;
-    endpoint: FernIr.HttpEndpoint;
+    endpoint: Pick<FernIr.HttpEndpoint, "retries">;
 }): string | undefined {
     if (!isRetriesDisabled(endpoint)) {
         return undefined;
