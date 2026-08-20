@@ -15,7 +15,9 @@
     declares less often than another never names the whole group. An operation's
     `description` is no longer discarded in favour of its terse `summary`: the
     summary still labels the command table while the prose is what the command
-    renders under its own `--help`. Flag help is split the same way — `-h`
+    renders under its own `--help` — but only when it elaborates rather than
+    paraphrasing the summary, so the two tiers never read as different
+    commands. Flag help is split the same way — `-h`
     shows a one-line form and `--help` the fuller prose — and multipart field
     help, which previously bypassed truncation entirely, is now capped and has
     its spec indentation collapsed like every other parameter. `--help` keeps

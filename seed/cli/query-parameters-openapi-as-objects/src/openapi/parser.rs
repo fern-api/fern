@@ -2900,7 +2900,11 @@ pub fn load_openapi_spec_from_value(
                 .description
                 .clone()
                 .filter(|prose| !prose.trim().is_empty())
-                .filter(|prose| Some(prose.trim()) != description.as_deref().map(str::trim));
+                .filter(|prose| {
+                    description
+                        .as_deref()
+                        .is_none_or(|summary| prose_adds_detail(prose, summary))
+                });
 
             let method_root_url = operation.servers
                 .first()
@@ -3165,6 +3169,25 @@ fn append_unique_tags(existing: &mut Vec<String>, incoming: &[String]) {
             existing.push(tag.clone());
         }
     }
+}
+
+/// Whether an operation's `description` says more than its `summary`, rather
+/// than restating it in different words.
+///
+/// `--help` is meant to elaborate on `-h`. Specs commonly carry a paraphrase
+/// in `description` ("Audio isolation" / "Removes background noise from
+/// audio."), and promoting one of those makes the two tiers look like they
+/// describe different commands. A description earns the long slot by adding
+/// a further sentence or a substantial clause.
+fn prose_adds_detail(prose: &str, summary: &str) -> bool {
+    const MIN_ADDED_CHARS: usize = 40;
+    let prose = crate::text::collapse_whitespace(prose);
+    let summary = crate::text::collapse_whitespace(summary);
+    if prose.eq_ignore_ascii_case(&summary) {
+        return false;
+    }
+    let multi_sentence = crate::text::first_sentence(&prose).len() < prose.trim_end().len();
+    multi_sentence || prose.chars().count() >= summary.chars().count() + MIN_ADDED_CHARS
 }
 
 fn tag_match_key(value: &str) -> String {
@@ -7002,6 +7025,52 @@ paths:
         assert_eq!(
             doc.groups["my-group"].summary.as_deref(),
             Some("Pretty Label"),
+        );
+    }
+
+    /// `--help` elaborates on `-h`; it does not restate it. A description
+    /// that only paraphrases the summary in the same breath earns no long
+    /// slot, or the two tiers read like different commands.
+    #[test]
+    fn test_paraphrasing_description_is_not_promoted_to_long_help() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: t
+  version: "1"
+paths:
+  /groups:
+    get:
+      x-fern-sdk-group-name: [groups]
+      x-fern-sdk-method-name: list
+      operationId: groups_list
+      summary: List workspace groups
+      description: Get all groups in the workspace
+      responses:
+        "200":
+          description: ok
+  /things:
+    get:
+      x-fern-sdk-group-name: [things]
+      x-fern-sdk-method-name: list
+      operationId: things_list
+      summary: Audio isolation
+      description: Removes background noise from audio. Returns the isolated speech track.
+      responses:
+        "200":
+          description: ok
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        // Same length, different words — a paraphrase, so no long form.
+        let groups = first_method(&doc, "groups", "list");
+        assert_eq!(groups.description.as_deref(), Some("List workspace groups"));
+        assert_eq!(groups.long_description, None);
+        // A second sentence is real elaboration and is kept.
+        let things = first_method(&doc, "things", "list");
+        assert_eq!(things.description.as_deref(), Some("Audio isolation"));
+        assert_eq!(
+            things.long_description.as_deref(),
+            Some("Removes background noise from audio. Returns the isolated speech track."),
         );
     }
 
