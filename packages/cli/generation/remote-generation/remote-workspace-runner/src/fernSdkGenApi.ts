@@ -233,6 +233,8 @@ function mapGithubOutput({
     publishInfo?: FernFiddle.GithubPublishInfo;
 }): FernSdkGenApiOutputMapping {
     const publication = publishInfo != null ? mapGithubPublishInfo(publishInfo) : undefined;
+    // TODO: Before broadly enabling this route, require downstream credential resolution to bind
+    // credentials to approved GitHub installations/repositories and registry hosts/package namespaces.
     return {
         ...(publication?.package != null ? { package: publication.package } : {}),
         requestedOutput: {
@@ -613,6 +615,8 @@ async function executeFernSdkGenApiBuild(
         const response = await axios.post<{ buildId: string }>(`${origin}/v1/fern/build`, form, {
             headers: {
                 ...form.getHeaders(),
+                // TODO: Replace the reusable Fern bearer token with a short-lived, audience-restricted
+                // sdk-generation token once cross-service token exchange is available.
                 Authorization: `Bearer ${first.token.value}`,
                 "X-Fern-Organization-Id": first.organization
             },
