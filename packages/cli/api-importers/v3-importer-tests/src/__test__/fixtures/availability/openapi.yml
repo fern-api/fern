@@ -209,8 +209,37 @@ paths:
               schema:
                 $ref: "#/components/schemas/NotDeprecatedSettings"
       x-fern-availability: "legacy"
+  /success-ref-property-deprecation:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deprecated_ref_setting:
+                  $ref: "#/components/schemas/DeprecatedParam"
+                deprecated_allof_setting:
+                  allOf:
+                    - $ref: "#/components/schemas/NotDeprecatedParam"
+                  deprecated: true
+                beta_allof_setting:
+                  allOf:
+                    - $ref: "#/components/schemas/NotDeprecatedParam"
+                  x-fern-availability: "beta"
+                fine_ref_setting:
+                  $ref: "#/components/schemas/NotDeprecatedParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotDeprecatedSettings"
 components:
   schemas:
+    NotDeprecatedParam:
+      type: string
     DeprecatedParam:
       type: string
       deprecated: true

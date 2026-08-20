@@ -74,7 +74,11 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
             if (response.ok) {
                 return {
                     type: this.wrapTypeReference(response.reference),
-                    inlinedTypes: response.inlinedTypes ?? {}
+                    inlinedTypes: response.inlinedTypes ?? {},
+                    availability: this.context.getAvailability({
+                        node: schemaOrReference,
+                        breadcrumbs: this.breadcrumbs
+                    })
                 };
             }
         }
@@ -97,7 +101,8 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 if (response.ok) {
                     return {
                         type: this.wrapTypeReference(response.reference),
-                        inlinedTypes: response.inlinedTypes ?? {}
+                        inlinedTypes: response.inlinedTypes ?? {},
+                        availability: this.getAvailabilityOfSelfOrReference(allOfReference)
                     };
                 }
             }
@@ -136,13 +141,25 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 if (response.ok) {
                     return {
                         type: this.wrapTypeReference(response.reference),
-                        inlinedTypes: response.inlinedTypes ?? {}
+                        inlinedTypes: response.inlinedTypes ?? {},
+                        availability: this.getAvailabilityOfSelfOrReference(singleRef as OpenAPIV3_1.ReferenceObject)
                     };
                 }
             }
         }
 
         return undefined;
+    }
+
+    /**
+     * Availability declared alongside the `allOf` takes precedence over the availability
+     * of the referenced schema, since the outer schema is the more specific declaration.
+     */
+    private getAvailabilityOfSelfOrReference(reference: OpenAPIV3_1.ReferenceObject): Availability | undefined {
+        return (
+            this.context.getAvailability({ node: this.schemaOrReference, breadcrumbs: this.breadcrumbs }) ??
+            this.context.getAvailability({ node: reference, breadcrumbs: this.breadcrumbs })
+        );
     }
 
     private convertSchemaObject({

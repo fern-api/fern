@@ -1,0 +1,6 @@
+- summary: |
+    Preserve `deprecated`/`x-fern-availability` on OpenAPI object properties whose value is a
+    `$ref` (or a single-`$ref` `allOf`). Previously availability was only read off inline
+    schemas, so a request body property referencing a deprecated component schema rendered
+    without a Deprecated badge, while the equivalent query parameter did.
+  type: fix
