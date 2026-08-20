@@ -514,6 +514,9 @@ function getCursorDoneCondition({
  * Whether the cursor is a string that generates as a Go pointer, so that it can hold an empty
  * string in addition to nil. Optionality is resolved through named aliases, which generate as the
  * pointer type they alias (e.g. `type Cursor = *string`) rather than as a Go optional.
+ *
+ * The IR property is the source of truth for the emitted type because `next` is always declared
+ * from the response cursor property's getter.
  */
 function isNilableStringCursor({
     context,

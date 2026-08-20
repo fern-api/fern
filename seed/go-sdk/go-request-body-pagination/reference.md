@@ -323,6 +323,69 @@ client.Users.ListWithRequiredAliasBodyCursorPagination(
 </dl>
 </details>
 
+<details><summary><code>client.Users.ListWithNullableAliasBodyCursorPagination(request) -> *fern.ListUsersNullableAliasCursorResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint whose cursor is a named alias resolving to a nullable string. Nullable
+generates as a pointer in Go, so an empty string cursor terminates the pager here too.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.ListUsersNullableAliasBodyCursorPaginationRequest{
+    Cursor: fern.String(
+        "cursor",
+    ),
+}
+client.Users.ListWithNullableAliasBodyCursorPagination(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `fern.NullableCursor` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Users.ListWithBodyOffsetPagination(request) -> *fern.ListUsersResponse</code></summary>
 <dl>
 <dd>

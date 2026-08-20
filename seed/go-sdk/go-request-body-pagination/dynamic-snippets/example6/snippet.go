@@ -14,14 +14,15 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.ListUsersNestedBodyCursorPaginationRequest{
-        Pagination: &fern.WithCursor{
-            Cursor: fern.String(
-                "cursor",
-            ),
-        },
+    request := &fern.ListUsersBodyOffsetPaginationRequest{
+        Page: fern.Int(
+            1,
+        ),
+        Limit: fern.Int(
+            1,
+        ),
     }
-    client.Users.ListWithNestedBodyCursorPagination(
+    client.Users.ListWithBodyOffsetPagination(
         context.TODO(),
         request,
     )
