@@ -1,11 +1,14 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 
+import { mkdir, mkdtemp, rm, symlink } from "fs/promises";
+import { tmpdir } from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     deepMergeGlobalWins,
+    ensureGlobalThemeAssetDirectory,
     filenameFromUrl,
     getGlobalThemeAssetDirectoryPath,
     isPresignedUrl,
@@ -139,6 +142,24 @@ describe("getGlobalThemeAssetDirectoryPath", () => {
         expect(path.basename(directoryPath)).toMatch(/^fern-theme-[0-9a-f]{16}$/);
         expect(path.basename(directoryPath)).not.toContain("/");
         expect(path.basename(directoryPath)).not.toContain("\\");
+    });
+});
+
+describe("ensureGlobalThemeAssetDirectory", () => {
+    it.skipIf(process.platform === "win32")("rejects a symlinked directory", async () => {
+        const parentDirectory = await mkdtemp(path.join(tmpdir(), "fern-theme-test-"));
+        const targetDirectory = path.join(parentDirectory, "target");
+        const symlinkPath = path.join(parentDirectory, "theme");
+        await mkdir(targetDirectory);
+        await symlink(targetDirectory, symlinkPath);
+
+        try {
+            await expect(ensureGlobalThemeAssetDirectory(symlinkPath)).rejects.toThrow(
+                `Global theme asset directory "${symlinkPath}" is not a secure directory`
+            );
+        } finally {
+            await rm(parentDirectory, { force: true, recursive: true });
+        }
     });
 });
 

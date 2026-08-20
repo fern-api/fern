@@ -5,7 +5,7 @@ import { CliError, TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 
 import { createHash, randomUUID } from "crypto";
-import { mkdir, rename, unlink, writeFile } from "fs/promises";
+import { chmod, lstat, mkdir, rename, unlink, writeFile } from "fs/promises";
 import mime from "mime-types";
 import { tmpdir } from "os";
 import path from "path";
@@ -52,6 +52,22 @@ export function getGlobalThemeAssetDirectoryPath(organization: string, themeName
     const themeKey = `${organization}\0${themeName}`;
     const themeHash = createHash("sha256").update(themeKey).digest("hex").slice(0, 16);
     return path.join(tmpdir(), `fern-theme-${themeHash}`);
+}
+
+export async function ensureGlobalThemeAssetDirectory(directoryPath: string): Promise<void> {
+    await mkdir(directoryPath, { mode: 0o700, recursive: true });
+
+    const stats = await lstat(directoryPath);
+    const processUid = typeof process.getuid === "function" ? process.getuid() : undefined;
+    if (!stats.isDirectory() || (processUid !== undefined && stats.uid !== processUid)) {
+        throw new Error(
+            `Global theme asset directory "${directoryPath}" is not a secure directory. Remove it and retry.`
+        );
+    }
+
+    if ((stats.mode & 0o777) !== 0o700) {
+        await chmod(directoryPath, 0o700);
+    }
 }
 
 async function writeFileAtomically(filePath: string, data: string | Uint8Array): Promise<void> {
@@ -408,7 +424,16 @@ export async function stitchGlobalTheme({
 
     // Reuse a deterministic directory so asset paths remain stable across publishes.
     const tmpDirPath = getGlobalThemeAssetDirectoryPath(organization, themeName);
-    await mkdir(tmpDirPath, { recursive: true });
+    try {
+        await ensureGlobalThemeAssetDirectory(tmpDirPath);
+    } catch (err) {
+        taskContext.failAndThrow(
+            `Could not prepare global theme asset directory "${tmpDirPath}". Remove it and retry.`,
+            err,
+            { code: CliError.Code.ConfigError }
+        );
+        return docsWorkspace;
+    }
     taskContext.logger.debug(`Downloading theme assets to ${tmpDirPath}`);
 
     let resolvedConfig: Record<string, unknown>;
