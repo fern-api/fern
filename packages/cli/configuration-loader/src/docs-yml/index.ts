@@ -5,5 +5,7 @@ export { parseAudiences, parseDocsConfiguration, resolveFilepath } from "./parse
 export {
     type DocsConfigurationWithResolvedRedirects,
     getRedirectsFilepaths,
+    type LoadedRedirects,
+    loadRedirects,
     resolveRedirects
 } from "./resolveRedirects.js";

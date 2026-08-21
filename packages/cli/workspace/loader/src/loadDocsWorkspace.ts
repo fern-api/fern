@@ -3,7 +3,7 @@ import {
     DocsConfigurationWithResolvedRedirects,
     docsYml,
     getRedirectsFilepaths,
-    resolveRedirects
+    loadRedirects
 } from "@fern-api/configuration-loader";
 import { extractErrorMessage, sanitizeNullValues, validateAgainstJsonSchema } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -115,12 +115,17 @@ export async function loadRawDocsConfiguration({
             });
         }
 
+        // Errors are carried on the configuration rather than thrown so that they are reported by
+        // docs validation, formatted like every other docs violation.
+        const loadedRedirects = await loadRedirects({
+            redirects: parsed.redirects,
+            absoluteFilepathToDocsConfig: absolutePathOfConfiguration
+        });
+
         return {
             ...parsed,
-            redirects: await resolveRedirects({
-                redirects: parsed.redirects,
-                absoluteFilepathToDocsConfig: absolutePathOfConfiguration
-            }),
+            redirects: loadedRedirects.redirects,
+            _redirectsFileErrors: loadedRedirects.errors,
             _absoluteFilepathsToRedirectsFiles: getRedirectsFilepaths({
                 redirects: parsed.redirects,
                 absoluteFilepathToDocsConfig: absolutePathOfConfiguration

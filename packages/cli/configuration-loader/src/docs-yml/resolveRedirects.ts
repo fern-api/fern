@@ -16,7 +16,17 @@ export type DocsConfigurationWithResolvedRedirects = Omit<docsYml.RawSchemas.Doc
     redirects?: docsYml.RawSchemas.RedirectConfig[];
     /** The external files that `redirects` referenced, if any. Consumers watch these for changes. */
     _absoluteFilepathsToRedirectsFiles?: AbsoluteFilePath[];
+    /**
+     * Errors encountered while reading the files that `redirects` referenced, reported by the
+     * `valid-redirects-files` docs rule so that they are formatted alongside other docs violations.
+     */
+    _redirectsFileErrors?: string[];
 };
+
+export interface LoadedRedirects {
+    redirects: docsYml.RawSchemas.RedirectConfig[] | undefined;
+    errors: string[];
+}
 
 /**
  * `redirects` accepts either an inline list of redirects, or one or more filepaths to YAML files
@@ -30,21 +40,44 @@ export async function resolveRedirects({
     redirects: docsYml.RawSchemas.RedirectsConfiguration | undefined;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
 }): Promise<docsYml.RawSchemas.RedirectConfig[] | undefined> {
+    const { redirects: loaded, errors } = await loadRedirects({ redirects, absoluteFilepathToDocsConfig });
+    const [firstError] = errors;
+    if (firstError != null) {
+        throw new CliError({
+            message: errors.length === 1 ? firstError : errors.map((error) => `- ${error}`).join("\n"),
+            code: CliError.Code.ParseError
+        });
+    }
+    return loaded;
+}
+
+/**
+ * Same as {@link resolveRedirects}, but returns the errors encountered while reading the referenced
+ * files instead of throwing, so that callers can report them alongside other docs violations.
+ */
+export async function loadRedirects({
+    redirects,
+    absoluteFilepathToDocsConfig
+}: {
+    redirects: docsYml.RawSchemas.RedirectsConfiguration | undefined;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+}): Promise<LoadedRedirects> {
     if (redirects == null) {
-        return undefined;
+        return { redirects: undefined, errors: [] };
     }
 
     const entries: (string | docsYml.RawSchemas.RedirectConfig)[] =
         typeof redirects === "string" ? [redirects] : redirects;
     if (isRedirectList(entries)) {
-        return entries;
+        return { redirects: entries, errors: [] };
     }
     if (!isFilepathList(entries)) {
-        throw new CliError({
-            message:
-                "Failed to load redirects: `redirects` must be either a list of redirects or a list of filepaths, not a mix of both",
-            code: CliError.Code.ParseError
-        });
+        return {
+            redirects: [],
+            errors: [
+                "Failed to load redirects: `redirects` must be either a list of redirects or a list of filepaths, not a mix of both"
+            ]
+        };
     }
 
     // Every file is loaded before reporting, so that all invalid files are surfaced at once
@@ -63,14 +96,7 @@ export async function resolveRedirects({
             throw result.reason;
         }
     }
-    const [firstError] = errors;
-    if (firstError != null) {
-        throw new CliError({
-            message: errors.length === 1 ? firstError : errors.map((error) => `- ${error}`).join("\n"),
-            code: CliError.Code.ParseError
-        });
-    }
-    return redirectConfigs;
+    return { redirects: redirectConfigs, errors };
 }
 
 /**
