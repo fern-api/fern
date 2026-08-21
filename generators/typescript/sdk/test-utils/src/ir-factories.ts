@@ -134,14 +134,15 @@ export function createMinimalIR(opts?: {
  */
 export function createPathParameter(
     name: string,
-    location: FernIr.PathParameterLocation = "ENDPOINT"
+    location: FernIr.PathParameterLocation = "ENDPOINT",
+    valueType: FernIr.TypeReference = FernIr.TypeReference.primitive({
+        v1: "STRING",
+        v2: undefined
+    })
 ): FernIr.PathParameter {
     return {
         name: casingsGenerator.generateName(name),
-        valueType: FernIr.TypeReference.primitive({
-            v1: "STRING",
-            v2: undefined
-        }),
+        valueType,
         location,
         variable: undefined,
         v2Examples: undefined,

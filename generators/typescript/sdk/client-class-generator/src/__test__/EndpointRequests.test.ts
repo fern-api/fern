@@ -434,6 +434,35 @@ function createBytesEndpointRequest(opts?: {
     });
 }
 
+function createExamplePathParameter(name: string, value: string): FernIr.ExamplePathParameter {
+    return {
+        name: casingsGenerator.generateName(name),
+        value: {
+            shape: FernIr.ExampleTypeReferenceShape.primitive(FernIr.ExamplePrimitive.string({ original: value })),
+            jsonExample: value
+        }
+    };
+}
+
+function createExampleEndpointCall(opts?: {
+    endpointPathParameters?: FernIr.ExamplePathParameter[];
+}): FernIr.ExampleEndpointCall {
+    return {
+        id: undefined,
+        name: undefined,
+        url: "",
+        rootPathParameters: [],
+        servicePathParameters: [],
+        endpointPathParameters: opts?.endpointPathParameters ?? [],
+        serviceHeaders: [],
+        endpointHeaders: [],
+        queryParameters: [],
+        request: undefined,
+        response: FernIr.ExampleResponse.ok(FernIr.ExampleEndpointSuccessResponse.body(undefined)),
+        docs: undefined
+    };
+}
+
 // ========================== Tests ==========================
 
 describe("GeneratedDefaultEndpointRequest", () => {
@@ -994,6 +1023,34 @@ describe("GeneratedDefaultEndpointRequest", () => {
             expect(() => request.getReferenceToPathParameter("userId", context)).toThrow();
         });
     });
+
+    describe("getExampleEndpointParameters", () => {
+        it("renders a placeholder for a path parameter the example omits", () => {
+            const pathParam = createPathParameter("objectPath");
+            const request = new GeneratedDefaultEndpointRequest({
+                ir: createMinimalIR(),
+                packageId: { isRoot: true },
+                sdkRequest: undefined,
+                service: createHttpService(),
+                endpoint: createHttpEndpoint({
+                    pathParameters: [pathParam],
+                    allPathParameters: [pathParam]
+                }),
+                requestBody: undefined,
+                generatedSdkClientClass: createMockSdkClientClass(),
+                retainOriginalCasing: false,
+                parameterNaming: "default",
+                caseConverter
+            });
+            const context = createEndpointRequestMockContext();
+            const params = request.getExampleEndpointParameters({
+                context,
+                example: createExampleEndpointCall(),
+                opts: {}
+            });
+            expect(params?.map((param) => getTextOfTsNode(param))).toEqual(['"objectPath"']);
+        });
+    });
 });
 
 describe("GeneratedFileUploadEndpointRequest", () => {
@@ -1276,6 +1333,42 @@ describe("GeneratedFileUploadEndpointRequest", () => {
         });
     });
 
+    describe("getExampleEndpointParameters", () => {
+        it("renders a placeholder for a path parameter the example omits", () => {
+            const fileProperty = createFileProperty("document");
+            const fileBody = createFileUploadRequestBody({ properties: [fileProperty] });
+            const pathParameter = createPathParameter("objectPath");
+            const request = new GeneratedFileUploadEndpointRequest({
+                ir: createMinimalIR(),
+                packageId: { isRoot: true },
+                service: createHttpService(),
+                endpoint: createHttpEndpoint({
+                    requestBody: fileBody,
+                    sdkRequest: createSdkRequestWrapper(),
+                    pathParameters: [pathParameter],
+                    allPathParameters: [pathParameter]
+                }),
+                requestBody: fileBody,
+                generatedSdkClientClass: createMockSdkClientClass(),
+                retainOriginalCasing: false,
+                inlineFileProperties: false,
+                includeSerdeLayer: true,
+                allowExtraFields: false,
+                omitUndefined: false,
+                formDataSupport: "Node18",
+                parameterNaming: "default",
+                caseConverter
+            });
+            const context = createEndpointRequestMockContext();
+            const params = request.getExampleEndpointParameters({
+                context,
+                example: createExampleEndpointCall(),
+                opts: {}
+            });
+            expect(params?.map((param) => getTextOfTsNode(param))).toContain('"objectPath"');
+        });
+    });
+
     describe("getExampleEndpointImports", () => {
         it("returns fs createReadStream import", () => {
             const fileProperty = createFileProperty("document");
@@ -1369,6 +1462,38 @@ describe("GeneratedBytesEndpointRequest", () => {
             const statements = request.getBuildRequestStatements(context);
             const serialized = serializeStatements(statements);
             expect(serialized).toMatchSnapshot();
+        });
+    });
+
+    describe("getExampleEndpointParameters", () => {
+        it("renders a placeholder for a path parameter the example omits", () => {
+            const request = createBytesEndpointRequest({ pathParameters: [createPathParameter("objectPath")] });
+            const context = createEndpointRequestMockContext();
+            const params = request.getExampleEndpointParameters({
+                context,
+                example: createExampleEndpointCall(),
+                opts: {}
+            });
+            expect(params?.map((param) => getTextOfTsNode(param))).toEqual([
+                'createReadStream("path/to/file")',
+                '"objectPath"'
+            ]);
+        });
+
+        it("renders the example value when the example supplies the path parameter", () => {
+            const request = createBytesEndpointRequest({ pathParameters: [createPathParameter("objectPath")] });
+            const context = createEndpointRequestMockContext();
+            const params = request.getExampleEndpointParameters({
+                context,
+                example: createExampleEndpointCall({
+                    endpointPathParameters: [createExamplePathParameter("objectPath", "some/object.txt")]
+                }),
+                opts: {}
+            });
+            expect(params?.map((param) => getTextOfTsNode(param))).toEqual([
+                'createReadStream("path/to/file")',
+                '"example"'
+            ]);
         });
     });
 

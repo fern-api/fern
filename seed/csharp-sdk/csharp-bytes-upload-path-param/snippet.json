@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/upload-content/{objectPath}",
+                "method": "POST",
+                "identifier_override": "endpoint_service.uploadWithPathParam"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpBytesUploadPathParam;\nusing global::System.IO;\nusing global::System.Text;\n\nvar client = new SeedCsharpBytesUploadPathParamClient();\nawait client.Service.UploadWithPathParamAsync(\n    \"objectPath\",\n    new MemoryStream(Encoding.UTF8.GetBytes(\"[bytes]\"))\n);\n"
+            }
+        }
+    ]
+}

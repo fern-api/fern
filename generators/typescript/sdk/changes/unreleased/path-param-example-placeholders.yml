@@ -1,0 +1,5 @@
+- summary: |
+    Render a placeholder of the declared type for path parameters an example does not supply, instead
+    of `undefined`. Generated `@example` docstrings, `reference.md` snippets and snippet.json for such
+    endpoints previously produced calls that do not typecheck against the required parameter.
+  type: fix
