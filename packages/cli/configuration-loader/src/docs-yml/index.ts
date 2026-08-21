@@ -2,4 +2,8 @@ export { getColorFromRawConfig, getColorType } from "./convertColorsConfiguratio
 export { getAllPages } from "./getAllPages.js";
 export { getReferencedApiSections } from "./getReferencedApiSections.js";
 export { parseAudiences, parseDocsConfiguration, resolveFilepath } from "./parseDocsConfiguration.js";
-export { type DocsConfigurationWithResolvedRedirects, resolveRedirects } from "./resolveRedirects.js";
+export {
+    type DocsConfigurationWithResolvedRedirects,
+    getRedirectsFilepaths,
+    resolveRedirects
+} from "./resolveRedirects.js";

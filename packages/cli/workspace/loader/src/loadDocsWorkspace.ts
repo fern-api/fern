@@ -2,6 +2,7 @@ import {
     DOCS_CONFIGURATION_FILENAME,
     DocsConfigurationWithResolvedRedirects,
     docsYml,
+    getRedirectsFilepaths,
     resolveRedirects
 } from "@fern-api/configuration-loader";
 import { extractErrorMessage, sanitizeNullValues, validateAgainstJsonSchema } from "@fern-api/core-utils";
@@ -117,6 +118,10 @@ export async function loadRawDocsConfiguration({
         return {
             ...parsed,
             redirects: await resolveRedirects({
+                redirects: parsed.redirects,
+                absoluteFilepathToDocsConfig: absolutePathOfConfiguration
+            }),
+            _absoluteFilepathsToRedirectsFiles: getRedirectsFilepaths({
                 redirects: parsed.redirects,
                 absoluteFilepathToDocsConfig: absolutePathOfConfiguration
             })

@@ -74,10 +74,14 @@ export namespace ReferenceResolver {
  * Note that this is a subset of the behavior supported by OpenAPI so
  * that it's better suited for non-recursive structures.
  *
+ * Note that `$ref` splices the referenced file in place of the node, so the referenced file holds
+ * the value of that node directly (e.g. a bare list). This differs from `redirects: ./redirects.yml`
+ * in docs.yml, where the referenced file nests its list under a top-level `redirects` key.
+ *
  * @example
  * ```yaml
- * redirects:
- *   $ref: "./redirects.yml"
+ * navigation:
+ *   $ref: "./navigation.yml"
  * ```
  */
 export class ReferenceResolver {

@@ -319,6 +319,7 @@ export async function visitDocsConfigFileYamlAst({
         },
         check: noop,
         redirects: noop,
+        _absoluteFilepathsToRedirectsFiles: noop,
         tabs: noop,
         title: noop,
         typography: async (typography) => {

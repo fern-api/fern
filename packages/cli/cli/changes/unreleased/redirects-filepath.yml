@@ -1,5 +1,6 @@
 - summary: |
     `redirects` in `docs.yml` now accepts one or more filepaths to YAML files containing only the
     list of redirects, in addition to an inline list. Redirects from multiple files are concatenated,
-    and each file's contents are validated the same way as inline redirects.
+    and each file's contents are validated the same way as inline redirects. `fern docs dev` reloads
+    when a referenced redirects file changes, including files outside the fern folder.
   type: feat

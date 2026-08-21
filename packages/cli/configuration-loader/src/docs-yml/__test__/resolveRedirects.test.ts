@@ -1,12 +1,12 @@
 import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { mkdtemp, symlink, writeFile } from "fs/promises";
+import { mkdir, mkdtemp, symlink, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import path from "path";
 import { beforeAll, describe, expect, it } from "vitest";
 
-import { resolveRedirects } from "../resolveRedirects.js";
+import { getRedirectsFilepaths, resolveRedirects } from "../resolveRedirects.js";
 
 describe("resolveRedirects", () => {
     let absoluteFilepathToDocsConfig: AbsoluteFilePath;
@@ -43,6 +43,7 @@ describe("resolveRedirects", () => {
             "redirects:\n  - source: /old-plants\n    destination: /plants\n    permanent:"
         );
         await symlink(join(dir, RelativeFilePath.of("redirects.yml")), join(dir, RelativeFilePath.of("symlinked.yml")));
+        await mkdir(join(dir, RelativeFilePath.of("nested")));
     });
 
     it("passes through an inline list", async () => {
@@ -109,13 +110,19 @@ describe("resolveRedirects", () => {
     it("fails when one of several filepaths does not exist", async () => {
         await expect(
             resolveRedirects({ redirects: ["./redirects.yml", "./missing.yml"], absoluteFilepathToDocsConfig })
-        ).rejects.toThrowError(/is not a file/);
+        ).rejects.toThrowError(/does not exist/);
     });
 
     it("fails when the file does not exist", async () => {
         await expect(
             resolveRedirects({ redirects: "./missing.yml", absoluteFilepathToDocsConfig })
-        ).rejects.toThrowError(/is not a file/);
+        ).rejects.toThrowError(/does not exist/);
+    });
+
+    it("fails when the filepath points at a directory", async () => {
+        await expect(resolveRedirects({ redirects: "./nested", absoluteFilepathToDocsConfig })).rejects.toThrowError(
+            /is not a file/
+        );
     });
 
     it("fails when the filepath is empty", async () => {
@@ -133,6 +140,32 @@ describe("resolveRedirects", () => {
     it("fails when the file is missing the `redirects` key", async () => {
         await expect(
             resolveRedirects({ redirects: "./bare-list.yml", absoluteFilepathToDocsConfig })
-        ).rejects.toThrowError(/Failed to parse/);
+        ).rejects.toThrowError(/must nest the list under a top-level `redirects` key/);
+    });
+});
+
+describe("getRedirectsFilepaths", () => {
+    const absoluteFilepathToDocsConfig = join(AbsoluteFilePath.of("/tmp/fern"), RelativeFilePath.of("docs.yml"));
+
+    it("returns nothing for an inline list", () => {
+        expect(
+            getRedirectsFilepaths({
+                redirects: [{ source: "/old-plants", destination: "/plants" }],
+                absoluteFilepathToDocsConfig
+            })
+        ).toEqual([]);
+        expect(getRedirectsFilepaths({ redirects: undefined, absoluteFilepathToDocsConfig })).toEqual([]);
+    });
+
+    it("resolves single and multiple filepaths against the docs config", () => {
+        expect(getRedirectsFilepaths({ redirects: "../redirects.yml", absoluteFilepathToDocsConfig })).toEqual([
+            "/tmp/redirects.yml"
+        ]);
+        expect(
+            getRedirectsFilepaths({
+                redirects: ["./redirects/a.yml", "../b.yml"],
+                absoluteFilepathToDocsConfig
+            })
+        ).toEqual(["/tmp/fern/redirects/a.yml", "/tmp/b.yml"]);
     });
 });
