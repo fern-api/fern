@@ -13,7 +13,9 @@ export const ValidRedirectsFilesRule: Rule = {
                 const violations: RuleViolation[] = [];
                 for (const error of config._redirectsFileErrors ?? []) {
                     violations.push({
-                        severity: "error",
+                        // fatal so that generation fails: redirects that could not be read would
+                        // otherwise be silently dropped from the published site
+                        severity: "fatal",
                         message: error
                     });
                 }

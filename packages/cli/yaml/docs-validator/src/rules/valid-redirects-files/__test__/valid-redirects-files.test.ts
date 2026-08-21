@@ -29,7 +29,7 @@ describe("valid-redirects-files", () => {
         expect(await getViolations({ instances: [] })).toEqual([]);
     });
 
-    it("reports every redirects file error as an error violation", async () => {
+    it("reports every redirects file error as a fatal violation so that generation fails", async () => {
         const violations = await getViolations({
             instances: [],
             _redirectsFileErrors: [
@@ -40,11 +40,11 @@ describe("valid-redirects-files", () => {
 
         expect(violations).toEqual([
             {
-                severity: "error",
+                severity: "fatal",
                 message: "Failed to parse /fern/redirects/a.yml: the file is empty and must contain a `redirects` list"
             },
             {
-                severity: "error",
+                severity: "fatal",
                 message: "Failed to load redirects: /fern/redirects/b.yml does not exist"
             }
         ]);
