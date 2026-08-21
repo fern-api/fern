@@ -377,12 +377,10 @@ impl SdkError {
     pub fn into_cli_error(self) -> CliError {
         match self {
             Self::Http { status, body } => api_error_from_body(status, &body),
-            Self::Network(msg) => {
-                CliError::Other(anyhow::anyhow!("SDK network error: {msg}"))
-            }
-            Self::Timeout(msg) => {
-                CliError::Other(anyhow::anyhow!("SDK request timeout: {msg}"))
-            }
+            // Neither reached a server, so neither has an HTTP status. The
+            // OpenAPI path reports these as `networkError`; SDK mode must agree.
+            Self::Network(msg) => CliError::Network(format!("SDK network error: {msg}")),
+            Self::Timeout(msg) => CliError::Network(format!("SDK request timeout: {msg}")),
             Self::Auth(msg) => CliError::Auth(msg),
             Self::Other(msg) => {
                 CliError::Other(anyhow::anyhow!("SDK error: {msg}"))
@@ -490,19 +488,23 @@ mod tests {
     }
 
     #[test]
-    fn sdk_error_network_maps_to_cli_other() {
-        let err = SdkError::Network("connection refused".into());
-        let cli_err = err.into_cli_error();
-        assert!(matches!(cli_err, CliError::Other(_)));
-        assert!(cli_err.to_string().contains("network error"));
-    }
-
-    #[test]
-    fn sdk_error_timeout_maps_to_cli_other() {
-        let err = SdkError::Timeout("timed out after 30s".into());
-        let cli_err = err.into_cli_error();
-        assert!(matches!(cli_err, CliError::Other(_)));
-        assert!(cli_err.to_string().contains("timeout"));
+    fn sdk_error_network_and_timeout_carry_no_http_status() {
+        // Neither reached a server. Reporting `code: 500` told an agent the API
+        // had failed and invited a retry against a host never contacted.
+        for (err, needle) in [
+            (SdkError::Network("connection refused".into()), "network error"),
+            (SdkError::Timeout("timed out after 30s".into()), "timeout"),
+        ] {
+            let cli_err = err.into_cli_error();
+            assert!(matches!(cli_err, CliError::Network(_)), "got: {cli_err:?}");
+            assert!(cli_err.to_string().contains(needle), "got: {cli_err}");
+            let json = cli_err.to_json();
+            assert_eq!(json["error"]["reason"], "networkError");
+            assert!(json["error"].get("code").is_none(), "got: {json:#}");
+            // Still `other` at the process boundary — a sixth exit code would
+            // change the documented table every consumer branches on.
+            assert_eq!(cli_err.exit_code(), CliError::EXIT_CODE_OTHER);
+        }
     }
 
     #[test]

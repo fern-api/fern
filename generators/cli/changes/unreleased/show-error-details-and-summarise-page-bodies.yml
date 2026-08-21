@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Terminal error output now reports what the server said beyond the failure
+    sentence. A field-level rejection used to read as `error[api]: field
+    required` with no way to tell which field — the `loc` was in the JSON
+    envelope, which is exactly what the person in the terminal cannot see. The
+    parsed body is now flattened one `path: value` per line under the message:
+
+        error[api]: value is not a valid email address
+          detail[0].loc: body, email
+          detail[0].type: value_error.email
+
+    Lists of scalars stay on one line, since splitting FastAPI's two-element
+    `loc` buries the field name it exists to report. Output is capped at ten
+    lines, with a final line naming what was elided and pointing at
+    `--format json`. The JSON envelope is unchanged.
+  type: fix
+
+- summary: |
+    Non-JSON error bodies no longer break the "`message` is one sentence"
+    guarantee. A CDN or load balancer answering with an HTML page used to have
+    its whole document — doctype, newlines and markup — pasted into
+    `error.message`; the previous 500-byte clip did not help, because a short
+    page is still multi-line markup. Markup and over-long bodies now yield
+    `HTTP 502 badGateway (non-JSON response, 1284 bytes)` in `message`, with the
+    bytes preserved (whitespace-collapsed and clipped) in `error.details.body`.
+    A short plain-text body — the common proxy case — is still the message
+    itself, now collapsed onto one line if the server wrapped it.
+  type: fix
+
+- summary: |
+    Two error bodies that produced an unhelpful envelope now read correctly. An
+    empty body gave `message: ""`, which reads as the CLI having lost the error
+    rather than the server having sent nothing; it now reports
+    `HTTP <status> <reason>`. A body that is a bare JSON string
+    (`"Service temporarily unavailable"`) was summarised as
+    `HTTP 500 internalServerError` with the only text the server sent exiled to
+    `details`; it is now the message. A body that is a bare JSON list of
+    problems is also recognised, matching the existing `errors`/`detail`
+    handling one level out.
+  type: fix

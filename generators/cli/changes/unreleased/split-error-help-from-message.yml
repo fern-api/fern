@@ -6,6 +6,6 @@
     same shape whether or not the CLI had advice to offer. The docs link (opt-in
     via `error_docs_base_url`, previously human-only) now also appears as
     `error.docs_url`, so the JSON envelope no longer silently drops information
-    the human rendering shows. Human output is unchanged: message, then hint,
-    then link, each on its own line.
+    the human rendering shows. Human output keeps the same order, one item per
+    line: message, then what the server said beyond it, then hint, then link.
   type: fix

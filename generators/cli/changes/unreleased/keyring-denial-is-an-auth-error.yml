@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    A credential the CLI could not read is no longer treated as a credential the
+    user never stored. Denying the OS keychain prompt made
+    `AuthCredentialSource::resolve` return "nothing here" — the same answer as an
+    empty keyring — so the CLI sent the request unauthenticated and the user saw
+    whatever the API says to an anonymous caller. Against ElevenLabs that is
+    `error[api]: Workspace 1anonymous1 not found.` with exit 1: a 404 for a
+    problem that is an authentication failure.
+
+    Credential resolution now distinguishes "not configured" from "configured but
+    unreadable". On the request path a denied or broken keyring surfaces as
+    `error[auth]` with exit 2, naming the backend failure. A fallback chain stops
+    at the denial instead of falling through to a later empty source, which would
+    have masked it again. Probing paths — `auth status`, `has_credentials` — still
+    degrade to "no credential" rather than aborting, since a status listing should
+    report what is usable, not fail.
+  type: fix
+
+- summary: |
+    Terminal error output no longer repeats itself. Services routinely echo one
+    token across several fields — ElevenLabs sends `code`, `status` and `type` all
+    restating the same `workspace_not_found` — which turned a one-fact 404 into
+    five lines saying the same thing four times. A detail line whose value already
+    appeared in the message, the reason, or an earlier line is now dropped, and a
+    sole wrapper object (`{"detail": {...}}`) no longer prefixes every line with a
+    word that names nothing the reader is looking for.
+
+    A service-specific reason is now shown on the message line, in parentheses.
+    It was previously the one useful field that appeared in the JSON envelope but
+    never in the terminal. A reason derived from the HTTP status (`notFound` on a
+    404) stays hidden, since it says nothing the label and message do not.
+
+        error[api]: Workspace 1anonymous1 not found. (workspace_not_found)
+          request_id: 6c312fb855fc7b476570b44e2b660988
+          type: not_found
+
+    The JSON envelope is unchanged and still carries every field.
+  type: fix

@@ -233,7 +233,7 @@ fn resolve_default_format(env_value: Option<&str>, stdout_is_terminal: bool) -> 
 }
 
 /// Supported output formats.
-#[derive(Debug, Clone, PartialEq, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum OutputFormat {
     /// Pretty-printed JSON (default).
     #[default]
@@ -315,6 +315,17 @@ pub fn resolve_format_from_raw_args(args: &[String], app_name: &str) -> OutputFo
     let env_var = format!("{}_OUTPUT", app_name.to_uppercase().replace('-', "_"));
     let env_value = std::env::var(env_var).ok();
     resolve_default_format(env_value.as_deref(), std::io::stdout().is_terminal())
+}
+
+/// True when argv carries an explicit `--format` naming a machine format.
+///
+/// Distinct from "the resolved format is machine-readable", which is also true
+/// for a plain pipe. Callers that change *what* a command does — rather than
+/// how its output is rendered — must key off the explicit request only.
+pub fn explicit_machine_format(args: &[String]) -> bool {
+    explicit_format_arg(args_before_separator(args))
+        .and_then(|v| OutputFormat::parse(&v).ok())
+        .is_some_and(|f| f.is_machine_readable())
 }
 
 /// The leading slice of argv that clap treats as our own flags.
@@ -1375,6 +1386,26 @@ mod tests {
             ])),
             None
         );
+    }
+
+    #[test]
+    fn explicit_machine_format_requires_an_actual_flag() {
+        // Gates behaviour changes (`--help` -> operation catalog), so a plain
+        // pipe must not qualify: `<cli> --help | less` has to keep showing help.
+        assert!(explicit_machine_format(&["--format=json".to_string()]));
+        assert!(explicit_machine_format(&[
+            "--format".to_string(),
+            "yaml".to_string()
+        ]));
+        assert!(!explicit_machine_format(&["--format=table".to_string()]));
+        assert!(!explicit_machine_format(&["--help".to_string()]));
+        assert!(!explicit_machine_format(&["--format=nonsense".to_string()]));
+        // After `--` the flag belongs to the invoked command, not to us.
+        assert!(!explicit_machine_format(&[
+            "run".to_string(),
+            "--".to_string(),
+            "--format=json".to_string()
+        ]));
     }
 
     #[test]

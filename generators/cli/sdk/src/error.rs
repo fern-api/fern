@@ -39,6 +39,14 @@ pub enum CliError {
     #[error("{0}")]
     Discovery(String),
 
+    /// A request that never reached the server: DNS, TLS, connection refused,
+    /// timeout. Distinct from [`Other`](Self::Other) because there is no HTTP
+    /// status to report — folding it into `Other` produced `code: 500`, which
+    /// tells an agent the *server* failed and invites a retry against an API
+    /// that was never contacted.
+    #[error("{0}")]
+    Network(String),
+
     #[error(transparent)]
     Other(#[from] anyhow::Error),
 
@@ -88,6 +96,7 @@ impl CliError {
             Self::Validation(msg) => Self::Validation(msg.clone()),
             Self::Auth(msg) => Self::Auth(msg.clone()),
             Self::Discovery(msg) => Self::Discovery(msg.clone()),
+            Self::Network(msg) => Self::Network(msg.clone()),
             Self::Other(e) => Self::Other(anyhow::anyhow!("{e:#}")),
             Self::RawSentinel { code } => Self::RawSentinel { code: *code },
         }
@@ -104,6 +113,9 @@ impl CliError {
             CliError::Auth(_) => Self::EXIT_CODE_AUTH,
             CliError::Validation(_) => Self::EXIT_CODE_VALIDATION,
             CliError::Discovery(_) => Self::EXIT_CODE_DISCOVERY,
+            // Shares `other`'s exit code: adding a sixth would change the
+            // documented table every consumer already branches on.
+            CliError::Network(_) => Self::EXIT_CODE_OTHER,
             CliError::Other(_) => Self::EXIT_CODE_OTHER,
             CliError::RawSentinel { .. } => Self::EXIT_CODE_API,
         }
@@ -164,6 +176,15 @@ impl CliError {
                     "reason": "discoveryError",
                 }
             }),
+            // No `code`: the field is documented as the HTTP status, and this
+            // request never got one. A consumer testing `.error.code` sees it
+            // absent rather than a status the server never sent.
+            CliError::Network(msg) => json!({
+                "error": {
+                    "message": msg,
+                    "reason": "networkError",
+                }
+            }),
             CliError::Other(e) => json!({
                 "error": {
                     "code": 500,
@@ -183,6 +204,25 @@ impl CliError {
 }
 
 use crate::output::{colorize, sanitize_for_terminal};
+
+/// Render an error together with its `source()` chain, `": "`-joined.
+///
+/// Transport errors bury the useful part: `reqwest`'s Display is "error sending
+/// request for url (…)", and "Connection refused" — the only line that tells
+/// the user what to change — is two levels down.
+pub fn error_chain(err: &dyn std::error::Error) -> String {
+    let mut parts = vec![err.to_string()];
+    let mut cursor = err.source();
+    while let Some(source) = cursor {
+        let text = source.to_string();
+        // Skip a link that merely restates its parent.
+        if !parts.last().is_some_and(|prev| prev.contains(&text)) {
+            parts.push(text);
+        }
+        cursor = source.source();
+    }
+    parts.join(": ")
+}
 
 /// Map an HTTP status code to a short reason string for [`CliError::Api`].
 pub fn http_status_reason(status: u16) -> &'static str {
@@ -214,55 +254,299 @@ pub fn http_status_reason(status: u16) -> &'static str {
 /// whole JSON document inside a JSON field.
 pub fn api_error_from_body(status: u16, body: &str) -> CliError {
     let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body) else {
-        // Not JSON — the body itself is the most informative message we have,
-        // but a proxy or CDN failure (the 502/503 case) answers with an HTML
-        // page, and a page-sized `message` is unreadable either way.
-        return CliError::api(
-            status,
-            truncate_body(body, MAX_MESSAGE_BODY_BYTES),
-            http_status_reason(status),
-        );
+        return non_json_api_error(status, body);
     };
+
+    // A body that is a bare JSON string *is* the sentence. Falling through
+    // would summarise it as `HTTP <status> <reason>` and exile the only text
+    // the server sent to `details`.
+    if let serde_json::Value::String(text) = &parsed {
+        let text = text.trim();
+        if !text.is_empty() {
+            return CliError::api(status, text, http_status_reason(status));
+        }
+    }
 
     // Services wrap the interesting fields one level down under `error`
     // (Google, Stripe) or `detail` (FastAPI, which is what a Fern-generated
     // Python backend emits), so look inside before falling back to the root.
-    let scope = ["error", "detail"]
-        .iter()
-        .filter_map(|k| parsed.get(k))
-        .find(|v| v.is_object())
-        .unwrap_or(&parsed);
+    // A body that is a bare list of problems is the same shape one level out.
+    let scope_prefix: Vec<Seg> = ["error", "detail"]
+        .into_iter()
+        .find(|k| parsed.get(k).is_some_and(|v| v.is_object()))
+        .map(|k| vec![Seg::Key(k.to_string())])
+        .or_else(|| parsed.as_array()?.first().map(|_| vec![Seg::Index(0)]))
+        .unwrap_or_default();
+    let scope = resolve_path(&parsed, &scope_prefix).unwrap_or(&parsed);
 
-    // Only an HTTP-shaped `code` may override the status: application error
-    // codes (`{"code": 100234}`) would otherwise truncate into a nonsense
-    // status and produce a bogus docs link.
-    let code = scope
-        .get("code")
-        .and_then(|c| c.as_u64())
-        .filter(|c| (100..=599).contains(c))
-        .unwrap_or(status as u64) as u16;
     // A string `code` is a symbolic reason, not an HTTP status — as is Stripe's
     // and ElevenLabs' `type`.
     let reason = first_error(scope)
-        .and_then(|e| str_field(e, "reason"))
+        .and_then(|(_, e)| str_field(e, "reason"))
         .or_else(|| str_field(scope, "reason"))
         .or_else(|| str_field(scope, "code"))
         .or_else(|| str_field(scope, "type"))
         .unwrap_or_else(|| http_status_reason(status).to_string());
-    let message = message_from(scope).unwrap_or_else(|| format!("HTTP {status} {reason}"));
+    let located = message_from(scope);
+    let message = located
+        .as_ref()
+        .map(|m| m.text.clone())
+        .unwrap_or_else(|| format!("HTTP {status} {reason}"));
 
     // `details` exists to preserve what `message` could not carry — a
-    // `request_id`, the `loc` of the offending field. Whatever we already
-    // lifted into `message` would only be the same sentence twice, so drop it,
-    // and drop `details` altogether once nothing unique is left.
-    let details = without_message(&parsed, &message);
+    // `request_id`, the `loc` of the offending field. Drop the one field the
+    // sentence came from (repeating it would only say the same thing twice),
+    // then drop `details` altogether if nothing unique is left. Removal is by
+    // *path*, not by value: a body whose second entry happens to carry the same
+    // sentence as the first must keep it, or a consumer cannot tell which
+    // problem belongs to which `loc`.
+    let details = match &located {
+        Some(m) => {
+            let path: Vec<Seg> = scope_prefix
+                .iter()
+                .chain(m.path.iter())
+                .cloned()
+                .collect();
+            prune(remove_at_path(parsed, &path))
+        }
+        None => prune(parsed),
+    };
 
     CliError::Api {
-        code,
+        // Always the HTTP status. A body's own `code` is application-defined —
+        // it may be an internal numbering (`{"code": 100234}`) or even a
+        // success value on a failed request — so letting it win produced
+        // envelopes that contradicted the exit code and docs links pointing at
+        // the wrong page. The body's `code` survives in `details`.
+        code: status,
         message,
         help: None,
         reason,
         details,
+    }
+}
+
+/// Follow `path` into `value`, or `None` if it does not resolve.
+fn resolve_path<'v>(value: &'v serde_json::Value, path: &[Seg]) -> Option<&'v serde_json::Value> {
+    path.iter().try_fold(value, |cursor, seg| match seg {
+        Seg::Key(k) => cursor.get(k),
+        Seg::Index(i) => cursor.get(i),
+    })
+}
+
+/// Build a [`CliError::Api`] from a body that is not JSON at all.
+///
+/// Three shapes turn up here: an empty body, a one-line message from a proxy,
+/// and a full HTML (or XML) error page from a CDN or load balancer. Only the
+/// middle one belongs in `message` — a page is neither a sentence nor a single
+/// line, and reproducing it there breaks the guarantee every other error class
+/// keeps. The bytes are not discarded: they move to `details.body`, clipped.
+fn non_json_api_error(status: u16, body: &str) -> CliError {
+    let reason = http_status_reason(status);
+    let collapsed = collapse_whitespace(body);
+    if collapsed.is_empty() {
+        // An error with no body at all still needs a sentence; an empty
+        // `message` would read as "the CLI lost the error".
+        return CliError::api(status, format!("HTTP {status} {reason}"), reason);
+    }
+    let is_markup = collapsed.starts_with('<');
+    if is_markup || collapsed.len() > MAX_MESSAGE_BODY_BYTES {
+        return CliError::Api {
+            code: status,
+            message: format!(
+                "HTTP {status} {reason} (non-JSON response, {} bytes)",
+                body.len()
+            ),
+            reason: reason.to_string(),
+            details: Some(json!({ "body": truncate_body(&collapsed, MAX_MESSAGE_BODY_BYTES) })),
+            help: None,
+        };
+    }
+    CliError::api(status, collapsed, reason)
+}
+
+/// Fold every run of whitespace into a single space and trim the ends, so a
+/// body that arrived wrapped across lines still reads as one.
+fn collapse_whitespace(text: &str) -> String {
+    text.split_whitespace().collect::<Vec<_>>().join(" ")
+}
+
+/// Upper bound on `details` lines shown in the terminal. The whole structure is
+/// always in the JSON envelope; this is only about not flooding a screen when a
+/// service answers with a hundred per-field problems.
+const MAX_DETAIL_LINES: usize = 10;
+
+/// Flatten `details` into `path: value` lines for the human rendering.
+///
+/// A list of scalars stays on one line (`loc: body, email`) — splitting FastAPI's
+/// two-element `loc` across two lines buries the field name it exists to report.
+/// Returns at most `max` lines, with a final line naming what was elided.
+/// `already_shown` are strings the reader has seen on the headline — the
+/// message and the reason. A leaf repeating one of them is noise: services
+/// routinely echo the same token as `code`, `status` and `type`, which turned a
+/// one-fact 404 into five lines that said the same thing four times.
+fn detail_lines(
+    details: &serde_json::Value,
+    max: usize,
+    already_shown: &[&str],
+) -> Vec<String> {
+    let mut lines = Vec::new();
+    let mut seen: std::collections::HashSet<String> =
+        already_shown.iter().map(|s| s.to_string()).collect();
+    walk_details(unwrap_sole_object(details), &mut String::new(), &mut lines, &mut seen);
+    if lines.len() > max {
+        let hidden = lines.len() - max;
+        lines.truncate(max);
+        lines.push(format!("… {hidden} more (use --format json to see all)"));
+    }
+    lines
+}
+
+/// Descend through wrappers that add a path segment but no information.
+///
+/// `{"detail": {...}}` would otherwise prefix every line with `detail.`, which
+/// is the same word on every row and never the part the reader is looking for.
+/// Only single-key *object* wrappers are unwrapped: for a list, `detail[0].loc`
+/// is more legible than `[0].loc`.
+fn unwrap_sole_object(mut value: &serde_json::Value) -> &serde_json::Value {
+    while let serde_json::Value::Object(map) = value {
+        match map.iter().next() {
+            Some((_, inner)) if map.len() == 1 && inner.is_object() => value = inner,
+            _ => break,
+        }
+    }
+    value
+}
+
+fn walk_details(
+    value: &serde_json::Value,
+    path: &mut String,
+    out: &mut Vec<String>,
+    seen: &mut std::collections::HashSet<String>,
+) {
+    match value {
+        serde_json::Value::Object(map) => {
+            for (k, v) in map {
+                let mark = path.len();
+                if !path.is_empty() {
+                    path.push('.');
+                }
+                path.push_str(k);
+                walk_details(v, path, out, seen);
+                path.truncate(mark);
+            }
+        }
+        serde_json::Value::Array(items) => {
+            // All-scalar lists read better joined than exploded one per line.
+            if let Some(joined) = scalar_list(items) {
+                if seen.insert(joined.clone()) {
+                    out.push(format!("{path}: {joined}"));
+                }
+                return;
+            }
+            for (i, v) in items.iter().enumerate() {
+                let mark = path.len();
+                path.push_str(&format!("[{i}]"));
+                walk_details(v, path, out, seen);
+                path.truncate(mark);
+            }
+        }
+        other => {
+            let text = scalar_text(other);
+            // `seen` grows as we go, so a value repeated across sibling keys is
+            // printed once — under the first key that carried it.
+            if seen.insert(text.clone()) {
+                out.push(format!("{path}: {text}"));
+            }
+        }
+    }
+}
+
+/// `Some(joined)` when every item is a scalar, else `None`.
+fn scalar_list(items: &[serde_json::Value]) -> Option<String> {
+    if items.is_empty() || items.iter().any(|v| v.is_object() || v.is_array()) {
+        return None;
+    }
+    Some(
+        items
+            .iter()
+            .map(scalar_text)
+            .collect::<Vec<_>>()
+            .join(", "),
+    )
+}
+
+/// Render a scalar without JSON's quoting, which adds nothing in a terminal.
+fn scalar_text(value: &serde_json::Value) -> String {
+    match value {
+        serde_json::Value::String(s) => s.clone(),
+        serde_json::Value::Null => "null".to_string(),
+        other => other.to_string(),
+    }
+}
+
+/// One step along a path into a JSON document.
+#[derive(Clone, Debug, PartialEq)]
+pub(crate) enum Seg {
+    Key(String),
+    Index(usize),
+}
+
+/// A message plus the path it was read from, so `details` can drop exactly that
+/// occurrence rather than every string that happens to equal it.
+struct LocatedMessage {
+    text: String,
+    path: Vec<Seg>,
+}
+
+/// Remove the value at `path`, leaving everything else untouched. A path that
+/// does not resolve leaves `value` unchanged.
+pub(crate) fn remove_at_path(mut value: serde_json::Value, path: &[Seg]) -> serde_json::Value {
+    let Some((last, parents)) = path.split_last() else {
+        return value;
+    };
+    let mut cursor = &mut value;
+    for seg in parents {
+        cursor = match (cursor, seg) {
+            (serde_json::Value::Object(map), Seg::Key(k)) => match map.get_mut(k) {
+                Some(next) => next,
+                None => return value,
+            },
+            (serde_json::Value::Array(items), Seg::Index(i)) => match items.get_mut(*i) {
+                Some(next) => next,
+                None => return value,
+            },
+            _ => return value,
+        };
+    }
+    match (cursor, last) {
+        (serde_json::Value::Object(map), Seg::Key(k)) => {
+            map.remove(k);
+        }
+        (serde_json::Value::Array(items), Seg::Index(i)) if *i < items.len() => {
+            items.remove(*i);
+        }
+        _ => {}
+    }
+    value
+}
+
+/// Drop containers that hold nothing, recursively. `None` means the document
+/// carried no information once the message was removed.
+pub(crate) fn prune(value: serde_json::Value) -> Option<serde_json::Value> {
+    match value {
+        serde_json::Value::Object(map) => {
+            let kept: serde_json::Map<String, serde_json::Value> = map
+                .into_iter()
+                .filter_map(|(k, v)| prune(v).map(|v| (k, v)))
+                .collect();
+            (!kept.is_empty()).then_some(serde_json::Value::Object(kept))
+        }
+        serde_json::Value::Array(items) => {
+            let kept: Vec<serde_json::Value> = items.into_iter().filter_map(prune).collect();
+            (!kept.is_empty()).then_some(serde_json::Value::Array(kept))
+        }
+        other => Some(other),
     }
 }
 
@@ -281,7 +565,29 @@ impl UsageText {
     /// the envelope cannot "try `--help`".
     const TRY_HELP: &'static str = "For more information, try";
 
+    /// Whether `text` is clap's rendered error block rather than one of our
+    /// own validators' messages.
+    ///
+    /// The split below is tuned to clap's layout — first line is the failure,
+    /// everything after it is a tip, a usage line, or boilerplate. Applied to a
+    /// message that merely happens to span lines (a schema validation listing
+    /// one bullet per violation) it would demote the violations to `help` and
+    /// leave only the header in `message`, so anything not clap-shaped passes
+    /// through whole. clap is built without the `color` feature here, so the
+    /// prefix is plain text.
+    fn is_clap_block(text: &str) -> bool {
+        let trimmed = text.trim_start();
+        trimmed.starts_with("error:") || trimmed.starts_with("Usage:") || text.contains("\nUsage:")
+    }
+
     fn parse(text: &str) -> Self {
+        if !Self::is_clap_block(text) {
+            return Self {
+                message: text.trim().to_string(),
+                help: None,
+                usage: None,
+            };
+        }
         let mut message = Vec::new();
         let mut help = Vec::new();
         let mut usage = Vec::new();
@@ -325,33 +631,6 @@ impl UsageText {
     }
 }
 
-/// Copy `value` without any string equal to `message`, and without containers
-/// left empty by that removal. `None` means the body said nothing beyond the
-/// message itself.
-pub(crate) fn without_message(
-    value: &serde_json::Value,
-    message: &str,
-) -> Option<serde_json::Value> {
-    match value {
-        serde_json::Value::String(s) if s == message => None,
-        serde_json::Value::Object(map) => {
-            let kept: serde_json::Map<String, serde_json::Value> = map
-                .iter()
-                .filter_map(|(k, v)| without_message(v, message).map(|v| (k.clone(), v)))
-                .collect();
-            (!kept.is_empty()).then(|| serde_json::Value::Object(kept))
-        }
-        serde_json::Value::Array(items) => {
-            let kept: Vec<serde_json::Value> = items
-                .iter()
-                .filter_map(|v| without_message(v, message))
-                .collect();
-            (!kept.is_empty()).then_some(serde_json::Value::Array(kept))
-        }
-        other => Some(other.clone()),
-    }
-}
-
 /// Upper bound on a non-JSON body reproduced verbatim in `message`.
 const MAX_MESSAGE_BODY_BYTES: usize = 500;
 
@@ -377,18 +656,18 @@ fn str_field(scope: &serde_json::Value, key: &str) -> Option<String> {
 }
 
 /// The first entry of an `errors`/`detail` list of per-problem objects, which is
-/// where Google-style and FastAPI-style bodies put the actual message.
-fn first_error(scope: &serde_json::Value) -> Option<&serde_json::Value> {
+/// where Google-style and FastAPI-style bodies put the actual message. Returns
+/// the key it was found under so callers can rebuild the path to it.
+fn first_error(scope: &serde_json::Value) -> Option<(&'static str, &serde_json::Value)> {
     ["errors", "detail"]
-        .iter()
-        .filter_map(|k| scope.get(k))
-        .filter_map(|v| v.as_array())
-        .find_map(|arr| arr.first())
+        .into_iter()
+        .filter_map(|k| Some((k, scope.get(k)?.as_array()?)))
+        .find_map(|(k, arr)| arr.first().map(|first| (k, first)))
 }
 
 /// Pull a human-readable sentence out of an error object, accepting the field
-/// names services actually use.
-fn message_from(scope: &serde_json::Value) -> Option<String> {
+/// names services actually use, and report where it came from.
+fn message_from(scope: &serde_json::Value) -> Option<LocatedMessage> {
     for key in [
         "message",
         "msg",
@@ -397,16 +676,25 @@ fn message_from(scope: &serde_json::Value) -> Option<String> {
         "error_description",
         "error",
     ] {
-        if let Some(s) = str_field(scope, key) {
-            return Some(s);
+        if let Some(text) = str_field(scope, key) {
+            return Some(LocatedMessage {
+                text,
+                path: vec![Seg::Key(key.to_string())],
+            });
         }
     }
-    first_error(scope).and_then(|first| {
-        first
-            .as_str()
-            .map(str::to_string)
-            .or_else(|| message_from(first))
-    })
+    let (key, first) = first_error(scope)?;
+    let prefix = [Seg::Key(key.to_string()), Seg::Index(0)];
+    match first.as_str() {
+        Some(text) => Some(LocatedMessage {
+            text: text.to_string(),
+            path: prefix.to_vec(),
+        }),
+        None => message_from(first).map(|inner| LocatedMessage {
+            text: inner.text,
+            path: prefix.into_iter().chain(inner.path).collect(),
+        }),
+    }
 }
 
 /// All documented exit codes with their human-readable descriptions.
@@ -520,6 +808,7 @@ fn error_label(err: &CliError) -> String {
         CliError::Auth(_) => colorize("error[auth]:", "31"),
         CliError::Validation(_) => colorize("error[validation]:", "33"),
         CliError::Discovery(_) => colorize("error[discovery]:", "31"),
+        CliError::Network(_) => colorize("error[network]:", "31"),
         CliError::Other(_) => colorize("error:", "31"),
         CliError::RawSentinel { .. } => colorize("error[api]:", "31"),
     }
@@ -534,12 +823,15 @@ pub struct ErrorDisplayContext {
     /// Full help invocation, e.g. `box users list --help`.
     /// Printed as `Try \`...\`` after the error message.
     pub help_hint: Option<String>,
-    /// Whether the resolved output format is machine-readable.
+    /// The resolved output format.
     ///
-    /// Selects *which* representation of the error is emitted, never both:
-    /// `true` puts the JSON envelope on stdout, `false` puts a single human
-    /// line on stderr and leaves stdout empty.
-    pub machine_readable: bool,
+    /// Selects *which* representation of the error is emitted, never both: a
+    /// machine format puts the JSON envelope on stdout, a human one puts a
+    /// single line on stderr and leaves stdout empty. It also decides the
+    /// envelope's shape — `jsonl` is line-delimited by definition, so a
+    /// pretty-printed value there is unreadable to the line-at-a-time consumer
+    /// the format exists for.
+    pub format: crate::formatter::OutputFormat,
 }
 
 impl Default for ErrorDisplayContext {
@@ -549,7 +841,7 @@ impl Default for ErrorDisplayContext {
             help_hint: None,
             // Matches the format resolver's non-TTY default: a caller with no
             // resolved format is a pipe or a test, both of which want JSON.
-            machine_readable: true,
+            format: crate::formatter::OutputFormat::Json,
         }
     }
 }
@@ -574,10 +866,8 @@ pub fn write_error_json(
     // One representation per invocation. Emitting both makes a consumer that
     // merges stdout and stderr see the same error twice with no way to tell
     // which is authoritative.
-    let machine_readable = match ctx {
-        Some(ctx) => ctx.machine_readable,
-        None => true,
-    };
+    let format = ctx.map(|c| c.format).unwrap_or(crate::formatter::OutputFormat::Json);
+    let machine_readable = format.is_machine_readable();
     let docs_url = ctx
         .and_then(|ctx| ctx.docs_base_url.as_deref())
         .zip(match err {
@@ -592,18 +882,55 @@ pub fn write_error_json(
         if let Some(url) = &docs_url {
             json["error"]["docs_url"] = json!(url);
         }
-        let _ = writeln!(
-            out,
-            "{}",
+        // `jsonl` means one JSON value per line; pretty-printing puts a bare
+        // `{` on the first line and breaks every line-at-a-time reader.
+        let rendered = if matches!(format, crate::formatter::OutputFormat::Jsonl) {
+            serde_json::to_string(&json).unwrap_or_default()
+        } else {
             serde_json::to_string_pretty(&json).unwrap_or_default()
-        );
+        };
+        let _ = writeln!(out, "{rendered}");
         return;
     }
-    eprintln!(
-        "{} {}",
-        error_label(err),
-        sanitize_for_terminal(&err.to_string())
-    );
+    // A service-specific reason (`workspace_not_found`) is the second most
+    // useful thing after the sentence, and the human rendering used to be the
+    // one place it never appeared. A reason derived from the status carries
+    // nothing the label and message do not already say, so it stays hidden.
+    let specific_reason = match err {
+        CliError::Api { code, reason, .. } if reason != http_status_reason(*code) => {
+            Some(reason.as_str())
+        }
+        _ => None,
+    };
+    match specific_reason {
+        Some(reason) => eprintln!(
+            "{} {} ({})",
+            error_label(err),
+            sanitize_for_terminal(&err.to_string()),
+            sanitize_for_terminal(reason)
+        ),
+        None => eprintln!(
+            "{} {}",
+            error_label(err),
+            sanitize_for_terminal(&err.to_string())
+        ),
+    }
+    // What the server said beyond the sentence, before the advice about it.
+    // Without this a field-level failure reads as `error[api]: field required`
+    // with no way to tell *which* field — the `loc` is in the envelope but the
+    // person in the terminal is the one who cannot see it.
+    if let CliError::Api {
+        details: Some(details),
+        message,
+        reason,
+        ..
+    } = err
+    {
+        let shown = [message.as_str(), reason.as_str()];
+        for line in detail_lines(details, MAX_DETAIL_LINES, &shown) {
+            eprintln!("  {}", sanitize_for_terminal(&line));
+        }
+    }
     if let CliError::Api {
         help: Some(help), ..
     } = err
@@ -849,7 +1176,7 @@ mod tests {
         let ctx = ErrorDisplayContext {
             docs_base_url: Some("https://docs.example.com/errors".to_string()),
             help_hint: Some("mycli users list --help".to_string()),
-            machine_readable: true,
+            format: crate::formatter::OutputFormat::Json,
         };
         let mut out = Vec::new();
         write_error_json(&err, &mut out, Some(&ctx));
@@ -894,7 +1221,7 @@ mod tests {
         let ctx = ErrorDisplayContext {
             docs_base_url: Some("https://docs.example.com/errors".to_string()),
             help_hint: None,
-            machine_readable: true,
+            format: crate::formatter::OutputFormat::Json,
         };
         // Validation errors should not get docs URLs (no HTTP status code).
         let mut out = Vec::new();
@@ -914,7 +1241,7 @@ mod tests {
         // The regression: stdout carried the envelope *and* stderr carried the
         // same message, so a consumer merging the two saw the error twice.
         let ctx = ErrorDisplayContext {
-            machine_readable: false,
+            format: crate::formatter::OutputFormat::Table,
             ..Default::default()
         };
         let mut out = Vec::new();
@@ -1023,7 +1350,8 @@ mod tests {
 
     #[test]
     fn api_error_from_body_recognizes_common_shapes() {
-        // Google-style envelope: code and reason come from the body.
+        // Google-style envelope: the reason comes from the body, the code does
+        // not — `error.code` is the status the server actually answered with.
         let err = api_error_from_body(
             401,
             r#"{"error":{"code":403,"message":"Denied","errors":[{"reason":"authError"}]}}"#,
@@ -1033,11 +1361,14 @@ mod tests {
                 code,
                 message,
                 reason,
+                details,
                 ..
             } => {
-                assert_eq!(*code, 403);
+                assert_eq!(*code, 401);
                 assert_eq!(message, "Denied");
                 assert_eq!(reason, "authError");
+                // The body's own code is still reachable, just not as `code`.
+                assert_eq!(details.as_ref().unwrap()["error"]["code"], 403);
             }
             other => panic!("expected Api, got: {other:?}"),
         }
@@ -1078,34 +1409,246 @@ mod tests {
     }
 
     #[test]
-    fn api_error_from_body_clips_page_sized_non_json_bodies() {
-        // A CDN answering 502 with an HTML page must not put kilobytes of
-        // markup into `message`.
-        let page = format!("<html><body>{}</body></html>", "x".repeat(4000));
-        let err = api_error_from_body(502, &page);
-        let message = err.to_string();
-        assert!(
-            message.len() < 600,
-            "expected a clipped message, got {} bytes",
-            message.len()
-        );
-        assert!(
-            message.contains(&format!("{} bytes total", page.len())),
-            "got: {message}"
-        );
-        assert!(message.starts_with("<html><body>"));
+    fn markup_bodies_are_summarised_not_pasted_into_the_message() {
+        // A CDN answering 502 with an HTML page: `message` is a sentence about
+        // what happened, and the markup moves to `details.body` clipped. Size
+        // alone is not the test — even a short page is multi-line markup, which
+        // `message` promises never to be.
+        for page in [
+            format!("<html><body>{}</body></html>", "x".repeat(4000)),
+            "<!DOCTYPE html>\n<html>\n  <body>502 Bad Gateway</body>\n</html>".to_string(),
+        ] {
+            let err = api_error_from_body(502, &page);
+            let message = err.to_string();
+            assert_eq!(
+                message,
+                format!("HTTP 502 badGateway (non-JSON response, {} bytes)", page.len())
+            );
+            assert!(!message.contains('\n'), "message must be one line: {message}");
+            let json = err.to_json();
+            let body = json["error"]["details"]["body"].as_str().unwrap();
+            assert!(body.starts_with("<"), "the bytes are kept: {body}");
+            assert!(!body.contains('\n'), "details.body is collapsed: {body}");
+            assert!(body.len() < 600, "details.body is clipped: {} bytes", body.len());
+        }
     }
 
     #[test]
-    fn api_error_from_body_ignores_application_codes_outside_http_range() {
-        // Services commonly return their own error numbering; `error.code` is
-        // documented as the HTTP status, and `as u16` would silently truncate.
-        let err = api_error_from_body(400, r#"{"code":100234,"message":"Bad thing"}"#);
-        assert_eq!(err.to_json()["error"]["code"], 400);
-        assert_eq!(err.to_string(), "Bad thing");
-        // An HTTP-shaped code is still honoured.
-        let err = api_error_from_body(400, r#"{"code":422,"message":"Bad thing"}"#);
-        assert_eq!(err.to_json()["error"]["code"], 422);
+    fn non_json_bodies_that_are_a_sentence_stay_in_the_message() {
+        // The common proxy case: a short plain-text reason. It is the most
+        // informative thing we have, so it stays where a reader looks first.
+        let err = api_error_from_body(502, "upstream connect error");
+        assert_eq!(err.to_string(), "upstream connect error");
+        assert!(err.to_json()["error"].get("details").is_none());
+
+        // Wrapped across lines by the server, but still one sentence.
+        let err = api_error_from_body(503, "upstream connect error\n  or disconnect");
+        assert_eq!(err.to_string(), "upstream connect error or disconnect");
+    }
+
+    #[test]
+    fn bodyless_and_bare_string_responses_still_yield_a_sentence() {
+        // An empty body used to produce `message: ""`, which reads as the CLI
+        // having lost the error rather than the server having sent nothing.
+        for body in ["", "   \n  "] {
+            let err = api_error_from_body(504, body);
+            assert_eq!(err.to_string(), "HTTP 504 gatewayTimeout", "body: {body:?}");
+            assert!(err.to_json()["error"].get("details").is_none());
+        }
+        // A body that is a bare JSON string is the sentence itself, not an
+        // unrecognised document to file under `details`.
+        let err = api_error_from_body(500, r#""Service temporarily unavailable""#);
+        assert_eq!(err.to_string(), "Service temporarily unavailable");
+        assert!(err.to_json()["error"].get("details").is_none());
+
+        // A body that is a bare list of problems reads like `errors`/`detail`
+        // one level out.
+        let err = api_error_from_body(
+            422,
+            r#"[{"loc":["body","email"],"msg":"value is not a valid email"}]"#,
+        );
+        assert_eq!(err.to_string(), "value is not a valid email");
+        assert_eq!(err.to_json()["error"]["details"][0]["loc"][1], "email");
+    }
+
+    #[test]
+    fn human_rendering_reports_the_details_a_reader_cannot_otherwise_see() {
+        // The envelope carries `loc`; the person in the terminal cannot read the
+        // envelope. Without these lines a field-level failure is unactionable.
+        let err = api_error_from_body(
+            422,
+            r#"{"detail":[{"loc":["body","email"],"msg":"value is not a valid email","type":"value_error.email"}]}"#,
+        );
+        let CliError::Api { details, .. } = &err else {
+            panic!("expected Api");
+        };
+        let lines = detail_lines(details.as_ref().unwrap(), MAX_DETAIL_LINES, &[]);
+        // A scalar list stays on one line: the field path is the point.
+        assert!(
+            lines.contains(&"detail[0].loc: body, email".to_string()),
+            "got: {lines:?}"
+        );
+        assert!(
+            lines.contains(&"detail[0].type: value_error.email".to_string()),
+            "got: {lines:?}"
+        );
+        assert!(lines.iter().all(|l| !l.contains('"')), "got: {lines:?}");
+    }
+
+    #[test]
+    fn human_details_drop_what_the_headline_already_said() {
+        // Verbatim from api.elevenlabs.io. `code`, `status` and `type` all
+        // restate the reason; only `request_id` is new. Rendering all four
+        // turned a one-fact 404 into five lines saying the same thing.
+        let err = api_error_from_body(
+            404,
+            r#"{"detail":{"status":"workspace_not_found","message":"Workspace 1anonymous1 not found.","code":"workspace_not_found","type":"not_found","request_id":"6c312f"}}"#,
+        );
+        let CliError::Api {
+            details,
+            message,
+            reason,
+            ..
+        } = &err
+        else {
+            panic!("expected Api");
+        };
+        assert_eq!(reason, "workspace_not_found");
+        let lines = detail_lines(
+            details.as_ref().unwrap(),
+            MAX_DETAIL_LINES,
+            &[message.as_str(), reason.as_str()],
+        );
+        // The sole `detail.` wrapper is stripped — it prefixed every line and
+        // named nothing the reader was looking for.
+        assert_eq!(
+            lines,
+            vec![
+                "request_id: 6c312f".to_string(),
+                "type: not_found".to_string()
+            ],
+            "got: {lines:?}"
+        );
+        // Nothing is lost: the envelope still carries every field.
+        let json = err.to_json();
+        assert_eq!(json["error"]["details"]["detail"]["status"], "workspace_not_found");
+        assert_eq!(json["error"]["details"]["detail"]["code"], "workspace_not_found");
+    }
+
+    #[test]
+    fn a_status_derived_reason_stays_off_the_headline() {
+        // `notFound` on a 404 says nothing `error[api]` and the message do not.
+        let err = api_error_from_body(404, r#"{"detail":"Not Found"}"#);
+        let CliError::Api { code, reason, .. } = &err else {
+            panic!("expected Api");
+        };
+        assert_eq!(reason, http_status_reason(*code));
+    }
+
+    #[test]
+    fn jsonl_errors_are_one_line() {
+        // NDJSON is parsed a line at a time; a pretty-printed envelope puts a
+        // bare `{` on line one and breaks every such reader.
+        let err = api_error_from_body(404, r#"{"detail":"Not Found"}"#);
+        let mut out = Vec::new();
+        write_error_json(
+            &err,
+            &mut out,
+            Some(&ErrorDisplayContext {
+                docs_base_url: None,
+                help_hint: None,
+                format: crate::formatter::OutputFormat::Jsonl,
+            }),
+        );
+        let text = String::from_utf8(out).unwrap();
+        assert_eq!(text.lines().count(), 1, "got: {text}");
+        serde_json::from_str::<serde_json::Value>(text.trim()).expect("each line must parse");
+
+        // `json` keeps the readable multi-line rendering.
+        let mut out = Vec::new();
+        write_error_json(
+            &err,
+            &mut out,
+            Some(&ErrorDisplayContext {
+                docs_base_url: None,
+                help_hint: None,
+                format: crate::formatter::OutputFormat::Json,
+            }),
+        );
+        assert!(String::from_utf8(out).unwrap().lines().count() > 1);
+    }
+
+    #[test]
+    fn human_detail_rendering_is_capped() {
+        // A service answering with a hundred per-field problems must not scroll
+        // the failure sentence off the screen.
+        let problems: Vec<serde_json::Value> = (0..40)
+            .map(|i| json!({ "field": format!("f{i}") }))
+            .collect();
+        let lines = detail_lines(&json!({ "detail": problems }), MAX_DETAIL_LINES, &[]);
+        assert_eq!(lines.len(), MAX_DETAIL_LINES + 1);
+        assert!(lines.last().unwrap().contains("30 more"), "got: {lines:?}");
+        assert!(lines.last().unwrap().contains("--format json"));
+    }
+
+    #[test]
+    fn api_error_from_body_code_is_always_the_http_status() {
+        // A body's `code` is application-defined and cannot be told apart from
+        // an HTTP status by inspection, so it never wins: an internal numbering
+        // would truncate into a nonsense status, and a code that merely *looks*
+        // like a status can disagree with the one actually served — including a
+        // success value on a failed request, which contradicts the exit code
+        // and points the docs link at the wrong page.
+        for (status, body, expected_in_details) in [
+            (400, r#"{"code":100234,"message":"Bad thing"}"#, 100234),
+            (400, r#"{"code":422,"message":"Bad thing"}"#, 422),
+            (500, r#"{"code":200,"message":"Bad thing"}"#, 200),
+        ] {
+            let json = api_error_from_body(status, body).to_json();
+            assert_eq!(json["error"]["code"], status, "body: {body}");
+            assert_eq!(json["error"]["message"], "Bad thing", "body: {body}");
+            assert_eq!(
+                json["error"]["details"]["code"], expected_in_details,
+                "the body's own code must survive in details; body: {body}"
+            );
+        }
+    }
+
+    #[test]
+    fn details_keep_a_sibling_that_repeats_the_lifted_sentence() {
+        // Two fields failing the same way is the common multi-field validation
+        // shape. Only the entry the sentence was lifted *from* loses its `msg`;
+        // dropping every string equal to it would leave the second problem
+        // unattributable.
+        let err = api_error_from_body(
+            422,
+            r#"{"detail":[{"loc":["body","name"],"msg":"field required"},
+                          {"loc":["body","email"],"msg":"field required"}]}"#,
+        );
+        let json = err.to_json();
+        assert_eq!(json["error"]["message"], "field required");
+        let entries = json["error"]["details"]["detail"].as_array().unwrap();
+        assert_eq!(entries.len(), 2, "got: {json:#}");
+        assert!(entries[0].get("msg").is_none(), "got: {json:#}");
+        assert_eq!(entries[1]["msg"], "field required", "got: {json:#}");
+        assert_eq!(entries[1]["loc"][1], "email");
+    }
+
+    #[test]
+    fn multi_line_validator_messages_are_not_split_like_clap_output() {
+        // Our own schema validator emits one bullet per violation. The clap
+        // splitter would demote every bullet to `help` and leave `message` as
+        // the bare header, so a non-clap block passes through whole.
+        let err = CliError::Validation(
+            "Request body failed schema validation:\n- $.name: expected string, got number\n- $.age: required property missing".to_string(),
+        );
+        let json = err.to_json();
+        assert_eq!(
+            json["error"]["message"],
+            "Request body failed schema validation:\n- $.name: expected string, got number\n- $.age: required property missing"
+        );
+        assert!(json["error"].get("help").is_none(), "got: {json:#}");
+        assert!(json["error"].get("usage").is_none(), "got: {json:#}");
     }
 
     #[test]
@@ -1120,7 +1663,7 @@ mod tests {
         let ctx = ErrorDisplayContext {
             docs_base_url: None,
             help_hint: Some("mycli users list --help".to_string()),
-            machine_readable: true,
+            format: crate::formatter::OutputFormat::Json,
         };
         // Validation errors should get the hint.
         let mut out = Vec::new();

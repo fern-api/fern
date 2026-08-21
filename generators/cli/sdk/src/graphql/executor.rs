@@ -136,10 +136,11 @@ fn parse_graphql_response(body_text: &str) -> Result<String, CliError> {
                 eprintln!("GraphQL partial errors: {message}");
             } else {
                 // GraphQL puts every error's location/path/extensions here;
-                // keep them for machine consumers, minus the message text that
-                // is already reported above it.
-                let details =
-                    crate::error::without_message(&json!({ "errors": errors }), &message);
+                // keep them for machine consumers. Each entry keeps its own
+                // `message` because it pairs with that entry's `path` — the
+                // top-level `message` is a join of all of them, not one lifted
+                // field, so there is no single occurrence to drop.
+                let details = crate::error::prune(json!({ "errors": errors }));
                 return Err(CliError::Api {
                     code: 400,
                     message,
@@ -311,7 +312,15 @@ pub async fn execute_method(
             }
 
             let built = request.build().map_err(|e| {
-                CliError::Other(anyhow::Error::from(e).context("Failed to build HTTP request"))
+                // `Validation`, not `Other`: `build()` fails on a malformed URL
+                // or header value, which comes from `--base-url` or a flag the
+                // user typed. Reporting it as `code: 500` claimed a server
+                // status for a request that was never sent, and buried a
+                // fixable input error under an internal-error exit code.
+                CliError::Validation(format!(
+                    "Failed to build HTTP request: {}",
+                    crate::error::error_chain(&e)
+                ))
             })?;
             if debug {
                 let query_str = input.body.get("query").and_then(|q| q.as_str()).unwrap_or("");
@@ -391,7 +400,14 @@ pub async fn execute_method(
                         continue;
                     }
                     crate::http::maybe_emit_tls_hint(http_config, &e);
-                    return Err(anyhow::Error::from(e).context("HTTP request failed").into());
+                    // `Network`, not `Other`: nothing answered, so there is no
+                    // HTTP status to put in `error.code`. The chain is walked
+                    // because reqwest's own Display stops at "error sending
+                    // request" — "Connection refused" is the actionable part.
+                    return Err(CliError::Network(format!(
+                        "HTTP request failed: {}",
+                        crate::error::error_chain(&e)
+                    )));
                 }
             }
         };

@@ -7,4 +7,9 @@
     dropped — so every field is a single line, as with API errors. Human output on
     a terminal is unchanged: it still prints clap's full rendering, tip and usage
     included.
+
+    Only clap's own blocks are split. A multi-line message from one of the CLI's
+    validators — schema validation listing one bullet per violation, say — passes
+    through whole, since applying the split there would demote the violations to
+    `help` and leave `message` as the bare header.
   type: fix

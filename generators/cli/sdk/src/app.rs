@@ -704,8 +704,7 @@ impl CliApp {
             // Resolved from raw argv because an error can precede clap parsing;
             // the resolver is the same one the success path uses, so errors land
             // in whichever representation the caller already asked for.
-            machine_readable: crate::formatter::resolve_format_from_raw_args(&str_args, &self.name)
-                .is_machine_readable(),
+            format: crate::formatter::resolve_format_from_raw_args(&str_args, &self.name),
         };
         match self.dispatch_pipeline(args, out).await {
             Ok(PipelineOutcome::Success) => 0,
@@ -755,7 +754,12 @@ impl CliApp {
         // binding to own the path wins. A real `Err` from one binding is
         // logged and the walk continues — one broken spec cannot mask its
         // sibling's surface.
-        if crate::cli_args::wants_schema(&str_args) {
+        // `--schema`, or `--help` with an explicit machine format — the spelling
+        // the generated README has always documented for the operation catalog.
+        let explicit_schema = crate::cli_args::wants_schema(&str_args);
+        let help_as_schema = crate::cli_args::wants_help(&str_args)
+            && crate::formatter::explicit_machine_format(&str_args);
+        if explicit_schema || help_as_schema {
             let path = crate::cli_args::extract_subcommand_path(&str_args);
 
             if path.is_empty() {
@@ -845,10 +849,17 @@ impl CliApp {
                     ),
                 }
             }
-            return Err(CliError::Discovery(format!(
-                "--schema: no binding contains path `{}`",
-                path.join(" ")
-            )));
+            // A path with no schema is an error for an explicit `--schema` —
+            // the caller asked for a document that does not exist. It must not
+            // be one for `--help`: built-in subcommands (`auth login`,
+            // `completion`, `man`) are not API operations, and someone asking
+            // for help on one should get help, not `discoveryError` exit 4.
+            if explicit_schema {
+                return Err(CliError::Discovery(format!(
+                    "--schema: no binding contains path `{}`",
+                    path.join(" ")
+                )));
+            }
         }
 
         // 0c. --spec / --spec-raw: emit embedded OpenAPI spec(s) and exit.

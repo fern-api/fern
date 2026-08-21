@@ -17,8 +17,12 @@
     path produced the error — the runtime's `sdk_executor` already said
     `rateLimited`, while the generated request adapter said `tooManyRequests`.
     Both now come from one mapping. Also,
-    `error.code` is always the HTTP status, so a body carrying its own
-    application error code (`{"code": 100234}`) no longer overwrites it.
+    `error.code` is always the HTTP status the server answered with. A body's own
+    `code` never overrides it — not an internal numbering (`{"code": 100234}`,
+    which used to truncate into a nonsense status), and not one that merely looks
+    like a status, which could disagree with what was actually served and point
+    the docs link at the wrong page. The body's `code` is still available under
+    `error.details`.
   type: fix
 
 - summary: |
