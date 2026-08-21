@@ -45,6 +45,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             namespaceExport: parsed?.namespaceExport,
             naming: parsed?.naming,
             outputEsm: parsed?.outputEsm ?? false,
+            esmOnly: parsed?.esmOnly ?? false,
             outputSrcOnly: parsed?.outputSrcOnly ?? false,
             includeCredentialsOnCrossOriginRequests: parsed?.includeCredentialsOnCrossOriginRequests ?? false,
             shouldBundle: parsed?.bundle ?? false,
@@ -155,6 +156,19 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             }
         }
 
+        if (parsed?.esmOnly) {
+            if (parsed?.useLegacyExports) {
+                throw new Error(
+                    "Incompatible configuration: `esmOnly` cannot be combined with `useLegacyExports`. Please remove one of the two options."
+                );
+            }
+            if (parsed?.bundle) {
+                throw new Error(
+                    "Incompatible configuration: `esmOnly` cannot be combined with `bundle`. Please remove one of the two options."
+                );
+            }
+        }
+
         if (config.formatter === "oxfmt") {
             logger.warn("Warning: oxfmt is currently in beta. Use with caution.");
         }
@@ -220,6 +234,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 neverThrowErrors: customConfig.neverThrowErrors,
                 shouldBundle: customConfig.shouldBundle,
                 outputEsm: customConfig.outputEsm,
+                esmOnly: customConfig.esmOnly,
                 includeCredentialsOnCrossOriginRequests: customConfig.includeCredentialsOnCrossOriginRequests,
                 allowCustomFetcher: customConfig.allowCustomFetcher,
                 generateWebSocketClients: customConfig.generateWebSocketClients,

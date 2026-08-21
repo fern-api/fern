@@ -10,6 +10,7 @@ import { TypescriptProject } from "./TypescriptProject.js";
 export declare namespace SimpleTypescriptProject {
     export interface Init extends TypescriptProject.Init {
         outputEsm: boolean;
+        esmOnly: boolean;
         resolutions: Record<string, string>;
         useLegacyExports: boolean;
     }
@@ -17,12 +18,14 @@ export declare namespace SimpleTypescriptProject {
 
 export class SimpleTypescriptProject extends TypescriptProject {
     private outputEsm: boolean;
+    private esmOnly: boolean;
     private useLegacyExports: boolean;
     private resolutions: Record<string, string>;
 
-    constructor({ outputEsm, resolutions, useLegacyExports, ...superInit }: SimpleTypescriptProject.Init) {
+    constructor({ outputEsm, esmOnly, resolutions, useLegacyExports, ...superInit }: SimpleTypescriptProject.Init) {
         super(superInit);
         this.outputEsm = outputEsm;
+        this.esmOnly = esmOnly;
         this.resolutions = resolutions;
         this.useLegacyExports = useLegacyExports ?? false;
     }
@@ -119,24 +122,26 @@ export class SimpleTypescriptProject extends TypescriptProject {
             )
         );
 
-        const cjsCompilerOptions: CompilerOptions = {
-            module: "CommonJS" as unknown as ModuleKind,
-            outDir: `${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}`
-        };
+        if (!this.esmOnly) {
+            const cjsCompilerOptions: CompilerOptions = {
+                module: "CommonJS" as unknown as ModuleKind,
+                outDir: `${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}`
+            };
 
-        await this.writeFileToVolume(
-            RelativeFilePath.of(TypescriptProject.TS_CONFIG_CJS_FILENAME),
-            JSON.stringify(
-                {
-                    extends: `./${baseTsConfigPath}`,
-                    compilerOptions: cjsCompilerOptions,
-                    include: [this.packagePath],
-                    exclude: this.testPath.startsWith(this.packagePath) ? [this.testPath] : []
-                },
-                undefined,
-                4
-            )
-        );
+            await this.writeFileToVolume(
+                RelativeFilePath.of(TypescriptProject.TS_CONFIG_CJS_FILENAME),
+                JSON.stringify(
+                    {
+                        extends: `./${baseTsConfigPath}`,
+                        compilerOptions: cjsCompilerOptions,
+                        include: [this.packagePath],
+                        exclude: this.testPath.startsWith(this.packagePath) ? [this.testPath] : []
+                    },
+                    undefined,
+                    4
+                )
+            );
+        }
 
         const esmCompilerOptions: CompilerOptions = {
             module: "esnext" as unknown as ModuleKind,
@@ -163,7 +168,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             RelativeFilePath.of(TypescriptProject.TS_CONFIG_FILENAME),
             JSON.stringify(
                 {
-                    extends: `./${TypescriptProject.TS_CONFIG_CJS_FILENAME}`
+                    extends: `./${this.esmOnly ? TypescriptProject.TS_CONFIG_ESM_FILENAME : TypescriptProject.TS_CONFIG_CJS_FILENAME}`
                 },
                 undefined,
                 4
@@ -218,26 +223,31 @@ export class SimpleTypescriptProject extends TypescriptProject {
             const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/index.d.ts`;
             const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/index.mjs`;
             const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/index.d.mts`;
-            const defaultTypesExport = this.outputEsm ? mjsTypesFile : cjsTypesFile;
-            const defaultExport = this.outputEsm ? mjsFile : cjsFile;
+            const defaultTypesExport = this.esmOnly || this.outputEsm ? mjsTypesFile : cjsTypesFile;
+            const defaultExport = this.esmOnly || this.outputEsm ? mjsFile : cjsFile;
             packageJson = {
                 ...packageJson,
-                type: this.outputEsm ? "module" : "commonjs",
+                type: this.esmOnly || this.outputEsm ? "module" : "commonjs",
                 main: defaultExport,
                 module: mjsFile,
                 types: defaultTypesExport,
                 exports: {
-                    ".": {
-                        import: {
-                            types: mjsTypesFile,
-                            default: mjsFile
-                        },
-                        require: {
-                            types: cjsTypesFile,
-                            default: cjsFile
-                        },
-                        default: defaultExport
-                    },
+                    ".": this.esmOnly
+                        ? {
+                              types: mjsTypesFile,
+                              default: mjsFile
+                          }
+                        : {
+                              import: {
+                                  types: mjsTypesFile,
+                                  default: mjsFile
+                              },
+                              require: {
+                                  types: cjsTypesFile,
+                                  default: cjsFile
+                              },
+                              default: defaultExport
+                          },
                     ...this.getFoldersForExports().reduce((acc, folder) => {
                         const subpackageExport = this.generateSubpackageExports
                             ? this.subpackageExportPaths.find((p) => p.relPath === folder)
@@ -253,17 +263,22 @@ export class SimpleTypescriptProject extends TypescriptProject {
 
                         return {
                             ...acc,
-                            [`./${exportKey}`]: {
-                                import: {
-                                    types: mjsTypesFile,
-                                    default: mjsFile
-                                },
-                                require: {
-                                    types: cjsTypesFile,
-                                    default: cjsFile
-                                },
-                                default: defaultExport
-                            }
+                            [`./${exportKey}`]: this.esmOnly
+                                ? {
+                                      types: mjsTypesFile,
+                                      default: mjsFile
+                                  }
+                                : {
+                                      import: {
+                                          types: mjsTypesFile,
+                                          default: mjsFile
+                                      },
+                                      require: {
+                                          types: cjsTypesFile,
+                                          default: cjsFile
+                                      },
+                                      default: defaultExport
+                                  }
                         };
                     }, {}),
                     "./package.json": "./package.json"
@@ -276,10 +291,16 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 ],
                 scripts: {
                     ...this.getCommonScripts(),
-                    [SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME]: `tsc --project ./${TypescriptProject.TS_CONFIG_CJS_FILENAME}`,
+                    ...(this.esmOnly
+                        ? {}
+                        : {
+                              [SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME]: `tsc --project ./${TypescriptProject.TS_CONFIG_CJS_FILENAME}`
+                          }),
                     [SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME]: [
                         `tsc --project ./${TypescriptProject.TS_CONFIG_ESM_FILENAME}`,
-                        `node ${SimpleTypescriptProject.SCRIPTS_DIRECTORY_NAME}/rename-to-esm-files.js ${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}`
+                        // in an ESM-only package (`type: "module"`), the CommonJS script is emitted
+                        // with a `.cjs` extension so Node does not interpret it as ESM
+                        `node ${SimpleTypescriptProject.SCRIPTS_DIRECTORY_NAME}/rename-to-esm-files.${this.esmOnly ? "cjs" : "js"} ${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}`
                     ].join(" && "),
                     ...packageJson.scripts,
                     ...this.extraScripts
@@ -346,9 +367,11 @@ export class SimpleTypescriptProject extends TypescriptProject {
     protected getBuildCommandScript(): string {
         if (this.useLegacyExports) {
             return "tsc";
-        } else {
-            return `${this.packageManager} ${SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME} && ${this.packageManager} ${SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME}`;
         }
+        if (this.esmOnly) {
+            return `${this.packageManager} ${SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME}`;
+        }
+        return `${this.packageManager} ${SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME} && ${this.packageManager} ${SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME}`;
     }
 
     private getDevDependencies(): Record<string, string> {
