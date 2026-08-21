@@ -233,6 +233,61 @@ fn merge_security_schemes(
     }
 }
 
+/// Merge document-root OpenAPI tag descriptions across specs. First write
+/// wins on normalized-name collisions, preserving deterministic metadata when
+/// multiple specs declare the same tag.
+fn merge_tag_descriptions(
+    acc: &mut HashMap<String, String>,
+    incoming: HashMap<String, String>,
+) {
+    for (name, description) in incoming {
+        acc.entry(name).or_insert(description);
+    }
+}
+
+fn merge_group_tag_names(
+    acc: &mut HashMap<String, Vec<String>>,
+    incoming: HashMap<String, Vec<String>>,
+) {
+    for (group, tags) in incoming {
+        let existing = acc.entry(group).or_default();
+        for tag in tags {
+            if !existing.iter().any(|existing_tag| existing_tag == &tag) {
+                existing.push(tag);
+            }
+        }
+    }
+}
+
+fn merge_group_tag_operation_counts(
+    acc: &mut HashMap<String, HashMap<String, usize>>,
+    incoming: HashMap<String, HashMap<String, usize>>,
+) {
+    for (group, tags) in incoming {
+        let existing = acc.entry(group).or_default();
+        for (tag, count) in tags {
+            *existing.entry(tag).or_default() += count;
+        }
+    }
+}
+
+fn merge_group_operation_counts(
+    acc: &mut HashMap<String, usize>,
+    incoming: HashMap<String, usize>,
+) {
+    for (group, count) in incoming {
+        *acc.entry(group).or_default() += count;
+    }
+}
+
+fn merge_tag_description_order(acc: &mut Vec<String>, incoming: Vec<String>) {
+    for tag in incoming {
+        if !acc.iter().any(|existing| existing == &tag) {
+            acc.push(tag);
+        }
+    }
+}
+
 /// Merge `x-fern-sdk-variables` declarations across specs. First write
 /// wins on name collisions, mirroring [`merge_schemas`] and
 /// [`merge_security_schemes`]. Multi-spec setups that share a common
@@ -1189,6 +1244,21 @@ impl CliApp {
                     merge_into_path(&mut acc.resources, &entry.prefix_path, spec_doc.resources)?;
                     merge_schemas(&mut acc.schemas, spec_doc.schemas)?;
                     merge_security_schemes(&mut acc.security_schemes, spec_doc.security_schemes);
+                    merge_tag_descriptions(&mut acc.tag_descriptions, spec_doc.tag_descriptions);
+                    merge_group_tag_names(&mut acc.group_tag_names, spec_doc.group_tag_names);
+                    merge_group_tag_operation_counts(
+                        &mut acc.group_tag_operation_counts,
+                        spec_doc.group_tag_operation_counts,
+                    );
+                    merge_group_operation_counts(
+                        &mut acc.group_operation_counts,
+                        spec_doc.group_operation_counts,
+                    );
+                    merge_group_tag_names(&mut acc.tag_group_names, spec_doc.tag_group_names);
+                    merge_tag_description_order(
+                        &mut acc.tag_description_order,
+                        spec_doc.tag_description_order,
+                    );
                     merge_sdk_variables(&mut acc.sdk_variables, spec_doc.sdk_variables);
                     merge_global_headers(&mut acc.global_headers, spec_doc.global_headers);
                     merge_global_parameters(&mut acc.global_parameters, spec_doc.global_parameters);
@@ -1754,7 +1824,10 @@ impl CliApp {
             Some(format!("Global parameters:\n{}", rows.join("\n")))
         };
         let env_footer = super::commands::after_help_footer(&doc.name);
+        // `build_cli` already sets the env-var footer, so appending it
+        // unconditionally renders the block twice on the root `--help`.
         let base_footer = match existing_after_help {
+            Some(ref s) if s.contains(&env_footer) => s.clone(),
             Some(ref s) if !s.is_empty() => format!("{s}\n{env_footer}"),
             _ => env_footer,
         };
@@ -3423,6 +3496,25 @@ mod tests {
         );
     }
 
+    /// `build_cli` sets the env-var footer and `decorate_command` used to
+    /// append it again, so the root `--help` printed the section twice.
+    #[test]
+    fn test_root_help_renders_env_footer_once() {
+        let doc = RestDescription {
+            name: "channel3".into(),
+            ..Default::default()
+        };
+        let cli = crate::openapi::commands::build_cli(&doc);
+        let cli = CliApp::new("channel3").decorate_command(&doc, cli);
+
+        let after_help = cli.get_after_help().expect("footer").to_string();
+        assert_eq!(
+            after_help.matches("Environment variables:").count(),
+            1,
+            "env-var footer should appear once, got:\n{after_help}",
+        );
+    }
+
     #[test]
     fn test_app_context_spec_accessor() {
         let doc = RestDescription {
@@ -4299,6 +4391,9 @@ openapi: "3.0.0"
 info:
   title: "API A"
   version: "1.0"
+tags:
+  - name: users
+    description: User operations.
 servers:
   - url: "https://api-a.example.com"
 paths:
@@ -4315,6 +4410,9 @@ openapi: "3.0.0"
 info:
   title: "API B"
   version: "1.0"
+tags:
+  - name: orders
+    description: Order operations.
 servers:
   - url: "https://api-b.example.com"
 paths:
@@ -4330,6 +4428,53 @@ paths:
         let doc = app.build_doc().unwrap();
         assert!(doc.resources.contains_key("users"));
         assert!(doc.resources.contains_key("orders"));
+        assert_eq!(
+            doc.tag_descriptions.get("users").map(String::as_str),
+            Some("User operations."),
+        );
+        assert_eq!(
+            doc.tag_descriptions.get("orders").map(String::as_str),
+            Some("Order operations."),
+        );
+    }
+
+    #[test]
+    fn test_multi_spec_tag_descriptions_first_write_wins() {
+        let spec_a = r#"
+openapi: "3.0.0"
+info: { title: "API A", version: "1.0" }
+tags:
+  - name: shared
+    description: First description.
+paths:
+  /users:
+    get:
+      x-fern-sdk-group-name: ["users"]
+      x-fern-sdk-method-name: list
+      responses: { "200": { description: ok } }
+"#;
+        let spec_b = r#"
+openapi: "3.0.0"
+info: { title: "API B", version: "1.0" }
+tags:
+  - name: shared
+    description: Second description.
+paths:
+  /orders:
+    get:
+      x-fern-sdk-group-name: ["orders"]
+      x-fern-sdk-method-name: list
+      responses: { "200": { description: ok } }
+"#;
+        let doc = CliApp::new("test")
+            .spec(spec_a)
+            .spec(spec_b)
+            .build_doc()
+            .unwrap();
+        assert_eq!(
+            doc.tag_descriptions.get("shared").map(String::as_str),
+            Some("First description."),
+        );
     }
 
     #[test]

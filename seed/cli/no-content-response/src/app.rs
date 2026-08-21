@@ -1269,8 +1269,22 @@ fn graft_builtin_command(cli: clap::Command, builtin: clap::Command) -> clap::Co
         // are intercepted pre-clap anyway, so the built-in wins.
         return cli.mut_subcommand(name, move |_spec_owned| builtin);
     }
+    let builtin_about = builtin.get_about().map(ToString::to_string);
+    let builtin_long_about = builtin.get_long_about().map(ToString::to_string);
+    let generic_about = crate::openapi::commands::generic_group_about(&name);
     cli.mut_subcommand(name, move |spec_owned| {
         let mut merged = spec_owned;
+        let spec_uses_generic_about = merged
+            .get_about()
+            .is_none_or(|about| about.to_string() == generic_about);
+        if spec_uses_generic_about {
+            if let Some(about) = builtin_about {
+                merged = merged.about(about);
+            }
+            if let Some(long_about) = builtin_long_about {
+                merged = merged.long_about(long_about);
+            }
+        }
         for sub in builtin_subs {
             merged = crate::custom_commands::graft_subcommand(merged, &[], sub);
         }
@@ -1771,12 +1785,48 @@ mod tests {
     }
 
     #[test]
+    fn graft_builtin_about_wins_over_generic_spec_fallback() {
+        let spec = clap::Command::new("root").subcommand(
+            clap::Command::new("auth")
+                .about(crate::openapi::commands::generic_group_about("auth"))
+                .subcommand(clap::Command::new("me")),
+        );
+        let cli = graft_builtin_command(spec, crate::auth::login::build_auth_command());
+        let auth = cli.find_subcommand("auth").expect("auth group survives");
+        assert_eq!(
+            auth.get_about().map(ToString::to_string).as_deref(),
+            Some("Manage credentials (login / logout / status)"),
+        );
+    }
+
+    #[test]
+    fn graft_builtin_preserves_real_spec_about() {
+        let spec = clap::Command::new("root").subcommand(
+            clap::Command::new("auth")
+                .about("API authentication operations")
+                .subcommand(clap::Command::new("me")),
+        );
+        let cli = graft_builtin_command(spec, crate::auth::login::build_auth_command());
+        let auth = cli.find_subcommand("auth").expect("auth group survives");
+        assert_eq!(
+            auth.get_about().map(ToString::to_string).as_deref(),
+            Some("API authentication operations"),
+        );
+    }
+
+    #[test]
     fn graft_builtin_registers_when_no_collision() {
         let cli = graft_builtin_command(
             clap::Command::new("root").subcommand(clap::Command::new("users")),
             crate::auth::login::build_auth_command(),
         );
-        assert!(cli.find_subcommand("auth").is_some());
+        assert_eq!(
+            cli.find_subcommand("auth")
+                .and_then(|auth| auth.get_about())
+                .map(ToString::to_string)
+                .as_deref(),
+            Some("Manage credentials (login / logout / status)"),
+        );
         assert!(cli.find_subcommand("users").is_some());
     }
 

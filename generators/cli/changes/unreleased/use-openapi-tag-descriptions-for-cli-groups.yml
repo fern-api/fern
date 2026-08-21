@@ -1,0 +1,28 @@
+- summary: |
+    Use safe OpenAPI root tag descriptions for generated CLI group help and agent
+    skills when no x-fern-groups summary is provided. Match operation-declared
+    tags to groups without borrowing ambiguous or scope-style descriptions, and
+    keep CLI help table lines concise while preserving full prose in long help.
+    Treat summaries that only restate a group's command name as non-informative
+    when a usable tag description exists, while retaining them when no such
+    description is available. Preserve framework built-in group descriptions
+    when a colliding API group has only the generic fallback. Method help now
+    keeps the fuller description under `<method> --help` while the command
+    table stays a single short sentence, and sentence splitting no longer cuts
+    help text at abbreviations such as `e.g.`, `i.e.`, or `U.S.`. A tag named
+    after the group owns that group's description: when it documents nothing,
+    a sibling tag's prose no longer stands in for it, and a tag the group
+    declares less often than another never names the whole group. An operation's
+    `description` is no longer discarded in favour of its terse `summary`: the
+    summary still labels the command table while the prose is what the command
+    renders under its own `--help` — but only when it elaborates rather than
+    paraphrasing the summary, so the two tiers never read as different
+    commands. Flag help is split the same way — `-h`
+    shows a one-line form and `--help` the fuller prose — and multipart field
+    help, which previously bypassed truncation entirely, is now capped and has
+    its spec indentation collapsed like every other parameter. `--help` keeps
+    whatever the spec documents in full; only `-h` trims. An explicit
+    `x-fern-groups.description` now drives the group's command-table line too
+    (first sentence, with the full prose kept in long help) instead of only
+    populating long help while the table showed the generic label.
+  type: feat
