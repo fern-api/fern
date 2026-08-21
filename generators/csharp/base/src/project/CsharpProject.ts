@@ -10,6 +10,7 @@ import { AsIsFiles } from "../AsIs.js";
 import { GeneratorContext } from "../context/GeneratorContext.js";
 import { findDotnetToolPath } from "../findDotNetToolPath.js";
 import { CSharpFile } from "./CSharpFile.js";
+import { TARGET_FRAMEWORKS } from "./targetFrameworks.js";
 
 const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
@@ -636,7 +637,8 @@ dotnet_diagnostic.IDE0005.severity = error
                 context: this.context,
                 namespaces: this.namespaces,
                 clientOptionsRequiredDefaults: this.getClientOptionsRequiredDefaults(),
-                retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy"
+                retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy",
+                hasRetriesDisabledEndpoints: this.context.hasRetriesDisabledEndpoints
             }
         });
         return new File(filename.replace("test/", "").replace(".Template", ""), RelativeFilePath.of(""), rendered);
@@ -704,7 +706,8 @@ dotnet_diagnostic.IDE0005.severity = error
                 additionalProperties: true,
                 context: this.context,
                 namespaces: this.namespaces,
-                retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy"
+                retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy",
+                hasRetriesDisabledEndpoints: this.context.hasRetriesDisabledEndpoints
             }
         });
         return new File(filename.replace(".Template", ""), RelativeFilePath.of(""), rendered);
@@ -820,6 +823,21 @@ function getAsIsFilepath(filename: string): string {
 function generateDeterministicGuid(name: string): string {
     const hash = createHash("md5").update(name).digest("hex");
     return `${hash.slice(0, 8)}-${hash.slice(8, 12)}-${hash.slice(12, 16)}-${hash.slice(16, 20)}-${hash.slice(20, 32)}`.toUpperCase();
+}
+
+/**
+ * Joins a metadata value that may be a single string or a list into the
+ * delimiter-separated form MSBuild expects. Returns undefined when unset.
+ */
+function joinMetadataList(value: string | string[] | undefined, delimiter: string): string | undefined {
+    if (value == null) {
+        return undefined;
+    }
+    return Array.isArray(value) ? value.join(delimiter) : value;
+}
+
+function escapeXml(value: string): string {
+    return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
 declare namespace CsProj {
@@ -969,6 +987,13 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
                 '<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />'
             );
         }
+        if (this.generation.settings.packageMetadata["include-source-link"]) {
+            pushIfNotOverridden(
+                result,
+                SOURCE_LINK_PACKAGE.name,
+                `<PackageReference Include="${SOURCE_LINK_PACKAGE.name}" Version="${SOURCE_LINK_PACKAGE.version}" PrivateAssets="all" />`
+            );
+        }
         for (const [name, version] of Object.entries(extraDeps)) {
             // PolySharp is already handled above with its required metadata.
             if (name.toLowerCase() === "polysharp") {
@@ -1084,7 +1109,7 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
             );
         }
         result.push(
-            `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<TargetFrameworks>net462;net8.0;net9.0;netstandard2.0</TargetFrameworks>`
+            `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<TargetFrameworks>${TARGET_FRAMEWORKS.join(";")}</TargetFrameworks>`
         );
         result.push(
             `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<ImplicitUsings>enable</ImplicitUsings>`
@@ -1131,15 +1156,81 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
             );
         }
 
-        if (this.githubUrl != null) {
-            result.push(`<PackageProjectUrl>${this.githubUrl}</PackageProjectUrl>`);
-        }
+        result.push(...this.getPackageMetadataProperties());
+
         result.push("<PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>");
+        return result;
+    }
+
+    /**
+     * NuGet package metadata and XML documentation properties, sourced from the
+     * `package-metadata` and `generate-documentation-file` config options and
+     * falling back to values derived from the IR (e.g. the GitHub URL).
+     */
+    private getPackageMetadataProperties(): string[] {
+        const result: string[] = [];
+        const metadata = this.generation.settings.packageMetadata;
+
+        if (this.generation.settings.generateDocumentationFile) {
+            result.push("<GenerateDocumentationFile>true</GenerateDocumentationFile>");
+            // Publishing XML docs should not force every undocumented public
+            // member to emit CS1591.
+            result.push("<NoWarn>$(NoWarn);CS1591</NoWarn>");
+        }
+
+        if (metadata.description != null) {
+            result.push(`<Description>${escapeXml(metadata.description)}</Description>`);
+        }
+        const authors = joinMetadataList(metadata.authors, ",");
+        if (authors != null) {
+            result.push(`<Authors>${escapeXml(authors)}</Authors>`);
+        }
+        const tags = joinMetadataList(metadata.tags, ";");
+        if (tags != null) {
+            result.push(`<PackageTags>${escapeXml(tags)}</PackageTags>`);
+        }
+        if (metadata.copyright != null) {
+            result.push(`<Copyright>${escapeXml(metadata.copyright)}</Copyright>`);
+        }
+        if (metadata.icon != null) {
+            result.push(`<PackageIcon>${escapeXml(path.basename(metadata.icon))}</PackageIcon>`);
+        }
+
+        const projectUrl = metadata["project-url"] ?? this.githubUrl;
+        if (projectUrl != null) {
+            result.push(`<PackageProjectUrl>${escapeXml(projectUrl)}</PackageProjectUrl>`);
+        }
+        const repositoryUrl = metadata["repository-url"] ?? this.githubUrl;
+        if (repositoryUrl != null) {
+            result.push(`<RepositoryUrl>${escapeXml(repositoryUrl)}</RepositoryUrl>`);
+            result.push(`<RepositoryType>${escapeXml(metadata["repository-type"] ?? "git")}</RepositoryType>`);
+        }
+
+        if (metadata["include-symbols"]) {
+            result.push("<IncludeSymbols>true</IncludeSymbols>");
+            result.push("<SymbolPackageFormat>snupkg</SymbolPackageFormat>");
+        }
+        if (metadata["include-source-link"]) {
+            result.push("<PublishRepositoryUrl>true</PublishRepositoryUrl>");
+            result.push("<EmbedUntrackedSources>true</EmbedUntrackedSources>");
+            result.push("<Deterministic>true</Deterministic>");
+        }
+
         return result;
     }
 
     private getAdditionalItemGroups(): string[] {
         const result: string[] = [];
+        const icon = this.generation.settings.packageMetadata.icon;
+        if (icon != null) {
+            // The configured path is relative to the root of the generated output,
+            // matching how a custom license file is referenced below.
+            result.push(`
+    <ItemGroup>
+        <None Include="..\\..\\${this.relativePathToWindowsPath(RelativeFilePath.of(icon))}" Pack="true" PackagePath=""/>
+    </ItemGroup>
+`);
+        }
 
         if (this.license != null && this.license.type === "custom") {
             result.push(`
@@ -1194,4 +1285,13 @@ const NET8_INBOX_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
 const PLATFORM_HEADERS_INBOX_PACKAGE = {
     name: "System.Runtime.InteropServices.RuntimeInformation",
     version: "4.3.0"
+} as const;
+
+/**
+ * Enables SourceLink for GitHub-hosted repositories, so debuggers can step into
+ * the SDK sources. Only emitted when `package-metadata.include-source-link` is on.
+ */
+const SOURCE_LINK_PACKAGE = {
+    name: "Microsoft.SourceLink.GitHub",
+    version: "8.0.0"
 } as const;

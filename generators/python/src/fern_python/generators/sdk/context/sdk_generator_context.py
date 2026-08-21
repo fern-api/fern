@@ -66,6 +66,13 @@ class SdkGeneratorContext(ABC):
             for webhook_group in ir.webhook_groups.values()
             for webhook in webhook_group
         )
+        _has_streaming_endpoints = any(
+            ep.response is not None
+            and ep.response.body is not None
+            and ep.response.body.get_as_union().type in ("streaming", "streamParameter")
+            for service in ir.services.values()
+            for ep in service.endpoints
+        )
         _idempotency_key_generation = ir.sdk_config.idempotency_key_generation
         _generates_idempotency_key = _idempotency_key_generation is not None and any(
             ep.method in _idempotency_key_generation.methods
@@ -79,6 +86,7 @@ class SdkGeneratorContext(ABC):
             project_module_path=project_module_path,
             custom_config=custom_config,
             has_webhook_signature_verification=_has_webhook_signature_verification,
+            has_streaming_endpoints=_has_streaming_endpoints,
         )
         self.custom_config = custom_config
         self.source_file_factory = SourceFileFactory(should_format=not custom_config.skip_formatting)

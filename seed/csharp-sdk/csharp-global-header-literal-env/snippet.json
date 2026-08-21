@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCsharpGlobalHeaderLiteralEnv;\n\nvar client = new SeedCsharpGlobalHeaderLiteralEnvClient(\"TOKEN\", \"VERSION\");\nawait client.Service.GetWithLiteralVersionHeaderAsync();\n"
+                "client": "using SeedCsharpGlobalHeaderLiteralEnv;\n\nvar client = new SeedCsharpGlobalHeaderLiteralEnvClient(\"TOKEN\", \"2026-07-15\");\nawait client.Service.GetWithLiteralVersionHeaderAsync();\n"
             }
         }
     ]

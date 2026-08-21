@@ -224,6 +224,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                 referenceToOptions: this.generatedSdkClientClass.getReferenceToOptions()
             }),
             maxRetries: getMaxRetriesExpression({
+                endpoint: this.endpoint,
                 maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
                     this.generatedSdkClientClass
                 ),

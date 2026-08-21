@@ -432,7 +432,7 @@ function hasOperations(pathItem: Record<string, unknown>): boolean {
 /**
  * Collects raw API specs, writes them to a temporary directory alongside a
  * manifest, and packages everything into a gzipped tar archive suitable for
- * uploading to Fiddle's `startJob` endpoint.
+ * remote generation backends.
  */
 export async function createSpecsTarGzBuffer({
     specs,

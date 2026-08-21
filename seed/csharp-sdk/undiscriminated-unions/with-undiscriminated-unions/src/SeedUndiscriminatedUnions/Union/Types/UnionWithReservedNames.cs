@@ -43,7 +43,7 @@ public class UnionWithReservedNames
     public static UnionWithReservedNames FromValueMember() => new("value", "value");
 
     /// <summary>
-    /// Factory method to create a union from a string value.
+    /// Factory method to create a union from a <see cref="string"/> value.
     /// </summary>
     public static UnionWithReservedNames FromString(string value) => new("string", value);
 

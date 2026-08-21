@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    get:
+      auth: true
+      docs: GET request that sends the global headers
+      path: /global-headers
+      method: GET
+      response: string

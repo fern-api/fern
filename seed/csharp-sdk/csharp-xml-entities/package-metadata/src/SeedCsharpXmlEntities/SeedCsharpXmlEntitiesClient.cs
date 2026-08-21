@@ -1,0 +1,127 @@
+using global::System.Text.Json;
+using SeedCsharpXmlEntities.Core;
+
+namespace SeedCsharpXmlEntities;
+
+public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
+{
+    private readonly RawClient _client;
+
+    public SeedCsharpXmlEntitiesClient(ClientOptions? clientOptions = null)
+    {
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedCsharpXmlEntities" },
+                { "X-Fern-SDK-Version", global::SeedCsharpXmlEntities.Version.Current },
+                { "User-Agent", "Ferncsharp-xml-entities/0.0.1" },
+            }
+        );
+        foreach (var header in platformHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
+    }
+
+    private async Task<WithRawResponse<TimeZoneModel>> GetTimeZoneAsyncCore(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _queryString = new SeedCsharpXmlEntities.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedCsharpXmlEntities.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Get,
+                    Path = "/timezone",
+                    QueryString = _queryString,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<TimeZoneModel>(responseBody)!;
+                return new WithRawResponse<TimeZoneModel>()
+                {
+                    Data = responseData,
+                    RawResponse = new SeedCsharpXmlEntities.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedCsharpXmlEntitiesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e,
+                    rawResponse: new SeedCsharpXmlEntities.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedCsharpXmlEntitiesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody,
+                rawResponse: new SeedCsharpXmlEntities.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
+            );
+        }
+    }
+
+    /// <summary>
+    /// Get timezone information with + offset
+    /// </summary>
+    /// <example><code>
+    /// await client.GetTimeZoneAsync();
+    /// </code></example>
+    public WithRawResponseTask<TimeZoneModel> GetTimeZoneAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<TimeZoneModel>(
+            GetTimeZoneAsyncCore(options, cancellationToken)
+        );
+    }
+}

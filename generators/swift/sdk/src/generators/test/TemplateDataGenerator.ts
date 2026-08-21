@@ -4,7 +4,18 @@ import { swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator, EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
-import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest.js";
+import {
+    convertDynamicEndpointSnippetRequest,
+    EndpointSnippetRequest
+} from "../../utils/convertEndpointSnippetRequest.js";
+import { areRetriesDisabled } from "../client/util/are-retries-disabled.js";
+
+interface SampleEndpoint {
+    endpoint: FernIr.HttpEndpoint;
+    dynamicEndpoint: FernIr.dynamic.Endpoint;
+    dynamicEndpointExample: FernIr.dynamic.EndpointExample;
+    endpointSnippetRequest: EndpointSnippetRequest;
+}
 
 export declare namespace TemplateDataGenerator {
     interface Args {
@@ -74,6 +85,8 @@ export class TemplateDataGenerator {
                 return this.generateTemplateDataForClientErrorTests();
             case "ClientRetryTests":
                 return this.generateTemplateDataForClientRetryTests();
+            case "ClientRetriesDisabledTests":
+                return this.generateTemplateDataForClientRetriesDisabledTests();
             case "HTTPStub":
                 return this.generateTemplateDataForHTTPStub();
             default:
@@ -84,11 +97,12 @@ export class TemplateDataGenerator {
     private generateTemplateDataForClientErrorTests() {
         const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         const errorEnumSymbol = this.context.project.nameRegistry.getErrorEnumSymbolOrThrow();
-        const clientDeclaration = this.generateRootClientInitializationStatement();
-        const endpointCallExpression = this.generateEndpointMethodCallExpression();
-        if (!clientDeclaration || !endpointCallExpression) {
+        const sampleEndpoint = this.getSampleEndpoint(this.getEndpointForClientErrorTests());
+        if (!sampleEndpoint) {
             return null;
         }
+        const clientDeclaration = this.generateRootClientInitializationStatement(sampleEndpoint);
+        const endpointCallExpression = this.generateEndpointMethodCallExpression(sampleEndpoint);
         return {
             moduleName: moduleSymbol.name,
             errorEnumName: errorEnumSymbol.name,
@@ -99,14 +113,13 @@ export class TemplateDataGenerator {
 
     private generateTemplateDataForClientRetryTests() {
         const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
-        const sampleEndpoint = this.getSampleEndpoint();
-        const clientDeclaration = this.generateRootClientInitializationStatement();
-        const endpointCallExpression = this.generateEndpointMethodCallExpression();
-        if (!sampleEndpoint || !clientDeclaration || !endpointCallExpression) {
+        const sampleEndpoint = this.getSampleEndpoint(this.getEndpointForClientRetryTests());
+        if (!sampleEndpoint) {
             return null;
         }
+        const clientDeclaration = this.generateRootClientInitializationStatement(sampleEndpoint);
+        const endpointCallExpression = this.generateEndpointMethodCallExpression(sampleEndpoint);
         const defaultMaxRetries = this.context.customConfig.maxRetries ?? 2;
-        const { dynamicEndpoint, dynamicEndpointExample } = sampleEndpoint;
         return {
             moduleName: moduleSymbol.name,
             defaultMaxRetries,
@@ -120,58 +133,57 @@ export class TemplateDataGenerator {
             endpointCallMaxRetriesExhausted:
                 swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(4),
             endpointCallMaxRetries5: swift.Statement.discardAssignment(
-                this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
-                    endpoint: dynamicEndpoint,
-                    snippet: convertDynamicEndpointSnippetRequest(dynamicEndpointExample),
-                    additionalArguments: [
-                        swift.functionArgument({
-                            label: "requestOptions",
-                            value: swift.Expression.structInitialization({
-                                unsafeName: "RequestOptions",
-                                arguments_: [
-                                    swift.functionArgument({
-                                        label: "maxRetries",
-                                        value: swift.Expression.numberLiteral(5)
-                                    }),
-                                    swift.functionArgument({
-                                        label: "additionalHeaders",
-                                        value: swift.Expression.memberAccess({
-                                            target: swift.Expression.reference("stub"),
-                                            memberName: "headers"
-                                        })
-                                    })
-                                ]
-                            })
-                        })
-                    ]
-                })
+                this.generateEndpointMethodCallExpressionWithMaxRetries(sampleEndpoint, 5)
             ).toStringWithIndentation(4),
             endpointCallMaxRetriesZero: swift.Statement.discardAssignment(
-                this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
-                    endpoint: dynamicEndpoint,
-                    snippet: convertDynamicEndpointSnippetRequest(dynamicEndpointExample),
-                    additionalArguments: [
-                        swift.functionArgument({
-                            label: "requestOptions",
-                            value: swift.Expression.structInitialization({
-                                unsafeName: "RequestOptions",
-                                arguments_: [
-                                    swift.functionArgument({
-                                        label: "maxRetries",
-                                        value: swift.Expression.numberLiteral(0)
-                                    }),
-                                    swift.functionArgument({
-                                        label: "additionalHeaders",
-                                        value: swift.Expression.memberAccess({
-                                            target: swift.Expression.reference("stub"),
-                                            memberName: "headers"
-                                        })
-                                    })
-                                ]
+                this.generateEndpointMethodCallExpressionWithMaxRetries(sampleEndpoint, 0)
+            ).toStringWithIndentation(4)
+        };
+    }
+
+    private generateEndpointMethodCallExpressionWithMaxRetries(sampleEndpoint: SampleEndpoint, maxRetries: number) {
+        const { dynamicEndpoint, dynamicEndpointExample } = sampleEndpoint;
+        return this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
+            endpoint: dynamicEndpoint,
+            snippet: convertDynamicEndpointSnippetRequest(dynamicEndpointExample),
+            additionalArguments: [
+                swift.functionArgument({
+                    label: "requestOptions",
+                    value: swift.Expression.structInitialization({
+                        unsafeName: "RequestOptions",
+                        arguments_: [
+                            swift.functionArgument({
+                                label: "maxRetries",
+                                value: swift.Expression.numberLiteral(maxRetries)
+                            }),
+                            swift.functionArgument({
+                                label: "additionalHeaders",
+                                value: swift.Expression.memberAccess({
+                                    target: swift.Expression.reference("stub"),
+                                    memberName: "headers"
+                                })
                             })
-                        })
-                    ]
+                        ]
+                    })
                 })
+            ]
+        });
+    }
+
+    private generateTemplateDataForClientRetriesDisabledTests() {
+        const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        const sampleEndpoint = this.getSampleEndpoint(this.getEndpointForClientRetriesDisabledTests());
+        if (!sampleEndpoint) {
+            return null;
+        }
+        const clientDeclaration = this.generateRootClientInitializationStatement(sampleEndpoint);
+        const endpointCallExpression = this.generateEndpointMethodCallExpression(sampleEndpoint);
+        return {
+            moduleName: moduleSymbol.name,
+            clientDeclaration: clientDeclaration.toStringWithIndentation(3),
+            endpointCall: swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(4),
+            endpointCallMaxRetries5: swift.Statement.discardAssignment(
+                this.generateEndpointMethodCallExpressionWithMaxRetries(sampleEndpoint, 5)
             ).toStringWithIndentation(4)
         };
     }
@@ -194,11 +206,7 @@ export class TemplateDataGenerator {
         };
     }
 
-    private generateRootClientInitializationStatement() {
-        const sampleEndpoint = this.getSampleEndpoint();
-        if (!sampleEndpoint) {
-            return null;
-        }
+    private generateRootClientInitializationStatement(sampleEndpoint: SampleEndpoint) {
         const { dynamicEndpoint, endpointSnippetRequest } = sampleEndpoint;
         return this.endpointSnippetGenerator.generateRootClientInitializationStatement({
             auth: dynamicEndpoint.auth,
@@ -215,11 +223,7 @@ export class TemplateDataGenerator {
         });
     }
 
-    private generateEndpointMethodCallExpression() {
-        const sampleEndpoint = this.getSampleEndpoint();
-        if (!sampleEndpoint) {
-            return null;
-        }
+    private generateEndpointMethodCallExpression(sampleEndpoint: SampleEndpoint) {
         const { dynamicEndpoint, dynamicEndpointExample } = sampleEndpoint;
         return this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
             endpoint: dynamicEndpoint,
@@ -244,8 +248,7 @@ export class TemplateDataGenerator {
         });
     }
 
-    private getSampleEndpoint() {
-        const endpoint = this.getEndpointForClientRetryTests();
+    private getSampleEndpoint(endpoint: FernIr.HttpEndpoint | undefined): SampleEndpoint | null {
         if (!endpoint) {
             return null;
         }
@@ -265,11 +268,43 @@ export class TemplateDataGenerator {
         };
     }
 
-    private getEndpointForClientRetryTests() {
+    private getEndpointForClientErrorTests() {
         const { services } = this.context.ir;
         for (const serviceId in services) {
             const service = services[serviceId];
             return service?.endpoints[0];
+        }
+        return undefined;
+    }
+
+    /**
+     * The retry test suite asserts that requests are retried, so it can only be generated for an
+     * endpoint that has retries enabled.
+     */
+    private getEndpointForClientRetryTests() {
+        const { services } = this.context.ir;
+        for (const serviceId in services) {
+            const service = services[serviceId];
+            const endpoint = service?.endpoints.find((endpoint) => !areRetriesDisabled(endpoint.retries));
+            if (endpoint) {
+                return endpoint;
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * The retries-disabled test suite asserts that requests are not retried, so it can only be generated
+     * for an endpoint that has retries disabled.
+     */
+    private getEndpointForClientRetriesDisabledTests() {
+        const { services } = this.context.ir;
+        for (const serviceId in services) {
+            const service = services[serviceId];
+            const endpoint = service?.endpoints.find((endpoint) => areRetriesDisabled(endpoint.retries));
+            if (endpoint) {
+                return endpoint;
+            }
         }
         return undefined;
     }

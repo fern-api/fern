@@ -1,0 +1,27 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-csharp-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "package-metadata": {
+      "description": "An SDK for the XML entities API.",
+      "authors": [
+        "Fern",
+        "Acme"
+      ],
+      "tags": [
+        "acme",
+        "sdk"
+      ],
+      "copyright": "Copyright (c) Acme, Inc. <acme@example.com>",
+      "project-url": "https://example.com/docs",
+      "repository-url": "https://github.com/acme/acme-dotnet",
+      "include-source-link": true,
+      "include-symbols": true
+    }
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "manual",
+  "requestedVersion": "0.0.1",
+  "sdkVersion": "0.0.1"
+}

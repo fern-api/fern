@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Escaped generic type syntax in the XML doc comments of the generated core
+    files (`Optional`, `OptionalAttribute`, `NullableAttribute`, `Extensions`),
+    and added the missing `param` tags on `Extensions.Assert`. Building generated
+    SDKs with XML documentation enabled no longer emits CS1570/CS1573 warnings.
+  type: fix

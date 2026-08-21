@@ -55,7 +55,37 @@
         "statusCode": 200,
         "type": "json"
       },
-      "errors": {},
+      "errors": {
+        "400": {
+          "generatedName": "BadRequestError",
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "value": {
+              "generatedName": "BadRequestErrorBody",
+              "schema": "UserError",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "type": "nullable"
+          },
+          "description": "Bad request",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
       "servers": [],
       "authed": false,
       "method": "POST",
@@ -397,7 +427,37 @@
         "statusCode": 200,
         "type": "json"
       },
-      "errors": {},
+      "errors": {
+        "400": {
+          "generatedName": "BadRequestError",
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "value": {
+              "generatedName": "BadRequestErrorBody",
+              "schema": "UserError",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "type": "nullable"
+          },
+          "description": "Bad request",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
       "servers": [],
       "authed": false,
       "method": "GET",
@@ -883,6 +943,44 @@
           "type": "openapi"
         },
         "type": "object"
+      },
+      "UserError": {
+        "generatedName": "UserError",
+        "value": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userErrorErrorCode",
+              "key": "errorCode",
+              "schema": {
+                "generatedName": "UserErrorErrorCode",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UserErrorErrorCode",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UserError",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "groupName": [],
+        "type": "nullable"
       },
       "UserStats": {
         "allOf": [],

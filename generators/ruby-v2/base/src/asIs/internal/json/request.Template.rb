@@ -16,8 +16,9 @@ module <%= gem_namespace %>
 <% if (respectOptionalRequestBody) { %>        # @param omit_content_type_without_body [Boolean] When true and no body is present, the
         #   Content-Type header is omitted (used for endpoints whose request body is optional)
 <% } %>        # @param request_options [<%= gem_namespace %>::RequestOptions, Hash{Symbol=>Object}, nil]
-        def initialize(base_url:, path:, method:, headers: {}, query: {}, body: nil, <% if (respectOptionalRequestBody) { %>omit_content_type_without_body: false, <% } %>request_options: {})
-          super(base_url:, path:, method:, headers:, query:, request_options:)
+<% if (requestLevelMaxRetries) { %>        # @param max_retries [Integer, nil] Overrides the client's retry count for this request
+<% } %>        def initialize(base_url:, path:, method:, headers: {}, query: {}, body: nil, <% if (respectOptionalRequestBody) { %>omit_content_type_without_body: false, <% } %>request_options: {}<% if (requestLevelMaxRetries) { %>, max_retries: nil<% } %>)
+          super(base_url:, path:, method:, headers:, query:, request_options:<% if (requestLevelMaxRetries) { %>, max_retries:<% } %>)
 
           @body = body
 <% if (respectOptionalRequestBody) { %>          @omit_content_type_without_body = omit_content_type_without_body

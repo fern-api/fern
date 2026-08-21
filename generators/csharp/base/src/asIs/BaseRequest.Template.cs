@@ -22,6 +22,13 @@ internal abstract record BaseRequest
     internal Dictionary<string, string> Headers { get; init; } = new(StringComparer.OrdinalIgnoreCase);
 
     internal IRequestOptions? Options { get; init; }
+<% if (hasRetriesDisabledEndpoints) { %>
+
+    /// <summary>
+    /// Whether retries are disabled for this request, regardless of the client or request options.
+    /// </summary>
+    internal bool RetriesDisabled { get; init; }
+<% } %>
 
     internal abstract HttpContent? CreateContent();
 

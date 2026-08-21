@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.20.4
+  changelogEntry:
+    - summary: |
+        Honor endpoint-level `retries: { disabled: true }` (`x-fern-retries`). Requests for those
+        endpoints pin `maxRetries` to 0, so they are never retried regardless of the client-level or
+        per-request retry options.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 2.20.3
+  changelogEntry:
+    - summary: |
+        Fixed generated WireMock stubs for OAuth client credentials APIs whose token endpoint is
+        itself marked as authenticated: the token (and refresh) endpoint stub no longer requires
+        an `Authorization` header, since the token request is made to obtain the token and cannot
+        carry one yet.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
 - version: 2.20.2
   changelogEntry:
     - summary: |

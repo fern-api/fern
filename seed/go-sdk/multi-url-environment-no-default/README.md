@@ -73,7 +73,7 @@ with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 response, err := client.Ec2.BootInstance(...)
 if err != nil {
     var apiError *core.APIError
-    if errors.As(err, apiError) {
+    if errors.As(err, &apiError) {
         // Do something with the API error ...
     }
     return err

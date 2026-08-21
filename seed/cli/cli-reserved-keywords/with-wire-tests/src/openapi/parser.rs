@@ -3,7 +3,7 @@
 //! Converts an OpenAPI 3.0 YAML specification into the internal `RestDescription`
 //! representation used by the CLI command builder and executor.
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 use serde::{Deserialize, Deserializer};
 
@@ -176,6 +176,11 @@ struct OpenApiSpec {
     info: OpenApiInfo,
     #[serde(default)]
     servers: Vec<OpenApiServer>,
+    /// OpenAPI's document-root tags are optional metadata for generated
+    /// groups. Invalid or primitive entries are skipped by the lenient
+    /// deserializer below.
+    #[serde(default, deserialize_with = "deserialize_openapi_tags")]
+    tags: OpenApiTagMetadata,
     #[serde(default)]
     paths: HashMap<String, OpenApiPathItem>,
     /// OpenAPI 3.1 top-level `webhooks` block. Webhooks describe operations
@@ -236,6 +241,71 @@ struct OpenApiSpec {
     /// `x-fern-sdk-group-name`).
     #[serde(default, rename = "x-fern-groups")]
     x_fern_groups: Option<HashMap<String, RawFernGroup>>,
+}
+
+/// Deserialize document-root OpenAPI tags into the normalized metadata used
+/// by the CLI help surface. Some real-world specs contain primitive entries
+/// in this array, so malformed entries are skipped rather than rejecting the
+/// whole document.
+fn deserialize_openapi_tags<'de, D>(
+    deserializer: D,
+) -> Result<OpenApiTagMetadata, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let value = Option::<serde_yaml::Value>::deserialize(deserializer)?;
+    let Some(value) = value else {
+        return Ok(OpenApiTagMetadata::default());
+    };
+    let serde_yaml::Value::Sequence(entries) = value else {
+        tracing::debug!("Skipping document-root OpenAPI tags because the value is not an array");
+        return Ok(OpenApiTagMetadata::default());
+    };
+
+    let mut descriptions = HashMap::new();
+    let mut order = Vec::new();
+    for entry in entries {
+        match serde_yaml::from_value::<RawOpenApiTag>(entry) {
+            Ok(tag) if !tag.name.trim().is_empty() => {
+                if let Some(description) = tag.description.filter(|d| !d.trim().is_empty()) {
+                    let normalized_name = camel_to_kebab(&tag.name);
+                    order.push(normalized_name.clone());
+                    match descriptions.entry(normalized_name) {
+                        std::collections::hash_map::Entry::Vacant(entry) => {
+                            entry.insert(description);
+                        }
+                        std::collections::hash_map::Entry::Occupied(entry) => {
+                            tracing::debug!(
+                                tag_name = %tag.name,
+                                normalized_name = %entry.key(),
+                                "Keeping the first document-root OpenAPI tag description after normalization collision"
+                            );
+                        }
+                    }
+                }
+            }
+            Ok(_) => {
+                tracing::debug!("Skipping document-root OpenAPI tag with an empty name");
+            }
+            Err(error) => {
+                tracing::debug!(%error, "Skipping malformed document-root OpenAPI tag");
+            }
+        }
+    }
+    Ok(OpenApiTagMetadata { descriptions, order })
+}
+
+#[derive(Debug, Default)]
+struct OpenApiTagMetadata {
+    descriptions: HashMap<String, String>,
+    order: Vec<String>,
+}
+
+#[derive(Debug, Deserialize)]
+struct RawOpenApiTag {
+    name: String,
+    #[serde(default)]
+    description: Option<String>,
 }
 
 /// Raw deserialized form of a single entry in `x-fern-idempotency-headers`.
@@ -2635,6 +2705,12 @@ pub fn load_openapi_spec_from_value(
         global_parameters,
         global_headers,
         groups,
+        tag_descriptions: spec.tags.descriptions,
+        group_tag_names: HashMap::new(),
+        group_tag_operation_counts: HashMap::new(),
+        group_operation_counts: HashMap::new(),
+        tag_group_names: HashMap::new(),
+        tag_description_order: spec.tags.order,
         ..Default::default()
     };
 
@@ -2812,10 +2888,23 @@ pub fn load_openapi_spec_from_value(
                 params.entry(name).or_insert(param);
             }
 
+            // `summary` is the terse label and wins for the command table.
+            // `description` is the prose; keep it separately rather than
+            // discarding it, so `<command> --help` has something to show
+            // beyond the table line. Dropped when it adds nothing.
             let description = operation
                 .summary
                 .clone()
                 .or_else(|| operation.description.clone());
+            let long_description = operation
+                .description
+                .clone()
+                .filter(|prose| !prose.trim().is_empty())
+                .filter(|prose| {
+                    description
+                        .as_deref()
+                        .is_none_or(|summary| prose_adds_detail(prose, summary))
+                });
 
             let method_root_url = operation.servers
                 .first()
@@ -2955,6 +3044,7 @@ pub fn load_openapi_spec_from_value(
             let rest_method = RestMethod {
                 id: operation.operation_id.clone(),
                 description,
+                long_description,
                 http_method: http_method.to_string(),
                 path: path.clone(),
                 parameters: params,
@@ -2982,8 +3072,44 @@ pub fn load_openapi_spec_from_value(
             // Walk group_name to create/find nested resources
             let kebab_groups: Vec<String> =
                 group_name.iter().map(|g| camel_to_kebab(g)).collect();
+            let operation_tags = operation.tags.as_deref().unwrap_or(&[]);
+            if let Some(top_level_group) = kebab_groups.first() {
+                *doc.group_operation_counts
+                    .entry(top_level_group.clone())
+                    .or_default() += 1;
+                append_unique_tags(
+                    doc.group_tag_names
+                        .entry(top_level_group.clone())
+                        .or_default(),
+                    operation_tags,
+                );
+                let tag_counts = doc
+                    .group_tag_operation_counts
+                    .entry(top_level_group.clone())
+                    .or_default();
+                let mut counted_tags = HashSet::new();
+                for tag in operation_tags {
+                    let tag_key = tag_match_key(tag);
+                    if counted_tags.insert(tag_key.clone()) {
+                        *tag_counts.entry(tag_key.clone()).or_default() += 1;
+                    }
+                    append_unique_tags(
+                        doc.tag_group_names
+                            .entry(tag_key)
+                            .or_default(),
+                        std::slice::from_ref(top_level_group),
+                    );
+                }
+            }
 
-            insert_method_into_resources(&mut doc.resources, &kebab_groups, &method_name, rest_method);
+            insert_method_into_resources(
+                &mut doc.resources,
+                &kebab_groups,
+                &method_name,
+                rest_method,
+                operation_tags,
+                &mut doc.group_tag_names,
+            );
         }
     }
 
@@ -3011,6 +3137,8 @@ fn insert_method_into_resources(
     groups: &[String],
     method_name: &str,
     method: RestMethod,
+    tags: &[String],
+    group_tag_names: &mut HashMap<String, Vec<String>>,
 ) {
     if groups.is_empty() {
         return;
@@ -3019,12 +3147,55 @@ fn insert_method_into_resources(
     let resource = resources
         .entry(groups[0].clone())
         .or_default();
+    append_unique_tags(group_tag_names.entry(groups[0].clone()).or_default(), tags);
 
     if groups.len() == 1 {
         resource.methods.insert(method_name.to_string(), method);
     } else {
-        insert_method_into_resources(&mut resource.resources, &groups[1..], method_name, method);
+        insert_method_into_resources(
+            &mut resource.resources,
+            &groups[1..],
+            method_name,
+            method,
+            tags,
+            group_tag_names,
+        );
     }
+}
+
+fn append_unique_tags(existing: &mut Vec<String>, incoming: &[String]) {
+    for tag in incoming {
+        if !existing.iter().any(|existing_tag| existing_tag == tag) {
+            existing.push(tag.clone());
+        }
+    }
+}
+
+/// Whether an operation's `description` says more than its `summary`, rather
+/// than restating it in different words.
+///
+/// `--help` is meant to elaborate on `-h`. Specs commonly carry a paraphrase
+/// in `description` ("Audio isolation" / "Removes background noise from
+/// audio."), and promoting one of those makes the two tiers look like they
+/// describe different commands. A description earns the long slot by adding
+/// a further sentence or a substantial clause.
+fn prose_adds_detail(prose: &str, summary: &str) -> bool {
+    const MIN_ADDED_CHARS: usize = 40;
+    let prose = crate::text::collapse_whitespace(prose);
+    let summary = crate::text::collapse_whitespace(summary);
+    if prose.eq_ignore_ascii_case(&summary) {
+        return false;
+    }
+    let multi_sentence = crate::text::first_sentence(&prose).len() < prose.trim_end().len();
+    multi_sentence || prose.chars().count() >= summary.chars().count() + MIN_ADDED_CHARS
+}
+
+fn tag_match_key(value: &str) -> String {
+    value
+        .chars()
+        .filter(|c| c.is_alphanumeric())
+        .flat_map(char::to_lowercase)
+        .collect()
 }
 
 /// Extract request body info from an OpenAPI requestBody.
@@ -6854,6 +7025,345 @@ paths:
         assert_eq!(
             doc.groups["my-group"].summary.as_deref(),
             Some("Pretty Label"),
+        );
+    }
+
+    /// `--help` elaborates on `-h`; it does not restate it. A description
+    /// that only paraphrases the summary in the same breath earns no long
+    /// slot, or the two tiers read like different commands.
+    #[test]
+    fn test_paraphrasing_description_is_not_promoted_to_long_help() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: t
+  version: "1"
+paths:
+  /groups:
+    get:
+      x-fern-sdk-group-name: [groups]
+      x-fern-sdk-method-name: list
+      operationId: groups_list
+      summary: List workspace groups
+      description: Get all groups in the workspace
+      responses:
+        "200":
+          description: ok
+  /things:
+    get:
+      x-fern-sdk-group-name: [things]
+      x-fern-sdk-method-name: list
+      operationId: things_list
+      summary: Audio isolation
+      description: Removes background noise from audio. Returns the isolated speech track.
+      responses:
+        "200":
+          description: ok
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        // Same length, different words — a paraphrase, so no long form.
+        let groups = first_method(&doc, "groups", "list");
+        assert_eq!(groups.description.as_deref(), Some("List workspace groups"));
+        assert_eq!(groups.long_description, None);
+        // A second sentence is real elaboration and is kept.
+        let things = first_method(&doc, "things", "list");
+        assert_eq!(things.description.as_deref(), Some("Audio isolation"));
+        assert_eq!(
+            things.long_description.as_deref(),
+            Some("Removes background noise from audio. Returns the isolated speech track."),
+        );
+    }
+
+    #[test]
+    fn test_operation_summary_and_description_are_kept_separately() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: t
+  version: "1"
+paths:
+  /things:
+    get:
+      x-fern-sdk-group-name: [things]
+      x-fern-sdk-method-name: list
+      operationId: things_list
+      summary: List things
+      description: Returns every thing visible to the caller, newest first.
+      responses:
+        "200":
+          description: ok
+  /others:
+    get:
+      x-fern-sdk-group-name: [others]
+      x-fern-sdk-method-name: list
+      operationId: others_list
+      description: Only prose, no summary.
+      responses:
+        "200":
+          description: ok
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        let things = first_method(&doc, "things", "list");
+        assert_eq!(things.description.as_deref(), Some("List things"));
+        assert_eq!(
+            things.long_description.as_deref(),
+            Some("Returns every thing visible to the caller, newest first."),
+        );
+        // With no summary the prose already is the description, so keeping a
+        // second copy would only duplicate the line in help output.
+        let others = first_method(&doc, "others", "list");
+        assert_eq!(others.description.as_deref(), Some("Only prose, no summary."));
+        assert_eq!(others.long_description, None);
+    }
+
+    #[test]
+    fn test_root_tag_descriptions_are_indexed_by_kebab_case() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: t
+  version: "1"
+tags:
+  - name: myGroup
+    description: Description for the group.
+  - name: no-description
+    x-displayName: Display label only
+paths: {}
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        assert_eq!(
+            doc.tag_descriptions.get("my-group").map(String::as_str),
+            Some("Description for the group."),
+        );
+        assert!(!doc.tag_descriptions.contains_key("no-description"));
+    }
+
+    #[test]
+    fn test_root_tag_description_normalization_collision_keeps_first() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: t
+  version: "1"
+tags:
+  - name: myGroup
+    description: First description.
+  - name: my-group
+    description: Second description.
+paths: {}
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        assert_eq!(
+            doc.tag_descriptions.get("my-group").map(String::as_str),
+            Some("First description."),
+        );
+    }
+
+    #[test]
+    fn test_string_array_tags_are_skipped() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: t
+  version: "1"
+tags: [customers, orders]
+paths: {}
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        assert!(doc.tag_descriptions.is_empty());
+    }
+
+    #[test]
+    fn test_group_descriptions_follow_operation_tags_when_names_differ() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: t
+  version: "1"
+tags:
+  - name: speech-history
+    description: Speech history description.
+  - name: music-generation
+    description: Music generation description.
+  - name: Pronunciation Dictionary
+    description: Pronunciation dictionary description.
+  - name: Conversational AI
+    description: Conversational AI description.
+paths:
+  /history:
+    get:
+      tags: [speech-history]
+      x-fern-sdk-group-name: [history]
+      operationId: history_list
+      responses:
+        "200":
+          description: ok
+  /music:
+    get:
+      tags: [music-generation]
+      x-fern-sdk-group-name: [music]
+      operationId: music_list
+      responses:
+        "200":
+          description: ok
+  /pronunciation-dictionaries:
+    get:
+      tags: [Pronunciation Dictionary]
+      x-fern-sdk-group-name: [pronunciation-dictionaries]
+      operationId: pronunciation_list
+      responses:
+        "200":
+          description: ok
+  /conversational-ai:
+    get:
+      tags: [Conversational AI]
+      x-fern-sdk-group-name: [conversational-ai]
+      operationId: conversational_list
+      responses:
+        "200":
+          description: ok
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        let resource_names: std::collections::BTreeSet<String> =
+            doc.resources.keys().cloned().collect();
+        assert_eq!(
+            resource_names,
+            [
+                "conversational-ai",
+                "history",
+                "music",
+                "pronunciation-dictionaries",
+            ]
+            .into_iter()
+            .map(String::from)
+            .collect()
+        );
+        assert_eq!(
+            doc.group_tag_names.get("history"),
+            Some(&vec!["speech-history".to_string()])
+        );
+        assert_eq!(
+            doc.group_tag_names.get("music"),
+            Some(&vec!["music-generation".to_string()])
+        );
+        assert_eq!(
+            doc.group_tag_names.get("pronunciation-dictionaries"),
+            Some(&vec!["Pronunciation Dictionary".to_string()])
+        );
+        assert_eq!(
+            doc.group_tag_names.get("conversational-ai"),
+            Some(&vec!["Conversational AI".to_string()])
+        );
+        assert_eq!(
+            doc.group_operation_counts.get("history"),
+            Some(&1),
+        );
+        assert_eq!(
+            doc.group_tag_operation_counts
+                .get("history")
+                .and_then(|counts| counts.get("speechhistory")),
+            Some(&1),
+        );
+
+        let cli = crate::openapi::commands::build_cli(&doc);
+        for (group, description) in [
+            ("history", "Speech history description."),
+            ("music", "Music generation description."),
+            (
+                "pronunciation-dictionaries",
+                "Pronunciation dictionary description.",
+            ),
+            ("conversational-ai", "Conversational AI description."),
+        ] {
+            assert_eq!(
+                cli.find_subcommand(group)
+                    .and_then(|command| command.get_about())
+                    .map(ToString::to_string)
+                    .as_deref(),
+                Some(description)
+            );
+        }
+    }
+
+    #[test]
+    fn test_shared_tags_are_rejected_but_group_name_tags_win() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: t
+  version: "1"
+tags:
+  - name: shared
+    description: Shared description.
+  - name: Named Group
+    description: Named group description.
+paths:
+  /first:
+    get:
+      tags: [shared]
+      x-fern-sdk-group-name: [first]
+      operationId: first_list
+      responses:
+        "200":
+          description: ok
+  /second:
+    get:
+      tags: [shared]
+      x-fern-sdk-group-name: [second]
+      operationId: second_list
+      responses:
+        "200":
+          description: ok
+  /named-group:
+    get:
+      tags: [shared, Named Group]
+      x-fern-sdk-group-name: [named-group]
+      operationId: named_group_list
+      responses:
+        "200":
+          description: ok
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        let shared_groups = doc
+            .tag_group_names
+            .get("shared")
+            .cloned()
+            .unwrap_or_default()
+            .into_iter()
+            .collect::<std::collections::BTreeSet<_>>();
+        assert_eq!(
+            shared_groups,
+            ["first", "second", "named-group"]
+                .into_iter()
+                .map(String::from)
+                .collect()
+        );
+        assert_eq!(
+            doc.tag_group_names.get("namedgroup"),
+            Some(&vec!["named-group".to_string()])
+        );
+
+        let cli = crate::openapi::commands::build_cli(&doc);
+        assert_eq!(
+            cli.find_subcommand("first")
+                .and_then(|command| command.get_about())
+                .map(ToString::to_string)
+                .as_deref(),
+            Some("Operations on 'first'")
+        );
+        assert_eq!(
+            cli.find_subcommand("second")
+                .and_then(|command| command.get_about())
+                .map(ToString::to_string)
+                .as_deref(),
+            Some("Operations on 'second'")
+        );
+        assert_eq!(
+            cli.find_subcommand("named-group")
+                .and_then(|command| command.get_about())
+                .map(ToString::to_string)
+                .as_deref(),
+            Some("Named group description.")
         );
     }
 

@@ -26,6 +26,7 @@ public final class RetriesClient: Sendable {
             method: .get,
             path: "/users",
             requestOptions: requestOptions,
+            retriesDisabled: true,
             responseType: [User].self
         )
     }

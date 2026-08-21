@@ -1,4 +1,82 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.83.1
+  changelogEntry:
+    - summary: |
+        Honor the `x-fern-retries: { disabled: true }` extension (`retries: { disabled: true }` in a Fern
+        definition) at the endpoint level. Requests for those endpoints are now sent exactly once, even when
+        the client or the per-request options configure retries.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 2.83.0
+  changelogEntry:
+    - summary: |
+        Added a `generate-documentation-file` config option (default `true`) so the
+        generated csproj emits XML documentation and the published NuGet package ships
+        `lib/<tfm>/<Namespace>.xml`, giving consumers IntelliSense. CS1591 is
+        suppressed so enabling documentation does not introduce warnings for
+        undocumented members.
+      type: feat
+    - summary: |
+        Added a `package-metadata` config block for NuGet metadata written into the
+        generated csproj: `description`, `authors`, `tags`, `copyright`, `icon`,
+        `project-url`, `repository-url`, `repository-type`, `include-source-link`
+        (adds `Microsoft.SourceLink.GitHub`) and `include-symbols` (produces a
+        `.snupkg`).
+      type: feat
+    - summary: |
+        Global header values set on `ClientOptions` are now respected in the default
+        (non-unified) client shape. Previously the generated root client read only the
+        constructor parameter for a promoted global header, so
+        `new Client(clientOptions: new ClientOptions { Version = "..." })` was silently
+        ignored and a stray environment variable could win instead. The resolution
+        order is now: explicit constructor argument, `ClientOptions` property,
+        environment variable, then the literal/client default.
+      type: fix
+    - summary: |
+        `ClientOptions.Clone()` now copies literal global header properties (e.g.
+        `Version`), which were previously dropped when the options were cloned.
+      type: fix
+    - summary: |
+        Escape markup characters in the attribute values of documentation comment tags. Descriptions
+        containing links such as `<a href="https://example.com/docs?a=1&b=2">` no longer emit invalid
+        XML (CS1570) in generated documentation comments, while attribute values that already contain
+        character or entity references are left untouched.
+      type: fix
+    - summary: |
+        The generated README's `## Requirements` section is now populated with the
+        project's target frameworks (".NET 8 and above", ".NET Framework 4.6.2 and
+        above", ".NET Standard 2.0 and above"). Previously the C# generator passed an
+        empty requirements list, so the section rendered as a dangling
+        "This SDK requires:" with no entries.
+      type: fix
+    - summary: |
+        README and dynamic snippets no longer pass an upper-cased placeholder for
+        global header constructor parameters (e.g. `new Client("TOKEN", "VERSION")`,
+        which sent the literal header value `VERSION` at runtime). Snippets now use
+        the header's literal or client default value when one is known.
+      type: fix
+    - summary: |
+        Fixed invalid C# in the generated README: `RequestOptions` examples used
+        object-initializer syntax with `:` instead of `=` (`new RequestOptions { MaxRetries: 0 }`),
+        and the `WithRawResponse` section declared `var data` twice in one block.
+      type: fix
+    - summary: |
+        Fix invalid `<see cref="..."/>` documentation comments generated for union types. Type names
+        are now converted to documentation comment identifiers (`List<string>` becomes
+        `List{String}`, `object?` becomes `object`), and types that cannot be expressed as an
+        identifier (arrays, nested generic arguments) are rendered as escaped inline code instead.
+        This removes CS1570/CS1584/CS1658 warnings from generated SDKs that contain unions when XML
+        documentation is enabled.
+      type: fix
+    - summary: |
+        Escaped generic type syntax in the XML doc comments of the generated core
+        files (`Optional`, `OptionalAttribute`, `NullableAttribute`, `Extensions`),
+        and added the missing `param` tags on `Extensions.Assert`. Building generated
+        SDKs with XML documentation enabled no longer emits CS1570/CS1573 warnings.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
 - version: 2.82.1
   changelogEntry:
     - summary: |

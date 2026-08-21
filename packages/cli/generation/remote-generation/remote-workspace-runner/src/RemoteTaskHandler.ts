@@ -442,26 +442,28 @@ function extractGithubModeFromGenerator(
     return "push";
 }
 
-async function downloadFilesForTask({
+export async function downloadFilesForTask({
     s3PreSignedReadUrl,
     absolutePathToLocalOutput,
-    context
+    context,
+    skipFernignore = false
 }: {
     s3PreSignedReadUrl: string;
     absolutePathToLocalOutput: AbsoluteFilePath;
     context: InteractiveTaskContext;
-}) {
+    skipFernignore?: boolean;
+}): Promise<void> {
     try {
         const isFernIgnorePresent = await checkFernIgnorePresent(absolutePathToLocalOutput);
         const isExistingGitRepo = await checkIsGitRepository(absolutePathToLocalOutput);
 
-        if (isFernIgnorePresent && isExistingGitRepo) {
+        if (!skipFernignore && isFernIgnorePresent && isExistingGitRepo) {
             await downloadFilesWithFernIgnoreInExistingRepo({
                 s3PreSignedReadUrl,
                 absolutePathToLocalOutput,
                 context
             });
-        } else if (isFernIgnorePresent && !isExistingGitRepo) {
+        } else if (!skipFernignore && isFernIgnorePresent && !isExistingGitRepo) {
             await downloadFilesWithFernIgnoreInTempRepo({
                 s3PreSignedReadUrl,
                 absolutePathToLocalOutput,

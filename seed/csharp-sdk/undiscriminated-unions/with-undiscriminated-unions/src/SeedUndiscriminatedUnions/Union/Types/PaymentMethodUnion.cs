@@ -34,14 +34,14 @@ public class PaymentMethodUnion
     public object? Value { get; internal set; }
 
     /// <summary>
-    /// Factory method to create a union from a SeedUndiscriminatedUnions.TokenizeCard value.
+    /// Factory method to create a union from a <see cref="SeedUndiscriminatedUnions.TokenizeCard"/> value.
     /// </summary>
     public static PaymentMethodUnion FromTokenizeCard(
         SeedUndiscriminatedUnions.TokenizeCard value
     ) => new("tokenizeCard", value);
 
     /// <summary>
-    /// Factory method to create a union from a SeedUndiscriminatedUnions.ConvertToken value.
+    /// Factory method to create a union from a <see cref="SeedUndiscriminatedUnions.ConvertToken"/> value.
     /// </summary>
     public static PaymentMethodUnion FromConvertToken(
         SeedUndiscriminatedUnions.ConvertToken value

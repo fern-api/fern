@@ -1,0 +1,5 @@
+- summary: |
+    Honor the `x-fern-retries: { disabled: true }` extension (`retries: { disabled: true }` in a Fern
+    definition) at the endpoint level. Requests for those endpoints are now sent exactly once, even when
+    the client or the per-request options configure retries.
+  type: fix

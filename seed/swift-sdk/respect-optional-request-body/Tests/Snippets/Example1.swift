@@ -6,9 +6,9 @@ enum Example1 {
         let client = ApiClient(baseURL: "https://api.fern.com")
 
         _ = try await client.refund(
-            id: "id",
+            id: "refund-id",
             request: RefundRequest(
-                amount: 1.1
+                amount: 60
             )
         )
     }

@@ -132,6 +132,12 @@ class SDKCustomConfig(pydantic.BaseModel):
     # this is opted in.
     respect_optional_request_body: bool = False
 
+    # When True, streaming endpoints return a `Stream` (`AsyncStream` for async clients) instead of
+    # a plain iterator. The stream still iterates as the parsed payloads, and `with_metadata()`
+    # additionally exposes the server-sent event `id`, `event` and `retry` fields. Off by default —
+    # existing output is unchanged unless this is opted in.
+    stream_abstraction: bool = False
+
     # If true, treats path parameters as named parameters in endpoint functions
     inline_path_params: bool = False
 

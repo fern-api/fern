@@ -38,6 +38,8 @@ export declare namespace RawClient {
         request: ast.CodeBlock | ast.ClassInstantiation;
         /** Cancellation token */
         cancellationToken: ast.CodeBlock;
+        /** whether retries are disabled for the endpoint */
+        retriesDisabled?: boolean;
     }
 
     export interface CreateHttpRequestWrapperArgs {
@@ -143,6 +145,12 @@ export class RawClient extends WithGeneration {
             args.push({
                 name: "Options",
                 assignment: this.csharp.codeblock(this.names.parameters.requestOptions)
+            });
+        }
+        if (this.context.areRetriesDisabled(endpoint)) {
+            args.push({
+                name: "RetriesDisabled",
+                assignment: this.csharp.codeblock("true")
             });
         }
         switch (requestType) {
@@ -320,12 +328,18 @@ export class RawClient extends WithGeneration {
         clientReference,
         options,
         request,
-        cancellationToken
+        cancellationToken,
+        retriesDisabled
     }: RawClient.SendRequestWithHttpRequestArgs): ast.MethodInvocation {
         return this.csharp.invokeMethod({
             on: this.csharp.codeblock(clientReference),
             method: "SendRequestAsync",
-            arguments_: [request, options, this.csharp.codeblock(this.names.parameters.cancellationToken)],
+            arguments_: [
+                request,
+                options,
+                this.csharp.codeblock(this.names.parameters.cancellationToken),
+                ...(retriesDisabled === true ? [this.csharp.codeblock("true")] : [])
+            ],
             async: true
         });
     }

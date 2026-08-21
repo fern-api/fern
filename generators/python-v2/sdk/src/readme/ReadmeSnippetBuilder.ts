@@ -184,7 +184,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const methodCallBlock = syncSnippet != null ? this.extractMethodCallFromSyncSnippet(syncSnippet) : undefined;
 
         let asyncBody: string;
-        if (methodCallBlock != null) {
+        if (this.isStreamingEndpoint(endpoint.endpoint)) {
+            // Streaming methods are async generator functions, so awaiting the call raises a
+            // TypeError; the returned stream is iterated with `async for` instead.
+            const methodCall = this.getMethodCall(endpoint);
+            const hasParams = this.endpointHasParameters(endpoint.endpoint);
+            asyncBody = `    async for chunk in ${methodCall}(${hasParams ? "..." : ""}):\n        print(chunk)`;
+        } else if (methodCallBlock != null) {
             const indentedMethodCall = methodCallBlock
                 .split("\n")
                 .map((line, idx) => {
