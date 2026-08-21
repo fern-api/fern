@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `layout.api-reference-layout` option to docs.yml. Set it to `cards` to render
+    nested API reference fields as bordered cards, or `indented` (the default) to render
+    each nested level as an indented branch with a connector line and a path breadcrumb.
+  type: feat

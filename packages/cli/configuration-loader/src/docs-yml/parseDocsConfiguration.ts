@@ -676,6 +676,11 @@ function convertLayoutConfig(
         // fern-platform companion PR. Part of the `as unknown as` cast below
         // until the published FDR SDK adds `changelogLayout`.
         changelogLayout: layout.changelogLayout,
+        // Passed through as-is (no default): omitted renders the indented
+        // connector-line tree, "cards" renders the legacy nested cards. Resolved
+        // by the fern-platform companion PR. Part of the `as unknown as` cast
+        // below until the published FDR SDK adds `apiReferenceLayout`.
+        apiReferenceLayout: layout.apiReferenceLayout,
         // Opt-in (default off, resolved by the fern-platform companion PR):
         // when true the sidebar renders inline availability badges. Part of the
         // `as unknown as` cast below until the published FDR SDK adds the field.

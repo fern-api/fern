@@ -2897,6 +2897,13 @@
                 "classic"
               ]
             },
+            "api-reference-layout": {
+              "type": "string",
+              "enum": [
+                "indented",
+                "cards"
+              ]
+            },
             "show-nav-availability-badges": {
               "type": "boolean"
             }
