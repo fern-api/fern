@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedTsBytesUploadPathParam from "../../../index.js";
@@ -108,6 +109,74 @@ export class ServiceClient {
             _response.rawResponse,
             "POST",
             "/upload-content/{tenantId}/{objectPath}/{revision}/{uploadedAt}/{region}",
+        );
+    }
+
+    /**
+     * Endpoint with an inlined request wrapper whose example supplies no path-parameter
+     * values, so the generated example must still populate every path parameter the
+     * wrapper carries (`inlinePathParameters`) or passes positionally.
+     *
+     * @param {SeedTsBytesUploadPathParam.UpdateMetadataRequest} request
+     * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTsBytesUploadPathParamError}
+     * @throws {@link errors.SeedTsBytesUploadPathParamTimeoutError}
+     *
+     * @example
+     *     await client.service.updateMetadataWithPathParam({
+     *         objectPath: "objectPath",
+     *         label: "primary"
+     *     })
+     */
+    public updateMetadataWithPathParam(
+        request: SeedTsBytesUploadPathParam.UpdateMetadataRequest,
+        requestOptions?: ServiceClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__updateMetadataWithPathParam(request, requestOptions));
+    }
+
+    private async __updateMetadataWithPathParam(
+        request: SeedTsBytesUploadPathParam.UpdateMetadataRequest,
+        requestOptions?: ServiceClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { tenantId, objectPath, ..._body } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `upload-content/${core.url.encodePathParam(tenantId ?? "acme")}/${core.url.encodePathParam(objectPath)}/metadata`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTsBytesUploadPathParamError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/upload-content/{tenantId}/{objectPath}/metadata",
         );
     }
 }

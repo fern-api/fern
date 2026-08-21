@@ -350,6 +350,251 @@
                 "type": "json"
             },
             "examples": null
+        },
+        "endpoint_service.updateMetadataWithPathParam": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "updateMetadataWithPathParam",
+                    "camelCase": {
+                        "unsafeName": "updateMetadataWithPathParam",
+                        "safeName": "updateMetadataWithPathParam"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "update_metadata_with_path_param",
+                        "safeName": "update_metadata_with_path_param"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UPDATE_METADATA_WITH_PATH_PARAM",
+                        "safeName": "UPDATE_METADATA_WITH_PATH_PARAM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UpdateMetadataWithPathParam",
+                        "safeName": "UpdateMetadataWithPathParam"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/upload-content/{tenantId}/{objectPath}/metadata"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "UpdateMetadataRequest",
+                        "camelCase": {
+                            "unsafeName": "updateMetadataRequest",
+                            "safeName": "updateMetadataRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "update_metadata_request",
+                            "safeName": "update_metadata_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPDATE_METADATA_REQUEST",
+                            "safeName": "UPDATE_METADATA_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UpdateMetadataRequest",
+                            "safeName": "UpdateMetadataRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "tenantId",
+                                "camelCase": {
+                                    "unsafeName": "tenantID",
+                                    "safeName": "tenantID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "tenant_id",
+                                    "safeName": "tenant_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TENANT_ID",
+                                    "safeName": "TENANT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "TenantID",
+                                    "safeName": "TenantID"
+                                }
+                            },
+                            "wireValue": "tenantId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "objectPath",
+                                "camelCase": {
+                                    "unsafeName": "objectPath",
+                                    "safeName": "objectPath"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "object_path",
+                                    "safeName": "object_path"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OBJECT_PATH",
+                                    "safeName": "OBJECT_PATH"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ObjectPath",
+                                    "safeName": "ObjectPath"
+                                }
+                            },
+                            "wireValue": "objectPath"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "label",
+                                "name": {
+                                    "originalName": "label",
+                                    "camelCase": {
+                                        "unsafeName": "label",
+                                        "safeName": "label"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "label",
+                                        "safeName": "label"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "LABEL",
+                                        "safeName": "LABEL"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Label",
+                                        "safeName": "Label"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
         }
     },
     "pathParameters": [],

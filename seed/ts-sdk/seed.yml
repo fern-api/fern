@@ -603,6 +603,9 @@ fixtures:
     - outputFolder: bigint
       customConfig:
         useBigInt: true
+    - outputFolder: inline-path-parameters
+      customConfig:
+        inlinePathParameters: true
 
 scripts:
   - image: fernapi/ts-seed

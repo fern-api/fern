@@ -107,3 +107,71 @@ await client.service.uploadWithPathParam(createReadStream("path/to/file"), "acme
 </dl>
 </details>
 
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">updateMetadataWithPathParam</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Endpoint with an inlined request wrapper whose example supplies no path-parameter
+values, so the generated example must still populate every path parameter the
+wrapper carries (`inlinePathParameters`) or passes positionally.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.service.updateMetadataWithPathParam({
+    objectPath: "objectPath",
+    label: "primary"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedTsBytesUploadPathParam.UpdateMetadataRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

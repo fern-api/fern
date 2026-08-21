@@ -10,6 +10,17 @@
                 "type": "typescript",
                 "client": "import { createReadStream } from \"fs\";\nimport { SeedTsBytesUploadPathParamClient } from \"@fern/ts-bytes-upload-path-param\";\n\nconst client = new SeedTsBytesUploadPathParamClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.service.uploadWithPathParam(createReadStream(\"path/to/file\"), \"acme\", \"objectPath\", BigInt(\"1000000\"), \"2024-01-15T09:30:00Z\", \"us-east\");\n"
             }
+        },
+        {
+            "id": {
+                "path": "/upload-content/{tenantId}/{objectPath}/metadata",
+                "method": "POST",
+                "identifier_override": "endpoint_service.updateMetadataWithPathParam"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsBytesUploadPathParamClient } from \"@fern/ts-bytes-upload-path-param\";\n\nconst client = new SeedTsBytesUploadPathParamClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.service.updateMetadataWithPathParam({\n    objectPath: \"objectPath\",\n    label: \"primary\"\n});\n"
+            }
         }
     ],
     "types": {}

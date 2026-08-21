@@ -10,6 +10,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [File Uploads](#file-uploads)
 - [Advanced](#advanced)
@@ -45,6 +46,19 @@ import { SeedTsBytesUploadPathParamClient } from "@fern/ts-bytes-upload-path-par
 
 const client = new SeedTsBytesUploadPathParamClient({ baseUrl: "YOUR_BASE_URL" });
 await client.service.uploadWithPathParam(createReadStream("path/to/file"), "acme", "objectPath", 1000000, "2024-01-15T09:30:00Z", "us-east");
+```
+
+## Request and Response Types
+
+The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+following namespace:
+
+```typescript
+import { SeedTsBytesUploadPathParam } from "@fern/ts-bytes-upload-path-param";
+
+const request: SeedTsBytesUploadPathParam.UpdateMetadataRequest = {
+    ...
+};
 ```
 
 ## Exception Handling
