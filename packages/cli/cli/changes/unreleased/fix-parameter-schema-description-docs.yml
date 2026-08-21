@@ -1,0 +1,4 @@
+- summary: |
+    Fall back to an OpenAPI parameter's inline schema description when the parameter itself has no
+    description, so query, header, and path parameter docs appear in generated API references.
+  type: fix

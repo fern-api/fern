@@ -1,0 +1,47 @@
+openapi: 3.0.1
+info:
+  title: Plant API
+  version: 0.1.0
+servers:
+  - url: https://api.example.com
+paths:
+  /plants/{plantId}:
+    get:
+      operationId: getPlant
+      tags:
+        - plants
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+            description: The plant's identifier, described inside the schema.
+        - name: cursor
+          in: query
+          schema:
+            type: string
+            description: The pagination cursor, described inside the schema.
+        - name: limit
+          in: query
+          description: The page size, described on the parameter.
+          schema:
+            type: integer
+            description: The page size, described inside the schema.
+        - name: X-Region
+          in: header
+          schema:
+            type: string
+            description: The region, described inside the schema.
+        - name: X-Tenant
+          in: header
+          schema:
+            $ref: "#/components/schemas/TenantId"
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    TenantId:
+      type: string
+      description: The tenant identifier, described on the named type.
