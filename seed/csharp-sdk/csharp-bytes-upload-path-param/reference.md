@@ -116,9 +116,9 @@ await client.Service.UploadWithPathParamAsync(
 <dl>
 <dd>
 
-Endpoint with an inlined request wrapper whose example supplies no path-parameter
-values, so the generated example must still populate every path parameter the
-wrapper carries (`inline-path-parameters`).
+Endpoint with a request wrapper carrying the path parameters. Its second example
+supplies no path-parameter values, so the generated example must still populate every
+path parameter the wrapper carries (`inline-path-parameters`).
 </dd>
 </dl>
 </dd>
@@ -134,7 +134,12 @@ wrapper carries (`inline-path-parameters`).
 
 ```csharp
 await client.Service.UpdateMetadataWithPathParamAsync(
-    new UpdateMetadataRequest { ObjectPath = "objectPath", Label = "primary" }
+    new UpdateMetadataRequest
+    {
+        TenantId = "acme",
+        ObjectPath = "path/to/object.txt",
+        Label = "primary",
+    }
 );
 ```
 </dd>

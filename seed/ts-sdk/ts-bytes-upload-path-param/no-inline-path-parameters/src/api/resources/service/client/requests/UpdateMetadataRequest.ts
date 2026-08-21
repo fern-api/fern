@@ -5,7 +5,10 @@
  *     {
  *         label: "primary"
  *     }
+ *
+ * @example
+ *     {}
  */
 export interface UpdateMetadataRequest {
-    label: string;
+    label?: string;
 }

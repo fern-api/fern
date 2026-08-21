@@ -4,22 +4,30 @@ import { SeedTsBytesUploadPathParamClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("ServiceClient", () => {
-    test("updateMetadataWithPathParam", async () => {
+    test("updateMetadataWithPathParam (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTsBytesUploadPathParamClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { label: "primary" };
 
         server
             .mockEndpoint()
-            .post("/upload-content/acme/objectPath/metadata")
-            .jsonBody(rawRequestBody)
+            .post("/upload-content/acme/path%2Fto%2Fobject.txt/metadata")
             .respondWith()
             .statusCode(200)
             .build();
 
-        const response = await client.service.updateMetadataWithPathParam("acme", "objectPath", {
+        const response = await client.service.updateMetadataWithPathParam("acme", "path/to/object.txt", {
             label: "primary",
         });
+        expect(response).toEqual(undefined);
+    });
+
+    test("updateMetadataWithPathParam (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedTsBytesUploadPathParamClient({ maxRetries: 0, environment: server.baseUrl });
+
+        server.mockEndpoint().post("/upload-content/acme/objectPath/metadata").respondWith().statusCode(200).build();
+
+        const response = await client.service.updateMetadataWithPathParam("acme", "objectPath");
         expect(response).toEqual(undefined);
     });
 });

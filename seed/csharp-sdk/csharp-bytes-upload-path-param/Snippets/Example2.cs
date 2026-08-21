@@ -11,9 +11,8 @@ public partial class Examples
 
         await client.Service.UpdateMetadataWithPathParamAsync(
             new UpdateMetadataRequest {
-                TenantId = "tenantId",
-                ObjectPath = "objectPath",
-                Label = "label"
+                TenantId = "<tenantId>",
+                ObjectPath = "objectPath"
             }
         );
     }

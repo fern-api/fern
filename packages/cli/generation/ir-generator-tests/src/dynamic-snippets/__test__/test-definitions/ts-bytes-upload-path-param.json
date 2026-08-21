@@ -71,7 +71,7 @@
                 {
                     "wireValue": "us-east",
                     "name": {
-                        "originalName": "us-east",
+                        "originalName": "UsEast",
                         "camelCase": {
                             "unsafeName": "usEast",
                             "safeName": "usEast"
@@ -93,7 +93,7 @@
                 {
                     "wireValue": "eu-west",
                     "name": {
-                        "originalName": "eu-west",
+                        "originalName": "EuWest",
                         "camelCase": {
                             "unsafeName": "euWest",
                             "safeName": "euWest"
@@ -549,43 +549,43 @@
                         "variable": null
                     }
                 ],
-                "queryParameters": [],
-                "headers": [],
-                "body": {
-                    "type": "properties",
-                    "value": [
-                        {
+                "queryParameters": [
+                    {
+                        "name": {
+                            "wireValue": "label",
                             "name": {
-                                "wireValue": "label",
-                                "name": {
-                                    "originalName": "label",
-                                    "camelCase": {
-                                        "unsafeName": "label",
-                                        "safeName": "label"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "label",
-                                        "safeName": "label"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "LABEL",
-                                        "safeName": "LABEL"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Label",
-                                        "safeName": "Label"
-                                    }
+                                "originalName": "label",
+                                "camelCase": {
+                                    "unsafeName": "label",
+                                    "safeName": "label"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "label",
+                                    "safeName": "label"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "LABEL",
+                                    "safeName": "LABEL"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Label",
+                                    "safeName": "Label"
                                 }
-                            },
-                            "typeReference": {
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            },
-                            "propertyAccess": null,
-                            "variable": null
-                        }
-                    ]
-                },
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": null,
                 "metadata": {
                     "includePathParameters": true,
                     "onlyPathParameters": false

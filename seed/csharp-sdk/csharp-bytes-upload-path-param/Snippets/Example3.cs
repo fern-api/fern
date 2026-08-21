@@ -2,7 +2,7 @@ using SeedCsharpBytesUploadPathParam;
 
 public partial class Examples
 {
-    public async Task Example1() {
+    public async Task Example3() {
         var client = new SeedCsharpBytesUploadPathParamClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
@@ -11,9 +11,9 @@ public partial class Examples
 
         await client.Service.UpdateMetadataWithPathParamAsync(
             new UpdateMetadataRequest {
-                TenantId = "acme",
-                ObjectPath = "path/to/object.txt",
-                Label = "primary"
+                TenantId = "tenantId",
+                ObjectPath = "objectPath",
+                Label = "label"
             }
         );
     }

@@ -4,7 +4,6 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedTsBytesUploadPathParam from "../../../index.js";
@@ -113,9 +112,9 @@ export class ServiceClient {
     }
 
     /**
-     * Endpoint with an inlined request wrapper whose example supplies no path-parameter
-     * values, so the generated example must still populate every path parameter the
-     * wrapper carries (`inlinePathParameters`) or passes positionally.
+     * Endpoint with a request wrapper carrying the path parameters. Its second example
+     * supplies no path-parameter values, so the generated example must still populate every
+     * path parameter the wrapper carries (`inlinePathParameters`) or passes positionally.
      *
      * @param {string} tenantId
      * @param {string} objectPath
@@ -126,14 +125,17 @@ export class ServiceClient {
      * @throws {@link errors.SeedTsBytesUploadPathParamTimeoutError}
      *
      * @example
-     *     await client.service.updateMetadataWithPathParam("acme", "objectPath", {
+     *     await client.service.updateMetadataWithPathParam("acme", "path/to/object.txt", {
      *         label: "primary"
      *     })
+     *
+     * @example
+     *     await client.service.updateMetadataWithPathParam("acme", "objectPath")
      */
     public updateMetadataWithPathParam(
         tenantId: string,
         objectPath: string,
-        request: SeedTsBytesUploadPathParam.UpdateMetadataRequest,
+        request: SeedTsBytesUploadPathParam.UpdateMetadataRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(
@@ -144,9 +146,13 @@ export class ServiceClient {
     private async __updateMetadataWithPathParam(
         tenantId: string,
         objectPath: string,
-        request: SeedTsBytesUploadPathParam.UpdateMetadataRequest,
+        request: SeedTsBytesUploadPathParam.UpdateMetadataRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
+        const { label } = request;
+        const _queryParams: Record<string, unknown> = {
+            label,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -156,10 +162,11 @@ export class ServiceClient {
             ),
             method: "POST",
             headers: _headers,
-            contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            requestType: "json",
-            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

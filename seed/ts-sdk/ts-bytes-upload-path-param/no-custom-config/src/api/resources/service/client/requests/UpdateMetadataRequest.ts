@@ -3,12 +3,18 @@
 /**
  * @example
  *     {
- *         objectPath: "objectPath",
+ *         tenantId: "acme",
+ *         objectPath: "path/to/object.txt",
  *         label: "primary"
+ *     }
+ *
+ * @example
+ *     {
+ *         objectPath: "objectPath"
  *     }
  */
 export interface UpdateMetadataRequest {
     tenantId?: string;
     objectPath: string;
-    label: string;
+    label?: string;
 }

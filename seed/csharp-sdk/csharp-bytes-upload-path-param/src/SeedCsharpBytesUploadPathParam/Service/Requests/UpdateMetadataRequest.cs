@@ -12,8 +12,8 @@ public record UpdateMetadataRequest
     [JsonIgnore]
     public required string ObjectPath { get; set; }
 
-    [JsonPropertyName("label")]
-    public required string Label { get; set; }
+    [JsonIgnore]
+    public string? Label { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

@@ -119,9 +119,9 @@ await client.service.uploadWithPathParam(createReadStream("path/to/file"), "acme
 <dl>
 <dd>
 
-Endpoint with an inlined request wrapper whose example supplies no path-parameter
-values, so the generated example must still populate every path parameter the
-wrapper carries (`inlinePathParameters`) or passes positionally.
+Endpoint with a request wrapper carrying the path parameters. Its second example
+supplies no path-parameter values, so the generated example must still populate every
+path parameter the wrapper carries (`inlinePathParameters`) or passes positionally.
 </dd>
 </dl>
 </dd>
@@ -137,7 +137,8 @@ wrapper carries (`inlinePathParameters`) or passes positionally.
 
 ```typescript
 await client.service.updateMetadataWithPathParam({
-    objectPath: "objectPath",
+    tenantId: "acme",
+    objectPath: "path/to/object.txt",
     label: "primary"
 });
 

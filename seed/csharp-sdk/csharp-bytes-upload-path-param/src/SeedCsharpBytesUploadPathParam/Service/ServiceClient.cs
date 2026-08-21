@@ -89,8 +89,9 @@ public partial class ServiceClient : IServiceClient
     )
     {
         var _queryString = new SeedCsharpBytesUploadPathParam.Core.QueryStringBuilder.Builder(
-            capacity: 0
+            capacity: 1
         )
+            .Add("label", request.Label)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var _headers = await new SeedCsharpBytesUploadPathParam.Core.HeadersBuilder.Builder()
@@ -109,7 +110,6 @@ public partial class ServiceClient : IServiceClient
                         ValueConvert.ToPathParameterString(request.TenantId),
                         ValueConvert.ToPathParameterString(request.ObjectPath)
                     ),
-                    Body = request,
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -186,13 +186,18 @@ public partial class ServiceClient : IServiceClient
     }
 
     /// <summary>
-    /// Endpoint with an inlined request wrapper whose example supplies no path-parameter
-    /// values, so the generated example must still populate every path parameter the
-    /// wrapper carries (`inline-path-parameters`).
+    /// Endpoint with a request wrapper carrying the path parameters. Its second example
+    /// supplies no path-parameter values, so the generated example must still populate every
+    /// path parameter the wrapper carries (`inline-path-parameters`).
     /// </summary>
     /// <example><code>
     /// await client.Service.UpdateMetadataWithPathParamAsync(
-    ///     new UpdateMetadataRequest { ObjectPath = "objectPath", Label = "primary" }
+    ///     new UpdateMetadataRequest
+    ///     {
+    ///         TenantId = "acme",
+    ///         ObjectPath = "path/to/object.txt",
+    ///         Label = "primary",
+    ///     }
     /// );
     /// </code></example>
     public WithRawResponseTask UpdateMetadataWithPathParamAsync(

@@ -2,7 +2,7 @@
     "types": {},
     "endpoints": [
         {
-            "example_identifier": null,
+            "example_identifier": "Curl example",
             "id": {
                 "path": "/upload-content/{tenantId}/{objectPath}/{revision}/{uploadedAt}/{region}",
                 "method": "POST",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": null,
+            "example_identifier": "Complete example",
             "id": {
                 "path": "/upload-content/{tenantId}/{objectPath}/metadata",
                 "method": "POST",
@@ -22,7 +22,19 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCsharpBytesUploadPathParam;\n\nvar client = new SeedCsharpBytesUploadPathParamClient();\nawait client.Service.UpdateMetadataWithPathParamAsync(\n    new UpdateMetadataRequest { ObjectPath = \"objectPath\", Label = \"primary\" }\n);\n"
+                "client": "using SeedCsharpBytesUploadPathParam;\n\nvar client = new SeedCsharpBytesUploadPathParamClient();\nawait client.Service.UpdateMetadataWithPathParamAsync(\n    new UpdateMetadataRequest\n    {\n        TenantId = \"acme\",\n        ObjectPath = \"path/to/object.txt\",\n        Label = \"primary\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": "Curl example",
+            "id": {
+                "path": "/upload-content/{tenantId}/{objectPath}/metadata",
+                "method": "POST",
+                "identifier_override": "endpoint_service.updateMetadataWithPathParam"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpBytesUploadPathParam;\n\nvar client = new SeedCsharpBytesUploadPathParamClient();\nawait client.Service.UpdateMetadataWithPathParamAsync(\n    new UpdateMetadataRequest { ObjectPath = \"objectPath\" }\n);\n"
             }
         }
     ]
