@@ -28,7 +28,9 @@ const bulkRefund: FernIr.dynamic.EndpointSnippetRequest = {
     requestBody: undefined
 };
 
-describe("optional request body", () => {
+// Snippet generation shells out to `rustfmt`, whose first invocation on a cold machine can take
+// several seconds, so these need a longer timeout than the 5s default.
+describe("optional request body", { tags: ["slow"] }, () => {
     it("passes None for an absent body once the generator opts in", async () => {
         const generator = buildDynamicSnippetsGenerator({
             irFilepath: IR_FILEPATH,
