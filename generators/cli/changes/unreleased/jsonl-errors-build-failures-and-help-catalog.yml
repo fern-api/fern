@@ -35,3 +35,12 @@
     counting operations is `jq '.operations | length'`, not `jq 'length'` (which
     counted the two top-level keys).
   type: fix
+
+- summary: |
+    Removed `error::print_error_json` from the vendored runtime. It wrote the
+    JSON envelope to stdout unconditionally — the exact double-output behaviour
+    the rest of this release removes — so it was a working copy of the bug left
+    reachable under an inviting name. It had no callers in the runtime, in the
+    generator's emitted code, or in any generated CLI. `write_error_json`, which
+    honours the resolved format, is the entry point.
+  type: fix

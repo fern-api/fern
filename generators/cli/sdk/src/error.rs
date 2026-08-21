@@ -846,13 +846,9 @@ impl Default for ErrorDisplayContext {
     }
 }
 
-pub fn print_error_json(err: &CliError) {
-    write_error_json(err, &mut std::io::stdout(), None);
-}
-
 /// Render `err` in exactly one representation, chosen by
-/// [`ErrorDisplayContext::machine_readable`]: the JSON envelope on `out`, or a
-/// human line (plus docs link / help hint) on stderr.
+/// [`ErrorDisplayContext::format`]: the JSON envelope on `out` for a machine
+/// format, or a human line (plus details, help hint and docs link) on stderr.
 pub fn write_error_json(
     err: &CliError,
     out: &mut dyn std::io::Write,
@@ -1162,12 +1158,21 @@ mod tests {
     }
 
     #[test]
-    fn test_print_error_json_all_variants_no_panic() {
-        print_error_json(&CliError::api(500, "oops".to_string(), "err".to_string()));
-        print_error_json(&CliError::Validation("bad input".to_string()));
-        print_error_json(&CliError::Auth("no auth".to_string()));
-        print_error_json(&CliError::Discovery("no spec".to_string()));
-        print_error_json(&CliError::Other(anyhow::anyhow!("broken")));
+    fn every_variant_renders_without_panicking() {
+        // Captures rather than writing to the real stdout, and covers `Network`
+        // and `RawSentinel`, which the previous version of this test predated.
+        for err in [
+            CliError::api(500, "oops".to_string(), "err".to_string()),
+            CliError::Validation("bad input".to_string()),
+            CliError::Auth("no auth".to_string()),
+            CliError::Discovery("no spec".to_string()),
+            CliError::Network("connection refused".to_string()),
+            CliError::Other(anyhow::anyhow!("broken")),
+            CliError::RawSentinel { code: 500 },
+        ] {
+            let mut out = Vec::new();
+            write_error_json(&err, &mut out, None);
+        }
     }
 
     #[test]
