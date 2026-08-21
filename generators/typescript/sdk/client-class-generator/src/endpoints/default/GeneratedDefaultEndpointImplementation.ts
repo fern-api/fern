@@ -824,6 +824,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
 
         const maxRetriesExpression = getMaxRetriesExpression({
+            endpoint: this.endpoint,
             maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
                 this.generatedSdkClientClass
             ),
@@ -961,6 +962,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 referenceToOptions: this.generatedSdkClientClass.getReferenceToOptions()
             }),
             maxRetries: getMaxRetriesExpression({
+                endpoint: this.endpoint,
                 maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
                     this.generatedSdkClientClass
                 ),

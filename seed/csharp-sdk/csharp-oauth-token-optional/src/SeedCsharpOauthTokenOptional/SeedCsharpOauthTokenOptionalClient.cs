@@ -18,7 +18,7 @@ public partial class SeedCsharpOauthTokenOptionalClient : ISeedCsharpOauthTokenO
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedCsharpOauthTokenOptional" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedCsharpOauthTokenOptional.Version.Current },
                 { "User-Agent", "Ferncsharp-oauth-token-optional/0.0.1" },
             }
         );

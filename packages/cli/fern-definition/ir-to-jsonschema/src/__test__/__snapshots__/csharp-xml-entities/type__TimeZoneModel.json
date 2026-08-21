@@ -23,6 +23,28 @@
         }
       ],
       "description": "Special characters: &nbsp; &hellip; &middot; &copy;"
+    },
+    "documentationLink": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "See <a href=\"https://example.com/docs?a=1&b=2\">see here</a> for details"
+    },
+    "escapedDocumentationLink": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "See <a href=\"https://example.com/docs?a=1&amp;b=2\">see here</a> for details"
     }
   },
   "required": [

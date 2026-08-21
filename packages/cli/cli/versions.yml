@@ -1,4 +1,108 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.101.0
+  changelogEntry:
+    - summary: |
+        Add a `layout.api-reference-layout` option to docs.yml. Set it to `cards` to render
+        nested API reference fields as bordered cards, or `indented` (the default) to render
+        each nested level as an indented branch with a connector line and a path breadcrumb.
+      type: feat
+  createdAt: "2026-08-21"
+  irVersion: 67
+- version: 5.100.0
+  changelogEntry:
+    - summary: |
+        Add an internal, default-disabled SDK generation route through sdk-gen-api. Preserve local
+        generation and non-SDK remote generators on their existing paths, and report unsupported
+        SDK migration features explicitly instead of silently falling back to Fiddle.
+      type: internal
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 5.99.1
+  changelogEntry:
+    - summary: |
+        Error responses that reference the same `nullable` schema from two or more endpoints now
+        generate a typed error body instead of an untyped one. Previously two responses referring
+        to the identical nullable schema were treated as conflicting shapes and the body was
+        downgraded to `unknown`.
+
+        **This changes generated error-handling signatures for specs with that shape**, so those
+        SDKs may warrant a major bump. The trigger condition is narrow: two or more endpoints must
+        share a status code whose error schema is the same nullable schema. Errors declared by a
+        single endpoint, and shared errors whose schemas are not nullable, were already typed and
+        are unaffected.
+
+        If your spec has that shape, error handling that indexes into the body must move to the
+        typed field:
+
+        - Go fails to compile: `err.Body.(map[string]any)["error_code"]` becomes
+          `err.Body.ErrorCode`.
+        - Java fails to compile: casts such as `(Map<String, Object>) e.body()` no longer apply.
+        - **Python fails at runtime, not at build time**: the body is parsed into a model, so
+          `e.body["error_code"]` raises `TypeError: 'ErrorBody' object is not subscriptable` the
+          first time the error path fires. Use `e.body.error_code`.
+        - TypeScript is unaffected in practice, since the body was already `unknown` and had to be
+          narrowed.
+      type: fix
+  createdAt: "2026-08-19"
+  irVersion: 67
+- version: 5.99.0
+  changelogEntry:
+    - summary: |
+        Add the `respect-parameter-content` OpenAPI setting. When enabled, header parameters that
+        declare their schema under `content` (e.g. a header whose value is a JSON-encoded
+        object) are typed from that schema instead of falling back to a string, so the
+        referenced object's fields are preserved in SDKs and the API reference playground.
+      type: feat
+  createdAt: "2026-08-19"
+  irVersion: 67
+- version: 5.98.3
+  changelogEntry:
+    - summary: |
+        Fix `@/`-prefixed imports inside fenced code blocks and inline code being rewritten to relative
+        paths. Code samples are now rendered verbatim; only real MDX imports are resolved.
+      type: fix
+  createdAt: "2026-08-18"
+  irVersion: 67
+- version: 5.98.2
+  changelogEntry:
+    - summary: |
+        Preserve explicit `null` values when generating examples from OpenAPI. A `null` routed through
+        an unknown schema (for instance a declared property on an object with
+        `additionalProperties: true`) was replaced with the `{"key": "value"}` placeholder, which made
+        generated SDK wire tests mock an object where the model expects a nullable scalar.
+      type: fix
+  createdAt: "2026-08-17"
+  irVersion: 67
+- version: 5.98.1
+  changelogEntry:
+    - summary: |
+        Render per-endpoint auth in docs when `api.auth` is `endpoint-security`. The declared
+        `auth-schemes` and each operation's `security` were both dropped while importing OpenAPI, so
+        every endpoint published with no auth section, no auth headers in copied snippets, and no
+        credential inputs in the API Explorer. Endpoints now document exactly the schemes they declare:
+        either-scheme endpoints render each option separately, single-scheme endpoints render only that
+        scheme, and `security: []` endpoints render none.
+      type: fix
+  createdAt: "2026-08-17"
+  irVersion: 67
+- version: 5.98.0
+  changelogEntry:
+    - summary: |
+        Add support for the `x-fern-explorer` extension in AsyncAPI specs. It controls whether the
+        API Explorer is available for a generated WebSocket channel. It can be set globally at the
+        document root and overridden per channel, with the per-channel value taking precedence.
+      type: feat
+  createdAt: "2026-08-17"
+  irVersion: 67
+- version: 5.97.0
+  changelogEntry:
+    - summary: |
+        Send IR v67 to the Rust SDK generator from 0.46.0 and the Rust model generator from 0.6.0-rc.0,
+        which is where they start reading whether an endpoint's request body is required. Earlier Rust
+        generator versions keep receiving v66.
+      type: internal
+  createdAt: "2026-08-17"
+  irVersion: 67
 - version: 5.96.0
   changelogEntry:
     - summary: |

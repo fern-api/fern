@@ -11,6 +11,52 @@ import (
 )
 
 var (
+	listUsersAliasBodyCursorPaginationRequestFieldCursor = big.NewInt(1 << 0)
+)
+
+type ListUsersAliasBodyCursorPaginationRequest struct {
+	Cursor Cursor `json:"cursor,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUsersAliasBodyCursorPaginationRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasBodyCursorPaginationRequest) SetCursor(cursor Cursor) {
+	l.Cursor = cursor
+	l.require(listUsersAliasBodyCursorPaginationRequestFieldCursor)
+}
+
+func (l *ListUsersAliasBodyCursorPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersAliasBodyCursorPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersAliasBodyCursorPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersAliasBodyCursorPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersAliasBodyCursorPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	listUsersBodyCursorPaginationRequestFieldCursor = big.NewInt(1 << 0)
 	listUsersBodyCursorPaginationRequestFieldFilter = big.NewInt(1 << 1)
 )
@@ -167,6 +213,98 @@ func (l *ListUsersNestedBodyCursorPaginationRequest) MarshalJSON() ([]byte, erro
 }
 
 var (
+	listUsersNullableAliasBodyCursorPaginationRequestFieldCursor = big.NewInt(1 << 0)
+)
+
+type ListUsersNullableAliasBodyCursorPaginationRequest struct {
+	Cursor NullableCursor `json:"cursor,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUsersNullableAliasBodyCursorPaginationRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersNullableAliasBodyCursorPaginationRequest) SetCursor(cursor NullableCursor) {
+	l.Cursor = cursor
+	l.require(listUsersNullableAliasBodyCursorPaginationRequestFieldCursor)
+}
+
+func (l *ListUsersNullableAliasBodyCursorPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersNullableAliasBodyCursorPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersNullableAliasBodyCursorPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersNullableAliasBodyCursorPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersNullableAliasBodyCursorPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	listUsersRequiredAliasBodyCursorPaginationRequestFieldCursor = big.NewInt(1 << 0)
+)
+
+type ListUsersRequiredAliasBodyCursorPaginationRequest struct {
+	Cursor RequiredCursor `json:"cursor" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUsersRequiredAliasBodyCursorPaginationRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersRequiredAliasBodyCursorPaginationRequest) SetCursor(cursor RequiredCursor) {
+	l.Cursor = cursor
+	l.require(listUsersRequiredAliasBodyCursorPaginationRequestFieldCursor)
+}
+
+func (l *ListUsersRequiredAliasBodyCursorPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersRequiredAliasBodyCursorPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersRequiredAliasBodyCursorPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersRequiredAliasBodyCursorPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersRequiredAliasBodyCursorPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	listUsersRequiredBodyCursorPaginationRequestFieldCursor = big.NewInt(1 << 0)
 )
 
@@ -256,6 +394,309 @@ func (l *ListUsersUUIDBodyCursorPaginationRequest) MarshalJSON() ([]byte, error)
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
 	return json.Marshal(explicitMarshaler)
+}
+
+// A named alias that resolves to an optional string, i.e. a pointer in Go.
+type Cursor = *string
+
+var (
+	listUsersAliasCursorResponseFieldNextCursor = big.NewInt(1 << 0)
+	listUsersAliasCursorResponseFieldData       = big.NewInt(1 << 1)
+)
+
+type ListUsersAliasCursorResponse struct {
+	NextCursor Cursor  `json:"next_cursor,omitempty" url:"next_cursor,omitempty"`
+	Data       []*User `json:"data" url:"data"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUsersAliasCursorResponse) GetNextCursor() Cursor {
+	if l == nil {
+		return nil
+	}
+	return l.NextCursor
+}
+
+func (l *ListUsersAliasCursorResponse) GetData() []*User {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersAliasCursorResponse) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUsersAliasCursorResponse) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNextCursor sets the NextCursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasCursorResponse) SetNextCursor(nextCursor Cursor) {
+	l.NextCursor = nextCursor
+	l.require(listUsersAliasCursorResponseFieldNextCursor)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasCursorResponse) SetData(data []*User) {
+	l.Data = data
+	l.require(listUsersAliasCursorResponseFieldData)
+}
+
+func (l *ListUsersAliasCursorResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersAliasCursorResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersAliasCursorResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUsersAliasCursorResponse) MarshalJSON() ([]byte, error) {
+	type embed ListUsersAliasCursorResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUsersAliasCursorResponse) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listUsersNullableAliasCursorResponseFieldNextCursor = big.NewInt(1 << 0)
+	listUsersNullableAliasCursorResponseFieldData       = big.NewInt(1 << 1)
+)
+
+type ListUsersNullableAliasCursorResponse struct {
+	NextCursor NullableCursor `json:"next_cursor,omitempty" url:"next_cursor,omitempty"`
+	Data       []*User        `json:"data" url:"data"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUsersNullableAliasCursorResponse) GetNextCursor() NullableCursor {
+	if l == nil {
+		return nil
+	}
+	return l.NextCursor
+}
+
+func (l *ListUsersNullableAliasCursorResponse) GetData() []*User {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersNullableAliasCursorResponse) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUsersNullableAliasCursorResponse) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNextCursor sets the NextCursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersNullableAliasCursorResponse) SetNextCursor(nextCursor NullableCursor) {
+	l.NextCursor = nextCursor
+	l.require(listUsersNullableAliasCursorResponseFieldNextCursor)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersNullableAliasCursorResponse) SetData(data []*User) {
+	l.Data = data
+	l.require(listUsersNullableAliasCursorResponseFieldData)
+}
+
+func (l *ListUsersNullableAliasCursorResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersNullableAliasCursorResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersNullableAliasCursorResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUsersNullableAliasCursorResponse) MarshalJSON() ([]byte, error) {
+	type embed ListUsersNullableAliasCursorResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUsersNullableAliasCursorResponse) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listUsersRequiredAliasCursorResponseFieldNextCursor = big.NewInt(1 << 0)
+	listUsersRequiredAliasCursorResponseFieldData       = big.NewInt(1 << 1)
+)
+
+type ListUsersRequiredAliasCursorResponse struct {
+	NextCursor RequiredCursor `json:"next_cursor" url:"next_cursor"`
+	Data       []*User        `json:"data" url:"data"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUsersRequiredAliasCursorResponse) GetNextCursor() RequiredCursor {
+	if l == nil {
+		return ""
+	}
+	return l.NextCursor
+}
+
+func (l *ListUsersRequiredAliasCursorResponse) GetData() []*User {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersRequiredAliasCursorResponse) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUsersRequiredAliasCursorResponse) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNextCursor sets the NextCursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersRequiredAliasCursorResponse) SetNextCursor(nextCursor RequiredCursor) {
+	l.NextCursor = nextCursor
+	l.require(listUsersRequiredAliasCursorResponseFieldNextCursor)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersRequiredAliasCursorResponse) SetData(data []*User) {
+	l.Data = data
+	l.require(listUsersRequiredAliasCursorResponseFieldData)
+}
+
+func (l *ListUsersRequiredAliasCursorResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersRequiredAliasCursorResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersRequiredAliasCursorResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUsersRequiredAliasCursorResponse) MarshalJSON() ([]byte, error) {
+	type embed ListUsersRequiredAliasCursorResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUsersRequiredAliasCursorResponse) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
 }
 
 var (
@@ -557,6 +998,12 @@ func (l *ListUsersUUIDCursorResponse) String() string {
 	}
 	return fmt.Sprintf("%#v", l)
 }
+
+// A named alias that resolves to a nullable string, which is also a pointer in Go.
+type NullableCursor = *string
+
+// A named alias that resolves to a required string, i.e. a value in Go.
+type RequiredCursor = string
 
 var (
 	userFieldName = big.NewInt(1 << 0)

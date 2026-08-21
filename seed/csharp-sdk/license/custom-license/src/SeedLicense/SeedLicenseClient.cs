@@ -14,7 +14,7 @@ public partial class SeedLicenseClient : ISeedLicenseClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedLicense" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedLicense.Version.Current },
                 { "User-Agent", "Fernlicense/0.0.1" },
             }
         );

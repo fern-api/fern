@@ -5991,6 +5991,13 @@
         "classic"
       ]
     },
+    "docs.ApiReferenceLayout": {
+      "type": "string",
+      "enum": [
+        "indented",
+        "cards"
+      ]
+    },
     "docs.LayoutConfig": {
       "type": "object",
       "properties": {
@@ -6147,6 +6154,17 @@
             }
           ],
           "description": "Sets which layout to use for changelog pages.\n\n@default: `timeline`\n\n- `timeline` renders the searchable timeline-of-cards layout.\n- `classic` renders the legacy stacked-entries layout with a per-page table of contents."
+        },
+        "api-reference-layout": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ApiReferenceLayout"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Sets how nested object fields are rendered in the API reference.\n\n@default: `indented`\n\n- `indented` renders each nested level as an indented branch with a connector line and a color-coded path breadcrumb.\n- `cards` renders each nested level as a bordered card."
         },
         "show-nav-availability-badges": {
           "oneOf": [

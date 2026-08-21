@@ -1,0 +1,208 @@
+{
+    "version": "1.0.0",
+    "types": {},
+    "headers": [
+        {
+            "name": {
+                "wireValue": "X-API-Client-Id",
+                "name": {
+                    "originalName": "clientId",
+                    "camelCase": {
+                        "unsafeName": "clientID",
+                        "safeName": "clientID"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "client_id",
+                        "safeName": "client_id"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CLIENT_ID",
+                        "safeName": "CLIENT_ID"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ClientID",
+                        "safeName": "ClientID"
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "STRING"
+            },
+            "propertyAccess": null,
+            "variable": null
+        },
+        {
+            "name": {
+                "wireValue": "X-API-Version",
+                "name": {
+                    "originalName": "version",
+                    "camelCase": {
+                        "unsafeName": "version",
+                        "safeName": "version"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "version",
+                        "safeName": "version"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "VERSION",
+                        "safeName": "VERSION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Version",
+                        "safeName": "Version"
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "STRING"
+            },
+            "propertyAccess": null,
+            "variable": null
+        },
+        {
+            "name": {
+                "wireValue": "X-API-Tenant",
+                "name": {
+                    "originalName": "tenant",
+                    "camelCase": {
+                        "unsafeName": "tenant",
+                        "safeName": "tenant"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "tenant",
+                        "safeName": "tenant"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TENANT",
+                        "safeName": "TENANT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Tenant",
+                        "safeName": "Tenant"
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "optional",
+                "value": {
+                    "type": "primitive",
+                    "value": "STRING"
+                }
+            },
+            "propertyAccess": null,
+            "variable": null
+        }
+    ],
+    "endpoints": {
+        "endpoint_service.get": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "apiKey",
+                    "camelCase": {
+                        "unsafeName": "apiKey",
+                        "safeName": "apiKey"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "api_key",
+                        "safeName": "api_key"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "API_KEY",
+                        "safeName": "API_KEY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "APIKey",
+                        "safeName": "APIKey"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "get",
+                    "camelCase": {
+                        "unsafeName": "get",
+                        "safeName": "get"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get",
+                        "safeName": "get"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET",
+                        "safeName": "GET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Get",
+                        "safeName": "Get"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/global-headers"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null,
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}

@@ -22,7 +22,7 @@ public partial class SeedInferredAuthImplicitClient : ISeedInferredAuthImplicitC
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedInferredAuthImplicit" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedInferredAuthImplicit.Version.Current },
                 { "User-Agent", "Ferninferred-auth-implicit/0.0.1" },
             }
         );

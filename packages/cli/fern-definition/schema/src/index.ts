@@ -22,6 +22,7 @@ export { visitExampleCodeSampleSchema } from "./utils/visitExampleCodeSampleSche
 export { type ExampleResponseSchemaVisitor, visitExampleResponseSchema } from "./utils/visitExampleResponseSchema.js";
 export {
     isAnyAuthSchemes,
+    isEndpointSecurityAuthSchemes,
     isSingleAuthScheme,
     type RawApiAuthVisitor,
     visitRawApiAuth

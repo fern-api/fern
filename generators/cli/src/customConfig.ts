@@ -122,6 +122,20 @@ export interface FernCliCustomConfig {
  */
 export interface FernCliDistributionConfig {
     /**
+     * Mint a GitHub App installation token at release time instead of
+     * reading a long-lived PAT out of a secret. Applies to every channel
+     * that does not pin its own `tokenEnvironmentVariable`.
+     *
+     * Declared once here rather than per channel because one App
+     * normally serves both: an App can be installed on several accounts,
+     * and the emitted token step passes the tap/bucket `owner` so each
+     * job mints from the right installation. Duplicating the same two
+     * secret names under `homebrew` and `scoop` would only invite the
+     * drift where one is renamed and the other is not.
+     */
+    githubApp?: FernCliGitHubAppConfig;
+
+    /**
      * Publish a Homebrew formula to a tap repository. Handled natively
      * by cargo-dist: enabling this flips `installers`/`publish-jobs` in
      * `dist-workspace.toml` and adds a `publish-homebrew-formula` job to
@@ -132,8 +146,8 @@ export interface FernCliDistributionConfig {
     /**
      * Publish a Scoop manifest to a bucket repository. cargo-dist has no
      * Scoop support, so the generator emits its own `publish-scoop` job
-     * into `ci.yml` that renders the manifest from the released Windows
-     * archive.
+     * into `release.yml` that renders the manifest from the released
+     * Windows archive.
      */
     scoop?: FernCliScoopConfig;
 }
@@ -173,8 +187,77 @@ export interface FernCliScoopConfig {
     tokenEnvironmentVariable?: string;
 }
 
+/**
+ * Credentials for the GitHub App whose installation token the release
+ * workflow uses to push to the tap / bucket repo.
+ *
+ * Both are *names of GitHub Actions secrets* in the generated CLI's
+ * repository, not the values themselves. Neither may be `GITHUB_TOKEN`.
+ */
+export interface FernCliGitHubAppConfig {
+    /**
+     * Secret holding the App's identifier — either the numeric App ID or
+     * the App's Client ID; `actions/create-github-app-token` accepts
+     * both, which is why the generator does not constrain the shape of
+     * the value.
+     *
+     * It must be an Actions **secret**, not an Actions *variable*: the
+     * emitted workflow reads `secrets.<NAME>`, and an undefined secret
+     * resolves to the empty string rather than erroring. The preflight
+     * job exists to catch exactly that.
+     */
+    appIdSecret: string;
+
+    /**
+     * Secret holding the App's private key — the entire `.pem`,
+     * including the BEGIN/END lines and its internal newlines. A PEM
+     * collapsed onto one line is the most common cause of
+     * `secretOrPrivateKey must be an asymmetric key` at release time,
+     * so the preflight job checks for it.
+     */
+    privateKeySecret: string;
+}
+
+/**
+ * Which mechanism a channel uses to authenticate its cross-repo push,
+ * after `resolveChannelAuth` has applied the precedence rules. The
+ * emitters branch on this rather than re-deriving it.
+ */
+export type ResolvedChannelAuth =
+    | { type: "pat"; tokenSecret: string }
+    | { type: "githubApp"; app: FernCliGitHubAppConfig };
+
 export const DEFAULT_HOMEBREW_TOKEN_ENV_VAR = "HOMEBREW_TAP_TOKEN";
 export const DEFAULT_SCOOP_TOKEN_ENV_VAR = "SCOOP_BUCKET_TOKEN";
+
+/**
+ * Decide how one channel authenticates, most specific first:
+ *
+ *   1. the channel's own `tokenEnvironmentVariable`
+ *   2. `distribution.githubApp`
+ *   3. the channel's default PAT secret name
+ *
+ * Rung 1 sitting above rung 2 is what makes migrating one channel at a
+ * time expressible: a shared App plus `scoop.tokenEnvironmentVariable`
+ * means "App everywhere except Scoop, which is not migrated yet". That
+ * is also why there is no mutual-exclusivity error to raise here — with
+ * no per-channel `githubApp`, two mechanisms for one push cannot be
+ * expressed in the first place.
+ */
+export function resolveChannelAuth(args: {
+    tokenEnvironmentVariable: string | undefined;
+    githubApp: FernCliGitHubAppConfig | undefined;
+    defaultTokenSecret: string;
+}): ResolvedChannelAuth {
+    const { tokenEnvironmentVariable, githubApp, defaultTokenSecret } = args;
+    if (tokenEnvironmentVariable != null) {
+        return { type: "pat", tokenSecret: tokenEnvironmentVariable };
+    }
+    if (githubApp != null) {
+        return { type: "githubApp", app: githubApp };
+    }
+    return { type: "pat", tokenSecret: defaultTokenSecret };
+}
 
 const DEFAULT_FERN_CLI_CUSTOM_CONFIG: FernCliCustomConfig = { customCommands: true };
 
@@ -328,6 +411,9 @@ const FORMULA_NAME_PATTERN = /^[a-z][a-z0-9-]*$/;
 function validateDistribution(raw: unknown): FernCliDistributionConfig {
     const obj = asConfigObject(raw, "customConfig.distribution");
     const result: FernCliDistributionConfig = {};
+    if (obj.githubApp !== undefined) {
+        result.githubApp = validateGitHubApp(obj.githubApp);
+    }
     if (obj.homebrew !== undefined) {
         result.homebrew = validateHomebrew(obj.homebrew);
     }
@@ -372,6 +458,24 @@ function validateScoop(raw: unknown): FernCliScoopConfig {
     return result;
 }
 
+/**
+ * Both fields are mandatory once the block is present. Deliberately
+ * *not* routed through `optionalSecretName`: that returns `undefined`
+ * rather than throwing, so a forgotten `privateKeySecret` would emit
+ * `private-key: ${{ secrets. }}` — not a valid Actions expression, which
+ * makes GitHub refuse to load `release.yml` at all. That takes down the
+ * whole release (archives, installers, `curl | bash`), not just the one
+ * channel whose key was mistyped.
+ */
+function validateGitHubApp(raw: unknown): FernCliGitHubAppConfig {
+    const path = "customConfig.distribution.githubApp";
+    const obj = asConfigObject(raw, path);
+    return {
+        appIdSecret: requireSecretName(obj.appIdSecret, `${path}.appIdSecret`, "PUBLISH_APP_ID"),
+        privateKeySecret: requireSecretName(obj.privateKeySecret, `${path}.privateKeySecret`, "PUBLISH_APP_PRIVATE_KEY")
+    };
+}
+
 function asConfigObject(raw: unknown, path: string): Record<string, unknown> {
     if (typeof raw !== "object" || raw == null || Array.isArray(raw)) {
         throw new Error(`Invalid ${path}: expected an object, got ${Array.isArray(raw) ? "array" : typeof raw}.`);
@@ -384,6 +488,37 @@ function requireRepoSlug(value: unknown, path: string, example: string): string 
         throw new Error(
             `Invalid ${path}: ${JSON.stringify(value)} is not a GitHub repository. ` +
                 `Provide it as "<owner>/<repo>" (e.g. "${example}").`
+        );
+    }
+    return value;
+}
+
+/**
+ * A mandatory secret name. Same shape rules as `optionalSecretName`, but
+ * a missing value is an error and the `GITHUB_TOKEN` rejection is worded
+ * for the App case — `optionalSecretName`'s message tells the reader to
+ * "create a personal access token (or GitHub App token)", which reads as
+ * nonsense to someone who is already configuring a GitHub App.
+ */
+function requireSecretName(value: unknown, path: string, example: string): string {
+    if (value === undefined) {
+        throw new Error(
+            `Missing ${path}: both appIdSecret and privateKeySecret are required when ` +
+                `customConfig.distribution.githubApp is set. Provide the name of the GitHub Actions ` +
+                `secret holding the value (e.g. "${example}").`
+        );
+    }
+    if (typeof value !== "string" || !SECRET_NAME_PATTERN.test(value)) {
+        throw new Error(
+            `Invalid ${path}: ${JSON.stringify(value)} is not a valid GitHub Actions secret name. ` +
+                "It must start with an uppercase letter and contain only [A-Z0-9_]."
+        );
+    }
+    if (value === "GITHUB_TOKEN") {
+        throw new Error(
+            `Invalid ${path}: GITHUB_TOKEN cannot be used here. It is the workflow's own built-in ` +
+                "token, not a GitHub App credential. Store the App's identifier and private key as " +
+                "separate Actions secrets under different names."
         );
     }
     return value;

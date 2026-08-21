@@ -10,6 +10,7 @@ export * from "./AnalyticsConfig.js";
 export * from "./AnnouncementConfig.js";
 export * from "./ApiReferenceConfiguration.js";
 export * from "./ApiReferenceEndpointConfiguration.js";
+export * from "./ApiReferenceLayout.js";
 export * from "./ApiReferenceLayoutItem.js";
 export * from "./ApiReferenceOperationConfiguration.js";
 export * from "./ApiReferencePackageConfiguration.js";

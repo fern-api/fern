@@ -96,39 +96,50 @@ describe("requestOptionsParameter", () => {
     });
 
     describe("getMaxRetriesExpression", () => {
-        it("generates max retries with nullish coalescing", () => {
-            const referenceToOptions = ts.factory.createPropertyAccessExpression(
-                ts.factory.createThis(),
-                ts.factory.createIdentifier("_options")
-            );
+        const referenceToOptions = ts.factory.createPropertyAccessExpression(
+            ts.factory.createThis(),
+            ts.factory.createIdentifier("_options")
+        );
 
-            const maxRetriesReference = ({
-                referenceToRequestOptions,
-                isNullable
-            }: {
-                referenceToRequestOptions: ts.Expression;
-                isNullable: boolean;
-            }) => {
-                if (isNullable) {
-                    return ts.factory.createPropertyAccessChain(
-                        referenceToRequestOptions,
-                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                        ts.factory.createIdentifier("maxRetries")
-                    );
-                }
-                return ts.factory.createPropertyAccessExpression(
+        const maxRetriesReference = ({
+            referenceToRequestOptions,
+            isNullable
+        }: {
+            referenceToRequestOptions: ts.Expression;
+            isNullable: boolean;
+        }) => {
+            if (isNullable) {
+                return ts.factory.createPropertyAccessChain(
                     referenceToRequestOptions,
+                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                     ts.factory.createIdentifier("maxRetries")
                 );
-            };
+            }
+            return ts.factory.createPropertyAccessExpression(
+                referenceToRequestOptions,
+                ts.factory.createIdentifier("maxRetries")
+            );
+        };
 
+        it("generates max retries with nullish coalescing", () => {
             const result = getMaxRetriesExpression({
+                endpoint: { retries: undefined },
                 maxRetriesReference,
                 referenceToOptions
             });
 
             const text = getTextOfTsNode(result);
             expect(text).toMatchSnapshot();
+        });
+
+        it("generates zero when the endpoint disables retries", () => {
+            const result = getMaxRetriesExpression({
+                endpoint: { retries: { disabled: true } },
+                maxRetriesReference,
+                referenceToOptions
+            });
+
+            expect(getTextOfTsNode(result)).toBe("0");
         });
     });
 

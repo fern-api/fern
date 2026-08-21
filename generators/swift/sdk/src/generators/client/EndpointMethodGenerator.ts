@@ -4,6 +4,7 @@ import { Referencer, swift } from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
+import { areRetriesDisabled } from "./util/are-retries-disabled.js";
 import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift.js";
 import { parseEndpointPath } from "./util/parse-endpoint-path.js";
 
@@ -416,6 +417,15 @@ export class EndpointMethodGenerator {
                 value: swift.Expression.reference("requestOptions")
             })
         );
+
+        if (areRetriesDisabled(endpoint.retries)) {
+            arguments_.push(
+                swift.functionArgument({
+                    label: "retriesDisabled",
+                    value: swift.Expression.rawValue("true")
+                })
+            );
+        }
 
         const returnType = this.getMethodReturnTypeForEndpoint(endpoint);
 

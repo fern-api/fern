@@ -14,7 +14,7 @@ public partial class SeedNoRetriesClient : ISeedNoRetriesClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedNoRetries" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedNoRetries.Version.Current },
                 { "User-Agent", "Fernno-retries/0.0.1" },
             }
         );

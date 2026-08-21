@@ -148,7 +148,7 @@ public record WorkspaceSubmissionUpdateInfo
             : throw new global::System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'ran'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stopped'.</exception>
     public object? AsStopped() =>
@@ -159,7 +159,7 @@ public record WorkspaceSubmissionUpdateInfo
             );
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'traced'.</exception>
     public object? AsTraced() =>
@@ -192,7 +192,7 @@ public record WorkspaceSubmissionUpdateInfo
             );
 
     /// <summary>
-    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'finished', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'finished', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'finished'.</exception>
     public object? AsFinished() =>
@@ -295,7 +295,7 @@ public record WorkspaceSubmissionUpdateInfo
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsStopped(out object? value)
     {
@@ -309,7 +309,7 @@ public record WorkspaceSubmissionUpdateInfo
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsTraced(out object? value)
     {
@@ -351,7 +351,7 @@ public record WorkspaceSubmissionUpdateInfo
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
     public bool TryAsFinished(out object? value)
     {

@@ -701,7 +701,7 @@ public partial class ServiceClient : IServiceClient
     }
 
     /// <example><code>
-    /// await client.Service.RefreshTokenAsync();
+    /// await client.Service.RefreshTokenAsync(new RefreshTokenRequest { Ttl = 420 });
     /// </code></example>
     public WithRawResponseTask RefreshTokenAsync(
         RefreshTokenRequest? request,

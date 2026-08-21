@@ -515,6 +515,31 @@ public class RetriesTests
         }
     }
 
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldNotRetry_WhenRetriesDisabledForEndpoint()
+    {
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .RespondWith(WireMockResponse.Create().WithStatusCode(500).WithBody("Failure"));
+
+        var request = new SeedNoRetries.Core.EmptyRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Get,
+            Path = "/test",
+            Options = new global::SeedNoRetries.RequestOptions { MaxRetries = MaxRetries },
+            RetriesDisabled = true,
+        };
+
+        var response = await _rawClient.SendRequestAsync(request);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(500));
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(1));
+        }
+    }
+
     [TearDown]
     public void TearDown()
     {

@@ -568,7 +568,8 @@ export class DocsDefinitionResolver {
             const newMarkdown = transformAtPrefixImports({
                 markdown: codeReplacedMarkdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
-                absolutePathToMarkdownFile: this.resolveFilepath(relativePath)
+                absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
+                context: this.taskContext
             });
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
         }

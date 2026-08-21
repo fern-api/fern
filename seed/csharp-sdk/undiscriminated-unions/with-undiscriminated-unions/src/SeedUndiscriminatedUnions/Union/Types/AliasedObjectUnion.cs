@@ -35,13 +35,13 @@ public class AliasedObjectUnion
     public object? Value { get; internal set; }
 
     /// <summary>
-    /// Factory method to create a union from a LeafObjectA value.
+    /// Factory method to create a union from a <see cref="LeafObjectA"/> value.
     /// </summary>
     public static AliasedObjectUnion FromAliasedLeafA(LeafObjectA value) =>
         new("aliasedLeafA", value);
 
     /// <summary>
-    /// Factory method to create a union from a LeafObjectB value.
+    /// Factory method to create a union from a <see cref="LeafObjectB"/> value.
     /// </summary>
     public static AliasedObjectUnion FromAliasedLeafB(LeafObjectB value) =>
         new("aliasedLeafB", value);

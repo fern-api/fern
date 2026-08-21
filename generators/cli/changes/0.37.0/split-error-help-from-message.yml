@@ -1,0 +1,11 @@
+- summary: |
+    Made the error envelope's `message` field one sentence for every error class.
+    Advice that is not part of what the server reported — today the "Credentials
+    were supplied via: ..." hint shown on 401/403 — moved out of `message` into
+    its own `error.help` field, so a consumer keying off `error.message` sees the
+    same shape whether or not the CLI had advice to offer. The docs link (opt-in
+    via `error_docs_base_url`, previously human-only) now also appears as
+    `error.docs_url`, so the JSON envelope no longer silently drops information
+    the human rendering shows. Human output keeps the same order, one item per
+    line: message, then what the server said beyond it, then hint, then link.
+  type: fix

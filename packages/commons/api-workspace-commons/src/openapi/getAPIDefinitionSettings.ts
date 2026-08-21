@@ -70,7 +70,8 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     coerceConstsTo: "coerceConstsTo",
     shouldInferDiscriminatedUnionBaseProperties: "shouldInferDiscriminatedUnionBaseProperties",
     disambiguateRequestNames: "disambiguateRequestNames",
-    ignoreTags: "ignoreTags"
+    ignoreTags: "ignoreTags",
+    respectParameterContent: "respectParameterContent"
 };
 
 function setIfDefined<K extends keyof OpenAPISettings>(

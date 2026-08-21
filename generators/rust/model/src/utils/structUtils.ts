@@ -416,6 +416,7 @@ export function convertQueryParametersToProperties(
             docs: queryParam.docs,
             availability: queryParam.availability,
             propertyAccess: undefined,
+            defaultValue: undefined,
             v2Examples: undefined
         };
     });

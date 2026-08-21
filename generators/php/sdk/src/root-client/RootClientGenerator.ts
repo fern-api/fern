@@ -1464,6 +1464,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
     }
 
     private getParameterForHeader(header: FernIr.HttpHeader): ConstructorParameter {
+        const literal = this.context.maybeLiteral(header.valueType);
+        // Env vars are strings, so only a string-typed literal can be resolved from one. Other
+        // literals stay out of the constructor's env-resolution path and remain literal parameters.
+        const environmentVariable = literal == null || literal.type === "string" ? header.env : undefined;
         return {
             name: this.context.getParameterName(header.name),
             header: {
@@ -1472,9 +1476,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             docs: header.docs,
             isOptional: this.context.isOptional(header.valueType),
             typeReference: header.valueType,
-            environmentVariable: header.env,
+            environmentVariable,
             isGlobalHeader: true,
-            clientDefault: header.clientDefault
+            // A literal-typed header's value is known at compile time, so when an env var promotes
+            // it to a constructor parameter the literal acts as its client default: the parameter
+            // stays optional and falls back to the literal instead of throwing.
+            clientDefault: header.clientDefault ?? (environmentVariable != null ? literal : undefined)
         };
     }
 

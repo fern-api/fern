@@ -12,7 +12,9 @@ import {
     AutomationRunOptions,
     findGeneratorLineNumber,
     GeneratorOccurrenceTracker,
+    getFernSdkGenApiLanguage,
     getOutputRepoUrl,
+    isFernSdkGenApiEnabled,
     runRemoteGenerationForAPIWorkspace
 } from "@fern-api/remote-workspace-runner";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -20,6 +22,7 @@ import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
+import { createSpecsTarGzCache } from "./createSpecsTarGzCache.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
 import { PackMode, packLocalOutputForGroup } from "./packLocalOutput.js";
@@ -193,21 +196,27 @@ export async function generateWorkspace({
                     });
                 } else if (token != null) {
                     // Lazily build the specs tar.gz once per group, only if a generator needs it
-                    let cachedSpecsTarGz: Buffer | undefined;
-                    let specsComputed = false;
+                    const ossWorkspace = workspace instanceof OSSWorkspace ? workspace : undefined;
+                    const getCachedSpecsTarGz =
+                        ossWorkspace == null
+                            ? undefined
+                            : createSpecsTarGzCache(() =>
+                                  createSpecsTarGzBuffer({
+                                      specs: ossWorkspace.allSpecs,
+                                      context: groupContext,
+                                      audiences: group.audiences
+                                  })
+                              );
                     const getSpecsTarGz = async (generatorName: string): Promise<Buffer | undefined> => {
-                        if (!(workspace instanceof OSSWorkspace) || !generatorWantsSpecs(generatorName)) {
+                        const sdkGenApiNeedsSpecs =
+                            isFernSdkGenApiEnabled() && getFernSdkGenApiLanguage(generatorName) != null;
+                        if (
+                            getCachedSpecsTarGz == null ||
+                            (!generatorWantsSpecs(generatorName) && !sdkGenApiNeedsSpecs)
+                        ) {
                             return undefined;
                         }
-                        if (!specsComputed) {
-                            specsComputed = true;
-                            cachedSpecsTarGz = await createSpecsTarGzBuffer({
-                                specs: workspace.allSpecs,
-                                context: groupContext,
-                                audiences: group.audiences
-                            });
-                        }
-                        return cachedSpecsTarGz;
+                        return getCachedSpecsTarGz();
                     };
 
                     await runRemoteGenerationForAPIWorkspace({

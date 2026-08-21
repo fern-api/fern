@@ -1005,6 +1005,17 @@ types:
           - `timeline` renders the searchable timeline-of-cards layout.
           - `classic` renders the legacy stacked-entries layout with a per-page table of contents.
 
+      api-reference-layout:
+        type: optional<ApiReferenceLayout>
+        availability: in-development
+        docs: |
+          Sets how nested object fields are rendered in the API reference.
+
+          @default: `indented`
+
+          - `indented` renders each nested level as an indented branch with a connector line and a color-coded path breadcrumb.
+          - `cards` renders each nested level as a bordered card.
+
       show-nav-availability-badges:
         type: optional<boolean>
         availability: in-development
@@ -1248,6 +1259,11 @@ types:
     enum:
       - timeline
       - classic
+
+  ApiReferenceLayout:
+    enum:
+      - indented
+      - cards
 
   AudienceId:
     type: string

@@ -124,6 +124,25 @@ pub struct RestDescription {
     /// existing groups for documentation.
     #[serde(default, skip)]
     pub groups: HashMap<String, SdkGroupInfo>,
+    /// Descriptions from the document-root OpenAPI `tags` array, keyed by
+    /// kebab-cased tag name so they match tag-derived resource keys.
+    #[serde(default, skip)]
+    pub tag_descriptions: HashMap<String, String>,
+    #[serde(default, skip)]
+    pub group_tag_names: HashMap<String, Vec<String>>,
+    /// Number of operations in each top-level group that declare each tag,
+    /// keyed by the lenient tag matching key.
+    #[serde(default, skip)]
+    pub group_tag_operation_counts: HashMap<String, HashMap<String, usize>>,
+    /// Number of operations in each top-level group.
+    #[serde(default, skip)]
+    pub group_operation_counts: HashMap<String, usize>,
+    /// Top-level groups carrying each operation-declared tag, keyed by the
+    /// lenient tag matching key.
+    #[serde(default, skip)]
+    pub tag_group_names: HashMap<String, Vec<String>>,
+    #[serde(default, skip)]
+    pub tag_description_order: Vec<String>,
 }
 
 /// Metadata for a single group declared via the spec-root
@@ -604,6 +623,12 @@ impl RetriesConfig {
 pub struct RestMethod {
     pub id: Option<String>,
     pub description: Option<String>,
+    /// The operation's full `description` when it says more than
+    /// [`RestMethod::description`] (which prefers the terse `summary`).
+    /// `None` when the spec has no separate prose, so the command table and
+    /// the command's own `--help` would otherwise repeat one line.
+    #[serde(default)]
+    pub long_description: Option<String>,
     pub http_method: String,
     pub path: String,
     #[serde(default)]

@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/timezone",
+                "method": "GET",
+                "identifier_override": "endpoint_.getTimeZone"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpXmlEntities;\n\nvar client = new SeedCsharpXmlEntitiesClient();\nawait client.GetTimeZoneAsync();\n"
+            }
+        }
+    ]
+}

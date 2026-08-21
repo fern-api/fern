@@ -21,7 +21,8 @@ final class HTTPClient: Swift.Sendable {
         headers requestHeaders: [Swift.String: Swift.String?] = [:],
         queryParams requestQueryParams: [Swift.String: QueryParameter?] = [:],
         body requestBody: Any? = nil,
-        requestOptions: RequestOptions? = nil
+        requestOptions: RequestOptions? = nil,
+        retriesDisabled: Swift.Bool = false
     ) async throws {
         _ = try await performRequest(
             method: method,
@@ -31,6 +32,7 @@ final class HTTPClient: Swift.Sendable {
             queryParams: requestQueryParams,
             body: requestBody,
             requestOptions: requestOptions,
+            retriesDisabled: retriesDisabled,
             responseType: Foundation.Data.self
         )
     }
@@ -44,6 +46,7 @@ final class HTTPClient: Swift.Sendable {
         queryParams requestQueryParams: [Swift.String: QueryParameter?] = [:],
         body requestBody: Any? = nil,
         requestOptions: RequestOptions? = nil,
+        retriesDisabled: Swift.Bool = false,
         responseType: T.Type
     ) async throws -> T {
         let requestBody: HTTP.RequestBody? = requestBody.map { body in
@@ -70,7 +73,8 @@ final class HTTPClient: Swift.Sendable {
 
         let (data, _) = try await executeRequestWithURLSession(
             request,
-            requestOptions: requestOptions
+            requestOptions: requestOptions,
+            retriesDisabled: retriesDisabled
         )
 
         if responseType == Foundation.Data.self {
@@ -265,9 +269,12 @@ final class HTTPClient: Swift.Sendable {
 
     private func executeRequestWithURLSession(
         _ request: Networking.URLRequest,
-        requestOptions: RequestOptions? = nil
+        requestOptions: RequestOptions? = nil,
+        retriesDisabled: Swift.Bool = false
     ) async throws -> (Foundation.Data, Swift.String?) {
-        let maxRetries = requestOptions?.maxRetries ?? clientConfig.maxRetries
+        // Endpoints declaring `retries: { disabled: true }` never retry, taking precedence over both
+        // the client-level and the per-request retry configuration.
+        let maxRetries = retriesDisabled ? 0 : (requestOptions?.maxRetries ?? clientConfig.maxRetries)
         var lastResponse: (Foundation.Data, Networking.HTTPURLResponse)?
 
         for attempt in 0...maxRetries {

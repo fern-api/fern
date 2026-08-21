@@ -256,7 +256,8 @@ export async function getPreviewDocsDefinition({
             const markdownReplacedMdAndCode = transformAtPrefixImports({
                 markdown: markdownReplacedCode,
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-                absolutePathToMarkdownFile: absoluteFilePath
+                absolutePathToMarkdownFile: absoluteFilePath,
+                context
             });
 
             let markdownWithAbsPaths: string;

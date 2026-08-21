@@ -757,6 +757,32 @@ export class WireTestGenerator {
                             }
                             break;
                         }
+                        case "oauth": {
+                            // The client exchanges these for a token against the mocked token
+                            // endpoint, which produces the Authorization header the stubs require.
+                            if (scheme.configuration.type === "clientCredentials") {
+                                arguments_.push(
+                                    go.invokeFunc({
+                                        func: go.typeReference({
+                                            name: "WithClientCredentials",
+                                            importPath: this.context.getOptionImportPath()
+                                        }),
+                                        arguments_: [
+                                            go.codeblock('"test_client_id"'),
+                                            go.codeblock('"test_client_secret"')
+                                        ],
+                                        multiline: false
+                                    })
+                                );
+                            }
+                            break;
+                        }
+                        case "inferred":
+                            // Credentials are endpoint-specific, so the stubs do not constrain the
+                            // Authorization header. Handled by InferredAuthWireTestGenerator.
+                            break;
+                        default:
+                            assertNever(scheme);
                     }
                 }
             }

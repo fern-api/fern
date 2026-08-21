@@ -157,7 +157,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 var response = await ${this.getMethodCall(retryEndpoint)}(
     ...,
     new ${this.requestOptionsName} {
-        MaxRetries: 0 // Override MaxRetries at the request level
+        MaxRetries = 0 // Override MaxRetries at the request level
     }
 );
 `)
@@ -171,7 +171,7 @@ var response = await ${this.getMethodCall(retryEndpoint)}(
 var response = await ${this.getMethodCall(timeoutEndpoint)}(
     ...,
     new ${this.requestOptionsName} {
-        Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
+        Timeout = TimeSpan.FromSeconds(3) // Override timeout to 3s
     }
 );
 `)
@@ -231,7 +231,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await ${this.getMethodCall(rawResponseEndpoint)}(...);
+var parsedData = await ${this.getMethodCall(rawResponseEndpoint)}(...);
 
 // .WithRawResponse() also works on streaming endpoints (returns IAsyncEnumerable<T> + RawResponse)
 // and on endpoints with no response body (returns RawResponse only).

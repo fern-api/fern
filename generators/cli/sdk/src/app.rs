@@ -701,6 +701,10 @@ impl CliApp {
         let ctx = ErrorDisplayContext {
             docs_base_url: self.error_docs_base_url.clone(),
             help_hint: Some(help_hint),
+            // Resolved from raw argv because an error can precede clap parsing;
+            // the resolver is the same one the success path uses, so errors land
+            // in whichever representation the caller already asked for.
+            format: crate::formatter::resolve_format_from_raw_args(&str_args, &self.name),
         };
         match self.dispatch_pipeline(args, out).await {
             Ok(PipelineOutcome::Success) => 0,
@@ -750,7 +754,12 @@ impl CliApp {
         // binding to own the path wins. A real `Err` from one binding is
         // logged and the walk continues — one broken spec cannot mask its
         // sibling's surface.
-        if crate::cli_args::wants_schema(&str_args) {
+        // `--schema`, or `--help` with an explicit machine format — the spelling
+        // the generated README has always documented for the operation catalog.
+        let explicit_schema = crate::cli_args::wants_schema(&str_args);
+        let help_as_schema = crate::cli_args::wants_help(&str_args)
+            && crate::formatter::explicit_machine_format(&str_args);
+        if explicit_schema || help_as_schema {
             let path = crate::cli_args::extract_subcommand_path(&str_args);
 
             if path.is_empty() {
@@ -840,10 +849,17 @@ impl CliApp {
                     ),
                 }
             }
-            return Err(CliError::Discovery(format!(
-                "--schema: no binding contains path `{}`",
-                path.join(" ")
-            )));
+            // A path with no schema is an error for an explicit `--schema` —
+            // the caller asked for a document that does not exist. It must not
+            // be one for `--help`: built-in subcommands (`auth login`,
+            // `completion`, `man`) are not API operations, and someone asking
+            // for help on one should get help, not `discoveryError` exit 4.
+            if explicit_schema {
+                return Err(CliError::Discovery(format!(
+                    "--schema: no binding contains path `{}`",
+                    path.join(" ")
+                )));
+            }
         }
 
         // 0c. --spec / --spec-raw: emit embedded OpenAPI spec(s) and exit.
@@ -912,6 +928,19 @@ impl CliApp {
                     .long("format")
                     .help("Output format: json, table, yaml, csv, raw, jsonl, http. Default: table when stdout is a TTY, json when piped. Override default with <NAME>_OUTPUT env var. raw emits unmodified server response bytes. jsonl emits one compact JSON value per line (NDJSON); arrays are flattened. http emits the full HTTP response (status line + headers + body) like curl -i (OpenAPI only).")
                     .value_name("FORMAT")
+                    .global(true),
+            )
+            // The one shorthand a caller needs beyond TTY detection: piping
+            // already selects the machine rendering, so only the reverse —
+            // "I am a human, but I am paging or redirecting" — needs a flag.
+            // Deliberately not mirrored by a `--json`: endpoints with a request
+            // body already spell that flag `--json <JSON>`.
+            .arg(
+                clap::Arg::new("human")
+                    .long("human")
+                    .help("Force human-readable output (same as --format table) even when piped")
+                    .action(clap::ArgAction::SetTrue)
+                    .conflicts_with("format")
                     .global(true),
             )
             .arg(
@@ -1212,6 +1241,7 @@ fn graft_merged_subtree(
     //    avoid clap panic on duplicates).
     let mut seen_arg_ids: std::collections::HashSet<String> = [
         "format".to_string(),
+        "human".to_string(),
         "base-url".to_string(),
         "user-agent-suffix".to_string(),
         "schema".to_string(),
@@ -1269,8 +1299,22 @@ fn graft_builtin_command(cli: clap::Command, builtin: clap::Command) -> clap::Co
         // are intercepted pre-clap anyway, so the built-in wins.
         return cli.mut_subcommand(name, move |_spec_owned| builtin);
     }
+    let builtin_about = builtin.get_about().map(ToString::to_string);
+    let builtin_long_about = builtin.get_long_about().map(ToString::to_string);
+    let generic_about = crate::openapi::commands::generic_group_about(&name);
     cli.mut_subcommand(name, move |spec_owned| {
         let mut merged = spec_owned;
+        let spec_uses_generic_about = merged
+            .get_about()
+            .is_none_or(|about| about.to_string() == generic_about);
+        if spec_uses_generic_about {
+            if let Some(about) = builtin_about {
+                merged = merged.about(about);
+            }
+            if let Some(long_about) = builtin_long_about {
+                merged = merged.long_about(long_about);
+            }
+        }
         for sub in builtin_subs {
             merged = crate::custom_commands::graft_subcommand(merged, &[], sub);
         }
@@ -1771,12 +1815,48 @@ mod tests {
     }
 
     #[test]
+    fn graft_builtin_about_wins_over_generic_spec_fallback() {
+        let spec = clap::Command::new("root").subcommand(
+            clap::Command::new("auth")
+                .about(crate::openapi::commands::generic_group_about("auth"))
+                .subcommand(clap::Command::new("me")),
+        );
+        let cli = graft_builtin_command(spec, crate::auth::login::build_auth_command());
+        let auth = cli.find_subcommand("auth").expect("auth group survives");
+        assert_eq!(
+            auth.get_about().map(ToString::to_string).as_deref(),
+            Some("Manage credentials (login / logout / status)"),
+        );
+    }
+
+    #[test]
+    fn graft_builtin_preserves_real_spec_about() {
+        let spec = clap::Command::new("root").subcommand(
+            clap::Command::new("auth")
+                .about("API authentication operations")
+                .subcommand(clap::Command::new("me")),
+        );
+        let cli = graft_builtin_command(spec, crate::auth::login::build_auth_command());
+        let auth = cli.find_subcommand("auth").expect("auth group survives");
+        assert_eq!(
+            auth.get_about().map(ToString::to_string).as_deref(),
+            Some("API authentication operations"),
+        );
+    }
+
+    #[test]
     fn graft_builtin_registers_when_no_collision() {
         let cli = graft_builtin_command(
             clap::Command::new("root").subcommand(clap::Command::new("users")),
             crate::auth::login::build_auth_command(),
         );
-        assert!(cli.find_subcommand("auth").is_some());
+        assert_eq!(
+            cli.find_subcommand("auth")
+                .and_then(|auth| auth.get_about())
+                .map(ToString::to_string)
+                .as_deref(),
+            Some("Manage credentials (login / logout / status)"),
+        );
         assert!(cli.find_subcommand("users").is_some());
     }
 

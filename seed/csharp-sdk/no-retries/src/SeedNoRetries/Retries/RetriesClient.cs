@@ -35,6 +35,7 @@ public partial class RetriesClient : IRetriesClient
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
+                    RetriesDisabled = true,
                 },
                 cancellationToken
             )

@@ -45,14 +45,15 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         var httpRequest = await CreateHttpRequestAsync(request).ConfigureAwait(false);
         // Send the request.
-        return await SendWithRetriesAsync(httpRequest, request.Options, cts.Token)
+        return await SendWithRetriesAsync(httpRequest, request.Options, cts.Token<% if (hasRetriesDisabledEndpoints) { %>, request.RetriesDisabled<% } %>)
             .ConfigureAwait(false);
     }
 
     internal async global::System.Threading.Tasks.Task<global::<%= namespace%>.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken = default<% if (hasRetriesDisabledEndpoints) { %>,
+        bool retriesDisabled = false<% } %>
     )
     {
         // Apply the request timeout.
@@ -61,7 +62,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         cts.CancelAfter(timeout);
 
         // Send the request.
-        return await SendWithRetriesAsync(request, options, cts.Token).ConfigureAwait(false);
+        return await SendWithRetriesAsync(request, options, cts.Token<% if (hasRetriesDisabledEndpoints) { %>, retriesDisabled<% } %>).ConfigureAwait(false);
     }
 
     private static async global::System.Threading.Tasks.Task<HttpRequestMessage> CloneRequestAsync(
@@ -142,11 +143,12 @@ internal partial class RawClient(ClientOptions clientOptions)
     private async global::System.Threading.Tasks.Task<global::<%= namespace%>.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
-        CancellationToken cancellationToken
+        CancellationToken cancellationToken<% if (hasRetriesDisabledEndpoints) { %>,
+        bool retriesDisabled<% } %>
     )
     {
         var httpClient = options?.HttpClient ?? Options.HttpClient;
-        var maxRetries = Math.Max(0, options?.MaxRetries ?? Options.MaxRetries);
+        var maxRetries = <% if (hasRetriesDisabledEndpoints) { %>retriesDisabled ? 0 : <% } %>Math.Max(0, options?.MaxRetries ?? Options.MaxRetries);
         var isRetryableContent = IsRetryableContent(request);
 
         if (!isRetryableContent || maxRetries == 0)

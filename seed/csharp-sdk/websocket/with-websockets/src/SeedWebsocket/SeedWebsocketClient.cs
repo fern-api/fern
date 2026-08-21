@@ -15,7 +15,7 @@ public partial class SeedWebsocketClient : ISeedWebsocketClient
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedWebsocket" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedWebsocket.Version.Current },
                 { "User-Agent", "Fernwebsocket/0.0.1" },
             }
         );

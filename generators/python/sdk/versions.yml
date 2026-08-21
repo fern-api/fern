@@ -1,4 +1,45 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.29.1
+  changelogEntry:
+    - summary: |
+        Fixed generated WireMock stubs for OAuth client credentials APIs whose token endpoint is
+        itself marked as authenticated: the token (and refresh) endpoint stub no longer requires
+        an `Authorization` header, since the token request is made to obtain the token and cannot
+        carry one yet.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
+- version: 5.29.0
+  changelogEntry:
+    - summary: |
+        Add `stream_abstraction`. With it enabled, streaming endpoints return a `Stream[T]`
+        (`AsyncStream[T]` for async clients) rather than a plain iterator, mirroring the TypeScript SDK's
+        `core.Stream`. Iterating the stream still yields the parsed payloads, while `with_metadata()`
+        yields them wrapped in a `StreamEvent` that also exposes the server-sent event `id`, `event` and
+        `retry` fields — `for event in client.completions.stream(...).with_metadata()` — so reading an
+        event id no longer requires dropping down to `with_raw_response`. The request is still only
+        issued once the stream is iterated, the stream owns the underlying response and releases it when
+        exhausted, closed or exited as a (asynchronous) context manager, and the raw client's `data` is
+        the same stream. `AsyncStream` is awaitable, so `await client.completions.stream(...)` and
+        `async for chunk in client.completions.stream(...)` both work. Defaults to `false`, so signatures
+        and snippets are unchanged until you opt in.
+      type: feat
+    - summary: |
+        Server-sent events carrying no data, such as comment-only and retry-only frames, are skipped
+        instead of being parsed as a payload, which previously failed model construction and logged a
+        warning.
+      type: fix
+    - summary: |
+        `HttpResponse` and `AsyncHttpResponse` expose the underlying `httpx.Response` through a public
+        `response` property.
+      type: feat
+    - summary: |
+        Fix the generated async examples for streaming endpoints, which awaited the method call —
+        `response = await client.completions.stream(...)` — even though it returns an async generator and
+        raises `TypeError: 'async_generator' object can't be awaited`.
+      type: fix
+  createdAt: "2026-08-20"
+  irVersion: 67
 - version: 5.28.0
   changelogEntry:
     - summary: |

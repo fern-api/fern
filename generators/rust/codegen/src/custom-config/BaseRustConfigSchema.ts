@@ -32,6 +32,9 @@ export const BaseRustCustomConfigSchema = z.object({
     enableWireTests: z.boolean().optional().default(false),
     // Enable WebSocket client generation for APIs with WebSocket channels
     enableWebsockets: z.boolean().optional().default(false),
+    // Let callers leave out a request body the API marks as not required, sending no body and no
+    // Content-Type. Opt-in so that existing SDKs keep the signatures they already have.
+    respectOptionalRequestBody: z.boolean().optional().default(false),
     // Alias for enableWebsockets (matches TypeScript/Python/Java config key)
     generateWebSocketClients: z.boolean().optional(),
     // DateTime type to use for datetime primitives:

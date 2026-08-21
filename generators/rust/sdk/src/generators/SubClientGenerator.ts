@@ -7,6 +7,7 @@ import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
+import { mayOmitRequestBody } from "../utils/mayOmitRequestBody.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 
 
@@ -951,7 +952,7 @@ export class SubClientGenerator {
         // Only apply to execute_request and execute_stream_request (we have _with_base_url variants for these).
         const urlMethodName = this.getEndpointUrlMethodName(endpoint);
         const supportsBaseUrlOverride = executeMethod === "execute_request" || executeMethod === "execute_stream_request";
-        const literalHeadersPrelude = this.buildLiteralHeadersPrelude(endpoint);
+        const requestOptionsPrelude = this.buildRequestOptionsPrelude(endpoint);
         let body: string;
 
         if (urlMethodName && supportsBaseUrlOverride) {
@@ -959,11 +960,11 @@ export class SubClientGenerator {
             const baseUrlResolution =
                 `let base_url = self.http_client.config().environment.as_ref()\n` +
                 `            .map_or(self.http_client.base_url(), |env| env.${urlMethodName}());\n`;
-            body = `${literalHeadersPrelude}${baseUrlResolution}        self.http_client.${executeMethod}_with_base_url${typeParameter}(
+            body = `${requestOptionsPrelude}${baseUrlResolution}        self.http_client.${executeMethod}_with_base_url${typeParameter}(
             base_url,${executeArgs}
         ).await`;
         } else {
-            body = `${literalHeadersPrelude}self.http_client.${executeMethod}${typeParameter}(${executeArgs}
+            body = `${requestOptionsPrelude}self.http_client.${executeMethod}${typeParameter}(${executeArgs}
         ).await`;
         }
 
@@ -1004,9 +1005,11 @@ export class SubClientGenerator {
      * (e.g. `Accept-Encoding: literal<"gzip">`) into the request options, and — in
      * endpoint-security mode — the auth headers routed for this endpoint's declared
      * `security` requirements. Caller-supplied literal headers take precedence over the
-     * literal defaults; routed auth headers are authoritative.
+     * literal defaults; routed auth headers are authoritative. Endpoints that declare
+     * `retries: { disabled: true }` also pin `max_retries` to zero, overriding both the
+     * client default and any caller-supplied value.
      */
-    private buildLiteralHeadersPrelude(endpoint: FernIr.HttpEndpoint): string {
+    private buildRequestOptionsPrelude(endpoint: FernIr.HttpEndpoint): string {
         const literalHeaders: { wireValue: string; value: string }[] = [];
         for (const header of [...(this.context.ir.headers ?? []), ...(this.service?.headers ?? []), ...(endpoint.headers ?? [])]) {
             const value = this.getLiteralHeaderValue(header.valueType);
@@ -1016,7 +1019,8 @@ export class SubClientGenerator {
         }
         const authRequirements = this.getEndpointSecurityRequirements(endpoint);
         const needsAuthRouting = authRequirements != null && authRequirements.length > 0;
-        if (literalHeaders.length === 0 && !needsAuthRouting) {
+        const retriesDisabled = endpoint.retries?.disabled === true;
+        if (literalHeaders.length === 0 && !needsAuthRouting && !retriesDisabled) {
             return "";
         }
         const literalInserts = literalHeaders
@@ -1048,6 +1052,9 @@ export class SubClientGenerator {
                 `            for (header_key, header_value) in endpoint_auth_headers {\n` +
                 `                o.additional_headers.insert(header_key, header_value);\n` +
                 `            }\n`;
+        }
+        if (retriesDisabled) {
+            prelude += `            o.max_retries = Some(0);\n`;
         }
         prelude += `            Some(o)\n` + `        };\n        `;
         return prelude;
@@ -1122,6 +1129,9 @@ export class SubClientGenerator {
             if (requestBodyParam.isRef) {
                 // Use &str instead of &String for idiomatic Rust
                 paramType = paramType === "String" ? "&str" : `&${paramType}`;
+            }
+            if (requestBodyParam.optional) {
+                paramType = `Option<${paramType}>`;
             }
             methodParams.push(`${requestBodyParam.name}: ${paramType}`);
         }
@@ -1243,7 +1253,7 @@ export class SubClientGenerator {
                 name: "request",
                 type: requestBodyType,
                 isRef: true,
-                optional: false
+                optional: mayOmitRequestBody({ context: this.context, endpoint })
             });
         }
     }
@@ -1689,6 +1699,10 @@ export class SubClientGenerator {
     private getRequestBody(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): string {
         const requestBodyParam = params.find((param) => param.name === "request");
         if (requestBodyParam && endpoint.requestBody) {
+            // An omitted optional body sends no body at all, and with it no Content-Type
+            if (requestBodyParam.optional) {
+                return "request.map(serde_json::to_value).transpose().map_err(ApiError::Serialization)?";
+            }
             // For referenced body with query parameters, serialize request.body
             if (endpoint.requestBody.type === "reference" && endpoint.queryParameters.length > 0) {
                 return "Some(serde_json::to_value(&request.body).map_err(ApiError::Serialization)?)";

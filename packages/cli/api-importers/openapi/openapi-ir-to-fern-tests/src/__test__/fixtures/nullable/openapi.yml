@@ -20,6 +20,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
+        # Shared with GET /users/{userId} below: a nullable named error schema must keep its
+        # named type instead of collapsing to unknown when the same error is declared twice.
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserError"
 
     put:
       summary: Update a user
@@ -66,6 +74,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserError"
 
 components:
   schemas:
@@ -122,6 +136,13 @@ components:
           type: string
           format: date-time
           nullable: true
+
+    UserError:
+      type: object
+      nullable: true
+      properties:
+        errorCode:
+          type: string
 
     UserStats:
       type: object

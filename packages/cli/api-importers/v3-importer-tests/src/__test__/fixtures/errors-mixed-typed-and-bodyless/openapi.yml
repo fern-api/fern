@@ -1,0 +1,56 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Test API
+servers:
+  - url: https://api.test.com
+    description: Test API
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+        - error_code
+      properties:
+        error_code:
+          type: string
+        error_type:
+          type: string
+
+paths:
+  /trees:
+    get:
+      operationId: list
+      responses:
+        "200":
+          description: A response
+          content:
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /trees/{id}:
+    get:
+      operationId: get
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A response
+          content:
+            application/json:
+              schema:
+                type: string
+        # This error has no body, so the shared 400 above cannot be typed: this endpoint's
+        # response would fail to decode and lose its specific error type at runtime.
+        "400":
+          description: Bad Request

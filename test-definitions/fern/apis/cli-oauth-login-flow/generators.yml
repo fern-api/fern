@@ -15,6 +15,10 @@ auth-schemes:
     client-id: login-flow-test-client
     authorization-url: https://api.example.com/oauth/authorize
     token-url: https://api.example.com/oauth/token
+    # Hosted pages the generated CLI's loopback listener redirects the browser to once it has
+    # handled the callback, instead of rendering its own built-in pages.
+    success-redirect-url: https://acme.com/cli/success
+    error-redirect-url: https://acme.com/cli/error
     scopes:
       - read:widgets
 api:

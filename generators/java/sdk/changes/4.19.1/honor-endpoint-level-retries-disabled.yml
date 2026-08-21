@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Honor an endpoint's `retries: {disabled: true}` configuration (the `x-fern-retries` OpenAPI
+    extension). A call to such an endpoint tags its request with a max-retries override of zero, so it
+    bypasses automatic retries regardless of the client-wide `ClientOptions.maxRetries` or a
+    per-request `RequestOptions.maxRetries`. Endpoints without the configuration are unchanged.
+  type: fix

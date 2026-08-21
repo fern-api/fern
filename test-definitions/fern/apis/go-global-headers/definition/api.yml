@@ -1,0 +1,18 @@
+name: go-global-headers
+auth: Bearer
+auth-schemes:
+  Bearer:
+    scheme: bearer
+    token:
+      name: apiKey
+      env: MY_API_KEY
+headers:
+  X-API-Client-Id:
+    name: clientId
+    type: string
+  X-API-Version:
+    name: version
+    type: string
+  X-API-Tenant:
+    name: tenant
+    type: optional<string>

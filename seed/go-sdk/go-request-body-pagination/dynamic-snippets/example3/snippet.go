@@ -14,15 +14,12 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.ListUsersBodyOffsetPaginationRequest{
-        Page: fern.Int(
-            1,
-        ),
-        Limit: fern.Int(
-            1,
+    request := &fern.ListUsersAliasBodyCursorPaginationRequest{
+        Cursor: fern.String(
+            "cursor",
         ),
     }
-    client.Users.ListWithBodyOffsetPagination(
+    client.Users.ListWithAliasBodyCursorPagination(
         context.TODO(),
         request,
     )

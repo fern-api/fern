@@ -394,6 +394,14 @@ function authorizationCodeBinding(args: {
             rustCall += `.redirect_port(${redirect.port})`;
         }
     }
+    // Hosted pages the loopback listener redirects the browser to once the callback is handled.
+    // Omitted when unset, so the listener keeps rendering its built-in pages.
+    if (authorizationCode.successRedirectUrl != null) {
+        rustCall += `.success_redirect_url(${rustString(authorizationCode.successRedirectUrl)})`;
+    }
+    if (authorizationCode.errorRedirectUrl != null) {
+        rustCall += `.error_redirect_url(${rustString(authorizationCode.errorRedirectUrl)})`;
+    }
     // Extra literal params (e.g. Auth0 `audience`). Optional — emitted only when present, so a
     // config without them produces byte-identical output.
     rustCall += renderParams("authorization_params", authorizationCode.authorizationParameters);

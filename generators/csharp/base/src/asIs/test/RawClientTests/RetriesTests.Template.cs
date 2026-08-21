@@ -516,6 +516,38 @@ public class RetriesTests
         }
     }
 
+<% if (hasRetriesDisabledEndpoints) { %>
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldNotRetry_WhenRetriesDisabledForEndpoint()
+    {
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .RespondWith(
+                WireMockResponse
+                    .Create()
+                    .WithStatusCode(<%= retryStatusCodes === "recommended" ? 503 : 500 %>)
+                    .WithBody("Failure")
+            );
+
+        var request = new <%= namespaces.qualifiedCore %>.EmptyRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Get,
+            Path = "/test",
+            Options = new global::<%= namespace%>.RequestOptions { MaxRetries = MaxRetries },
+            RetriesDisabled = true,
+        };
+
+        var response = await _rawClient.SendRequestAsync(request);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(<%= retryStatusCodes === "recommended" ? 503 : 500 %>));
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(1));
+        }
+    }
+<% } %>
+
     [TearDown]
     public void TearDown()
     {

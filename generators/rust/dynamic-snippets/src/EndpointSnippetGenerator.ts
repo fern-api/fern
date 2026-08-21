@@ -576,25 +576,56 @@ export class EndpointSnippetGenerator {
     }): rust.Expression[] {
         const args: rust.Expression[] = [];
 
-        // Organize request components like Swift does
+        const bodyMayBeOmitted = this.bodyMayBeOmitted({ request });
+        const omitsBody = bodyMayBeOmitted && this.callOmitsRequestBody({ snippet });
+
+        // Organize request components like Swift does. A call that leaves the body out has no body
+        // value to read, so the body is not evaluated at all: doing so would report a missing-value
+        // error for a body the caller is allowed to omit.
         const requestComponents = this.buildRequestComponents({
             pathParameters: [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])],
             snippet,
-            body: request.body
+            body: omitsBody ? undefined : request.body
         });
 
         // Add path parameters
         args.push(...requestComponents.pathArgs);
 
         // Add request body
-        if (requestComponents.bodyArg != null) {
-            args.push(rust.Expression.referenceOf(requestComponents.bodyArg));
+        if (omitsBody) {
+            // The generated parameter is an Option, so an omitted body is spelled None
+            args.push(rust.Expression.raw("None"));
+        } else if (requestComponents.bodyArg != null) {
+            const bodyArg = rust.Expression.referenceOf(requestComponents.bodyArg);
+            args.push(bodyMayBeOmitted ? rust.Expression.functionCall("Some", [bodyArg]) : bodyArg);
         }
 
         // Add default None for RequestOptions parameter
         args.push(rust.Expression.raw("None"));
 
         return args;
+    }
+
+    /**
+     * Whether the generated body parameter is an `Option`, which mirrors the condition the SDK
+     * generator applies before it lets a caller leave the body out. Reading `bodyRequired` at all is
+     * opt-in so that existing snippets keep the shape they always had.
+     */
+    private bodyMayBeOmitted({ request }: { request: FernIr.dynamic.BodyRequest }): boolean {
+        return (
+            this.context.customConfig?.respectOptionalRequestBody === true &&
+            request.bodyRequired === false &&
+            request.body?.type === "typeReference"
+        );
+    }
+
+    /**
+     * Whether the call leaves the body out entirely, which `None` expresses. Only an absent body
+     * counts: an example that documents an empty object still sends that object, so it keeps
+     * rendering a body expression.
+     */
+    private callOmitsRequestBody({ snippet }: { snippet: FernIr.dynamic.EndpointSnippetRequest }): boolean {
+        return snippet.requestBody == null;
     }
 
     private getMethodArgsForInlinedRequest({

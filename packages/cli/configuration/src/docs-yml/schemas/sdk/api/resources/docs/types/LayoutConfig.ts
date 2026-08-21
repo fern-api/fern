@@ -106,6 +106,15 @@ export interface LayoutConfig {
      */
     changelogLayout?: FernDocsConfig.ChangelogLayout;
     /**
+     * Sets how nested object fields are rendered in the API reference.
+     *
+     * @default: `indented`
+     *
+     * - `indented` renders each nested level as an indented branch with a connector line and a color-coded path breadcrumb.
+     * - `cards` renders each nested level as a bordered card.
+     */
+    apiReferenceLayout?: FernDocsConfig.ApiReferenceLayout;
+    /**
      * If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)
      * are rendered inline next to navigation items in the sidebar. Defaults to false. The page-header
      * availability badge is unaffected by this setting.

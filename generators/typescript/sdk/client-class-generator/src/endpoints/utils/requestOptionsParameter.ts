@@ -1,3 +1,4 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
@@ -109,12 +110,19 @@ export const getTimeoutExpression = ({
 };
 
 export const getMaxRetriesExpression = ({
+    endpoint,
     maxRetriesReference,
     referenceToOptions
 }: {
+    endpoint: Pick<FernIr.HttpEndpoint, "retries">;
     maxRetriesReference: (args: { referenceToRequestOptions: ts.Expression; isNullable: boolean }) => ts.Expression;
     referenceToOptions: ts.Expression;
 }): ts.Expression => {
+    // Endpoints with retries explicitly disabled never retry, regardless of client- or request-level config.
+    if (endpoint.retries?.disabled === true) {
+        return ts.factory.createNumericLiteral("0");
+    }
+
     const requestOptionsMaxRetries = maxRetriesReference({
         referenceToRequestOptions: ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
         isNullable: true

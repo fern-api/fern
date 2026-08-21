@@ -5,6 +5,105 @@ use unicode_normalization::UnicodeNormalization;
 /// Max chars for CLI `--help` method descriptions (terminal-width friendly).
 pub const CLI_DESCRIPTION_LIMIT: usize = 200;
 
+/// Max chars for single-line CLI `--help` descriptions.
+pub const CLI_SHORT_DESCRIPTION_LIMIT: usize = 80;
+
+/// Max chars for the detailed text rendered under `--help` — both a
+/// command's own description and its flags'.
+///
+/// `--help` is the thorough tier: whatever the spec documents about a flag
+/// (constraints, pricing, examples) belongs there in full, so this is set
+/// well above anything real specs contain rather than as an editorial
+/// trim. It exists only so a pathological spec cannot flood the terminal;
+/// [`CLI_SHORT_DESCRIPTION_LIMIT`] is what keeps `-h` scannable.
+pub const CLI_LONG_DESCRIPTION_LIMIT: usize = 2000;
+
+/// Abbreviations that end in a period without ending a sentence. Splitting
+/// on them truncates help text mid-phrase (`Fetch a user, e.g.`), so they
+/// are never treated as sentence boundaries.
+const NON_TERMINAL_ABBREVIATIONS: &[&str] = &[
+    "al", "approx", "ca", "cf", "co", "corp", "dept", "dr", "eg", "esp", "etc", "ex", "fig", "ie",
+    "inc", "jr", "ltd", "max", "min", "mr", "mrs", "ms", "no", "prof", "resp", "sr", "st", "vol",
+    "vs",
+];
+
+/// Return whether the period at `period_index` ends a sentence rather than
+/// an abbreviation, an initial, or a dotted token like `U.S.` or `v1.2`.
+///
+/// Callers are responsible for the "followed by a space or end of input"
+/// half of the check — this decides the ambiguous cases that rule alone
+/// gets wrong.
+fn is_sentence_boundary(chars: &[char], period_index: usize) -> bool {
+    debug_assert_eq!(chars.get(period_index), Some(&'.'));
+
+    // The token this period closes, back to the preceding whitespace, with
+    // any opening punctuation (`(e.g.`) stripped.
+    let token_start = chars[..period_index]
+        .iter()
+        .rposition(|c| c.is_whitespace())
+        .map_or(0, |index| index + 1);
+    let token: String = chars[token_start..period_index].iter().collect();
+    let word = token.trim_start_matches(|c: char| !c.is_alphanumeric());
+
+    if word.is_empty()
+        // Interior periods mark a dotted abbreviation (`e.g.`, `U.S.`) or a
+        // version (`v1.2`), never the end of a sentence.
+        || word.contains('.')
+        // A lone letter is an initial (`J. Smith`).
+        || word.chars().count() == 1
+        || NON_TERMINAL_ABBREVIATIONS
+            .iter()
+            .any(|abbreviation| word.eq_ignore_ascii_case(abbreviation))
+    {
+        return false;
+    }
+
+    // Prose resumes with a capital (or a digit). A lowercase continuation
+    // means the period belonged to the phrase — an abbreviation this list
+    // doesn't know about.
+    match chars[period_index + 1..].iter().find(|c| !c.is_whitespace()) {
+        Some(next) => !next.is_lowercase(),
+        None => true,
+    }
+}
+
+/// Collapse runs of whitespace (including newlines) into single spaces.
+///
+/// Specs routinely carry hand-indented prose whose leading whitespace
+/// survives YAML block scalars; rendered verbatim in a help column it shows
+/// up as long gaps mid-sentence.
+pub fn collapse_whitespace(s: &str) -> String {
+    s.split_whitespace().collect::<Vec<_>>().join(" ")
+}
+
+/// Return the first sentence of prose, with embedded whitespace normalized.
+pub fn first_sentence(s: &str) -> String {
+    let normalized = collapse_whitespace(s);
+    let chars: Vec<char> = normalized.chars().collect();
+    for index in 0..chars.len() {
+        if chars[index] == '.'
+            && chars.get(index + 1) == Some(&' ')
+            && is_sentence_boundary(&chars, index)
+        {
+            return chars[..=index].iter().collect();
+        }
+    }
+    normalized
+}
+
+/// Return whether a summary merely restates a command name, ignoring case
+/// and non-alphanumeric characters.
+pub fn is_name_restating(summary: &str, name: &str) -> bool {
+    let normalize = |value: &str| {
+        value
+            .chars()
+            .filter(|character| character.is_alphanumeric())
+            .flat_map(char::to_lowercase)
+            .collect::<String>()
+    };
+    normalize(summary) == normalize(name)
+}
+
 /// Convert a parameter name to an idiomatic kebab-case CLI flag.
 ///
 /// Handles snake_case (`min_start_time` → `min-start-time`), camelCase
@@ -279,9 +378,11 @@ fn find_last_sentence_boundary(prefix: &str) -> Option<usize> {
     for (i, _) in chars.iter().enumerate() {
         if chars[i] == '.' {
             let after_period = i + 1;
-            // Sentence boundary: period followed by a space, or period at end of prefix
-            if after_period == chars.len()
-                || (after_period < chars.len() && chars[after_period] == ' ')
+            // Sentence boundary: period followed by a space, or period at
+            // end of prefix — and not an abbreviation's period.
+            if (after_period == chars.len()
+                || (after_period < chars.len() && chars[after_period] == ' '))
+                && is_sentence_boundary(&chars, i)
             {
                 last_boundary = Some(after_period);
             }
@@ -464,6 +565,65 @@ mod tests {
         // single token
         assert_eq!(to_screaming_snake("uuid"), "UUID");
         assert_eq!(to_screaming_snake(""), "");
+    }
+
+    #[test]
+    fn test_first_sentence_does_not_split_on_abbreviations() {
+        assert_eq!(
+            first_sentence("Fetch a user by id, e.g. usr_123, from the directory."),
+            "Fetch a user by id, e.g. usr_123, from the directory."
+        );
+        assert_eq!(
+            first_sentence("Returns items (i.e. songs, albums) for the user."),
+            "Returns items (i.e. songs, albums) for the user."
+        );
+        assert_eq!(
+            first_sentence("Upload a file to the U.S. region bucket. Returns a handle."),
+            "Upload a file to the U.S. region bucket."
+        );
+        assert_eq!(
+            first_sentence("Reads at most 100 items, etc. Additional pages need a cursor."),
+            "Reads at most 100 items, etc. Additional pages need a cursor."
+        );
+        assert_eq!(
+            first_sentence("Written by J. Smith. Deprecated."),
+            "Written by J. Smith."
+        );
+    }
+
+    #[test]
+    fn test_first_sentence_splits_on_real_boundaries() {
+        assert_eq!(
+            first_sentence("Deletes the voice. This cannot be undone."),
+            "Deletes the voice."
+        );
+        assert_eq!(
+            first_sentence("Deletes the voice.\nThis cannot be undone."),
+            "Deletes the voice."
+        );
+        assert_eq!(first_sentence("No trailing period"), "No trailing period");
+        assert_eq!(first_sentence(""), "");
+    }
+
+    #[test]
+    fn test_truncate_description_does_not_cut_at_abbreviations() {
+        let description = "Fetch a user by id, e.g. usr_123, from the directory of every \
+registered account in the workspace.";
+        let truncated = truncate_description(description, CLI_SHORT_DESCRIPTION_LIMIT, true);
+        assert!(
+            !truncated.ends_with("e.g."),
+            "truncated at an abbreviation: {truncated}"
+        );
+        assert!(truncated.ends_with('…'), "expected a word-boundary cut: {truncated}");
+    }
+
+    #[test]
+    fn test_is_name_restating() {
+        assert!(is_name_restating("Models", "models"));
+        assert!(is_name_restating("Text To Speech", "text-to-speech"));
+        assert!(is_name_restating("Audio_Isolation", "audio-isolation"));
+        assert!(!is_name_restating("Pronunciation Dictionary", "pronunciation-dictionaries"));
+        assert!(!is_name_restating("Manage models", "models"));
     }
 
     // ------------------------------------------------------------------

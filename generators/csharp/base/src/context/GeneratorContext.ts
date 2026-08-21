@@ -393,6 +393,23 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     }
 
     /**
+     * Checks if the API has any endpoints that disable retries.
+     * @returns True if the API has any endpoints configured with `retries: { disabled: true }`.
+     */
+    public get hasRetriesDisabledEndpoints(): boolean {
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some((endpoint) => this.areRetriesDisabled(endpoint))
+        );
+    }
+
+    /**
+     * Checks if the endpoint disables retries, regardless of the client or per-request options.
+     */
+    public areRetriesDisabled(endpoint: HttpEndpoint): boolean {
+        return endpoint.retries?.disabled === true;
+    }
+
+    /**
      * Checks if the endpoint has a resumable SSE streaming result.
      */
     public endpointHasResumableSseResult(endpoint: HttpEndpoint): boolean {
@@ -522,11 +539,24 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         });
     }
 
-    public getCurrentVersionValueAccess(): ast.CodeBlock {
+    /**
+     * @param inInterpolatedString wraps the access in parentheses, required inside an
+     * interpolated string hole where an unparenthesized `::` would otherwise start a
+     * format specifier
+     */
+    public getCurrentVersionValueAccess({ inInterpolatedString = false } = {}): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
-            writer.writeNode(this.Types.Version);
+            if (inInterpolatedString) {
+                writer.write("(");
+            }
+            // qualify globally so the reference cannot be shadowed by a constructor
+            // parameter or local named `Version`
+            writer.writeNode(this.Types.Version.asGloballyQualified());
             writer.write(".");
             writer.write(this.model.getPropertyNameFor(this.Types.Version.explicit("Current")));
+            if (inInterpolatedString) {
+                writer.write(")");
+            }
         });
     }
 
