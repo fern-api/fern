@@ -9,12 +9,22 @@ import axios, { AxiosError } from "axios";
 import { createHash } from "crypto";
 import FormData from "form-data";
 import path from "path";
+import { gunzipSync } from "zlib";
 import { downloadFilesForTask } from "./RemoteTaskHandler.js";
 
 const POLL_INTERVAL_MS = 2_000;
 const POLL_TIMEOUT_MS = 15 * 60 * 1_000;
 const REQUEST_TIMEOUT_MS = 60_000;
+const MAX_BUNDLES = 64;
+const MAX_SOURCE_COMPRESSED_BYTES = 25 * 1024 * 1024;
+const MAX_SOURCE_DECOMPRESSED_BYTES = 25 * 1024 * 1024;
+const MAX_BUNDLE_COMPRESSED_BYTES = 5 * 1024 * 1024;
+const MAX_BUNDLE_DECOMPRESSED_BYTES = 25 * 1024 * 1024;
+const MAX_TOTAL_BUNDLE_COMPRESSED_BYTES = 25 * 1024 * 1024;
+const MAX_TOTAL_BUNDLE_DECOMPRESSED_BYTES = 100 * 1024 * 1024;
+const MAX_MULTIPART_BODY_BYTES = 60 * 1024 * 1024;
 const LOOPBACK_HOSTNAMES = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
+const TARGET_ID_SEED_COLLATOR = new Intl.Collator("en", { numeric: true });
 
 export type FernSdkGenApiLanguage =
     | "typescript"
@@ -103,7 +113,7 @@ interface FernBuildStatus {
 }
 
 export interface FernSdkGenApiRequest {
-    protocolVersion: 1;
+    protocolVersion: 2;
     apiName: string;
     cliVersion?: string;
     idempotencyKey: string;
@@ -452,6 +462,7 @@ export interface FernSdkGenApiBuildParameters {
     sdkVersion: string;
     token: FernToken;
     specsTarGzBuffer: Buffer;
+    runtimeBundle: Buffer;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     context: InteractiveTaskContext;
     targetIdSeed?: string;
@@ -533,10 +544,11 @@ export class FernSdkGenApiBatch {
     }
 
     private async dispatch(): Promise<void> {
+        const orderedParticipants = [...this.participants].sort(compareFernSdkGenApiParticipants);
         try {
-            const results = await executeFernSdkGenApiBuild(this.participants);
+            const results = await executeFernSdkGenApiBuild(orderedParticipants);
             results.forEach((result, index) => {
-                const participant = this.participants[index];
+                const participant = orderedParticipants[index];
                 if (result.status === "fulfilled") {
                     participant?.resolve(result.value);
                 } else {
@@ -590,6 +602,7 @@ async function executeFernSdkGenApiBuild(
     }
 
     assertSameBatchInput(participants);
+    validateProtocolInputs(participants, first);
     const request = createFernSdkGenApiBatchRequest({
         apiName: first.apiName,
         organization: first.organization,
@@ -599,7 +612,8 @@ async function executeFernSdkGenApiBuild(
             generatorInvocation: participant.generatorInvocation,
             sdkVersion: participant.sdkVersion,
             targetIdSeed: participant.targetIdSeed,
-            audiences: participant.audiences
+            audiences: participant.audiences,
+            runtimeBundle: participant.runtimeBundle
         }))
     });
 
@@ -609,6 +623,24 @@ async function executeFernSdkGenApiBuild(
         filename: "specs.tar.gz",
         contentType: "application/gzip"
     });
+    participants.forEach((participant, index) => {
+        const target = request.targets[index];
+        if (target == null) {
+            throw new Error(`Cannot pair sdk-gen-api runtime bundle at index ${index} with a target`);
+        }
+        form.append("bundles", participant.runtimeBundle, {
+            filename: `${target.targetId}.json.gz`,
+            contentType: "application/gzip"
+        });
+    });
+    const multipartBodyLength = form.getLengthSync();
+    if (multipartBodyLength > MAX_MULTIPART_BODY_BYTES) {
+        return first.context.failAndThrow(
+            `sdk-gen-api multipart request is ${formatMiB(multipartBodyLength)}, exceeding the 60 MiB limit; reduce source or target bundle size`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
 
     let buildId: string;
     try {
@@ -620,7 +652,7 @@ async function executeFernSdkGenApiBuild(
                 Authorization: `Bearer ${first.token.value}`,
                 "X-Fern-Organization-Id": first.organization
             },
-            maxBodyLength: 30 * 1024 * 1024,
+            maxBodyLength: MAX_MULTIPART_BODY_BYTES,
             timeout: REQUEST_TIMEOUT_MS
         });
         buildId = response.data.buildId;
@@ -696,6 +728,130 @@ async function executeFernSdkGenApiBuild(
         }
         await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
     }
+}
+
+function compareFernSdkGenApiParticipants(
+    left: FernSdkGenApiBuildParameters,
+    right: FernSdkGenApiBuildParameters
+): number {
+    const seedComparison = TARGET_ID_SEED_COLLATOR.compare(left.targetIdSeed ?? "", right.targetIdSeed ?? "");
+    if (seedComparison !== 0) {
+        return seedComparison;
+    }
+    const generatorComparison = left.generatorInvocation.name.localeCompare(right.generatorInvocation.name);
+    if (generatorComparison !== 0) {
+        return generatorComparison;
+    }
+    const versionComparison = left.generatorInvocation.version.localeCompare(right.generatorInvocation.version);
+    if (versionComparison !== 0) {
+        return versionComparison;
+    }
+    return left.sdkVersion.localeCompare(right.sdkVersion);
+}
+
+function validateProtocolInputs(
+    participants: FernSdkGenApiBuildParameters[],
+    first: FernSdkGenApiBuildParameters
+): void {
+    if (participants.length > MAX_BUNDLES) {
+        first.context.failAndThrow(
+            `sdk-gen-api supports at most ${MAX_BUNDLES} runtime bundles per build; received ${participants.length}`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    if (first.specsTarGzBuffer.length > MAX_SOURCE_COMPRESSED_BYTES) {
+        first.context.failAndThrow(
+            `sdk-gen-api source archive is ${formatMiB(first.specsTarGzBuffer.length)}, exceeding the 25 MiB compressed limit`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    const oversizedBundleIndex = participants.findIndex(
+        (participant) => participant.runtimeBundle.length > MAX_BUNDLE_COMPRESSED_BYTES
+    );
+    if (oversizedBundleIndex >= 0) {
+        const participant = participants[oversizedBundleIndex];
+        first.context.failAndThrow(
+            `sdk-gen-api runtime bundle ${participant?.targetIdSeed ?? oversizedBundleIndex.toString()} is ${formatMiB(participant?.runtimeBundle.length ?? 0)}, exceeding the 5 MiB compressed limit`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    const totalBundleBytes = participants.reduce((total, participant) => total + participant.runtimeBundle.length, 0);
+    if (totalBundleBytes > MAX_TOTAL_BUNDLE_COMPRESSED_BYTES) {
+        first.context.failAndThrow(
+            `sdk-gen-api runtime bundles total ${formatMiB(totalBundleBytes)}, exceeding the 25 MiB compressed limit; reduce the number or size of targets`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    getBoundedGzipSize({
+        buffer: first.specsTarGzBuffer,
+        maxBytes: MAX_SOURCE_DECOMPRESSED_BYTES,
+        label: "source archive",
+        context: first.context
+    });
+    let totalDecompressedBundleBytes = 0;
+    for (const [index, participant] of participants.entries()) {
+        totalDecompressedBundleBytes += getBoundedGzipSize({
+            buffer: participant.runtimeBundle,
+            maxBytes: MAX_BUNDLE_DECOMPRESSED_BYTES,
+            label: `runtime bundle ${participant.targetIdSeed ?? index.toString()}`,
+            context: first.context
+        });
+        if (totalDecompressedBundleBytes > MAX_TOTAL_BUNDLE_DECOMPRESSED_BYTES) {
+            first.context.failAndThrow(
+                `sdk-gen-api runtime bundles total ${formatMiB(totalDecompressedBundleBytes)} decompressed, exceeding the 100 MiB decompressed limit; reduce the number or size of targets`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+    }
+}
+
+function getBoundedGzipSize({
+    buffer,
+    maxBytes,
+    label,
+    context
+}: {
+    buffer: Buffer;
+    maxBytes: number;
+    label: string;
+    context: InteractiveTaskContext;
+}): number {
+    let decompressed: Buffer;
+    try {
+        decompressed = gunzipSync(buffer, { maxOutputLength: maxBytes + 1 });
+    } catch (error) {
+        if (isMaxOutputLengthError(error)) {
+            return context.failAndThrow(
+                `sdk-gen-api ${label} exceeds the ${formatMiB(maxBytes)} decompressed limit`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+        return context.failAndThrow(`sdk-gen-api ${label} is malformed gzip; regenerate it and retry`, error, {
+            code: CliError.Code.ConfigError
+        });
+    }
+    if (decompressed.length > maxBytes) {
+        return context.failAndThrow(
+            `sdk-gen-api ${label} is ${formatMiB(decompressed.length)} decompressed, exceeding the ${formatMiB(maxBytes)} decompressed limit`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    return decompressed.length;
+}
+
+function isMaxOutputLengthError(error: unknown): boolean {
+    return error instanceof Error && "code" in error && error.code === "ERR_BUFFER_TOO_LARGE";
+}
+
+function formatMiB(bytes: number): string {
+    return `${(bytes / (1024 * 1024)).toFixed(2)} MiB`;
 }
 
 function isTerminal(status: FernBuildStatus, targetId: string): boolean {
@@ -785,7 +941,8 @@ export function createFernSdkGenApiRequest({
     cliVersion,
     generatorInvocation,
     sdkVersion,
-    specsTarGzBuffer
+    specsTarGzBuffer,
+    runtimeBundle
 }: {
     apiName: string;
     organization: string;
@@ -793,13 +950,14 @@ export function createFernSdkGenApiRequest({
     generatorInvocation: generatorsYml.GeneratorInvocation;
     sdkVersion: string;
     specsTarGzBuffer: Buffer;
+    runtimeBundle: Buffer;
 }): FernSdkGenApiRequest {
     return createFernSdkGenApiBatchRequest({
         apiName,
         organization,
         cliVersion,
         specsTarGzBuffer,
-        targets: [{ generatorInvocation, sdkVersion }]
+        targets: [{ generatorInvocation, sdkVersion, runtimeBundle }]
     });
 }
 
@@ -819,6 +977,7 @@ export function createFernSdkGenApiBatchRequest({
         sdkVersion: string;
         targetIdSeed?: string;
         audiences?: string[];
+        runtimeBundle: Buffer;
     }>;
 }): FernSdkGenApiRequest {
     if (targets.length === 0) {
@@ -871,21 +1030,25 @@ export function createFernSdkGenApiBatchRequest({
         };
     });
     const apiInputs: FernSdkGenApiRequest["apiInputs"] = [{ id: "default", specIndexes: "all" }];
+    const runtimeBundleHashes = targets.map((target) =>
+        createHash("sha256").update(target.runtimeBundle).digest("hex")
+    );
     const idempotencyKey = createHash("sha256")
         .update(specsTarGzBuffer)
         .update(
             JSON.stringify({
-                protocolVersion: 1,
+                protocolVersion: 2,
                 organization,
                 apiName,
                 apiInputs,
-                targets: requestTargets
+                targets: requestTargets,
+                runtimeBundleHashes
             })
         )
         .digest("hex");
 
     return {
-        protocolVersion: 1,
+        protocolVersion: 2,
         apiName,
         ...(cliVersion ? { cliVersion } : {}),
         idempotencyKey,
