@@ -1,4 +1,256 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.37.0
+  changelogEntry:
+    - summary: |
+        The "no credentials" hint is no longer tied to 401/403. The condition it
+        describes — this request went out carrying nothing — has nothing to do with
+        the status code, but the hint was gated on those two, so an API that
+        expresses "not authenticated" any other way said nothing useful. ElevenLabs
+        answers 404 for a workspace scoped to the anonymous principal (deliberate: a
+        401 would confirm the resource exists), so a logged-out user read
+        `Workspace 1anonymous1 not found` with no indication that the fix was
+        `auth login`.
+
+        Any failed status now carries a `No credentials were sent with this
+        request. Set ...` note in `error.help` when the provider had nothing for
+        that endpoint. This only annotates: the error keeps its class and exit code,
+        and the request is still sent, because the server — not the spec — is the
+        authority on whether an endpoint needed auth. Public endpoints are
+        unaffected, and 401/403 still escalate to `error[auth]` with exit 2.
+      type: fix
+    - summary: |
+        The "check for shadowing" advice on a rejected credential now appears only
+        when there is more than one visible credential source. Shadowing means one
+        source silently outranking another, which cannot happen with a single
+        source — yet the note sent every user to `auth status` to compare a list of
+        one against itself. On a scope failure (`OAuth token does not have required
+        permissions: user_read`) that was worse than noise: the credential is the
+        right one from the right place, and the advice points away from the real
+        fix. The source is still named whenever credentials were sent, since knowing
+        which one was used is useful either way.
+      type: fix
+    - summary: |
+        Transport failures no longer report a fabricated HTTP status. A request that
+        never reached a server — DNS, TLS, connection refused, timeout — was folded
+        into the generic internal-error shape and emitted `code: 500` with
+        `reason: "internalError"`, telling a consumer the *API* had failed and
+        inviting a retry against a host that was never contacted. These now produce
+        `reason: "networkError"` and **no** `code` field, since the field is
+        documented as the HTTP status and there is none. Exit code is unchanged at
+        5, and the human rendering is labelled `error[network]:`.
+
+        The message also keeps the part that matters: `reqwest` stops at "error
+        sending request for url (...)" and buries "Connection refused" two levels
+        down its `source()` chain, so the chain is now walked and joined. SDK-mode
+        CLIs report network and timeout failures the same way as OpenAPI-mode ones.
+      type: fix
+    - summary: |
+        `auth status` now honors the global `--format`. It gated JSON output on its
+        own `--json` boolean, so `auth status --format json` printed the human table
+        with no error and no hint — the first command an agent runs, silently
+        ignoring the flag it uses everywhere else. `--format`, `--human`, the
+        `<NAME>_OUTPUT` env var and the piped default now all apply; `--json`
+        remains as an alias so existing scripts keep working.
+      type: fix
+    - summary: |
+        Fixed a literal `<bin>` placeholder appearing in credential hints. The
+        keyring source rendered `populated by \`<bin> auth login\`` instead of naming
+        the binary. CLIs using an OAuth login flow were unaffected — that provider
+        overrides the hint and substituted correctly — so the placeholder only
+        reached users on bearer, header and basic schemes.
+      type: fix
+    - summary: |
+        `error.details` no longer repeats the sentence already reported in
+        `error.message`. The parsed server body is still carried structurally, so
+        fields a consumer cannot get anywhere else — `request_id`, a validation
+        error's `loc`, a GraphQL error's `path`/`extensions` — are unchanged, but the
+        one field the message was lifted from is removed, and `details` is
+        omitted entirely when the body said nothing beyond that message (so
+        `{"detail": "Not Found"}` now yields just `code`/`message`/`reason`).
+
+        Removal is by position, not by value: when several entries report the same
+        problem — two required fields both failing with `"field required"`, the
+        common multi-field validation shape — only the entry the sentence came from
+        loses it. Dropping every string equal to the message would leave the
+        remaining problems unattributable to their `loc`.
+      type: fix
+    - summary: |
+        Fixed API errors being printed twice and with the server's JSON body escaped
+        inside the `message` string. An error is now rendered in exactly one
+        representation — the JSON envelope on stdout for machine formats
+        (`json`/`jsonl`/`yaml`, which includes the piped/non-TTY default), or a single
+        `error[api]: <message>` line on stderr for `table`/`csv` — and the server's
+        body is parsed rather than stringified: a sentence lands in `message`, the
+        parsed body in `error.details`, and `reason` is derived from the HTTP status
+        (`internalServerError` for 500) instead of always `httpError`. Top-level
+        shapes such as `{"status", "message"}`, `{"error": "<message>"}`, RFC 7807
+        `detail`/`title`, and OAuth 2.0 `error_description` are now recognized. Two
+        consequences worth noting for anyone scripting against these fields: 429 now
+        always reports `reason: "rateLimited"`. Previously a generated CLI reported
+        either that or `tooManyRequests` for the same status depending on which code
+        path produced the error — the runtime's `sdk_executor` already said
+        `rateLimited`, while the generated request adapter said `tooManyRequests`.
+        Both now come from one mapping. Also,
+        `error.code` is always the HTTP status the server answered with. A body's own
+        `code` never overrides it — not an internal numbering (`{"code": 100234}`,
+        which used to truncate into a nonsense status), and not one that merely looks
+        like a status, which could disagree with what was actually served and point
+        the docs link at the wrong page. The body's `code` is still available under
+        `error.details`.
+      type: fix
+    - summary: |
+        Added a global `--human` flag, shorthand for `--format table`, for the one
+        case TTY detection gets wrong: a person piping into a pager or a file still
+        wants the interactive rendering. Without it the existing TTY-aware default
+        applies (`table` on a terminal, `json` when piped), and passing it alongside
+        `--format` is rejected. There is deliberately no `--json` counterpart:
+        endpoints with a request body already spell that flag `--json <JSON>`, so
+        the name cannot mean "render JSON" everywhere; use `--format json`.
+      type: feat
+    - summary: |
+        `--format jsonl` now emits errors as a single line. The envelope was
+        pretty-printed regardless of format, so a line-delimited consumer — the only
+        reason to pick NDJSON — read a bare `{` and failed on the first line. Errors
+        under `jsonl` are compact; `json` and `yaml` keep the readable multi-line
+        rendering.
+      type: fix
+    - summary: |
+        A request that fails to build is now a validation error rather than an
+        internal one. `reqwest`'s `build()` fails on a malformed URL or header
+        value, which comes from `--base-url` or a flag the user typed, but the
+        failure was reported as `code: 500` / `reason: "internalError"` with exit 5.
+        A mistyped `--base-url` claimed a server status for a request that was never
+        sent and buried a fixable input error under an internal-error exit code. It
+        now reports `code: 400` / `reason: "validationError"` with exit 3.
+      type: fix
+    - summary: |
+        `<cli> --help --format json` now emits the operation catalog, as the
+        generated README has always documented. It printed the human help instead,
+        so the README's own example (`--help --format json | jq …`) failed with a
+        jq parse error. It now returns exactly what `--schema` returns for the same
+        scope.
+
+        Only an *explicit* machine `--format` triggers this — the piped default does
+        not, so `<cli> --help | less` still shows help. A path with no catalog entry
+        (`auth login`, `completion`, `man` — built-ins, not API operations) falls
+        back to prose rather than erroring; `--schema` on such a path still reports
+        `discoveryError`, since asking for a document that does not exist is a real
+        error. The README example was also
+        corrected: the catalog is an object with `globalFlags` and `operations`, so
+        counting operations is `jq '.operations | length'`, not `jq 'length'` (which
+        counted the two top-level keys).
+      type: fix
+    - summary: |
+        Removed `error::print_error_json` from the vendored runtime. It wrote the
+        JSON envelope to stdout unconditionally — the exact double-output behaviour
+        the rest of this release removes — so it was a working copy of the bug left
+        reachable under an inviting name. It had no callers in the runtime, in the
+        generator's emitted code, or in any generated CLI. `write_error_json`, which
+        honours the resolved format, is the entry point.
+      type: fix
+    - summary: |
+        A credential the CLI could not read is no longer treated as a credential the
+        user never stored. Denying the OS keychain prompt made
+        `AuthCredentialSource::resolve` return "nothing here" — the same answer as an
+        empty keyring — so the CLI sent the request unauthenticated and the user saw
+        whatever the API says to an anonymous caller. Against ElevenLabs that is
+        `error[api]: Workspace 1anonymous1 not found.` with exit 1: a 404 for a
+        problem that is an authentication failure.
+
+        Credential resolution now distinguishes "not configured" from "configured but
+        unreadable". On the request path a denied or broken keyring surfaces as
+        `error[auth]` with exit 2, naming the backend failure. A fallback chain stops
+        at the denial instead of falling through to a later empty source, which would
+        have masked it again. Probing paths — `auth status`, `has_credentials` — still
+        degrade to "no credential" rather than aborting, since a status listing should
+        report what is usable, not fail.
+      type: fix
+    - summary: |
+        Terminal error output no longer repeats itself. Services routinely echo one
+        token across several fields — ElevenLabs sends `code`, `status` and `type` all
+        restating the same `workspace_not_found` — which turned a one-fact 404 into
+        five lines saying the same thing four times. A detail line whose value already
+        appeared in the message, the reason, or an earlier line is now dropped, and a
+        sole wrapper object (`{"detail": {...}}`) no longer prefixes every line with a
+        word that names nothing the reader is looking for.
+
+        A service-specific reason is now shown on the message line, in parentheses.
+        It was previously the one useful field that appeared in the JSON envelope but
+        never in the terminal. A reason derived from the HTTP status (`notFound` on a
+        404) stays hidden, since it says nothing the label and message do not.
+
+            error[api]: Workspace 1anonymous1 not found. (workspace_not_found)
+              request_id: 6c312fb855fc7b476570b44e2b660988
+              type: not_found
+
+        The JSON envelope is unchanged and still carries every field.
+      type: fix
+    - summary: |
+        Terminal error output now reports what the server said beyond the failure
+        sentence. A field-level rejection used to read as `error[api]: field
+        required` with no way to tell which field — the `loc` was in the JSON
+        envelope, which is exactly what the person in the terminal cannot see. The
+        parsed body is now flattened one `path: value` per line under the message:
+
+            error[api]: value is not a valid email address
+              detail[0].loc: body, email
+              detail[0].type: value_error.email
+
+        Lists of scalars stay on one line, since splitting FastAPI's two-element
+        `loc` buries the field name it exists to report. Output is capped at ten
+        lines, with a final line naming what was elided and pointing at
+        `--format json`. The JSON envelope is unchanged.
+      type: fix
+    - summary: |
+        Non-JSON error bodies no longer break the "`message` is one sentence"
+        guarantee. A CDN or load balancer answering with an HTML page used to have
+        its whole document — doctype, newlines and markup — pasted into
+        `error.message`; the previous 500-byte clip did not help, because a short
+        page is still multi-line markup. Markup and over-long bodies now yield
+        `HTTP 502 badGateway (non-JSON response, 1284 bytes)` in `message`, with the
+        bytes preserved (whitespace-collapsed and clipped) in `error.details.body`.
+        A short plain-text body — the common proxy case — is still the message
+        itself, now collapsed onto one line if the server wrapped it.
+      type: fix
+    - summary: |
+        Two error bodies that produced an unhelpful envelope now read correctly. An
+        empty body gave `message: ""`, which reads as the CLI having lost the error
+        rather than the server having sent nothing; it now reports
+        `HTTP <status> <reason>`. A body that is a bare JSON string
+        (`"Service temporarily unavailable"`) was summarised as
+        `HTTP 500 internalServerError` with the only text the server sent exiled to
+        `details`; it is now the message. A body that is a bare JSON list of
+        problems is also recognised, matching the existing `errors`/`detail`
+        handling one level out.
+      type: fix
+    - summary: |
+        Made the error envelope's `message` field one sentence for every error class.
+        Advice that is not part of what the server reported — today the "Credentials
+        were supplied via: ..." hint shown on 401/403 — moved out of `message` into
+        its own `error.help` field, so a consumer keying off `error.message` sees the
+        same shape whether or not the CLI had advice to offer. The docs link (opt-in
+        via `error_docs_base_url`, previously human-only) now also appears as
+        `error.docs_url`, so the JSON envelope no longer silently drops information
+        the human rendering shows. Human output keeps the same order, one item per
+        line: message, then what the server said beyond it, then hint, then link.
+      type: fix
+    - summary: |
+        Usage errors (a mistyped subcommand, a bad flag value, conflicting flags) no
+        longer stuff clap's whole multi-line block into `error.message` when output is
+        machine-readable. The failure sentence stays in `message`, clap's `tip:` and
+        `[possible values: ...]` lines move to `error.help`, the usage string becomes
+        `error.usage`, and the `For more information, try '--help'` boilerplate is
+        dropped — so every field is a single line, as with API errors. Human output on
+        a terminal is unchanged: it still prints clap's full rendering, tip and usage
+        included.
+
+        Only clap's own blocks are split. A multi-line message from one of the CLI's
+        validators — schema validation listing one bullet per violation, say — passes
+        through whole, since applying the split there would demote the violations to
+        `help` and leave `message` as the bare header.
+      type: fix
+  createdAt: "2026-08-21"
+  irVersion: 67
 - version: 0.36.0
   changelogEntry:
     - summary: |
