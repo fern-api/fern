@@ -28,7 +28,7 @@ const bulkRefund: FernIr.dynamic.EndpointSnippetRequest = {
     requestBody: undefined
 };
 
-describe("optional request body", () => {
+describe("optional request body", { tags: ["slow"] }, () => {
     it("passes None for an absent body once the generator opts in", async () => {
         const generator = buildDynamicSnippetsGenerator({
             irFilepath: IR_FILEPATH,
