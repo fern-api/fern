@@ -1,0 +1,15 @@
+- summary: |
+    `error.details` no longer repeats the sentence already reported in
+    `error.message`. The parsed server body is still carried structurally, so
+    fields a consumer cannot get anywhere else — `request_id`, a validation
+    error's `loc`, a GraphQL error's `path`/`extensions` — are unchanged, but the
+    one field the message was lifted from is removed, and `details` is
+    omitted entirely when the body said nothing beyond that message (so
+    `{"detail": "Not Found"}` now yields just `code`/`message`/`reason`).
+
+    Removal is by position, not by value: when several entries report the same
+    problem — two required fields both failing with `"field required"`, the
+    common multi-field validation shape — only the entry the sentence came from
+    loses it. Dropping every string equal to the message would leave the
+    remaining problems unattributable to their `loc`.
+  type: fix
