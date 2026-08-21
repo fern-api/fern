@@ -33,3 +33,23 @@ service:
         body: bytes
       examples:
         - {}
+    updateMetadataWithPathParam:
+      docs: |-
+        Endpoint with an inlined request wrapper whose example supplies no path-parameter
+        values, so the generated example must still populate every path parameter the
+        wrapper carries (`inline-path-parameters`).
+      path: /upload-content/{tenantId}/{objectPath}/metadata
+      method: POST
+      request:
+        name: UpdateMetadataRequest
+        path-parameters:
+          tenantId:
+            type: string
+            client-default: acme
+          objectPath: string
+        body:
+          properties:
+            label: string
+      examples:
+        - request:
+            label: primary

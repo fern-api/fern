@@ -17,8 +17,7 @@ describe("ServiceClient", () => {
             .statusCode(200)
             .build();
 
-        const response = await client.service.updateMetadataWithPathParam({
-            objectPath: "objectPath",
+        const response = await client.service.updateMetadataWithPathParam("acme", "objectPath", {
             label: "primary",
         });
         expect(response).toEqual(undefined);

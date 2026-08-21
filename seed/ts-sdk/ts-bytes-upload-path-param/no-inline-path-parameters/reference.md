@@ -107,7 +107,7 @@ await client.service.uploadWithPathParam(createReadStream("path/to/file"), "acme
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">updateMetadataWithPathParam</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">updateMetadataWithPathParam</a>(tenantId, objectPath, { ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -136,8 +136,7 @@ wrapper carries (`inlinePathParameters`) or passes positionally.
 <dd>
 
 ```typescript
-await client.service.updateMetadataWithPathParam({
-    objectPath: "objectPath",
+await client.service.updateMetadataWithPathParam("acme", "objectPath", {
     label: "primary"
 });
 
@@ -151,6 +150,22 @@ await client.service.updateMetadataWithPathParam({
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**objectPath:** `string` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

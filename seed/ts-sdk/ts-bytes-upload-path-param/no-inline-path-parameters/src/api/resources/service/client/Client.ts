@@ -117,6 +117,8 @@ export class ServiceClient {
      * values, so the generated example must still populate every path parameter the
      * wrapper carries (`inlinePathParameters`) or passes positionally.
      *
+     * @param {string} tenantId
+     * @param {string} objectPath
      * @param {SeedTsBytesUploadPathParam.UpdateMetadataRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -124,23 +126,27 @@ export class ServiceClient {
      * @throws {@link errors.SeedTsBytesUploadPathParamTimeoutError}
      *
      * @example
-     *     await client.service.updateMetadataWithPathParam({
-     *         objectPath: "objectPath",
+     *     await client.service.updateMetadataWithPathParam("acme", "objectPath", {
      *         label: "primary"
      *     })
      */
     public updateMetadataWithPathParam(
+        tenantId: string,
+        objectPath: string,
         request: SeedTsBytesUploadPathParam.UpdateMetadataRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__updateMetadataWithPathParam(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(
+            this.__updateMetadataWithPathParam(tenantId, objectPath, request, requestOptions),
+        );
     }
 
     private async __updateMetadataWithPathParam(
+        tenantId: string,
+        objectPath: string,
         request: SeedTsBytesUploadPathParam.UpdateMetadataRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const { tenantId, objectPath, ..._body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -153,7 +159,7 @@ export class ServiceClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

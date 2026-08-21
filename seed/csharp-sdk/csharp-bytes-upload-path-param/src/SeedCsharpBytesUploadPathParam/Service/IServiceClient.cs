@@ -19,4 +19,15 @@ public partial interface IServiceClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    /// <summary>
+    /// Endpoint with an inlined request wrapper whose example supplies no path-parameter
+    /// values, so the generated example must still populate every path parameter the
+    /// wrapper carries (`inline-path-parameters`).
+    /// </summary>
+    WithRawResponseTask UpdateMetadataWithPathParamAsync(
+        UpdateMetadataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

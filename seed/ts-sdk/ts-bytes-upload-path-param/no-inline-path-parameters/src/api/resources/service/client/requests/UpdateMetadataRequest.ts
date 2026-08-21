@@ -3,12 +3,9 @@
 /**
  * @example
  *     {
- *         objectPath: "objectPath",
  *         label: "primary"
  *     }
  */
 export interface UpdateMetadataRequest {
-    tenantId?: string;
-    objectPath: string;
     label: string;
 }

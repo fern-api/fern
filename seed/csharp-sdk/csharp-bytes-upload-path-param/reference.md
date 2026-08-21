@@ -104,3 +104,61 @@ await client.Service.UploadWithPathParamAsync(
 </dl>
 </details>
 
+<details><summary><code>client.Service.<a href="/src/SeedCsharpBytesUploadPathParam/Service/ServiceClient.cs">UpdateMetadataWithPathParamAsync</a>(UpdateMetadataRequest { ... }) -> WithRawResponseTask</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Endpoint with an inlined request wrapper whose example supplies no path-parameter
+values, so the generated example must still populate every path parameter the
+wrapper carries (`inline-path-parameters`).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Service.UpdateMetadataWithPathParamAsync(
+    new UpdateMetadataRequest { ObjectPath = "objectPath", Label = "primary" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `UpdateMetadataRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
