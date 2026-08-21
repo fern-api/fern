@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"context"
 	"crypto/rand"
 	"math/big"
 	"net/http"
@@ -52,6 +53,7 @@ func buildRetryOptions(maxAttempts uint, disableRetries bool) []RetryOption {
 // exponential back-off between each retry.
 type Retrier struct {
 	attempts uint
+	disabled bool
 }
 
 // NewRetrier constructs a new *Retrier with the given options, if any.
@@ -66,6 +68,7 @@ func NewRetrier(opts ...RetryOption) *Retrier {
 	}
 	return &Retrier{
 		attempts: attempts,
+		disabled: options.disabled,
 	}
 }
 
@@ -84,10 +87,16 @@ func (r *Retrier) Run(
 		opt(options)
 	}
 	maxRetryAttempts := r.attempts
+	disabled := r.disabled
 	if options.attempts > 0 {
+		// Request-scoped attempts take precedence over the client-scoped configuration.
 		maxRetryAttempts = options.attempts
+		disabled = false
 	}
 	if options.disabled {
+		disabled = true
+	}
+	if disabled {
 		maxRetryAttempts = 1
 	}
 	var (
@@ -143,7 +152,9 @@ func (r *Retrier) run(
 			return nil, err
 		}
 
-		time.Sleep(delay)
+		if err := sleepWithContext(request.Context(), delay); err != nil {
+			return nil, err
+		}
 
 		body, err := decompressedResponseBody(response)
 		if err != nil {
@@ -161,6 +172,19 @@ func (r *Retrier) run(
 	}
 
 	return response, nil
+}
+
+// sleepWithContext waits for the given delay, returning the context's error as
+// soon as it is cancelled or its deadline is exceeded.
+func sleepWithContext(ctx context.Context, delay time.Duration) error {
+	timer := time.NewTimer(delay)
+	defer timer.Stop()
+	select {
+	case <-ctx.Done():
+		return ctx.Err()
+	case <-timer.C:
+		return nil
+	}
 }
 
 // shouldRetry returns true if the request should be retried based on the given
