@@ -1,5 +1,3 @@
-import assert from "assert";
-
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import {
@@ -8,6 +6,7 @@ import {
     createNamedTypeReference,
     createPathParameter
 } from "@fern-typescript/test-utils";
+import assert from "assert";
 import { describe, expect, it } from "vitest";
 
 import {
