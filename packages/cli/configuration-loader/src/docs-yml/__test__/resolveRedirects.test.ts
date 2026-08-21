@@ -113,6 +113,22 @@ describe("resolveRedirects", () => {
         ).rejects.toThrowError(/does not exist/);
     });
 
+    it("reports every invalid file, not just the first", async () => {
+        const error = await resolveRedirects({
+            redirects: ["./comments-only.yml", "./redirects.yml", "./missing.yml", "./invalid.yml"],
+            absoluteFilepathToDocsConfig
+        }).then(
+            () => undefined,
+            (thrown: unknown) => thrown
+        );
+        expect(error).toBeInstanceOf(Error);
+        const message = error instanceof Error ? error.message : "";
+        expect(message).toMatch(/comments-only\.yml: the file is empty/);
+        expect(message).toMatch(/missing\.yml does not exist/);
+        expect(message).toMatch(/invalid\.yml\. The file must contain only a `redirects` list/);
+        expect(message).not.toMatch(/[/\\]redirects\.yml/);
+    });
+
     it("fails when the file does not exist", async () => {
         await expect(
             resolveRedirects({ redirects: "./missing.yml", absoluteFilepathToDocsConfig })

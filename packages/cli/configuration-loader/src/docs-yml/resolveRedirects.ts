@@ -47,10 +47,30 @@ export async function resolveRedirects({
         });
     }
 
-    const loaded = await Promise.all(
+    // Every file is loaded before reporting, so that all invalid files are surfaced at once
+    // rather than one per run.
+    const results = await Promise.allSettled(
         entries.map((filepath) => loadRedirectsFile({ filepath, absoluteFilepathToDocsConfig }))
     );
-    return loaded.flat();
+    const errors: string[] = [];
+    const redirectConfigs: docsYml.RawSchemas.RedirectConfig[] = [];
+    for (const result of results) {
+        if (result.status === "fulfilled") {
+            redirectConfigs.push(...result.value);
+        } else if (result.reason instanceof CliError) {
+            errors.push(result.reason.message);
+        } else {
+            throw result.reason;
+        }
+    }
+    const [firstError] = errors;
+    if (firstError != null) {
+        throw new CliError({
+            message: errors.length === 1 ? firstError : errors.map((error) => `- ${error}`).join("\n"),
+            code: CliError.Code.ParseError
+        });
+    }
+    return redirectConfigs;
 }
 
 /**
