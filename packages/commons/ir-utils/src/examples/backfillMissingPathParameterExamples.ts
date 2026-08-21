@@ -2,8 +2,6 @@ import { assertNever } from "@fern-api/core-utils";
 import {
     ExampleEndpointCall,
     ExamplePathParameter,
-    ExamplePrimitive,
-    ExampleTypeReferenceShape,
     HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
@@ -73,44 +71,33 @@ function backfillExample({
         buckets.flatMap((bucket) => bucket.examples.map((pathParameter) => getOriginalName(pathParameter.name)))
     );
 
-    let backfilledAny = false;
+    let anyMissing = false;
+    // A parameter with a client default is deliberately left out of the example: the client supplies
+    // it, so only the URL needs its value.
+    const clientDefaultValues: Record<string, string> = {};
     for (const bucket of buckets) {
         for (const pathParameter of bucket.declared) {
             if (suppliedNames.has(getOriginalName(pathParameter.name))) {
                 continue;
             }
-            const pathParameterExample =
-                exampleForClientDefault(pathParameter) ?? generateExample({ pathParameter, typeDeclarations });
+            anyMissing = true;
+            if (pathParameter.clientDefault != null) {
+                clientDefaultValues[getOriginalName(pathParameter.name)] = literalToString(pathParameter.clientDefault);
+                continue;
+            }
+            const pathParameterExample = generateExample({ pathParameter, typeDeclarations });
             if (pathParameterExample == null) {
                 continue;
             }
             bucket.examples.push(pathParameterExample);
-            backfilledAny = true;
         }
     }
 
-    if (backfilledAny) {
+    if (anyMissing) {
         // The URL was built from the incomplete example, so it interpolates "undefined" for every
         // parameter the example did not supply.
-        example.url = getUrlForExample(endpoint, example);
+        example.url = getUrlForExample(endpoint, example, clientDefaultValues);
     }
-}
-
-/**
- * Generators pass path parameters positionally even when they declare a client default, so the
- * default is the most faithful value to render.
- */
-function exampleForClientDefault(pathParameter: PathParameter): ExamplePathParameter | undefined {
-    if (pathParameter.clientDefault == null) {
-        return undefined;
-    }
-    return {
-        name: pathParameter.name,
-        value: {
-            jsonExample: literalToJson(pathParameter.clientDefault),
-            shape: ExampleTypeReferenceShape.primitive(literalToPrimitive(pathParameter.clientDefault))
-        }
-    };
 }
 
 function generateExample({
@@ -133,23 +120,12 @@ function generateExample({
     return generated.example[0];
 }
 
-function literalToJson(literal: Literal): string | boolean {
+function literalToString(literal: Literal): string {
     switch (literal.type) {
         case "string":
             return literal.string;
         case "boolean":
-            return literal.boolean;
-        default:
-            assertNever(literal);
-    }
-}
-
-function literalToPrimitive(literal: Literal): ExamplePrimitive {
-    switch (literal.type) {
-        case "string":
-            return ExamplePrimitive.string({ original: literal.string });
-        case "boolean":
-            return ExamplePrimitive.boolean(literal.boolean);
+            return String(literal.boolean);
         default:
             assertNever(literal);
     }

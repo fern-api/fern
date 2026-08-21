@@ -50,8 +50,7 @@ await client.Service.UploadWithPathParamAsync(
     1000000,
     new DateTime(2024, 01, 15, 09, 30, 00, 000),
     BucketRegion.UsEast,
-    new MemoryStream(Encoding.UTF8.GetBytes("[bytes]")),
-    "acme"
+    new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
 );
 ```
 

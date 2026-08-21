@@ -12,7 +12,7 @@ public partial class Examples
         );
 
         await client.Service.UploadWithPathParamAsync(
-            tenantId: "acme",
+            tenantId: "<tenantId>",
             objectPath: "objectPath",
             revision: 1000000L,
             uploadedAt: DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),

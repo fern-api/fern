@@ -231,7 +231,7 @@ describe("backfillMissingPathParameterExamples", () => {
         expect(example.url).toBe("/objects/my/object.txt");
     });
 
-    it("backfills a path parameter with its client default", () => {
+    it("leaves a path parameter with a client default out of the example, but uses it in the url", () => {
         const ir = makeIr({
             endpointPathParameters: [
                 makePathParameter({
@@ -246,8 +246,7 @@ describe("backfillMissingPathParameterExamples", () => {
         backfillMissingPathParameterExamples({ ir });
 
         const example = getUserExample(ir);
-        expect(example.endpointPathParameters).toHaveLength(1);
-        expect(example.endpointPathParameters[0]?.value.jsonExample).toBe("acme");
+        expect(example.endpointPathParameters).toEqual([]);
         expect(example.url).toBe("/objects/acme");
     });
 
@@ -268,7 +267,6 @@ describe("backfillMissingPathParameterExamples", () => {
 
         const example = getUserExample(ir);
         expect(example.endpointPathParameters.map((pathParameter) => getOriginalName(pathParameter.name))).toEqual([
-            "tenantId",
             "objectPath"
         ]);
         expect(example.url).toBe("/objects/acme/objectPath");
