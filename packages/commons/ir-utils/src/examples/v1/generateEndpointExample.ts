@@ -429,7 +429,7 @@ export function generateEndpointExample({
     }
 }
 
-function getUrlForExample(endpoint: HttpEndpoint, example: Omit<ExampleEndpointCall, "id" | "url">): string {
+export function getUrlForExample(endpoint: HttpEndpoint, example: Omit<ExampleEndpointCall, "id" | "url">): string {
     const pathParameters: Record<string, string> = {};
     [...example.rootPathParameters, ...example.servicePathParameters, ...example.endpointPathParameters].forEach(
         (examplePathParameter) => {

@@ -12,7 +12,6 @@ type ServiceId = FernIr.ServiceId;
 
 import { DefaultValueExtractor } from "../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-import { getPathParameterPlaceholder } from "../utils/pathParameterPlaceholders.js";
 import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator.js";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
 import { getEndpointRequest } from "./utils/getEndpointRequest.js";
@@ -431,9 +430,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         const requiredArguments: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
         const optionalArguments: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
         for (const pathParameter of endpoint.allPathParameters) {
-            const exampleValue =
-                exampleValuesByName.get(getOriginalName(pathParameter.name)) ??
-                getPathParameterPlaceholder({ pathParameter, types: this.context.ir.types });
+            const exampleValue = exampleValuesByName.get(getOriginalName(pathParameter.name));
             if (exampleValue == null) {
                 continue;
             }

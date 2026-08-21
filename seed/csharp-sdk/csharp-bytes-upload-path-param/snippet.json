@@ -4,13 +4,13 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/upload-content/{objectPath}",
+                "path": "/upload-content/{tenantId}/{objectPath}/{revision}/{uploadedAt}/{region}",
                 "method": "POST",
                 "identifier_override": "endpoint_service.uploadWithPathParam"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCsharpBytesUploadPathParam;\nusing global::System.IO;\nusing global::System.Text;\n\nvar client = new SeedCsharpBytesUploadPathParamClient();\nawait client.Service.UploadWithPathParamAsync(\n    \"objectPath\",\n    new MemoryStream(Encoding.UTF8.GetBytes(\"[bytes]\"))\n);\n"
+                "client": "using SeedCsharpBytesUploadPathParam;\nusing global::System.Text;\n\nvar client = new SeedCsharpBytesUploadPathParamClient();\nawait client.Service.UploadWithPathParamAsync(\n    \"objectPath\",\n    1000000,\n    new DateTime(2024, 01, 15, 09, 30, 00, 000),\n    BucketRegion.UsEast,\n    new MemoryStream(Encoding.UTF8.GetBytes(\"[bytes]\")),\n    \"acme\"\n);\n"
             }
         }
     ]

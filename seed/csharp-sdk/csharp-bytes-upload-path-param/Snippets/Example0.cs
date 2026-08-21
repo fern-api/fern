@@ -1,4 +1,5 @@
 using SeedCsharpBytesUploadPathParam;
+using System.Globalization;
 using System.Text;
 
 public partial class Examples
@@ -11,7 +12,11 @@ public partial class Examples
         );
 
         await client.Service.UploadWithPathParamAsync(
-            objectPath: "<objectPath>",
+            tenantId: "acme",
+            objectPath: "objectPath",
+            revision: 1000000L,
+            uploadedAt: DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
+            region: BucketRegion.UsEast,
             request: new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
         );
     }

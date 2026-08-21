@@ -16,6 +16,7 @@ import {
     Webhook
 } from "@fern-api/ir-sdk";
 import {
+    backfillMissingPathParameterExamples,
     constructHttpPath,
     convertEnvironments,
     filterIntermediateRepresentationForAudiences,
@@ -506,6 +507,9 @@ export function generateIntermediateRepresentation({
     resolveGlobalParameterApplicability(intermediateRepresentation, {
         onWarning: (message) => context.logger.warn(message)
     });
+
+    // Normalization of user-written examples, so it must run whether or not autogeneration is enabled.
+    backfillMissingPathParameterExamples({ ir: intermediateRepresentation });
 
     const intermediateRepresentationWithGeneratedExamples = exampleGeneration.disabled
         ? intermediateRepresentation

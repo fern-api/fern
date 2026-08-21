@@ -19,6 +19,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
   - [Additional Body Properties](#additional-body-properties)
+  - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -41,13 +42,16 @@ Instantiate and use the client with the following:
 
 ```csharp
 using SeedCsharpBytesUploadPathParam;
-using global::System.IO;
 using global::System.Text;
 
 var client = new SeedCsharpBytesUploadPathParamClient();
 await client.Service.UploadWithPathParamAsync(
     "objectPath",
-    new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+    1000000,
+    new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    BucketRegion.UsEast,
+    new MemoryStream(Encoding.UTF8.GetBytes("[bytes]")),
+    "acme"
 );
 ```
 
@@ -202,6 +206,35 @@ var response = await client.Service.UploadWithPathParamAsync(
         }
     }
 );
+```
+
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedCsharpBytesUploadPathParam;
+
+// Using a built-in value
+var bucketRegion = BucketRegion.UsEast;
+
+// Using a custom value
+var customBucketRegion = BucketRegion.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (bucketRegion.Value)
+{
+    case BucketRegion.Values.UsEast:
+        Console.WriteLine("UsEast");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {bucketRegion.Value}");
+        break;
+}
+
+// Explicit casting
+string bucketRegionString = (string)BucketRegion.UsEast;
+BucketRegion bucketRegionFromString = (BucketRegion)"us-east";
 ```
 
 ## Contributing

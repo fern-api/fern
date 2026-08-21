@@ -1,5 +1,0 @@
-- summary: |
-    Render a placeholder of the declared type for path parameters an example does not supply, instead
-    of omitting the argument. Generated snippets for such endpoints previously produced calls that are
-    missing a required parameter.
-  type: fix
