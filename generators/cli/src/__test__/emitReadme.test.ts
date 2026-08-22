@@ -102,7 +102,57 @@ describe("emitReadme", () => {
         });
 
         expect(readme).not.toContain("npm shield");
-        expect(readme).not.toContain("img.shields.io");
+        expect(readme).not.toContain("img.shields.io/npm");
+    });
+
+    // ── Fern shield in header ───────────────────────────────────────
+
+    it("includes the Fern shield linked to the repo", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "petstore-api",
+            apiDisplayName: "Petstore",
+            authBindings: [bearerBinding],
+            npmPublishInfo,
+            repoUrl: "https://github.com/fern-api/petstore-cli"
+        });
+
+        expect(readme).toContain(
+            "[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-CLI%20generated%20by%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Ffern-api%2Fpetstore-cli)"
+        );
+    });
+
+    it("falls back to the display name in the Fern shield link when repoUrl is absent", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [bearerBinding],
+            npmPublishInfo: undefined,
+            repoUrl: undefined
+        });
+
+        expect(readme).toContain(
+            "[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-CLI%20generated%20by%20Fern-brightgreen)]"
+        );
+        expect(readme).toContain("utm_source=Acme%2FCLI)");
+    });
+
+    it("omits the Fern shield when white-labeling is enabled", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [bearerBinding],
+            npmPublishInfo,
+            repoUrl: "https://github.com/acme/acme-cli",
+            whiteLabel: true
+        });
+
+        expect(readme).not.toContain("fern shield");
+        expect(readme).not.toContain("buildwithfern.com");
+        // The npm badge is unaffected by white-labeling.
+        expect(readme).toContain("npm shield");
     });
 
     // ── Build from source when npmPublishInfo absent ────────────────

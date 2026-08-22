@@ -111,7 +111,8 @@ describe("runPipeline", () => {
         auth: overrides.auth ?? { schemes: [] },
         globalParameters: overrides.globalParameters ?? [],
         services: overrides.services ?? {},
-        environments: overrides.environments
+        environments: overrides.environments,
+        whiteLabel: overrides.whiteLabel ?? false
     });
 
     const localFilesConfig: ResolvedOutputConfig = {

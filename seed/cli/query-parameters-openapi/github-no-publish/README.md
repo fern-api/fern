@@ -1,5 +1,7 @@
 # Query Parameters API CLI
 
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-CLI%20generated%20by%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fquery-parameters-openapi%2Ffern)
+
 Command-line interface for the Query Parameters API.
 
 ## Table of contents
