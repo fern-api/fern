@@ -249,15 +249,24 @@ export async function runPipeline(args: {
     }
 
     if (outputConfig.isGithubOutput) {
+        // The generated crates are path dependencies rather than workspace
+        // members, so the `test` job has to name each manifest for its tests
+        // to run at all.
+        const generatedCrateDirs = [
+            typesCrateName,
+            sdkCrateName,
+            ...typePartitionCrates.map(({ relativeDir }) => relativeDir)
+        ].filter((crateDir): crateDir is string => crateDir != null);
         if (outputConfig.npmPublishInfo != null) {
             await emitPublishWorkflow({
                 outputDir,
                 binaryName,
                 npmPublishInfo: outputConfig.npmPublishInfo,
-                repoUrl: outputConfig.repoUrl
+                repoUrl: outputConfig.repoUrl,
+                generatedCrateDirs
             });
         } else {
-            await emitCiWorkflow({ outputDir, binaryName });
+            await emitCiWorkflow({ outputDir, binaryName, generatedCrateDirs });
         }
         // Emit cargo-dist release workflow unconditionally for GitHub output.
         // This provides curl|bash installation via GitHub Release assets

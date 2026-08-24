@@ -25,11 +25,15 @@ const TARGETS: ReadonlyArray<{
  * publish info is configured.
  *
  */
-export async function emitCiWorkflow(args: { outputDir: string; binaryName: string }): Promise<void> {
-    const { outputDir, binaryName } = args;
+export async function emitCiWorkflow(args: {
+    outputDir: string;
+    binaryName: string;
+    generatedCrateDirs?: readonly string[];
+}): Promise<void> {
+    const { outputDir, binaryName, generatedCrateDirs = [] } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
-    const yaml = constructBuildTestYaml({ binaryName });
+    const yaml = constructBuildTestYaml({ binaryName, generatedCrateDirs });
     await writeFile(path.join(workflowsDir, "ci.yml"), yaml);
 }
 
@@ -55,11 +59,12 @@ export async function emitPublishWorkflow(args: {
     binaryName: string;
     npmPublishInfo: ResolvedNpmPublishInfo;
     repoUrl: string | undefined;
+    generatedCrateDirs?: readonly string[];
 }): Promise<void> {
-    const { outputDir, binaryName, npmPublishInfo, repoUrl } = args;
+    const { outputDir, binaryName, npmPublishInfo, repoUrl, generatedCrateDirs = [] } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
-    const yaml = constructWorkflowYaml({ binaryName, npmPublishInfo, repoUrl });
+    const yaml = constructWorkflowYaml({ binaryName, npmPublishInfo, repoUrl, generatedCrateDirs });
     await writeFile(path.join(workflowsDir, "ci.yml"), yaml);
 }
 
@@ -113,10 +118,30 @@ function rustCacheStep(cacheKeySuffix: string): string {
 }
 
 /**
+ * `cargo test` steps for the generated model/SDK crates.
+ *
+ * Those crates are path dependencies of the CLI crate, not workspace members,
+ * and `cargo test` only builds test targets for the packages it is invoked on
+ * — so the generated serialization tests never run without this. Each crate
+ * needs its own `--manifest-path`, including the nested type partitions, which
+ * are path dependencies of the types facade rather than members of it.
+ */
+function generatedCrateTestSteps(generatedCrateDirs: readonly string[]): string {
+    return generatedCrateDirs
+        .map((crateDir) => {
+            const manifestPath = crateDir.split(path.sep).join("/");
+            return `
+      - name: Test ${manifestPath}
+        run: cargo test --manifest-path ${manifestPath}/Cargo.toml`;
+        })
+        .join("");
+}
+
+/**
  * Build+test-only workflow YAML — the `check`, `compile`, and `test`
  * jobs with no publish steps.
  */
-function constructBuildTestYaml(args: { binaryName: string }): string {
+function constructBuildTestYaml(args: { binaryName: string; generatedCrateDirs: readonly string[] }): string {
     return `name: ci
 
 on: [push]
@@ -160,7 +185,7 @@ ${rustCacheStep("compile")}
 ${RUST_SETUP_STEP}
 ${rustCacheStep("test")}
       - name: Test
-        run: cargo test
+        run: cargo test${generatedCrateTestSteps(args.generatedCrateDirs)}
 `;
 }
 
@@ -168,6 +193,7 @@ function constructWorkflowYaml(args: {
     binaryName: string;
     npmPublishInfo: ResolvedNpmPublishInfo;
     repoUrl: string | undefined;
+    generatedCrateDirs: readonly string[];
 }): string {
     const { binaryName, npmPublishInfo, repoUrl } = args;
     const { useOidc } = npmPublishInfo;
@@ -241,7 +267,7 @@ ${rustCacheStep("compile")}
 ${RUST_SETUP_STEP}
 ${rustCacheStep("test")}
       - name: Test
-        run: cargo test
+        run: cargo test${generatedCrateTestSteps(args.generatedCrateDirs)}
 
   # The npm packages take their version from the release tag, while the
   # binary reports the version in Cargo.toml. Publishing when they disagree

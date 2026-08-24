@@ -27,9 +27,10 @@ describe("emitPublishWorkflow", () => {
     async function emitAndRead(
         npmPublishInfo: ResolvedNpmPublishInfo,
         binaryName = "acme",
-        repoUrl: string | undefined = undefined
+        repoUrl: string | undefined = undefined,
+        generatedCrateDirs: readonly string[] = []
     ): Promise<string> {
-        await emitPublishWorkflow({ outputDir, binaryName, npmPublishInfo, repoUrl });
+        await emitPublishWorkflow({ outputDir, binaryName, npmPublishInfo, repoUrl, generatedCrateDirs });
         return readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
     }
 
@@ -67,6 +68,20 @@ describe("emitPublishWorkflow", () => {
         expect(yaml).toContain(
             "key: cargo-${{ runner.os }}-${{ matrix.rust-target }}-${{ hashFiles('**/Cargo.lock') }}"
         );
+    });
+
+    // The generated crates are path dependencies, not workspace members, so
+    // plain `cargo test` never builds their test targets.
+    it("tests the generated crates by manifest path", async () => {
+        const yaml = await emitAndRead(baseInfo, "acme", undefined, [
+            "acme-types",
+            "acme-sdk",
+            "acme-types/crates/acme-types-users"
+        ]);
+
+        expect(yaml).toContain("run: cargo test --manifest-path acme-types/Cargo.toml");
+        expect(yaml).toContain("run: cargo test --manifest-path acme-sdk/Cargo.toml");
+        expect(yaml).toContain("run: cargo test --manifest-path acme-types/crates/acme-types-users/Cargo.toml");
     });
 
     it("includes backport detection for stable releases", async () => {
@@ -275,8 +290,8 @@ describe("emitCiWorkflow", () => {
         await rm(tmpDir, { recursive: true, force: true });
     });
 
-    async function emitAndRead(binaryName = "acme"): Promise<string> {
-        await emitCiWorkflow({ outputDir, binaryName });
+    async function emitAndRead(binaryName = "acme", generatedCrateDirs: readonly string[] = []): Promise<string> {
+        await emitCiWorkflow({ outputDir, binaryName, generatedCrateDirs });
         return readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
     }
 
@@ -315,6 +330,19 @@ describe("emitCiWorkflow", () => {
         // any job starts.
         expect(yaml).not.toContain("actions-rust-lang/");
         expect(yaml).toContain("https://sh.rustup.rs");
+    });
+
+    it("tests the generated crates by manifest path", async () => {
+        const yaml = await emitAndRead("acme", ["acme-types", "acme-sdk"]);
+
+        expect(yaml).toContain("run: cargo test --manifest-path acme-types/Cargo.toml");
+        expect(yaml).toContain("run: cargo test --manifest-path acme-sdk/Cargo.toml");
+    });
+
+    it("omits generated-crate test steps when there are none", async () => {
+        const yaml = await emitAndRead();
+
+        expect(yaml).not.toContain("--manifest-path");
     });
 
     it("caches the cargo registry and target dir with actions/cache", async () => {
