@@ -5,7 +5,8 @@ import { cloneRepositoryAtRef, resolveRepositorySubpath } from "../cloneReposito
 const mocks = vi.hoisted(() => ({
     checkout: vi.fn(),
     clone: vi.fn(),
-    fetch: vi.fn()
+    fetch: vi.fn(),
+    setGracefulCleanup: vi.fn()
 }));
 
 vi.mock("@fern-api/core-utils", async (importOriginal) => ({
@@ -15,7 +16,8 @@ vi.mock("@fern-api/core-utils", async (importOriginal) => ({
 
 vi.mock("tmp-promise", () => ({
     default: {
-        dir: vi.fn().mockResolvedValue({ path: "/tmp/clone" })
+        dir: vi.fn().mockResolvedValue({ path: "/tmp/clone" }),
+        setGracefulCleanup: mocks.setGracefulCleanup
     }
 }));
 
@@ -31,7 +33,13 @@ vi.mock("simple-git", () => ({
 
 describe("cloneRepositoryAtRef", () => {
     beforeEach(() => {
-        vi.clearAllMocks();
+        mocks.checkout.mockReset();
+        mocks.clone.mockReset();
+        mocks.fetch.mockReset();
+    });
+
+    it("registers temporary clones for process-exit cleanup", () => {
+        expect(mocks.setGracefulCleanup).toHaveBeenCalledOnce();
     });
 
     it("clones the default branch when ref is omitted", async () => {

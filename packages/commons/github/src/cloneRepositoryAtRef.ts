@@ -3,6 +3,8 @@ import path from "path";
 import { simpleGit } from "simple-git";
 import tmp from "tmp-promise";
 
+tmp.setGracefulCleanup();
+
 /**
  * Shallow-clones `repositoryUrl` at `ref` (a branch, tag, or commit SHA; the
  * default branch when omitted) into a temporary directory and returns its path.
