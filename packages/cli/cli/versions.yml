@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.103.0
+  changelogEntry:
+    - summary: |
+        Support git repositories, refs, and repository subpaths when generating library documentation locally.
+      type: feat
+  createdAt: "2026-08-24"
+  irVersion: 67
 - version: 5.102.0
   changelogEntry:
     - summary: |
