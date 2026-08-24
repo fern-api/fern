@@ -382,6 +382,13 @@ async function packCliOutput({
     return true;
 }
 
+interface ArchiveEntry {
+    entryName: string;
+    filePath: AbsoluteFilePath;
+    /** Unix mode the entry is extracted with: 0o100755 for executables, 0o100644 otherwise. */
+    mode: number;
+}
+
 /** The archive contents: the compiled binary plus the README and license files cargo-dist ships. */
 async function getCliArchiveEntries({
     outputPath,
@@ -391,14 +398,19 @@ async function getCliArchiveEntries({
     outputPath: AbsoluteFilePath;
     releaseDir: AbsoluteFilePath;
     builtBinary: string;
-}): Promise<Record<string, AbsoluteFilePath>> {
-    const entries: Record<string, AbsoluteFilePath> = {
-        [builtBinary]: join(releaseDir, RelativeFilePath.of(builtBinary))
-    };
+}): Promise<ArchiveEntry[]> {
+    const entries: ArchiveEntry[] = [
+        {
+            entryName: builtBinary,
+            filePath: join(releaseDir, RelativeFilePath.of(builtBinary)),
+            // keeps the CLI runnable straight out of the archive, with no chmod step
+            mode: 0o100755
+        }
+    ];
     for (const name of ["README.md", "LICENSE", "LICENSE-APACHE", "LICENSE-MIT"]) {
-        const path = join(outputPath, RelativeFilePath.of(name));
-        if (await doesPathExist(path)) {
-            entries[name] = path;
+        const filePath = join(outputPath, RelativeFilePath.of(name));
+        if (await doesPathExist(filePath)) {
+            entries.push({ entryName: name, filePath, mode: 0o100644 });
         }
     }
     return entries;
@@ -482,28 +494,21 @@ async function runPackCommands({
     }
 }
 
-/**
- * Zips the contents of a directory (excluding fern-dist itself and any .git directory) into
- * `zipPath`. Runs in-process, so it behaves identically in host and docker pack modes and
- * requires no language toolchain.
- */
-/** Zips an explicit set of files, keyed by their path within the archive. */
-async function zipFiles({
-    files,
-    zipPath
-}: {
-    files: Record<string, AbsoluteFilePath>;
-    zipPath: AbsoluteFilePath;
-}): Promise<void> {
+/** Zips an explicit set of files, each with the file mode it should be extracted with. */
+async function zipFiles({ files, zipPath }: { files: ArchiveEntry[]; zipPath: AbsoluteFilePath }): Promise<void> {
     const zip = new ZipFile();
-    for (const [entryName, filePath] of Object.entries(files)) {
-        // 0o755 keeps the binary executable once the archive is extracted.
-        zip.addFile(filePath, entryName, { mode: 0o100755 });
+    for (const { entryName, filePath, mode } of files) {
+        zip.addFile(filePath, entryName, { mode });
     }
     zip.end();
     await writeZip({ zip, zipPath });
 }
 
+/**
+ * Zips the contents of a directory (excluding fern-dist itself and any .git directory) into
+ * `zipPath`. Runs in-process, so it behaves identically in host and docker pack modes and
+ * requires no language toolchain.
+ */
 async function zipDirectory({
     sourceDir,
     zipPath
