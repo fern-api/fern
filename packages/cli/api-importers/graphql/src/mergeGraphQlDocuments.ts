@@ -70,6 +70,8 @@ interface MergedMember {
 
 interface MergedType {
     definition: TypeDefinitionNode;
+    /** File the type was first declared in, so a conflicting redeclaration names the right file. */
+    filePath: string;
     members: Map<string, MergedMember>;
 }
 
@@ -90,7 +92,7 @@ interface InaccessibleState {
 export function mergeGraphQlDocuments(sources: readonly GraphQlSource[]): MergedGraphQlDocument {
     const conflicts: GraphQlDocumentConflict[] = [];
     const types = new Map<string, MergedType>();
-    const directiveDefinitions = new Map<string, DefinitionNode>();
+    const directiveDefinitions = new Map<string, { definition: DefinitionNode; filePath: string }>();
     const operationTypes = new Map<string, OperationTypeDefinitionNode>();
     const otherDefinitions: DefinitionNode[] = [];
     const inaccessible: InaccessibleState = { types: new Set(), seen: false };
@@ -98,8 +100,22 @@ export function mergeGraphQlDocuments(sources: readonly GraphQlSource[]): Merged
     for (const source of sources) {
         for (const definition of parse(source.sdl).definitions) {
             if (definition.kind === Kind.DIRECTIVE_DEFINITION) {
-                if (!FEDERATION_DIRECTIVES.has(definition.name.value)) {
-                    directiveDefinitions.set(definition.name.value, definition);
+                const directiveName = definition.name.value;
+                if (FEDERATION_DIRECTIVES.has(directiveName)) {
+                    continue;
+                }
+                const owner = directiveDefinitions.get(directiveName);
+                if (owner == null) {
+                    directiveDefinitions.set(directiveName, { definition, filePath: source.filePath });
+                } else if (print(owner.definition) !== print(definition)) {
+                    // First-wins, as for types: letting a later file replace the definition would
+                    // leave earlier usages referencing arguments that no longer exist.
+                    conflicts.push({
+                        typeName: `@${directiveName}`,
+                        memberName: "<declaration>",
+                        kept: owner.filePath,
+                        dropped: source.filePath
+                    });
                 }
                 continue;
             }
@@ -133,10 +149,11 @@ export function mergeGraphQlDocuments(sources: readonly GraphQlSource[]): Merged
 
     if (inaccessible.seen) {
         pruneInaccessibleTypes(types, inaccessible.types);
+        pruneUnsatisfiedInterfaces(types);
     }
 
     const definitions: DefinitionNode[] = [
-        ...directiveDefinitions.values(),
+        ...[...directiveDefinitions.values()].map((entry) => entry.definition),
         ...otherDefinitions,
         ...[...types.values()].map((type) => type.definition)
     ];
@@ -314,6 +331,39 @@ function pruneInaccessibleTypes(types: Map<string, MergedType>, inaccessibleType
     }
 }
 
+function fieldNamesOf(definition: TypeDefinitionNode): ReadonlySet<string> {
+    if (definition.kind !== Kind.OBJECT_TYPE_DEFINITION && definition.kind !== Kind.INTERFACE_TYPE_DEFINITION) {
+        return new Set();
+    }
+    return new Set((definition.fields ?? []).map((field) => field.name.value));
+}
+
+/**
+ * Drops `implements I` wherever the `@inaccessible` cascade left a type without a field `I` requires.
+ * `buildASTSchema` accepts such a document but `validateSchema` rejects it, so without this the merge
+ * can only produce an invalid schema; showing the type without the interface is the lesser loss.
+ */
+function pruneUnsatisfiedInterfaces(types: Map<string, MergedType>): void {
+    for (const type of types.values()) {
+        const definition = type.definition;
+        if (definition.kind !== Kind.OBJECT_TYPE_DEFINITION && definition.kind !== Kind.INTERFACE_TYPE_DEFINITION) {
+            continue;
+        }
+        const declared = definition.interfaces ?? [];
+        const ownFields = fieldNamesOf(definition);
+        const interfaces = declared.filter((node) => {
+            const implemented = types.get(node.name.value);
+            if (implemented == null) {
+                return false;
+            }
+            return [...fieldNamesOf(implemented.definition)].every((fieldName) => ownFields.has(fieldName));
+        });
+        if (interfaces.length !== declared.length) {
+            type.definition = { ...definition, interfaces };
+        }
+    }
+}
+
 /** Returns the definition with references to removed types dropped, or `null` if it is now empty. */
 function pruneReferences(definition: TypeDefinitionNode, removed: ReadonlySet<string>): TypeDefinitionNode | null {
     switch (definition.kind) {
@@ -373,7 +423,7 @@ function mergeTypeDefinition(
         for (const member of getMembers(cleaned)) {
             members.set(member.name.value, { filePath, signature: memberSignature(member) });
         }
-        types.set(name, { definition: cleaned, members });
+        types.set(name, { definition: cleaned, filePath, members });
         return;
     }
 
@@ -381,7 +431,7 @@ function mergeTypeDefinition(
         conflicts.push({
             typeName: name,
             memberName: "<declaration>",
-            kept: existing.members.values().next().value?.filePath ?? filePath,
+            kept: existing.filePath,
             dropped: filePath
         });
         return;
@@ -442,7 +492,7 @@ function mergeMembers(
             if (owner != null) {
                 // Subgraphs routinely redeclare a shared field (`id: ID! @external`) so they can
                 // reference an entity; only a differing shape is an actual conflict.
-                if (owner.filePath !== filePath && owner.signature !== signature) {
+                if (owner.signature !== signature) {
                     conflicts.push({ typeName, memberName, kept: owner.filePath, dropped: filePath });
                 }
                 continue;

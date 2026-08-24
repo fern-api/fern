@@ -1,4 +1,4 @@
-import { buildASTSchema, GraphQLObjectType, GraphQLUnionType, print } from "graphql";
+import { buildASTSchema, GraphQLObjectType, GraphQLUnionType, print, validateSchema } from "graphql";
 import { describe, expect, it } from "vitest";
 
 import { mergeGraphQlDocuments } from "../mergeGraphQlDocuments.js";
@@ -140,5 +140,91 @@ describe("mergeGraphQlDocuments", () => {
             throw new Error("expected UserProfile to be an object type");
         }
         expect(String(userProfile.getFields().name?.type)).toBe("String");
+    });
+
+    it("names the file that actually won when a type is redeclared with a different kind", () => {
+        const { conflicts } = buildSchemaFrom([
+            { filePath: "a.graphql", sdl: `scalar Thing` },
+            { filePath: "b.graphql", sdl: `type Thing { x: String }` }
+        ]);
+
+        expect(conflicts).toEqual([
+            { typeName: "Thing", memberName: "<declaration>", kept: "a.graphql", dropped: "b.graphql" }
+        ]);
+    });
+
+    it("drops `implements` when the @inaccessible cascade leaves the interface unsatisfied", () => {
+        const { document } = mergeGraphQlDocuments([
+            {
+                filePath: "core.graphql",
+                sdl: `
+                    type Query { node: Node }
+                    interface Node { id: ID!, extra: String }
+                    type Thing implements Node { id: ID!, extra: String @inaccessible }
+                `
+            }
+        ]);
+
+        // Without this the document builds but `validateSchema` rejects it.
+        expect(validateSchema(buildASTSchema(document))).toEqual([]);
+        expect(print(document)).not.toContain("implements Node");
+    });
+
+    it("keeps `implements` when the cascade leaves the interface satisfied", () => {
+        const { schema } = buildSchemaFrom([
+            {
+                filePath: "core.graphql",
+                sdl: `
+                    type Query { node: Node }
+                    interface Node { id: ID! }
+                    type Thing implements Node { id: ID!, internal: String @inaccessible }
+                `
+            }
+        ]);
+
+        const thing = schema.getType("Thing");
+        if (!(thing instanceof GraphQLObjectType)) {
+            throw new Error("expected Thing to be an object type");
+        }
+        expect(thing.getInterfaces().map((node) => node.name)).toEqual(["Node"]);
+    });
+
+    it("keeps the first directive definition and reports a conflict when a later file differs", () => {
+        const { document, conflicts } = mergeGraphQlDocuments([
+            {
+                filePath: "a.graphql",
+                sdl: `directive @foo(x: String) on FIELD_DEFINITION
+                      type Query { a: String @foo(x: "1") }`
+            },
+            { filePath: "b.graphql", sdl: `directive @foo(y: Int) on FIELD_DEFINITION` }
+        ]);
+
+        expect(conflicts).toEqual([
+            { typeName: "@foo", memberName: "<declaration>", kept: "a.graphql", dropped: "b.graphql" }
+        ]);
+        // Last-wins would leave `@foo(x:)` referencing an argument the definition no longer declares,
+        // forcing the whole document down the `assumeValidSDL` path.
+        expect(() => buildASTSchema(document)).not.toThrow();
+    });
+
+    it("does not report a conflict when two files declare the same directive identically", () => {
+        const { conflicts } = mergeGraphQlDocuments([
+            { filePath: "a.graphql", sdl: `directive @foo(x: String) on FIELD_DEFINITION` },
+            { filePath: "b.graphql", sdl: `directive @foo(x: String) on FIELD_DEFINITION` }
+        ]);
+
+        expect(conflicts).toEqual([]);
+    });
+
+    it("reports a member declared twice with differing shapes within one file", () => {
+        const { conflicts } = buildSchemaFrom([
+            {
+                filePath: "a.graphql",
+                sdl: `type Query { a: String }
+                      extend type Query { a: Int }`
+            }
+        ]);
+
+        expect(conflicts).toEqual([{ typeName: "Query", memberName: "a", kept: "a.graphql", dropped: "a.graphql" }]);
     });
 });

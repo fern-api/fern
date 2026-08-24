@@ -4,6 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import {
     buildASTSchema,
+    DEFAULT_DEPRECATION_REASON,
     DocumentNode,
     GraphQLArgument as GQLArgument,
     GraphQLEnumType,
@@ -106,7 +107,9 @@ export class GraphQLConverter {
         deprecationReason?: string | null;
     }): string | undefined {
         const description = node.description ?? undefined;
-        if (node.deprecationReason == null) {
+        // graphql-js fills in `DEFAULT_DEPRECATION_REASON` for a bare `@deprecated`, which says
+        // nothing that `availability` does not already say.
+        if (node.deprecationReason == null || node.deprecationReason === DEFAULT_DEPRECATION_REASON) {
             return description;
         }
         const deprecation = `**Deprecated:** ${node.deprecationReason}`;
@@ -191,9 +194,13 @@ export class GraphQLConverter {
 
         const { document, conflicts } = mergeGraphQlDocuments(sources);
         for (const conflict of conflicts) {
+            const member = `${conflict.typeName}.${conflict.memberName}`;
             this.context.logger.warn(
-                `GraphQL schema conflict: ${conflict.typeName}.${conflict.memberName} is defined in both ` +
-                    `${conflict.kept} and ${conflict.dropped}. Keeping the definition from ${conflict.kept}.`
+                conflict.kept === conflict.dropped
+                    ? `GraphQL schema conflict: ${member} is declared more than once in ${conflict.kept} with ` +
+                          "differing shapes. Keeping the first declaration."
+                    : `GraphQL schema conflict: ${member} is defined in both ${conflict.kept} and ` +
+                          `${conflict.dropped}. Keeping the definition from ${conflict.kept}.`
             );
         }
 
