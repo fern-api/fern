@@ -67,7 +67,7 @@ export class OpenAPILoader {
                         if (!openAPI.schemes || openAPI.schemes.length === 0) {
                             openAPI.schemes = ["https"];
                         }
-                        const convertedOpenAPI = await convertOpenAPIV2ToV3(openAPI);
+                        const convertedOpenAPI = await convertOpenAPIV2ToV3(openAPI, { context });
                         return {
                             type: "openapi",
                             value: convertedOpenAPI,
