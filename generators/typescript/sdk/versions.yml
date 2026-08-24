@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.88.2
+  changelogEntry:
+    - summary: |
+        Stop dropping the examples of endpoints whose request body is bytes or a file upload. The IR's
+        `ExampleRequestBody` cannot carry those bodies, so such examples read as bodyless and the
+        endpoint lost its `reference.md` section, snippets and docs comments.
+      type: fix
+    - summary: |
+        Positional path parameters that an example does not supply are now rendered with their
+        `client-default` value instead of `undefined`, so generated snippets typecheck.
+      type: fix
+  createdAt: "2026-08-24"
+  irVersion: 67
 - version: 3.88.1
   changelogEntry:
     - summary: |
