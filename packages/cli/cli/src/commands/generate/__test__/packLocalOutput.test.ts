@@ -255,7 +255,7 @@ describe("packLocalOutputForGroup", () => {
         expect(zipStat.size).toBeGreaterThan(0);
     });
 
-    it("builds the release binary for the CLI generator, which reports no language", async () => {
+    it("archives the release binary for the CLI generator, which reports no language", async () => {
         await writeFile(
             path.join(outputDir, "Cargo.toml"),
             '[package]\nname = "acme-cli-sdk"\nversion = "0.1.0"\n\n[[bin]]\nname = "acme"\npath = "cli/acme/main.rs"\n'
@@ -278,7 +278,9 @@ describe("packLocalOutputForGroup", () => {
         expect(loggingExecaMock).toHaveBeenCalledTimes(1);
         const [, command, args] = loggingExecaMock.mock.calls[0] ?? [];
         expect([command, ...(args ?? [])].join(" ")).toBe("cargo build --release --bin acme");
-        expect(await readdir(path.join(outputDir, "fern-dist"))).toEqual(["acme"]);
+        const archiveName = `acme-${process.arch}-${process.platform}.zip`;
+        expect(await readdir(path.join(outputDir, "fern-dist"))).toEqual([archiveName]);
+        expect((await stat(path.join(outputDir, "fern-dist", archiveName))).size).toBeGreaterThan(0);
     });
 
     it("builds the CLI generator binary in the rust toolchain image in docker mode", async () => {
@@ -303,6 +305,8 @@ describe("packLocalOutputForGroup", () => {
         expect(args).toContain("rust:1");
         // falls back to the [package] name when there is no [[bin]] section
         expect(args?.slice(-4).join(" ")).toBe("build --release --bin acme");
+        // the archive is named for the platform the binary was built for, not the host
+        expect(await readdir(path.join(outputDir, "fern-dist"))).toEqual([`acme-${process.arch}-linux.zip`]);
     });
 
     it("fails CLI generator packaging when cargo produces no binary", async () => {

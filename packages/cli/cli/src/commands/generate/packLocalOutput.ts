@@ -326,9 +326,10 @@ async function packOutputForLanguage({
 
 /**
  * Builds the CLI produced by the CLI generator. The generated output is a Cargo workspace whose
- * root package builds the CLI binary, so the shareable artifact is the compiled executable rather
- * than a registry package. The binary only runs on the platform it was built for; multi-platform
- * archives and installers come from cargo-dist in the generated release workflow.
+ * root package builds the CLI binary, so the shareable artifact is an archive containing that
+ * executable rather than a registry package. The archive only runs on the platform it was built
+ * for; multi-platform archives and installers come from cargo-dist in the generated release
+ * workflow.
  */
 async function packCliOutput({
     outputPath,
@@ -365,8 +366,13 @@ async function packCliOutput({
     if (builtBinary == null) {
         throw new Error(`cargo build did not produce ${binaryName} in target/release.`);
     }
-    // copyFile preserves the executable bit, so the artifact is runnable as-is.
-    await copyFile(join(releaseDir, RelativeFilePath.of(builtBinary)), join(distDir, RelativeFilePath.of(builtBinary)));
+    const target = mode === "docker" ? `${process.arch}-linux` : `${process.arch}-${process.platform}`;
+    const archivePath = join(distDir, RelativeFilePath.of(`${binaryName}-${target}.zip`));
+    await zipFiles({
+        // cargo-dist ships the same set in its release archives.
+        files: await getCliArchiveEntries({ outputPath, releaseDir, builtBinary }),
+        zipPath: archivePath
+    });
     const platform = mode === "docker" ? "linux, inside the Rust toolchain image" : "this host";
     context.logger.warn(
         `${builtBinary} only runs on the platform it was compiled for (${platform}). ` +
@@ -374,6 +380,28 @@ async function packCliOutput({
     );
     logArtifacts({ distDir, context });
     return true;
+}
+
+/** The archive contents: the compiled binary plus the README and license files cargo-dist ships. */
+async function getCliArchiveEntries({
+    outputPath,
+    releaseDir,
+    builtBinary
+}: {
+    outputPath: AbsoluteFilePath;
+    releaseDir: AbsoluteFilePath;
+    builtBinary: string;
+}): Promise<Record<string, AbsoluteFilePath>> {
+    const entries: Record<string, AbsoluteFilePath> = {
+        [builtBinary]: join(releaseDir, RelativeFilePath.of(builtBinary))
+    };
+    for (const name of ["README.md", "LICENSE", "LICENSE-APACHE", "LICENSE-MIT"]) {
+        const path = join(outputPath, RelativeFilePath.of(name));
+        if (await doesPathExist(path)) {
+            entries[name] = path;
+        }
+    }
+    return entries;
 }
 
 /** The name cargo builds the CLI binary under: the root package's [[bin]] name, else its package name. */
@@ -459,6 +487,23 @@ async function runPackCommands({
  * `zipPath`. Runs in-process, so it behaves identically in host and docker pack modes and
  * requires no language toolchain.
  */
+/** Zips an explicit set of files, keyed by their path within the archive. */
+async function zipFiles({
+    files,
+    zipPath
+}: {
+    files: Record<string, AbsoluteFilePath>;
+    zipPath: AbsoluteFilePath;
+}): Promise<void> {
+    const zip = new ZipFile();
+    for (const [entryName, filePath] of Object.entries(files)) {
+        // 0o755 keeps the binary executable once the archive is extracted.
+        zip.addFile(filePath, entryName, { mode: 0o100755 });
+    }
+    zip.end();
+    await writeZip({ zip, zipPath });
+}
+
 async function zipDirectory({
     sourceDir,
     zipPath
@@ -483,6 +528,10 @@ async function zipDirectory({
     };
     await addEntries(sourceDir, "");
     zip.end();
+    await writeZip({ zip, zipPath });
+}
+
+async function writeZip({ zip, zipPath }: { zip: ZipFile; zipPath: AbsoluteFilePath }): Promise<void> {
     await new Promise<void>((resolve, reject) => {
         zip.outputStream.on("error", reject);
         zip.outputStream.pipe(createWriteStream(zipPath)).on("close", resolve).on("error", reject);
