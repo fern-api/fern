@@ -606,6 +606,12 @@ fixtures:
     - outputFolder: no-inline-path-parameters
       customConfig:
         inlinePathParameters: false
+  openapi-per-spec-base-path:
+    - outputFolder: no-custom-config
+      customConfig: null
+  openapi-per-spec-base-path-disabled:
+    - outputFolder: no-custom-config
+      customConfig: null
 
 scripts:
   - image: fernapi/ts-seed
