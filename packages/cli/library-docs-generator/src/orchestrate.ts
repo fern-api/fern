@@ -3,11 +3,12 @@ import { docsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
+import { cloneRepositoryAtRef, resolveRepositorySubpath } from "@fern-api/github";
 import { CliError, type TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 
 import { generateCpp } from "./CppDocsGenerator.js";
-import { runLocalParser } from "./LocalParserRunner.js";
+import { type LocalParserConfig, runLocalParser } from "./LocalParserRunner.js";
 import { generate } from "./PythonDocsGenerator.js";
 import type { CppLibraryDocsIr } from "./types/CppLibraryDocsIr.js";
 
@@ -379,14 +380,9 @@ async function generateIrRemotely({
 }
 
 /**
- * Produces the library-docs IR by running the parser Docker image locally on a
- * `path` input. The source path is resolved relative to the docs directory and
- * mounted into the container.
- *
- * `--local` deliberately does NOT clone `git` inputs: cloning an attacker-
- * controlled repository (or git URL) on the user's machine / CI runner is a
- * code-execution risk, and the point of `--local` is to stay offline. `git`
- * inputs are handled remotely (server-side) instead.
+ * Produces the library-docs IR by running the parser Docker image locally.
+ * Local paths are resolved relative to the docs directory; git inputs are
+ * materialized at the configured branch, tag, or commit before parsing.
  */
 async function generateIrLocally({
     context,
@@ -405,20 +401,38 @@ async function generateIrLocally({
     doxyfileContent: string | undefined;
     wrapStep: StepWrapper;
 }): Promise<unknown> {
-    if (isGitLibraryInput(config.input)) {
-        throw new CliError({
-            message:
-                `Library '${name}': 'git' inputs are generated remotely, not with --local. ` +
-                `For --local, use a 'path' input pointing at a local checkout of the library.`,
-            code: CliError.Code.ConfigError
-        });
-    }
+    let sourcePath: AbsoluteFilePath;
+    let parserConfig: LocalParserConfig;
 
-    const sourcePath = resolve(docsDirectoryPath, config.input.path);
+    if (isGitLibraryInput(config.input)) {
+        const gitInput = config.input;
+        const clonePath = await wrapStep({
+            message: `Library '${name}': cloning ${gitInput.git}${gitInput.ref != null ? ` (ref: ${gitInput.ref})` : ""}`,
+            operation: () => cloneRepositoryAtRef({ repositoryUrl: gitInput.git, ref: gitInput.ref })
+        });
+        if (gitInput.subpath != null) {
+            resolveRepositorySubpath({
+                repositoryRoot: clonePath,
+                subpath: gitInput.subpath,
+                description: `subpath for library '${name}'`
+            });
+        }
+        // The parser reads the package at `packagePath` but resolves imports against the repo root.
+        sourcePath = AbsoluteFilePath.of(clonePath);
+        parserConfig = {
+            packagePath: gitInput.subpath,
+            sourceUrl: gitInput.git,
+            branch: gitInput.ref,
+            doxyfileContent
+        };
+    } else {
+        sourcePath = resolve(docsDirectoryPath, config.input.path);
+        parserConfig = { doxyfileContent };
+    }
 
     const ir = await wrapStep({
         message: `Library '${name}': parsing library source locally`,
-        operation: () => runLocalParser({ context, sourcePath, language, config: { doxyfileContent } })
+        operation: () => runLocalParser({ context, sourcePath, language, config: parserConfig })
     });
     validateLibraryIr(ir, language, name);
     return ir;

@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -20,7 +21,7 @@ import { runLibraryDocsGeneration } from "../orchestrate.js";
 
 /**
  * End-to-end coverage of the `fern docs md generate --local` path for a
- * `path` (local) input library.
+ * local path and git input libraries.
  *
  * Only the Docker boundary (`runContainer`) is mocked — it emits a realistic
  * `{ ir }` envelope to the container's `/output` mount, exactly as the real
@@ -205,10 +206,36 @@ describe("runLibraryDocsGeneration — --local path input (end-to-end to disk)",
         expect(clientPage).toContain("Entry point for the plant store SDK.");
     });
 
-    it("never shells out to Docker for a 'git' input under --local", async () => {
+    it("clones a git input and mounts the resolved checkout in Docker", async () => {
+        const origin = join(docsDir, "sdk-python");
+        execFileSync("git", ["init", "-b", "main"], { cwd: origin });
+        execFileSync("git", ["add", "--", "plantstore/__init__.py"], { cwd: origin });
+        execFileSync(
+            "git",
+            ["-c", "user.name=Fern Test", "-c", "user.email=test@buildwithfern.com", "commit", "-m", "initial"],
+            { cwd: origin }
+        );
+
+        const ir = pythonIr();
+        let parserConfig: Record<string, unknown> | undefined;
+        (runContainer as Mock).mockImplementation(async ({ binds }: { binds: string[] }) => {
+            const repoHostPath = hostPathForMount(binds, "/repo");
+            expect(repoHostPath).not.toBe(origin);
+            expect(existsSync(join(repoHostPath, "plantstore", "__init__.py"))).toBe(true);
+
+            parserConfig = JSON.parse(readFileSync(hostPathForMount(binds, "/input/config.json"), "utf-8")) as Record<
+                string,
+                unknown
+            >;
+            await writeFile(
+                join(hostPathForMount(binds, "/output"), "ir.json"),
+                JSON.stringify({ ir, metadata: { packageName: "plantstore" } })
+            );
+        });
+
         const libraries: Record<string, docsYml.RawSchemas.LibraryConfiguration> = {
             plantstore: {
-                input: { git: "https://github.com/acme/plantstore" },
+                input: { git: origin, ref: "main", subpath: "plantstore" },
                 output: { path: "./static/plant-sdk-docs" },
                 lang: "python"
             }
@@ -222,9 +249,14 @@ describe("runLibraryDocsGeneration — --local path input (end-to-end to disk)",
                 context: makeContext(),
                 local: true
             })
-        ).rejects.toThrow(/'git' inputs are generated remotely/);
+        ).resolves.toEqual({ successful: 1 });
 
-        expect(runContainer as Mock).not.toHaveBeenCalled();
-        expect(existsSync(join(docsDir, "static", "plant-sdk-docs"))).toBe(false);
+        expect(runContainer as Mock).toHaveBeenCalledTimes(1);
+        expect(parserConfig).toEqual({
+            packagePath: "plantstore",
+            sourceUrl: origin,
+            branch: "main"
+        });
+        expect(existsSync(join(docsDir, "static", "plant-sdk-docs", "_navigation.yml"))).toBe(true);
     });
 });
