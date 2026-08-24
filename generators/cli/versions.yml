@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.38.1
+  changelogEntry:
+    - summary: |
+        Fixed `auth login` failing on Windows with "keyring set failed: Attribute
+        'password encoded as UTF-16' is longer than platform limit of 2560 chars".
+        Large OAuth token bundles are now transparently split across multiple
+        Windows Credential Manager entries and reassembled on read, so credentials
+        stay in the OS keyring. A partially written entry set is detected on read
+        and reported as a missing credential rather than a corrupt token. Only
+        Windows writes split entries — macOS Keychain and secret-service have no
+        such limit and keep storing credentials exactly as before. Existing
+        credentials remain readable.
+      type: fix
+  createdAt: "2026-08-24"
+  irVersion: 67
 - version: 0.38.0
   changelogEntry:
     - summary: |
