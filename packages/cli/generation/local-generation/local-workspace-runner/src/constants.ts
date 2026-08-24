@@ -60,3 +60,16 @@ const GENERATORS_WANTING_SPECS: ReadonlySet<string> = new Set(["fernapi/fern-cli
 export function generatorWantsSpecs(generatorName: string): boolean {
     return GENERATORS_WANTING_SPECS.has(generatorName);
 }
+
+/**
+ * Opts a local generation run into a specific container network mode, `none` being the useful value.
+ *
+ * An environment variable rather than a generators.yml key so the switch exists without a schema
+ * change; a first-class config field or CLI flag is the natural follow-up if that is preferred.
+ */
+export const GENERATOR_NETWORK_ENV_VAR = "FERN_GENERATOR_NETWORK";
+
+export function getConfiguredGeneratorNetwork(env: NodeJS.ProcessEnv = process.env): string | undefined {
+    const value = env[GENERATOR_NETWORK_ENV_VAR]?.trim();
+    return value !== undefined && value !== "" ? value : undefined;
+}

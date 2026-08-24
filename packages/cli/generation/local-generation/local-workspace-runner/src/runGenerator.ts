@@ -30,6 +30,7 @@ import {
     CONTAINER_SOURCES_DIRECTORY,
     CONTAINER_SPECS_DIRECTORY,
     GENERATOR_CONFIG_FILENAME,
+    getConfiguredGeneratorNetwork,
     IR_FILENAME,
     SPECS_DIRECTORY_NAME,
     SPECS_MANIFEST_FILENAME
@@ -196,7 +197,8 @@ export async function writeFilesToDiskAndRunGenerator({
                 ? `${generatorInvocation.containerImage}:${generatorInvocation.version}`
                 : `${generatorInvocation.name}:${generatorInvocation.version}`,
             keepContainer: keepDocker,
-            disableTelemetry
+            disableTelemetry,
+            ...(getConfiguredGeneratorNetwork() != null ? { network: getConfiguredGeneratorNetwork() } : {})
         });
 
     const paths = environment.usesContainerPaths
