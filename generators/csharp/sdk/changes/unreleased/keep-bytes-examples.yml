@@ -1,0 +1,5 @@
+- summary: |
+    Stop dropping the examples of endpoints whose request body is bytes or a file upload. The IR's
+    `ExampleRequestBody` cannot carry those bodies, so such examples read as bodyless and the
+    endpoint lost its snippets and generated tests.
+  type: fix
