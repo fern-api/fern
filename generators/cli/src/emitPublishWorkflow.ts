@@ -64,6 +64,30 @@ export async function emitPublishWorkflow(args: {
 }
 
 /**
+ * Install a Rust toolchain without a third-party action.
+ *
+ * `actions-rust-lang/setup-rust-toolchain` is the obvious choice here, but
+ * organizations that restrict GitHub Actions to a first-party allowlist
+ * cannot run it — the workflow fails at startup, before any job, which
+ * leaves the customer no option but to take `ci.yml` out of generation and
+ * hand-maintain it. GitHub-hosted runners ship a stable toolchain already,
+ * so the step is a no-op there; the rustup fallback covers containers and
+ * self-hosted runners. Same shape as the equivalent step cargo-dist emits
+ * into `release.yml`, which is why that file needs no allowlist exception.
+ *
+ * Nothing here caches: the action's built-in `rust-cache` is itself a
+ * third-party action, and cargo-dist's release builds run uncached too.
+ */
+const RUST_SETUP_STEP = `      - name: Set up Rust
+        shell: bash
+        run: |
+          if ! command -v cargo > /dev/null 2>&1; then
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+            echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+          fi
+`;
+
+/**
  * Build+test-only workflow YAML — the `check`, `compile`, and `test`
  * jobs with no publish steps.
  */
@@ -86,9 +110,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
+${RUST_SETUP_STEP}
       - name: Check
         run: cargo check
 
@@ -98,9 +120,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
+${RUST_SETUP_STEP}
       - name: Compile
         run: cargo build
 
@@ -110,9 +130,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
+${RUST_SETUP_STEP}
       - name: Test
         run: cargo test
 `;
@@ -170,9 +188,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
+${RUST_SETUP_STEP}
       - name: Check
         run: cargo check
 
@@ -182,9 +198,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
+${RUST_SETUP_STEP}
       - name: Compile
         run: cargo build
 
@@ -194,9 +208,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
+${RUST_SETUP_STEP}
       - name: Test
         run: cargo test
 
@@ -212,9 +224,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
+${RUST_SETUP_STEP}
       - name: Check tag matches crate version
         shell: bash
         run: |
@@ -256,10 +266,10 @@ ${matrixIncludes}
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: \${{ matrix.rust-target }}
+${RUST_SETUP_STEP}
+      - name: Add Rust target
+        shell: bash
+        run: rustup target add \${{ matrix.rust-target }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v6

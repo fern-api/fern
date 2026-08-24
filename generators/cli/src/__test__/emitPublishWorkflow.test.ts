@@ -295,10 +295,14 @@ describe("emitCiWorkflow", () => {
         expect(yaml).toContain("on: [push]");
     });
 
-    it("uses actions/checkout@v6 and actions-rust-lang/setup-rust-toolchain@v1", async () => {
+    it("uses actions/checkout@v6 and no third-party actions", async () => {
         const yaml = await emitAndRead();
 
         expect(yaml).toContain("actions/checkout@v6");
-        expect(yaml).toContain("actions-rust-lang/setup-rust-toolchain@v1");
+        // Organizations that allowlist first-party actions only cannot run
+        // third-party ones, and an unrunnable action fails the workflow before
+        // any job starts.
+        expect(yaml).not.toContain("actions-rust-lang/");
+        expect(yaml).toContain("https://sh.rustup.rs");
     });
 });
