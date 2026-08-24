@@ -255,6 +255,71 @@ describe("packLocalOutputForGroup", () => {
         expect(zipStat.size).toBeGreaterThan(0);
     });
 
+    it("builds the release binary for the CLI generator, which reports no language", async () => {
+        await writeFile(
+            path.join(outputDir, "Cargo.toml"),
+            '[package]\nname = "acme-cli-sdk"\nversion = "0.1.0"\n\n[[bin]]\nname = "acme"\npath = "cli/acme/main.rs"\n'
+        );
+        loggingExecaMock.mockImplementationOnce(async () => {
+            await mkdir(path.join(outputDir, "target", "release"), { recursive: true });
+            await writeFile(path.join(outputDir, "target", "release", "acme"), "binary-bytes");
+            return { stdout: "", stderr: "" } as never;
+        });
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({ name: "fernapi/fern-cli-generator", language: undefined, outputPath: outputDir })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        expect(loggingExecaMock).toHaveBeenCalledTimes(1);
+        const [, command, args] = loggingExecaMock.mock.calls[0] ?? [];
+        expect([command, ...(args ?? [])].join(" ")).toBe("cargo build --release --bin acme");
+        expect(await readdir(path.join(outputDir, "fern-dist"))).toEqual(["acme"]);
+    });
+
+    it("builds the CLI generator binary in the rust toolchain image in docker mode", async () => {
+        await writeFile(path.join(outputDir, "Cargo.toml"), '[package]\nname = "acme"\nversion = "0.1.0"\n');
+        loggingExecaMock.mockImplementationOnce(async () => {
+            await mkdir(path.join(outputDir, "target", "release"), { recursive: true });
+            await writeFile(path.join(outputDir, "target", "release", "acme"), "binary-bytes");
+            return { stdout: "", stderr: "" } as never;
+        });
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({ name: "fernapi/fern-cli-generator", language: undefined, outputPath: outputDir })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext(), mode: "docker" });
+
+        const [, command, args] = loggingExecaMock.mock.calls[0] ?? [];
+        expect(command).toBe("docker");
+        expect(args).toContain("rust:1");
+        // falls back to the [package] name when there is no [[bin]] section
+        expect(args?.slice(-4).join(" ")).toBe("build --release --bin acme");
+    });
+
+    it("fails CLI generator packaging when cargo produces no binary", async () => {
+        await writeFile(path.join(outputDir, "Cargo.toml"), '[package]\nname = "acme"\nversion = "0.1.0"\n');
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({ name: "fernapi/fern-cli-generator", language: undefined, outputPath: outputDir })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await expect(packLocalOutputForGroup({ group, context: createMockTaskContext() })).rejects.toThrow();
+        // the empty fern-dist/ is cleaned up on failure
+        expect(await readdir(outputDir)).not.toContain("fern-dist");
+    });
+
     it("packs the non-test csproj for csharp generators", async () => {
         const projectDir = path.join(outputDir, "src", "Acme");
         const testDir = path.join(outputDir, "src", "Acme.Test");

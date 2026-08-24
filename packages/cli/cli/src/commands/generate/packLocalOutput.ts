@@ -1,4 +1,4 @@
-import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration-loader";
+import { FERNIGNORE_FILENAME, GeneratorName, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration-loader";
 import { assertNever, ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -61,14 +61,9 @@ export async function packLocalOutputForGroup({
             );
             continue;
         }
-        const language = generator.language;
-        if (language == null) {
-            context.logger.warn(`Skipping packaging for ${generator.name}: could not determine language.`);
-            continue;
-        }
         try {
-            const artifactProduced = await packOutputForLanguage({
-                language,
+            const artifactProduced = await packGeneratorOutput({
+                generator,
                 outputPath,
                 context,
                 mode,
@@ -97,6 +92,34 @@ export async function packLocalOutputForGroup({
 }
 
 /** Packs one generator's output. Returns whether a package artifact was produced in fern-dist/. */
+async function packGeneratorOutput({
+    generator,
+    outputPath,
+    context,
+    mode,
+    runner,
+    version
+}: {
+    generator: generatorsYml.GeneratorInvocation;
+    outputPath: AbsoluteFilePath;
+    context: TaskContext;
+    mode: PackMode;
+    runner: ContainerRunner;
+    version: string | undefined;
+}): Promise<boolean> {
+    // The CLI generator emits a Rust binary rather than a library package, so it has its own
+    // packaging path and no entry in the language map (its name carries no language).
+    if (generator.name === GeneratorName.CLI) {
+        return packCliOutput({ outputPath, context, mode, runner });
+    }
+    const language = generator.language;
+    if (language == null) {
+        context.logger.warn(`Skipping packaging for ${generator.name}: could not determine language.`);
+        return false;
+    }
+    return packOutputForLanguage({ language, outputPath, context, mode, runner, version });
+}
+
 async function packOutputForLanguage({
     language,
     outputPath,
@@ -114,7 +137,7 @@ async function packOutputForLanguage({
 }): Promise<boolean> {
     const distDir = join(outputPath, RelativeFilePath.of(PACK_OUTPUT_DIRECTORY));
     const run = async (commands: string[][]) => {
-        await runPackCommands({ commands, language, outputPath, context, mode, runner });
+        await runPackCommands({ commands, toolchain: language, outputPath, context, mode, runner });
     };
     switch (language) {
         case "typescript": {
@@ -302,20 +325,95 @@ async function packOutputForLanguage({
 }
 
 /**
+ * Builds the CLI produced by the CLI generator. The generated output is a Cargo workspace whose
+ * root package builds the CLI binary, so the shareable artifact is the compiled executable rather
+ * than a registry package. The binary only runs on the platform it was built for; multi-platform
+ * archives and installers come from cargo-dist in the generated release workflow.
+ */
+async function packCliOutput({
+    outputPath,
+    context,
+    mode,
+    runner
+}: {
+    outputPath: AbsoluteFilePath;
+    context: TaskContext;
+    mode: PackMode;
+    runner: ContainerRunner;
+}): Promise<boolean> {
+    const binaryName = await getCargoBinaryName(outputPath);
+    if (binaryName == null) {
+        throw new Error(
+            "Could not determine the CLI binary name: no [[bin]] or [package] name found in the generated Cargo.toml."
+        );
+    }
+    const distDir = join(outputPath, RelativeFilePath.of(PACK_OUTPUT_DIRECTORY));
+    await mkdir(distDir, { recursive: true });
+    context.logger.info(`Compiling the ${binaryName} CLI in release mode; this can take several minutes.`);
+    await runPackCommands({
+        commands: [["cargo", "build", "--release", "--bin", binaryName]],
+        toolchain: "rust",
+        outputPath,
+        context,
+        mode,
+        runner
+    });
+    const releaseDir = join(outputPath, RelativeFilePath.of("target/release"));
+    const builtBinary = (await readdir(releaseDir).catch(() => [])).find(
+        (file) => file === binaryName || file === `${binaryName}.exe`
+    );
+    if (builtBinary == null) {
+        throw new Error(`cargo build did not produce ${binaryName} in target/release.`);
+    }
+    // copyFile preserves the executable bit, so the artifact is runnable as-is.
+    await copyFile(join(releaseDir, RelativeFilePath.of(builtBinary)), join(distDir, RelativeFilePath.of(builtBinary)));
+    const platform = mode === "docker" ? "linux, inside the Rust toolchain image" : "this host";
+    context.logger.warn(
+        `${builtBinary} only runs on the platform it was compiled for (${platform}). ` +
+            "Use the generated release workflow for multi-platform archives and installers."
+    );
+    logArtifacts({ distDir, context });
+    return true;
+}
+
+/** The name cargo builds the CLI binary under: the root package's [[bin]] name, else its package name. */
+async function getCargoBinaryName(outputPath: AbsoluteFilePath): Promise<string | undefined> {
+    const cargoTomlPath = join(outputPath, RelativeFilePath.of("Cargo.toml"));
+    if (!(await doesPathExist(cargoTomlPath))) {
+        return undefined;
+    }
+    const contents = await readFile(cargoTomlPath, "utf-8");
+    const binSection = contents.split(/^\[\[bin\]\]\s*$/m)[1];
+    const binName = binSection != null ? getFirstCargoName(binSection) : undefined;
+    if (binName != null) {
+        return binName;
+    }
+    const packageSection = contents.split(/^\[package\]\s*$/m)[1];
+    return packageSection != null ? getFirstCargoName(packageSection) : undefined;
+}
+
+/** Reads the `name = "..."` key from the start of a TOML section (before the next table header). */
+function getFirstCargoName(section: string): string | undefined {
+    const beforeNextTable = section.split(/^\[/m)[0] ?? "";
+    return /^\s*name\s*=\s*"([^"]+)"/m.exec(beforeNextTable)?.[1];
+}
+
+/**
  * Runs the toolchain commands for a language, either directly on the host (cwd = output dir) or
  * inside the language's official Docker image with the output directory mounted at /workspace.
  * Commands only use paths relative to the output directory, so they work identically in both modes.
  */
 async function runPackCommands({
     commands,
-    language,
+    toolchain,
     outputPath,
     context,
     mode,
     runner
 }: {
     commands: string[][];
-    language: generatorsYml.GenerationLanguage;
+    /** Key into PACK_DOCKER_IMAGES; the generation language for SDKs, or "rust" for the CLI. */
+    toolchain: string;
     outputPath: AbsoluteFilePath;
     context: TaskContext;
     mode: PackMode;
@@ -337,9 +435,9 @@ async function runPackCommands({
             });
             continue;
         }
-        const image = PACK_DOCKER_IMAGES[language];
+        const image = PACK_DOCKER_IMAGES[toolchain];
         if (image == null) {
-            throw new Error(`No Docker toolchain image is configured for ${language}.`);
+            throw new Error(`No Docker toolchain image is configured for ${toolchain}.`);
         }
         // Mount under a directory that keeps the output folder's name so toolchains that derive
         // package identity from the directory name (e.g. Gradle's project name) behave the same

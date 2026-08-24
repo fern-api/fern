@@ -1,0 +1,5 @@
+- summary: |
+    `fern generate --package` now builds an artifact for CLI-generator output: it compiles the
+    generated Rust CLI in release mode and copies the binary into `fern-dist/`. Previously the CLI
+    generator was skipped because its name carries no generation language.
+  type: feat
