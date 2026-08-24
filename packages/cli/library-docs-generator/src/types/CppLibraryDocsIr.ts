@@ -306,6 +306,13 @@ export interface CppGroupIr {
     memberRefs: string[];
     innerClassRefs: string[];
     innerNamespaceRefs: string[];
+    // Members are inlined by the parser. Optional because an IR produced before
+    // inlining shipped omits them entirely.
+    classes?: CppClassIr[];
+    functions?: CppFunctionIr[];
+    enums?: CppEnumIr[];
+    typedefs?: CppTypedefIr[];
+    variables?: CppVariableIr[];
     subgroups: CppGroupIr[];
 }
 
