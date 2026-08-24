@@ -1,0 +1,3 @@
+- summary: |
+    Apply plain OpenAPI x-fern-base-path values to endpoints within their own documents.
+  type: fix
