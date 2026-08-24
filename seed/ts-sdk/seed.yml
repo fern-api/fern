@@ -597,6 +597,15 @@ fixtures:
   ts-multi-env-url-templating:
     - outputFolder: no-custom-config
       customConfig: null
+  ts-bytes-upload-path-param:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: bigint
+      customConfig:
+        useBigInt: true
+    - outputFolder: no-inline-path-parameters
+      customConfig:
+        inlinePathParameters: false
 
 scripts:
   - image: fernapi/ts-seed

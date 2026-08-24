@@ -6,6 +6,7 @@ export * from "./generateHeaders.js";
 export * from "./getAvailabilityDocs.js";
 export * from "./getNonVariablePathParameters.js";
 export * from "./getParameterNameForFile.js";
+export * from "./getPathParameterExampleFallback.js";
 export * from "./getPathParametersForEndpointSignature.js";
 export * from "./isLiteralHeader.js";
 export * from "./requestOptionsParameter.js";
