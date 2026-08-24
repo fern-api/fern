@@ -1,0 +1,7 @@
+- summary: |
+    Support GraphQL schemas whose SDL is split across multiple files. GraphQL specs that share a
+    namespace are now compiled into a single schema, so federated subgraphs (which reference types
+    owned by sibling files and extend the same `Query`/`Mutation` types) can be documented as one
+    API. Federation composition directives such as `@key`, `@external` and `@link` are ignored, and
+    `@deprecated` is now surfaced on operations, fields, arguments and enum values.
+  type: feat

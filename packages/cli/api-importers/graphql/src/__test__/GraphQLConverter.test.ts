@@ -19,16 +19,18 @@ describe("GraphQLConverter", async () => {
         }
 
         it(fixture.name, async () => {
-            const fixturePath = join(
-                FIXTURES_DIR,
-                RelativeFilePath.of(fixture.name),
-                RelativeFilePath.of("schema.graphql")
-            );
+            const fixtureDir = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name));
+            // A fixture may hold several SDL files, which is how a schema split across federated
+            // subgraphs is expressed.
+            const filePaths = (await readdir(fixtureDir))
+                .filter((file) => file.endsWith(".graphql"))
+                .sort()
+                .map((file) => join(fixtureDir, RelativeFilePath.of(file)));
             const context = createMockTaskContext();
 
             const converter = new GraphQLConverter({
                 context,
-                filePath: fixturePath
+                filePath: filePaths
             });
 
             const result = await converter.convert();

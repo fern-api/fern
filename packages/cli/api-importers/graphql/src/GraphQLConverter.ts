@@ -3,7 +3,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import {
-    buildSchema,
+    buildASTSchema,
     GraphQLArgument as GQLArgument,
     GraphQLEnumType,
     GraphQLField,
@@ -18,6 +18,7 @@ import {
     GraphQLSchema,
     GraphQLUnionType
 } from "graphql";
+import { mergeGraphQlDocuments } from "./mergeGraphQlDocuments.js";
 
 export interface GraphQLConverterResult {
     graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
@@ -47,7 +48,7 @@ interface PendingOperation {
 export class GraphQLConverter {
     private schema: GraphQLSchema | undefined;
     private context: TaskContext;
-    private filePath: AbsoluteFilePath;
+    private filePaths: AbsoluteFilePath[];
     private namespace: string | undefined;
     private processingTypes: Set<string> = new Set();
     private types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
@@ -60,12 +61,16 @@ export class GraphQLConverter {
         examples
     }: {
         context: TaskContext;
-        filePath: AbsoluteFilePath;
+        /**
+         * One or more SDL files that make up a single schema. Multiple files are merged, which is
+         * how federated subgraphs owned by different teams are documented as one API.
+         */
+        filePath: AbsoluteFilePath | AbsoluteFilePath[];
         namespace?: string;
         examples?: GraphQlOperationExamplesInput[];
     }) {
         this.context = context;
-        this.filePath = filePath;
+        this.filePaths = Array.isArray(filePath) ? filePath : [filePath];
         this.namespace = namespace;
         if (examples != null) {
             for (const entry of examples) {
@@ -84,6 +89,26 @@ export class GraphQLConverter {
                 }
             }
         }
+    }
+
+    // `@deprecated` is a standard, consumer-facing directive (unlike the federation directives
+    // dropped during merging), so it is carried through as availability metadata.
+    private availabilityOf(node: { deprecationReason?: string | null }): "Deprecated" | undefined {
+        return node.deprecationReason != null ? "Deprecated" : undefined;
+    }
+
+    // The deprecation reason has nowhere to live in the FDR shape other than the description,
+    // and it is the part consumers act on ("use X instead").
+    private describeWithDeprecation(node: {
+        description?: string | null;
+        deprecationReason?: string | null;
+    }): string | undefined {
+        const description = node.description ?? undefined;
+        if (node.deprecationReason == null) {
+            return description;
+        }
+        const deprecation = `**Deprecated:** ${node.deprecationReason}`;
+        return description != null ? `${description}\n\n${deprecation}` : deprecation;
     }
 
     private isBuiltInScalar(typeName: string): boolean {
@@ -125,8 +150,24 @@ export class GraphQLConverter {
     }
 
     public async convert(): Promise<GraphQLConverterResult> {
-        const sdlContent = await readFile(this.filePath, "utf-8");
-        this.schema = buildSchema(sdlContent);
+        const sources = await Promise.all(
+            this.filePaths.map(async (filePath) => ({
+                filePath,
+                sdl: await readFile(filePath, "utf-8")
+            }))
+        );
+
+        const { document, conflicts } = mergeGraphQlDocuments(sources);
+        for (const conflict of conflicts) {
+            this.context.logger.warn(
+                `GraphQL schema conflict: ${conflict.typeName}.${conflict.memberName} is defined in both ` +
+                    `${conflict.kept} and ${conflict.dropped}. Keeping the definition from ${conflict.kept}.`
+            );
+        }
+
+        // `assumeValidSDL` keeps subgraphs ingestible: they reference types owned by sibling files
+        // and carry federation directives whose definitions live in the composed supergraph.
+        this.schema = buildASTSchema(document, { assumeValidSDL: true });
 
         this.collectTypeDefinitions();
 
@@ -380,8 +421,8 @@ export class GraphQLConverter {
             operationType,
             name,
             displayName: undefined,
-            description: field.description ?? undefined,
-            availability: undefined,
+            description: this.describeWithDeprecation(field),
+            availability: this.availabilityOf(field),
             fieldPath: fieldPath != null && fieldPath.length > 0 ? fieldPath : undefined,
             arguments: args.length > 0 ? args : undefined,
             returnType: this.convertOutputType(field.type),
@@ -393,8 +434,8 @@ export class GraphQLConverter {
     private convertArgument(arg: GQLArgument): FdrAPI.api.v1.register.GraphQlArgument {
         return {
             name: arg.name,
-            description: arg.description ?? undefined,
-            availability: undefined,
+            description: this.describeWithDeprecation(arg),
+            availability: this.availabilityOf(arg),
             type: this.convertInputType(arg.type),
             defaultValue: arg.defaultValue
         };
@@ -582,8 +623,8 @@ export class GraphQLConverter {
             type: "enum",
             values: values.map((value) => ({
                 value: value.name,
-                description: value.description ?? undefined,
-                availability: undefined
+                description: this.describeWithDeprecation(value),
+                availability: this.availabilityOf(value)
             })),
             default: undefined
         };
@@ -595,8 +636,8 @@ export class GraphQLConverter {
             ([fieldName, field]) => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertOutputType(field.type),
-                description: field.description ?? undefined,
-                availability: undefined,
+                description: this.describeWithDeprecation(field),
+                availability: this.availabilityOf(field),
                 propertyAccess: undefined,
                 arguments: field.args.length > 0 ? field.args.map((arg) => this.convertArgument(arg)) : undefined
             })
@@ -658,8 +699,8 @@ export class GraphQLConverter {
             ([fieldName, field]) => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertOutputType(field.type),
-                description: field.description ?? undefined,
-                availability: undefined,
+                description: this.describeWithDeprecation(field),
+                availability: this.availabilityOf(field),
                 propertyAccess: undefined,
                 arguments: field.args.length > 0 ? field.args.map((arg) => this.convertArgument(arg)) : undefined
             })
@@ -679,8 +720,8 @@ export class GraphQLConverter {
             ([fieldName, field]) => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertInputType(field.type),
-                description: field.description ?? undefined,
-                availability: undefined,
+                description: this.describeWithDeprecation(field),
+                availability: this.availabilityOf(field),
                 propertyAccess: undefined
             })
         );

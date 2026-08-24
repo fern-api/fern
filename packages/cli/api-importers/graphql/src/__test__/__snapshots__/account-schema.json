@@ -180,7 +180,8 @@
       "id": "mutation_createUserWithPassword",
       "operationType": "MUTATION",
       "name": "createUserWithPassword",
-      "description": "Creates a user with password.",
+      "description": "Creates a user with password.\n\n**Deprecated:** This mutation is deprecated and will be removed in a future release. Use `createUser` instead.",
+      "availability": "Deprecated",
       "fieldPath": [
         "user"
       ],
@@ -5320,7 +5321,8 @@
                 "value": "CreateUserWithPasswordResult"
               }
             },
-            "description": "Creates a user with password.",
+            "description": "Creates a user with password.\n\n**Deprecated:** This mutation is deprecated and will be removed in a future release. Use `createUser` instead.",
+            "availability": "Deprecated",
             "arguments": [
               {
                 "name": "input",
