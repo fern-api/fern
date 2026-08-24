@@ -219,8 +219,9 @@ impl KeyringStore for FileKeyringStore {
 // Chunking wrapper (Windows Credential Manager blob-size limit)
 // ---------------------------------------------------------------------------
 
-/// Marker written to the primary entry when a value is split across
-/// multiple keyring entries, followed by the decimal chunk count.
+/// Prefix of the marker written to the primary entry when a value is
+/// split across multiple keyring entries. The full marker is
+/// `<prefix><chunk count>:<total UTF-16 code units>`.
 /// Deliberately not valid JSON and not a plausible token prefix, so a
 /// plain value stored by an older binary can never be misread as chunked.
 const CHUNK_MARKER_PREFIX: &str = "__fern-cli-chunked-v1__:";
@@ -232,12 +233,25 @@ const CHUNK_MARKER_PREFIX: &str = "__fern-cli-chunked-v1__:";
 /// so chunking there is harmless.
 const MAX_ENTRY_UTF16_UNITS: usize = 1024;
 
+/// Contents of a chunk marker: how many chunks the value was split into
+/// and the total UTF-16 length of the reassembled value.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+struct ChunkMarker {
+    count: usize,
+    utf16_len: usize,
+}
+
 /// Wraps a [`KeyringStore`] and transparently splits values that exceed
 /// [`MAX_ENTRY_UTF16_UNITS`] across sibling entries.
 ///
 /// Layout for a value split into `n` chunks under `(service, account)`:
-/// - `(service, account)`        → `__fern-cli-chunked-v1__:<n>`
+/// - `(service, account)`        → `__fern-cli-chunked-v1__:<n>:<utf16_len>`
 /// - `(service, account#1..=n)`  → the chunks, in order
+///
+/// The marker carries the reassembled value's UTF-16 length so that a
+/// torn write — the process dying between chunk writes, leaving a stale
+/// marker describing a mix of old and new chunks — is detected on read
+/// instead of yielding a corrupt value. See [`ChunkedKeyringStore::get`].
 ///
 /// Values that fit in one entry are stored as-is, so existing plain
 /// credentials written by older binaries read back unchanged.
@@ -255,8 +269,30 @@ impl<S: KeyringStore> ChunkedKeyringStore<S> {
         format!("{account}#{index}")
     }
 
-    fn parse_chunk_count(value: &str) -> Option<usize> {
-        value.strip_prefix(CHUNK_MARKER_PREFIX)?.parse().ok()
+    /// Parse a primary entry as a chunk marker. `None` means the value is
+    /// a plain (unchunked) credential and should be returned as-is.
+    fn parse_marker(value: &str) -> Option<ChunkMarker> {
+        let (count, utf16_len) = value.strip_prefix(CHUNK_MARKER_PREFIX)?.split_once(':')?;
+        Some(ChunkMarker {
+            count: count.parse().ok()?,
+            utf16_len: utf16_len.parse().ok()?,
+        })
+    }
+
+    fn format_marker(marker: ChunkMarker) -> String {
+        format!("{CHUNK_MARKER_PREFIX}{}:{}", marker.count, marker.utf16_len)
+    }
+
+    /// Chunk count recorded in the primary entry, or 0 if it is absent or
+    /// holds a plain value. Used to reap chunks the new value doesn't use.
+    fn stored_chunk_count(&self, service: &str, account: &str) -> Result<usize, CliError> {
+        Ok(self
+            .inner
+            .get(service, account)?
+            .as_deref()
+            .and_then(Self::parse_marker)
+            .map(|marker| marker.count)
+            .unwrap_or(0))
     }
 
     /// Split on char boundaries so no chunk exceeds the per-entry UTF-16
@@ -286,9 +322,10 @@ impl<S: KeyringStore> KeyringStore for ChunkedKeyringStore<S> {
         let Some(primary) = self.inner.get(service, account)? else {
             return Ok(None);
         };
-        let Some(count) = Self::parse_chunk_count(&primary) else {
+        let Some(marker) = Self::parse_marker(&primary) else {
             return Ok(Some(primary));
         };
+        let ChunkMarker { count, utf16_len } = marker;
         let mut value = String::new();
         for i in 1..=count {
             match self.inner.get(service, &Self::chunk_account(account, i))? {
@@ -305,16 +342,23 @@ impl<S: KeyringStore> KeyringStore for ChunkedKeyringStore<S> {
                 }
             }
         }
+        // A length mismatch means the chunk set does not match the marker
+        // that describes it — the tell-tale of a write torn partway through
+        // (process killed between chunk writes), which leaves a stale marker
+        // pointing at a mix of old and new chunks. Reassembling that would
+        // hand back a corrupt token, so treat it as absent and re-login.
+        let actual_utf16_len = value.encode_utf16().count();
+        if actual_utf16_len != utf16_len {
+            tracing::warn!(
+                "keyring entry {service}/{account} reassembled to {actual_utf16_len} UTF-16 units but its marker records {utf16_len}; treating credential as absent"
+            );
+            return Ok(None);
+        }
         Ok(Some(value))
     }
 
     fn set(&self, service: &str, account: &str, value: &str) -> Result<(), CliError> {
-        let old_count = self
-            .inner
-            .get(service, account)?
-            .as_deref()
-            .and_then(Self::parse_chunk_count)
-            .unwrap_or(0);
+        let old_count = self.stored_chunk_count(service, account)?;
 
         let chunks = Self::split_chunks(value);
         let new_count = if chunks.len() > 1 { chunks.len() } else { 0 };
@@ -323,12 +367,18 @@ impl<S: KeyringStore> KeyringStore for ChunkedKeyringStore<S> {
         } else {
             // Chunks first, marker last: a failure mid-write leaves the
             // previous primary entry (plain value or old marker) intact.
+            // The old marker then describes a chunk set it no longer
+            // matches, which `get` catches via the recorded UTF-16 length.
             for (i, chunk) in chunks.iter().enumerate() {
                 self.inner
                     .set(service, &Self::chunk_account(account, i + 1), chunk)?;
             }
+            let marker = ChunkMarker {
+                count: chunks.len(),
+                utf16_len: value.encode_utf16().count(),
+            };
             self.inner
-                .set(service, account, &format!("{CHUNK_MARKER_PREFIX}{}", chunks.len()))?;
+                .set(service, account, &Self::format_marker(marker))?;
         }
 
         // Remove chunks left over from a previous, larger value.
@@ -339,12 +389,7 @@ impl<S: KeyringStore> KeyringStore for ChunkedKeyringStore<S> {
     }
 
     fn delete(&self, service: &str, account: &str) -> Result<(), CliError> {
-        let old_count = self
-            .inner
-            .get(service, account)?
-            .as_deref()
-            .and_then(Self::parse_chunk_count)
-            .unwrap_or(0);
+        let old_count = self.stored_chunk_count(service, account)?;
         self.inner.delete(service, account)?;
         for i in 1..=old_count {
             self.inner.delete(service, &Self::chunk_account(account, i))?;
@@ -621,7 +666,10 @@ mod tests {
 
         // Primary entry holds the marker, chunks hold the payload.
         let primary = mock.get("svc", "acct").unwrap().unwrap();
-        assert_eq!(primary, format!("{CHUNK_MARKER_PREFIX}3"));
+        assert_eq!(
+            primary,
+            format!("{CHUNK_MARKER_PREFIX}3:{}", value.encode_utf16().count())
+        );
         for ((_, account), chunk) in store_snapshot_chunks(&mock) {
             assert_ne!(account, "acct");
             assert!(
@@ -703,6 +751,37 @@ mod tests {
         mock.delete("svc", "acct#2").unwrap();
 
         assert_eq!(store.get("svc", "acct").unwrap(), None);
+    }
+
+    #[test]
+    fn chunked_store_torn_write_detected_by_length() {
+        let mock = MockKeyringStore::new();
+        let store = ChunkedKeyringStore::new(mock.clone());
+
+        // Three chunks on disk, then a write that dies after replacing only
+        // the first chunk with a shorter value. The stale marker still says
+        // three chunks, so `get` would otherwise splice new chunk 1 onto old
+        // chunks 2-3 and hand back a corrupt token.
+        let big = value_of_utf16_units(MAX_ENTRY_UTF16_UNITS * 3);
+        store.set("svc", "acct", &big).unwrap();
+        mock.set("svc", "acct#1", "truncated-replacement").unwrap();
+
+        assert_eq!(store.get("svc", "acct").unwrap(), None);
+    }
+
+    #[test]
+    fn chunked_store_marker_without_length_is_not_treated_as_chunked() {
+        let mock = MockKeyringStore::new();
+        // A count-only marker is not a marker this version writes; it must
+        // not be parsed as one and silently reassemble missing chunks.
+        mock.set("svc", "acct", &format!("{CHUNK_MARKER_PREFIX}2"))
+            .unwrap();
+
+        let store = ChunkedKeyringStore::new(mock);
+        assert_eq!(
+            store.get("svc", "acct").unwrap().as_deref(),
+            Some(format!("{CHUNK_MARKER_PREFIX}2").as_str())
+        );
     }
 
     #[test]

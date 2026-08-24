@@ -5,5 +5,7 @@
     'password encoded as UTF-16' is longer than platform limit of 2560 chars".
     Large OAuth token bundles are now transparently split across multiple
     Windows Credential Manager entries and reassembled on read, so credentials
-    stay in the OS keyring. Existing credentials remain readable.
+    stay in the OS keyring. A partially written entry set is detected on read
+    and reported as a missing credential rather than a corrupt token. Existing
+    credentials remain readable.
   type: fix
