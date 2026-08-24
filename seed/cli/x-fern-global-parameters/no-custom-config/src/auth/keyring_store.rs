@@ -25,6 +25,13 @@
 //! with many scopes easily exceeds. VS Code and the Azure CLI chunk the
 //! same way for the same reason.
 //!
+//! Only Windows *writes* chunks. macOS Keychain and secret-service have no
+//! comparable limit, so chunking there would change the on-disk shape of a
+//! credential that already worked — and an older binary, which knows
+//! nothing of markers, would read the marker back and send it as the
+//! token. Reads stay marker-aware on every platform, so a chunked entry is
+//! always reassembled correctly wherever it is encountered.
+//!
 //! ## Entry shape
 //!
 //! Keyed by `(service=<cli_name>, account=<scheme_name>)`. The value is an
@@ -255,14 +262,37 @@ struct ChunkMarker {
 ///
 /// Values that fit in one entry are stored as-is, so existing plain
 /// credentials written by older binaries read back unchanged.
+///
+/// Writing chunks is opt-in per platform (see
+/// [`for_platform`](Self::for_platform)); reading them never is.
 #[derive(Debug)]
 pub struct ChunkedKeyringStore<S: KeyringStore> {
     inner: S,
+    /// Whether oversized values are split on write. Reads reassemble
+    /// chunked entries regardless of this flag.
+    chunk_writes: bool,
 }
 
 impl<S: KeyringStore> ChunkedKeyringStore<S> {
+    /// Wrap `inner`, splitting oversized values on write.
     pub fn new(inner: S) -> Self {
-        Self { inner }
+        Self::with_chunk_writes(inner, true)
+    }
+
+    /// Wrap `inner`, splitting on write only where the platform requires
+    /// it — today, Windows alone. Elsewhere values are written plain, byte
+    /// for byte as a pre-chunking binary would, so downgrading the CLI
+    /// cannot strand a credential behind a marker the old build can't read.
+    /// Reads stay marker-aware either way.
+    pub fn for_platform(inner: S) -> Self {
+        Self::with_chunk_writes(inner, cfg!(target_os = "windows"))
+    }
+
+    fn with_chunk_writes(inner: S, chunk_writes: bool) -> Self {
+        Self {
+            inner,
+            chunk_writes,
+        }
     }
 
     fn chunk_account(account: &str, index: usize) -> String {
@@ -360,7 +390,14 @@ impl<S: KeyringStore> KeyringStore for ChunkedKeyringStore<S> {
     fn set(&self, service: &str, account: &str, value: &str) -> Result<(), CliError> {
         let old_count = self.stored_chunk_count(service, account)?;
 
-        let chunks = Self::split_chunks(value);
+        let chunks = if self.chunk_writes {
+            Self::split_chunks(value)
+        } else {
+            // No blob-size limit on this platform: store plain at any size.
+            // Stale chunks from an entry written by a chunking build are
+            // still reaped below.
+            vec![value.to_string()]
+        };
         let new_count = if chunks.len() > 1 { chunks.len() } else { 0 };
         if new_count == 0 {
             self.inner.set(service, account, value)?;
@@ -427,7 +464,7 @@ pub fn auto_store() -> Arc<dyn KeyringStore> {
     {
         if OsKeyringStore::probe().is_ok() {
             tracing::debug!("Using OS keyring backend for credential storage");
-            return Arc::new(ChunkedKeyringStore::new(OsKeyringStore));
+            return Arc::new(ChunkedKeyringStore::for_platform(OsKeyringStore));
         }
     }
     tracing::debug!("OS keyring unavailable; falling back to file backend");
@@ -782,6 +819,66 @@ mod tests {
             store.get("svc", "acct").unwrap().as_deref(),
             Some(format!("{CHUNK_MARKER_PREFIX}2").as_str())
         );
+    }
+
+    #[test]
+    fn chunked_store_write_gating_follows_platform() {
+        let mock = MockKeyringStore::new();
+        let store = ChunkedKeyringStore::for_platform(mock.clone());
+
+        let big = value_of_utf16_units(MAX_ENTRY_UTF16_UNITS * 2);
+        store.set("svc", "acct", &big).unwrap();
+
+        if cfg!(target_os = "windows") {
+            assert_eq!(
+                mock.snapshot().len(),
+                3,
+                "Windows must split oversized values: marker + 2 chunks"
+            );
+        } else {
+            // Byte-identical to a pre-chunking binary, so a downgraded CLI
+            // still reads a usable credential rather than the marker.
+            assert_eq!(
+                mock.snapshot().len(),
+                1,
+                "platforms without a blob limit must store plain"
+            );
+            assert_eq!(mock.get("svc", "acct").unwrap().as_deref(), Some(big.as_str()));
+        }
+
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some(big.as_str()));
+    }
+
+    #[test]
+    fn chunked_store_reads_chunks_even_when_writes_are_gated() {
+        let mock = MockKeyringStore::new();
+        let big = value_of_utf16_units(MAX_ENTRY_UTF16_UNITS * 2);
+        // Written by a chunking build.
+        ChunkedKeyringStore::new(mock.clone())
+            .set("svc", "acct", &big)
+            .unwrap();
+
+        // A non-chunking wrapper must still reassemble it.
+        let reader = ChunkedKeyringStore::with_chunk_writes(mock, false);
+        assert_eq!(reader.get("svc", "acct").unwrap().as_deref(), Some(big.as_str()));
+    }
+
+    #[test]
+    fn chunked_store_gated_write_reaps_chunks_from_a_chunking_build() {
+        let mock = MockKeyringStore::new();
+        let big = value_of_utf16_units(MAX_ENTRY_UTF16_UNITS * 3);
+        ChunkedKeyringStore::new(mock.clone())
+            .set("svc", "acct", &big)
+            .unwrap();
+        assert_eq!(mock.snapshot().len(), 4);
+
+        // Re-login on a platform that stores plain must not leave the old
+        // chunk entries behind.
+        let plain = ChunkedKeyringStore::with_chunk_writes(mock.clone(), false);
+        plain.set("svc", "acct", &big).unwrap();
+
+        assert_eq!(mock.snapshot().len(), 1, "stale chunks must be removed");
+        assert_eq!(plain.get("svc", "acct").unwrap().as_deref(), Some(big.as_str()));
     }
 
     #[test]

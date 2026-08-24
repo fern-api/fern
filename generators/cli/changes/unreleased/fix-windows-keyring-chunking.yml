@@ -6,6 +6,8 @@
     Large OAuth token bundles are now transparently split across multiple
     Windows Credential Manager entries and reassembled on read, so credentials
     stay in the OS keyring. A partially written entry set is detected on read
-    and reported as a missing credential rather than a corrupt token. Existing
+    and reported as a missing credential rather than a corrupt token. Only
+    Windows writes split entries — macOS Keychain and secret-service have no
+    such limit and keep storing credentials exactly as before. Existing
     credentials remain readable.
   type: fix
