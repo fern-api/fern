@@ -74,9 +74,6 @@ export async function emitPublishWorkflow(args: {
  * so the step is a no-op there; the rustup fallback covers containers and
  * self-hosted runners. Same shape as the equivalent step cargo-dist emits
  * into `release.yml`, which is why that file needs no allowlist exception.
- *
- * Nothing here caches: the action's built-in `rust-cache` is itself a
- * third-party action, and cargo-dist's release builds run uncached too.
  */
 const RUST_SETUP_STEP = `      - name: Set up Rust
         shell: bash
@@ -86,6 +83,34 @@ const RUST_SETUP_STEP = `      - name: Set up Rust
             echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
           fi
 `;
+
+/**
+ * Cache the cargo registry and the build directory between runs.
+ *
+ * `actions-rust-lang/setup-rust-toolchain` did this implicitly by wrapping
+ * `Swatinem/rust-cache`; both are third-party, so caching is done here with
+ * `actions/cache` instead. `restore-keys` gives a prefix match when
+ * `Cargo.lock` changes, so a dependency bump still starts from the previous
+ * run's artifacts rather than from nothing.
+ *
+ * `target/` holds per-triple artifacts, hence `cacheKeySuffix` — the publish
+ * matrix passes its target so the five cross-compiles don't fight over one
+ * cache entry.
+ */
+function rustCacheStep(cacheKeySuffix: string): string {
+    return `      - name: Cache cargo registry and build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            target
+          key: cargo-\${{ runner.os }}-${cacheKeySuffix}-\${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            cargo-\${{ runner.os }}-${cacheKeySuffix}-
+`;
+}
 
 /**
  * Build+test-only workflow YAML — the `check`, `compile`, and `test`
@@ -111,6 +136,7 @@ jobs:
         uses: actions/checkout@v6
 
 ${RUST_SETUP_STEP}
+${rustCacheStep("check")}
       - name: Check
         run: cargo check
 
@@ -121,6 +147,7 @@ ${RUST_SETUP_STEP}
         uses: actions/checkout@v6
 
 ${RUST_SETUP_STEP}
+${rustCacheStep("compile")}
       - name: Compile
         run: cargo build
 
@@ -131,6 +158,7 @@ ${RUST_SETUP_STEP}
         uses: actions/checkout@v6
 
 ${RUST_SETUP_STEP}
+${rustCacheStep("test")}
       - name: Test
         run: cargo test
 `;
@@ -189,6 +217,7 @@ jobs:
         uses: actions/checkout@v6
 
 ${RUST_SETUP_STEP}
+${rustCacheStep("check")}
       - name: Check
         run: cargo check
 
@@ -199,6 +228,7 @@ ${RUST_SETUP_STEP}
         uses: actions/checkout@v6
 
 ${RUST_SETUP_STEP}
+${rustCacheStep("compile")}
       - name: Compile
         run: cargo build
 
@@ -209,6 +239,7 @@ ${RUST_SETUP_STEP}
         uses: actions/checkout@v6
 
 ${RUST_SETUP_STEP}
+${rustCacheStep("test")}
       - name: Test
         run: cargo test
 
@@ -271,6 +302,7 @@ ${RUST_SETUP_STEP}
         shell: bash
         run: rustup target add \${{ matrix.rust-target }}
 
+${rustCacheStep("${{ matrix.rust-target }}")}
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:

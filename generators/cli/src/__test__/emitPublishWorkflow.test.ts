@@ -58,6 +58,17 @@ describe("emitPublishWorkflow", () => {
         expect(yaml).toContain('node-version: "lts/Krypton"');
     });
 
+    // `target/` holds per-triple artifacts, so the cross-compiling publish
+    // legs must not share one cache entry with each other or with the
+    // host-target build jobs.
+    it("keys the publish matrix cache per rust target", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain(
+            "key: cargo-${{ runner.os }}-${{ matrix.rust-target }}-${{ hashFiles('**/Cargo.lock') }}"
+        );
+    });
+
     it("includes backport detection for stable releases", async () => {
         const yaml = await emitAndRead(baseInfo);
 
@@ -304,5 +315,14 @@ describe("emitCiWorkflow", () => {
         // any job starts.
         expect(yaml).not.toContain("actions-rust-lang/");
         expect(yaml).toContain("https://sh.rustup.rs");
+    });
+
+    it("caches the cargo registry and target dir with actions/cache", async () => {
+        const yaml = await emitAndRead();
+
+        expect(yaml).toContain("uses: actions/cache@v4");
+        expect(yaml).toContain("key: cargo-${{ runner.os }}-check-${{ hashFiles('**/Cargo.lock') }}");
+        expect(yaml).toContain("restore-keys:");
+        expect(yaml).not.toContain("Swatinem/");
     });
 });
