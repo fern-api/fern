@@ -50,7 +50,7 @@ describe("runLocalParser", () => {
             context: makeContext(),
             sourcePath: AbsoluteFilePath.of("/tmp/src"),
             language: "PYTHON",
-            config: { packagePath: "pkg", sourceUrl: "https://github.com/acme/sdk" }
+            config: { packagePath: "pkg", sourceUrl: "https://github.com/acme/sdk", branch: "v2.0.0" }
         });
 
         // The IR is unwrapped from the `{ ir, metadata }` envelope the parser writes.
@@ -66,7 +66,11 @@ describe("runLocalParser", () => {
         expect(call.platform).toBeUndefined();
         expect(call.binds).toContain("/tmp/src:/repo:ro");
         // `undefined` fields (e.g. doxyfileContent for Python) are dropped by JSON.stringify.
-        expect(writtenConfig).toEqual({ packagePath: "pkg", sourceUrl: "https://github.com/acme/sdk" });
+        expect(writtenConfig).toEqual({
+            packagePath: "pkg",
+            sourceUrl: "https://github.com/acme/sdk",
+            branch: "v2.0.0"
+        });
     });
 
     it("uses the C++ image and forwards doxyfileContent", async () => {
