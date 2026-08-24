@@ -18,6 +18,13 @@
 //! [`AuthCredentialSource::Keyring`](crate::auth::AuthCredentialSource)
 //! reads through it at resolve time.
 //!
+//! The OS backend is wrapped in [`ChunkedKeyringStore`], which splits
+//! oversized values across multiple entries. Windows Credential Manager
+//! caps a credential blob at `CRED_MAX_CREDENTIAL_BLOB_SIZE` (2560 bytes,
+//! i.e. 1280 UTF-16 code units), which an OAuth token bundle for an API
+//! with many scopes easily exceeds. VS Code and the Azure CLI chunk the
+//! same way for the same reason.
+//!
 //! ## Entry shape
 //!
 //! Keyed by `(service=<cli_name>, account=<scheme_name>)`. The value is an
@@ -209,6 +216,148 @@ impl KeyringStore for FileKeyringStore {
 // existing `TokenCache` (oauth2.rs); see [`crate::auth::oauth_common`].
 
 // ---------------------------------------------------------------------------
+// Chunking wrapper (Windows Credential Manager blob-size limit)
+// ---------------------------------------------------------------------------
+
+/// Marker written to the primary entry when a value is split across
+/// multiple keyring entries, followed by the decimal chunk count.
+/// Deliberately not valid JSON and not a plausible token prefix, so a
+/// plain value stored by an older binary can never be misread as chunked.
+const CHUNK_MARKER_PREFIX: &str = "__fern-cli-chunked-v1__:";
+
+/// Maximum UTF-16 code units stored in a single entry. Windows Credential
+/// Manager rejects blobs over `CRED_MAX_CREDENTIAL_BLOB_SIZE` (2560 bytes
+/// = 1280 UTF-16 code units, enforced by the `keyring` crate); stay under
+/// it with margin. macOS Keychain and secret-service have no such limit,
+/// so chunking there is harmless.
+const MAX_ENTRY_UTF16_UNITS: usize = 1024;
+
+/// Wraps a [`KeyringStore`] and transparently splits values that exceed
+/// [`MAX_ENTRY_UTF16_UNITS`] across sibling entries.
+///
+/// Layout for a value split into `n` chunks under `(service, account)`:
+/// - `(service, account)`        → `__fern-cli-chunked-v1__:<n>`
+/// - `(service, account#1..=n)`  → the chunks, in order
+///
+/// Values that fit in one entry are stored as-is, so existing plain
+/// credentials written by older binaries read back unchanged.
+#[derive(Debug)]
+pub struct ChunkedKeyringStore<S: KeyringStore> {
+    inner: S,
+}
+
+impl<S: KeyringStore> ChunkedKeyringStore<S> {
+    pub fn new(inner: S) -> Self {
+        Self { inner }
+    }
+
+    fn chunk_account(account: &str, index: usize) -> String {
+        format!("{account}#{index}")
+    }
+
+    fn parse_chunk_count(value: &str) -> Option<usize> {
+        value.strip_prefix(CHUNK_MARKER_PREFIX)?.parse().ok()
+    }
+
+    /// Split on char boundaries so no chunk exceeds the per-entry UTF-16
+    /// budget (surrogate pairs are never divided).
+    fn split_chunks(value: &str) -> Vec<String> {
+        let mut chunks = Vec::new();
+        let mut current = String::new();
+        let mut units = 0usize;
+        for ch in value.chars() {
+            let n = ch.len_utf16();
+            if units + n > MAX_ENTRY_UTF16_UNITS && !current.is_empty() {
+                chunks.push(std::mem::take(&mut current));
+                units = 0;
+            }
+            current.push(ch);
+            units += n;
+        }
+        if !current.is_empty() || chunks.is_empty() {
+            chunks.push(current);
+        }
+        chunks
+    }
+}
+
+impl<S: KeyringStore> KeyringStore for ChunkedKeyringStore<S> {
+    fn get(&self, service: &str, account: &str) -> Result<Option<String>, CliError> {
+        let Some(primary) = self.inner.get(service, account)? else {
+            return Ok(None);
+        };
+        let Some(count) = Self::parse_chunk_count(&primary) else {
+            return Ok(Some(primary));
+        };
+        let mut value = String::new();
+        for i in 1..=count {
+            match self.inner.get(service, &Self::chunk_account(account, i))? {
+                Some(chunk) => value.push_str(&chunk),
+                // A missing chunk means the entry set was partially removed
+                // (e.g. by hand in a credential manager UI). Treat the whole
+                // credential as absent so the caller prompts a fresh login
+                // rather than resolving a truncated token.
+                None => {
+                    tracing::warn!(
+                        "keyring entry {service}/{account} is chunked but chunk {i}/{count} is missing; treating credential as absent"
+                    );
+                    return Ok(None);
+                }
+            }
+        }
+        Ok(Some(value))
+    }
+
+    fn set(&self, service: &str, account: &str, value: &str) -> Result<(), CliError> {
+        let old_count = self
+            .inner
+            .get(service, account)?
+            .as_deref()
+            .and_then(Self::parse_chunk_count)
+            .unwrap_or(0);
+
+        let chunks = Self::split_chunks(value);
+        let new_count = if chunks.len() > 1 { chunks.len() } else { 0 };
+        if new_count == 0 {
+            self.inner.set(service, account, value)?;
+        } else {
+            // Chunks first, marker last: a failure mid-write leaves the
+            // previous primary entry (plain value or old marker) intact.
+            for (i, chunk) in chunks.iter().enumerate() {
+                self.inner
+                    .set(service, &Self::chunk_account(account, i + 1), chunk)?;
+            }
+            self.inner
+                .set(service, account, &format!("{CHUNK_MARKER_PREFIX}{}", chunks.len()))?;
+        }
+
+        // Remove chunks left over from a previous, larger value.
+        for i in (new_count + 1)..=old_count {
+            self.inner.delete(service, &Self::chunk_account(account, i))?;
+        }
+        Ok(())
+    }
+
+    fn delete(&self, service: &str, account: &str) -> Result<(), CliError> {
+        let old_count = self
+            .inner
+            .get(service, account)?
+            .as_deref()
+            .and_then(Self::parse_chunk_count)
+            .unwrap_or(0);
+        self.inner.delete(service, account)?;
+        for i in 1..=old_count {
+            self.inner.delete(service, &Self::chunk_account(account, i))?;
+        }
+        Ok(())
+    }
+
+    fn backend_label(&self) -> String {
+        self.inner.backend_label()
+    }
+}
+
+// ---------------------------------------------------------------------------
 // Auto-pick + process-global handle
 // ---------------------------------------------------------------------------
 
@@ -233,7 +382,7 @@ pub fn auto_store() -> Arc<dyn KeyringStore> {
     {
         if OsKeyringStore::probe().is_ok() {
             tracing::debug!("Using OS keyring backend for credential storage");
-            return Arc::new(OsKeyringStore);
+            return Arc::new(ChunkedKeyringStore::new(OsKeyringStore));
         }
     }
     tracing::debug!("OS keyring unavailable; falling back to file backend");
@@ -445,6 +594,121 @@ mod tests {
         assert_eq!(mock2.get("svc", "acct").unwrap().as_deref(), Some("v2"));
         // mock1 retains its original value (we wrote v1 there).
         assert_eq!(mock1.get("svc", "acct").unwrap().as_deref(), Some("v1"));
+    }
+
+    fn value_of_utf16_units(units: usize) -> String {
+        "x".repeat(units)
+    }
+
+    #[test]
+    fn chunked_store_small_value_stored_plain() {
+        let mock = MockKeyringStore::new();
+        let store = ChunkedKeyringStore::new(mock.clone());
+
+        store.set("svc", "acct", "short-token").unwrap();
+        assert_eq!(mock.get("svc", "acct").unwrap().as_deref(), Some("short-token"));
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("short-token"));
+        assert_eq!(mock.snapshot().len(), 1);
+    }
+
+    #[test]
+    fn chunked_store_splits_and_reassembles_large_value() {
+        let mock = MockKeyringStore::new();
+        let store = ChunkedKeyringStore::new(mock.clone());
+
+        let value = value_of_utf16_units(MAX_ENTRY_UTF16_UNITS * 2 + 100);
+        store.set("svc", "acct", &value).unwrap();
+
+        // Primary entry holds the marker, chunks hold the payload.
+        let primary = mock.get("svc", "acct").unwrap().unwrap();
+        assert_eq!(primary, format!("{CHUNK_MARKER_PREFIX}3"));
+        for ((_, account), chunk) in store_snapshot_chunks(&mock) {
+            assert_ne!(account, "acct");
+            assert!(
+                chunk.encode_utf16().count() <= MAX_ENTRY_UTF16_UNITS,
+                "chunk {account} exceeds the per-entry UTF-16 budget"
+            );
+        }
+
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some(value.as_str()));
+    }
+
+    /// Chunk entries (everything except the primary marker entry).
+    fn store_snapshot_chunks(mock: &MockKeyringStore) -> Vec<((String, String), String)> {
+        mock.snapshot()
+            .into_iter()
+            .filter(|((_, account), _)| account != "acct")
+            .collect()
+    }
+
+    #[test]
+    fn chunked_store_never_splits_surrogate_pairs() {
+        let mock = MockKeyringStore::new();
+        let store = ChunkedKeyringStore::new(mock.clone());
+
+        // '𝄞' is 2 UTF-16 code units. The leading 1-unit char makes the
+        // per-entry budget run out mid-pair, so the splitter must break
+        // one unit early rather than divide a surrogate pair.
+        let mut value = String::from("x");
+        value.extend(std::iter::repeat_n('𝄞', MAX_ENTRY_UTF16_UNITS));
+        store.set("svc", "acct", &value).unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some(value.as_str()));
+    }
+
+    #[test]
+    fn chunked_store_overwrite_with_smaller_value_removes_stale_chunks() {
+        let mock = MockKeyringStore::new();
+        let store = ChunkedKeyringStore::new(mock.clone());
+
+        let big = value_of_utf16_units(MAX_ENTRY_UTF16_UNITS * 3);
+        store.set("svc", "acct", &big).unwrap();
+        assert_eq!(mock.snapshot().len(), 4); // marker + 3 chunks
+
+        store.set("svc", "acct", "small").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("small"));
+        assert_eq!(mock.snapshot().len(), 1, "stale chunk entries must be removed");
+    }
+
+    #[test]
+    fn chunked_store_delete_removes_all_chunks() {
+        let mock = MockKeyringStore::new();
+        let store = ChunkedKeyringStore::new(mock.clone());
+
+        let big = value_of_utf16_units(MAX_ENTRY_UTF16_UNITS * 2);
+        store.set("svc", "acct", &big).unwrap();
+        store.delete("svc", "acct").unwrap();
+
+        assert_eq!(store.get("svc", "acct").unwrap(), None);
+        assert!(mock.snapshot().is_empty(), "delete must remove marker and chunks");
+    }
+
+    #[test]
+    fn chunked_store_reads_plain_value_from_older_binary() {
+        let mock = MockKeyringStore::new();
+        // An older binary wrote directly, without the chunking wrapper.
+        mock.set("svc", "acct", "legacy-token").unwrap();
+
+        let store = ChunkedKeyringStore::new(mock);
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("legacy-token"));
+    }
+
+    #[test]
+    fn chunked_store_missing_chunk_treated_as_absent() {
+        let mock = MockKeyringStore::new();
+        let store = ChunkedKeyringStore::new(mock.clone());
+
+        let big = value_of_utf16_units(MAX_ENTRY_UTF16_UNITS * 2);
+        store.set("svc", "acct", &big).unwrap();
+        // Simulate a user deleting one chunk in a credential-manager UI.
+        mock.delete("svc", "acct#2").unwrap();
+
+        assert_eq!(store.get("svc", "acct").unwrap(), None);
+    }
+
+    #[test]
+    fn chunked_store_backend_label_delegates() {
+        let store = ChunkedKeyringStore::new(MockKeyringStore::new());
+        assert_eq!(store.backend_label(), "mock (in-memory)");
     }
 
     #[test]
