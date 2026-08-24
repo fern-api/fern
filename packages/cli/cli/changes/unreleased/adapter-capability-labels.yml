@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+      Local generation can now determine whether a generator needs the raw API specs from a label on
+      the generator image, in addition to the existing first-party name allowlist. This lets an image
+      published under an existing generator name in a different registry declare what it needs
+      without a CLI release. Generators without the label are unaffected.
+  type: internal

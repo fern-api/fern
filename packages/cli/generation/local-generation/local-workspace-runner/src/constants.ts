@@ -54,9 +54,36 @@ export const TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR = "FERN_TYPE_RELOCATIONS_O
 /**
  * Generators that receive pre-processed raw API spec files mounted into their
  * Docker container. Add new generator names here as they opt in.
+ *
+ * Prefer the label below for new images. A name allowlist cannot describe an image that is published
+ * under an existing generator name in a different registry, which is how a self-hosted adapter is
+ * configured -- the name is identical whether the image is Fern's or the vendor's.
  */
 const GENERATORS_WANTING_SPECS: ReadonlySet<string> = new Set(["fernapi/fern-cli-generator"]);
 
 export function generatorWantsSpecs(generatorName: string): boolean {
     return GENERATORS_WANTING_SPECS.has(generatorName);
+}
+
+/**
+ * Image label by which a generator declares it wants the raw API specs rather than only the IR.
+ * Read off the resolved image, so an image can opt in without a CLI release.
+ */
+export const WANTS_RAW_SPECS_LABEL = "com.postman.sdk-gen.adapter.wants-raw-specs";
+
+export function labelsRequestRawSpecs(labels: Record<string, string>): boolean {
+    return labels[WANTS_RAW_SPECS_LABEL]?.toLowerCase() === "true";
+}
+
+/**
+ * The image reference a generator invocation resolves to. Structurally typed so the capability check
+ * and the container execution agree on exactly which image is inspected and run.
+ */
+export function resolveGeneratorImage(generatorInvocation: {
+    containerImage: string | undefined;
+    name: string;
+    version: string;
+}): string {
+    const repository = generatorInvocation.containerImage ?? generatorInvocation.name;
+    return `${repository}:${generatorInvocation.version}`;
 }

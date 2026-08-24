@@ -31,6 +31,7 @@ import {
     CONTAINER_SPECS_DIRECTORY,
     GENERATOR_CONFIG_FILENAME,
     IR_FILENAME,
+    resolveGeneratorImage,
     SPECS_DIRECTORY_NAME,
     SPECS_MANIFEST_FILENAME
 } from "./constants.js";
@@ -192,9 +193,7 @@ export async function writeFilesToDiskAndRunGenerator({
     const environment =
         executionEnvironment ??
         new ContainerExecutionEnvironment({
-            containerImage: generatorInvocation.containerImage
-                ? `${generatorInvocation.containerImage}:${generatorInvocation.version}`
-                : `${generatorInvocation.name}:${generatorInvocation.version}`,
+            containerImage: resolveGeneratorImage(generatorInvocation),
             keepContainer: keepDocker,
             disableTelemetry
         });

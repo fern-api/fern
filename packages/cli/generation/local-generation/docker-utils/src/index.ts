@@ -1,3 +1,4 @@
+export { getImageLabels } from "./inspectImage.js";
 export {
     copyFromContainer,
     copyToContainer,

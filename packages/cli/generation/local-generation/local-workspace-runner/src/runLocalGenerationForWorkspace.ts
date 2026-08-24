@@ -16,6 +16,7 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
+import { getImageLabels } from "@fern-api/docker-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     AutoVersioningCache,
@@ -46,7 +47,7 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
-import { generatorWantsSpecs } from "./constants.js";
+import { generatorWantsSpecs, labelsRequestRawSpecs, resolveGeneratorImage } from "./constants.js";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 
@@ -401,6 +402,21 @@ export async function runLocalGenerationForWorkspace({
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
 
+                // Whether this generator receives the raw specs. Resolved from the generator name for
+                // first-party generators, and otherwise from a label on the image itself -- an image
+                // published under an existing generator name in a different registry is
+                // indistinguishable by name, so only the image can declare what it needs.
+                const wantsRawSpecs =
+                    workspace instanceof OSSWorkspace &&
+                    (generatorWantsSpecs(generatorInvocation.name) ||
+                        labelsRequestRawSpecs(
+                            await getImageLabels({
+                                logger: interactiveTaskContext.logger,
+                                imageName: resolveGeneratorImage(generatorInvocation),
+                                runner
+                            })
+                        ));
+
                 const {
                     shouldCommit,
                     autoVersioningCommitMessage,
@@ -441,10 +457,7 @@ export async function runLocalGenerationForWorkspace({
                     absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
                     skipFernignore,
                     disableTelemetry,
-                    rawApiSpecs:
-                        workspace instanceof OSSWorkspace && generatorWantsSpecs(generatorInvocation.name)
-                            ? workspace.allSpecs
-                            : undefined
+                    rawApiSpecs: wantsRawSpecs ? workspace.allSpecs : undefined
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
