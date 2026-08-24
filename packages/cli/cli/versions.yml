@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.101.1
+  changelogEntry:
+    - summary: |
+        Make global theme asset paths stable across publishes of the same organization and theme.
+      type: fix
+  createdAt: "2026-08-24"
+  irVersion: 67
 - version: 5.101.0
   changelogEntry:
     - summary: |
