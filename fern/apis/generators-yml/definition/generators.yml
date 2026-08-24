@@ -617,6 +617,12 @@ types:
           back to a string.
           Defaults to false.
         default: false
+      respect-per-spec-base-path:
+        type: optional<boolean>
+        docs: |
+          If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.
+          Defaults to false.
+        default: false
 
   ResolveAliases:
     discriminated: false

@@ -2,6 +2,7 @@
   "specVersion": "1.0",
   "title": "Acme API",
   "description": "The Acme API.",
+  "basePath": "/v1",
   "servers": [
     {
       "url": "https://api.acme.com"
@@ -28,7 +29,7 @@
       "servers": [],
       "authed": false,
       "method": "GET",
-      "path": "/v1/example",
+      "path": "/example",
       "examples": [
         {
           "pathParameters": [],

@@ -4047,6 +4047,9 @@
                       },
                       "respect-parameter-content": {
                         "type": "boolean"
+                      },
+                      "respect-per-spec-base-path": {
+                        "type": "boolean"
                       }
                     },
                     "additionalProperties": false
@@ -4635,6 +4638,9 @@
                           "type": "boolean"
                         },
                         "respect-parameter-content": {
+                          "type": "boolean"
+                        },
+                        "respect-per-spec-base-path": {
                           "type": "boolean"
                         }
                       },

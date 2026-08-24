@@ -145,7 +145,7 @@ export function generateIr({
         }
     }
     const plainBasePath =
-        fernBasePathParsed != null && fernBasePathParsed.pathParameters.length === 0
+        options.respectPerSpecBasePath && fernBasePathParsed != null && fernBasePathParsed.pathParameters.length === 0
             ? fernBasePathParsed.basePath
             : undefined;
 
@@ -418,7 +418,8 @@ export function generateIr({
         }),
         specVersion: openApi.info.version != null && openApi.info.version.length > 0 ? openApi.info.version : undefined,
         basePath:
-            fernBasePathParsed != null && fernBasePathParsed.pathParameters.length > 0
+            fernBasePathParsed != null &&
+            (!options.respectPerSpecBasePath || fernBasePathParsed.pathParameters.length > 0)
                 ? fernBasePathParsed.basePath
                 : undefined,
         basePathParameters:

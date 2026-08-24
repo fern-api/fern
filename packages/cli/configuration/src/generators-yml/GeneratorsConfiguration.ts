@@ -104,6 +104,7 @@ export interface APIDefinitionSettings {
     disambiguateRequestNames: boolean | undefined;
     ignoreTags: boolean | undefined;
     respectParameterContent: boolean | undefined;
+    respectPerSpecBasePath: boolean | undefined;
 }
 
 export interface GitSource {

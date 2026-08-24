@@ -3,8 +3,4 @@ api:
   specs:
     - openapi: ../auth-api.yml
       namespace: auth
-      settings:
-        respect-per-spec-base-path: true
     - openapi: ../main-api.yml
-      settings:
-        respect-per-spec-base-path: true

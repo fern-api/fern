@@ -2721,6 +2721,17 @@
             }
           ],
           "description": "If true, header parameters that declare their schema under `content` (e.g. a header\nwhose value is a JSON-encoded object) are typed from that schema instead of falling\nback to a string.\nDefaults to false."
+        },
+        "respect-per-spec-base-path": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.\nDefaults to false."
         }
       },
       "additionalProperties": false
@@ -3414,6 +3425,17 @@
             }
           ],
           "description": "If true, header parameters that declare their schema under `content` (e.g. a header\nwhose value is a JSON-encoded object) are typed from that schema instead of falling\nback to a string.\nDefaults to false."
+        },
+        "respect-per-spec-base-path": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.\nDefaults to false."
         },
         "respect-nullable-schemas": {
           "oneOf": [

@@ -97,4 +97,9 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      * Defaults to false.
      */
     "respect-parameter-content"?: boolean;
+    /**
+     * If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.
+     * Defaults to false.
+     */
+    "respect-per-spec-base-path"?: boolean;
 }

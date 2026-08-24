@@ -411,9 +411,15 @@ function hasGroupedServers(servers: AnyServerInput[]): boolean {
 function mergeBasePath(
     ir1: OpenApiIntermediateRepresentation,
     ir2: OpenApiIntermediateRepresentation,
+    options: ParseOpenAPIOptions | undefined,
     context: TaskContext
 ): Pick<OpenApiIntermediateRepresentation, "basePath" | "basePathParameters"> {
-    if (ir1.basePath != null && ir2.basePath != null && ir1.basePath !== ir2.basePath) {
+    if (
+        options?.respectPerSpecBasePath === true &&
+        ir1.basePath != null &&
+        ir2.basePath != null &&
+        ir1.basePath !== ir2.basePath
+    ) {
         context.failWithoutThrowing(
             `Conflicting parameterized x-fern-base-path values: '${ir1.basePath}' and '${ir2.basePath}'.`
         );
@@ -431,7 +437,7 @@ function merge(
     options: ParseOpenAPIOptions | undefined,
     context: TaskContext
 ): OpenApiIntermediateRepresentation {
-    const mergedBasePath = mergeBasePath(ir1, ir2, context);
+    const mergedBasePath = mergeBasePath(ir1, ir2, options, context);
 
     // Only perform multi-API environment grouping if the feature flag is enabled
     const shouldGroupEnvironments = options?.groupMultiApiEnvironments === true;
