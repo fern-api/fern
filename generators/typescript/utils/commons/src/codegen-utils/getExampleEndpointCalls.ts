@@ -21,7 +21,9 @@ export function mayOmitRequestBody({
  * Whether the example calls the endpoint without the request body it declares.
  *
  * Unless the caller may omit the body, the generated client asks for it, so rendering such an
- * example produces a call that is missing a required argument.
+ * example produces a call that is missing a required argument. Only bodies an example can carry
+ * count: `ExampleRequestBody` has no shape for bytes or file uploads, so those examples always
+ * read as bodyless even though the generated call passes a placeholder file.
  */
 export function exampleOmitsRequestBody({
     endpoint,
@@ -33,10 +35,20 @@ export function exampleOmitsRequestBody({
     respectOptionalRequestBody: boolean;
 }): boolean {
     return (
-        endpoint.requestBody != null &&
+        exampleCanCarryRequestBody(endpoint.requestBody) &&
         example.request == null &&
         !mayOmitRequestBody({ endpoint, respectOptionalRequestBody })
     );
+}
+
+/**
+ * Twin of `exampleCanCarryRequestBody` in `generators/csharp/sdk/src/utils/exampleUtils.ts`; keep both
+ * in sync when `ExampleRequestBody` grows a variant.
+ */
+function exampleCanCarryRequestBody(
+    requestBody: FernIr.HttpRequestBody | undefined
+): requestBody is FernIr.HttpRequestBody.InlinedRequestBody | FernIr.HttpRequestBody.Reference {
+    return requestBody?.type === "inlinedRequestBody" || requestBody?.type === "reference";
 }
 
 function withoutExamplesOmittingRequestBody({

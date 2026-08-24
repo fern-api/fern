@@ -1,0 +1,3 @@
+- summary: |
+    Make global theme asset paths stable across publishes of the same organization and theme.
+  type: fix

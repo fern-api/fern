@@ -1,0 +1,6 @@
+- summary: |
+    Fill in path parameters that a user-specified example omits, using the same values example
+    autogeneration produces (or the parameter's client default). Previously such an example
+    generated snippets that omitted a required argument or passed `undefined`, and an example URL
+    containing `undefined`.
+  type: fix

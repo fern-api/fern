@@ -13,6 +13,7 @@ import { FileContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
 import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
+import { getPathParameterExampleFallback } from "../endpoints/utils/getPathParameterExampleFallback.js";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
 import {
     REQUEST_OPTIONS_ADDITIONAL_BODY_PARAMETERS_PROPERTY_NAME,
@@ -160,7 +161,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 (param) => getOriginalName(param.name) === getOriginalName(pathParameter.name)
             );
             if (exampleParameter == null) {
-                result.push(ts.factory.createIdentifier("undefined"));
+                result.push(getPathParameterExampleFallback(pathParameter));
             } else {
                 const generatedExample = context.type.getGeneratedExample(exampleParameter.value);
                 result.push(generatedExample.build(context, opts));

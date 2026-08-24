@@ -155,7 +155,8 @@ export async function runPipeline(args: {
         npmPublishInfo: outputConfig.npmPublishInfo,
         repoUrl: outputConfig.repoUrl,
         distribution,
-        packageName: customConfig.packageIdentity?.name
+        packageName: customConfig.packageIdentity?.name,
+        whiteLabel: ir.whiteLabel
     });
     await emitReference({
         outputDir,

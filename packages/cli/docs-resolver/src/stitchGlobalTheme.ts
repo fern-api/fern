@@ -4,10 +4,11 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 
-import { writeFile } from "fs/promises";
+import { createHash, randomUUID } from "crypto";
+import { chmod, lstat, mkdir, rename, unlink, writeFile } from "fs/promises";
 import mime from "mime-types";
+import { tmpdir } from "os";
 import path from "path";
-import tmp from "tmp-promise";
 
 type RawDocsConfig = docsYml.RawSchemas.DocsConfiguration;
 
@@ -44,6 +45,38 @@ export function filenameFromUrl(url: string): string | undefined {
         return parseFilenameFromDisposition(rcd);
     } catch {
         return undefined;
+    }
+}
+
+export function getGlobalThemeAssetDirectoryPath(organization: string, themeName: string): string {
+    const themeKey = `${organization}\0${themeName}`;
+    const themeHash = createHash("sha256").update(themeKey).digest("hex").slice(0, 16);
+    return path.join(tmpdir(), `fern-theme-${themeHash}`);
+}
+
+export async function ensureGlobalThemeAssetDirectory(directoryPath: string): Promise<void> {
+    await mkdir(directoryPath, { mode: 0o700, recursive: true });
+
+    const stats = await lstat(directoryPath);
+    const processUid = typeof process.getuid === "function" ? process.getuid() : undefined;
+    if (!stats.isDirectory() || (processUid !== undefined && stats.uid !== processUid)) {
+        throw new Error(
+            `Global theme asset directory "${directoryPath}" is not a secure directory. Remove it and retry.`
+        );
+    }
+
+    if ((stats.mode & 0o777) !== 0o700) {
+        await chmod(directoryPath, 0o700);
+    }
+}
+
+async function writeFileAtomically(filePath: string, data: string | Uint8Array): Promise<void> {
+    const tempPath = path.join(path.dirname(filePath), `.${path.basename(filePath)}.${randomUUID()}.tmp`);
+    try {
+        await writeFile(tempPath, data);
+        await rename(tempPath, filePath);
+    } finally {
+        await unlink(tempPath).catch(() => undefined);
     }
 }
 
@@ -92,7 +125,7 @@ async function downloadToTemp(url: string, tmpDir: string, index: number): Promi
 
     const dest = path.join(tmpDir, filename);
     const buf = Buffer.from(await res.arrayBuffer());
-    await writeFile(dest, buf);
+    await writeFileAtomically(dest, buf);
     return dest;
 }
 
@@ -291,7 +324,7 @@ interface StitchGlobalThemeArgs {
  * FDR, downloads any file assets to a temp directory, and returns a new DocsWorkspace
  * whose raw config has the theme values merged in (theme wins for branding fields).
  *
- * The temp directory is cleaned up on process exit.
+ * The theme asset directory is reused across publishes of the same theme.
  * If no global-theme is declared, returns the workspace unchanged.
  */
 export async function stitchGlobalTheme({
@@ -389,8 +422,18 @@ export async function stitchGlobalTheme({
         throw err;
     }
 
-    // Download file assets to a temp directory that lives for the duration of the process
-    const { path: tmpDirPath } = await tmp.dir({ prefix: "fern-theme-", unsafeCleanup: true });
+    // Reuse a deterministic directory so asset paths remain stable across publishes.
+    const tmpDirPath = getGlobalThemeAssetDirectoryPath(organization, themeName);
+    try {
+        await ensureGlobalThemeAssetDirectory(tmpDirPath);
+    } catch (err) {
+        taskContext.failAndThrow(
+            `Could not prepare global theme asset directory "${tmpDirPath}". Remove it and retry.`,
+            err,
+            { code: CliError.Code.ConfigError }
+        );
+        return docsWorkspace;
+    }
     taskContext.logger.debug(`Downloading theme assets to ${tmpDirPath}`);
 
     let resolvedConfig: Record<string, unknown>;
@@ -406,11 +449,9 @@ export async function stitchGlobalTheme({
 
     const mergedRawConfig = mergeThemeOverride(docsWorkspace.config, resolvedConfig);
 
-    taskContext.logger.info(
-        `Applied global theme "${themeName}" — ${AbsoluteFilePath.of(tmpDirPath)} (cleaned up on exit)`
-    );
+    taskContext.logger.info(`Applied global theme "${themeName}" — ${AbsoluteFilePath.of(tmpDirPath)}`);
     const stitchedPath = path.join(tmpDirPath, "stitched-docs.yml.json");
-    await writeFile(stitchedPath, JSON.stringify(mergedRawConfig, null, 2));
+    await writeFileAtomically(stitchedPath, JSON.stringify(mergedRawConfig, null, 2));
     taskContext.logger.debug(`Stitched docs.yml after importing theme written to: ${stitchedPath}`);
 
     return { ...docsWorkspace, config: mergedRawConfig };

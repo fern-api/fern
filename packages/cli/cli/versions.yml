@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.101.2
+  changelogEntry:
+    - summary: |
+        Fill in path parameters that a user-specified example omits, using the same values example
+        autogeneration produces (or the parameter's client default). Previously such an example
+        generated snippets that omitted a required argument or passed `undefined`, and an example URL
+        containing `undefined`.
+      type: fix
+  createdAt: "2026-08-24"
+  irVersion: 67
+- version: 5.101.1
+  changelogEntry:
+    - summary: |
+        Make global theme asset paths stable across publishes of the same organization and theme.
+      type: fix
+  createdAt: "2026-08-24"
+  irVersion: 67
 - version: 5.101.0
   changelogEntry:
     - summary: |

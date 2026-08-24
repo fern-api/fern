@@ -1,5 +1,7 @@
 # openapi-request-body-ref CLI
 
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-CLI%20generated%20by%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=openapi-request-body-ref%2FCLI)
+
 Command-line interface for the openapi-request-body-ref API.
 
 ## Table of contents

@@ -1,12 +1,7 @@
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import * as FernIr from "@fern-api/ir-sdk";
-import { mergeIntermediateRepresentation } from "../mergeIntermediateRepresentation.js";
 
-const casingsGenerator = constructCasingsGenerator({
-    generationLanguage: undefined,
-    keywords: undefined,
-    smartCasing: false
-});
+import { mergeIntermediateRepresentation } from "../mergeIntermediateRepresentation.js";
+import { casingsGenerator, makeMinimalIr } from "./utils/makeMinimalIr.js";
 
 function makeHeader(wireValue: string): FernIr.HttpHeader {
     return {
@@ -24,78 +19,6 @@ function makeHeader(wireValue: string): FernIr.HttpHeader {
         clientDefault: undefined,
         defaultValue: undefined,
         v2Examples: undefined
-    };
-}
-
-function makeMinimalIr(overrides: Partial<FernIr.IntermediateRepresentation> = {}): FernIr.IntermediateRepresentation {
-    return {
-        fdrApiDefinitionId: undefined,
-        apiVersion: undefined,
-        specVersion: undefined,
-        apiName: "test-api",
-        apiDisplayName: undefined,
-        apiDocs: undefined,
-        auth: { requirement: "ALL", schemes: [], docs: undefined },
-        headers: [],
-        idempotencyHeaders: [],
-        types: {},
-        services: {},
-        webhookGroups: {},
-        websocketChannels: undefined,
-        errors: {},
-        subpackages: {},
-        rootPackage: {
-            fernFilepath: { allParts: [], packagePath: [], file: undefined },
-            service: undefined,
-            types: [],
-            errors: [],
-            subpackages: [],
-            webhooks: undefined,
-            websocket: undefined,
-            hasEndpointsInTree: false,
-            hasWebSocketInTree: undefined,
-            navigationConfig: undefined,
-            docs: undefined
-        },
-        constants: {
-            errorInstanceIdKey: {
-                wireValue: "errorInstanceId",
-                name: casingsGenerator.generateName("errorInstanceId")
-            }
-        },
-        environments: undefined,
-        basePath: undefined,
-        pathParameters: [],
-        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode(),
-        sdkConfig: {
-            isAuthMandatory: false,
-            hasStreamingEndpoints: false,
-            hasPaginatedEndpoints: false,
-            hasFileDownloadEndpoints: false,
-            idempotencyKeyGeneration: undefined,
-            platformHeaders: {
-                language: "X-Fern-Language",
-                sdkName: "X-Fern-SDK-Name",
-                sdkVersion: "X-Fern-SDK-Version",
-                userAgent: undefined
-            }
-        },
-        variables: [],
-        globalParameters: undefined,
-        serviceTypeReferenceInfo: {
-            typesReferencedOnlyByService: {},
-            sharedTypes: []
-        },
-        readmeConfig: undefined,
-        sourceConfig: undefined,
-        publishConfig: undefined,
-        dynamic: undefined,
-        selfHosted: undefined,
-        audiences: undefined,
-        generationMetadata: undefined,
-        apiPlayground: undefined,
-        casingsConfig: undefined,
-        ...overrides
     };
 }
 

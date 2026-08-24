@@ -1,0 +1,15 @@
+- summary: |
+    Usage errors (a mistyped subcommand, a bad flag value, conflicting flags) no
+    longer stuff clap's whole multi-line block into `error.message` when output is
+    machine-readable. The failure sentence stays in `message`, clap's `tip:` and
+    `[possible values: ...]` lines move to `error.help`, the usage string becomes
+    `error.usage`, and the `For more information, try '--help'` boilerplate is
+    dropped — so every field is a single line, as with API errors. Human output on
+    a terminal is unchanged: it still prints clap's full rendering, tip and usage
+    included.
+
+    Only clap's own blocks are split. A multi-line message from one of the CLI's
+    validators — schema validation listing one bullet per violation, say — passes
+    through whole, since applying the split there would demote the violations to
+    `help` and leave `message` as the bare header.
+  type: fix

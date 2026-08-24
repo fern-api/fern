@@ -1,5 +1,6 @@
 [
   "cli/openapi-fixture/**",
+  "tests/**",
   "src/bin/strip_schema.rs",
   ".gitignore",
   "README.md",

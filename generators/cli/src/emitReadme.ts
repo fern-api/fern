@@ -36,12 +36,17 @@ export async function emitReadme(args: {
      * `packageIdentity.name` is set (or left at the template default).
      */
     packageName?: string;
+    /**
+     * The IR's `readmeConfig.whiteLabel`. White-labeled orgs get no Fern
+     * shield, matching `ReadmeGenerator`'s behavior for SDK READMEs.
+     */
+    whiteLabel?: boolean;
 }): Promise<void> {
     const { outputDir, binaryName, apiDisplayName, authBindings, npmPublishInfo, repoUrl, distribution } = args;
     const installerName = args.packageName ?? TEMPLATE_PACKAGE_NAME;
     const displayName = apiDisplayName ?? binaryName;
 
-    const header = generateHeader({ displayName, npmPublishInfo });
+    const header = generateHeader({ displayName, npmPublishInfo, repoUrl, whiteLabel: args.whiteLabel ?? false });
     const blocks = generateBlocks({
         binaryName,
         displayName,
@@ -65,10 +70,18 @@ export async function emitReadme(args: {
 // Header
 // ---------------------------------------------------------------------------
 
-function generateHeader(args: { displayName: string; npmPublishInfo: ResolvedNpmPublishInfo | undefined }): string {
-    const { displayName, npmPublishInfo } = args;
+function generateHeader(args: {
+    displayName: string;
+    npmPublishInfo: ResolvedNpmPublishInfo | undefined;
+    repoUrl: string | undefined;
+    whiteLabel: boolean;
+}): string {
+    const { displayName, npmPublishInfo, repoUrl, whiteLabel } = args;
     const suffix = displayName.toUpperCase().endsWith("API") ? "" : " API";
     const shieldLines: string[] = [];
+    if (!whiteLabel) {
+        shieldLines.push(fernShield({ displayName, repoUrl }));
+    }
     if (npmPublishInfo != null) {
         shieldLines.push(
             `[![npm shield](https://img.shields.io/npm/v/${npmPublishInfo.packageName})](https://www.npmjs.com/package/${npmPublishInfo.packageName})`
@@ -85,6 +98,18 @@ function generateHeader(args: { displayName: string; npmPublishInfo: ResolvedNpm
         );
     }
     return lines(`# ${displayName} CLI`, "", `Command-line interface for the ${displayName}${suffix}.`, "");
+}
+
+/**
+ * The "Built with Fern" badge, identical in shape to the one
+ * `ReadmeGenerator` writes for SDK READMEs so both surfaces carry the same
+ * branding. The `utm_source` identifies the repo the badge was clicked from,
+ * falling back to `<DisplayName>/CLI` when the CLI isn't published to a
+ * known repo.
+ */
+function fernShield(args: { displayName: string; repoUrl: string | undefined }): string {
+    const repoSource = args.repoUrl ?? `${args.displayName}/CLI`;
+    return `[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-CLI%20generated%20by%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=${encodeURIComponent(repoSource)})`;
 }
 
 // ---------------------------------------------------------------------------
@@ -443,14 +468,19 @@ function generateAdvanced(args: { binaryName: string; envPrefix: string }): Bloc
             "",
             "### Output formats",
             "",
-            "Use the global `--format` flag to control output. Supported values: `json` (default), `table`, `yaml`, `csv`.",
+            "Use the global `--format` flag to control output. Supported values: `json`, `table`, `yaml`, `csv`, `jsonl`, `raw`, `http`.",
+            "",
+            "Without `--format`, output (including errors) is `table` when stdout is a terminal and `json` when it is piped or redirected — so scripts and agents get JSON by default. Pass `--human` to keep the interactive rendering when piping to a pager, and `--format json` to pin JSON in a terminal.",
             "",
             "```bash",
             `# Pipe JSON output through jq`,
             `${binaryName} <resource> <method> --format json | jq`,
             "",
-            "# Machine-readable catalog of every operation",
-            `${binaryName} --help --format json | jq 'length'`,
+            "# Keep the human rendering even when piped",
+            `${binaryName} <resource> <method> --human | less`,
+            "",
+            "# Machine-readable catalog of every operation (same as --schema)",
+            `${binaryName} --help --format json | jq '.operations | length'`,
             "```",
             "",
             "### Shell completion",

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedCsharpBytesUploadPathParam.Test/SeedCsharpBytesUploadPathParam.Test.csproj" />
+  <Project Path="src/SeedCsharpBytesUploadPathParam/SeedCsharpBytesUploadPathParam.csproj" />
+</Solution>

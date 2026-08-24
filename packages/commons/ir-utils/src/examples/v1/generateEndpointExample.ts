@@ -429,8 +429,13 @@ export function generateEndpointExample({
     }
 }
 
-function getUrlForExample(endpoint: HttpEndpoint, example: Omit<ExampleEndpointCall, "id" | "url">): string {
-    const pathParameters: Record<string, string> = {};
+export function getUrlForExample(
+    endpoint: HttpEndpoint,
+    example: Omit<ExampleEndpointCall, "id" | "url">,
+    /* Values for path parameters the example intentionally does not carry, such as ones the client supplies from a default. */
+    fallbackPathParameterValues: Record<string, string> = {}
+): string {
+    const pathParameters: Record<string, string> = { ...fallbackPathParameterValues };
     [...example.rootPathParameters, ...example.servicePathParameters, ...example.endpointPathParameters].forEach(
         (examplePathParameter) => {
             const value = examplePathParameter.value.jsonExample;
