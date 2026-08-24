@@ -85,5 +85,10 @@ export function resolveGeneratorImage(generatorInvocation: {
     version: string;
 }): string {
     const repository = generatorInvocation.containerImage ?? generatorInvocation.name;
+    // A digest already identifies an exact image, and `repo@sha256:...:1.2.3` is not a valid
+    // reference. Appending the version would also defeat the point of pinning.
+    if (repository.includes("@sha256:")) {
+        return repository;
+    }
     return `${repository}:${generatorInvocation.version}`;
 }

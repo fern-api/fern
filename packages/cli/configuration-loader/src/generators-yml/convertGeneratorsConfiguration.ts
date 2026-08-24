@@ -652,6 +652,37 @@ async function convertGroup({
     };
 }
 
+/**
+ * Separates an optional `@sha256:...` digest from an image name.
+ *
+ * Pinning by digest is how an immutable deployment is expressed: a tag can be repointed, a digest
+ * cannot. The digest is carried on the image reference while the generator name stays clean, because
+ * the name is also what IR version resolution is keyed on.
+ */
+export function splitImageDigest(
+    imageName: string,
+    context: TaskContext
+): { name: string; digest: string | undefined } {
+    const atIndex = imageName.indexOf("@");
+    if (atIndex === -1) {
+        return { name: imageName, digest: undefined };
+    }
+
+    const name = imageName.slice(0, atIndex);
+    const digest = imageName.slice(atIndex + 1);
+
+    // Rejected rather than passed through: an unusable digest that reaches the container runtime
+    // fails with a runtime error that does not name generators.yml as the cause.
+    if (!/^sha256:[0-9a-f]{64}$/.test(digest)) {
+        context.failAndThrow(
+            `Invalid image digest "${digest}" in generators.yml. ` +
+                "A digest must look like sha256: followed by 64 lowercase hex characters."
+        );
+    }
+
+    return { name, digest };
+}
+
 function getGeneratorNameAndImage(
     generator: generatorsYml.GeneratorInvocationSchema,
     context: TaskContext
@@ -664,11 +695,15 @@ function getGeneratorNameAndImage(
         // (FDR expects fully-qualified names like "fernapi/fern-typescript-sdk"), but use the
         // corrected (non-prefixed) name for the containerImage since the fernapi/ Docker Hub
         // org should not appear in custom registry paths.
-        const correctedImageName = correctIncorrectDockerOrgWithWarning(generator.image.name, context);
+        //
+        // A digest is split off before normalization: it belongs to the image reference, not to the
+        // generator identity, and IR version resolution must still see a clean name.
+        const { name: imageNameWithoutDigest, digest } = splitImageDigest(generator.image.name, context);
+        const correctedImageName = correctIncorrectDockerOrgWithWarning(imageNameWithoutDigest, context);
         const normalizedImageName = addDefaultDockerOrgIfNotPresent(correctedImageName);
         return {
             normalizedName: normalizedImageName,
-            containerImage: `${generator.image.registry}/${correctedImageName}`
+            containerImage: `${generator.image.registry}/${correctedImageName}${digest != null ? `@${digest}` : ""}`
         };
     }
     // DefaultGeneratorInvocationSchema — apply Docker Hub org normalization

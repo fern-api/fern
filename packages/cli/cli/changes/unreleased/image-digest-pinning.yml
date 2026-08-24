@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+      A generator image can now be pinned by digest in generators.yml, for example
+      `name: fern-python-sdk@sha256:...`. The digest is passed through to the container runtime
+      unchanged so the exact pinned image runs, while the generator name used for IR version
+      resolution is unaffected. A malformed digest is rejected with an error naming generators.yml.
+      Tag-based references are unchanged.
+  type: internal

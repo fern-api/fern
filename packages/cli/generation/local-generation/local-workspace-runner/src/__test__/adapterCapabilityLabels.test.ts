@@ -50,6 +50,28 @@ describe("resolveGeneratorImage", () => {
     });
 });
 
+describe("resolveGeneratorImage with a pinned digest", () => {
+    it("returns the digest reference unchanged rather than appending a tag", () => {
+        expect(
+            resolveGeneratorImage({
+                containerImage: "ghcr.io/acme/fern-python-sdk@sha256:" + "a".repeat(64),
+                name: "fernapi/fern-python-sdk",
+                version: "4.0.0"
+            })
+        ).toBe("ghcr.io/acme/fern-python-sdk@sha256:" + "a".repeat(64));
+    });
+
+    it("still tags a reference that carries no digest", () => {
+        expect(
+            resolveGeneratorImage({
+                containerImage: "ghcr.io/acme/fern-python-sdk",
+                name: "fernapi/fern-python-sdk",
+                version: "4.0.0"
+            })
+        ).toBe("ghcr.io/acme/fern-python-sdk:4.0.0");
+    });
+});
+
 describe("generatorWantsSpecs", () => {
     it("keeps the existing first-party allowlist working", () => {
         expect(generatorWantsSpecs("fernapi/fern-cli-generator")).toBe(true);
