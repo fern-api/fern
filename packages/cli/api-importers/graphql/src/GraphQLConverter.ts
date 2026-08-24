@@ -4,6 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import {
     buildASTSchema,
+    DocumentNode,
     GraphQLArgument as GQLArgument,
     GraphQLEnumType,
     GraphQLField,
@@ -16,7 +17,8 @@ import {
     GraphQLOutputType,
     GraphQLScalarType,
     GraphQLSchema,
-    GraphQLUnionType
+    GraphQLUnionType,
+    validateSchema
 } from "graphql";
 import { mergeGraphQlDocuments } from "./mergeGraphQlDocuments.js";
 
@@ -149,6 +151,36 @@ export class GraphQLConverter {
         return fields.every((f) => f.args.length > 0);
     }
 
+    /**
+     * Builds the merged document, reporting SDL problems instead of silently accepting them.
+     *
+     * `assumeValidSDL` is the fallback rather than the default: merged subgraphs can still carry
+     * constructs that only compose at runtime (e.g. a directive whose definition lives in the
+     * supergraph), and failing the docs build on those would make federation unusable.
+     */
+    private buildSchema(document: DocumentNode): GraphQLSchema {
+        try {
+            const schema = buildASTSchema(document);
+            for (const error of validateSchema(schema)) {
+                this.context.logger.warn(`Invalid GraphQL schema: ${error.message}`);
+            }
+            return schema;
+        } catch (validationError) {
+            let schema: GraphQLSchema;
+            try {
+                schema = buildASTSchema(document, { assumeValidSDL: true });
+            } catch {
+                // The schema cannot be built at all, so the original message is the useful one.
+                throw validationError;
+            }
+            this.context.logger.warn(
+                `Invalid GraphQL schema: ${validationError instanceof Error ? validationError.message : String(validationError)} ` +
+                    "Continuing without SDL validation."
+            );
+            return schema;
+        }
+    }
+
     public async convert(): Promise<GraphQLConverterResult> {
         const sources = await Promise.all(
             this.filePaths.map(async (filePath) => ({
@@ -165,9 +197,7 @@ export class GraphQLConverter {
             );
         }
 
-        // `assumeValidSDL` keeps subgraphs ingestible: they reference types owned by sibling files
-        // and carry federation directives whose definitions live in the composed supergraph.
-        this.schema = buildASTSchema(document, { assumeValidSDL: true });
+        this.schema = this.buildSchema(document);
 
         this.collectTypeDefinitions();
 

@@ -3,14 +3,22 @@ import {
     ConstDirectiveNode,
     DefinitionNode,
     DocumentNode,
+    InputValueDefinitionNode,
     Kind,
     NamedTypeNode,
     OperationTypeDefinitionNode,
     parse,
     print,
     TypeDefinitionNode,
-    TypeExtensionNode
+    TypeExtensionNode,
+    TypeNode
 } from "graphql";
+
+/**
+ * `@inaccessible` marks a member that composition omits from the client-facing API schema, so it is
+ * removed rather than merely having its directive stripped.
+ */
+const INACCESSIBLE_DIRECTIVE = "inaccessible";
 
 /**
  * Directives that describe how a federated graph is composed at runtime rather than what a
@@ -65,6 +73,13 @@ interface MergedType {
     members: Map<string, MergedMember>;
 }
 
+interface InaccessibleState {
+    /** Types declared `@inaccessible`, which are removed along with every reference to them. */
+    types: Set<string>;
+    /** Whether anything at all was marked `@inaccessible`, so the pruning pass can be skipped. */
+    seen: boolean;
+}
+
 /**
  * Merges any number of SDL documents into a single document that `buildASTSchema` can consume.
  *
@@ -78,6 +93,7 @@ export function mergeGraphQlDocuments(sources: readonly GraphQlSource[]): Merged
     const directiveDefinitions = new Map<string, DefinitionNode>();
     const operationTypes = new Map<string, OperationTypeDefinitionNode>();
     const otherDefinitions: DefinitionNode[] = [];
+    const inaccessible: InaccessibleState = { types: new Set(), seen: false };
 
     for (const source of sources) {
         for (const definition of parse(source.sdl).definitions) {
@@ -96,17 +112,27 @@ export function mergeGraphQlDocuments(sources: readonly GraphQlSource[]): Merged
             }
 
             if (isTypeExtension(definition)) {
-                mergeTypeDefinition(typeExtensionToDefinition(definition), source.filePath, types, conflicts);
+                mergeTypeDefinition(
+                    typeExtensionToDefinition(definition),
+                    source.filePath,
+                    types,
+                    conflicts,
+                    inaccessible
+                );
                 continue;
             }
 
             if (isTypeDefinition(definition)) {
-                mergeTypeDefinition(definition, source.filePath, types, conflicts);
+                mergeTypeDefinition(definition, source.filePath, types, conflicts, inaccessible);
                 continue;
             }
 
             otherDefinitions.push(definition);
         }
+    }
+
+    if (inaccessible.seen) {
+        pruneInaccessibleTypes(types, inaccessible.types);
     }
 
     const definitions: DefinitionNode[] = [
@@ -115,8 +141,11 @@ export function mergeGraphQlDocuments(sources: readonly GraphQlSource[]): Merged
         ...[...types.values()].map((type) => type.definition)
     ];
 
-    if (operationTypes.size > 0) {
-        definitions.push({ kind: Kind.SCHEMA_DEFINITION, operationTypes: [...operationTypes.values()] });
+    const rootOperationTypes = [...operationTypes.values()].filter((operationType) =>
+        types.has(operationType.type.name.value)
+    );
+    if (rootOperationTypes.length > 0) {
+        definitions.push({ kind: Kind.SCHEMA_DEFINITION, operationTypes: rootOperationTypes });
     }
 
     return { document: { kind: Kind.DOCUMENT, definitions }, conflicts };
@@ -174,28 +203,56 @@ function stripFederationDirectives(
     return directives.filter((directive) => !FEDERATION_DIRECTIVES.has(directive.name.value));
 }
 
-function cleanTypeDefinition(definition: TypeDefinitionNode): TypeDefinitionNode {
+function isInaccessible(node: { directives?: readonly ConstDirectiveNode[] }): boolean {
+    return node.directives?.some((directive) => directive.name.value === INACCESSIBLE_DIRECTIVE) ?? false;
+}
+
+function cleanArguments(
+    args: readonly InputValueDefinitionNode[] | undefined,
+    inaccessible: InaccessibleState
+): readonly InputValueDefinitionNode[] | undefined {
+    return args?.filter(keepAccessible(inaccessible)).map((argument) => ({
+        ...argument,
+        directives: stripFederationDirectives(argument.directives)
+    }));
+}
+
+function keepAccessible(
+    inaccessible: InaccessibleState
+): (node: { directives?: readonly ConstDirectiveNode[] }) => boolean {
+    return (node) => {
+        if (!isInaccessible(node)) {
+            return true;
+        }
+        inaccessible.seen = true;
+        return false;
+    };
+}
+
+function cleanTypeDefinition(definition: TypeDefinitionNode, inaccessible: InaccessibleState): TypeDefinitionNode {
     const directives = stripFederationDirectives(definition.directives);
+    if (isInaccessible(definition)) {
+        inaccessible.seen = true;
+        inaccessible.types.add(definition.name.value);
+    }
+    const keep = keepAccessible(inaccessible);
     switch (definition.kind) {
         case Kind.OBJECT_TYPE_DEFINITION:
         case Kind.INTERFACE_TYPE_DEFINITION:
             return {
                 ...definition,
                 directives,
-                fields: definition.fields?.map((field) => ({
+                fields: definition.fields?.filter(keep).map((field) => ({
                     ...field,
                     directives: stripFederationDirectives(field.directives),
-                    arguments: field.arguments?.map((argument) => ({
-                        ...argument,
-                        directives: stripFederationDirectives(argument.directives)
-                    }))
+                    arguments: cleanArguments(field.arguments, inaccessible)
                 }))
             };
         case Kind.INPUT_OBJECT_TYPE_DEFINITION:
             return {
                 ...definition,
                 directives,
-                fields: definition.fields?.map((field) => ({
+                fields: definition.fields?.filter(keep).map((field) => ({
                     ...field,
                     directives: stripFederationDirectives(field.directives)
                 }))
@@ -204,7 +261,7 @@ function cleanTypeDefinition(definition: TypeDefinitionNode): TypeDefinitionNode
             return {
                 ...definition,
                 directives,
-                values: definition.values?.map((value) => ({
+                values: definition.values?.filter(keep).map((value) => ({
                     ...value,
                     directives: stripFederationDirectives(value.directives)
                 }))
@@ -215,14 +272,100 @@ function cleanTypeDefinition(definition: TypeDefinitionNode): TypeDefinitionNode
     }
 }
 
+function namedTypeName(type: TypeNode): string {
+    switch (type.kind) {
+        case Kind.NAMED_TYPE:
+            return type.name.value;
+        case Kind.LIST_TYPE:
+        case Kind.NON_NULL_TYPE:
+            return namedTypeName(type.type);
+    }
+}
+
+/**
+ * Removes types declared `@inaccessible` together with every member that references them, repeating
+ * until nothing changes: a type left with no members is itself unreachable and has to go, otherwise
+ * the merged document would contain a dangling reference or an empty type.
+ */
+function pruneInaccessibleTypes(types: Map<string, MergedType>, inaccessibleTypes: ReadonlySet<string>): void {
+    const removed = new Set<string>();
+    for (const typeName of inaccessibleTypes) {
+        if (types.delete(typeName)) {
+            removed.add(typeName);
+        }
+    }
+
+    let changed = true;
+    while (changed) {
+        changed = false;
+        for (const [typeName, type] of types) {
+            const pruned = pruneReferences(type.definition, removed);
+            if (pruned == null) {
+                types.delete(typeName);
+                removed.add(typeName);
+                changed = true;
+                continue;
+            }
+            if (pruned !== type.definition) {
+                type.definition = pruned;
+                changed = true;
+            }
+        }
+    }
+}
+
+/** Returns the definition with references to removed types dropped, or `null` if it is now empty. */
+function pruneReferences(definition: TypeDefinitionNode, removed: ReadonlySet<string>): TypeDefinitionNode | null {
+    switch (definition.kind) {
+        case Kind.OBJECT_TYPE_DEFINITION:
+        case Kind.INTERFACE_TYPE_DEFINITION: {
+            const fields = (definition.fields ?? []).filter(
+                (field) =>
+                    !removed.has(namedTypeName(field.type)) &&
+                    !(field.arguments ?? []).some((argument) => removed.has(namedTypeName(argument.type)))
+            );
+            if (fields.length === 0) {
+                return null;
+            }
+            const interfaces = (definition.interfaces ?? []).filter((node) => !removed.has(node.name.value));
+            if (
+                fields.length === definition.fields?.length &&
+                interfaces.length === (definition.interfaces ?? []).length
+            ) {
+                return definition;
+            }
+            return { ...definition, fields, interfaces };
+        }
+        case Kind.INPUT_OBJECT_TYPE_DEFINITION: {
+            const fields = (definition.fields ?? []).filter((field) => !removed.has(namedTypeName(field.type)));
+            if (fields.length === 0) {
+                return null;
+            }
+            return fields.length === definition.fields?.length ? definition : { ...definition, fields };
+        }
+        case Kind.UNION_TYPE_DEFINITION: {
+            const members = (definition.types ?? []).filter((node) => !removed.has(node.name.value));
+            if (members.length === 0) {
+                return null;
+            }
+            return members.length === definition.types?.length ? definition : { ...definition, types: members };
+        }
+        case Kind.ENUM_TYPE_DEFINITION:
+            return definition.values?.length === 0 ? null : definition;
+        case Kind.SCALAR_TYPE_DEFINITION:
+            return definition;
+    }
+}
+
 function mergeTypeDefinition(
     incoming: TypeDefinitionNode,
     filePath: string,
     types: Map<string, MergedType>,
-    conflicts: GraphQlDocumentConflict[]
+    conflicts: GraphQlDocumentConflict[],
+    inaccessible: InaccessibleState
 ): void {
     const name = incoming.name.value;
-    const cleaned = cleanTypeDefinition(incoming);
+    const cleaned = cleanTypeDefinition(incoming, inaccessible);
     const existing = types.get(name);
 
     if (existing == null) {

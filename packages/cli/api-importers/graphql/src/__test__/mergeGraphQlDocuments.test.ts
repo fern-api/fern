@@ -1,4 +1,4 @@
-import { buildASTSchema, GraphQLObjectType, print } from "graphql";
+import { buildASTSchema, GraphQLObjectType, GraphQLUnionType, print } from "graphql";
 import { describe, expect, it } from "vitest";
 
 import { mergeGraphQlDocuments } from "../mergeGraphQlDocuments.js";
@@ -58,6 +58,63 @@ describe("mergeGraphQlDocuments", () => {
         expect(printed).not.toContain("@external");
         expect(printed).not.toContain("@link");
         expect(printed).toContain('@deprecated(reason: "Use displayName.")');
+    });
+
+    it("removes @inaccessible members and types, cascading to everything that references them", () => {
+        const { schema } = buildSchemaFrom([
+            {
+                filePath: "core.graphql",
+                sdl: `
+                    type Query { userProfile(id: ID!): UserProfile }
+                    type UserProfile {
+                        id: ID!
+                        internalScore: Int @inaccessible
+                        storage: ProfileStorage
+                        audit(filter: AuditFilter): String
+                    }
+                    type ProfileStorage @inaccessible { bucket: String! }
+                    input AuditFilter @inaccessible { since: String }
+                    type Vault @inaccessible { secret: String! }
+                    union ProfileSource = UserProfile | Vault
+                `
+            }
+        ]);
+
+        const userProfile = schema.getType("UserProfile");
+        if (!(userProfile instanceof GraphQLObjectType)) {
+            throw new Error("expected UserProfile to be an object type");
+        }
+        // `internalScore` is inaccessible; `storage` and `audit` reference inaccessible types.
+        expect(Object.keys(userProfile.getFields())).toEqual(["id"]);
+        expect(schema.getType("ProfileStorage")).toBeUndefined();
+        expect(schema.getType("AuditFilter")).toBeUndefined();
+        expect(schema.getType("Vault")).toBeUndefined();
+
+        const source = schema.getType("ProfileSource");
+        if (!(source instanceof GraphQLUnionType)) {
+            throw new Error("expected ProfileSource to be a union type");
+        }
+        expect(source.getTypes().map((type) => type.name)).toEqual(["UserProfile"]);
+    });
+
+    it("removes a type whose every member is @inaccessible", () => {
+        const { schema } = buildSchemaFrom([
+            {
+                filePath: "core.graphql",
+                sdl: `
+                    type Query { userProfile(id: ID!): UserProfile }
+                    type UserProfile { id: ID!, internal: Internal }
+                    type Internal { a: String @inaccessible, b: String @inaccessible }
+                `
+            }
+        ]);
+
+        expect(schema.getType("Internal")).toBeUndefined();
+        const userProfile = schema.getType("UserProfile");
+        if (!(userProfile instanceof GraphQLObjectType)) {
+            throw new Error("expected UserProfile to be an object type");
+        }
+        expect(Object.keys(userProfile.getFields())).toEqual(["id"]);
     });
 
     it("does not report a conflict when a subgraph redeclares an entity key field", () => {
