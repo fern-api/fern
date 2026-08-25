@@ -6,6 +6,8 @@ export const TabId = z.string();
 
 export const ChangelogFolderRelativePath = z.string();
 
+export const BlogFolderRelativePath = z.string();
+
 export const AudienceId = z.string();
 
 export const RoleId = z.string();
@@ -684,6 +686,19 @@ export const ChangelogConfiguration = WithPermissions.merge(WithFeatureFlags).me
     })
 );
 
+// ===== Blog Configuration =====
+// Mirrors ChangelogConfiguration — a directory of dated markdown posts rendered
+// as a card grid (vs. the changelog timeline). See ADR 0023 (fern-platform).
+export const BlogConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
+    z.object({
+        blog: BlogFolderRelativePath,
+        title: z.string().optional(),
+        slug: z.string().optional(),
+        icon: z.string().optional(),
+        hidden: z.boolean().optional()
+    })
+);
+
 // ===== Library Reference Configuration =====
 
 export const LibraryReferenceConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
@@ -823,6 +838,7 @@ export const NavigationItem: z.ZodType<unknown> = z.lazy(() =>
         LibraryReferenceConfiguration,
         LinkConfiguration,
         ChangelogConfiguration,
+        BlogConfiguration,
         FolderConfiguration
     ])
 );
@@ -887,7 +903,8 @@ export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
         hidden: z.boolean().optional(),
         href: z.string().optional(),
         target: Target.optional(),
-        changelog: ChangelogFolderRelativePath.optional()
+        changelog: ChangelogFolderRelativePath.optional(),
+        blog: BlogFolderRelativePath.optional()
     })
 );
 

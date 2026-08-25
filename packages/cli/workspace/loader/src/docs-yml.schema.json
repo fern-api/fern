@@ -1112,6 +1112,16 @@
               "type": "null"
             }
           ]
+        },
+        "blog": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.BlogFolderRelativePath"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -3129,6 +3139,9 @@
         },
         {
           "$ref": "#/definitions/docs.ChangelogConfiguration"
+        },
+        {
+          "$ref": "#/definitions/docs.BlogConfiguration"
         },
         {
           "$ref": "#/definitions/docs.FolderConfiguration"
@@ -6728,6 +6741,93 @@
         }
       ],
       "description": "The `js` object allows you to customize the behavior of your docs site by injecting custom JavaScript, i.e.\n\n```yaml\njs: \"path/to/js/file.js\"\n```\n\nor, multiple files:\n\n```yaml\njs:\n  - \"path/to/js/file.js\"\n  - \"path/to/another/js/file.js\"\n```\n\nor remote js:\n\n```yaml\njs:\n  url: \"https://example.com/path/to/js/file.js\"\n  strategy: \"afterInteractive\"\n```\n\nor, mixed:\n\n```yaml\njs:\n  - \"path/to/js/file.js\"\n  - path: \"path/to/another/js/file.js\"\n    strategy: \"beforeInteractive\"\n  - url: \"https://example.com/path/to/js/file.js\"\n```"
+    },
+    "docs.BlogFolderRelativePath": {
+      "type": "string",
+      "description": "The relative path to a folder containing markdown blog posts broken down by date.\n\nExample:\n```\nblog: \"blog\"\n```\n\nThis will look for markdown files in the `/fern/blog` directory, which should contain files named like\n- `/fern/blog/2024-04-29-my-post.mdx`."
+    },
+    "docs.BlogConfiguration": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blog": {
+          "$ref": "#/definitions/docs.BlogFolderRelativePath"
+        }
+      },
+      "required": [
+        "blog"
+      ],
+      "additionalProperties": false
     }
   }
 }

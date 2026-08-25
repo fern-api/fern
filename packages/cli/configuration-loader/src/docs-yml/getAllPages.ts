@@ -75,6 +75,8 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
                     );
                 } else if (tab.child.type === "changelog") {
                     return tab.child.changelog;
+                } else if (tab.child.type === "blog") {
+                    return tab.child.blog;
                 }
                 return [];
             });
@@ -129,6 +131,8 @@ export function getAllPagesFromNavigationItem({ item }: { item: docsYml.DocsNavi
             ]);
         case "changelog":
             return item.changelog;
+        case "blog":
+            return item.blog;
         case "librarySection":
             // Library docs pages are generated locally, but referenced via _navigation.yml
             return [];

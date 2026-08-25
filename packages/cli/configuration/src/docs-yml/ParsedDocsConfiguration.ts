@@ -333,6 +333,7 @@ type TabbedNavigationChild =
     | TabbedNavigationChild.Layout
     | TabbedNavigationChild.Link
     | TabbedNavigationChild.Changelog
+    | TabbedNavigationChild.Blog
     | TabbedNavigationChild.Variants;
 
 export declare namespace TabbedNavigationChild {
@@ -350,6 +351,11 @@ export declare namespace TabbedNavigationChild {
     export interface Changelog {
         type: "changelog";
         changelog: AbsoluteFilePath[];
+    }
+
+    export interface Blog {
+        type: "blog";
+        blog: AbsoluteFilePath[];
     }
 
     export interface Variants {
@@ -377,7 +383,8 @@ export type DocsNavigationItem =
     | DocsNavigationItem.ApiSection
     | DocsNavigationItem.LibrarySection
     | DocsNavigationItem.Link
-    | DocsNavigationItem.Changelog;
+    | DocsNavigationItem.Changelog
+    | DocsNavigationItem.Blog;
 
 export declare namespace DocsNavigationItem {
     export interface Page
@@ -449,6 +456,17 @@ export declare namespace DocsNavigationItem {
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
         type: "changelog";
         changelog: AbsoluteFilePath[];
+        title: string;
+        icon: string | AbsoluteFilePath | undefined;
+        hidden: boolean | undefined;
+        slug: string | undefined;
+    }
+
+    export interface Blog
+        extends CjsFdrSdk.navigation.v1.WithPermissions,
+            CjsFdrSdk.navigation.latest.WithFeatureFlags {
+        type: "blog";
+        blog: AbsoluteFilePath[];
         title: string;
         icon: string | AbsoluteFilePath | undefined;
         hidden: boolean | undefined;

@@ -1285,6 +1285,23 @@ async function convertNavigationTabConfiguration({
         };
     }
 
+    if (tab.blog != null) {
+        return {
+            title: tab.displayName,
+            icon: resolveIconPath(tab.icon, absolutePathToConfig),
+            slug: tab.slug,
+            skipUrlSlug: tab.skipSlug,
+            hidden: tab.hidden,
+            child: {
+                type: "blog",
+                blog: await listFiles(resolveFilepath(tab.blog, absolutePathToConfig), "{md,mdx}")
+            },
+            viewers: parseRoles(tab.viewers),
+            orphaned: tab.orphaned,
+            featureFlags: convertFeatureFlag(tab.featureFlag)
+        };
+    }
+
     assertNever(tab as never);
 }
 
@@ -1339,6 +1356,7 @@ async function convertNavigationConfiguration({
 }
 
 const DEFAULT_CHANGELOG_TITLE = "Changelog";
+const DEFAULT_BLOG_TITLE = "Blog";
 
 async function expandFolderConfiguration({
     rawConfig,
@@ -1517,6 +1535,19 @@ async function convertNavigationItem({
             hidden: rawConfig.hidden ?? false,
             icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
             title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
+            slug: rawConfig.slug,
+            viewers: parseRoles(rawConfig.viewers),
+            orphaned: rawConfig.orphaned,
+            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
+        };
+    }
+    if (isRawBlogConfig(rawConfig)) {
+        return {
+            type: "blog",
+            blog: await listFiles(resolveFilepath(rawConfig.blog, absolutePathToConfig), "{md,mdx}"),
+            hidden: rawConfig.hidden ?? false,
+            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+            title: rawConfig.title ?? DEFAULT_BLOG_TITLE,
             slug: rawConfig.slug,
             viewers: parseRoles(rawConfig.viewers),
             orphaned: rawConfig.orphaned,
@@ -1744,6 +1775,10 @@ function isRawLinkConfig(item: unknown): item is docsYml.RawSchemas.LinkConfigur
 
 function isRawChangelogConfig(item: unknown): item is docsYml.RawSchemas.ChangelogConfiguration {
     return isPlainObject(item) && typeof item.changelog === "string";
+}
+
+function isRawBlogConfig(item: unknown): item is docsYml.RawSchemas.BlogConfiguration {
+    return isPlainObject(item) && typeof item.blog === "string";
 }
 
 function isRawFolderConfig(item: unknown): item is docsYml.RawSchemas.FolderConfiguration {

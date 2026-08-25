@@ -3,6 +3,7 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { BlogFolderRelativePath } from "./BlogFolderRelativePath.js";
 import { ChangelogFolderRelativePath } from "./ChangelogFolderRelativePath.js";
 import { Target } from "./Target.js";
 import { WithFeatureFlags } from "./WithFeatureFlags.js";
@@ -19,6 +20,7 @@ export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Ra
             href: core.serialization.string().optional(),
             target: Target.optional(),
             changelog: ChangelogFolderRelativePath.optional(),
+            blog: BlogFolderRelativePath.optional(),
         })
         .extend(WithPermissions)
         .extend(WithFeatureFlags);
@@ -33,5 +35,6 @@ export declare namespace TabConfig {
         href?: string | null;
         target?: Target.Raw | null;
         changelog?: ChangelogFolderRelativePath.Raw | null;
+        blog?: BlogFolderRelativePath.Raw | null;
     }
 }
