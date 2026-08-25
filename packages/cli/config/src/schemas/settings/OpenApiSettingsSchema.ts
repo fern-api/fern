@@ -127,7 +127,13 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
      * back to a string.
      * Defaults to false.
      */
-    "respect-parameter-content": z.boolean().optional()
+    "respect-parameter-content": z.boolean().optional(),
+
+    /**
+     * If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.
+     * Defaults to false.
+     */
+    "respect-per-spec-base-path": z.boolean().optional()
 });
 
 export type OpenApiSettingsSchema = z.infer<typeof OpenApiSettingsSchema>;

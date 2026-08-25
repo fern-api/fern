@@ -172,6 +172,12 @@ export interface ParseOpenAPIOptions {
      * Defaults to false.
      */
     respectParameterContent: boolean;
+
+    /**
+     * If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.
+     * Defaults to false.
+     */
+    respectPerSpecBasePath: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -215,7 +221,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     shouldInferDiscriminatedUnionBaseProperties: false,
     disambiguateRequestNames: true,
     ignoreTags: false,
-    respectParameterContent: false
+    respectParameterContent: false,
+    respectPerSpecBasePath: false
 };
 
 function mergeOptions<T extends object>(params: {

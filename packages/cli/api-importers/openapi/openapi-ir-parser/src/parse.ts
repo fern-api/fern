@@ -88,7 +88,12 @@ export function parse({
                         source,
                         namespace: document.namespace
                     });
-                    ir = merge(ir, openapiIr, getParseOptions({ options: document.settings, overrides: options }));
+                    ir = merge(
+                        ir,
+                        openapiIr,
+                        getParseOptions({ options: document.settings, overrides: options }),
+                        context
+                    );
                     documentIndex++;
                     break;
                 }
@@ -403,11 +408,37 @@ function hasGroupedServers(servers: AnyServerInput[]): boolean {
     return servers.some((server) => server.type === "grouped");
 }
 
+function mergeBasePath(
+    ir1: OpenApiIntermediateRepresentation,
+    ir2: OpenApiIntermediateRepresentation,
+    options: ParseOpenAPIOptions | undefined,
+    context: TaskContext
+): Pick<OpenApiIntermediateRepresentation, "basePath" | "basePathParameters"> {
+    if (
+        options?.respectPerSpecBasePath === true &&
+        ir1.basePath != null &&
+        ir2.basePath != null &&
+        ir1.basePath !== ir2.basePath
+    ) {
+        context.failWithoutThrowing(
+            `Conflicting parameterized x-fern-base-path values: '${ir1.basePath}' and '${ir2.basePath}'.`
+        );
+    }
+
+    return {
+        basePath: ir1.basePath ?? ir2.basePath,
+        basePathParameters: ir1.basePathParameters ?? ir2.basePathParameters
+    };
+}
+
 function merge(
     ir1: OpenApiIntermediateRepresentation,
     ir2: OpenApiIntermediateRepresentation,
-    options?: ParseOpenAPIOptions
+    options: ParseOpenAPIOptions | undefined,
+    context: TaskContext
 ): OpenApiIntermediateRepresentation {
+    const mergedBasePath = mergeBasePath(ir1, ir2, options, context);
+
     // Only perform multi-API environment grouping if the feature flag is enabled
     const shouldGroupEnvironments = options?.groupMultiApiEnvironments === true;
 
@@ -418,8 +449,8 @@ function merge(
             specVersion: ir1.specVersion ?? ir2.specVersion,
             title: ir1.title ?? ir2.title,
             description: ir1.description ?? ir2.description,
-            basePath: ir1.basePath ?? ir2.basePath,
-            basePathParameters: ir1.basePathParameters ?? ir2.basePathParameters,
+            basePath: mergedBasePath.basePath,
+            basePathParameters: mergedBasePath.basePathParameters,
             servers: [...ir1.servers, ...ir2.servers],
             websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
             tags: {
@@ -591,8 +622,8 @@ function merge(
             specVersion: ir1.specVersion ?? ir2.specVersion,
             title: ir1.title ?? ir2.title,
             description: ir1.description ?? ir2.description,
-            basePath: ir1.basePath ?? ir2.basePath,
-            basePathParameters: ir1.basePathParameters ?? ir2.basePathParameters,
+            basePath: mergedBasePath.basePath,
+            basePathParameters: mergedBasePath.basePathParameters,
             // Cast grouped servers to Server[] - buildEnvironments.ts handles the grouped structure
             // biome-ignore lint/suspicious/noExplicitAny: Required to preserve grouped server metadata through type system
             servers: mergedServers as any as Server[],
@@ -655,8 +686,8 @@ function merge(
         specVersion: ir1.specVersion ?? ir2.specVersion,
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
-        basePath: ir1.basePath ?? ir2.basePath,
-        basePathParameters: ir1.basePathParameters ?? ir2.basePathParameters,
+        basePath: mergedBasePath.basePath,
+        basePathParameters: mergedBasePath.basePathParameters,
         servers: dedupeServers([...ir1.servers, ...ir2.servers] as AnyServerInput[]) as Server[],
         websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
         tags: {

@@ -240,5 +240,11 @@ allowedFailures:
   # Exercised by the CLI generator.
   - cli-oauth
   - api-wide-base-path-with-default
+  # OpenAPI per-spec base path fixtures: mandatory OAuth client credentials make the
+  # generated PHP root client take non-nullable $clientId/$clientSecret, while the OAuth
+  # provider construction still emits `$clientId ?? ''`, which phpstan (level max) rejects
+  # during `composer analyze`. Same latent generator issue as cli-oauth.
+  - openapi-per-spec-base-path
+  - openapi-per-spec-base-path-disabled
 
 
