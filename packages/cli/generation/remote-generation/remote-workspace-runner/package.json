@@ -58,6 +58,7 @@
     "@fern-api/venus-api-sdk": "catalog:",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "catalog:",
+    "@postman/sdk-gen-client": "0.0.4",
     "axios": "catalog:",
     "chalk": "catalog:",
     "form-data": "catalog:",
