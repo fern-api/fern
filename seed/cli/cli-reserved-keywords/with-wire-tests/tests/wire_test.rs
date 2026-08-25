@@ -1060,6 +1060,11 @@ async fn wire_list() {
 }
 
 #[tokio::test]
+async fn wire_listevents() {
+    run_case("listevents").await;
+}
+
+#[tokio::test]
 async fn wire_get_error() {
     run_case("get_error").await;
 }
@@ -1067,4 +1072,9 @@ async fn wire_get_error() {
 #[tokio::test]
 async fn wire_list_error() {
     run_case("list_error").await;
+}
+
+#[tokio::test]
+async fn wire_listevents_error() {
+    run_case("listevents_error").await;
 }

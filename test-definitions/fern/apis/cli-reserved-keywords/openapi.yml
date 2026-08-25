@@ -45,6 +45,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ModelPage"
+  /models/events:
+    get:
+      operationId: listModelEvents
+      x-fern-sdk-group-name: models
+      x-fern-sdk-method-name: listEvents
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelEvent"
 components:
   schemas:
     Model:
@@ -78,6 +90,34 @@ components:
           type: string
       required:
         - self
+    # Discriminated unions carry shared properties as union base properties, which
+    # the Rust generator emits through a separate code path from object fields.
+    ModelEvent:
+      type: object
+      properties:
+        self:
+          type: string
+      required:
+        - self
+      discriminator:
+        propertyName: event_type
+        mapping:
+          created: "#/components/schemas/ModelCreatedEvent"
+          deleted: "#/components/schemas/ModelDeletedEvent"
+      oneOf:
+        - $ref: "#/components/schemas/ModelCreatedEvent"
+        - $ref: "#/components/schemas/ModelDeletedEvent"
+    ModelCreatedEvent:
+      type: object
+      properties:
+        model:
+          $ref: "#/components/schemas/Model"
+    ModelDeletedEvent:
+      type: object
+      properties:
+        deleted_at:
+          type: string
+          format: date-time
     CreatedBy:
       type: string
       enum:

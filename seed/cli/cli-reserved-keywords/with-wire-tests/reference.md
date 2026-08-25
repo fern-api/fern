@@ -22,6 +22,10 @@ Full command reference for `reserved-keyword-cli`.
 
 `GET /models`
 
+#### `reserved-keyword-cli models list-events`
+
+`GET /models/events`
+
 ---
 
 ## Global flags

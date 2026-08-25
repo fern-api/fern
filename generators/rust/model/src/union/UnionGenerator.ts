@@ -313,14 +313,14 @@ export class UnionGenerator {
                 const isRecursive = typeId ? isFieldRecursive(typeId, singleProperty.type, this.context.ir) : false;
 
                 const fieldType = generateRustTypeForTypeReference(singleProperty.type, this.context, isRecursive);
-                const fieldName = this.context.case.snakeUnsafe(singleProperty.name);
+                const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(singleProperty.name));
                 const wireValue = getWireValue(singleProperty.name);
                 const isOptional = isOptionalType(singleProperty.type);
 
                 writer.writeLine(`    ${variantName} {`);
 
                 // Add serde rename if field name differs from wire value
-                if (fieldName !== wireValue) {
+                if (getSerdeName(fieldName) !== wireValue) {
                     writer.writeLine(`        #[serde(rename = "${wireValue}")]`);
                 }
 
@@ -560,9 +560,10 @@ export class UnionGenerator {
             if (this.unionTypeDeclaration.baseProperties.length > 0) {
                 this.unionTypeDeclaration.baseProperties.forEach((property) => {
                     writer.newLine();
-                    const fieldName = this.context.case.snakeUnsafe(property.name);
+                    const rawFieldName = this.context.case.snakeUnsafe(property.name);
+                    const fieldName = this.context.escapeRustKeyword(rawFieldName);
                     const fieldType = generateRustTypeForTypeReference(property.valueType, this.context);
-                    const methodName = `get_${fieldName}`;
+                    const methodName = `get_${rawFieldName}`;
 
                     // Use &str instead of &String for idiomatic Rust (more flexible, accepts both &String and literals)
                     const returnType = fieldType.toString() === "String" ? "&str" : `&${fieldType.toString()}`;
@@ -607,7 +608,7 @@ export class UnionGenerator {
             singleProperty: (singleProperty) => {
                 const isRecursive = typeId ? isFieldRecursive(typeId, singleProperty.type, this.context.ir) : false;
                 const fieldType = generateRustTypeForTypeReference(singleProperty.type, this.context, isRecursive);
-                const fieldName = this.context.case.snakeUnsafe(singleProperty.name);
+                const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(singleProperty.name));
                 const isOptional = isOptionalType(singleProperty.type);
 
                 const fieldTypeStr = isOptional
@@ -827,7 +828,7 @@ export class UnionGenerator {
 
     private getBasePropertyParams(): string[] {
         return this.unionTypeDeclaration.baseProperties.map((property) => {
-            const fieldName = this.context.case.snakeUnsafe(property.name);
+            const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(property.name));
             const fieldType = generateRustTypeForTypeReference(property.valueType, this.context);
             const isOptional = isOptionalType(property.valueType);
             const fieldTypeStr = isOptional
@@ -839,7 +840,7 @@ export class UnionGenerator {
 
     private getBasePropertyFieldAssignments(): string[] {
         return this.unionTypeDeclaration.baseProperties.map((property) => {
-            return this.context.case.snakeUnsafe(property.name);
+            return this.context.escapeRustKeyword(this.context.case.snakeUnsafe(property.name));
         });
     }
 

@@ -1,5 +1,6 @@
 //! Core client infrastructure
 
+pub mod flexible_datetime;
 mod http_client;
 mod oauth_token_provider;
 pub mod pagination;
