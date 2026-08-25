@@ -5,6 +5,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
 import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { GeneratorConfigCompatibilityError, validateGeneratorConfigCompatibility } from "@postman/sdk-gen-client";
 import axios, { AxiosError } from "axios";
 import { createHash } from "crypto";
 import FormData from "form-data";
@@ -445,13 +446,7 @@ export function isEligibleForFernSdkGenApi(
     // Fiddle currently replaces AUTO after generation. Until that step moves into the shared
     // pipeline, forwarding AUTO would write the literal placeholder into generated packages.
     const hasConcreteVersion = sdkVersion != null && sdkVersion.trim().length > 0 && !isAutoVersion(sdkVersion);
-    return (
-        language != null &&
-        (generatorInvocation.language == null || generatorInvocation.language === language) &&
-        hasConcreteVersion &&
-        specsTarGzBuffer != null &&
-        whitelabel == null
-    );
+    return language != null && hasConcreteVersion && specsTarGzBuffer != null && whitelabel == null;
 }
 
 export interface FernSdkGenApiBuildParameters {
@@ -581,6 +576,7 @@ async function executeFernSdkGenApiBuild(
     if (first == null) {
         throw new Error("Cannot submit an empty Fern sdk-gen-api build");
     }
+    assertGeneratorConfigCompatibility(participants);
     let origin: string | undefined;
     try {
         origin = getFernSdkGenApiOrigin();
@@ -728,6 +724,55 @@ async function executeFernSdkGenApiBuild(
         }
         await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
     }
+}
+
+function assertGeneratorConfigCompatibility(participants: FernSdkGenApiBuildParameters[]): void {
+    for (const participant of participants) {
+        const { generatorInvocation } = participant;
+        const language = generatorInvocation.language ?? getFernSdkGenApiLanguage(generatorInvocation.name);
+        if (language == null) {
+            participant.context.failAndThrow(
+                `Cannot submit SDK generation to sdk-gen-api: generator language is unknown for ${generatorInvocation.name}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+        try {
+            validateGeneratorConfigCompatibility({
+                generatorId: generatorInvocation.name,
+                language,
+                requestedVersion: generatorInvocation.version,
+                configKind: "legacy-fern"
+            });
+        } catch (error) {
+            if (!(error instanceof GeneratorConfigCompatibilityError)) {
+                throw error;
+            }
+            participant.context.failAndThrow(formatGeneratorConfigCompatibilityError(error), undefined, {
+                code: CliError.Code.ConfigError
+            });
+        }
+    }
+}
+
+function formatGeneratorConfigCompatibilityError(error: GeneratorConfigCompatibilityError): string {
+    const diagnostic = [
+        error.code,
+        `generator=${error.generatorId}`,
+        `language=${error.language}`,
+        `requestedVersion=${error.requestedVersion}`,
+        `cutoverVersion=${error.cutoverVersion ?? "n/a"}`,
+        `receivedConfigKind=${String(error.receivedConfigKind)}`,
+        `expectedConfigKind=${error.expectedConfigKind ?? "n/a"}`,
+        `expectedLanguage=${error.expectedLanguage ?? "n/a"}`,
+        `retryable=${error.retryable}`,
+        `recommendedAction=${error.recommendedAction}`
+    ].join("; ");
+    const remediation =
+        error.code === "SDK_CONFIG_V1_REQUIRED"
+            ? " Run `fern sdk-config migrate` to create SDK Config v1 for this target."
+            : "";
+    return `Cannot submit SDK generation to sdk-gen-api: ${error.message} [${diagnostic}].${remediation}`;
 }
 
 function compareFernSdkGenApiParticipants(

@@ -85,21 +85,28 @@ const validRuntimeBundle = gzipSync(Buffer.from("runtime-bundle"));
 function createPreflightBatch({
     runtimeBundles,
     specsTarGzBuffer = validSourceArchive,
-    generatorInvocation = invocation()
+    generatorInvocation = invocation(),
+    generatorInvocations
 }: {
     runtimeBundles: Buffer[];
     specsTarGzBuffer?: Buffer;
     generatorInvocation?: generatorsYml.GeneratorInvocation;
-}): { builds: Array<Promise<unknown>>; post: ReturnType<typeof vi.spyOn> } {
+    generatorInvocations?: generatorsYml.GeneratorInvocation[];
+}): {
+    builds: Array<Promise<unknown>>;
+    post: ReturnType<typeof vi.spyOn>;
+    get: ReturnType<typeof vi.spyOn>;
+} {
     vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
     const post = vi.spyOn(axios, "post").mockRejectedValue(new Error("axios should not be called"));
+    const get = vi.spyOn(axios, "get").mockRejectedValue(new Error("axios should not be called"));
     const batch = new FernSdkGenApiBatch(runtimeBundles.length);
     const builds = runtimeBundles.map((runtimeBundle, index) =>
         batch.run({
             apiName: "Petstore",
             organization: "acme",
             cliVersion: "0.0.0",
-            generatorInvocation,
+            generatorInvocation: generatorInvocations?.[index] ?? generatorInvocation,
             sdkVersion: "1.2.3",
             token: { value: "token" } as never,
             specsTarGzBuffer,
@@ -110,7 +117,7 @@ function createPreflightBatch({
         })
     );
 
-    return { builds, post };
+    return { builds, post, get };
 }
 
 describe("isEligibleForFernSdkGenApi", () => {
@@ -147,6 +154,16 @@ describe("isEligibleForFernSdkGenApi", () => {
                 generatorInvocation: invocation({
                     config: { packageJson: { name: "@acme/sdk" } }
                 }),
+                sdkVersion: "1.2.3",
+                specsTarGzBuffer: Buffer.from("archive")
+            })
+        ).toBe(true);
+    });
+
+    it("passes a known generator language mismatch to canonical compatibility validation", () => {
+        expect(
+            isEligibleForFernSdkGenApi({
+                generatorInvocation: invocation({ language: "python" }),
                 sdkVersion: "1.2.3",
                 specsTarGzBuffer: Buffer.from("archive")
             })
@@ -732,6 +749,46 @@ describe("isEligibleForFernSdkGenApi", () => {
             })
         ).rejects.toThrow("build ended with status failed");
         expect(get).toHaveBeenCalledTimes(1);
+    });
+
+    it.each([
+        ["UNKNOWN_GENERATOR", invocation({ name: "fernapi/not-a-generator" })],
+        ["GENERATOR_LANGUAGE_MISMATCH", invocation({ language: "python" })],
+        ["INVALID_GENERATOR_VERSION", invocation({ version: "latest" })]
+    ])("rejects %s before submission", async (code, generatorInvocation) => {
+        const { builds, post, get } = createPreflightBatch({
+            runtimeBundles: [validRuntimeBundle],
+            generatorInvocation
+        });
+
+        await expect(Promise.all(builds)).rejects.toThrow(code);
+        expect(post).not.toHaveBeenCalled();
+        expect(get).not.toHaveBeenCalled();
+    });
+
+    it("recommends sdk-config migration at the generator cutover", async () => {
+        const { builds, post, get } = createPreflightBatch({
+            runtimeBundles: [validRuntimeBundle],
+            generatorInvocation: invocation({ version: "4.0.0" })
+        });
+
+        await expect(Promise.all(builds)).rejects.toThrow(
+            "SDK_CONFIG_V1_REQUIRED; generator=fernapi/fern-typescript-sdk; language=typescript; requestedVersion=4.0.0; cutoverVersion=4.0.0; receivedConfigKind=legacy-fern; expectedConfigKind=sdk-config-v1"
+        );
+        await expect(Promise.all(builds)).rejects.toThrow("fern sdk-config migrate");
+        expect(post).not.toHaveBeenCalled();
+        expect(get).not.toHaveBeenCalled();
+    });
+
+    it("rejects an incompatible later batch target before submitting any target", async () => {
+        const { builds, post, get } = createPreflightBatch({
+            runtimeBundles: [validRuntimeBundle, validRuntimeBundle],
+            generatorInvocations: [invocation(), invocation({ version: "4.0.0" })]
+        });
+
+        await expect(Promise.all(builds)).rejects.toThrow("SDK_CONFIG_V1_REQUIRED");
+        expect(post).not.toHaveBeenCalled();
+        expect(get).not.toHaveBeenCalled();
     });
 
     it("rejects more than 64 bundles before submission", async () => {
