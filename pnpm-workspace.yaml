@@ -30,6 +30,7 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - "@fern-api/*"
   - "@fern-fern/*"
+  - "@postman/sdk-gen-client"
 
 # Prevent trust level downgrades (e.g. a previously trusted-publisher package
 # losing its attestation). Catches compromised maintainer accounts.
@@ -45,6 +46,7 @@ trustPolicyIgnoreAfter: 1440
 trustPolicyExclude:
   - "@fern-api/replay"
   - "@fern-api/fdr-sdk"
+  - "@postman/sdk-gen-client"
 
 # Block transitive dependencies from using exotic sources (git repos, tarball URLs).
 # Only direct dependencies may use non-registry sources.

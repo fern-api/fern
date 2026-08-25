@@ -241,24 +241,6 @@ describe("runLibraryDocsGeneration", () => {
         );
     });
 
-    it("rejects 'git' input under --local (git is generated remotely, never cloned locally)", async () => {
-        const context = makeContext();
-        await expect(
-            runLibraryDocsGeneration({
-                libraries: { "my-sdk": pythonConfig() },
-                docsDirectoryPath: DOCS_DIR,
-                orgId: "org",
-                context,
-                local: true
-            })
-        ).rejects.toThrow(/'git' inputs are generated remotely/);
-        // The CLI must never shell out to clone an untrusted git URL.
-        expect(LocalParserRunner.runLocalParser).not.toHaveBeenCalled();
-        // Failures are surfaced only via the thrown error — not also logged here,
-        // which previously double-printed every message.
-        expect(context.logger.error).not.toHaveBeenCalled();
-    });
-
     it("happy path: start → poll → download IR → generate (Python)", async () => {
         const { mockFn, startCalls } = makeMockFetch({
             startResponse: { body: { jobId: "job-1" } },
@@ -284,6 +266,41 @@ describe("runLibraryDocsGeneration", () => {
         expect(startCall.githubUrl).toBe("https://github.com/acme/sdk");
         expect(PythonDocsGenerator.generate).toHaveBeenCalledWith(
             expect.objectContaining({ ir: mockPythonIr, slug: "my-sdk", title: "my-sdk" })
+        );
+    });
+
+    it("remote mode: forwards a git ref and subpath to the generation service", async () => {
+        const { mockFn, startCalls } = makeMockFetch({
+            startResponse: { body: { jobId: "job-ref" } },
+            statusResponses: [{ body: makeStatus("COMPLETED") }]
+        });
+        globalThis.fetch = mockFn as unknown as typeof fetch;
+
+        const promise = runLibraryDocsGeneration({
+            libraries: {
+                "my-sdk": {
+                    input: {
+                        git: "https://github.com/acme/sdk",
+                        ref: "release/2.0",
+                        subpath: "packages/sdk"
+                    },
+                    output: { path: "./docs" },
+                    lang: "python"
+                }
+            },
+            docsDirectoryPath: DOCS_DIR,
+            orgId: "org",
+            tokenValue: "tok",
+            context: makeContext()
+        });
+        await vi.advanceTimersByTimeAsync(3000);
+        await promise;
+
+        expect((startCalls[0] as { config: unknown }).config).toEqual(
+            expect.objectContaining({
+                branch: "release/2.0",
+                packagePath: "packages/sdk"
+            })
         );
     });
 

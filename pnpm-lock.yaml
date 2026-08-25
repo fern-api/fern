@@ -6414,6 +6414,9 @@ importers:
       '@fern-fern/generator-exec-sdk':
         specifier: 'catalog:'
         version: 0.0.1167
+      '@postman/sdk-gen-client':
+        specifier: 0.0.4
+        version: 0.0.4
       axios:
         specifier: 'catalog:'
         version: 1.16.0
@@ -6600,6 +6603,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
+      '@fern-api/github':
+        specifier: workspace:*
+        version: link:../../commons/github
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
@@ -7260,6 +7266,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
+      '@fern-api/github':
+        specifier: workspace:*
+        version: link:../../../commons/github
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../lazy-fern-workspace
@@ -7275,12 +7284,6 @@ importers:
       js-yaml:
         specifier: '>=4.2.0'
         version: 4.2.0
-      simple-git:
-        specifier: 'catalog:'
-        version: 3.36.0
-      tmp-promise:
-        specifier: 'catalog:'
-        version: 3.0.3
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -10436,6 +10439,10 @@ packages:
 
   '@posthog/types@1.376.0':
     resolution: {integrity: sha512-gbFfxCuZDs/D4QZMwdE+smD1jsuqgGpS6yKGHZZ19foxMy8RYHsU1E47iG1b88n/uN02fAabLibVwuxLtq8juw==}
+
+  '@postman/sdk-gen-client@0.0.4':
+    resolution: {integrity: sha512-5jVwTejm7g8dcmx5vOmDj+MQ5WzqBCbsL+XTpAY8p32VV8MCL9Wfwu2RiekUNKHPWrcuu+9U1896SS2vJM10Ow==}
+    engines: {node: '>=20'}
 
   '@prisma/instrumentation@7.6.0':
     resolution: {integrity: sha512-ZPW2gRiwpPzEfgeZgaekhqXrbW+Y2RJKHVqUmlhZhKzRNCcvR6DykzylDrynpArKKRQtLxoZy36fK7U0p3pdgQ==}
@@ -17545,6 +17552,8 @@ snapshots:
       '@posthog/types': 1.376.0
 
   '@posthog/types@1.376.0': {}
+
+  '@postman/sdk-gen-client@0.0.4': {}
 
   '@prisma/instrumentation@7.6.0(@opentelemetry/api@1.9.1)':
     dependencies:

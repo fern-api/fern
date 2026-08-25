@@ -1,44 +1,23 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import * as Github from "@fern-api/github";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { resolveRemoteSpecs } from "../resolveRemoteSpecs.js";
 
-// Mock simple-git
-vi.mock("simple-git", () => {
-    const mockClone = vi.fn();
-    const mockFetch = vi.fn();
-    const mockCheckout = vi.fn();
-    return {
-        simpleGit: () => ({
-            clone: mockClone,
-            fetch: mockFetch,
-            checkout: mockCheckout
-        }),
-        __mockClone: mockClone,
-        __mockFetch: mockFetch,
-        __mockCheckout: mockCheckout
-    };
-});
-
-// Mock tmp-promise
-vi.mock("tmp-promise", () => ({
-    default: {
-        dir: vi.fn().mockResolvedValue({ path: "/tmp/mock-clone-dir", cleanup: vi.fn() })
-    }
-}));
-
-// Mock child_process for isGitAvailable
-vi.mock("child_process", () => ({
-    execSync: vi.fn().mockReturnValue("git version 2.40.0")
+vi.mock("@fern-api/github", async (importOriginal) => ({
+    ...(await importOriginal<typeof import("@fern-api/github")>()),
+    cloneRepositoryAtRef: vi.fn()
 }));
 
 describe("resolveRemoteSpecs", () => {
     const context = createMockTaskContext();
+    const cloneRepositoryAtRef = vi.mocked(Github.cloneRepositoryAtRef);
 
     beforeEach(() => {
         vi.clearAllMocks();
+        cloneRepositoryAtRef.mockResolvedValue("/tmp/mock-clone-dir");
     });
 
     it("returns definitions unchanged when no git sources are present", async () => {
@@ -58,9 +37,6 @@ describe("resolveRemoteSpecs", () => {
     });
 
     it("resolves git source definitions to local paths", async () => {
-        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
-        __mockClone.mockResolvedValue(undefined);
-
         const definitions: generatorsYml.APIDefinitionLocation[] = [
             {
                 schema: { type: "oss", path: "openapi/service.yml" },
@@ -79,14 +55,10 @@ describe("resolveRemoteSpecs", () => {
 
         const result = await resolveRemoteSpecs({ definitions, context });
 
-        expect(__mockClone).toHaveBeenCalledWith("https://github.com/org/specs.git", "/tmp/mock-clone-dir", [
-            "--depth",
-            "1",
-            "--config",
-            "core.symlinks=false",
-            "--branch",
-            "main"
-        ]);
+        expect(cloneRepositoryAtRef).toHaveBeenCalledWith({
+            repositoryUrl: "https://github.com/org/specs.git",
+            ref: "main"
+        });
 
         expect(result[0]?.gitSource).toBeUndefined();
         expect(result[0]?.schema.type).toBe("oss");
@@ -96,9 +68,6 @@ describe("resolveRemoteSpecs", () => {
     });
 
     it("deduplicates clones for same repo+ref", async () => {
-        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
-        __mockClone.mockResolvedValue(undefined);
-
         const definitions: generatorsYml.APIDefinitionLocation[] = [
             {
                 schema: { type: "oss", path: "openapi/a.yml" },
@@ -131,13 +100,10 @@ describe("resolveRemoteSpecs", () => {
         await resolveRemoteSpecs({ definitions, context });
 
         // Should only clone once since both use the same repo+ref
-        expect(__mockClone).toHaveBeenCalledTimes(1);
+        expect(cloneRepositoryAtRef).toHaveBeenCalledTimes(1);
     });
 
     it("clones different repos separately", async () => {
-        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
-        __mockClone.mockResolvedValue(undefined);
-
         const definitions: generatorsYml.APIDefinitionLocation[] = [
             {
                 schema: { type: "oss", path: "openapi/a.yml" },
@@ -169,13 +135,10 @@ describe("resolveRemoteSpecs", () => {
 
         await resolveRemoteSpecs({ definitions, context });
 
-        expect(__mockClone).toHaveBeenCalledTimes(2);
+        expect(cloneRepositoryAtRef).toHaveBeenCalledTimes(2);
     });
 
-    it("omits --branch flag when ref is undefined", async () => {
-        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
-        __mockClone.mockResolvedValue(undefined);
-
+    it("forwards an undefined ref to clone the default branch", async () => {
         const definitions: generatorsYml.APIDefinitionLocation[] = [
             {
                 schema: { type: "oss", path: "spec.yml" },
@@ -194,17 +157,16 @@ describe("resolveRemoteSpecs", () => {
 
         await resolveRemoteSpecs({ definitions, context });
 
-        expect(__mockClone).toHaveBeenCalledWith("https://github.com/org/specs.git", "/tmp/mock-clone-dir", [
-            "--depth",
-            "1",
-            "--config",
-            "core.symlinks=false"
-        ]);
+        expect(cloneRepositoryAtRef).toHaveBeenCalledWith({
+            repositoryUrl: "https://github.com/org/specs.git",
+            ref: undefined
+        });
     });
 
     it("throws auth error on authentication failure", async () => {
-        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
-        __mockClone.mockRejectedValue(new Error("Authentication failed for 'https://github.com/org/private.git'"));
+        cloneRepositoryAtRef.mockRejectedValue(
+            new Error("Failed to clone https://github.com/org/private.git: authentication failed")
+        );
 
         const definitions: generatorsYml.APIDefinitionLocation[] = [
             {
@@ -226,8 +188,9 @@ describe("resolveRemoteSpecs", () => {
     });
 
     it("throws not-found error when repo does not exist", async () => {
-        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
-        __mockClone.mockRejectedValue(new Error("Repository not found"));
+        cloneRepositoryAtRef.mockRejectedValue(
+            new Error("Failed to clone https://github.com/org/nonexistent.git: repository not found")
+        );
 
         const definitions: generatorsYml.APIDefinitionLocation[] = [
             {
@@ -249,9 +212,6 @@ describe("resolveRemoteSpecs", () => {
     });
 
     it("resolves protobuf definitions correctly (root and target)", async () => {
-        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
-        __mockClone.mockResolvedValue(undefined);
-
         const definitions: generatorsYml.APIDefinitionLocation[] = [
             {
                 schema: {
@@ -286,9 +246,6 @@ describe("resolveRemoteSpecs", () => {
     });
 
     it("resolves protobuf target as empty string when not specified", async () => {
-        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
-        __mockClone.mockResolvedValue(undefined);
-
         const definitions: generatorsYml.APIDefinitionLocation[] = [
             {
                 schema: {
@@ -319,16 +276,7 @@ describe("resolveRemoteSpecs", () => {
         }
     });
 
-    it("uses fetch+checkout flow for commit SHA refs", async () => {
-        const { __mockClone, __mockFetch, __mockCheckout } = (await import("simple-git")) as unknown as {
-            __mockClone: ReturnType<typeof vi.fn>;
-            __mockFetch: ReturnType<typeof vi.fn>;
-            __mockCheckout: ReturnType<typeof vi.fn>;
-        };
-        __mockClone.mockResolvedValue(undefined);
-        __mockFetch.mockResolvedValue(undefined);
-        __mockCheckout.mockResolvedValue(undefined);
-
+    it("forwards commit SHA refs", async () => {
         const definitions: generatorsYml.APIDefinitionLocation[] = [
             {
                 schema: { type: "oss", path: "openapi/service.yml" },
@@ -347,30 +295,13 @@ describe("resolveRemoteSpecs", () => {
 
         await resolveRemoteSpecs({ definitions, context });
 
-        // Should clone without --branch
-        expect(__mockClone).toHaveBeenCalledWith("https://github.com/org/specs.git", "/tmp/mock-clone-dir", [
-            "--depth",
-            "1",
-            "--config",
-            "core.symlinks=false",
-            "--no-checkout"
-        ]);
-        // Should fetch the specific commit
-        expect(__mockFetch).toHaveBeenCalledWith("origin", "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2", {
-            "--depth": "1"
+        expect(cloneRepositoryAtRef).toHaveBeenCalledWith({
+            repositoryUrl: "https://github.com/org/specs.git",
+            ref: "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
         });
-        // Should checkout the commit
-        expect(__mockCheckout).toHaveBeenCalledWith("a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2");
     });
 
-    it("uses --branch flow for non-SHA refs", async () => {
-        const { __mockClone, __mockFetch } = (await import("simple-git")) as unknown as {
-            __mockClone: ReturnType<typeof vi.fn>;
-            __mockFetch: ReturnType<typeof vi.fn>;
-        };
-        __mockClone.mockResolvedValue(undefined);
-        __mockFetch.mockResolvedValue(undefined);
-
+    it("forwards branch and tag refs", async () => {
         const definitions: generatorsYml.APIDefinitionLocation[] = [
             {
                 schema: { type: "oss", path: "spec.yml" },
@@ -389,23 +320,13 @@ describe("resolveRemoteSpecs", () => {
 
         await resolveRemoteSpecs({ definitions, context });
 
-        // Should use --branch for tags/branches
-        expect(__mockClone).toHaveBeenCalledWith("https://github.com/org/specs.git", "/tmp/mock-clone-dir", [
-            "--depth",
-            "1",
-            "--config",
-            "core.symlinks=false",
-            "--branch",
-            "v1.2.3"
-        ]);
-        // Should NOT use fetch+checkout
-        expect(__mockFetch).not.toHaveBeenCalled();
+        expect(cloneRepositoryAtRef).toHaveBeenCalledWith({
+            repositoryUrl: "https://github.com/org/specs.git",
+            ref: "v1.2.3"
+        });
     });
 
     it("rejects absolute paths that escape the cloned directory", async () => {
-        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
-        __mockClone.mockResolvedValue(undefined);
-
         const definitions: generatorsYml.APIDefinitionLocation[] = [
             {
                 schema: { type: "oss", path: "/etc/passwd" },
@@ -428,9 +349,6 @@ describe("resolveRemoteSpecs", () => {
     });
 
     it("rejects paths with directory traversal sequences", async () => {
-        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
-        __mockClone.mockResolvedValue(undefined);
-
         const definitions: generatorsYml.APIDefinitionLocation[] = [
             {
                 schema: { type: "oss", path: "../../proc/self/environ" },

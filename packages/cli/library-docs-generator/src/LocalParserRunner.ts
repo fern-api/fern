@@ -56,6 +56,8 @@ export interface LocalParserConfig {
     packagePath?: string;
     /** Source repository URL, embedded in the IR for source links. */
     sourceUrl?: string;
+    /** Source repository ref, embedded in the IR for source links. */
+    branch?: string;
     /** Contents of a Doxyfile, used only by the C++ parser. */
     doxyfileContent?: string;
 }
@@ -97,6 +99,7 @@ export async function runLocalParser({
             JSON.stringify({
                 packagePath: config.packagePath,
                 sourceUrl: config.sourceUrl,
+                branch: config.branch,
                 doxyfileContent: config.doxyfileContent
             })
         );

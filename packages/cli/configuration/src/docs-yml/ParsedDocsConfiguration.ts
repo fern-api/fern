@@ -560,8 +560,8 @@ export type ParsedApiReferenceLayoutItem =
 
 /**
  * Parsed configuration for the source location of a library documentation source.
- * A `git` input is generated remotely; a `path` input points at a local checkout
- * and is generated with `fern docs md generate --local`.
+ * A `git` input can be generated remotely or resolved locally with `--local`;
+ * a `path` input points at a local checkout and requires `--local`.
  */
 export type ParsedLibraryInputConfiguration =
     | {

@@ -1,0 +1,3 @@
+- summary: |
+    Support git repositories, refs, and repository subpaths when generating library documentation locally.
+  type: feat
