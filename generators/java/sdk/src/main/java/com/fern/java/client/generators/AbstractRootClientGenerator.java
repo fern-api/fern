@@ -2015,7 +2015,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             oauthTokenSupplierClassName);
                 } else {
                     // Extensible builder mode - use flat builder with runtime validation
-                    createTokenOverrideSetter(tokenOverridePropertyName);
+                    createTokenOverrideSetter(tokenOverridePropertyName, tokenHeader);
 
                     if (!generatorContext.isEndpointSecurity()) {
                         // Add validation: must provide either token OR (clientId AND clientSecret), but not both
@@ -2528,8 +2528,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addJavadoc("the OAuth client credentials flow.\n")
                         .addJavadoc("\n")
                         .addJavadoc(
-                                "@param $L The access token to use for Authorization header\n",
-                                tokenOverridePropertyName)
+                                "@param $L The access token to use for $L header\n",
+                                tokenOverridePropertyName,
+                                tokenHeader)
                         .addJavadoc("@return A builder configured for token authentication")
                         .addParameter(String.class, tokenOverridePropertyName)
                         .returns(tokenAuthClassName)
@@ -2923,7 +2924,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             }
         }
 
-        private void createTokenOverrideSetter(String fieldName) {
+        private void createTokenOverrideSetter(String fieldName, String tokenHeader) {
             // Skip if already created to prevent duplicate fields/methods
             if (createdFields.contains(fieldName)) {
                 return;
@@ -2942,7 +2943,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     .addJavadoc(
                             "Sets a pre-generated access token for authentication, bypassing the OAuth client credentials flow.\n")
                     .addJavadoc("Use this when you already have a valid access token.\n")
-                    .addJavadoc("@param $L The access token to use for Authorization header\n", fieldName)
+                    .addJavadoc("@param $L The access token to use for $L header\n", fieldName, tokenHeader)
                     .addJavadoc("@return This builder for method chaining")
                     .addStatement("this.$L = $L", fieldName, fieldName)
                     .addStatement(isExtensible ? "return self()" : "return this");
