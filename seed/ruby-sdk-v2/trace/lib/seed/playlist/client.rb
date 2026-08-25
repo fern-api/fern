@@ -185,11 +185,14 @@ module Seed
       # @return [Seed::Playlist::Types::Playlist, nil]
       def update_playlist(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[service_param playlist_id]
+        body_params = params.except(*path_param_names)
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
           path: "/v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/#{URI.encode_uri_component(params[:playlist_id].to_s)}",
-          body: params,
+          body: body_params,
           request_options: request_options
         )
         begin

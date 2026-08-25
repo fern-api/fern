@@ -40,11 +40,6 @@ func do() {
     client := client.NewClient()
     request := &fern.WaterPlantRequest{
         PlantID: "plant-id",
-        Body: &fern.WateringRequest{
-            Milliliters: fern.Float64(
-                60,
-            ),
-        },
     }
     client.WaterPlant(
         context.TODO(),

@@ -87,6 +87,7 @@ func TestUserGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
+		option.WithClientCredentials("test_client_id", "test_client_secret"),
 		option.WithBasicAuth("test-username", "test-password"),
 	)
 	_, invocationErr := client.User.Get(
@@ -111,6 +112,7 @@ func TestUserGetAdminsWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
+		option.WithClientCredentials("test_client_id", "test_client_secret"),
 		option.WithBasicAuth("test-username", "test-password"),
 	)
 	_, invocationErr := client.User.GetAdmins(

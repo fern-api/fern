@@ -701,7 +701,7 @@ await client.Service.CreateBigEntityAsync(
 <dd>
 
 ```csharp
-await client.Service.RefreshTokenAsync();
+await client.Service.RefreshTokenAsync(new RefreshTokenRequest { Ttl = 420 });
 ```
 </dd>
 </dl>

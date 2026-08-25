@@ -62,10 +62,8 @@ client = AsyncSeedStreaming(
 
 
 async def main() -> None:
-    await client.dummy.generate(
-        stream=False,
-        num_events=5,
-    )
+    async for chunk in client.dummy.generate(...):
+        print(chunk)
 
 
 asyncio.run(main())

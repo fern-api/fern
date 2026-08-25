@@ -81,6 +81,8 @@ class RawSeedApi:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 if _sse.event == "heartbeat":
                                     try:
                                         yield typing.cast(
@@ -183,6 +185,8 @@ class RawSeedApi:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 if _sse.event == "heartbeat":
                                     try:
                                         yield typing.cast(
@@ -285,6 +289,8 @@ class RawSeedApi:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 try:
                                     yield typing.cast(
                                         StreamDataContextResponse,
@@ -361,6 +367,8 @@ class RawSeedApi:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 try:
                                     yield typing.cast(
                                         StreamNoContextResponse,
@@ -437,6 +445,8 @@ class RawSeedApi:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 if _sse.event == "heartbeat":
                                     try:
                                         yield typing.cast(
@@ -517,6 +527,8 @@ class RawSeedApi:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 try:
                                     yield typing.cast(
                                         StreamDataContextWithEnvelopeSchemaResponse,
@@ -593,6 +605,8 @@ class RawSeedApi:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 try:
                                     yield typing.cast(
                                         Event,
@@ -1286,6 +1300,8 @@ class RawSeedApi:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 try:
                                     yield typing.cast(
                                         str,
@@ -1367,6 +1383,8 @@ class AsyncRawSeedApi:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 if _sse.event == "heartbeat":
                                     try:
                                         yield typing.cast(
@@ -1469,6 +1487,8 @@ class AsyncRawSeedApi:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 if _sse.event == "heartbeat":
                                     try:
                                         yield typing.cast(
@@ -1571,6 +1591,8 @@ class AsyncRawSeedApi:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 try:
                                     yield typing.cast(
                                         StreamDataContextResponse,
@@ -1647,6 +1669,8 @@ class AsyncRawSeedApi:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 try:
                                     yield typing.cast(
                                         StreamNoContextResponse,
@@ -1723,6 +1747,8 @@ class AsyncRawSeedApi:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 if _sse.event == "heartbeat":
                                     try:
                                         yield typing.cast(
@@ -1803,6 +1829,8 @@ class AsyncRawSeedApi:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 try:
                                     yield typing.cast(
                                         StreamDataContextWithEnvelopeSchemaResponse,
@@ -1879,6 +1907,8 @@ class AsyncRawSeedApi:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 try:
                                     yield typing.cast(
                                         Event,
@@ -2572,6 +2602,8 @@ class AsyncRawSeedApi:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 try:
                                     yield typing.cast(
                                         str,

@@ -14,18 +14,15 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.MistPlantRequest{
-        PlantID: "plantId",
-        IdempotencyKey: fern.String(
-            "idempotencyKey",
-        ),
+    request := &fern.PrunePlantRequest{
+        PlantID: "plant-id",
         Body: &fern.WateringRequest{
             Milliliters: fern.Float64(
-                1.1,
+                60,
             ),
         },
     }
-    client.MistPlant(
+    client.PrunePlant(
         context.TODO(),
         request,
     )

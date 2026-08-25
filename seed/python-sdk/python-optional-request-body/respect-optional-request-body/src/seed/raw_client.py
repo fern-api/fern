@@ -50,6 +50,7 @@ class RawSeedPythonOptionalRequestBody:
             },
             request_options=request_options,
             omit=OMIT,
+            optional_body=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -95,6 +96,7 @@ class RawSeedPythonOptionalRequestBody:
             },
             request_options=request_options,
             omit=OMIT,
+            optional_body=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -149,6 +151,7 @@ class RawSeedPythonOptionalRequestBody:
             },
             request_options=request_options,
             omit=OMIT,
+            optional_body=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -194,6 +197,7 @@ class RawSeedPythonOptionalRequestBody:
             ),
             request_options=request_options,
             omit=OMIT,
+            optional_body=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -293,6 +297,7 @@ class AsyncRawSeedPythonOptionalRequestBody:
             },
             request_options=request_options,
             omit=OMIT,
+            optional_body=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -338,6 +343,7 @@ class AsyncRawSeedPythonOptionalRequestBody:
             },
             request_options=request_options,
             omit=OMIT,
+            optional_body=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -392,6 +398,7 @@ class AsyncRawSeedPythonOptionalRequestBody:
             },
             request_options=request_options,
             omit=OMIT,
+            optional_body=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -437,6 +444,7 @@ class AsyncRawSeedPythonOptionalRequestBody:
             ),
             request_options=request_options,
             omit=OMIT,
+            optional_body=True,
         )
         try:
             if 200 <= _response.status_code < 300:

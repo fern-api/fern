@@ -442,9 +442,6 @@ export class ServiceClient {
      * @throws {@link errors.SeedExamplesTimeoutError}
      *
      * @example
-     *     await client.service.refreshToken(undefined)
-     *
-     * @example
      *     await client.service.refreshToken({
      *         ttl: 420
      *     })

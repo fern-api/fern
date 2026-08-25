@@ -61,9 +61,8 @@ client = AsyncSeedServerSentEventsResumable(
 
 
 async def main() -> None:
-    await client.completions.stream(
-        query="foo",
-    )
+    async for chunk in client.completions.stream(...):
+        print(chunk)
 
 
 asyncio.run(main())

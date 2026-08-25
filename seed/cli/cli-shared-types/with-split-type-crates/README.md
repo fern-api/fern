@@ -106,14 +106,19 @@ Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL
 
 ### Output formats
 
-Use the global `--format` flag to control output. Supported values: `json` (default), `table`, `yaml`, `csv`.
+Use the global `--format` flag to control output. Supported values: `json`, `table`, `yaml`, `csv`, `jsonl`, `raw`, `http`.
+
+Without `--format`, output (including errors) is `table` when stdout is a terminal and `json` when it is piped or redirected — so scripts and agents get JSON by default. Pass `--human` to keep the interactive rendering when piping to a pager, and `--format json` to pin JSON in a terminal.
 
 ```bash
 # Pipe JSON output through jq
 shared-types-cli <resource> <method> --format json | jq
 
-# Machine-readable catalog of every operation
-shared-types-cli --help --format json | jq 'length'
+# Keep the human rendering even when piped
+shared-types-cli <resource> <method> --human | less
+
+# Machine-readable catalog of every operation (same as --schema)
+shared-types-cli --help --format json | jq '.operations | length'
 ```
 
 ### Shell completion

@@ -224,11 +224,14 @@ module Seed
         # @return [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
         def get_and_return_nested_with_required_field(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
+          path_param_names = %i[string]
+          body_params = params.except(*path_param_names)
+
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/object/get-and-return-nested-with-required-field/#{URI.encode_uri_component(params[:string].to_s)}",
-            body: Seed::Types::Object_::Types::NestedObjectWithRequiredField.new(params).to_h,
+            body: Seed::Types::Object_::Types::NestedObjectWithRequiredField.new(body_params).to_h,
             request_options: request_options
           )
           begin
