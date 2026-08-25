@@ -1,3 +1,4 @@
+// cspell:ignore kotlin
 import { stripCliConfigKeys } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration";
@@ -5,13 +6,18 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
 import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { GeneratorConfigCompatibilityError, validateGeneratorConfigCompatibility } from "@postman/sdk-gen-client";
 import axios, { AxiosError } from "axios";
 import { createHash } from "crypto";
 import FormData from "form-data";
 import path from "path";
 import { gunzipSync } from "zlib";
 import { downloadFilesForTask } from "./RemoteTaskHandler.js";
+import {
+    GeneratorConfigCompatibilityError,
+    type GeneratorLanguage,
+    getGeneratorLanguage,
+    validateGeneratorConfigCompatibility
+} from "./sdk-gen-client/index.js";
 
 const POLL_INTERVAL_MS = 2_000;
 const POLL_TIMEOUT_MS = 15 * 60 * 1_000;
@@ -27,18 +33,7 @@ const MAX_MULTIPART_BODY_BYTES = 60 * 1024 * 1024;
 const LOOPBACK_HOSTNAMES = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
 const TARGET_ID_SEED_COLLATOR = new Intl.Collator("en", { numeric: true });
 
-export type FernSdkGenApiLanguage =
-    | "typescript"
-    | "python"
-    | "java"
-    | "kotlin"
-    | "go"
-    | "csharp"
-    | "php"
-    | "ruby"
-    | "rust"
-    | "swift"
-    | "cli";
+export type FernSdkGenApiLanguage = GeneratorLanguage;
 
 export type FernSdkGenApiPublishRegistry =
     | "npm"
@@ -76,30 +71,6 @@ export type FernSdkGenApiRequestedOutput =
           publish?: FernSdkGenApiPublishConfig;
       }
     | { type: "publish"; publish: FernSdkGenApiPublishConfig };
-
-/**
- * First-party Fern SDK generators that can be represented by the shared SDK Config IR target
- * languages. Keep aliases here because existing generators.yml files remain valid during the
- * backend migration.
- */
-const FERN_SDK_GENERATOR_LANGUAGES: Readonly<Record<string, FernSdkGenApiLanguage>> = {
-    "fernapi/fern-typescript": "typescript",
-    "fernapi/fern-typescript-sdk": "typescript",
-    "fernapi/fern-typescript-node-sdk": "typescript",
-    "fernapi/fern-typescript-browser-sdk": "typescript",
-    "fernapi/fern-python-sdk": "python",
-    "fernapi/fern-java-sdk": "java",
-    "fernapi/fern-kotlin-sdk": "kotlin",
-    "fernapi/fern-go-sdk": "go",
-    "fernapi/fern-csharp-sdk": "csharp",
-    "fernapi/fern-php-sdk": "php",
-    "fernapi/fern-ruby-sdk": "ruby",
-    "fernapi/fern-ruby-sdk-v2": "ruby",
-    "fernapi/fern-rust-sdk": "rust",
-    "fernapi/fern-swift-sdk": "swift",
-    "fernapi/fern-cli": "cli",
-    "fernapi/fern-cli-generator": "cli"
-};
 
 interface FernBuildStatus {
     buildId: string;
@@ -169,7 +140,7 @@ export function getFernSdkGenApiOrigin(): string | undefined {
 }
 
 export function getFernSdkGenApiLanguage(generatorName: string): FernSdkGenApiLanguage | undefined {
-    return FERN_SDK_GENERATOR_LANGUAGES[generatorName];
+    return getGeneratorLanguage(generatorName);
 }
 
 interface FernSdkGenApiOutputMapping {
