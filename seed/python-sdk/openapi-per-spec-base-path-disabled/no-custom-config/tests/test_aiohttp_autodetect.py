@@ -47,6 +47,7 @@ class TestMakeDefaultAsyncClientWithAiohttp(unittest.TestCase):
     def test_returns_aiohttp_client(self) -> None:
         """When httpx_aiohttp is installed, returns HttpxAiohttpClient."""
         import httpx_aiohttp  # type: ignore[import-not-found]
+
         from seed.client import _make_default_async_client
 
         client = _make_default_async_client(timeout=60, follow_redirects=True)
@@ -57,6 +58,7 @@ class TestMakeDefaultAsyncClientWithAiohttp(unittest.TestCase):
     def test_follow_redirects_none(self) -> None:
         """When httpx_aiohttp is installed and follow_redirects is None, omits it."""
         import httpx_aiohttp  # type: ignore[import-not-found]
+
         from seed.client import _make_default_async_client
 
         client = _make_default_async_client(timeout=60, follow_redirects=None)
@@ -93,7 +95,7 @@ class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
 
             with self.assertRaises(RuntimeError) as ctx:
                 seed._default_clients.DefaultAioHttpClient()
-            self.assertIn("pip install seed[aiohttp]", str(ctx.exception))
+            self.assertIn("pip install fern_openapi-per-spec-base-path-disabled[aiohttp]", str(ctx.exception))
 
         importlib.reload(seed._default_clients)
 
@@ -105,6 +107,7 @@ class TestDefaultClientsWithAiohttp(unittest.TestCase):
     def test_default_aiohttp_client_defaults(self) -> None:
         """DefaultAioHttpClient works when httpx_aiohttp is installed."""
         import httpx_aiohttp  # type: ignore[import-not-found]
+
         from seed._default_clients import SDK_DEFAULT_TIMEOUT, DefaultAioHttpClient
 
         client = DefaultAioHttpClient()

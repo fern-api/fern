@@ -14,15 +14,12 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.PrunePlantRequest{
-        PlantID: "plantId",
-        Body: &fern.WateringRequest{
-            Milliliters: fern.Float64(
-                1.1,
-            ),
-        },
+    request := &fern.WateringRequest{
+        Milliliters: fern.Float64(
+            1.1,
+        ),
     }
-    client.PrunePlant(
+    client.WaterAllPlants(
         context.TODO(),
         request,
     )

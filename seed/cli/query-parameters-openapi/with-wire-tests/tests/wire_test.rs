@@ -940,10 +940,39 @@ async fn run_case(id: &str) {
             manifest.binary_name,
             args.join(" ")
         );
+        // The harness pipes stdout, so the CLI resolves the machine-readable
+        // rendering and writes the error envelope there — a human line on
+        // stderr is what a terminal gets instead, and asserting on stderr here
+        // would pass for any failure, including one that never left the
+        // process. Parsing the envelope pins the failure to *this* response:
+        // `error.code` must be the status the mock served.
+        let envelope: serde_json::Value = serde_json::from_str(stdout.trim()).unwrap_or_else(|e| {
+            panic!(
+                "expected a JSON error envelope on stdout for {id} (a {} response), got unparseable output: {e}
+  stdout: {stdout}
+  stderr: {stderr}",
+                case.response.status
+            )
+        });
+        let error = envelope.get("error").unwrap_or_else(|| {
+            panic!(
+                "expected an `error` object in the envelope for {id}
+  stdout: {stdout}"
+            )
+        });
+        assert_eq!(
+            error.get("code").and_then(|c| c.as_u64()),
+            Some(u64::from(case.response.status)),
+            "expected error.code to be the served status for {id}
+  stdout: {stdout}"
+        );
         assert!(
-            !stderr.trim().is_empty(),
-            "expected an error message on stderr for {id} (a {} response), got empty stderr",
-            case.response.status
+            error
+                .get("message")
+                .and_then(|m| m.as_str())
+                .is_some_and(|m| !m.trim().is_empty()),
+            "expected a non-empty error.message for {id}
+  stdout: {stdout}"
         );
         // A non-zero exit alone proves nothing: the CLI must have failed
         // *because of the mocked response*, not before it ever made the call.

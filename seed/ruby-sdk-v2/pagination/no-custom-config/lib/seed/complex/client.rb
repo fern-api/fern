@@ -36,6 +36,9 @@ module Seed
       # @return [Seed::Complex::Types::PaginatedConversationResponse]
       def search(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[index]
+        body_params = params.except(*path_param_names)
+
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :conversations,
@@ -46,7 +49,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "#{URI.encode_uri_component(params[:index].to_s)}/conversations/search",
-            body: Seed::Complex::Types::SearchRequest.new(params).to_h,
+            body: Seed::Complex::Types::SearchRequest.new(body_params).to_h,
             request_options: request_options
           )
           begin

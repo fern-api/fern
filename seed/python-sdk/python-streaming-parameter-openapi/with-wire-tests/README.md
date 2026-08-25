@@ -61,9 +61,8 @@ client = AsyncSeedApi(
 
 
 async def main() -> None:
-    await client.chat_stream(
-        prompt="prompt",
-    )
+    async for chunk in client.chat_stream(...):
+        print(chunk)
 
 
 asyncio.run(main())

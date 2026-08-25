@@ -713,9 +713,11 @@ fn parse_and_validate_inputs(
             }
             Some("body") => {
                 raw_body_flag_keys.push(key.clone());
+                let param_def = method.parameters.get(key);
                 let coerced = coerce_body_param_value(
                     value,
-                    method.parameters.get(key).and_then(|p| p.param_type.as_deref()),
+                    param_def.and_then(|p| p.param_type.as_deref()),
+                    param_def.is_some_and(|p| p.nullable),
                 )?;
                 set_nested_value(&mut body_from_flags, key, coerced);
             }
@@ -2279,7 +2281,15 @@ pub async fn execute_method(
             }
 
             let built = request.build().map_err(|e| {
-                CliError::Other(anyhow::Error::from(e).context("Failed to build HTTP request"))
+                // `Validation`, not `Other`: `build()` fails on a malformed URL
+                // or header value, which comes from `--base-url` or a flag the
+                // user typed. Reporting it as `code: 500` claimed a server
+                // status for a request that was never sent, and buried a
+                // fixable input error under an internal-error exit code.
+                CliError::Validation(format!(
+                    "Failed to build HTTP request: {}",
+                    crate::error::error_chain(&e)
+                ))
             })?;
             if debug {
                 crate::debug::dump_request(
@@ -2371,7 +2381,14 @@ pub async fn execute_method(
                     // behind corporate proxies / interception tools. The hint is
                     // a side effect; the error then propagates up like any other.
                     crate::http::maybe_emit_tls_hint(http_config, &e);
-                    return Err(anyhow::Error::from(e).context("HTTP request failed").into());
+                    // `Network`, not `Other`: nothing answered, so there is no
+                    // HTTP status to put in `error.code`. The chain is walked
+                    // because reqwest's own Display stops at "error sending
+                    // request" — "Connection refused" is the actionable part.
+                    return Err(CliError::Network(format!(
+                        "HTTP request failed: {}",
+                        crate::error::error_chain(&e)
+                    )));
                 }
             }
         };
@@ -3940,7 +3957,17 @@ fn value_to_form_str(val: &Value) -> String {
 /// supplied via `--params` are already typed by `serde_json` and pass through
 /// unchanged. `object` and `array` types are JSON-decoded so callers can pass
 /// nested structures via individual flags (e.g. `--addresses '[{"city":"SF"}]'`).
-fn coerce_body_param_value(value: &Value, param_type: Option<&str>) -> Result<Value, CliError> {
+fn coerce_body_param_value(
+    value: &Value,
+    param_type: Option<&str>,
+    nullable: bool,
+) -> Result<Value, CliError> {
+    // An explicit `null` on a nullable field is the user asking to send
+    // JSON null (ADR-0003's sentinel, resolved in `collect_params_from_flags`),
+    // not a malformed object/array. Pass it through untouched.
+    if nullable && value.is_null() {
+        return Ok(Value::Null);
+    }
     // For object-shorthand body flags, validate shape regardless of whether
     // the value arrives here as a raw String (legacy / direct unit-test entry)
     // or as a pre-decoded Value. `collect_params_from_flags` eagerly
@@ -5984,29 +6011,30 @@ mod tests {
     fn test_coerce_body_param_value_scalar_types() {
         // CLI flags arrive as Value::String; coerce them per the schema's type.
         assert_eq!(
-            coerce_body_param_value(&Value::String("42".into()), Some("integer")).unwrap(),
+            coerce_body_param_value(&Value::String("42".into()), Some("integer"), false).unwrap(),
             json!(42)
         );
         assert_eq!(
-            coerce_body_param_value(&Value::String("2.5".into()), Some("number")).unwrap(),
+            coerce_body_param_value(&Value::String("2.5".into()), Some("number"), false).unwrap(),
             json!(2.5)
         );
         assert_eq!(
-            coerce_body_param_value(&Value::String("true".into()), Some("boolean")).unwrap(),
+            coerce_body_param_value(&Value::String("true".into()), Some("boolean"), false).unwrap(),
             Value::Bool(true)
         );
         assert_eq!(
-            coerce_body_param_value(&Value::String("false".into()), Some("boolean")).unwrap(),
+            coerce_body_param_value(&Value::String("false".into()), Some("boolean"), false)
+                .unwrap(),
             Value::Bool(false)
         );
         // String type passes through unchanged.
         assert_eq!(
-            coerce_body_param_value(&Value::String("hello".into()), Some("string")).unwrap(),
+            coerce_body_param_value(&Value::String("hello".into()), Some("string"), false).unwrap(),
             json!("hello")
         );
         // Already-typed values from `--params` JSON pass through.
         assert_eq!(
-            coerce_body_param_value(&json!(99), Some("integer")).unwrap(),
+            coerce_body_param_value(&json!(99), Some("integer"), false).unwrap(),
             json!(99)
         );
     }
@@ -6017,6 +6045,7 @@ mod tests {
         let arr = coerce_body_param_value(
             &Value::String(r#"["a","b"]"#.into()),
             Some("array"),
+            false,
         )
         .unwrap();
         assert_eq!(arr, json!(["a", "b"]));
@@ -6024,6 +6053,7 @@ mod tests {
         let obj = coerce_body_param_value(
             &Value::String(r#"{"city":"SF"}"#.into()),
             Some("object"),
+            false,
         )
         .unwrap();
         assert_eq!(obj, json!({ "city": "SF" }));
@@ -6041,7 +6071,7 @@ mod tests {
             ("true", "boolean"),
             ("null", "null"),
         ] {
-            let err = coerce_body_param_value(&Value::String(bad.0.into()), Some("object"))
+            let err = coerce_body_param_value(&Value::String(bad.0.into()), Some("object"), false)
                 .unwrap_err();
             match err {
                 CliError::Validation(msg) => assert!(
@@ -6058,7 +6088,8 @@ mod tests {
         // shape check and reports "got string" — consistent with the
         // already-decoded `"hi"` case from collect_params_from_flags.
         let err =
-            coerce_body_param_value(&Value::String("{not json}".into()), Some("object")).unwrap_err();
+            coerce_body_param_value(&Value::String("{not json}".into()), Some("object"), false)
+                .unwrap_err();
         match err {
             CliError::Validation(msg) => assert!(
                 msg.contains("must be a JSON object") && msg.contains("string"),
@@ -6076,7 +6107,7 @@ mod tests {
             (json!(true), "boolean"),
             (Value::Null, "null"),
         ] {
-            let err = coerce_body_param_value(&pre_parsed, Some("object")).unwrap_err();
+            let err = coerce_body_param_value(&pre_parsed, Some("object"), false).unwrap_err();
             match err {
                 CliError::Validation(msg) => assert!(
                     msg.contains("must be a JSON object") && msg.contains(kind),
@@ -6088,10 +6119,24 @@ mod tests {
     }
 
     #[test]
+    fn test_coerce_body_param_value_passes_null_on_nullable_composite() {
+        // A promoted `anyOf: [$ref, null]` field is typed `object` *and*
+        // nullable, so the sentinel's resolved `null` must survive the shape
+        // check instead of being rejected as "must be a JSON object".
+        assert_eq!(
+            coerce_body_param_value(&Value::Null, Some("object"), true).unwrap(),
+            Value::Null
+        );
+        // Non-nullable object fields still reject null.
+        assert!(coerce_body_param_value(&Value::Null, Some("object"), false).is_err());
+    }
+
+    #[test]
     fn test_coerce_body_param_value_rejects_bad_input() {
         let err = coerce_body_param_value(
             &Value::String("not-an-int".into()),
             Some("integer"),
+            false,
         )
         .unwrap_err();
         match err {
@@ -6102,6 +6147,7 @@ mod tests {
         let err = coerce_body_param_value(
             &Value::String("yes".into()),
             Some("boolean"),
+            false,
         )
         .unwrap_err();
         match err {

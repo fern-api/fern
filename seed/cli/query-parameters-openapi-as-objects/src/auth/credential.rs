@@ -25,6 +25,8 @@ use std::sync::Arc;
 
 use secrecy::SecretString;
 
+use crate::error::CliError;
+
 use crate::auth::keyring_store::active_store;
 
 type CredentialClosure = Arc<dyn Fn() -> Option<String> + Send + Sync>;
@@ -133,8 +135,26 @@ impl AuthCredentialSource {
     /// `Debug`/`Display`/panic messages. Callers that need the raw `&str`
     /// (to build a `HeaderValue`, base64-encode for basic auth, etc.)
     /// must opt in explicitly via [`ExposeSecret::expose_secret`].
+    ///
+    /// Treats every failure as "no credential". Correct for *probing* — an
+    /// `auth status` listing or a `has_credentials` check should report what is
+    /// usable, not abort — but wrong on the request path, where a credential
+    /// the user has but the CLI could not read must not silently downgrade the
+    /// request to unauthenticated. Use [`try_resolve`](Self::try_resolve) there.
     pub fn resolve(&self) -> Option<SecretString> {
-        match self {
+        self.try_resolve().ok().flatten()
+    }
+
+    /// Resolve the value, distinguishing "not configured" (`Ok(None)`) from
+    /// "configured but unreadable" (`Err`).
+    ///
+    /// The distinction only exists for the keyring today, and it is the one
+    /// that matters: denying the OS keychain prompt used to be indistinguishable
+    /// from having stored nothing, so the CLI sent the request anonymously and
+    /// the user saw whatever the server says to a stranger — a 404, typically —
+    /// instead of an auth failure.
+    pub fn try_resolve(&self) -> Result<Option<SecretString>, CliError> {
+        let value = match self {
             AuthCredentialSource::Env(name) => std::env::var(name)
                 .ok()
                 .map(|v| v.trim().to_string())
@@ -144,16 +164,29 @@ impl AuthCredentialSource {
             AuthCredentialSource::File(path) => read_credential_file(path),
             AuthCredentialSource::Literal(v) if v.is_empty() => None,
             AuthCredentialSource::Literal(v) => Some(SecretString::from(v.clone())),
-            AuthCredentialSource::Chain(sources) => sources.iter().find_map(|s| s.resolve()),
-            AuthCredentialSource::Closure(f, _) => f().filter(|v| !v.is_empty()).map(SecretString::from),
+            // First source that yields a value wins; a source that *errors*
+            // stops the walk rather than falling through, so a denied keychain
+            // is reported instead of being masked by a later empty rung.
+            AuthCredentialSource::Chain(sources) => {
+                let mut found = None;
+                for source in sources {
+                    if let Some(v) = source.try_resolve()? {
+                        found = Some(v);
+                        break;
+                    }
+                }
+                found
+            }
+            AuthCredentialSource::Closure(f, _) => {
+                f().filter(|v| !v.is_empty()).map(SecretString::from)
+            }
             AuthCredentialSource::Keyring { service, account } => active_store()
-                .get(service, account)
-                .ok()
-                .flatten()
+                .get(service, account)?
                 .filter(|v| !v.is_empty())
                 .map(SecretString::from),
             AuthCredentialSource::Missing => None,
-        }
+        };
+        Ok(value)
     }
 
     /// The environment-variable name backing this source, if it is an
@@ -184,7 +217,15 @@ impl AuthCredentialSource {
             }
             AuthCredentialSource::Closure(_, Some(hint)) => vec![hint.clone()],
             AuthCredentialSource::Keyring { service, account } => {
-                vec![format!("keyring entry {service}:{account} (populated by `<bin> auth login`)")]
+                // `service` is the CLI's binary name (see the variant's docs),
+                // so the command is spellable. It used to render as a literal
+                // `<bin>`, which reached users on any non-OAuth scheme — the
+                // OAuth provider overrides `credential_hints` and substituted
+                // correctly, hiding the placeholder on the one path anyone
+                // looked at.
+                vec![format!(
+                    "keyring entry {service}:{account} (populated by `{service} auth login`)"
+                )]
             }
             AuthCredentialSource::Literal(_)
             | AuthCredentialSource::Closure(_, None)
@@ -709,6 +750,59 @@ mod tests {
 
         let s = AuthCredentialSource::keyring("svc", "nothing-here");
         assert_eq!(resolved(&s), None);
+    }
+
+    /// A store that fails every read, standing in for a denied OS keychain
+    /// prompt (`keyring::Error::PlatformFailure` on macOS).
+    #[derive(Debug)]
+    struct DeniedKeyringStore;
+
+    impl crate::auth::keyring_store::KeyringStore for DeniedKeyringStore {
+        fn get(&self, _: &str, _: &str) -> Result<Option<String>, CliError> {
+            Err(CliError::Auth("keyring get failed: User denied access".into()))
+        }
+        fn set(&self, _: &str, _: &str, _: &str) -> Result<(), CliError> {
+            unreachable!()
+        }
+        fn delete(&self, _: &str, _: &str) -> Result<(), CliError> {
+            unreachable!()
+        }
+        fn backend_label(&self) -> String {
+            "denied".into()
+        }
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn a_denied_keyring_is_an_error_not_an_absent_credential() {
+        use crate::auth::keyring_store::set_active_store;
+        set_active_store(Arc::new(DeniedKeyringStore));
+
+        let s = AuthCredentialSource::keyring("svc", "OAuth2");
+        // The request path must be able to tell these apart: sending the
+        // request anonymously makes the server answer as if to a stranger, and
+        // the user sees a 404 instead of an auth failure.
+        let err = s.try_resolve().unwrap_err();
+        assert!(matches!(err, CliError::Auth(_)), "got: {err:?}");
+        assert_eq!(err.exit_code(), CliError::EXIT_CODE_AUTH);
+        // The probing path still degrades to "no credential", so `auth status`
+        // and `has_credentials` keep working rather than aborting.
+        assert!(s.resolve().is_none());
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn a_chain_stops_at_a_denied_keyring_rather_than_falling_through() {
+        use crate::auth::keyring_store::set_active_store;
+        set_active_store(Arc::new(DeniedKeyringStore));
+
+        // Env is empty, so without propagation the chain would report "no
+        // credential anywhere" and the denial would vanish.
+        let chain = AuthCredentialSource::any([
+            AuthCredentialSource::keyring("svc", "OAuth2"),
+            AuthCredentialSource::from_env("__FERN_TEST_DEFINITELY_UNSET"),
+        ]);
+        assert!(matches!(chain.try_resolve(), Err(CliError::Auth(_))));
     }
 
     #[test]

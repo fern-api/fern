@@ -131,7 +131,7 @@ class AsyncCompletionsClient:
 
 
         async def main() -> None:
-            response = await client.completions.stream(
+            response = client.completions.stream(
                 query="foo",
             )
             async for chunk in response:
@@ -171,7 +171,7 @@ class AsyncCompletionsClient:
 
 
         async def main() -> None:
-            response = await client.completions.stream_without_terminator(
+            response = client.completions.stream_without_terminator(
                 query="query",
             )
             async for chunk in response:

@@ -315,7 +315,22 @@ jobs:
           # Write and read notes from a file to avoid quoting breaking things
           echo "$ANNOUNCEMENT_BODY" > $RUNNER_TEMP/notes.txt
 
-          gh release create "${{ needs.plan.outputs.tag }}" --target "$RELEASE_COMMIT" $PRERELEASE_FLAG --title "$ANNOUNCEMENT_TITLE" --notes-file "$RUNNER_TEMP/notes.txt" artifacts/*
+          # Re-runs and pre-created releases must not fail after a successful build.
+          # --draft=false publishes a release that was drafted in the UI:
+          # gh release view finds drafts, so without it the assets upload into
+          # a release nobody can see and the job still reports success. A draft
+          # has no tag yet, so --target decides where that tag lands; for an
+          # already-published release the tag exists and GitHub ignores it.
+          if gh release view "${{ needs.plan.outputs.tag }}" > /dev/null 2>&1; then
+            if [[ -n "$PRERELEASE_FLAG" ]]; then
+              gh release edit "${{ needs.plan.outputs.tag }}" --title "$ANNOUNCEMENT_TITLE" --target "$RELEASE_COMMIT" --notes-file "$RUNNER_TEMP/notes.txt" --draft=false --prerelease
+            else
+              gh release edit "${{ needs.plan.outputs.tag }}" --title "$ANNOUNCEMENT_TITLE" --target "$RELEASE_COMMIT" --notes-file "$RUNNER_TEMP/notes.txt" --draft=false --prerelease=false
+            fi
+            gh release upload "${{ needs.plan.outputs.tag }}" artifacts/* --clobber
+          else
+            gh release create "${{ needs.plan.outputs.tag }}" --target "$RELEASE_COMMIT" $PRERELEASE_FLAG --title "$ANNOUNCEMENT_TITLE" --notes-file "$RUNNER_TEMP/notes.txt" artifacts/*
+          fi
 
   announce:
     needs:

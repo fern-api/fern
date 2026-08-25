@@ -55,6 +55,18 @@ pub fn wants_schema(args: &[String]) -> bool {
     args.iter().any(|a| a == "--schema")
 }
 
+/// True when raw args contain `--help` / `-h`.
+///
+/// Paired with an explicit machine `--format`, this is treated as a request for
+/// the same catalog `--schema` emits: the generated README documents
+/// `<cli> --help --format json | jq 'length'` as the machine-readable list of
+/// every operation, and until now that printed prose and made `jq` fail.
+/// Deliberately *not* satisfied by the piped default — `<cli> --help | less`
+/// must keep showing help.
+pub fn wants_help(args: &[String]) -> bool {
+    args.iter().any(|a| a == "--help" || a == "-h")
+}
+
 /// True when raw args contain the `--spec` flag.
 ///
 /// `--spec` emits the effective OpenAPI spec (source + overlays + overrides

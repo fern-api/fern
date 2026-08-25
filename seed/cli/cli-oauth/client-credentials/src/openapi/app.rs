@@ -394,13 +394,46 @@ pub(crate) fn resolve_global_parameter_value(
     p: &crate::openapi::discovery::GlobalParameter,
 ) -> Option<String> {
     let arg_id = global_parameter_arg_id(p);
-    matches
-        .try_get_one::<String>(&arg_id)
-        .ok()
-        .flatten()
-        .map(|s| s.trim())
+    match matches.try_get_one::<String>(&arg_id) {
+        Ok(resolved) => normalize_global_value(resolved.map(String::as_str)),
+        Err(_) => resolve_unregistered_global(p.env.as_deref(), p.default.as_deref()),
+    }
+}
+
+/// Trim a resolved global header/parameter value and drop it when the result
+/// is empty or whitespace-only — callers shouldn't stamp a bare
+/// `X-API-Stage:` on the wire. That's almost always a user mistake worth
+/// surfacing as a required-value error, and it matches the env-var-handling
+/// convention elsewhere.
+fn normalize_global_value(value: Option<&str>) -> Option<String> {
+    value
+        .map(str::trim)
         .filter(|s| !s.is_empty())
-        .map(|s| s.to_string())
+        .map(str::to_string)
+}
+
+/// Resolve a global header/parameter on a command where its flag was never
+/// registered, so clap has no `.env()` / `.default_value()` binding to read
+/// through.
+///
+/// Two ways to land here, and both still have to honor `env` and `default`:
+///
+///   * the flag's long name collided with a per-operation parameter, so it
+///     was attached to individual leaves instead of the root as
+///     `global(true)` (`register_global_header_on_nonconflicting_leaves`);
+///   * the command is a **custom command**, which is grafted after that
+///     registration and whose context resolves globals from the *root*
+///     `ArgMatches` (`build_binding_entry`).
+///
+/// Without this fallback a colliding global was stamped on built-in commands
+/// but silently dropped on custom ones — the header reached the wire on
+/// spec-derived requests and vanished on hand-written ones. Only the CLI flag
+/// is missing here, and it's missing for the user too (the arg was never
+/// registered, so there is nothing to type), so `env > default` is the whole
+/// chain that was ever reachable on such a command.
+fn resolve_unregistered_global(env: Option<&str>, default: Option<&str>) -> Option<String> {
+    let from_env = env.and_then(|name| std::env::var(name).ok());
+    normalize_global_value(from_env.as_deref().or(default))
 }
 
 /// Stable clap arg ID for a global header. Anchored to the wire header
@@ -501,19 +534,17 @@ fn register_global_header_on_nonconflicting_leaves(
 /// collides with a per-operation parameter, the flag is dropped from
 /// that operation's command (the per-op parameter wins — see
 /// `register_global_header_on_nonconflicting_leaves`). On such a command
-/// the arg id is unknown and `get_one` would panic; `try_get_one`
-/// returns `Err`, which we map to `None`.
+/// the arg id is unknown and `get_one` would panic. `try_get_one` returns
+/// `Err` instead, and we fall back to reading `env` / `default` directly —
+/// see [`resolve_unregistered_global`] for why that fallback exists.
 pub(crate) fn resolve_global_header_value(
     matched_args: &clap::ArgMatches,
     h: &crate::openapi::discovery::GlobalHeader,
 ) -> Option<String> {
-    matched_args
-        .try_get_one::<String>(&global_header_arg_id(h))
-        .ok()
-        .flatten()
-        .map(|s| s.trim())
-        .filter(|s| !s.is_empty())
-        .map(|s| s.to_string())
+    match matched_args.try_get_one::<String>(&global_header_arg_id(h)) {
+        Ok(resolved) => normalize_global_value(resolved.map(String::as_str)),
+        Err(_) => resolve_unregistered_global(h.env.as_deref(), h.default.as_deref()),
+    }
 }
 
 /// True when an operation declares a `header`-located parameter with
@@ -2526,6 +2557,24 @@ pub(crate) fn collect_params_from_flags(
     let is_body_param = |param_def: &crate::openapi::discovery::MethodParameter| {
         param_def.location.as_deref() == Some("body")
     };
+    // A defaulted nested leaf (`platform_settings.guardrails.version`) must
+    // also stand down when the user typed an *ancestor* object-shorthand
+    // flag (`--platform-settings.guardrails '{...}'`): the executor refuses
+    // to combine an object flag with a leaf flag underneath it, so an
+    // injected leaf would make its own parent's flag unusable.
+    let ancestor_flag_typed = |param_name: &str| -> bool {
+        let mut rest = param_name;
+        while let Some((prefix, _)) = rest.rsplit_once('.') {
+            let ancestor_id = crate::openapi::commands::param_clap_arg_id(prefix);
+            if matched_args.value_source(&ancestor_id)
+                == Some(clap::parser::ValueSource::CommandLine)
+            {
+                return true;
+            }
+            rest = prefix;
+        }
+        false
+    };
 
     let mut missing_variable_bound: Vec<(String, String)> = Vec::new();
     for (param_name, param_def) in &method.parameters {
@@ -2552,8 +2601,8 @@ pub(crate) fn collect_params_from_flags(
         if param_def.repeated {
             if matched_args.value_source(&arg_id)
                 == Some(clap::parser::ValueSource::DefaultValue)
-                && body_json_supplied
                 && is_body_param(param_def)
+                && (body_json_supplied || ancestor_flag_typed(param_name))
             {
                 continue;
             }
@@ -2563,11 +2612,23 @@ pub(crate) fn collect_params_from_flags(
                 // else — including non-array JSON like "123" — stays a
                 // literal string.
                 let mut arr: Vec<serde_json::Value> = Vec::new();
+                let mut explicit_null = false;
                 for v in values {
+                    // Null sentinel (ADR-0003): on a nullable list, a lone
+                    // `null` is the user asking to send JSON null rather
+                    // than a one-element list containing "null".
+                    if param_def.nullable && v == "null" {
+                        explicit_null = true;
+                        continue;
+                    }
                     match serde_json::from_str(v) {
                         Ok(serde_json::Value::Array(elems)) => arr.extend(elems),
                         _ => arr.push(serde_json::Value::String(v.clone())),
                     }
+                }
+                if explicit_null && arr.is_empty() {
+                    params.insert(param_name.clone(), serde_json::Value::Null);
+                    continue;
                 }
                 // For oneOf [string, array<string>] unions, a single scalar
                 // value stays a plain string — only multiple values (or an
@@ -2587,7 +2648,10 @@ pub(crate) fn collect_params_from_flags(
         };
         let from_default = matched_args.value_source(&arg_id)
             == Some(clap::parser::ValueSource::DefaultValue);
-        if from_default && body_json_supplied && is_body_param(param_def) {
+        if from_default
+            && is_body_param(param_def)
+            && (body_json_supplied || ancestor_flag_typed(param_name))
+        {
             continue;
         }
         let json_value = match (from_default, &param_def.default_value) {
@@ -2661,9 +2725,21 @@ pub(crate) fn collect_params_from_flags(
 /// when the operation has no multipart fields. File-typed fields reject
 /// control characters (matching `binary_body_path` validation) but allow
 /// absolute paths since users may upload files from anywhere on disk.
+///
+/// Array-typed fields are repeatable (`--files a.mp3 --files b.mp3`) and
+/// contribute one part per occurrence, all carrying the same `name` — the
+/// multipart encoding of a list.
+///
+/// `params` carries the `--params` JSON. Multipart fields live in
+/// `method.multipart_fields` rather than `method.parameters`, so the
+/// executor has no `location: body` to route them by and would send them as
+/// query parameters. Any key naming a multipart field is therefore *moved*
+/// out of `params` into the form body here, keeping `--params` equivalent to
+/// the individual flags (which it overrides, as everywhere else).
 pub(crate) fn collect_multipart_parts(
     method: &RestMethod,
     matches: &clap::ArgMatches,
+    params: &mut serde_json::Map<String, serde_json::Value>,
 ) -> Result<Option<Vec<executor::MultipartPart>>, crate::error::CliError> {
     if method.multipart_fields.is_empty() {
         return Ok(None);
@@ -2678,62 +2754,25 @@ pub(crate) fn collect_multipart_parts(
             continue;
         }
 
-        let value = matches
-            .try_get_one::<String>(&field.wire_name)
-            .ok()
-            .flatten();
-        let Some(value) = value else {
-            continue;
+        let values: Vec<String> = match params.remove(&field.wire_name) {
+            Some(from_params) => multipart_values_from_params(&from_params, field.repeated),
+            None if field.repeated => matches
+                .try_get_many::<String>(&field.wire_name)
+                .ok()
+                .flatten()
+                .map(|vals| vals.cloned().collect())
+                .unwrap_or_default(),
+            None => matches
+                .try_get_one::<String>(&field.wire_name)
+                .ok()
+                .flatten()
+                .cloned()
+                .into_iter()
+                .collect(),
         };
 
-        if field.is_file {
-            let raw = value.as_str();
-            // `\@literal` — escape syntax for sending a literal `@`-prefixed
-            // value on a file-typed field (FER-10436). The value is sent as a
-            // plain text part; no file read is attempted, and the path-safety
-            // validators that normally guard file inputs are skipped because
-            // there is no path to validate.
-            if executor::is_escaped_literal(raw) {
-                let literal = executor::strip_or_escape_at(raw).into_owned();
-                parts.push(executor::MultipartPart::Text {
-                    name: field.wire_name.clone(),
-                    value: literal,
-                    content_type: field.content_type.clone(),
-                });
-                continue;
-            }
-            // Validate the inner filesystem path — the same string the executor
-            // will eventually pass to `tokio::fs::read`. `parse_at_ref` strips
-            // the `@`, `@file://`, or `@data://` prefix so an adversarial
-            // `@file://evil\x00path` is rejected before disk I/O regardless of
-            // which encoding mode was requested (FER-10532). Stdin is only the
-            // `Auto`-mode `-` sentinel; an explicit-scheme `-` is a literal
-            // filename and still gets validated.
-            let (inner, mode) = match executor::parse_at_ref(raw) {
-                executor::AtRef::File { path, mode } => (path, mode),
-                executor::AtRef::Plain(s) => (std::borrow::Cow::Borrowed(s), executor::AtMode::Auto),
-                // `\@literal` was handled above; reachable only as a defensive
-                // fallback if the escape branch is ever skipped.
-                executor::AtRef::Escaped(_) => continue,
-            };
-            let is_stdin = mode == executor::AtMode::Auto && inner.as_ref() == "-";
-            if !is_stdin {
-                crate::output::reject_dangerous_chars(
-                    inner.as_ref(),
-                    &format!("--{}", crate::text::to_kebab_flag(&field.wire_name)),
-                )?;
-            }
-            parts.push(executor::MultipartPart::File {
-                name: field.wire_name.clone(),
-                path: raw.to_string(),
-                content_type: field.content_type.clone(),
-            });
-        } else {
-            parts.push(executor::MultipartPart::Text {
-                name: field.wire_name.clone(),
-                value: value.clone(),
-                content_type: field.content_type.clone(),
-            });
+        for value in values {
+            push_multipart_part(field, &value, &mut parts)?;
         }
     }
 
@@ -2742,6 +2781,86 @@ pub(crate) fn collect_multipart_parts(
     } else {
         Ok(Some(parts))
     }
+}
+
+/// Lower a `--params` value for a multipart field into the part values it
+/// stands for. A JSON array on a repeated field splices out element by
+/// element (`{"files": ["a", "b"]}` ≡ `--files a --files b`); everything
+/// else becomes a single value, with non-strings re-encoded as compact JSON
+/// so structured parts keep their shape.
+fn multipart_values_from_params(value: &serde_json::Value, repeated: bool) -> Vec<String> {
+    match value {
+        serde_json::Value::Array(elems) if repeated => {
+            elems.iter().map(multipart_scalar_to_string).collect()
+        }
+        other => vec![multipart_scalar_to_string(other)],
+    }
+}
+
+fn multipart_scalar_to_string(value: &serde_json::Value) -> String {
+    match value {
+        serde_json::Value::String(s) => s.clone(),
+        other => other.to_string(),
+    }
+}
+
+/// Append the part(s) for one occurrence of a multipart field's flag.
+fn push_multipart_part(
+    field: &crate::openapi::discovery::MultipartField,
+    value: &str,
+    parts: &mut Vec<executor::MultipartPart>,
+) -> Result<(), crate::error::CliError> {
+    if field.is_file {
+        let raw = value;
+        // `\@literal` — escape syntax for sending a literal `@`-prefixed
+        // value on a file-typed field (FER-10436). The value is sent as a
+        // plain text part; no file read is attempted, and the path-safety
+        // validators that normally guard file inputs are skipped because
+        // there is no path to validate.
+        if executor::is_escaped_literal(raw) {
+            let literal = executor::strip_or_escape_at(raw).into_owned();
+            parts.push(executor::MultipartPart::Text {
+                name: field.wire_name.clone(),
+                value: literal,
+                content_type: field.content_type.clone(),
+            });
+            return Ok(());
+        }
+        // Validate the inner filesystem path — the same string the executor
+        // will eventually pass to `tokio::fs::read`. `parse_at_ref` strips
+        // the `@`, `@file://`, or `@data://` prefix so an adversarial
+        // `@file://evil\x00path` is rejected before disk I/O regardless of
+        // which encoding mode was requested (FER-10532). Stdin is only the
+        // `Auto`-mode `-` sentinel; an explicit-scheme `-` is a literal
+        // filename and still gets validated.
+        let (inner, mode) = match executor::parse_at_ref(raw) {
+            executor::AtRef::File { path, mode } => (path, mode),
+            executor::AtRef::Plain(s) => (std::borrow::Cow::Borrowed(s), executor::AtMode::Auto),
+            // `\@literal` was handled above; reachable only as a defensive
+            // fallback if the escape branch is ever skipped.
+            executor::AtRef::Escaped(_) => return Ok(()),
+        };
+        let is_stdin = mode == executor::AtMode::Auto && inner.as_ref() == "-";
+        if !is_stdin {
+            crate::output::reject_dangerous_chars(
+                inner.as_ref(),
+                &format!("--{}", crate::text::to_kebab_flag(&field.wire_name)),
+            )?;
+        }
+        parts.push(executor::MultipartPart::File {
+            name: field.wire_name.clone(),
+            path: raw.to_string(),
+            content_type: field.content_type.clone(),
+        });
+    } else {
+        parts.push(executor::MultipartPart::Text {
+            name: field.wire_name.clone(),
+            value: value.to_string(),
+            content_type: field.content_type.clone(),
+        });
+    }
+
+    Ok(())
 }
 
 pub(crate) fn build_pagination_config(
@@ -2818,6 +2937,70 @@ mod tests {
             default: None,
         };
         assert_eq!(global_header_arg_id(&h), "__global_header::X-API-Stage");
+    }
+
+    /// A global header/parameter whose flag was never registered on the
+    /// command still resolves from `env` and `default`.
+    ///
+    /// Regression: colliding globals are attached per-leaf rather than
+    /// `global(true)`, and the custom-command path reads the *root*
+    /// `ArgMatches` — so `try_get_one` returned `Err` and the header was
+    /// silently dropped. The result was a global stamped on spec-derived
+    /// requests and missing on custom-command ones.
+    #[test]
+    fn test_unregistered_global_falls_back_to_env_then_default() {
+        // Matches on a command that declares no global-header arg at all,
+        // standing in for both the colliding-leaf and custom-command cases.
+        let matches = clap::Command::new("test").get_matches_from(["test"]);
+
+        let with_default = crate::openapi::discovery::GlobalHeader {
+            header: "X-Source".to_string(),
+            optional: true,
+            default: Some("cli".to_string()),
+            ..Default::default()
+        };
+        assert_eq!(
+            resolve_global_header_value(&matches, &with_default),
+            Some("cli".to_string()),
+            "an unregistered global must still honor its default",
+        );
+
+        // env wins over default, mirroring clap's own precedence.
+        let env_var = "FERN_TEST_UNREGISTERED_GLOBAL_HEADER";
+        // SAFETY: single-threaded test-local mutation; removed below.
+        unsafe { std::env::set_var(env_var, "  from-env  ") };
+        let with_env = crate::openapi::discovery::GlobalHeader {
+            header: "X-Source".to_string(),
+            optional: true,
+            env: Some(env_var.to_string()),
+            default: Some("cli".to_string()),
+            ..Default::default()
+        };
+        assert_eq!(
+            resolve_global_header_value(&matches, &with_env),
+            Some("from-env".to_string()),
+            "env must win over default, and the value must be trimmed",
+        );
+
+        // A whitespace-only resolution is dropped, not stamped as an empty
+        // header — same rule the registered path applies.
+        unsafe { std::env::set_var(env_var, "   ") };
+        let blank = crate::openapi::discovery::GlobalHeader {
+            header: "X-Source".to_string(),
+            optional: true,
+            env: Some(env_var.to_string()),
+            ..Default::default()
+        };
+        assert_eq!(resolve_global_header_value(&matches, &blank), None);
+        unsafe { std::env::remove_var(env_var) };
+
+        // Nothing declared anywhere still resolves to nothing.
+        let bare = crate::openapi::discovery::GlobalHeader {
+            header: "X-Source".to_string(),
+            optional: true,
+            ..Default::default()
+        };
+        assert_eq!(resolve_global_header_value(&matches, &bare), None);
     }
 
     /// `build_global_header_overrides` errors with a message naming the
@@ -3691,6 +3874,160 @@ mod tests {
         let result = collect_params_from_flags(&matches, &method, None).unwrap();
         assert_eq!(result.get("type").unwrap().as_str().unwrap(), "new");
         assert_eq!(result.get("name").unwrap().as_str().unwrap(), "n");
+    }
+
+    #[test]
+    fn test_defaulted_leaf_is_dropped_when_ancestor_object_flag_is_typed() {
+        // A `const` leaf under a nested object (`platform_settings.guardrails
+        // .version`) used to be materialized from its clap default even when
+        // the user typed the parent's object-shorthand flag, and the executor
+        // then refused the combination — making `--platform-settings
+        // .guardrails` unusable on any const-bearing nested schema.
+        let mut params = std::collections::HashMap::new();
+        for key in [
+            "platform_settings.guardrails",
+            "platform_settings.guardrails.version",
+        ] {
+            params.insert(
+                key.to_string(),
+                crate::openapi::discovery::MethodParameter {
+                    param_type: Some("string".to_string()),
+                    location: Some("body".to_string()),
+                    ..Default::default()
+                },
+            );
+        }
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let matches = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("platform_settings.guardrails").long("platform-settings.guardrails"),
+            )
+            .arg(
+                clap::Arg::new("platform_settings.guardrails.version")
+                    .long("platform-settings.guardrails.version")
+                    .default_value("1"),
+            )
+            .arg(clap::Arg::new("json").long("json"))
+            .arg(clap::Arg::new("params").long("params"))
+            .get_matches_from(vec![
+                "test",
+                "--platform-settings.guardrails",
+                r#"{"enabled":true}"#,
+            ]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert!(
+            !result.contains_key("platform_settings.guardrails.version"),
+            "a defaulted leaf must stand down under a typed ancestor flag, got: {result:?}",
+        );
+    }
+
+    /// Multipart method with one repeatable (array) file field, one plain
+    /// text field, and one repeatable text field.
+    fn multipart_method() -> crate::openapi::discovery::RestMethod {
+        use crate::openapi::discovery::MultipartField;
+        crate::openapi::discovery::RestMethod {
+            multipart_fields: vec![
+                MultipartField {
+                    wire_name: "files".to_string(),
+                    is_file: true,
+                    description: None,
+                    required: false,
+                    content_type: None,
+                    repeated: true,
+                },
+                MultipartField {
+                    wire_name: "name".to_string(),
+                    is_file: false,
+                    description: None,
+                    required: false,
+                    content_type: None,
+                    repeated: false,
+                },
+                MultipartField {
+                    wire_name: "tags".to_string(),
+                    is_file: false,
+                    description: None,
+                    required: false,
+                    content_type: None,
+                    repeated: true,
+                },
+            ],
+            ..Default::default()
+        }
+    }
+
+    fn multipart_command() -> clap::Command {
+        clap::Command::new("test")
+            .arg(
+                clap::Arg::new("files")
+                    .long("files")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("name").long("name"))
+            .arg(
+                clap::Arg::new("tags")
+                    .long("tags")
+                    .action(clap::ArgAction::Append),
+            )
+    }
+
+    #[test]
+    fn test_multipart_array_field_emits_one_part_per_occurrence() {
+        // The bug: an array-typed multipart field was a single-value flag, so
+        // multi-sample uploads (`--files a --files b`) were rejected outright
+        // and no alternative input path existed.
+        let method = multipart_method();
+        let matches = multipart_command().get_matches_from(vec![
+            "test", "--name", "V", "--files", "a.mp3", "--files", "b.mp3",
+        ]);
+        let mut params = serde_json::Map::new();
+        let parts = collect_multipart_parts(&method, &matches, &mut params)
+            .unwrap()
+            .expect("multipart parts");
+        let files: Vec<&str> = parts
+            .iter()
+            .filter_map(|p| match p {
+                executor::MultipartPart::File { name, path, .. } if name == "files" => {
+                    Some(path.as_str())
+                }
+                _ => None,
+            })
+            .collect();
+        assert_eq!(files, vec!["a.mp3", "b.mp3"]);
+        assert!(parts.iter().any(|p| matches!(
+            p,
+            executor::MultipartPart::Text { name, value, .. } if name == "name" && value == "V"
+        )));
+    }
+
+    #[test]
+    fn test_multipart_fields_are_moved_out_of_params() {
+        // Multipart fields live in `multipart_fields`, not `parameters`, so a
+        // `--params` key naming one had no `location: body` to route on and
+        // was appended to the query string instead of the form body.
+        let method = multipart_method();
+        let matches = multipart_command().get_matches_from(vec!["test"]);
+        let mut params = serde_json::Map::new();
+        params.insert("tags".to_string(), serde_json::json!(["a", "b"]));
+        params.insert("unrelated".to_string(), serde_json::json!("keep"));
+        let parts = collect_multipart_parts(&method, &matches, &mut params)
+            .unwrap()
+            .expect("multipart parts");
+        let tags: Vec<&str> = parts
+            .iter()
+            .filter_map(|p| match p {
+                executor::MultipartPart::Text { name, value, .. } if name == "tags" => {
+                    Some(value.as_str())
+                }
+                _ => None,
+            })
+            .collect();
+        assert_eq!(tags, vec!["a", "b"]);
+        assert!(!params.contains_key("tags"), "left in params: {params:?}");
+        assert!(params.contains_key("unrelated"), "dropped: {params:?}");
     }
 
     #[test]

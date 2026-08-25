@@ -1293,6 +1293,12 @@ public partial class ParamsClient : IParamsClient
     /// <summary>
     /// POST bytes with path param returning object
     /// </summary>
+    /// <example><code>
+    /// await client.Endpoints.Params.UploadWithPathAsync(
+    ///     "upload-path",
+    ///     new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+    /// );
+    /// </code></example>
     public WithRawResponseTask<ObjectWithRequiredField> UploadWithPathAsync(
         string param,
         Stream request,

@@ -290,7 +290,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.chat_stream(
+            response = client.chat_stream(
                 prompt="prompt",
             )
             async for chunk in response:

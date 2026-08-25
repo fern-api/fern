@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-optional-request-body/fern\"\n\tfernclient \"github.com/go-optional-request-body/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.WaterAllPlants(\n\tcontext.TODO(),\n\t\u0026fern.WateringRequest{\n\t\tMilliliters: fern.Float64(\n\t\t\t1.1,\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-optional-request-body/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.WaterAllPlants(\n\tcontext.TODO(),\n\tnil,\n)\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-optional-request-body/fern\"\n\tfernclient \"github.com/go-optional-request-body/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.MistPlant(\n\tcontext.TODO(),\n\t\u0026fern.MistPlantRequest{\n\t\tPlantID: \"plantId\",\n\t\tIdempotencyKey: fern.String(\n\t\t\t\"idempotencyKey\",\n\t\t),\n\t\tBody: \u0026fern.WateringRequest{\n\t\t\tMilliliters: fern.Float64(\n\t\t\t\t1.1,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-optional-request-body/fern\"\n\tfernclient \"github.com/go-optional-request-body/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.MistPlant(\n\tcontext.TODO(),\n\t\u0026fern.MistPlantRequest{\n\t\tPlantID: \"plant-id\",\n\t},\n)\n"
             }
         },
         {
@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-optional-request-body/fern\"\n\tfernclient \"github.com/go-optional-request-body/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.WaterPlant(\n\tcontext.TODO(),\n\t\u0026fern.WaterPlantRequest{\n\t\tPlantID: \"plant-id\",\n\t\tBody: \u0026fern.WateringRequest{\n\t\t\tMilliliters: fern.Float64(\n\t\t\t\t60,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-optional-request-body/fern\"\n\tfernclient \"github.com/go-optional-request-body/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.WaterPlant(\n\tcontext.TODO(),\n\t\u0026fern.WaterPlantRequest{\n\t\tPlantID: \"plant-id\",\n\t},\n)\n"
             }
         }
     ]

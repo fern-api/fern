@@ -887,7 +887,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_protocol_no_collision()
+            response = client.stream_protocol_no_collision()
             async for chunk in response:
                 yield chunk
 
@@ -928,7 +928,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_protocol_collision()
+            response = client.stream_protocol_collision()
             async for chunk in response:
                 yield chunk
 
@@ -969,7 +969,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_data_context()
+            response = client.stream_data_context()
             async for chunk in response:
                 yield chunk
 
@@ -1010,7 +1010,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_no_context()
+            response = client.stream_no_context()
             async for chunk in response:
                 yield chunk
 
@@ -1051,7 +1051,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_protocol_with_flat_schema()
+            response = client.stream_protocol_with_flat_schema()
             async for chunk in response:
                 yield chunk
 
@@ -1092,7 +1092,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_data_context_with_envelope_schema()
+            response = client.stream_data_context_with_envelope_schema()
             async for chunk in response:
                 yield chunk
 
@@ -1135,7 +1135,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_oas_spec_native()
+            response = client.stream_oas_spec_native()
             async for chunk in response:
                 yield chunk
 
@@ -1177,7 +1177,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_x_fern_streaming_condition_stream(
+            response = client.stream_x_fern_streaming_condition_stream(
                 query="query",
             )
             async for chunk in response:
@@ -1269,7 +1269,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_x_fern_streaming_shared_schema_stream(
+            response = client.stream_x_fern_streaming_shared_schema_stream(
                 prompt="prompt",
                 model="model",
             )
@@ -1420,7 +1420,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_x_fern_streaming_union_stream(
+            response = client.stream_x_fern_streaming_union_stream(
                 request=StreamXFernStreamingUnionStreamRequest_Message(
                     prompt="prompt",
                     message="message",
@@ -1566,7 +1566,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_x_fern_streaming_nullable_condition_stream(
+            response = client.stream_x_fern_streaming_nullable_condition_stream(
                 query="query",
             )
             async for chunk in response:
@@ -1654,7 +1654,7 @@ class AsyncSeedApi:
 
 
         async def main() -> None:
-            response = await client.stream_x_fern_streaming_sse_only()
+            response = client.stream_x_fern_streaming_sse_only()
             async for chunk in response:
                 yield chunk
 

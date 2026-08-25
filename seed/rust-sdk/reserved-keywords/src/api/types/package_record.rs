@@ -4,6 +4,7 @@ pub use crate::prelude::*;
 pub struct Record {
     #[serde(default)]
     pub foo: HashMap<String, String>,
+    #[serde(rename = "3d")]
     #[serde(default)]
     pub _3d: i64,
 }

@@ -149,11 +149,14 @@ module Seed
       # @return [Seed::Problem::Types::UpdateProblemResponse]
       def update_problem(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[problem_id]
+        body_params = params.except(*path_param_names)
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/problem-crud/update/#{URI.encode_uri_component(params[:problem_id].to_s)}",
-          body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h,
+          body: Seed::Problem::Types::CreateProblemRequest.new(body_params).to_h,
           request_options: request_options
         )
         begin

@@ -500,9 +500,9 @@ dependencies = [
  "base64",
  "bytes",
  "chrono",
- "clap",
  "clap_complete",
  "clap_mangen",
+ "clap",
  "dotenvy",
  "form_urlencoded",
  "futures-util",
@@ -516,25 +516,25 @@ dependencies = [
  "percent-encoding",
  "pin-project",
  "rand 0.8.6",
- "reqwest",
  "reqwest-sse",
+ "reqwest",
  "reserved_keyword_cli_sdk",
  "secrecy",
- "serde",
- "serde_json",
  "serde_json_path",
+ "serde_json",
  "serde_qs",
  "serde_yaml",
+ "serde",
  "serial_test",
  "sha2",
  "tempfile",
  "thiserror 2.0.18",
- "tokio",
  "tokio-tungstenite",
  "tokio-util",
- "tracing",
+ "tokio",
  "tracing-appender",
  "tracing-subscriber",
+ "tracing",
  "unicode-normalization",
  "webbrowser",
  "wiremock",
@@ -1792,33 +1792,6 @@ dependencies = [
  "tokio",
  "tokio-stream",
  "tokio-util",
-]
-
-[[package]]
-name = "reserved_keyword_cli_sdk"
-version = "0.1.0"
-dependencies = [
- "bytes",
- "chrono",
- "futures",
- "reqwest",
- "reserved_keyword_cli_types",
- "serde",
- "serde_json",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
-name = "reserved_keyword_cli_types"
-version = "0.0.0"
-dependencies = [
- "base64",
- "chrono",
- "num-bigint",
- "ordered-float",
- "serde",
- "serde_json",
 ]
 
 [[package]]
@@ -3291,3 +3264,30 @@ name = "zmij"
 version = "1.0.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b8848ee67ecc8aedbaf3e4122217aff892639231befc6a1b58d29fff4c2cabaa"
+
+[[package]]
+name = "reserved_keyword_cli_types"
+version = "0.0.0"
+dependencies = [
+ "base64",
+ "chrono",
+ "num-bigint",
+ "ordered-float",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "reserved_keyword_cli_sdk"
+version = "0.1.0"
+dependencies = [
+ "bytes",
+ "chrono",
+ "futures",
+ "reqwest",
+ "reserved_keyword_cli_types",
+ "serde",
+ "serde_json",
+ "thiserror 1.0.69",
+ "tokio",
+]

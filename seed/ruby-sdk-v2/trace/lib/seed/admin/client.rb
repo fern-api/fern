@@ -28,11 +28,14 @@ module Seed
       # @return [untyped]
       def update_test_submission_status(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[submission_id]
+        body_params = params.except(*path_param_names)
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/admin/store-test-submission-status/#{URI.encode_uri_component(params[:submission_id].to_s)}",
-          body: Seed::Submission::Types::TestSubmissionStatus.new(params).to_h,
+          body: Seed::Submission::Types::TestSubmissionStatus.new(body_params).to_h,
           request_options: request_options
         )
         begin
@@ -66,11 +69,14 @@ module Seed
       # @return [untyped]
       def send_test_submission_update(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[submission_id]
+        body_params = params.except(*path_param_names)
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/admin/store-test-submission-status-v2/#{URI.encode_uri_component(params[:submission_id].to_s)}",
-          body: Seed::Submission::Types::TestSubmissionUpdate.new(params).to_h,
+          body: Seed::Submission::Types::TestSubmissionUpdate.new(body_params).to_h,
           request_options: request_options
         )
         begin
@@ -103,11 +109,14 @@ module Seed
       # @return [untyped]
       def update_workspace_submission_status(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[submission_id]
+        body_params = params.except(*path_param_names)
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/admin/store-workspace-submission-status/#{URI.encode_uri_component(params[:submission_id].to_s)}",
-          body: Seed::Submission::Types::WorkspaceSubmissionStatus.new(params).to_h,
+          body: Seed::Submission::Types::WorkspaceSubmissionStatus.new(body_params).to_h,
           request_options: request_options
         )
         begin
@@ -141,11 +150,14 @@ module Seed
       # @return [untyped]
       def send_workspace_submission_update(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[submission_id]
+        body_params = params.except(*path_param_names)
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/admin/store-workspace-submission-status-v2/#{URI.encode_uri_component(params[:submission_id].to_s)}",
-          body: Seed::Submission::Types::WorkspaceSubmissionUpdate.new(params).to_h,
+          body: Seed::Submission::Types::WorkspaceSubmissionUpdate.new(body_params).to_h,
           request_options: request_options
         )
         begin
@@ -341,11 +353,14 @@ module Seed
       # @return [untyped]
       def store_traced_test_case_v2(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[submission_id test_case_id]
+        body_params = params.except(*path_param_names)
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/admin/store-test-trace-v2/submission/#{URI.encode_uri_component(params[:submission_id].to_s)}/testCase/#{URI.encode_uri_component(params[:test_case_id].to_s)}",
-          body: params,
+          body: body_params,
           request_options: request_options
         )
         begin
@@ -535,11 +550,14 @@ module Seed
       # @return [untyped]
       def store_traced_workspace_v2(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[submission_id]
+        body_params = params.except(*path_param_names)
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/admin/store-workspace-trace-v2/submission/#{URI.encode_uri_component(params[:submission_id].to_s)}",
-          body: params,
+          body: body_params,
           request_options: request_options
         )
         begin
