@@ -254,8 +254,11 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
 
         // Multipart requests cannot be cloned, so they skip retries
         // even in the default path. With an injected executor, delegate
-        // entirely to the executor.
+        // transport to the executor, applying custom headers first since
+        // the executor has no knowledge of them.
         let response = if let Some(executor) = &self.executor {
+            let mut req = req;
+            self.apply_custom_headers(&mut req, &options)?;
             executor.execute(req).await.map_err(ApiError::Executor)?
         } else {
             let mut req = req;
@@ -309,6 +312,8 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
 
         // Multipart requests cannot be cloned, so they skip retries
         let response = if let Some(executor) = &self.executor {
+            let mut req = req;
+            self.apply_custom_headers(&mut req, &options)?;
             executor.execute(req).await.map_err(ApiError::Executor)?
         } else {
             let mut req = req;
@@ -460,7 +465,9 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             .unwrap_or(self.config.timeout);
 
         let response = if let Some(executor) = &self.executor {
-            // SSE-specific headers for the executor path
+            self.apply_custom_headers(&mut req, &options)?;
+            // SSE-specific headers applied after custom headers to ensure
+            // proper SSE behavior even if custom headers are provided
             req.headers_mut().insert(
                 "Accept",
                 "text/event-stream"
