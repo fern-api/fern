@@ -1,0 +1,5 @@
+- summary: |
+    `fern docs md generate` now always runs the library parser(s) locally using Docker.
+    The remote (server-side) generation path has been removed, so the command no longer
+    requires authentication, and the `--local` flag is deprecated as a no-op.
+  type: feat

@@ -40,9 +40,6 @@ export class GenerateCommand {
             });
         }
 
-        const token = await context.getTokenOrPrompt();
-        await context.verifyOrgAccess({ organization: workspace.org, token });
-
         const docsFilePath = workspace.docs.absoluteFilePath ?? workspace.absoluteFilePath ?? context.cwd;
         const docsDirectoryPath = AbsoluteFilePath.of(dirname(docsFilePath));
 
@@ -53,8 +50,6 @@ export class GenerateCommand {
             libraries,
             library: args.library,
             docsDirectoryPath,
-            orgId: workspace.org,
-            tokenValue: token.value,
             context: taskContext,
             wrapStep: withSpinner
         });

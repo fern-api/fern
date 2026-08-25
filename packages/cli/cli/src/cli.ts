@@ -2101,8 +2101,9 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 })
                 .option("local", {
                     boolean: true,
-                    default: false,
-                    description: "Run the library parser(s) locally using Docker instead of Fern's servers"
+                    default: true,
+                    hidden: true,
+                    deprecated: "Library docs generation always runs locally using Docker; --local is no longer needed."
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -2117,8 +2118,7 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
             await generateLibraryDocs({
                 project,
                 cliContext,
-                library: argv.library,
-                local: argv.local
+                library: argv.library
             });
         }
     );

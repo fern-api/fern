@@ -1,9 +1,8 @@
 import type { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { CliError, type TaskContext, TaskResult } from "@fern-api/task-context";
-
+import * as GitHub from "@fern-api/github";
+import { type TaskContext, TaskResult } from "@fern-api/task-context";
 import { afterEach, beforeEach, describe, expect, it, type Mock, vi } from "vitest";
-
 import * as CppDocsGenerator from "../CppDocsGenerator.js";
 import * as LocalParserRunner from "../LocalParserRunner.js";
 import { runLibraryDocsGeneration, type StepWrapper } from "../orchestrate.js";
@@ -22,6 +21,11 @@ vi.mock("../CppDocsGenerator.js", async () => {
 vi.mock("../LocalParserRunner.js", () => ({
     runLocalParser: vi.fn()
 }));
+
+vi.mock("@fern-api/github", async () => {
+    const actual = await vi.importActual<typeof import("@fern-api/github")>("@fern-api/github");
+    return { ...actual, cloneRepositoryAtRef: vi.fn(), resolveRepositorySubpath: vi.fn() };
+});
 
 type LoggerMock = { info: Mock; error: Mock; debug: Mock; warn: Mock; trace: Mock; log: Mock };
 
@@ -55,88 +59,12 @@ function makeContext(logger: LoggerMock = makeLogger()): TaskContext & { logger:
     } as unknown as TaskContext & { logger: LoggerMock };
 }
 
-function pythonConfig(): docsYml.RawSchemas.LibraryConfiguration {
+function pathConfig(): docsYml.RawSchemas.LibraryConfiguration {
     return {
-        input: { git: "https://github.com/acme/sdk" },
+        input: { path: "./local-src" } as unknown as docsYml.RawSchemas.LibraryInputConfiguration,
         output: { path: "./docs" },
         lang: "python"
     };
-}
-
-function cppConfig(): docsYml.RawSchemas.LibraryConfiguration {
-    return {
-        input: { git: "https://github.com/acme/cpp" },
-        output: { path: "./docs" },
-        lang: "cpp"
-    };
-}
-
-function makeStatus(status: string, extras: Record<string, unknown> = {}) {
-    return { status, jobId: "job-1", progress: "", createdAt: "", updatedAt: "", ...extras };
-}
-
-/**
- * Routes calls to `globalThis.fetch` based on URL substring so tests can
- * script start → poll → result → S3 download responses for the library
- * docs endpoints without standing up a real server.
- */
-function makeMockFetch({
-    startResponse,
-    statusResponses,
-    resultResponse,
-    irResponse
-}: {
-    startResponse: { body: unknown; ok?: boolean };
-    statusResponses: { body: unknown; ok?: boolean }[];
-    resultResponse?: { body: unknown; ok?: boolean };
-    irResponse?: unknown;
-}) {
-    let statusIdx = 0;
-    const startCalls: unknown[] = [];
-
-    const mockFn = vi.fn().mockImplementation(async (url: string, init?: RequestInit) => {
-        const urlStr = String(url);
-
-        if (urlStr.includes("/library-docs/generate") && init?.method === "POST") {
-            startCalls.push(init.body ? JSON.parse(String(init.body)) : undefined);
-            if (startResponse.ok === false) {
-                return {
-                    ok: false,
-                    status: 401,
-                    json: async () => startResponse.body,
-                    text: async () => JSON.stringify(startResponse.body)
-                };
-            }
-            return { ok: true, status: 200, json: async () => startResponse.body, text: async () => "" };
-        }
-
-        if (urlStr.includes("/library-docs/status/")) {
-            const resp = statusResponses[statusIdx++];
-            if (!resp || resp.ok === false) {
-                return {
-                    ok: false,
-                    status: 500,
-                    json: async () => resp?.body ?? {},
-                    text: async () => JSON.stringify(resp?.body ?? {})
-                };
-            }
-            return { ok: true, status: 200, json: async () => resp.body, text: async () => "" };
-        }
-
-        if (urlStr.includes("/library-docs/result/")) {
-            const resp = resultResponse ?? { body: { resultUrl: "https://s3.example.com/ir.json" }, ok: true };
-            return {
-                ok: resp.ok !== false,
-                status: resp.ok !== false ? 200 : 500,
-                json: async () => resp.body,
-                text: async () => ""
-            };
-        }
-
-        return { ok: true, status: 200, json: async () => irResponse ?? { ir: mockPythonIr } };
-    });
-
-    return { mockFn, startCalls };
 }
 
 const mockPythonIr = {
@@ -150,24 +78,23 @@ const DOCS_DIR = AbsoluteFilePath.of("/tmp/docs");
 
 describe("runLibraryDocsGeneration", () => {
     let originalFetch: typeof globalThis.fetch;
+    let fetchSpy: Mock;
 
     beforeEach(() => {
         vi.clearAllMocks();
-        vi.useFakeTimers();
         originalFetch = globalThis.fetch;
-        globalThis.fetch = vi.fn().mockResolvedValue({
-            ok: true,
-            status: 200,
-            json: async () => ({ ir: mockPythonIr }),
-            text: async () => ""
-        }) as unknown as typeof fetch;
+        // Generation is local-only: any fetch call is a regression back to
+        // the removed remote path, so the spy rejects and tests assert it
+        // was never invoked.
+        fetchSpy = vi.fn().mockRejectedValue(new Error("unexpected network request"));
+        globalThis.fetch = fetchSpy as unknown as typeof fetch;
         (PythonDocsGenerator.generate as Mock).mockReturnValue({ pageCount: 1 });
         (CppDocsGenerator.generateCpp as Mock).mockReturnValue({ pageCount: 1 });
+        (GitHub.cloneRepositoryAtRef as Mock).mockResolvedValue("/tmp/clones/repo");
     });
 
     afterEach(() => {
         globalThis.fetch = originalFetch;
-        vi.useRealTimers();
     });
 
     it("rejects when libraries is empty", async () => {
@@ -175,8 +102,6 @@ describe("runLibraryDocsGeneration", () => {
             runLibraryDocsGeneration({
                 libraries: {},
                 docsDirectoryPath: DOCS_DIR,
-                orgId: "org",
-                tokenValue: "tok",
                 context: makeContext()
             })
         ).rejects.toThrow(/No libraries configured/);
@@ -185,50 +110,22 @@ describe("runLibraryDocsGeneration", () => {
     it("rejects when --library filter does not match any configured library", async () => {
         await expect(
             runLibraryDocsGeneration({
-                libraries: { "my-sdk": pythonConfig() },
+                libraries: { "my-sdk": pathConfig() },
                 library: "nonexistent",
                 docsDirectoryPath: DOCS_DIR,
-                orgId: "org",
-                tokenValue: "tok",
                 context: makeContext()
             })
         ).rejects.toThrow(/Library 'nonexistent' not found/);
     });
 
-    it("rejects 'path' input for remote generation (requires --local)", async () => {
-        await expect(
-            runLibraryDocsGeneration({
-                libraries: {
-                    "path-lib": {
-                        input: { path: "./local" } as unknown as docsYml.RawSchemas.LibraryInputConfiguration,
-                        output: { path: "./docs" },
-                        lang: "python"
-                    }
-                },
-                docsDirectoryPath: DOCS_DIR,
-                orgId: "org",
-                tokenValue: "tok",
-                context: makeContext()
-            })
-        ).rejects.toThrow(/'path' input requires the --local flag/);
-    });
-
-    it("local mode: parses a 'path' input library without a token and generates (Python)", async () => {
+    it("parses a 'path' input library locally and generates without any network request (Python)", async () => {
         (LocalParserRunner.runLocalParser as Mock).mockResolvedValue(mockPythonIr);
 
         await expect(
             runLibraryDocsGeneration({
-                libraries: {
-                    "my-sdk": {
-                        input: { path: "./local-src" } as unknown as docsYml.RawSchemas.LibraryInputConfiguration,
-                        output: { path: "./docs" },
-                        lang: "python"
-                    }
-                },
+                libraries: { "my-sdk": pathConfig() },
                 docsDirectoryPath: DOCS_DIR,
-                orgId: "org",
-                context: makeContext(),
-                local: true
+                context: makeContext()
             })
         ).resolves.toEqual({ successful: 1 });
 
@@ -239,221 +136,105 @@ describe("runLibraryDocsGeneration", () => {
         expect(PythonDocsGenerator.generate).toHaveBeenCalledWith(
             expect.objectContaining({ ir: mockPythonIr, slug: "my-sdk", title: "my-sdk" })
         );
+        expect(fetchSpy).not.toHaveBeenCalled();
     });
 
-    it("happy path: start → poll → download IR → generate (Python)", async () => {
-        const { mockFn, startCalls } = makeMockFetch({
-            startResponse: { body: { jobId: "job-1" } },
-            statusResponses: [{ body: makeStatus("PENDING") }, { body: makeStatus("COMPLETED") }]
-        });
-        globalThis.fetch = mockFn as unknown as typeof fetch;
-
-        const promise = runLibraryDocsGeneration({
-            libraries: { "my-sdk": pythonConfig() },
-            docsDirectoryPath: DOCS_DIR,
-            orgId: "org",
-            tokenValue: "tok-123",
-            context: makeContext()
-        });
-
-        await vi.advanceTimersByTimeAsync(3000);
-        await vi.advanceTimersByTimeAsync(3000);
-        await expect(promise).resolves.toEqual({ successful: 1 });
-
-        expect(startCalls.length).toBe(1);
-        const startCall = startCalls[0] as Record<string, unknown>;
-        expect(startCall.language).toBe("PYTHON");
-        expect(startCall.githubUrl).toBe("https://github.com/acme/sdk");
-        expect(PythonDocsGenerator.generate).toHaveBeenCalledWith(
-            expect.objectContaining({ ir: mockPythonIr, slug: "my-sdk", title: "my-sdk" })
-        );
-    });
-
-    it("remote mode: forwards a git ref and subpath to the generation service", async () => {
-        const { mockFn, startCalls } = makeMockFetch({
-            startResponse: { body: { jobId: "job-ref" } },
-            statusResponses: [{ body: makeStatus("COMPLETED") }]
-        });
-        globalThis.fetch = mockFn as unknown as typeof fetch;
-
-        const promise = runLibraryDocsGeneration({
-            libraries: {
-                "my-sdk": {
-                    input: {
-                        git: "https://github.com/acme/sdk",
-                        ref: "release/2.0",
-                        subpath: "packages/sdk"
-                    },
-                    output: { path: "./docs" },
-                    lang: "python"
-                }
-            },
-            docsDirectoryPath: DOCS_DIR,
-            orgId: "org",
-            tokenValue: "tok",
-            context: makeContext()
-        });
-        await vi.advanceTimersByTimeAsync(3000);
-        await promise;
-
-        expect((startCalls[0] as { config: unknown }).config).toEqual(
-            expect.objectContaining({
-                branch: "release/2.0",
-                packagePath: "packages/sdk"
-            })
-        );
-    });
-
-    it("sends the bearer token in the auth header", async () => {
-        const { mockFn } = makeMockFetch({
-            startResponse: { body: { jobId: "job-auth" } },
-            statusResponses: [{ body: makeStatus("COMPLETED") }]
-        });
-        globalThis.fetch = mockFn as unknown as typeof fetch;
-
-        const promise = runLibraryDocsGeneration({
-            libraries: { "my-sdk": pythonConfig() },
-            docsDirectoryPath: DOCS_DIR,
-            orgId: "org",
-            tokenValue: "tok-abc",
-            context: makeContext()
-        });
-
-        await vi.advanceTimersByTimeAsync(3000);
-        await promise;
-
-        const fetchCalls = mockFn.mock.calls as Array<[string, RequestInit | undefined]>;
-        const authHeader = fetchCalls
-            .filter(([, init]) => init?.headers != null)
-            .map(([, init]) => (init?.headers as Record<string, string>)?.Authorization)
-            .find(Boolean);
-        expect(authHeader).toBe("Bearer tok-abc");
-    });
-
-    it("rejects when generation status is FAILED, preserving the server message", async () => {
-        const { mockFn } = makeMockFetch({
-            startResponse: { body: { jobId: "job-fail" } },
-            statusResponses: [
-                { body: makeStatus("FAILED", { error: { code: "PARSE_FAILED", message: "Bad syntax" } }) }
-            ]
-        });
-        globalThis.fetch = mockFn as unknown as typeof fetch;
-
-        const promise = runLibraryDocsGeneration({
-            libraries: { "my-sdk": pythonConfig() },
-            docsDirectoryPath: DOCS_DIR,
-            orgId: "org",
-            tokenValue: "tok",
-            context: makeContext()
-        });
-        // Attach a no-op handler so the rejection is never "unhandled" while
-        // we advance fake timers below.
-        promise.catch(() => undefined);
-        await vi.advanceTimersByTimeAsync(3000);
-
-        await expect(promise).rejects.toThrow(/Bad syntax/);
-        await expect(promise).rejects.toBeInstanceOf(CliError);
-    });
-
-    it("rejects with a network error when startLibraryDocsGeneration HTTP-errors", async () => {
-        const { mockFn } = makeMockFetch({
-            startResponse: { body: { error: "UnauthorizedError" }, ok: false },
-            statusResponses: []
-        });
-        globalThis.fetch = mockFn as unknown as typeof fetch;
+    it("clones a git input locally, forwarding ref and subpath to the parser, without any network request", async () => {
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue(mockPythonIr);
 
         await expect(
             runLibraryDocsGeneration({
-                libraries: { "my-sdk": pythonConfig() },
+                libraries: {
+                    "my-sdk": {
+                        input: {
+                            git: "https://github.com/acme/sdk",
+                            ref: "release/2.0",
+                            subpath: "packages/sdk"
+                        },
+                        output: { path: "./docs" },
+                        lang: "python"
+                    }
+                },
                 docsDirectoryPath: DOCS_DIR,
-                orgId: "org",
-                tokenValue: "tok",
                 context: makeContext()
             })
-        ).rejects.toThrow(/Failed to start generation/);
+        ).resolves.toEqual({ successful: 1 });
+
+        expect(GitHub.cloneRepositoryAtRef).toHaveBeenCalledWith({
+            repositoryUrl: "https://github.com/acme/sdk",
+            ref: "release/2.0"
+        });
+        expect(GitHub.resolveRepositorySubpath).toHaveBeenCalledWith(
+            expect.objectContaining({ repositoryRoot: "/tmp/clones/repo", subpath: "packages/sdk" })
+        );
+        const call = (LocalParserRunner.runLocalParser as Mock).mock.calls[0]?.[0] as Record<string, unknown>;
+        expect(String(call.sourcePath)).toBe("/tmp/clones/repo");
+        expect(call.config).toEqual(
+            expect.objectContaining({
+                packagePath: "packages/sdk",
+                sourceUrl: "https://github.com/acme/sdk",
+                branch: "release/2.0"
+            })
+        );
+        expect(fetchSpy).not.toHaveBeenCalled();
     });
 
     it("maps lang: cpp → CPP and calls generateCpp", async () => {
-        const { mockFn, startCalls } = makeMockFetch({
-            startResponse: { body: { jobId: "job-cpp" } },
-            statusResponses: [{ body: makeStatus("COMPLETED", { jobId: "job-cpp" }) }],
-            irResponse: { ir: mockCppIr }
-        });
-        globalThis.fetch = mockFn as unknown as typeof fetch;
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue(mockCppIr);
 
-        const promise = runLibraryDocsGeneration({
-            libraries: { "cpp-lib": cppConfig() },
-            docsDirectoryPath: DOCS_DIR,
-            orgId: "org",
-            tokenValue: "tok",
-            context: makeContext()
-        });
-        await vi.advanceTimersByTimeAsync(3000);
-        await promise;
+        await expect(
+            runLibraryDocsGeneration({
+                libraries: { "cpp-lib": { ...pathConfig(), lang: "cpp" } },
+                docsDirectoryPath: DOCS_DIR,
+                context: makeContext()
+            })
+        ).resolves.toEqual({ successful: 1 });
 
-        expect((startCalls[0] as Record<string, unknown>).language).toBe("CPP");
+        const call = (LocalParserRunner.runLocalParser as Mock).mock.calls[0]?.[0] as Record<string, unknown>;
+        expect(call.language).toBe("CPP");
         expect(CppDocsGenerator.generateCpp).toHaveBeenCalledWith(
             expect.objectContaining({ ir: mockCppIr, slug: "cpp-lib" })
         );
     });
 
     it("respects the library filter — only the named library is generated", async () => {
-        const { mockFn, startCalls } = makeMockFetch({
-            startResponse: { body: { jobId: "job-f" } },
-            statusResponses: [{ body: makeStatus("COMPLETED") }]
-        });
-        globalThis.fetch = mockFn as unknown as typeof fetch;
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue(mockPythonIr);
 
-        const promise = runLibraryDocsGeneration({
-            libraries: {
-                "sdk-a": pythonConfig(),
-                "sdk-b": {
-                    input: { git: "https://github.com/acme/sdk-b" },
-                    output: { path: "./docs-b" },
-                    lang: "python"
-                }
-            },
-            library: "sdk-a",
-            docsDirectoryPath: DOCS_DIR,
-            orgId: "org",
-            tokenValue: "tok",
-            context: makeContext()
-        });
-        await vi.advanceTimersByTimeAsync(3000);
-        await promise;
+        await expect(
+            runLibraryDocsGeneration({
+                libraries: {
+                    "sdk-a": pathConfig(),
+                    "sdk-b": {
+                        input: { path: "./other-src" } as unknown as docsYml.RawSchemas.LibraryInputConfiguration,
+                        output: { path: "./docs-b" },
+                        lang: "python"
+                    }
+                },
+                library: "sdk-a",
+                docsDirectoryPath: DOCS_DIR,
+                context: makeContext()
+            })
+        ).resolves.toEqual({ successful: 1 });
 
-        expect(startCalls.length).toBe(1);
-        expect((startCalls[0] as Record<string, unknown>).githubUrl).toBe("https://github.com/acme/sdk");
+        expect(LocalParserRunner.runLocalParser).toHaveBeenCalledTimes(1);
+        const call = (LocalParserRunner.runLocalParser as Mock).mock.calls[0]?.[0] as Record<string, unknown>;
+        expect(String(call.sourcePath)).toBe("/tmp/docs/local-src");
     });
 
-    it("times out when polling exceeds the deadline", async () => {
-        const { mockFn } = makeMockFetch({
-            startResponse: { body: { jobId: "job-timeout" } },
-            statusResponses: Array.from({ length: 100 }, () => ({ body: makeStatus("PARSING") }))
-        });
-        globalThis.fetch = mockFn as unknown as typeof fetch;
+    it("rejects when the parser produces an IR without the expected root node", async () => {
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue({});
 
-        const promise = runLibraryDocsGeneration({
-            libraries: { "my-sdk": pythonConfig() },
-            docsDirectoryPath: DOCS_DIR,
-            orgId: "org",
-            tokenValue: "tok",
-            context: makeContext()
-        });
-        promise.catch(() => undefined);
-
-        // Advance well past the 3-minute deadline.
-        await vi.advanceTimersByTimeAsync(4 * 60 * 1000);
-
-        await expect(promise).rejects.toThrow(/timed out/);
+        await expect(
+            runLibraryDocsGeneration({
+                libraries: { "my-sdk": pathConfig() },
+                docsDirectoryPath: DOCS_DIR,
+                context: makeContext()
+            })
+        ).rejects.toThrow(/rootModule/);
     });
 
     it("invokes wrapStep around each long-running step", async () => {
-        const { mockFn } = makeMockFetch({
-            startResponse: { body: { jobId: "job-wrap" } },
-            statusResponses: [{ body: makeStatus("COMPLETED") }]
-        });
-        globalThis.fetch = mockFn as unknown as typeof fetch;
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue(mockPythonIr);
 
         const messages: string[] = [];
         const wrapStep: StepWrapper = async ({ message, operation }) => {
@@ -461,19 +242,13 @@ describe("runLibraryDocsGeneration", () => {
             return operation();
         };
 
-        const promise = runLibraryDocsGeneration({
-            libraries: { "my-sdk": pythonConfig() },
+        await runLibraryDocsGeneration({
+            libraries: { "my-sdk": pathConfig() },
             docsDirectoryPath: DOCS_DIR,
-            orgId: "org",
-            tokenValue: "tok",
             context: makeContext(),
             wrapStep
         });
-        await vi.advanceTimersByTimeAsync(3000);
-        await promise;
 
-        expect(messages.some((m) => m.includes("starting generation"))).toBe(true);
-        expect(messages.some((m) => m.includes("generating documentation"))).toBe(true);
-        expect(messages.some((m) => m.includes("downloading generated IR"))).toBe(true);
+        expect(messages.some((m) => m.includes("parsing library source locally"))).toBe(true);
     });
 });

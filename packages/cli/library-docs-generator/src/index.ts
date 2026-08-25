@@ -5,12 +5,7 @@
  */
 
 export { type CppGenerateOptions, type CppGenerateResult, generateCpp } from "./CppDocsGenerator.js";
-export {
-    createLibraryDocsClient,
-    type LibraryDocsClient,
-    runLibraryDocsGeneration,
-    type StepWrapper
-} from "./orchestrate.js";
+export { runLibraryDocsGeneration, type StepWrapper } from "./orchestrate.js";
 export { type GenerateOptions, type GenerateResult, generate } from "./PythonDocsGenerator.js";
 export type { CppLibraryDocsIr } from "./types/CppLibraryDocsIr.js";
 export {

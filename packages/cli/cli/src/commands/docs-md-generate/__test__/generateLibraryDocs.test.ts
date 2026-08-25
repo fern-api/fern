@@ -1,18 +1,13 @@
 import { describe, expect, it, type Mock, vi } from "vitest";
 
 // Per-library orchestration is unit-tested in `@fern-api/library-docs-generator`.
-// These tests cover only the v1 wrapper: workspace validation, auth flow,
-// and delegation to the orchestrator.
-vi.mock("@fern-api/login", () => ({
-    askToLogin: vi.fn()
-}));
-
+// These tests cover only the v1 wrapper: workspace validation and delegation
+// to the (local-only) orchestrator.
 vi.mock("@fern-api/library-docs-generator", () => ({
     runLibraryDocsGeneration: vi.fn()
 }));
 
 import { runLibraryDocsGeneration } from "@fern-api/library-docs-generator";
-import { askToLogin } from "@fern-api/login";
 import { type GenerateLibraryDocsOptions, generateLibraryDocs } from "../generateLibraryDocs.js";
 
 function makeCliContext() {
@@ -68,8 +63,7 @@ describe("generateLibraryDocs", () => {
             generateLibraryDocs({
                 project: project as unknown as GenerateLibraryDocsOptions["project"],
                 cliContext: ctx as unknown as GenerateLibraryDocsOptions["cliContext"],
-                library: undefined,
-                local: false
+                library: undefined
             })
         ).rejects.toThrow("No docs workspace found");
     });
@@ -82,73 +76,31 @@ describe("generateLibraryDocs", () => {
             generateLibraryDocs({
                 project: project as unknown as GenerateLibraryDocsOptions["project"],
                 cliContext: ctx as unknown as GenerateLibraryDocsOptions["cliContext"],
-                library: undefined,
-                local: false
+                library: undefined
             })
         ).rejects.toThrow("No libraries configured");
     });
 
-    it("fails when authentication returns null", async () => {
+    it("delegates to runLibraryDocsGeneration without any authentication", async () => {
         const ctx = makeCliContext();
         const project = makeProject({
             libraries: { "my-sdk": { input: { git: "https://x" }, output: { path: "./d" }, lang: "python" } }
         });
-        (askToLogin as Mock).mockResolvedValue(null);
-
-        await expect(
-            generateLibraryDocs({
-                project: project as unknown as GenerateLibraryDocsOptions["project"],
-                cliContext: ctx as unknown as GenerateLibraryDocsOptions["cliContext"],
-                library: undefined,
-                local: false
-            })
-        ).rejects.toThrow("Failed to authenticate");
-    });
-
-    it("delegates to runLibraryDocsGeneration with the workspace's libraries and token", async () => {
-        const ctx = makeCliContext();
-        const project = makeProject({
-            libraries: { "my-sdk": { input: { git: "https://x" }, output: { path: "./d" }, lang: "python" } }
-        });
-        (askToLogin as Mock).mockResolvedValue({ type: "user", value: "tok-xyz" });
         (runLibraryDocsGeneration as Mock).mockResolvedValue({ successful: 1 });
 
         await generateLibraryDocs({
             project: project as unknown as GenerateLibraryDocsOptions["project"],
             cliContext: ctx as unknown as GenerateLibraryDocsOptions["cliContext"],
-            library: "my-sdk",
-            local: false
+            library: "my-sdk"
         });
 
         expect(runLibraryDocsGeneration).toHaveBeenCalledTimes(1);
         const call = (runLibraryDocsGeneration as Mock).mock.calls[0]?.[0];
         expect(call).toBeDefined();
         expect(call.library).toBe("my-sdk");
-        expect(call.orgId).toBe("test-org");
-        expect(call.tokenValue).toBe("tok-xyz");
         expect(call.docsDirectoryPath).toBe("/home/user/project/fern");
-    });
-
-    it("local mode: skips authentication and delegates with local: true and no token", async () => {
-        const ctx = makeCliContext();
-        const project = makeProject({
-            libraries: { "my-sdk": { input: { path: "./src" }, output: { path: "./d" }, lang: "python" } }
-        });
-        (askToLogin as Mock).mockReset();
-        (runLibraryDocsGeneration as Mock).mockReset();
-        (runLibraryDocsGeneration as Mock).mockResolvedValue({ successful: 1 });
-
-        await generateLibraryDocs({
-            project: project as unknown as GenerateLibraryDocsOptions["project"],
-            cliContext: ctx as unknown as GenerateLibraryDocsOptions["cliContext"],
-            library: undefined,
-            local: true
-        });
-
-        expect(askToLogin).not.toHaveBeenCalled();
-        expect(runLibraryDocsGeneration).toHaveBeenCalledTimes(1);
-        const call = (runLibraryDocsGeneration as Mock).mock.calls[0]?.[0];
-        expect(call.local).toBe(true);
+        // Generation is local-only: no token or org is threaded through.
         expect(call.tokenValue).toBeUndefined();
+        expect(call.orgId).toBeUndefined();
     });
 });
