@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { execFileSync } from "child_process";
-import { mkdir, mkdtemp, rm, writeFile } from "fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -12,11 +12,16 @@ import { resolveRefContentRoot } from "../git-versions/resolveRefContentRoot.js"
 const context = createMockTaskContext();
 
 function git(cwd: string, ...args: string[]): string {
+    return gitWithEnv(cwd, {}, ...args);
+}
+
+function gitWithEnv(cwd: string, env: NodeJS.ProcessEnv, ...args: string[]): string {
     return execFileSync("git", args, {
         cwd,
         encoding: "utf-8",
         env: {
             ...process.env,
+            ...env,
             GIT_AUTHOR_NAME: "test",
             GIT_AUTHOR_EMAIL: "test@example.com",
             GIT_COMMITTER_NAME: "test",
@@ -46,6 +51,62 @@ const VERSION_FILE = "navigation:\n  - section: V2\n    contents:\n      - page:
 const DOCS_WITH_TOP_NAV =
     "instances: []\nnavigation:\n  - section: V1\n    contents:\n      - page: P1\n        path: ./pages/v1.mdx\n";
 const DOCS_WITH_NEITHER = "instances: []\n";
+
+describe("git-ref versioning: Git LFS", () => {
+    let workdir: string;
+    let clone: string;
+    let refSha: string;
+    const pdfContents = "%PDF-1.7\nmaterialized Git LFS contents\n";
+
+    beforeAll(async () => {
+        workdir = await mkdtemp(pathJoin(tmpdir(), "git-ref-lfs-"));
+        const origin = pathJoin(workdir, "origin");
+        await mkdir(origin, { recursive: true });
+        git(origin, "init", "-b", "main");
+        git(origin, "lfs", "install", "--local");
+        git(origin, "lfs", "track", "*.pdf");
+
+        await write(origin, "fern/docs.yml", DOCS_WITH_TOP_NAV);
+        await write(origin, "fern/pages/v1.mdx", "# v1\n");
+        await write(origin, "fern/assets/manual.pdf", pdfContents);
+        refSha = await commitAll(origin, "LFS-backed docs");
+        git(origin, "tag", "lfs-docs");
+
+        clone = pathJoin(workdir, "clone");
+        gitWithEnv(workdir, { GIT_LFS_SKIP_SMUDGE: "1" }, "clone", "file://" + origin, clone);
+        git(clone, "lfs", "install", "--local");
+    });
+
+    afterAll(async () => {
+        await rm(workdir, { recursive: true, force: true });
+    });
+
+    it("materializes LFS files when checkout smudging is disabled", async () => {
+        expect(await readFile(pathJoin(clone, "fern/assets/manual.pdf"), "utf-8")).toContain(
+            "version https://git-lfs.github.com/spec/v1"
+        );
+
+        const previousSkipSmudge = process.env.GIT_LFS_SKIP_SMUDGE;
+        process.env.GIT_LFS_SKIP_SMUDGE = "1";
+        try {
+            const materialized = await materializeGitRef({
+                ref: "lfs-docs",
+                absolutePathToFernFolder: fernFolder(clone),
+                context
+            });
+            expect(materialized.sha).toBe(refSha);
+            expect(
+                await readFile(pathJoin(materialized.absolutePathToRepoRoot, "fern/assets/manual.pdf"), "utf-8")
+            ).toBe(pdfContents);
+        } finally {
+            if (previousSkipSmudge == null) {
+                delete process.env.GIT_LFS_SKIP_SMUDGE;
+            } else {
+                process.env.GIT_LFS_SKIP_SMUDGE = previousSkipSmudge;
+            }
+        }
+    });
+});
 
 /**
  * A single origin repository holding the historical refs that a real docs
