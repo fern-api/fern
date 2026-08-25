@@ -92,6 +92,77 @@ async function getDefaultRemote({
     return remotes.includes("origin") ? "origin" : remotes[0];
 }
 
+async function worktreeContainsGitLfsPointers({
+    worktreePath,
+    ref,
+    sha,
+    context
+}: {
+    worktreePath: AbsoluteFilePath;
+    ref: string;
+    sha: string;
+    context: TaskContext;
+}): Promise<boolean> {
+    const result = await runGit({
+        args: ["grep", "-l", "-I", "-e", "^version https://git-lfs.github.com/spec/v1$", "--", "."],
+        cwd: worktreePath,
+        context
+    });
+    if (result.exitCode === 0) {
+        return true;
+    }
+    if (result.exitCode === 1) {
+        return false;
+    }
+
+    throw new CliError({
+        message: `Failed to inspect git ref '${ref}' (${sha}) for Git LFS pointers: ${result.stderr || result.stdout}`,
+        code: CliError.Code.ConfigError
+    });
+}
+
+async function materializeGitLfsFiles({
+    worktreePath,
+    ref,
+    sha,
+    context
+}: {
+    worktreePath: AbsoluteFilePath;
+    ref: string;
+    sha: string;
+    context: TaskContext;
+}): Promise<void> {
+    if (!(await worktreeContainsGitLfsPointers({ worktreePath, ref, sha, context }))) {
+        return;
+    }
+
+    const remote = await getDefaultRemote({ repoRoot: worktreePath, context });
+    const pullResult = await runGit({
+        args: remote != null ? ["lfs", "pull", "--include=*", "--exclude=", remote] : ["lfs", "checkout"],
+        cwd: worktreePath,
+        context
+    });
+    if (pullResult.exitCode !== 0) {
+        const output = pullResult.stderr || pullResult.stdout;
+        const gitLfsUnavailable = output.includes("'lfs' is not a git command");
+        throw new CliError({
+            message: gitLfsUnavailable
+                ? `Git LFS is required to materialize files for git ref '${ref}' (${sha}). Install Git LFS and retry.`
+                : `Failed to materialize Git LFS files for git ref '${ref}' (${sha}): ${output}`,
+            code: CliError.Code.ConfigError
+        });
+    }
+
+    if (await worktreeContainsGitLfsPointers({ worktreePath, ref, sha, context })) {
+        throw new CliError({
+            message:
+                `Git LFS files for git ref '${ref}' (${sha}) could not be materialized. ` +
+                "Ensure the required LFS objects are available from the configured git remote.",
+            code: CliError.Code.ConfigError
+        });
+    }
+}
+
 async function tryResolveSha({
     repoRoot,
     ref,
@@ -333,6 +404,8 @@ export async function materializeGitRef({
             code: CliError.Code.ConfigError
         });
     }
+
+    await materializeGitLfsFiles({ worktreePath, ref, sha, context });
 
     const materialized: MaterializedGitRef = {
         ref,
