@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.46.3
+  changelogEntry:
+    - summary: |
+        Custom headers are applied when the SDK runs through an injected `RequestExecutor` (the path
+        used by generated CLI custom commands). `ClientConfig::custom_headers` — including an
+        `X-Source`-style override and the `X-Fern-*` platform headers — and
+        `RequestOptions::additional_headers` were previously dropped before delegating to the executor,
+        so they reached the wire on generated-path requests but not on custom-command ones. Auth and
+        retries remain the executor's responsibility.
+      type: fix
+  createdAt: "2026-08-25"
+  irVersion: 67
 - version: 0.46.2
   changelogEntry:
     - summary: |

@@ -56,6 +56,13 @@ export const RUST_KEYWORDS = new Set([
 ]);
 
 /**
+ * Keywords that Rust refuses to accept as raw identifiers (`r#self` is a
+ * compile error). Identifiers colliding with these must be mangled instead,
+ * e.g. by appending an underscore.
+ */
+export const RUST_NON_RAW_KEYWORDS = new Set(["crate", "self", "Self", "super"]);
+
+/**
  * Static Rust source for the BuildError type used by generated builders.
  * Shared between model and SDK generators so the definition stays in sync.
  */
