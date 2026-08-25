@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.105.1
+  changelogEntry:
+    - summary: |
+        Materialize Git LFS assets when building docs versions from Git refs.
+      type: fix
+  createdAt: "2026-08-25"
+  irVersion: 67
 - version: 5.105.0
   changelogEntry:
     - summary: |
