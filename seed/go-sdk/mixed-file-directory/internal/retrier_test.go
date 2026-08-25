@@ -295,6 +295,93 @@ func TestRetryWithRequestBody(t *testing.T) {
 	assert.Equal(t, expectedBody, requestBodies[1], "Second request body should match expected (retry should re-send body)")
 }
 
+func TestRetryWaitIsInterruptedByContext(t *testing.T) {
+	var requestCount int
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		requestCount++
+		w.Header().Set("Retry-After", "5")
+		w.WriteHeader(http.StatusTooManyRequests)
+	}))
+	defer server.Close()
+
+	caller := NewCaller(&CallerParams{
+		Client: server.Client(),
+	})
+
+	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
+	defer cancel()
+
+	start := time.Now()
+	_, err := caller.Call(
+		ctx,
+		&CallParams{
+			URL:         server.URL,
+			Method:      http.MethodGet,
+			Request:     &InternalTestRequest{},
+			MaxAttempts: 3,
+		},
+	)
+	elapsed := time.Since(start)
+
+	assert.ErrorIs(t, err, context.DeadlineExceeded)
+	assert.Equal(t, 1, requestCount, "Expected the retry to be abandoned once the context expired")
+	assert.Less(t, elapsed, time.Second, "Expected the backoff to be interrupted by the context, took %v", elapsed)
+}
+
+func TestDisableRetries(t *testing.T) {
+	tests := []struct {
+		name             string
+		clientParams     *CallerParams
+		callParams       *CallParams
+		wantRequestCount int
+	}{
+		{
+			name:             "client-scoped DisableRetries",
+			clientParams:     &CallerParams{DisableRetries: true},
+			callParams:       &CallParams{},
+			wantRequestCount: 1,
+		},
+		{
+			name:             "request-scoped DisableRetries",
+			clientParams:     &CallerParams{},
+			callParams:       &CallParams{DisableRetries: true},
+			wantRequestCount: 1,
+		},
+		{
+			name:             "request-scoped MaxAttempts overrides client-scoped DisableRetries",
+			clientParams:     &CallerParams{DisableRetries: true},
+			callParams:       &CallParams{MaxAttempts: 3},
+			wantRequestCount: 3,
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+		t.Run(tt.name, func(t *testing.T) {
+			var requestCount int
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				requestCount++
+				w.WriteHeader(http.StatusInternalServerError)
+			}))
+			defer server.Close()
+
+			clientParams := *tt.clientParams
+			clientParams.Client = server.Client()
+			caller := NewCaller(&clientParams)
+
+			callParams := *tt.callParams
+			callParams.URL = server.URL
+			callParams.Method = http.MethodGet
+			callParams.Request = &InternalTestRequest{}
+
+			_, err := caller.Call(context.Background(), &callParams)
+
+			require.IsType(t, &core.APIError{}, err)
+			assert.Equal(t, tt.wantRequestCount, requestCount)
+		})
+	}
+}
+
 func TestRetryDelayTiming(t *testing.T) {
 	tests := []struct {
 		name            string
