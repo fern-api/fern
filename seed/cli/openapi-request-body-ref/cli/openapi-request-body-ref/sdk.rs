@@ -81,11 +81,9 @@ where
 
 fn convert_api_error(e: openapi_request_body_ref_sdk::ApiError) -> CliError {
     match e {
-        openapi_request_body_ref_sdk::ApiError::Http { status, message } => CliError::Api {
-            code: status,
-            message,
-            reason: http_status_reason(status).to_string(),
-        },
+        openapi_request_body_ref_sdk::ApiError::Http { status, message } => {
+            fern_cli_sdk::error::api_error_from_body(status, &message)
+        }
         openapi_request_body_ref_sdk::ApiError::Network(err) => {
             CliError::Other(anyhow::anyhow!("SDK network error: {err}"))
         }
@@ -94,22 +92,5 @@ fn convert_api_error(e: openapi_request_body_ref_sdk::ApiError) -> CliError {
             Err(other) => CliError::Other(anyhow::anyhow!("SDK executor error: {other}")),
         },
         other => CliError::Other(anyhow::anyhow!("SDK error: {other}")),
-    }
-}
-
-fn http_status_reason(status: u16) -> &'static str {
-    match status {
-        400 => "badRequest",
-        401 => "unauthorized",
-        403 => "forbidden",
-        404 => "notFound",
-        408 => "requestTimeout",
-        409 => "conflict",
-        429 => "tooManyRequests",
-        500 => "internalServerError",
-        502 => "badGateway",
-        503 => "serviceUnavailable",
-        504 => "gatewayTimeout",
-        _ => "httpError",
     }
 }

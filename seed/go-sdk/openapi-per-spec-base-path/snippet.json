@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/api/v3/items",
+                "method": "GET",
+                "identifier_override": "endpoint_.listItems"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/openapi-per-spec-base-path/fern/client\"\n\toption \"github.com/openapi-per-spec-base-path/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithClientCredentials(\n\t\t\"\u003cYOUR_CLIENT_ID\u003e\",\n\t\t\"\u003cYOUR_CLIENT_SECRET\u003e\",\n\t),\n)\nresponse, err := client.ListItems(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/oauth/token",
+                "method": "POST",
+                "identifier_override": "endpoint_oauth.getToken"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/openapi-per-spec-base-path/fern/client\"\n\toauth \"github.com/openapi-per-spec-base-path/fern/oauth\"\n\toption \"github.com/openapi-per-spec-base-path/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithClientCredentials(\n\t\t\"\u003cYOUR_CLIENT_ID\u003e\",\n\t\t\"\u003cYOUR_CLIENT_SECRET\u003e\",\n\t),\n)\nresponse, err := client.Oauth.GetToken(\n\tcontext.TODO(),\n\t\u0026oauth.GetTokenRequest{\n\t\tClientID:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

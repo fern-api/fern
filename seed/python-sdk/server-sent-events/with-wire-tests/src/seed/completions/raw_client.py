@@ -58,6 +58,8 @@ class RawCompletionsClient:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == "[[DONE]]":
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 try:
                                     yield typing.cast(
                                         StreamedCompletion,
@@ -131,6 +133,8 @@ class RawCompletionsClient:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 try:
                                     yield typing.cast(
                                         StreamedCompletion,
@@ -209,6 +213,8 @@ class AsyncRawCompletionsClient:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == "[[DONE]]":
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 try:
                                     yield typing.cast(
                                         StreamedCompletion,
@@ -282,6 +288,8 @@ class AsyncRawCompletionsClient:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
+                                if len(_sse.data) == 0:
+                                    continue
                                 try:
                                     yield typing.cast(
                                         StreamedCompletion,

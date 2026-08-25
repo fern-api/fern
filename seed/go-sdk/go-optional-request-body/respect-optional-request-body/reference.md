@@ -28,11 +28,6 @@ Water a plant, optionally with a specific amount.
 ```go
 request := &fern.WaterPlantRequest{
     PlantID: "plant-id",
-    Body: &fern.WateringRequest{
-        Milliliters: fern.Float64(
-            60,
-        ),
-    },
 }
 client.WaterPlant(
     context.TODO(),
@@ -99,14 +94,9 @@ Water every plant, optionally with a specific amount.
 <dd>
 
 ```go
-request := &fern.WateringRequest{
-    Milliliters: fern.Float64(
-        1.1,
-    ),
-}
 client.WaterAllPlants(
     context.TODO(),
-    request,
+    nil,
 )
 ```
 </dd>
@@ -235,15 +225,7 @@ Mist a plant, passing the body alongside a header.
 
 ```go
 request := &fern.MistPlantRequest{
-    PlantID: "plantId",
-    IdempotencyKey: fern.String(
-        "idempotencyKey",
-    ),
-    Body: &fern.WateringRequest{
-        Milliliters: fern.Float64(
-            1.1,
-        ),
-    },
+    PlantID: "plant-id",
 }
 client.MistPlant(
     context.TODO(),

@@ -97,11 +97,14 @@ module Seed
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_put(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
+          path_param_names = %i[id]
+          body_params = params.except(*path_param_names)
+
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PUT",
             path: "/http-methods/#{URI.encode_uri_component(params[:id].to_s)}",
-            body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params).to_h,
+            body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(body_params).to_h,
             request_options: request_options
           )
           begin
@@ -150,11 +153,14 @@ module Seed
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_patch(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
+          path_param_names = %i[id]
+          body_params = params.except(*path_param_names)
+
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PATCH",
             path: "/http-methods/#{URI.encode_uri_component(params[:id].to_s)}",
-            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params).to_h,
+            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(body_params).to_h,
             request_options: request_options
           )
           begin

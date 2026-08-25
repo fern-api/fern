@@ -123,6 +123,7 @@ func TestUserGetWithBearerWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
+		option.WithClientCredentials("test_client_id", "test_client_secret"),
 		option.WithBasicAuth("test-username", "test-password"),
 	)
 	_, invocationErr := client.User.GetWithBearer(
@@ -151,6 +152,7 @@ func TestUserGetWithAPIKeyWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
+		option.WithClientCredentials("test_client_id", "test_client_secret"),
 		option.WithBasicAuth("test-username", "test-password"),
 	)
 	_, invocationErr := client.User.GetWithAPIKey(
@@ -179,6 +181,7 @@ func TestUserGetWithOAuthWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
+		option.WithClientCredentials("test_client_id", "test_client_secret"),
 		option.WithBasicAuth("test-username", "test-password"),
 	)
 	_, invocationErr := client.User.GetWithOAuth(
@@ -207,6 +210,7 @@ func TestUserGetWithBasicWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
+		option.WithClientCredentials("test_client_id", "test_client_secret"),
 		option.WithBasicAuth("test-username", "test-password"),
 	)
 	_, invocationErr := client.User.GetWithBasic(
@@ -235,6 +239,7 @@ func TestUserGetWithInferredAuthWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
+		option.WithClientCredentials("test_client_id", "test_client_secret"),
 		option.WithBasicAuth("test-username", "test-password"),
 	)
 	_, invocationErr := client.User.GetWithInferredAuth(
@@ -263,6 +268,7 @@ func TestUserGetWithAnyAuthWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
+		option.WithClientCredentials("test_client_id", "test_client_secret"),
 		option.WithBasicAuth("test-username", "test-password"),
 	)
 	_, invocationErr := client.User.GetWithAnyAuth(
@@ -291,6 +297,7 @@ func TestUserGetWithAllAuthWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 		option.WithAPIKey("test-value"),
+		option.WithClientCredentials("test_client_id", "test_client_secret"),
 		option.WithBasicAuth("test-username", "test-password"),
 	)
 	_, invocationErr := client.User.GetWithAllAuth(

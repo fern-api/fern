@@ -969,6 +969,11 @@ pub struct MultipartField {
     /// Only meaningful when `is_file` is true; text parts always use
     /// `text/plain; charset=utf-8`.
     pub content_type: Option<String>,
+    /// `true` when the field's schema is `type: array` (or a nullable
+    /// composition wrapping one). The flag takes `ArgAction::Append` so it
+    /// can be repeated, and each occurrence is sent as its own part with
+    /// the same `name` — the wire encoding multipart uses for a list.
+    pub repeated: bool,
 }
 
 /// Media upload metadata.

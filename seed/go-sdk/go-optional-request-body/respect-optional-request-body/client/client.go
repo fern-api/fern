@@ -41,11 +41,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 //
 //	request := &fern.WaterPlantRequest{
 //	    PlantID: "plant-id",
-//	    Body: &fern.WateringRequest{
-//	        Milliliters: fern.Float64(
-//	            60,
-//	        ),
-//	    },
 //	}
 //	client.WaterPlant(
 //	    context.TODO(),
@@ -71,14 +66,9 @@ func (c *Client) WaterPlant(
 //
 // Example:
 //
-//	request := &fern.WateringRequest{
-//	    Milliliters: fern.Float64(
-//	        1.1,
-//	    ),
-//	}
 //	client.WaterAllPlants(
 //	    context.TODO(),
-//	    request,
+//	    nil,
 //	)
 func (c *Client) WaterAllPlants(
 	ctx context.Context,
@@ -133,15 +123,7 @@ func (c *Client) PrunePlant(
 // Example:
 //
 //	request := &fern.MistPlantRequest{
-//	    PlantID: "plantId",
-//	    IdempotencyKey: fern.String(
-//	        "idempotencyKey",
-//	    ),
-//	    Body: &fern.WateringRequest{
-//	        Milliliters: fern.Float64(
-//	            1.1,
-//	        ),
-//	    },
+//	    PlantID: "plant-id",
 //	}
 //	client.MistPlant(
 //	    context.TODO(),

@@ -1,0 +1,18 @@
+openapi: 3.0.0
+info:
+  title: Main API
+  version: 1.0.0
+x-fern-base-path: /api/v3
+paths:
+  /items:
+    get:
+      operationId: listItems
+      responses:
+        "200":
+          description: Items response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string

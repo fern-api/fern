@@ -14,7 +14,7 @@ public partial class SeedCsharpBytesUploadPathParamClient : ISeedCsharpBytesUplo
             {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedCsharpBytesUploadPathParam" },
-                { "X-Fern-SDK-Version", Version.Current },
+                { "X-Fern-SDK-Version", global::SeedCsharpBytesUploadPathParam.Version.Current },
                 { "User-Agent", "Ferncsharp-bytes-upload-path-param/0.0.1" },
             }
         );

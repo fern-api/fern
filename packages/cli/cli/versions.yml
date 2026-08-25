@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.104.1
+  changelogEntry:
+    - summary: |
+        Retry Swagger 2.0 to OpenAPI 3 conversion in lenient mode when strict conversion fails, instead
+        of dropping the spec. Specs using constructs such as `type: ['null', string]` now load, with a
+        warning naming the strict-mode error.
+      type: fix
+  createdAt: "2026-08-25"
+  irVersion: 67
+- version: 5.104.0
+  changelogEntry:
+    - summary: |
+        Add the opt-in respect-per-spec-base-path setting to apply each OpenAPI document's plain x-fern-base-path
+        to that document's own endpoints instead of collapsing to one API-wide base path.
+      type: feat
+  createdAt: "2026-08-25"
+  irVersion: 67
 - version: 5.103.0
   changelogEntry:
     - summary: |

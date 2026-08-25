@@ -428,17 +428,7 @@ describe("ServiceClient", () => {
         expect(response).toEqual(rawResponseBody);
     });
 
-    test("refreshToken (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
-
-        server.mockEndpoint().post("/refresh-token").respondWith().statusCode(200).build();
-
-        const response = await client.service.refreshToken(undefined);
-        expect(response).toEqual(undefined);
-    });
-
-    test("refreshToken (2)", async () => {
+    test("refreshToken", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { ttl: 420 };

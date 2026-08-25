@@ -92,6 +92,7 @@
     "shouldInferDiscriminatedUnionBaseProperties": false,
     "disambiguateRequestNames": true,
     "ignoreTags": false,
-    "respectParameterContent": false
+    "respectParameterContent": false,
+    "respectPerSpecBasePath": false
   }
 }

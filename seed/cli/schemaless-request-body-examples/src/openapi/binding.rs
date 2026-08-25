@@ -561,13 +561,21 @@ impl Binding for OpenApiBinding {
             // performs blocking `std::fs::read` I/O. Wrap in `block_in_place`
             // so the tokio runtime can schedule other work while the thread is
             // parked on disk reads.
-            let params = tokio::task::block_in_place(|| {
+            let mut params = tokio::task::block_in_place(|| {
                 super::app::collect_params_from_flags(
                     matched_args,
                     method,
                     params_override,
                 )
             })?;
+            // Collect multipart/form-data parts from CLI flags for operations
+            // that declare a `multipart/form-data` body. `None` for all others.
+            // Runs before `params` is serialized: multipart fields live in
+            // `method.multipart_fields`, not `method.parameters`, so a field
+            // named in `--params` has no `location: body` to route on and
+            // would otherwise leak into the query string.
+            let multipart_parts =
+                super::app::collect_multipart_parts(method, matched_args, &mut params)?;
             let params_json_string = serde_json::to_string(&params)
                 .map_err(|e| CliError::Validation(format!("Failed to serialize params: {e}")))?;
             let params_json: Option<&str> = if params.is_empty() {
@@ -687,10 +695,6 @@ impl Binding for OpenApiBinding {
             } else {
                 output_path_buf.as_deref().and_then(|p| p.to_str())
             };
-
-            // Collect multipart/form-data parts from CLI flags for operations
-            // that declare a `multipart/form-data` body. `None` for all others.
-            let multipart_parts = super::app::collect_multipart_parts(method, matched_args)?;
 
             let pipeline = crate::formatter::OutputPipeline::from_matches(
                 root_matches,

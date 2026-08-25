@@ -2,10 +2,10 @@
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "local",
-  "originGitCommit": "DUMMY",
   "generatorConfig": {
     "respect_optional_request_body": true
   },
+  "originGitCommit": "DUMMY",
   "invokedBy": "ci",
   "requestedVersion": "0.0.1",
   "ciProvider": "github",

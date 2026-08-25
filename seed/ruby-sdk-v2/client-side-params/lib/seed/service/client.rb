@@ -377,11 +377,14 @@ module Seed
       # @return [Seed::Types::Types::User]
       def update_user(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[user_id]
+        body_params = params.except(*path_param_names)
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/api/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
-          body: Seed::Types::Types::UpdateUserRequest.new(params).to_h,
+          body: Seed::Types::Types::UpdateUserRequest.new(body_params).to_h,
           request_options: request_options
         )
         begin
