@@ -67,7 +67,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
 
         return {
             headers: {
-                Authorization: `Bearer ${token}`,
+                token: token,
             },
         };
     }
@@ -136,7 +136,7 @@ export class OAuthTokenOverrideAuthProvider implements core.AuthProvider {
         }
         return {
             headers: {
-                Authorization: `Bearer ${await core.EndpointSupplier.get(token, { endpointMetadata })}`,
+                token: await core.EndpointSupplier.get(token, { endpointMetadata }),
             },
         };
     }
