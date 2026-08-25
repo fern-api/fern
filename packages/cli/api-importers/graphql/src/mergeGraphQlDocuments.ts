@@ -73,6 +73,12 @@ interface MergedType {
     /** File the type was first declared in, so a conflicting redeclaration names the right file. */
     filePath: string;
     members: Map<string, MergedMember>;
+    /**
+     * Whether the definition so far only comes from `extend type X`. An extension carries no
+     * description or type-level directives of its own, so the real definition -- which may be
+     * parsed later, since file order is arbitrary -- has to replace it as the base.
+     */
+    fromExtension: boolean;
 }
 
 interface InaccessibleState {
@@ -93,12 +99,12 @@ export function mergeGraphQlDocuments(sources: readonly GraphQlSource[]): Merged
     const conflicts: GraphQlDocumentConflict[] = [];
     const types = new Map<string, MergedType>();
     const directiveDefinitions = new Map<string, { definition: DefinitionNode; filePath: string }>();
-    const operationTypes = new Map<string, OperationTypeDefinitionNode>();
+    const operationTypes = new Map<string, { operationType: OperationTypeDefinitionNode; filePath: string }>();
     const otherDefinitions: DefinitionNode[] = [];
     const inaccessible: InaccessibleState = { types: new Set(), seen: false };
 
     for (const source of sources) {
-        for (const definition of parse(source.sdl).definitions) {
+        for (const definition of parseSource(source).definitions) {
             if (definition.kind === Kind.DIRECTIVE_DEFINITION) {
                 const directiveName = definition.name.value;
                 if (FEDERATION_DIRECTIVES.has(directiveName)) {
@@ -122,24 +128,50 @@ export function mergeGraphQlDocuments(sources: readonly GraphQlSource[]): Merged
 
             if (definition.kind === Kind.SCHEMA_DEFINITION || definition.kind === Kind.SCHEMA_EXTENSION) {
                 for (const operationType of definition.operationTypes ?? []) {
-                    operationTypes.set(operationType.operation, operationType);
+                    const owner = operationTypes.get(operationType.operation);
+                    if (owner == null) {
+                        operationTypes.set(operationType.operation, { operationType, filePath: source.filePath });
+                    } else if (owner.operationType.type.name.value !== operationType.type.name.value) {
+                        // First-wins, as for types: the root operation type a later file names would
+                        // orphan every operation the earlier one contributed.
+                        conflicts.push({
+                            typeName: "schema",
+                            memberName: operationType.operation,
+                            kept: owner.filePath,
+                            dropped: source.filePath
+                        });
+                    }
                 }
                 continue;
             }
 
             if (isTypeExtension(definition)) {
-                mergeTypeDefinition(
-                    typeExtensionToDefinition(definition),
-                    source.filePath,
+                mergeTypeDefinition({
+                    incoming: typeExtensionToDefinition(definition),
+                    isExtension: true,
+                    filePath: source.filePath,
                     types,
                     conflicts,
                     inaccessible
-                );
+                });
                 continue;
             }
 
             if (isTypeDefinition(definition)) {
-                mergeTypeDefinition(definition, source.filePath, types, conflicts, inaccessible);
+                mergeTypeDefinition({
+                    incoming: definition,
+                    isExtension: false,
+                    filePath: source.filePath,
+                    types,
+                    conflicts,
+                    inaccessible
+                });
+                continue;
+            }
+
+            if (definition.kind === Kind.OPERATION_DEFINITION || definition.kind === Kind.FRAGMENT_DEFINITION) {
+                // An executable document (a query or fragment) contributes nothing to the schema, so
+                // it is dropped rather than emitted into the merged type system document.
                 continue;
             }
 
@@ -158,14 +190,23 @@ export function mergeGraphQlDocuments(sources: readonly GraphQlSource[]): Merged
         ...[...types.values()].map((type) => type.definition)
     ];
 
-    const rootOperationTypes = [...operationTypes.values()].filter((operationType) =>
-        types.has(operationType.type.name.value)
-    );
+    const rootOperationTypes = [...operationTypes.values()]
+        .map((entry) => entry.operationType)
+        .filter((operationType) => types.has(operationType.type.name.value));
     if (rootOperationTypes.length > 0) {
         definitions.push({ kind: Kind.SCHEMA_DEFINITION, operationTypes: rootOperationTypes });
     }
 
     return { document: { kind: Kind.DOCUMENT, definitions }, conflicts };
+}
+
+/** Parses a source, naming the file in the error so one bad spec in a group can be identified. */
+function parseSource(source: GraphQlSource): DocumentNode {
+    try {
+        return parse(source.sdl);
+    } catch (error) {
+        throw new Error(`${source.filePath}: ${error instanceof Error ? error.message : String(error)}`);
+    }
 }
 
 function isTypeDefinition(definition: DefinitionNode): definition is TypeDefinitionNode {
@@ -407,23 +448,27 @@ function pruneReferences(definition: TypeDefinitionNode, removed: ReadonlySet<st
     }
 }
 
-function mergeTypeDefinition(
-    incoming: TypeDefinitionNode,
-    filePath: string,
-    types: Map<string, MergedType>,
-    conflicts: GraphQlDocumentConflict[],
-    inaccessible: InaccessibleState
-): void {
+function mergeTypeDefinition({
+    incoming,
+    isExtension,
+    filePath,
+    types,
+    conflicts,
+    inaccessible
+}: {
+    incoming: TypeDefinitionNode;
+    isExtension: boolean;
+    filePath: string;
+    types: Map<string, MergedType>;
+    conflicts: GraphQlDocumentConflict[];
+    inaccessible: InaccessibleState;
+}): void {
     const name = incoming.name.value;
     const cleaned = cleanTypeDefinition(incoming, inaccessible);
     const existing = types.get(name);
 
     if (existing == null) {
-        const members = new Map<string, MergedMember>();
-        for (const member of getMembers(cleaned)) {
-            members.set(member.name.value, { filePath, signature: memberSignature(member) });
-        }
-        types.set(name, { definition: cleaned, filePath, members });
+        types.set(name, initMergedType(cleaned, filePath, isExtension));
         return;
     }
 
@@ -437,7 +482,24 @@ function mergeTypeDefinition(
         return;
     }
 
+    if (existing.fromExtension && !isExtension) {
+        // The real definition owns the description, the type-level directives and the member order,
+        // so it becomes the base and the extension's members are appended to it.
+        const promoted = initMergedType(cleaned, filePath, false);
+        promoted.definition = mergeMembers(promoted, existing.definition, existing.filePath, conflicts);
+        types.set(name, promoted);
+        return;
+    }
+
     existing.definition = mergeMembers(existing, cleaned, filePath, conflicts);
+}
+
+function initMergedType(definition: TypeDefinitionNode, filePath: string, fromExtension: boolean): MergedType {
+    const members = new Map<string, MergedMember>();
+    for (const member of getMembers(definition)) {
+        members.set(member.name.value, { filePath, signature: memberSignature(member) });
+    }
+    return { definition, filePath, members, fromExtension };
 }
 
 function getMembers(definition: TypeDefinitionNode): readonly (ASTNode & { name: { value: string } })[] {

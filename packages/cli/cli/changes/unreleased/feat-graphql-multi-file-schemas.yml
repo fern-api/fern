@@ -5,5 +5,7 @@
     API. Federation composition directives such as `@key`, `@external` and `@link` are ignored,
     members marked `@inaccessible` are omitted along with everything that references them (matching
     the client-facing API schema produced by composition), and `@deprecated` is now surfaced on
-    operations, fields, arguments and enum values.
+    operations, fields, arguments and enum values. Merging is first-wins throughout -- types,
+    members, directive definitions, root operation types and operation examples -- and every
+    discarded declaration is reported, naming the files involved.
   type: feat

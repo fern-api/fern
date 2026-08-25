@@ -227,4 +227,186 @@ describe("mergeGraphQlDocuments", () => {
 
         expect(conflicts).toEqual([{ typeName: "Query", memberName: "a", kept: "a.graphql", dropped: "a.graphql" }]);
     });
+
+    it("keeps the first root operation type and reports a conflict when files disagree", () => {
+        const { schema, conflicts } = buildSchemaFrom([
+            { filePath: "a.graphql", sdl: `schema { query: QueryA } type QueryA { a: String }` },
+            { filePath: "b.graphql", sdl: `schema { query: QueryB } type QueryB { b: String }` }
+        ]);
+
+        // Last-wins would orphan every operation the first file contributed.
+        expect(schema.getQueryType()?.name).toBe("QueryA");
+        expect(conflicts).toEqual([
+            { typeName: "schema", memberName: "query", kept: "a.graphql", dropped: "b.graphql" }
+        ]);
+    });
+
+    it("keeps the real definition's description and directives when an extension is parsed first", () => {
+        const { document } = mergeGraphQlDocuments([
+            {
+                filePath: "b.graphql",
+                sdl: `directive @auth on OBJECT
+                      extend type Foo { y: Int }`
+            },
+            {
+                filePath: "a.graphql",
+                sdl: `"""The real doc"""
+                      type Foo @auth { x: String }`
+            }
+        ]);
+
+        const printed = print(document);
+        expect(printed).toContain("The real doc");
+        expect(printed).toContain("type Foo @auth");
+        // The definition's own fields come first regardless of the order the files were listed in.
+        expect(printed.indexOf("x: String")).toBeLessThan(printed.indexOf("y: Int"));
+    });
+
+    it("names the offending file when one spec in the group cannot be parsed", () => {
+        expect(() =>
+            mergeGraphQlDocuments([
+                { filePath: "good.graphql", sdl: `type Query { a: String }` },
+                { filePath: "bad.graphql", sdl: `type {{{ broken` }
+            ])
+        ).toThrow(/bad\.graphql/);
+    });
+
+    it("removes an enum whose every value is @inaccessible, cascading to its references", () => {
+        const { schema } = buildSchemaFrom([
+            {
+                filePath: "a.graphql",
+                sdl: `type Query { status: Status, ok: String }
+                      enum Status { ACTIVE @inaccessible, ARCHIVED @inaccessible }`
+            }
+        ]);
+
+        expect(schema.getType("Status")).toBeUndefined();
+        expect(Object.keys(schema.getQueryType()?.getFields() ?? {})).toEqual(["ok"]);
+    });
+
+    it("removes an @inaccessible scalar and every field that returns it", () => {
+        const { schema } = buildSchemaFrom([
+            {
+                filePath: "a.graphql",
+                sdl: `type Query { createdAt: DateTime, ok: String }
+                      scalar DateTime @inaccessible`
+            }
+        ]);
+
+        expect(schema.getType("DateTime")).toBeUndefined();
+        expect(Object.keys(schema.getQueryType()?.getFields() ?? {})).toEqual(["ok"]);
+    });
+
+    it("removes an @inaccessible interface and drops it from its implementors", () => {
+        const { schema } = buildSchemaFrom([
+            {
+                filePath: "a.graphql",
+                sdl: `interface Node @inaccessible { id: ID! }
+                      type Foo implements Node { id: ID!, name: String }
+                      type Query { foo: Foo }`
+            }
+        ]);
+
+        expect(schema.getType("Node")).toBeUndefined();
+        const foo = schema.getType("Foo");
+        expect(foo).toBeInstanceOf(GraphQLObjectType);
+        if (foo instanceof GraphQLObjectType) {
+            expect(foo.getInterfaces()).toEqual([]);
+            expect(Object.keys(foo.getFields())).toEqual(["id", "name"]);
+        }
+    });
+
+    it("drops a root operation type the @inaccessible cascade emptied", () => {
+        const { schema } = buildSchemaFrom([
+            {
+                filePath: "a.graphql",
+                sdl: `schema { query: Query, mutation: Mutation }
+                      type Query { a: String }
+                      type Mutation { rotateSecret: Secret }
+                      type Secret @inaccessible { value: String }`
+            }
+        ]);
+
+        expect(schema.getMutationType()).toBeUndefined();
+        expect(schema.getQueryType()?.name).toBe("Query");
+    });
+
+    it("terminates when the @inaccessible cascade runs into a reference cycle", () => {
+        const { schema } = buildSchemaFrom([
+            {
+                filePath: "a.graphql",
+                sdl: `type Query { a: A }
+                      type A { b: B }
+                      type B { a: A, gone: Gone }
+                      type Gone @inaccessible { x: String }`
+            }
+        ]);
+
+        expect(schema.getType("Gone")).toBeUndefined();
+        expect(schema.getType("A")).toBeDefined();
+        expect(schema.getType("B")).toBeDefined();
+    });
+
+    it("unions the members a union declares across files", () => {
+        const { schema, conflicts } = buildSchemaFrom([
+            {
+                filePath: "a.graphql",
+                sdl: `union Result = Ok | Failed
+                      type Ok { ok: String }
+                      type Failed { failed: String }
+                      type Query { result: Result }`
+            },
+            {
+                filePath: "b.graphql",
+                sdl: `union Result = Failed | Pending
+                      type Pending { pending: String }`
+            }
+        ]);
+
+        const result = schema.getType("Result");
+        expect(result).toBeInstanceOf(GraphQLUnionType);
+        if (result instanceof GraphQLUnionType) {
+            expect(result.getTypes().map((type) => type.name)).toEqual(["Ok", "Failed", "Pending"]);
+        }
+        expect(conflicts).toEqual([]);
+    });
+
+    it("merges a federation v1 `@extends` definition the same way as an `extend type`", () => {
+        const { schema, conflicts } = buildSchemaFrom([
+            {
+                filePath: "a.graphql",
+                sdl: `type Query { user: User }
+                      type User @key(fields: "id") { id: ID! }`
+            },
+            {
+                filePath: "b.graphql",
+                sdl: `type User @extends @key(fields: "id") { id: ID! @external, extra: String }`
+            }
+        ]);
+
+        const user = schema.getType("User");
+        expect(user).toBeInstanceOf(GraphQLObjectType);
+        if (user instanceof GraphQLObjectType) {
+            expect(Object.keys(user.getFields())).toEqual(["id", "extra"]);
+        }
+        expect(conflicts).toEqual([]);
+    });
+
+    it("drops executable definitions that a spec file happens to contain", () => {
+        const { document } = mergeGraphQlDocuments([
+            { filePath: "a.graphql", sdl: `type Query { a: String } query Foo { a }` }
+        ]);
+
+        expect(print(document)).not.toContain("query Foo");
+    });
+
+    it("is a no-op when the same spec is listed twice", () => {
+        const { schema, conflicts } = buildSchemaFrom([
+            { filePath: "a.graphql", sdl: `type Query { a: String }` },
+            { filePath: "a.graphql", sdl: `type Query { a: String }` }
+        ]);
+
+        expect(Object.keys(schema.getQueryType()?.getFields() ?? {})).toEqual(["a"]);
+        expect(conflicts).toEqual([]);
+    });
 });

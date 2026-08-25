@@ -84,12 +84,20 @@ export class GraphQLConverter {
                     variables: ex.variables ?? undefined,
                     response: ex.response ?? undefined
                 }));
-                if (entry.operationType != null) {
-                    const key = `${entry.operationType.toLowerCase()}:${entry.operation}`;
-                    this.examplesByOperation.set(key, mapped);
-                } else {
-                    this.examplesByOperation.set(entry.operation, mapped);
+                const key =
+                    entry.operationType != null
+                        ? `${entry.operationType.toLowerCase()}:${entry.operation}`
+                        : entry.operation;
+                if (this.examplesByOperation.has(key)) {
+                    // Examples from every spec in a namespace group are loaded together, so two
+                    // subgraphs can each ship examples for the same operation. First-wins, as when
+                    // merging the SDL itself, but silently discarding the rest would be surprising.
+                    this.context.logger.warn(
+                        `Multiple GraphQL examples provided for "${key}". Keeping the first and ignoring the rest.`
+                    );
+                    continue;
                 }
+                this.examplesByOperation.set(key, mapped);
             }
         }
     }
