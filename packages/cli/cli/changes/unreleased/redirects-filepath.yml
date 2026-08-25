@@ -1,21 +1,4 @@
 - summary: |
     You can now keep your redirects in their own files instead of listing them all in `docs.yml`.
-    Point `redirects` at one file or several, and Fern combines them in the order you list them:
-
-    ```yaml
-    # docs.yml
-    redirects:
-      - ./redirects/product.yml
-      - ./redirects/api.yml
-    ```
-
-    ```yaml
-    # redirects/product.yml
-    redirects:
-      - source: /old-plants
-        destination: /plants
-    ```
-
-    Each file is checked exactly like an inline `redirects` list, so mistakes are caught before your
-    site goes live.
+    Point `redirects` at one file or several, and Fern combines them in the order you list them.
   type: feat
