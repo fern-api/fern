@@ -40,6 +40,100 @@ def _basic_auth_scheme(*, username_omit: bool = False, password_omit: bool = Fal
     )
 
 
+def _name(value: str) -> ir_types.Name:
+    return ir_types.Name(
+        original_name=value,
+        camel_case=ir_types.SafeAndUnsafeString(unsafe_name=value, safe_name=value),
+        pascal_case=ir_types.SafeAndUnsafeString(unsafe_name=value, safe_name=value),
+        snake_case=ir_types.SafeAndUnsafeString(unsafe_name=value, safe_name=value),
+        screaming_snake_case=ir_types.SafeAndUnsafeString(unsafe_name=value, safe_name=value),
+    )
+
+
+def _object_property(value: str) -> ir_types.ObjectProperty:
+    return ir_types.ObjectProperty(
+        name=ir_types.NameAndWireValue(wire_value=value, name=_name(value)),
+        value_type=ir_types.TypeReference.factory.primitive(
+            ir_types.PrimitiveType(v_1=ir_types.PrimitiveTypeV1.STRING, v_2=None)
+        ),
+    )
+
+
+def _oauth_token_endpoint() -> ir_types.OAuthTokenEndpoint:
+    return ir_types.OAuthTokenEndpoint(
+        endpoint_reference=ir_types.EndpointReference(
+            subpackage_id=None,
+            service_id="service_auth",
+            endpoint_id="endpoint_auth.getToken",
+        ),
+        request_properties=ir_types.OAuthAccessTokenRequestProperties(
+            client_id=ir_types.RequestProperty(
+                property_path=None,
+                property=ir_types.RequestPropertyValue.factory.body(_object_property("client_id")),
+            ),
+            client_secret=ir_types.RequestProperty(
+                property_path=None,
+                property=ir_types.RequestPropertyValue.factory.body(_object_property("client_secret")),
+            ),
+            scopes=None,
+            custom_properties=None,
+        ),
+        response_properties=ir_types.OAuthAccessTokenResponseProperties(
+            access_token=ir_types.ResponseProperty(
+                property_path=None,
+                property=_object_property("access_token"),
+            ),
+            expires_in=None,
+            refresh_token=None,
+        ),
+    )
+
+
+def _oauth_auth_scheme(*, token_header: Optional[str], token_prefix: Optional[str]) -> ir_types.AuthScheme:
+    return ir_types.AuthScheme.factory.oauth(
+        ir_types.OAuthScheme(
+            key="oauth",
+            configuration=ir_types.OAuthConfiguration.factory.client_credentials(
+                ir_types.OAuthClientCredentials.model_construct(
+                    token_header=token_header,
+                    token_prefix=token_prefix,
+                    token_endpoint=_oauth_token_endpoint(),
+                )
+            ),
+        )
+    )
+
+
+def _create_generator(*, scheme: ir_types.AuthScheme) -> ClientWrapperGenerator:
+    ir = _FakeIr(
+        auth=ir_types.ApiAuth(
+            requirement=ir_types.AuthSchemesRequirement.ALL,
+            schemes=[scheme],
+        ),
+        sdk_config=ir_types.SdkConfig(
+            is_auth_mandatory=True,
+            has_streaming_endpoints=False,
+            has_paginated_endpoints=False,
+            has_file_download_endpoints=False,
+            platform_headers=ir_types.PlatformHeaders(
+                language="X-Fern-Language",
+                sdk_name="X-Fern-SDK-Name",
+                sdk_version="X-Fern-SDK-Version",
+            ),
+        ),
+    )
+    return ClientWrapperGenerator(
+        context=_FakeContext(ir=ir, custom_config=SDKCustomConfig.parse_obj({})),  # type: ignore[arg-type]
+        generated_environment=None,
+    )
+
+
+def _get_async_headers_body(*, scheme: ir_types.AuthScheme) -> str:
+    snippet = SourceFileFactory(should_format=False).create_snippet()
+    snippet.add_arbitrary_code(AST.CodeWriter(_create_generator(scheme=scheme)._get_write_async_get_headers_body()))
+    return snippet.to_str()
+
+
 def _get_headers_body(
     *,
     is_auth_mandatory: bool,
@@ -136,6 +230,27 @@ def test_bearer_auth_header_is_not_emitted_by_get_headers() -> None:
     # Authorization header here; the difference lives in the parameter's requiredness.
     assert "Authorization" not in optional
     assert "Authorization" not in mandatory
+
+
+def test_oauth_async_header_uses_custom_header_without_empty_prefix_spacing() -> None:
+    body = _get_async_headers_body(
+        scheme=_oauth_auth_scheme(
+            token_header="x-walmart-oauth",
+            token_prefix="",
+        )
+    )
+    assert 'headers["x-walmart-oauth"] = token' in body
+    assert "Bearer" not in body
+
+
+def test_oauth_async_header_preserves_default_header_and_prefix() -> None:
+    body = _get_async_headers_body(
+        scheme=_oauth_auth_scheme(
+            token_header=None,
+            token_prefix=None,
+        )
+    )
+    assert 'headers["Authorization"] = f"Bearer {token}"' in body
 
 
 def test_optional_auth_custom_config_aliases() -> None:
