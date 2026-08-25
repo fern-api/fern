@@ -394,13 +394,46 @@ pub(crate) fn resolve_global_parameter_value(
     p: &crate::openapi::discovery::GlobalParameter,
 ) -> Option<String> {
     let arg_id = global_parameter_arg_id(p);
-    matches
-        .try_get_one::<String>(&arg_id)
-        .ok()
-        .flatten()
-        .map(|s| s.trim())
+    match matches.try_get_one::<String>(&arg_id) {
+        Ok(resolved) => normalize_global_value(resolved.map(String::as_str)),
+        Err(_) => resolve_unregistered_global(p.env.as_deref(), p.default.as_deref()),
+    }
+}
+
+/// Trim a resolved global header/parameter value and drop it when the result
+/// is empty or whitespace-only — callers shouldn't stamp a bare
+/// `X-API-Stage:` on the wire. That's almost always a user mistake worth
+/// surfacing as a required-value error, and it matches the env-var-handling
+/// convention elsewhere.
+fn normalize_global_value(value: Option<&str>) -> Option<String> {
+    value
+        .map(str::trim)
         .filter(|s| !s.is_empty())
-        .map(|s| s.to_string())
+        .map(str::to_string)
+}
+
+/// Resolve a global header/parameter on a command where its flag was never
+/// registered, so clap has no `.env()` / `.default_value()` binding to read
+/// through.
+///
+/// Two ways to land here, and both still have to honor `env` and `default`:
+///
+///   * the flag's long name collided with a per-operation parameter, so it
+///     was attached to individual leaves instead of the root as
+///     `global(true)` (`register_global_header_on_nonconflicting_leaves`);
+///   * the command is a **custom command**, which is grafted after that
+///     registration and whose context resolves globals from the *root*
+///     `ArgMatches` (`build_binding_entry`).
+///
+/// Without this fallback a colliding global was stamped on built-in commands
+/// but silently dropped on custom ones — the header reached the wire on
+/// spec-derived requests and vanished on hand-written ones. Only the CLI flag
+/// is missing here, and it's missing for the user too (the arg was never
+/// registered, so there is nothing to type), so `env > default` is the whole
+/// chain that was ever reachable on such a command.
+fn resolve_unregistered_global(env: Option<&str>, default: Option<&str>) -> Option<String> {
+    let from_env = env.and_then(|name| std::env::var(name).ok());
+    normalize_global_value(from_env.as_deref().or(default))
 }
 
 /// Stable clap arg ID for a global header. Anchored to the wire header
@@ -501,19 +534,17 @@ fn register_global_header_on_nonconflicting_leaves(
 /// collides with a per-operation parameter, the flag is dropped from
 /// that operation's command (the per-op parameter wins — see
 /// `register_global_header_on_nonconflicting_leaves`). On such a command
-/// the arg id is unknown and `get_one` would panic; `try_get_one`
-/// returns `Err`, which we map to `None`.
+/// the arg id is unknown and `get_one` would panic. `try_get_one` returns
+/// `Err` instead, and we fall back to reading `env` / `default` directly —
+/// see [`resolve_unregistered_global`] for why that fallback exists.
 pub(crate) fn resolve_global_header_value(
     matched_args: &clap::ArgMatches,
     h: &crate::openapi::discovery::GlobalHeader,
 ) -> Option<String> {
-    matched_args
-        .try_get_one::<String>(&global_header_arg_id(h))
-        .ok()
-        .flatten()
-        .map(|s| s.trim())
-        .filter(|s| !s.is_empty())
-        .map(|s| s.to_string())
+    match matched_args.try_get_one::<String>(&global_header_arg_id(h)) {
+        Ok(resolved) => normalize_global_value(resolved.map(String::as_str)),
+        Err(_) => resolve_unregistered_global(h.env.as_deref(), h.default.as_deref()),
+    }
 }
 
 /// True when an operation declares a `header`-located parameter with
@@ -2906,6 +2937,70 @@ mod tests {
             default: None,
         };
         assert_eq!(global_header_arg_id(&h), "__global_header::X-API-Stage");
+    }
+
+    /// A global header/parameter whose flag was never registered on the
+    /// command still resolves from `env` and `default`.
+    ///
+    /// Regression: colliding globals are attached per-leaf rather than
+    /// `global(true)`, and the custom-command path reads the *root*
+    /// `ArgMatches` — so `try_get_one` returned `Err` and the header was
+    /// silently dropped. The result was a global stamped on spec-derived
+    /// requests and missing on custom-command ones.
+    #[test]
+    fn test_unregistered_global_falls_back_to_env_then_default() {
+        // Matches on a command that declares no global-header arg at all,
+        // standing in for both the colliding-leaf and custom-command cases.
+        let matches = clap::Command::new("test").get_matches_from(["test"]);
+
+        let with_default = crate::openapi::discovery::GlobalHeader {
+            header: "X-Source".to_string(),
+            optional: true,
+            default: Some("cli".to_string()),
+            ..Default::default()
+        };
+        assert_eq!(
+            resolve_global_header_value(&matches, &with_default),
+            Some("cli".to_string()),
+            "an unregistered global must still honor its default",
+        );
+
+        // env wins over default, mirroring clap's own precedence.
+        let env_var = "FERN_TEST_UNREGISTERED_GLOBAL_HEADER";
+        // SAFETY: single-threaded test-local mutation; removed below.
+        unsafe { std::env::set_var(env_var, "  from-env  ") };
+        let with_env = crate::openapi::discovery::GlobalHeader {
+            header: "X-Source".to_string(),
+            optional: true,
+            env: Some(env_var.to_string()),
+            default: Some("cli".to_string()),
+            ..Default::default()
+        };
+        assert_eq!(
+            resolve_global_header_value(&matches, &with_env),
+            Some("from-env".to_string()),
+            "env must win over default, and the value must be trimmed",
+        );
+
+        // A whitespace-only resolution is dropped, not stamped as an empty
+        // header — same rule the registered path applies.
+        unsafe { std::env::set_var(env_var, "   ") };
+        let blank = crate::openapi::discovery::GlobalHeader {
+            header: "X-Source".to_string(),
+            optional: true,
+            env: Some(env_var.to_string()),
+            ..Default::default()
+        };
+        assert_eq!(resolve_global_header_value(&matches, &blank), None);
+        unsafe { std::env::remove_var(env_var) };
+
+        // Nothing declared anywhere still resolves to nothing.
+        let bare = crate::openapi::discovery::GlobalHeader {
+            header: "X-Source".to_string(),
+            optional: true,
+            ..Default::default()
+        };
+        assert_eq!(resolve_global_header_value(&matches, &bare), None);
     }
 
     /// `build_global_header_overrides` errors with a message naming the

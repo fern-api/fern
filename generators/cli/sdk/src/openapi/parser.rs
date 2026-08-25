@@ -4274,6 +4274,37 @@ fn flatten_body_params_prefix(
                 };
                 let effective = promoted_composite.unwrap_or(resolved);
                 let is_array = effective.schema_type() == Some("array");
+                // Parity with a bare `$ref` to the same object: emit the
+                // dot-notation leaf flags too, not just the JSON shorthand.
+                // `anyOf: [$ref Model, null]` is what pydantic emits for *every*
+                // `Optional[Model]` field, so a promotion that stopped at the
+                // parent flag would leave the per-leaf surface missing on exactly
+                // the specs ADR-0010 exists to serve. `nullable` stays on the
+                // parent so ADR-0003's `null` sentinel still reaches the wire.
+                // Arrays are excluded — they lower to a repeated flag, not a
+                // nested object (same as a plain `type: array` property).
+                if let Some(inner) = promoted_composite.filter(|_| !is_array) {
+                    let nested =
+                        flatten_body_params_prefix(inner, component_schemas, depth + 1, &full_key);
+                    if !nested.is_empty() {
+                        out.extend(nested);
+                        out.insert(
+                            full_key.clone(),
+                            MethodParameter {
+                                param_type: Some("object".to_string()),
+                                location: Some("body".to_string()),
+                                required: false,
+                                description: prop
+                                    .description
+                                    .clone()
+                                    .or_else(|| inner.description.clone()),
+                                nullable: true,
+                                ..Default::default()
+                            },
+                        );
+                        continue;
+                    }
+                }
                 let spec_required = required.contains(name.as_str());
                 let (const_default, const_doc_default) = const_defaults(effective, spec_required);
                 out.insert(
@@ -4381,6 +4412,37 @@ fn flatten_body_params_prefix(
         };
         let effective = promoted_composite.unwrap_or(prop);
         let is_array = effective.schema_type() == Some("array");
+        // Parity with a bare `$ref` to the same object: emit the
+        // dot-notation leaf flags too, not just the JSON shorthand.
+        // `anyOf: [$ref Model, null]` is what pydantic emits for *every*
+        // `Optional[Model]` field, so a promotion that stopped at the
+        // parent flag would leave the per-leaf surface missing on exactly
+        // the specs ADR-0010 exists to serve. `nullable` stays on the
+        // parent so ADR-0003's `null` sentinel still reaches the wire.
+        // Arrays are excluded — they lower to a repeated flag, not a
+        // nested object (same as a plain `type: array` property).
+        if let Some(inner) = promoted_composite.filter(|_| !is_array) {
+            let nested =
+                flatten_body_params_prefix(inner, component_schemas, depth + 1, &full_key);
+            if !nested.is_empty() {
+                out.extend(nested);
+                out.insert(
+                    full_key.clone(),
+                    MethodParameter {
+                        param_type: Some("object".to_string()),
+                        location: Some("body".to_string()),
+                        required: false,
+                        description: prop
+                            .description
+                            .clone()
+                            .or_else(|| inner.description.clone()),
+                        nullable: true,
+                        ..Default::default()
+                    },
+                );
+                continue;
+            }
+        }
         let spec_required = required.contains(name.as_str());
         let (const_default, const_doc_default) = const_defaults(effective, spec_required);
         out.insert(
@@ -11545,6 +11607,102 @@ paths:
             Some(&["1".to_string()][..]),
             "the const should still constrain accepted values",
         );
+    }
+
+    #[test]
+    fn test_nullable_composite_object_keeps_leaf_flag_parity() {
+        // `Model` and `Optional[Model]` must expose the same flag surface.
+        // ADR-0010's promotion typed the parent correctly but stopped there,
+        // so the dot-notation leaves — the CLI's primary body surface —
+        // existed for `$ref: Model` and vanished for `anyOf: [$ref, null]`,
+        // which is what pydantic emits for every optional model field.
+        let settings: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              stability:
+                type: number
+              use_speaker_boost:
+                type: boolean
+            "#,
+        )
+        .unwrap();
+        let mut component_schemas = HashMap::new();
+        component_schemas.insert("VoiceSettings".to_string(), settings);
+
+        let bare: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              voice_settings:
+                $ref: '#/components/schemas/VoiceSettings'
+            "#,
+        )
+        .unwrap();
+        let nullable: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              voice_settings:
+                anyOf:
+                  - $ref: '#/components/schemas/VoiceSettings'
+                  - type: 'null'
+            "#,
+        )
+        .unwrap();
+
+        let mut bare_keys: Vec<String> = flatten_body_params(&bare, &component_schemas, 0)
+            .into_keys()
+            .collect();
+        bare_keys.sort();
+        let nullable_params = flatten_body_params(&nullable, &component_schemas, 0);
+        let mut nullable_keys: Vec<String> = nullable_params.keys().cloned().collect();
+        nullable_keys.sort();
+
+        assert_eq!(
+            bare_keys, nullable_keys,
+            "Optional[Model] must expose the same flags as Model",
+        );
+        assert_eq!(
+            nullable_params["voice_settings.stability"].param_type.as_deref(),
+            Some("number"),
+            "leaf flags must keep the branch's own types",
+        );
+        // The parent keeps both the shorthand type and the null sentinel, so
+        // `--voice-settings '{...}'` and `--voice-settings null` both work.
+        let parent = &nullable_params["voice_settings"];
+        assert_eq!(parent.param_type.as_deref(), Some("object"));
+        assert!(
+            parent.nullable,
+            "recursing must not drop the parent's null sentinel",
+        );
+    }
+
+    #[test]
+    fn test_nullable_composite_array_is_not_recursed_into() {
+        // Guard the `!is_array` condition: an array branch lowers to a
+        // repeated flag, exactly like a plain `type: array` property, and
+        // must not sprout object leaf flags.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              tags:
+                anyOf:
+                  - type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                  - type: 'null'
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        let keys: Vec<&String> = params.keys().collect();
+        assert_eq!(keys, vec!["tags"], "array branch must stay a single flag");
+        assert!(params["tags"].repeated);
     }
 
     #[test]
