@@ -196,8 +196,13 @@ impl WebSocketClient {
         config.auth.apply_to_url_and_headers(&mut url, &mut headers)?;
 
         // Build the handshake request (WS control headers + User-Agent +
-        // auth headers). See `build_handshake_request`.
-        let request = build_handshake_request(&url, &headers, &http_config.user_agent())?;
+        // Fern platform headers + auth headers). See `build_handshake_request`.
+        let request = build_handshake_request(
+            &url,
+            &headers,
+            &http_config.user_agent(),
+            &http_config.platform_headers(),
+        )?;
 
         // Sync the URL on the WsConfig with what we actually connected to,
         // so anything downstream that reads it (logging, error messages)
@@ -678,6 +683,7 @@ fn build_handshake_request(
     url: &str,
     headers: &[(String, String)],
     user_agent: &str,
+    platform_headers: &[(&'static str, String)],
 ) -> Result<tokio_tungstenite::tungstenite::handshake::client::Request, CliError> {
     let uri: tokio_tungstenite::tungstenite::http::Uri = url
         .parse()
@@ -689,6 +695,18 @@ fn build_handshake_request(
             tokio_tungstenite::tungstenite::http::header::USER_AGENT,
             value,
         );
+    }
+
+    // Fern platform-identification headers (X-Fern-SDK-Name, X-Fern-SDK-Version,
+    // X-Fern-Language, X-Fern-CLI-Command). Applied before auth headers, like
+    // the User-Agent, so an auth-supplied header can still override.
+    for (name, value) in platform_headers {
+        if let (Ok(name), Ok(value)) = (
+            name.parse::<tokio_tungstenite::tungstenite::http::HeaderName>(),
+            HeaderValue::from_str(value),
+        ) {
+            request.headers_mut().insert(name, value);
+        }
     }
 
     for (name, value) in headers {
@@ -715,7 +733,7 @@ mod tests {
     #[test]
     fn handshake_request_sets_user_agent() {
         let request =
-            build_handshake_request("wss://example.com/socket", &[], "elevenlabs-cli/1.4.0")
+            build_handshake_request("wss://example.com/socket", &[], "elevenlabs-cli/1.4.0", &[])
                 .expect("request builds");
         assert_eq!(
             request.headers().get(USER_AGENT).map(|v| v.to_str().unwrap()),
@@ -724,13 +742,47 @@ mod tests {
     }
 
     #[test]
+    fn handshake_request_sets_platform_headers() {
+        let http_config = crate::http::HttpConfig::new("elevenlabs")
+            .expect("config")
+            .with_cli_command(Some("conversational-ai.stream".to_string()));
+        let request = build_handshake_request(
+            "wss://example.com/socket",
+            &[],
+            &http_config.user_agent(),
+            &http_config.platform_headers(),
+        )
+        .expect("request builds");
+        let header = |name: &str| {
+            request
+                .headers()
+                .get(name)
+                .map(|v| v.to_str().unwrap().to_string())
+        };
+        assert_eq!(header("x-fern-sdk-name"), Some("elevenlabs-cli".to_string()));
+        assert_eq!(
+            header("x-fern-sdk-version"),
+            Some(env!("CARGO_PKG_VERSION").to_string()),
+        );
+        assert_eq!(header("x-fern-language"), Some("Rust".to_string()));
+        assert_eq!(
+            header("x-fern-cli-command"),
+            Some("conversational-ai.stream".to_string()),
+        );
+    }
+
+    #[test]
     fn handshake_request_auth_header_can_override_user_agent() {
         // An explicit auth-supplied User-Agent wins over the default, since
         // auth headers are layered after the CLI identity.
         let headers = vec![("user-agent".to_string(), "custom/9.9".to_string())];
-        let request =
-            build_handshake_request("wss://example.com/socket", &headers, "elevenlabs-cli/1.4.0")
-                .expect("request builds");
+        let request = build_handshake_request(
+            "wss://example.com/socket",
+            &headers,
+            "elevenlabs-cli/1.4.0",
+            &[],
+        )
+        .expect("request builds");
         assert_eq!(
             request.headers().get(USER_AGENT).map(|v| v.to_str().unwrap()),
             Some("custom/9.9"),
@@ -741,7 +793,7 @@ mod tests {
     fn handshake_request_skips_invalid_user_agent() {
         // A malformed User-Agent is dropped rather than failing the handshake;
         // the other required WS headers are still present.
-        let request = build_handshake_request("wss://example.com/socket", &[], "bad\nvalue")
+        let request = build_handshake_request("wss://example.com/socket", &[], "bad\nvalue", &[])
             .expect("request builds");
         assert!(request.headers().get(USER_AGENT).is_none());
         assert!(request

@@ -399,7 +399,16 @@ fn handle_status<W: Write>(
     login_flows: &[DynLoginFlow],
     out: &mut W,
 ) -> Result<(), CliError> {
-    let as_json = matches.get_flag("json");
+    // `--json` is this subcommand's own boolean and predates the global
+    // `--format`. Honouring only that made `auth status --format json` print
+    // the human table with no error and no hint — the one command an agent
+    // needs before anything else, silently ignoring the flag it was taught to
+    // use everywhere else. `--format` (and the piped default behind it) now
+    // decides too; `--json` stays as an alias so existing scripts keep working.
+    let as_json = matches.get_flag("json")
+        || crate::formatter::OutputPipeline::from_matches(matches, cli_name)
+            .map(|pipeline| pipeline.format.is_machine_readable())
+            .unwrap_or(false);
     let store = active_store();
     let backend = store.backend_label();
 

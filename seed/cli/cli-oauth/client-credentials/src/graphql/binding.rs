@@ -304,9 +304,13 @@ impl Binding for GraphqlBinding {
                 crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
             let base_url_override = base_url_override_owned.as_deref();
 
-            let http_config = prepared.http_config.clone().with_user_agent_suffix_override(
-                crate::cli_args::resolve_user_agent_suffix_override(root_matches),
-            );
+            let http_config = prepared
+                .http_config
+                .clone()
+                .with_user_agent_suffix_override(
+                    crate::cli_args::resolve_user_agent_suffix_override(root_matches),
+                )
+                .with_cli_command(Some(_op_path.join(".")));
 
             // When --page-all is active on a TTY without --no-pager,
             // let the executor write directly to the pager (capture_output

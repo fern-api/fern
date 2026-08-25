@@ -2279,7 +2279,15 @@ pub async fn execute_method(
             }
 
             let built = request.build().map_err(|e| {
-                CliError::Other(anyhow::Error::from(e).context("Failed to build HTTP request"))
+                // `Validation`, not `Other`: `build()` fails on a malformed URL
+                // or header value, which comes from `--base-url` or a flag the
+                // user typed. Reporting it as `code: 500` claimed a server
+                // status for a request that was never sent, and buried a
+                // fixable input error under an internal-error exit code.
+                CliError::Validation(format!(
+                    "Failed to build HTTP request: {}",
+                    crate::error::error_chain(&e)
+                ))
             })?;
             if debug {
                 crate::debug::dump_request(
@@ -2371,7 +2379,14 @@ pub async fn execute_method(
                     // behind corporate proxies / interception tools. The hint is
                     // a side effect; the error then propagates up like any other.
                     crate::http::maybe_emit_tls_hint(http_config, &e);
-                    return Err(anyhow::Error::from(e).context("HTTP request failed").into());
+                    // `Network`, not `Other`: nothing answered, so there is no
+                    // HTTP status to put in `error.code`. The chain is walked
+                    // because reqwest's own Display stops at "error sending
+                    // request" — "Connection refused" is the actionable part.
+                    return Err(CliError::Network(format!(
+                        "HTTP request failed: {}",
+                        crate::error::error_chain(&e)
+                    )));
                 }
             }
         };

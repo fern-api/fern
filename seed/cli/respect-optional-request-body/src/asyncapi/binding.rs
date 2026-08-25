@@ -309,9 +309,17 @@ impl Binding for AsyncApiBinding {
             );
             let base_url_override = composed.as_deref();
 
-            let http_config = prepared.http_config.clone().with_user_agent_suffix_override(
-                crate::cli_args::resolve_user_agent_suffix_override(root_matches),
-            );
+            // The channel's full command path == sdk_group_name ++ [leaf],
+            // mirroring the match in `resolve_channel`.
+            let mut command_path = channel.sdk_group_name.clone();
+            command_path.push(commands::leaf_command_name(channel_name, channel));
+            let http_config = prepared
+                .http_config
+                .clone()
+                .with_user_agent_suffix_override(
+                    crate::cli_args::resolve_user_agent_suffix_override(root_matches),
+                )
+                .with_cli_command(Some(command_path.join(".")));
 
             // Resolve binding-level CLI args (e.g. `--voice`, `--audio-out`)
             // ONCE per dispatch, then pick the init payload and

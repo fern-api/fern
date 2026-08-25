@@ -61,7 +61,10 @@ impl AuthProvider for BearerAuthProvider {
         request: reqwest::RequestBuilder,
         _endpoint: &EndpointAuthMetadata,
     ) -> Result<reqwest::RequestBuilder, CliError> {
-        let Some(token) = self.token.resolve() else {
+        // `try_resolve`, not `resolve`: a credential the user stored but the
+        // CLI could not read (a denied keychain prompt) must fail here rather
+        // than sending the request unauthenticated.
+        let Some(token) = self.token.try_resolve()? else {
             return Ok(request);
         };
         // Avoid `RequestBuilder::bearer_auth` — it panics on tokens with
@@ -179,8 +182,10 @@ impl AuthProvider for BasicAuthProvider {
         request: reqwest::RequestBuilder,
         _endpoint: &EndpointAuthMetadata,
     ) -> Result<reqwest::RequestBuilder, CliError> {
-        let u = self.username.resolve();
-        let p = self.password.resolve();
+        // See the note on the bearer path: an unreadable credential is an
+        // auth failure, not an absent one.
+        let u = self.username.try_resolve()?;
+        let p = self.password.try_resolve()?;
 
         // In Full mode both must be present; in partial modes the
         // omitted half is sent as the empty string.
@@ -262,7 +267,10 @@ impl AuthProvider for HeaderAuthProvider {
         request: reqwest::RequestBuilder,
         _endpoint: &EndpointAuthMetadata,
     ) -> Result<reqwest::RequestBuilder, CliError> {
-        let Some(token) = self.token.resolve() else {
+        // `try_resolve`, not `resolve`: a credential the user stored but the
+        // CLI could not read (a denied keychain prompt) must fail here rather
+        // than sending the request unauthenticated.
+        let Some(token) = self.token.try_resolve()? else {
             return Ok(request);
         };
         let value = if self.bearer_prefix {
