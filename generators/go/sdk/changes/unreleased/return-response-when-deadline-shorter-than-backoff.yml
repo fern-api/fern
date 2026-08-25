@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    When a request's context deadline would elapse before the retry backoff
+    completes, the retrier now returns the response instead of sleeping through
+    the remaining deadline. Callers see why the request actually failed (for
+    example a `429` with its `Retry-After` and body) rather than a
+    `context deadline exceeded` error. An explicit `cancel()` during the
+    backoff still returns the context's error.
+  type: fix
