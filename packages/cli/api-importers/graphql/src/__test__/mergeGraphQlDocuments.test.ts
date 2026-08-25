@@ -331,6 +331,79 @@ describe("mergeGraphQlDocuments", () => {
         expect(schema.getQueryType()?.name).toBe("Query");
     });
 
+    it("strips federation directives from every spec version so the SDL still validates strictly", () => {
+        // A subgraph imports these via @link rather than defining them, so any that survive
+        // stripping force the whole schema onto the assumeValidSDL fallback, which silences
+        // validation for everything else in the file.
+        const { document } = mergeGraphQlDocuments([
+            {
+                filePath: "v29.graphql",
+                sdl: `extend schema @link(url: "https://specs.apollo.dev/federation/v2.9", import: ["@cost", "@listSize", "@context", "@fromContext"])
+                      type Query { items(first: Int): [Item] @listSize(assumedSize: 10) @cost(weight: 5) }
+                      type Item @context(name: "ctx") @key(fields: "id") {
+                        id: ID! @cost(weight: 1)
+                        related(ctx: String @fromContext(field: "$ctx { id }")): [Item] @listSize(slicingArguments: ["first"])
+                      }`
+            }
+        ]);
+
+        expect(print(document)).not.toMatch(/@(cost|listSize|context|fromContext|link|key)\b/);
+        // Strict, not assumeValidSDL: the point is that no unknown directive survives.
+        expect(validateSchema(buildASTSchema(document))).toEqual([]);
+    });
+
+    it("keeps @deprecated while stripping the federation directives beside it", () => {
+        const { document } = mergeGraphQlDocuments([
+            {
+                filePath: "a.graphql",
+                sdl: `type Query { a: String @deprecated(reason: "use b") @cost(weight: 2) b: String }`
+            }
+        ]);
+
+        const printed = print(document);
+        expect(printed).toMatch(/@deprecated\(reason: "use b"\)/);
+        expect(printed).not.toMatch(/@cost/);
+    });
+
+    it("fails loudly when the @inaccessible cascade empties the query root", () => {
+        // Dropping an emptied Mutation leaves a usable schema; dropping the query root leaves
+        // nothing, which would silently publish an API with no operations.
+        expect(() =>
+            mergeGraphQlDocuments([
+                {
+                    filePath: "a.graphql",
+                    sdl: `type Query { secret: Secret }
+                          type Secret @inaccessible { value: String }`
+                }
+            ])
+        ).toThrow(/query root "Query".*@inaccessible/s);
+    });
+
+    it("fails loudly when the cascade empties a query root declared under another name", () => {
+        expect(() =>
+            mergeGraphQlDocuments([
+                {
+                    filePath: "a.graphql",
+                    sdl: `schema { query: RootQuery }
+                          type RootQuery { secret: Secret }
+                          type Secret @inaccessible { value: String }`
+                }
+            ])
+        ).toThrow(/query root "RootQuery"/);
+    });
+
+    it("does not fire the query-root guard when the query root keeps a field", () => {
+        const { schema } = buildSchemaFrom([
+            {
+                filePath: "a.graphql",
+                sdl: `type Query { secret: Secret ok: String }
+                      type Secret @inaccessible { value: String }`
+            }
+        ]);
+
+        expect(Object.keys(schema.getQueryType()?.getFields() ?? {})).toEqual(["ok"]);
+    });
+
     it("terminates when the @inaccessible cascade runs into a reference cycle", () => {
         const { schema } = buildSchemaFrom([
             {

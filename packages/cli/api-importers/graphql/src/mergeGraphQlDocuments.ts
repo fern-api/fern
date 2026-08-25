@@ -24,6 +24,11 @@ const INACCESSIBLE_DIRECTIVE = "inaccessible";
  * Directives that describe how a federated graph is composed at runtime rather than what a
  * consumer can call. Apollo strips these when it derives the client-facing API schema from a
  * supergraph, so they are dropped here too. Standard directives such as `@deprecated` are kept.
+ *
+ * A subgraph never defines these itself -- it imports them via `@link` -- so any that survive
+ * stripping leave `buildASTSchema` with an unknown directive, which forces the whole schema onto
+ * the `assumeValidSDL` fallback and silences validation for everything else in the file. Keep this
+ * list current with the federation spec: it covers v1 through v2.9.
  */
 const FEDERATION_DIRECTIVES = new Set([
     "link",
@@ -40,7 +45,13 @@ const FEDERATION_DIRECTIVES = new Set([
     "tag",
     "authenticated",
     "requiresScopes",
-    "policy"
+    "policy",
+    // federation v2.8
+    "context",
+    "fromContext",
+    // federation v2.9 (demand control)
+    "cost",
+    "listSize"
 ]);
 
 export interface GraphQlSource {
@@ -180,8 +191,20 @@ export function mergeGraphQlDocuments(sources: readonly GraphQlSource[]): Merged
     }
 
     if (inaccessible.seen) {
+        const queryRootName = queryRootTypeName(operationTypes, types);
         pruneInaccessibleTypes(types, inaccessible.types);
         pruneUnsatisfiedInterfaces(types);
+        // Dropping an emptied `Mutation` still leaves a usable schema, but dropping the query root
+        // leaves nothing at all -- `buildASTSchema` then yields a schema with no types and the docs
+        // silently lose the whole API. That is always a mis-specified schema, so say so.
+        if (queryRootName != null && !types.has(queryRootName)) {
+            throw new Error(
+                `Every field on the GraphQL query root "${queryRootName}" returns a type marked @inaccessible ` +
+                    `(${[...inaccessible.types].sort().join(", ")}), so the merged schema has no reachable ` +
+                    "operations. Remove @inaccessible from at least one reachable type, or exclude these files " +
+                    "from the docs."
+            );
+        }
     }
 
     const definitions: DefinitionNode[] = [
@@ -198,6 +221,22 @@ export function mergeGraphQlDocuments(sources: readonly GraphQlSource[]): Merged
     }
 
     return { document: { kind: Kind.DOCUMENT, definitions }, conflicts };
+}
+
+/**
+ * Name of the type serving as the query root: whatever `schema { query: ... }` declares, else the
+ * conventional `Query`. Returns undefined when the merged sources have no query root to begin with,
+ * which is not this function's problem to report.
+ */
+function queryRootTypeName(
+    operationTypes: ReadonlyMap<string, { operationType: OperationTypeDefinitionNode }>,
+    types: ReadonlyMap<string, MergedType>
+): string | undefined {
+    const declared = operationTypes.get("query")?.operationType.type.name.value;
+    if (declared != null) {
+        return types.has(declared) ? declared : undefined;
+    }
+    return types.has("Query") ? "Query" : undefined;
 }
 
 /** Parses a source, naming the file in the error so one bad spec in a group can be identified. */
