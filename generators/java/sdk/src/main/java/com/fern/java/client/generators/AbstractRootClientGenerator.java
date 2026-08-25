@@ -2000,13 +2000,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 ClassName oauthTokenSupplierClassName =
                         generatedOAuthTokenSupplier.get().getClassName();
 
-                String tokenPrefix = clientCredentials.getTokenPrefix().orElse("Bearer");
+                Optional<String> tokenPrefix = OAuthTokenSupplierGenerator.getTokenPrefixWithSpace(clientCredentials);
+                String tokenHeader = OAuthTokenSupplierGenerator.getTokenHeader(clientCredentials);
 
                 if (useStagedBuilder) {
                     // Token override is always enabled - use staged builder pattern
                     generateStagedBuilderForOAuth(
                             clientCredentials,
                             tokenOverridePropertyName,
+                            tokenHeader,
                             tokenPrefix,
                             customPropertyNames,
                             authClientClassName,
@@ -2081,11 +2083,16 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     } else if (configureAuthMethod != null) {
                         // Token override is always enabled - check for token first
                         configureAuthMethod.beginControlFlow("if (this.$L != null)", tokenOverridePropertyName);
-                        configureAuthMethod.addStatement(
-                                "builder.addHeader($S, $S + this.$L)",
-                                "Authorization",
-                                tokenPrefix + " ",
-                                tokenOverridePropertyName);
+                        if (tokenPrefix.isEmpty()) {
+                            configureAuthMethod.addStatement(
+                                    "builder.addHeader($S, this.$L)", tokenHeader, tokenOverridePropertyName);
+                        } else {
+                            configureAuthMethod.addStatement(
+                                    "builder.addHeader($S, $S + this.$L)",
+                                    tokenHeader,
+                                    tokenPrefix.get(),
+                                    tokenOverridePropertyName);
+                        }
                         configureAuthMethod.nextControlFlow(
                                 "else if (this.clientId != null && this.clientSecret != null)");
 
@@ -2126,7 +2133,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                         oauthTokenSupplierClassName,
                                         oauthTokenSupplierClassName,
                                         oauthConstructorArgs.build())
-                                .addStatement("builder.addHeader($S, oAuthTokenSupplier)", "Authorization")
+                                .addStatement("builder.addHeader($S, oAuthTokenSupplier)", tokenHeader)
                                 .endControlFlow();
                     }
                 }
@@ -2136,7 +2143,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             private void generateStagedBuilderForOAuth(
                     OAuthClientCredentials clientCredentials,
                     String tokenOverridePropertyName,
-                    String tokenPrefix,
+                    String tokenHeader,
+                    Optional<String> tokenPrefix,
                     List<OAuthCustomProperty> customPropertyNames,
                     ClassName authClientClassName,
                     ClassName oauthTokenSupplierClassName) {
@@ -2159,16 +2167,21 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .build());
 
                 // Override setAuthentication to use token
-                tokenAuthBuilder.addMethod(MethodSpec.methodBuilder("setAuthentication")
+                MethodSpec.Builder tokenAuthMethod = MethodSpec.methodBuilder("setAuthentication")
                         .addAnnotation(Override.class)
                         .addModifiers(Modifier.PROTECTED)
-                        .addParameter(generatedClientOptions.builderClassName(), "builder")
-                        .addStatement(
-                                "builder.addHeader($S, $S + this.$L)",
-                                "Authorization",
-                                tokenPrefix + " ",
-                                tokenOverridePropertyName)
-                        .build());
+                        .addParameter(generatedClientOptions.builderClassName(), "builder");
+                if (tokenPrefix.isEmpty()) {
+                    tokenAuthMethod.addStatement(
+                            "builder.addHeader($S, this.$L)", tokenHeader, tokenOverridePropertyName);
+                } else {
+                    tokenAuthMethod.addStatement(
+                            "builder.addHeader($S, $S + this.$L)",
+                            tokenHeader,
+                            tokenPrefix.get(),
+                            tokenOverridePropertyName);
+                }
+                tokenAuthBuilder.addMethod(tokenAuthMethod.build());
 
                 clientBuilder.addType(tokenAuthBuilder.build());
 
@@ -2267,7 +2280,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         "$T finalOptions = $T.Builder.from(baseOptions).addHeader($S, oAuthTokenSupplier).build()",
                         generatedClientOptions.getClassName(),
                         generatedClientOptions.getClassName(),
-                        "Authorization");
+                        tokenHeader);
                 credentialsBuildMethod.addStatement("return new $T(finalOptions)", className());
 
                 credentialsAuthBuilder.addMethod(credentialsBuildMethod.build());
@@ -2282,8 +2295,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addJavadoc("the OAuth client credentials flow.\n")
                         .addJavadoc("\n")
                         .addJavadoc(
-                                "@param $L The access token to use for Authorization header\n",
-                                tokenOverridePropertyName)
+                                "@param $L The access token to use for $L header\n",
+                                tokenOverridePropertyName,
+                                tokenHeader)
                         .addJavadoc("@return A builder configured for token authentication")
                         .addParameter(String.class, tokenOverridePropertyName)
                         .returns(tokenAuthClassName)
