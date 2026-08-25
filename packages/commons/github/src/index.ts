@@ -1,5 +1,6 @@
 export { ClonedRepository } from "./ClonedRepository.js";
 export { cloneRepository } from "./cloneRepository.js";
+export { cloneRepositoryAtRef, resolveRepositorySubpath } from "./cloneRepositoryAtRef.js";
 export { createOrUpdatePullRequest } from "./createOrUpdatePullRequest.js";
 export { deleteBranch } from "./deleteBranch.js";
 export { expandFernignorePatterns } from "./expandFernignorePatterns.js";

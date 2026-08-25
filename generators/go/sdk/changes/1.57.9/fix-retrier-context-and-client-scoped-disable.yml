@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Retry backoff now waits on the request context, so a cancelled or expired
+    context interrupts the wait instead of sleeping through it (previously a
+    `Retry-After` of up to 60s could hold a call well past its deadline).
+  type: fix
+
+- summary: |
+    `option.WithoutRetries()` is now honored when passed to the client
+    constructor. Previously the flag was dropped by `NewRetrier` and only worked
+    per call. Request-scoped `WithMaxAttempts` still overrides it.
+  type: fix

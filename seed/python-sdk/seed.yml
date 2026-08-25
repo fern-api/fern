@@ -534,6 +534,12 @@ fixtures:
     - customConfig:
         respect_optional_request_body: true
       outputFolder: respect-optional-request-body
+  openapi-per-spec-base-path:
+    - customConfig: null
+      outputFolder: no-custom-config
+  openapi-per-spec-base-path-disabled:
+    - customConfig: null
+      outputFolder: no-custom-config
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2

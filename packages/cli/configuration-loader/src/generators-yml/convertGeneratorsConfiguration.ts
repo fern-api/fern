@@ -76,7 +76,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     shouldInferDiscriminatedUnionBaseProperties: undefined,
     disambiguateRequestNames: undefined,
     ignoreTags: undefined,
-    respectParameterContent: undefined
+    respectParameterContent: undefined,
+    respectPerSpecBasePath: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -189,7 +190,8 @@ function parseOpenApiDefinitionSettingsSchema(
         shouldInferDiscriminatedUnionBaseProperties: settings?.["infer-discriminated-union-base-properties"],
         disambiguateRequestNames: settings?.["disambiguate-request-names"],
         ignoreTags: settings?.["ignore-tags"],
-        respectParameterContent: settings?.["respect-parameter-content"]
+        respectParameterContent: settings?.["respect-parameter-content"],
+        respectPerSpecBasePath: settings?.["respect-per-spec-base-path"]
     };
 }
 

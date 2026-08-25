@@ -144,6 +144,10 @@ export function generateIr({
             taskContext.logger.warn(message);
         }
     }
+    const plainBasePath =
+        options.respectPerSpecBasePath && fernBasePathParsed != null && fernBasePathParsed.pathParameters.length === 0
+            ? fernBasePathParsed.basePath
+            : undefined;
 
     Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
         if (pathItem == null) {
@@ -157,16 +161,16 @@ export function generateIr({
             }
             switch (operation.type) {
                 case "async":
-                    endpointsWithExample.push(...operation.sync);
-                    endpointsWithExample.push(...operation.async);
+                    endpointsWithExample.push(...prependBasePathToEndpoints(operation.sync, plainBasePath));
+                    endpointsWithExample.push(...prependBasePathToEndpoints(operation.async, plainBasePath));
                     break;
                 case "http":
-                    endpointsWithExample.push(...operation.value);
+                    endpointsWithExample.push(...prependBasePathToEndpoints(operation.value, plainBasePath));
                     break;
                 case "streaming":
-                    endpointsWithExample.push(...operation.streaming);
+                    endpointsWithExample.push(...prependBasePathToEndpoints(operation.streaming, plainBasePath));
                     if (operation.nonStreaming) {
-                        endpointsWithExample.push(...operation.nonStreaming);
+                        endpointsWithExample.push(...prependBasePathToEndpoints(operation.nonStreaming, plainBasePath));
                     }
                     break;
                 case "webhook":
@@ -413,17 +417,15 @@ export function generateIr({
             document: openApi
         }),
         specVersion: openApi.info.version != null && openApi.info.version.length > 0 ? openApi.info.version : undefined,
-        basePath: (() => {
-            const parsed = getFernBasePath(openApi);
-            return parsed?.basePath;
-        })(),
-        basePathParameters: (() => {
-            const parsed = getFernBasePath(openApi);
-            if (parsed == null || parsed.pathParameters.length === 0) {
-                return undefined;
-            }
-            return parsed.pathParameters;
-        })(),
+        basePath:
+            fernBasePathParsed != null &&
+            (!options.respectPerSpecBasePath || fernBasePathParsed.pathParameters.length > 0)
+                ? fernBasePathParsed.basePath
+                : undefined,
+        basePathParameters:
+            fernBasePathParsed != null && fernBasePathParsed.pathParameters.length > 0
+                ? fernBasePathParsed.pathParameters
+                : undefined,
         title: openApi.info.title ?? "",
         description: openApi.info.description,
         groups: Object.fromEntries(
@@ -529,6 +531,33 @@ function maybeRemoveDiscriminantsFromSchemas(
         }
     }
     return result;
+}
+
+function prependBasePath(path: string, basePath: string | undefined): string {
+    if (basePath == null || basePath === "/") {
+        return path;
+    }
+
+    const normalizedBasePath = basePath.replace(/\/+$/, "");
+    if (path === normalizedBasePath || path.startsWith(`${normalizedBasePath}/`)) {
+        return path;
+    }
+
+    const normalizedPath = path.replace(/^\/+/, "");
+    return normalizedPath.length > 0 ? `${normalizedBasePath}/${normalizedPath}` : normalizedBasePath;
+}
+
+function prependBasePathToEndpoints(
+    endpoints: EndpointWithExample[],
+    basePath: string | undefined
+): EndpointWithExample[] {
+    if (basePath == null || basePath === "/") {
+        return endpoints;
+    }
+    return endpoints.map((endpoint) => ({
+        ...endpoint,
+        path: prependBasePath(endpoint.path, basePath)
+    }));
 }
 
 /**

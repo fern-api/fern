@@ -39,6 +39,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "disambiguate-request-names": core.serialization.boolean().optional(),
         "ignore-tags": core.serialization.boolean().optional(),
         "respect-parameter-content": core.serialization.boolean().optional(),
+        "respect-per-spec-base-path": core.serialization.boolean().optional(),
     })
     .extend(BaseApiSettingsSchema);
 
@@ -68,5 +69,6 @@ export declare namespace OpenApiSettingsSchema {
         "disambiguate-request-names"?: boolean | null;
         "ignore-tags"?: boolean | null;
         "respect-parameter-content"?: boolean | null;
+        "respect-per-spec-base-path"?: boolean | null;
     }
 }

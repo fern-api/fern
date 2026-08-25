@@ -7,6 +7,8 @@ import type {
     CppClassIr,
     CppConceptIr,
     CppDocstringIr,
+    CppFunctionIr,
+    CppGroupIr,
     CppLibraryDocsIr,
     CppNamespaceIr,
     IrMetadata
@@ -81,6 +83,51 @@ function makeConcept(overrides: Partial<CppConceptIr>): CppConceptIr {
     };
 }
 
+function makeFunction(overrides: Partial<CppFunctionIr>): CppFunctionIr {
+    return {
+        name: "my_func",
+        path: "cub::my_func",
+        signature: "void my_func()",
+        templateParams: [],
+        parameters: [],
+        returnType: undefined,
+        docstring: makeDocstring(),
+        isStatic: false,
+        isConst: false,
+        isConstexpr: false,
+        isVolatile: false,
+        isInline: false,
+        isExplicit: false,
+        isNoexcept: false,
+        noexceptExpression: undefined,
+        isNoDiscard: false,
+        virtuality: "non-virtual",
+        refQualifier: undefined,
+        requiresClause: undefined,
+        isDeleted: false,
+        ...overrides
+    };
+}
+
+function makeGroup(overrides: Partial<CppGroupIr>): CppGroupIr {
+    return {
+        id: "group__my__group",
+        name: "my_group",
+        title: "My Group",
+        docstring: undefined,
+        memberRefs: [],
+        innerClassRefs: [],
+        innerNamespaceRefs: [],
+        classes: [],
+        functions: [],
+        enums: [],
+        typedefs: [],
+        variables: [],
+        subgroups: [],
+        ...overrides
+    };
+}
+
 function makeNamespace(overrides: Partial<CppNamespaceIr>): CppNamespaceIr {
     return {
         name: "",
@@ -97,11 +144,15 @@ function makeNamespace(overrides: Partial<CppNamespaceIr>): CppNamespaceIr {
     };
 }
 
-function makeIr(rootNamespace: CppNamespaceIr, metadata?: Partial<IrMetadata>): CppLibraryDocsIr {
+function makeIr(
+    rootNamespace: CppNamespaceIr,
+    metadata?: Partial<IrMetadata>,
+    groups: CppGroupIr[] = []
+): CppLibraryDocsIr {
     return {
         metadata: { ...DEFAULT_METADATA, ...metadata },
         rootNamespace,
-        groups: []
+        groups
     };
 }
 
@@ -294,5 +345,215 @@ describe("generateCpp()", () => {
         // Signature should include the constraint expression
         expect(content).toContain("concept random_access_range");
         expect(content).toContain("std::ranges::random_access_range<Range>");
+    });
+
+    // ------------------------------------------------------------------
+    // 6. Doxygen group pages
+    // ------------------------------------------------------------------
+    it("generates group pages linking to entity pages, including nested subgroups", () => {
+        const blockScan = makeClass({ name: "BlockScan", path: "cub::BlockScan" });
+        const deviceScan = makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" });
+        const tune = makeFunction({ name: "Tune", path: "cub::Tune" });
+
+        const ir = makeIr(
+            makeNamespace({
+                name: "cub",
+                path: "cub",
+                classes: [blockScan],
+                functions: [deviceScan, tune]
+            }),
+            undefined,
+            [
+                makeGroup({
+                    id: "group__scan",
+                    name: "scan",
+                    title: "Scan",
+                    docstring: makeDocstring({ summary: [{ type: "text", text: "Prefix scan primitives." }] }),
+                    classes: [blockScan],
+                    functions: [deviceScan],
+                    subgroups: [
+                        makeGroup({
+                            id: "group__scan__advanced",
+                            name: "scan_advanced",
+                            title: "Advanced scan",
+                            functions: [tune]
+                        })
+                    ]
+                })
+            ]
+        );
+
+        const result = generateCpp({ ir, outputDir: tmpDir, slug: "reference/cub" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("groups/index.mdx");
+        expect(relativePaths).toContain("groups/scan/index.mdx");
+        expect(relativePaths).toContain("groups/scan/scan_advanced/index.mdx");
+        expect(result.pageCount).toBe(relativePaths.length);
+
+        const groupsIndex = readFileSync(join(tmpDir, "groups/index.mdx"), "utf-8");
+        expect(groupsIndex).toContain("- [Scan](groups/scan)");
+
+        const scanPage = readFileSync(join(tmpDir, "groups/scan/index.mdx"), "utf-8");
+        expect(scanPage).toContain("title: Scan");
+        expect(scanPage).toContain("Prefix scan primitives.");
+        expect(scanPage).toContain("## Classes");
+        expect(scanPage).toContain("- [`cub::BlockScan`](../classes/blockscan)");
+        expect(scanPage).toContain("## Functions");
+        expect(scanPage).toContain("- [`cub::DeviceScan`](../functions/devicescan)");
+        expect(scanPage).toContain("## Subgroups");
+        expect(scanPage).toContain("- [Advanced scan](scan/scanadvanced)");
+
+        const subgroupPage = readFileSync(join(tmpDir, "groups/scan/scan_advanced/index.mdx"), "utf-8");
+        expect(subgroupPage).toContain("title: Advanced scan");
+        expect(subgroupPage).toContain("- [`cub::Tune`](../../functions/tune)");
+    });
+
+    it("writes no group pages when the IR has no groups with members", () => {
+        const ir = makeIr(
+            makeNamespace({
+                name: "cub",
+                path: "cub",
+                classes: [makeClass({ name: "BlockScan", path: "cub::BlockScan" })]
+            }),
+            undefined,
+            [makeGroup({ id: "group__empty", name: "empty", title: "Empty" })]
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/cub" });
+
+        expect(existsSync(join(tmpDir, "groups"))).toBe(false);
+    });
+
+    it("skips anonymous group members, which have no page to link to", () => {
+        const ir = makeIr(
+            makeNamespace({
+                name: "cub",
+                path: "cub",
+                functions: [makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" })]
+            }),
+            undefined,
+            [
+                makeGroup({
+                    id: "group__scan",
+                    name: "scan",
+                    title: "Scan",
+                    functions: [makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" })],
+                    // Doxygen emits an unnamed enum with no name and no path
+                    enums: [
+                        {
+                            name: "",
+                            path: "",
+                            isScoped: false,
+                            underlyingType: undefined,
+                            values: [],
+                            docstring: undefined
+                        }
+                    ]
+                }),
+                makeGroup({
+                    id: "group__anon__only",
+                    name: "anon_only",
+                    title: "Anonymous only",
+                    enums: [
+                        {
+                            name: "",
+                            path: "",
+                            isScoped: false,
+                            underlyingType: undefined,
+                            values: [],
+                            docstring: undefined
+                        }
+                    ]
+                })
+            ]
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/cub" });
+
+        const scanPage = readFileSync(join(tmpDir, "groups/scan/index.mdx"), "utf-8");
+        expect(scanPage).not.toContain("## Enumerations");
+        expect(scanPage).not.toContain("[``]");
+
+        // A group whose only members are anonymous has nothing to render
+        expect(existsSync(join(tmpDir, "groups/anon_only"))).toBe(false);
+        expect(readFileSync(join(tmpDir, "groups/index.mdx"), "utf-8")).not.toContain("Anonymous only");
+    });
+
+    it("titles the groups index from the library name, falling back when the IR has none", () => {
+        const makeGroupedIr = (packageName: string) =>
+            makeIr(
+                makeNamespace({
+                    name: "cub",
+                    path: "cub",
+                    functions: [makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" })]
+                }),
+                { packageName },
+                [
+                    makeGroup({
+                        id: "group__scan",
+                        name: "scan",
+                        title: "Scan",
+                        functions: [makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" })]
+                    })
+                ]
+            );
+
+        generateCpp({ ir: makeGroupedIr("CUB"), outputDir: tmpDir, slug: "reference/cub" });
+        expect(readFileSync(join(tmpDir, "groups/index.mdx"), "utf-8")).toContain("title: CUB — Groups");
+
+        const fallbackDir = mkdtempSync(join(tmpdir(), "cpp-gen-test-"));
+        try {
+            generateCpp({ ir: makeGroupedIr(""), outputDir: fallbackDir, slug: "reference/cub" });
+            const index = readFileSync(join(fallbackDir, "groups/index.mdx"), "utf-8");
+            expect(index).toContain("title: cub — Groups");
+            expect(index).not.toContain("Documentation groups in .");
+        } finally {
+            rmSync(fallbackDir, { recursive: true, force: true });
+        }
+    });
+
+    it("links the groups folder from the library index page", () => {
+        const deviceScan = makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" });
+        const ir = makeIr(
+            makeNamespace({
+                namespaces: [makeNamespace({ name: "cub", path: "cub", functions: [deviceScan] })]
+            }),
+            undefined,
+            [makeGroup({ id: "group__scan", name: "scan", title: "Scan", functions: [deviceScan] })]
+        );
+
+        generateCpp({ ir, outputDir: join(tmpDir, "cub"), slug: "cub" });
+
+        const libraryIndex = readFileSync(join(tmpDir, "cub/index.mdx"), "utf-8");
+        expect(libraryIndex).toContain("- [Functions](cub/functions)");
+        expect(libraryIndex).toContain("- [Groups](cub/groups)");
+    });
+
+    it("terminates on a group tree whose subgroup references an ancestor", () => {
+        const scan = makeGroup({
+            id: "group__scan",
+            name: "scan",
+            title: "Scan",
+            functions: [makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" })]
+        });
+        // A malformed IR: the subgroup points back at its parent
+        scan.subgroups.push(makeGroup({ id: "group__nested", name: "nested", subgroups: [scan] }));
+
+        const ir = makeIr(
+            makeNamespace({
+                name: "cub",
+                path: "cub",
+                functions: [makeFunction({ name: "DeviceScan", path: "cub::DeviceScan" })]
+            }),
+            undefined,
+            [scan]
+        );
+
+        const result = generateCpp({ ir, outputDir: tmpDir, slug: "reference/cub" });
+
+        expect(result.writtenFiles.filter((file) => file.includes("/groups/")).length).toBe(3);
+        expect(existsSync(join(tmpDir, "groups/scan/nested/index.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "groups/scan/nested/scan"))).toBe(false);
     });
 });

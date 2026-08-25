@@ -38,13 +38,12 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/github": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "chalk": "catalog:",
     "js-yaml": "catalog:",
-    "simple-git": "catalog:",
-    "tmp-promise": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

@@ -6,6 +6,7 @@
  * 2. Compute page keys, resolving filename collisions for template specializations
  * 3. Render each compound page and stream to disk via MdxFileWriter
  * 4. Generate hierarchical index pages (namespace → category folders → entity pages)
+ * 5. Generate group pages from the library's Doxygen groups, linking to the entity pages
  *
  * Designed for sequential rendering: global state in the renderers (nameToPathMap,
  * currentPagePath) requires that pages are rendered one at a time.
@@ -24,6 +25,13 @@ import {
 import type { CppCompoundIr } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderCompoundPage } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderSegmentsPlainText } from "../cpp/src/renderers/DescriptionRenderer.js";
+import type { GroupListEntry } from "../cpp/src/renderers/GroupPageRenderer.js";
+import {
+    collectGroupSections,
+    groupHasContent,
+    renderGroupPage,
+    renderGroupsIndexPage
+} from "../cpp/src/renderers/GroupPageRenderer.js";
 import type {
     CategoryDefinition,
     CategoryWithEntries,
@@ -37,7 +45,13 @@ import {
     renderNamespacesIndexPage
 } from "../cpp/src/renderers/IndexPageRenderer.js";
 import { groupFunctionsByName, methodAnchorId } from "../cpp/src/renderers/MethodRenderer.js";
-import type { CppClassIr, CppDocstringIr, CppLibraryDocsIr, CppNamespaceIr } from "./types/CppLibraryDocsIr.js";
+import type {
+    CppClassIr,
+    CppDocstringIr,
+    CppGroupIr,
+    CppLibraryDocsIr,
+    CppNamespaceIr
+} from "./types/CppLibraryDocsIr.js";
 import { MdxFileWriter } from "./writers/MdxFileWriter.js";
 
 export interface CppGenerateOptions {
@@ -106,14 +120,19 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
             writer.writePage(entry.pageKey, content);
         }
 
+        const groups = (ir.groups ?? []).filter((group) => groupHasContent(group));
+
         // Stage 4: Generate index pages for namespaces
         const slugBaseName = slug.includes("/") ? (slug.split("/").pop() ?? slug) : slug;
         const libraryNs = ir.rootNamespace.namespaces.find((child) => child.name === slugBaseName);
         if (libraryNs) {
             const title = LIBRARY_TITLES[libraryNs.name] ?? `${libraryNs.name} API Reference`;
             const outputFolderSlug = slugifySegment(outputDir.split("/").pop() || slug);
-            generateIndexPages(libraryNs, title, writer, rootNsName, outputFolderSlug);
+            generateIndexPages(libraryNs, title, writer, rootNsName, outputFolderSlug, groups.length > 0);
         }
+
+        // Stage 5: Generate pages for the library's Doxygen groups
+        generateGroupPages(groups, writer, repo.trim() || (rootNsName ?? slug));
 
         return writer.result();
     } finally {
@@ -494,7 +513,8 @@ function generateIndexPages(
     title: string,
     writer: MdxFileWriter,
     rootNsName: string | undefined,
-    outputFolderSlug: string
+    outputFolderSlug: string,
+    hasGroups: boolean
 ): void {
     if (!namespaceHasEntities(ns)) {
         return;
@@ -531,7 +551,8 @@ function generateIndexPages(
         title,
         categoriesForNsIndex,
         childrenWithEntities.length > 0,
-        nsLastSegment
+        nsLastSegment,
+        hasGroups
     );
     writer.writePage(nsIndexPageKey, indexContent);
 
@@ -570,6 +591,81 @@ function generateIndexPages(
 
     // 4. Recurse into child namespaces
     for (const child of ns.namespaces) {
-        generateIndexPages(child, `Namespace ${child.path}`, writer, rootNsName, outputFolderSlug);
+        // Groups are listed on the library's index page only, not on every namespace
+        generateIndexPages(child, `Namespace ${child.path}`, writer, rootNsName, outputFolderSlug, false);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Group page generation (Stage 5)
+// ---------------------------------------------------------------------------
+
+const GROUPS_FOLDER = "groups";
+
+function groupFolderName(group: CppGroupIr): string {
+    return sanitizeForFilename(group.name || group.title);
+}
+
+function groupDisplayName(group: CppGroupIr): string {
+    return group.title || group.name;
+}
+
+/**
+ * Generate a page per Doxygen group, plus a groups/index.mdx listing them.
+ *
+ * Group pages link to the entity pages written in Stage 3 rather than
+ * re-rendering their members, so each symbol is documented in one place.
+ * Members that have no page (for example symbols the parser skipped) are
+ * listed without a link.
+ */
+function generateGroupPages(renderable: CppGroupIr[], writer: MdxFileWriter, libraryTitle: string): void {
+    if (renderable.length === 0) {
+        return;
+    }
+
+    const indexPageKey = `${GROUPS_FOLDER}/index.mdx`;
+    setCurrentPageSlugPath(pageKeyToSlugPath(indexPageKey));
+    const entries: GroupListEntry[] = renderable.map((group) => ({
+        displayName: groupDisplayName(group),
+        linkPath: `${GROUPS_FOLDER}/${slugifySegment(groupFolderName(group))}`
+    }));
+    writer.writePage(indexPageKey, renderGroupsIndexPage(entries, libraryTitle));
+
+    const written = new Set<string>();
+    for (const group of renderable) {
+        writeGroupPage(group, `${GROUPS_FOLDER}/${groupFolderName(group)}`, writer, written);
+    }
+}
+
+/**
+ * Write one group page at `<dir>/index.mdx` and recurse into its subgroups.
+ *
+ * Links are relative to the group's own folder, matching how Fern resolves
+ * links on a folder index page (the `/index` suffix is stripped from the URL).
+ *
+ * `written` tracks the groups already emitted so a group tree that references
+ * one of its ancestors terminates instead of recursing forever.
+ */
+function writeGroupPage(group: CppGroupIr, dir: string, writer: MdxFileWriter, written: Set<string>): void {
+    if (written.has(group.id)) {
+        return;
+    }
+    written.add(group.id);
+
+    const pageKey = `${dir}/index.mdx`;
+    setCurrentPageSlugPath(pageKeyToSlugPath(pageKey));
+
+    const sections = collectGroupSections(group);
+    const subgroups = group.subgroups.filter((subgroup) => !written.has(subgroup.id) && groupHasContent(subgroup));
+    const dirSegment = slugifySegment(dir.split("/").pop() ?? "");
+    const subgroupEntries: GroupListEntry[] = subgroups.map((subgroup) => ({
+        displayName: groupDisplayName(subgroup),
+        linkPath: `${dirSegment}/${slugifySegment(groupFolderName(subgroup))}`
+    }));
+
+    writer.writePage(pageKey, renderGroupPage(group, sections, subgroupEntries));
+
+    for (const subgroup of subgroups) {
+        writeGroupPage(subgroup, `${dir}/${groupFolderName(subgroup)}`, writer, written);
     }
 }
