@@ -1,0 +1,6 @@
+- summary: |
+    `fern docs preview delete --id <id>` now resolves the preview's full URL, including its basepath.
+    Previously the ID was resolved to the hostname alone, so deleting a preview published under a
+    basepath reported success without deleting the site. The command now fails with a clear message
+    when the ID doesn't match a preview deployment.
+  type: fix

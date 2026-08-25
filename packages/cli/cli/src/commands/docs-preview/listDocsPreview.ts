@@ -12,9 +12,18 @@ interface PreviewDeployment {
 }
 
 /** A single docs-url entry as returned by FDR's `listAllDocsUrls`. */
-type DocsUrlItem = Awaited<
+export type DocsUrlItem = Awaited<
     ReturnType<ReturnType<typeof createFdrService>["docs"]["v2"]["read"]["listAllDocsUrls"]>
 >["urls"][number];
+
+/**
+ * The URL that identifies a docs site to FDR: the hostname plus its basepath, if
+ * it has one. Deletion and metadata lookups are keyed on this full URL, not on
+ * the hostname alone.
+ */
+export function toPreviewUrl(item: DocsUrlItem): string {
+    return item.basePath != null ? `${item.domain}${item.basePath}` : item.domain;
+}
 
 /**
  * Maps FDR docs-url items to preview deployments. Preview deployments are
@@ -26,7 +35,7 @@ type DocsUrlItem = Awaited<
  */
 export function toPreviewDeployments(urls: readonly DocsUrlItem[]): PreviewDeployment[] {
     return urls.map((item) => ({
-        url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
+        url: toPreviewUrl(item),
         organizationId: item.organizationId,
         updatedAt: item.updatedAt
     }));
