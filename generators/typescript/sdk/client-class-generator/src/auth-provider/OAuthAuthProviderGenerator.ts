@@ -759,6 +759,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
     private getTokenValue(oauthConfig: FernIr.OAuthClientCredentials, tokenExpression: string): string {
         const tokenPrefix = oauthConfig.tokenPrefix ?? DEFAULT_TOKEN_PREFIX;
+        if (tokenPrefix === DEFAULT_TOKEN_PREFIX) {
+            return `\`${DEFAULT_TOKEN_PREFIX} \${${tokenExpression}}\``;
+        }
         return tokenPrefix.length > 0 ? `${JSON.stringify(`${tokenPrefix} `)} + ${tokenExpression}` : tokenExpression;
     }
 
