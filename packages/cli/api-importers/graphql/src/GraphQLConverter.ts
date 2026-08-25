@@ -3,7 +3,9 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import {
-    buildSchema,
+    buildASTSchema,
+    DEFAULT_DEPRECATION_REASON,
+    DocumentNode,
     GraphQLArgument as GQLArgument,
     GraphQLEnumType,
     GraphQLField,
@@ -16,8 +18,10 @@ import {
     GraphQLOutputType,
     GraphQLScalarType,
     GraphQLSchema,
-    GraphQLUnionType
+    GraphQLUnionType,
+    validateSchema
 } from "graphql";
+import { mergeGraphQlDocuments } from "./mergeGraphQlDocuments.js";
 
 export interface GraphQLConverterResult {
     graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
@@ -47,7 +51,7 @@ interface PendingOperation {
 export class GraphQLConverter {
     private schema: GraphQLSchema | undefined;
     private context: TaskContext;
-    private filePath: AbsoluteFilePath;
+    private filePaths: AbsoluteFilePath[];
     private namespace: string | undefined;
     private processingTypes: Set<string> = new Set();
     private types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
@@ -60,12 +64,16 @@ export class GraphQLConverter {
         examples
     }: {
         context: TaskContext;
-        filePath: AbsoluteFilePath;
+        /**
+         * One or more SDL files that make up a single schema. Multiple files are merged, which is
+         * how federated subgraphs owned by different teams are documented as one API.
+         */
+        filePath: AbsoluteFilePath | AbsoluteFilePath[];
         namespace?: string;
         examples?: GraphQlOperationExamplesInput[];
     }) {
         this.context = context;
-        this.filePath = filePath;
+        this.filePaths = Array.isArray(filePath) ? filePath : [filePath];
         this.namespace = namespace;
         if (examples != null) {
             for (const entry of examples) {
@@ -76,14 +84,44 @@ export class GraphQLConverter {
                     variables: ex.variables ?? undefined,
                     response: ex.response ?? undefined
                 }));
-                if (entry.operationType != null) {
-                    const key = `${entry.operationType.toLowerCase()}:${entry.operation}`;
-                    this.examplesByOperation.set(key, mapped);
-                } else {
-                    this.examplesByOperation.set(entry.operation, mapped);
+                const key =
+                    entry.operationType != null
+                        ? `${entry.operationType.toLowerCase()}:${entry.operation}`
+                        : entry.operation;
+                if (this.examplesByOperation.has(key)) {
+                    // Examples from every spec in a namespace group are loaded together, so two
+                    // subgraphs can each ship examples for the same operation. First-wins, as when
+                    // merging the SDL itself, but silently discarding the rest would be surprising.
+                    this.context.logger.warn(
+                        `Multiple GraphQL examples provided for "${key}". Keeping the first and ignoring the rest.`
+                    );
+                    continue;
                 }
+                this.examplesByOperation.set(key, mapped);
             }
         }
+    }
+
+    // `@deprecated` is a standard, consumer-facing directive (unlike the federation directives
+    // dropped during merging), so it is carried through as availability metadata.
+    private availabilityOf(node: { deprecationReason?: string | null }): "Deprecated" | undefined {
+        return node.deprecationReason != null ? "Deprecated" : undefined;
+    }
+
+    // The deprecation reason has nowhere to live in the FDR shape other than the description,
+    // and it is the part consumers act on ("use X instead").
+    private describeWithDeprecation(node: {
+        description?: string | null;
+        deprecationReason?: string | null;
+    }): string | undefined {
+        const description = node.description ?? undefined;
+        // graphql-js fills in `DEFAULT_DEPRECATION_REASON` for a bare `@deprecated`, which says
+        // nothing that `availability` does not already say.
+        if (node.deprecationReason == null || node.deprecationReason === DEFAULT_DEPRECATION_REASON) {
+            return description;
+        }
+        const deprecation = `**Deprecated:** ${node.deprecationReason}`;
+        return description != null ? `${description}\n\n${deprecation}` : deprecation;
     }
 
     private isBuiltInScalar(typeName: string): boolean {
@@ -124,9 +162,57 @@ export class GraphQLConverter {
         return fields.every((f) => f.args.length > 0);
     }
 
+    /**
+     * Builds the merged document, reporting SDL problems instead of silently accepting them.
+     *
+     * `assumeValidSDL` is the fallback rather than the default: merged subgraphs can still carry
+     * constructs that only compose at runtime (e.g. a directive whose definition lives in the
+     * supergraph), and failing the docs build on those would make federation unusable.
+     */
+    private buildSchema(document: DocumentNode): GraphQLSchema {
+        try {
+            const schema = buildASTSchema(document);
+            for (const error of validateSchema(schema)) {
+                this.context.logger.warn(`Invalid GraphQL schema: ${error.message}`);
+            }
+            return schema;
+        } catch (validationError) {
+            let schema: GraphQLSchema;
+            try {
+                schema = buildASTSchema(document, { assumeValidSDL: true });
+            } catch {
+                // The schema cannot be built at all, so the original message is the useful one.
+                throw validationError;
+            }
+            this.context.logger.warn(
+                `Invalid GraphQL schema: ${validationError instanceof Error ? validationError.message : String(validationError)} ` +
+                    "Continuing without SDL validation."
+            );
+            return schema;
+        }
+    }
+
     public async convert(): Promise<GraphQLConverterResult> {
-        const sdlContent = await readFile(this.filePath, "utf-8");
-        this.schema = buildSchema(sdlContent);
+        const sources = await Promise.all(
+            this.filePaths.map(async (filePath) => ({
+                filePath,
+                sdl: await readFile(filePath, "utf-8")
+            }))
+        );
+
+        const { document, conflicts } = mergeGraphQlDocuments(sources);
+        for (const conflict of conflicts) {
+            const member = `${conflict.typeName}.${conflict.memberName}`;
+            this.context.logger.warn(
+                conflict.kept === conflict.dropped
+                    ? `GraphQL schema conflict: ${member} is declared more than once in ${conflict.kept} with ` +
+                          "differing shapes. Keeping the first declaration."
+                    : `GraphQL schema conflict: ${member} is defined in both ${conflict.kept} and ` +
+                          `${conflict.dropped}. Keeping the definition from ${conflict.kept}.`
+            );
+        }
+
+        this.schema = this.buildSchema(document);
 
         this.collectTypeDefinitions();
 
@@ -380,8 +466,8 @@ export class GraphQLConverter {
             operationType,
             name,
             displayName: undefined,
-            description: field.description ?? undefined,
-            availability: undefined,
+            description: this.describeWithDeprecation(field),
+            availability: this.availabilityOf(field),
             fieldPath: fieldPath != null && fieldPath.length > 0 ? fieldPath : undefined,
             arguments: args.length > 0 ? args : undefined,
             returnType: this.convertOutputType(field.type),
@@ -393,8 +479,8 @@ export class GraphQLConverter {
     private convertArgument(arg: GQLArgument): FdrAPI.api.v1.register.GraphQlArgument {
         return {
             name: arg.name,
-            description: arg.description ?? undefined,
-            availability: undefined,
+            description: this.describeWithDeprecation(arg),
+            availability: this.availabilityOf(arg),
             type: this.convertInputType(arg.type),
             defaultValue: arg.defaultValue
         };
@@ -582,8 +668,8 @@ export class GraphQLConverter {
             type: "enum",
             values: values.map((value) => ({
                 value: value.name,
-                description: value.description ?? undefined,
-                availability: undefined
+                description: this.describeWithDeprecation(value),
+                availability: this.availabilityOf(value)
             })),
             default: undefined
         };
@@ -595,8 +681,8 @@ export class GraphQLConverter {
             ([fieldName, field]) => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertOutputType(field.type),
-                description: field.description ?? undefined,
-                availability: undefined,
+                description: this.describeWithDeprecation(field),
+                availability: this.availabilityOf(field),
                 propertyAccess: undefined,
                 arguments: field.args.length > 0 ? field.args.map((arg) => this.convertArgument(arg)) : undefined
             })
@@ -658,8 +744,8 @@ export class GraphQLConverter {
             ([fieldName, field]) => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertOutputType(field.type),
-                description: field.description ?? undefined,
-                availability: undefined,
+                description: this.describeWithDeprecation(field),
+                availability: this.availabilityOf(field),
                 propertyAccess: undefined,
                 arguments: field.args.length > 0 ? field.args.map((arg) => this.convertArgument(arg)) : undefined
             })
@@ -679,8 +765,8 @@ export class GraphQLConverter {
             ([fieldName, field]) => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertInputType(field.type),
-                description: field.description ?? undefined,
-                availability: undefined,
+                description: this.describeWithDeprecation(field),
+                availability: this.availabilityOf(field),
                 propertyAccess: undefined
             })
         );
