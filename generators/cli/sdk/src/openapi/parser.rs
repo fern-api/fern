@@ -3636,6 +3636,7 @@ fn extract_multipart_fields(
                 description: prop.description.clone(),
                 required: required_set.contains(name.as_str()),
                 content_type,
+                repeated: is_repeated_multipart_property(prop, component_schemas),
             }
         })
         .collect();
@@ -3731,6 +3732,55 @@ fn classify_multipart_property_at_depth(
     }
 
     (false, None)
+}
+
+/// True when a multipart property holds a list, so its flag must be
+/// repeatable. `type: array` counts whether it is declared inline, behind a
+/// `$ref`, or inside a nullable composition (`anyOf: [{type: array}, null]` —
+/// what pydantic emits for `Optional[list[T]]`). Each occurrence of the flag
+/// becomes its own part carrying the same `name`, which is how multipart
+/// encodes a list; without this the field is a single-value flag and a
+/// multi-file request (e.g. multi-sample voice cloning) is unreachable.
+fn is_repeated_multipart_property(
+    prop: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> bool {
+    is_repeated_multipart_property_at_depth(prop, component_schemas, 0)
+}
+
+/// [`is_repeated_multipart_property`] with the composition-nesting counter,
+/// bounded by [`MAX_MULTIPART_COMPOSITION_DEPTH`] so a cyclic `$ref`
+/// composition chain fails closed (single-value flag) instead of
+/// overflowing the stack at CLI startup.
+fn is_repeated_multipart_property_at_depth(
+    prop: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+    depth: u8,
+) -> bool {
+    let resolved = if let Some(ref_path) = &prop.schema_ref {
+        let name = strip_ref_prefix(ref_path);
+        component_schemas.get(&name).unwrap_or(prop)
+    } else {
+        prop
+    };
+
+    if resolved.schema_type() == Some("array") {
+        return true;
+    }
+
+    if depth < MAX_MULTIPART_COMPOSITION_DEPTH {
+        return resolved
+            .any_of
+            .iter()
+            .chain(resolved.one_of.iter())
+            .chain(resolved.all_of.iter())
+            .filter(|branch| !is_null_sentinel(branch))
+            .any(|branch| {
+                is_repeated_multipart_property_at_depth(branch, component_schemas, depth + 1)
+            });
+    }
+
+    false
 }
 
 /// Recursively walk an object schema and emit one body-located [`MethodParameter`]
@@ -3852,6 +3902,84 @@ fn resolve_branch_scalar_type(
         "number" => Some("number"),
         "boolean" => Some("boolean"),
         _ => None,
+    }
+}
+
+/// Recognize `anyOf`/`oneOf` with **exactly one** null-sentinel branch and
+/// **exactly one** other branch that resolves to a composite type
+/// (`object` or `array`), and return that branch. This is what
+/// FastAPI/pydantic emits for every `Optional[Model]` / `Optional[list[T]]`
+/// field, and it is the composite counterpart to
+/// [`recognize_nullable_union`]: the composition itself carries no `type`
+/// keyword, so without unwrapping it the flag ends up typeless and the
+/// executor sends the user's JSON as an escaped string instead of an
+/// object/array (`"voice_settings": "{\"stability\":0.5}"`).
+///
+/// Scalar branches deliberately return `None` — those stay on
+/// [`recognize_nullable_union`], which also accepts multi-branch unions of
+/// the same scalar type. Only a *single* non-null branch is unwrapped here:
+/// a union of two different object schemas has no single shape to promote.
+fn recognize_nullable_composite<'a>(
+    obj: &'a OpenApiSchemaObject,
+    component_schemas: &'a HashMap<String, OpenApiSchemaObject>,
+) -> Option<&'a OpenApiSchemaObject> {
+    let branches: &[OpenApiSchemaObject] = if !obj.one_of.is_empty() {
+        &obj.one_of
+    } else if !obj.any_of.is_empty() {
+        &obj.any_of
+    } else {
+        return None;
+    };
+
+    let mut null_count: usize = 0;
+    let mut composite: Option<&OpenApiSchemaObject> = None;
+
+    for branch in branches {
+        if is_null_sentinel(branch) {
+            null_count += 1;
+            continue;
+        }
+        // More than one non-null branch: a true union, leave it opaque.
+        if composite.is_some() {
+            return None;
+        }
+        composite = Some(resolve_ref_chain(branch, component_schemas)?);
+    }
+
+    if null_count != 1 {
+        return None;
+    }
+    let resolved = composite?;
+    match resolved.schema_type() {
+        Some("object") | Some("array") => Some(resolved),
+        // An `allOf` composition with properties is object-shaped even
+        // without a `type` keyword (the inheritance idiom).
+        None if !resolved.all_of.is_empty() || !resolved.properties.is_empty() => Some(resolved),
+        _ => None,
+    }
+}
+
+/// Lower a property's `const` into the pair of defaults the flag carries:
+/// `(clap_default, documentation_default)`.
+///
+/// A `const` is only auto-injected — i.e. materialized as a real clap
+/// `default_value` that lands in the request — when the spec **requires**
+/// the field: the value is fixed, so demanding the user type it is pure
+/// ceremony. For an *optional* field the const stays documentation-only, so
+/// omitting the flag omits the field. Injecting it there would (a) put
+/// properties the user never asked for into every request body and (b)
+/// collide with the object-shorthand flag of its own parent ("Cannot
+/// combine --a.b with --a.b.version"), making the parent flag unusable.
+/// Either way the const still constrains the accepted values via
+/// `effective_enum_values`.
+fn const_defaults(
+    obj: &OpenApiSchemaObject,
+    spec_required: bool,
+) -> (Option<serde_json::Value>, Option<serde_json::Value>) {
+    match const_default_value(obj) {
+        Some(v) if spec_required => (Some(v), None),
+        Some(v) => (None, Some(v)),
+        None => (None, None),
     }
 }
 
@@ -4104,7 +4232,9 @@ fn flatten_body_params_prefix(
                 // repeated flag so the executor JSON-parses array inputs
                 // instead of passing them as literal strings.
                 if let Some(element_type) = recognize_scalar_or_array_union(resolved, component_schemas) {
-                    let const_default = const_default_value(resolved);
+                    let spec_required = required.contains(name.as_str());
+                    let (const_default, const_doc_default) =
+                        const_defaults(resolved, spec_required);
                     let has_null_branch = resolved.one_of.iter()
                         .chain(resolved.any_of.iter())
                         .any(|b| {
@@ -4119,9 +4249,10 @@ fn flatten_body_params_prefix(
                             param_type: Some(element_type.to_string()),
                             description: prop.description.clone().or_else(|| resolved.description.clone()),
                             location: Some("body".to_string()),
-                            required: required.contains(name.as_str()) && const_default.is_none(),
+                            required: spec_required && const_default.is_none(),
                             format: resolved.format.clone(),
                             default_value: const_default,
+                            documentation_default_value: const_doc_default,
                             repeated: true,
                             scalar_or_array: true,
                             nullable: resolved.is_nullable() || has_null_branch,
@@ -4132,10 +4263,19 @@ fn flatten_body_params_prefix(
                 }
                 // Non-object ref or empty recursion — emit with resolved type.
                 // Promote nullable-union compositions to a scalar flag
-                // routed through ADR-0003's sentinel; see ADR-0005.
+                // routed through ADR-0003's sentinel; see ADR-0005. A
+                // nullable *composite* union (`anyOf: [$ref Model, null]`)
+                // promotes to the wrapped object/array instead; see ADR-0010.
                 let promoted_scalar = recognize_nullable_union(resolved, component_schemas);
-                let is_array = resolved.schema_type() == Some("array");
-                let const_default = const_default_value(resolved);
+                let promoted_composite = if promoted_scalar.is_some() {
+                    None
+                } else {
+                    recognize_nullable_composite(resolved, component_schemas)
+                };
+                let effective = promoted_composite.unwrap_or(resolved);
+                let is_array = effective.schema_type() == Some("array");
+                let spec_required = required.contains(name.as_str());
+                let (const_default, const_doc_default) = const_defaults(effective, spec_required);
                 out.insert(
                     full_key,
                     MethodParameter {
@@ -4143,21 +4283,28 @@ fn flatten_body_params_prefix(
                             Some("string".to_string())
                         } else if let Some(t) = promoted_scalar {
                             Some(t.to_string())
+                        } else if promoted_composite.is_some() {
+                            // Array branches are handled by `is_array` above,
+                            // so the promoted composite is object-shaped here.
+                            Some("object".to_string())
                         } else {
                             resolved.schema_type().map(str::to_string)
                         },
                         description: prop.description.clone().or_else(|| resolved.description.clone()),
                         location: Some("body".to_string()),
-                        // A `const` makes the field effectively optional: the
-                        // value is fixed, so we auto-inject it via default_value
-                        // when omitted. Spec's `required:` only matters when the
-                        // user could meaningfully choose to omit a value.
-                        required: required.contains(name.as_str()) && const_default.is_none(),
-                        format: resolved.format.clone(),
-                        enum_values: effective_enum_values(resolved),
+                        // A required `const` is auto-injected via
+                        // default_value (the value is fixed, so requiring the
+                        // user to type it is ceremony), which also satisfies
+                        // the required check.
+                        required: spec_required && const_default.is_none(),
+                        format: effective.format.clone(),
+                        enum_values: effective_enum_values(effective),
                         default_value: const_default,
+                        documentation_default_value: const_doc_default,
                         repeated: is_array,
-                        nullable: is_scalar_nullable(resolved) || promoted_scalar.is_some(),
+                        nullable: is_scalar_nullable(resolved)
+                            || promoted_scalar.is_some()
+                            || promoted_composite.is_some(),
                         ..Default::default()
                     },
                 );
@@ -4191,7 +4338,8 @@ fn flatten_body_params_prefix(
 
         // Recognize inline oneOf/anyOf [T, array<T>] unions.
         if let Some(element_type) = recognize_scalar_or_array_union(prop, component_schemas) {
-            let const_default = const_default_value(prop);
+            let spec_required = required.contains(name.as_str());
+            let (const_default, const_doc_default) = const_defaults(prop, spec_required);
             let has_null_branch = prop.one_of.iter()
                 .chain(prop.any_of.iter())
                 .any(|b| {
@@ -4206,9 +4354,10 @@ fn flatten_body_params_prefix(
                     param_type: Some(element_type.to_string()),
                     description: prop.description.clone(),
                     location: Some("body".to_string()),
-                    required: required.contains(name.as_str()) && const_default.is_none(),
+                    required: spec_required && const_default.is_none(),
                     format: prop.format.clone(),
                     default_value: const_default,
+                    documentation_default_value: const_doc_default,
                     repeated: true,
                     scalar_or_array: true,
                     nullable: prop.is_nullable() || has_null_branch,
@@ -4222,8 +4371,18 @@ fn flatten_body_params_prefix(
         // or the same shape with `oneOf`) to a nullable scalar flag.
         // Returns None when the composition is a true union or absent.
         let promoted_scalar = recognize_nullable_union(prop, component_schemas);
-        let is_array = prop_type == Some("array");
-        let const_default = const_default_value(prop);
+        // `anyOf: [{...object/array...}, null]` — pydantic's `Optional[T]`.
+        // Promote to the wrapped composite so the value is coerced as JSON
+        // rather than sent as an escaped string; see ADR-0010.
+        let promoted_composite = if promoted_scalar.is_some() {
+            None
+        } else {
+            recognize_nullable_composite(prop, component_schemas)
+        };
+        let effective = promoted_composite.unwrap_or(prop);
+        let is_array = effective.schema_type() == Some("array");
+        let spec_required = required.contains(name.as_str());
+        let (const_default, const_doc_default) = const_defaults(effective, spec_required);
         out.insert(
             full_key,
             MethodParameter {
@@ -4231,17 +4390,22 @@ fn flatten_body_params_prefix(
                     Some("string".to_string())
                 } else if let Some(t) = promoted_scalar {
                     Some(t.to_string())
+                } else if promoted_composite.is_some() {
+                    Some("object".to_string())
                 } else {
                     prop_type.map(str::to_string)
                 },
                 description: prop.description.clone(),
                 location: Some("body".to_string()),
-                required: required.contains(name.as_str()) && const_default.is_none(),
-                format: prop.format.clone(),
-                enum_values: effective_enum_values(prop),
+                required: spec_required && const_default.is_none(),
+                format: effective.format.clone(),
+                enum_values: effective_enum_values(effective),
                 default_value: const_default,
+                documentation_default_value: const_doc_default,
                 repeated: is_array,
-                nullable: is_scalar_nullable(prop) || promoted_scalar.is_some(),
+                nullable: is_scalar_nullable(prop)
+                    || promoted_scalar.is_some()
+                    || promoted_composite.is_some(),
                 ..Default::default()
             },
         );
@@ -11342,13 +11506,191 @@ paths:
     }
 
     #[test]
-    fn test_const_numeric_default_keeps_wire_type() {
-        // A numeric const lands on the wire as a JSON number, not a string —
-        // critical for body fields whose const is meaningful as a literal
-        // type rather than a label.
+    fn test_optional_const_is_documentation_only() {
+        // The bug: a `const` on an *optional* property became a real clap
+        // default and was materialized into every request body, and a nested
+        // const leaf additionally collided with its own parent's
+        // object-shorthand flag. Optional consts are now help-text only.
         let schema: OpenApiSchemaObject = serde_yaml::from_str(
             r#"
             type: object
+            properties:
+              platform_settings:
+                type: object
+                properties:
+                  guardrails:
+                    type: object
+                    properties:
+                      version:
+                        type: string
+                        const: "1"
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        let version = params
+            .get("platform_settings.guardrails.version")
+            .expect("nested const leaf should still get a flag");
+        assert_eq!(
+            version.default_value, None,
+            "an optional const must not be injected into the body",
+        );
+        assert_eq!(
+            version.documentation_default_value,
+            Some(serde_json::Value::String("1".into())),
+            "the const should still be advertised in --help",
+        );
+        assert_eq!(
+            version.enum_values.as_deref(),
+            Some(&["1".to_string()][..]),
+            "the const should still constrain accepted values",
+        );
+    }
+
+    #[test]
+    fn test_nullable_composite_ref_promotes_to_object() {
+        // `anyOf: [$ref, null]` — pydantic's `Optional[Model]`. Without
+        // promotion the flag was typeless, so the executor sent the user's
+        // JSON as an escaped string ("voice_settings": "{\"stability\":0.5}").
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              voice_settings:
+                anyOf:
+                  - $ref: '#/components/schemas/VoiceSettings'
+                  - type: 'null'
+            "#,
+        )
+        .unwrap();
+        let settings: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              stability:
+                type: number
+            "#,
+        )
+        .unwrap();
+        let mut component_schemas = HashMap::new();
+        component_schemas.insert("VoiceSettings".to_string(), settings);
+        let params = flatten_body_params(&schema, &component_schemas, 0);
+        let settings_param = params
+            .get("voice_settings")
+            .expect("voice_settings flag should be emitted");
+        assert_eq!(settings_param.param_type.as_deref(), Some("object"));
+        assert!(
+            settings_param.nullable,
+            "the null branch must stay expressible via the sentinel",
+        );
+    }
+
+    #[test]
+    fn test_nullable_composite_array_promotes_to_repeated_flag() {
+        // Same shape wrapping an array (`Optional[list[T]]`): the flag must
+        // become repeatable rather than a typeless single value.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              tags:
+                anyOf:
+                  - type: array
+                    items:
+                      type: string
+                  - type: 'null'
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        let tags = params.get("tags").expect("tags flag should be emitted");
+        // Repeated flags carry the element type, matching plain `type: array`.
+        assert_eq!(tags.param_type.as_deref(), Some("string"));
+        assert!(tags.repeated, "nullable array must be a repeated flag");
+        assert!(tags.nullable);
+    }
+
+    #[test]
+    fn test_true_union_of_objects_is_not_promoted() {
+        // Two non-null branches have no single shape to promote to, so the
+        // property stays opaque exactly as before.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              payload:
+                anyOf:
+                  - type: object
+                    properties:
+                      a:
+                        type: string
+                  - type: object
+                    properties:
+                      b:
+                        type: string
+                  - type: 'null'
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        let payload = params
+            .get("payload")
+            .expect("payload flag should be emitted");
+        assert_eq!(payload.param_type, None, "a true union must stay opaque");
+    }
+
+    #[test]
+    fn test_multipart_array_field_is_marked_repeated() {
+        // An array-typed multipart field must be repeatable, whether declared
+        // inline or wrapped in pydantic's nullable composition.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              files:
+                type: array
+                items:
+                  type: string
+                  format: binary
+              labels:
+                anyOf:
+                  - type: array
+                    items:
+                      type: string
+                  - type: 'null'
+              name:
+                type: string
+            "#,
+        )
+        .unwrap();
+        let fields = extract_multipart_fields(
+            Some(&schema),
+            &HashMap::new(),
+            &HashMap::new(),
+            "uploadFiles",
+        );
+        let by_name = |wire: &str| {
+            fields
+                .iter()
+                .find(|f| f.wire_name == wire)
+                .unwrap_or_else(|| panic!("{wire} field missing"))
+                .repeated
+        };
+        assert!(by_name("files"), "array file field must be repeatable");
+        assert!(by_name("labels"), "nullable array field must be repeatable");
+        assert!(!by_name("name"), "scalar field must stay single-valued");
+    }
+
+    #[test]
+    fn test_const_numeric_default_keeps_wire_type() {
+        // A numeric const lands on the wire as a JSON number, not a string —
+        // critical for body fields whose const is meaningful as a literal
+        // type rather than a label. Required, so the const is injected
+        // rather than left documentation-only.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            required: [version]
             properties:
               version:
                 type: integer
