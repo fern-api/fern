@@ -659,9 +659,13 @@ impl Binding for OpenApiBinding {
             // --user-agent-suffix flag wins; otherwise {NAME}_USER_AGENT_SUFFIX
             // env var (resolved inside HttpConfig). Apply the flag override to
             // a clone so the client this request builds carries it.
-            let http_config = prepared.http_config.clone().with_user_agent_suffix_override(
-                crate::cli_args::resolve_user_agent_suffix_override(root_matches),
-            );
+            let http_config = prepared
+                .http_config
+                .clone()
+                .with_user_agent_suffix_override(
+                    crate::cli_args::resolve_user_agent_suffix_override(root_matches),
+                )
+                .with_cli_command(Some(_op_path.join(".")));
 
             // Read --output flag for binary response file writing. The literal
             // `-` is a stdout sentinel (curl/wget convention) and bypasses
