@@ -1,7 +1,7 @@
 import { getOriginalName, getWireValue, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { RustFile } from "@fern-api/rust-base";
+import { getSerdeName, RustFile } from "@fern-api/rust-base";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -465,7 +465,7 @@ export class UnionGenerator {
 
         // Generate base properties that are common to all variants
         this.unionTypeDeclaration.baseProperties.forEach((property) => {
-            const fieldName = this.context.case.snakeUnsafe(property.name);
+            const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(property.name));
 
             // Check if this field creates a recursive reference
             const isRecursive = typeId ? isFieldRecursive(typeId, property.valueType, this.context.ir) : false;
@@ -474,7 +474,7 @@ export class UnionGenerator {
             const wireValue = getWireValue(property.name);
             const isOptional = isOptionalType(property.valueType);
 
-            if (fieldName !== wireValue) {
+            if (getSerdeName(fieldName) !== wireValue) {
                 writer.writeLine(`        #[serde(rename = "${wireValue}")]`);
             }
 

@@ -9,6 +9,11 @@ info:
 # generated crate (types + sdk) before running, this fixture turns that
 # class of bug into a CI failure at `cargo test` time instead of a customer
 # hitting it at `cargo build`. See fern-api/fern#17183.
+#
+# `PaginationMetadata` covers the same class of bug for property names: `self`
+# and `crate` cannot be raw identifiers in Rust (`pub r#self: String` is a
+# compile error), so they must be mangled and given an explicit serde rename.
+# `type` and `move` stay raw identifiers, which serde handles natively.
 paths:
   /models/{model_id}:
     get:
@@ -28,6 +33,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Model"
+  /models:
+    get:
+      operationId: listModels
+      x-fern-sdk-group-name: models
+      x-fern-sdk-method-name: list
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelPage"
 components:
   schemas:
     Model:
@@ -37,6 +54,30 @@ components:
           type: string
         created_by:
           $ref: "#/components/schemas/CreatedBy"
+    ModelPage:
+      type: object
+      properties:
+        models:
+          type: array
+          items:
+            $ref: "#/components/schemas/Model"
+        meta:
+          $ref: "#/components/schemas/PaginationMetadata"
+    PaginationMetadata:
+      type: object
+      properties:
+        next:
+          type: string
+        self:
+          type: string
+        crate:
+          type: string
+        type:
+          type: string
+        move:
+          type: string
+      required:
+        - self
     CreatedBy:
       type: string
       enum:

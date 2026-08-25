@@ -18,6 +18,10 @@ Full command reference for `reserved-keyword-cli`.
 |------|------|----------|-------------|
 | `--model-id` | `string` | Yes |  |
 
+#### `reserved-keyword-cli models list`
+
+`GET /models`
+
 ---
 
 ## Global flags

@@ -42,4 +42,24 @@ impl ModelsClient {
             )
             .await
     }
+
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use reserved_keyword_cli_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ReservedKeywordCliClient::new(config).expect("Failed to build client");
+    ///     client.models.list(None).await;
+    /// }
+    /// ```
+    pub async fn list(&self, options: Option<RequestOptions>) -> Result<ModelPage, ApiError> {
+        self.http_client
+            .execute_request(Method::GET, "models", None, None, options)
+            .await
+    }
 }
