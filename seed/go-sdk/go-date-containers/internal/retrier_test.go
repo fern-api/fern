@@ -295,7 +295,50 @@ func TestRetryWithRequestBody(t *testing.T) {
 	assert.Equal(t, expectedBody, requestBodies[1], "Second request body should match expected (retry should re-send body)")
 }
 
+// An explicit cancel (e.g. Ctrl-C wired to cancel()) must interrupt the backoff
+// wait. There is no deadline here, so the retrier cannot know the wait is futile
+// up front -- it has to be woken by the context.
 func TestRetryWaitIsInterruptedByContext(t *testing.T) {
+	var requestCount int
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		requestCount++
+		w.Header().Set("Retry-After", "5")
+		w.WriteHeader(http.StatusTooManyRequests)
+	}))
+	defer server.Close()
+
+	caller := NewCaller(&CallerParams{
+		Client: server.Client(),
+	})
+
+	ctx, cancel := context.WithCancel(context.Background())
+	go func() {
+		time.Sleep(100 * time.Millisecond)
+		cancel()
+	}()
+	defer cancel()
+
+	start := time.Now()
+	_, err := caller.Call(
+		ctx,
+		&CallParams{
+			URL:         server.URL,
+			Method:      http.MethodGet,
+			Request:     &InternalTestRequest{},
+			MaxAttempts: 3,
+		},
+	)
+	elapsed := time.Since(start)
+
+	assert.ErrorIs(t, err, context.Canceled)
+	assert.Equal(t, 1, requestCount, "Expected the retry to be abandoned once the context was cancelled")
+	assert.Less(t, elapsed, time.Second, "Expected the backoff to be interrupted by the context, took %v", elapsed)
+}
+
+// When the caller's deadline would elapse before the backoff finishes, sleeping
+// only guarantees a context error. Return the response instead so the caller
+// learns why the request actually failed.
+func TestRetryReturnsResponseWhenDeadlineShorterThanBackoff(t *testing.T) {
 	var requestCount int
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		requestCount++
@@ -323,9 +366,50 @@ func TestRetryWaitIsInterruptedByContext(t *testing.T) {
 	)
 	elapsed := time.Since(start)
 
-	assert.ErrorIs(t, err, context.DeadlineExceeded)
-	assert.Equal(t, 1, requestCount, "Expected the retry to be abandoned once the context expired")
-	assert.Less(t, elapsed, time.Second, "Expected the backoff to be interrupted by the context, took %v", elapsed)
+	// The caller gets the 429, not context.DeadlineExceeded.
+	var apiError *core.APIError
+	require.ErrorAs(t, err, &apiError)
+	assert.Equal(t, http.StatusTooManyRequests, apiError.StatusCode)
+	assert.NotErrorIs(t, err, context.DeadlineExceeded)
+	assert.Equal(t, 1, requestCount, "Expected no retry once the deadline was known to be too short")
+	assert.Less(t, elapsed, time.Second, "Expected to return immediately rather than sleep, took %v", elapsed)
+}
+
+// A deadline with room for the backoff must still retry as normal.
+func TestRetryProceedsWhenDeadlineLongerThanBackoff(t *testing.T) {
+	var requestCount int
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		requestCount++
+		if requestCount == 1 {
+			w.Header().Set("Retry-After", "1")
+			w.WriteHeader(http.StatusTooManyRequests)
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte("{}"))
+	}))
+	defer server.Close()
+
+	caller := NewCaller(&CallerParams{
+		Client: server.Client(),
+	})
+
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	_, err := caller.Call(
+		ctx,
+		&CallParams{
+			URL:         server.URL,
+			Method:      http.MethodGet,
+			Request:     &InternalTestRequest{},
+			Response:    &InternalTestResponse{},
+			MaxAttempts: 3,
+		},
+	)
+
+	assert.NoError(t, err)
+	assert.Equal(t, 2, requestCount, "Expected the retry to proceed when the deadline allows it")
 }
 
 func TestDisableRetries(t *testing.T) {

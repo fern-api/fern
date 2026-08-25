@@ -145,12 +145,20 @@ func (r *Retrier) run(
 	}
 
 	if r.shouldRetry(response) {
-		defer func() { _ = response.Body.Close() }()
-
 		delay, err := r.retryDelay(response, retryAttempt)
 		if err != nil {
+			_ = response.Body.Close()
 			return nil, err
 		}
+
+		// If the context's deadline would elapse before the backoff completes, return
+		// the response instead of sleeping through it. The caller then sees why the
+		// request actually failed (e.g. a 429) rather than a context deadline error.
+		if deadline, ok := request.Context().Deadline(); ok && time.Until(deadline) < delay {
+			return response, nil
+		}
+
+		defer func() { _ = response.Body.Close() }()
 
 		if err := sleepWithContext(request.Context(), delay); err != nil {
 			return nil, err
