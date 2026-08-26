@@ -88,3 +88,11 @@
     when one is configured (`license: { type: custom }`), matching every other
     Fern generator; a basic license remains package metadata only.
   type: fix
+
+- summary: |
+    The generated README carries an Attribution section naming the vendored
+    `fern-cli-sdk` runtime and its Apache-2.0 license. The runtime's source is
+    copied into every generated repo, and Apache-2.0 requires retaining that
+    notice; carrying it in the README keeps it without shipping a LICENSE file
+    that contradicts the repo's own declared license.
+  type: fix

@@ -190,7 +190,8 @@ function generateBlocks(args: {
         generateQuickStart(binaryName),
         generateUsage(binaryName),
         generateDocumentation(),
-        generateAdvanced({ binaryName, envPrefix })
+        generateAdvanced({ binaryName, envPrefix }),
+        generateAttribution()
     ];
 }
 
@@ -423,6 +424,35 @@ function generateDocumentation(): Block {
     return new Block({
         id: "DOCUMENTATION",
         content: lines("## Documentation", "", "See [reference.md](./reference.md) for the full command reference.", "")
+    });
+}
+
+// ---------------------------------------------------------------------------
+// Attribution — the notice Apache-2.0 s4 requires for the vendored runtime.
+//
+// The generated repo contains `fern-cli-sdk` (everything under `src/`) copied
+// verbatim by `copySdk`. That code is Apache-2.0, and redistributing it
+// requires retaining the license notice. The runtime's `LICENSE` file itself is
+// deliberately NOT shipped (see `writeLicense.ts`): it contradicted the
+// `license` field `packageIdentity` writes into Cargo.toml, and no other Fern
+// generator ships a LICENSE it wasn't asked for. This line carries the notice
+// instead, so the repo's own license stays whatever the customer declared.
+//
+// Emitted last and as its own block so `mergeWithExisting` treats it like any
+// other section — a customer who rewords it keeps their wording on regen.
+// ---------------------------------------------------------------------------
+
+function generateAttribution(): Block {
+    return new Block({
+        id: "ATTRIBUTION",
+        content: lines(
+            "## Attribution",
+            "",
+            "Built on [fern-cli-sdk](https://github.com/fern-api/fern), " +
+                "Copyright Fern, licensed under the " +
+                "[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).",
+            ""
+        )
     });
 }
 
