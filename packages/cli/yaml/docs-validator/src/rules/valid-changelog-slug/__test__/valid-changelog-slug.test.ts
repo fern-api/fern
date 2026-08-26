@@ -254,4 +254,19 @@ describe("blog navigation aliases", () => {
         expect(messages).toHaveLength(1);
         expect(messages[0]).toContain('resolves to URL path "/product-updates"');
     });
+
+    it("derives a tab-level blog navigation item's slug from the tab displayName", async () => {
+        const messages = await violationsFor({
+            instances: [],
+            tabs: {
+                entries: {
+                    displayName: "Entries",
+                    blog: "content/entries"
+                }
+            },
+            navigation: [{ tab: "entries" }]
+        });
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toContain('resolves to URL path "/entries"');
+    });
 });
