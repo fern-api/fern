@@ -22,6 +22,7 @@ import {
     formatGeneratorConfigCompatibilityError,
     getFernSdkGenApiLanguage,
     isFernSdkGenApiEnabled,
+    isSdkGenApiOnly,
     selectFernSdkGenApiRoute,
     validateFernSdkGenApiTargetCount
 } from "./fernSdkGenApi.js";
@@ -351,6 +352,14 @@ export function prepareFernSdkGenApiRoutes({
             if (!enabled) {
                 if (sdkConfigV1 != null) {
                     throw new Error("SDK Config v1 generation requires the sdk-gen-api generation backend");
+                }
+                // Generators without a Fiddle fallback must not fall through to legacy
+                // generation, where they would fail opaquely.
+                if (isSdkGenApiOnly(resolved.name)) {
+                    throw new CliError({
+                        message: `${resolved.name} requires the environment variable FERN_USE_SDK_GEN_API=true.`,
+                        code: CliError.Code.ConfigError
+                    });
                 }
                 return { generatorInvocation: resolved, route: undefined, error: undefined };
             }

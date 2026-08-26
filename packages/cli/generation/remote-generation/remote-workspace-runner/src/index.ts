@@ -4,7 +4,7 @@ export type {
     FernSdkGenApiPackageConfig,
     FernSdkGenApiRequestedOutput
 } from "./fernSdkGenApi.js";
-export { getFernSdkGenApiLanguage, isFernSdkGenApiEnabled } from "./fernSdkGenApi.js";
+export { getFernSdkGenApiLanguage, isFernSdkGenApiEnabled, isSdkGenApiOnly } from "./fernSdkGenApi.js";
 export type {
     FernSdkGenApiImportSettings,
     FernSdkGenApiSourceArchive,
