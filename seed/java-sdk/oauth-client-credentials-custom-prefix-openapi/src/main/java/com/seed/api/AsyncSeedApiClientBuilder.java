@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 import okhttp3.OkHttpClient;
 
-public class SeedApiClientBuilder {
+public class AsyncSeedApiClientBuilder {
     private Optional<Integer> timeout = Optional.empty();
 
     private Optional<Integer> maxRetries = Optional.empty();
@@ -37,7 +37,7 @@ public class SeedApiClientBuilder {
      * Use this when you already have a valid access token and want to bypass
      * the OAuth client credentials flow.
      *
-     * @param token The access token to use for token header
+     * @param token The access token to use for X-Custom-Token header
      * @return A builder configured for token authentication
      */
     public static _TokenAuth withToken(String token) {
@@ -66,7 +66,7 @@ public class SeedApiClientBuilder {
         return new _Builder();
     }
 
-    public SeedApiClientBuilder url(String url) {
+    public AsyncSeedApiClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
     }
@@ -74,7 +74,7 @@ public class SeedApiClientBuilder {
     /**
      * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
-    public SeedApiClientBuilder timeout(int timeout) {
+    public AsyncSeedApiClientBuilder timeout(int timeout) {
         this.timeout = Optional.of(timeout);
         return this;
     }
@@ -82,7 +82,7 @@ public class SeedApiClientBuilder {
     /**
      * Sets the maximum number of retries for the client. Defaults to 2 retries.
      */
-    public SeedApiClientBuilder maxRetries(int maxRetries) {
+    public AsyncSeedApiClientBuilder maxRetries(int maxRetries) {
         this.maxRetries = Optional.of(maxRetries);
         return this;
     }
@@ -90,7 +90,7 @@ public class SeedApiClientBuilder {
     /**
      * Sets the initial delay (in milliseconds) used for exponential backoff between retries. Defaults to 1000 milliseconds.
      */
-    public SeedApiClientBuilder initialRetryDelayMillis(long initialRetryDelayMillis) {
+    public AsyncSeedApiClientBuilder initialRetryDelayMillis(long initialRetryDelayMillis) {
         this.initialRetryDelayMillis = Optional.of(initialRetryDelayMillis);
         return this;
     }
@@ -98,7 +98,7 @@ public class SeedApiClientBuilder {
     /**
      * Sets the maximum delay (in milliseconds) between retries. Defaults to 60000 milliseconds.
      */
-    public SeedApiClientBuilder maxRetryDelayMillis(long maxRetryDelayMillis) {
+    public AsyncSeedApiClientBuilder maxRetryDelayMillis(long maxRetryDelayMillis) {
         this.maxRetryDelayMillis = Optional.of(maxRetryDelayMillis);
         return this;
     }
@@ -106,7 +106,7 @@ public class SeedApiClientBuilder {
     /**
      * Sets the jitter factor (between 0 and 1) applied to retry delays. Defaults to 0.2.
      */
-    public SeedApiClientBuilder retryJitterFactor(double retryJitterFactor) {
+    public AsyncSeedApiClientBuilder retryJitterFactor(double retryJitterFactor) {
         this.retryJitterFactor = Optional.of(retryJitterFactor);
         return this;
     }
@@ -114,7 +114,7 @@ public class SeedApiClientBuilder {
     /**
      * Sets the underlying OkHttp client
      */
-    public SeedApiClientBuilder httpClient(OkHttpClient httpClient) {
+    public AsyncSeedApiClientBuilder httpClient(OkHttpClient httpClient) {
         this.httpClient = httpClient;
         return this;
     }
@@ -122,7 +122,7 @@ public class SeedApiClientBuilder {
     /**
      * Configure logging for the SDK. Silent by default — no log output unless explicitly configured.
      */
-    public SeedApiClientBuilder logging(LogConfig logging) {
+    public AsyncSeedApiClientBuilder logging(LogConfig logging) {
         this.logging = Optional.of(logging);
         return this;
     }
@@ -135,7 +135,7 @@ public class SeedApiClientBuilder {
      * @param value The header value
      * @return This builder for method chaining
      */
-    public SeedApiClientBuilder addHeader(String name, String value) {
+    public AsyncSeedApiClientBuilder addHeader(String name, String value) {
         this.customHeaders.put(name, value);
         return this;
     }
@@ -275,12 +275,12 @@ public class SeedApiClientBuilder {
      */
     protected void validateConfiguration() {}
 
-    public SeedApiClient build() {
+    public AsyncSeedApiClient build() {
         validateConfiguration();
-        return new SeedApiClient(buildClientOptions());
+        return new AsyncSeedApiClient(buildClientOptions());
     }
 
-    public static final class _TokenAuth extends SeedApiClientBuilder {
+    public static final class _TokenAuth extends AsyncSeedApiClientBuilder {
         private final String token;
 
         _TokenAuth(String token) {
@@ -289,11 +289,11 @@ public class SeedApiClientBuilder {
 
         @Override
         protected void setAuthentication(ClientOptions.Builder builder) {
-            builder.addHeader("token", this.token);
+            builder.addHeader("X-Custom-Token", "Token " + this.token);
         }
     }
 
-    public static final class _CredentialsAuth extends SeedApiClientBuilder {
+    public static final class _CredentialsAuth extends AsyncSeedApiClientBuilder {
         private final String clientId;
 
         private final String clientSecret;
@@ -304,16 +304,16 @@ public class SeedApiClientBuilder {
         }
 
         @Override
-        public SeedApiClient build() {
+        public AsyncSeedApiClient build() {
             validateConfiguration();
             ClientOptions baseOptions = buildClientOptions();
             IdentityClient authClient = new IdentityClient(baseOptions);
             OAuthTokenSupplier oAuthTokenSupplier =
                     new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
             ClientOptions finalOptions = ClientOptions.Builder.from(baseOptions)
-                    .addHeader("token", oAuthTokenSupplier)
+                    .addHeader("X-Custom-Token", oAuthTokenSupplier)
                     .build();
-            return new SeedApiClient(finalOptions);
+            return new AsyncSeedApiClient(finalOptions);
         }
     }
 
@@ -403,7 +403,7 @@ public class SeedApiClientBuilder {
          * Use this when you already have a valid access token and want to bypass
          * the OAuth client credentials flow.
          *
-         * @param token The access token to use for token header
+         * @param token The access token to use for X-Custom-Token header
          * @return A builder configured for token authentication
          */
         public _TokenAuth token(String token) {

@@ -37,7 +37,7 @@ public class SeedApiClientBuilder {
      * Use this when you already have a valid access token and want to bypass
      * the OAuth client credentials flow.
      *
-     * @param token The access token to use for token header
+     * @param token The access token to use for X-Custom-Token header
      * @return A builder configured for token authentication
      */
     public static _TokenAuth withToken(String token) {
@@ -289,7 +289,7 @@ public class SeedApiClientBuilder {
 
         @Override
         protected void setAuthentication(ClientOptions.Builder builder) {
-            builder.addHeader("token", this.token);
+            builder.addHeader("X-Custom-Token", "Token " + this.token);
         }
     }
 
@@ -311,7 +311,7 @@ public class SeedApiClientBuilder {
             OAuthTokenSupplier oAuthTokenSupplier =
                     new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
             ClientOptions finalOptions = ClientOptions.Builder.from(baseOptions)
-                    .addHeader("token", oAuthTokenSupplier)
+                    .addHeader("X-Custom-Token", oAuthTokenSupplier)
                     .build();
             return new SeedApiClient(finalOptions);
         }
@@ -403,7 +403,7 @@ public class SeedApiClientBuilder {
          * Use this when you already have a valid access token and want to bypass
          * the OAuth client credentials flow.
          *
-         * @param token The access token to use for token header
+         * @param token The access token to use for X-Custom-Token header
          * @return A builder configured for token authentication
          */
         public _TokenAuth token(String token) {

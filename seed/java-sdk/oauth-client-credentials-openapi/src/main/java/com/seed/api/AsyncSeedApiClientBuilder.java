@@ -37,7 +37,7 @@ public class AsyncSeedApiClientBuilder {
      * Use this when you already have a valid access token and want to bypass
      * the OAuth client credentials flow.
      *
-     * @param token The access token to use for Authorization header
+     * @param token The access token to use for token header
      * @return A builder configured for token authentication
      */
     public static _TokenAuth withToken(String token) {
@@ -289,7 +289,7 @@ public class AsyncSeedApiClientBuilder {
 
         @Override
         protected void setAuthentication(ClientOptions.Builder builder) {
-            builder.addHeader("Authorization", " " + this.token);
+            builder.addHeader("token", this.token);
         }
     }
 
@@ -311,7 +311,7 @@ public class AsyncSeedApiClientBuilder {
             OAuthTokenSupplier oAuthTokenSupplier =
                     new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
             ClientOptions finalOptions = ClientOptions.Builder.from(baseOptions)
-                    .addHeader("Authorization", oAuthTokenSupplier)
+                    .addHeader("token", oAuthTokenSupplier)
                     .build();
             return new AsyncSeedApiClient(finalOptions);
         }
@@ -403,7 +403,7 @@ public class AsyncSeedApiClientBuilder {
          * Use this when you already have a valid access token and want to bypass
          * the OAuth client credentials flow.
          *
-         * @param token The access token to use for Authorization header
+         * @param token The access token to use for token header
          * @return A builder configured for token authentication
          */
         public _TokenAuth token(String token) {
