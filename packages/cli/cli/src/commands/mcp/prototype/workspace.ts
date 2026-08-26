@@ -5,6 +5,7 @@ import { select } from "@inquirer/prompts";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { loadSpecSummaries, SpecSummary } from "./openapiSummary.js";
+import { radioChoice, selectTheme } from "./ui.js";
 
 export interface WorkspaceSpec {
     workspace: AbstractAPIWorkspace<unknown>;
@@ -46,9 +47,10 @@ export async function pickWorkspaceAndLoadSpec({
             workspace = await select({
                 message: `Which API? (detected ${workspaces.length})`,
                 choices: workspaces.map((candidate) => ({
-                    name: getWorkspaceName(candidate),
+                    name: radioChoice(getWorkspaceName(candidate)),
                     value: candidate
-                }))
+                })),
+                theme: selectTheme
             });
         } else {
             cliContext.failAndThrow("Multiple APIs found. Specify one with --api <name>.");

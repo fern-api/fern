@@ -16,7 +16,7 @@ import { EndpointSummary } from "./openapiSummary.js";
 import { BuiltinPresetKey, buildBuiltinPresets, PresetResolution } from "./presets.js";
 import { computeVerdict, formatTokens, formatVerdictLine, resolveTools, ToolsConfig } from "./toolset.js";
 import { runTrimLoop } from "./trimLoop.js";
-import { banner, command, hint, ICONS, sleep, styledVerdictLine, withSpinner } from "./ui.js";
+import { banner, command, hint, ICONS, radioChoice, selectTheme, sleep, styledVerdictLine, withSpinner } from "./ui.js";
 import { pickWorkspaceAndLoadSpec } from "./workspace.js";
 
 const AI_SPINNER_DELAY_MS = 1200;
@@ -287,7 +287,7 @@ async function promptForToolsetChoice({
     for (const existing of existingPresets) {
         const verdict = computeVerdict(resolveTools(endpoints, existing.config));
         choices.push({
-            name: `${existing.name}\n       ${styledVerdictLine(verdict)}`,
+            name: `${radioChoice(existing.name)}\n         ${styledVerdictLine(verdict)}`,
             value: { presetKey: existing.name, config: existing.config }
         });
     }
@@ -295,25 +295,25 @@ async function promptForToolsetChoice({
         const preset = presets[key];
         if (!preset.available) {
             choices.push({
-                name: preset.label,
+                name: radioChoice(preset.label),
                 value: { presetKey: key, config: preset.config },
                 disabled: `(${preset.unavailableReason ?? "unavailable"})`
             });
             continue;
         }
-        const noteSuffix = preset.notes.length > 0 ? `\n       ${chalk.dim(preset.notes.join(" · "))}` : "";
+        const noteSuffix = preset.notes.length > 0 ? `\n         ${chalk.dim(preset.notes.join(" · "))}` : "";
         choices.push({
-            name: `${preset.label}\n       ${styledVerdictLine(preset.verdict)}${noteSuffix}`,
+            name: `${radioChoice(preset.label)}\n         ${styledVerdictLine(preset.verdict)}${noteSuffix}`,
             value: { presetKey: key, config: preset.config }
         });
     }
     choices.push({
-        name: `AI-curated — ${chalk.magenta("Fern Agent")} picks tools from your description ${chalk.dim("(requires fern login)")}\n       ${chalk.dim("resolved after you describe what agents should do")}`,
+        name: `${radioChoice(`AI-curated — ${chalk.magenta("Fern Agent")} picks tools from your description ${chalk.dim("(requires fern login)")}`)}\n         ${chalk.dim("resolved after you describe what agents should do")}`,
         value: { presetKey: "ai-curated", config: {} }
     });
     const everything = presets.everything;
     choices.push({
-        name: `${everything.label}\n       ${styledVerdictLine(everything.verdict)}`,
+        name: `${radioChoice(everything.label)}\n         ${styledVerdictLine(everything.verdict)}`,
         value: { presetKey: "everything", config: everything.config }
     });
 
@@ -321,6 +321,7 @@ async function promptForToolsetChoice({
     return await select<ToolsetChoice>({
         message: "Which tools should this server expose?",
         choices,
-        pageSize: 12
+        pageSize: 12,
+        theme: selectTheme
     });
 }

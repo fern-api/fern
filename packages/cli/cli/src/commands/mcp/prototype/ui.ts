@@ -83,6 +83,26 @@ export function keyValueRows(rows: [string, string][]): string[] {
     return rows.map(([key, value]) => `  ${chalk.dim(`${key.padEnd(keyWidth)}`)}  ${value}`);
 }
 
+export const RADIO_UNSELECTED = "○";
+
+/**
+ * Radio-style theme for `@inquirer/prompts` select menus: a green `❯` cursor,
+ * a filled green radio dot on the active choice, and a persistent
+ * "↑↓ navigate · ⏎ select" hint.
+ */
+export const selectTheme = {
+    icon: { cursor: chalk.green("❯") },
+    style: {
+        highlight: (text: string): string => text.replace(RADIO_UNSELECTED, chalk.green("●")),
+        help: (text: string): string => chalk.dim(text)
+    },
+    helpMode: "always" as const
+};
+
+export function radioChoice(label: string): string {
+    return `${RADIO_UNSELECTED} ${label}`;
+}
+
 export function command(text: string): string {
     return chalk.cyan(text);
 }

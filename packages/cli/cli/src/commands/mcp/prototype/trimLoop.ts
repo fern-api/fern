@@ -5,7 +5,7 @@ import chalk from "chalk";
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { EndpointSummary } from "./openapiSummary.js";
 import { computeVerdict, resolveTools, ToolsConfig } from "./toolset.js";
-import { hint, ICONS, styledVerdictLine } from "./ui.js";
+import { hint, ICONS, radioChoice, selectTheme, styledVerdictLine } from "./ui.js";
 
 type TrimAction = "tag" | "method" | "path-prefix" | "keep";
 
@@ -42,11 +42,12 @@ export async function runTrimLoop({
         const action = await select<TrimAction>({
             message: "Trim the toolset?",
             choices: [
-                ...(tags.length > 0 ? [{ name: "Remove endpoints by tag…", value: "tag" as const }] : []),
-                { name: "Remove endpoints by method…", value: "method" as const },
-                { name: "Remove endpoints by path prefix…", value: "path-prefix" as const },
-                { name: "Keep as-is", value: "keep" as const }
-            ]
+                ...(tags.length > 0 ? [{ name: radioChoice("Remove endpoints by tag…"), value: "tag" as const }] : []),
+                { name: radioChoice("Remove endpoints by method…"), value: "method" as const },
+                { name: radioChoice("Remove endpoints by path prefix…"), value: "path-prefix" as const },
+                { name: radioChoice("Keep as-is"), value: "keep" as const }
+            ],
+            theme: selectTheme
         });
 
         switch (action) {
@@ -55,7 +56,8 @@ export async function runTrimLoop({
             case "tag": {
                 const tag = await select<string>({
                     message: "Which tag should be removed?",
-                    choices: tags.map((candidate) => ({ name: candidate, value: candidate }))
+                    choices: tags.map((candidate) => ({ name: radioChoice(candidate), value: candidate })),
+                    theme: selectTheme
                 });
                 config = { ...config, exclude: [...(config.exclude ?? []), { tag }] };
                 cliContext.logger.info(`${ICONS.success} Removed ${chalk.bold(tag)}`);
@@ -65,9 +67,10 @@ export async function runTrimLoop({
                 const method = await select<string>({
                     message: "Which method should be removed?",
                     choices: ["GET", "POST", "PUT", "PATCH", "DELETE"].map((candidate) => ({
-                        name: candidate,
+                        name: radioChoice(candidate),
                         value: candidate
-                    }))
+                    })),
+                    theme: selectTheme
                 });
                 config = { ...config, exclude: [...(config.exclude ?? []), { method }] };
                 cliContext.logger.info(`${ICONS.success} Removed ${chalk.bold(method)} endpoints`);
