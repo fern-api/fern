@@ -1,5 +1,12 @@
 import { createFdrService } from "@fern-api/core";
-import { buildPreviewDomain, isPreviewUrl as isPreviewUrlUtil } from "@fern-api/docs-preview";
+import { assertNever } from "@fern-api/core-utils";
+import {
+    PreviewSiteLookup,
+    buildPreviewDomain,
+    isPreviewUrl as isPreviewUrlUtil,
+    lookupPreviewSiteUrl,
+    splitPreviewUrl
+} from "@fern-api/docs-preview";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import type { Argv } from "yargs";
@@ -17,12 +24,13 @@ export declare namespace DeleteCommand {
 
 export class DeleteCommand {
     public async handle(context: Context, args: DeleteCommand.Args): Promise<void> {
-        const resolvedUrl = await this.resolveUrl(context, args);
+        const resolved = this.resolveTarget(args);
 
-        if (!isPreviewUrlUtil(resolvedUrl)) {
+        // Validate the URL before asking the user to log in
+        if (resolved.type === "url" && !isPreviewUrlUtil(resolved.value)) {
             throw new CliError({
                 message:
-                    `Invalid preview URL: ${resolvedUrl}\n` +
+                    `Invalid preview URL: ${resolved.value}\n` +
                     `  Preview URLs follow the pattern: {org}-preview-{hash}.docs.buildwithfern.com`,
                 code: CliError.Code.ConfigError
             });
@@ -30,6 +38,8 @@ export class DeleteCommand {
 
         const token = await context.getTokenOrPrompt();
         const fdr = createFdrService({ token: token.value, headers: context.headers });
+
+        const resolvedUrl = await this.resolveUrl(context, resolved, fdr);
 
         context.stderr.debug(`Deleting preview site: ${resolvedUrl}`);
 
@@ -74,17 +84,86 @@ export class DeleteCommand {
         return { type: "id", value: args.target };
     }
 
-    private async resolveUrl(context: Context, args: DeleteCommand.Args): Promise<string> {
-        const resolved = this.resolveTarget(args);
-
+    /**
+     * Resolves the target to the URL FDR stores for the site, which includes the
+     * basepath the preview was published under. A preview ID — and likewise a
+     * bare hostname — only determines the hostname, so the deployment has to be
+     * looked up rather than assumed to live at the root.
+     */
+    private async resolveUrl(
+        context: Context,
+        resolved: { type: "url"; value: string } | { type: "id"; value: string },
+        fdr: ReturnType<typeof createFdrService>
+    ): Promise<string> {
         if (resolved.type === "id") {
             const workspace = await context.loadWorkspaceOrThrow();
-            const url = buildPreviewDomain({ orgId: workspace.org, previewId: resolved.value });
+            const hostname = buildPreviewDomain({ orgId: workspace.org, previewId: resolved.value });
+            const url = await this.lookupSiteUrl({ fdr, hostname, target: `preview ID "${resolved.value}"` });
             context.stderr.debug(`Resolved preview ID "${resolved.value}" to URL: ${url}`);
             return url;
         }
 
-        return resolved.value;
+        const { hostname, path } = splitPreviewUrl(resolved.value);
+        if (path !== "") {
+            return `${hostname}${path}`;
+        }
+        return this.lookupSiteUrl({ fdr, hostname, target: hostname });
+    }
+
+    private async lookupSiteUrl({
+        fdr,
+        hostname,
+        target
+    }: {
+        fdr: ReturnType<typeof createFdrService>;
+        hostname: string;
+        /** How to refer to what the user asked to delete, e.g. `preview ID "mr-2"`. */
+        target: string;
+    }): Promise<string> {
+        let lookup: PreviewSiteLookup;
+        try {
+            lookup = await lookupPreviewSiteUrl({
+                listPreviewUrls: (listArgs) => fdr.docs.v2.read.listAllDocsUrls(listArgs),
+                hostname
+            });
+        } catch (error) {
+            if ((error as Record<string, unknown>)?.error === "UnauthorizedError") {
+                throw CliError.unauthorized(
+                    "You do not have permissions to list preview deployments. Reach out to support@buildwithfern.com"
+                );
+            }
+            throw new CliError({
+                message: `Failed to look up the preview deployment for ${target}.`,
+                code: CliError.Code.InternalError
+            });
+        }
+
+        switch (lookup.type) {
+            case "found":
+                return lookup.url;
+            case "notFound":
+                throw CliError.notFound(
+                    `No preview deployment found for ${target} (${hostname}).\n` +
+                        "  Run 'fern docs preview list' to see the preview deployments you can delete."
+                );
+            case "ambiguous":
+                throw new CliError({
+                    message:
+                        `${hostname} serves more than one preview site:\n` +
+                        `${lookup.urls.map((url) => `  ${url}`).join("\n")}\n` +
+                        "  Pass the full URL of the one you want to delete.",
+                    code: CliError.Code.ConfigError
+                });
+            case "scanLimitReached":
+                throw new CliError({
+                    message:
+                        `Could not find ${target} (${hostname}) in the first ${lookup.pagesScanned} pages of preview deployments.\n` +
+                        "  Pass the full preview URL, including its basepath, instead.",
+                    code: CliError.Code.ConfigError
+                });
+            default:
+                assertNever(lookup);
+        }
     }
 }
 

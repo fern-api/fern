@@ -1,58 +1,26 @@
 import { FernToken } from "@fern-api/auth";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
 import { createFdrService } from "@fern-api/core";
-import { buildPreviewDomain, isPreviewUrl } from "@fern-api/docs-preview";
+import { assertNever } from "@fern-api/core-utils";
+import {
+    PreviewSiteLookup,
+    buildPreviewDomain,
+    isPreviewUrl,
+    lookupPreviewSiteUrl,
+    splitPreviewUrl
+} from "@fern-api/docs-preview";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
-import { DocsUrlItem, toPreviewUrl } from "./listDocsPreview.js";
 
-/** FDR caps `limit` on the docs-url listing at 1000. */
-const PREVIEW_PAGE_SIZE = 1000;
-/** Guards against paging forever if the listing never shrinks below a full page. */
-const MAX_PREVIEW_PAGES = 20;
-
-type ListPreviewUrls = (args: { page: number; limit: number; preview: true }) => Promise<{
-    urls: readonly DocsUrlItem[];
-}>;
-
-/**
- * Finds the preview deployments served from `hostname`. There can be more than
- * one: a preview host can serve several sites, each under its own basepath.
- */
-export async function findPreviewsForHostname({
-    listPreviewUrls,
-    hostname
-}: {
-    listPreviewUrls: ListPreviewUrls;
-    hostname: string;
-}): Promise<DocsUrlItem[]> {
-    const normalizedHostname = hostname.toLowerCase();
-    const matches: DocsUrlItem[] = [];
-    for (let page = 1; page <= MAX_PREVIEW_PAGES; page++) {
-        const { urls } = await listPreviewUrls({ page, limit: PREVIEW_PAGE_SIZE, preview: true });
-        matches.push(...urls.filter((item) => item.domain.toLowerCase() === normalizedHostname));
-        if (urls.length < PREVIEW_PAGE_SIZE) {
-            break;
-        }
-    }
-    return matches;
-}
-
-/**
- * Resolves a preview ID to the URL FDR stores for it. The ID only determines the
- * hostname, but a preview published under a basepath is keyed on hostname +
- * basepath, so the deployment is looked up rather than assumed to be at the root.
- */
-async function resolvePreviewUrlFromId({
+/** The hostname a preview ID maps to, per the org of the local Fern project. */
+async function resolveHostnameFromId({
     cliContext,
-    previewId,
-    token
+    previewId
 }: {
     cliContext: CliContext;
     previewId: string;
-    token: FernToken;
 }): Promise<string> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
@@ -68,46 +36,75 @@ async function resolvePreviewUrlFromId({
         loadProjectConfig({ directory: fernDirectory, context })
     );
 
-    const hostname = buildPreviewDomain({ orgId: projectConfig.organization, previewId });
+    return buildPreviewDomain({ orgId: projectConfig.organization, previewId });
+}
+
+/**
+ * Resolves the URL FDR stores for the preview served from `hostname` — including
+ * the basepath it was published under, which a hostname alone does not identify.
+ */
+async function resolveSiteUrlForHostname({
+    cliContext,
+    hostname,
+    target,
+    token
+}: {
+    cliContext: CliContext;
+    hostname: string;
+    /** How to refer to what the user asked to delete, e.g. `preview ID "mr-2"`. */
+    target: string;
+    token: FernToken;
+}): Promise<string> {
     const fdr = createFdrService({ token: token.value });
 
-    let matches: DocsUrlItem[];
+    let lookup: PreviewSiteLookup;
     try {
-        matches = await findPreviewsForHostname({
+        lookup = await lookupPreviewSiteUrl({
             listPreviewUrls: (args) => fdr.docs.v2.read.listAllDocsUrls(args),
             hostname
         });
     } catch (error) {
-        return cliContext.failAndThrow(
-            `Failed to look up the preview deployment for ID "${previewId}".\n` +
-                `Pass the full preview URL instead, e.g. fern docs preview delete ${hostname}`,
-            error,
-            { code: CliError.Code.NetworkError }
-        );
+        const errorType = (error as Record<string, unknown>)?.error;
+        if (errorType === "UnauthorizedError") {
+            return cliContext.failAndThrow(
+                "Unauthorized to list preview deployments. Please run 'fern login' to refresh your credentials, or set the FERN_TOKEN environment variable.",
+                undefined,
+                { code: CliError.Code.NetworkError }
+            );
+        }
+        return cliContext.failAndThrow(`Failed to look up the preview deployment for ${target}.`, error, {
+            code: CliError.Code.NetworkError
+        });
     }
 
-    const [match, ...ambiguous] = matches;
-
-    if (match == null) {
-        return cliContext.failAndThrow(
-            `No preview deployment found for ID "${previewId}" (${hostname}).\n` +
-                "Run 'fern docs preview list' to see the preview deployments you can delete.",
-            undefined,
-            { code: CliError.Code.ConfigError }
-        );
+    switch (lookup.type) {
+        case "found":
+            return lookup.url;
+        case "notFound":
+            return cliContext.failAndThrow(
+                `No preview deployment found for ${target} (${hostname}).\n` +
+                    "Run 'fern docs preview list' to see the preview deployments you can delete.",
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        case "ambiguous":
+            return cliContext.failAndThrow(
+                `${hostname} serves more than one preview site:\n` +
+                    `${lookup.urls.map((url) => `  ${url}`).join("\n")}\n` +
+                    "Pass the full URL of the one you want to delete.",
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        case "scanLimitReached":
+            return cliContext.failAndThrow(
+                `Could not find ${target} (${hostname}) in the first ${lookup.pagesScanned} pages of preview deployments.\n` +
+                    "Pass the full preview URL, including its basepath, instead.",
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        default:
+            assertNever(lookup);
     }
-
-    if (ambiguous.length > 0) {
-        const urls = matches.map((item) => `  ${toPreviewUrl(item)}`).join("\n");
-        return cliContext.failAndThrow(
-            `Preview ID "${previewId}" matches more than one deployment:\n${urls}\n` +
-                "Pass the full preview URL of the one you want to delete.",
-            undefined,
-            { code: CliError.Code.ConfigError }
-        );
-    }
-
-    return toPreviewUrl(match);
 }
 
 function resolveTarget({
@@ -150,6 +147,19 @@ export async function deleteDocsPreview({
 }): Promise<void> {
     const resolved = resolveTarget({ target, url: previewUrl, id: previewId });
 
+    // Validate that the URL is a preview URL before asking the user to log in
+    if (resolved.type === "url" && !isPreviewUrl(resolved.value)) {
+        cliContext.failAndThrow(
+            `Invalid preview URL: ${resolved.value}\n` +
+                "Only preview sites can be deleted with this command.\n" +
+                "Preview URLs follow the pattern: {org}-preview-{hash}.docs.buildwithfern.com\n" +
+                "Example: acme-preview-abc123.docs.buildwithfern.com",
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+        return;
+    }
+
     const token: FernToken | null = await cliContext.runTask(async (context) => {
         return askToLogin(context);
     });
@@ -164,23 +174,23 @@ export async function deleteDocsPreview({
     let resolvedUrl: string;
 
     if (resolved.type === "id") {
-        resolvedUrl = await resolvePreviewUrlFromId({ cliContext, previewId: resolved.value, token });
+        const hostname = await resolveHostnameFromId({ cliContext, previewId: resolved.value });
+        resolvedUrl = await resolveSiteUrlForHostname({
+            cliContext,
+            hostname,
+            target: `preview ID "${resolved.value}"`,
+            token
+        });
         cliContext.logger.debug(`Resolved preview ID "${resolved.value}" to URL: ${resolvedUrl}`);
     } else {
-        resolvedUrl = resolved.value;
-    }
-
-    // Validate that the URL is a preview URL before proceeding
-    if (!isPreviewUrl(resolvedUrl)) {
-        cliContext.failAndThrow(
-            `Invalid preview URL: ${resolvedUrl}\n` +
-                "Only preview sites can be deleted with this command.\n" +
-                "Preview URLs follow the pattern: {org}-preview-{hash}.docs.buildwithfern.com\n" +
-                "Example: acme-preview-abc123.docs.buildwithfern.com",
-            undefined,
-            { code: CliError.Code.ConfigError }
-        );
-        return;
+        const { hostname, path } = splitPreviewUrl(resolved.value);
+        // A bare hostname doesn't identify a preview published under a basepath —
+        // FDR keys the site on hostname + basepath — so look the site up unless
+        // the user already told us which basepath they mean.
+        resolvedUrl =
+            path === ""
+                ? await resolveSiteUrlForHostname({ cliContext, hostname, target: hostname, token })
+                : `${hostname}${path}`;
     }
 
     await cliContext.runTask(async (context) => {

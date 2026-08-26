@@ -16,21 +16,33 @@ const DOMAIN_SUFFIX = "docs.buildwithfern.com";
  */
 const SUBDOMAIN_LIMIT = 62;
 
+/**
+ * Splits a preview URL into the hostname and the basepath it was published
+ * under, if any. The scheme is stripped and the hostname lowercased; the path
+ * keeps its leading slash and loses trailing ones ("host/docs/" -> "/docs").
+ */
+export function splitPreviewUrl(url: string): { hostname: string; path: string } {
+    let rest = url.trim();
+
+    if (rest.startsWith("https://")) {
+        rest = rest.slice(8);
+    } else if (rest.startsWith("http://")) {
+        rest = rest.slice(7);
+    }
+
+    const slashIndex = rest.indexOf("/");
+    if (slashIndex === -1) {
+        return { hostname: rest.toLowerCase(), path: "" };
+    }
+
+    return {
+        hostname: rest.slice(0, slashIndex).toLowerCase(),
+        path: rest.slice(slashIndex).replace(/\/+$/, "")
+    };
+}
+
 export function isPreviewUrl(url: string): boolean {
-    let hostname = url.toLowerCase().trim();
-
-    if (hostname.startsWith("https://")) {
-        hostname = hostname.slice(8);
-    } else if (hostname.startsWith("http://")) {
-        hostname = hostname.slice(7);
-    }
-
-    const slashIndex = hostname.indexOf("/");
-    if (slashIndex !== -1) {
-        hostname = hostname.slice(0, slashIndex);
-    }
-
-    return PREVIEW_URL_PATTERN.test(hostname);
+    return PREVIEW_URL_PATTERN.test(splitPreviewUrl(url).hostname);
 }
 
 /**

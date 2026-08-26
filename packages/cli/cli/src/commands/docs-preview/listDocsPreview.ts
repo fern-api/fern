@@ -1,5 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
+import { toPreviewSiteUrl } from "@fern-api/docs-preview";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -17,15 +18,6 @@ export type DocsUrlItem = Awaited<
 >["urls"][number];
 
 /**
- * The URL that identifies a docs site to FDR: the hostname plus its basepath, if
- * it has one. Deletion and metadata lookups are keyed on this full URL, not on
- * the hostname alone.
- */
-export function toPreviewUrl(item: DocsUrlItem): string {
-    return item.basePath != null ? `${item.domain}${item.basePath}` : item.domain;
-}
-
-/**
  * Maps FDR docs-url items to preview deployments. Preview deployments are
  * filtered entirely server-side (preview: true -> the isPreview column in FDR),
  * so there is intentionally NO client-side URL filtering: the domain suffix is
@@ -35,7 +27,7 @@ export function toPreviewUrl(item: DocsUrlItem): string {
  */
 export function toPreviewDeployments(urls: readonly DocsUrlItem[]): PreviewDeployment[] {
     return urls.map((item) => ({
-        url: toPreviewUrl(item),
+        url: toPreviewSiteUrl(item),
         organizationId: item.organizationId,
         updatedAt: item.updatedAt
     }));
