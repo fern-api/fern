@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { MAX_PREVIEW_PAGES, PREVIEW_PAGE_SIZE, lookupPreviewSiteUrl } from "../lookupPreviewSite.js";
+import { lookupPreviewSiteUrl, MAX_PREVIEW_PAGES, PREVIEW_PAGE_SIZE } from "../lookupPreviewSite.js";
 
 function item(domain: string, basePath?: string) {
     return { domain, basePath };

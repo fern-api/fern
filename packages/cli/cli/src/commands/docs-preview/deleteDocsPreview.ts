@@ -3,10 +3,10 @@ import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loa
 import { createFdrService } from "@fern-api/core";
 import { assertNever } from "@fern-api/core-utils";
 import {
-    PreviewSiteLookup,
     buildPreviewDomain,
     isPreviewUrl,
     lookupPreviewSiteUrl,
+    PreviewSiteLookup,
     splitPreviewUrl
 } from "@fern-api/docs-preview";
 import { askToLogin } from "@fern-api/login";

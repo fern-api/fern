@@ -1,8 +1,8 @@
 export {
     lookupPreviewSiteUrl,
-    toPreviewSiteUrl,
     type PreviewDocsUrl,
-    type PreviewSiteLookup
+    type PreviewSiteLookup,
+    toPreviewSiteUrl
 } from "./lookupPreviewSite.js";
 export {
     buildPreviewDomain,

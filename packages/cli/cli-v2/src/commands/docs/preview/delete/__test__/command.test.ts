@@ -1,9 +1,8 @@
 import type { FernToken } from "@fern-api/auth";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-
-import type { Context } from "../../../../../context/Context.js";
 import { createTestContext } from "../../../../../__test__/utils/createTestContext.js";
+import type { Context } from "../../../../../context/Context.js";
 import { DeleteCommand } from "../command.js";
 
 const { listAllDocsUrls, deleteDocsSite } = vi.hoisted(() => ({
