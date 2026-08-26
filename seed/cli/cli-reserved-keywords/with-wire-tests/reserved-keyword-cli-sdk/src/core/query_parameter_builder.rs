@@ -1,3 +1,4 @@
+use chrono::{DateTime, TimeZone};
 use serde::Serialize;
 
 /// Modern query builder with type-safe method chaining
@@ -101,6 +102,37 @@ impl QueryBuilder {
             if let Some(v) = value.into() {
                 self.params.push((key.to_string(), v.to_string()));
             }
+        }
+        self
+    }
+
+    /// Add a datetime parameter (any DateTime timezone)
+    pub fn datetime<Tz: TimeZone>(
+        mut self,
+        key: &str,
+        value: impl Into<Option<DateTime<Tz>>>,
+    ) -> Self
+    where
+        Tz::Offset: std::fmt::Display,
+    {
+        if let Some(v) = value.into() {
+            self.params.push((
+                key.to_string(),
+                v.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
+            ));
+        }
+        self
+    }
+
+    /// Add a date parameter (converts NaiveDate to DateTime<Utc>)
+    pub fn date(mut self, key: &str, value: impl Into<Option<chrono::NaiveDate>>) -> Self {
+        if let Some(v) = value.into() {
+            // Convert NaiveDate to DateTime<Utc> at start of day
+            let datetime = v.and_hms_opt(0, 0, 0).unwrap().and_utc();
+            self.params.push((
+                key.to_string(),
+                datetime.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
+            ));
         }
         self
     }
@@ -264,6 +296,7 @@ fn tokenize_query(input: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use chrono::{NaiveDate, TimeZone, Utc};
 
     // ===========================
     // QueryBuilder tests
@@ -319,6 +352,29 @@ mod tests {
         assert_eq!(
             result,
             Some(vec![("active".to_string(), "true".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_datetime_param_formats_rfc3339() {
+        let dt = Utc.with_ymd_and_hms(2024, 1, 15, 9, 30, 0).unwrap();
+        let result = QueryBuilder::new().datetime("since", Some(dt)).build();
+        assert_eq!(
+            result,
+            Some(vec![(
+                "since".to_string(),
+                "2024-01-15T09:30:00Z".to_string()
+            )])
+        );
+    }
+
+    #[test]
+    fn test_date_param_converts_to_midnight_utc() {
+        let date = NaiveDate::from_ymd_opt(2024, 1, 15).unwrap();
+        let result = QueryBuilder::new().date("on", Some(date)).build();
+        assert_eq!(
+            result,
+            Some(vec![("on".to_string(), "2024-01-15T00:00:00Z".to_string())])
         );
     }
 

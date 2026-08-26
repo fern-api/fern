@@ -55,6 +55,7 @@ export class CoreUtilitiesManager {
     private readonly generateEndpointMetadata: boolean;
     private readonly customPagerName: string;
     private readonly maxRetries: number | undefined;
+    private readonly additionalSensitiveHeaders: string[];
 
     constructor({
         streamType,
@@ -64,7 +65,8 @@ export class CoreUtilitiesManager {
         relativeTestPath = DEFAULT_TEST_PATH,
         generateEndpointMetadata,
         customPagerName,
-        maxRetries
+        maxRetries,
+        additionalSensitiveHeaders = []
     }: {
         streamType: "wrapper" | "web";
         formDataSupport: "Node16" | "Node18";
@@ -74,6 +76,7 @@ export class CoreUtilitiesManager {
         generateEndpointMetadata: boolean;
         customPagerName: string;
         maxRetries?: number;
+        additionalSensitiveHeaders?: string[];
     }) {
         this.streamType = streamType;
         this.formDataSupport = formDataSupport;
@@ -83,6 +86,9 @@ export class CoreUtilitiesManager {
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.customPagerName = customPagerName;
         this.maxRetries = maxRetries;
+        this.additionalSensitiveHeaders = Array.from(
+            new Set(additionalSensitiveHeaders.map((header) => header.toLowerCase()))
+        );
     }
 
     public getCoreUtilities({
@@ -261,6 +267,22 @@ export class CoreUtilitiesManager {
                 await writeFile(requestWithRetriesPath, contents, { encoding: "utf8" });
             } catch (_error) {
                 // File may not exist if fetcher utility doesn't include requestWithRetries
+            }
+        }
+
+        if (this.referencedCoreUtilities["fetcher"] != null && this.additionalSensitiveHeaders.length > 0) {
+            const fetcherPath = path.join(pathToRoot, this.relativePackagePath, "core", "fetcher", "Fetcher.ts");
+            let contents = await readFile(fetcherPath, "utf8");
+            const headersToAdd = this.additionalSensitiveHeaders.filter(
+                (header) => !contents.includes(`    ${JSON.stringify(header)},`)
+            );
+            if (headersToAdd.length > 0) {
+                const headerEntries = headersToAdd.map((header) => `    ${JSON.stringify(header)},\n`).join("");
+                contents = contents.replace(
+                    "const SENSITIVE_HEADERS = new Set([\n",
+                    `const SENSITIVE_HEADERS = new Set([\n${headerEntries}`
+                );
+                await writeFile(fetcherPath, contents, { encoding: "utf8" });
             }
         }
 

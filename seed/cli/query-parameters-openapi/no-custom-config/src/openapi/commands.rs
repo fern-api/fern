@@ -781,8 +781,10 @@ fn build_resource_command(
                 Some("object") => "JSON_OBJECT",
                 _ => "VALUE",
             };
-            // Composite types never set `param.nullable`, so the `|null`
-            // sentinel suffix stays scalar-only without an explicit guard.
+            // A composite only sets `param.nullable` when it came from a
+            // promoted nullable composition (`anyOf: [$ref, null]`), where
+            // the schema genuinely admits `null` — so the sentinel suffix
+            // is accurate for `JSON_OBJECT|null` too.
             let value_name: Cow<'static, str> = if param.nullable {
                 Cow::Owned(format!("{base_value_name}|null"))
             } else {
@@ -1010,7 +1012,8 @@ fn build_possible_value(wire: &str, cfg: Option<&FernEnumValue>) -> PossibleValu
 /// Build a `clap::Arg` for a single [`MultipartField`]. File fields
 /// accept a path (`<PATH>` / `@<PATH>` / `-` for stdin), or a `\@<REST>`
 /// escape that sends the literal text `@<REST>` as the part value;
-/// text fields accept a plain string value.
+/// text fields accept a plain string value. Array-typed fields are
+/// repeatable — each occurrence becomes its own same-named part.
 fn build_multipart_field_arg(field: &MultipartField) -> Arg {
     let kebab = to_kebab_flag(&field.wire_name);
     let (value_name, help_prefix) = if field.is_file {
@@ -1050,6 +1053,10 @@ fn build_multipart_field_arg(field: &MultipartField) -> Arg {
         .help(help_text.clone());
     if long_help_text != help_text {
         arg = arg.long_help(long_help_text);
+    }
+
+    if field.repeated {
+        arg = arg.action(clap::ArgAction::Append);
     }
 
     if field.required {
@@ -3252,6 +3259,7 @@ paths:
             ),
             required: false,
             content_type: None,
+            repeated: false,
         };
         let arg = build_multipart_field_arg(&field);
         let short = arg.get_help().expect("short help missing").to_string();
@@ -3264,6 +3272,26 @@ paths:
         assert!(
             long.ends_with("Each keyterm must be under 50 characters."),
             "long help should keep the pricing/constraint clauses; got: {long}",
+        );
+    }
+
+    #[test]
+    fn test_multipart_array_field_flag_is_repeatable() {
+        // The reported error was `the argument '--files <PATH|...>' cannot be
+        // used multiple times`, which made multi-sample uploads unreachable.
+        let field = crate::openapi::discovery::MultipartField {
+            wire_name: "files".to_string(),
+            is_file: true,
+            description: None,
+            required: false,
+            content_type: None,
+            repeated: true,
+        };
+        let arg = build_multipart_field_arg(&field);
+        assert!(
+            matches!(arg.get_action(), clap::ArgAction::Append),
+            "array multipart field must append, got {:?}",
+            arg.get_action(),
         );
     }
 
@@ -3284,6 +3312,7 @@ paths:
                         description: Some("Collides with builtin --format".to_string()),
                         required: false,
                         content_type: None,
+                        repeated: false,
                     },
                     MultipartField {
                         wire_name: "output".to_string(),
@@ -3291,6 +3320,7 @@ paths:
                         description: Some("Collides with builtin --output".to_string()),
                         required: false,
                         content_type: None,
+                        repeated: false,
                     },
                     MultipartField {
                         wire_name: "file".to_string(),
@@ -3298,6 +3328,7 @@ paths:
                         description: Some("No collision".to_string()),
                         required: true,
                         content_type: Some("application/octet-stream".to_string()),
+                        repeated: false,
                     },
                 ],
                 ..Default::default()

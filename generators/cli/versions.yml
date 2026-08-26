@@ -1,4 +1,65 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.38.4
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.46.4 updates.
+      type: fix
+    - summary: |
+        Fix generated CLI failing to compile when a property is named `self`, `Self`, `crate` or `super`.
+        Rust rejects these as raw identifiers, so they are now suffixed with an underscore (`self_`)
+        and given an explicit `#[serde(rename = "self")]` to preserve the wire name.
+      type: fix
+  createdAt: "2026-08-25"
+  irVersion: 67
+- version: 0.38.3
+  changelogEntry:
+    - summary: |
+        An `x-fern-global-headers` / `x-fern-global-parameters` entry whose flag
+        name collides with a per-operation parameter is now honored on custom
+        commands. Colliding globals are registered per-leaf rather than globally,
+        and the custom-command path resolves them from the root `ArgMatches`, so
+        the value was stamped on spec-derived requests and silently dropped on
+        hand-written ones. Such a global now falls back to its `env` var and
+        `default` (the CLI flag is not registered on those commands, so this is the
+        full chain that was ever reachable).
+      type: fix
+    - summary: |
+        A body property spelled `anyOf: [$ref Model, null]` now emits the same
+        dot-notation leaf flags as a bare `$ref: Model` (e.g.
+        `--voice-settings.stability`), not just the JSON shorthand. The parent flag
+        keeps its `null` sentinel. Nullable *array* branches are unaffected — they
+        stay a single repeated flag, matching a plain `type: array` property.
+      type: fix
+    - summary: |
+        Array-typed `multipart/form-data` fields are now repeatable
+        (`--files a.mp3 --files b.mp3`), each occurrence becoming its own part with
+        the same wire name. Multipart fields named in `--params` are routed into the
+        form body instead of the query string, and a JSON array there is equivalent
+        to repeating the flag.
+      type: fix
+    - summary: |
+        `anyOf: [$ref, null]` / `oneOf: [$ref, null]` body properties — what
+        FastAPI/pydantic emits for every `Optional[Model]` field — now resolve to
+        their non-null branch's type, so nullable objects and arrays are sent as
+        JSON instead of an escaped string. Explicit `null` remains accepted. True
+        unions with more than one non-null branch are left untouched.
+      type: fix
+    - summary: |
+        A `const` on an optional body property is no longer injected into the
+        request body as a clap default; it stays documentation- and
+        validation-only. Required consts are still sent. This also unblocks
+        object-shorthand flags on const-bearing nested schemas, which previously
+        failed with "Cannot combine --a.b with --a.b.c".
+      type: fix
+  createdAt: "2026-08-25"
+  irVersion: 67
+- version: 0.38.2
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.46.3 updates.
+      type: fix
+  createdAt: "2026-08-25"
+  irVersion: 67
 - version: 0.38.1
   changelogEntry:
     - summary: |

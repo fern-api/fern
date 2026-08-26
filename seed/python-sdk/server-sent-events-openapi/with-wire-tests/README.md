@@ -59,7 +59,8 @@ client = AsyncSeedApi(
 
 
 async def main() -> None:
-    await client.stream_protocol_no_collision()
+    async for chunk in client.stream_protocol_no_collision(...):
+        print(chunk)
 
 
 asyncio.run(main())

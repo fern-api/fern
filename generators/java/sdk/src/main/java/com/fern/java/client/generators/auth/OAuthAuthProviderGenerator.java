@@ -100,7 +100,8 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 clientCredentials.getClientIdEnvVar().map(ev -> ev.get()).orElse(null);
         String clientSecretEnvVar =
                 clientCredentials.getClientSecretEnvVar().map(ev -> ev.get()).orElse(null);
-        String tokenPrefix = clientCredentials.getTokenPrefix().orElse("Bearer");
+        Optional<String> tokenPrefix = OAuthTokenSupplierGenerator.getTokenPrefixWithSpace(clientCredentials);
+        String tokenHeader = OAuthTokenSupplierGenerator.getTokenHeader(clientCredentials);
 
         StringBuilder errorMessageBuilder = new StringBuilder("Please provide ");
         if (clientIdEnvVar != null && clientSecretEnvVar != null) {
@@ -143,9 +144,9 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 .addField(expiresAtField)
                 .addField(refreshLockField)
                 .addMethod(buildConstructor(clientIdSupplierField, clientSecretSupplierField, authClientField))
-                .addMethod(buildGetAuthHeaders(endpointMetadataClassName, tokenPrefix))
+                .addMethod(buildGetAuthHeaders(endpointMetadataClassName, tokenHeader, tokenPrefix))
                 .addMethod(buildGetTokenMethod())
-                .addMethod(buildRefreshMethod(oauthTokenSupplierClassName))
+                .addMethod(buildRefreshMethod(oauthTokenSupplierClassName, tokenPrefix))
                 .addMethod(buildGetExpiresAtMethod())
                 .addMethod(buildCanCreateMethod(clientIdEnvVar, clientSecretEnvVar));
 
@@ -175,17 +176,21 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    private MethodSpec buildGetAuthHeaders(ClassName endpointMetadataClassName, String tokenPrefix) {
-        return MethodSpec.methodBuilder("getAuthHeaders")
+    private MethodSpec buildGetAuthHeaders(
+            ClassName endpointMetadataClassName, String tokenHeader, Optional<String> tokenPrefix) {
+        MethodSpec.Builder method = MethodSpec.methodBuilder("getAuthHeaders")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .addParameter(endpointMetadataClassName, "endpointMetadata")
                 .returns(ParameterizedTypeName.get(Map.class, String.class, String.class))
                 .addStatement("String token = getToken()")
-                .addStatement("$T<String, String> headers = new $T<>()", Map.class, HashMap.class)
-                .addStatement("headers.put($S, $S + token)", "Authorization", tokenPrefix + " ")
-                .addStatement("return headers")
-                .build();
+                .addStatement("$T<String, String> headers = new $T<>()", Map.class, HashMap.class);
+        if (tokenPrefix.isEmpty()) {
+            method.addStatement("headers.put($S, token)", tokenHeader);
+        } else {
+            method.addStatement("headers.put($S, $S + token)", tokenHeader, tokenPrefix.get());
+        }
+        return method.addStatement("return headers").build();
     }
 
     private MethodSpec buildGetTokenMethod() {
@@ -207,7 +212,7 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    private MethodSpec buildRefreshMethod(ClassName oauthTokenSupplierClassName) {
+    private MethodSpec buildRefreshMethod(ClassName oauthTokenSupplierClassName, Optional<String> tokenPrefix) {
         // The generated OAuthTokenSupplier constructor takes an extra parameter for each non-literal
         // custom token-request property (scopes, custom body properties, headers), inserted between
         // clientSecret and authClient. This provider only has clientId/clientSecret, so it passes a
@@ -229,7 +234,7 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
 
         // Get the token response type - we'll use the OAuthTokenSupplier pattern
         // The refresh method calls the token endpoint and updates cached values
-        return MethodSpec.methodBuilder("refresh")
+        MethodSpec.Builder method = MethodSpec.methodBuilder("refresh")
                 .addModifiers(Modifier.PRIVATE)
                 .returns(String.class)
                 .addStatement("String clientId = this.clientIdSupplier.get()")
@@ -243,15 +248,19 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                         oauthTokenSupplierClassName,
                         oauthTokenSupplierClassName,
                         tokenSupplierArgs.build())
-                .addComment("The token supplier's get() method handles fetching and returns the full auth header value")
-                .addStatement("String authHeader = tokenSupplier.get()")
-                .addComment("Extract just the token part (remove 'Bearer ' prefix)")
-                .beginControlFlow("if (authHeader.startsWith($S))", "Bearer ")
-                .addStatement("this.accessToken = authHeader.substring(7)")
-                .nextControlFlow("else")
-                .addStatement("this.accessToken = authHeader")
-                .endControlFlow()
-                .addComment(
+                .addStatement("String authHeader = tokenSupplier.get()");
+        if (tokenPrefix.isEmpty()) {
+            method.addStatement("this.accessToken = authHeader");
+        } else {
+            method.beginControlFlow("if (authHeader.startsWith($S))", tokenPrefix.get())
+                    .addStatement(
+                            "this.accessToken = authHeader.substring($L)",
+                            tokenPrefix.get().length())
+                    .nextControlFlow("else")
+                    .addStatement("this.accessToken = authHeader")
+                    .endControlFlow();
+        }
+        return method.addComment(
                         "Set expiration with buffer (we don't have access to expires_in here, so use 1 hour default)")
                 .addStatement("this.expiresAt = getExpiresAt(3600)")
                 .addStatement("return this.accessToken")

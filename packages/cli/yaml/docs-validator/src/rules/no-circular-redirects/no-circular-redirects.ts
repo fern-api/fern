@@ -46,7 +46,9 @@ export function detectCircularRedirects(redirects: RedirectConfig[]): RuleViolat
             if (normalizedSource === normalizedDestination) {
                 violations.push({
                     severity: "error",
-                    message: `redirects[${i}]: Redirect from "${redirect.source}" to "${redirect.destination}" creates an infinite loop (source equals destination)`
+                    // Redirects may come from docs.yml or from external redirects files, so the
+                    // entry is identified by its source rather than by its index.
+                    message: `Redirect from "${redirect.source}" to "${redirect.destination}" creates an infinite loop (source equals destination)`
                 });
             }
         }

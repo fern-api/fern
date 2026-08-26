@@ -1,4 +1,10 @@
-import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration-loader";
+import {
+    DOCS_CONFIGURATION_FILENAME,
+    DocsConfigurationWithResolvedRedirects,
+    docsYml,
+    getRedirectsFilepaths,
+    loadRedirects
+} from "@fern-api/configuration-loader";
 import { extractErrorMessage, sanitizeNullValues, validateAgainstJsonSchema } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -43,7 +49,7 @@ export async function loadDocsConfiguration({
 }: {
     absolutePathToDocsDefinition: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<docsYml.RawSchemas.DocsConfiguration | undefined> {
+}): Promise<DocsConfigurationWithResolvedRedirects | undefined> {
     if (!(await doesPathExist(absolutePathToDocsDefinition))) {
         return undefined;
     }
@@ -63,7 +69,7 @@ export async function loadRawDocsConfiguration({
 }: {
     absolutePathOfConfiguration: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<docsYml.RawSchemas.DocsConfiguration> {
+}): Promise<DocsConfigurationWithResolvedRedirects> {
     const contentsStr = await readFile(absolutePathOfConfiguration);
     let contentsJson: unknown;
     try {
@@ -95,9 +101,10 @@ export async function loadRawDocsConfiguration({
             context.logger.debug(`No null/undefined values found during sanitization`);
         }
 
+        let parsed: docsYml.RawSchemas.DocsConfiguration;
         try {
             context.logger.debug(`Attempting to parse sanitized docs configuration`);
-            return docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(sanitizedJson);
+            parsed = docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(sanitizedJson);
         } catch (err) {
             context.logger.error(`Parsing failed even after sanitization: ${extractErrorMessage(err)}`);
             // Log the JSON structure to debug
@@ -107,6 +114,23 @@ export async function loadRawDocsConfiguration({
                 code: CliError.Code.ParseError
             });
         }
+
+        // Errors are carried on the configuration rather than thrown so that they are reported by
+        // docs validation, formatted like every other docs violation.
+        const loadedRedirects = await loadRedirects({
+            redirects: parsed.redirects,
+            absoluteFilepathToDocsConfig: absolutePathOfConfiguration
+        });
+
+        return {
+            ...parsed,
+            redirects: loadedRedirects.redirects,
+            _redirectsFileErrors: loadedRedirects.errors,
+            _absoluteFilepathsToRedirectsFiles: getRedirectsFilepaths({
+                redirects: parsed.redirects,
+                absoluteFilepathToDocsConfig: absolutePathOfConfiguration
+            })
+        };
     } else {
         throw new CliError({
             message: `Failed to parse docs.yml:\n${result.error?.message ?? "Unknown error"}`,

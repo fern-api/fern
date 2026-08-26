@@ -142,18 +142,6 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExamples;\n\nvar client = new SeedExamplesClient(\"TOKEN\");\nawait client.Service.RefreshTokenAsync();\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/refresh-token",
-                "method": "POST",
-                "identifier_override": "endpoint_service.refreshToken"
-            },
-            "snippet": {
-                "type": "csharp",
                 "client": "using SeedExamples;\n\nvar client = new SeedExamplesClient(\"TOKEN\");\nawait client.Service.RefreshTokenAsync(new RefreshTokenRequest { Ttl = 420 });\n"
             }
         }

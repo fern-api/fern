@@ -108,7 +108,9 @@ impl Stream for ByteStream {
 ///
 /// When an external executor is provided, the SDK delegates raw HTTP
 /// execution to it, allowing the caller's transport stack to handle
-/// auth, retries, and TLS configuration.
+/// auth, retries, and TLS configuration. Custom headers configured on
+/// the client or on the request options are still applied by the SDK
+/// before the request reaches the executor.
 #[doc(hidden)]
 pub trait RequestExecutor: Send + Sync {
     fn execute(
@@ -236,10 +238,12 @@ impl HttpClient {
     /// Creates an HttpClient with an injected request executor.
     ///
     /// When using an injected executor, the client delegates HTTP execution
-    /// entirely to the executor. Auth headers, custom headers, and retry
-    /// logic are NOT applied by this client — the executor's transport
-    /// stack is expected to handle them. This prevents double-retry and
-    /// double-auth when the SDK is embedded inside a CLI.
+    /// entirely to the executor. Auth headers and retry logic are NOT applied
+    /// by this client — the executor's transport stack is expected to handle
+    /// them. This prevents double-retry and double-auth when the SDK is
+    /// embedded inside a CLI. Custom headers (from `ClientConfig` and from
+    /// `RequestOptions`) are still applied, since the executor has no way to
+    /// know about them.
     #[doc(hidden)]
     pub fn with_executor(executor: Arc<dyn RequestExecutor>, config: ClientConfig) -> Self {
         let client = Client::new();
@@ -427,8 +431,11 @@ impl HttpClient {
 
         // Multipart requests cannot be cloned, so they skip retries
         // even in the default path. With an injected executor, delegate
-        // entirely to the executor.
+        // transport to the executor, applying custom headers first since
+        // the executor has no knowledge of them.
         let response = if let Some(executor) = &self.executor {
+            let mut req = req;
+            self.apply_custom_headers(&mut req, &options)?;
             executor.execute(req).await.map_err(ApiError::Executor)?
         } else {
             let mut req = req;
@@ -482,6 +489,8 @@ impl HttpClient {
 
         // Multipart requests cannot be cloned, so they skip retries
         let response = if let Some(executor) = &self.executor {
+            let mut req = req;
+            self.apply_custom_headers(&mut req, &options)?;
             executor.execute(req).await.map_err(ApiError::Executor)?
         } else {
             let mut req = req;
@@ -500,14 +509,16 @@ impl HttpClient {
     }
 
     /// Applies auth/headers and executes the request, choosing between
-    /// the injected executor path (no SDK-level auth/headers/retries)
-    /// and the default path (full SDK behavior).
+    /// the injected executor path (custom headers only, no SDK-level
+    /// auth/retries) and the default path (full SDK behavior).
     async fn send_request(
         &self,
         req: Request,
         options: &Option<RequestOptions>,
     ) -> Result<Response, ApiError> {
         if let Some(executor) = &self.executor {
+            let mut req = req;
+            self.apply_custom_headers(&mut req, options)?;
             executor.execute(req).await.map_err(ApiError::Executor)
         } else {
             let mut req = req;
@@ -1268,6 +1279,71 @@ mod tests {
         assert!(
             !raw_request.contains("content-type: application/json"),
             "token request should not send a JSON content type when form-encoded: {raw_request}"
+        );
+    }
+
+    /// Captures the request it is handed and refuses to send it, so the
+    /// headers the SDK applied before delegating are observable.
+    struct RecordingExecutor {
+        seen: std::sync::Mutex<Option<HeaderMap>>,
+    }
+
+    impl RequestExecutor for RecordingExecutor {
+        fn execute(
+            &self,
+            request: Request,
+        ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>> {
+            *self.seen.lock().expect("lock") = Some(request.headers().clone());
+            Box::pin(async { Err("not sent".into()) })
+        }
+    }
+
+    #[tokio::test]
+    async fn test_executor_path_applies_custom_headers() {
+        // Regression: the executor branch delegated the request untouched, so
+        // headers only the SDK knows about — `ClientConfig::custom_headers`
+        // (e.g. an `X-Source` override, plus the X-Fern-* platform headers)
+        // and `RequestOptions::additional_headers` — never reached the wire.
+        // An injected executor (the generated CLI's custom-command path)
+        // cannot recover them on its own.
+        let executor = Arc::new(RecordingExecutor {
+            seen: std::sync::Mutex::new(None),
+        });
+        let mut config = ClientConfig::default();
+        config
+            .custom_headers
+            .insert("X-Source".to_string(), "custom-command".to_string());
+        let client = HttpClient::with_executor(executor.clone(), config);
+
+        let request = Client::new()
+            .get("http://127.0.0.1:1/ping")
+            .build()
+            .expect("build request");
+        let options = RequestOptions::new().additional_header("X-Request-Level", "sunflower");
+        let _: Result<Response, ApiError> = client.send_request(request, &Some(options)).await;
+
+        let seen = executor
+            .seen
+            .lock()
+            .expect("lock")
+            .clone()
+            .expect("executor received the request");
+        assert_eq!(
+            seen.get("x-source").map(|v| v.to_str().expect("utf-8")),
+            Some("custom-command"),
+            "client-level custom headers must survive the executor path: {seen:?}"
+        );
+        assert_eq!(
+            seen.get("x-request-level")
+                .map(|v| v.to_str().expect("utf-8")),
+            Some("sunflower"),
+            "request-level headers must survive the executor path: {seen:?}"
+        );
+        assert_eq!(
+            seen.get("x-fern-language")
+                .map(|v| v.to_str().expect("utf-8")),
+            Some("Rust"),
+            "SDK platform headers must survive the executor path: {seen:?}"
         );
     }
 }

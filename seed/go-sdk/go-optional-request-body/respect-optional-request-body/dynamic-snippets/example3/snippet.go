@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/go-optional-request-body/fern"
     client "github.com/go-optional-request-body/fern/client"
     option "github.com/go-optional-request-body/fern/option"
 )
@@ -14,16 +13,8 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.PrunePlantRequest{
-        PlantID: "plant-id",
-        Body: &fern.WateringRequest{
-            Milliliters: fern.Float64(
-                60,
-            ),
-        },
-    }
-    client.PrunePlant(
+    client.WaterAllPlants(
         context.TODO(),
-        request,
+        nil,
     )
 }

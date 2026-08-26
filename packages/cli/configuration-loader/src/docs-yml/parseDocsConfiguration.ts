@@ -14,6 +14,7 @@ import { getVersionContentRef } from "./git-versions/getVersionContentRef.js";
 import { materializeGitRef } from "./git-versions/materializeGitRef.js";
 import { resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
 import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
+import { resolveRedirects } from "./resolveRedirects.js";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {
@@ -136,6 +137,8 @@ export async function parseDocsConfiguration({
               })
             : undefined;
 
+    const redirectsPromise = resolveRedirects({ redirects, absoluteFilepathToDocsConfig });
+
     const cssPromise = convertCssConfig(rawCssConfig, absoluteFilepathToDocsConfig);
     const jsPromise = convertJsConfig(rawJsConfig, absoluteFilepathToDocsConfig);
 
@@ -193,6 +196,7 @@ export async function parseDocsConfiguration({
         css,
         js,
         metadata,
+        resolvedRedirects,
         context7File,
         llmsTxtFile,
         llmsFullTxtFile,
@@ -206,6 +210,7 @@ export async function parseDocsConfiguration({
         cssPromise,
         jsPromise,
         metadataPromise,
+        redirectsPromise,
         context7FilePromise,
         llmsTxtFilePromise,
         llmsFullTxtFilePromise,
@@ -256,10 +261,7 @@ export async function parseDocsConfiguration({
 
         /* seo */
         metadata,
-        redirects: redirects?.map((redirect) => ({
-            ...redirect,
-            permanent: redirect?.permanent
-        })),
+        redirects: resolvedRedirects,
 
         /* branding */
         logo,
@@ -1268,7 +1270,8 @@ async function convertNavigationTabConfiguration({
         };
     }
 
-    if (tab.changelog != null) {
+    const changelogPath = docsYml.getChangelogFolderFromTabConfig(tab);
+    if (changelogPath != null) {
         return {
             title: tab.displayName,
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
@@ -1277,7 +1280,7 @@ async function convertNavigationTabConfiguration({
             hidden: tab.hidden,
             child: {
                 type: "changelog",
-                changelog: await listFiles(resolveFilepath(tab.changelog, absolutePathToConfig), "{md,mdx}")
+                changelog: await listFiles(resolveFilepath(changelogPath, absolutePathToConfig), "{md,mdx}")
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
@@ -1414,7 +1417,7 @@ async function expandFolderConfiguration({
 }
 
 async function convertNavigationItem({
-    rawConfig,
+    rawConfig: rawConfigInput,
     absolutePathToFernFolder,
     absolutePathToConfig,
     context,
@@ -1426,6 +1429,8 @@ async function convertNavigationItem({
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.DocsNavigationItem> {
+    const rawConfig = normalizeNavigationItem(rawConfigInput);
+
     if (isRawPageConfig(rawConfig)) {
         return parsePageConfig(rawConfig, absolutePathToConfig);
     }
@@ -1744,6 +1749,25 @@ function isRawLinkConfig(item: unknown): item is docsYml.RawSchemas.LinkConfigur
 
 function isRawChangelogConfig(item: unknown): item is docsYml.RawSchemas.ChangelogConfiguration {
     return isPlainObject(item) && typeof item.changelog === "string";
+}
+
+function isRawBlogConfig(item: unknown): item is docsYml.RawSchemas.BlogConfiguration {
+    return isPlainObject(item) && typeof item.blog === "string";
+}
+
+function normalizeNavigationItem(
+    rawConfig: docsYml.RawSchemas.NavigationItem
+): Exclude<docsYml.RawSchemas.NavigationItem, docsYml.RawSchemas.BlogConfiguration> {
+    if (!isRawBlogConfig(rawConfig)) {
+        return rawConfig;
+    }
+
+    const { blog, ...rest } = rawConfig;
+    return {
+        ...rest,
+        changelog: blog,
+        title: rawConfig.title ?? docsYml.DEFAULT_BLOG_TITLE
+    };
 }
 
 function isRawFolderConfig(item: unknown): item is docsYml.RawSchemas.FolderConfiguration {

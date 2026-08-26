@@ -1,0 +1,13 @@
+- summary: |
+    Support GraphQL schemas whose SDL is split across multiple files. GraphQL specs that share a
+    namespace -- including specs that declare no `name`, which all belong to the same unnamed
+    group -- are now compiled into a single schema, so federated subgraphs (which reference types
+    owned by sibling files and extend the same `Query`/`Mutation` types) can be documented as one
+    API. Federation composition directives such as `@key`, `@external` and `@link` are ignored
+    (through federation v2.9, so `@cost`, `@listSize`, `@context` and `@fromContext` too),
+    members marked `@inaccessible` are omitted along with everything that references them (matching
+    the client-facing API schema produced by composition), and `@deprecated` is now surfaced on
+    operations, fields, arguments and enum values. Merging is first-wins throughout -- types,
+    members, directive definitions, root operation types and operation examples -- and every
+    discarded declaration is reported, naming the files involved.
+  type: feat

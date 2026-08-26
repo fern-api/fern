@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration-loader";
+import { docsYml } from "@fern-api/configuration";
 import { kebabCase } from "lodash-es";
 
 import { validateProductConfigFileSchema } from "../../docsAst/validateProductConfig.js";
@@ -17,15 +17,16 @@ import { Rule, RuleViolation } from "../../Rule.js";
  * `fern-api/fern-platform` (`packages/commons/docs-server/src/patterns.ts`).
  */
 export const CHANGELOG_FEED_ALLOWED_SLUGS: readonly string[] = [
+    "blog",
+    "blogs",
     "changelog",
     "changelogs",
+    "posts",
     "release-notes",
     "releasenotes",
     "whats-new",
     "whatsnew"
 ];
-
-const DEFAULT_CHANGELOG_TITLE = "Changelog";
 
 /**
  * Computes the URL segments contributed by a changelog node itself. Mirrors
@@ -34,7 +35,7 @@ const DEFAULT_CHANGELOG_TITLE = "Changelog";
  * which may be a nested path like `v2/release-notes`.
  */
 export function getEffectiveChangelogSlugSegments(config: { slug?: string; title?: string }): string[] {
-    const raw = config.slug ?? kebabCase(config.title ?? DEFAULT_CHANGELOG_TITLE);
+    const raw = config.slug ?? kebabCase(config.title ?? docsYml.DEFAULT_CHANGELOG_TITLE);
     return splitSegments(raw);
 }
 
@@ -101,10 +102,14 @@ function collectChangelogLocations(
     const out: ChangelogLocation[] = [];
     for (const item of items) {
         if (isChangelog(item)) {
+            const changelogFolder = docsYml.getChangelogFolderFromNavigationItem(item);
+            if (changelogFolder == null) {
+                continue;
+            }
             out.push({
-                where: `${breadcrumb} > changelog (${item.changelog})`,
+                where: `${breadcrumb} > changelog (${changelogFolder})`,
                 slug: item.slug,
-                title: item.title,
+                title: item.title ?? ("blog" in item ? docsYml.DEFAULT_BLOG_TITLE : docsYml.DEFAULT_CHANGELOG_TITLE),
                 ancestorSegments
             });
             continue;
@@ -124,6 +129,12 @@ function collectChangelogLocations(
     return out;
 }
 
+function isChangelog(
+    item: docsYml.RawSchemas.NavigationItem
+): item is docsYml.RawSchemas.ChangelogConfiguration | docsYml.RawSchemas.BlogConfiguration {
+    return docsYml.getChangelogFolderFromNavigationItem(item) != null;
+}
+
 function collectFromTabs(
     tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined,
     breadcrumb: string,
@@ -134,16 +145,21 @@ function collectFromTabs(
     }
     const out: ChangelogLocation[] = [];
     for (const [tabId, tab] of Object.entries(tabs)) {
-        if (tab.changelog != null) {
+        const changelogFolder = docsYml.getChangelogFolderFromTabConfig(tab);
+        if (changelogFolder != null) {
             // For a tab-level `changelog` field, the tab IS the changelog
             // node — its slug/displayName define the leaf URL segment, so
             // we don't add tabSegments to `ancestorSegments` (that would
             // double-count). `getEffectiveChangelogSlugSegments` derives
             // them from `slug`/`title` on the location itself.
             out.push({
-                where: `${breadcrumb} > tab "${tabId}" (changelog: ${tab.changelog})`,
+                where: `${breadcrumb} > tab "${tabId}" (changelog: ${changelogFolder})`,
                 slug: tab.slug,
-                title: tab.displayName,
+                title:
+                    tab.displayName ??
+                    (tab.blog != null && tab.changelog == null
+                        ? docsYml.DEFAULT_BLOG_TITLE
+                        : docsYml.DEFAULT_CHANGELOG_TITLE),
                 ancestorSegments
             });
         }
@@ -210,7 +226,7 @@ function violationsForLocations(locations: ChangelogLocation[]): RuleViolation[]
         }
         const allowed = CHANGELOG_FEED_ALLOWED_SLUGS.join(", ");
         const sourceField =
-            loc.slug != null ? `slug: "${loc.slug}"` : `title: "${loc.title ?? DEFAULT_CHANGELOG_TITLE}"`;
+            loc.slug != null ? `slug: "${loc.slug}"` : `title: "${loc.title ?? docsYml.DEFAULT_CHANGELOG_TITLE}"`;
         const fullPath = "/" + allSegments.join("/");
         violations.push({
             severity: "error",
@@ -268,10 +284,6 @@ export const ValidChangelogSlugRule: Rule = {
         };
     }
 };
-
-function isChangelog(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.ChangelogConfiguration {
-    return (item as docsYml.RawSchemas.ChangelogConfiguration)?.changelog != null;
-}
 
 function isSection(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.SectionConfiguration {
     return (item as docsYml.RawSchemas.SectionConfiguration)?.section != null;

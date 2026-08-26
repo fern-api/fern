@@ -15,10 +15,10 @@ func do() {
         ),
     )
     request := &fern.WaterPlantRequest{
-        PlantID: "plantId",
+        PlantID: "plant-id",
         Body: &fern.WateringRequest{
             Milliliters: fern.Float64(
-                1.1,
+                60,
             ),
         },
     }

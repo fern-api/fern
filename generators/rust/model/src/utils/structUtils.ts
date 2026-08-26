@@ -1,5 +1,6 @@
 import { getWireValue, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { getSerdeName } from "@fern-api/rust-base";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -220,8 +221,11 @@ export function generateFieldAttributes(
 ): rust.Attribute[] {
     const attributes: rust.Attribute[] = [];
 
-    // Add serde rename if the field name differs from wire name
-    if (context.case.snakeUnsafe(property.name) !== getWireValue(property.name)) {
+    // Add serde rename if the field name differs from wire name. The comparison uses the
+    // escaped identifier because keywords that cannot be raw identifiers are mangled (e.g. a
+    // `self` property becomes `self_`), and serde would otherwise use the mangled name.
+    const fieldName = context.escapeRustKeyword(context.case.snakeUnsafe(property.name));
+    if (getSerdeName(fieldName) !== getWireValue(property.name)) {
         attributes.push(Attribute.serde.rename(getWireValue(property.name)));
     }
 

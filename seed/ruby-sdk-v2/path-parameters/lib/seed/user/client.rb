@@ -68,11 +68,14 @@ module Seed
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[tenant_id]
+        body_params = params.except(*path_param_names)
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/user/",
-          body: Seed::User::Types::User.new(params).to_h,
+          body: Seed::User::Types::User.new(body_params).to_h,
           request_options: request_options
         )
         begin

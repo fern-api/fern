@@ -4,6 +4,7 @@ import {
     FernWorkspace,
     GraphQLSpec,
     getOpenAPISettings,
+    groupGraphQLSpecsByNamespace,
     IdentifiableSource,
     OpenAPISettings,
     OpenAPISpec,
@@ -222,13 +223,22 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const { GraphQLConverter } = await import("@fern-api/graphql-to-fdr");
         const graphqlSpecs = this.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
 
-        for (const spec of graphqlSpecs) {
+        // Specs that share a namespace describe one schema (e.g. federated subgraphs owned by
+        // different teams), so they are converted together rather than as independent schemas.
+        for (const [, specs] of groupGraphQLSpecsByNamespace(graphqlSpecs)) {
+            const filePaths = specs.map((spec) => spec.absoluteFilepath);
             try {
-                const examples = await loadGraphQlExamples(spec.absoluteFilepathToExamples, context);
+                const examples = (
+                    await Promise.all(
+                        specs.map((spec) => loadGraphQlExamples(spec.absoluteFilepathToExamples, context))
+                    )
+                )
+                    .filter(isNonNullish)
+                    .flat();
                 const converter = new GraphQLConverter({
                     context,
-                    filePath: spec.absoluteFilepath,
-                    namespace: spec.namespace,
+                    filePath: filePaths,
+                    namespace: specs[0]?.namespace,
                     examples
                 });
                 const result = await converter.convert();
@@ -238,7 +248,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 Object.assign(this.graphqlTypes, result.types);
             } catch (error) {
                 context.logger.error(
-                    `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
+                    `Failed to process GraphQL spec(s) ${filePaths.join(", ")}:`,
                     extractErrorMessage(error)
                 );
             }

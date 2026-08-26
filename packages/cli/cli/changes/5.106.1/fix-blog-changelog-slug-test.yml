@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix stale blog changelog-slug rule test expectations after the blog feed slug allowlist change.
+  type: chore

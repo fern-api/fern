@@ -1,4 +1,4 @@
-import { GraphQLSpec, type Spec } from "@fern-api/api-workspace-commons";
+import { GraphQLSpec, groupGraphQLSpecsByNamespace, type Spec } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import {
@@ -2119,13 +2119,21 @@ export class DocsDefinitionResolver {
         }
 
         const graphqlSpecs = workspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
-        for (const spec of graphqlSpecs) {
+        // Specs that share a namespace describe one schema (e.g. federated subgraphs owned by
+        // different teams), so they are converted together rather than as independent schemas.
+        for (const [, specs] of groupGraphQLSpecsByNamespace(graphqlSpecs)) {
+            const filePaths = specs.map((spec) => spec.absoluteFilepath);
+            const namespace = specs[0]?.namespace;
             try {
-                const examples = await this.loadGraphQlExamples(spec.absoluteFilepathToExamples);
+                const examples = (
+                    await Promise.all(specs.map((spec) => this.loadGraphQlExamples(spec.absoluteFilepathToExamples)))
+                )
+                    .filter(isNonNullish)
+                    .flat();
                 const converter = new GraphQLConverter({
                     context: this.taskContext,
-                    filePath: spec.absoluteFilepath,
-                    namespace: spec.namespace,
+                    filePath: filePaths,
+                    namespace,
                     examples
                 });
                 const graphqlResult = await converter.convert();
@@ -2133,15 +2141,15 @@ export class DocsDefinitionResolver {
                 Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
                 Object.assign(graphqlTypes, graphqlResult.types);
 
-                if (spec.namespace) {
+                if (namespace) {
                     for (const operationId of Object.keys(graphqlResult.graphqlOperations)) {
-                        namespacesByOperationId.set(FdrAPI.GraphQlOperationId(operationId), spec.namespace);
+                        namespacesByOperationId.set(FdrAPI.GraphQlOperationId(operationId), namespace);
                     }
                 }
             } catch (error) {
                 this.taskContext.logger.error(
-                    `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
-                    String(error)
+                    `Failed to process GraphQL spec(s) ${filePaths.join(", ")}:`,
+                    extractErrorMessage(error)
                 );
             }
         }

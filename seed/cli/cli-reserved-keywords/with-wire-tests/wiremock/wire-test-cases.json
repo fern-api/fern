@@ -29,12 +29,70 @@
       }
     },
     {
+      "id": "list",
+      "method": "GET",
+      "path": "/models",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 200,
+        "body": "{\n  \"models\": [\n    {\n      \"id\": \"id\",\n      \"created_by\": \"self\"\n    }\n  ],\n  \"meta\": {\n    \"next\": \"next\",\n    \"self\": \"self\",\n    \"crate\": \"crate\",\n    \"type\": \"type\",\n    \"move\": \"move\"\n  }\n}"
+      }
+    },
+    {
+      "id": "listevents",
+      "method": "GET",
+      "path": "/models/events",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 200,
+        "body": "{\n  \"model\": {\n    \"id\": \"id\",\n    \"created_by\": \"self\"\n  },\n  \"event_type\": \"created\",\n  \"self\": \"string\"\n}"
+      }
+    },
+    {
       "id": "get_error",
       "method": "GET",
       "path": "/models/{model_id}",
       "params": {
         "model_id": "model_id"
       },
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
+    },
+    {
+      "id": "list_error",
+      "method": "GET",
+      "path": "/models",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
+    },
+    {
+      "id": "listevents_error",
+      "method": "GET",
+      "path": "/models/events",
+      "params": {},
       "body": null,
       "queryMatchers": [],
       "headerMatchers": [],

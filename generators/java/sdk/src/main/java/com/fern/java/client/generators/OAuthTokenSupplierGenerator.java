@@ -149,7 +149,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         Optional<ResponseProperty> expiryResponseProperty =
                 clientCredentials.getTokenEndpoint().getResponseProperties().getExpiresIn();
         boolean refreshRequired = expiryResponseProperty.isPresent();
-        String tokenPrefixWithSpace = clientCredentials.getTokenPrefix().orElse("Bearer") + " ";
+        Optional<String> tokenPrefix = getTokenPrefixWithSpace(clientCredentials);
         // This supplier is a singleton shared across all request threads (registered via
         // builder.addHeader), so accessToken/expiresAt are volatile and refreshed under tokenLock.
         // A cache hit takes the lock-free fast path (a volatile snapshot read); only an expired or
@@ -181,8 +181,12 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         } else {
             getMethodSpecBuilder.beginControlFlow("if (cachedToken != null)");
         }
+        if (tokenPrefix.isEmpty()) {
+            getMethodSpecBuilder.addStatement("return cachedToken");
+        } else {
+            getMethodSpecBuilder.addStatement("return $S + cachedToken", tokenPrefix.get());
+        }
         getMethodSpecBuilder
-                .addStatement("return $S + cachedToken", tokenPrefixWithSpace)
                 .endControlFlow()
                 .beginControlFlow("synchronized ($L)", TOKEN_LOCK_FIELD_NAME)
                 .beginControlFlow(refreshNeededPredicate)
@@ -227,10 +231,13 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         tokenPropertyName);
             }
         }
-        getMethodSpecBuilder
-                .endControlFlow()
-                .addStatement("return $S + $L", tokenPrefixWithSpace, ACCESS_TOKEN_FIELD_NAME)
-                .endControlFlow();
+        getMethodSpecBuilder.endControlFlow();
+        if (tokenPrefix.isEmpty()) {
+            getMethodSpecBuilder.addStatement("return $L", ACCESS_TOKEN_FIELD_NAME);
+        } else {
+            getMethodSpecBuilder.addStatement("return $S + $L", tokenPrefix.get(), ACCESS_TOKEN_FIELD_NAME);
+        }
+        getMethodSpecBuilder.endControlFlow();
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(String.class, CLIENT_ID_FIELD_NAME)
@@ -556,6 +563,23 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         // Check if the type (or inner type) is Long (wrapper class) or long (primitive)
         String typeString = typeToCheck.toString();
         return typeString.equals("java.lang.Long") || typeString.equals("Long") || typeString.equals("long");
+    }
+
+    public static String getTokenHeader(OAuthClientCredentials clientCredentials) {
+        return getTokenHeader(clientCredentials.getTokenHeader());
+    }
+
+    static String getTokenHeader(Optional<String> tokenHeader) {
+        return tokenHeader.orElse("Authorization");
+    }
+
+    public static Optional<String> getTokenPrefixWithSpace(OAuthClientCredentials clientCredentials) {
+        return getTokenPrefixWithSpace(clientCredentials.getTokenPrefix());
+    }
+
+    static Optional<String> getTokenPrefixWithSpace(Optional<String> configuredTokenPrefix) {
+        String tokenPrefix = configuredTokenPrefix.orElse("Bearer");
+        return tokenPrefix.isEmpty() ? Optional.empty() : Optional.of(tokenPrefix + " ");
     }
 
     /**

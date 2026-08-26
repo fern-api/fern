@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "properties": {
+    "model": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Model"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "CreatedBy": {
+      "type": "string",
+      "enum": [
+        "self",
+        "user",
+        "api"
+      ]
+    },
+    "Model": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "created_by": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CreatedBy"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

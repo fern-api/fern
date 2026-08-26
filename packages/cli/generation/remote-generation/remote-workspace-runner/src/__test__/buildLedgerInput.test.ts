@@ -23,15 +23,17 @@ const MINIMAL_ROOT = {
 
 function makeDocsDefinition({
     pages = {},
-    root = MINIMAL_ROOT
+    root = MINIMAL_ROOT,
+    translations
 }: {
     pages?: Record<string, { markdown: string }>;
     root?: unknown;
+    translations?: { defaultLocale: string; translations?: string[] };
 } = {}) {
     // Minimal DocsDefinition shape — only the fields buildLedgerInput reads.
     return {
         pages,
-        config: { root }
+        config: { root, ...(translations != null ? { translations } : {}) }
     } as Parameters<typeof buildLedgerInput>[0]["docsDefinition"];
 }
 
@@ -216,6 +218,52 @@ describe("buildLedgerInput", () => {
     it("defaults locale to en", () => {
         const { localeEntry } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
+            apiDefinitions: new Map()
+        });
+
+        expect(localeEntry.locale).toBe("en");
+    });
+
+    it("keys the base segment by the configured default locale", () => {
+        const { localeEntry } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition({
+                translations: { defaultLocale: "en-US", translations: ["en-US", "pt-BR", "ja-JP"] }
+            }),
+            apiDefinitions: new Map()
+        });
+
+        // publishInput.defaultLocale is derived from this value, so the
+        // manifest's defaultLocale and its base locales[] key stay in sync
+        // with the tag readers look up from docs.yml.
+        expect(localeEntry.locale).toBe("en-US");
+    });
+
+    it("preserves a non-English default locale", () => {
+        const { localeEntry } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition({
+                translations: { defaultLocale: "de-DE", translations: ["de-DE", "en"] }
+            }),
+            apiDefinitions: new Map()
+        });
+
+        expect(localeEntry.locale).toBe("de-DE");
+    });
+
+    it("keeps an explicitly passed translation locale, including regional tags", () => {
+        const { localeEntry } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition({
+                translations: { defaultLocale: "en-US", translations: ["en-US", "pt-BR"] }
+            }),
+            apiDefinitions: new Map(),
+            locale: "pt-BR"
+        });
+
+        expect(localeEntry.locale).toBe("pt-BR");
+    });
+
+    it("keys the base segment by en when the site declares no translations", () => {
+        const { localeEntry } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition({ pages: { "page-1": { markdown: "# Hi" } } }),
             apiDefinitions: new Map()
         });
 

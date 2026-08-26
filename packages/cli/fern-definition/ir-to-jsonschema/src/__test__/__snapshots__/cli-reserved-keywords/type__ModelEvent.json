@@ -1,0 +1,91 @@
+{
+  "type": "object",
+  "properties": {
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "created",
+        "deleted"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "event_type": {
+          "const": "created"
+        },
+        "model": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Model"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "event_type"
+      ]
+    },
+    {
+      "properties": {
+        "event_type": {
+          "const": "deleted"
+        },
+        "deleted_at": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "event_type"
+      ]
+    }
+  ],
+  "definitions": {
+    "CreatedBy": {
+      "type": "string",
+      "enum": [
+        "self",
+        "user",
+        "api"
+      ]
+    },
+    "Model": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "created_by": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CreatedBy"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
