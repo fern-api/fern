@@ -11,8 +11,11 @@ import {
 describe("CHANGELOG_FEED_ALLOWED_SLUGS", () => {
     it("contains the canonical names", () => {
         expect(CHANGELOG_FEED_ALLOWED_SLUGS).toEqual([
+            "blog",
+            "blogs",
             "changelog",
             "changelogs",
+            "posts",
             "release-notes",
             "releasenotes",
             "whats-new",
@@ -124,6 +127,10 @@ describe("hasAllowedChangelogSegment", () => {
 });
 
 describe("integration: ancestors + changelog", () => {
+    it("slug 'blog' is allowlisted", () => {
+        expect(hasAllowedChangelogSegment(getEffectiveChangelogSlugSegments({ slug: "blog" }))).toBe(true);
+    });
+
     it("default config (no slug, no title) is allowlisted", () => {
         expect(hasAllowedChangelogSegment(getEffectiveChangelogSlugSegments({}))).toBe(true);
     });
@@ -150,6 +157,12 @@ describe("integration: ancestors + changelog", () => {
 
     it("slug 'product-updates' becomes allowlisted under a 'whats-new' tab ancestor", () => {
         const ancestors = ["whats-new"];
+        const own = getEffectiveChangelogSlugSegments({ slug: "product-updates" });
+        expect(hasAllowedChangelogSegment([...ancestors, ...own])).toBe(true);
+    });
+
+    it("slug 'product-updates' becomes allowlisted under a 'blog' tab ancestor", () => {
+        const ancestors = ["blog"];
         const own = getEffectiveChangelogSlugSegments({ slug: "product-updates" });
         expect(hasAllowedChangelogSegment([...ancestors, ...own])).toBe(true);
     });
