@@ -1,3 +1,4 @@
+import { CONTAINER_RUNNERS } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 
 import type { Argv } from "yargs";
@@ -55,7 +56,7 @@ export function addPreviewCommand(cli: Argv<GlobalArgs>): void {
                     description: "Filter the target API(s) with the given audience(s)"
                 })
                 .option("container-engine", {
-                    choices: ["docker", "podman", "container"],
+                    choices: CONTAINER_RUNNERS,
                     description: "Choose the container engine to use for local generation"
                 })
                 .option("force", {

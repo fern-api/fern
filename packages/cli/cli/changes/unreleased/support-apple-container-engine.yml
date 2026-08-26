@@ -1,7 +1,9 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Add Apple's `container` as a supported container engine for local generation.
-    Pass `--container-engine container` (or `--runner container` on the legacy CLI)
-    to run generators with Apple's native container runtime instead of Docker or Podman.
+    Add optional support for Apple's `container` runtime in local generation.
+    Docker remains the default and recommended runtime; pass
+    `--container-engine container` (or `--runner container` on the legacy CLI)
+    to opt in. Apple's runtime must be started with `container system start`
+    before use, and image pulls run through `container image pull`.
   type: feat

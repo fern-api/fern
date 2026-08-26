@@ -50,6 +50,12 @@ export async function runContainer({
     platform,
     signal
 }: runContainer.Args): Promise<void> {
+    // Apple's `container run` has no `--pull` option, so an always-pull request is
+    // satisfied by pulling explicitly beforehand.
+    const pullBeforeRun = pull && runner === "container";
+    if (pullBeforeRun) {
+        await pullImage(imageName, runner, signal);
+    }
     const tryRun = () =>
         tryRunContainer({
             logger,
@@ -61,7 +67,7 @@ export async function runContainer({
             removeAfterCompletion,
             writeLogsToFile,
             runner,
-            pull,
+            pull: pull && !pullBeforeRun,
             platform,
             signal
         });
@@ -175,12 +181,18 @@ async function tryRunContainer({
     }
 
     if (exitCode !== 0) {
-        throw new Error(`Container exited with code ${exitCode}.\n${stdout}\n${stderr}`);
+        throw new Error(
+            `Container exited with code ${exitCode}.\n${stdout}\n${stderr}` +
+                (containerRunner === "container" ? `\n${APPLE_CONTAINER_SERVICE_HINT}` : "")
+        );
     }
 }
 
 async function pullImage(imageName: string, runner?: ContainerRunner, signal?: AbortSignal): Promise<void> {
-    await loggingExeca(undefined, runner ?? "docker", ["pull", imageName], {
+    const containerRunner = runner ?? "docker";
+    // Apple's CLI namespaces image commands: `container image pull`, not `container pull`.
+    const pullArgs = containerRunner === "container" ? ["image", "pull", imageName] : ["pull", imageName];
+    await loggingExeca(undefined, containerRunner, pullArgs, {
         all: true,
         doNotPipeOutput: true,
         signal
@@ -221,7 +233,10 @@ export async function startContainer({
         }
 
         if (exitCode !== 0) {
-            throw new Error(`Failed to start container from image ${imageName}.\n${stdout}\n${stderr}`);
+            throw new Error(
+                `Failed to start container from image ${imageName}.\n${stdout}\n${stderr}` +
+                    (containerRunner === "container" ? `\n${APPLE_CONTAINER_SERVICE_HINT}` : "")
+            );
         }
 
         return stdout.trim();
@@ -373,6 +388,9 @@ export async function stopContainer({
         doNotPipeOutput: true
     });
 }
+
+const APPLE_CONTAINER_SERVICE_HINT =
+    "If Apple's container runtime is not running, start it with `container system start`.";
 
 function getContainerRunnerInstallUrl(runner: ContainerRunner): string {
     switch (runner) {
