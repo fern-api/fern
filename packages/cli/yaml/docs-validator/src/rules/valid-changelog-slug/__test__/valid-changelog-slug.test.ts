@@ -213,13 +213,14 @@ describe("blog navigation aliases", () => {
     });
 
     it("uses the Blog default title for an untitled top-level blog navigation item", async () => {
-        const messages = await violationsFor({
-            instances: [],
-            navigation: [{ blog: "blog" }]
-        });
-        expect(messages).toHaveLength(1);
-        expect(messages[0]).toContain('resolves to URL path "/blog"');
-        expect(messages[0]).toContain('title: "Blog"');
+        // The folder name is not part of the URL, so the only reason this resolves
+        // to the allowlisted "/blog" is the Blog default title.
+        expect(
+            await violationsFor({
+                instances: [],
+                navigation: [{ blog: "content/entries" }]
+            })
+        ).toEqual([]);
     });
 
     it("allows a tab-level blog navigation item with an allowlisted slug", async () => {
@@ -255,18 +256,16 @@ describe("blog navigation aliases", () => {
     });
 
     it("uses the Blog default title for a tab-level blog navigation item", async () => {
-        const messages = await violationsFor({
-            instances: [],
-            tabs: {
-                posts: {
-                    displayName: "Blog",
-                    blog: "blog"
-                }
-            },
-            navigation: [{ tab: "posts" }]
-        });
-        expect(messages).toHaveLength(1);
-        expect(messages[0]).toContain('resolves to URL path "/blog"');
-        expect(messages[0]).toContain('title: "Blog"');
+        expect(
+            await violationsFor({
+                instances: [],
+                tabs: {
+                    entries: {
+                        blog: "content/entries"
+                    }
+                },
+                navigation: [{ tab: "entries" }]
+            })
+        ).toEqual([]);
     });
 });
