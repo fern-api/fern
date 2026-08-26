@@ -1268,7 +1268,8 @@ async function convertNavigationTabConfiguration({
         };
     }
 
-    if (tab.changelog != null) {
+    const changelogPath = docsYml.getChangelogFolderFromTabConfig(tab);
+    if (changelogPath != null) {
         return {
             title: tab.displayName,
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
@@ -1277,7 +1278,7 @@ async function convertNavigationTabConfiguration({
             hidden: tab.hidden,
             child: {
                 type: "changelog",
-                changelog: await listFiles(resolveFilepath(tab.changelog, absolutePathToConfig), "{md,mdx}")
+                changelog: await listFiles(resolveFilepath(changelogPath, absolutePathToConfig), "{md,mdx}")
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
@@ -1414,7 +1415,7 @@ async function expandFolderConfiguration({
 }
 
 async function convertNavigationItem({
-    rawConfig,
+    rawConfig: rawConfigInput,
     absolutePathToFernFolder,
     absolutePathToConfig,
     context,
@@ -1426,6 +1427,8 @@ async function convertNavigationItem({
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.DocsNavigationItem> {
+    const rawConfig = normalizeNavigationItem(rawConfigInput);
+
     if (isRawPageConfig(rawConfig)) {
         return parsePageConfig(rawConfig, absolutePathToConfig);
     }
@@ -1744,6 +1747,25 @@ function isRawLinkConfig(item: unknown): item is docsYml.RawSchemas.LinkConfigur
 
 function isRawChangelogConfig(item: unknown): item is docsYml.RawSchemas.ChangelogConfiguration {
     return isPlainObject(item) && typeof item.changelog === "string";
+}
+
+function isRawBlogConfig(item: unknown): item is docsYml.RawSchemas.BlogConfiguration {
+    return isPlainObject(item) && typeof item.blog === "string";
+}
+
+function normalizeNavigationItem(
+    rawConfig: docsYml.RawSchemas.NavigationItem
+): Exclude<docsYml.RawSchemas.NavigationItem, docsYml.RawSchemas.BlogConfiguration> {
+    if (!isRawBlogConfig(rawConfig)) {
+        return rawConfig;
+    }
+
+    const { blog, ...rest } = rawConfig;
+    return {
+        ...rest,
+        changelog: blog,
+        title: rawConfig.title ?? docsYml.DEFAULT_BLOG_TITLE
+    };
 }
 
 function isRawFolderConfig(item: unknown): item is docsYml.RawSchemas.FolderConfiguration {
