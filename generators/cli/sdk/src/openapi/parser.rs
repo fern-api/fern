@@ -702,6 +702,13 @@ struct OpenApiParamSchema {
     /// one silently became a single-value string flag.
     #[serde(rename = "$ref", default)]
     schema_ref: Option<String>,
+    /// `oneOf` / `anyOf` branches on the parameter's own schema. Needed for
+    /// pydantic's `Optional[list[T]]` spelling — see
+    /// [`resolve_param_nullable_branch`].
+    #[serde(rename = "oneOf", default)]
+    one_of: Vec<OpenApiSchemaObject>,
+    #[serde(rename = "anyOf", default)]
+    any_of: Vec<OpenApiSchemaObject>,
     #[serde(rename = "type", default, deserialize_with = "deserialize_type_field")]
     schema_type: Option<String>,
     #[serde(rename = "enum", default, deserialize_with = "deserialize_enum_values")]
@@ -2303,6 +2310,50 @@ fn resolve_param_schema_ref<'a>(
     resolve_ref_chain(resolved, component_schemas)
 }
 
+/// The single non-null branch of a `oneOf`/`anyOf` on a *parameter* schema,
+/// resolved through `$ref`.
+///
+/// The parameter counterpart to [`recognize_nullable_composite`], which
+/// operates on `OpenApiSchemaObject` and so only ever reached body properties.
+/// `anyOf: [{type: array, ...}, {type: 'null'}]` is what pydantic emits for
+/// `Optional[list[T]]`, and on real specs that spelling dominates the bare
+/// `type: array` one — 29 of 31 array query parameters on the spec this was
+/// tested against. Without it the parameter keeps `param_type: None`, so it is
+/// neither repeatable nor coerced, and a JSON array argument goes on the wire
+/// verbatim as `?x=["a","b"]`.
+///
+/// `None` for a true union (more than one non-null branch), which has no single
+/// type to promote, and for anything without exactly one null branch.
+fn resolve_param_nullable_branch<'a>(
+    schema: &'a OpenApiParamSchema,
+    component_schemas: &'a HashMap<String, OpenApiSchemaObject>,
+) -> Option<&'a OpenApiSchemaObject> {
+    let branches: &[OpenApiSchemaObject] = if !schema.one_of.is_empty() {
+        &schema.one_of
+    } else if !schema.any_of.is_empty() {
+        &schema.any_of
+    } else {
+        return None;
+    };
+
+    let mut null_count: usize = 0;
+    let mut non_null: Option<&OpenApiSchemaObject> = None;
+    for branch in branches {
+        if is_null_sentinel(branch) {
+            null_count += 1;
+            continue;
+        }
+        if non_null.is_some() {
+            return None;
+        }
+        non_null = Some(branch);
+    }
+    if null_count != 1 {
+        return None;
+    }
+    resolve_ref_chain(non_null?, component_schemas)
+}
+
 fn convert_parameter(
     param: &OpenApiParameter,
     ref_site_default: Option<&serde_yaml::Value>,
@@ -2314,10 +2365,10 @@ fn convert_parameter(
     // bounds, and — worst — an array-typed filter registered as a
     // single-value flag, so `--labels a --labels b` was rejected outright and
     // `--labels '["a","b"]'` went on the wire as one literal string.
-    let resolved_ref = param
-        .schema
-        .as_ref()
-        .and_then(|s| resolve_param_schema_ref(s, component_schemas));
+    let resolved_ref = param.schema.as_ref().and_then(|s| {
+        resolve_param_schema_ref(s, component_schemas)
+            .or_else(|| resolve_param_nullable_branch(s, component_schemas))
+    });
 
     let (param_type, enum_values, schema_default, format, fern_enum, minimum, maximum) =
         match (&param.schema, resolved_ref) {
@@ -4632,6 +4683,97 @@ mod tests {
         let (_, ref_mp) = convert_parameter(&via_ref, None, &components);
         assert_eq!(ref_mp.param_type.as_deref(), Some("array"));
         assert!(ref_mp.repeated, "$ref'd array param must be repeatable");
+    }
+
+    #[test]
+    fn test_nullable_array_parameter_is_repeatable() {
+        // `anyOf: [{type: array}, {type: 'null'}]` — pydantic's
+        // `Optional[list[T]]`, and the dominant spelling for array query
+        // parameters on real specs (29 of 31 on the spec this was tested
+        // against, versus 2 using bare `type: array`). Covers the inline
+        // branch and the `$ref`'d branch.
+        let inline: OpenApiParameter = serde_yaml::from_str(
+            r#"
+            name: voice_ids
+            in: query
+            schema:
+                anyOf:
+                  - type: array
+                    items:
+                        type: string
+                  - type: 'null'
+            "#,
+        )
+        .unwrap();
+        let (_, inline_mp) = convert_parameter(&inline, None, &HashMap::new());
+        assert_eq!(inline_mp.param_type.as_deref(), Some("array"));
+        assert!(inline_mp.repeated, "nullable array param must be repeatable");
+
+        let via_ref: OpenApiParameter = serde_yaml::from_str(
+            r#"
+            name: voice_ids
+            in: query
+            schema:
+                anyOf:
+                  - $ref: '#/components/schemas/VoiceIds'
+                  - type: 'null'
+            "#,
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert(
+            "VoiceIds".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>("type: array\nitems:\n  type: string\n").unwrap(),
+        );
+        let (_, ref_mp) = convert_parameter(&via_ref, None, &components);
+        assert_eq!(ref_mp.param_type.as_deref(), Some("array"));
+        assert!(ref_mp.repeated);
+    }
+
+    #[test]
+    fn test_true_union_parameter_is_not_promoted() {
+        // Two non-null branches have no single type to promote to, so the
+        // parameter stays untyped exactly as before.
+        let param: OpenApiParameter = serde_yaml::from_str(
+            r#"
+            name: filter
+            in: query
+            schema:
+                anyOf:
+                  - type: string
+                  - type: integer
+                  - type: 'null'
+            "#,
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&param, None, &HashMap::new());
+        assert_eq!(mp.param_type, None, "a true union must stay opaque");
+        assert!(!mp.repeated);
+    }
+
+    #[test]
+    fn test_nullable_scalar_parameter_resolves_its_type() {
+        // The scalar case of the same spelling: the parameter should pick up
+        // its type (and enum) rather than arriving untyped.
+        let param: OpenApiParameter = serde_yaml::from_str(
+            r#"
+            name: sort_direction
+            in: query
+            schema:
+                anyOf:
+                  - type: string
+                    enum: [asc, desc]
+                  - type: 'null'
+            "#,
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&param, None, &HashMap::new());
+        assert_eq!(mp.param_type.as_deref(), Some("string"));
+        assert_eq!(
+            mp.enum_values.as_deref(),
+            Some(&["asc".to_string(), "desc".to_string()][..]),
+        );
+        assert!(!mp.repeated, "a scalar must not become repeatable");
     }
 
     #[test]

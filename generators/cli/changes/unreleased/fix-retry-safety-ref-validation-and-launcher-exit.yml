@@ -29,11 +29,14 @@
   type: fix
 
 - summary: |
-    Parameters declared as a bare `$ref` now resolve through component
-    schemas, so they keep their type, `enum`, `format` and numeric bounds
-    instead of arriving untyped. Array-typed parameters (inline or `$ref`'d)
-    are now repeatable: `--labels a --labels b` works, and a single JSON-array
-    argument is equivalent.
+    Parameters declared as a bare `$ref`, or as `anyOf: [T, null]` (pydantic's
+    `Optional[T]`), now resolve through component schemas, so they keep their
+    type, `enum`, `format` and numeric bounds instead of arriving untyped.
+    Array-typed parameters in any of those spellings are now repeatable:
+    `--labels a --labels b` works, and a single JSON-array argument is
+    equivalent. Previously a JSON array on such a parameter went on the wire
+    URL-encoded as `?x=%5B%22a%22%5D`. A single value is still sent as `?x=a`,
+    and a true union (more than one non-null branch) is left untouched.
   type: fix
 
 - summary: |
@@ -41,7 +44,13 @@
     registered on operations the spec describes how to page. They were
     advertised everywhere, and on a spec with no pagination metadata the
     executor fell back to guessing `pageToken` / `nextPageToken`: one request
-    went out and the command exited 0 with page 1.
+    went out and the command exited 0 with page 1 — silent partial data.
+
+    Note for consumers: on a spec with no pagination metadata these flags now
+    disappear from every operation, so a script or agent already passing
+    `--page-all` goes from exit 0 (having silently received one page) to a
+    hard "unexpected argument" error. Nothing that previously worked breaks,
+    but the failure is now loud rather than silent.
   type: fix
 
 - summary: |
