@@ -1,8 +1,7 @@
 import { describe, expect, it } from "vitest";
-
+import { proposeAiRuleset } from "../aiCurated.js";
 import { EndpointSummary } from "../openapiSummary.js";
 import { buildMainResourcesPreset, buildReadOnlyPreset, isAmbiguousReadPost, isReadLikePost } from "../presets.js";
-import { proposeAiRuleset } from "../aiCurated.js";
 import { resolveTools } from "../toolset.js";
 
 function endpoint(overrides: Partial<EndpointSummary>): EndpointSummary {
