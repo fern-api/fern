@@ -1,4 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
+import { DocsConfigurationWithResolvedRedirects } from "@fern-api/configuration-loader";
 import { isPlainObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -10,7 +11,7 @@ import mime from "mime-types";
 import { tmpdir } from "os";
 import path from "path";
 
-type RawDocsConfig = docsYml.RawSchemas.DocsConfiguration;
+type RawDocsConfig = DocsConfigurationWithResolvedRedirects;
 
 // Theme-eligible fields that can contain local file paths (strings that become
 // { hash } sentinels on upload and presigned S3 URLs on GET from FDR).

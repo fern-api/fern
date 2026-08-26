@@ -1,12 +1,12 @@
-import type { docsYml } from "@fern-api/configuration-loader";
+import type { DocsConfigurationWithResolvedRedirects } from "@fern-api/configuration-loader";
 import { describe, expect, it } from "vitest";
 
 import type { DocsConfigFileAstNodeTypes } from "../../../docsAst/DocsConfigFileAstVisitor.js";
 import type { RuleContext } from "../../../Rule.js";
 import { NavigationConflicts } from "../navigation-conflicts.js";
 
-async function runRuleOnConfig(partialConfig: Partial<docsYml.RawSchemas.DocsConfiguration>) {
-    const config: docsYml.RawSchemas.DocsConfiguration = { instances: [], ...partialConfig };
+async function runRuleOnConfig(partialConfig: Partial<DocsConfigurationWithResolvedRedirects>) {
+    const config: DocsConfigurationWithResolvedRedirects = { instances: [], ...partialConfig };
     const visitor = await NavigationConflicts.create({} as RuleContext);
     const fileVisitor = visitor.file;
     if (fileVisitor == null) {

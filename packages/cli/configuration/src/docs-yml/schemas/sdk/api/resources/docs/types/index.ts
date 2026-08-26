@@ -112,6 +112,7 @@ export * from "./ProductPath.js";
 export * from "./ProductSwitcherThemeConfig.js";
 export * from "./ProgrammingLanguage.js";
 export * from "./RedirectConfig.js";
+export * from "./RedirectsConfiguration.js";
 export * from "./RelativeProductPath.js";
 export * from "./Role.js";
 export * from "./RoleId.js";

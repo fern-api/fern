@@ -30,7 +30,7 @@ import { PageActionsConfig } from "./PageActionsConfig.js";
 import { PageConfiguration } from "./PageConfiguration.js";
 import { ProductConfig } from "./ProductConfig.js";
 import { ProgrammingLanguage } from "./ProgrammingLanguage.js";
-import { RedirectConfig } from "./RedirectConfig.js";
+import { RedirectsConfiguration } from "./RedirectsConfiguration.js";
 import { RoleId } from "./RoleId.js";
 import { TabConfig } from "./TabConfig.js";
 import { TabId } from "./TabId.js";
@@ -66,7 +66,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     aiExamples: core.serialization.property("ai-examples", AiExamplesConfig.optional()),
     agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
-    redirects: core.serialization.list(RedirectConfig).optional(),
+    redirects: RedirectsConfiguration.optional(),
     check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: core.serialization.string().optional(),
@@ -109,7 +109,7 @@ export declare namespace DocsConfiguration {
         "ai-examples"?: AiExamplesConfig.Raw | null;
         agents?: AgentsConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
-        redirects?: RedirectConfig.Raw[] | null;
+        redirects?: RedirectsConfiguration.Raw | null;
         check?: CheckConfig.Raw | null;
         logo?: LogoConfiguration.Raw | null;
         favicon?: string | null;
