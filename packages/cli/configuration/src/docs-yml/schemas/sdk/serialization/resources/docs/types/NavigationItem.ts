@@ -4,6 +4,7 @@ import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 import { ApiReferenceConfiguration } from "./ApiReferenceConfiguration.js";
+import { BlogConfiguration } from "./BlogConfiguration.js";
 import { ChangelogConfiguration } from "./ChangelogConfiguration.js";
 import { FolderConfiguration } from "./FolderConfiguration.js";
 import { LibraryReferenceConfiguration } from "./LibraryReferenceConfiguration.js";
@@ -18,6 +19,7 @@ export const NavigationItem: core.serialization.Schema<serializers.NavigationIte
         LibraryReferenceConfiguration,
         LinkConfiguration,
         ChangelogConfiguration,
+        BlogConfiguration,
         FolderConfiguration,
     ]);
 
@@ -29,5 +31,6 @@ export declare namespace NavigationItem {
         | LibraryReferenceConfiguration.Raw
         | LinkConfiguration.Raw
         | ChangelogConfiguration.Raw
+        | BlogConfiguration.Raw
         | FolderConfiguration.Raw;
 }

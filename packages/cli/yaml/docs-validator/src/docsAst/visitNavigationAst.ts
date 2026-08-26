@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration-loader";
+import { docsYml } from "@fern-api/configuration";
 import { noop, visitObjectAsync } from "@fern-api/core-utils";
 import { parseImagePaths } from "@fern-api/docs-markdown-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
@@ -277,8 +277,9 @@ async function visitNavigationItem({
         }
     }
 
-    if (navigationItemIsChangelog(navigationItem)) {
-        const changelogDir = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.changelog);
+    const changelogFolder = docsYml.getChangelogFolderFromNavigationItem(navigationItem);
+    if (changelogFolder != null) {
+        const changelogDir = resolve(dirname(absoluteFilepathToConfiguration), changelogFolder);
         context.logger.trace(`Starting changelog processing for directory: ${changelogDir}`);
 
         if (await doesPathExist(changelogDir)) {
@@ -397,13 +398,6 @@ async function visitFolderMarkdownFiles({
             context
         });
     });
-}
-
-function navigationItemIsChangelog(
-    item: docsYml.RawSchemas.NavigationItem
-): item is docsYml.RawSchemas.ChangelogConfiguration {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as docsYml.RawSchemas.ChangelogConfiguration)?.changelog != null;
 }
 
 function navigationItemIsPage(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.PageConfiguration {

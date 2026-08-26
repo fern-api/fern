@@ -684,6 +684,16 @@ export const ChangelogConfiguration = WithPermissions.merge(WithFeatureFlags).me
     })
 );
 
+export const BlogConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
+    z.object({
+        blog: ChangelogFolderRelativePath,
+        title: z.string().optional(),
+        slug: z.string().optional(),
+        icon: z.string().optional(),
+        hidden: z.boolean().optional()
+    })
+);
+
 // ===== Library Reference Configuration =====
 
 export const LibraryReferenceConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
@@ -823,6 +833,7 @@ export const NavigationItem: z.ZodType<unknown> = z.lazy(() =>
         LibraryReferenceConfiguration,
         LinkConfiguration,
         ChangelogConfiguration,
+        BlogConfiguration,
         FolderConfiguration
     ])
 );
@@ -887,7 +898,8 @@ export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
         hidden: z.boolean().optional(),
         href: z.string().optional(),
         target: Target.optional(),
-        changelog: ChangelogFolderRelativePath.optional()
+        changelog: ChangelogFolderRelativePath.optional(),
+        blog: ChangelogFolderRelativePath.optional()
     })
 );
 

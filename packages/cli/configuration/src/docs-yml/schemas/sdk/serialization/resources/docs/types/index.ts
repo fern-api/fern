@@ -21,6 +21,7 @@ export * from "./AudienceId.js";
 export * from "./Availability.js";
 export * from "./BackgroundImageConfiguration.js";
 export * from "./BackgroundImageThemedConfig.js";
+export * from "./BlogConfiguration.js";
 export * from "./BodyThemeConfig.js";
 export * from "./ChangelogConfiguration.js";
 export * from "./ChangelogFolderRelativePath.js";
