@@ -6,6 +6,7 @@ import fern.ir.resources as ir_types
 from fern_python.codegen import AST
 from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
+    ConstructorParameter,
 )
 from fern_python.generators.sdk.custom_config import SDKCustomConfig
 from fern_python.source_file_factory import SourceFileFactory
@@ -139,6 +140,7 @@ def _get_headers_body(
     is_auth_mandatory: bool,
     optional_auth: bool,
     scheme: Optional[ir_types.AuthScheme] = None,
+    constructor_parameters: Optional[list[ConstructorParameter]] = None,
 ) -> str:
     ir = _FakeIr(
         auth=ir_types.ApiAuth(
@@ -169,7 +171,7 @@ def _get_headers_body(
     snippet.add_arbitrary_code(
         AST.CodeWriter(
             generator._get_write_get_headers_body(
-                constructor_parameters=[],
+                constructor_parameters=constructor_parameters or [],
                 literal_headers=[],
                 project=_FakeProject(),  # type: ignore[arg-type]
             )
@@ -235,12 +237,31 @@ def test_bearer_auth_header_is_not_emitted_by_get_headers() -> None:
 def test_oauth_async_header_uses_custom_header_without_empty_prefix_spacing() -> None:
     body = _get_async_headers_body(
         scheme=_oauth_auth_scheme(
-            token_header="x-walmart-oauth",
+            token_header="X-Custom-Token",
             token_prefix="",
         )
     )
-    assert 'headers["x-walmart-oauth"] = token' in body
+    assert 'headers["X-Custom-Token"] = token' in body
     assert "Bearer" not in body
+
+
+def test_header_auth_empty_prefix_preserves_string_coercion() -> None:
+    body = _get_headers_body(
+        is_auth_mandatory=True,
+        optional_auth=False,
+        constructor_parameters=[
+            ConstructorParameter(
+                constructor_parameter_name="api_key",
+                type_hint=AST.TypeHint.int_(),
+                private_member_name="_api_key",
+                initializer=AST.Expression("api_key=1"),
+                header_key="X-Custom-Header",
+                header_prefix="",
+                is_auth=True,
+            )
+        ],
+    )
+    assert 'headers["X-Custom-Header"] = f" {self._api_key}"' in body
 
 
 def test_oauth_async_header_preserves_default_header_and_prefix() -> None:

@@ -3,7 +3,7 @@ auth-schemes:
   CustomAuth:
     scheme: oauth
     type: client-credentials
-    token-header: X-Access-Token
+    token-header: X-Custom-Token
     token-prefix: Token
     get-token:
       endpoint: POST /identity/token

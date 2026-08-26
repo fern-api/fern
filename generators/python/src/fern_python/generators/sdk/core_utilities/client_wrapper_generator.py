@@ -117,6 +117,7 @@ class ConstructorParameter(BaseClientGeneratorConstructorParameter):
     # header auth scheme). Used to skip flat auth-header emission in endpoint
     # security mode, where auth headers are routed per-endpoint instead.
     is_auth: bool = False
+    raw_header_value_for_empty_prefix: bool = False
 
 
 @dataclass
@@ -576,7 +577,11 @@ class ClientWrapperGenerator:
                     token_header, token_prefix = self._get_token_header_and_prefix()
                     writer.write_line(
                         f"headers[{json.dumps(token_header)}] = "
-                        + self._get_prefixed_header_value(token_prefix, "token")
+                        + self._get_prefixed_header_value(
+                            token_prefix,
+                            "token",
+                            raw_value_for_empty_prefix=True,
+                        )
                     )
                 if self._has_inferred_auth():
                     writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME} is not None:")
@@ -654,7 +659,11 @@ class ClientWrapperGenerator:
                 writer.write_line("if _token is not None:")
                 with writer.indent():
                     for key, token_header, token_prefix in token_schemes:
-                        token_value = self._get_prefixed_header_value(token_prefix, "_token")
+                        token_value = self._get_prefixed_header_value(
+                            token_prefix,
+                            "_token",
+                            raw_value_for_empty_prefix=True,
+                        )
                         writer.write_line(
                             f"{available_var}[{json.dumps(key)}] = {{{json.dumps(token_header)}: {token_value}}}"
                         )
@@ -1093,7 +1102,7 @@ class ClientWrapperGenerator:
                     continue
                 if param.header_key is not None:
                     header_key = json.dumps(param.header_key)
-                    if param.header_prefix:
+                    if param.header_prefix is not None:
                         if param.getter_method is not None:
                             if param.type_hint.is_optional:
                                 writer.write_line(
@@ -1104,14 +1113,18 @@ class ClientWrapperGenerator:
                                     writer.write_line(
                                         f"headers[{header_key}] = "
                                         + self._get_prefixed_header_value(
-                                            param.header_prefix, param.constructor_parameter_name
+                                            param.header_prefix,
+                                            param.constructor_parameter_name,
+                                            raw_value_for_empty_prefix=param.raw_header_value_for_empty_prefix,
                                         )
                                     )
                             else:
                                 writer.write_line(
                                     f"headers[{header_key}] = "
                                     + self._get_prefixed_header_value(
-                                        param.header_prefix, f"self.{param.getter_method.name}()"
+                                        param.header_prefix,
+                                        f"self.{param.getter_method.name}()",
+                                        raw_value_for_empty_prefix=param.raw_header_value_for_empty_prefix,
                                     )
                                 )
                         elif param.private_member_name is not None:
@@ -1121,7 +1134,9 @@ class ClientWrapperGenerator:
                             writer.write_line(
                                 f"headers[{header_key}] = "
                                 + self._get_prefixed_header_value(
-                                    param.header_prefix, f"self.{param.private_member_name}"
+                                    param.header_prefix,
+                                    f"self.{param.private_member_name}",
+                                    raw_value_for_empty_prefix=param.raw_header_value_for_empty_prefix,
                                 )
                             )
                             if param.type_hint.is_optional:
@@ -1526,6 +1541,7 @@ class ClientWrapperGenerator:
                     header_key=token_header,
                     header_prefix=token_prefix,
                     is_auth=True,
+                    raw_header_value_for_empty_prefix=self._has_oauth(),
                     environment_variable=(
                         bearer_auth_scheme.token_env_var if bearer_auth_scheme.token_env_var is not None else None
                     ),
@@ -1673,9 +1689,14 @@ class ClientWrapperGenerator:
         return token_header, token_prefix
 
     @staticmethod
-    def _get_prefixed_header_value(prefix: str, value_expression: str) -> str:
+    def _get_prefixed_header_value(
+        prefix: str,
+        value_expression: str,
+        *,
+        raw_value_for_empty_prefix: bool = False,
+    ) -> str:
         if len(prefix) == 0:
-            return value_expression
+            return value_expression if raw_value_for_empty_prefix else f'f" {{{value_expression}}}"'
         if re.search(r'[\\"\r\n{}]', prefix) is not None:
             return f"{(prefix + ' ')!r} + {value_expression}"
         return f'f"{prefix} {{{value_expression}}}"'

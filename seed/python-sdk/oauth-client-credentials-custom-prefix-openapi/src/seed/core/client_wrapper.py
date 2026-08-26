@@ -43,7 +43,7 @@ class BaseClientWrapper:
         }
         token = self._get_token()
         if token is not None:
-            headers["X-Access-Token"] = f"Token {token}"
+            headers["X-Custom-Token"] = f"Token {token}"
         return headers
 
     def _get_token(self) -> typing.Optional[str]:
@@ -145,5 +145,5 @@ class AsyncClientWrapper(BaseClientWrapper):
         headers = self.get_headers()
         if self._async_token is not None:
             token = await self._async_token()
-            headers["X-Access-Token"] = f"Token {token}"
+            headers["X-Custom-Token"] = f"Token {token}"
         return headers
