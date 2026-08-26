@@ -214,7 +214,7 @@ describe("blog navigation aliases", () => {
 
     it("uses the Blog default title for an untitled top-level blog navigation item", async () => {
         // The folder name is not part of the URL, so the only reason this resolves
-        // to the allowlisted "/blog" is the Blog default title.
+        // to the allowlisted "/blog" is the Blog default title
         expect(
             await violationsFor({
                 instances: [],
