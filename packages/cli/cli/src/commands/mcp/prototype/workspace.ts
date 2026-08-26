@@ -2,10 +2,14 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { select } from "@inquirer/prompts";
+import chalk from "chalk";
+import path from "path";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { loadSpecSummaries, SpecSummary } from "./openapiSummary.js";
-import { radioChoice, selectTheme } from "./ui.js";
+import { hint, ICONS, radioChoice, selectTheme, sleep, withSpinner } from "./ui.js";
+
+const SPEC_SCAN_DELAY_MS = 600;
 
 export interface WorkspaceSpec {
     workspace: AbstractAPIWorkspace<unknown>;
@@ -16,6 +20,27 @@ export interface WorkspaceSpec {
 
 function getWorkspaceName(workspace: AbstractAPIWorkspace<unknown>): string {
     return workspace.workspaceName ?? "api";
+}
+
+/**
+ * Prints the spec-discovery step every MCP flow starts with: a brief scan
+ * spinner followed by the spec that was identified.
+ */
+export async function announceSpecDiscovery({
+    cliContext,
+    workspaceSpec
+}: {
+    cliContext: CliContext;
+    workspaceSpec: WorkspaceSpec;
+}): Promise<void> {
+    cliContext.logger.info("");
+    await withSpinner("Scanning workspace for API specs…", () => sleep(SPEC_SCAN_DELAY_MS));
+    const { spec, workspaceName, absolutePathToWorkspace } = workspaceSpec;
+    const relativeSpecPath = path.relative(absolutePathToWorkspace, spec.absoluteFilePath);
+    const title = spec.title ?? workspaceName;
+    cliContext.logger.info(
+        `${ICONS.success} Found spec ${chalk.bold(relativeSpecPath)} ${hint(`${ICONS.bullet} ${title} ${ICONS.bullet} ${spec.endpoints.length} endpoints`)}`
+    );
 }
 
 /**

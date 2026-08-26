@@ -6,7 +6,7 @@ import { findMcpGroup, parseToolsConfig, writeMcpGroupToGeneratorsYml } from "./
 import { computeVerdict, resolveTools, ToolsConfig } from "./toolset.js";
 import { runTrimLoop } from "./trimLoop.js";
 import { hint, ICONS, styledVerdictLine, toolTable } from "./ui.js";
-import { pickWorkspaceAndLoadSpec } from "./workspace.js";
+import { announceSpecDiscovery, pickWorkspaceAndLoadSpec } from "./workspace.js";
 
 export async function toolsMcp({
     project,
@@ -33,6 +33,9 @@ export async function toolsMcp({
     });
     if (workspaceSpec == null) {
         return;
+    }
+    if (!json) {
+        await announceSpecDiscovery({ cliContext, workspaceSpec });
     }
     const { spec, absolutePathToWorkspace } = workspaceSpec;
 
