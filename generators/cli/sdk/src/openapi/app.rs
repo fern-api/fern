@@ -2383,6 +2383,30 @@ impl AppContext {
         self.base_url_override.as_deref()
     }
 
+    /// The base URL requests from this context go to, resolved the same way
+    /// the built-in command path resolves it: `--base-url` / `{NAME}_BASE_URL`
+    /// override first, then the spec's explicit `base_url`, then the server
+    /// root plus any Discovery `service_path`.
+    ///
+    /// Exposed for the generated custom-command SDK bridge, which has to seed
+    /// the co-generated SDK's `ClientConfig.base_url`. `ClientConfig::default()`
+    /// is not a usable substitute: the Rust SDK generator emits
+    /// `base_url: String::new()` for an API that declares no environment, so a
+    /// bridge built on the default produced a client with no host and every
+    /// custom command failed before the injected executor could help. The
+    /// executor's own `resolve_url` only rewrites the host when `--base-url`
+    /// was passed, so it cannot recover an empty base either.
+    pub fn effective_base_url(&self) -> String {
+        if let Some(override_url) = self.base_url_override.as_deref() {
+            return override_url.trim_end_matches('/').to_string();
+        }
+        let doc = &self.entries[0].doc;
+        if let Some(base) = &doc.base_url {
+            return base.clone();
+        }
+        format!("{}{}", doc.root_url, doc.service_path)
+    }
+
     /// Build a [`CliExecutor`] wired to this context's HTTP/auth/retry stack.
     ///
     /// The executor is constructed from the first binding entry's config
@@ -2868,14 +2892,27 @@ pub(crate) fn build_pagination_config(
     doc: &RestDescription,
     cli_name: &str,
 ) -> executor::PaginationConfig {
+    // `try_*` rather than `get_*`: the pagination flags are only registered
+    // on operations the spec describes how to page (see
+    // `commands::method_has_pagination`). On every other operation the arg id
+    // is unknown and `get_flag` panics, so absence has to read as "off".
     executor::PaginationConfig {
-        page_all: matches.get_flag("page-all"),
+        page_all: matches
+            .try_get_one::<bool>("page-all")
+            .ok()
+            .flatten()
+            .copied()
+            .unwrap_or(false),
         page_limit: matches
-            .get_one::<u32>("page-limit")
+            .try_get_one::<u32>("page-limit")
+            .ok()
+            .flatten()
             .copied()
             .unwrap_or(10),
         page_delay_ms: matches
-            .get_one::<u64>("page-delay")
+            .try_get_one::<u64>("page-delay")
+            .ok()
+            .flatten()
             .copied()
             .unwrap_or(100),
         token_query_param: doc
@@ -2886,7 +2923,12 @@ pub(crate) fn build_pagination_config(
             .pagination_token_response_path
             .clone()
             .unwrap_or_else(|| "nextPageToken".to_string()),
-        no_pager: matches.get_flag("no-pager"),
+        no_pager: matches
+            .try_get_one::<bool>("no-pager")
+            .ok()
+            .flatten()
+            .copied()
+            .unwrap_or(false),
         cli_name: cli_name.to_string(),
     }
 }

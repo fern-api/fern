@@ -148,6 +148,18 @@ function constructWorkflowYaml(args: {
     // JavaScript object-literal entries for the launcher's PLATFORMS
     // map. Trailing commas are legal in ES5+ object literals so every
     // entry gets one — keeps diffs small when targets are added.
+    // The npm launcher shells out to the platform binary with
+    // `execFileSync` and must forward its exit status faithfully.
+    //
+    // `execFileSync` throws on a non-zero exit *and* on a signal death, but
+    // the two look different: a normal exit sets `status` to a number and
+    // `signal` to null, while a signal sets `status` to **null** and `signal`
+    // to e.g. "SIGTERM". An earlier version tested `"status" in e` — true in
+    // both cases — and called `process.exit(e.status)`, which Node coerces
+    // `null` to 0. CI timeouts (SIGTERM), SIGSEGV and OOM-kills therefore all
+    // reported SUCCESS to anything checking `$?`, on the npm install path
+    // only. The launcher now requires a numeric status and otherwise reports
+    // 128+signum, matching the shell convention (SIGTERM -> 143).
     const launcherPlatformEntries = TARGETS.map(
         (t) => `            "${t.npmPlatformSuffix}": "${npmPublishInfo.packageName}-${t.npmPlatformSuffix}",`
     ).join("\n");
@@ -329,14 +341,22 @@ ${matrixIncludes}
           PKGJSON
 
           cd "\${PKG_DIR}"
-          # Pre-release detection — require the semver "-" separator so a
-          # release tag like v1.0.0 for a package whose version string
-          # happens to contain "alpha"/"beta" as a substring isn't
-          # mis-tagged on npm.
-          if [[ "\${VERSION}" == *-alpha* ]]; then
-            npm publish --access public --tag alpha
-          elif [[ "\${VERSION}" == *-beta* ]]; then
-            npm publish --access public --tag beta
+          # Pre-release detection. ANY SemVer pre-release (a "-" after the
+          # version core) must get a non-latest dist-tag: matching only
+          # -alpha/-beta let a v1.1.0-rc.1 or -next.1 tag fall through to a
+          # bare \`npm publish\`, which moves \`latest\` to a pre-release for
+          # every existing installer. The tag is the first dot-separated
+          # pre-release identifier, stripped to a safe slug, so -rc.1 -> rc
+          # and -next.1 -> next; an all-numeric or empty identifier falls
+          # back to "prerelease" because npm rejects a numeric dist-tag.
+          PRERELEASE="\${VERSION#*-}"
+          if [[ "\${VERSION}" == *-* ]]; then
+            TAG=\$(echo "\${PRERELEASE%%.*}" | tr -cd '[:alnum:]-')
+            if [[ -z "\${TAG}" || "\${TAG}" =~ ^[0-9]+\$ ]]; then
+              TAG=prerelease
+            fi
+            echo "Publishing pre-release \${VERSION} with --tag \${TAG}"
+            npm publish --access public --tag "\${TAG}"
           else
             PKG_NAME=\$(node -p "require('./package.json').name")
             PKG_VERSION=\$(node -p "require('./package.json').version")
@@ -427,22 +447,38 @@ ${launcherPlatformEntries}
           try {
             execFileSync(binPath, process.argv.slice(2), { stdio: "inherit" });
           } catch (e) {
-            if (e && typeof e === "object" && "status" in e) {
-              process.exit(e.status);
+            if (e && typeof e === "object") {
+              // Propagate the child's exit code; a signal death has no
+              // numeric status, so report it as 128+signum like a shell does.
+              if (typeof e.status === "number") {
+                process.exit(e.status);
+              }
+              if (typeof e.signal === "string") {
+                const SIGNUM = { SIGHUP: 1, SIGINT: 2, SIGQUIT: 3, SIGILL: 4, SIGABRT: 6, SIGFPE: 8, SIGKILL: 9, SIGSEGV: 11, SIGPIPE: 13, SIGALRM: 14, SIGTERM: 15 };
+                process.exit(128 + (SIGNUM[e.signal] || 0));
+              }
             }
             throw e;
           }
           LAUNCHER
 
           cd "\${PKG_DIR}"
-          # Pre-release detection — require the semver "-" separator so a
-          # release tag like v1.0.0 for a package whose version string
-          # happens to contain "alpha"/"beta" as a substring isn't
-          # mis-tagged on npm.
-          if [[ "\${VERSION}" == *-alpha* ]]; then
-            npm publish --access public --tag alpha
-          elif [[ "\${VERSION}" == *-beta* ]]; then
-            npm publish --access public --tag beta
+          # Pre-release detection. ANY SemVer pre-release (a "-" after the
+          # version core) must get a non-latest dist-tag: matching only
+          # -alpha/-beta let a v1.1.0-rc.1 or -next.1 tag fall through to a
+          # bare \`npm publish\`, which moves \`latest\` to a pre-release for
+          # every existing installer. The tag is the first dot-separated
+          # pre-release identifier, stripped to a safe slug, so -rc.1 -> rc
+          # and -next.1 -> next; an all-numeric or empty identifier falls
+          # back to "prerelease" because npm rejects a numeric dist-tag.
+          PRERELEASE="\${VERSION#*-}"
+          if [[ "\${VERSION}" == *-* ]]; then
+            TAG=\$(echo "\${PRERELEASE%%.*}" | tr -cd '[:alnum:]-')
+            if [[ -z "\${TAG}" || "\${TAG}" =~ ^[0-9]+\$ ]]; then
+              TAG=prerelease
+            fi
+            echo "Publishing pre-release \${VERSION} with --tag \${TAG}"
+            npm publish --access public --tag "\${TAG}"
           else
             PKG_NAME=\$(node -p "require('./package.json').name")
             PKG_VERSION=\$(node -p "require('./package.json').version")

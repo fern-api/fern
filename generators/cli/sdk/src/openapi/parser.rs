@@ -695,6 +695,13 @@ struct OpenApiParameter {
 
 #[derive(Debug, Deserialize, Default)]
 struct OpenApiParamSchema {
+    /// `$ref` to a component schema. A parameter is routinely declared as a
+    /// bare `$ref` (`schema: {$ref: '#/components/schemas/Labels'}`), and
+    /// without this field the whole schema deserialized to all-`None` — the
+    /// parameter lost its type, enum, format and bounds, and an array-typed
+    /// one silently became a single-value string flag.
+    #[serde(rename = "$ref", default)]
+    schema_ref: Option<String>,
     #[serde(rename = "type", default, deserialize_with = "deserialize_type_field")]
     schema_type: Option<String>,
     #[serde(rename = "enum", default, deserialize_with = "deserialize_enum_values")]
@@ -2283,22 +2290,66 @@ fn parse_sdk_variables(mapping: Option<&serde_yaml::Mapping>) -> Vec<SdkVariable
 // Parameter conversion
 // ---------------------------------------------------------------------------
 
+/// Resolve a parameter schema that is a bare `$ref` to its component
+/// schema, following a bounded chain. Returns `None` for an inline schema or
+/// an unresolvable / cyclic reference, in which case the caller uses the
+/// schema as written.
+fn resolve_param_schema_ref<'a>(
+    schema: &OpenApiParamSchema,
+    component_schemas: &'a HashMap<String, OpenApiSchemaObject>,
+) -> Option<&'a OpenApiSchemaObject> {
+    let ref_path = schema.schema_ref.as_ref()?;
+    let resolved = component_schemas.get(&strip_ref_prefix(ref_path))?;
+    resolve_ref_chain(resolved, component_schemas)
+}
+
 fn convert_parameter(
     param: &OpenApiParameter,
     ref_site_default: Option<&serde_yaml::Value>,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
 ) -> (String, MethodParameter) {
-    let (param_type, enum_values, schema_default, format, fern_enum, minimum, maximum) = match &param.schema {
-        Some(s) => (
-            s.schema_type.clone(),
-            s.enum_values.clone(),
-            s.default.as_ref(),
-            s.format.clone(),
-            convert_fern_enum(s.x_fern_enum.as_ref()),
-            s.minimum,
-            s.maximum,
-        ),
-        None => (None, None, None, None, None, None, None),
-    };
+    // A parameter declared as `schema: {$ref: ...}` carries none of its own
+    // keywords, so read them off the resolved component. Without this the
+    // parameter reached the CLI untyped: no enum constraint, no format, no
+    // bounds, and — worst — an array-typed filter registered as a
+    // single-value flag, so `--labels a --labels b` was rejected outright and
+    // `--labels '["a","b"]'` went on the wire as one literal string.
+    let resolved_ref = param
+        .schema
+        .as_ref()
+        .and_then(|s| resolve_param_schema_ref(s, component_schemas));
+
+    let (param_type, enum_values, schema_default, format, fern_enum, minimum, maximum) =
+        match (&param.schema, resolved_ref) {
+            (Some(s), Some(r)) => (
+                r.schema_type().map(str::to_string),
+                effective_enum_values(r),
+                r.default.as_ref(),
+                r.format.clone(),
+                // `x-fern-enum` has no home on a component schema, so it can
+                // only come from the ref site — which is also the precedence
+                // the importer uses when both are present.
+                convert_fern_enum(s.x_fern_enum.as_ref()),
+                r.minimum,
+                r.maximum,
+            ),
+            (Some(s), None) => (
+                s.schema_type.clone(),
+                s.enum_values.clone(),
+                s.default.as_ref(),
+                s.format.clone(),
+                convert_fern_enum(s.x_fern_enum.as_ref()),
+                s.minimum,
+                s.maximum,
+            ),
+            (None, _) => (None, None, None, None, None, None, None),
+        };
+
+    // An `array`-typed parameter is repeatable: `--labels a --labels b`
+    // collects into a JSON array, which the style-aware query serializer then
+    // renders per `style`/`explode`. A single JSON-array argument still works
+    // (the repeated collector splices it), so both spellings now agree.
+    let repeated = param_type.as_deref() == Some("array");
 
     // `x-fern-default` is the only source of a client-side default —
     // i.e. a value the CLI will (a) advertise in `--help` via clap's
@@ -2368,6 +2419,7 @@ fn convert_parameter(
         availability,
         fern_enum,
         variable_reference,
+        repeated,
         ..Default::default()
     };
 
@@ -2854,7 +2906,7 @@ pub fn load_openapi_spec_from_value(
                         OpenApiParamOrRef::Ref { x_fern_default, .. } => x_fern_default.as_ref(),
                         OpenApiParamOrRef::Inline(_) => None,
                     };
-                    let (name, mut mp) = convert_parameter(p, ref_site_default);
+                    let (name, mut mp) = convert_parameter(p, ref_site_default, component_schemas);
                     mp.display_name = display_name;
                     params.insert(name, mp);
                 }
@@ -4498,10 +4550,88 @@ mod tests {
                 maximum: 100
         "#;
         let p: OpenApiParameter = serde_yaml::from_str(raw).unwrap();
-        let (name, mp) = convert_parameter(&p, None);
+        let (name, mp) = convert_parameter(&p, None, &HashMap::new());
         assert_eq!(name, "limit");
         assert_eq!(mp.minimum, Some(1.0), "minimum must lower from schema");
         assert_eq!(mp.maximum, Some(100.0), "maximum must lower from schema");
+    }
+
+    #[test]
+    fn test_ref_typed_parameter_resolves_through_component_schemas() {
+        // A parameter declared as a bare `$ref` carried none of its own
+        // keywords, so it reached the CLI with `param_type: None` — no type
+        // check, no enum constraint, no format, no bounds. On specs where most
+        // parameters are component refs that meant validation was effectively
+        // off for them.
+        let raw = r#"
+            name: status
+            in: query
+            schema:
+                $ref: '#/components/schemas/Status'
+        "#;
+        let param: OpenApiParameter = serde_yaml::from_str(raw).unwrap();
+        let component: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: string
+            format: uuid
+            enum: [open, closed]
+            "#,
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert("Status".to_string(), component);
+
+        let (name, mp) = convert_parameter(&param, None, &components);
+        assert_eq!(name, "status");
+        assert_eq!(mp.param_type.as_deref(), Some("string"));
+        assert_eq!(mp.format.as_deref(), Some("uuid"));
+        assert_eq!(
+            mp.enum_values.as_deref(),
+            Some(&["open".to_string(), "closed".to_string()][..]),
+        );
+        assert!(!mp.repeated, "a scalar parameter must not be repeatable");
+    }
+
+    #[test]
+    fn test_array_typed_parameter_is_repeatable() {
+        // `--labels a --labels b` was rejected outright ("cannot be used
+        // multiple times") and `--labels '["a","b"]'` went on the wire as one
+        // literal string, because `repeated` was only ever set for body
+        // properties and multipart fields — never for query/header params.
+        // Covers both the inline and `$ref` spellings.
+        let inline: OpenApiParameter = serde_yaml::from_str(
+            r#"
+            name: labels
+            in: query
+            schema:
+                type: array
+                items:
+                    type: string
+            "#,
+        )
+        .unwrap();
+        let (_, inline_mp) = convert_parameter(&inline, None, &HashMap::new());
+        assert_eq!(inline_mp.param_type.as_deref(), Some("array"));
+        assert!(inline_mp.repeated, "inline array param must be repeatable");
+
+        let via_ref: OpenApiParameter = serde_yaml::from_str(
+            r#"
+            name: labels
+            in: query
+            schema:
+                $ref: '#/components/schemas/Labels'
+            "#,
+        )
+        .unwrap();
+        let labels: OpenApiSchemaObject = serde_yaml::from_str(
+            "type: array\nitems:\n  type: string\n",
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert("Labels".to_string(), labels);
+        let (_, ref_mp) = convert_parameter(&via_ref, None, &components);
+        assert_eq!(ref_mp.param_type.as_deref(), Some("array"));
+        assert!(ref_mp.repeated, "$ref'd array param must be repeatable");
     }
 
     #[test]

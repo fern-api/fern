@@ -1,0 +1,74 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Retries no longer treat a self-generated `Idempotency-Key` as a licence to
+    retry. Because the key is generated for every POST/PUT/PATCH, every
+    non-idempotent operation was retry-eligible and a 5xx on a create retried
+    ~4x against endpoints with no idempotency support. Retry-safety now
+    requires either `x-fern-idempotent: true` (the spec declaring server-side
+    support) or an explicit `--idempotency-key`. The auto key is still sent.
+  type: fix
+
+- summary: |
+    `x-fern-idempotent: true` no longer suppresses the auto `Idempotency-Key`.
+    The marker only means the operation *exposes* `--idempotency-key`, but it
+    was read as "the caller supplies one" — so a marked operation invoked
+    without the flag retried with no key at all, while the same operation
+    without the marker got one. A key is now always sent on POST/PUT/PATCH
+    unless the caller supplied their own or `x-fern-cli-idempotency: false`
+    opts out.
+  type: fix
+
+- summary: |
+    Request-body validation now checks properties behind a `$ref`. The
+    validator only had an object branch, so a `$ref` to a scalar or array
+    component was accepted whatever its value — on specs where most schemas
+    are component refs this meant validation was effectively off, and
+    `--dry-run` exited 0 on a malformed body. Bare-`$ref` component chains are
+    now followed too (bounded, so a cycle fails closed).
+  type: fix
+
+- summary: |
+    Parameters declared as a bare `$ref` now resolve through component
+    schemas, so they keep their type, `enum`, `format` and numeric bounds
+    instead of arriving untyped. Array-typed parameters (inline or `$ref`'d)
+    are now repeatable: `--labels a --labels b` works, and a single JSON-array
+    argument is equivalent.
+  type: fix
+
+- summary: |
+    `--page-all` / `--page-limit` / `--page-delay` / `--no-pager` are only
+    registered on operations the spec describes how to page. They were
+    advertised everywhere, and on a spec with no pagination metadata the
+    executor fell back to guessing `pageToken` / `nextPageToken`: one request
+    went out and the command exited 0 with page 1.
+  type: fix
+
+- summary: |
+    The generated npm launcher now exits non-zero when the binary dies on a
+    signal. `execFileSync` reports a signal death with `status: null`, which
+    the launcher passed to `process.exit`, and Node coerces that to 0 — so CI
+    timeouts (SIGTERM), SIGSEGV and OOM-kills all reported success. Signal
+    deaths now exit 128+signum (SIGTERM to 143).
+  type: fix
+
+- summary: |
+    Any SemVer pre-release now publishes to npm under a non-latest dist-tag.
+    Only `-alpha` and `-beta` were matched, so a `v1.1.0-rc.1` or `-next.1`
+    tag fell through to a bare `npm publish` and would move `latest` to a
+    pre-release. The tag is derived from the first pre-release identifier.
+  type: fix
+
+- summary: |
+    The custom-command SDK bridge seeds the co-generated SDK's `base_url` from
+    the CLI's own resolution. `ClientConfig::default()` carries an empty
+    `base_url` for any API that declares no environment, so `sdk::client(ctx)`
+    produced a client with no host and every custom command failed on a
+    relative URL before the injected executor could help.
+  type: fix
+
+- summary: |
+    Generated skills now tell agents to verify auth with `<cli> auth status`
+    rather than `<cli> --help`, which reads no credentials and so confirmed
+    nothing.
+  type: fix

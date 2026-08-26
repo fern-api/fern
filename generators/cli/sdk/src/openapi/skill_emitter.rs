@@ -223,9 +223,14 @@ fn render_auth_section(
             }
             let _ = writeln!(out, "```\n");
 
-            let _ = writeln!(out, "Verify authentication works:\n");
+            // `--help` reads no credentials and contacts nothing, so it
+            // verified nothing — an agent following this step got a pass
+            // signal from an unauthenticated CLI. `auth status` is the
+            // credential-resolution report and is grafted onto every Fern CLI
+            // (ADR-0007 § always-graft), so it is always a valid instruction.
+            let _ = writeln!(out, "Verify authentication resolves:\n");
             let _ = writeln!(out, "```bash");
-            let _ = writeln!(out, "{bin_name} --help");
+            let _ = writeln!(out, "{bin_name} auth status");
             let _ = writeln!(out, "```\n");
         }
     } else {
