@@ -1,4 +1,5 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { assertNever } from "@fern-api/core-utils";
+import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -13,6 +14,7 @@ import {
     GraphQLInputType,
     GraphQLInterfaceType,
     GraphQLList,
+    GraphQLNamedType,
     GraphQLNonNull,
     GraphQLObjectType,
     GraphQLOutputType,
@@ -26,6 +28,13 @@ import { mergeGraphQlDocuments } from "./mergeGraphQlDocuments.js";
 export interface GraphQLConverterResult {
     graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
     types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
+    /**
+     * The GraphQL kind each emitted type was declared with, keyed exactly like `types`.
+     *
+     * The FDR type shape is shared with OpenAPI and gRPC and cannot express a GraphQL kind, so
+     * the kind travels alongside the types rather than inside them.
+     */
+    typeCategories: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>;
 }
 
 export interface GraphQlExampleInput {
@@ -55,6 +64,7 @@ export class GraphQLConverter {
     private namespace: string | undefined;
     private processingTypes: Set<string> = new Set();
     private types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
+    private typeCategories: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory> = {};
     private examplesByOperation: Map<string, FdrAPI.api.v1.register.GraphQlExample[]> = new Map();
 
     constructor({
@@ -235,7 +245,7 @@ export class GraphQLConverter {
 
         const graphqlOperations = this.resolveOperationIds(pendingOperations);
 
-        return { graphqlOperations, types: this.types };
+        return { graphqlOperations, types: this.types, typeCategories: this.typeCategories };
     }
 
     private resolveOperationIds(
@@ -289,6 +299,7 @@ export class GraphQLConverter {
             }
 
             const typeId = this.getNamespacedTypeId(typeName);
+            this.typeCategories[typeId] = this.typeCategoryOf(type);
 
             if (type instanceof GraphQLEnumType) {
                 this.processingTypes.add(typeName);
@@ -372,6 +383,31 @@ export class GraphQLConverter {
                 }
             }
         }
+    }
+
+    // Derived from the declared kind, never from the converted FDR shape: an interface and an
+    // object both convert to `object` and a custom scalar to `alias`, so shape-sniffing would
+    // mislabel types.
+    private typeCategoryOf(type: GraphQLNamedType): FernNavigation.GraphQlTypeCategory {
+        if (type instanceof GraphQLObjectType) {
+            return "object";
+        }
+        if (type instanceof GraphQLInputObjectType) {
+            return "input";
+        }
+        if (type instanceof GraphQLEnumType) {
+            return "enum";
+        }
+        if (type instanceof GraphQLInterfaceType) {
+            return "interface";
+        }
+        if (type instanceof GraphQLUnionType) {
+            return "union";
+        }
+        if (type instanceof GraphQLScalarType) {
+            return "scalar";
+        }
+        assertNever(type);
     }
 
     // Builds an operation id of the form `<operationType>_<segments joined by ".">`.

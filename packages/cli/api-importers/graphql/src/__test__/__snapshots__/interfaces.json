@@ -478,5 +478,16 @@
       },
       "description": "An interface with no implementations."
     }
+  },
+  "typeCategories": {
+    "ProductOption": "interface",
+    "CheckboxOption": "object",
+    "MultipleChoiceOption": "object",
+    "TextFieldOption": "object",
+    "Node": "interface",
+    "Product": "object",
+    "Category": "object",
+    "SearchResult": "union",
+    "OrphanInterface": "interface"
   }
 }

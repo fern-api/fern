@@ -3914,6 +3914,9 @@ importers:
 
   packages/cli/api-importers/graphql:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
       '@fern-api/fdr-sdk':
         specifier: 1.2.96-8e5f0d55dd
         version: 1.2.96-8e5f0d55dd(@opentelemetry/api@1.9.1)(typescript@5.9.3)

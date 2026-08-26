@@ -505,5 +505,17 @@
         ]
       }
     }
+  },
+  "typeCategories": {
+    "UserProfile": "object",
+    "UserProfileFilter": "input",
+    "UpdateUserProfileInput": "input",
+    "ProfileStatus": "enum",
+    "ProfileImages": "object",
+    "Image": "object",
+    "ImageInput": "input",
+    "ImageFilter": "input",
+    "ProductUsage": "object",
+    "UsagePeriod": "enum"
   }
 }
