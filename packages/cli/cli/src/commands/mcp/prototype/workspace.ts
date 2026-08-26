@@ -9,7 +9,7 @@ import { CliContext } from "../../../cli-context/CliContext.js";
 import { loadSpecSummaries, SpecSummary } from "./openapiSummary.js";
 import { hint, ICONS, radioChoice, selectTheme, sleep, withSpinner } from "./ui.js";
 
-const SPEC_SCAN_DELAY_MS = 600;
+const SPEC_SCAN_DELAY_MS = 1500;
 
 export interface WorkspaceSpec {
     workspace: AbstractAPIWorkspace<unknown>;
