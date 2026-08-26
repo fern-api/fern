@@ -15,6 +15,7 @@ import {
     getFernSdkGenApiLanguage,
     getOutputRepoUrl,
     isFernSdkGenApiEnabled,
+    isSdkGenApiOnly,
     runRemoteGenerationForAPIWorkspace
 } from "@fern-api/remote-workspace-runner";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -169,6 +170,15 @@ export async function generateWorkspace({
         runnableGroups.map(({ resolvedGroupName, group }) =>
             context.runInteractiveTask({ name: resolvedGroupName }, async (groupContext) => {
                 if (useLocalDocker) {
+                    const unsupported = group.generators.find((generator) => isSdkGenApiOnly(generator.name));
+                    if (unsupported != null) {
+                        groupContext.failAndThrow(
+                            `${unsupported.name} does not support --local. ` +
+                                "Remove --local to run this generator through the remote pipeline.",
+                            undefined,
+                            { code: CliError.Code.ConfigError }
+                        );
+                    }
                     await runLocalGenerationForWorkspace({
                         token,
                         projectConfig,

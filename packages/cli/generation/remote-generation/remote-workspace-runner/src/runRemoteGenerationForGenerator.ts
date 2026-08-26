@@ -37,6 +37,7 @@ import {
     getFernSdkGenApiLanguage,
     isEligibleForFernSdkGenApi,
     isFernSdkGenApiEnabled,
+    isSdkGenApiOnly,
     runFernSdkGenApiBuild
 } from "./fernSdkGenApi.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
@@ -428,6 +429,13 @@ export async function runRemoteGenerationForGenerator({
         usedSdkGenApi = true;
     } else {
         sdkGenApiBatch?.skip();
+        if (isSdkGenApiOnly(generatorInvocationWithEnvVarSubstitutions.name)) {
+            return interactiveTaskContext.failAndThrow(
+                `${generatorInvocationWithEnvVarSubstitutions.name} requires the environment variable FERN_USE_SDK_GEN_API=true.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
     }
 
     if (!usedSdkGenApi) {

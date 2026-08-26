@@ -92,6 +92,17 @@ const FERN_SDK_GENERATOR_LANGUAGES: Readonly<Record<string, FernSdkGenApiLanguag
     "fernapi/fern-mcp-server": "mcp"
 };
 
+/**
+ * Generators that only run through sdk-gen-api and have no Fiddle fallback.
+ * When sdk-gen-api is disabled, these generators must fail fast with a clear
+ * message instead of falling through to Fiddle where they would fail opaquely.
+ */
+const SDK_GEN_API_ONLY_GENERATORS: ReadonlySet<string> = new Set(["fernapi/fern-mcp-server"]);
+
+export function isSdkGenApiOnly(generatorName: string): boolean {
+    return SDK_GEN_API_ONLY_GENERATORS.has(generatorName);
+}
+
 interface FernBuildStatus {
     buildId: string;
     status: "queued" | "running" | "succeeded" | "failed" | "partial_failure";

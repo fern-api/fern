@@ -1,5 +1,5 @@
 export { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
-export { getFernSdkGenApiLanguage, isFernSdkGenApiEnabled } from "./fernSdkGenApi.js";
+export { getFernSdkGenApiLanguage, isFernSdkGenApiEnabled, isSdkGenApiOnly } from "./fernSdkGenApi.js";
 export { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 export type { PublishTarget } from "./publishTarget.js";
 export { extractPublishTarget } from "./publishTarget.js";

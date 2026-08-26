@@ -10,6 +10,7 @@ import {
     getFernSdkGenApiOrigin,
     isEligibleForFernSdkGenApi,
     isFernSdkGenApiEnabled,
+    isSdkGenApiOnly,
     mapFernSdkGenApiOutput,
     runFernSdkGenApiBuild
 } from "../fernSdkGenApi.js";
@@ -601,5 +602,22 @@ describe("fernapi/fern-mcp-server target", () => {
             type: "publish",
             publish: { registry: "npm" }
         });
+    });
+});
+
+describe("isSdkGenApiOnly", () => {
+    it("returns true for generators that have no Fiddle fallback", () => {
+        expect(isSdkGenApiOnly("fernapi/fern-mcp-server")).toBe(true);
+    });
+
+    it("returns false for generators that support both routes", () => {
+        expect(isSdkGenApiOnly("fernapi/fern-typescript-sdk")).toBe(false);
+        expect(isSdkGenApiOnly("fernapi/fern-python-sdk")).toBe(false);
+        expect(isSdkGenApiOnly("fernapi/fern-go-sdk")).toBe(false);
+    });
+
+    it("returns false for unknown generators", () => {
+        expect(isSdkGenApiOnly("fernapi/fern-typescript-express")).toBe(false);
+        expect(isSdkGenApiOnly("some-custom/generator")).toBe(false);
     });
 });
