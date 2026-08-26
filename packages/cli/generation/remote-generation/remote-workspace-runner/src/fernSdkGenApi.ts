@@ -597,6 +597,7 @@ async function executeFernSdkGenApiBuild(
         if (target == null) {
             throw new Error(`Cannot pair sdk-gen-api runtime bundle at index ${index} with a target`);
         }
+        // sdk-gen-api correlates bundles by this filename; ordering is only deterministic batching.
         form.append("bundles", participant.runtimeBundle, {
             filename: `${target.targetId}.json.gz`,
             contentType: "application/gzip"

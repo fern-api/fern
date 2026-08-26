@@ -163,6 +163,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     });
 
     it("passes a known generator language mismatch to canonical compatibility validation", () => {
+        // Eligibility gates route prerequisites; batch preflight owns canonical diagnostics.
         expect(
             isEligibleForFernSdkGenApi({
                 generatorInvocation: invocation({ language: "python" }),
@@ -534,7 +535,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                     packageName: "@acme/sdk",
                     token: marker
                 }),
-                true
+                { omitPublishCredentials: true }
             );
             const nuget = getGithubPublishConfig(
                 FernFiddle.GithubPublishInfo.nuget({
@@ -542,7 +543,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                     packageName: "Acme.Sdk",
                     apiKey: marker
                 }),
-                true
+                { omitPublishCredentials: true }
             );
             const pypi = getGithubPublishConfig(
                 FernFiddle.GithubPublishInfo.pypi({
@@ -550,7 +551,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                     packageName: "acme-sdk",
                     credentials: { username: "__token__", password: marker }
                 }),
-                true
+                { omitPublishCredentials: true }
             );
 
             expect(npm?.type === "npm" ? npm.tokenEnvironmentVariable : undefined).toBe("<USE_OIDC>");
@@ -564,7 +565,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                 packageName: "@acme/sdk",
                 token: "actual-secret"
             }),
-            true
+            { omitPublishCredentials: true }
         );
         const nugetWithSecret = getGithubPublishConfig(
             FernFiddle.GithubPublishInfo.nuget({
@@ -572,7 +573,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                 packageName: "Acme.Sdk",
                 apiKey: "actual-secret"
             }),
-            true
+            { omitPublishCredentials: true }
         );
         const pypiWithSecret = getGithubPublishConfig(
             FernFiddle.GithubPublishInfo.pypi({
@@ -580,12 +581,49 @@ describe("isEligibleForFernSdkGenApi", () => {
                 packageName: "acme-sdk",
                 credentials: { username: "actual-user", password: "actual-secret" }
             }),
-            true
+            { omitPublishCredentials: true }
         );
         expect(npmWithSecret?.type === "npm" ? npmWithSecret.tokenEnvironmentVariable : undefined).toBe("");
         expect(nugetWithSecret?.type === "nuget" ? nugetWithSecret.apiKeyEnvironmentVariable : undefined).toBe("");
         expect(pypiWithSecret?.type === "pypi" ? pypiWithSecret.usernameEnvironmentVariable : undefined).toBe("");
         expect(pypiWithSecret?.type === "pypi" ? pypiWithSecret.passwordEnvironmentVariable : undefined).toBe("");
+    });
+
+    it("omits credentials for registries without trusted-publishing markers", () => {
+        const options = { omitPublishCredentials: true };
+        const maven = getGithubPublishConfig(
+            FernFiddle.GithubPublishInfo.maven({
+                registryUrl: "https://repo.example.com",
+                coordinate: "com.acme:sdk",
+                credentials: { username: "user", password: "secret" },
+                signature: { keyId: "key", password: "secret", secretKey: "private" }
+            }),
+            options
+        );
+        const rubygems = getGithubPublishConfig(
+            FernFiddle.GithubPublishInfo.rubygems({
+                registryUrl: "https://rubygems.org",
+                packageName: "acme-sdk",
+                apiKey: "secret"
+            }),
+            options
+        );
+        const crates = getGithubPublishConfig(
+            FernFiddle.GithubPublishInfo.crates({
+                registryUrl: "https://crates.io",
+                packageName: "acme-sdk",
+                token: "secret"
+            }),
+            options
+        );
+
+        expect(maven).toMatchObject({
+            usernameEnvironmentVariable: "",
+            passwordEnvironmentVariable: ""
+        });
+        expect(maven?.type === "maven" ? maven.signature : undefined).toBeUndefined();
+        expect(rubygems?.type === "rubygems" ? rubygems.apiKeyEnvironmentVariable : undefined).toBe("");
+        expect(crates?.type === "crates" ? crates.tokenEnvironmentVariable : undefined).toBe("");
     });
 
     it("uses the override and exact generator identity when migrating a runtime bundle", async () => {

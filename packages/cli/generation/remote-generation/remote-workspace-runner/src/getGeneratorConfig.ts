@@ -103,8 +103,9 @@ export declare namespace getGeneratorConfig {
 
 export function getGithubPublishConfig(
     githubPublishInfo: FernFiddle.GithubPublishInfo | undefined,
-    omitPublishCredentials = false
+    options: { omitPublishCredentials?: boolean } = {}
 ): FernGeneratorExec.GithubPublishInfo | undefined {
+    const omitPublishCredentials = options.omitPublishCredentials ?? false;
     return githubPublishInfo != null
         ? FernFiddle.GithubPublishInfo._visit<FernGeneratorExec.GithubPublishInfo | undefined>(githubPublishInfo, {
               npm: (value) => {
@@ -285,7 +286,7 @@ export function getGeneratorConfig({
                 mode: FernGeneratorExec.OutputMode.github({
                     repoUrl: `https://github.com/${value.owner}/${value.repo}`,
                     version: outputVersion,
-                    publishInfo: getGithubPublishConfig(value.publishInfo, omitPublishCredentials),
+                    publishInfo: getGithubPublishConfig(value.publishInfo, { omitPublishCredentials }),
                     installationToken: undefined // Don't attempt to clone the repository when generating locally.
                 }),
                 path: outputDirectory,
@@ -315,7 +316,7 @@ export function getGeneratorConfig({
                 mode: FernGeneratorExec.OutputMode.github({
                     repoUrl,
                     version: outputVersion,
-                    publishInfo: getGithubPublishConfig(value.publishInfo, omitPublishCredentials)
+                    publishInfo: getGithubPublishConfig(value.publishInfo, { omitPublishCredentials })
                 }),
                 path: outputDirectory,
                 publishingMetadata: generatorInvocation.publishMetadata
