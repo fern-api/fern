@@ -1,0 +1,40 @@
+"""A point in time, serialized as an ISO-8601 string."""
+scalar DateTime
+
+"""How a product list is ordered."""
+enum ProductSortKeys {
+  TITLE
+  CREATED_AT
+}
+
+"""Anything addressable by a global id."""
+interface Node {
+  id: ID!
+}
+
+type Product implements Node {
+  id: ID!
+  title: String!
+  createdAt: DateTime!
+}
+
+type Collection implements Node {
+  id: ID!
+  title: String!
+}
+
+input ProductInput {
+  title: String!
+  sortKey: ProductSortKeys
+}
+
+union SearchResult = Product | Collection
+
+type Query {
+  products(sortKey: ProductSortKeys, first: Int): [Product!]!
+  search(query: String!): [SearchResult!]!
+}
+
+type Mutation {
+  productCreate(input: ProductInput!): Product
+}

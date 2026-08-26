@@ -81,6 +81,12 @@ type GraphqlTypeChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "
 
 const GRAPHQL_TYPES_URL_SLUG = "types";
 
+/**
+ * Title of the single section holding every GraphQL kind. Types belong to the schema rather than
+ * to any one package, so every GraphQL spec in the API section contributes to this one section.
+ */
+const GRAPHQL_TYPES_TITLE = "GraphQL Types";
+
 export class ApiReferenceNodeConverter {
     apiDefinitionId: FernNavigation.V1.ApiDefinitionId;
     #holder: ApiDefinitionHolder;
@@ -100,7 +106,6 @@ export class ApiReferenceNodeConverter {
     #tagDescriptionContent: Map<AbsoluteFilePath, string>;
     #graphqlNamespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
     #graphqlTypeCategories: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>;
-    #emittedGraphqlTypeSections = false;
     constructor(
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: APIV1Read.ApiDefinition,
@@ -1158,13 +1163,13 @@ export class ApiReferenceNodeConverter {
             additionalChildren.push(...graphqlSections);
         }
 
-        // GraphQL types are declared once per schema rather than per package, so their sections
-        // hang off the same level as Queries/Mutations and are emitted exactly once.
-        if (!this.#emittedGraphqlTypeSections) {
-            const graphqlTypeSections = this.#convertGraphQLTypesToSections(parentSlug, parentAvailability);
-            if (graphqlTypeSections.length > 0) {
-                this.#emittedGraphqlTypeSections = true;
-                additionalChildren.push(...graphqlTypeSections);
+        // GraphQL types belong to the schema, not to any one package, so they are emitted once at
+        // the API root. Emitting from whichever package happened to be converted first would nest
+        // them under an unrelated REST tag and give them that tag's slug.
+        if (pkg === this.#holder.api.rootPackage) {
+            const graphqlTypesSection = this.#convertGraphQLTypesToSection(parentSlug, parentAvailability);
+            if (graphqlTypesSection != null) {
+                additionalChildren.push(graphqlTypesSection);
             }
         }
 
@@ -1344,16 +1349,17 @@ export class ApiReferenceNodeConverter {
     }
 
     /**
-     * Builds the GraphQL Types navigation: one page per named type in the schema, grouped by the
-     * GraphQL kind it was declared with.
+     * Builds the GraphQL Types navigation: a single "GraphQL Types" section holding one sub-section
+     * per GraphQL kind, each with one page per named type declared with that kind. Every GraphQL
+     * spec in the API section contributes to this one section.
      *
      * Slugs are `<api>/types/<kind>/<type-name>`. Type IDs are already namespace-prefixed by the
      * GraphQL converter, so same-named types from two schemas get distinct slugs.
      */
-    #convertGraphQLTypesToSections(
+    #convertGraphQLTypesToSection(
         parentSlug: FernNavigation.V1.SlugGenerator,
         parentAvailability?: docsYml.RawSchemas.Availability
-    ): FernNavigation.V1.ApiPackageChild[] {
+    ): FernNavigation.V1.ApiPackageChild | undefined {
         const typeIdsByCategory = new Map<FernNavigation.GraphQlTypeCategory, FdrAPI.TypeId[]>();
         for (const [typeIdRaw, category] of Object.entries(this.#graphqlTypeCategories)) {
             const typeId = FdrAPI.TypeId(typeIdRaw);
@@ -1369,7 +1375,7 @@ export class ApiReferenceNodeConverter {
         }
 
         if (typeIdsByCategory.size === 0) {
-            return [];
+            return undefined;
         }
 
         const typesSlug = parentSlug.append(GRAPHQL_TYPES_URL_SLUG);
@@ -1415,7 +1421,32 @@ export class ApiReferenceNodeConverter {
             } as ApiPackageNodeWithCollapsibleConfig);
         }
 
-        return sections;
+        if (sections.length === 0) {
+            return undefined;
+        }
+
+        return {
+            id: this.#idgen.get(`${this.apiDefinitionId}:graphql:types`),
+            type: "apiPackage",
+            collapsed: undefined,
+            children: sections,
+            title: GRAPHQL_TYPES_TITLE,
+            slug: typesSlug.get(),
+            icon: undefined,
+            hidden: this.hideChildren,
+            overviewPageId: undefined,
+            collapsible: undefined,
+            collapsedByDefault: undefined,
+            availability: convertDocsAvailability(parentAvailability),
+            apiDefinitionId: this.apiDefinitionId,
+            pointsTo: undefined,
+            noindex: undefined,
+            playground: undefined,
+            authed: undefined,
+            viewers: undefined,
+            orphaned: undefined,
+            featureFlags: undefined
+        } as ApiPackageNodeWithCollapsibleConfig;
     }
 
     #buildGraphqlTypeChildNode(

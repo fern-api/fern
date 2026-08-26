@@ -17,8 +17,17 @@ const apiDefinitionId = "550e8400-e29b-41d4-a716-446655440000";
 
 const FIXTURE = "fixtures/graphql-type-navigation/fern";
 
-async function convertFixture({ namespace }: { namespace?: string } = {}): Promise<FernNavigation.V1.ApiReferenceNode> {
-    const fernDirectory = resolve(AbsoluteFilePath.of(__dirname), FIXTURE);
+/** Same schema, but the API section also has an OpenAPI spec whose tags become subpackages. */
+const FIXTURE_WITH_SUBPACKAGES = "fixtures/graphql-type-navigation-subpackages/fern";
+
+async function convertFixture({
+    namespace,
+    fixture = FIXTURE
+}: {
+    namespace?: string;
+    fixture?: string;
+} = {}): Promise<FernNavigation.V1.ApiReferenceNode> {
+    const fernDirectory = resolve(AbsoluteFilePath.of(__dirname), fixture);
 
     const docsWorkspace = await loadDocsWorkspace({ fernDirectory, context });
     if (docsWorkspace == null) {
@@ -53,7 +62,7 @@ async function convertFixture({ namespace }: { namespace?: string } = {}): Promi
 
     const graphqlResult = await new GraphQLConverter({
         context,
-        filePath: [resolve(AbsoluteFilePath.of(__dirname), `${FIXTURE}/definition/schema.graphql`)],
+        filePath: [resolve(AbsoluteFilePath.of(__dirname), `${fixture}/definition/schema.graphql`)],
         namespace,
         examples: []
     }).convert();
@@ -100,15 +109,21 @@ async function convertFixture({ namespace }: { namespace?: string } = {}): Promi
     ).get();
 }
 
+/** The single section holding every kind, or undefined when the schema declares no types. */
+function typesRoot(node: FernNavigation.V1.ApiReferenceNode): FernNavigation.V1.ApiPackageNode | undefined {
+    return node.children.find(
+        (child): child is FernNavigation.V1.ApiPackageNode =>
+            child.type === "apiPackage" && child.title === "GraphQL Types"
+    );
+}
+
 function typeSection(
     node: FernNavigation.V1.ApiReferenceNode,
     title: string
 ): FernNavigation.V1.ApiPackageNode | undefined {
-    const typesSections = node.children.filter(
-        (child): child is FernNavigation.V1.ApiPackageNode =>
-            child.type === "apiPackage" && child.slug.includes("/types/")
+    return (typesRoot(node)?.children ?? []).find(
+        (child): child is FernNavigation.V1.ApiPackageNode => child.type === "apiPackage" && child.title === title
     );
-    return typesSections.find((child) => child.title === title);
 }
 
 function graphqlTypeChildren(section: FernNavigation.V1.ApiPackageNode | undefined) {
@@ -172,16 +187,52 @@ describe("GraphQL type navigation", () => {
     it("does not create a section for a kind the schema does not declare", async () => {
         const node = await convertFixture();
 
-        // The fixture declares no subscriptions, so the operations side has no Subscriptions
-        // section; every types section that exists has at least one page.
-        for (const child of node.children) {
-            if (child.type === "apiPackage" && child.slug.includes("/types/")) {
+        // Every kind section that exists has at least one page.
+        for (const child of typesRoot(node)?.children ?? []) {
+            if (child.type === "apiPackage") {
                 expect(graphqlTypeChildren(child).length).toBeGreaterThan(0);
             }
         }
 
         expect(typeSection(node, "Objects")).toBeDefined();
-        expect(node.children.find((child) => child.type === "apiPackage" && child.title === "Scalars")).toBeDefined();
+        expect(typeSection(node, "Scalars")).toBeDefined();
+    });
+
+    it("nests every kind under a single GraphQL Types section", async () => {
+        const node = await convertFixture();
+
+        const root = typesRoot(node);
+        expect(root?.slug).toBe("base/path/graph-ql-api-reference/types");
+        // The kinds are sections of that one node, not siblings of Queries/Mutations.
+        expect(
+            (root?.children ?? [])
+                .filter((child): child is FernNavigation.V1.ApiPackageNode => child.type === "apiPackage")
+                .map((child) => child.title)
+        ).toEqual(["Objects", "Inputs", "Enums", "Scalars", "Interfaces", "Unions"]);
+        expect(node.children.filter((child) => child.type === "apiPackage" && child.title === "Objects")).toEqual([]);
+    });
+
+    it("emits the section at the API root when the API also has subpackages", async () => {
+        // An OpenAPI spec alongside the schema turns its tags into subpackages. Types belong to
+        // the schema, so they must not be nested under whichever tag is converted first.
+        const node = await convertFixture({ fixture: FIXTURE_WITH_SUBPACKAGES });
+
+        const subpackages = node.children.filter(
+            (child): child is FernNavigation.V1.ApiPackageNode =>
+                child.type === "apiPackage" && child.title !== "GraphQL Types"
+        );
+        expect(subpackages.length).toBeGreaterThan(0);
+        for (const subpackage of subpackages) {
+            expect(
+                subpackage.children.some((child) => child.type === "apiPackage" && child.slug.includes("/types/"))
+            ).toBe(false);
+        }
+
+        expect(typesRoot(node)?.slug).toBe("base/path/graph-ql-api-reference/types");
+        expect(graphqlTypeChildren(typeSection(node, "Objects")).map((child) => child.slug)).toEqual([
+            "base/path/graph-ql-api-reference/types/objects/collection",
+            "base/path/graph-ql-api-reference/types/objects/product"
+        ]);
     });
 
     it("keeps namespaced type ids and slugs distinct so same-named types do not collide", async () => {
