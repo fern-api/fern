@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.105.2
+  changelogEntry:
+    - summary: |
+        Add snapshot coverage for OAuth client credentials with a custom token header and prefix.
+      type: chore
+  createdAt: "2026-08-26"
+  irVersion: 67
 - version: 5.105.1
   changelogEntry:
     - summary: |
