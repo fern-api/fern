@@ -10,8 +10,8 @@ import { proposeAiRuleset } from "./aiCurated.js";
 import {
     DEFAULT_MCP_GROUP_NAME,
     getMcpGeneratorEntries,
-    writeMcpGroupToGeneratorsYml,
-    WriteMcpGroupResult
+    WriteMcpGroupResult,
+    writeMcpGroupToGeneratorsYml
 } from "./mcpGeneratorsYml.js";
 import { EndpointSummary } from "./openapiSummary.js";
 import { BuiltinPresetKey, buildBuiltinPresets, PresetResolution } from "./presets.js";
@@ -62,17 +62,22 @@ async function sleep(milliseconds: number): Promise<void> {
 async function promptForAiCuratedConfig({
     cliContext,
     endpoints,
-    initialIntent
+    initialIntent,
+    quiet = false
 }: {
     cliContext: CliContext;
     endpoints: EndpointSummary[];
     initialIntent: string | undefined;
+    quiet?: boolean;
 }): Promise<ToolsConfig> {
     const intent =
         initialIntent ??
         (await cliContext.getInput({
             message: "Describe what this MCP should let an agent do (and anything it must never touch)"
         }));
+    if (quiet) {
+        return proposeAiRuleset(intent, endpoints).config;
+    }
     cliContext.logger.info(chalk.dim("✦ Fern Agent is proposing a ruleset… (stubbed locally in this prototype)"));
     await sleep(AI_SPINNER_DELAY_MS);
     const proposal = proposeAiRuleset(intent, endpoints);
@@ -149,7 +154,12 @@ export async function initMcp(args: InitMcpArgs): Promise<void> {
 
     if (args.intent != null && args.preset == null) {
         presetKey = "ai-curated";
-        toolsConfig = await promptForAiCuratedConfig({ cliContext, endpoints, initialIntent: args.intent });
+        toolsConfig = await promptForAiCuratedConfig({
+            cliContext,
+            endpoints,
+            initialIntent: args.intent,
+            quiet: json
+        });
     } else if (!interactive || args.preset != null) {
         presetKey = args.preset ?? "read-only";
         const resolution = presets[args.preset ?? "read-only"];

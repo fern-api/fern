@@ -256,7 +256,13 @@ export async function writeMcpGroupToGeneratorsYml({
 
     const configurationAsRecord: Record<string, unknown> = isRecord(parsedFile) ? { ...parsedFile } : {};
     const groups = isRecord(configurationAsRecord.groups) ? { ...configurationAsRecord.groups } : {};
-    groups[groupName] = { generators: [generatorEntry] };
+    const existingGroupValue = groups[groupName];
+    const existingGroup = isRecord(existingGroupValue) ? existingGroupValue : undefined;
+    const existingGenerators: unknown[] = Array.isArray(existingGroup?.generators) ? existingGroup.generators : [];
+    const otherGenerators = existingGenerators.filter(
+        (generator) => !(isRecord(generator) && generator.name === MCP_GENERATOR_NAME)
+    );
+    groups[groupName] = { ...existingGroup, generators: [...otherGenerators, generatorEntry] };
     configurationAsRecord.groups = groups;
 
     await writeFile(

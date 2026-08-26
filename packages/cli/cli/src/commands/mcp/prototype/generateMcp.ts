@@ -1,10 +1,9 @@
-import { createHash } from "crypto";
-import { writeFile } from "fs/promises";
-import { dirname, join } from "path";
-
 import { Project } from "@fern-api/project-loader";
 import chalk from "chalk";
+import { createHash } from "crypto";
+import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
+import { dirname, join } from "path";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { findMcpGroup, MCP_GENERATOR_NAME, MCP_GENERATOR_VERSION } from "./mcpGeneratorsYml.js";

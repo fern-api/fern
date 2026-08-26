@@ -65,14 +65,18 @@ export async function toolsMcp({
             endpoints: spec.endpoints,
             initialConfig: toolsConfig
         });
+        const refinedConfig = toolsConfig;
+        const groupToolsConfig = preset != null ? (found.config.tools ?? {}) : refinedConfig;
+        const updatedPresets =
+            preset != null ? { ...found.config.tools?.presets, [preset]: refinedConfig } : found.config.tools?.presets;
         await cliContext.runTaskForWorkspace(workspaceSpec.workspace, async (context) => {
             await writeMcpGroupToGeneratorsYml({
                 absolutePathToWorkspace,
                 context,
                 groupName: group,
                 serverName: found.config["server-name"],
-                toolsConfig,
-                presets: found.config.tools?.presets
+                toolsConfig: groupToolsConfig,
+                presets: updatedPresets
             });
         });
         cliContext.logger.info(chalk.green(`Updated group "${group}" in generators.yml.`));
