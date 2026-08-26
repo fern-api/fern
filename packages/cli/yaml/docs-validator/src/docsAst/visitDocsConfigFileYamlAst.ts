@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration-loader";
+import { DocsConfigurationWithResolvedRedirects, docsYml } from "@fern-api/configuration-loader";
 import { noop, visitObjectAsync } from "@fern-api/core-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
@@ -15,7 +15,7 @@ import { visitNavigationAst } from "./visitNavigationAst.js";
 
 export declare namespace visitDocsConfigFileYamlAst {
     interface Args {
-        contents: docsYml.RawSchemas.DocsConfiguration;
+        contents: DocsConfigurationWithResolvedRedirects;
         visitor: Partial<DocsConfigFileAstVisitor>;
         absoluteFilepathToConfiguration: AbsoluteFilePath;
         absolutePathToFernFolder: AbsoluteFilePath;
@@ -319,6 +319,8 @@ export async function visitDocsConfigFileYamlAst({
         },
         check: noop,
         redirects: noop,
+        _absoluteFilepathsToRedirectsFiles: noop,
+        _redirectsFileErrors: noop,
         tabs: noop,
         title: noop,
         typography: async (typography) => {

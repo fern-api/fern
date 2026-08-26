@@ -2,23 +2,30 @@ import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 
 /**
- * Collects directories containing docs pages that are outside the fern folder.
+ * Collects directories containing docs files that are outside the fern folder.
  *
- * When users reference pages from outside the fern directory (e.g., `path: ../docs/page.mdx`),
- * the file watcher needs to also watch those external directories to detect changes.
+ * When users reference files from outside the fern directory (e.g., `path: ../docs/page.mdx`, or
+ * `redirects: ../redirects.yml`), the file watcher needs to also watch those external directories
+ * to detect changes.
  *
- * This function resolves all page IDs from the docs definition back to absolute paths
- * and returns the unique top-level directories that fall outside `absoluteFilePathToFern`.
+ * This function resolves all page IDs from the docs definition back to absolute paths, adds any
+ * additional referenced files, and returns the unique top-level directories that fall outside
+ * `absoluteFilePathToFern`.
  */
 export function getExternalDocsWatchPaths(
     absoluteFilePathToFern: AbsoluteFilePath,
-    docsDefinition: DocsV1Read.DocsDefinition
+    docsDefinition: Pick<DocsV1Read.DocsDefinition, "pages">,
+    additionalReferencedFiles: AbsoluteFilePath[] = []
 ): AbsoluteFilePath[] {
     const fernDirWithSep = absoluteFilePathToFern + "/";
     const externalDirs = new Set<string>();
 
-    for (const pageId of Object.keys(docsDefinition.pages)) {
-        const absolutePath = resolve(absoluteFilePathToFern, pageId);
+    const absolutePaths = [
+        ...Object.keys(docsDefinition.pages).map((pageId) => resolve(absoluteFilePathToFern, pageId)),
+        ...additionalReferencedFiles
+    ];
+
+    for (const absolutePath of absolutePaths) {
         // Check if the resolved path is outside the fern directory
         if (!absolutePath.startsWith(fernDirWithSep)) {
             const dir = dirname(absolutePath);

@@ -17,6 +17,7 @@ import { ValidLocalReferencesRule } from "./rules/valid-local-references/index.j
 import { ValidMarkdownRule } from "./rules/valid-markdown/index.js";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
+import { ValidRedirectsFilesRule } from "./rules/valid-redirects-files/index.js";
 import { ValidSkillsPageActionRule } from "./rules/valid-skills-page-action/index.js";
 import { ValidTranslationsConfigRule } from "./rules/valid-translations-config/index.js";
 import { ValidVersionRefRule } from "./rules/valid-version-ref/index.js";
@@ -25,6 +26,7 @@ import { ValidateProductFileRule } from "./rules/validate-product-file/index.js"
 import { ValidateVersionFileRule } from "./rules/validate-version-file/index.js";
 
 const allRules = [
+    ValidRedirectsFilesRule, // Report redirects files that could not be read
     FilepathsExistRule,
     NoOpenApiV2InDocsRule, // Check OpenAPI v2 first (more fundamental issue)
     ValidOpenApiExamples, // Validate human examples in OpenAPI specs

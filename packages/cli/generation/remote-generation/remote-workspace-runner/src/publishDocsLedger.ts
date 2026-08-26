@@ -123,7 +123,7 @@ export function buildLedgerInput({
     fileManifest,
     fileIdToPath,
     editThisPage,
-    locale = "en"
+    locale
 }: {
     docsDefinition: DocsDefinition;
     git?: DocsPublishGitInput;
@@ -139,7 +139,11 @@ export function buildLedgerInput({
     fileIdToPath?: Map<string, string>;
     /** Raw edit-this-page config from docs.yml, forwarded to LedgerConfig. */
     editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
-    /** Locale to stamp on segments. Defaults to "en". */
+    /**
+     * Locale to stamp on segments. When omitted (the base segment), it falls
+     * back to the default locale the docs config declares, and to "en" for
+     * sites that declare no translations.
+     */
     locale?: string;
 }): { localeEntry: LocaleEntry; blobs: Map<string, Buffer> } {
     const blobs = new Map<string, Buffer>();
@@ -225,7 +229,7 @@ export function buildLedgerInput({
         jsFiles: jsFilesRef,
         fileManifest,
         redirects: null,
-        locale,
+        locale: locale ?? docsDefinition.config.translations?.defaultLocale ?? "en",
         git
     };
 

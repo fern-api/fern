@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.107.0
+  changelogEntry:
+    - summary: |
+        Publish the configured default locale as the docs manifest locale key instead of always using "en".
+      type: fix
+    - summary: |
+        You can now keep your redirects in their own files instead of listing them all in `docs.yml`.
+        Point `redirects` at one file or several, and Fern combines them in the order you list them.
+      type: feat
+  createdAt: "2026-08-26"
+  irVersion: 67
+- version: 5.106.1
+  changelogEntry:
+    - summary: |
+        Fix stale blog changelog-slug rule test expectations after the blog feed slug allowlist change.
+      type: chore
+  createdAt: "2026-08-26"
+  irVersion: 67
 - version: 5.106.0
   changelogEntry:
     - summary: |

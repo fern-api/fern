@@ -275,10 +275,7 @@
     "redirects": {
       "oneOf": [
         {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/docs.RedirectConfig"
-          }
+          "$ref": "#/definitions/docs.RedirectsConfiguration"
         },
         {
           "type": "null"
@@ -5359,6 +5356,26 @@
       ],
       "additionalProperties": false,
       "description": "The `redirects` object allows you to redirect traffic from one path to another. You can redirect exact paths or use dynamic patterns with regex parameters like `:slug` to handle bulk redirects. You can redirect to internal paths within your site or external URLs.\n\n```yaml\nredirects:\n  - source: \"/old-path\"\n    destination: \"/new-path\"\n```\n\nBoth source and destination paths support regex. See https://github.com/pillarjs/path-to-regexp"
+    },
+    "docs.RedirectsConfiguration": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.RedirectConfig"
+          }
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Either an inline list of redirects, or one or more filepaths to YAML files containing\nonly a list of redirects.\n\n```yaml\nredirects: ./redirects.yml\n```\n\n```yaml\nredirects:\n  - ./redirects/a.yml\n  - ./redirects/b.yml\n```"
     },
     "docs.CheckRuleSeverity": {
       "type": "string",

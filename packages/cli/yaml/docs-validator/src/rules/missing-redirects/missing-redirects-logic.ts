@@ -139,7 +139,7 @@ export function checkMissingRedirects(
                 message:
                     `Page "${removed.pageId}" was moved from "${oldPath}" to "${newPath}". ` +
                     `The old URL will return 404 without a redirect. ` +
-                    `Add to docs.yml: redirects: [{source: "${oldPath}", destination: "${newPath}"}]`
+                    `Add to redirects: [{source: "${oldPath}", destination: "${newPath}"}]`
             });
         } else {
             violations.push({
@@ -147,7 +147,7 @@ export function checkMissingRedirects(
                 message:
                     `Page "${removed.pageId}" was removed. ` +
                     `The previously published URL "${oldPath}" will return 404 without a redirect. ` +
-                    `Consider adding a redirect in docs.yml to preserve existing links.`
+                    `Consider adding a redirect to preserve existing links.`
             });
         }
     }
