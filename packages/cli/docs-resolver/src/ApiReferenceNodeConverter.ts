@@ -59,6 +59,28 @@ import { toRelativeFilepath } from "./utils/toRelativeFilepath.js";
 
 const NUM_NEAREST_SUBPACKAGES = 1;
 
+/**
+ * One sidebar section per GraphQL kind. A kind with no types in the schema produces no section,
+ * so a schema without unions never renders an empty "Unions" group.
+ *
+ * `urlSlug` is part of the public docs URL (`.../types/objects/<type>`) and must stay stable.
+ */
+const GRAPHQL_TYPE_SECTIONS: { category: FernNavigation.GraphQlTypeCategory; title: string; urlSlug: string }[] = [
+    { category: "object", title: "Objects", urlSlug: "objects" },
+    { category: "input", title: "Inputs", urlSlug: "inputs" },
+    { category: "enum", title: "Enums", urlSlug: "enums" },
+    { category: "scalar", title: "Scalars", urlSlug: "scalars" },
+    { category: "interface", title: "Interfaces", urlSlug: "interfaces" },
+    { category: "union", title: "Unions", urlSlug: "unions" }
+];
+
+/**
+ * The GraphQL type-page member of {@link FernNavigation.V1.ApiPackageChild}.
+ */
+type GraphqlTypeChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "graphqlType" }>;
+
+const GRAPHQL_TYPES_URL_SLUG = "types";
+
 export class ApiReferenceNodeConverter {
     apiDefinitionId: FernNavigation.V1.ApiDefinitionId;
     #holder: ApiDefinitionHolder;
@@ -77,6 +99,8 @@ export class ApiReferenceNodeConverter {
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     #tagDescriptionContent: Map<AbsoluteFilePath, string>;
     #graphqlNamespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
+    #graphqlTypeCategories: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>;
+    #emittedGraphqlTypeSections = false;
     constructor(
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: APIV1Read.ApiDefinition,
@@ -92,10 +116,12 @@ export class ApiReferenceNodeConverter {
         private hideChildren?: boolean,
         private parentAvailability?: docsYml.RawSchemas.Availability,
         private openApiTags?: Record<string, { id: string; description: string | undefined }>,
-        graphqlNamespacesByOperationId?: Map<FdrAPI.GraphQlOperationId, string>
+        graphqlNamespacesByOperationId?: Map<FdrAPI.GraphQlOperationId, string>,
+        graphqlTypeCategories?: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>
     ) {
         this.#tagDescriptionContent = new Map();
         this.#graphqlNamespacesByOperationId = graphqlNamespacesByOperationId ?? new Map();
+        this.#graphqlTypeCategories = graphqlTypeCategories ?? {};
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.V1.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api, taskContext);
@@ -1132,6 +1158,16 @@ export class ApiReferenceNodeConverter {
             additionalChildren.push(...graphqlSections);
         }
 
+        // GraphQL types are declared once per schema rather than per package, so their sections
+        // hang off the same level as Queries/Mutations and are emitted exactly once.
+        if (!this.#emittedGraphqlTypeSections) {
+            const graphqlTypeSections = this.#convertGraphQLTypesToSections(parentSlug, parentAvailability);
+            if (graphqlTypeSections.length > 0) {
+                this.#emittedGraphqlTypeSections = true;
+                additionalChildren.push(...graphqlTypeSections);
+            }
+        }
+
         additionalChildren = this.mergeEndpointPairs(additionalChildren);
 
         if (this.apiSection.alphabetized) {
@@ -1305,6 +1341,112 @@ export class ApiReferenceNodeConverter {
         }
 
         return sections;
+    }
+
+    /**
+     * Builds the GraphQL Types navigation: one page per named type in the schema, grouped by the
+     * GraphQL kind it was declared with.
+     *
+     * Slugs are `<api>/types/<kind>/<type-name>`. Type IDs are already namespace-prefixed by the
+     * GraphQL converter, so same-named types from two schemas get distinct slugs.
+     */
+    #convertGraphQLTypesToSections(
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
+    ): FernNavigation.V1.ApiPackageChild[] {
+        const typeIdsByCategory = new Map<FernNavigation.GraphQlTypeCategory, FdrAPI.TypeId[]>();
+        for (const [typeIdRaw, category] of Object.entries(this.#graphqlTypeCategories)) {
+            const typeId = FdrAPI.TypeId(typeIdRaw);
+            if (this.#holder.api.types[typeId] == null) {
+                continue;
+            }
+            const existing = typeIdsByCategory.get(category);
+            if (existing != null) {
+                existing.push(typeId);
+            } else {
+                typeIdsByCategory.set(category, [typeId]);
+            }
+        }
+
+        if (typeIdsByCategory.size === 0) {
+            return [];
+        }
+
+        const typesSlug = parentSlug.append(GRAPHQL_TYPES_URL_SLUG);
+        const sections: FernNavigation.V1.ApiPackageChild[] = [];
+
+        for (const { category, title, urlSlug } of GRAPHQL_TYPE_SECTIONS) {
+            const typeIds = typeIdsByCategory.get(category);
+            if (typeIds == null || typeIds.length === 0) {
+                continue;
+            }
+
+            const sectionSlug = typesSlug.append(urlSlug);
+            const children: FernNavigation.V1.ApiPackageChild[] = typeIds
+                .map((typeId) => this.#buildGraphqlTypeChildNode(typeId, category, sectionSlug, parentAvailability))
+                .filter(isNonNullish)
+                .sort((a, b) => a.title.localeCompare(b.title));
+
+            if (children.length === 0) {
+                continue;
+            }
+
+            sections.push({
+                id: this.#idgen.get(`${this.apiDefinitionId}:graphql:types:${category}`),
+                type: "apiPackage",
+                collapsed: undefined,
+                children,
+                title,
+                slug: sectionSlug.get(),
+                icon: undefined,
+                hidden: this.hideChildren,
+                overviewPageId: undefined,
+                collapsible: undefined,
+                collapsedByDefault: undefined,
+                availability: convertDocsAvailability(parentAvailability),
+                apiDefinitionId: this.apiDefinitionId,
+                pointsTo: undefined,
+                noindex: undefined,
+                playground: undefined,
+                authed: undefined,
+                viewers: undefined,
+                orphaned: undefined,
+                featureFlags: undefined
+            } as ApiPackageNodeWithCollapsibleConfig);
+        }
+
+        return sections;
+    }
+
+    #buildGraphqlTypeChildNode(
+        typeId: FdrAPI.TypeId,
+        typeCategory: FernNavigation.GraphQlTypeCategory,
+        sectionSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
+    ): GraphqlTypeChildNode | undefined {
+        const type = this.#holder.api.types[typeId];
+        if (type == null) {
+            return undefined;
+        }
+        const title = type.displayName ?? type.name ?? typeId;
+        return {
+            id: this.#idgen.get(`${this.apiDefinitionId}:graphqlType:${typeId}`),
+            type: "graphqlType",
+            collapsed: undefined,
+            typeId: FernNavigation.TypeId(typeId),
+            typeCategory,
+            title,
+            slug: sectionSlug.append(kebabCase(title)).get(),
+            icon: undefined,
+            hidden: this.hideChildren,
+            apiDefinitionId: this.apiDefinitionId,
+            availability:
+                FernNavigation.V1.convertAvailability(type.availability) ?? convertDocsAvailability(parentAvailability),
+            authed: undefined,
+            viewers: undefined,
+            orphaned: undefined,
+            featureFlags: undefined
+        };
     }
 
     // Single source of truth for constructing a GraphQL navigation child node. Callers pass

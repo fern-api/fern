@@ -1,0 +1,6 @@
+- summary: |
+    GraphQL API references now get a page per named type in the schema, grouped in the sidebar by
+    the kind it was declared with (Objects, Inputs, Enums, Scalars, Interfaces, Unions). A kind the
+    schema does not declare produces no section, and type pages live at
+    `<api>/types/<kind>/<type-name>`.
+  type: feat
