@@ -27,7 +27,8 @@ export type FernSdkGenApiLanguage =
     | "ruby"
     | "rust"
     | "swift"
-    | "cli";
+    | "cli"
+    | "mcp";
 
 export type FernSdkGenApiPublishRegistry =
     | "npm"
@@ -87,7 +88,8 @@ const FERN_SDK_GENERATOR_LANGUAGES: Readonly<Record<string, FernSdkGenApiLanguag
     "fernapi/fern-rust-sdk": "rust",
     "fernapi/fern-swift-sdk": "swift",
     "fernapi/fern-cli": "cli",
-    "fernapi/fern-cli-generator": "cli"
+    "fernapi/fern-cli-generator": "cli",
+    "fernapi/fern-mcp-server": "mcp"
 };
 
 interface FernBuildStatus {
@@ -408,6 +410,8 @@ function defaultPublishRegistry(language: FernSdkGenApiLanguage | undefined): Fe
             return "rubygems";
         case "rust":
             return "crates";
+        case "mcp":
+            return "npm";
         case "swift":
         case "cli":
         case undefined:

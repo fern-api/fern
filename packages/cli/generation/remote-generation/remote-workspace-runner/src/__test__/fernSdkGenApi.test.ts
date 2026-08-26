@@ -10,6 +10,7 @@ import {
     getFernSdkGenApiOrigin,
     isEligibleForFernSdkGenApi,
     isFernSdkGenApiEnabled,
+    mapFernSdkGenApiOutput,
     runFernSdkGenApiBuild
 } from "../fernSdkGenApi.js";
 
@@ -46,7 +47,8 @@ describe("isEligibleForFernSdkGenApi", () => {
             ["fernapi/fern-ruby-sdk", "ruby"],
             ["fernapi/fern-rust-sdk", "rust"],
             ["fernapi/fern-swift-sdk", "swift"],
-            ["fernapi/fern-cli-generator", "cli"]
+            ["fernapi/fern-cli-generator", "cli"],
+            ["fernapi/fern-mcp-server", "mcp"]
         ] as const;
 
         for (const [name, language] of generators) {
@@ -498,5 +500,106 @@ describe("sdk-gen-api environment configuration", () => {
         vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "http://sdk-gen-api.example.test");
 
         expect(() => getFernSdkGenApiOrigin()).toThrow("must use HTTPS unless it targets localhost");
+    });
+});
+
+describe("fernapi/fern-mcp-server target", () => {
+    function mcpInvocation(overrides: Record<string, unknown> = {}): generatorsYml.GeneratorInvocation {
+        return {
+            name: "fernapi/fern-mcp-server",
+            version: "0.1.0",
+            config: {
+                target: "hosted",
+                serverName: "my-api",
+                baseUrl: "https://api.example.com/v3"
+            },
+            keywords: [],
+            smartCasing: false,
+            smartCasingDigitWordBoundary: false,
+            disableExamples: false,
+            outputMode: { type: "downloadFiles" },
+            ...overrides
+        } as unknown as generatorsYml.GeneratorInvocation;
+    }
+
+    it("maps fernapi/fern-mcp-server to the mcp language", () => {
+        expect(getFernSdkGenApiLanguage("fernapi/fern-mcp-server")).toBe("mcp");
+    });
+
+    it("is eligible for sdk-gen-api with a concrete version and source archive", () => {
+        expect(
+            isEligibleForFernSdkGenApi({
+                generatorInvocation: mcpInvocation(),
+                sdkVersion: "0.0.1",
+                specsTarGzBuffer: Buffer.from("archive")
+            })
+        ).toBe(true);
+    });
+
+    it("maps downloadFiles output mode to download", () => {
+        expect(mapFernSdkGenApiOutput(mcpInvocation()).requestedOutput).toEqual({ type: "download" });
+    });
+
+    it("builds a request with customConfig passed through unchanged", () => {
+        const config = {
+            target: "hosted",
+            serverName: "my-api",
+            baseUrl: "https://api.example.com/v3",
+            tools: [{ name: "list-pets", path: "/pets", method: "GET" }],
+            toolsets: ["crud"]
+        };
+
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: mcpInvocation({ config }),
+            sdkVersion: "0.0.1",
+            specsTarGzBuffer: Buffer.from("archive")
+        });
+
+        const target = request.targets[0];
+        expect(target).toBeDefined();
+        expect(target?.language).toBe("mcp");
+        expect(target?.fernGenerator).toEqual({
+            id: "fernapi/fern-mcp-server",
+            version: "0.1.0"
+        });
+        expect(target?.sdk).toEqual({ name: "Petstore", version: "0.0.1" });
+        expect(target?.invocation.customConfig).toEqual(config);
+        expect(target?.requestedOutput).toEqual({ type: "download" });
+    });
+
+    it("does not include package metadata for download output", () => {
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: mcpInvocation(),
+            sdkVersion: "0.0.1",
+            specsTarGzBuffer: Buffer.from("archive")
+        });
+
+        expect(request.targets[0]?.package).toBeUndefined();
+    });
+
+    it("infers npm for legacy publish output with no explicit registry override", () => {
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: mcpInvocation({
+                outputMode: FernFiddle.OutputMode.publish({
+                    registryOverrides: {}
+                })
+            }),
+            sdkVersion: "0.0.1",
+            specsTarGzBuffer: Buffer.from("archive")
+        });
+
+        expect(request.targets[0]?.requestedOutput).toEqual({
+            type: "publish",
+            publish: { registry: "npm" }
+        });
     });
 });
