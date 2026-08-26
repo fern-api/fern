@@ -1,7 +1,7 @@
 import type { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import * as GitHub from "@fern-api/github";
-import { type TaskContext, TaskResult } from "@fern-api/task-context";
+import { CliError, type TaskContext, TaskResult } from "@fern-api/task-context";
 import { afterEach, beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 import * as CppDocsGenerator from "../CppDocsGenerator.js";
 import * as LocalParserRunner from "../LocalParserRunner.js";
@@ -76,6 +76,82 @@ const mockCppIr = {
 
 const DOCS_DIR = AbsoluteFilePath.of("/tmp/docs");
 
+function gitConfig(): docsYml.RawSchemas.LibraryConfiguration {
+    return {
+        input: { git: "https://github.com/acme/sdk" },
+        output: { path: "./docs" },
+        lang: "python"
+    };
+}
+
+function makeStatus(status: string, extras: Record<string, unknown> = {}) {
+    return { status, jobId: "job-1", progress: "", createdAt: "", updatedAt: "", ...extras };
+}
+
+/**
+ * Routes calls to `globalThis.fetch` based on URL substring so tests can
+ * script start → poll → result → S3 download responses for the library
+ * docs endpoints without standing up a real server.
+ */
+function makeMockFetch({
+    startResponse,
+    statusResponses,
+    resultResponse,
+    irResponse
+}: {
+    startResponse: { body: unknown; ok?: boolean };
+    statusResponses: { body: unknown; ok?: boolean }[];
+    resultResponse?: { body: unknown; ok?: boolean };
+    irResponse?: unknown;
+}) {
+    let statusIdx = 0;
+    const startCalls: unknown[] = [];
+
+    const mockFn = vi.fn().mockImplementation(async (url: string, init?: RequestInit) => {
+        const urlStr = String(url);
+
+        if (urlStr.includes("/library-docs/generate") && init?.method === "POST") {
+            startCalls.push(init.body ? JSON.parse(String(init.body)) : undefined);
+            if (startResponse.ok === false) {
+                return {
+                    ok: false,
+                    status: 401,
+                    json: async () => startResponse.body,
+                    text: async () => JSON.stringify(startResponse.body)
+                };
+            }
+            return { ok: true, status: 200, json: async () => startResponse.body, text: async () => "" };
+        }
+
+        if (urlStr.includes("/library-docs/status/")) {
+            const resp = statusResponses[statusIdx++];
+            if (!resp || resp.ok === false) {
+                return {
+                    ok: false,
+                    status: 500,
+                    json: async () => resp?.body ?? {},
+                    text: async () => JSON.stringify(resp?.body ?? {})
+                };
+            }
+            return { ok: true, status: 200, json: async () => resp.body, text: async () => "" };
+        }
+
+        if (urlStr.includes("/library-docs/result/")) {
+            const resp = resultResponse ?? { body: { resultUrl: "https://s3.example.com/ir.json" }, ok: true };
+            return {
+                ok: resp.ok !== false,
+                status: resp.ok !== false ? 200 : 500,
+                json: async () => resp.body,
+                text: async () => ""
+            };
+        }
+
+        return { ok: true, status: 200, json: async () => irResponse ?? { ir: mockPythonIr } };
+    });
+
+    return { mockFn, startCalls };
+}
+
 describe("runLibraryDocsGeneration", () => {
     let originalFetch: typeof globalThis.fetch;
     let fetchSpy: Mock;
@@ -83,9 +159,9 @@ describe("runLibraryDocsGeneration", () => {
     beforeEach(() => {
         vi.clearAllMocks();
         originalFetch = globalThis.fetch;
-        // Generation is local-only: any fetch call is a regression back to
-        // the removed remote path, so the spy rejects and tests assert it
-        // was never invoked.
+        // Generation is local by default: any fetch call outside the explicit
+        // --remote tests is a regression, so the spy rejects and tests assert
+        // it was never invoked.
         fetchSpy = vi.fn().mockRejectedValue(new Error("unexpected network request"));
         globalThis.fetch = fetchSpy as unknown as typeof fetch;
         (PythonDocsGenerator.generate as Mock).mockReturnValue({ pageCount: 1 });
@@ -250,5 +326,180 @@ describe("runLibraryDocsGeneration", () => {
         });
 
         expect(messages.some((m) => m.includes("parsing library source locally"))).toBe(true);
+    });
+
+    describe("remote escape hatch (--remote)", () => {
+        beforeEach(() => {
+            vi.useFakeTimers();
+        });
+
+        afterEach(() => {
+            vi.useRealTimers();
+        });
+
+        it("rejects when --remote is set without a token or org", async () => {
+            await expect(
+                runLibraryDocsGeneration({
+                    libraries: { "my-sdk": gitConfig() },
+                    docsDirectoryPath: DOCS_DIR,
+                    context: makeContext(),
+                    remote: true
+                })
+            ).rejects.toThrow(/Authentication is required/);
+            expect(fetchSpy).not.toHaveBeenCalled();
+        });
+
+        it("rejects 'path' input with --remote", async () => {
+            await expect(
+                runLibraryDocsGeneration({
+                    libraries: { "path-lib": pathConfig() },
+                    docsDirectoryPath: DOCS_DIR,
+                    context: makeContext(),
+                    remote: true,
+                    orgId: "org",
+                    tokenValue: "tok"
+                })
+            ).rejects.toThrow(/'path' input is not supported with --remote/);
+        });
+
+        it("happy path: start → poll → download IR → generate (Python), never touching the local parser", async () => {
+            const { mockFn, startCalls } = makeMockFetch({
+                startResponse: { body: { jobId: "job-1" } },
+                statusResponses: [{ body: makeStatus("PENDING") }, { body: makeStatus("COMPLETED") }]
+            });
+            globalThis.fetch = mockFn as unknown as typeof fetch;
+
+            const promise = runLibraryDocsGeneration({
+                libraries: { "my-sdk": gitConfig() },
+                docsDirectoryPath: DOCS_DIR,
+                context: makeContext(),
+                remote: true,
+                orgId: "org",
+                tokenValue: "tok-123"
+            });
+
+            await vi.advanceTimersByTimeAsync(3000);
+            await vi.advanceTimersByTimeAsync(3000);
+            await expect(promise).resolves.toEqual({ successful: 1 });
+
+            expect(startCalls.length).toBe(1);
+            const startCall = startCalls[0] as Record<string, unknown>;
+            expect(startCall.language).toBe("PYTHON");
+            expect(startCall.githubUrl).toBe("https://github.com/acme/sdk");
+            expect(startCall.orgId).toBe("org");
+            expect(PythonDocsGenerator.generate).toHaveBeenCalledWith(
+                expect.objectContaining({ ir: mockPythonIr, slug: "my-sdk", title: "my-sdk" })
+            );
+            expect(LocalParserRunner.runLocalParser).not.toHaveBeenCalled();
+            expect(GitHub.cloneRepositoryAtRef).not.toHaveBeenCalled();
+        });
+
+        it("forwards git ref and subpath to the generation service", async () => {
+            const { mockFn, startCalls } = makeMockFetch({
+                startResponse: { body: { jobId: "job-ref" } },
+                statusResponses: [{ body: makeStatus("COMPLETED") }]
+            });
+            globalThis.fetch = mockFn as unknown as typeof fetch;
+
+            const promise = runLibraryDocsGeneration({
+                libraries: {
+                    "my-sdk": {
+                        input: {
+                            git: "https://github.com/acme/sdk",
+                            ref: "release/2.0",
+                            subpath: "packages/sdk"
+                        },
+                        output: { path: "./docs" },
+                        lang: "python"
+                    }
+                },
+                docsDirectoryPath: DOCS_DIR,
+                context: makeContext(),
+                remote: true,
+                orgId: "org",
+                tokenValue: "tok"
+            });
+            await vi.advanceTimersByTimeAsync(3000);
+            await promise;
+
+            expect((startCalls[0] as { config: unknown }).config).toEqual(
+                expect.objectContaining({
+                    branch: "release/2.0",
+                    packagePath: "packages/sdk"
+                })
+            );
+        });
+
+        it("sends the bearer token in the auth header", async () => {
+            const { mockFn } = makeMockFetch({
+                startResponse: { body: { jobId: "job-auth" } },
+                statusResponses: [{ body: makeStatus("COMPLETED") }]
+            });
+            globalThis.fetch = mockFn as unknown as typeof fetch;
+
+            const promise = runLibraryDocsGeneration({
+                libraries: { "my-sdk": gitConfig() },
+                docsDirectoryPath: DOCS_DIR,
+                context: makeContext(),
+                remote: true,
+                orgId: "org",
+                tokenValue: "tok-abc"
+            });
+
+            await vi.advanceTimersByTimeAsync(3000);
+            await promise;
+
+            const fetchCalls = mockFn.mock.calls as Array<[string, RequestInit | undefined]>;
+            const authHeader = fetchCalls
+                .filter(([, init]) => init?.headers != null)
+                .map(([, init]) => (init?.headers as Record<string, string>)?.Authorization)
+                .find(Boolean);
+            expect(authHeader).toBe("Bearer tok-abc");
+        });
+
+        it("rejects when generation status is FAILED, preserving the server message", async () => {
+            const { mockFn } = makeMockFetch({
+                startResponse: { body: { jobId: "job-fail" } },
+                statusResponses: [
+                    { body: makeStatus("FAILED", { error: { code: "PARSE_FAILED", message: "Bad syntax" } }) }
+                ]
+            });
+            globalThis.fetch = mockFn as unknown as typeof fetch;
+
+            const promise = runLibraryDocsGeneration({
+                libraries: { "my-sdk": gitConfig() },
+                docsDirectoryPath: DOCS_DIR,
+                context: makeContext(),
+                remote: true,
+                orgId: "org",
+                tokenValue: "tok"
+            });
+            // Attach a no-op handler so the rejection is never "unhandled" while
+            // we advance fake timers below.
+            promise.catch(() => undefined);
+            await vi.advanceTimersByTimeAsync(3000);
+
+            await expect(promise).rejects.toThrow(/Bad syntax/);
+            await expect(promise).rejects.toBeInstanceOf(CliError);
+        });
+
+        it("rejects with a network error when startLibraryDocsGeneration HTTP-errors", async () => {
+            const { mockFn } = makeMockFetch({
+                startResponse: { body: { error: "UnauthorizedError" }, ok: false },
+                statusResponses: []
+            });
+            globalThis.fetch = mockFn as unknown as typeof fetch;
+
+            await expect(
+                runLibraryDocsGeneration({
+                    libraries: { "my-sdk": gitConfig() },
+                    docsDirectoryPath: DOCS_DIR,
+                    context: makeContext(),
+                    remote: true,
+                    orgId: "org",
+                    tokenValue: "tok"
+                })
+            ).rejects.toThrow(/Failed to start generation/);
+        });
     });
 });

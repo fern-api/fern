@@ -14,6 +14,8 @@ export declare namespace GenerateCommand {
     export interface Args extends GlobalArgs {
         /** If specified, only generate docs for this library. */
         library?: string;
+        /** Escape hatch: generate on Fern's servers instead of running the parser Docker images locally. */
+        remote?: boolean;
     }
 }
 
@@ -40,6 +42,13 @@ export class GenerateCommand {
             });
         }
 
+        let tokenValue: string | undefined;
+        if (args.remote === true) {
+            const token = await context.getTokenOrPrompt();
+            await context.verifyOrgAccess({ organization: workspace.org, token });
+            tokenValue = token.value;
+        }
+
         const docsFilePath = workspace.docs.absoluteFilePath ?? workspace.absoluteFilePath ?? context.cwd;
         const docsDirectoryPath = AbsoluteFilePath.of(dirname(docsFilePath));
 
@@ -51,7 +60,10 @@ export class GenerateCommand {
             library: args.library,
             docsDirectoryPath,
             context: taskContext,
-            wrapStep: withSpinner
+            wrapStep: withSpinner,
+            remote: args.remote === true,
+            orgId: args.remote === true ? workspace.org : undefined,
+            tokenValue
         });
     }
 }
@@ -64,9 +76,16 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
         "[Beta] Generate MDX documentation from library source code. Requires 'libraries' config in docs.yml.",
         (context, args) => cmd.handle(context, args as GenerateCommand.Args),
         (yargs) =>
-            yargs.option("library", {
-                type: "string",
-                description: "Name of a specific library defined in docs.yml to generate docs for"
-            })
+            yargs
+                .option("library", {
+                    type: "string",
+                    description: "Name of a specific library defined in docs.yml to generate docs for"
+                })
+                .option("remote", {
+                    type: "boolean",
+                    default: false,
+                    description:
+                        "Generate on Fern's servers instead of running the parser Docker images locally. Requires authentication. Use when Docker is unavailable (e.g. containerized CI)."
+                })
     );
 }
