@@ -1,4 +1,4 @@
-import type { docsYml } from "@fern-api/configuration-loader";
+import type { DocsConfigurationWithResolvedRedirects } from "@fern-api/configuration-loader";
 import { describe, expect, it } from "vitest";
 
 import type { RuleContext } from "../../../Rule.js";
@@ -11,7 +11,7 @@ import {
     ValidChangelogSlugRule
 } from "../valid-changelog-slug.js";
 
-async function violationsFor(config: docsYml.RawSchemas.DocsConfiguration): Promise<string[]> {
+async function violationsFor(config: DocsConfigurationWithResolvedRedirects): Promise<string[]> {
     const visitor = await ValidChangelogSlugRule.create({} as RuleContext);
     const fileVisitor = visitor.file;
     if (fileVisitor == null) {
