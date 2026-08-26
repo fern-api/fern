@@ -37,7 +37,7 @@ use std::collections::HashSet;
 use std::sync::{Arc, LazyLock, Mutex};
 use std::time::Duration;
 
-use reqwest::header::{HeaderMap, HeaderValue, USER_AGENT};
+use reqwest::header::{HeaderMap, HeaderName, HeaderValue, USER_AGENT};
 
 use crate::error::CliError;
 
@@ -74,6 +74,10 @@ pub struct HttpConfig {
     /// `<NAME>_USER_AGENT_SUFFIX` env var when set. `None` means fall back
     /// to the env var (or no suffix).
     user_agent_suffix_override: Option<Arc<str>>,
+    /// Dot-separated invoked command path (e.g. `text-to-speech.convert`),
+    /// sent as the `X-Fern-CLI-Command` header. `None` when the dispatch
+    /// path doesn't know the invoked command (e.g. programmatic consumers).
+    cli_command: Option<Arc<str>>,
 }
 
 /// Transport-neutral view of the resolved HTTP/TLS configuration.
@@ -139,6 +143,7 @@ impl HttpConfig {
             extra_root_certs: Vec::new(),
             extra_root_certs_pem: Vec::new(),
             user_agent_suffix_override: None,
+            cli_command: None,
         })
     }
 
@@ -181,6 +186,36 @@ impl HttpConfig {
             .filter(|s| !s.is_empty() && HeaderValue::from_str(s).is_ok())
             .map(Arc::from);
         self
+    }
+
+    /// Set the invoked command path (dot-separated, e.g.
+    /// `text-to-speech.convert`), sent as the `X-Fern-CLI-Command` header so
+    /// a backend can attribute a request to the exact command that made it.
+    /// A blank or header-invalid value clears the header rather than failing
+    /// client construction.
+    pub fn with_cli_command(mut self, command: Option<String>) -> Self {
+        self.cli_command = command
+            .map(|s| s.trim().to_string())
+            .filter(|s| !s.is_empty() && HeaderValue::from_str(s).is_ok())
+            .map(Arc::from);
+        self
+    }
+
+    /// Fern platform-identification headers sent on every request, matching
+    /// the convention Fern SDK generators use: `X-Fern-SDK-Name`,
+    /// `X-Fern-SDK-Version`, and `X-Fern-Language`, plus `X-Fern-CLI-Command`
+    /// when the invoked command path is known (see
+    /// [`HttpConfig::with_cli_command`]).
+    pub fn platform_headers(&self) -> Vec<(&'static str, String)> {
+        let mut headers = vec![
+            ("X-Fern-Language", "Rust".to_string()),
+            ("X-Fern-SDK-Name", Self::user_agent_product(&self.name)),
+            ("X-Fern-SDK-Version", env!("CARGO_PKG_VERSION").to_string()),
+        ];
+        if let Some(command) = &self.cli_command {
+            headers.push(("X-Fern-CLI-Command", command.to_string()));
+        }
+        headers
     }
 
     /// CLI binary name (e.g. `"bigcommerce"`).
@@ -334,12 +369,20 @@ impl HttpConfig {
         let prefix = &self.prefix;
 
         let mut builder = reqwest::Client::builder();
+        let mut headers = HeaderMap::new();
         let user_agent = self.user_agent();
         if let Ok(header_value) = HeaderValue::from_str(&user_agent) {
-            let mut headers = HeaderMap::new();
             headers.insert(USER_AGENT, header_value);
-            builder = builder.default_headers(headers);
         }
+        for (name, value) in self.platform_headers() {
+            if let (Ok(name), Ok(value)) = (
+                HeaderName::from_bytes(name.as_bytes()),
+                HeaderValue::from_str(&value),
+            ) {
+                headers.insert(name, value);
+            }
+        }
+        builder = builder.default_headers(headers);
 
         // --- Compile-time trust roots (from CliApp::extra_root_cert) ---
         for cert in &self.extra_root_certs {
@@ -1123,6 +1166,77 @@ mod tests {
         assert_eq!(
             cfg.user_agent(),
             format!("elevenlabs-cli/{} from-env/1.0", env!("CARGO_PKG_VERSION")),
+        );
+    }
+
+    #[test]
+    fn platform_headers_identify_the_cli() {
+        let cfg = HttpConfig::new("elevenlabs").unwrap();
+        let headers = cfg.platform_headers();
+        assert!(headers.contains(&("X-Fern-Language", "Rust".to_string())));
+        assert!(headers.contains(&("X-Fern-SDK-Name", "elevenlabs-cli".to_string())));
+        assert!(headers.contains(&(
+            "X-Fern-SDK-Version",
+            env!("CARGO_PKG_VERSION").to_string()
+        )));
+        // No command header until one is set.
+        assert!(!headers.iter().any(|(n, _)| *n == "X-Fern-CLI-Command"));
+    }
+
+    #[test]
+    fn platform_headers_include_the_invoked_command_when_set() {
+        let cfg = HttpConfig::new("elevenlabs")
+            .unwrap()
+            .with_cli_command(Some("text-to-speech.convert".to_string()));
+        assert!(cfg.platform_headers().contains(&(
+            "X-Fern-CLI-Command",
+            "text-to-speech.convert".to_string()
+        )));
+    }
+
+    #[test]
+    fn with_cli_command_ignores_blank_or_invalid_values() {
+        for bad in ["", "   ", "bad\nvalue"] {
+            let cfg = HttpConfig::new("elevenlabs")
+                .unwrap()
+                .with_cli_command(Some(bad.to_string()));
+            assert!(
+                !cfg.platform_headers()
+                    .iter()
+                    .any(|(n, _)| *n == "X-Fern-CLI-Command"),
+                "value {bad:?} must not produce a command header"
+            );
+        }
+    }
+
+    #[tokio::test]
+    #[serial_test::serial]
+    async fn build_client_sends_platform_headers_on_the_wire() {
+        let server =
+            always_respond(wiremock::ResponseTemplate::new(200).set_body_string("{}")).await;
+        let client = HttpConfig::new("elevenlabs")
+            .expect("config")
+            .with_cli_command(Some("text-to-speech.convert".to_string()))
+            .build_client()
+            .expect("client");
+        client.get(server.uri()).send().await.expect("request");
+
+        let requests = server.received_requests().await.unwrap_or_default();
+        let headers = &requests[0].headers;
+        let header = |name: &str| {
+            headers
+                .get(name)
+                .map(|v| v.to_str().unwrap().to_string())
+        };
+        assert_eq!(header("x-fern-sdk-name"), Some("elevenlabs-cli".to_string()));
+        assert_eq!(
+            header("x-fern-sdk-version"),
+            Some(env!("CARGO_PKG_VERSION").to_string()),
+        );
+        assert_eq!(header("x-fern-language"), Some("Rust".to_string()));
+        assert_eq!(
+            header("x-fern-cli-command"),
+            Some("text-to-speech.convert".to_string()),
         );
     }
 

@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated CLIs now send Fern platform-identification headers on every HTTP
+    request and WebSocket handshake: `X-Fern-SDK-Name` (e.g. `elevenlabs-cli`),
+    `X-Fern-SDK-Version` (the CLI's package version), `X-Fern-Language: Rust`,
+    and `X-Fern-CLI-Command` (the invoked command path, e.g.
+    `text-to-speech.convert`), matching the convention used by Fern SDK
+    generators.
+  type: feat
