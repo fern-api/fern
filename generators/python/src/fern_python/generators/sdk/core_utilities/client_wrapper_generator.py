@@ -5,12 +5,10 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List, Optional
 
-import fern.ir.resources as ir_types
+import fern_python.generators.sdk.names as names
 from ..context.sdk_generator_context import SdkGeneratorContext
 from ..environment_generators import GeneratedEnvironment
 from fdr import PayloadInput, Template, TemplateInput
-
-import fern_python.generators.sdk.names as names
 from fern_python.codegen import AST, Project, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import httpx
@@ -23,6 +21,8 @@ from fern_python.generators.sdk.client_generator.type_utilities import (
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
 from fern_python.snippet.template_utils import TemplateGenerator
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
+
+import fern.ir.resources as ir_types
 
 
 def _get_user_agent_coordinate_prefix(user_agent_value: str) -> typing.Optional[str]:
