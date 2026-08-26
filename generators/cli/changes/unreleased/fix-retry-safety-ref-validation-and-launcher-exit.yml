@@ -64,7 +64,8 @@
     the CLI's own resolution. `ClientConfig::default()` carries an empty
     `base_url` for any API that declares no environment, so `sdk::client(ctx)`
     produced a client with no host and every custom command failed on a
-    relative URL before the injected executor could help.
+    relative URL before the injected executor could help. A spec that declares
+    its server per-operation rather than at the root is resolved too.
   type: fix
 
 - summary: |

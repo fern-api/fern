@@ -2404,7 +2404,18 @@ impl AppContext {
         if let Some(base) = &doc.base_url {
             return base.clone();
         }
-        format!("{}{}", doc.root_url, doc.service_path)
+        // A spec can declare its server per-operation rather than at the root
+        // (`paths./x.get.servers`), which the built-in path handles via
+        // `effective_root_url(method, doc)`. There is no operation in scope
+        // here, so fall back to the first operation that declares one, walked
+        // in sorted order for determinism. Without this the bridge produced an
+        // empty base for exactly the specs the fix was meant to serve.
+        let root_url = if doc.root_url.is_empty() {
+            first_method_root_url(&doc.resources).unwrap_or_default()
+        } else {
+            doc.root_url.clone()
+        };
+        format!("{}{}", root_url, doc.service_path)
     }
 
     /// Build a [`CliExecutor`] wired to this context's HTTP/auth/retry stack.
@@ -2435,6 +2446,31 @@ impl AppContext {
     }
 }
 
+
+/// First non-empty per-operation `root_url` in the resource tree, visiting
+/// resources and methods in sorted-name order so the answer is stable across
+/// runs (the trees are `HashMap`s).
+fn first_method_root_url(
+    resources: &std::collections::HashMap<String, RestResource>,
+) -> Option<String> {
+    let mut resource_names: Vec<&String> = resources.keys().collect();
+    resource_names.sort();
+    for name in resource_names {
+        let resource = &resources[name];
+        let mut method_names: Vec<&String> = resource.methods.keys().collect();
+        method_names.sort();
+        for method_name in method_names {
+            let root_url = &resource.methods[method_name].root_url;
+            if !root_url.is_empty() {
+                return Some(root_url.clone());
+            }
+        }
+        if let Some(found) = first_method_root_url(&resource.resources) {
+            return Some(found);
+        }
+    }
+    None
+}
 
 /// Recursively check whether any method in the resource tree is the
 /// same object (pointer-equal) as `target`. Used by
@@ -2979,6 +3015,38 @@ mod tests {
             default: None,
         };
         assert_eq!(global_header_arg_id(&h), "__global_header::X-API-Stage");
+    }
+
+    #[test]
+    fn test_effective_base_url_falls_back_to_per_operation_server() {
+        // A spec can declare its server per-operation (`paths./x.get.servers`)
+        // and carry no root-level one. The built-in path handles that via
+        // `effective_root_url(method, doc)`; the SDK bridge has no operation in
+        // scope, so without a fallback it produced an empty base and every
+        // custom command failed on a relative URL — on exactly the specs this
+        // accessor exists to serve.
+        let mut methods = std::collections::HashMap::new();
+        methods.insert(
+            "list".to_string(),
+            RestMethod {
+                root_url: "https://api.example.com".to_string(),
+                ..Default::default()
+            },
+        );
+        let mut resources = std::collections::HashMap::new();
+        resources.insert(
+            "things".to_string(),
+            RestResource {
+                methods,
+                ..Default::default()
+            },
+        );
+        assert_eq!(
+            first_method_root_url(&resources).as_deref(),
+            Some("https://api.example.com"),
+        );
+        // No operation declares one either — nothing to invent.
+        assert_eq!(first_method_root_url(&std::collections::HashMap::new()), None);
     }
 
     /// A global header/parameter whose flag was never registered on the
