@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.106.0
+  changelogEntry:
+    - summary: |
+        Add a blog navigation item as an alias for changelog navigation.
+      type: feat
+    - summary: |
+        Accept blog, blogs, and posts changelog slugs for feeds.
+      type: fix
+  createdAt: "2026-08-26"
+  irVersion: 67
 - version: 5.105.3
   changelogEntry:
     - summary: |
