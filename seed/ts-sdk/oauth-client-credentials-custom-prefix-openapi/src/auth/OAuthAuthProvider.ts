@@ -67,7 +67,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
 
         return {
             headers: {
-                "X-Access-Token": `Token ${token}`,
+                "X-Custom-Token": `Token ${token}`,
             },
         };
     }
@@ -136,7 +136,7 @@ export class OAuthTokenOverrideAuthProvider implements core.AuthProvider {
         }
         return {
             headers: {
-                "X-Access-Token": `Token ${await core.EndpointSupplier.get(token, { endpointMetadata })}`,
+                "X-Custom-Token": `Token ${await core.EndpointSupplier.get(token, { endpointMetadata })}`,
             },
         };
     }
