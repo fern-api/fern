@@ -1026,6 +1026,20 @@ types:
           are rendered inline next to navigation items in the sidebar. Defaults to false. The page-header
           availability badge is unaffected by this setting.
 
+      sidebar-footer-behavior:
+        type: optional<SidebarFooterBehavior>
+        availability: in-development
+        docs: |
+          Sets how the sidebar reacts to a custom footer (`footer:`) scrolling into view. Has no effect
+          without a custom footer.
+
+          @default: `shrink`
+
+          - `shrink` shortens the sidebar so all of it stays visible above the footer. On viewports
+            shorter than the footer this can leave little or none of the sidebar visible.
+          - `scroll` keeps the sidebar at full height and scrolls it up out of view above the footer,
+            like the rest of the page.
+
   DocsSettingsConfig:
     properties:
       search-text:
@@ -1266,6 +1280,11 @@ types:
     enum:
       - indented
       - cards
+
+  SidebarFooterBehavior:
+    enum:
+      - shrink
+      - scroll
 
   AudienceId:
     type: string

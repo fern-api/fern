@@ -6094,6 +6094,13 @@
         "cards"
       ]
     },
+    "docs.SidebarFooterBehavior": {
+      "type": "string",
+      "enum": [
+        "shrink",
+        "scroll"
+      ]
+    },
     "docs.LayoutConfig": {
       "type": "object",
       "properties": {
@@ -6272,6 +6279,17 @@
             }
           ],
           "description": "If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)\nare rendered inline next to navigation items in the sidebar. Defaults to false. The page-header\navailability badge is unaffected by this setting."
+        },
+        "sidebar-footer-behavior": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SidebarFooterBehavior"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Sets how the sidebar reacts to a custom footer (`footer:`) scrolling into view. Has no effect\nwithout a custom footer.\n\n@default: `shrink`\n\n- `shrink` shortens the sidebar so all of it stays visible above the footer. On viewports\n  shorter than the footer this can leave little or none of the sidebar visible.\n- `scroll` keeps the sidebar at full height and scrolls it up out of view above the footer,\n  like the rest of the page."
         }
       },
       "additionalProperties": false

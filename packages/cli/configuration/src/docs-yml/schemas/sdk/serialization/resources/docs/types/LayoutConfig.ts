@@ -8,6 +8,7 @@ import { ChangelogLayout } from "./ChangelogLayout.js";
 import { ContentAlignment } from "./ContentAlignment.js";
 import { HeaderPosition } from "./HeaderPosition.js";
 import { SearchbarPlacement } from "./SearchbarPlacement.js";
+import { SidebarFooterBehavior } from "./SidebarFooterBehavior.js";
 import { SwitcherPlacement } from "./SwitcherPlacement.js";
 import { TabsPlacement } from "./TabsPlacement.js";
 
@@ -32,6 +33,10 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
             "show-nav-availability-badges",
             core.serialization.boolean().optional(),
         ),
+        sidebarFooterBehavior: core.serialization.property(
+            "sidebar-footer-behavior",
+            SidebarFooterBehavior.optional(),
+        ),
     });
 
 export declare namespace LayoutConfig {
@@ -52,5 +57,6 @@ export declare namespace LayoutConfig {
         "changelog-layout"?: ChangelogLayout.Raw | null;
         "api-reference-layout"?: ApiReferenceLayout.Raw | null;
         "show-nav-availability-badges"?: boolean | null;
+        "sidebar-footer-behavior"?: SidebarFooterBehavior.Raw | null;
     }
 }

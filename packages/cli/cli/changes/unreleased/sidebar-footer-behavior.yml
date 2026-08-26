@@ -1,0 +1,6 @@
+- summary: |
+    Add the `layout.sidebar-footer-behavior` docs.yml setting, controlling how the sidebar
+    reacts to a custom footer scrolling into view. Defaults to `shrink` (today's behavior,
+    where the sidebar shortens to stay above the footer); `scroll` keeps the sidebar at full
+    height and scrolls it up above the footer, so it can't collapse on short viewports.
+  type: feat

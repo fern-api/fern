@@ -96,6 +96,8 @@ export const ChangelogLayout = z.enum(["timeline", "classic"]);
 
 export const ApiReferenceLayout = z.enum(["indented", "cards"]);
 
+export const SidebarFooterBehavior = z.enum(["shrink", "scroll"]);
+
 export const ProductSwitcherThemeConfig = z.enum(["default", "toggle", "tabs"]);
 
 export const LanguageSwitcherThemeConfig = z.enum(["default", "minimal"]);
@@ -311,7 +313,8 @@ export const LayoutConfig = z.object({
     "mobile-toc": z.boolean().optional(),
     "changelog-layout": ChangelogLayout.optional(),
     "api-reference-layout": ApiReferenceLayout.optional(),
-    "show-nav-availability-badges": z.boolean().optional()
+    "show-nav-availability-badges": z.boolean().optional(),
+    "sidebar-footer-behavior": SidebarFooterBehavior.optional()
 });
 
 // ===== Settings =====

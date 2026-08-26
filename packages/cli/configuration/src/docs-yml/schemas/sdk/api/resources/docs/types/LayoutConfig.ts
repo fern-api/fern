@@ -120,4 +120,16 @@ export interface LayoutConfig {
      * availability badge is unaffected by this setting.
      */
     showNavAvailabilityBadges?: boolean;
+    /**
+     * Sets how the sidebar reacts to a custom footer (`footer:`) scrolling into view. Has no effect
+     * without a custom footer.
+     *
+     * @default: `shrink`
+     *
+     * - `shrink` shortens the sidebar so all of it stays visible above the footer. On viewports
+     *   shorter than the footer this can leave little or none of the sidebar visible.
+     * - `scroll` keeps the sidebar at full height and scrolls it up out of view above the footer,
+     *   like the rest of the page.
+     */
+    sidebarFooterBehavior?: FernDocsConfig.SidebarFooterBehavior;
 }

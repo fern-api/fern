@@ -685,6 +685,11 @@ function convertLayoutConfig(
         // when true the sidebar renders inline availability badges. Part of the
         // `as unknown as` cast below until the published FDR SDK adds the field.
         showNavAvailabilityBadges: layout.showNavAvailabilityBadges,
+        // Opt-in (defaults to "shrink", resolved by the fern-platform companion
+        // PR): "scroll" keeps the sidebar full-height and scrolls it above a
+        // custom footer instead of shrinking it. Part of the `as unknown as`
+        // cast below until the published FDR SDK adds the field.
+        sidebarFooterBehavior: layout.sidebarFooterBehavior,
         tabsAlignment: resolvedTabsAlignment
     } as unknown as docsYml.ParsedDocsConfiguration["layout"];
 }
