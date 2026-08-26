@@ -247,6 +247,19 @@ describe("emitPublishWorkflow", () => {
         expect(backportMatches).toHaveLength(4);
     });
 
+    it("builds npm binaries with the same profile as the GitHub Release", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        // `ci.yml` built `--release` while cargo-dist's `release.yml` builds
+        // `--profile dist` (release + thin LTO), so npm and the GitHub Release
+        // shipped different bytes under one version tag.
+        expect(yaml).toContain("cargo build --profile dist --target");
+        expect(yaml).not.toMatch(/cargo build --release --target/);
+        // A custom cargo profile writes to target/<triple>/<profile>/.
+        expect(yaml).toContain("/dist/${BINARY_NAME}");
+        expect(yaml).not.toContain("/release/${BINARY_NAME}");
+    });
+
     it("gives every SemVer pre-release a non-latest dist-tag", async () => {
         const yaml = await emitAndRead(baseInfo);
 

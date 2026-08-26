@@ -293,6 +293,12 @@ ${matrixIncludes}
       # that needs /lib/ld-musl-*.so.1 at runtime — which defeats the point
       # of a musl build and crashes where that loader is absent. Left alone,
       # rustc links the self-contained musl objects statically.
+      #
+      # Built with the \`dist\` profile — the same one cargo-dist uses for the
+      # GitHub Release — so npm and the Release ship byte-identical binaries
+      # for a given tag. Building \`--release\` here meant two channels
+      # shipping different bytes under one version, which surfaces as an
+      # unreproducible bug report.
       - name: Build release binary
         shell: bash
         run: |
@@ -300,7 +306,7 @@ ${matrixIncludes}
             TARGET_UNDERSCORE=\$(echo "\${{ matrix.rust-target }}" | tr '-' '_')
             export "CC_\${TARGET_UNDERSCORE}=musl-gcc"
           fi
-          cargo build --release --target \${{ matrix.rust-target }}
+          cargo build --profile dist --target \${{ matrix.rust-target }}
 
       - name: Package and publish npm platform package${tokenEnvBlock}
         shell: bash
@@ -317,7 +323,9 @@ ${matrixIncludes}
           if [[ "\${{ matrix.rust-target }}" == *"windows"* ]]; then
             BINARY_NAME="${binaryName}.exe"
           fi
-          cp "target/\${{ matrix.rust-target }}/release/\${BINARY_NAME}" "\${PKG_DIR}/"
+          # A custom cargo profile writes to target/<triple>/<profile>/, not
+          # .../release/.
+          cp "target/\${{ matrix.rust-target }}/dist/\${BINARY_NAME}" "\${PKG_DIR}/"
 
           # Write platform package.json
           cat > "\${PKG_DIR}/package.json" <<PKGJSON

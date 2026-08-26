@@ -73,3 +73,18 @@
     rather than `<cli> --help`, which reads no credentials and so confirmed
     nothing.
   type: fix
+
+- summary: |
+    npm platform binaries are built with the `dist` cargo profile, the same one
+    cargo-dist uses for the GitHub Release. `ci.yml` built `--release` while
+    `release.yml` built `--profile dist`, so the two channels shipped different
+    bytes under one version tag.
+  type: fix
+
+- summary: |
+    Generated CLI repos no longer ship the vendored runtime's Apache-2.0
+    `LICENSE` by default, which contradicted the `license` field
+    `packageIdentity` writes into `Cargo.toml`. A LICENSE is now emitted only
+    when one is configured (`license: { type: custom }`), matching every other
+    Fern generator; a basic license remains package metadata only.
+  type: fix

@@ -7,6 +7,7 @@ import { detectAuthBindings } from "./detectAuth.js";
 import { detectGlobalParams } from "./detectGlobalParams.js";
 import { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 import { emitReadme } from "./emitReadme.js";
+import { type LicenseConfigLike, writeLicense } from "./writeLicense.js";
 import { emitReference } from "./emitReference.js";
 import { emitReleaseWorkflow } from "./emitReleaseWorkflow.js";
 import { generateAgentSkills } from "./generateAgentSkills.js";
@@ -56,8 +57,14 @@ export async function runPipeline(args: {
     outputConfig: ResolvedOutputConfig;
     sdkTemplateDir?: string;
     specsDir?: string;
+    /**
+     * `GeneratorConfig.license`. A `type: custom` entry is copied from the
+     * Fern CLI's `/tmp/LICENSE` mount; anything else writes no file, matching
+     * every other Fern generator. See `writeLicense.ts`.
+     */
+    license?: LicenseConfigLike;
 }): Promise<PipelineOutcome> {
-    const { outputDir, customConfig, ir, irFilepath, outputConfig, sdkTemplateDir, specsDir } = args;
+    const { outputDir, customConfig, ir, irFilepath, outputConfig, sdkTemplateDir, specsDir, license } = args;
 
     if (!(await hasOpenApiSpecs(specsDir))) {
         return { status: "skipped", reason: "no-openapi-specs" };
@@ -107,6 +114,10 @@ export async function runPipeline(args: {
     const distribution = outputConfig.isGithubOutput ? customConfig.distribution : undefined;
 
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
+    // Right after copySdk so the LICENSE lands in the same pass that lays down
+    // the rest of the repo, and before patchCargoToml — which is where a
+    // `license-file` pointer would have to agree with what actually exists.
+    await writeLicense({ outputDir, license });
     await patchCargoToml({
         outputDir,
         binaryName,
