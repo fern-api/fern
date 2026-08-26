@@ -270,6 +270,20 @@ describe("buildLedgerInput", () => {
         expect(localeEntry.locale).toBe("en");
     });
 
+    it("does not collide the base segment with a real en translation", () => {
+        const docsDefinition = makeDocsDefinition({
+            pages: { "welcome-page": { markdown: "# Welcome to the Plant Atlas" } },
+            translations: { defaultLocale: "nl", translations: ["en", "de"] }
+        });
+
+        const base = buildLedgerInput({ docsDefinition, apiDefinitions: new Map() }).localeEntry;
+        const translation = buildLedgerInput({ docsDefinition, apiDefinitions: new Map(), locale: "en" }).localeEntry;
+
+        // The manifest keys locales as a record, so a base segment stamped "en"
+        // would overwrite the site's real "en" translation.
+        expect([base.locale, translation.locale]).toEqual(["nl", "en"]);
+    });
+
     it("uses config.root for the root field", () => {
         const { localeEntry } = buildLedgerInput({
             docsDefinition: makeDocsDefinition({ root: MINIMAL_ROOT }),
