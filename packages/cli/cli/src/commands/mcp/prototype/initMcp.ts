@@ -3,6 +3,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { select } from "@inquirer/prompts";
 import chalk from "chalk";
+import path from "path";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { proposeAiRuleset } from "./aiCurated.js";
@@ -20,6 +21,7 @@ import { banner, command, hint, ICONS, radioChoice, selectTheme, sleep, styledVe
 import { pickWorkspaceAndLoadSpec } from "./workspace.js";
 
 const AI_SPINNER_DELAY_MS = 1200;
+const SPEC_SCAN_DELAY_MS = 600;
 
 export interface InitMcpArgs {
     project: Project;
@@ -103,6 +105,11 @@ export async function initMcp(args: InitMcpArgs): Promise<void> {
     const { project, cliContext, yes, json } = args;
     const interactive = !yes && !json;
 
+    if (!json) {
+        cliContext.logger.info("");
+        await withSpinner("Scanning workspace for API specs…", () => sleep(SPEC_SCAN_DELAY_MS));
+    }
+
     const workspaceSpec = await pickWorkspaceAndLoadSpec({
         project,
         cliContext,
@@ -120,6 +127,10 @@ export async function initMcp(args: InitMcpArgs): Promise<void> {
     if (!json) {
         const title = spec.title ?? workspaceName;
         const tagless = endpoints.every((endpoint) => endpoint.tags.length === 0);
+        const relativeSpecPath = path.relative(absolutePathToWorkspace, spec.absoluteFilePath);
+        cliContext.logger.info(
+            `${ICONS.success} Found spec ${chalk.bold(relativeSpecPath)} ${hint(`${ICONS.bullet} ${title} ${ICONS.bullet} ${endpoints.length} endpoints`)}`
+        );
         cliContext.logger.info("");
         cliContext.logger.info(
             banner("Create an MCP server", [
