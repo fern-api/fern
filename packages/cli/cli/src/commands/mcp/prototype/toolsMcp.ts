@@ -3,8 +3,9 @@ import chalk from "chalk";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { findMcpGroup, parseToolsConfig, writeMcpGroupToGeneratorsYml } from "./mcpGeneratorsYml.js";
-import { computeVerdict, formatVerdictLine, resolveTools, ToolsConfig } from "./toolset.js";
+import { computeVerdict, resolveTools, ToolsConfig } from "./toolset.js";
 import { runTrimLoop } from "./trimLoop.js";
+import { hint, ICONS, styledVerdictLine, toolTable } from "./ui.js";
 import { pickWorkspaceAndLoadSpec } from "./workspace.js";
 
 export async function toolsMcp({
@@ -79,7 +80,7 @@ export async function toolsMcp({
                 presets: updatedPresets
             });
         });
-        cliContext.logger.info(chalk.green(`Updated group "${group}" in generators.yml.`));
+        cliContext.logger.info(`${ICONS.success} Updated group ${chalk.bold(`"${group}"`)} in generators.yml.`);
     }
 
     const tools = resolveTools(spec.endpoints, toolsConfig);
@@ -110,13 +111,16 @@ export async function toolsMcp({
     }
 
     cliContext.logger.info("");
-    cliContext.logger.info(chalk.bold(`Tool surface for ${presetLabel} — ${found.config["server-name"]}`));
+    cliContext.logger.info(
+        `${chalk.bold("Tool surface")} ${hint(`for ${presetLabel}`)} — ${chalk.bold.green(found.config["server-name"])}`
+    );
     cliContext.logger.info("");
-    for (const tool of tools) {
-        cliContext.logger.info(
-            `  ${tool.name}  ${chalk.dim(`${tool.endpoint.method} ${tool.endpoint.path} · ~${tool.endpoint.estimatedTokens} tokens`)}`
-        );
+    if (tools.length === 0) {
+        cliContext.logger.info(hint("  (no tools resolved — the config excludes everything)"));
+    }
+    for (const line of toolTable(tools)) {
+        cliContext.logger.info(line);
     }
     cliContext.logger.info("");
-    cliContext.logger.info(formatVerdictLine(verdict));
+    cliContext.logger.info(styledVerdictLine(verdict));
 }

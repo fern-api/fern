@@ -1,5 +1,4 @@
 import { loadRawGeneratorsConfiguration } from "@fern-api/configuration-loader";
-import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { select } from "@inquirer/prompts";
@@ -15,8 +14,9 @@ import {
 } from "./mcpGeneratorsYml.js";
 import { EndpointSummary } from "./openapiSummary.js";
 import { BuiltinPresetKey, buildBuiltinPresets, PresetResolution } from "./presets.js";
-import { computeVerdict, formatTokens, formatVerdictLine, resolveTools, ToolsConfig, Verdict } from "./toolset.js";
+import { computeVerdict, formatTokens, formatVerdictLine, resolveTools, ToolsConfig } from "./toolset.js";
 import { runTrimLoop } from "./trimLoop.js";
+import { banner, command, hint, ICONS, sleep, styledVerdictLine, withSpinner } from "./ui.js";
 import { pickWorkspaceAndLoadSpec } from "./workspace.js";
 
 const AI_SPINNER_DELAY_MS = 1200;
@@ -42,23 +42,6 @@ function deriveServerName(title: string | undefined, workspaceName: string): str
     return slug.endsWith("-mcp") ? slug : `${slug}-mcp`;
 }
 
-function verdictColor(verdict: Verdict, text: string): string {
-    switch (verdict.level) {
-        case "green":
-            return chalk.green(text);
-        case "amber":
-            return chalk.yellow(text);
-        case "red":
-            return chalk.red(text);
-        default:
-            assertNever(verdict.level);
-    }
-}
-
-async function sleep(milliseconds: number): Promise<void> {
-    await new Promise((resolve) => setTimeout(resolve, milliseconds));
-}
-
 async function promptForAiCuratedConfig({
     cliContext,
     endpoints,
@@ -78,22 +61,29 @@ async function promptForAiCuratedConfig({
     if (quiet) {
         return proposeAiRuleset(intent, endpoints).config;
     }
-    cliContext.logger.info(chalk.dim("✦ Fern Agent is proposing a ruleset… (stubbed locally in this prototype)"));
-    await sleep(AI_SPINNER_DELAY_MS);
-    const proposal = proposeAiRuleset(intent, endpoints);
     cliContext.logger.info("");
-    cliContext.logger.info("✦ Proposed ruleset (exclusions first — that's the part worth reviewing):");
+    const proposal = await withSpinner(
+        `${chalk.magenta("Fern Agent")} is picking tools for you… ${hint("(stubbed locally in this prototype)")}`,
+        async () => {
+            await sleep(AI_SPINNER_DELAY_MS);
+            return proposeAiRuleset(intent, endpoints);
+        }
+    );
+    cliContext.logger.info(
+        `${ICONS.agent} ${chalk.bold("Proposed toolset")} ${hint("(exclusions first — that's the part worth reviewing)")}`
+    );
+    cliContext.logger.info("");
     if (proposal.excludeReasons.length > 0) {
-        cliContext.logger.info("  exclude:");
+        cliContext.logger.info(`  ${chalk.red("excluded")}`);
         for (const reason of proposal.excludeReasons) {
-            cliContext.logger.info(`    - ${reason}`);
+            cliContext.logger.info(`    ${chalk.red("−")} ${reason}`);
         }
     } else {
-        cliContext.logger.info(chalk.dim("  (nothing excluded)"));
+        cliContext.logger.info(hint("  (nothing excluded)"));
     }
-    cliContext.logger.info("  include:");
+    cliContext.logger.info(`  ${chalk.green("included")}`);
     for (const reason of proposal.includeReasons) {
-        cliContext.logger.info(`    - ${reason}`);
+        cliContext.logger.info(`    ${chalk.green("+")} ${reason}`);
     }
     return proposal.config;
 }
@@ -128,16 +118,17 @@ export async function initMcp(args: InitMcpArgs): Promise<void> {
     const everythingVerdict = computeVerdict(allTools);
 
     if (!json) {
-        cliContext.logger.info("");
-        cliContext.logger.info(chalk.bold("┌ Create an MCP server"));
         const title = spec.title ?? workspaceName;
         const tagless = endpoints.every((endpoint) => endpoint.tags.length === 0);
+        cliContext.logger.info("");
         cliContext.logger.info(
-            `│  ${title}: ${endpoints.length} endpoints · ~${formatTokens(everythingVerdict.estimatedTokens)} tokens (est.) if all become tools${
-                tagless ? " · no tags — grouping by path prefix" : ""
-            }`
+            banner("Create an MCP server", [
+                `${chalk.green(title)} ${ICONS.bullet} ${chalk.bold(endpoints.length)} endpoints ${ICONS.bullet} ~${chalk.bold(formatTokens(everythingVerdict.estimatedTokens))} tokens (est.) if all become tools${
+                    tagless ? ` ${ICONS.bullet} no tags — grouping by path prefix` : ""
+                }`,
+                hint("Recommended budget: 40 tools · 60k tokens (adjustable later)")
+            ])
         );
-        cliContext.logger.info("│  Recommended budget: 40 tools · 60k tokens (adjustable later)");
         cliContext.logger.info("");
     }
 
@@ -183,9 +174,8 @@ export async function initMcp(args: InitMcpArgs): Promise<void> {
     if (verdict.level !== "green") {
         if (interactive) {
             cliContext.logger.info("");
-            cliContext.logger.info(
-                `Your pick: ${verdictColor(verdict, formatVerdictLine(verdict))}. Agents handle ~40 tools well — let's trim it (or keep it as-is).`
-            );
+            cliContext.logger.info(`Your pick: ${styledVerdictLine(verdict)}`);
+            cliContext.logger.info(hint("Agents handle ~40 tools well — let's trim it (or keep it as-is)."));
             toolsConfig = await runTrimLoop({ cliContext, endpoints, initialConfig: toolsConfig });
             verdict = computeVerdict(resolveTools(endpoints, toolsConfig));
         } else {
@@ -226,20 +216,28 @@ export async function initMcp(args: InitMcpArgs): Promise<void> {
     }
 
     for (const warning of warnings) {
-        cliContext.logger.warn(chalk.yellow(`⚠ ${warning}`));
+        cliContext.logger.warn(`${ICONS.warning} ${chalk.yellow(warning)}`);
     }
     cliContext.logger.info("");
     cliContext.logger.info(
-        chalk.green(`└ Wrote group "${groupName}" to ${result.absolutePathToGeneratorsConfiguration}`)
+        `${ICONS.success} Wrote group ${chalk.bold(`"${groupName}"`)} to ${chalk.green(result.absolutePathToGeneratorsConfiguration)}`
     );
     cliContext.logger.info("");
-    cliContext.logger.info(result.yamlBlock.trimEnd());
+    cliContext.logger.info(
+        result.yamlBlock
+            .trimEnd()
+            .split("\n")
+            .map((line) => `  ${chalk.dim("│")} ${line}`)
+            .join("\n")
+    );
     cliContext.logger.info("");
-    cliContext.logger.info(`Verdict: ${verdictColor(verdict, formatVerdictLine(verdict))}`);
+    cliContext.logger.info(styledVerdictLine(verdict));
     cliContext.logger.info("");
-    cliContext.logger.info("Next steps:");
-    cliContext.logger.info(`  fern generate --group ${groupName}     # build it`);
-    cliContext.logger.info(`  fern mcp dev --group ${groupName}      # try it locally with an inspector`);
+    cliContext.logger.info(chalk.bold("Next steps"));
+    cliContext.logger.info(`  ${ICONS.pointer} ${command(`fern generate --group ${groupName}`)}   ${hint("build it")}`);
+    cliContext.logger.info(
+        `  ${ICONS.pointer} ${command(`fern mcp dev --group ${groupName}`)}    ${hint("try it locally with an inspector")}`
+    );
 }
 
 async function loadExistingPresets({
@@ -289,7 +287,7 @@ async function promptForToolsetChoice({
     for (const existing of existingPresets) {
         const verdict = computeVerdict(resolveTools(endpoints, existing.config));
         choices.push({
-            name: `${existing.name}\n       ${formatVerdictLine(verdict)}`,
+            name: `${existing.name}\n       ${styledVerdictLine(verdict)}`,
             value: { presetKey: existing.name, config: existing.config }
         });
     }
@@ -305,17 +303,17 @@ async function promptForToolsetChoice({
         }
         const noteSuffix = preset.notes.length > 0 ? `\n       ${chalk.dim(preset.notes.join(" · "))}` : "";
         choices.push({
-            name: `${preset.label}\n       ${formatVerdictLine(preset.verdict)}${noteSuffix}`,
+            name: `${preset.label}\n       ${styledVerdictLine(preset.verdict)}${noteSuffix}`,
             value: { presetKey: key, config: preset.config }
         });
     }
     choices.push({
-        name: "AI-curated — Fern Agent picks tools from your description (requires fern login)\n       resolved after you describe what agents should do",
+        name: `AI-curated — ${chalk.magenta("Fern Agent")} picks tools from your description ${chalk.dim("(requires fern login)")}\n       ${chalk.dim("resolved after you describe what agents should do")}`,
         value: { presetKey: "ai-curated", config: {} }
     });
     const everything = presets.everything;
     choices.push({
-        name: `${everything.label}\n       ${formatVerdictLine(everything.verdict)}`,
+        name: `${everything.label}\n       ${styledVerdictLine(everything.verdict)}`,
         value: { presetKey: "everything", config: everything.config }
     });
 

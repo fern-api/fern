@@ -4,7 +4,8 @@ import chalk from "chalk";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { EndpointSummary } from "./openapiSummary.js";
-import { computeVerdict, formatVerdictLine, resolveTools, ToolsConfig } from "./toolset.js";
+import { computeVerdict, resolveTools, ToolsConfig } from "./toolset.js";
+import { hint, ICONS, styledVerdictLine } from "./ui.js";
 
 type TrimAction = "tag" | "method" | "path-prefix" | "keep";
 
@@ -33,9 +34,9 @@ export async function runTrimLoop({
     while (true) {
         const verdict = computeVerdict(resolveTools(endpoints, config));
         cliContext.logger.info("");
-        cliContext.logger.info(`Verdict: ${formatVerdictLine(verdict)}`);
+        cliContext.logger.info(styledVerdictLine(verdict));
         if (verdict.level !== "green") {
-            cliContext.logger.info(chalk.dim("Agents handle ~40 tools well — let's trim it (or keep it as-is)."));
+            cliContext.logger.info(hint("Agents handle ~40 tools well — let's trim it (or keep it as-is)."));
         }
 
         const action = await select<TrimAction>({
@@ -57,7 +58,7 @@ export async function runTrimLoop({
                     choices: tags.map((candidate) => ({ name: candidate, value: candidate }))
                 });
                 config = { ...config, exclude: [...(config.exclude ?? []), { tag }] };
-                cliContext.logger.info(chalk.dim(`Removed: ${tag}`));
+                cliContext.logger.info(`${ICONS.success} Removed ${chalk.bold(tag)}`);
                 break;
             }
             case "method": {
@@ -69,7 +70,7 @@ export async function runTrimLoop({
                     }))
                 });
                 config = { ...config, exclude: [...(config.exclude ?? []), { method }] };
-                cliContext.logger.info(chalk.dim(`Removed: ${method} endpoints`));
+                cliContext.logger.info(`${ICONS.success} Removed ${chalk.bold(method)} endpoints`);
                 break;
             }
             case "path-prefix": {
@@ -77,7 +78,7 @@ export async function runTrimLoop({
                     message: "Which path prefix should be removed? (e.g. /v1/admin)"
                 });
                 config = { ...config, exclude: [...(config.exclude ?? []), { "path-prefix": prefix }] };
-                cliContext.logger.info(chalk.dim(`Removed: ${prefix}*`));
+                cliContext.logger.info(`${ICONS.success} Removed ${chalk.bold(`${prefix}*`)}`);
                 break;
             }
             default:

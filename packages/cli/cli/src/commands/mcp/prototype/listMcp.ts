@@ -5,7 +5,8 @@ import chalk from "chalk";
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { getMcpGeneratorEntries } from "./mcpGeneratorsYml.js";
 import { loadSpecSummaries } from "./openapiSummary.js";
-import { computeVerdict, formatVerdictLine, resolveTools } from "./toolset.js";
+import { computeVerdict, resolveTools, Verdict } from "./toolset.js";
+import { command, hint, keyValueRows, styledVerdictLine } from "./ui.js";
 
 interface McpListRow {
     api: string;
@@ -15,7 +16,7 @@ interface McpListRow {
     output: string;
     toolCount: number;
     estimatedTokens: number;
-    verdict: string;
+    verdict: Verdict;
 }
 
 export async function listMcp({
@@ -54,29 +55,40 @@ export async function listMcp({
                     output: entry.outputLocation ?? "local-file-system",
                     toolCount: verdict.toolCount,
                     estimatedTokens: verdict.estimatedTokens,
-                    verdict: formatVerdictLine(verdict)
+                    verdict
                 });
             }
         });
     }
 
     if (json) {
-        cliContext.logger.info(JSON.stringify(rows, null, 2));
+        cliContext.logger.info(
+            JSON.stringify(
+                rows.map((row) => ({ ...row, verdict: row.verdict.level })),
+                null,
+                2
+            )
+        );
         return;
     }
     if (rows.length === 0) {
-        cliContext.logger.info("No MCP servers are configured yet. Run `fern mcp init` to create one.");
+        cliContext.logger.info(`No MCP servers are configured yet. Run ${command("fern mcp init")} to create one.`);
         return;
     }
     cliContext.logger.info("");
     for (const row of rows) {
-        cliContext.logger.info(chalk.bold(`${row.group} (${row.api})`));
-        cliContext.logger.info(`  server-name: ${row.serverName}`);
-        cliContext.logger.info(`  output:      ${row.output}`);
+        cliContext.logger.info(`${chalk.bold.green(row.group)} ${hint(`(${row.api})`)}`);
+        const kvRows: [string, string][] = [
+            ["server", chalk.bold(row.serverName)],
+            ["output", row.output]
+        ];
         if (row.presets.length > 0) {
-            cliContext.logger.info(`  presets:     ${row.presets.join(", ")}`);
+            kvRows.push(["presets", row.presets.map((preset) => chalk.cyan(preset)).join(", ")]);
         }
-        cliContext.logger.info(`  tools:       ${row.verdict}`);
+        kvRows.push(["tools", styledVerdictLine(row.verdict)]);
+        for (const line of keyValueRows(kvRows)) {
+            cliContext.logger.info(line);
+        }
         cliContext.logger.info("");
     }
 }

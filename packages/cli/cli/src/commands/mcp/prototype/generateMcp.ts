@@ -7,14 +7,11 @@ import { dirname, join } from "path";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { findMcpGroup, MCP_GENERATOR_NAME, MCP_GENERATOR_VERSION } from "./mcpGeneratorsYml.js";
-import { computeVerdict, formatVerdictLine, resolveTools } from "./toolset.js";
+import { computeVerdict, resolveTools } from "./toolset.js";
+import { banner, command, hint, ICONS, sleep, styledVerdictLine, withSpinner } from "./ui.js";
 import { pickWorkspaceAndLoadSpec } from "./workspace.js";
 
 const STUB_STEP_DELAY_MS = 400;
-
-async function sleep(milliseconds: number): Promise<void> {
-    await new Promise((resolve) => setTimeout(resolve, milliseconds));
-}
 
 export async function generateMcp({
     project,
@@ -51,15 +48,19 @@ export async function generateMcp({
     const serverName = found.config["server-name"];
 
     cliContext.logger.info("");
-    cliContext.logger.info(chalk.bold(`[mcp] Generating ${serverName} (group: ${group})`));
-    cliContext.logger.info(chalk.dim("[mcp] NOTE: this is a stubbed prototype — no code is actually generated."));
-    cliContext.logger.info(`[mcp] Using generator ${MCP_GENERATOR_NAME}@${MCP_GENERATOR_VERSION}`);
-    await sleep(STUB_STEP_DELAY_MS);
-    cliContext.logger.info(`[mcp] Parsed spec: ${spec.endpoints.length} endpoints`);
-    cliContext.logger.info(`[mcp] Resolved tool surface: ${formatVerdictLine(verdict)}`);
-    await sleep(STUB_STEP_DELAY_MS);
-    cliContext.logger.info(`[mcp] Building tool schemas… ${tools.length}/${tools.length}`);
-    await sleep(STUB_STEP_DELAY_MS);
+    cliContext.logger.info(
+        banner(`Generating ${serverName}`, [
+            `group ${chalk.bold(group)} ${ICONS.bullet} ${MCP_GENERATOR_NAME}@${MCP_GENERATOR_VERSION}`,
+            hint("stubbed prototype — no code is actually generated")
+        ])
+    );
+    cliContext.logger.info("");
+    await withSpinner(`Parsing spec…`, () => sleep(STUB_STEP_DELAY_MS));
+    cliContext.logger.info(`${ICONS.success} Parsed spec ${hint(`· ${spec.endpoints.length} endpoints`)}`);
+    await withSpinner(`Resolving tool surface…`, () => sleep(STUB_STEP_DELAY_MS));
+    cliContext.logger.info(`${ICONS.success} Resolved tool surface  ${styledVerdictLine(verdict)}`);
+    await withSpinner(`Building tool schemas…`, () => sleep(STUB_STEP_DELAY_MS));
+    cliContext.logger.info(`${ICONS.success} Built tool schemas ${hint(`· ${tools.length}/${tools.length}`)}`);
 
     const schemaHash = createHash("sha256")
         .update(JSON.stringify(tools.map((tool) => [tool.name, tool.endpoint.method, tool.endpoint.path])))
@@ -84,10 +85,11 @@ export async function generateMcp({
     const lockPath = join(dirname(found.absolutePathToGeneratorsConfiguration), "tools.lock");
     await writeFile(lockPath, yaml.dump(lock));
 
-    cliContext.logger.info(`[mcp] Wrote lockfile: ${lockPath}`);
-    cliContext.logger.info(chalk.green(`[mcp] Done. ${tools.length} tools locked for ${serverName}.`));
+    cliContext.logger.info(`${ICONS.success} Wrote lockfile ${hint(`· ${lockPath}`)}`);
     cliContext.logger.info("");
-    cliContext.logger.info(`Next: fern mcp dev --group ${group}`);
+    cliContext.logger.info(chalk.green(`${tools.length} tools locked for ${chalk.bold(serverName)}.`));
+    cliContext.logger.info("");
+    cliContext.logger.info(`${ICONS.pointer} Next: ${command(`fern mcp dev --group ${group}`)}`);
 }
 
 export async function devMcp({
@@ -121,17 +123,23 @@ export async function devMcp({
     const serverPath = found.outputLocation ?? `generated/${group}`;
 
     cliContext.logger.info("");
-    cliContext.logger.info(chalk.bold(`Local dev for ${serverName} (group: ${group})`));
-    cliContext.logger.info(chalk.dim("This prototype does not start a real MCP runtime — here's how you would:"));
+    cliContext.logger.info(
+        banner(`Local dev for ${serverName}`, [
+            `group ${chalk.bold(group)}`,
+            hint("this prototype does not start a real MCP runtime — here's how you would")
+        ])
+    );
     cliContext.logger.info("");
-    cliContext.logger.info("1. Generate the server (stubbed in this prototype):");
-    cliContext.logger.info(`     fern mcp generate --group ${group}`);
+    cliContext.logger.info(`${chalk.bold("1.")} Generate the server ${hint("(stubbed in this prototype)")}`);
+    cliContext.logger.info(`   ${command(`fern mcp generate --group ${group}`)}`);
     cliContext.logger.info("");
-    cliContext.logger.info("2. Inspect it with the MCP Inspector:");
-    cliContext.logger.info(chalk.cyan(`     npx @modelcontextprotocol/inspector node ${serverPath}/server.js`));
+    cliContext.logger.info(`${chalk.bold("2.")} Inspect it with the MCP Inspector`);
+    cliContext.logger.info(`   ${command(`npx @modelcontextprotocol/inspector node ${serverPath}/server.js`)}`);
     cliContext.logger.info("");
-    cliContext.logger.info("3. Or wire it into your agent (e.g. Claude Desktop / Cursor) with:");
-    cliContext.logger.info(`     { "command": "node", "args": ["${serverPath}/server.js"] }`);
+    cliContext.logger.info(`${chalk.bold("3.")} Or wire it into your agent ${hint("(e.g. Claude Desktop / Cursor)")}`);
+    cliContext.logger.info(`   ${hint(`{ "command": "node", "args": ["${serverPath}/server.js"] }`)}`);
     cliContext.logger.info("");
-    cliContext.logger.info(`Tool surface: run \`fern mcp tools --group ${group}\` to review before shipping.`);
+    cliContext.logger.info(
+        `${ICONS.pointer} Review the tool surface before shipping: ${command(`fern mcp tools --group ${group}`)}`
+    );
 }
