@@ -403,7 +403,7 @@ public class AsyncSeedApiClientBuilder {
          * Use this when you already have a valid access token and want to bypass
          * the OAuth client credentials flow.
          *
-         * @param token The access token to use for Authorization header
+         * @param token The access token to use for token header
          * @return A builder configured for token authentication
          */
         public _TokenAuth token(String token) {

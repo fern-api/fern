@@ -16,8 +16,8 @@ class OAuthTokenSupplierGeneratorTest {
 
     @Test
     void respectsCustomHeaderWithoutSpacingForEmptyPrefix() {
-        assertThat(OAuthTokenSupplierGenerator.getTokenHeader(Optional.of("x-walmart-oauth")))
-                .isEqualTo("x-walmart-oauth");
+        assertThat(OAuthTokenSupplierGenerator.getTokenHeader(Optional.of("X-Custom-Token")))
+                .isEqualTo("X-Custom-Token");
         assertThat(OAuthTokenSupplierGenerator.getTokenPrefixWithSpace(Optional.of("")))
                 .isEmpty();
     }
