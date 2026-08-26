@@ -74,7 +74,7 @@ export declare namespace Fetcher {
 }
 
 const SENSITIVE_HEADERS = new Set([
-    "token",
+    "x-custom-token",
     "authorization",
     "www-authenticate",
     "x-api-key",

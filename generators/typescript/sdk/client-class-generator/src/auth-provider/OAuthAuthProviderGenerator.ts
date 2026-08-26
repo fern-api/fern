@@ -32,6 +32,8 @@ const ACCESS_TOKEN_FIELD_NAME = "accessToken";
 const EXPIRES_AT_FIELD_NAME = "expiresAt";
 const REFRESH_PROMISE_FIELD_NAME = "refreshPromise";
 const DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME = "token";
+const DEFAULT_TOKEN_HEADER = "Authorization";
+const DEFAULT_TOKEN_PREFIX = "Bearer";
 const DEFAULT_EXPIRES_IN_SECONDS = 3600; // 1 hour
 const GRANT_TYPE_WIRE_VALUE = "grant_type";
 const CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
@@ -228,6 +230,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         if (oauthConfig.type !== "clientCredentials") {
             return;
         }
+
+        const tokenHeader = this.getTokenHeader(oauthConfig);
+        const tokenValue = this.getTokenValue(oauthConfig, "token");
 
         const authEndpointReference = oauthConfig.tokenEndpoint.endpointReference;
         const packageId = authEndpointReference.subpackageId
@@ -526,7 +531,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         return {
             headers: {
-                Authorization: \`Bearer \${token}\`
+                ${tokenHeader}: ${tokenValue}
             }
         };
         `
@@ -632,6 +637,12 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             return;
         }
 
+        const tokenHeader = this.getTokenHeader(oauthConfig);
+        const tokenValue = this.getTokenValue(
+            oauthConfig,
+            "await core.EndpointSupplier.get(token, { endpointMetadata })"
+        );
+
         const constructorOptionsType = `${CLASS_NAME}.TokenOverride`;
 
         const constructorStatements = `
@@ -702,7 +713,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         }
         return {
             headers: {
-                Authorization: \`Bearer \${await core.EndpointSupplier.get(token, { endpointMetadata })}\`
+                ${tokenHeader}: ${tokenValue}
             }
         };
         `
@@ -715,7 +726,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         }
         return {
             headers: {
-                Authorization: \`Bearer \${await core.EndpointSupplier.get(token, { endpointMetadata })}\`
+                ${tokenHeader}: ${tokenValue}
             }
         };
         `
@@ -740,6 +751,16 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 }
             ]
         });
+    }
+
+    private getTokenHeader(oauthConfig: FernIr.OAuthClientCredentials): string {
+        return JSON.stringify(oauthConfig.tokenHeader ?? DEFAULT_TOKEN_HEADER);
+    }
+
+    private getTokenValue(oauthConfig: FernIr.OAuthClientCredentials, tokenExpression: string): string {
+        const tokenPrefix = oauthConfig.tokenPrefix ?? DEFAULT_TOKEN_PREFIX;
+        const escapedTokenPrefix = tokenPrefix.replaceAll("\\", "\\\\").replaceAll("`", "\\`").replaceAll("${", "\\${");
+        return tokenPrefix.length > 0 ? `\`${escapedTokenPrefix} \${${tokenExpression}}\`` : tokenExpression;
     }
 
     private getNeverThrowErrorsHandler(context: FileContext): string {
