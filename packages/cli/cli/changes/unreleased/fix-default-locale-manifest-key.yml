@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Publish the configured default locale as the docs manifest locale key instead of always using "en".
+  type: fix
