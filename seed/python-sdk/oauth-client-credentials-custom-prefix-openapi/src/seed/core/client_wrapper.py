@@ -33,17 +33,17 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "fern_oauth-client-credentials-openapi/0.0.1",
+            "User-Agent": "fern_oauth-client-credentials-custom-prefix-openapi/0.0.1",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
-            "X-Fern-SDK-Name": "fern_oauth-client-credentials-openapi",
+            "X-Fern-SDK-Name": "fern_oauth-client-credentials-custom-prefix-openapi",
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }
         token = self._get_token()
         if token is not None:
-            headers["token"] = token
+            headers["X-Custom-Token"] = f"Token {token}"
         return headers
 
     def _get_token(self) -> typing.Optional[str]:
@@ -145,5 +145,5 @@ class AsyncClientWrapper(BaseClientWrapper):
         headers = self.get_headers()
         if self._async_token is not None:
             token = await self._async_token()
-            headers["token"] = token
+            headers["X-Custom-Token"] = f"Token {token}"
         return headers

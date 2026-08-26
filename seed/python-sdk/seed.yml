@@ -506,6 +506,12 @@ fixtures:
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
+  oauth-client-credentials-custom-prefix-openapi:
+    - customConfig: null
+      outputFolder: .
+  oauth-client-credentials-openapi:
+    - customConfig: null
+      outputFolder: .
   python-oauth-token-optional:
     - customConfig: null
       outputFolder: no-custom-config

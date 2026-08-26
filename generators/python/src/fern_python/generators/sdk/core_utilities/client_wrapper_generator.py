@@ -1,3 +1,4 @@
+import json
 import re
 import typing
 from dataclasses import dataclass
@@ -116,6 +117,7 @@ class ConstructorParameter(BaseClientGeneratorConstructorParameter):
     # header auth scheme). Used to skip flat auth-header emission in endpoint
     # security mode, where auth headers are routed per-endpoint instead.
     is_auth: bool = False
+    raw_header_value_for_empty_prefix: bool = False
 
 
 @dataclass
@@ -572,7 +574,15 @@ class ClientWrapperGenerator:
                 writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME} is not None:")
                 with writer.indent():
                     writer.write_line(f"token = await self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME}()")
-                    writer.write_line('headers["Authorization"] = f"Bearer {token}"')
+                    token_header, token_prefix = self._get_token_header_and_prefix()
+                    writer.write_line(
+                        f"headers[{json.dumps(token_header)}] = "
+                        + self._get_prefixed_header_value(
+                            token_prefix,
+                            "token",
+                            raw_value_for_empty_prefix=True,
+                        )
+                    )
                 if self._has_inferred_auth():
                     writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME} is not None:")
                     with writer.indent():
@@ -600,14 +610,21 @@ class ClientWrapperGenerator:
         basic_auth_scheme = self._get_basic_auth_scheme()
         inferred_auth_scheme = self._get_inferred_auth_scheme()
 
-        # The scheme keys that resolve to a bearer token (Authorization: Bearer <token>).
+        # The scheme keys that resolve to a token.
         # Both an explicit bearer scheme and an OAuth scheme share the client wrapper's
         # single token slot (_get_token / _async_token).
-        token_scheme_keys: List[str] = []
+        token_schemes: List[typing.Tuple[str, str, str]] = []
         if bearer_auth_scheme is not None and self._has_bearer_scheme():
-            token_scheme_keys.append(bearer_auth_scheme.key)
+            token_schemes.append(
+                (
+                    bearer_auth_scheme.key,
+                    ClientWrapperGenerator.AUTHORIZATION_HEADER,
+                    ClientWrapperGenerator.BEARER_AUTH_PREFIX,
+                )
+            )
         if oauth_scheme is not None:
-            token_scheme_keys.append(oauth_scheme.key)
+            token_header, token_prefix = self._get_oauth_token_header_and_prefix()
+            token_schemes.append((oauth_scheme.key, token_header, token_prefix))
 
         def _write_auth_headers_for_endpoint_body(writer: AST.NodeWriter) -> None:
             writer.write_line(f"if not {security_param}:")
@@ -624,7 +641,7 @@ class ClientWrapperGenerator:
             writer.write_line(" = {}")
 
             # Bearer / OAuth token schemes
-            if len(token_scheme_keys) > 0 and bearer_auth_scheme is not None:
+            if len(token_schemes) > 0 and bearer_auth_scheme is not None:
                 token_getter = names.get_token_getter_name(bearer_auth_scheme)
                 if is_async:
                     # Forward-declare so both branches (async token -> str, sync getter ->
@@ -641,9 +658,14 @@ class ClientWrapperGenerator:
                     writer.write_line(f"_token = self.{token_getter}()")
                 writer.write_line("if _token is not None:")
                 with writer.indent():
-                    for key in token_scheme_keys:
+                    for key, token_header, token_prefix in token_schemes:
+                        token_value = self._get_prefixed_header_value(
+                            token_prefix,
+                            "_token",
+                            raw_value_for_empty_prefix=True,
+                        )
                         writer.write_line(
-                            f'{available_var}["{key}"] = {{"{ClientWrapperGenerator.AUTHORIZATION_HEADER}": f"{ClientWrapperGenerator.BEARER_AUTH_PREFIX} {{_token}}"}}'
+                            f"{available_var}[{json.dumps(key)}] = {{{json.dumps(token_header)}: {token_value}}}"
                         )
 
             # Header auth schemes (e.g. X-API-Key)
@@ -1079,6 +1101,7 @@ class ClientWrapperGenerator:
                 if param.is_auth and not emit_flat_auth:
                     continue
                 if param.header_key is not None:
+                    header_key = json.dumps(param.header_key)
                     if param.header_prefix is not None:
                         if param.getter_method is not None:
                             if param.type_hint.is_optional:
@@ -1088,18 +1111,33 @@ class ClientWrapperGenerator:
                                 writer.write_line(f"if {param.constructor_parameter_name} is not None:")
                                 with writer.indent():
                                     writer.write_line(
-                                        f'headers["{param.header_key}"] = f"{param.header_prefix} {{{param.constructor_parameter_name}}}"'
+                                        f"headers[{header_key}] = "
+                                        + self._get_prefixed_header_value(
+                                            param.header_prefix,
+                                            param.constructor_parameter_name,
+                                            raw_value_for_empty_prefix=param.raw_header_value_for_empty_prefix,
+                                        )
                                     )
                             else:
                                 writer.write_line(
-                                    f'headers["{param.header_key}"] = f"{param.header_prefix} {{self.{param.getter_method.name}()}}"'
+                                    f"headers[{header_key}] = "
+                                    + self._get_prefixed_header_value(
+                                        param.header_prefix,
+                                        f"self.{param.getter_method.name}()",
+                                        raw_value_for_empty_prefix=param.raw_header_value_for_empty_prefix,
+                                    )
                                 )
                         elif param.private_member_name is not None:
                             if param.type_hint.is_optional:
                                 writer.write_line(f"if self.{param.private_member_name} is not None:")
                                 writer.indent()
                             writer.write_line(
-                                f'headers["{param.header_key}"] = f"{param.header_prefix} {{self.{param.private_member_name}}}"'
+                                f"headers[{header_key}] = "
+                                + self._get_prefixed_header_value(
+                                    param.header_prefix,
+                                    f"self.{param.private_member_name}",
+                                    raw_value_for_empty_prefix=param.raw_header_value_for_empty_prefix,
+                                )
                             )
                             if param.type_hint.is_optional:
                                 writer.outdent()
@@ -1113,18 +1151,18 @@ class ClientWrapperGenerator:
                                 writer.write_line(f"if {param.constructor_parameter_name} is not None:")
                                 with writer.indent():
                                     writer.write_line(
-                                        f'headers["{param.header_key}"] = {stringify(param.constructor_parameter_name)}'
+                                        f"headers[{header_key}] = {stringify(param.constructor_parameter_name)}"
                                     )
                             else:
                                 writer.write_line(
-                                    f'headers["{param.header_key}"] = {stringify(f"self.{param.getter_method.name}()")}'
+                                    f"headers[{header_key}] = {stringify(f'self.{param.getter_method.name}()')}"
                                 )
                         elif param.private_member_name is not None:
                             if param.type_hint.is_optional:
                                 writer.write_line(f"if self.{param.private_member_name} is not None:")
                                 writer.indent()
                             writer.write_line(
-                                f'headers["{param.header_key}"] = {stringify(f"self.{param.private_member_name}")}'
+                                f"headers[{header_key}] = {stringify(f'self.{param.private_member_name}')}"
                             )
                             if param.type_hint.is_optional:
                                 writer.outdent()
@@ -1460,6 +1498,7 @@ class ClientWrapperGenerator:
 
         bearer_auth_scheme = self._get_bearer_auth_scheme()
         if bearer_auth_scheme is not None:
+            token_header, token_prefix = self._get_token_header_and_prefix()
             constructor_parameter_name = names.get_token_constructor_parameter_name(bearer_auth_scheme)
             # For OAuth flows, the OAuthTokenProvider needs to create a SyncClientWrapper without a token
             # to fetch the initial token. For plain bearer auth, use the is_auth_mandatory flag.
@@ -1499,9 +1538,10 @@ class ClientWrapperGenerator:
                             )
                         ),
                     ),
-                    header_key=ClientWrapperGenerator.AUTHORIZATION_HEADER,
-                    header_prefix=ClientWrapperGenerator.BEARER_AUTH_PREFIX,
+                    header_key=token_header,
+                    header_prefix=token_prefix,
                     is_auth=True,
+                    raw_header_value_for_empty_prefix=self._has_oauth(),
                     environment_variable=(
                         bearer_auth_scheme.token_env_var if bearer_auth_scheme.token_env_var is not None else None
                     ),
@@ -1612,6 +1652,54 @@ class ClientWrapperGenerator:
             if scheme_as_union.type == "oauth":
                 return scheme_as_union
         return None
+
+    def _get_token_header_and_prefix(self) -> typing.Tuple[str, str]:
+        if self._has_bearer_scheme():
+            return (
+                ClientWrapperGenerator.AUTHORIZATION_HEADER,
+                ClientWrapperGenerator.BEARER_AUTH_PREFIX,
+            )
+        return self._get_oauth_token_header_and_prefix()
+
+    def _get_oauth_token_header_and_prefix(self) -> typing.Tuple[str, str]:
+        oauth_scheme = self._get_oauth_scheme()
+        if oauth_scheme is None:
+            return (
+                ClientWrapperGenerator.AUTHORIZATION_HEADER,
+                ClientWrapperGenerator.BEARER_AUTH_PREFIX,
+            )
+
+        oauth_configuration = oauth_scheme.configuration.get_as_union()
+        if oauth_configuration.type != "clientCredentials":
+            return (
+                ClientWrapperGenerator.AUTHORIZATION_HEADER,
+                ClientWrapperGenerator.BEARER_AUTH_PREFIX,
+            )
+
+        token_header = (
+            oauth_configuration.token_header
+            if oauth_configuration.token_header is not None
+            else ClientWrapperGenerator.AUTHORIZATION_HEADER
+        )
+        token_prefix = (
+            oauth_configuration.token_prefix
+            if oauth_configuration.token_prefix is not None
+            else ClientWrapperGenerator.BEARER_AUTH_PREFIX
+        )
+        return token_header, token_prefix
+
+    @staticmethod
+    def _get_prefixed_header_value(
+        prefix: str,
+        value_expression: str,
+        *,
+        raw_value_for_empty_prefix: bool = False,
+    ) -> str:
+        if len(prefix) == 0:
+            return value_expression if raw_value_for_empty_prefix else f'f" {{{value_expression}}}"'
+        if re.search(r'[\\"\r\n{}]', prefix) is not None:
+            return f"{(prefix + ' ')!r} + {value_expression}"
+        return f'f"{prefix} {{{value_expression}}}"'
 
     def _get_inferred_auth_scheme(self) -> Optional[ir_types.InferredAuthScheme]:
         for scheme in self._context.ir.auth.schemes:
