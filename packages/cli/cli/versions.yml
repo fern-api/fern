@@ -1,4 +1,70 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.107.0
+  changelogEntry:
+    - summary: |
+        Publish the configured default locale as the docs manifest locale key instead of always using "en".
+      type: fix
+    - summary: |
+        You can now keep your redirects in their own files instead of listing them all in `docs.yml`.
+        Point `redirects` at one file or several, and Fern combines them in the order you list them.
+      type: feat
+  createdAt: "2026-08-26"
+  irVersion: 67
+- version: 5.106.1
+  changelogEntry:
+    - summary: |
+        Fix stale blog changelog-slug rule test expectations after the blog feed slug allowlist change.
+      type: chore
+  createdAt: "2026-08-26"
+  irVersion: 67
+- version: 5.106.0
+  changelogEntry:
+    - summary: |
+        Add a blog navigation item as an alias for changelog navigation.
+      type: feat
+    - summary: |
+        Accept blog, blogs, and posts changelog slugs for feeds.
+      type: fix
+  createdAt: "2026-08-26"
+  irVersion: 67
+- version: 5.105.3
+  changelogEntry:
+    - summary: |
+        Add snapshot coverage for OAuth client credentials with a custom token header and prefix.
+      type: chore
+  createdAt: "2026-08-26"
+  irVersion: 67
+- version: 5.105.2
+  changelogEntry:
+    - summary: |
+        Add snapshot coverage for OAuth client credentials with a custom token header and prefix.
+      type: chore
+  createdAt: "2026-08-26"
+  irVersion: 67
+- version: 5.105.1
+  changelogEntry:
+    - summary: |
+        Materialize Git LFS assets when building docs versions from Git refs.
+      type: fix
+  createdAt: "2026-08-25"
+  irVersion: 67
+- version: 5.105.0
+  changelogEntry:
+    - summary: |
+        Support GraphQL schemas whose SDL is split across multiple files. GraphQL specs that share a
+        namespace -- including specs that declare no `name`, which all belong to the same unnamed
+        group -- are now compiled into a single schema, so federated subgraphs (which reference types
+        owned by sibling files and extend the same `Query`/`Mutation` types) can be documented as one
+        API. Federation composition directives such as `@key`, `@external` and `@link` are ignored
+        (through federation v2.9, so `@cost`, `@listSize`, `@context` and `@fromContext` too),
+        members marked `@inaccessible` are omitted along with everything that references them (matching
+        the client-facing API schema produced by composition), and `@deprecated` is now surfaced on
+        operations, fields, arguments and enum values. Merging is first-wins throughout -- types,
+        members, directive definitions, root operation types and operation examples -- and every
+        discarded declaration is reported, naming the files involved.
+      type: feat
+  createdAt: "2026-08-25"
+  irVersion: 67
 - version: 5.104.1
   changelogEntry:
     - summary: |

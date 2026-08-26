@@ -73,9 +73,7 @@ public final class OAuthAuthProvider implements AuthProvider {
         }
         // Create a temporary token supplier to fetch the token
         OAuthTokenSupplier tokenSupplier = new OAuthTokenSupplier(clientId, clientSecret, this.authClient);
-        // The token supplier's get() method handles fetching and returns the full auth header value
         String authHeader = tokenSupplier.get();
-        // Extract just the token part (remove 'Bearer ' prefix)
         if (authHeader.startsWith("Bearer ")) {
             this.accessToken = authHeader.substring(7);
         } else {

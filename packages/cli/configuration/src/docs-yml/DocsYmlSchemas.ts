@@ -593,6 +593,20 @@ export const RedirectConfig = z.object({
     permanent: z.boolean().optional()
 });
 
+/**
+ * Either an inline list of redirects, or one or more filepaths to YAML files containing only that list.
+ */
+export const RedirectsConfiguration = z.union([z.array(RedirectConfig), z.string(), z.array(z.string())]);
+
+/**
+ * The contents of a standalone redirects file referenced by `redirects` in docs.yml.
+ */
+export const RedirectsFile = z
+    .object({
+        redirects: z.array(RedirectConfig.strict())
+    })
+    .strict();
+
 // ===== Check =====
 
 export const CheckRuleSeverity = z.enum(["warn", "error"]);
@@ -677,6 +691,16 @@ export const PageConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
 export const ChangelogConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         changelog: ChangelogFolderRelativePath,
+        title: z.string().optional(),
+        slug: z.string().optional(),
+        icon: z.string().optional(),
+        hidden: z.boolean().optional()
+    })
+);
+
+export const BlogConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
+    z.object({
+        blog: ChangelogFolderRelativePath,
         title: z.string().optional(),
         slug: z.string().optional(),
         icon: z.string().optional(),
@@ -823,6 +847,7 @@ export const NavigationItem: z.ZodType<unknown> = z.lazy(() =>
         LibraryReferenceConfiguration,
         LinkConfiguration,
         ChangelogConfiguration,
+        BlogConfiguration,
         FolderConfiguration
     ])
 );
@@ -887,7 +912,8 @@ export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
         hidden: z.boolean().optional(),
         href: z.string().optional(),
         target: Target.optional(),
-        changelog: ChangelogFolderRelativePath.optional()
+        changelog: ChangelogFolderRelativePath.optional(),
+        blog: ChangelogFolderRelativePath.optional()
     })
 );
 
@@ -1022,7 +1048,7 @@ export const DocsConfiguration = z.object({
     "ai-examples": AiExamplesConfig.optional(),
     agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
-    redirects: z.array(RedirectConfig).optional(),
+    redirects: RedirectsConfiguration.optional(),
     check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: z.string().optional(),

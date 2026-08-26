@@ -343,7 +343,14 @@ export class SdkGenerator {
             relativeTestPath: this.relativeTestPath,
             generateEndpointMetadata: config.generateEndpointMetadata,
             customPagerName: config.customPagerName,
-            maxRetries: config.maxRetries ?? undefined
+            maxRetries: config.maxRetries ?? undefined,
+            additionalSensitiveHeaders: this.intermediateRepresentation.auth.schemes.flatMap((scheme) =>
+                scheme.type === "oauth" &&
+                scheme.configuration.type === "clientCredentials" &&
+                scheme.configuration.tokenHeader != null
+                    ? [scheme.configuration.tokenHeader]
+                    : []
+            )
         });
 
         const apiDirectory: ExportedDirectory[] = [

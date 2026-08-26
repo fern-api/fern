@@ -1,6 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { createMockTaskContext } from "@fern-api/task-context";
+import { createMockTaskContext, type TaskContext } from "@fern-api/task-context";
 import { readdir } from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -19,16 +19,18 @@ describe("GraphQLConverter", async () => {
         }
 
         it(fixture.name, async () => {
-            const fixturePath = join(
-                FIXTURES_DIR,
-                RelativeFilePath.of(fixture.name),
-                RelativeFilePath.of("schema.graphql")
-            );
+            const fixtureDir = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name));
+            // A fixture may hold several SDL files, which is how a schema split across federated
+            // subgraphs is expressed.
+            const filePaths = (await readdir(fixtureDir))
+                .filter((file) => file.endsWith(".graphql"))
+                .sort()
+                .map((file) => join(fixtureDir, RelativeFilePath.of(file)));
             const context = createMockTaskContext();
 
             const converter = new GraphQLConverter({
                 context,
-                filePath: fixturePath
+                filePath: filePaths
             });
 
             const result = await converter.convert();
@@ -128,5 +130,40 @@ describe("GraphQLConverter custom scalars", () => {
 
         expect(types[FdrAPI.TypeId("myapi_DateTime")]).toBeDefined();
         expect(types[FdrAPI.TypeId("DateTime")]).toBeUndefined();
+    });
+
+    it("keeps the first examples and warns when two specs document the same operation", async () => {
+        const mockContext = createMockTaskContext();
+        const warnings: string[] = [];
+        const context: TaskContext = {
+            ...mockContext,
+            logger: {
+                ...mockContext.logger,
+                warn: (...args: unknown[]) => {
+                    warnings.push(args.join(" "));
+                }
+            }
+        };
+        const converter = new GraphQLConverter({
+            context,
+            filePath: BASIC_SCHEMA,
+            examples: [
+                {
+                    operation: "users",
+                    operationType: "query",
+                    examples: [{ query: "query { users { id } }", name: "from spec A" }]
+                },
+                {
+                    operation: "users",
+                    operationType: "query",
+                    examples: [{ query: "query { users { id } }", name: "from spec B" }]
+                }
+            ]
+        });
+
+        const { graphqlOperations } = await converter.convert();
+
+        expect(warnings.some((warning) => warning.includes("query:users"))).toBe(true);
+        expect(graphqlOperations[FdrAPI.GraphQlOperationId("query_users")]?.examples?.[0]?.name).toBe("from spec A");
     });
 });

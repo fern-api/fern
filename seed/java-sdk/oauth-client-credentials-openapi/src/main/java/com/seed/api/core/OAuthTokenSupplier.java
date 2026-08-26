@@ -45,7 +45,7 @@ public final class OAuthTokenSupplier implements Supplier<String> {
         String cachedToken = this.accessToken;
         Instant cachedExpiresAt = this.expiresAt;
         if (cachedToken != null && cachedExpiresAt != null && !cachedExpiresAt.isBefore(Instant.now())) {
-            return " " + cachedToken;
+            return cachedToken;
         }
         synchronized (tokenLock) {
             if (accessToken == null || expiresAt.isBefore(Instant.now())) {
@@ -53,7 +53,7 @@ public final class OAuthTokenSupplier implements Supplier<String> {
                 this.accessToken = authResponse.getAccessToken();
                 this.expiresAt = getExpiresAt(authResponse.getExpiresIn());
             }
-            return " " + accessToken;
+            return accessToken;
         }
     }
 

@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration-loader";
+import { DocsConfigurationWithResolvedRedirects, docsYml } from "@fern-api/configuration-loader";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -9,7 +9,7 @@ export type DocsConfigFileAstVisitor<R = void | Promise<void>> = {
 };
 
 export interface DocsConfigFileAstNodeTypes {
-    file: { config: docsYml.RawSchemas.DocsConfiguration };
+    file: { config: DocsConfigurationWithResolvedRedirects };
     filepath: {
         absoluteFilepath: AbsoluteFilePath;
         value: string /* User defined value for filepath */;

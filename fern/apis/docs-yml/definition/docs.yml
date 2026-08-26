@@ -339,7 +339,7 @@ types:
 
       # seo
       metadata: optional<MetadataConfig>
-      redirects: optional<list<RedirectConfig>>
+      redirects: optional<RedirectsConfiguration>
 
       # validation
       check: optional<CheckConfig>
@@ -626,6 +626,7 @@ types:
           Tabs with `href` must not have children in the navigation config.
       target: optional<Target>
       changelog: optional<ChangelogFolderRelativePath>
+      blog: optional<ChangelogFolderRelativePath>
 
   ChangelogFolderRelativePath:
     type: string
@@ -816,6 +817,7 @@ types:
       - LibraryReferenceConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
+      - BlogConfiguration
       - FolderConfiguration
 
   LogoConfiguration:
@@ -1426,6 +1428,16 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       # skip-slug: optional<boolean> # skip-slug is not needed for changelog
+
+  BlogConfiguration:
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      blog: ChangelogFolderRelativePath
+      title: optional<string> # defaults to "Blog"
+      slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      # skip-slug: optional<boolean> # skip-slug is not needed for blog
 
   SectionConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -2257,6 +2269,26 @@ types:
     enum:
       - dark
       - light
+
+  RedirectsConfiguration:
+    discriminated: false
+    docs: |
+      Either an inline list of redirects, or one or more filepaths to YAML files containing
+      only a list of redirects.
+
+      ```yaml
+      redirects: ./redirects.yml
+      ```
+
+      ```yaml
+      redirects:
+        - ./redirects/a.yml
+        - ./redirects/b.yml
+      ```
+    union:
+      - list<RedirectConfig>
+      - string
+      - list<string>
 
   RedirectConfig:
     availability: in-development

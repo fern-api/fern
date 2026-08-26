@@ -1,0 +1,509 @@
+{
+  "graphqlOperations": {
+    "query_userProfile": {
+      "id": "query_userProfile",
+      "operationType": "QUERY",
+      "name": "userProfile",
+      "description": "Fetch a user profile by id.",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "filter",
+          "type": {
+            "type": "optional",
+            "itemType": {
+              "type": "id",
+              "value": "UserProfileFilter"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "UserProfile"
+        }
+      }
+    },
+    "query_legacyUserProfile": {
+      "id": "query_legacyUserProfile",
+      "operationType": "QUERY",
+      "name": "legacyUserProfile",
+      "description": "**Deprecated:** Use `userProfile` instead.",
+      "availability": "Deprecated",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "UserProfile"
+        }
+      }
+    },
+    "query_profileImages": {
+      "id": "query_profileImages",
+      "operationType": "QUERY",
+      "name": "profileImages",
+      "arguments": [
+        {
+          "name": "profileId",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "ProfileImages"
+        }
+      }
+    },
+    "query_productUsage": {
+      "id": "query_productUsage",
+      "operationType": "QUERY",
+      "name": "productUsage",
+      "arguments": [
+        {
+          "name": "profileId",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "ProductUsage"
+        }
+      }
+    },
+    "mutation_updateUserProfile": {
+      "id": "mutation_updateUserProfile",
+      "operationType": "MUTATION",
+      "name": "updateUserProfile",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "UpdateUserProfileInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "UserProfile"
+        }
+      }
+    },
+    "mutation_updateProfileImage": {
+      "id": "mutation_updateProfileImage",
+      "operationType": "MUTATION",
+      "name": "updateProfileImage",
+      "arguments": [
+        {
+          "name": "profileId",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "ImageInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "ProfileImages"
+        }
+      }
+    }
+  },
+  "types": {
+    "UserProfile": {
+      "name": "UserProfile",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "displayName",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The user's display name."
+          },
+          {
+            "key": "nickname",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "**Deprecated:** Use `displayName`.",
+            "availability": "Deprecated"
+          },
+          {
+            "key": "profileImages",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ProfileImages"
+              }
+            },
+            "description": "Images owned by the images subgraph."
+          },
+          {
+            "key": "usage",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ProductUsage"
+              }
+            },
+            "arguments": [
+              {
+                "name": "period",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UsagePeriod"
+                  }
+                },
+                "defaultValue": "MONTHLY"
+              }
+            ]
+          },
+          {
+            "key": "avatarUrl",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "UserProfileFilter": {
+      "name": "UserProfileFilter",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "status",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ProfileStatus"
+              }
+            }
+          },
+          {
+            "key": "images",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ImageFilter"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "UpdateUserProfileInput": {
+      "name": "UpdateUserProfileInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "displayName",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "nickname",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ProfileStatus": {
+      "name": "ProfileStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ACTIVE"
+          },
+          {
+            "value": "DISABLED"
+          },
+          {
+            "value": "ARCHIVED",
+            "description": "**Deprecated:** Archived profiles are deleted immediately.",
+            "availability": "Deprecated"
+          }
+        ]
+      }
+    },
+    "ProfileImages": {
+      "name": "ProfileImages",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "profileId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "avatar",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Image"
+              }
+            },
+            "description": "Square avatar rendition."
+          },
+          {
+            "key": "cover",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Image"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Image": {
+      "name": "Image",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "url",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "width",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "height",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ImageInput": {
+      "name": "ImageInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "url",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ImageFilter": {
+      "name": "ImageFilter",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "hasAvatar",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ProductUsage": {
+      "name": "ProductUsage",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "profileId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "sessions",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            "description": "Number of sessions in the requested period."
+          },
+          {
+            "key": "period",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "UsagePeriod"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "UsagePeriod": {
+      "name": "UsagePeriod",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "DAILY"
+          },
+          {
+            "value": "MONTHLY"
+          }
+        ]
+      }
+    }
+  }
+}

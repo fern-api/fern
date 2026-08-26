@@ -93,7 +93,7 @@ export interface DocsConfiguration {
     /** Configuration for agent-serving endpoints. */
     agents?: FernDocsConfig.AgentsConfig;
     metadata?: FernDocsConfig.MetadataConfig;
-    redirects?: FernDocsConfig.RedirectConfig[];
+    redirects?: FernDocsConfig.RedirectsConfiguration;
     check?: FernDocsConfig.CheckConfig;
     logo?: FernDocsConfig.LogoConfiguration;
     /** Relative filepath to the favicon. */

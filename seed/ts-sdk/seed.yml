@@ -309,6 +309,12 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+  oauth-client-credentials-custom-prefix-openapi:
+    - outputFolder: .
+      customConfig: null
+  oauth-client-credentials-openapi:
+    - outputFolder: .
+      customConfig: null
   oauth-client-credentials-mandatory-auth:
     - outputFolder: no-custom-config
       customConfig: null

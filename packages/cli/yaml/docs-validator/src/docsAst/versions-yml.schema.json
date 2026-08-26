@@ -239,6 +239,16 @@
               "type": "null"
             }
           ]
+        },
+        "blog": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ChangelogFolderRelativePath"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1723,6 +1733,89 @@
       ],
       "additionalProperties": false
     },
+    "docs.BlogConfiguration": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blog": {
+          "$ref": "#/definitions/docs.ChangelogFolderRelativePath"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "blog"
+      ],
+      "additionalProperties": false
+    },
     "docs.TitleSource": {
       "type": "string",
       "enum": [
@@ -1898,6 +1991,9 @@
         },
         {
           "$ref": "#/definitions/docs.ChangelogConfiguration"
+        },
+        {
+          "$ref": "#/definitions/docs.BlogConfiguration"
         },
         {
           "$ref": "#/definitions/docs.FolderConfiguration"
