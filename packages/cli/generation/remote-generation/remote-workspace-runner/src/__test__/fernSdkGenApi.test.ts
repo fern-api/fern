@@ -17,6 +17,7 @@ import {
     getFernSdkGenApiOrigin,
     isEligibleForFernSdkGenApi,
     isFernSdkGenApiEnabled,
+    isSdkGenApiOnly,
     mapFernSdkGenApiOutput,
     preflightFernSdkGenApiBuild,
     runFernSdkGenApiBuild,
@@ -336,6 +337,21 @@ describe("isEligibleForFernSdkGenApi", () => {
 
         expect(result?.route).toBeUndefined();
         expect(result?.error).toBeUndefined();
+    });
+
+    it("fails fast for sdk-gen-api-only generators when sdk-gen-api routing is disabled", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ name: "fernapi/fern-mcp-server", version: "0.0.1", language: undefined })],
+            enabled: false,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toMatchObject({
+            code: "CONFIG_ERROR",
+            message: "fernapi/fern-mcp-server requires the environment variable FERN_USE_SDK_GEN_API=true."
+        });
     });
 
     it("unescapes literal environment placeholders only once", () => {
@@ -1792,5 +1808,22 @@ describe("fernapi/fern-mcp-server target", () => {
             type: "publish",
             publish: { registry: "npm" }
         });
+    });
+});
+
+describe("isSdkGenApiOnly", () => {
+    it("returns true for generators that have no Fiddle fallback", () => {
+        expect(isSdkGenApiOnly("fernapi/fern-mcp-server")).toBe(true);
+    });
+
+    it("returns false for generators that support both routes", () => {
+        expect(isSdkGenApiOnly("fernapi/fern-typescript-sdk")).toBe(false);
+        expect(isSdkGenApiOnly("fernapi/fern-python-sdk")).toBe(false);
+        expect(isSdkGenApiOnly("fernapi/fern-go-sdk")).toBe(false);
+    });
+
+    it("returns false for unknown generators", () => {
+        expect(isSdkGenApiOnly("fernapi/fern-typescript-express")).toBe(false);
+        expect(isSdkGenApiOnly("some-custom/generator")).toBe(false);
     });
 });

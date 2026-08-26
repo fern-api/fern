@@ -124,6 +124,17 @@ export function isFernSdkGenApiEnabled(): boolean {
     return configured.trim().toLowerCase() === "true";
 }
 
+/**
+ * Generators that only run through sdk-gen-api and have no Fiddle fallback.
+ * When sdk-gen-api is disabled, these generators must fail fast with a clear
+ * message instead of falling through to Fiddle where they would fail opaquely.
+ */
+const SDK_GEN_API_ONLY_GENERATORS: ReadonlySet<string> = new Set(["fernapi/fern-mcp-server"]);
+
+export function isSdkGenApiOnly(generatorName: string): boolean {
+    return SDK_GEN_API_ONLY_GENERATORS.has(generatorName);
+}
+
 export function getFernSdkGenApiOrigin(): string | undefined {
     const configured = process.env.FERN_SDK_GEN_API_ORIGIN ?? process.env.DEFAULT_SDK_GEN_API_ORIGIN;
     if (configured == null) {
