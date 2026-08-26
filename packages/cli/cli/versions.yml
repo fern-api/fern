@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.106.1
+  changelogEntry:
+    - summary: |
+        Fix stale blog changelog-slug rule test expectations after the blog feed slug allowlist change.
+      type: chore
+  createdAt: "2026-08-26"
+  irVersion: 67
 - version: 5.106.0
   changelogEntry:
     - summary: |
