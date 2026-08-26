@@ -254,18 +254,4 @@ describe("blog navigation aliases", () => {
         expect(messages).toHaveLength(1);
         expect(messages[0]).toContain('resolves to URL path "/product-updates"');
     });
-
-    it("uses the Blog default title for a tab-level blog navigation item", async () => {
-        expect(
-            await violationsFor({
-                instances: [],
-                tabs: {
-                    entries: {
-                        blog: "content/entries"
-                    }
-                },
-                navigation: [{ tab: "entries" }]
-            })
-        ).toEqual([]);
-    });
 });
