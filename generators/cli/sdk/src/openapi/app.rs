@@ -1899,7 +1899,7 @@ impl CliApp {
         let resolved = crate::validate::validate_safe_output_dir(&out_dir)?;
 
         let files =
-            crate::openapi::skill_emitter::generate_skills(doc, &self.name, &self.auth_bindings);
+            crate::openapi::skill_emitter::generate_skills(doc, &self.name, &self.auth_bindings, self.auth_strategy);
 
         for (rel_path, content) in &files {
             let full_path = resolved.join(rel_path);

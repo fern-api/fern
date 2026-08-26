@@ -105,3 +105,20 @@
     notice; carrying it in the README keeps it without shipping a LICENSE file
     that contradicts the repo's own declared license.
   type: fix
+
+- summary: |
+    The shared `generate-skills` prerequisite file no longer documents flags the
+    spec cannot produce. `-o, --output` and the pagination flags are emitted
+    only when some operation actually registers them, and the pointer at
+    `--schema`'s `paginable` / `binaryResponse` hints is emitted only when those
+    hints can appear. On an API with neither, step one of the file was
+    unfollowable — it named a flag the parser rejects.
+  type: fix
+
+- summary: |
+    Generated skills state the real `--format` default (`table` on a TTY,
+    `json` when piped) instead of `json`, and tell agents to set **one** of
+    several alternative auth schemes rather than exporting every environment
+    variable — which set up the exact credential shadowing the CLI's own auth
+    errors warn about.
+  type: fix
