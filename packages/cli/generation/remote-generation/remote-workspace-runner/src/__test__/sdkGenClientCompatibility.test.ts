@@ -94,6 +94,13 @@ const LANGUAGE_BOUNDARIES: readonly LanguageBoundary[] = [
         below: "0.999.999",
         cutover: "1.0.0",
         above: "1.0.1"
+    },
+    {
+        generatorId: "fernapi/fern-mcp-server",
+        language: "mcp",
+        below: "0.0.999",
+        cutover: "0.1.0",
+        above: "0.1.1"
     }
 ];
 
@@ -113,7 +120,8 @@ const GENERATOR_ALIASES: ReadonlyArray<readonly [string, GeneratorLanguage, stri
     ["fernapi/fern-rust-sdk", "rust", "1.0.0"],
     ["fernapi/fern-swift-sdk", "swift", "1.0.0"],
     ["fernapi/fern-cli", "cli", "1.0.0"],
-    ["fernapi/fern-cli-generator", "cli", "1.0.0"]
+    ["fernapi/fern-cli-generator", "cli", "1.0.0"],
+    ["fernapi/fern-mcp-server", "mcp", "0.1.0"]
 ];
 
 describe("validateGeneratorConfigCompatibility", () => {

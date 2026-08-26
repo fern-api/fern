@@ -13,7 +13,8 @@ export type GeneratorLanguage =
     | "ruby"
     | "rust"
     | "swift"
-    | "cli";
+    | "cli"
+    | "mcp";
 
 export type GenerationConfigKind = "legacy-fern" | "sdk-config-v1";
 

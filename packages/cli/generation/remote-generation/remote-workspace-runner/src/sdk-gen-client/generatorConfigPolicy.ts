@@ -64,7 +64,8 @@ const GENERATOR_POLICIES = createGeneratorPolicies([
     ["fernapi/fern-rust-sdk", { language: "rust", cutoverVersion: "1.0.0" }],
     ["fernapi/fern-swift-sdk", { language: "swift", cutoverVersion: "1.0.0" }],
     ["fernapi/fern-cli", { language: "cli", cutoverVersion: "1.0.0" }],
-    ["fernapi/fern-cli-generator", { language: "cli", cutoverVersion: "1.0.0" }]
+    ["fernapi/fern-cli-generator", { language: "cli", cutoverVersion: "1.0.0" }],
+    ["fernapi/fern-mcp-server", { language: "mcp", cutoverVersion: "0.1.0" }]
 ]);
 
 /** Resolves one alias without exposing the private policy collection. */

@@ -782,6 +782,23 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(get).not.toHaveBeenCalled();
     });
 
+    it("requires sdk-config for MCP at its first core-backed version", async () => {
+        const { builds, post, get } = createPreflightBatch({
+            runtimeBundles: [validRuntimeBundle],
+            generatorInvocation: invocation({
+                name: "fernapi/fern-mcp-server",
+                language: "mcp",
+                version: "0.1.0"
+            })
+        });
+
+        await expect(Promise.all(builds)).rejects.toThrow(
+            "SDK_CONFIG_V1_REQUIRED; generator=fernapi/fern-mcp-server; language=mcp; requestedVersion=0.1.0; cutoverVersion=0.1.0"
+        );
+        expect(post).not.toHaveBeenCalled();
+        expect(get).not.toHaveBeenCalled();
+    });
+
     it("rejects an incompatible later batch target before submitting any target", async () => {
         const { builds, post, get } = createPreflightBatch({
             runtimeBundles: [validRuntimeBundle, validRuntimeBundle],

@@ -33,7 +33,7 @@ const MAX_MULTIPART_BODY_BYTES = 60 * 1024 * 1024;
 const LOOPBACK_HOSTNAMES = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
 const TARGET_ID_SEED_COLLATOR = new Intl.Collator("en", { numeric: true });
 
-export type FernSdkGenApiLanguage = GeneratorLanguage | "mcp";
+export type FernSdkGenApiLanguage = GeneratorLanguage;
 
 export type FernSdkGenApiPublishRegistry =
     | "npm"
@@ -140,8 +140,7 @@ export function getFernSdkGenApiOrigin(): string | undefined {
 }
 
 export function getFernSdkGenApiLanguage(generatorName: string): FernSdkGenApiLanguage | undefined {
-    return getGeneratorLanguage(generatorName) ??
-        (generatorName === "fernapi/fern-mcp-server" ? "mcp" : undefined);
+    return getGeneratorLanguage(generatorName);
 }
 
 interface FernSdkGenApiOutputMapping {
@@ -710,9 +709,6 @@ function assertGeneratorConfigCompatibility(participants: FernSdkGenApiBuildPara
                 undefined,
                 { code: CliError.Code.ConfigError }
             );
-        }
-        if (language === "mcp") {
-            continue;
         }
         try {
             validateGeneratorConfigCompatibility({
