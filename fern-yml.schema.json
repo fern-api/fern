@@ -2909,6 +2909,13 @@
             },
             "show-nav-availability-badges": {
               "type": "boolean"
+            },
+            "sidebar-footer-behavior": {
+              "type": "string",
+              "enum": [
+                "shrink",
+                "scroll"
+              ]
             }
           },
           "additionalProperties": false

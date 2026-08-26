@@ -33,10 +33,7 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
             "show-nav-availability-badges",
             core.serialization.boolean().optional(),
         ),
-        sidebarFooterBehavior: core.serialization.property(
-            "sidebar-footer-behavior",
-            SidebarFooterBehavior.optional(),
-        ),
+        sidebarFooterBehavior: core.serialization.property("sidebar-footer-behavior", SidebarFooterBehavior.optional()),
     });
 
 export declare namespace LayoutConfig {
