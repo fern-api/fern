@@ -759,10 +759,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
     private getTokenValue(oauthConfig: FernIr.OAuthClientCredentials, tokenExpression: string): string {
         const tokenPrefix = oauthConfig.tokenPrefix ?? DEFAULT_TOKEN_PREFIX;
-        const escapedTokenPrefix = tokenPrefix
-            .replaceAll("\\", "\\\\")
-            .replaceAll("`", "\\`")
-            .replaceAll("${", "\\${");
+        const escapedTokenPrefix = tokenPrefix.replaceAll("\\", "\\\\").replaceAll("`", "\\`").replaceAll("${", "\\${");
         return tokenPrefix.length > 0 ? `\`${escapedTokenPrefix} \${${tokenExpression}}\`` : tokenExpression;
     }
 
