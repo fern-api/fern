@@ -280,6 +280,7 @@ async function promptForToolsetChoice({
 }): Promise<ToolsetChoice> {
     interface Choice {
         name: string;
+        short?: string;
         value: ToolsetChoice;
         disabled?: string | boolean;
     }
@@ -288,6 +289,7 @@ async function promptForToolsetChoice({
         const verdict = computeVerdict(resolveTools(endpoints, existing.config));
         choices.push({
             name: `${radioChoice(existing.name)}\n         ${styledVerdictLine(verdict)}`,
+            short: existing.name,
             value: { presetKey: existing.name, config: existing.config }
         });
     }
@@ -296,6 +298,7 @@ async function promptForToolsetChoice({
         if (!preset.available) {
             choices.push({
                 name: radioChoice(preset.label),
+                short: preset.label,
                 value: { presetKey: key, config: preset.config },
                 disabled: `(${preset.unavailableReason ?? "unavailable"})`
             });
@@ -304,16 +307,19 @@ async function promptForToolsetChoice({
         const noteSuffix = preset.notes.length > 0 ? `\n         ${chalk.dim(preset.notes.join(" · "))}` : "";
         choices.push({
             name: `${radioChoice(preset.label)}\n         ${styledVerdictLine(preset.verdict)}${noteSuffix}`,
+            short: preset.label,
             value: { presetKey: key, config: preset.config }
         });
     }
     choices.push({
         name: `${radioChoice(`AI-curated — ${chalk.magenta("Fern Agent")} picks tools from your description ${chalk.dim("(requires fern login)")}`)}\n         ${chalk.dim("resolved after you describe what agents should do")}`,
+        short: `AI-curated — ${chalk.magenta("Fern Agent")} picks tools from your description`,
         value: { presetKey: "ai-curated", config: {} }
     });
     const everything = presets.everything;
     choices.push({
         name: `${radioChoice(everything.label)}\n         ${styledVerdictLine(everything.verdict)}`,
+        short: everything.label,
         value: { presetKey: "everything", config: everything.config }
     });
 

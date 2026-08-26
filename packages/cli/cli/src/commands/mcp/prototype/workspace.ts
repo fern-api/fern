@@ -48,6 +48,7 @@ export async function pickWorkspaceAndLoadSpec({
                 message: `Which API? (detected ${workspaces.length})`,
                 choices: workspaces.map((candidate) => ({
                     name: radioChoice(getWorkspaceName(candidate)),
+                    short: getWorkspaceName(candidate),
                     value: candidate
                 })),
                 theme: selectTheme

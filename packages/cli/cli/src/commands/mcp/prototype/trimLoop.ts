@@ -42,10 +42,26 @@ export async function runTrimLoop({
         const action = await select<TrimAction>({
             message: "Trim the toolset?",
             choices: [
-                ...(tags.length > 0 ? [{ name: radioChoice("Remove endpoints by tag…"), value: "tag" as const }] : []),
-                { name: radioChoice("Remove endpoints by method…"), value: "method" as const },
-                { name: radioChoice("Remove endpoints by path prefix…"), value: "path-prefix" as const },
-                { name: radioChoice("Keep as-is"), value: "keep" as const }
+                ...(tags.length > 0
+                    ? [
+                          {
+                              name: radioChoice("Remove endpoints by tag…"),
+                              short: "Remove endpoints by tag…",
+                              value: "tag" as const
+                          }
+                      ]
+                    : []),
+                {
+                    name: radioChoice("Remove endpoints by method…"),
+                    short: "Remove endpoints by method…",
+                    value: "method" as const
+                },
+                {
+                    name: radioChoice("Remove endpoints by path prefix…"),
+                    short: "Remove endpoints by path prefix…",
+                    value: "path-prefix" as const
+                },
+                { name: radioChoice("Keep as-is"), short: "Keep as-is", value: "keep" as const }
             ],
             theme: selectTheme
         });
@@ -56,7 +72,11 @@ export async function runTrimLoop({
             case "tag": {
                 const tag = await select<string>({
                     message: "Which tag should be removed?",
-                    choices: tags.map((candidate) => ({ name: radioChoice(candidate), value: candidate })),
+                    choices: tags.map((candidate) => ({
+                        name: radioChoice(candidate),
+                        short: candidate,
+                        value: candidate
+                    })),
                     theme: selectTheme
                 });
                 config = { ...config, exclude: [...(config.exclude ?? []), { tag }] };
@@ -68,6 +88,7 @@ export async function runTrimLoop({
                     message: "Which method should be removed?",
                     choices: ["GET", "POST", "PUT", "PATCH", "DELETE"].map((candidate) => ({
                         name: radioChoice(candidate),
+                        short: candidate,
                         value: candidate
                     })),
                     theme: selectTheme
