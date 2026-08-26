@@ -23,15 +23,20 @@ const MINIMAL_ROOT = {
 
 function makeDocsDefinition({
     pages = {},
-    root = MINIMAL_ROOT
+    root = MINIMAL_ROOT,
+    translations
 }: {
     pages?: Record<string, { markdown: string }>;
     root?: unknown;
+    translations?: { defaultLocale: string; translations: string[] };
 } = {}) {
     // Minimal DocsDefinition shape — only the fields buildLedgerInput reads.
     return {
         pages,
-        config: { root }
+        config: {
+            root,
+            ...(translations == null ? {} : { translations })
+        }
     } as Parameters<typeof buildLedgerInput>[0]["docsDefinition"];
 }
 
@@ -220,6 +225,33 @@ describe("buildLedgerInput", () => {
         });
 
         expect(localeEntry.locale).toBe("en");
+    });
+
+    it("uses the configured default locale for the base entry", () => {
+        const docsDefinition = makeDocsDefinition({
+            pages: { "welcome-page": { markdown: "# Welcome to the Plant Atlas" } },
+            translations: {
+                defaultLocale: "nl",
+                translations: ["en", "de"]
+            }
+        });
+        const baseLocale = buildLedgerInput({
+            docsDefinition,
+            apiDefinitions: new Map(),
+            locale: docsDefinition.config.translations?.defaultLocale ?? "en"
+        }).localeEntry;
+        const translationEntry = buildLedgerInput({
+            docsDefinition,
+            apiDefinitions: new Map(),
+            locale: "en"
+        }).localeEntry;
+
+        const locales = [baseLocale, translationEntry];
+        const defaultLocale = baseLocale.locale;
+
+        expect(baseLocale.locale).toBe("nl");
+        expect(locales.map((locale) => locale.locale)).toEqual(["nl", "en"]);
+        expect(defaultLocale).toBe("nl");
     });
 
     it("uses config.root for the root field", () => {

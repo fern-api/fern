@@ -78,7 +78,8 @@ export async function publishDocsViaLedgerPreview({
         apiDefinitions,
         fileManifest,
         fileIdToPath,
-        editThisPage
+        editThisPage,
+        locale: docsDefinition.config.translations?.defaultLocale ?? "en"
     });
 
     const builtTranslations = await buildAllTranslationInputs({

@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix docs ledger publishing so the base locale entry uses the configured default locale instead of always using "en".
+  type: fix
