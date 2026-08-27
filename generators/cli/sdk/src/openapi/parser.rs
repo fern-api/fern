@@ -3837,6 +3837,28 @@ fn classify_multipart_property_at_depth(
     (false, None)
 }
 
+/// Element type of an array schema, resolved through `$ref` and through a
+/// nullable composition on the items. `None` for a non-array, an untyped
+/// element, or a plain string element — the caller treats `None` as "string",
+/// which is what every lowering produced before this existed.
+fn array_item_type(
+    schema: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<String> {
+    let items = schema.items.as_deref()?;
+    let resolved = resolve_ref_chain(items, component_schemas)
+        .or_else(|| recognize_nullable_composite(items, component_schemas))?;
+    match resolved.schema_type() {
+        // An `allOf` / property-bag element has no `type` of its own but is
+        // object-shaped — the inheritance idiom.
+        None if !resolved.all_of.is_empty() || !resolved.properties.is_empty() => {
+            Some("object".to_string())
+        }
+        Some("string") | None => None,
+        Some(other) => Some(other.to_string()),
+    }
+}
+
 /// True when a multipart property holds a list, so its flag must be
 /// repeatable. `type: array` counts whether it is declared inline, behind a
 /// `$ref`, or inside a nullable composition (`anyOf: [{type: array}, null]` —
@@ -4320,7 +4342,14 @@ fn flatten_body_params_prefix(
                             MethodParameter {
                                 param_type: Some("object".to_string()),
                                 location: Some("body".to_string()),
+                                // The shorthand flag stays optional — the
+                                // caller can satisfy this property with
+                                // dot-notation leaves instead — but the
+                                // property itself is required on the wire, and
+                                // `--schema` must say so or it disagrees with
+                                // the validator.
                                 required: false,
+                                required_by_spec: required.contains(name.as_str()),
                                 description: prop
                                     .description
                                     .clone()
@@ -4353,6 +4382,7 @@ fn flatten_body_params_prefix(
                             description: prop.description.clone().or_else(|| resolved.description.clone()),
                             location: Some("body".to_string()),
                             required: spec_required && const_default.is_none(),
+                            required_by_spec: spec_required,
                             format: resolved.format.clone(),
                             default_value: const_default,
                             documentation_default_value: const_doc_default,
@@ -4396,7 +4426,14 @@ fn flatten_body_params_prefix(
                             MethodParameter {
                                 param_type: Some("object".to_string()),
                                 location: Some("body".to_string()),
+                                // The shorthand flag stays optional — the
+                                // caller can satisfy this property with
+                                // dot-notation leaves instead — but the
+                                // property itself is required on the wire, and
+                                // `--schema` must say so or it disagrees with
+                                // the validator.
                                 required: false,
+                                required_by_spec: required.contains(name.as_str()),
                                 description: prop
                                     .description
                                     .clone()
@@ -4431,11 +4468,17 @@ fn flatten_body_params_prefix(
                         // user to type it is ceremony), which also satisfies
                         // the required check.
                         required: spec_required && const_default.is_none(),
+                            required_by_spec: spec_required,
                         format: effective.format.clone(),
                         enum_values: effective_enum_values(effective),
                         default_value: const_default,
                         documentation_default_value: const_doc_default,
                         repeated: is_array,
+                        item_type: if is_array {
+                            array_item_type(effective, component_schemas)
+                        } else {
+                            None
+                        },
                         nullable: is_scalar_nullable(resolved)
                             || promoted_scalar.is_some()
                             || promoted_composite.is_some(),
@@ -4461,7 +4504,10 @@ fn flatten_body_params_prefix(
                     MethodParameter {
                         param_type: Some("object".to_string()),
                         location: Some("body".to_string()),
+                        // See the note on the `$ref` branch: clap-optional,
+                        // spec-required.
                         required: false,
+                        required_by_spec: required.contains(name.as_str()),
                         description: prop.description.clone(),
                         ..Default::default()
                     },
@@ -4489,6 +4535,7 @@ fn flatten_body_params_prefix(
                     description: prop.description.clone(),
                     location: Some("body".to_string()),
                     required: spec_required && const_default.is_none(),
+                            required_by_spec: spec_required,
                     format: prop.format.clone(),
                     default_value: const_default,
                     documentation_default_value: const_doc_default,
@@ -4534,7 +4581,10 @@ fn flatten_body_params_prefix(
                     MethodParameter {
                         param_type: Some("object".to_string()),
                         location: Some("body".to_string()),
+                        // See the note on the `$ref` branch: clap-optional,
+                        // spec-required.
                         required: false,
+                        required_by_spec: required.contains(name.as_str()),
                         description: prop
                             .description
                             .clone()
@@ -4563,11 +4613,17 @@ fn flatten_body_params_prefix(
                 description: prop.description.clone(),
                 location: Some("body".to_string()),
                 required: spec_required && const_default.is_none(),
+                            required_by_spec: spec_required,
                 format: effective.format.clone(),
                 enum_values: effective_enum_values(effective),
                 default_value: const_default,
                 documentation_default_value: const_doc_default,
                 repeated: is_array,
+                item_type: if is_array {
+                    array_item_type(effective, component_schemas)
+                } else {
+                    None
+                },
                 nullable: is_scalar_nullable(prop)
                     || promoted_scalar.is_some()
                     || promoted_composite.is_some(),
@@ -4774,6 +4830,90 @@ mod tests {
             Some(&["asc".to_string(), "desc".to_string()][..]),
         );
         assert!(!mp.repeated, "a scalar must not become repeatable");
+    }
+
+    #[test]
+    fn test_array_of_objects_records_its_element_type() {
+        // `--schema` rendered `items: {type: string}` for an array of objects
+        // because a repeated flag carries `param_type: "string"` (the flag
+        // surface). An agent read that, sent `["x"]`, and the validator — which
+        // was right — rejected it.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              inputs:
+                type: array
+                items:
+                    $ref: '#/components/schemas/DialogueInput'
+              tags:
+                type: array
+                items:
+                    type: string
+            "#,
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert(
+            "DialogueInput".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: object\nproperties:\n  text:\n    type: string\n",
+            )
+            .unwrap(),
+        );
+        let params = flatten_body_params(&schema, &components, 0);
+
+        let inputs = &params["inputs"];
+        assert!(inputs.repeated);
+        assert_eq!(
+            inputs.item_type.as_deref(),
+            Some("object"),
+            "an array of objects must record its element type",
+        );
+        // A plain string array leaves it `None`, which downstream reads as
+        // "string" — byte-identical to every pre-existing lowering.
+        assert_eq!(params["tags"].item_type, None);
+    }
+
+    #[test]
+    fn test_recursed_object_property_keeps_the_spec_required_bit() {
+        // The shorthand flag must stay clap-optional (leaf flags can satisfy
+        // the property), but the property is still required on the wire.
+        // Dropping the bit made `--schema` disagree with the validator: every
+        // advertised field supplied, request still rejected for one that was
+        // never listed.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            required: [workflow]
+            properties:
+              workflow:
+                $ref: '#/components/schemas/Workflow'
+              optional_thing:
+                $ref: '#/components/schemas/Workflow'
+            "#,
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert(
+            "Workflow".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: object\nproperties:\n  nodes:\n    type: string\n",
+            )
+            .unwrap(),
+        );
+        let params = flatten_body_params(&schema, &components, 0);
+
+        let workflow = &params["workflow"];
+        assert!(
+            !workflow.required,
+            "the shorthand flag must stay optional so leaf flags can satisfy it",
+        );
+        assert!(
+            workflow.required_by_spec,
+            "but the contract must still advertise it as required",
+        );
+        assert!(!params["optional_thing"].required_by_spec);
     }
 
     #[test]

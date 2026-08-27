@@ -178,7 +178,16 @@ fn build_operation_schema(
     param_names.sort();
     for name in param_names {
         let param = &method.parameters[name];
-        let element_type = param.param_type.as_deref().unwrap_or("string");
+        // A repeated flag carries `param_type: "string"` because clap collects
+        // strings; the spec's real element type lives in `item_type`. Rendering
+        // `param_type` as the element type advertised `items: {type: string}`
+        // for an array of objects, so an agent reading the contract sent
+        // `["x"]` and the validator rejected it.
+        let element_type = param
+            .item_type
+            .as_deref()
+            .or(param.param_type.as_deref())
+            .unwrap_or("string");
         let mut prop = if param.scalar_or_array {
             json!({
                 "oneOf": [
@@ -268,7 +277,13 @@ fn build_operation_schema(
             prop["variable"] = json!(var_name);
             prop["globalFlag"] = json!(format!("--{}", crate::text::to_kebab_flag(var_name)));
             prop["envVar"] = json!(crate::text::to_screaming_snake(var_name));
-        } else if param.required {
+        } else if param.required || param.required_by_spec {
+            // `required_by_spec` catches object-valued body properties whose
+            // shorthand flag is deliberately clap-optional (the caller may use
+            // dot-notation leaves instead) but which the wire still requires.
+            // Reporting only `required` made this contract disagree with the
+            // validator — an agent supplied every listed field and the request
+            // was rejected for one that was never advertised.
             required.push(name.clone());
         }
         properties.insert(name.clone(), prop);

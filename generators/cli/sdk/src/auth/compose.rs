@@ -54,6 +54,13 @@ impl AuthProvider for AnyAuthProvider {
             .collect()
     }
 
+    fn populated_credential_hints(&self) -> Vec<String> {
+        self.providers
+            .iter()
+            .flat_map(|p| p.populated_credential_hints())
+            .collect()
+    }
+
     fn has_credentials_for(&self, endpoint: &EndpointAuthMetadata) -> bool {
         self.providers
             .iter()
@@ -128,6 +135,13 @@ impl AuthProvider for AllAuthProvider {
         self.providers
             .iter()
             .flat_map(|p| p.credential_hints())
+            .collect()
+    }
+
+    fn populated_credential_hints(&self) -> Vec<String> {
+        self.providers
+            .iter()
+            .flat_map(|p| p.populated_credential_hints())
             .collect()
     }
 

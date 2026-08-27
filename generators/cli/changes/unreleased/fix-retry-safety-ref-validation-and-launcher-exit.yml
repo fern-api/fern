@@ -122,3 +122,35 @@
     variable — which set up the exact credential shadowing the CLI's own auth
     errors warn about.
   type: fix
+
+- summary: |
+    Auth failures name only the credential sources that actually hold a value,
+    and the "check for shadowing" advice appears only when more than one source
+    is populated. Listing every *declared* source meant a CLI with two schemes
+    named four places when one supplied the credential, then sent the user
+    hunting for a conflict that could not exist.
+  type: fix
+
+- summary: |
+    `--schema`'s `globalFlags` lists `--params`, `--no-retry`, `--no-extract`
+    and `--help`. All four are registered on every operation, so an agent
+    coding against `--schema` had no way to discover they existed.
+  type: fix
+
+- summary: |
+    `--schema` and `--help` advertise the real element type of an array body
+    property. A repeated flag carries `type: string` because that is the flag
+    surface, which was rendered as `items: {type: string}` even for an array of
+    objects — an agent following the contract sent `["x"]` and the request was
+    rejected. Each occurrence of such a flag is now JSON-decoded, so
+    `--inputs '{...}' --inputs '{...}'` builds an array of objects; plain
+    string arrays are unchanged.
+  type: fix
+
+- summary: |
+    `--schema`'s `input.required` no longer disagrees with the validator. An
+    object-valued body property the parser recurses into kept a clap-optional
+    shorthand flag (leaf flags can satisfy it) but was also dropped from the
+    advertised required list, so a caller could supply every field `--schema`
+    named and still be rejected for one it never mentioned.
+  type: fix

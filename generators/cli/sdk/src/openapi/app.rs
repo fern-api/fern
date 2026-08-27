@@ -2681,8 +2681,24 @@ pub(crate) fn collect_params_from_flags(
                         explicit_null = true;
                         continue;
                     }
-                    match serde_json::from_str(v) {
+                    match serde_json::from_str::<serde_json::Value>(v) {
                         Ok(serde_json::Value::Array(elems)) => arr.extend(elems),
+                        // A non-string element type means each occurrence is
+                        // itself JSON — `--inputs '{"text":"hi"}'` is one
+                        // object, not the literal text of one. Keeping it a
+                        // string made an array-of-objects flag impossible to
+                        // use one element at a time, while `--schema` now
+                        // advertises `items: {type: object}`.
+                        Ok(decoded)
+                            if param_def
+                                .item_type
+                                .as_deref()
+                                .is_some_and(|t| t != "string") =>
+                        {
+                            arr.push(decoded)
+                        }
+                        // Anything else — including non-array JSON like "123"
+                        // on a string-element flag — stays a literal string.
                         _ => arr.push(serde_json::Value::String(v.clone())),
                     }
                 }
