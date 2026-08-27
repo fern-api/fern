@@ -55,8 +55,9 @@ export async function writeLicense(args: {
         await copyFile(LICENSE_MOUNT_PATH, path.join(outputDir, filename));
         return filename;
     } catch (error) {
-        const code =
-            error instanceof Error && "code" in error ? (error as NodeJS.ErrnoException).code : undefined;
+        // `"code" in error` narrows to `Error & Record<"code", unknown>`, so the
+        // comparison below needs no assertion.
+        const code = error instanceof Error && "code" in error ? error.code : undefined;
         if (code === "ENOENT") {
             // Expected on remote generation — Fiddle writes it post-generation.
             return undefined;

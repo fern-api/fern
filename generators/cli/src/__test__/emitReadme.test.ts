@@ -625,5 +625,4 @@ describe("emitReadme — installer URLs", () => {
         const readme = await readFile(path.join(outputDir, "README.md"), "utf-8");
         expect(readme).toContain("fern-cli-sdk-installer.sh");
     });
-
 });
