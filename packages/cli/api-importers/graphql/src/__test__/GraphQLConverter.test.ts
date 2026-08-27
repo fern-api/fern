@@ -206,11 +206,7 @@ describe("GraphQLConverter type categories", () => {
     it("gives an operation namespace no category, so it gets no type page", async () => {
         const converter = new GraphQLConverter({
             context: createMockTaskContext(),
-            filePath: join(
-                FIXTURES_DIR,
-                RelativeFilePath.of("namespace-types"),
-                RelativeFilePath.of("schema.graphql")
-            )
+            filePath: join(FIXTURES_DIR, RelativeFilePath.of("namespace-types"), RelativeFilePath.of("schema.graphql"))
         });
 
         const { types, typeCategories } = await converter.convert();
