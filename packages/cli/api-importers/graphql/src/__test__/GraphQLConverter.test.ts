@@ -198,8 +198,8 @@ describe("GraphQLConverter type categories", () => {
             [FdrAPI.TypeId("SearchResult")]: "union"
         });
 
-        // The categories are keyed exactly like `types`, so consumers can look one up for
-        // any type they render without a fallback.
+        // Nothing here is an operation namespace, so every type is documented and the two maps
+        // line up. See the namespace test below for the case where they deliberately do not.
         expect(Object.keys(typeCategories).sort()).toEqual(Object.keys(types).sort());
     });
 

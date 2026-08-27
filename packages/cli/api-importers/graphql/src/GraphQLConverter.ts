@@ -29,7 +29,11 @@ export interface GraphQLConverterResult {
     graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
     types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
     /**
-     * The GraphQL kind each emitted type was declared with, keyed exactly like `types`.
+     * The GraphQL kind each documented type was declared with, keyed like `types`.
+     *
+     * This is the set of types that get a page, so it is a subset of `types`: an operation
+     * namespace is left out because its fields are documented as operations, while its definition
+     * stays in `types` for the namespace query's page to render. Look up with a null check.
      *
      * The FDR type shape is shared with OpenAPI and gRPC and cannot express a GraphQL kind, so
      * the kind travels alongside the types rather than inside them.
