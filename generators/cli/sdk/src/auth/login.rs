@@ -5,7 +5,9 @@
 //!
 //! - [`TokenPasteLoginFlow`] — read a token from stdin into the keyring.
 //!   Always available on every CLI via `auth login --with-token`,
-//!   regardless of whether an OAuth flow is declared (ADR-0007).
+//!   regardless of whether an OAuth flow is declared (ADR-0007). For an
+//!   HTTP Basic scheme the same flag prompts for both halves of the
+//!   credential, since one pasted value can never satisfy it.
 //! - `DeviceCodeLoginFlow` — RFC 8628 device-code grant. **TB3, in
 //!   [`crate::auth::oauth2`].**
 //! - `PkceLoginFlow` — authorization-code + PKCE with a loopback
@@ -221,21 +223,84 @@ pub fn run_token_paste(
 /// Read a single line from stdin, trimmed. Returns `Auth("No token …")`
 /// if empty / EOF.
 fn read_token_from_stdin() -> Result<String, CliError> {
+    read_line_from_stdin("token")
+}
+
+/// Read one trimmed line from stdin, naming `what` in both error messages so
+/// the two-value Basic prompt can say which half is missing.
+fn read_line_from_stdin(what: &str) -> Result<String, CliError> {
     use std::io::BufRead;
     let stdin = std::io::stdin();
     let mut line = String::new();
     stdin
         .lock()
         .read_line(&mut line)
-        .map_err(|e| CliError::Auth(format!("Failed to read token from stdin: {e}")))?;
+        .map_err(|e| CliError::Auth(format!("Failed to read {what} from stdin: {e}")))?;
     let trimmed = line.trim().to_string();
     if trimmed.is_empty() {
-        return Err(CliError::Auth(
-            "No token provided on stdin. Pipe the token in or type it followed by Enter."
-                .to_string(),
-        ));
+        return Err(CliError::Auth(format!(
+            "No {what} provided on stdin. Pipe the {what} in or type it followed by Enter."
+        )));
     }
     Ok(trimmed)
+}
+
+/// Keyring account suffixes for the two halves of an HTTP Basic credential.
+///
+/// Basic auth needs two values, so it cannot share the single
+/// `(cli_name, scheme_name)` slot the token schemes use. `auth login` writes
+/// two derived slots instead, which keeps the existing
+/// [`AuthCredentialSource::Keyring`] variant (and every backend behind it)
+/// unchanged.
+const BASIC_USERNAME_PART: &str = "username";
+const BASIC_PASSWORD_PART: &str = "password";
+
+fn basic_keyring_account(scheme_name: &str, part: &str) -> String {
+    format!("{scheme_name}:{part}")
+}
+
+/// Basic-auth counterpart of [`run_token_paste`]: prompt for both halves of
+/// the credential and store each in its own keyring slot.
+///
+/// Storing a single pasted token here would be a silent no-op — the
+/// `BasicAuthProvider` needs a username *and* a password to build the
+/// `Authorization` header, so a lone token can never satisfy it.
+fn run_basic_paste(cli_name: &str, scheme_name: &str) -> Result<(), CliError> {
+    let stderr = std::io::stderr();
+    let mut err = stderr.lock();
+
+    let _ = writeln!(
+        err,
+        "Scheme `{scheme_name}` uses HTTP Basic auth, which needs two values."
+    );
+    let _ = write!(err, "Username: ");
+    let _ = err.flush();
+    let username = read_line_from_stdin("username")?;
+    let _ = write!(err, "Password: ");
+    let _ = err.flush();
+    let password = read_line_from_stdin("password")?;
+
+    let store = active_store();
+    store.set(
+        cli_name,
+        &basic_keyring_account(scheme_name, BASIC_USERNAME_PART),
+        &username,
+    )?;
+    store.set(
+        cli_name,
+        &basic_keyring_account(scheme_name, BASIC_PASSWORD_PART),
+        &password,
+    )?;
+
+    let _ = writeln!(
+        err,
+        "{}",
+        green(&format!(
+            "✓ Stored username and password for {cli_name}:{scheme_name} in {}",
+            store.backend_label()
+        ))
+    );
+    Ok(())
 }
 
 // ---------------------------------------------------------------------------
@@ -255,7 +320,7 @@ pub fn build_auth_command() -> Command {
                     Arg::new("with-token")
                         .long("with-token")
                         .action(ArgAction::SetTrue)
-                        .help("Bypass any declared OAuth flow; read a token from stdin into the keyring"),
+                        .help("Bypass any declared OAuth flow; read a token from stdin into the keyring (HTTP Basic schemes prompt for username + password)"),
                 )
                 .arg(
                     Arg::new("scheme")
@@ -345,6 +410,13 @@ fn handle_login(
     };
 
     if with_token {
+        // HTTP Basic can't be satisfied by one pasted value, so it gets its
+        // own two-value prompt rather than writing a token nothing reads.
+        if let Some((_, SchemeBinding::Basic { .. })) =
+            auth_bindings.iter().find(|(name, _)| *name == scheme)
+        {
+            return run_basic_paste(cli_name, &scheme);
+        }
         // Universal paste path — surfaces the token_paste_url hint from
         // any declared flow for this scheme (regardless of flow type),
         // since the dashboard URL is meaningful for paste no matter which
@@ -380,7 +452,17 @@ fn handle_logout(
     auth_bindings: &[(String, SchemeBinding)],
 ) -> Result<(), CliError> {
     let scheme = resolve_scheme(matches.get_one::<String>("scheme"), auth_bindings, &[])?;
-    active_store().delete(cli_name, &scheme)?;
+    let store = active_store();
+    store.delete(cli_name, &scheme)?;
+    // Basic credentials live in two derived slots, so clear those too —
+    // deleting only the scheme slot would leave a logged-in CLI behind.
+    if let Some((_, SchemeBinding::Basic { .. })) =
+        auth_bindings.iter().find(|(name, _)| name == &scheme)
+    {
+        for part in [BASIC_USERNAME_PART, BASIC_PASSWORD_PART] {
+            store.delete(cli_name, &basic_keyring_account(&scheme, part))?;
+        }
+    }
     let _ = writeln!(
         std::io::stderr().lock(),
         "{}",
@@ -454,32 +536,37 @@ fn handle_status<W: Write>(
                 .unwrap_or_default()
         );
 
-        let sources = expand_sources(scheme_name, binding, login_flows, cli_name);
-        if sources.is_empty() {
+        let slots = expand_slots(scheme_name, binding, login_flows, cli_name);
+        if slots.iter().all(|slot| slot.sources.is_empty()) {
             let _ = writeln!(stderr, "    {}", dim("(no credential sources bound)"));
             let _ = writeln!(stderr);
             continue;
         }
 
-        // Mark the first source that resolves as ACTIVE (green); subsequent
-        // resolving sources are SHADOWED (dim) — the credential is there
-        // but a higher-precedence source is winning. Non-resolving sources
-        // are MISSING (also dim) — they're declared but unset.
-        let mut active_found = false;
-        for src in &sources {
-            let has_value = src.resolve().is_some();
-            let desc = describe_source(src);
-            let line = match (has_value, active_found) {
-                (true, false) => {
-                    active_found = true;
-                    green(&format!("✓ active    {desc}"))
-                }
-                (true, true) => dim(&format!("  shadowed  {desc}")),
-                (false, _) => dim(&format!("  missing   {desc}")),
-            };
-            let _ = writeln!(stderr, "    {line}");
+        // Within a slot, mark the first source that resolves as ACTIVE
+        // (green); subsequent resolving sources are SHADOWED (dim) — the
+        // credential is there but a higher-precedence source is winning.
+        // Non-resolving sources are MISSING (also dim) — they're declared but
+        // unset. Every slot must be satisfied for the scheme to be usable.
+        let mut all_slots_satisfied = true;
+        for slot in &slots {
+            let mut active_found = false;
+            for src in &slot.sources {
+                let has_value = src.resolve().is_some();
+                let desc = slot.describe(src);
+                let line = match (has_value, active_found) {
+                    (true, false) => {
+                        active_found = true;
+                        green(&format!("✓ active    {desc}"))
+                    }
+                    (true, true) => dim(&format!("  shadowed  {desc}")),
+                    (false, _) => dim(&format!("  missing   {desc}")),
+                };
+                let _ = writeln!(stderr, "    {line}");
+            }
+            all_slots_satisfied &= active_found;
         }
-        if !active_found {
+        if !all_slots_satisfied {
             let suffix = if login_flows.iter().any(|f| f.scheme_name() == scheme_name) {
                 String::new()
             } else {
@@ -506,6 +593,23 @@ fn resolve_scheme(
     login_flows: &[DynLoginFlow],
 ) -> Result<String, CliError> {
     if let Some(s) = explicit {
+        // A CLI with no declared schemes can name any keyring slot (the
+        // `--with-token` escape hatch); otherwise the name has to be one the
+        // binary actually knows, or the user gets "No login flow declared for
+        // scheme `BasicAuth`" for what is really a typo.
+        let declared: Vec<&str> = auth_bindings
+            .iter()
+            .map(|(n, _)| n.as_str())
+            .chain(login_flows.iter().map(|f| f.scheme_name()))
+            .collect();
+        if !declared.is_empty() && !declared.contains(&s.as_str()) {
+            let mut valid = declared.clone();
+            valid.dedup();
+            return Err(CliError::Validation(format!(
+                "Unknown auth scheme `{s}`. This CLI declares: {}.",
+                valid.join(", "),
+            )));
+        }
         return Ok(s.clone());
     }
     // Prefer the schemes that have a declared LoginFlow when disambiguating.
@@ -528,8 +632,27 @@ fn resolve_scheme(
     )))
 }
 
-/// Expand a binding's credential source(s) into a flat list of leaf
-/// sources (Chain flattened), for status reporting.
+/// One credential slot of a scheme, with the ordered sources that can fill
+/// it. Token and Custom schemes have a single unlabeled slot; HTTP Basic has
+/// two, and is only usable when *both* resolve — reporting its halves as one
+/// flat chain made a password-only environment read as `logged_in: true` with
+/// the username "shadowed".
+struct CredentialSlot {
+    part: Option<&'static str>,
+    sources: Vec<AuthCredentialSource>,
+}
+
+impl CredentialSlot {
+    fn describe(&self, src: &AuthCredentialSource) -> String {
+        match self.part {
+            Some(part) => format!("{part}: {}", describe_source(src)),
+            None => describe_source(src),
+        }
+    }
+}
+
+/// Expand a binding into its credential slots, each holding a flat list of
+/// leaf sources (Chain flattened), for status reporting.
 ///
 /// For `SchemeBinding::Custom` bindings whose scheme has a declared
 /// login flow (i.e. registered via `CliApp::login_flow`), we synthesize
@@ -538,24 +661,35 @@ fn resolve_scheme(
 /// surface needs to see it. Without this, OAuth-logged-in users would
 /// see "Not logged in" in `auth status` even though the keyring entry
 /// is populated and apply() can read it on every request.
-fn expand_sources(
+fn expand_slots(
     scheme_name: &str,
     binding: &SchemeBinding,
     login_flows: &[DynLoginFlow],
     cli_name: &str,
-) -> Vec<AuthCredentialSource> {
+) -> Vec<CredentialSlot> {
+    let single = |sources| {
+        vec![CredentialSlot {
+            part: None,
+            sources,
+        }]
+    };
     match binding {
-        SchemeBinding::Token(s) => flatten_chain(s.clone()),
-        SchemeBinding::Basic { username, password } => {
-            let mut out = flatten_chain(username.clone());
-            out.extend(flatten_chain(password.clone()));
-            out
-        }
+        SchemeBinding::Token(s) => single(flatten_chain(s.clone())),
+        SchemeBinding::Basic { username, password } => vec![
+            CredentialSlot {
+                part: Some(BASIC_USERNAME_PART),
+                sources: flatten_chain(username.clone()),
+            },
+            CredentialSlot {
+                part: Some(BASIC_PASSWORD_PART),
+                sources: flatten_chain(password.clone()),
+            },
+        ],
         SchemeBinding::Custom(_) => {
             if login_flows.iter().any(|f| f.scheme_name() == scheme_name) {
-                vec![AuthCredentialSource::keyring(cli_name, scheme_name)]
+                single(vec![AuthCredentialSource::keyring(cli_name, scheme_name)])
             } else {
-                Vec::new()
+                single(Vec::new())
             }
         }
     }
@@ -630,12 +764,13 @@ fn status_entry_for(
         .iter()
         .find(|f| f.scheme_name() == scheme_name)
         .map(|f| f.flow_type());
-    let sources = expand_sources(scheme_name, binding, login_flows, cli_name);
-    let mut active_found = false;
-    let entries: Vec<serde_json::Value> = sources
-        .iter()
-        .map(|s| {
-            let has_value = s.resolve().is_some();
+    let slots = expand_slots(scheme_name, binding, login_flows, cli_name);
+    let mut entries: Vec<serde_json::Value> = Vec::new();
+    let mut all_slots_satisfied = true;
+    for slot in &slots {
+        let mut active_found = false;
+        for src in &slot.sources {
+            let has_value = src.resolve().is_some();
             let state = match (has_value, active_found) {
                 (true, false) => {
                     active_found = true;
@@ -644,16 +779,18 @@ fn status_entry_for(
                 (true, true) => "shadowed",
                 (false, _) => "missing",
             };
-            serde_json::json!({
+            entries.push(serde_json::json!({
                 "state": state,
-                "source": describe_source(s),
-            })
-        })
-        .collect();
+                "source": describe_source(src),
+                "part": slot.part,
+            }));
+        }
+        all_slots_satisfied &= active_found;
+    }
     serde_json::json!({
         "scheme": scheme_name,
         "login_flow": flow,
-        "logged_in": active_found,
+        "logged_in": all_slots_satisfied,
         "sources": entries,
         "cli": cli_name,
     })
@@ -676,11 +813,22 @@ pub fn inject_keyring_sources(
                 let existing = std::mem::replace(src, AuthCredentialSource::Missing);
                 *src = append_to_chain(existing, kr);
             }
-            // Basic auth: username/password are separate, but the typical
-            // shape stores both in a single keyring entry encoded as JSON.
-            // For v1 we leave Basic alone — username-only/password-only
-            // schemes already work via env; full Basic is a v2 concern.
-            SchemeBinding::Basic { .. } => {}
+            // Basic auth: the two halves live in their own derived slots
+            // (`<scheme>:username` / `<scheme>:password`), written by
+            // `auth login --with-token`.
+            SchemeBinding::Basic { username, password } => {
+                for (src, part) in [
+                    (username, BASIC_USERNAME_PART),
+                    (password, BASIC_PASSWORD_PART),
+                ] {
+                    let kr = AuthCredentialSource::keyring(
+                        cli_name,
+                        basic_keyring_account(scheme_name.as_str(), part),
+                    );
+                    let existing = std::mem::replace(src, AuthCredentialSource::Missing);
+                    *src = append_to_chain(existing, kr);
+                }
+            }
             SchemeBinding::Custom(_) => {}
         }
     }
@@ -807,8 +955,14 @@ mod tests {
     #[test]
     fn resolve_scheme_explicit_wins() {
         let bindings = vec![
-            ("a".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
-            ("b".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
+            (
+                "a".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::Missing),
+            ),
+            (
+                "b".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::Missing),
+            ),
         ];
         let s = resolve_scheme(Some(&"b".to_string()), &bindings, &[]).unwrap();
         assert_eq!(s, "b");
@@ -817,8 +971,14 @@ mod tests {
     #[test]
     fn resolve_scheme_multiple_bindings_no_arg_errors() {
         let bindings = vec![
-            ("a".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
-            ("b".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
+            (
+                "a".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::Missing),
+            ),
+            (
+                "b".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::Missing),
+            ),
         ];
         let err = resolve_scheme(None, &bindings, &[]).unwrap_err();
         match err {
@@ -835,8 +995,14 @@ mod tests {
     fn resolve_scheme_disambiguates_via_single_login_flow() {
         // Multiple bindings, but only one has a declared login flow → use it.
         let bindings = vec![
-            ("a".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
-            ("b".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
+            (
+                "a".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::Missing),
+            ),
+            (
+                "b".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::Missing),
+            ),
         ];
         let flows: Vec<DynLoginFlow> = vec![Arc::new(TokenPasteLoginFlow::new("b"))];
         let s = resolve_scheme(None, &bindings, &flows).unwrap();
@@ -917,16 +1083,19 @@ mod tests {
     }
 
     #[test]
-    fn expand_sources_synthesises_keyring_for_oauth_custom_binding() {
+    fn expand_slots_synthesises_keyring_for_oauth_custom_binding() {
         use crate::auth::provider::NoAuthProvider;
-        // OAuth flows register their auth provider as Custom; expand_sources
+        // OAuth flows register their auth provider as Custom; expand_slots
         // must still surface the keyring slot for `auth status`.
         let binding = SchemeBinding::Custom(std::sync::Arc::new(NoAuthProvider));
         // Use a TokenPasteLoginFlow as a stand-in for any LoginFlow declared
-        // against scheme "OAuth2" — the only thing expand_sources reads is
+        // against scheme "OAuth2" — the only thing expand_slots reads is
         // scheme_name().
         let flow: DynLoginFlow = std::sync::Arc::new(TokenPasteLoginFlow::new("OAuth2"));
-        let sources = expand_sources("OAuth2", &binding, &[flow], "my-cli");
+        let slots = expand_slots("OAuth2", &binding, &[flow], "my-cli");
+        assert_eq!(slots.len(), 1);
+        assert_eq!(slots[0].part, None);
+        let sources = &slots[0].sources;
         assert_eq!(sources.len(), 1);
         match &sources[0] {
             AuthCredentialSource::Keyring { service, account } => {
@@ -938,13 +1107,129 @@ mod tests {
     }
 
     #[test]
-    fn expand_sources_returns_empty_for_custom_with_no_login_flow() {
+    fn expand_slots_returns_empty_for_custom_with_no_login_flow() {
         use crate::auth::provider::NoAuthProvider;
         // Custom bindings registered manually (no matching login_flow) stay
         // opaque — status output shows "(no credential sources bound)".
         let binding = SchemeBinding::Custom(std::sync::Arc::new(NoAuthProvider));
-        let sources = expand_sources("OAuth2", &binding, &[], "my-cli");
-        assert!(sources.is_empty());
+        let slots = expand_slots("OAuth2", &binding, &[], "my-cli");
+        assert!(slots.iter().all(|slot| slot.sources.is_empty()));
+    }
+
+    #[test]
+    fn expand_slots_splits_basic_into_username_and_password() {
+        let binding = SchemeBinding::Basic {
+            username: AuthCredentialSource::from_env("CLI_USERNAME"),
+            password: AuthCredentialSource::from_env("CLI_PASSWORD"),
+        };
+        let slots = expand_slots("accountSid_authToken", &binding, &[], "my-cli");
+        assert_eq!(
+            slots.iter().map(|s| s.part).collect::<Vec<_>>(),
+            vec![Some(BASIC_USERNAME_PART), Some(BASIC_PASSWORD_PART)]
+        );
+        assert_eq!(
+            slots[0].describe(&slots[0].sources[0]),
+            "username: CLI_USERNAME env var"
+        );
+    }
+
+    #[test]
+    #[serial]
+    fn status_requires_both_basic_halves_to_report_logged_in() {
+        set_active_store(Arc::new(MockKeyringStore::new()));
+        std::env::set_var("BASIC_STATUS_PASSWORD", "sekret");
+        std::env::remove_var("BASIC_STATUS_USERNAME");
+
+        let binding = SchemeBinding::Basic {
+            username: AuthCredentialSource::from_env("BASIC_STATUS_USERNAME"),
+            password: AuthCredentialSource::from_env("BASIC_STATUS_PASSWORD"),
+        };
+        let entry = status_entry_for("my-cli", "accountSid_authToken", &binding, &[]);
+        assert_eq!(entry["logged_in"], serde_json::json!(false));
+        // The password half must not be reported as shadowing the username:
+        // they are separate slots, not alternatives.
+        assert_eq!(entry["sources"][0]["state"], serde_json::json!("missing"));
+        assert_eq!(entry["sources"][0]["part"], serde_json::json!("username"));
+        assert_eq!(entry["sources"][1]["state"], serde_json::json!("active"));
+
+        std::env::set_var("BASIC_STATUS_USERNAME", "ACfake");
+        let entry = status_entry_for("my-cli", "accountSid_authToken", &binding, &[]);
+        assert_eq!(entry["logged_in"], serde_json::json!(true));
+
+        std::env::remove_var("BASIC_STATUS_USERNAME");
+        std::env::remove_var("BASIC_STATUS_PASSWORD");
+    }
+
+    #[test]
+    #[serial]
+    fn inject_keyring_sources_covers_both_basic_halves() {
+        let mock = Arc::new(MockKeyringStore::new());
+        mock.set("my-cli", "accountSid_authToken:username", "ACfake")
+            .unwrap();
+        mock.set("my-cli", "accountSid_authToken:password", "sekret")
+            .unwrap();
+        set_active_store(mock);
+
+        let mut bindings = vec![(
+            "accountSid_authToken".to_string(),
+            SchemeBinding::Basic {
+                username: AuthCredentialSource::from_env("UNSET_BASIC_USERNAME"),
+                password: AuthCredentialSource::from_env("UNSET_BASIC_PASSWORD"),
+            },
+        )];
+        inject_keyring_sources("my-cli", &mut bindings);
+
+        let entry = status_entry_for("my-cli", &bindings[0].0, &bindings[0].1, &[]);
+        assert_eq!(entry["logged_in"], serde_json::json!(true));
+    }
+
+    #[test]
+    #[serial]
+    fn logout_clears_both_basic_keyring_slots() {
+        let mock = Arc::new(MockKeyringStore::new());
+        mock.set("my-cli", "Basic:username", "ACfake").unwrap();
+        mock.set("my-cli", "Basic:password", "sekret").unwrap();
+        set_active_store(mock.clone());
+
+        let m = build_auth_command()
+            .try_get_matches_from(vec!["auth", "logout", "--scheme", "Basic"])
+            .unwrap();
+        let bindings = vec![(
+            "Basic".to_string(),
+            SchemeBinding::Basic {
+                username: AuthCredentialSource::Missing,
+                password: AuthCredentialSource::Missing,
+            },
+        )];
+        let (_, sub) = m.subcommand().unwrap();
+        handle_logout(sub, "my-cli", &bindings).unwrap();
+
+        assert_eq!(mock.get("my-cli", "Basic:username").unwrap(), None);
+        assert_eq!(mock.get("my-cli", "Basic:password").unwrap(), None);
+    }
+
+    #[test]
+    fn resolve_scheme_rejects_undeclared_scheme_name() {
+        let bindings = vec![(
+            "accountSid_authToken".to_string(),
+            SchemeBinding::Token(AuthCredentialSource::Missing),
+        )];
+        let err = resolve_scheme(Some(&"BasicAuth".to_string()), &bindings, &[]).unwrap_err();
+        match err {
+            CliError::Validation(msg) => {
+                assert!(msg.contains("Unknown auth scheme `BasicAuth`"), "{msg}");
+                assert!(msg.contains("accountSid_authToken"), "{msg}");
+            }
+            other => panic!("expected Validation error, got: {other:?}"),
+        }
+    }
+
+    #[test]
+    fn resolve_scheme_allows_any_slot_when_no_schemes_declared() {
+        // The `--with-token` escape hatch on a CLI that declares nothing:
+        // the user names the keyring slot, so anything goes.
+        let scheme = resolve_scheme(Some(&"whatever".to_string()), &[], &[]).unwrap();
+        assert_eq!(scheme, "whatever");
     }
 
     #[test]
@@ -1008,12 +1293,9 @@ mod tests {
             AuthCredentialSource::from_env("MY_CLI_OAUTH2_TEST"),
             AuthCredentialSource::keyring("my-cli", "OAuth2"),
         ]);
-        let sources = expand_sources(
-            "OAuth2",
-            &SchemeBinding::Token(chain),
-            &[],
-            "my-cli",
-        );
+        let slots = expand_slots("OAuth2", &SchemeBinding::Token(chain), &[], "my-cli");
+        assert_eq!(slots.len(), 1);
+        let sources = &slots[0].sources;
         assert_eq!(sources.len(), 2);
         let env_resolves = sources[0].resolve().is_some();
         let keyring_resolves = sources[1].resolve().is_some();
