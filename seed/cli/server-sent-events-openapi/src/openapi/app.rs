@@ -193,6 +193,27 @@ fn collect_spec_server_variables(
     out
 }
 
+/// Whether a spec declares anything for server-variable resolution to
+/// act on: `servers[].variables` or `x-fern-default-url`, at the document
+/// root or on an operation.
+fn spec_declares_server_urls_to_resolve(
+    doc: &crate::openapi::discovery::RestDescription,
+) -> bool {
+    use crate::openapi::discovery::{RestResource, Server};
+
+    fn any_server(servers: &[Server]) -> bool {
+        servers
+            .iter()
+            .any(|s| !s.variables.is_empty() || s.default_url.is_some())
+    }
+
+    fn walk(res: &RestResource) -> bool {
+        res.methods.values().any(|m| any_server(&m.servers)) || res.resources.values().any(walk)
+    }
+
+    any_server(&doc.servers) || doc.resources.values().any(walk)
+}
+
 /// Swap every templated server URL for its `x-fern-default-url`.
 ///
 /// The extension declares the concrete URL to use when the caller pins
@@ -407,6 +428,25 @@ fn merge_tag_description_order(acc: &mut Vec<String>, incoming: Vec<String>) {
     for tag in incoming {
         if !acc.iter().any(|existing| existing == &tag) {
             acc.push(tag);
+        }
+    }
+}
+
+/// Merge `servers:` declarations across specs, deduplicated by URL and
+/// keeping the first write. Only the first spec's `servers` (and the
+/// `root_url` derived from them) survive as the document's defaults; the
+/// rest are carried over so their template `variables` and
+/// `x-fern-default-url` still reach URL resolution — a multi-spec CLI
+/// otherwise sends the second spec's templated URL verbatim.
+fn merge_servers(
+    acc: &mut Vec<crate::openapi::discovery::Server>,
+    incoming: Vec<crate::openapi::discovery::Server>,
+) {
+    use std::collections::HashSet;
+    let existing: HashSet<String> = acc.iter().map(|s| s.url.clone()).collect();
+    for server in incoming {
+        if !existing.contains(&server.url) {
+            acc.push(server);
         }
     }
 }
@@ -1413,6 +1453,7 @@ impl CliApp {
                         &mut acc.tag_description_order,
                         spec_doc.tag_description_order,
                     );
+                    merge_servers(&mut acc.servers, spec_doc.servers);
                     merge_sdk_variables(&mut acc.sdk_variables, spec_doc.sdk_variables);
                     merge_global_headers(&mut acc.global_headers, spec_doc.global_headers);
                     merge_global_parameters(&mut acc.global_parameters, spec_doc.global_parameters);
@@ -1769,9 +1810,25 @@ impl CliApp {
         // Server-variable flags declared in the spec itself
         // (`servers[].variables`). Generator-registered variables above win
         // on name collisions — they carry env-var wiring the spec can't
-        // express.
+        // express, and so do the SDK-variable flags registered below.
+        //
+        // A flag is only skipped, never force-registered: an unregistered
+        // variable still resolves to its declared `default` in
+        // [`CliApp::apply_server_vars`], so the URL stays valid — whereas
+        // handing clap two args with the same long name makes it reject the
+        // whole command tree ("Long option names must be unique").
         let generator_server_vars: std::collections::HashSet<&str> =
             self.server_vars.iter().map(|v| v.name.as_str()).collect();
+        let mut reserved_longs: std::collections::HashSet<String> = self
+            .server_vars
+            .iter()
+            .map(|v| crate::text::to_kebab_flag(&v.name))
+            .chain(
+                doc.sdk_variables
+                    .iter()
+                    .map(|v| crate::text::to_kebab_flag(&v.name)),
+            )
+            .collect();
         for var in collect_spec_server_variables(doc) {
             if generator_server_vars.contains(var.name.as_str()) {
                 continue;
@@ -1782,6 +1839,27 @@ impl CliApp {
                     variable = %var.name,
                     flag = %kebab,
                     "Server variable flag collides with built-in; skipping"
+                );
+                continue;
+            }
+            if !reserved_longs.insert(kebab.clone()) {
+                tracing::warn!(
+                    variable = %var.name,
+                    flag = %kebab,
+                    "Server variable flag duplicates another global flag; skipping"
+                );
+                continue;
+            }
+            // Same clap constraint the global-header loop handles below: a
+            // `global(true)` long name that a per-operation parameter also
+            // uses is fatal. The per-op parameter wins; the variable falls
+            // back to its declared default.
+            if global_header_long_collides_with_param(&cli, &kebab) {
+                tracing::warn!(
+                    variable = %var.name,
+                    flag = %kebab,
+                    "Server variable flag collides with a per-operation parameter; \
+                     skipping — the variable resolves to its declared default"
                 );
                 continue;
             }
@@ -2042,6 +2120,14 @@ impl CliApp {
     /// the caller passes nothing. When the caller pins no variable at all
     /// and the server declares `x-fern-default-url`, that URL wins over
     /// substituting the defaults.
+    /// Whether [`apply_server_vars`](Self::apply_server_vars) has anything
+    /// to do for `doc` — generator-registered variables, or a spec that
+    /// declares `servers[].variables` / `x-fern-default-url`. Callers use
+    /// it to skip cloning the doc when there is nothing to resolve.
+    pub(crate) fn needs_server_var_resolution(&self, doc: &RestDescription) -> bool {
+        !self.server_vars.is_empty() || spec_declares_server_urls_to_resolve(doc)
+    }
+
     pub(crate) fn apply_server_vars(
         &self,
         doc: &mut RestDescription,
@@ -2068,6 +2154,19 @@ impl CliApp {
                     caller_pinned_any = true;
                 }
                 subs.insert(name.clone(), value.clone());
+            }
+        }
+
+        // A spec variable whose flag was skipped (built-in or per-operation
+        // parameter collision) has no arg to read, so fall back to the
+        // `default` the spec declares for it — an unsubstituted `{var}` would
+        // otherwise reach the request builder as a literal.
+        for var in &spec_vars {
+            if subs.contains_key(&var.name) {
+                continue;
+            }
+            if let Some(default) = &var.default {
+                subs.insert(var.name.clone(), default.clone());
             }
         }
 
@@ -5471,6 +5570,106 @@ paths:
         let collected = collect_spec_server_variables(&doc);
         assert_eq!(collected.len(), 1);
         assert_eq!(collected[0].name, "region");
+    }
+
+    #[test]
+    fn test_multi_spec_preserves_later_spec_server_metadata() {
+        // Twilio's shape: dozens of `spec_under` entries, with the
+        // templated server declared by one that is not the first.
+        let app = CliApp::new("t")
+            .spec_under(
+                "accounts",
+                r#"
+openapi: "3.0.0"
+info: { title: "A", version: "1.0" }
+servers: [{ url: "https://accounts.twilio.com" }]
+paths:
+  /Accounts:
+    get:
+      x-fern-sdk-group-name: ["accounts"]
+      x-fern-sdk-method-name: list
+      responses: { "200": { description: ok } }
+"#,
+            )
+            .spec_under("core", TWILIO_SHAPED_SPEC);
+        let mut doc = app.build_doc().unwrap();
+
+        let collected = collect_spec_server_variables(&doc);
+        assert_eq!(collected.len(), 1, "later spec's `variables` must survive the merge");
+        assert_eq!(collected[0].name, "region");
+        assert!(app.needs_server_var_resolution(&doc));
+
+        let cli = app.decorate_command(&doc, crate::openapi::commands::build_cli(&doc));
+        let matches = cli
+            .try_get_matches_from(["t", "core", "messages", "list-message"])
+            .expect("parses with no flags");
+        app.apply_server_vars(&mut doc, &matches);
+
+        let list = doc.resources["core"].resources["messages"]
+            .methods
+            .get("list-message")
+            .unwrap();
+        assert_eq!(list.root_url, "https://api.twilio.com");
+    }
+
+    #[test]
+    fn test_spec_server_variable_flag_colliding_with_operation_param_falls_back_to_default() {
+        // A `global(true)` long name that a per-operation parameter also uses
+        // makes clap reject the whole command tree, so the flag is skipped —
+        // and the variable resolves to its declared `default` instead, which
+        // still yields a sendable URL.
+        let app = CliApp::new("t").spec(
+            r#"
+openapi: "3.0.0"
+info: { title: "T", version: "1.0" }
+servers:
+  - url: "https://api.{region}.example.com"
+    variables:
+      region: { default: us1 }
+paths:
+  /things:
+    get:
+      x-fern-sdk-group-name: ["things"]
+      x-fern-sdk-method-name: list
+      parameters:
+        - { name: region, in: query, schema: { type: string } }
+      responses: { "200": { description: ok } }
+"#,
+        );
+        let mut doc = app.build_doc().unwrap();
+        let cli = app.decorate_command(&doc, crate::openapi::commands::build_cli(&doc));
+        let matches = cli
+            .try_get_matches_from(["t", "things", "list"])
+            .expect("command tree must still build and parse");
+        app.apply_server_vars(&mut doc, &matches);
+
+        assert_eq!(doc.root_url, "https://api.us1.example.com");
+        let list = doc.resources["things"].methods.get("list").unwrap();
+        assert_eq!(list.root_url, "https://api.us1.example.com");
+    }
+
+    #[test]
+    fn test_needs_server_var_resolution_for_spec_declared_variables() {
+        // The resolution pass must run for specs that declare their own
+        // `servers[].variables` / `x-fern-default-url`, even when the
+        // generator registered no `.server_var()` of its own.
+        let app = CliApp::new("t").spec(TWILIO_SHAPED_SPEC);
+        assert!(app.needs_server_var_resolution(&app.build_doc().unwrap()));
+
+        let plain = CliApp::new("t").spec(
+            r#"
+openapi: "3.0.0"
+info: { title: "T", version: "1.0" }
+servers: [{ url: "https://api.example.com" }]
+paths:
+  /things:
+    get:
+      x-fern-sdk-group-name: ["things"]
+      x-fern-sdk-method-name: list
+      responses: { "200": { description: ok } }
+"#,
+        );
+        assert!(!plain.needs_server_var_resolution(&plain.build_doc().unwrap()));
     }
 
     #[test]

@@ -278,12 +278,12 @@ impl OpenApiBinding {
     ) -> Result<super::app::BindingEntry, CliError> {
         let prepared = self.ensure_prepared()?;
         let mut doc_owned;
-        let doc = if self.inner.server_vars.is_empty() {
-            &prepared.doc
-        } else {
+        let doc = if self.inner.needs_server_var_resolution(&prepared.doc) {
             doc_owned = prepared.doc.clone();
             self.inner.apply_server_vars(&mut doc_owned, matches);
             &doc_owned
+        } else {
+            &prepared.doc
         };
 
         // Finalize CLI-arg-bound auth sources against parsed matches,
@@ -531,14 +531,15 @@ impl Binding for OpenApiBinding {
             };
 
             // Apply server-variable substitutions to a local copy of the doc
-            // if any server vars are registered.
+            // when the generator registered server vars or the spec declares
+            // its own `servers[].variables` / `x-fern-default-url`.
             let mut doc_owned;
-            let doc = if self.inner.server_vars.is_empty() {
-                &prepared.doc
-            } else {
+            let doc = if self.inner.needs_server_var_resolution(&prepared.doc) {
                 doc_owned = prepared.doc.clone();
                 self.inner.apply_server_vars(&mut doc_owned, root_matches);
                 &doc_owned
+            } else {
+                &prepared.doc
             };
 
             // Walk the subcommand tree from root to find the target method.
