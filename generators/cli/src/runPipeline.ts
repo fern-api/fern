@@ -74,7 +74,10 @@ export async function runPipeline(args: {
         services: ir.services,
         environments: ir.environments
     });
-    const globalParamBindings = detectGlobalParams({ globalParameters: ir.globalParameters });
+    const globalParamBindings = detectGlobalParams({
+        globalParameters: ir.globalParameters,
+        apiWideHeaders: ir.headers
+    });
 
     await mkdir(outputDir, { recursive: true });
 

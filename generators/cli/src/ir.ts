@@ -20,6 +20,13 @@ export interface IrSummary {
     auth: { schemes: FernIr.AuthScheme[] };
     globalParameters: FernIr.GlobalParameter[];
     /**
+     * The API-wide headers (`x-fern-global-headers` / the root API file's
+     * `headers:` block) sent on every request. They carry the resolved
+     * env-var name and client-side default, and the copied raw specs don't
+     * express them, so the generator lowers them into global parameters.
+     */
+    headers: FernIr.HttpHeader[];
+    /**
      * The IR's services, keyed by service id. Used to resolve an OAuth
      * client-credentials scheme's `tokenEndpoint.endpointReference` to a
      * concrete request path when wiring the token URL.
@@ -63,6 +70,7 @@ export async function readIr(irFilepath: string): Promise<IrSummary> {
         apiDisplayName: ir.apiDisplayName,
         auth: { schemes: ir.auth.schemes },
         globalParameters: ir.globalParameters ?? [],
+        headers: ir.headers,
         services: ir.services,
         environments: ir.environments,
         whiteLabel: ir.readmeConfig?.whiteLabel ?? false
