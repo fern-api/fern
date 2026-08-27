@@ -724,21 +724,10 @@ export class GraphQLConverter {
             })
         );
 
-        // Only extend interfaces that are converted to plain objects (no implementations).
-        // Interfaces with implementations are converted to undiscriminatedUnion, and the
-        // frontend's unwrapObjectType only supports extending object types.
-        // GraphQL implementing types already include all interface fields, so extends is
-        // only needed for documentation purposes when the interface is a plain object.
-        const interfaces = type.getInterfaces();
-        const extendsIds = interfaces
-            .filter((iface) => {
-                if (!this.schema) {
-                    return true;
-                }
-                const implementations = this.schema.getPossibleTypes(iface);
-                return implementations.length === 0;
-            })
-            .map((iface) => this.getNamespacedTypeId(iface.name));
+        // `extends` carries the `implements` clause, which is the only edge the docs have to
+        // resolve an interface's implementors. Implementing types already inline every interface
+        // field, so the extended properties are deduplicated away when rendering.
+        const extendsIds = type.getInterfaces().map((iface) => this.getNamespacedTypeId(iface.name));
 
         return {
             type: "object",
@@ -748,33 +737,9 @@ export class GraphQLConverter {
         };
     }
 
+    // An interface is its own set of fields, not the union of the types that implement it: the
+    // implementors are reachable from each implementing type's `extends`.
     private convertInterfaceTypeDefinition(type: GraphQLInterfaceType): FdrAPI.api.v1.register.TypeShape {
-        if (!this.schema) {
-            return this.convertInterfaceAsObject(type);
-        }
-
-        const implementations = this.schema.getPossibleTypes(type);
-        if (implementations.length === 0) {
-            return this.convertInterfaceAsObject(type);
-        }
-
-        return {
-            type: "undiscriminatedUnion",
-            variants: implementations.map((impl) => ({
-                typeName: impl.name,
-                displayName: impl.name,
-                type: {
-                    type: "id",
-                    value: this.getNamespacedTypeId(impl.name),
-                    default: undefined
-                },
-                description: impl.description ?? undefined,
-                availability: undefined
-            }))
-        };
-    }
-
-    private convertInterfaceAsObject(type: GraphQLInterfaceType): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
         const properties: FdrAPI.api.v1.register.ObjectProperty[] = Object.entries(fields).map(
             ([fieldName, field]) => ({

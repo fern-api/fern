@@ -1,6 +1,6 @@
 # GraphQL schema to test field-level arguments on interface types with no implementations.
-# convertInterfaceAsObject is used when an interface has zero implementing types;
-# this fixture ensures those field arguments are included in the output.
+# An interface is converted to an object shape, so this fixture ensures its field
+# arguments are included in the output even when nothing implements it.
 
 """
 Supported image formats.
