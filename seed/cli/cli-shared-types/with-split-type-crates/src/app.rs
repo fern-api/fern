@@ -1596,6 +1596,26 @@ fn global_flags() -> Vec<serde_json::Value> {
             "flag": "--spec-raw",
             "description": "Print the byte-exact embedded source OpenAPI spec(s) to stdout",
         }),
+        // Registered on every operation command, so genuinely global from an
+        // agent's point of view even though they are not clap `global(true)`
+        // args. Their absence meant an agent reading `--schema` did not know
+        // `--params` or `--no-retry` existed at all.
+        serde_json::json!({
+            "flag": "--params",
+            "description": "Supply parameters as a JSON object instead of individual flags; overrides them where both are given",
+        }),
+        serde_json::json!({
+            "flag": "--no-retry",
+            "description": "Disable retries declared by x-fern-retries on this operation, including network errors",
+        }),
+        serde_json::json!({
+            "flag": "--no-extract",
+            "description": "Disable x-fern-sdk-return-value extraction and print the full response body",
+        }),
+        serde_json::json!({
+            "flag": "--help",
+            "description": "Print help for this scope (human-readable counterpart to --schema)",
+        }),
     ]
 }
 

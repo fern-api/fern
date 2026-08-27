@@ -119,6 +119,21 @@ pub trait AuthProvider: Send + Sync + std::fmt::Debug {
         Vec::new()
     }
 
+    /// Like [`credential_hints`](Self::credential_hints), but restricted to
+    /// sources that actually hold a value.
+    ///
+    /// The 401/403 path names the sources a rejected credential came from. It
+    /// used to name every *declared* source, so on a CLI with two schemes it
+    /// listed four places when one had supplied the value — and then advised
+    /// hunting for shadowing between sources the user had never set.
+    ///
+    /// Defaults to [`credential_hints`](Self::credential_hints) so a provider
+    /// that cannot distinguish keeps today's behavior; providers backed by an
+    /// [`AuthCredentialSource`](crate::auth::AuthCredentialSource) override it.
+    fn populated_credential_hints(&self) -> Vec<String> {
+        self.credential_hints()
+    }
+
     /// Apply the scheme to `request`. Implementations should be a no-op if
     /// they can't satisfy the request (e.g., no env var set), so wrappers can
     /// fall through. Hard errors (malformed token bytes) are surfaced via

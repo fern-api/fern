@@ -16,6 +16,7 @@ Command-line interface for the Query Parameters API.
   - [Environment variables](#environment-variables)
   - [Output formats](#output-formats)
   - [Shell completion](#shell-completion)
+- [Attribution](#attribution)
 
 ## Installation
 
@@ -143,4 +144,8 @@ Generate shell completion scripts:
 ```bash
 query-parameters-api completion <bash|zsh|fish|powershell>
 ```
+
+## Attribution
+
+Built on [fern-cli-sdk](https://github.com/fern-api/fern), Copyright Fern, licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
