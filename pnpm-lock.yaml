@@ -6348,6 +6348,9 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../../configuration
+      '@fern-api/configuration-loader':
+        specifier: workspace:*
+        version: link:../../../configuration-loader
       '@fern-api/core':
         specifier: workspace:*
         version: link:../../../../core
@@ -6369,6 +6372,9 @@ importers:
       '@fern-api/generator-cli':
         specifier: workspace:*
         version: link:../../../../generator-cli
+      '@fern-api/github':
+        specifier: workspace:*
+        version: link:../../../../commons/github
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../../ir-generator
@@ -6405,6 +6411,9 @@ importers:
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
         version: 1.1.0
+      '@fern-fern/generator-exec-sdk':
+        specifier: 'catalog:'
+        version: 0.0.1167
       axios:
         specifier: 'catalog:'
         version: 1.16.0
