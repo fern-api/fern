@@ -1,0 +1,179 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Retries no longer treat a self-generated `Idempotency-Key` as a licence to
+    retry. Because the key is generated for every POST/PUT/PATCH, every
+    non-idempotent operation was retry-eligible and a 5xx on a create retried
+    ~4x against endpoints with no idempotency support. Retry-safety now
+    requires either `x-fern-idempotent: true` (the spec declaring server-side
+    support) or an explicit `--idempotency-key`. The auto key is still sent.
+  type: fix
+
+- summary: |
+    `x-fern-idempotent: true` no longer suppresses the auto `Idempotency-Key`.
+    The marker only means the operation *exposes* `--idempotency-key`, but it
+    was read as "the caller supplies one" — so a marked operation invoked
+    without the flag retried with no key at all, while the same operation
+    without the marker got one. A key is now always sent on POST/PUT/PATCH
+    unless the caller supplied their own or `x-fern-cli-idempotency: false`
+    opts out.
+  type: fix
+
+- summary: |
+    Request-body validation now checks properties behind a `$ref`. The
+    validator only had an object branch, so a `$ref` to a scalar or array
+    component was accepted whatever its value — on specs where most schemas
+    are component refs this meant validation was effectively off, and
+    `--dry-run` exited 0 on a malformed body. Bare-`$ref` component chains are
+    now followed too (bounded, so a cycle fails closed).
+  type: fix
+
+- summary: |
+    Parameters declared as a bare `$ref`, or as `anyOf: [T, null]` (pydantic's
+    `Optional[T]`), now resolve through component schemas, so they keep their
+    type, `enum`, `format` and numeric bounds instead of arriving untyped.
+    Array-typed parameters in any of those spellings are now repeatable:
+    `--labels a --labels b` works, and a single JSON-array argument is
+    equivalent. Previously a JSON array on such a parameter went on the wire
+    URL-encoded as `?x=%5B%22a%22%5D`. A single value is still sent as `?x=a`,
+    and a true union (more than one non-null branch) is left untouched.
+  type: fix
+
+- summary: |
+    `--page-all` / `--page-limit` / `--page-delay` / `--no-pager` are only
+    registered on operations the spec describes how to page. They were
+    advertised everywhere, and on a spec with no pagination metadata the
+    executor fell back to guessing `pageToken` / `nextPageToken`: one request
+    went out and the command exited 0 with page 1 — silent partial data.
+
+    Note for consumers: on a spec with no pagination metadata these flags now
+    disappear from every operation, so a script or agent already passing
+    `--page-all` goes from exit 0 (having silently received one page) to a
+    hard "unexpected argument" error. Nothing that previously worked breaks,
+    but the failure is now loud rather than silent.
+  type: fix
+
+- summary: |
+    The generated npm launcher now exits non-zero when the binary dies on a
+    signal. `execFileSync` reports a signal death with `status: null`, which
+    the launcher passed to `process.exit`, and Node coerces that to 0 — so CI
+    timeouts (SIGTERM), SIGSEGV and OOM-kills all reported success. Signal
+    deaths now exit 128+signum (SIGTERM to 143).
+  type: fix
+
+- summary: |
+    Any SemVer pre-release now publishes to npm under a non-latest dist-tag.
+    Only `-alpha` and `-beta` were matched, so a `v1.1.0-rc.1` or `-next.1`
+    tag fell through to a bare `npm publish` and would move `latest` to a
+    pre-release. The tag is derived from the first pre-release identifier.
+  type: fix
+
+- summary: |
+    The custom-command SDK bridge seeds the co-generated SDK's `base_url` from
+    the CLI's own resolution. `ClientConfig::default()` carries an empty
+    `base_url` for any API that declares no environment, so `sdk::client(ctx)`
+    produced a client with no host and every custom command failed on a
+    relative URL before the injected executor could help. A spec that declares
+    its server per-operation rather than at the root is resolved too.
+  type: fix
+
+- summary: |
+    Generated skills now tell agents to verify auth with `<cli> auth status`
+    rather than `<cli> --help`, which reads no credentials and so confirmed
+    nothing.
+  type: fix
+
+- summary: |
+    npm platform binaries are built with the `dist` cargo profile, the same one
+    cargo-dist uses for the GitHub Release. `ci.yml` built `--release` while
+    `release.yml` built `--profile dist`, so the two channels shipped different
+    bytes under one version tag.
+  type: fix
+
+- summary: |
+    Generated CLI repos no longer ship the vendored runtime's Apache-2.0
+    `LICENSE` by default, which contradicted the `license` field
+    `packageIdentity` writes into `Cargo.toml`. A LICENSE is now emitted only
+    when one is configured (`license: { type: custom }`), matching every other
+    Fern generator; a basic license remains package metadata only.
+  type: fix
+
+- summary: |
+    The generated README carries an Attribution section naming the vendored
+    `fern-cli-sdk` runtime and its Apache-2.0 license. The runtime's source is
+    copied into every generated repo, and Apache-2.0 requires retaining that
+    notice; carrying it in the README keeps it without shipping a LICENSE file
+    that contradicts the repo's own declared license.
+  type: fix
+
+- summary: |
+    The shared `generate-skills` prerequisite file no longer documents flags the
+    spec cannot produce. `-o, --output` and the pagination flags are emitted
+    only when some operation actually registers them, and the pointer at
+    `--schema`'s `paginable` / `binaryResponse` hints is emitted only when those
+    hints can appear. On an API with neither, step one of the file was
+    unfollowable — it named a flag the parser rejects.
+  type: fix
+
+- summary: |
+    Generated skills state the real `--format` default (`table` on a TTY,
+    `json` when piped) instead of `json`, and tell agents to set **one** of
+    several alternative auth schemes rather than exporting every environment
+    variable — which set up the exact credential shadowing the CLI's own auth
+    errors warn about.
+  type: fix
+
+- summary: |
+    Auth failures name only the credential sources that actually hold a value,
+    and the "check for shadowing" advice appears only when more than one source
+    is populated. Listing every *declared* source meant a CLI with two schemes
+    named four places when one supplied the credential, then sent the user
+    hunting for a conflict that could not exist.
+  type: fix
+
+- summary: |
+    `--schema`'s `globalFlags` lists `--params`, `--no-retry`, `--no-extract`
+    and `--help`. All four are registered on every operation, so an agent
+    coding against `--schema` had no way to discover they existed.
+  type: fix
+
+- summary: |
+    `--schema` and `--help` advertise the real element type of an array body
+    property. A repeated flag carries `type: string` because that is the flag
+    surface, which was rendered as `items: {type: string}` even for an array of
+    objects — an agent following the contract sent `["x"]` and the request was
+    rejected. Each occurrence of such a flag is now JSON-decoded, so
+    `--inputs '{...}' --inputs '{...}'` builds an array of objects; plain
+    string arrays are unchanged.
+  type: fix
+
+- summary: |
+    `--schema`'s `input.required` no longer disagrees with the validator. An
+    object-valued body property the parser recurses into kept a clap-optional
+    shorthand flag (leaf flags can satisfy it) but was also dropped from the
+    advertised required list, so a caller could supply every field `--schema`
+    named and still be rejected for one it never mentioned.
+  type: fix
+
+- summary: |
+    `--schema` no longer advertises a required parent object alongside its
+    required dotted leaves. The executor rejects combining `--a` with `--a.b`,
+    so listing both made the contract unsatisfiable — following it verbatim
+    produced "Cannot combine". The ancestor is dropped; the required leaves
+    already imply it. A required parent with no required leaves is unaffected.
+  type: fix
+
+- summary: |
+    `--help` shows the real element type for a repeated flag, so an
+    array-of-objects flag reads `<JSON_OBJECT>` rather than `<STRING>`.
+  type: fix
+
+- summary: |
+    `--schema` includes `multipart/form-data` body fields. They live in
+    `method.multipart_fields` rather than `method.parameters`, so an upload
+    operation advertised only its query parameters and headers with an empty
+    `required` — the flags existed and worked but were undiscoverable, making
+    every multipart operation uninvokable by an agent driving from the
+    contract. File parts carry `file: true` so an agent knows to pass a path,
+    and a per-part `contentType` surfaces when the spec pins one.
+  type: fix
