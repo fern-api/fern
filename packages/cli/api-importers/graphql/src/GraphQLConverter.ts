@@ -65,6 +65,7 @@ export class GraphQLConverter {
     private processingTypes: Set<string> = new Set();
     private types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
     private typeCategories: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory> = {};
+    private namespaceTypeNames: Set<string> = new Set();
     private examplesByOperation: Map<string, FdrAPI.api.v1.register.GraphQlExample[]> = new Map();
 
     constructor({
@@ -244,6 +245,13 @@ export class GraphQLConverter {
         }
 
         const graphqlOperations = this.resolveOperationIds(pendingOperations);
+
+        // A namespace type's fields are documented as operations, so it groups operations rather
+        // than being a documented type: no kind means no type page. Its definition stays in
+        // `types` because a namespace query's page renders the nested fields from it.
+        for (const typeName of this.namespaceTypeNames) {
+            delete this.typeCategories[this.getNamespacedTypeId(typeName)];
+        }
 
         return { graphqlOperations, types: this.types, typeCategories: this.typeCategories };
     }
@@ -445,6 +453,7 @@ export class GraphQLConverter {
                         operation: this.convertField(field, fieldName, operationType)
                     });
                 }
+                this.namespaceTypeNames.add(returnRawType.name);
                 this.convertNamespaceOperations(returnRawType, operationType, pending, [fieldName]);
             } else {
                 const flatId = this.buildOperationId(operationType, [fieldName]);

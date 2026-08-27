@@ -319,8 +319,6 @@
     }
   },
   "typeCategories": {
-    "Widget": "object",
-    "InventoryQueries": "object",
-    "CatalogQueries": "object"
+    "Widget": "object"
   }
 }

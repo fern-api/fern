@@ -306,8 +306,6 @@
   },
   "typeCategories": {
     "Account": "object",
-    "InventoryLocation": "object",
-    "AccountMutations": "object",
-    "InventoryQueries": "object"
+    "InventoryLocation": "object"
   }
 }

@@ -5398,7 +5398,6 @@
   "typeCategories": {
     "Account": "object",
     "AccountInfo": "object",
-    "AccountMutations": "object",
     "AddUserToAccountInput": "input",
     "AddUserToAccountResult": "object",
     "AddUserToStoreInput": "input",
@@ -5406,7 +5405,6 @@
     "AddUsersToUserGroupsInput": "input",
     "AddUsersToUserGroupsResult": "object",
     "App": "object",
-    "AppMutations": "object",
     "AppsConnection": "object",
     "AppsEdge": "object",
     "AwsEventSource": "object",
@@ -5430,7 +5428,6 @@
     "CheckoutItemScopeInput": "input",
     "CheckoutItemScopeType": "enum",
     "CheckoutItemStatus": "enum",
-    "CheckoutMutations": "object",
     "CheckoutStatus": "enum",
     "CollectionInfo": "object",
     "CreateCheckoutInput": "input",
@@ -5473,7 +5470,6 @@
     "SubscriptionConnection": "object",
     "SubscriptionEdge": "object",
     "SubscriptionFiltersInput": "input",
-    "SubscriptionMutations": "object",
     "SubscriptionProduct": "object",
     "SubscriptionProductType": "enum",
     "SubscriptionScope": "object",
@@ -5494,8 +5490,6 @@
     "UserGroupByUserEdge": "object",
     "UserGroupConnection": "object",
     "UserGroupEdge": "object",
-    "UserGroupMutations": "object",
-    "UserIdentifierInput": "input",
-    "UserMutations": "object"
+    "UserIdentifierInput": "input"
   }
 }

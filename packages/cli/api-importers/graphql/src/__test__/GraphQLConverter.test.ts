@@ -203,6 +203,30 @@ describe("GraphQLConverter type categories", () => {
         expect(Object.keys(typeCategories).sort()).toEqual(Object.keys(types).sort());
     });
 
+    it("gives an operation namespace no category, so it gets no type page", async () => {
+        const converter = new GraphQLConverter({
+            context: createMockTaskContext(),
+            filePath: join(
+                FIXTURES_DIR,
+                RelativeFilePath.of("namespace-types"),
+                RelativeFilePath.of("schema.graphql")
+            )
+        });
+
+        const { types, typeCategories } = await converter.convert();
+
+        // A namespace type's fields are documented as operations, so listing it as a type too
+        // would duplicate every one of its fields and arguments on the referenced types' pages.
+        expect(typeCategories).toEqual({
+            [FdrAPI.TypeId("Account")]: "object",
+            [FdrAPI.TypeId("InventoryLocation")]: "object"
+        });
+
+        // The definitions stay: a namespace query's page renders its nested fields from them.
+        expect(Object.keys(types)).toContain("AccountMutations");
+        expect(Object.keys(types)).toContain("InventoryQueries");
+    });
+
     it("namespaces category keys alongside type ids", async () => {
         const converter = new GraphQLConverter({
             context: createMockTaskContext(),
