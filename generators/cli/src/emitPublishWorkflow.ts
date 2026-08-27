@@ -132,6 +132,23 @@ function rustCacheStep(cacheKeySuffix: string): string {
 }
 
 /**
+ * Escape a consumer-supplied string for a JSON body inside an *unexpanded*
+ * heredoc.
+ *
+ * The `package.json` heredocs are deliberately unquoted so `${VERSION}` and the
+ * matrix expressions interpolate, which also means a `$(...)` or a backtick in
+ * a `packageIdentity.description` would run as a command on the release runner.
+ * Escaping `$` and `` ` `` leaves them literal; `\` and `"` keep the JSON
+ * parseable.
+ */
+function escapeJsonStringInHeredoc(value: string): string {
+    return value
+        .replace(/\\/g, "\\\\")
+        .replace(/"/g, '\\"')
+        .replace(/[$`]/g, (char) => `\\${char}`);
+}
+
+/**
  * Stage the repo's README and LICENSE into a package directory.
  *
  * npm renders the package page from the README *inside the published tarball*
@@ -233,11 +250,11 @@ function constructWorkflowYaml(args: {
     packageMetadata: NpmPackageMetadata;
 }): string {
     const { binaryName, npmPublishInfo, repoUrl, packageMetadata } = args;
-    const launcherDescription = packageMetadata.description ?? `CLI for ${binaryName}`;
+    const launcherDescription = escapeJsonStringInHeredoc(packageMetadata.description ?? `CLI for ${binaryName}`);
     const licenseField =
         packageMetadata.license != null
             ? `
-            "license": "${packageMetadata.license}",`
+            "license": "${escapeJsonStringInHeredoc(packageMetadata.license)}",`
             : "";
     const { useOidc } = npmPublishInfo;
     const tokenVar = npmPublishInfo.tokenEnvironmentVariable;

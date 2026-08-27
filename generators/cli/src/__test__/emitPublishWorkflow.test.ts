@@ -287,6 +287,19 @@ describe("emitPublishWorkflow", () => {
         expect(licenseFields).toHaveLength(2);
     });
 
+    // The package.json heredocs are unquoted so ${VERSION} interpolates, which
+    // means a description is shell input on the release runner.
+    it("neutralizes shell metacharacters in the configured description", async () => {
+        const yaml = await emitAndRead(baseInfo, "acme", undefined, [], {
+            description: 'CLI for $(id) `whoami` "Acme" \\ API'
+        });
+
+        expect(yaml).toContain('\\$(id) \\`whoami\\` \\"Acme\\" \\\\ API');
+        // No occurrence is left unescaped.
+        expect(yaml).not.toMatch(/[^\\]\$\(id\)/);
+        expect(yaml).not.toMatch(/[^\\]`whoami/);
+    });
+
     it("omits the license field entirely when none is configured", async () => {
         const yaml = await emitAndRead(baseInfo);
 
