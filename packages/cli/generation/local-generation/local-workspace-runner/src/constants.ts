@@ -54,9 +54,44 @@ export const TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR = "FERN_TYPE_RELOCATIONS_O
 /**
  * Generators that receive pre-processed raw API spec files mounted into their
  * Docker container. Add new generator names here as they opt in.
+ *
+ * Prefer the label below for new images. A name allowlist cannot describe an image that is published
+ * under an existing generator name in a different registry, which is how a self-hosted adapter is
+ * configured -- the name is identical whether the image is Fern's or the vendor's.
  */
 const GENERATORS_WANTING_SPECS: ReadonlySet<string> = new Set(["fernapi/fern-cli-generator"]);
 
 export function generatorWantsSpecs(generatorName: string): boolean {
     return GENERATORS_WANTING_SPECS.has(generatorName);
+}
+
+/**
+ * The image reference a generator invocation resolves to. Structurally typed so every caller agrees
+ * on exactly which image is run.
+ */
+export function resolveGeneratorImage(generatorInvocation: {
+    containerImage: string | undefined;
+    name: string;
+    version: string;
+}): string {
+    const repository = generatorInvocation.containerImage ?? generatorInvocation.name;
+    // A digest already identifies an exact image, and `repo@sha256:...:1.2.3` is not a valid
+    // reference. Appending the version would also defeat the point of pinning.
+    if (repository.includes("@sha256:")) {
+        return repository;
+    }
+    return `${repository}:${generatorInvocation.version}`;
+}
+
+/**
+ * Opts a local generation run into a specific container network mode, `none` being the useful value.
+ *
+ * An environment variable rather than a generators.yml key so the switch exists without a schema
+ * change; a first-class config field or CLI flag is the natural follow-up if that is preferred.
+ */
+export const GENERATOR_NETWORK_ENV_VAR = "FERN_GENERATOR_NETWORK";
+
+export function getConfiguredGeneratorNetwork(env: NodeJS.ProcessEnv = process.env): string | undefined {
+    const value = env[GENERATOR_NETWORK_ENV_VAR]?.trim();
+    return value !== undefined && value !== "" ? value : undefined;
 }
