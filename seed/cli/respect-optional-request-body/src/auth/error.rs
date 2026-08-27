@@ -53,10 +53,12 @@ pub fn handle_error_response<T>(
         // Surface which source supplied the credential so the user can
         // diagnose shadowing (e.g. stale env var winning over a fresh
         // `auth login`). ADR-0008 § 8e.
-        let hints = dedup_preserve_order(provider.credential_hints());
-        if !hints.is_empty() {
+        // Only the sources that actually supplied something. Listing every
+        // declared source named places the user had never configured.
+        let supplied = dedup_preserve_order(provider.populated_credential_hints());
+        if !supplied.is_empty() {
             let base = parse_api_error(status, error_body);
-            return Err(decorate_with_source_hint(base, &hints));
+            return Err(decorate_with_source_hint(base, &supplied));
         }
         return Err(parse_api_error(status, error_body));
     }
@@ -128,12 +130,20 @@ fn decorate_with_help(err: CliError, note: String) -> CliError {
 /// list of one against itself, which is busywork at best and, on a scope
 /// failure like `OAuth token does not have required permissions`, actively
 /// points away from the real fix.
+/// Note for a request that carried credentials the server rejected.
+///
+/// `hints` must be the *populated* sources, not every declared one. The
+/// shadowing advice is gated on more than one source actually holding a value,
+/// because that is the only situation in which shadowing is possible — gating
+/// it on the declared count meant any CLI with two auth schemes always told
+/// the user to go looking for a conflict that could not exist.
 fn decorate_with_source_hint(err: CliError, hints: &[String]) -> CliError {
     let joined = hints.join(", ");
     let note = if hints.len() > 1 {
         format!(
-            "Credentials were supplied via: {joined}. \
-             Run `auth status` to see all visible sources and check for shadowing."
+            "Credentials were supplied via: {joined}. More than one source has a \
+             value, so one may be shadowing another — run `auth status` to see \
+             which was used."
         )
     } else {
         format!("Credentials were supplied via: {joined}.")
@@ -481,16 +491,18 @@ mod tests {
     }
 
     #[test]
-    fn shadowing_advice_appears_only_with_more_than_one_source() {
-        // Two visible sources is the situation the advice was written for: a
-        // stale env var can outrank a fresh `auth login`, and which one won is
-        // not observable from the error alone.
+    fn names_only_the_sources_that_actually_hold_a_value() {
+        // A declared-but-empty source must not be named. Listing every source
+        // the provider *could* read told users their credential came from a
+        // keyring entry they had never populated, and — because the shadowing
+        // advice was gated on the declared count — sent them hunting for a
+        // conflict that could not exist.
         std::env::set_var("__FERN_TEST_CHAIN_A", "stale");
         let p = BearerAuthProvider::new(
             "bearer",
             AuthCredentialSource::any([
                 AuthCredentialSource::from_env("__FERN_TEST_CHAIN_A"),
-                AuthCredentialSource::keyring("mycli", "bearer"),
+                AuthCredentialSource::from_env("__FERN_TEST_CHAIN_UNSET"),
             ]),
         );
         let err = handle_error_response::<()>(
@@ -504,12 +516,52 @@ mod tests {
             CliError::Api { help, .. } => {
                 let help = help.expect("credential source hint");
                 assert!(help.contains("__FERN_TEST_CHAIN_A"), "got: {help}");
-                assert!(help.contains("keyring entry mycli:bearer"), "got: {help}");
-                assert!(help.contains("check for shadowing"), "got: {help}");
+                assert!(
+                    !help.contains("__FERN_TEST_CHAIN_UNSET"),
+                    "an unset source must not be named: {help}",
+                );
+                assert!(
+                    !help.contains("shadowing"),
+                    "one populated source cannot be shadowed: {help}",
+                );
             }
             other => panic!("expected Api, got: {other:?}"),
         }
         std::env::remove_var("__FERN_TEST_CHAIN_A");
+    }
+
+    #[test]
+    fn shadowing_advice_appears_only_with_more_than_one_source() {
+        // Two *populated* sources is the situation the advice was written for:
+        // a stale env var can outrank a fresh one, and which won is not
+        // observable from the error alone.
+        std::env::set_var("__FERN_TEST_SHADOW_A", "stale");
+        std::env::set_var("__FERN_TEST_SHADOW_B", "fresh");
+        let p = BearerAuthProvider::new(
+            "bearer",
+            AuthCredentialSource::any([
+                AuthCredentialSource::from_env("__FERN_TEST_SHADOW_A"),
+                AuthCredentialSource::from_env("__FERN_TEST_SHADOW_B"),
+            ]),
+        );
+        let err = handle_error_response::<()>(
+            reqwest::StatusCode::UNAUTHORIZED,
+            r#"{"error":{"code":401,"message":"bad token"}}"#,
+            &p,
+            &EndpointAuthMetadata::unspecified(),
+        )
+        .unwrap_err();
+        match err {
+            CliError::Api { help, .. } => {
+                let help = help.expect("credential source hint");
+                assert!(help.contains("__FERN_TEST_SHADOW_A"), "got: {help}");
+                assert!(help.contains("__FERN_TEST_SHADOW_B"), "got: {help}");
+                assert!(help.contains("shadowing"), "got: {help}");
+            }
+            other => panic!("expected Api, got: {other:?}"),
+        }
+        std::env::remove_var("__FERN_TEST_SHADOW_A");
+        std::env::remove_var("__FERN_TEST_SHADOW_B");
     }
 
     #[test]
