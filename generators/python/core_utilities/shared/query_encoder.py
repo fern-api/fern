@@ -27,7 +27,9 @@ def single_query_encoder(query_key: str, query_value: Any) -> List[Tuple[str, An
             obj_dict = query_value.dict(by_alias=True)
         else:
             obj_dict = query_value
-        return traverse_query_dict(obj_dict, query_key)
+        # An object query parameter is exploded: every entry becomes its own parameter,
+        # keyed by the property name alone. Only nested levels stay bracketed.
+        return traverse_query_dict(obj_dict)
     elif isinstance(query_value, list):
         encoded_values: List[Tuple[str, Any]] = []
         for value in query_value:

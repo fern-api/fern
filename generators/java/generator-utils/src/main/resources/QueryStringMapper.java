@@ -32,12 +32,34 @@ public class QueryStringMapper {
         }
 
         for (Map.Entry<String, JsonNode> field : flat) {
+            // A map query parameter is exploded: every entry becomes its own parameter, keyed
+            // by the property name alone. Arrays keep the parameter name, since their
+            // flattened keys are indexes rather than property names, and a declared object
+            // keeps it too so that only the dynamic case changes.
+            String name = value instanceof java.util.Map ? explodedName(field.getKey()) : key + field.getKey();
             if (field.getValue().isTextual()) {
-                httpUrl.addQueryParameter(key + field.getKey(), field.getValue().textValue());
+                httpUrl.addQueryParameter(name, field.getValue().textValue());
             } else {
-                httpUrl.addQueryParameter(key + field.getKey(), field.getValue().toString());
+                httpUrl.addQueryParameter(name, field.getValue().toString());
             }
         }
+    }
+
+    /**
+     * Turns a flattened key into an exploded parameter name by unwrapping its first bracket:
+     * {@code [category]} becomes {@code category} and {@code [a][b]} becomes {@code a[b]}.
+     * Nested levels stay bracketed, which is the only sensible reading of an exploded object
+     * whose values are themselves objects.
+     */
+    private static String explodedName(String flattenedKey) {
+        if (!flattenedKey.startsWith("[")) {
+            return flattenedKey;
+        }
+        int close = flattenedKey.indexOf(']');
+        if (close < 0) {
+            return flattenedKey;
+        }
+        return flattenedKey.substring(1, close) + flattenedKey.substring(close + 1);
     }
 
     public static void addFormDataPart(

@@ -18,7 +18,7 @@ public final class QueryStringMapperTest {
             }
         };
 
-        String expectedQueryString = "withquoted%5Bhello%5D=%22world%22";
+        String expectedQueryString = "hello=%22world%22";
 
         String actualQueryString = queryString(
                 new HashMap<String, Object>() {
@@ -39,7 +39,7 @@ public final class QueryStringMapperTest {
             }
         };
 
-        String expectedQueryString = "withquoted%5Bhello%5D=%22world%22";
+        String expectedQueryString = "hello=%22world%22";
 
         String actualQueryString = queryString(
                 new HashMap<String, Object>() {
@@ -61,7 +61,7 @@ public final class QueryStringMapperTest {
             }
         };
 
-        String expectedQueryString = "metadata%5Bfoo%5D=bar&metadata%5Bbaz%5D=qux";
+        String expectedQueryString = "foo=bar&baz=qux";
 
         String actualQueryString = queryString(
                 new HashMap<String, Object>() {
@@ -83,7 +83,7 @@ public final class QueryStringMapperTest {
             }
         };
 
-        String expectedQueryString = "metadata%5Bfoo%5D=bar&metadata%5Bbaz%5D=qux";
+        String expectedQueryString = "foo=bar&baz=qux";
 
         String actualQueryString = queryString(
                 new HashMap<String, Object>() {
@@ -115,8 +115,8 @@ public final class QueryStringMapperTest {
         };
 
         String expectedQueryString =
-                "nested%5Bmapkey2%5D%5Bmapkey2mapkey1%5D=mapkey2mapkey1value&nested%5Bmapkey1%5D%5Bmapkey1mapkey1"
-                        + "%5D=mapkey1mapkey1value&nested%5Bmapkey1%5D%5Bmapkey1mapkey2%5D=mapkey1mapkey2value";
+                "mapkey2%5Bmapkey2mapkey1%5D=mapkey2mapkey1value&mapkey1%5Bmapkey1mapkey1"
+                        + "%5D=mapkey1mapkey1value&mapkey1%5Bmapkey1mapkey2%5D=mapkey1mapkey2value";
 
         String actualQueryString = queryString(
                 new HashMap<String, Object>() {
@@ -148,8 +148,8 @@ public final class QueryStringMapperTest {
         };
 
         String expectedQueryString =
-                "nested%5Bmapkey2%5D%5Bmapkey2mapkey1%5D=mapkey2mapkey1value&nested%5Bmapkey1%5D%5Bmapkey1mapkey1"
-                        + "%5D=mapkey1mapkey1value&nested%5Bmapkey1%5D%5Bmapkey1mapkey2%5D=mapkey1mapkey2value";
+                "mapkey2%5Bmapkey2mapkey1%5D=mapkey2mapkey1value&mapkey1%5Bmapkey1mapkey1"
+                        + "%5D=mapkey1mapkey1value&mapkey1%5Bmapkey1mapkey2%5D=mapkey1mapkey2value";
 
         String actualQueryString = queryString(
                 new HashMap<String, Object>() {
@@ -281,9 +281,7 @@ public final class QueryStringMapperTest {
             }
         };
 
-        String expectedQueryString =
-                "objectwitharray%5Bid%5D=abc123&objectwitharray%5BcontactIds%5D%5B0%5D=id1&objectwitharray"
-                        + "%5BcontactIds%5D%5B1%5D=id2&objectwitharray%5BcontactIds%5D%5B2%5D=id3";
+        String expectedQueryString = "id=abc123&contactIds%5B0%5D=id1&contactIds%5B1%5D=id2&contactIds%5B2%5D=id3";
 
         String actualQueryString = queryString(
                 new HashMap<String, Object>() {
@@ -311,8 +309,7 @@ public final class QueryStringMapperTest {
             }
         };
 
-        String expectedQueryString = "objectwitharray%5Bid%5D=abc123&objectwitharray%5BcontactIds"
-                + "%5D=id1&objectwitharray%5BcontactIds%5D=id2&objectwitharray%5BcontactIds%5D=id3";
+        String expectedQueryString = "id=abc123&contactIds=id1&contactIds=id2&contactIds=id3";
 
         String actualQueryString = queryString(
                 new HashMap<String, Object>() {
