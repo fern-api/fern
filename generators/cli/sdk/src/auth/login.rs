@@ -604,6 +604,7 @@ fn resolve_scheme(
             .collect();
         if !declared.is_empty() && !declared.contains(&s.as_str()) {
             let mut valid = declared.clone();
+            valid.sort_unstable();
             valid.dedup();
             return Err(CliError::Validation(format!(
                 "Unknown auth scheme `{s}`. This CLI declares: {}.",
