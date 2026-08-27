@@ -143,6 +143,15 @@ describe("parseImagePaths", () => {
         );
     });
 
+    it("should parse thumbnail from frontmatter text", () => {
+        const page = '---\nthumbnail: "path/to/image.png"\n---';
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
+        expect(result.markdown.trim()).toEqual(
+            "---\nthumbnail:\n  type: fileId\n  value: /Volume/git/fern/my/docs/folder/path/to/image.png\n---"
+        );
+    });
+
     it("should parse logo from frontmatter text", () => {
         const page = '---\nlogo: "path/to/image.png"\n---';
         const result = parseImagePaths(page, PATHS);

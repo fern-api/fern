@@ -1,0 +1,4 @@
+- summary: |
+    Upload and rewrite `thumbnail` frontmatter images the same way as `image`, so blog
+    post thumbnails resolve to hosted URLs instead of unpublished local paths.
+  type: fix

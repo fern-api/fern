@@ -59,6 +59,12 @@ interface ImageOccurrence {
     type: "markdown-image" | "markdown-link" | "jsx-src" | "jsx-href";
 }
 
+/**
+ * Frontmatter keys whose values are image paths: they get uploaded and rewritten to
+ * `file:<id>` references. `thumbnail` is read by blog cards and post headers.
+ */
+const FRONTMATTER_IMAGE_KEYS = ["image", "thumbnail", "og:image", "og:logo", "twitter:image"];
+
 const JSX_TAG_NAME_START_REGEX = /[A-Za-z]/;
 
 /**
@@ -601,7 +607,7 @@ export function parseImagePaths(
         return;
     }
 
-    visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
+    visitFrontmatterImages(data, FRONTMATTER_IMAGE_KEYS, mapImage);
     replaceFrontmatterImagesforLogo(data, mapImage);
 
     // Fast path: skip expensive parsing if content has no image-related patterns
@@ -908,7 +914,7 @@ export function replaceImagePathsAndUrls(
         return undefined;
     }
 
-    visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
+    visitFrontmatterImages(data, FRONTMATTER_IMAGE_KEYS, mapImage);
     replaceFrontmatterImagesforLogo(data, mapImage);
 
     // Use streaming scanner for all pages (O(n) character scan instead of full MDX parse).
