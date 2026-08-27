@@ -1,0 +1,7 @@
+- summary: |
+    The published npm packages now carry the CLI's README and LICENSE, plus a
+    `license` field and the configured `packageIdentity.description`. npm
+    renders a package's page from the README inside the tarball, so every
+    generated CLI's registry page read "no README data" and showed no license
+    no matter what the repo contained.
+  type: fix

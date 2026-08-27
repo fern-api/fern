@@ -263,7 +263,16 @@ export async function runPipeline(args: {
                 binaryName,
                 npmPublishInfo: outputConfig.npmPublishInfo,
                 repoUrl: outputConfig.repoUrl,
-                generatedCrateDirs
+                generatedCrateDirs,
+                // Same values the crate and the Homebrew formula carry, so a
+                // consumer's one `packageIdentity` block describes them on
+                // every channel they publish to.
+                packageMetadata: {
+                    description:
+                        customConfig.packageIdentity?.description ??
+                        defaultCrateDescription(ir.apiDisplayName ?? binaryName),
+                    license: customConfig.packageIdentity?.license
+                }
             });
         } else {
             await emitCiWorkflow({ outputDir, binaryName, generatedCrateDirs });

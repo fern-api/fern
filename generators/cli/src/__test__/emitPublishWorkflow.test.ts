@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, readFile, rm } from "fs/promises";
 import os from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { emitCiWorkflow, emitPublishWorkflow } from "../emitPublishWorkflow.js";
+import { emitCiWorkflow, emitPublishWorkflow, type NpmPackageMetadata } from "../emitPublishWorkflow.js";
 import type { ResolvedNpmPublishInfo } from "../resolveOutputConfig.js";
 
 /**
@@ -28,9 +28,17 @@ describe("emitPublishWorkflow", () => {
         npmPublishInfo: ResolvedNpmPublishInfo,
         binaryName = "acme",
         repoUrl: string | undefined = undefined,
-        generatedCrateDirs: readonly string[] = []
+        generatedCrateDirs: readonly string[] = [],
+        packageMetadata: NpmPackageMetadata = {}
     ): Promise<string> {
-        await emitPublishWorkflow({ outputDir, binaryName, npmPublishInfo, repoUrl, generatedCrateDirs });
+        await emitPublishWorkflow({
+            outputDir,
+            binaryName,
+            npmPublishInfo,
+            repoUrl,
+            generatedCrateDirs,
+            packageMetadata
+        });
         return readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
     }
 
@@ -252,6 +260,52 @@ describe("emitPublishWorkflow", () => {
         const yaml = await emitAndRead(baseInfo, "acme", undefined);
 
         expect(yaml).not.toContain('"repository"');
+    });
+
+    it("stages the README and LICENSE into every published package", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        // npm renders the page from the tarball, so the copy has to happen in
+        // both the platform matrix and the launcher step.
+        const copyLoops = yaml.match(/for doc in README\.md LICENSE LICENSE\.md LICENSE\.txt; do/g);
+        expect(copyLoops).toHaveLength(2);
+        expect(yaml).toContain('cp "${doc}" "${PKG_DIR}/${doc}"');
+        // LICENSE is only present when the consumer configured one, and the
+        // publish steps run under `set -e`.
+        expect(yaml).toContain('if [[ -f "${doc}" ]]; then');
+    });
+
+    it("carries the configured description and license into both packages", async () => {
+        const yaml = await emitAndRead(baseInfo, "acme", undefined, [], {
+            description: "CLI for the Acme API",
+            license: "MIT"
+        });
+
+        expect(yaml).toContain('"description": "CLI for the Acme API"');
+        expect(yaml).not.toContain('"description": "CLI for acme"');
+        const licenseFields = yaml.match(/"license": "MIT"/g);
+        expect(licenseFields).toHaveLength(2);
+    });
+
+    // The package.json heredocs are unquoted so ${VERSION} interpolates, which
+    // means a description is shell input on the release runner.
+    it("neutralizes shell metacharacters in the configured description", async () => {
+        const yaml = await emitAndRead(baseInfo, "acme", undefined, [], {
+            description: 'CLI for $(id) `whoami` "Acme" \\ API'
+        });
+
+        expect(yaml).toContain('\\$(id) \\`whoami\\` \\"Acme\\" \\\\ API');
+        // No occurrence is left unescaped.
+        expect(yaml).not.toMatch(/[^\\]\$\(id\)/);
+        expect(yaml).not.toMatch(/[^\\]`whoami/);
+    });
+
+    it("omits the license field entirely when none is configured", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).not.toContain('"license"');
+        // Falls back to the binary name rather than emitting an empty field.
+        expect(yaml).toContain('"description": "CLI for acme"');
     });
 
     it("both publish steps call npm publish directly with backport logic", async () => {

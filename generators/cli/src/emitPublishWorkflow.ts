@@ -60,12 +60,26 @@ export async function emitPublishWorkflow(args: {
     npmPublishInfo: ResolvedNpmPublishInfo;
     repoUrl: string | undefined;
     generatedCrateDirs?: readonly string[];
+    packageMetadata?: NpmPackageMetadata;
 }): Promise<void> {
-    const { outputDir, binaryName, npmPublishInfo, repoUrl, generatedCrateDirs = [] } = args;
+    const { outputDir, binaryName, npmPublishInfo, repoUrl, generatedCrateDirs = [], packageMetadata = {} } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
-    const yaml = constructWorkflowYaml({ binaryName, npmPublishInfo, repoUrl, generatedCrateDirs });
+    const yaml = constructWorkflowYaml({ binaryName, npmPublishInfo, repoUrl, generatedCrateDirs, packageMetadata });
     await writeFile(path.join(workflowsDir, "ci.yml"), yaml);
+}
+
+/**
+ * The `package.json` fields npm's package page renders that the binary
+ * packaging itself doesn't imply. Both default from `packageIdentity`, which
+ * is also where the crate's own metadata comes from — a consumer who set
+ * `license: MIT` there means it for what they publish, not just for crates.io.
+ */
+export interface NpmPackageMetadata {
+    /** `description`. Falls back to `CLI for <binaryName>`. */
+    description?: string;
+    /** SPDX `license`. Omitted entirely when unset — npm renders no license. */
+    license?: string;
 }
 
 /**
@@ -116,6 +130,45 @@ function rustCacheStep(cacheKeySuffix: string): string {
             cargo-\${{ runner.os }}-${cacheKeySuffix}-
 `;
 }
+
+/**
+ * Escape a consumer-supplied string for a JSON body inside an *unexpanded*
+ * heredoc.
+ *
+ * The `package.json` heredocs are deliberately unquoted so `${VERSION}` and the
+ * matrix expressions interpolate, which also means a `$(...)` or a backtick in
+ * a `packageIdentity.description` would run as a command on the release runner.
+ * Escaping `$` and `` ` `` leaves them literal; `\` and `"` keep the JSON
+ * parseable.
+ */
+function escapeJsonStringInHeredoc(value: string): string {
+    return value
+        .replace(/\\/g, "\\\\")
+        .replace(/"/g, '\\"')
+        .replace(/[$`]/g, (char) => `\\${char}`);
+}
+
+/**
+ * Stage the repo's README and LICENSE into a package directory.
+ *
+ * npm renders the package page from the README *inside the published tarball*
+ * — a README in the source repo is invisible to the registry, so without this
+ * every published version's page reads "no README data". Same for the license
+ * text. Both are included in the tarball whichever way `files` is set, so the
+ * copy is the whole fix.
+ *
+ * Existence is checked rather than assumed: a README is emitted for every
+ * generated CLI, but `LICENSE` only exists when the consumer configured
+ * `github.license`, and `set -e` would otherwise fail the publish on a
+ * missing file.
+ */
+const PACKAGE_DOCS_COPY_STEP = `
+          for doc in README.md LICENSE LICENSE.md LICENSE.txt; do
+            if [[ -f "\${doc}" ]]; then
+              cp "\${doc}" "\${PKG_DIR}/\${doc}"
+            fi
+          done
+`;
 
 /**
  * `cargo test` steps for the generated model/SDK crates.
@@ -194,8 +247,15 @@ function constructWorkflowYaml(args: {
     npmPublishInfo: ResolvedNpmPublishInfo;
     repoUrl: string | undefined;
     generatedCrateDirs: readonly string[];
+    packageMetadata: NpmPackageMetadata;
 }): string {
-    const { binaryName, npmPublishInfo, repoUrl } = args;
+    const { binaryName, npmPublishInfo, repoUrl, packageMetadata } = args;
+    const launcherDescription = escapeJsonStringInHeredoc(packageMetadata.description ?? `CLI for ${binaryName}`);
+    const licenseField =
+        packageMetadata.license != null
+            ? `
+            "license": "${escapeJsonStringInHeredoc(packageMetadata.license)}",`
+            : "";
     const { useOidc } = npmPublishInfo;
     const tokenVar = npmPublishInfo.tokenEnvironmentVariable;
 
@@ -380,7 +440,7 @@ ${rustCacheStep("${{ matrix.rust-target }}")}
           {
             "name": "\${PLATFORM_PKG}",
             "version": "\${VERSION}",
-            "description": "Platform-specific binary for ${binaryName} (\${{ matrix.npm-platform-suffix }})",${
+            "description": "Platform-specific binary for ${binaryName} (\${{ matrix.npm-platform-suffix }})",${licenseField}${
                 repoUrl != null
                     ? `
             "repository": {
@@ -395,7 +455,7 @@ ${rustCacheStep("${{ matrix.rust-target }}")}
             "files": ["\${BINARY_NAME}"]
           }
           PKGJSON
-
+${PACKAGE_DOCS_COPY_STEP}
           cd "\${PKG_DIR}"
           # Pre-release detection — require the semver "-" separator so a
           # release tag like v1.0.0 for a package whose version string
@@ -450,7 +510,7 @@ ${optionalDepsLines}
           {
             "name": "${npmPublishInfo.packageName}",
             "version": "\${VERSION}",
-            "description": "CLI for ${binaryName}",${
+            "description": "${launcherDescription}",${licenseField}${
                 repoUrl != null
                     ? `
             "repository": {
@@ -468,7 +528,7 @@ ${optionalDepsLines}
             "files": ["bin/"]
           }
           PKGJSON
-
+${PACKAGE_DOCS_COPY_STEP}
           # Write launcher script
           mkdir -p "\${PKG_DIR}/bin"
           cat > "\${PKG_DIR}/bin/cli.js" <<'LAUNCHER'
