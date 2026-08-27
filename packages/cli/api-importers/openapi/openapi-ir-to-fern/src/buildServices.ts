@@ -15,7 +15,9 @@ export function buildServices(context: OpenApiIrConverterContext): ConvertedServ
     const { endpoints, tags } = context.ir;
     let schemaIdsToExclude: string[] = [];
     for (const endpoint of endpoints) {
-        const { endpointId, file, tag } = getEndpointLocation(endpoint);
+        const { endpointId, file, tag } = getEndpointLocation(endpoint, {
+            respectOperationIdWordBoundaries: context.options.respectOperationIdWordBoundaries
+        });
         const sdkGroup = file.split(".")[0];
         if (sdkGroup != null) {
             sdkGroups.add(sdkGroup);

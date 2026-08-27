@@ -171,7 +171,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             inferDefaultEnvironment: collapseSpecBooleanSetting(specs, (s) => s?.inferDefaultEnvironment),
             defaultIntegerFormat: specs[0]?.settings?.defaultIntegerFormat,
             pathParameterOrder: specs[0]?.settings?.pathParameterOrder,
-            coerceConstsTo: specs[0]?.settings?.coerceConstsTo
+            coerceConstsTo: specs[0]?.settings?.coerceConstsTo,
+            respectOperationIdWordBoundaries: collapseSpecBooleanSetting(
+                specs,
+                (s) => s?.respectOperationIdWordBoundaries
+            )
         });
         this.specs = specs;
         this.allSpecs = allSpecs;

@@ -211,8 +211,9 @@ function getUnresolvedWebhookLocation({
     }
 
     // if both tag and operation ids are defined
-    const tagTokens = tokenizeString(tag);
-    const operationIdTokens = tokenizeString(operationId);
+    const { respectOperationIdWordBoundaries } = context.options;
+    const tagTokens = tokenizeString(tag, respectOperationIdWordBoundaries);
+    const operationIdTokens = tokenizeString(operationId, respectOperationIdWordBoundaries);
 
     // add to __package__.yml if equal
     if (isEqual(tagTokens, operationIdTokens)) {

@@ -133,7 +133,17 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
      * If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.
      * Defaults to false.
      */
-    "respect-per-spec-base-path": z.boolean().optional()
+    "respect-per-spec-base-path": z.boolean().optional(),
+
+    /**
+     * If true, operation ids are split on every word boundary (camelCase transitions and digits)
+     * when deriving endpoint names, so a redundant tag prefix is stripped and the remaining words
+     * are preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields
+     * `listFolderMembers` rather than `listfoldermembers`).
+     * This changes endpoint names, and therefore SDK method names and docs URLs.
+     * Defaults to false.
+     */
+    "respect-operation-id-word-boundaries": z.boolean().optional()
 });
 
 export type OpenApiSettingsSchema = z.infer<typeof OpenApiSettingsSchema>;

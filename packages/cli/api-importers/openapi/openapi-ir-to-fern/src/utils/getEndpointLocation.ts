@@ -2,13 +2,21 @@ import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { Endpoint, HttpMethod } from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { CliError } from "@fern-api/task-context";
-import { camelCase, compact, isEqual } from "lodash-es";
+import { camelCase, compact, isEqual, words } from "lodash-es";
 import { convertEndpointSdkNameToFileWithoutExtension } from "./convertSdkGroupName.js";
 
 export interface EndpointLocation {
     file: RelativeFilePath;
     endpointId: string;
     tag?: string;
+}
+
+export interface EndpointLocationOptions {
+    /**
+     * If true, operation ids are tokenized on every word boundary (camelCase transitions and
+     * digits) rather than only on separators. See {@link tokenizeString}.
+     */
+    respectOperationIdWordBoundaries?: boolean;
 }
 
 function resolveEndpointLocationWithNamespaceOverride({
@@ -33,8 +41,9 @@ function sanitizeEndpointId(operationId: string): string {
     return operationId.includes(".") ? camelCase(operationId) : operationId;
 }
 
-function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
+function getUnresolvedEndpointLocation(endpoint: Endpoint, options: EndpointLocationOptions): EndpointLocation {
     const namespace = endpoint.namespace;
+    const { respectOperationIdWordBoundaries } = options;
 
     // Ignore the namespace tag as we'll apply that later, universally
     const tag = endpoint.tags.filter((tag) => tag !== namespace)[0];
@@ -75,8 +84,8 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
     }
 
     // if both tag and operation ids are defined
-    const tagTokens = tokenizeString(tag);
-    const operationIdTokens = tokenizeString(operationId);
+    const tagTokens = tokenizeString(tag, respectOperationIdWordBoundaries);
+    const operationIdTokens = tokenizeString(operationId, respectOperationIdWordBoundaries);
 
     // add to __package__.yml if equal
     if (isEqual(tagTokens, operationIdTokens)) {
@@ -127,7 +136,7 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
     };
 }
 
-export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
+export function getEndpointLocation(endpoint: Endpoint, options: EndpointLocationOptions = {}): EndpointLocation {
     const tag = endpoint.tags[0];
     if (endpoint.sdkName != null) {
         const filenameWithoutExtension = convertEndpointSdkNameToFileWithoutExtension({
@@ -147,11 +156,21 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
 
     return resolveEndpointLocationWithNamespaceOverride({
         namespaceOverride: endpoint.namespace,
-        location: getUnresolvedEndpointLocation(endpoint)
+        location: getUnresolvedEndpointLocation(endpoint, options)
     });
 }
 
-export function tokenizeString(input: string): string[] {
+/**
+ * @param respectWordBoundaries when true, split on every word boundary (camelCase transitions and
+ * digits) regardless of the shape of the input. The default only splits on camelCase when the input
+ * is entirely alphabetic and camel/Pascal cased, so an id like `Sharing_ListFolderMembers` or
+ * `filesGetThumbnailV2` collapses into a single token that can no longer be split.
+ */
+export function tokenizeString(input: string, respectWordBoundaries = false): string[] {
+    if (respectWordBoundaries) {
+        return compact(words(input).map((token) => token.toLowerCase()));
+    }
+
     let tokens: string[];
 
     // Check if the string is in camel case or Pascal case

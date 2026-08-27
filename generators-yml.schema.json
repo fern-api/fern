@@ -2732,6 +2732,17 @@
             }
           ],
           "description": "If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.\nDefaults to false."
+        },
+        "respect-operation-id-word-boundaries": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, operation ids are split on every word boundary (camelCase transitions and digits)\nwhen deriving endpoint names, so a redundant tag prefix is stripped and the remaining words\nare preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields\n`listFolderMembers` rather than `listfoldermembers`).\nThis changes endpoint names, and therefore SDK method names and docs URLs.\nDefaults to false."
         }
       },
       "additionalProperties": false
@@ -3436,6 +3447,17 @@
             }
           ],
           "description": "If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.\nDefaults to false."
+        },
+        "respect-operation-id-word-boundaries": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, operation ids are split on every word boundary (camelCase transitions and digits)\nwhen deriving endpoint names, so a redundant tag prefix is stripped and the remaining words\nare preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields\n`listFolderMembers` rather than `listfoldermembers`).\nThis changes endpoint names, and therefore SDK method names and docs URLs.\nDefaults to false."
         },
         "respect-nullable-schemas": {
           "oneOf": [
