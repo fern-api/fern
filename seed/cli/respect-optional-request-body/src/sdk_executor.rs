@@ -148,6 +148,18 @@ impl CliExecutor {
 
         let http_method_str = method.as_str().to_uppercase();
 
+        // Retry-safety for a non-idempotent verb hinges on the request
+        // actually carrying an `Idempotency-Key`, not on it being an SDK
+        // request. This used to pass a hardcoded `true`, which made every
+        // custom-command POST retry as if it were idempotent — a 5xx on a
+        // create could duplicate the resource. The header is the only signal
+        // available here (the executor is handed a built `Request` and knows
+        // nothing about the operation), and it is the right one: a key that
+        // is present is a key the caller intends the server to dedupe on.
+        let carries_idempotency_key = headers
+            .keys()
+            .any(|name| name.as_str().eq_ignore_ascii_case("idempotency-key"));
+
         // Borrowed views for the debug dump; `Vec<String>` -> `&[&str]`.
         let sensitive: Vec<&str> = self.sensitive_headers.iter().map(String::as_str).collect();
 
@@ -201,7 +213,7 @@ impl CliExecutor {
                         &outcome,
                         &self.retries,
                         &http_method_str,
-                        true, // SDK requests are treated as idempotent
+                        carries_idempotency_key,
                         false,
                     ) {
                         retry_attempt += 1;
@@ -220,7 +232,7 @@ impl CliExecutor {
                         &outcome,
                         &self.retries,
                         &http_method_str,
-                        true,
+                        carries_idempotency_key,
                         false,
                     ) {
                         retry_attempt += 1;

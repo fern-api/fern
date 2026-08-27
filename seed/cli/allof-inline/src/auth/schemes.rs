@@ -56,6 +56,10 @@ impl AuthProvider for BearerAuthProvider {
         self.token.credential_hints()
     }
 
+    fn populated_credential_hints(&self) -> Vec<String> {
+        self.token.populated_credential_hints()
+    }
+
     fn apply(
         &self,
         request: reqwest::RequestBuilder,
@@ -174,6 +178,12 @@ impl AuthProvider for BasicAuthProvider {
     fn credential_hints(&self) -> Vec<String> {
         let mut hints = self.username.credential_hints();
         hints.extend(self.password.credential_hints());
+        hints
+    }
+
+    fn populated_credential_hints(&self) -> Vec<String> {
+        let mut hints = self.username.populated_credential_hints();
+        hints.extend(self.password.populated_credential_hints());
         hints
     }
 

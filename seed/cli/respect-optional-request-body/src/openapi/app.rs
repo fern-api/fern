@@ -2187,7 +2187,7 @@ impl CliApp {
         let resolved = crate::validate::validate_safe_output_dir(&out_dir)?;
 
         let files =
-            crate::openapi::skill_emitter::generate_skills(doc, &self.name, &self.auth_bindings);
+            crate::openapi::skill_emitter::generate_skills(doc, &self.name, &self.auth_bindings, self.auth_strategy);
 
         for (rel_path, content) in &files {
             let full_path = resolved.join(rel_path);
@@ -2671,6 +2671,41 @@ impl AppContext {
         self.base_url_override.as_deref()
     }
 
+    /// The base URL requests from this context go to, resolved the same way
+    /// the built-in command path resolves it: `--base-url` / `{NAME}_BASE_URL`
+    /// override first, then the spec's explicit `base_url`, then the server
+    /// root plus any Discovery `service_path`.
+    ///
+    /// Exposed for the generated custom-command SDK bridge, which has to seed
+    /// the co-generated SDK's `ClientConfig.base_url`. `ClientConfig::default()`
+    /// is not a usable substitute: the Rust SDK generator emits
+    /// `base_url: String::new()` for an API that declares no environment, so a
+    /// bridge built on the default produced a client with no host and every
+    /// custom command failed before the injected executor could help. The
+    /// executor's own `resolve_url` only rewrites the host when `--base-url`
+    /// was passed, so it cannot recover an empty base either.
+    pub fn effective_base_url(&self) -> String {
+        if let Some(override_url) = self.base_url_override.as_deref() {
+            return override_url.trim_end_matches('/').to_string();
+        }
+        let doc = &self.entries[0].doc;
+        if let Some(base) = &doc.base_url {
+            return base.clone();
+        }
+        // A spec can declare its server per-operation rather than at the root
+        // (`paths./x.get.servers`), which the built-in path handles via
+        // `effective_root_url(method, doc)`. There is no operation in scope
+        // here, so fall back to the first operation that declares one, walked
+        // in sorted order for determinism. Without this the bridge produced an
+        // empty base for exactly the specs the fix was meant to serve.
+        let root_url = if doc.root_url.is_empty() {
+            first_method_root_url(&doc.resources).unwrap_or_default()
+        } else {
+            doc.root_url.clone()
+        };
+        format!("{}{}", root_url, doc.service_path)
+    }
+
     /// Build a [`CliExecutor`] wired to this context's HTTP/auth/retry stack.
     ///
     /// The executor is constructed from the first binding entry's config
@@ -2699,6 +2734,31 @@ impl AppContext {
     }
 }
 
+
+/// First non-empty per-operation `root_url` in the resource tree, visiting
+/// resources and methods in sorted-name order so the answer is stable across
+/// runs (the trees are `HashMap`s).
+fn first_method_root_url(
+    resources: &std::collections::HashMap<String, RestResource>,
+) -> Option<String> {
+    let mut resource_names: Vec<&String> = resources.keys().collect();
+    resource_names.sort();
+    for name in resource_names {
+        let resource = &resources[name];
+        let mut method_names: Vec<&String> = resource.methods.keys().collect();
+        method_names.sort();
+        for method_name in method_names {
+            let root_url = &resource.methods[method_name].root_url;
+            if !root_url.is_empty() {
+                return Some(root_url.clone());
+            }
+        }
+        if let Some(found) = first_method_root_url(&resource.resources) {
+            return Some(found);
+        }
+    }
+    None
+}
 
 /// Recursively check whether any method in the resource tree is the
 /// same object (pointer-equal) as `target`. Used by
@@ -2909,8 +2969,24 @@ pub(crate) fn collect_params_from_flags(
                         explicit_null = true;
                         continue;
                     }
-                    match serde_json::from_str(v) {
+                    match serde_json::from_str::<serde_json::Value>(v) {
                         Ok(serde_json::Value::Array(elems)) => arr.extend(elems),
+                        // A non-string element type means each occurrence is
+                        // itself JSON — `--inputs '{"text":"hi"}'` is one
+                        // object, not the literal text of one. Keeping it a
+                        // string made an array-of-objects flag impossible to
+                        // use one element at a time, while `--schema` now
+                        // advertises `items: {type: object}`.
+                        Ok(decoded)
+                            if param_def
+                                .item_type
+                                .as_deref()
+                                .is_some_and(|t| t != "string") =>
+                        {
+                            arr.push(decoded)
+                        }
+                        // Anything else — including non-array JSON like "123"
+                        // on a string-element flag — stays a literal string.
                         _ => arr.push(serde_json::Value::String(v.clone())),
                     }
                 }
@@ -3156,14 +3232,27 @@ pub(crate) fn build_pagination_config(
     doc: &RestDescription,
     cli_name: &str,
 ) -> executor::PaginationConfig {
+    // `try_*` rather than `get_*`: the pagination flags are only registered
+    // on operations the spec describes how to page (see
+    // `commands::method_has_pagination`). On every other operation the arg id
+    // is unknown and `get_flag` panics, so absence has to read as "off".
     executor::PaginationConfig {
-        page_all: matches.get_flag("page-all"),
+        page_all: matches
+            .try_get_one::<bool>("page-all")
+            .ok()
+            .flatten()
+            .copied()
+            .unwrap_or(false),
         page_limit: matches
-            .get_one::<u32>("page-limit")
+            .try_get_one::<u32>("page-limit")
+            .ok()
+            .flatten()
             .copied()
             .unwrap_or(10),
         page_delay_ms: matches
-            .get_one::<u64>("page-delay")
+            .try_get_one::<u64>("page-delay")
+            .ok()
+            .flatten()
             .copied()
             .unwrap_or(100),
         token_query_param: doc
@@ -3174,7 +3263,12 @@ pub(crate) fn build_pagination_config(
             .pagination_token_response_path
             .clone()
             .unwrap_or_else(|| "nextPageToken".to_string()),
-        no_pager: matches.get_flag("no-pager"),
+        no_pager: matches
+            .try_get_one::<bool>("no-pager")
+            .ok()
+            .flatten()
+            .copied()
+            .unwrap_or(false),
         cli_name: cli_name.to_string(),
     }
 }
@@ -3225,6 +3319,38 @@ mod tests {
             default: None,
         };
         assert_eq!(global_header_arg_id(&h), "__global_header::X-API-Stage");
+    }
+
+    #[test]
+    fn test_effective_base_url_falls_back_to_per_operation_server() {
+        // A spec can declare its server per-operation (`paths./x.get.servers`)
+        // and carry no root-level one. The built-in path handles that via
+        // `effective_root_url(method, doc)`; the SDK bridge has no operation in
+        // scope, so without a fallback it produced an empty base and every
+        // custom command failed on a relative URL — on exactly the specs this
+        // accessor exists to serve.
+        let mut methods = std::collections::HashMap::new();
+        methods.insert(
+            "list".to_string(),
+            RestMethod {
+                root_url: "https://api.example.com".to_string(),
+                ..Default::default()
+            },
+        );
+        let mut resources = std::collections::HashMap::new();
+        resources.insert(
+            "things".to_string(),
+            RestResource {
+                methods,
+                ..Default::default()
+            },
+        );
+        assert_eq!(
+            first_method_root_url(&resources).as_deref(),
+            Some("https://api.example.com"),
+        );
+        // No operation declares one either — nothing to invent.
+        assert_eq!(first_method_root_url(&std::collections::HashMap::new()), None);
     }
 
     /// A global header/parameter whose flag was never registered on the
