@@ -7,7 +7,6 @@ import { detectAuthBindings } from "./detectAuth.js";
 import { detectGlobalParams } from "./detectGlobalParams.js";
 import { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 import { emitReadme } from "./emitReadme.js";
-import { type LicenseConfigLike, writeLicense } from "./writeLicense.js";
 import { emitReference } from "./emitReference.js";
 import { emitReleaseWorkflow } from "./emitReleaseWorkflow.js";
 import { generateAgentSkills } from "./generateAgentSkills.js";
@@ -29,6 +28,7 @@ import type { ResolvedOutputConfig } from "./resolveOutputConfig.js";
 import type { TypePartitionCrate } from "./splitTypesCrates.js";
 import { generateWireTests } from "./wireTests/index.js";
 import { writeGitignore } from "./writeGitignore.js";
+import { type LicenseConfigLike, writeLicense } from "./writeLicense.js";
 
 export type PipelineOutcome =
     | { status: "skipped"; reason: "no-openapi-specs" }
