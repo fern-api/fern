@@ -167,3 +167,13 @@
     `--help` shows the real element type for a repeated flag, so an
     array-of-objects flag reads `<JSON_OBJECT>` rather than `<STRING>`.
   type: fix
+
+- summary: |
+    `--schema` includes `multipart/form-data` body fields. They live in
+    `method.multipart_fields` rather than `method.parameters`, so an upload
+    operation advertised only its query parameters and headers with an empty
+    `required` — the flags existed and worked but were undiscoverable, making
+    every multipart operation uninvokable by an agent driving from the
+    contract. File parts carry `file: true` so an agent knows to pass a path,
+    and a per-part `contentType` surfaces when the spec pins one.
+  type: fix

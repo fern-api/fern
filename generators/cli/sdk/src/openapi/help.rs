@@ -288,6 +288,48 @@ fn build_operation_schema(
         }
         properties.insert(name.clone(), prop);
     }
+
+    // `multipart/form-data` body fields live in `method.multipart_fields`, not
+    // `method.parameters`, so this contract omitted them entirely: an
+    // upload operation advertised only its query params and headers, with an
+    // empty `required`. The flags exist and work — they were simply
+    // undiscoverable, so an agent driving purely from `--schema` could not
+    // invoke *any* multipart operation.
+    //
+    // Skips fields whose kebab name collides with a builtin flag, mirroring
+    // `commands::build_resource_command` — those args are never registered, so
+    // advertising them would be the same class of lie.
+    for field in &method.multipart_fields {
+        let kebab = crate::text::to_kebab_flag(&field.wire_name);
+        if crate::openapi::commands::BUILTIN_FLAG_NAMES.contains(&kebab.as_str()) {
+            continue;
+        }
+        // The flag surface is a string either way: a text part takes its value
+        // verbatim, a file part takes a filesystem path (`@path` / `-` for
+        // stdin are accepted too — see `--help`). `file: true` is what tells an
+        // agent to pass a path rather than the content.
+        let mut prop = if field.repeated {
+            json!({
+                "type": "array",
+                "items": { "type": "string" },
+                "location": "body",
+            })
+        } else {
+            json!({ "type": "string", "location": "body" })
+        };
+        prop["description"] = json!(field.description.as_deref().unwrap_or(""));
+        if field.is_file {
+            prop["file"] = json!(true);
+        }
+        if let Some(content_type) = &field.content_type {
+            prop["contentType"] = json!(content_type);
+        }
+        if field.required {
+            required.push(field.wire_name.clone());
+        }
+        properties.insert(field.wire_name.clone(), prop);
+    }
+
     required.sort();
     // A parent object flag and its dotted leaves are mutually exclusive on the
     // command line — the executor rejects `--a` combined with `--a.b`. So when
@@ -2121,5 +2163,81 @@ mod tests {
             required.contains(&"workflow".to_string()),
             "a required parent with no required leaves must survive: {required:?}",
         );
+    }
+
+    /// Multipart body fields must reach the contract.
+    ///
+    /// They live in `method.multipart_fields`, not `method.parameters`, so
+    /// `--schema` omitted them entirely — an upload operation advertised only
+    /// its query params and headers with an empty `required`, which made every
+    /// multipart operation uninvokable by an agent driving from the contract.
+    #[test]
+    fn multipart_fields_appear_in_the_input_contract() {
+        use crate::openapi::discovery::MultipartField;
+        let field = |wire: &str, is_file: bool, required: bool, repeated: bool| MultipartField {
+            wire_name: wire.to_string(),
+            is_file,
+            description: Some(format!("the {wire} field")),
+            required,
+            content_type: None,
+            repeated,
+        };
+        let mut methods = HashMap::new();
+        methods.insert(
+            "convert".to_string(),
+            RestMethod {
+                multipart_fields: vec![
+                    field("audio", true, true, false),
+                    field("files", true, false, true),
+                    field("file_format", false, false, false),
+                    // Collides with the builtin `--format`; never registered,
+                    // so it must not be advertised either.
+                    field("format", false, false, false),
+                ],
+                ..Default::default()
+            },
+        );
+        let mut resources = HashMap::new();
+        resources.insert(
+            "audio".to_string(),
+            crate::openapi::discovery::RestResource {
+                methods,
+                resources: HashMap::new(),
+            },
+        );
+        let doc = RestDescription {
+            resources,
+            ..Default::default()
+        };
+
+        let schema = operation_schema(&doc, &["audio"], "convert").expect("schema");
+        let props = &schema["input"]["properties"];
+
+        // A required file part: string-typed (the flag takes a path), flagged
+        // `file` so an agent passes a path rather than the content.
+        assert_eq!(props["audio"]["type"], "string");
+        assert_eq!(props["audio"]["location"], "body");
+        assert_eq!(props["audio"]["file"], true);
+        assert_eq!(props["audio"]["description"], "the audio field");
+
+        // A repeated file part is an array of paths.
+        assert_eq!(props["files"]["type"], "array");
+        assert_eq!(props["files"]["items"]["type"], "string");
+        assert_eq!(props["files"]["file"], true);
+
+        // A text part carries no `file` marker.
+        assert_eq!(props["file_format"]["type"], "string");
+        assert!(props["file_format"].get("file").is_none());
+
+        // Builtin-colliding field is skipped, matching flag registration.
+        assert!(props.get("format").is_none(), "builtin collision must be skipped");
+
+        let required: Vec<&str> = schema["input"]["required"]
+            .as_array()
+            .expect("required")
+            .iter()
+            .map(|v| v.as_str().unwrap())
+            .collect();
+        assert_eq!(required, vec!["audio"], "only the required part is listed");
     }
 }
