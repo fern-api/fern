@@ -154,3 +154,16 @@
     advertised required list, so a caller could supply every field `--schema`
     named and still be rejected for one it never mentioned.
   type: fix
+
+- summary: |
+    `--schema` no longer advertises a required parent object alongside its
+    required dotted leaves. The executor rejects combining `--a` with `--a.b`,
+    so listing both made the contract unsatisfiable — following it verbatim
+    produced "Cannot combine". The ancestor is dropped; the required leaves
+    already imply it. A required parent with no required leaves is unaffected.
+  type: fix
+
+- summary: |
+    `--help` shows the real element type for a repeated flag, so an
+    array-of-objects flag reads `<JSON_OBJECT>` rather than `<STRING>`.
+  type: fix

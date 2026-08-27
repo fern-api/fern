@@ -289,6 +289,29 @@ fn build_operation_schema(
         properties.insert(name.clone(), prop);
     }
     required.sort();
+    // A parent object flag and its dotted leaves are mutually exclusive on the
+    // command line — the executor rejects `--a` combined with `--a.b`. So when
+    // both a parent and its leaves are spec-required, advertising both makes
+    // the contract literally unsatisfiable: an agent supplies everything listed
+    // and gets "Cannot combine --settings with --settings.auth_type".
+    //
+    // Drop the ancestor. The required leaves already imply the parent must be
+    // present, and they are the form a caller can actually use together. A
+    // required parent with no required leaves (the case `required_by_spec` was
+    // added for) has no descendants here and is kept.
+    let covered: std::collections::HashSet<String> = required
+        .iter()
+        .flat_map(|name| {
+            let mut ancestors = Vec::new();
+            let mut rest = name.as_str();
+            while let Some((parent, _)) = rest.rsplit_once('.') {
+                ancestors.push(parent.to_string());
+                rest = parent;
+            }
+            ancestors
+        })
+        .collect();
+    required.retain(|name| !covered.contains(name));
 
     // Per ADR-0006: `--schema` is the agent-facing contract. Drop HTTP
     // plumbing (`httpMethod`, `path`) — agents drive the CLI, not raw
@@ -2021,5 +2044,82 @@ mod tests {
         assert_eq!(one_of[1]["type"], "array");
         assert_eq!(one_of[1]["items"]["type"], "string");
         assert_eq!(props["to"]["description"], "Recipient addresses");
+    }
+
+    /// A parent flag and its leaves cannot both be advertised as required —
+    /// the executor rejects combining them, so the contract would be
+    /// unsatisfiable. Caught by driving all 337 operations of a real spec:
+    /// 8 of them listed both and could not be followed as advertised.
+    #[test]
+    fn required_drops_an_ancestor_whose_leaves_are_also_required() {
+        use crate::openapi::discovery::MethodParameter;
+        let body = |required_by_spec: bool| MethodParameter {
+            location: Some("body".to_string()),
+            required_by_spec,
+            ..Default::default()
+        };
+        let mut parameters = HashMap::new();
+        // `settings` is spec-required and so are three of its leaves.
+        parameters.insert("settings".to_string(), MethodParameter {
+            param_type: Some("object".to_string()),
+            ..body(true)
+        });
+        for leaf in ["settings.auth_type", "settings.name", "settings.webhook_url"] {
+            parameters.insert(leaf.to_string(), MethodParameter {
+                param_type: Some("string".to_string()),
+                required: true,
+                ..body(true)
+            });
+        }
+        // A required parent with NO required leaves must survive — that is the
+        // case `required_by_spec` was added for.
+        parameters.insert("workflow".to_string(), MethodParameter {
+            param_type: Some("object".to_string()),
+            ..body(true)
+        });
+        parameters.insert("workflow.nodes".to_string(), MethodParameter {
+            param_type: Some("string".to_string()),
+            ..body(false)
+        });
+
+        let mut methods = HashMap::new();
+        methods.insert(
+            "create".to_string(),
+            RestMethod {
+                parameters,
+                ..Default::default()
+            },
+        );
+        let mut resources = HashMap::new();
+        resources.insert(
+            "things".to_string(),
+            crate::openapi::discovery::RestResource {
+                methods,
+                resources: HashMap::new(),
+            },
+        );
+        let doc = RestDescription {
+            resources,
+            ..Default::default()
+        };
+        let schema = operation_schema(&doc, &["things"], "create").expect("schema");
+        let required: Vec<String> = schema["input"]["required"]
+            .as_array()
+            .expect("required array")
+            .iter()
+            .map(|v| v.as_str().unwrap().to_string())
+            .collect();
+
+        assert!(
+            !required.contains(&"settings".to_string()),
+            "an ancestor of a required leaf must be dropped: {required:?}",
+        );
+        for leaf in ["settings.auth_type", "settings.name", "settings.webhook_url"] {
+            assert!(required.contains(&leaf.to_string()), "{leaf} missing: {required:?}");
+        }
+        assert!(
+            required.contains(&"workflow".to_string()),
+            "a required parent with no required leaves must survive: {required:?}",
+        );
     }
 }

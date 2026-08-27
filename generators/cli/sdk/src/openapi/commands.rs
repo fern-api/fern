@@ -790,15 +790,7 @@ fn build_resource_command(
             }
             flag_to_wire.insert(kebab_name.clone(), param_name.clone());
 
-            let base_value_name = match param.param_type.as_deref() {
-                Some("string") => "STRING",
-                Some("integer") => "NUMBER",
-                Some("number") => "NUMBER",
-                Some("boolean") => "BOOLEAN",
-                Some("array") => "JSON_ARRAY",
-                Some("object") => "JSON_OBJECT",
-                _ => "VALUE",
-            };
+            let base_value_name = value_name_for(param);
             // A composite only sets `param.nullable` when it came from a
             // promoted nullable composition (`anyOf: [$ref, null]`), where
             // the schema genuinely admits `null` — so the sentinel suffix
@@ -1026,6 +1018,31 @@ fn build_possible_value(wire: &str, cfg: Option<&FernEnumValue>) -> PossibleValu
         pv = pv.help(desc.to_string());
     }
     pv
+}
+
+/// `--help` value-name placeholder for a parameter.
+///
+/// On a repeated flag `param_type` is the *flag* surface — clap collects
+/// strings — so the spec's real element type lives in `item_type`. Reading
+/// `param_type` here made an array-of-objects flag advertise `<STRING>` while
+/// `--schema` (correctly) said `items: {type: object}` and the collector
+/// decoded objects: three surfaces, two answers. `item_type: None` means
+/// string, so non-array and string-array flags are unchanged.
+fn value_name_for(param: &MethodParameter) -> &'static str {
+    let value_type = if param.repeated {
+        param.item_type.as_deref().or(param.param_type.as_deref())
+    } else {
+        param.param_type.as_deref()
+    };
+    match value_type {
+        Some("string") => "STRING",
+        Some("integer") => "NUMBER",
+        Some("number") => "NUMBER",
+        Some("boolean") => "BOOLEAN",
+        Some("array") => "JSON_ARRAY",
+        Some("object") => "JSON_OBJECT",
+        _ => "VALUE",
+    }
 }
 
 /// True when the spec says enough for `--page-all` to actually work on this
@@ -3308,6 +3325,30 @@ paths:
             long.ends_with("Each keyterm must be under 50 characters."),
             "long help should keep the pricing/constraint clauses; got: {long}",
         );
+    }
+
+    #[test]
+    fn test_repeated_flag_value_name_uses_the_element_type() {
+        // An array-of-objects flag advertised `<STRING>` in `--help` while
+        // `--schema` said `items: {type: object}` and the collector decoded
+        // objects — three surfaces, two answers.
+        use crate::openapi::discovery::MethodParameter;
+        let objects = MethodParameter {
+            param_type: Some("string".to_string()),
+            item_type: Some("object".to_string()),
+            repeated: true,
+            location: Some("body".to_string()),
+            ..Default::default()
+        };
+        let strings = MethodParameter {
+            param_type: Some("string".to_string()),
+            repeated: true,
+            location: Some("body".to_string()),
+            ..Default::default()
+        };
+        assert_eq!(value_name_for(&objects), "JSON_OBJECT");
+        // `item_type: None` means string — unchanged from before.
+        assert_eq!(value_name_for(&strings), "STRING");
     }
 
     #[test]
