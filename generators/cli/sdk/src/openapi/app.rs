@@ -138,6 +138,150 @@ fn apply_server_var_substitutions(
     }
 }
 
+/// Collect every server variable declared in the spec's `servers:` blocks
+/// (top-level first, then per-operation overrides sorted by name so the
+/// flag order is stable across runs). First declaration wins on name
+/// collisions — a variable of a given name is one CLI flag, however many
+/// servers reference it.
+fn collect_spec_server_variables(
+    doc: &crate::openapi::discovery::RestDescription,
+) -> Vec<crate::openapi::discovery::ServerVariable> {
+    use crate::openapi::discovery::{RestResource, Server, ServerVariable};
+
+    fn collect(
+        servers: &[Server],
+        seen: &mut std::collections::HashSet<String>,
+        out: &mut Vec<ServerVariable>,
+    ) {
+        for server in servers {
+            for var in &server.variables {
+                if seen.insert(var.name.clone()) {
+                    out.push(var.clone());
+                }
+            }
+        }
+    }
+
+    fn walk(
+        res: &RestResource,
+        seen: &mut std::collections::HashSet<String>,
+        out: &mut std::collections::BTreeMap<String, ServerVariable>,
+    ) {
+        for method in res.methods.values() {
+            let mut per_op = Vec::new();
+            collect(&method.servers, seen, &mut per_op);
+            for var in per_op {
+                out.insert(var.name.clone(), var);
+            }
+        }
+        for sub in res.resources.values() {
+            walk(sub, seen, out);
+        }
+    }
+
+    let mut seen = std::collections::HashSet::new();
+    let mut out = Vec::new();
+    collect(&doc.servers, &mut seen, &mut out);
+
+    // Resources are stored in a `HashMap`, so per-operation variables are
+    // gathered into a `BTreeMap` first to keep the emitted order stable.
+    let mut per_op = std::collections::BTreeMap::new();
+    for res in doc.resources.values() {
+        walk(res, &mut seen, &mut per_op);
+    }
+    out.extend(per_op.into_values());
+    out
+}
+
+/// Whether a spec declares anything for server-variable resolution to
+/// act on: `servers[].variables` or `x-fern-default-url`, at the document
+/// root or on an operation.
+fn spec_declares_server_urls_to_resolve(
+    doc: &crate::openapi::discovery::RestDescription,
+) -> bool {
+    use crate::openapi::discovery::{RestResource, Server};
+
+    fn any_server(servers: &[Server]) -> bool {
+        servers
+            .iter()
+            .any(|s| !s.variables.is_empty() || s.default_url.is_some())
+    }
+
+    fn walk(res: &RestResource) -> bool {
+        res.methods.values().any(|m| any_server(&m.servers)) || res.resources.values().any(walk)
+    }
+
+    any_server(&doc.servers) || doc.resources.values().any(walk)
+}
+
+/// Swap every templated server URL for its `x-fern-default-url`.
+///
+/// The extension declares the concrete URL to use when the caller pins
+/// none of the server's template variables — e.g. Twilio's
+/// `https://api.{region}.twilio.com` defaults to `https://api.twilio.com`
+/// rather than to the `region` variable's default substituted in. Only
+/// called when no variable value was supplied (see
+/// [`CliApp::apply_server_vars`]); otherwise the template wins so the
+/// caller's value still routes the request.
+fn apply_default_server_urls(doc: &mut crate::openapi::discovery::RestDescription) {
+    use crate::openapi::discovery::{RestResource, Server};
+
+    /// `url` -> `default_url` for every server that declares one, so a
+    /// `root_url` copied from a server entry (the parser's fallback for
+    /// operations without their own `servers:` block) is rewritten too.
+    fn index(servers: &[Server], out: &mut HashMap<String, String>) {
+        for server in servers {
+            if let Some(default_url) = &server.default_url {
+                out.insert(server.url.clone(), default_url.clone());
+            }
+        }
+    }
+
+    fn index_walk(res: &RestResource, out: &mut HashMap<String, String>) {
+        for method in res.methods.values() {
+            index(&method.servers, out);
+        }
+        for sub in res.resources.values() {
+            index_walk(sub, out);
+        }
+    }
+
+    let mut defaults_by_url = HashMap::new();
+    index(&doc.servers, &mut defaults_by_url);
+    for res in doc.resources.values() {
+        index_walk(res, &mut defaults_by_url);
+    }
+    if defaults_by_url.is_empty() {
+        return;
+    }
+
+    fn rewrite(url: &mut String, defaults_by_url: &HashMap<String, String>) {
+        if let Some(default_url) = defaults_by_url.get(url.as_str()) {
+            *url = default_url.clone();
+        }
+    }
+
+    fn rewrite_walk(res: &mut RestResource, defaults_by_url: &HashMap<String, String>) {
+        for method in res.methods.values_mut() {
+            rewrite(&mut method.root_url, defaults_by_url);
+            for server in &mut method.servers {
+                rewrite(&mut server.url, defaults_by_url);
+            }
+        }
+        for sub in res.resources.values_mut() {
+            rewrite_walk(sub, defaults_by_url);
+        }
+    }
+
+    rewrite(&mut doc.root_url, &defaults_by_url);
+    for server in &mut doc.servers {
+        rewrite(&mut server.url, &defaults_by_url);
+    }
+    for res in doc.resources.values_mut() {
+        rewrite_walk(res, &defaults_by_url);
+    }
+}
+
 /// Apply generator-supplied env-var overrides to every idempotent
 /// operation's synthetic idempotency-header parameter. The parser
 /// already populated `MethodParameter.env_var` from each
@@ -284,6 +428,25 @@ fn merge_tag_description_order(acc: &mut Vec<String>, incoming: Vec<String>) {
     for tag in incoming {
         if !acc.iter().any(|existing| existing == &tag) {
             acc.push(tag);
+        }
+    }
+}
+
+/// Merge `servers:` declarations across specs, deduplicated by URL and
+/// keeping the first write. Only the first spec's `servers` (and the
+/// `root_url` derived from them) survive as the document's defaults; the
+/// rest are carried over so their template `variables` and
+/// `x-fern-default-url` still reach URL resolution — a multi-spec CLI
+/// otherwise sends the second spec's templated URL verbatim.
+fn merge_servers(
+    acc: &mut Vec<crate::openapi::discovery::Server>,
+    incoming: Vec<crate::openapi::discovery::Server>,
+) {
+    use std::collections::HashSet;
+    let existing: HashSet<String> = acc.iter().map(|s| s.url.clone()).collect();
+    for server in incoming {
+        if !existing.contains(&server.url) {
+            acc.push(server);
         }
     }
 }
@@ -1290,6 +1453,7 @@ impl CliApp {
                         &mut acc.tag_description_order,
                         spec_doc.tag_description_order,
                     );
+                    merge_servers(&mut acc.servers, spec_doc.servers);
                     merge_sdk_variables(&mut acc.sdk_variables, spec_doc.sdk_variables);
                     merge_global_headers(&mut acc.global_headers, spec_doc.global_headers);
                     merge_global_parameters(&mut acc.global_parameters, spec_doc.global_parameters);
@@ -1643,6 +1807,43 @@ impl CliApp {
             cli = cli.arg(arg);
         }
 
+        // Server-variable flags declared in the spec itself
+        // (`servers[].variables`). Generator-registered variables above win
+        // on name collisions — they carry env-var wiring the spec can't
+        // express.
+        let generator_server_vars: std::collections::HashSet<&str> =
+            self.server_vars.iter().map(|v| v.name.as_str()).collect();
+        for var in collect_spec_server_variables(doc) {
+            if generator_server_vars.contains(var.name.as_str()) {
+                continue;
+            }
+            let kebab = crate::text::to_kebab_flag(&var.name);
+            if sdk_variable_collides_with_builtin(&kebab) {
+                tracing::warn!(
+                    variable = %var.name,
+                    flag = %kebab,
+                    "Server variable flag collides with built-in; skipping"
+                );
+                continue;
+            }
+            let mut arg = clap::Arg::new(var.name.clone())
+                .long(kebab)
+                .global(true)
+                .value_name(crate::text::to_screaming_snake(&var.name))
+                .help(var.description.clone().unwrap_or_else(|| {
+                    format!("Value for the {{{}}} URL template variable", var.name)
+                }));
+            if let Some(default) = &var.default {
+                arg = arg.default_value(default.clone());
+            }
+            if !var.enum_values.is_empty() {
+                arg = arg.value_parser(clap::builder::PossibleValuesParser::new(
+                    var.enum_values.clone(),
+                ));
+            }
+            cli = cli.arg(arg);
+        }
+
         // SDK-variable flags (`x-fern-sdk-variables`).
         for var in &doc.sdk_variables {
             let kebab = crate::text::to_kebab_flag(&var.name);
@@ -1874,16 +2075,53 @@ impl CliApp {
 
     /// Resolve server variable values from clap matches and substitute
     /// them into the doc's URLs.
+    ///
+    /// Values come from generator-registered variables
+    /// ([`server_var`](Self::server_var)) and from the spec's own
+    /// `servers[].variables` block, whose flags carry the variable's
+    /// `default` — so a templated URL resolves to a sendable one even when
+    /// the caller passes nothing. When the caller pins no variable at all
+    /// and the server declares `x-fern-default-url`, that URL wins over
+    /// substituting the defaults.
+    /// Whether [`apply_server_vars`](Self::apply_server_vars) has anything
+    /// to do for `doc` — generator-registered variables, or a spec that
+    /// declares `servers[].variables` / `x-fern-default-url`. Callers use
+    /// it to skip cloning the doc when there is nothing to resolve.
+    pub(crate) fn needs_server_var_resolution(&self, doc: &RestDescription) -> bool {
+        !self.server_vars.is_empty() || spec_declares_server_urls_to_resolve(doc)
+    }
+
     pub(crate) fn apply_server_vars(
         &self,
         doc: &mut RestDescription,
         matches: &clap::ArgMatches,
     ) {
+        let spec_vars = collect_spec_server_variables(doc);
+        let names = self
+            .server_vars
+            .iter()
+            .map(|v| &v.name)
+            .chain(spec_vars.iter().map(|v| &v.name));
+
         let mut subs = std::collections::HashMap::new();
-        for var in &self.server_vars {
-            if let Some(val) = matches.get_one::<String>(&var.name) {
-                subs.insert(var.name.clone(), val.clone());
+        let mut caller_pinned_any = false;
+        for name in names {
+            if subs.contains_key(name) {
+                continue;
             }
+            // `try_get_one` rather than `get_one`: a variable whose flag was
+            // skipped (built-in collision) is not a registered arg id, and
+            // `get_one` panics on unknown ids.
+            if let Ok(Some(value)) = matches.try_get_one::<String>(name) {
+                if matches.value_source(name) != Some(clap::parser::ValueSource::DefaultValue) {
+                    caller_pinned_any = true;
+                }
+                subs.insert(name.clone(), value.clone());
+            }
+        }
+
+        if !caller_pinned_any {
+            apply_default_server_urls(doc);
         }
         apply_server_var_substitutions(doc, &subs);
     }
@@ -5242,6 +5480,228 @@ paths:
             create.servers[0].url,
             "https://upload.example.com/stores/abc123/v3",
         );
+    }
+
+    /// Twilio's spec shape: a templated server URL plus the concrete
+    /// `x-fern-default-url` to fall back to.
+    const TWILIO_SHAPED_SPEC: &str = r#"
+openapi: "3.0.0"
+info: { title: "T", version: "1.0" }
+servers:
+  - url: "https://api.{region}.twilio.com"
+    x-fern-server-name: Production
+    x-fern-default-url: "https://api.twilio.com"
+    variables:
+      region:
+        default: us1
+        description: The Twilio region
+        enum: [us1, ie1, au1]
+paths:
+  /Messages:
+    get:
+      x-fern-sdk-group-name: ["messages"]
+      x-fern-sdk-method-name: list-message
+      responses: { "200": { description: ok } }
+"#;
+
+    #[test]
+    fn test_spec_server_variables_survive_parsing() {
+        let doc = CliApp::new("t").spec(TWILIO_SHAPED_SPEC).build_doc().unwrap();
+        assert_eq!(doc.servers.len(), 1);
+        let server = &doc.servers[0];
+        assert_eq!(server.default_url.as_deref(), Some("https://api.twilio.com"));
+        assert_eq!(server.variables.len(), 1);
+        assert_eq!(server.variables[0].name, "region");
+        assert_eq!(server.variables[0].default.as_deref(), Some("us1"));
+        assert_eq!(server.variables[0].description.as_deref(), Some("The Twilio region"));
+        assert_eq!(server.variables[0].enum_values, vec!["us1", "ie1", "au1"]);
+
+        // Same metadata reachable through the collector the CLI layer uses.
+        let collected = collect_spec_server_variables(&doc);
+        assert_eq!(collected.len(), 1);
+        assert_eq!(collected[0].name, "region");
+    }
+
+    #[test]
+    fn test_multi_spec_preserves_later_spec_server_metadata() {
+        // Twilio's shape: dozens of `spec_under` entries, with the
+        // templated server declared by one that is not the first.
+        let app = CliApp::new("t")
+            .spec_under(
+                "accounts",
+                r#"
+openapi: "3.0.0"
+info: { title: "A", version: "1.0" }
+servers: [{ url: "https://accounts.twilio.com" }]
+paths:
+  /Accounts:
+    get:
+      x-fern-sdk-group-name: ["accounts"]
+      x-fern-sdk-method-name: list
+      responses: { "200": { description: ok } }
+"#,
+            )
+            .spec_under("core", TWILIO_SHAPED_SPEC);
+        let mut doc = app.build_doc().unwrap();
+
+        let collected = collect_spec_server_variables(&doc);
+        assert_eq!(collected.len(), 1, "later spec's `variables` must survive the merge");
+        assert_eq!(collected[0].name, "region");
+        assert!(app.needs_server_var_resolution(&doc));
+
+        let cli = app.decorate_command(&doc, crate::openapi::commands::build_cli(&doc));
+        let matches = cli
+            .try_get_matches_from(["t", "core", "messages", "list-message"])
+            .expect("parses with no flags");
+        app.apply_server_vars(&mut doc, &matches);
+
+        let list = doc.resources["core"].resources["messages"]
+            .methods
+            .get("list-message")
+            .unwrap();
+        assert_eq!(list.root_url, "https://api.twilio.com");
+    }
+
+    #[test]
+    fn test_needs_server_var_resolution_for_spec_declared_variables() {
+        // The resolution pass must run for specs that declare their own
+        // `servers[].variables` / `x-fern-default-url`, even when the
+        // generator registered no `.server_var()` of its own.
+        let app = CliApp::new("t").spec(TWILIO_SHAPED_SPEC);
+        assert!(app.needs_server_var_resolution(&app.build_doc().unwrap()));
+
+        let plain = CliApp::new("t").spec(
+            r#"
+openapi: "3.0.0"
+info: { title: "T", version: "1.0" }
+servers: [{ url: "https://api.example.com" }]
+paths:
+  /things:
+    get:
+      x-fern-sdk-group-name: ["things"]
+      x-fern-sdk-method-name: list
+      responses: { "200": { description: ok } }
+"#,
+        );
+        assert!(!plain.needs_server_var_resolution(&plain.build_doc().unwrap()));
+    }
+
+    #[test]
+    fn test_apply_server_vars_uses_default_url_when_caller_pins_nothing() {
+        // `./cli messages list-message` with no flags: the templated URL is
+        // not a valid URI, so `x-fern-default-url` must take over.
+        let app = CliApp::new("t").spec(TWILIO_SHAPED_SPEC);
+        let mut doc = app.build_doc().unwrap();
+        let cli = app.decorate_command(&doc, crate::openapi::commands::build_cli(&doc));
+        let matches = cli
+            .try_get_matches_from(["t", "messages", "list-message"])
+            .expect("parses with no flags");
+        app.apply_server_vars(&mut doc, &matches);
+
+        assert_eq!(doc.root_url, "https://api.twilio.com");
+        assert_eq!(doc.servers[0].url, "https://api.twilio.com");
+        let list = doc.resources["messages"].methods.get("list-message").unwrap();
+        assert_eq!(list.root_url, "https://api.twilio.com");
+    }
+
+    #[test]
+    fn test_apply_server_vars_caller_value_beats_default_url() {
+        // An explicit `--region` must route the request, not be discarded in
+        // favour of `x-fern-default-url`.
+        let app = CliApp::new("t").spec(TWILIO_SHAPED_SPEC);
+        let mut doc = app.build_doc().unwrap();
+        let cli = app.decorate_command(&doc, crate::openapi::commands::build_cli(&doc));
+        let matches = cli
+            .try_get_matches_from(["t", "--region", "ie1", "messages", "list-message"])
+            .expect("parses --region from the spec's server variables");
+        app.apply_server_vars(&mut doc, &matches);
+
+        assert_eq!(doc.root_url, "https://api.ie1.twilio.com");
+        let list = doc.resources["messages"].methods.get("list-message").unwrap();
+        assert_eq!(list.root_url, "https://api.ie1.twilio.com");
+    }
+
+    #[test]
+    fn test_spec_server_variable_flag_rejects_off_enum_value() {
+        let app = CliApp::new("t").spec(TWILIO_SHAPED_SPEC);
+        let doc = app.build_doc().unwrap();
+        let cli = app.decorate_command(&doc, crate::openapi::commands::build_cli(&doc));
+        cli.clone().debug_assert();
+        assert!(
+            cli.try_get_matches_from(["t", "--region", "mars1", "messages", "list-message"])
+                .is_err(),
+            "spec `enum` must constrain the generated flag",
+        );
+    }
+
+    #[test]
+    fn test_apply_server_vars_substitutes_variable_default_without_default_url() {
+        // No `x-fern-default-url`: the variable's own `default` resolves the
+        // template so the URL is still sendable.
+        let spec = r#"
+openapi: "3.0.0"
+info: { title: "T", version: "1.0" }
+servers:
+  - url: "https://api.{region}.example.com"
+    variables:
+      region: { default: us-east-1 }
+paths:
+  /things:
+    get:
+      x-fern-sdk-group-name: ["things"]
+      x-fern-sdk-method-name: list
+      responses: { "200": { description: ok } }
+"#;
+        let app = CliApp::new("t").spec(spec);
+        let mut doc = app.build_doc().unwrap();
+        let cli = app.decorate_command(&doc, crate::openapi::commands::build_cli(&doc));
+        let matches = cli.try_get_matches_from(["t", "things", "list"]).unwrap();
+        app.apply_server_vars(&mut doc, &matches);
+
+        assert_eq!(doc.root_url, "https://api.us-east-1.example.com");
+    }
+
+    #[test]
+    fn test_apply_server_vars_handles_per_operation_server_variables() {
+        let spec = r#"
+openapi: "3.0.0"
+info: { title: "T", version: "1.0" }
+servers:
+  - url: "https://api.example.com"
+paths:
+  /uploads:
+    post:
+      x-fern-sdk-group-name: ["uploads"]
+      x-fern-sdk-method-name: create
+      servers:
+        - url: "https://upload.{region}.example.com"
+          x-fern-default-url: "https://upload.example.com"
+          variables:
+            region: { default: us1 }
+      responses: { "200": { description: ok } }
+"#;
+        let app = CliApp::new("t").spec(spec);
+        let doc = app.build_doc().unwrap();
+        let cli = app.decorate_command(&doc, crate::openapi::commands::build_cli(&doc));
+
+        // No caller value: the per-operation server falls back to its default URL.
+        let mut doc_default = doc.clone();
+        let matches = cli
+            .clone()
+            .try_get_matches_from(["t", "uploads", "create"])
+            .unwrap();
+        app.apply_server_vars(&mut doc_default, &matches);
+        let create = doc_default.resources["uploads"].methods.get("create").unwrap();
+        assert_eq!(create.servers[0].url, "https://upload.example.com");
+
+        // Caller value: substituted into the per-operation server.
+        let mut doc_pinned = doc;
+        let matches = cli
+            .try_get_matches_from(["t", "--region", "ie1", "uploads", "create"])
+            .unwrap();
+        app.apply_server_vars(&mut doc_pinned, &matches);
+        let create = doc_pinned.resources["uploads"].methods.get("create").unwrap();
+        assert_eq!(create.servers[0].url, "https://upload.ie1.example.com");
     }
 
     #[test]

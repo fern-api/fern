@@ -6,9 +6,21 @@ mod sdk;
 
 use fern_cli_sdk::app::CliApp;
 use fern_cli_sdk::openapi::OpenApiBinding;
+use fern_cli_sdk::openapi::discovery::{GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation};
 
 fn main() {
     let app = CliApp::new("x-fern-default-test")
+        .global_parameter(GlobalParameter {
+            name: "X-API-Version".into(),
+            location: GlobalParameterLocation::Header,
+            target: "X-API-Version".into(),
+            env: None,
+            default: Some("2024-02-08".into()),
+            optional: true,
+            apply: GlobalParameterApplyMode::Auto,
+            parameter_name: Some("api_version".into()),
+            docs: None,
+        })
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

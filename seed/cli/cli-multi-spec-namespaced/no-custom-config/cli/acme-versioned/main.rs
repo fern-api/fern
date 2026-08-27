@@ -7,10 +7,22 @@ mod sdk;
 use fern_cli_sdk::app::CliApp;
 use fern_cli_sdk::openapi::OpenApiBinding;
 use fern_cli_sdk::auth::{BearerAuth};
+use fern_cli_sdk::openapi::discovery::{GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation};
 
 fn main() {
     let app = CliApp::new("acme-versioned")
         .auth(BearerAuth::new("bearerAuth").env("ACME_VERSIONED_TOKEN"))
+        .global_parameter(GlobalParameter {
+            name: "X-Api-Key".into(),
+            location: GlobalParameterLocation::Header,
+            target: "X-Api-Key".into(),
+            env: None,
+            default: None,
+            optional: false,
+            apply: GlobalParameterApplyMode::Auto,
+            parameter_name: Some("apiKey".into()),
+            docs: None,
+        })
         .binding(
             OpenApiBinding::new()
                 .spec_under("v1", include_str!("openapi0.json"))

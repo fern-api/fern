@@ -502,6 +502,29 @@ pub struct Server {
     /// Optional human-readable description from the spec — surfaced in
     /// `--help` next to the server URL.
     pub description: Option<String>,
+    /// The URL to use when the caller supplies no value for any of this
+    /// server's template variables, from the `x-fern-default-url`
+    /// extension. Mirrors fern's OpenAPI importer, which treats it as the
+    /// concrete default environment URL for a templated server
+    /// (`packages/cli/api-importers/openapi/openapi-ir-parser/src/openapi/v3/converters/convertServer.ts`).
+    pub default_url: Option<String>,
+    /// The server's OpenAPI `variables:` block, in name order. Each entry
+    /// becomes a global `--<variable>` flag whose value is substituted
+    /// into [`Self::url`] before the request is sent.
+    pub variables: Vec<ServerVariable>,
+}
+
+/// One entry from an OpenAPI server's `variables:` block.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct ServerVariable {
+    /// Variable name as it appears in the `{placeholder}`.
+    pub name: String,
+    /// The spec's `default` — used when the caller supplies no value.
+    pub default: Option<String>,
+    /// The spec's `description`, surfaced as the flag's `--help` text.
+    pub description: Option<String>,
+    /// The spec's `enum`, surfaced as the flag's allowed values.
+    pub enum_values: Vec<String>,
 }
 
 impl RestDescription {
