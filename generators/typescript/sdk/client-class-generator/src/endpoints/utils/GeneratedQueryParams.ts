@@ -36,6 +36,27 @@ export class GeneratedQueryParams {
         for (const queryParameter of this.queryParameters) {
             const wireValue = getWireValue(queryParameter.name);
             const referenceToQueryParameter = this.referenceToQueryParameterProperty(wireValue, context);
+
+            // An object query parameter is exploded: every entry becomes its own parameter,
+            // keyed by the property name alone. Spreading the map into _queryParams does that;
+            // assigning it under its own wire name would json encode the whole thing instead.
+            if (this.isMapType(queryParameter.valueType)) {
+                properties.push(
+                    ts.factory.createSpreadAssignment(
+                        this.isOptional(queryParameter.valueType)
+                            ? ts.factory.createParenthesizedExpression(
+                                  ts.factory.createBinaryExpression(
+                                      referenceToQueryParameter,
+                                      ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                      ts.factory.createObjectLiteralExpression([], false)
+                                  )
+                              )
+                            : referenceToQueryParameter
+                    )
+                );
+                continue;
+            }
+
             const valueExpression = this.getQueryParameterValueExpression({
                 queryParameter,
                 referenceToQueryParameter,
@@ -481,6 +502,25 @@ export class GeneratedQueryParams {
             }
         }
         return undefined;
+    }
+
+    /**
+     * Whether a type reference is a map, unwrapping optional and nullable.
+     */
+    private isMapType(typeReference: FernIr.TypeReference): boolean {
+        if (typeReference.type !== "container") {
+            return false;
+        }
+        switch (typeReference.container.type) {
+            case "map":
+                return true;
+            case "optional":
+                return this.isMapType(typeReference.container.optional);
+            case "nullable":
+                return this.isMapType(typeReference.container.nullable);
+            default:
+                return false;
+        }
     }
 
     private isOptional(typeReference: FernIr.TypeReference): boolean {
